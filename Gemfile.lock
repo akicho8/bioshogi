@@ -1,0 +1,30 @@
+GIT
+  remote: https://github.com/akicho8/rain_table.git
+  revision: 630ac3c007f74d1bb9a91ebc79e65ffe1325ec41
+  specs:
+    rain_table (0.1.1)
+      activesupport
+
+PATH
+  remote: .
+  specs:
+    bushido (0.0.1)
+      activesupport
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.2.9)
+      i18n (~> 0.6)
+      multi_json (~> 1.0)
+    i18n (0.6.1)
+    multi_json (1.4.0)
+    rspec-core (2.12.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bushido!
+  rain_table!
+  rspec-core
