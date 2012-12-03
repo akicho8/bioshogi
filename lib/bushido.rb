@@ -21,41 +21,131 @@ module Bushido
       def sym_name
         self.class.name.demodulize.underscore.to_sym
       end
+
+      def transformable?
+        true
+      end
+
+      def cleave?
+        false
+      end
+    end
+
+    module Golden
+      def transformed_movable_cells
+        [
+          [-1, -1], [0, -1], [1, -1],
+          [-1,  0],          [1,  0],
+          nil,      [0,  1],     nil,
+        ].compact
+      end
+
+      module_function :transformed_movable_cells
+    end
+
+    module Brave
+      def transformed_movable_cells
+        [
+          [-1, -1], [0, -1], [1, -1],
+          [-1,  0],          [1,  0],
+          [-1,  1], [0,  1], [1,  1],
+        ]
+      end
     end
 
     class Fu < Base
+      include Golden
+
       def name
         "歩"
+      end
+
+      def basic_movable_cells
+        [[0, -1]]
       end
     end
 
     class Ka < Base
+      include Brave
+
       def name
         "角"
+      end
+
+      def basic_movable_cells
+        [
+          [-1, -1], nil, [1, -1],
+          nil,      nil,     nil,
+          [-1,  1], nil, [1,  1],
+        ].compact
+      end
+
+      def cleave?
+        true
       end
     end
 
     class Hi < Base
+      include Brave
+
       def name
         "飛"
+      end
+
+      def basic_movable_cells
+        [
+          nil,      [0, -1],     nil,
+          [-1,  0],          [1,  0],
+          nil,      [0,  1],     nil,
+        ].compact
+      end
+
+      def cleave?
+        true
       end
     end
 
     class Ky < Base
+      include Golden
+
       def name
         "香"
+      end
+
+      def basic_movable_cells
+        [[0, -1]]
+      end
+
+      def cleave?
+        true
       end
     end
 
     class Ke < Base
+      include Golden
+
       def name
         "桂"
+      end
+
+      def basic_movable_cells
+        [[-1, -2], [1, -2]]
       end
     end
 
     class Gi < Base
+      include Golden
+
       def name
         "銀"
+      end
+
+      def basic_movable_cells
+        [
+          [-1, -1], [0, -1], [1, -1],
+          nil,                   nil,
+          [-1,  1],     nil, [1,  1],
+        ]
       end
     end
 
@@ -63,12 +153,46 @@ module Bushido
       def name
         "金"
       end
+
+      def basic_movable_cells
+        Golden.transformed_movable_cells
+      end
+
+      def transformable?
+        false
+      end
     end
 
     class Ou < Base
       def name
         "王"
       end
+
+      def basic_movable_cells
+        [
+          [-1, -1], [0, -1], [1, -1],
+          [-1,  0],          [1,  0],
+          [-1,  1], [0,  1], [1,  1],
+        ]
+      end
+
+      def transformable?
+        false
+      end
+    end
+  end
+
+  class Soldier
+    attr_accessor :player, :piece, :transform
+
+    def initialize(player, piece, transform = false)
+      @player = player
+      @piece = piece
+      @transform = transform
+    end
+
+    def to_s
+      "#{@transform ? '成' : ''}#{@piece.name}#{@player.arrow}"
     end
   end
 
@@ -95,11 +219,15 @@ module Bushido
     end
 
     def name
-      to_a[@value]
+      self.class.units[@value]
     end
 
     def reverse
       self.class.parse(self.class.units.size - 1 - @value)
+    end
+
+    def inspect
+      "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
     end
   end
 
@@ -125,6 +253,8 @@ module Bushido
       y = nil
 
       case arg
+      when Point
+        x, y = arg.to_xy
       when Array
         a, b = arg
         x = Hposition.parse(a)
@@ -155,6 +285,14 @@ module Bushido
 
     def to_xy
       [@x.value, @y.value]
+    end
+
+    def name
+      [@x, @y].collect(&:name).join
+    end
+
+    def inspect
+      "#<#{self.class.name}:#{object_id} #{name.inspect} #{to_xy.inspect}>"
     end
   end
 
@@ -194,21 +332,24 @@ module Bushido
       @name = name
       @field = field
       @location = location
-      @pieces = []
-      [
-        {:count => 9, :attrs => {:key => :fu}},
-        {:count => 1, :attrs => {:key => :ka}},
-        {:count => 1, :attrs => {:key => :hi}},
-        {:count => 2, :attrs => {:key => :ky}},
-        {:count => 2, :attrs => {:key => :ke}},
-        {:count => 2, :attrs => {:key => :gi}},
-        {:count => 2, :attrs => {:key => :ki}},
-        {:count => 1, :attrs => {:key => :ou}},
-      ].each{|info|
-        info[:count].times {
-          @pieces << Piece.create(info[:attrs][:key])
+      @pieces = first_distributed_pieces.collect{|info|
+        info[:count].times.collect {
+          Piece.create(info[:key])
         }
-      }
+      }.flatten
+    end
+
+    def first_distributed_pieces
+      [
+        {:count => 9, :key => :fu},
+        {:count => 1, :key => :ka},
+        {:count => 1, :key => :hi},
+        {:count => 2, :key => :ky},
+        {:count => 2, :key => :ke},
+        {:count => 2, :key => :gi},
+        {:count => 2, :key => :ki},
+        {:count => 1, :key => :ou},
+      ]
     end
 
     def pick_out(key)
@@ -221,6 +362,18 @@ module Bushido
     end
 
     def setup
+      first_deployment.each{|info|
+        piece = pick_out(info[:key])
+        point = Point.parse(info[:point])
+        if @location == :kotti
+        else
+          point = point.reverse
+        end
+        @field.put_on(point, Soldier.new(self, piece))
+      }
+    end
+
+    def first_deployment
       [
         {:point => "9七", :key => :fu},
         {:point => "8七", :key => :fu},
@@ -242,15 +395,7 @@ module Bushido
         {:point => "3九", :key => :gi},
         {:point => "2九", :key => :ke},
         {:point => "1九", :key => :ky},
-      ].each{|info|
-        piece = pick_out(info[:key])
-        point = Point.parse(info[:point])
-        if @location == :kotti
-        else
-          point = point.reverse
-        end
-        @field.put_on(point, Soldier.new(self, piece))
-      }
+      ]
     end
 
     def arrow
@@ -267,20 +412,18 @@ module Bushido
       soldier = @field.pick_up(a)
       @field.put_on(b, soldier)
     end
-  end
 
-  class Soldier
-    attr_accessor :player, :piece, :transform
-
-    def initialize(player, piece, transform = false)
-      @player = player
-      @piece = piece
-      @transform = transform
-    end
-
-    def to_s
-      "#{@transform ? '成' : ''}#{@piece.name}#{@player.arrow}"
-    end
+    # def execute(str)
+    #   md = str.match(/(?<point>..)(?<piece>.)(?<option>.*)/)
+    #   point = Point.parse(md[:point])
+    #   move_to(point)
+    # end
+    #
+    # def piece_to_come_here(point)
+    #   point = Point.parse(point)
+    #   p point.to_xy
+    #
+    # end
   end
 
   if $0 == __FILE__
@@ -289,6 +432,8 @@ module Bushido
     @players << Player.new("先手", @field, :kotti)
     @players << Player.new("後手", @field, :atti)
     @players.each(&:setup)
+    # @players[0].piece_to_come_here("7六")
+    # @players[0].execute("7六歩")
     puts @field
     @players[0].move_to("7七", "7六")
     puts @field
