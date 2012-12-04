@@ -29,6 +29,10 @@ module Bushido
       def cleave?
         false
       end
+
+      def jumpable?
+        false
+      end
     end
 
     module Golden
@@ -131,6 +135,10 @@ module Bushido
       def basic_movable_cells
         [[-1, -2], [1, -2]]
       end
+
+      def jumpable?
+        true
+      end
     end
 
     class Gi < Base
@@ -194,6 +202,41 @@ module Bushido
     def to_s
       "#{@transform ? '成' : ''}#{@piece.name}#{@player.arrow}"
     end
+
+    def moveable_all_cells
+      list = []
+      solders_hash = @player.field.matrix.invert
+      x, y = solders_hash[self]
+      @piece.basic_movable_cells.each{|sx, sy|
+        if @piece.cleave?
+          loop do
+            x += sx
+            y += sy
+            unless Hposition.value_range.include?(x) && Vposition.value_range.include?(y)
+              break
+            end
+            point = [x, y]
+            soldier = solders_hash[point]
+            if soldier.nil?
+              list << point
+            elsif soldier == self
+              break
+            elsif soldier.player != self
+              list << point
+            else
+              raise
+            end
+          end
+        else
+          x += sx
+          y += sy
+          if Hposition.value_range.include?(x) && Vposition.value_range.include?(y)
+            list << [x, y]
+          end
+        end
+      }
+      list
+    end
   end
 
   class Position
@@ -212,6 +255,10 @@ module Bushido
         v = arg
       end
       new(v)
+    end
+
+    def self.value_range
+      (0 .. units.size - 1)
     end
 
     def initialize(value)
@@ -254,7 +301,9 @@ module Bushido
 
       case arg
       when Point
-        x, y = arg.to_xy
+        a, b = arg.to_xy
+        x = Hposition.parse(a)
+        y = Vposition.parse(b)
       when Array
         a, b = arg
         x = Hposition.parse(a)
@@ -352,15 +401,6 @@ module Bushido
       ]
     end
 
-    def pick_out(key)
-      if index = @pieces.find_index{|piece|piece.sym_name == key}
-        piece = @pieces[index]
-        @pieces[index] = nil
-        @pieces.compact!
-        piece
-      end
-    end
-
     def setup
       first_deployment.each{|info|
         piece = pick_out(info[:key])
@@ -406,6 +446,19 @@ module Bushido
       end
     end
 
+    def pick_out(key)
+      if index = @pieces.find_index{|piece|piece.sym_name == key}
+        piece = @pieces[index]
+        @pieces[index] = nil
+        @pieces.compact!
+        piece
+      end
+    end
+
+    def soldiers
+      @field.matrix.values.find_all{|soldier|soldier.player == self}
+    end
+
     def move_to(a, b)
       a = Point.parse(a)
       b = Point.parse(b)
@@ -413,17 +466,24 @@ module Bushido
       @field.put_on(b, soldier)
     end
 
-    # def execute(str)
-    #   md = str.match(/(?<point>..)(?<piece>.)(?<option>.*)/)
-    #   point = Point.parse(md[:point])
-    #   move_to(point)
-    # end
-    #
-    # def piece_to_come_here(point)
-    #   point = Point.parse(point)
-    #   p point.to_xy
-    #
-    # end
+    def execute(str)
+      md = str.match(/(?<point>..)(?<piece>.)(?<option>.*)/)
+      point = Point.parse(md[:point])
+
+      source = nil
+      soldiers.each{|soldier|
+        all_cell = soldier.moveable_all_cells
+        if all_cell.any?{|xy|xy == point.to_xy}
+          if soldier.piece.name == md[:piece]
+            source = soldier
+            break
+          end
+        end
+      }
+
+      source_point = @field.matrix.invert[source]
+      move_to(source_point, point)
+    end
   end
 
   if $0 == __FILE__
@@ -432,14 +492,14 @@ module Bushido
     @players << Player.new("先手", @field, :kotti)
     @players << Player.new("後手", @field, :atti)
     @players.each(&:setup)
-    # @players[0].piece_to_come_here("7六")
-    # @players[0].execute("7六歩")
+    @players[0].execute("7六歩")
     puts @field
-    @players[0].move_to("7七", "7六")
-    puts @field
-    @players[1].move_to("3三", "3四")
-    puts @field
-    @players[0].move_to("8八", "2二")
-    puts @field
+
+    # @players[0].move_to("7七", "7六")
+    # puts @field
+    # @players[1].move_to("3三", "3四")
+    # puts @field
+    # @players[0].move_to("8八", "2二")
+    # puts @field
   end
 end
