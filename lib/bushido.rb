@@ -30,9 +30,9 @@ module Bushido
         false
       end
 
-      def jumpable?
-        false
-      end
+      # def jumpable?
+      #   false
+      # end
     end
 
     module Golden
@@ -51,7 +51,7 @@ module Bushido
       def transformed_movable_cells
         [
           [-1, -1], [0, -1], [1, -1],
-          [-1,  0],          [1,  0],
+          [-1,  0],     nil, [1,  0],
           [-1,  1], [0,  1], [1,  1],
         ]
       end
@@ -81,7 +81,7 @@ module Bushido
           [-1, -1], nil, [1, -1],
           nil,      nil,     nil,
           [-1,  1], nil, [1,  1],
-        ].compact
+        ]
       end
 
       def cleave?
@@ -136,9 +136,9 @@ module Bushido
         [[-1, -2], [1, -2]]
       end
 
-      def jumpable?
-        true
-      end
+      # def jumpable?
+      #   true
+      # end
     end
 
     class Gi < Base
@@ -151,7 +151,7 @@ module Bushido
       def basic_movable_cells
         [
           [-1, -1], [0, -1], [1, -1],
-          nil,                   nil,
+          nil,          nil,     nil,
           [-1,  1],     nil, [1,  1],
         ]
       end
@@ -179,7 +179,7 @@ module Bushido
       def basic_movable_cells
         [
           [-1, -1], [0, -1], [1, -1],
-          [-1,  0],          [1,  0],
+          [-1,  0],     nil, [1,  0],
           [-1,  1], [0,  1], [1,  1],
         ]
       end
@@ -207,7 +207,7 @@ module Bushido
       list = []
       solders_hash = @player.field.matrix.invert
       x, y = solders_hash[self]
-      @piece.basic_movable_cells.each{|sx, sy|
+      @piece.basic_movable_cells.compact.each{|sx, sy|
         if @piece.cleave?
           loop do
             x += sx
