@@ -9,9 +9,20 @@ require "rain_table"
 require_relative "bushido/version"
 
 module Bushido
+  class LogicError < StandardError; end
+  class SyntaxError < StandardError; end
+
   module Piece
     def self.create(key, *args)
       "Bushido::Piece::#{key.to_s.classify}".constantize.new(*args)
+    end
+
+    def self.collection
+      [:fu, :ka, :hi, :ky, :ke, :gi, :ki, :ou].collect{|key|create(key)}
+    end
+
+    def self.get(arg)
+      collection.find{|piece|piece.name == arg}
     end
 
     class Base
@@ -29,10 +40,6 @@ module Bushido
       def cleave?
         false
       end
-
-      # def jumpable?
-      #   false
-      # end
     end
 
     module Golden
@@ -135,10 +142,6 @@ module Bushido
       def basic_movable_cells
         [[-1, -2], [1, -2]]
       end
-
-      # def jumpable?
-      #   true
-      # end
     end
 
     class Gi < Base
@@ -203,39 +206,40 @@ module Bushido
       "#{@transform ? '成' : ''}#{@piece.name}#{@player.arrow}"
     end
 
+    def inspect
+      "<#{@player.name}の#{current_point.name}#{self}>"
+    end
+
+    def current_point
+      Point.parse(@player.field.matrix.invert[self])
+    end
+
     def moveable_all_cells
-      list = []
-      solders_hash = @player.field.matrix.invert
-      x, y = solders_hash[self]
-      @piece.basic_movable_cells.compact.each{|sx, sy|
-        if @piece.cleave?
-          loop do
-            x += sx
-            y += sy
-            unless Hposition.value_range.include?(x) && Vposition.value_range.include?(y)
+      @piece.basic_movable_cells.compact.each_with_object([]) do |vector, list|
+        point = current_point
+        loop do
+          point = point.add_vector(vector)
+          unless point.valid?
+            break
+          end
+          target = @player.field.fetch(point)
+          if target.nil?
+            list << point
+          else
+            raise LogicError unless target.kind_of? Soldier
+            if target.player == player # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
               break
-            end
-            point = [x, y]
-            soldier = solders_hash[point]
-            if soldier.nil?
-              list << point
-            elsif soldier == self
-              break
-            elsif soldier.player != self
-              list << point
             else
-              raise
+              # 相手の駒だったので置ける
+              list << point
+              break
             end
           end
-        else
-          x += sx
-          y += sy
-          if Hposition.value_range.include?(x) && Vposition.value_range.include?(y)
-            list << [x, y]
+          unless @piece.cleave?
+            break
           end
         end
-      }
-      list
+      end
     end
   end
 
@@ -248,7 +252,7 @@ module Bushido
       case arg
       when String
         v = units.find_index{|e|e == arg}
-        v or raise ArgumentError, "#{arg.inspect} が #{units} の中にありません"
+        v or raise SyntaxError, "#{arg.inspect} が #{units} の中にありません"
       when Position
         v = arg.value
       else
@@ -259,6 +263,10 @@ module Bushido
 
     def self.value_range
       (0 .. units.size - 1)
+    end
+
+    def valid?
+      self.class.value_range.include?(@value)
     end
 
     def initialize(value)
@@ -288,6 +296,13 @@ module Bushido
     def self.units
       "一二三四五六七八九".scan(/./)
     end
+
+    def self.parse(arg)
+      if arg.kind_of?(String) && arg.match(/\A\d\z/)
+        arg = arg.tr("1-9", units.join)
+      end
+      super
+    end
   end
 
   class Point
@@ -314,10 +329,10 @@ module Bushido
           x = Hposition.parse(a)
           y = Vposition.parse(b)
         else
-          raise ArgumentError, "#{arg.inspect}"
+          raise SyntaxError, "#{arg.inspect}"
         end
       else
-        raise ArgumentError, "#{arg.inspect}"
+        raise SyntaxError, "#{arg.inspect}"
       end
 
       new(x, y)
@@ -337,11 +352,24 @@ module Bushido
     end
 
     def name
-      [@x, @y].collect(&:name).join
+      if valid?
+        [@x, @y].collect(&:name).join
+      else
+        "盤外"
+      end
     end
 
     def inspect
       "#<#{self.class.name}:#{object_id} #{name.inspect} #{to_xy.inspect}>"
+    end
+
+    def add_vector(vector)
+      x, y = vector
+      self.class.parse([@x.value + x, @y.value + y])
+    end
+
+    def valid?
+      @x.valid? && @y.valid?
     end
   end
 
@@ -402,7 +430,11 @@ module Bushido
     end
 
     def setup
-      first_deployment.each{|info|
+      reset_field(first_deployment)
+    end
+
+    def reset_field(table)
+      table.each{|info|
         piece = pick_out(info[:key])
         point = Point.parse(info[:point])
         if @location == :kotti

@@ -13,11 +13,20 @@ module Bushido
     end
 
     describe "#moveable_all_cells" do
-      it do
-        player.setup
-        soldier = field.matrix[[2, 6]]
-        soldier.moveable_all_cells.should == [[2, 5]]
+      context "初期配置の場合" do
+        before { player.setup }
+        it { field.matrix[[2, 6]].moveable_all_cells.collect(&:to_xy).should == [[2, 5]] }                                         # 歩
+        it { field.matrix[[0, 8]].moveable_all_cells.collect(&:to_xy).should == [[0, 7]] }                                         # 香
+        it { field.matrix[[1, 8]].moveable_all_cells.collect(&:to_xy).should == [] }                                               # 桂
+        it { field.matrix[[2, 8]].moveable_all_cells.collect(&:to_xy).should == [[2, 7], [3, 7]] }                                 # 銀
+        it { field.matrix[[3, 8]].moveable_all_cells.collect(&:to_xy).should == [[2, 7], [3, 7], [4, 7]] }                         # 金
+        it { field.matrix[[4, 8]].moveable_all_cells.collect(&:to_xy).should == [[3, 7], [4, 7], [5, 7]] }                         # 王
+        it { field.matrix[[1, 7]].moveable_all_cells.collect(&:to_xy).should == [] }                                               # 角
+        it { field.matrix[[7, 7]].moveable_all_cells.collect(&:to_xy).should == [[6, 7], [5, 7], [4, 7], [3, 7], [2, 7], [8, 7]] } # 飛
       end
+      # context "初期配置の場合" do
+      #   before { player.reset_field([{}]) }
+      # end
     end
   end
 end
