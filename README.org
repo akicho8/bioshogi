@@ -1,12 +1,12 @@
-#+OPTIONS: toc:nil num:nil author:nil creator:nil
-#+OPTIONS: H:3 \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS: toc:nil num:nil author:nil creator:nil \n:nil |:t
+#+OPTIONS: @:t ::t ^:t -:t f:t *:t <:t
 
 * 将棋の定石を覚えたくて作ってるぷろぐらむ
 
 : @field = Field.new
 : @players = []
-: @players << Player.new("先手", @field, :kotti)
-: @players << Player.new("後手", @field, :atti)
+: @players << Player.new("先手", @field, :lower)
+: @players << Player.new("後手", @field, :upper)
 : @players.each(&:setup)
 : @players[0].execute("7六歩")
 : puts @field
@@ -14,7 +14,7 @@
 #+ATTR_HTML: border="1" rules="all" frame="all"
 | 9    | 8    | 7    | 6    | 5    | 4    | 3    | 2    | 1    |
 |------+------+------+------+------+------+------+------+------|
-| 香↓ | 桂↓ | 銀↓ | 金↓ | 王↓ | 金↓ | 銀↓ | 桂↓ | 香↓ |
+| 香↓ | 桂↓ | 銀↓ | 金↓ | 玉↓ | 金↓ | 銀↓ | 桂↓ | 香↓ |
 | .    | 飛↓ | .    | .    | .    | .    | .    | 角↓ | .    |
 | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ |
 | .    | .    | .    | .    | .    | .    | .    | .    | .    |
@@ -22,7 +22,7 @@
 | .    | .    | 歩   | .    | .    | .    | .    | .    | .    |
 | 歩   | 歩   | .    | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   |
 | .    | 角   | .    | .    | .    | .    | .    | 飛   | .    |
-| 香   | 桂   | 銀   | 金   | 王   | 金   | 銀   | 桂   | 香   |
+| 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   |
 
 ** 自分用メモ
 

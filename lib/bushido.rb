@@ -11,6 +11,9 @@ require_relative "bushido/version"
 module Bushido
   class LogicError < StandardError; end
   class SyntaxError < StandardError; end
+  class PieceNotFound < StandardError; end
+  class PieceOverwrideError < StandardError; end
+  class SamePlayerSoldierOverwrideError < StandardError; end
 
   module Piece
     def self.create(key, *args)
@@ -18,11 +21,11 @@ module Bushido
     end
 
     def self.collection
-      [:fu, :ka, :hi, :ky, :ke, :gi, :ki, :ou].collect{|key|create(key)}
+      [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
     end
 
     def self.get(arg)
-      collection.find{|piece|piece.name == arg}
+      collection.find{|piece|piece.name == arg || piece.sym_name == arg}
     end
 
     class Base
@@ -37,121 +40,141 @@ module Bushido
         true
       end
 
-      def cleave?
-        false
+      def basic_vectors1
+        []
+      end
+
+      def basic_vectors2
+        []
+      end
+
+      def promoted_vectors1
+        []
+      end
+
+      def promoted_vectors2
+        []
+      end
+
+      def vectors1(promoted = false)
+        if !transformable? && promoted
+          raise NotTransformable
+        end
+        if promoted
+          promoted_vectors1
+        else
+          basic_vectors1
+        end
+      end
+
+      def vectors2(promoted = false)
+        if !transformable? && promoted
+          raise NotTransformable
+        end
+        if promoted
+          promoted_vectors2
+        else
+          basic_vectors2
+        end
       end
     end
 
     module Golden
-      def transformed_movable_cells
-        [
-          [-1, -1], [0, -1], [1, -1],
-          [-1,  0],          [1,  0],
-          nil,      [0,  1],     nil,
-        ].compact
+      def promoted_vectors1
+        Gold.__base__
       end
-
-      module_function :transformed_movable_cells
     end
 
     module Brave
-      def transformed_movable_cells
-        [
-          [-1, -1], [0, -1], [1, -1],
-          [-1,  0],     nil, [1,  0],
-          [-1,  1], [0,  1], [1,  1],
-        ]
+      def promoted_vectors1
+        King.__base__
+      end
+
+      def promoted_vectors2
+        basic_vectors2
       end
     end
 
-    class Fu < Base
+    class Pawn < Base
       include Golden
 
       def name
         "歩"
       end
 
-      def basic_movable_cells
+      def basic_vectors1
         [[0, -1]]
       end
     end
 
-    class Ka < Base
+    class Bishop < Base
       include Brave
 
       def name
         "角"
       end
 
-      def basic_movable_cells
+      def basic_vectors2
         [
           [-1, -1], nil, [1, -1],
           nil,      nil,     nil,
           [-1,  1], nil, [1,  1],
         ]
       end
-
-      def cleave?
-        true
-      end
     end
 
-    class Hi < Base
+    class Rook < Base
       include Brave
 
       def name
         "飛"
       end
 
-      def basic_movable_cells
+      def basic_vectors2
         [
           nil,      [0, -1],     nil,
           [-1,  0],          [1,  0],
           nil,      [0,  1],     nil,
-        ].compact
+        ]
       end
 
-      def cleave?
-        true
-      end
+      # def cleave?
+      #   true
+      # end
     end
 
-    class Ky < Base
+    class Lance < Base
       include Golden
 
       def name
         "香"
       end
 
-      def basic_movable_cells
+      def basic_vectors2
         [[0, -1]]
-      end
-
-      def cleave?
-        true
       end
     end
 
-    class Ke < Base
+    class Knight < Base
       include Golden
 
       def name
         "桂"
       end
 
-      def basic_movable_cells
+      def basic_vectors1
         [[-1, -2], [1, -2]]
       end
     end
 
-    class Gi < Base
+    class Silver < Base
       include Golden
 
       def name
         "銀"
       end
 
-      def basic_movable_cells
+      def basic_vectors1
         [
           [-1, -1], [0, -1], [1, -1],
           nil,          nil,     nil,
@@ -160,13 +183,21 @@ module Bushido
       end
     end
 
-    class Ki < Base
+    class Gold < Base
+      def self.__base__
+        [
+          [-1, -1], [0, -1], [1, -1],
+          [-1,  0],          [1,  0],
+          nil,      [0,  1],     nil,
+        ]
+      end
+
       def name
         "金"
       end
 
-      def basic_movable_cells
-        Golden.transformed_movable_cells
+      def basic_vectors1
+        self.class.__base__
       end
 
       def transformable?
@@ -174,17 +205,21 @@ module Bushido
       end
     end
 
-    class Ou < Base
-      def name
-        "王"
-      end
-
-      def basic_movable_cells
+    class King < Base
+      def self.__base__
         [
           [-1, -1], [0, -1], [1, -1],
           [-1,  0],     nil, [1,  0],
           [-1,  1], [0,  1], [1,  1],
         ]
+      end
+
+      def name
+        "玉"
+      end
+
+      def basic_vectors1
+        self.class.__base__
       end
 
       def transformable?
@@ -194,28 +229,43 @@ module Bushido
   end
 
   class Soldier
-    attr_accessor :player, :piece, :transform
+    attr_accessor :player, :piece, :promoted
 
-    def initialize(player, piece, transform = false)
+    def initialize(player, piece, promoted = false)
       @player = player
       @piece = piece
-      @transform = transform
+      @promoted = promoted
     end
 
     def to_s
-      "#{@transform ? '成' : ''}#{@piece.name}#{@player.arrow}"
+      "#{@promoted ? '成' : ''}#{@piece.name}#{@player.arrow}"
     end
 
     def inspect
-      "<#{@player.name}の#{current_point.name}#{self}>"
+      "<#{@player.location_mark}#{current_point.name}#{self}>"
+    end
+
+    def to_text
+      "#{@player.location_mark}#{current_point.name}#{self}"
     end
 
     def current_point
       Point.parse(@player.field.matrix.invert[self])
     end
 
+    # def moveable_all_cells2
+    #   moveable_all_cells.collect{|point|Point.parse(point)}
+    # end
+
     def moveable_all_cells
-      @piece.basic_movable_cells.compact.each_with_object([]) do |vector, list|
+      list = []
+      list += moveable_all_cells1(@piece.vectors1(@promoted), false)
+      list += moveable_all_cells1(@piece.vectors2(@promoted), true)
+      list.uniq
+    end
+
+    def moveable_all_cells1(vectors, loop)
+      vectors.uniq.compact.each_with_object([]) do |vector, list|
         point = current_point
         loop do
           point = point.add_vector(vector)
@@ -235,7 +285,7 @@ module Bushido
               break
             end
           end
-          unless @piece.cleave?
+          unless loop
             break
           end
         end
@@ -310,6 +360,10 @@ module Bushido
 
     private_class_method :new
 
+    def self.[](arg)
+      parse(arg)
+    end
+
     def self.parse(arg)
       x = nil
       y = nil
@@ -380,7 +434,10 @@ module Bushido
       @matrix = {}
     end
 
-    def put_on(point, soldier)
+    def pick_down(point, soldier)
+      if fetch(point)
+        raise PieceOverwrideError
+      end
       @matrix[point.to_xy] = soldier
     end
 
@@ -409,82 +466,83 @@ module Bushido
       @name = name
       @field = field
       @location = location
+
+      deal
+    end
+
+    def deal
       @pieces = first_distributed_pieces.collect{|info|
-        info[:count].times.collect {
-          Piece.create(info[:key])
-        }
+        info[:count].times.collect{ Piece.get(info[:piece]) }
       }.flatten
     end
 
     def first_distributed_pieces
       [
-        {:count => 9, :key => :fu},
-        {:count => 1, :key => :ka},
-        {:count => 1, :key => :hi},
-        {:count => 2, :key => :ky},
-        {:count => 2, :key => :ke},
-        {:count => 2, :key => :gi},
-        {:count => 2, :key => :ki},
-        {:count => 1, :key => :ou},
+        {:count => 9, :piece => "歩"},
+        {:count => 1, :piece => "角"},
+        {:count => 1, :piece => "飛"},
+        {:count => 2, :piece => "香"},
+        {:count => 2, :piece => "桂"},
+        {:count => 2, :piece => "銀"},
+        {:count => 2, :piece => "金"},
+        {:count => 1, :piece => "玉"},
       ]
     end
 
     def setup
-      reset_field(first_deployment)
+      init_soldiers(first_placements)
     end
 
-    def reset_field(table)
-      table.each{|info|
-        piece = pick_out(info[:key])
-        point = Point.parse(info[:point])
-        if @location == :kotti
+    def init_soldiers(table)
+      table.each{|info|init_soldier(info)}
+    end
+
+    def init_soldier(info)
+      promoted = false
+      if info.kind_of?(String)
+        if md = info.match(/(?<point>..)(?<piece>.)(?<options>.*)/)
+          point = Point.parse(md[:point])
+          piece = pick_out(md[:piece])
+          promoted = md[:options] == "成"
         else
-          point = point.reverse
+          raise SyntaxError, info.inspect
         end
-        @field.put_on(point, Soldier.new(self, piece))
-      }
+      else
+        point = Point.parse(info[:point])
+        piece = pick_out(info[:piece])
+        promoted = info[:promoted]
+      end
+      if @location == :lower
+      else
+        point = point.reverse
+      end
+      @field.pick_down(point, Soldier.new(self, piece, promoted))
     end
 
-    def first_deployment
+    def first_placements
       [
-        {:point => "9七", :key => :fu},
-        {:point => "8七", :key => :fu},
-        {:point => "7七", :key => :fu},
-        {:point => "6七", :key => :fu},
-        {:point => "5七", :key => :fu},
-        {:point => "4七", :key => :fu},
-        {:point => "3七", :key => :fu},
-        {:point => "2七", :key => :fu},
-        {:point => "1七", :key => :fu},
-        {:point => "8八", :key => :ka},
-        {:point => "2八", :key => :hi},
-        {:point => "9九", :key => :ky},
-        {:point => "8九", :key => :ke},
-        {:point => "7九", :key => :gi},
-        {:point => "6九", :key => :ki},
-        {:point => "5九", :key => :ou},
-        {:point => "4九", :key => :ki},
-        {:point => "3九", :key => :gi},
-        {:point => "2九", :key => :ke},
-        {:point => "1九", :key => :ky},
+        "9七歩", "8七歩", "7七歩", "6七歩", "5七歩", "4七歩", "3七歩", "2七歩", "1七歩",
+        "8八角", "2八飛",
+        "9九香", "8九桂", "7九銀", "6九金", "5九玉", "4九金", "3九銀", "2九桂", "1九香",
       ]
     end
 
     def arrow
-      if @location == :kotti
-        ""
-      else
-        "↓"
-      end
+      @location == :lower ? "" : "↓"
     end
 
-    def pick_out(key)
-      if index = @pieces.find_index{|piece|piece.sym_name == key}
-        piece = @pieces[index]
-        @pieces[index] = nil
-        @pieces.compact!
-        piece
-      end
+    def location_mark
+      @location == :lower ? "▲" : "▽"
+    end
+
+    def piece_fetch(arg)
+      @pieces.find{|piece|piece.sym_name == arg || piece.name == arg} or raise PieceNotFound
+    end
+
+    def pick_out(arg)
+      piece = piece_fetch(arg)
+      @pieces = @pieces.reject{|e|e == piece}
+      piece
     end
 
     def soldiers
@@ -495,11 +553,19 @@ module Bushido
       a = Point.parse(a)
       b = Point.parse(b)
       soldier = @field.pick_up(a)
-      @field.put_on(b, soldier)
+      target_soldier = @field.fetch(b)
+      if target_soldier
+        if target_soldier.player == self
+          raise SamePlayerSoldierOverwrideError
+        end
+        @field.pick_up(b)
+        @pieces << target_soldier.piece
+      end
+      @field.pick_down(b, soldier)
     end
 
     def execute(str)
-      md = str.match(/(?<point>..)(?<piece>.)(?<option>.*)/)
+      md = str.match(/(?<point>..)(?<piece>.)(?<options>.*)/)
       point = Point.parse(md[:point])
 
       source = nil
@@ -521,8 +587,8 @@ module Bushido
   if $0 == __FILE__
     @field = Field.new
     @players = []
-    @players << Player.new("先手", @field, :kotti)
-    @players << Player.new("後手", @field, :atti)
+    @players << Player.new("先手", @field, :lower)
+    @players << Player.new("後手", @field, :upper)
     @players.each(&:setup)
     @players[0].execute("7六歩")
     puts @field
