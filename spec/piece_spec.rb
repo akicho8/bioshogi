@@ -21,15 +21,15 @@ module Bushido
     describe Pawn do
       its(:name) { should be_an_instance_of String }
       its(:basic_vectors1) { should be_an_instance_of Array }
-      its(:transformable?) { should be_true }
+      its(:promotable?) { should be_true }
     end
 
     describe Gold do
-      its(:transformable?) { should be_false }
+      its(:promotable?) { should be_false }
     end
 
     describe King do
-      its(:transformable?) { should be_false }
+      its(:promotable?) { should be_false }
     end
 
     describe "すべての駒" do

@@ -4,16 +4,41 @@
 #
 
 require "active_support/core_ext/string"
+require "active_support/configurable"
+
 require "rain_table"
 
 require_relative "bushido/version"
 
 module Bushido
-  class LogicError < StandardError; end
-  class SyntaxError < StandardError; end
-  class PieceNotFound < StandardError; end
-  class PieceOverwrideError < StandardError; end
-  class SamePlayerSoldierOverwrideError < StandardError; end
+  include ActiveSupport::Configurable
+  config_accessor :format
+  config.format = :basic
+
+  class BushidoError < StandardError; end
+
+  class MustNotHappen < BushidoError; end
+  class RuleError < BushidoError; end
+  class SyntaxError < BushidoError; end
+  class PointSyntaxError < BushidoError; end
+  class UnknownPositionName < BushidoError; end
+  class PieceNotFound < BushidoError; end
+  class PieceAlredyExist < BushidoError; end
+  class SamePlayerSoldierOverwrideError < BushidoError; end
+  class NotPromotable < BushidoError; end
+  class AlredyPromoted < BushidoError; end
+
+  class Vector < Array
+    def initialize(arg)
+      super()
+      replace(arg)
+    end
+
+    def reverse
+      x, y = self
+      self.class.new([-x, -y])
+    end
+  end
 
   module Piece
     def self.create(key, *args)
@@ -36,7 +61,7 @@ module Bushido
         self.class.name.demodulize.underscore.to_sym
       end
 
-      def transformable?
+      def promotable?
         true
       end
 
@@ -57,37 +82,35 @@ module Bushido
       end
 
       def vectors1(promoted = false)
-        if !transformable? && promoted
-          raise NotTransformable
-        end
-        if promoted
-          promoted_vectors1
-        else
-          basic_vectors1
-        end
+        assert_promotable(promoted)
+        promoted ? promoted_vectors1 : basic_vectors1
       end
 
       def vectors2(promoted = false)
-        if !transformable? && promoted
-          raise NotTransformable
+        assert_promotable(promoted)
+        promoted ? promoted_vectors2 : basic_vectors2
+      end
+
+      def assert_promotable(promoted)
+        if !promotable? && promoted
+          raise NotPromotable
         end
-        if promoted
-          promoted_vectors2
-        else
-          basic_vectors2
-        end
+      end
+
+      def inspect
+        "<#{self.class.name}:#{object_id} #{name} #{sym_name}>"
       end
     end
 
-    module Golden
+    module AsGoldIfPromoted
       def promoted_vectors1
-        Gold.__base__
+        Gold.basic_pattern
       end
     end
 
     module Brave
       def promoted_vectors1
-        King.__base__
+        King.basic_pattern
       end
 
       def promoted_vectors2
@@ -96,7 +119,7 @@ module Bushido
     end
 
     class Pawn < Base
-      include Golden
+      include AsGoldIfPromoted
 
       def name
         "歩"
@@ -137,14 +160,10 @@ module Bushido
           nil,      [0,  1],     nil,
         ]
       end
-
-      # def cleave?
-      #   true
-      # end
     end
 
     class Lance < Base
-      include Golden
+      include AsGoldIfPromoted
 
       def name
         "香"
@@ -156,7 +175,7 @@ module Bushido
     end
 
     class Knight < Base
-      include Golden
+      include AsGoldIfPromoted
 
       def name
         "桂"
@@ -168,7 +187,7 @@ module Bushido
     end
 
     class Silver < Base
-      include Golden
+      include AsGoldIfPromoted
 
       def name
         "銀"
@@ -184,7 +203,7 @@ module Bushido
     end
 
     class Gold < Base
-      def self.__base__
+      def self.basic_pattern
         [
           [-1, -1], [0, -1], [1, -1],
           [-1,  0],          [1,  0],
@@ -197,16 +216,16 @@ module Bushido
       end
 
       def basic_vectors1
-        self.class.__base__
+        self.class.basic_pattern
       end
 
-      def transformable?
+      def promotable?
         false
       end
     end
 
     class King < Base
-      def self.__base__
+      def self.basic_pattern
         [
           [-1, -1], [0, -1], [1, -1],
           [-1,  0],     nil, [1,  0],
@@ -219,10 +238,10 @@ module Bushido
       end
 
       def basic_vectors1
-        self.class.__base__
+        self.class.basic_pattern
       end
 
-      def transformable?
+      def promotable?
         false
       end
     end
@@ -235,6 +254,10 @@ module Bushido
       @player = player
       @piece = piece
       @promoted = promoted
+
+      if !piece.promotable? && promoted
+        raise NotPromotable, piece.inspect
+      end
     end
 
     def to_s
@@ -242,32 +265,36 @@ module Bushido
     end
 
     def inspect
-      "<#{@player.location_mark}#{current_point.name}#{self}>"
+      "<#{self.class.name}:#{object_id} #{to_text}>"
     end
 
     def to_text
       "#{@player.location_mark}#{current_point.name}#{self}"
     end
 
+    def name
+      to_text
+    end
+
     def current_point
       Point.parse(@player.field.matrix.invert[self])
     end
 
-    # def moveable_all_cells2
-    #   moveable_all_cells.collect{|point|Point.parse(point)}
-    # end
-
-    def moveable_all_cells
+    # FIXME: vectors1, vectors2 と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    def moveable_points
       list = []
-      list += moveable_all_cells1(@piece.vectors1(@promoted), false)
-      list += moveable_all_cells1(@piece.vectors2(@promoted), true)
+      list += __moveable_points(@piece.vectors1(@promoted), false)
+      list += __moveable_points(@piece.vectors2(@promoted), true)
       list.uniq
     end
 
-    def moveable_all_cells1(vectors, loop)
+    def __moveable_points(vectors, loop)
       vectors.uniq.compact.each_with_object([]) do |vector, list|
         point = current_point
         loop do
+          if player.location == :upper
+            vector = Vector.new(vector).reverse
+          end
           point = point.add_vector(vector)
           unless point.valid?
             break
@@ -276,7 +303,9 @@ module Bushido
           if target.nil?
             list << point
           else
-            raise LogicError unless target.kind_of? Soldier
+            unless target.kind_of? Soldier
+              raise MustNotHappen, "得体の知れないものが盤上にいます : #{target.inspect}"
+            end
             if target.player == player # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
               break
             else
@@ -302,7 +331,7 @@ module Bushido
       case arg
       when String
         v = units.find_index{|e|e == arg}
-        v or raise SyntaxError, "#{arg.inspect} が #{units} の中にありません"
+        v or raise UnknownPositionName, "#{arg.inspect} が #{units} の中にありません"
       when Position
         v = arg.value
       else
@@ -340,6 +369,18 @@ module Bushido
     def self.units
       "987654321".scan(/./)
     end
+
+    # "５五" の全角 "５" に対応するため
+    def self.parse(arg)
+      if arg.kind_of?(String) && arg.match(/[１-９]/)
+        arg = arg.tr("１-９", units.reverse.join)
+      end
+      super
+    end
+
+    def to_s_digit
+      name
+    end
   end
 
   class Vposition < Position
@@ -347,15 +388,24 @@ module Bushido
       "一二三四五六七八九".scan(/./)
     end
 
+    # "(52)" の "2" に対応するため
     def self.parse(arg)
-      if arg.kind_of?(String) && arg.match(/\A\d\z/)
+      if arg.kind_of?(String) && arg.match(/\d/)
         arg = arg.tr("1-9", units.join)
       end
       super
     end
+
+    def to_s_digit
+      name.tr(self.class.units.join, "1-9")
+    end
   end
 
   class Point
+    include ActiveSupport::Configurable
+    config_accessor :promoted_area_height
+    config.promoted_area_height = 3
+
     attr_accessor :x, :y
 
     private_class_method :new
@@ -378,15 +428,15 @@ module Bushido
         x = Hposition.parse(a)
         y = Vposition.parse(b)
       when String
-        if md = arg.match(/(.)(.)/)
+        if md = arg.match(/\A(.)(.)\z/)
           a, b = md.captures
           x = Hposition.parse(a)
           y = Vposition.parse(b)
         else
-          raise SyntaxError, "#{arg.inspect}"
+          raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
         end
       else
-        raise SyntaxError, "#{arg.inspect}"
+        raise MustNotHappen, "#{arg.inspect}"
       end
 
       new(x, y)
@@ -413,8 +463,12 @@ module Bushido
       end
     end
 
+    def to_s_digit
+      [@x, @y].collect(&:to_s_digit).join
+    end
+
     def inspect
-      "#<#{self.class.name}:#{object_id} #{name.inspect} #{to_xy.inspect}>"
+      "#<#{self.class.name}:#{object_id} #{name.inspect}>"
     end
 
     def add_vector(vector)
@@ -425,6 +479,22 @@ module Bushido
     def valid?
       @x.valid? && @y.valid?
     end
+
+    def to_point
+      self
+    end
+
+    def ==(other)
+      to_xy == other.to_xy
+    end
+
+    def promotable_area?(location)
+      if location == :lower
+        @y.value < promoted_area_height
+      else
+        @y.value > (@y.class.units.size - promoted_area_height)
+      end
+    end
   end
 
   class Field
@@ -434,15 +504,19 @@ module Bushido
       @matrix = {}
     end
 
-    def pick_down(point, soldier)
+    def put_on_at(point, soldier)
       if fetch(point)
-        raise PieceOverwrideError
+        raise PieceAlredyExist
       end
       @matrix[point.to_xy] = soldier
     end
 
+    def [](point)
+      fetch(point)
+    end
+
     def fetch(point)
-      @matrix[point.to_xy]
+      @matrix[Point[point].to_xy]
     end
 
     def pick_up(point)
@@ -455,7 +529,8 @@ module Bushido
           @matrix[[x, y]]
         }
       }
-      RainTable::TableFormatter.format(Hposition.units, rows, :header => true)
+      rows = rows.zip(Vposition.units).collect{|e, u|e + [u]}
+      RainTable::TableFormatter.format(Hposition.units + [""], rows, :header => true)
     end
   end
 
@@ -490,33 +565,47 @@ module Bushido
     end
 
     def setup
-      init_soldiers(first_placements)
+      table = first_placements.collect{|arg|parse_arg(arg)}
+      if @location == :upper
+        table.each{|info|info[:point] = info[:point].reverse}
+      end
+      side_soldiers_put_on(table)
     end
 
-    def init_soldiers(table)
-      table.each{|info|init_soldier(info)}
+    def side_soldiers_put_on(table)
+      table.each{|info|side_soldier_put_on(info)}
     end
 
-    def init_soldier(info)
-      promoted = false
-      if info.kind_of?(String)
-        if md = info.match(/(?<point>..)(?<piece>.)(?<options>.*)/)
-          point = Point.parse(md[:point])
-          piece = pick_out(md[:piece])
-          promoted = md[:options] == "成"
-        else
-          raise SyntaxError, info.inspect
+    def side_soldier_put_on(arg)
+      info = parse_arg(arg)
+      @field.put_on_at(info[:point], Soldier.new(self, pick_out(info[:piece].name), info[:promoted]))
+    end
+
+    def parse_arg(arg)
+      if arg.kind_of?(String)
+        info = parse_string_arg(arg)
+        if info[:options] == "成"
+          raise SyntaxError, "駒の配置するときは「○成」ではなく「成○」: #{arg.inspect}"
         end
+        info
       else
-        point = Point.parse(info[:point])
-        piece = pick_out(info[:piece])
-        promoted = info[:promoted]
+        piece = arg[:piece]
+        if piece.kind_of?(String)
+          piece = Piece.get(arg[:piece])
+        end
+        arg.merge(:point => Point[arg[:point]], :piece => piece)
       end
-      if @location == :lower
+    end
+
+    def parse_string_arg(str)
+      if md = str.match(/(?<point>..)(?<promoted>成)?(?<piece>.)(?<options>.*)/)
+        point = Point.parse(md[:point])
+        piece = Piece.get(md[:piece])
+        promoted = !!md[:promoted]
       else
-        point = point.reverse
+        raise SyntaxError, str.inspect
       end
-      @field.pick_down(point, Soldier.new(self, piece, promoted))
+      {:point => point, :piece => piece, :promoted => promoted, :options => md[:options]}
     end
 
     def first_placements
@@ -549,38 +638,63 @@ module Bushido
       @field.matrix.values.find_all{|soldier|soldier.player == self}
     end
 
-    def move_to(a, b)
+    def move_to(a, b, promoted = false)
       a = Point.parse(a)
       b = Point.parse(b)
+
+      if promoted
+        if a.promotable_area?(location) || b.promotable_area?(location)
+        else
+          raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
+        end
+
+        _soldier = @field.fetch(a)
+        if _soldier.promoted
+          raise AlredyPromoted, "#{_soldier.current_point.name}の#{_soldier.piece.name}はすでに成っています"
+        end
+      end
+
       soldier = @field.pick_up(a)
       target_soldier = @field.fetch(b)
       if target_soldier
         if target_soldier.player == self
-          raise SamePlayerSoldierOverwrideError
+          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.name}があります"
         end
         @field.pick_up(b)
         @pieces << target_soldier.piece
       end
-      @field.pick_down(b, soldier)
+
+      if promoted
+        soldier.promoted = promoted
+      end
+
+      @field.put_on_at(b, soldier)
     end
 
     def execute(str)
       md = str.match(/(?<point>..)(?<piece>.)(?<options>.*)/)
       point = Point.parse(md[:point])
+      piece = Piece.get(md[:piece])
+      promoted = md[:options] == "成"
 
       source = nil
       soldiers.each{|soldier|
-        all_cell = soldier.moveable_all_cells
-        if all_cell.any?{|xy|xy == point.to_xy}
-          if soldier.piece.name == md[:piece]
+        points = soldier.moveable_points
+        if points.any?{|e|e == point}
+          if soldier.piece.class == piece.class
             source = soldier
             break
           end
         end
       }
 
+      unless source
+        raise RuleError, "#{point.name}に来れる#{piece.name}がありません。#{str.inspect} の指定が間違っているのかもしれません"
+      end
+
       source_point = @field.matrix.invert[source]
-      move_to(source_point, point)
+
+      move_to(source_point, point, promoted)
     end
   end
 
