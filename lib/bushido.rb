@@ -18,7 +18,9 @@ module Bushido
   class BushidoError < StandardError; end
 
   class MustNotHappen < BushidoError; end
-  class RuleError < BushidoError; end
+  class UnconfirmedObject < BushidoError; end
+  class MovableSoldierNotFound < BushidoError; end
+  class AmbiguousFormatError < BushidoError; end
   class SyntaxError < BushidoError; end
   class PointSyntaxError < BushidoError; end
   class UnknownPositionName < BushidoError; end
@@ -26,7 +28,10 @@ module Bushido
   class PieceAlredyExist < BushidoError; end
   class SamePlayerSoldierOverwrideError < BushidoError; end
   class NotPromotable < BushidoError; end
+  class PromotedPiecePutOnError < BushidoError; end
   class AlredyPromoted < BushidoError; end
+  class NotFoundOnField < BushidoError; end
+  # class NotMove < BushidoError; end
 
   class Vector < Array
     def initialize(arg)
@@ -49,46 +54,113 @@ module Bushido
       [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
     end
 
-    def self.get(arg)
-      collection.find{|piece|piece.name == arg || piece.sym_name == arg}
+    # def self.get(arg)
+    #   collection.find{|piece|piece.basic_names.include?(arg.to_s)}
+    # end
+    #
+    # def self.get!(arg)
+    #   get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+    # end
+
+    def self.get1(arg)
+      collection.find{|piece|piece.basic_names.include?(arg.to_s)}
+    end
+
+    def self.get2(arg)
+      collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
+    end
+
+    def self.get3(arg)
+      get1(arg) || get2(arg)
+    end
+
+    def self.get3!(arg)
+      get3(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+    end
+
+    def self.parse!(arg)
+      case
+      when piece = get1(arg)
+        [false, piece]
+      when piece = get2(arg)
+        [true, piece]
+      else
+        raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+      end
+    end
+
+    def self.names
+      collection.collect{|piece|piece.names}.flatten
     end
 
     class Base
-      def name
+      module NameMethods
+        def some_name(promoted)
+          if promoted
+            promoted_name
+          else
+            name
+          end
+        end
+
+        def name
+          raise NotImplementedError, "#{__method__} is not implemented"
+        end
+
+        def sym_name
+          self.class.name.demodulize.underscore.to_sym
+        end
+
+        def promoted_name
+        end
+
+        def names
+          basic_names + promoted_names
+        end
+
+        def basic_names
+          [name, sym_name.to_s]
+        end
+
+        def promoted_names
+          [promoted_name, sym_name.to_s.upcase].compact
+        end
       end
 
-      def sym_name
-        self.class.name.demodulize.underscore.to_sym
+      include NameMethods
+
+      module VectorMethods
+        def basic_vectors1
+          []
+        end
+
+        def basic_vectors2
+          []
+        end
+
+        def promoted_vectors1
+          []
+        end
+
+        def promoted_vectors2
+          []
+        end
+
+        def vectors1(promoted = false)
+          assert_promotable(promoted)
+          promoted ? promoted_vectors1 : basic_vectors1
+        end
+
+        def vectors2(promoted = false)
+          assert_promotable(promoted)
+          promoted ? promoted_vectors2 : basic_vectors2
+        end
       end
+
+      include VectorMethods
 
       def promotable?
         true
-      end
-
-      def basic_vectors1
-        []
-      end
-
-      def basic_vectors2
-        []
-      end
-
-      def promoted_vectors1
-        []
-      end
-
-      def promoted_vectors2
-        []
-      end
-
-      def vectors1(promoted = false)
-        assert_promotable(promoted)
-        promoted ? promoted_vectors1 : basic_vectors1
-      end
-
-      def vectors2(promoted = false)
-        assert_promotable(promoted)
-        promoted ? promoted_vectors2 : basic_vectors2
       end
 
       def assert_promotable(promoted)
@@ -118,11 +190,21 @@ module Bushido
       end
     end
 
+    module Narigatsukudake
+      def promoted_name
+        "成#{name}"
+      end
+    end
+
     class Pawn < Base
       include AsGoldIfPromoted
 
       def name
         "歩"
+      end
+
+      def promoted_name
+        "と"
       end
 
       def basic_vectors1
@@ -135,6 +217,10 @@ module Bushido
 
       def name
         "角"
+      end
+
+      def promoted_name
+        "馬"
       end
 
       def basic_vectors2
@@ -153,6 +239,10 @@ module Bushido
         "飛"
       end
 
+      def promoted_name
+        "龍"
+      end
+
       def basic_vectors2
         [
           nil,      [0, -1],     nil,
@@ -164,6 +254,7 @@ module Bushido
 
     class Lance < Base
       include AsGoldIfPromoted
+      include Narigatsukudake
 
       def name
         "香"
@@ -176,6 +267,7 @@ module Bushido
 
     class Knight < Base
       include AsGoldIfPromoted
+      include Narigatsukudake
 
       def name
         "桂"
@@ -188,6 +280,7 @@ module Bushido
 
     class Silver < Base
       include AsGoldIfPromoted
+      include Narigatsukudake
 
       def name
         "銀"
@@ -261,7 +354,7 @@ module Bushido
     end
 
     def to_s
-      "#{@promoted ? '成' : ''}#{@piece.name}#{@player.arrow}"
+      "#{@piece.some_name(@promoted)}#{@player.arrow}"
     end
 
     def inspect
@@ -285,7 +378,7 @@ module Bushido
       list = []
       list += __moveable_points(@piece.vectors1(@promoted), false)
       list += __moveable_points(@piece.vectors2(@promoted), true)
-      list.uniq
+      list.uniq{|e|e.to_xy}     # FIXME: ブロックを取る
     end
 
     def __moveable_points(vectors, loop)
@@ -304,7 +397,7 @@ module Bushido
             list << point
           else
             unless target.kind_of? Soldier
-              raise MustNotHappen, "得体の知れないものが盤上にいます : #{target.inspect}"
+              raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
             end
             if target.player == player # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
               break
@@ -519,8 +612,8 @@ module Bushido
       @matrix[Point[point].to_xy]
     end
 
-    def pick_up(point)
-      @matrix.delete(point.to_xy)
+    def pick_up!(point)
+      @matrix.delete(point.to_xy) or raise NotFoundOnField, "#{point.name}の位置には何もありません"
     end
 
     def to_s
@@ -535,7 +628,7 @@ module Bushido
   end
 
   class Player
-    attr_accessor :name, :field, :location, :pieces
+    attr_accessor :name, :field, :location, :pieces, :frame, :before_point
 
     def initialize(name, field, location)
       @name = name
@@ -547,7 +640,7 @@ module Bushido
 
     def deal
       @pieces = first_distributed_pieces.collect{|info|
-        info[:count].times.collect{ Piece.get(info[:piece]) }
+        info[:count].times.collect{ Piece.get3!(info[:piece]) }
       }.flatten
     end
 
@@ -573,12 +666,12 @@ module Bushido
     end
 
     def side_soldiers_put_on(table)
-      table.each{|info|side_soldier_put_on(info)}
+      table.each{|info|initial_put_on(info)}
     end
 
-    def side_soldier_put_on(arg)
+    def initial_put_on(arg)
       info = parse_arg(arg)
-      @field.put_on_at(info[:point], Soldier.new(self, pick_out(info[:piece].name), info[:promoted]))
+      @field.put_on_at(info[:point], Soldier.new(self, pick_out(info[:piece]), info[:promoted]))
     end
 
     def parse_arg(arg)
@@ -589,22 +682,25 @@ module Bushido
         end
         info
       else
-        piece = arg[:piece]
-        if piece.kind_of?(String)
-          piece = Piece.get(arg[:piece])
+        if true
+          # FIXME: ここ使ってないわりにごちゃごちゃしているから消そう
+          piece = arg[:piece]
+          promoted = arg[:promoted]
+          if piece.kind_of?(String)
+            promoted, piece = Piece.parse!(piece)
+          end
+          arg.merge(:point => Point[arg[:point]], :piece => piece, :promoted => promoted)
+        else
+          arg
         end
-        arg.merge(:point => Point[arg[:point]], :piece => piece)
       end
     end
 
     def parse_string_arg(str)
-      if md = str.match(/(?<point>..)(?<promoted>成)?(?<piece>.)(?<options>.*)/)
-        point = Point.parse(md[:point])
-        piece = Piece.get(md[:piece])
-        promoted = !!md[:promoted]
-      else
-        raise SyntaxError, str.inspect
-      end
+      md = str.match(/\A(?<point>..)(?<piece>#{Piece.names.join("|")})(?<options>.*)/)
+      md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
+      point = Point.parse(md[:point])
+      promoted, piece = Piece.parse!(md[:piece])
       {:point => point, :piece => piece, :promoted => promoted, :options => md[:options]}
     end
 
@@ -620,29 +716,28 @@ module Bushido
       @location == :lower ? "" : "↓"
     end
 
+    # FIXME: 先手後手と、位置は別に考えた方がいい
     def location_mark
       @location == :lower ? "▲" : "▽"
     end
 
-    def piece_fetch(arg)
-      @pieces.find{|piece|piece.sym_name == arg || piece.name == arg} or raise PieceNotFound
+    def piece_fetch!(piece)
+      @pieces.find{|e|e.class == piece.class} or raise PieceNotFound, "持駒に#{piece.name}がありません"
     end
 
-    def pick_out(arg)
-      piece = piece_fetch(arg)
-      @pieces = @pieces.reject{|e|e == piece}
-      piece
+    def pick_out(piece)
+      @pieces.delete(piece_fetch!(piece))
     end
 
     def soldiers
       @field.matrix.values.find_all{|soldier|soldier.player == self}
     end
 
-    def move_to(a, b, promoted = false)
+    def move_to(a, b, promote_trigger = false)
       a = Point.parse(a)
       b = Point.parse(b)
 
-      if promoted
+      if promote_trigger
         if a.promotable_area?(location) || b.promotable_area?(location)
         else
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
@@ -654,58 +749,109 @@ module Bushido
         end
       end
 
-      soldier = @field.pick_up(a)
+      soldier = @field.pick_up!(a)
       target_soldier = @field.fetch(b)
       if target_soldier
         if target_soldier.player == self
           raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.name}があります"
         end
-        @field.pick_up(b)
+        @field.pick_up!(b)
         @pieces << target_soldier.piece
       end
 
-      if promoted
-        soldier.promoted = promoted
+      if promote_trigger
+        soldier.promoted = true
       end
 
       @field.put_on_at(b, soldier)
     end
 
+    def next_player
+      if @frame
+        @frame.players[@frame.players.find_index(self).next.modulo(frame.players.size)]
+      else
+        self
+      end
+    end
+
     def execute(str)
-      md = str.match(/(?<point>..)(?<piece>.)(?<options>.*)/)
-      point = Point.parse(md[:point])
-      piece = Piece.get(md[:piece])
-      promoted = md[:options] == "成"
+      md = str.match(/\A(?<point>..|同)(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
+      if md[:point] == "同"
+        point = next_player.before_point
+      else
+        point = Point.parse(md[:point])
+      end
+      promoted, piece = Piece.parse!(md[:piece])
+      promote_trigger = md[:options] == "成"
+      put_on_trigger = md[:options] == "打"
+      source_point = nil
 
-      source = nil
-      soldiers.each{|soldier|
-        points = soldier.moveable_points
-        if points.any?{|e|e == point}
-          if soldier.piece.class == piece.class
-            source = soldier
-            break
-          end
+      if put_on_trigger
+        if promoted
+          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{str.inspect}"
         end
-      }
+        @field.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
+      else
+        if md[:from]
+          source_point = Point.parse(md[:from])
+        end
 
-      unless source
-        raise RuleError, "#{point.name}に来れる#{piece.name}がありません。#{str.inspect} の指定が間違っているのかもしれません"
+        unless source_point
+          soldiers = soldiers()
+
+          soldiers = soldiers.find_all{|soldier|
+            soldier.moveable_points.include?(point)
+          }
+
+          if piece # MEMO: いまんとこ絶対通るけど、駒の指定がなくても動かせるようにしたいので。
+            soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
+          end
+
+          if soldiers.empty?
+            raise MovableSoldierNotFound, "#{point.name}に移動できる#{piece.name}がありません。#{str.inspect} の指定が間違っているのかもしれません"
+          end
+
+          if soldiers.size > 1
+            raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
+          end
+
+          source_point = @field.matrix.invert[soldiers.first]
+        end
+        move_to(source_point, point, promote_trigger)
       end
 
-      source_point = @field.matrix.invert[source]
+      @before_point = point
+    end
+  end
 
-      move_to(source_point, point, promoted)
+  class Frame
+    attr_accessor :players, :field
+
+    def initialize
+      @field = Field.new
+      @players = []
+    end
+
+    def attach
+      # ここで設定するのおかしくね？
+      @players.each{|player|player.frame = self}
     end
   end
 
   if $0 == __FILE__
-    @field = Field.new
-    @players = []
-    @players << Player.new("先手", @field, :lower)
-    @players << Player.new("後手", @field, :upper)
-    @players.each(&:setup)
-    @players[0].execute("7六歩")
-    puts @field
+    frame = Frame.new
+    frame.players << Player.new("先手", frame.field, :lower)
+    frame.players << Player.new("後手", frame.field, :upper)
+    frame.attach
+    puts frame.field
+
+    # @field = Field.new
+    # @players = []
+    # @players << Player.new("先手", @field, :lower)
+    # @players << Player.new("後手", @field, :upper)
+    # @players.each(&:setup)
+    # @players[0].execute("7六歩")
+    # puts @field
 
     # @players[0].move_to("7七", "7六")
     # puts @field

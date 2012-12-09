@@ -25,10 +25,10 @@ module Bushido
         it { field["2八"].moveable_points.collect(&:name).should == ["3八", "4八", "5八", "6八", "7八", "1八"] } # 飛
       end
 
-      context "成っている5三成飛だけがあるときの筋" do
+      context "成っている5三龍だけがあるときの筋" do
         it do
-          player.side_soldiers_put_on(["5三成飛"])
-          field["5三"].moveable_points.collect(&:name).should == ["6二", "5二", "4二", "6三", "4三", "6四", "5四", "4四", "5二", "5一", "6三", "7三", "8三", "9三", "4三", "3三", "2三", "1三", "5四", "5五", "5六", "5七", "5八", "5九"]
+          player.side_soldiers_put_on(["5三龍"])
+          field["5三"].moveable_points.collect(&:name).sort.should == ["6二", "5二", "4二", "6三", "4三", "6四", "5四", "4四", "5一", "7三", "8三", "9三", "3三", "2三", "1三", "5五", "5六", "5七", "5八", "5九"].sort
         end
       end
     end
