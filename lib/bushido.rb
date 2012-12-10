@@ -46,50 +46,44 @@ module Bushido
   end
 
   module Piece
-    def self.create(key, *args)
+    extend self
+
+    def create(key, *args)
       "Bushido::Piece::#{key.to_s.classify}".constantize.new(*args)
     end
 
-    def self.collection
+    def collection
       [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
     end
 
-    # def self.get(arg)
-    #   collection.find{|piece|piece.basic_names.include?(arg.to_s)}
-    # end
-    #
-    # def self.get!(arg)
-    #   get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
-    # end
-
-    def self.get1(arg)
+    def basic_get(arg)
       collection.find{|piece|piece.basic_names.include?(arg.to_s)}
     end
 
-    def self.get2(arg)
+    def promoted_get(arg)
       collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
     end
 
-    def self.get3(arg)
-      get1(arg) || get2(arg)
+    def get(arg)
+      basic_get(arg) || promoted_get(arg)
     end
 
-    def self.get3!(arg)
-      get3(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+    def get!(arg)
+      get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
     end
 
-    def self.parse!(arg)
+    def parse!(arg)
       case
-      when piece = get1(arg)
+      when piece = basic_get(arg)
         [false, piece]
-      when piece = get2(arg)
+      when piece = promoted_get(arg)
         [true, piece]
       else
         raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
       end
     end
 
-    def self.names
+    def names
       collection.collect{|piece|piece.names}.flatten
     end
 
@@ -640,7 +634,7 @@ module Bushido
 
     def deal
       @pieces = first_distributed_pieces.collect{|info|
-        info[:count].times.collect{ Piece.get3!(info[:piece]) }
+        info[:count].times.collect{ Piece.get!(info[:piece]) }
       }.flatten
     end
 

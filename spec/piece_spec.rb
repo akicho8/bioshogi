@@ -9,23 +9,23 @@ module Bushido
       it { should be_an_instance_of Piece::Pawn }
     end
 
-    describe ".get3" do
-      it { Piece.get3("歩").class.should == Piece::Pawn }
-      it { Piece.get3("").should == nil }
-      it { Piece.get3(nil).should == nil }
+    describe ".get" do
+      it { Piece.get("歩").class.should == Piece::Pawn }
+      it { Piece.get("").should == nil }
+      it { Piece.get(nil).should == nil }
     end
 
     it "駒の名前" do
-      Piece.get3("角").name.should == "角"
-      Piece.get3("馬").name.should == "角"
+      Piece.get("角").name.should == "角"
+      Piece.get("馬").name.should == "角"
 
       Piece.names.should == ["歩", "pawn", "と", "PAWN", "角", "bishop", "馬", "BISHOP", "飛", "rook", "龍", "ROOK", "香", "lance", "成香", "LANCE", "桂", "knight", "成桂", "KNIGHT", "銀", "silver", "成銀", "SILVER", "金", "gold", "GOLD", "玉", "king", "KING"]
     end
 
     it "無効な名前シリーズ" do
-      proc { Piece.get3!("成龍") }.should raise_error(PieceNotFound)
-      proc { Piece.get3!("成と") }.should raise_error(PieceNotFound)
-      proc { Piece.get3!("成飛") }.should raise_error(PieceNotFound)
+      expect { Piece.get!("成龍") }.to raise_error(PieceNotFound)
+      expect { Piece.get!("成と") }.to raise_error(PieceNotFound)
+      expect { Piece.get!("成飛") }.to raise_error(PieceNotFound)
     end
   end
 

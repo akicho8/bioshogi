@@ -17,15 +17,15 @@ module Bushido
         subject.soldiers.collect(&:to_text).should == ["▲5三と"]
       end
       it "成っている金を相手の陣地に配置" do
-        proc { subject.initial_put_on("5三成金") }.should raise_error(SyntaxError)
+        expect { subject.initial_put_on("5三成金") }.to raise_error(SyntaxError)
       end
       it "すでに駒があるところに駒を配置できない" do
         subject.initial_put_on("5三歩")
-        proc { subject.initial_put_on("5三歩") }.should raise_error(PieceAlredyExist)
+        expect { subject.initial_put_on("5三歩") }.to raise_error(PieceAlredyExist)
       end
       it "飛車は二枚持ってないので二枚配置できない" do
         subject.initial_put_on("5二飛")
-        proc { subject.initial_put_on("5二飛") }.should raise_error(PieceNotFound)
+        expect { subject.initial_put_on("5二飛") }.to raise_error(PieceNotFound)
       end
     end
 
@@ -98,7 +98,7 @@ FIELD
         it "動いてない(エラーの種類は動いてないではなくそこに来る駒がない)" do
           player = Player.new("先手", field, :lower)
           player.initial_put_on("４二銀")
-          proc { player.execute("４二銀") }.should raise_error(MovableSoldierNotFound)
+          expect { player.execute("４二銀") }.to raise_error(MovableSoldierNotFound)
         end
 
         context "推測結果が複数パターンがあったときにエラーにする" do
@@ -106,7 +106,7 @@ FIELD
             player = Player.new("先手", field, :lower)
             player.initial_put_on("６九金")
             player.initial_put_on("４九金")
-            proc { player.execute("５九金") }.should raise_error(AmbiguousFormatError)
+            expect { player.execute("５九金") }.to raise_error(AmbiguousFormatError)
           end
         end
 
@@ -145,22 +145,22 @@ FIELD
         context "成れないシリーズ" do
           it "自分の陣地に入るタイミングでは成れない" do
             player.initial_put_on("５五飛")
-            proc { player.execute("５九飛成") }.should raise_error(NotPromotable)
+            expect { player.execute("５九飛成") }.to raise_error(NotPromotable)
           end
 
           it "自分の陣地から出るタイミングでも成れない" do
             player.initial_put_on("５九飛")
-            proc { player.execute("５五飛成") }.should raise_error(NotPromotable)
+            expect { player.execute("５五飛成") }.to raise_error(NotPromotable)
           end
 
           it "天王山から一歩動いても成れない" do
             player.initial_put_on("５五飛")
-            proc { player.execute("５六飛成") }.should raise_error(NotPromotable)
+            expect { player.execute("５六飛成") }.to raise_error(NotPromotable)
           end
 
           it "すでに成っているから成れない" do
             player.initial_put_on("５五龍")
-            proc { player.execute("５一飛成") }.should raise_error(AlredyPromoted)
+            expect { player.execute("５一飛成") }.to raise_error(AlredyPromoted)
           end
         end
       end
@@ -194,7 +194,7 @@ FIELD
           player.initial_put_on("２五飛")
           player.initial_put_on("８八角")
           player.execute("５五飛")
-          proc { player.execute("同角") }.should raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
+          expect { player.execute("同角") }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
         end
 
         it "同歩で取る" do
@@ -225,7 +225,7 @@ FIELD
         end
 
         it "成った状態では打てない" do
-          proc { player.execute("５五馬打") }.should raise_error(PromotedPiecePutOnError)
+          expect { player.execute("５五馬打") }.to raise_error(PromotedPiecePutOnError)
         end
 
         it "「打」は曖昧なときだけ付くらしい(打がない場合、動けるのを推測で無いのを確認し、打つ)" do
