@@ -32,6 +32,7 @@ module Bushido
   class AlredyPromoted < BushidoError; end
   class NotFoundOnField < BushidoError; end
   # class NotMove < BushidoError; end
+  class PromotedPieceToNormalPiece < BushidoError; end
 
   class Vector < Array
     def initialize(arg)
@@ -348,7 +349,11 @@ module Bushido
     end
 
     def to_s
-      "#{@piece.some_name(@promoted)}#{@player.arrow}"
+      "#{piece_current_name}#{@player.arrow}"
+    end
+
+    def piece_current_name
+      @piece.some_name(@promoted)
     end
 
     def inspect
@@ -811,6 +816,15 @@ module Bushido
 
           source_point = @field.matrix.invert[soldiers.first]
         end
+
+        source_soldier = @field.fetch(source_point)
+
+        unless promote_trigger
+          if source_soldier.promoted && !promoted
+            raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{str.inspect}の駒は#{source_soldier.piece_current_name}と書いてください"
+          end
+        end
+
         move_to(source_point, point, promote_trigger)
       end
 

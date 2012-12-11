@@ -136,10 +136,15 @@ FIELD
           field["５四"].promoted.should == true
         end
 
-        it "成っている状態から成らない状態に戻ろうとした" do
-          player.initial_put_on("５五龍")
-          player.execute("５六飛")
-          pending "チェック↑"
+        describe "成っている状態から成らない状態に戻ろうとした" do
+          it "推測する場合" do
+            player.initial_put_on("５五龍")
+            expect { player.execute("５六飛") }.to raise_error(PromotedPieceToNormalPiece)
+          end
+          it "元の位置が書いてある場合" do
+            player.initial_put_on("５五龍")
+            expect { player.execute("５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
+          end
         end
 
         context "成れないシリーズ" do

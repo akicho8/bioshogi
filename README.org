@@ -1,7 +1,7 @@
 #+OPTIONS: toc:nil num:nil author:nil creator:nil \n:nil |:t
 #+OPTIONS: @:t ::t ^:t -:t f:t *:t <:t
 
-* 将棋の定石を覚えたいので作ってるプログラム
+* 将棋のプログラム
 
   : field = Field.new
   : players = []
@@ -79,6 +79,31 @@
      : piece.basic_vectors2    # => [[-1, -1], nil, [1, -1], nil, nil, nil, [-1, 1], nil, [1, 1]]
      : piece.promoted_vectors1 # => [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
      : piece.promoted_vectors2 # => [[-1, -1], nil, [1, -1], nil, nil, nil, [-1, 1], nil, [1, 1]]
+
+**** 盤面上の駒の確認
+
+     : field = Field.new
+     : player = Player.new("先手", field, :lower)
+     : player.setup
+     : puts field
+
+#+ATTR_HTML: border="1" rules="all" frame="all"
+     | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  |    |
+     |----+----+----+----+----+----+----+----+----+----|
+     |    |    |    |    |    |    |    |    |    | 一 |
+     |    |    |    |    |    |    |    |    |    | 二 |
+     |    |    |    |    |    |    |    |    |    | 三 |
+     |    |    |    |    |    |    |    |    |    | 四 |
+     |    |    |    |    |    |    |    |    |    | 五 |
+     |    |    |    |    |    |    |    |    |    | 六 |
+     | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 七 |
+     |    | 角 |    |    |    |    |    | 飛 |    | 八 |
+     | 香 | 桂 | 銀 | 金 | 玉 | 金 | 銀 | 桂 | 香 | 九 |
+
+     : field["５五"]      # => nil
+     : field["８八"].name # => "▲8八角"
+     : field["２八"].name # => "▲2八飛"
+     : field["５九"].name # => "▲5九玉"
 
 ** 自分用メモ
 
