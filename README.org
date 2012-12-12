@@ -105,7 +105,34 @@
      : field["２八"].name # => "▲2八飛"
      : field["５九"].name # => "▲5九玉"
 
-** 自分用メモ
+** 仕様
+
+*** 棋譜の表記
+
+    #+ATTR_HTML: border="1" rules="all" frame="all"
+    | 9   | 8 |   7 | 6 | 5 | 4 |   3 | 2 | 1   |    |
+    |-----+---+-----+---+---+---+-----+---+-----+----|
+    | 9一 |   |     |   |   |   |     |   | 1一 | 一 |
+    |     |   |     |   |   |   |     |   |     | 二 |
+
+*** 主な例外
+
+    #+ATTR_HTML: border="1" rules="all" frame="all"
+    | 例外                            | 意味               | どんなときに起きる？             |
+    |---------------------------------+--------------------+----------------------------------|
+    | MovableSoldierNotFound          | 移動可能な駒がない | ７七歩に歩がないのに７六歩とした |
+    | AmbiguousFormatError            |                    |                                  |
+    | SyntaxError                     |                    |                                  |
+    | PointSyntaxError                |                    |                                  |
+    | UnknownPositionName             |                    |                                  |
+    | PieceNotFound                   |                    |                                  |
+    | PieceAlredyExist                |                    |                                  |
+    | SamePlayerSoldierOverwrideError |                    |                                  |
+    | NotPromotable                   |                    |                                  |
+    | PromotedPiecePutOnError         |                    |                                  |
+    | AlredyPromoted                  |                    |                                  |
+    | NotFoundOnField                 |                    |                                  |
+    | PromotedPieceToNormalPiece      |                    |                                  |
 
 *** 座標系
 
@@ -148,6 +175,7 @@
     - "4八" に金があった場合、"5八金右" は真横の金なのか、斜め下の金なのか、どっちだろう。
     - ネット上にある棋譜はだいたい "7六歩(77)" の形式になっていて７七にあったことを明示しているのでがんばって推測しなくてもいい。
 
+
 *** プログラムで使っている将棋の英語表記対応表
 
     | 日本語   | 英語     |    |
@@ -166,3 +194,9 @@
     | 相対座標 | vector   |    |
     | 対面     | upper    | △ |
     | 自分     | lower    | △ |
+
+*** 関連リンク集
+
+    - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
+    - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
+    - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117
