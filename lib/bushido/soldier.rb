@@ -60,6 +60,7 @@ module Bushido
             break
           end
           if options[:ignore_the_other_pieces_on_the_board]
+            # FIXME: 無限ループしている
             list << point
           else
             target = @player.field.fetch(point)

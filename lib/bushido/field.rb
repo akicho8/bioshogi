@@ -9,10 +9,16 @@ module Bushido
 
     def put_on_at(point, soldier)
       if fetch(point)
-        raise PieceAlredyExist
+        raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
 
       @matrix[point.to_xy] = soldier
+
+      # # FIXME: 無限ループ
+      # if soldier.moveable_points(:ignore_the_other_pieces_on_the_board => true, :point => point).empty?
+      #   @matrix[point.to_xy] = nil # TODO: セットする前に確認したい
+      #   raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
+      # end
     end
 
     def [](point)

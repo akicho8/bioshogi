@@ -27,6 +27,7 @@ module Bushido
   class AlredyPromoted < BushidoError; end
   class NotFoundOnField < BushidoError; end
   class PromotedPieceToNormalPiece < BushidoError; end
+  class NotPutInPlaceNotBeMoved < BushidoError; end
 
   class Vector < Array
     def initialize(arg)

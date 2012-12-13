@@ -118,21 +118,22 @@
 *** 主な例外
 
     #+ATTR_HTML: border="1" rules="all" frame="all"
-    | 例外                            | 意味               | どんなときに起きる？             |
-    |---------------------------------+--------------------+----------------------------------|
-    | MovableSoldierNotFound          | 移動可能な駒がない | ７七歩に歩がないのに７六歩とした |
-    | AmbiguousFormatError            |                    |                                  |
-    | SyntaxError                     |                    |                                  |
-    | PointSyntaxError                |                    |                                  |
-    | UnknownPositionName             |                    |                                  |
-    | PieceNotFound                   |                    |                                  |
-    | PieceAlredyExist                |                    |                                  |
-    | SamePlayerSoldierOverwrideError |                    |                                  |
-    | NotPromotable                   |                    |                                  |
-    | PromotedPiecePutOnError         |                    |                                  |
-    | AlredyPromoted                  |                    |                                  |
-    | NotFoundOnField                 |                    |                                  |
-    | PromotedPieceToNormalPiece      |                    |                                  |
+    | 例外                            | 意味                                       | どんなときに起きる？                         |
+    |---------------------------------+--------------------------------------------+----------------------------------------------|
+    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない         | ７七に歩がないのに７六歩                     |
+    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない | 初手 "５八金"                                |
+    | SyntaxError                     | とりあえず表記が違う                       | 駒の配置時に４二銀成とした(４二成銀が正しい) |
+    | PointSyntaxError                | 座標の表記が違う                           | ４二のつもりで４と書いた                     |
+    | UnknownPositionName             | 座標の桁の指定が違う                       | ４二のつもりで四２と書いた                   |
+    | PieceNotFound                   | そんな名前の駒は存在しない                 | 竜のつもりで蛇と書いた                       |
+    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置           | 配置時に2連続で "９七歩"                     |
+    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した             | 初手 "８八飛(28)"                            |
+    | NotPromotable                   | 成れない条件で成ろうとした                 | 初手 "７六歩成"                              |
+    | PromotedPiecePutOnError         | 成った状態で打とうとした                   | ５五竜打                                     |
+    | AlredyPromoted                  | すでに成っている                           | ５五の龍を５一飛成                           |
+    | NotFoundOnField                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした           |
+    | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                               |
+    | NotPutInPlaceNotBeMoved         | 移動の見込みない状態で駒を指せない         | ▲１一桂                                     |
 
 *** 座標系
 

@@ -249,7 +249,9 @@ FIELD
         end
 
         it "１一歩打はエラー" do
-          pending
+          player.execute("１一歩打")
+          puts field
+          # FIXME:ここのテストの処理が無限ループしている
         end
       end
 
