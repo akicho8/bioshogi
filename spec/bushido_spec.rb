@@ -7,8 +7,8 @@ module Bushido
     it do
       @field = Field.new
       @players = []
-      @players << Player.new("先手", @field, :lower)
-      @players << Player.new("後手", @field, :upper)
+      @players << Player.new(:black, @field, :lower)
+      @players << Player.new(:white, @field, :upper)
       @players.each(&:setup)
       # puts @field.to_s
       @players[0].move_to("7七", "7六")

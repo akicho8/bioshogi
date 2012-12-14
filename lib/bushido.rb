@@ -28,6 +28,7 @@ module Bushido
   class NotFoundOnField < BushidoError; end
   class PromotedPieceToNormalPiece < BushidoError; end
   class NotPutInPlaceNotBeMoved < BushidoError; end
+  class DoublePawn < BushidoError; end
 
   class Vector < Array
     def initialize(arg)
@@ -67,15 +68,15 @@ require_relative "bushido/player"
 module Bushido
   if $0 == __FILE__
     frame = Frame.new
-    frame.players << Player.new("先手", frame.field, :lower)
-    frame.players << Player.new("後手", frame.field, :upper)
+    frame.players << Player.new(:black, frame.field, :lower)
+    frame.players << Player.new(:white, frame.field, :upper)
     frame.attach
     puts frame.field
 
     # @field = Field.new
     # @players = []
-    # @players << Player.new("先手", @field, :lower)
-    # @players << Player.new("後手", @field, :upper)
+    # @players << Player.new(:black, @field, :lower)
+    # @players << Player.new(:white, @field, :upper)
     # @players.each(&:setup)
     # @players[0].execute("7六歩")
     # puts @field

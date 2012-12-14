@@ -149,11 +149,14 @@ module Bushido
 
     def execute(str)
       md = str.match(/\A(?<point>..|同)(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
+      md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
+
       if md[:point] == "同"
         point = next_player.before_point
       else
         point = Point.parse(md[:point])
       end
+
       promoted, piece = Piece.parse!(md[:piece])
       promote_trigger = md[:options] == "成"
       put_on_trigger = md[:options] == "打"

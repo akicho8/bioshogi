@@ -12,7 +12,7 @@ end
 include Bushido
 
 field = Field.new
-player = Player.new("先手", field, :lower)
+player = Player.new(:black, field, :lower)
 player.initial_put_on("５五馬")
 player.soldiers.first.moveable_points.each{|point|
   field.put_on_at(point, "○")

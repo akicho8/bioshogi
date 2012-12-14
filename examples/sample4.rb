@@ -12,7 +12,7 @@ end
 include Bushido
 
 field = Field.new
-player = Player.new("先手", field, :lower)
+player = Player.new(:black, field, :lower)
 player.setup
 puts field
 field["５五"]      # => nil

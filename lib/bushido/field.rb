@@ -12,6 +12,14 @@ module Bushido
         raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
 
+      point.y.class.units.each{|y|
+        if obj = fetch(Point[[point.x, y]])
+          if obj.player == soldier.player && soldier.piece.kind_of?(Piece::Pawn) && obj.piece.kind_of?(Piece::Pawn)
+            raise DoublePawn, "二歩です。#{obj.name}があるため#{point.name}に#{soldier}は打てません。"
+          end
+        end
+      }
+
       @matrix[point.to_xy] = soldier
 
       # # FIXME: 無限ループ

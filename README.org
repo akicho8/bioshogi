@@ -5,8 +5,8 @@
 
   : field = Field.new
   : players = []
-  : players << Player.new("先手", field, :lower)
-  : players << Player.new("後手", field, :upper)
+  : players << Player.new(:black, field, :lower)
+  : players << Player.new(:white, field, :upper)
   : players.each(&:setup)
   : players[0].execute("7六歩")
   : players[1].execute("3四歩")
@@ -32,7 +32,7 @@
 **** 駒が動ける場所
 
      : field = Field.new
-     : player = Player.new("先手", field, :lower)
+     : player = Player.new(:black, field, :lower)
      : player.initial_put_on("５五馬")
      : player.soldiers.first.moveable_points.each{|point|
      :   field.put_on_at(point, "○")
@@ -83,7 +83,7 @@
 **** 盤面上の駒の確認
 
      : field = Field.new
-     : player = Player.new("先手", field, :lower)
+     : player = Player.new(:black, field, :lower)
      : player.setup
      : puts field
 
@@ -134,6 +134,7 @@
     | NotFoundOnField                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした           |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                               |
     | NotPutInPlaceNotBeMoved         | 移動の見込みない状態で駒を指せない         | ▲１一桂                                     |
+    | DoublePawn                      | 二歩                                       | 歩がある縦列に歩を打った                     |
 
 *** 座標系
 
@@ -195,9 +196,12 @@
     | 相対座標 | vector   |    |
     | 対面     | upper    | △ |
     | 自分     | lower    | △ |
+    | 先手     | black    |    |
+    | 後手     | white    |    |
 
-*** 関連リンク集
+*** 参考リンク集
 
     - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
     - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
     - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117
+    - 将棋を英語表記するときにblackは何故先手なのか？ - やねうらお－よっちゃんイカを食べながら、息子語録を書き綴る http://d.hatena.ne.jp/yaneurao/20101128

@@ -13,13 +13,24 @@ include Bushido
 
 field = Field.new
 players = []
-players << Player.new("先手", field, :lower)
-players << Player.new("後手", field, :upper)
+players << Player.new(:black, field, :lower)
+players << Player.new(:white, field, :upper)
 players.each(&:setup)
 players[0].execute("7六歩")
 players[1].execute("3四歩")
 players[0].execute("2二角成")
-players[0].pieces.collect(&:name) # => 
+players[0].pieces.collect(&:name) # => ["角"]
 puts field
-# ~> /Users/ikeda/src/bushido/lib/bushido.rb:794:in `execute': 7六に来れる駒が多すぎます。"7六歩" の表記を明確にしてください。(移動元候補: ▲9七歩, ▲8七歩, ▲7七歩, ▲6七歩, ▲5七歩, ▲4七歩, ▲3七歩, ▲2七歩, ▲1七歩) (Bushido::AmbiguousFormatError)
-# ~> 	from -:19:in `<main>'
+# >> +------+------+------+------+------+------+------+------+------+----+
+# >> |    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
+# >> +------+------+------+------+------+------+------+------+------+----+
+# >> | 香↓ | 桂↓ | 銀↓ | 金↓ | 玉↓ | 金↓ | 銀↓ | 桂↓ | 香↓ | 一 |
+# >> |      | 飛↓ |      |      |      |      |      | 馬   |      | 二 |
+# >> | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ |      | 歩↓ | 歩↓ | 三 |
+# >> |      |      |      |      |      |      | 歩↓ |      |      | 四 |
+# >> |      |      |      |      |      |      |      |      |      | 五 |
+# >> |      |      | 歩   |      |      |      |      |      |      | 六 |
+# >> | 歩   | 歩   |      | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 七 |
+# >> |      |      |      |      |      |      |      | 飛   |      | 八 |
+# >> | 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   | 九 |
+# >> +------+------+------+------+------+------+------+------+------+----+

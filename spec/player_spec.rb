@@ -7,7 +7,7 @@ module Bushido
     let(:field)  { Field.new }
 
     describe "#side_soldiers_put_on" do
-      subject { Player.new("先手", field, :lower) }
+      subject { Player.new(:black, field, :lower) }
       it "歩を相手の陣地に配置" do
         subject.initial_put_on("5三歩")
         subject.soldiers.collect(&:to_text).should == ["▲5三歩"]
@@ -32,8 +32,8 @@ module Bushido
     describe "#setup" do
       it "初期配置" do
         players = []
-        players << Player.new("先手", field, :lower)
-        players << Player.new("後手", field, :upper)
+        players << Player.new(:black, field, :lower)
+        players << Player.new(:white, field, :upper)
         players.each(&:setup)
         field.to_s.should == <<-FIELD.strip_heredoc
 +------+------+------+------+------+------+------+------+------+----+
@@ -56,7 +56,7 @@ FIELD
     describe "#execute" do
       context "移動" do
         it "「７六歩」は７七の歩が上に上がる" do
-          player = Player.new("先手", field, :lower)
+          player = Player.new(:black, field, :lower)
           player.initial_put_on("７七歩")
           soldier = field["７七"]
           player.execute("７六歩")
@@ -65,7 +65,7 @@ FIELD
         end
 
         it "後手の「３四歩」は３三の歩が上に上がる(画面上で下がることに注意)" do
-          player = Player.new("後手", field, :upper)
+          player = Player.new(:white, field, :upper)
           player.initial_put_on("３三歩")
           soldier = field["３三"]
           player.execute("３四歩")
@@ -74,7 +74,7 @@ FIELD
         end
 
         it "成銀を動かす" do
-          player = Player.new("先手", field, :lower)
+          player = Player.new(:black, field, :lower)
           player.initial_put_on("４二成銀")
           soldier = field["４二"]
           player.execute("３二成銀")
@@ -83,7 +83,7 @@ FIELD
         end
 
         it "龍を動かす" do
-          player = Player.new("先手", field, :lower)
+          player = Player.new(:black, field, :lower)
           player.initial_put_on("４二龍")
           soldier = field["４二"]
           player.execute("３二龍")
@@ -96,14 +96,14 @@ FIELD
         end
 
         it "動いてない(エラーの種類は動いてないではなくそこに来る駒がない)" do
-          player = Player.new("先手", field, :lower)
+          player = Player.new(:black, field, :lower)
           player.initial_put_on("４二銀")
           expect { player.execute("４二銀") }.to raise_error(MovableSoldierNotFound)
         end
 
         context "推測結果が複数パターンがあったときにエラーにする" do
           it do
-            player = Player.new("先手", field, :lower)
+            player = Player.new(:black, field, :lower)
             player.initial_put_on("６九金")
             player.initial_put_on("４九金")
             expect { player.execute("５九金") }.to raise_error(AmbiguousFormatError)
@@ -112,7 +112,7 @@ FIELD
 
         context "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
           it do
-            player = Player.new("先手", field, :lower)
+            player = Player.new(:black, field, :lower)
             player.initial_put_on("６九金")
             player.initial_put_on("４九金")
             player.execute("５九金(49)")
@@ -122,7 +122,7 @@ FIELD
       end
 
       context "成る" do
-        let(:player) { Player.new("先手", field, :lower) }
+        let(:player) { Player.new(:black, field, :lower) }
 
         it "相手陣地に入るときに成る" do
           player.initial_put_on("２四歩")
@@ -171,7 +171,7 @@ FIELD
       end
 
       context "不成" do
-        let(:player) { Player.new("先手", field, :lower) }
+        let(:player) { Player.new(:black, field, :lower) }
 
         it "成らない" do
           pending
@@ -184,8 +184,8 @@ FIELD
 
       context "取る" do
         it "相手の駒を取る" do
-          player0 = Player.new("先手", field, :lower)
-          player1 = Player.new("後手", field, :upper)
+          player0 = Player.new(:black, field, :lower)
+          player1 = Player.new(:white, field, :upper)
           player0.initial_put_on("５六歩")
           player1.initial_put_on("５五飛")
           soldier = field["５五"]
@@ -195,7 +195,7 @@ FIELD
 
         # MEMO: 相手がいないと絶対に「同角」は失敗するので相手がいないというエラーにした方がいいかもしれない
         it "一人で同を使う(同角で２五がわかった上で移動しようとしたけど自分の飛車がいるために移動できなかった)" do
-          player = Player.new("先手", field, :lower)
+          player = Player.new(:black, field, :lower)
           player.initial_put_on("２五飛")
           player.initial_put_on("８八角")
           player.execute("５五飛")
@@ -204,8 +204,8 @@ FIELD
 
         it "同歩で取る" do
           frame = Frame.new
-          frame.players << Player.new("先手", frame.field, :lower)
-          frame.players << Player.new("後手", frame.field, :upper)
+          frame.players << Player.new(:black, frame.field, :lower)
+          frame.players << Player.new(:white, frame.field, :upper)
           frame.attach
           frame.players[0].initial_put_on("２五歩")
           frame.players[1].initial_put_on("２三歩")
@@ -222,43 +222,67 @@ FIELD
       end
 
       context "打つ" do
-        let(:player) { Player.new("先手", field, :lower) }
+        let(:player) { Player.new(:black, field, :lower) }
 
-        it "打てる" do
-          player.execute("５五歩打")
-          field["５五"].name.should == "▲5五歩"
+        context "打てる" do
+          it "空いているので打てる" do
+            player.execute("５五歩打")
+            field["５五"].name.should == "▲5五歩"
+          end
+
+          it "「打」は曖昧なときだけ付くらしい(打がない場合、動けるのを推測で無いのを確認し、打つ)" do
+            pending
+            # 1. 動ける駒を探す→0件
+            # 2. 持駒にその駒がある
+            # 3. それを打つ
+          end
+
+          it "と金は二歩にならないので" do
+            pending
+          end
         end
 
-        it "成った状態では打てない" do
-          expect { player.execute("５五馬打") }.to raise_error(PromotedPiecePutOnError)
-        end
+        context "打てない" do
+          it "場外に" do
+            expect { player.execute("５十飛打") }.to raise_error(UnknownPositionName)
+          end
 
-        it "「打」は曖昧なときだけ付くらしい(打がない場合、動けるのを推測で無いのを確認し、打つ)" do
-          pending
-          # 1. 動ける駒を探す→0件
-          # 2. 持駒にその駒がある
-          # 3. それを打つ
-        end
+          it "自分の駒の上に" do
+            player.initial_put_on("５五飛")
+            expect { player.execute("５五角打") }.to raise_error(PieceAlredyExist)
+          end
 
-        it "駒があるところには打てない" do
-          pending
-        end
+          it "相手の駒の上にも" do
+            white_player = Player.new(:white, field, :upper)
+            white_player.initial_put_on("５五飛")
+            expect { player.execute("５五角打") }.to raise_error(PieceAlredyExist)
+          end
 
-        it "場外には打てない" do
-          pending
-        end
+          it "竜なんて駒はないので" do
+            expect { player.execute("５五竜打") }.to raise_error(SyntaxError)
+          end
 
-        it "１一歩打はエラー" do
-          player.execute("１一歩打")
-          puts field
-          # FIXME:ここのテストの処理が無限ループしている
+          it "成った状態で" do
+            expect { player.execute("５五龍打") }.to raise_error(PromotedPiecePutOnError)
+          end
+
+          it "１一歩打だとそれ以上動けないので" do
+            player.execute("１一歩打")
+            puts field
+            # FIXME:ここのテストの処理が無限ループしている
+          end
+
+          it "二歩なので" do
+            player.initial_put_on("５五歩")
+            expect { player.execute("５九歩打") }.to raise_error(DoublePawn)
+          end
         end
       end
 
       it "全体確認" do
         players = []
-        players << Player.new("先手", field, :lower)
-        players << Player.new("後手", field, :upper)
+        players << Player.new(:black, field, :lower)
+        players << Player.new(:white, field, :upper)
         players.each(&:setup)
         players[0].execute("7六歩")
         players[1].execute("3四歩")
