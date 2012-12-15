@@ -26,7 +26,7 @@ module Bushido
     end
 
     def to_text
-      "#{@player.location_mark}#{current_point.name}#{self}"
+      "#{@player.location_mark}#{current_point ? current_point.name : '(どこにも置いてない)'}#{self}"
     end
 
     def name
@@ -34,7 +34,9 @@ module Bushido
     end
 
     def current_point
-      Point.parse(@player.field.matrix.invert[self])
+      if xy = @player.field.matrix.invert[self]
+        Point.parse(xy)
+      end
     end
 
     # FIXME: vectors1, vectors2 と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
@@ -42,6 +44,7 @@ module Bushido
       options = {
         :ignore_the_other_pieces_on_the_board => false,
       }.merge(options)
+
       list = []
       list += __moveable_points(@piece.vectors1(@promoted), false, options)
       list += __moveable_points(@piece.vectors2(@promoted), true, options)
@@ -51,16 +54,19 @@ module Bushido
     def __moveable_points(vectors, loop, options = {})
       vectors.uniq.compact.each_with_object([]) do |vector, list|
         point = current_point
+
         loop do
+          # binding.pry
           if player.location == :upper
             vector = Vector.new(vector).reverse
           end
+
           point = point.add_vector(vector)
           unless point.valid?
             break
           end
+
           if options[:ignore_the_other_pieces_on_the_board]
-            # FIXME: 無限ループしている
             list << point
           else
             target = @player.field.fetch(point)

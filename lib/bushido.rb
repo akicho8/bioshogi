@@ -2,6 +2,7 @@
 
 require "active_support/core_ext/string"
 require "active_support/configurable"
+require "pry-debugger"
 
 require "rain_table"
 

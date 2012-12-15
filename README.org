@@ -110,31 +110,33 @@
 *** 棋譜の表記
 
     #+ATTR_HTML: border="1" rules="all" frame="all"
-    | 9   | 8 |   7 | 6 | 5 | 4 |   3 | 2 | 1   |    |
-    |-----+---+-----+---+---+---+-----+---+-----+----|
-    | 9一 |   |     |   |   |   |     |   | 1一 | 一 |
-    |     |   |     |   |   |   |     |   |     | 二 |
+    | 表記       | 意味                     |
+    |------------+--------------------------|
+    | ７六歩(77) | ７七の歩を７六に移動     |
+    | ７六歩     | ７六歩(77) の省略形      |
+    | ２二角成   | ２二に角が移動して成った |
+    | ５五飛打   | ５五に持駒の飛車を打った |
 
 *** 主な例外
 
     #+ATTR_HTML: border="1" rules="all" frame="all"
-    | 例外                            | 意味                                       | どんなときに起きる？                         |
-    |---------------------------------+--------------------------------------------+----------------------------------------------|
-    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない         | ７七に歩がないのに７六歩                     |
-    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない | 初手 "５八金"                                |
-    | SyntaxError                     | とりあえず表記が違う                       | 駒の配置時に４二銀成とした(４二成銀が正しい) |
-    | PointSyntaxError                | 座標の表記が違う                           | ４二のつもりで４と書いた                     |
-    | UnknownPositionName             | 座標の桁の指定が違う                       | ４二のつもりで四２と書いた                   |
-    | PieceNotFound                   | そんな名前の駒は存在しない                 | 竜のつもりで蛇と書いた                       |
-    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置           | 配置時に2連続で "９七歩"                     |
-    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した             | 初手 "８八飛(28)"                            |
-    | NotPromotable                   | 成れない条件で成ろうとした                 | 初手 "７六歩成"                              |
-    | PromotedPiecePutOnError         | 成った状態で打とうとした                   | ５五竜打                                     |
-    | AlredyPromoted                  | すでに成っている                           | ５五の龍を５一飛成                           |
-    | NotFoundOnField                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした           |
-    | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                               |
-    | NotPutInPlaceNotBeMoved         | 移動の見込みない状態で駒を指せない         | ▲１一桂                                     |
-    | DoublePawn                      | 二歩                                       | 歩がある縦列に歩を打った                     |
+    | 例外                            | 意味                                       | どんなときに起きる？               |
+    |---------------------------------+--------------------------------------------+------------------------------------|
+    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない         | ７七に歩がないのに７六歩           |
+    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない | 初手 "５八金"                      |
+    | SyntaxError                     | とりあえず表記が違う                       | 駒の配置時に４二銀成とした         |
+    | PointSyntaxError                | 座標の表記が違う                           | ４二のつもりで４と書いた           |
+    | UnknownPositionName             | 座標の桁の指定が違う                       | ４二のつもりで四２と書いた         |
+    | PieceNotFound                   | そんな名前の駒は存在しない                 | 龍のつもりで蛇と書いた             |
+    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置           | 配置時に2連続で "９七歩"           |
+    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した             | 初手 "８八飛(28)"                  |
+    | NotPromotable                   | 成れない条件で成ろうとした                 | 初手 "７六歩成"                    |
+    | PromotedPiecePutOnError         | 成った状態で打とうとした                   | ５五龍打                           |
+    | AlredyPromoted                  | すでに成っている                           | ５五の龍を５一飛成                 |
+    | NotFoundOnField                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした |
+    | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                     |
+    | NotPutInPlaceNotBeMoved         | 移動の見込みがない状態で駒を指せない       | ▲１一桂                           |
+    | DoublePawn                      | 二歩                                       | 歩がある縦列に歩を打った           |
 
 *** 座標系
 
@@ -201,7 +203,9 @@
 
 *** 参考リンク集
 
-    - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
     - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
-    - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117
     - 将棋を英語表記するときにblackは何故先手なのか？ - やねうらお－よっちゃんイカを食べながら、息子語録を書き綴る http://d.hatena.ne.jp/yaneurao/20101128
+    - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
+
+    - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
+    - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117

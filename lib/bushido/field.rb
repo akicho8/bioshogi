@@ -14,7 +14,9 @@ module Bushido
 
       point.y.class.units.each{|y|
         if obj = fetch(Point[[point.x, y]])
-          if obj.player == soldier.player && soldier.piece.kind_of?(Piece::Pawn) && obj.piece.kind_of?(Piece::Pawn)
+          if obj.player == soldier.player &&
+              soldier.piece.kind_of?(Piece::Pawn) && !soldier.promoted &&
+              obj.piece.kind_of?(Piece::Pawn) && !obj.promoted
             raise DoublePawn, "二歩です。#{obj.name}があるため#{point.name}に#{soldier}は打てません。"
           end
         end
@@ -24,7 +26,6 @@ module Bushido
 
       # # FIXME: 無限ループ
       # if soldier.moveable_points(:ignore_the_other_pieces_on_the_board => true, :point => point).empty?
-      #   @matrix[point.to_xy] = nil # TODO: セットする前に確認したい
       #   raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       # end
     end

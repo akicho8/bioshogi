@@ -7,3 +7,4 @@ end
 
 gem "rspec"
 gem "tapp"
+gem "pry-debugger"

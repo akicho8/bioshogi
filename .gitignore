@@ -1,3 +1,4 @@
 /README.html
 /Gemfile.lock
 /*.gem
+/.pryrc

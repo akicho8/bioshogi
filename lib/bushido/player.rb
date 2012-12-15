@@ -44,7 +44,8 @@ module Bushido
 
     def initial_put_on(arg)
       info = parse_arg(arg)
-      @field.put_on_at(info[:point], Soldier.new(self, pick_out(info[:piece]), info[:promoted]))
+      v = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+      @field.put_on_at(info[:point], v)
     end
 
     def parse_arg(arg)
