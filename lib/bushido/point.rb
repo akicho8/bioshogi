@@ -36,7 +36,7 @@ module Bushido
           raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
         end
       else
-        raise MustNotHappen, "#{arg.inspect}"
+        raise MustNotHappen, "引数がめちゃくちゃです : Point.parse(#{arg.inspect})"
       end
 
       new(x, y)
@@ -89,7 +89,7 @@ module Bushido
     end
 
     def promotable_area?(location)
-      if location == :lower
+      if location == :black
         @y.value < promoted_area_height
       else
         @y.value > (@y.class.units.size - promoted_area_height)

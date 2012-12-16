@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Soldier do
     let(:field)  { Field.new }
-    let(:player) { Player.new(:black, field, :lower) }
+    let(:player) { Player.create3(:black, field, :black) }
 
     describe "#to_s" do
       subject { Soldier.new(player, Piece::Pawn.new) }

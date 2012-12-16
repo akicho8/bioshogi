@@ -1,15 +1,36 @@
 # -*- coding: utf-8 -*-
 module Bushido
   class Player
-    attr_accessor :name, :field, :location, :pieces, :frame, :before_point
-
-    def initialize(name, field, location)
-      @name = name
-      @field = field
-      @location = location
-
-      deal
+    # facade
+    def self.this_case(params)
+      params = {
+        :player => :black,
+      }.merge(params)
+      player = Player.create3(params[:player], Field.new, params[:player])
+      Array.wrap(params[:init]).each{|v|player.initial_put_on(v)}
+      Array.wrap(params[:exec]).each{|v|player.execute(v)}
+      player.soldier_names.sort
     end
+
+    # 互換性のため一時的に。
+    def self.create3(name, field, location)
+      new.tap do |o|
+        o.name = name
+        o.field = field
+        o.location = location
+        o.deal
+      end
+    end
+
+    # 互換性のため一時的に。
+    def self.create1(location)
+      new.tap do |o|
+        o.location = location
+        o.deal
+      end
+    end
+
+    attr_accessor :name, :field, :location, :pieces, :frame, :before_point
 
     def deal
       @pieces = first_distributed_pieces.collect{|info|
@@ -19,20 +40,20 @@ module Bushido
 
     def first_distributed_pieces
       [
-        {:count => 9, :piece => "歩"},
-        {:count => 1, :piece => "角"},
-        {:count => 1, :piece => "飛"},
-        {:count => 2, :piece => "香"},
-        {:count => 2, :piece => "桂"},
-        {:count => 2, :piece => "銀"},
-        {:count => 2, :piece => "金"},
-        {:count => 1, :piece => "玉"},
+        {:piece => "歩", :count => 9},
+        {:piece => "角", :count => 1},
+        {:piece => "飛", :count => 1},
+        {:piece => "香", :count => 2},
+        {:piece => "桂", :count => 2},
+        {:piece => "銀", :count => 2},
+        {:piece => "金", :count => 2},
+        {:piece => "玉", :count => 1},
       ]
     end
 
     def setup
       table = first_placements.collect{|arg|parse_arg(arg)}
-      if @location == :upper
+      if @location == :white
         table.each{|info|info[:point] = info[:point].reverse}
       end
       side_soldiers_put_on(table)
@@ -44,8 +65,8 @@ module Bushido
 
     def initial_put_on(arg)
       info = parse_arg(arg)
-      v = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      @field.put_on_at(info[:point], v)
+      soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+      @field.put_on_at(info[:point], soldier)
     end
 
     def parse_arg(arg)
@@ -87,12 +108,12 @@ module Bushido
     end
 
     def arrow
-      @location == :lower ? "" : "↓"
+      @location == :black ? "" : "↓"
     end
 
     # FIXME: 先手後手と、位置は別に考えた方がいい
     def location_mark
-      @location == :lower ? "▲" : "▽"
+      @location == :black ? "▲" : "▽"
     end
 
     def piece_fetch!(piece)
@@ -148,12 +169,28 @@ module Bushido
       end
     end
 
+    # soldier_names # => ["▽5五飛↓"]
+    def soldier_names
+      soldiers.collect(&:to_text).sort
+    end
+
+    def piece_names
+      pieces.collect(&:name).sort
+    end
+
+    def piece_discard
+      @pieces.clear
+    end
+
     def execute(str)
       md = str.match(/\A(?<point>..|同)(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
       md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
 
       if md[:point] == "同"
         point = next_player.before_point
+        unless point
+          raise BeforePointNotFound, "同に対する座標が不明です : #{str.inspect}"
+        end
       else
         point = Point.parse(md[:point])
       end

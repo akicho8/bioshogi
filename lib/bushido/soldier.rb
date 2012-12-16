@@ -51,16 +51,20 @@ module Bushido
       list.uniq{|e|e.to_xy}     # FIXME: ブロックを取る
     end
 
+    def normalized_vectors(vectors)
+      vectors.uniq.compact.collect do |vector|
+        if player.location == :white
+          vector = Vector.new(vector).reverse
+        else
+          vector
+        end
+      end
+    end
+
     def __moveable_points(vectors, loop, options = {})
-      vectors.uniq.compact.each_with_object([]) do |vector, list|
+      normalized_vectors(vectors).each_with_object([]) do |vector, list|
         point = current_point
-
         loop do
-          # binding.pry
-          if player.location == :upper
-            vector = Vector.new(vector).reverse
-          end
-
           point = point.add_vector(vector)
           unless point.valid?
             break

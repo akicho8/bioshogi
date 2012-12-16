@@ -5,8 +5,8 @@
 
   : field = Field.new
   : players = []
-  : players << Player.new(:black, field, :lower)
-  : players << Player.new(:white, field, :upper)
+  : players << Player.create3(:black, field, :black)
+  : players << Player.create3(:white, field, :white)
   : players.each(&:setup)
   : players[0].execute("7六歩")
   : players[1].execute("3四歩")
@@ -32,7 +32,7 @@
 **** 駒が動ける場所
 
      : field = Field.new
-     : player = Player.new(:black, field, :lower)
+     : player = Player.create3(:black, field, :black)
      : player.initial_put_on("５五馬")
      : player.soldiers.first.moveable_points.each{|point|
      :   field.put_on_at(point, "○")
@@ -83,7 +83,7 @@
 **** 盤面上の駒の確認
 
      : field = Field.new
-     : player = Player.new(:black, field, :lower)
+     : player = Player.create3(:black, field, :black)
      : player.setup
      : puts field
 
@@ -116,6 +116,7 @@
     | ７六歩     | ７六歩(77) の省略形      |
     | ２二角成   | ２二に角が移動して成った |
     | ５五飛打   | ５五に持駒の飛車を打った |
+    | 同歩       | 1手前の座標に歩を移動    |
 
 *** 主な例外
 
@@ -137,6 +138,7 @@
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                     |
     | NotPutInPlaceNotBeMoved         | 移動の見込みがない状態で駒を指せない       | ▲１一桂                           |
     | DoublePawn                      | 二歩                                       | 歩がある縦列に歩を打った           |
+    | BeforePointNotFound             | 同に対する座標が不明                       | 初手 "同歩"                        |
 
 *** 座標系
 
@@ -179,33 +181,32 @@
     - "4八" に金があった場合、"5八金右" は真横の金なのか、斜め下の金なのか、どっちだろう。
     - ネット上にある棋譜はだいたい "7六歩(77)" の形式になっていて７七にあったことを明示しているのでがんばって推測しなくてもいい。
 
-
 *** プログラムで使っている将棋の英語表記対応表
 
-    | 日本語   | 英語     |    |
-    |----------+----------+----|
-    | 歩       | pawn     |    |
-    | 角       | bishop   |    |
-    | 飛       | rook     |    |
-    | 香       | lance    |    |
-    | 桂       | knight   |    |
-    | 銀       | silver   |    |
-    | 金       | gold     |    |
-    | 玉       | king     |    |
-    | 成った   | promoted |    |
-    | 盤面     | field    |    |
-    | 座標     | point    |    |
-    | 相対座標 | vector   |    |
-    | 対面     | upper    | △ |
-    | 自分     | lower    | △ |
-    | 先手     | black    |    |
-    | 後手     | white    |    |
+    | 日本語   | 英語     |
+    |----------+----------|
+    | 歩       | pawn     |
+    | 角       | bishop   |
+    | 飛       | rook     |
+    | 香       | lance    |
+    | 桂       | knight   |
+    | 銀       | silver   |
+    | 金       | gold     |
+    | 玉       | king     |
+    | 成った   | promoted |
+    | 盤面     | field    |
+    | 座標     | point    |
+    | 相対座標 | vector   |
+    | 先手     | black    |
+    | 後手     | white    |
+    | 対局室   | frame    |
 
 *** 参考リンク集
 
     - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
     - 将棋を英語表記するときにblackは何故先手なのか？ - やねうらお－よっちゃんイカを食べながら、息子語録を書き綴る http://d.hatena.ne.jp/yaneurao/20101128
     - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
+    - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
 
     - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
     - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117

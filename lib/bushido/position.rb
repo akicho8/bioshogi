@@ -16,7 +16,11 @@ module Bushido
         else
           v = arg
         end
-        new(v)
+        new(v).tap{|o|
+          if o.valid?
+            # raise MustNotHappen
+          end
+        }
       end
 
       def self.value_range
