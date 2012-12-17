@@ -12,7 +12,7 @@ end
 include Bushido
 
 field = Field.new
-player = Player.create3(:black, field, :black)
+player = Player.create2(:black, field)
 player.setup
 puts field
 field["５五"]      # => nil

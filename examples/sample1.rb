@@ -13,8 +13,8 @@ include Bushido
 
 field = Field.new
 players = []
-players << Player.create3(:black, field, :black)
-players << Player.create3(:white, field, :white)
+players << Player.create2(:black, field)
+players << Player.create2(:white, field)
 players.each(&:setup)
 players[0].execute("7六歩")
 players[1].execute("3四歩")

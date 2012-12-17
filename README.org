@@ -5,8 +5,8 @@
 
   : field = Field.new
   : players = []
-  : players << Player.create3(:black, field, :black)
-  : players << Player.create3(:white, field, :white)
+  : players << Player.create2(:black, field)
+  : players << Player.create2(:white, field)
   : players.each(&:setup)
   : players[0].execute("7六歩")
   : players[1].execute("3四歩")
@@ -32,7 +32,7 @@
 **** 駒が動ける場所
 
      : field = Field.new
-     : player = Player.create3(:black, field, :black)
+     : player = Player.create2(:black, field)
      : player.initial_put_on("５五馬")
      : player.soldiers.first.moveable_points.each{|point|
      :   field.put_on_at(point, "○")
@@ -83,7 +83,7 @@
 **** 盤面上の駒の確認
 
      : field = Field.new
-     : player = Player.create3(:black, field, :black)
+     : player = Player.create2(:black, field)
      : player.setup
      : puts field
 
@@ -203,10 +203,13 @@
 
 *** 参考リンク集
 
+    - 棋譜の形式について http://wiki.optus.nu/shogi/index.php?post=%B4%FD%C9%E8%A4%CE%B7%C1%BC%B0%A4%CB%A4%C4%A4%A4%A4%C6
     - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
     - 将棋を英語表記するときにblackは何故先手なのか？ - やねうらお－よっちゃんイカを食べながら、息子語録を書き綴る http://d.hatena.ne.jp/yaneurao/20101128
     - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
     - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
+    - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
+    - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html
 
     - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
     - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117

@@ -193,6 +193,10 @@ module Bushido
         "龍"
       end
 
+      def promoted_names
+        super + ["竜"]
+      end
+
       def basic_vectors2
         [
           nil,      [0, -1],     nil,
@@ -210,6 +214,10 @@ module Bushido
         "香"
       end
 
+      def promoted_names
+        super + ["杏"]
+      end
+
       def basic_vectors2
         [[0, -1]]
       end
@@ -223,6 +231,10 @@ module Bushido
         "桂"
       end
 
+      def promoted_names
+        super + ["圭"]
+      end
+
       def basic_vectors1
         [[-1, -2], [1, -2]]
       end
@@ -234,6 +246,10 @@ module Bushido
 
       def name
         "銀"
+      end
+
+      def promoted_names
+        super + ["全"]
       end
 
       def basic_vectors1

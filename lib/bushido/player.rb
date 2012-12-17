@@ -6,18 +6,17 @@ module Bushido
       params = {
         :player => :black,
       }.merge(params)
-      player = Player.create3(params[:player], Field.new, params[:player])
+      player = Player.create2(params[:player], Field.new)
       Array.wrap(params[:init]).each{|v|player.initial_put_on(v)}
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
       player.soldier_names.sort
     end
 
     # 互換性のため一時的に。
-    def self.create3(name, field, location)
+    def self.create2(location, field)
       new.tap do |o|
-        o.name = name
-        o.field = field
         o.location = location
+        o.field = field
         o.deal
       end
     end

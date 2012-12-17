@@ -87,15 +87,15 @@ require_relative "bushido/player"
 module Bushido
   if $0 == __FILE__
     frame = Frame.new
-    frame.players << Player.create3(:black, frame.field, :black)
-    frame.players << Player.create3(:white, frame.field, :white)
+    frame.players << Player.create2(:black, frame.field, :black)
+    frame.players << Player.create2(:white, frame.field, :white)
     frame.attach
     puts frame.field
 
     # @field = Field.new
     # @players = []
-    # @players << Player.create3(:black, @field, :black)
-    # @players << Player.create3(:white, @field, :white)
+    # @players << Player.create2(:black, @field)
+    # @players << Player.create2(:white, @field)
     # @players.each(&:setup)
     # @players[0].execute("7六歩")
     # puts @field
