@@ -84,11 +84,17 @@ require_relative "bushido/field"
 require_relative "bushido/soldier"
 require_relative "bushido/player"
 
+require_relative "bushido/kif_format"
+
+module Bushido
+  Field.send(:include, KifFormat::Field)
+end
+
 module Bushido
   if $0 == __FILE__
     frame = Frame.new
-    frame.players << Player.create2(:black, frame.field, :black)
-    frame.players << Player.create2(:white, frame.field, :white)
+    frame.players << Player.create2(:black, frame.field)
+    frame.players << Player.create2(:white, frame.field)
     frame.attach
     puts frame.field
 
