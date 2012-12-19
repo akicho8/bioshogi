@@ -24,7 +24,6 @@ module Bushido
 
       @matrix[point.to_xy] = soldier
 
-      # FIXME: 無限ループ
       if soldier.moveable_points(:ignore_the_other_pieces_on_the_board => true, :point => point).empty?
         raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       end

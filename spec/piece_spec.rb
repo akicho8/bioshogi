@@ -19,7 +19,7 @@ module Bushido
       Piece.get("角").name.should == "角"
       Piece.get("馬").name.should == "角"
 
-      Piece.names.should == ["歩", "pawn", "と", "PAWN", "角", "bishop", "馬", "BISHOP", "飛", "rook", "龍", "ROOK", "竜", "香", "lance", "成香", "LANCE", "杏", "桂", "knight", "成桂", "KNIGHT", "圭", "銀", "silver", "成銀", "SILVER", "全", "金", "gold", "GOLD", "玉", "king", "KING"]
+      Piece.names.should == ["歩", "pawn", "と", "PAWN", "角", "bishop", "馬", "BISHOP", "飛", "rook", "龍", "ROOK", "竜", "香", "lance", "杏", "LANCE", "成香", "桂", "knight", "圭", "KNIGHT", "成桂馬", "銀", "silver", "全", "SILVER", "成銀", "金", "gold", "GOLD", "玉", "king", "KING"]
     end
 
     it "特殊な名前" do

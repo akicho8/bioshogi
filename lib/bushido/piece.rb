@@ -141,9 +141,9 @@ module Bushido
     end
 
     module Narigatsukudake
-      def promoted_name
-        "成#{name}"
-      end
+      # def promoted_name
+      #   "成#{name}"
+      # end
     end
 
     class Pawn < Base
@@ -214,8 +214,12 @@ module Bushido
         "香"
       end
 
+      def promoted_name
+        "杏"
+      end
+
       def promoted_names
-        super + ["杏"]
+        super + ["成香"]
       end
 
       def basic_vectors2
@@ -231,8 +235,12 @@ module Bushido
         "桂"
       end
 
+      def promoted_name
+        "圭"
+      end
+
       def promoted_names
-        super + ["圭"]
+        super + ["成桂馬"]
       end
 
       def basic_vectors1
@@ -248,8 +256,12 @@ module Bushido
         "銀"
       end
 
+      def promoted_name
+        "全"
+      end
+
       def promoted_names
-        super + ["全"]
+        super + ["成銀"]
       end
 
       def basic_vectors1

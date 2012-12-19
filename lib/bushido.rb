@@ -88,6 +88,7 @@ require_relative "bushido/kif_format"
 
 module Bushido
   Field.send(:include, KifFormat::Field)
+  Soldier.send(:include, KifFormat::Soldier)
 end
 
 module Bushido

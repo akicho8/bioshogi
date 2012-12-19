@@ -63,7 +63,7 @@ FIELD
           Player.this_case(:player => :white, :init => "３三歩", :exec => "３四歩").should == ["▽3四歩↓"]
         end
         it "成銀を" do
-          Player.this_case(:init => "４二成銀", :exec => "３二成銀").should == ["▲3二成銀"]
+          Player.this_case(:init => "４二成銀", :exec => "３二成銀").should == ["▲3二全"]
         end
         it "龍を" do
           Player.this_case(:init => "４二龍", :exec => "３二龍").should == ["▲3二龍"]
