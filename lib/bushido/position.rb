@@ -53,6 +53,10 @@ module Bushido
         "987654321".scan(/./)
       end
 
+      def self.zenkaku_units
+        "９８７６５４３２１".scan(/./)
+      end
+
       # "５五" の全角 "５" に対応するため
       def self.parse(arg)
         if arg.kind_of?(String) && arg.match(/[１-９]/)
@@ -69,6 +73,10 @@ module Bushido
     class Vpos < Base
       def self.units
         "一二三四五六七八九".scan(/./)
+      end
+
+      def self.zenkaku_units
+        units
       end
 
       # "(52)" の "2" に対応するため

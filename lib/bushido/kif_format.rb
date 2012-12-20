@@ -50,7 +50,7 @@ module Bushido
           "|" + values.join + "|" + Position::Vpos.parse(y).name
         }
         s = []
-        s << "  ９ ８ ７ ６ ５ ４ ３ ２ １"
+        s << "  " + Position::Hpos.zenkaku_units.join(" ")
         s << "+---------------------------+"
         s += rows
         s << "+---------------------------+"
