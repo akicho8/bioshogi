@@ -11,16 +11,16 @@ end
 
 include Bushido
 
-field = Field.new
+board = Board.new
 players = []
-players << Player.create2(:black, field)
-players << Player.create2(:white, field)
+players << Player.create2(:black, board)
+players << Player.create2(:white, board)
 players.each(&:setup)
 players[0].execute("7六歩")
 players[1].execute("3四歩")
 players[0].execute("2二角成")
 players[0].pieces.collect(&:name) # => ["角"]
-puts field
+puts board
 # >> +------+------+------+------+------+------+------+------+------+----+
 # >> |    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
 # >> +------+------+------+------+------+------+------+------+------+----+

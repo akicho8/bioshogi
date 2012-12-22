@@ -11,12 +11,12 @@ end
 
 include Bushido
 
-field = Field.new
+board = Board.new
 players = []
-players << Player.create2(:black, field)
-players << Player.create2(:white, field)
+players << Player.create2(:black, board)
+players << Player.create2(:white, board)
 players.each(&:setup)
-puts field.to_kif_table
+puts board.to_kif_table
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

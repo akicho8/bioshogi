@@ -1,6 +1,82 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
+
 module Bushido
   module KifFormat
+    class Parser
+      def self.parse(source, options = {})
+        new(source, options).tap{|o|o.parse}
+      end
+
+      attr_reader :header, :inputs
+
+      def initialize(source, options = {})
+        @source = source
+        @options = default_options.merge(options)
+
+        @source = normalized_source
+      end
+
+      def default_options
+        {}
+      end
+
+      # # ----  Kifu for Windows V6.26 棋譜ファイル  ----
+      # 開始日時：1968/03/18
+      # 棋戦：順位戦
+      # 戦型：中飛車
+      # 手合割：平手
+      # 先手：加藤博二
+      # 後手：松田茂役
+      # 手数----指手---------消費時間--
+      # *棋戦詳細：第22期順位戦A級
+      #    1 ７六歩(77)   ( 0:00/00:00:00)
+      def parse
+        @header = {}
+        @source.scan(/^(\S.*)：(.*)$/).each{|key, value|
+          next if key.match(/^\*/)
+          @header[key] = value
+        }
+
+        r = @source.scan(/^\s+(\d+)\s+(\S.*?)\s+\(\s*(.*)\)/)
+        @inputs = r.collect{|index, input, spent_time|
+          {index: index, input: input, spent_time: spent_time}
+        }
+
+        # @header = {}
+        # @inputs = []
+        #
+        # @mode = :header
+        # @source.lines.each{|line|
+        #   if line.match(/^#/)
+        #     next
+        #   end
+        #   if @mode == :header
+        #     if line.match(/^手数.*指手/)
+        #       @mode = :body
+        #       next
+        #     end
+        #     if md = line.match(/^(?<key>.*)：(?<value>.*)/)
+        #       @header[md[:key]] = md[:value]
+        #     end
+        #   end
+        #   if @mode == :body
+        #     p line
+        #     if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
+        #       p md.to_a
+        #       # @inputs <<
+        #       # p md
+        #     end
+        #   end
+      end
+
+      private
+
+      def normalized_source
+        str = @source.toutf8
+        str = str.gsub(/[#{[0x3000].pack('U')}\s]+\r?\n/, "\n")
+      end
+    end
+
     module Soldier
       extend ActiveSupport::Concern
 
@@ -15,7 +91,7 @@ module Bushido
       end
     end
 
-    module Field
+    module Board
       extend ActiveSupport::Concern
 
       included do

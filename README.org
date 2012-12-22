@@ -3,16 +3,16 @@
 
 * 将棋のプログラム
 
-  : field = Field.new
+  : board = Board.new
   : players = []
-  : players << Player.create2(:black, field)
-  : players << Player.create2(:white, field)
+  : players << Player.create2(:black, board)
+  : players << Player.create2(:white, board)
   : players.each(&:setup)
   : players[0].execute("7六歩")
   : players[1].execute("3四歩")
   : players[0].execute("2二角成")
   : p players[0].pieces.collect(&:name) # => ["角"]
-  : puts field
+  : puts board
 
 #+ATTR_HTML: border="1" rules="all" frame="all"
   | 9    | 8    | 7    | 6    | 5    | 4    | 3    | 2    | 1    |    |
@@ -31,13 +31,13 @@
 
 **** 駒が動ける場所
 
-     : field = Field.new
-     : player = Player.create2(:black, field)
+     : board = Board.new
+     : player = Player.create2(:black, board)
      : player.initial_put_on("５五馬")
      : player.soldiers.first.moveable_points.each{|point|
-     :   field.put_on_at(point, "○")
+     :   board.put_on_at(point, "○")
      : }
-     : puts field
+     : puts board
 
 #+ATTR_HTML: border="1" rules="all" frame="all"
      | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  |    |
@@ -82,10 +82,10 @@
 
 **** 盤面上の駒の確認
 
-     : field = Field.new
-     : player = Player.create2(:black, field)
+     : board = Board.new
+     : player = Player.create2(:black, board)
      : player.setup
-     : puts field
+     : puts board
 
 #+ATTR_HTML: border="1" rules="all" frame="all"
      | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  |    |
@@ -100,19 +100,19 @@
      |    | 角 |    |    |    |    |    | 飛 |    | 八 |
      | 香 | 桂 | 銀 | 金 | 玉 | 金 | 銀 | 桂 | 香 | 九 |
 
-     : field["５五"]      # => nil
-     : field["８八"].name # => "▲8八角"
-     : field["２八"].name # => "▲2八飛"
-     : field["５九"].name # => "▲5九玉"
+     : board["５五"]      # => nil
+     : board["８八"].name # => "▲8八角"
+     : board["２八"].name # => "▲2八飛"
+     : board["５九"].name # => "▲5九玉"
 
 **** KIF形式の盤面
 
-     : field = Field.new
+     : board = Board.new
      : players = []
-     : players << Player.create2(:black, field)
-     : players << Player.create2(:white, field)
+     : players << Player.create2(:black, board)
+     : players << Player.create2(:white, board)
      : players.each(&:setup)
-     : puts field.to_kif_table
+     : puts board.to_kif_table
      : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
      : # >> +---------------------------+
      : # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -155,7 +155,7 @@
     | NotPromotable                   | 成れない条件で成ろうとした                 | 初手 "７六歩成"                    |
     | PromotedPiecePutOnError         | 成った状態で打とうとした                   | ５五龍打                           |
     | AlredyPromoted                  | すでに成っている                           | ５五の龍を５一飛成                 |
-    | NotFoundOnField                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした |
+    | NotFoundOnBoard                 | 盤面に指定の駒がない                       | ２七に歩がないのに２六歩(27)とした |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした         | ５五龍を５六飛                     |
     | NotPutInPlaceNotBeMoved         | 移動の見込みがない状態で駒を指せない       | ▲１一桂                           |
     | DoublePawn                      | 二歩                                       | 歩がある縦列に歩を打った           |
@@ -215,7 +215,7 @@
     | 金       | gold     |
     | 玉       | king     |
     | 成った   | promoted |
-    | 盤面     | field    |
+    | 盤面     | board    |
     | 座標     | point    |
     | 相対座標 | vector   |
     | 先手     | black    |

@@ -11,13 +11,13 @@ end
 
 include Bushido
 
-field = Field.new
-player = Player.create2(:black, field)
+board = Board.new
+player = Player.create2(:black, board)
 player.initial_put_on("５五馬")
 player.soldiers.first.moveable_points.each{|point|
-  field.put_on_at(point, "○")
+  board.put_on_at(point, "○")
 }
-puts field
+puts board
 # >> +----+----+----+----+----+----+----+----+----+----+
 # >> |  9 |  8 |  7 |  6 |  5 |  4 |  3 |  2 |  1 |    |
 # >> +----+----+----+----+----+----+----+----+----+----+

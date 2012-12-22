@@ -6,17 +6,17 @@ module Bushido
       params = {
         :player => :black,
       }.merge(params)
-      player = Player.create2(params[:player], Field.new)
+      player = Player.create2(params[:player], Board.new)
       Array.wrap(params[:init]).each{|v|player.initial_put_on(v)}
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
       player.soldier_names.sort
     end
 
     # 互換性のため一時的に。
-    def self.create2(location, field)
+    def self.create2(location, board)
       new.tap do |o|
         o.location = location
-        o.field = field
+        o.board = board
         o.deal
       end
     end
@@ -29,7 +29,7 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :field, :location, :pieces, :frame, :before_point
+    attr_accessor :name, :board, :location, :pieces, :frame, :before_point
 
     def deal
       @pieces = first_distributed_pieces.collect{|info|
@@ -65,7 +65,7 @@ module Bushido
     def initial_put_on(arg)
       info = parse_arg(arg)
       soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      @field.put_on_at(info[:point], soldier)
+      @board.put_on_at(info[:point], soldier)
     end
 
     def parse_arg(arg)
@@ -124,7 +124,7 @@ module Bushido
     end
 
     def soldiers
-      @field.matrix.values.find_all{|soldier|soldier.player == self}
+      @board.matrix.values.find_all{|soldier|soldier.player == self}
     end
 
     def move_to(a, b, promote_trigger = false)
@@ -137,19 +137,19 @@ module Bushido
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
         end
 
-        _soldier = @field.fetch(a)
+        _soldier = @board.fetch(a)
         if _soldier.promoted
           raise AlredyPromoted, "#{_soldier.current_point.name}の#{_soldier.piece.name}はすでに成っています"
         end
       end
 
-      soldier = @field.pick_up!(a)
-      target_soldier = @field.fetch(b)
+      soldier = @board.pick_up!(a)
+      target_soldier = @board.fetch(b)
       if target_soldier
         if target_soldier.player == self
           raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.name}があります"
         end
-        @field.pick_up!(b)
+        @board.pick_up!(b)
         @pieces << target_soldier.piece
       end
 
@@ -157,7 +157,7 @@ module Bushido
         soldier.promoted = true
       end
 
-      @field.put_on_at(b, soldier)
+      @board.put_on_at(b, soldier)
     end
 
     def next_player
@@ -203,7 +203,7 @@ module Bushido
         if promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{str.inspect}"
         end
-        @field.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
+        @board.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
       else
         if md[:from]
           source_point = Point.parse(md[:from])
@@ -228,10 +228,10 @@ module Bushido
             raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
           end
 
-          source_point = @field.matrix.invert[soldiers.first]
+          source_point = @board.matrix.invert[soldiers.first]
         end
 
-        source_soldier = @field.fetch(source_point)
+        source_soldier = @board.fetch(source_point)
 
         unless promote_trigger
           if source_soldier.promoted && !promoted

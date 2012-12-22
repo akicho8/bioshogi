@@ -5,18 +5,18 @@ require "spec_helper"
 module Bushido
   describe Bushido do
     it do
-      @field = Field.new
+      @board = Board.new
       @players = []
-      @players << Player.create2(:black, @field)
-      @players << Player.create2(:white, @field)
+      @players << Player.create2(:black, @board)
+      @players << Player.create2(:white, @board)
       @players.each(&:setup)
-      # puts @field.to_s
+      # puts @board.to_s
       @players[0].move_to("7七", "7六")
-      # puts @field.to_s
+      # puts @board.to_s
       @players[1].move_to("3三", "3四")
-      # puts @field.to_s
+      # puts @board.to_s
       @players[0].move_to("8八", "2二")
-      # puts @field.to_s
+      # puts @board.to_s
 
       # p Point.parse("4三").name
       # p Point.parse("４三").name

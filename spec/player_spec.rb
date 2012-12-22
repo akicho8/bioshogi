@@ -31,12 +31,12 @@ module Bushido
 
     describe "#setup" do
       it "初期配置" do
-        field = Field.new
+        board = Board.new
         players = []
-        players << Player.create2(:black, field)
-        players << Player.create2(:white, field)
+        players << Player.create2(:black, board)
+        players << Player.create2(:white, board)
         players.each(&:setup)
-        field.to_s.should == <<-FIELD.strip_heredoc
+        board.to_s.should == <<-FIELD.strip_heredoc
 +------+------+------+------+------+------+------+------+------+----+
 |    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
 +------+------+------+------+------+------+------+------+------+----+
@@ -210,16 +210,16 @@ FIELD
     end
 
     it "全体確認" do
-      field = Field.new
+      board = Board.new
       players = []
-      players << Player.create2(:black, field)
-      players << Player.create2(:white, field)
+      players << Player.create2(:black, board)
+      players << Player.create2(:white, board)
       players.each(&:setup)
       players[0].execute("7六歩")
       players[1].execute("3四歩")
       players[0].execute("2二角成")
       players[0].pieces.collect(&:name).should == ["角"]
-      field.to_s.should == <<-FIELD.strip_heredoc
+      board.to_s.should == <<-FIELD.strip_heredoc
 +------+------+------+------+------+------+------+------+------+----+
 |    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
 +------+------+------+------+------+------+------+------+------+----+

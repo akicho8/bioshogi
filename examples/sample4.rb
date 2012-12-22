@@ -11,14 +11,14 @@ end
 
 include Bushido
 
-field = Field.new
-player = Player.create2(:black, field)
+board = Board.new
+player = Player.create2(:black, board)
 player.setup
-puts field
-field["５五"]      # => nil
-field["８八"].name # => "▲8八角"
-field["２八"].name # => "▲2八飛"
-field["５九"].name # => "▲5九玉"
+puts board
+board["５五"]      # => nil
+board["８八"].name # => "▲8八角"
+board["２八"].name # => "▲2八飛"
+board["５九"].name # => "▲5九玉"
 # >> +----+----+----+----+----+----+----+----+----+----+
 # >> |  9 |  8 |  7 |  6 |  5 |  4 |  3 |  2 |  1 |    |
 # >> +----+----+----+----+----+----+----+----+----+----+

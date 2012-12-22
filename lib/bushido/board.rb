@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 module Bushido
-  class Field
+  class Board
     attr_accessor :matrix
 
     def initialize
@@ -38,7 +38,7 @@ module Bushido
     end
 
     def pick_up!(point)
-      @matrix.delete(point.to_xy) or raise NotFoundOnField, "#{point.name}の位置には何もありません"
+      @matrix.delete(point.to_xy) or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
     end
 
     def to_s

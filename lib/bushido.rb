@@ -26,7 +26,7 @@ module Bushido
   class NotPromotable < BushidoError; end
   class PromotedPiecePutOnError < BushidoError; end
   class AlredyPromoted < BushidoError; end
-  class NotFoundOnField < BushidoError; end
+  class NotFoundOnBoard < BushidoError; end
   class PromotedPieceToNormalPiece < BushidoError; end
   class NotPutInPlaceNotBeMoved < BushidoError; end
   class DoublePawn < BushidoError; end
@@ -43,75 +43,44 @@ module Bushido
       self.class.new([-x, -y])
     end
   end
-
-  class Frame
-    attr_accessor :players, :field
-
-    def self.setup
-      new.tap do |o|
-        o.player_join(Player.create1(:black))
-        o.player_join(Player.create1(:white))
-      end
-    end
-
-    def initialize
-      @field = Field.new
-      @players = []
-    end
-
-    def player_join(player)
-      @players << player
-      player.frame = self
-      player.field = @field
-    end
-
-    def attach
-      # # ここで設定するのおかしくね？
-      # @players.each{|player|player.frame = self}
-    end
-
-    def piece_discard
-      @players.collect(&:piece_discard)
-    end
-  end
 end
 
 require_relative "bushido/version"
 require_relative "bushido/position"
 require_relative "bushido/point"
 require_relative "bushido/piece"
-require_relative "bushido/field"
+require_relative "bushido/board"
 require_relative "bushido/soldier"
 require_relative "bushido/player"
+require_relative "bushido/frame"
 
 require_relative "bushido/kif_format"
 
 module Bushido
-  Field.send(:include, KifFormat::Field)
+  Board.send(:include, KifFormat::Board)
   Soldier.send(:include, KifFormat::Soldier)
 end
 
 module Bushido
   if $0 == __FILE__
     frame = Frame.new
-    frame.players << Player.create2(:black, frame.field)
-    frame.players << Player.create2(:white, frame.field)
-    frame.attach
-    puts frame.field
+    frame.players << Player.create2(:black, frame.board)
+    frame.players << Player.create2(:white, frame.board)
+    puts frame.board
 
-    # @field = Field.new
+    # @board = Board.new
     # @players = []
-    # @players << Player.create2(:black, @field)
-    # @players << Player.create2(:white, @field)
+    # @players << Player.create2(:black, @board)
+    # @players << Player.create2(:white, @board)
     # @players.each(&:setup)
     # @players[0].execute("7六歩")
-    # puts @field
+    # puts @board
 
     # @players[0].move_to("7七", "7六")
-    # puts @field
+    # puts @board
     # @players[1].move_to("3三", "3四")
-    # puts @field
+    # puts @board
     # @players[0].move_to("8八", "2二")
-    # puts @field
+    # puts @board
   end
 end

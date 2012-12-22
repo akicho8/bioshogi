@@ -34,7 +34,7 @@ module Bushido
     end
 
     def current_point
-      if xy = @player.field.matrix.invert[self]
+      if xy = @player.board.matrix.invert[self]
         Point.parse(xy)
       end
     end
@@ -73,7 +73,7 @@ module Bushido
           if options[:ignore_the_other_pieces_on_the_board]
             list << point
           else
-            target = @player.field.fetch(point)
+            target = @player.board.fetch(point)
             if target.nil?
               list << point
             else
