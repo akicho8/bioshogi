@@ -3,13 +3,23 @@
 require "spec_helper"
 
 module Bushido
-  describe do
-    it "読み込み" do
-      # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
-      file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
-      text = file.read
-      obj = KifFormat::Parser.parse(text)
-      obj.header.should == {"開始日時" => "2010/01/15 09:28:52", "終了日時" => "2010/01/15 12:18:26", "棋戦" => "第五回 世界最強決定戦 2010", "持ち時間" => "各1時間", "手合割" => "平手", "先手" => "激指", "後手" => "GPS将棋"}
+  describe KifFormat do
+    context "KIF読み込み" do
+      before do
+        # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
+        # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
+        file = Pathname(__FILE__).dirname.join("sample1.kif").expand_path
+        @result = KifFormat::Parser.parse(file.read)
+      end
+
+      it "ヘッダー部" do
+        @result.header.should == {"開始日時" => "2000/01/01 00:00:00", "終了日時" => "2000/01/01 01:00:00", "棋戦" => "(棋戦)", "持ち時間" => "(棋戦)", "手合割" => "平手", "先手" => "(先手)", "後手" => "(後手)"}
+      end
+
+      it "棋譜の羅列" do
+        @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["1手目のコメ1行目", "", "1手目のコメ3行目"]}
+        @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50", :comments => []}
+      end
     end
 
     it "盤面表示" do
@@ -17,7 +27,7 @@ module Bushido
       players = []
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
-      players.each(&:setup)
+      players.each(&:piece_plot)
       board.to_kif_table.should == <<-FIELD.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

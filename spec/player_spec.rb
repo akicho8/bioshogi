@@ -35,7 +35,7 @@ module Bushido
         players = []
         players << Player.create2(:black, board)
         players << Player.create2(:white, board)
-        players.each(&:setup)
+        players.each(&:piece_plot)
         board.to_s.should == <<-FIELD.strip_heredoc
 +------+------+------+------+------+------+------+------+------+----+
 |    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
@@ -99,6 +99,9 @@ FIELD
           it "相手陣地から出るときに成る" do
             Player.this_case(:init => "５一飛", :exec => "５四飛成").should == ["▲5四龍"]
           end
+          it "後手が相手の3段目に入ったタイミングで成る(バグっていたので消さないように)" do
+            Player.this_case(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭↓"]
+          end
         end
         context "成れない" do
           it "自分の陣地に入るタイミングでは" do
@@ -135,7 +138,7 @@ FIELD
       context "取る" do
         context "取れる" do
           it "座標指定で" do
-            frame = Frame.setup
+            frame = Frame.sit_down
             frame.players[0].initial_put_on("５六歩")
             frame.players[1].initial_put_on("５五飛")
             frame.piece_discard
@@ -143,12 +146,12 @@ FIELD
             frame.players[0].piece_names.should == ["飛"]
           end
           it "同歩で取る" do
-            frame = Frame.setup
+            frame = Frame.sit_down
             frame.players[0].initial_put_on("２五歩")
             frame.players[1].initial_put_on("２三歩")
             frame.piece_discard
             frame.players[0].execute("２四歩")
-            frame.players[1].execute("同歩")
+            frame.players[1].execute("同 歩")
             frame.players[1].piece_names.should == ["歩"]
           end
         end
@@ -190,7 +193,7 @@ FIELD
           expect { Player.this_case(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
         end
         it "相手の駒の上に" do
-          frame = Frame.setup
+          frame = Frame.sit_down
           frame.players[1].initial_put_on("５五飛")
           expect { frame.players[0].execute("５五角打") }.to raise_error(PieceAlredyExist)
         end
@@ -214,7 +217,7 @@ FIELD
       players = []
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
-      players.each(&:setup)
+      players.each(&:piece_plot)
       players[0].execute("7六歩")
       players[1].execute("3四歩")
       players[0].execute("2二角成")
@@ -234,6 +237,12 @@ FIELD
 | 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   | 九 |
 +------+------+------+------+------+------+------+------+------+----+
 FIELD
+    end
+
+    it "指したあと前回の手を確認できる" do
+      Player.this_case2(:init => "５五飛", :exec => "５一飛成").last_info_str.should == "5一飛成(55)"
+      Player.this_case2(:init => "５一龍", :exec => "１一龍").last_info_str.should   == "1一龍(51)"
+      Player.this_case2(:exec => "５五飛打").last_info_str.should                    == "5五飛打"
     end
   end
 end

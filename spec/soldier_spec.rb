@@ -14,7 +14,7 @@ module Bushido
 
     describe "#moveable_points" do
       context "初期配置での移動可能な座標" do
-        before { player.setup }
+        before { player.piece_plot }
         it { board["7七"].moveable_points.collect(&:name).should == ["7六"] }                                    # 歩
         it { board["9九"].moveable_points.collect(&:name).should == ["9八"] }                                    # 香
         it { board["8九"].moveable_points.collect(&:name).should == [] }                                         # 桂

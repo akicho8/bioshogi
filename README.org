@@ -7,7 +7,7 @@
   : players = []
   : players << Player.create2(:black, board)
   : players << Player.create2(:white, board)
-  : players.each(&:setup)
+  : players.each(&:piece_plot)
   : players[0].execute("7六歩")
   : players[1].execute("3四歩")
   : players[0].execute("2二角成")
@@ -84,7 +84,7 @@
 
      : board = Board.new
      : player = Player.create2(:black, board)
-     : player.setup
+     : player.piece_plot
      : puts board
 
 #+ATTR_HTML: border="1" rules="all" frame="all"
@@ -111,7 +111,7 @@
      : players = []
      : players << Player.create2(:black, board)
      : players << Player.create2(:white, board)
-     : players.each(&:setup)
+     : players.each(&:piece_plot)
      : puts board.to_kif_table
      : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
      : # >> +---------------------------+
@@ -201,6 +201,8 @@
     - "5八金右" の場合、5八から見て右下にある金が斜め上に上がったという意味なのでこの解釈が難しい。
     - "4八" に金があった場合、"5八金右" は真横の金なのか、斜め下の金なのか、どっちだろう。
     - ネット上にある棋譜はだいたい "7六歩(77)" の形式になっていて７七にあったことを明示しているのでがんばって推測しなくてもいい。
+
+    - KIFフォーマットは人間には読みやすい一方でパースしずらい。アスタリスクで始まるコメント部分には何を書いてもいいというのを利用して一手目の上に開始前メッセージがあるのがおかしい。結び付く手がない。開始前メッセージはヘッダーに入っていればよかった。
 
 *** プログラムで使っている将棋の英語表記対応表
 

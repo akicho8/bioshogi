@@ -9,7 +9,7 @@ module Bushido
       @players = []
       @players << Player.create2(:black, @board)
       @players << Player.create2(:white, @board)
-      @players.each(&:setup)
+      @players.each(&:piece_plot)
       # puts @board.to_s
       @players[0].move_to("7七", "7六")
       # puts @board.to_s

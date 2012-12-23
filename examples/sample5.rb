@@ -15,7 +15,7 @@ board = Board.new
 players = []
 players << Player.create2(:black, board)
 players << Player.create2(:white, board)
-players.each(&:setup)
+players.each(&:piece_plot)
 puts board.to_kif_table
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

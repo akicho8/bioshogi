@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Frame do
     it do
-      frame = Frame.setup
+      frame = Frame.sit_down
       frame.players[0].initial_put_on("５六歩")
       frame.players[1].initial_put_on("５五飛")
       frame.piece_discard
@@ -22,6 +22,20 @@ module Bushido
     end
     it "N手目を一発で表示" do
       pending
+    end
+  end
+
+  describe LiveFrame do
+    it do
+      # @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
+      @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif"))
+      frame = LiveFrame.sit_down
+      frame.piece_plot
+      @result.move_infos.each{|move_info|
+        frame.execute(move_info[:input])
+        frame.inspect
+      }
+      frame.a_move_logs.join(" ")
     end
   end
 end

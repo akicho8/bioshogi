@@ -5,11 +5,21 @@ module Bushido
     def self.this_case(params)
       params = {
         :player => :black,
+        :return_player => false,
       }.merge(params)
       player = Player.create2(params[:player], Board.new)
       Array.wrap(params[:init]).each{|v|player.initial_put_on(v)}
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
-      player.soldier_names.sort
+      if params[:return_player]
+        player
+      else
+        player.soldier_names.sort
+      end
+    end
+
+    # facade
+    def self.this_case2(params)
+      this_case({:return_player => true}.merge(params))
     end
 
     # 互換性のため一時的に。
@@ -50,7 +60,7 @@ module Bushido
       ]
     end
 
-    def setup
+    def piece_plot
       table = first_placements.collect{|arg|parse_arg(arg)}
       if @location == :white
         table.each{|info|info[:point] = info[:point].reverse}
@@ -182,7 +192,15 @@ module Bushido
     end
 
     def execute(str)
-      md = str.match(/\A(?<point>..|同)(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
+      if str == "投了"
+        # last_info_reset
+        return
+      end
+
+      white_space = /\s#{[0x3000].pack('U')}/
+      # not_white_space = /[^#{white_space}]*/
+
+      md = str.match(/\A(?<point>同|..)[#{white_space}]*(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
       md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
 
       if md[:point] == "同"
@@ -228,7 +246,7 @@ module Bushido
             raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
           end
 
-          source_point = @board.matrix.invert[soldiers.first]
+          source_point = Point[@board.matrix.invert[soldiers.first]]
         end
 
         source_soldier = @board.fetch(source_point)
@@ -242,7 +260,55 @@ module Bushido
         move_to(source_point, point, promote_trigger)
       end
 
-      @before_point = point
+      @before_promoted        = promoted
+      @before_piece           = piece
+      @before_point           = point
+      @before_source_point    = source_point
+      @before_promote_trigger = promote_trigger
+      @before_put_on_trigger  = put_on_trigger
+    end
+
+    # def last_info_reset
+    #   @before_promoted        = nil
+    #   @before_piece           = nil
+    #   @before_point           = nil
+    #   @before_source_point    = nil
+    #   @before_promote_trigger = nil
+    #   @before_put_on_trigger  = nil
+    # end
+
+    def last_info
+      {
+        :before_promoted        => @before_promoted,
+        :before_promote_trigger => @before_promote_trigger,
+        :before_source_point    => @before_source_point,
+        :before_point           => @before_point,
+        :before_piece           => @before_piece,
+        :before_put_on_trigger  => @before_put_on_trigger,
+      }
+    end
+
+    #  @before_piece=<Bushido::Piece::Rook:70167310927440 飛 rook>,
+    #  @before_point=#<Bushido::Point:70167308998220 "5一">,
+    #  @before_promote_trigger=true,
+    #  @before_put_on_trigger=false,
+    #  @before_source_point=#<Bushido::Point:70167310511120 "5五">,
+    def last_info_str
+      # return if @before_piece.nil?
+
+      s = []
+      s << @before_point.name
+      s << @before_piece.some_name(@before_promoted)
+      if @before_promote_trigger
+        s << "成"
+      end
+      if @before_put_on_trigger
+        s << "打"
+      end
+      if @before_source_point
+        s << "(#{@before_source_point.to_s_digit})"
+      end
+      s.join
     end
   end
 end

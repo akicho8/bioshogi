@@ -72,7 +72,7 @@ module Bushido
     # @players = []
     # @players << Player.create2(:black, @board)
     # @players << Player.create2(:white, @board)
-    # @players.each(&:setup)
+    # @players.each(&:piece_plot)
     # @players[0].execute("7六歩")
     # puts @board
 

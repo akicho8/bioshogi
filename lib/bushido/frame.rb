@@ -4,7 +4,7 @@ module Bushido
   class Frame
     attr_accessor :players, :board
 
-    def self.setup
+    def self.sit_down
       new.tap do |o|
         o.player_join(Player.create1(:black))
         o.player_join(Player.create1(:white))
@@ -22,9 +22,17 @@ module Bushido
       player.board = @board
     end
 
+    def piece_plot
+      @players.collect(&:piece_plot)
+    end
+
     def piece_discard
       @players.collect(&:piece_discard)
     end
+
+    # def deal
+    #   @players.each(&:deal)
+    # end
 
     def inspect
       s = ""
@@ -33,18 +41,53 @@ module Bushido
   end
 
   class LiveFrame < Frame
-    attr_accessor :count
+    attr_reader :count, :a_move_logs
 
     def initialize(*)
       super
       @count = 0
+      @a_move_logs = []
     end
 
-    def next_scene
+    def execute(str)
+      if str == "投了"
+        return
+      end
+      current_player.execute(str)
+      @a_move_logs << "#{white_or_black_mark}#{current_player.last_info_str}"
       @count += 1
     end
 
-    def execute
+    def current_player
+      players[current_index]
+    end
+
+    def current_index
+      @count.modulo(@players.size)
+    end
+
+    def counter_human_name
+      @count.next
+    end
+
+    def inspect
+      "#{counter_human_name}:#{white_or_black}\n#{super}"
+    end
+
+    def white_or_black
+      if current_index.zero?
+        "▲先手番"
+      else
+        "▽後手番"
+      end
+    end
+
+    def white_or_black_mark
+      if current_index.zero?
+        "▲"
+      else
+        "▽"
+      end
     end
   end
 end

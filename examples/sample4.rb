@@ -13,7 +13,7 @@ include Bushido
 
 board = Board.new
 player = Player.create2(:black, board)
-player.setup
+player.piece_plot
 puts board
 board["５五"]      # => nil
 board["８八"].name # => "▲8八角"

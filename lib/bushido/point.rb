@@ -92,7 +92,7 @@ module Bushido
       if location == :black
         @y.value < promoted_area_height
       else
-        @y.value > (@y.class.units.size - promoted_area_height)
+        @y.value >= (@y.class.units.size - promoted_area_height)
       end
     end
   end
