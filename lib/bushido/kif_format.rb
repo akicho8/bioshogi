@@ -7,87 +7,65 @@ module Bushido
         new(source, options).tap{|o|o.parse}
       end
 
-      attr_reader :header, :move_infos
+      attr_reader :header, :move_infos, :start_comments, :source
 
       def initialize(source, options = {})
         @source = source
         @options = default_options.merge(options)
 
-        @source = normalized_source
+        normalized_source
+        @header = {}
+        @move_infos = []
+        @start_comments = []
       end
 
       def default_options
         {}
       end
 
-      # # ----  Kifu for Windows V6.26 棋譜ファイル  ----
-      # 開始日時：1968/03/18
-      # 棋戦：順位戦
-      # 戦型：中飛車
-      # 手合割：平手
-      # 先手：加藤博二
-      # 後手：松田茂役
-      # 手数----指手---------消費時間--
-      # *棋戦詳細：第22期順位戦A級
-      #    1 ７六歩(77)   ( 0:00/00:00:00)
+      # | # ----  Kifu for Windows V6.26 棋譜ファイル  ----
+      # | key：value
+      # | 手数----指手---------消費時間--
+      # | *コメント0
+      # |    1 ７六歩(77)   ( 0:00/00:00:00)
       def parse
-        @header = {}
-
-        if false
-          @source.scan(/^(\S.*)：(.*)$/).each{|key, value|
-            next if key.match(/^\*/)
-            @header[key] = value
-          }
-
-          r = @source.scan(/^\s+(\d+)\s+(\S.*?)\s+\(\s*(.*)\)/)
-          @move_infos = r.collect{|index, input, spent_time|
-            {index: index, input: input, spent_time: spent_time}
-          }
-        else
-          @header = {}
-          @move_infos = []
-          @start_comments = []
-
-          @current_part = :header
-          @source.lines.each do |line|
-            if line.match(/^#/)
-              next
-            end
-            if @current_part == :header
-              if line.match(/^手数.*指手/)
-                @current_part = :body
-                next
-              end
-              if md = line.match(/^(?<key>.*)：(?<value>.*)/)
-                @header.update(md[:key] => md[:value])
-              end
-            end
-            if @current_part == :body
-              if md = line.match(/^\s*\*\s*(?<comment>.*)/)
-                if @move_infos.empty?
-                  # 1手目より前にコメントがある場合、結び付く手が無い→つまり開始前メッセージということになる
-                  @start_comments << md[:comment]
-                else
-                  # 手に結び付いているコメント
-                  @move_infos.last[:comments] << md[:comment]
-                end
-              end
-              if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
-                @move_infos << {:index => md[:index], :input => md[:input], :spent_time => md[:spent_time], :comments => []}
-              end
-            end
+        @_head, @_body = @source.split(/^手数.*指手.*消費時間.*$/, 2)
+        read_header
+        @_body.lines.each do |line|
+          comment_read(line)
+          if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
+            @move_infos << {:index => md[:index], :input => md[:input], :spent_time => md[:spent_time]}
           end
         end
       end
 
       private
 
+      def read_header
+        @_head.scan(/^(\S.*)：(.*)$/).each{|key, value|
+          @header[key] = value
+        }
+      end
+
+      def comment_read(line)
+        if md = line.match(/^\s*\*\s*(?<comment>.*)/)
+          if @move_infos.empty?
+            # 1手目より前にコメントがある場合、結び付く手が無い→つまり開始前メッセージということになる
+            @start_comments << md[:comment]
+          else
+            # 手に結び付いているコメント
+            @move_infos.last[:comments] ||= []
+            @move_infos.last[:comments] << md[:comment]
+          end
+        end
+      end
+
       def normalized_source
         if @source.kind_of? Pathname
           @source = @source.expand_path.read
         end
-        str = @source.toutf8
-        str = str.gsub(/[#{[0x3000].pack('U')}\s]+\r?\n/, "\n")
+        @source = @source.toutf8
+        @source = @source.gsub(/[#{[0x3000].pack('U')} ]*\r?\n/, "\n")
       end
     end
 

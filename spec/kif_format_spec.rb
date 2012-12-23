@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe KifFormat do
-    context "KIF読み込み" do
+    context "kif読み込み" do
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
@@ -13,12 +13,16 @@ module Bushido
       end
 
       it "ヘッダー部" do
-        @result.header.should == {"開始日時" => "2000/01/01 00:00:00", "終了日時" => "2000/01/01 01:00:00", "棋戦" => "(棋戦)", "持ち時間" => "(棋戦)", "手合割" => "平手", "先手" => "(先手)", "後手" => "(後手)"}
+        @result.header.should == {"開始日時"=>"2000/01/01 00:00:00", "終了日時"=>"2000/01/01 01:00:00", "棋戦"=>"(棋戦)", "持ち時間"=>"(持ち時間)", "手合割"=>"平手", "先手"=>"(先手)", "後手"=>"(後手)"}
       end
 
       it "棋譜の羅列" do
-        @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["1手目のコメ1行目", "", "1手目のコメ3行目"]}
-        @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50", :comments => []}
+        @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
+        @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50"}
+      end
+
+      it "対戦前コメント" do
+        @result.start_comments.should == ["指し手に結び付かない対戦前コメント"]
       end
     end
 

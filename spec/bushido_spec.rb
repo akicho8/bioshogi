@@ -24,5 +24,15 @@ module Bushido
       #
       # p Point.parse("4三").to_xy # => [5, 2]
     end
+
+    context "ファイル読み込み" do
+      it "できる" do
+        Bushido.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
+        Bushido.parse(Pathname(__FILE__).dirname.join("sample1.ki2"))
+      end
+      it "できない" do
+        expect { Bushido.parse(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(FileFormatError)
+      end
+    end
   end
 end

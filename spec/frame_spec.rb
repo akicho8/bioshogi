@@ -28,7 +28,8 @@ module Bushido
   describe LiveFrame do
     it do
       # @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-      @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif"))
+      @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif"))
+      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/九段戦1950-01 大山板谷-2.ki2"))
       frame = LiveFrame.sit_down
       frame.piece_plot
       @result.move_infos.each{|move_info|

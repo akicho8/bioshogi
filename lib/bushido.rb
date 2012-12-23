@@ -32,6 +32,8 @@ module Bushido
   class DoublePawn < BushidoError; end
   class BeforePointNotFound < BushidoError; end
 
+  class FileFormatError < BushidoError; end
+
   class Vector < Array
     def initialize(arg)
       super()
@@ -42,6 +44,12 @@ module Bushido
       x, y = self
       self.class.new([-x, -y])
     end
+  end
+
+  def self.parse(file)
+    "#{name}/#{file.extname.gsub(".", "")}_format/parser".classify.constantize.parse(file.read)
+  rescue NameError
+    raise FileFormatError, "拡張子がおかしい : #{file.expand_path}"
   end
 end
 
@@ -55,10 +63,14 @@ require_relative "bushido/player"
 require_relative "bushido/frame"
 
 require_relative "bushido/kif_format"
+require_relative "bushido/ki2_format"
 
 module Bushido
   Board.send(:include, KifFormat::Board)
   Soldier.send(:include, KifFormat::Soldier)
+
+  Board.send(:include, Ki2Format::Board)
+  Soldier.send(:include, Ki2Format::Soldier)
 end
 
 module Bushido

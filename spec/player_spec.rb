@@ -173,11 +173,11 @@ FIELD
           Player.this_case(:exec => "５五歩打").should == ["▲5五歩"]
         end
 
-        it "「打」は曖昧なときだけ付くらしい(打がない場合、動けるのを推測で無いのを確認し、打つ)" do
-          pending
-          # 1. 動ける駒を探す→0件
-          # 2. 持駒にその駒がある
-          # 3. それを打つ
+        # 棋譜の表記方法：日本将棋連盟 http://www.shogi.or.jp/faq/kihuhyouki.html
+        # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
+        it "打は曖昧なときだけ付く" do
+          Player.this_case(:exec => "５五歩").should == ["▲5五歩"]
+          Player.this_case2(:exec => "５五歩").last_info_str.should == "5五歩打"
         end
 
         it "と金は二歩にならないので" do
@@ -212,6 +212,19 @@ FIELD
       end
     end
 
+    context "人間が入力する棋譜" do
+      it do
+        pending
+        # p Player.this_case(:init => ["４九金", "３九金"], :exec => "５八金右")
+      end
+    end
+
+    it "指したあと前回の手を確認できる" do
+      Player.this_case2(:init => "５五飛", :exec => "５一飛成").last_info_str.should == "5一飛成(55)"
+      Player.this_case2(:init => "５一龍", :exec => "１一龍").last_info_str.should   == "1一龍(51)"
+      Player.this_case2(:exec => "５五飛打").last_info_str.should                    == "5五飛打"
+    end
+
     it "全体確認" do
       board = Board.new
       players = []
@@ -237,12 +250,6 @@ FIELD
 | 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   | 九 |
 +------+------+------+------+------+------+------+------+------+----+
 FIELD
-    end
-
-    it "指したあと前回の手を確認できる" do
-      Player.this_case2(:init => "５五飛", :exec => "５一飛成").last_info_str.should == "5一飛成(55)"
-      Player.this_case2(:init => "５一龍", :exec => "１一龍").last_info_str.should   == "1一龍(51)"
-      Player.this_case2(:exec => "５五飛打").last_info_str.should                    == "5五飛打"
     end
   end
 end

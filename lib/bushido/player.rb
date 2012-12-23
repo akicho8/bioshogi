@@ -126,7 +126,11 @@ module Bushido
     end
 
     def piece_fetch!(piece)
-      @pieces.find{|e|e.class == piece.class} or raise PieceNotFound, "持駒に#{piece.name}がありません"
+      piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません"
+    end
+
+    def piece_fetch(piece)
+      @pieces.find{|e|e.class == piece.class}
     end
 
     def pick_out(piece)
@@ -191,6 +195,7 @@ module Bushido
       @pieces.clear
     end
 
+    # FIXME: dry
     def execute(str)
       if str == "投了"
         # last_info_reset
@@ -198,7 +203,6 @@ module Bushido
       end
 
       white_space = /\s#{[0x3000].pack('U')}/
-      # not_white_space = /[^#{white_space}]*/
 
       md = str.match(/\A(?<point>同|..)[#{white_space}]*(?<piece>#{Piece.names.join("|")})(?<options>成|打)?(\((?<from>.*)\))?/)
       md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
@@ -217,47 +221,57 @@ module Bushido
       put_on_trigger = md[:options] == "打"
       source_point = nil
 
+      done = false
       if put_on_trigger
         if promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{str.inspect}"
         end
         @board.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
+        done = true
       else
         if md[:from]
           source_point = Point.parse(md[:from])
         end
 
         unless source_point
-          soldiers = soldiers()
-
-          soldiers = soldiers.find_all{|soldier|
-            soldier.moveable_points.include?(point)
-          }
-
-          if piece # MEMO: いまんとこ絶対通るけど、駒の指定がなくても動かせるようにしたいので。
-            soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
-          end
-
+          soldiers = soldiers().find_all{|soldier|soldier.moveable_points.include?(point)}
+          soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
           if soldiers.empty?
-            raise MovableSoldierNotFound, "#{point.name}に移動できる#{piece.name}がありません。#{str.inspect} の指定が間違っているのかもしれません"
+            if my_piece = piece_fetch(piece)
+
+              # FIXME: dry
+              put_on_trigger = true
+              if promoted
+                raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{str.inspect}"
+              end
+              @board.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
+              done = true
+
+            else
+              raise MovableSoldierNotFound, "#{point.name}に移動できる#{piece.name}がありません。#{str.inspect} の指定が間違っているのかもしれません"
+            end
           end
 
-          if soldiers.size > 1
-            raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
-          end
+          unless done
+            if soldiers.size > 1
+              raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
+            end
 
-          source_point = Point[@board.matrix.invert[soldiers.first]]
+            source_point = Point[@board.matrix.invert[soldiers.first]]
+          end
         end
 
-        source_soldier = @board.fetch(source_point)
+        unless done
+          source_soldier = @board.fetch(source_point)
 
-        unless promote_trigger
-          if source_soldier.promoted && !promoted
-            raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{str.inspect}の駒は#{source_soldier.piece_current_name}と書いてください"
+          unless promote_trigger
+            if source_soldier.promoted && !promoted
+              raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{str.inspect}の駒は#{source_soldier.piece_current_name}と書いてください"
+            end
           end
-        end
 
-        move_to(source_point, point, promote_trigger)
+          move_to(source_point, point, promote_trigger)
+        end
       end
 
       @before_promoted        = promoted
