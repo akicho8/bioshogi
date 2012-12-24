@@ -23,8 +23,15 @@ module Bushido
         ]
       end
 
-      it "対戦前コメント" do
-        @result.start_comments.should == ["指し手に結び付かない対戦前コメント"]
+      it "対局前コメント" do
+        @result.first_comments.should == ["対局前コメント"]
+      end
+    end
+
+    context "読み込み練習" do
+      it do
+        result = Ki2Format::Parser.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/龍王戦2002-15 羽生阿部-3.ki2").read)
+        # result.tapp
       end
     end
   end

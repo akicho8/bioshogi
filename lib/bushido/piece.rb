@@ -124,7 +124,7 @@ module Bushido
       end
     end
 
-    module AsGoldIfPromoted
+    module Goldable
       def promoted_vectors1
         Gold.basic_pattern
       end
@@ -140,14 +140,8 @@ module Bushido
       end
     end
 
-    module Narigatsukudake
-      # def promoted_name
-      #   "成#{name}"
-      # end
-    end
-
     class Pawn < Base
-      include AsGoldIfPromoted
+      include Goldable
 
       def name
         "歩"
@@ -207,8 +201,7 @@ module Bushido
     end
 
     class Lance < Base
-      include AsGoldIfPromoted
-      include Narigatsukudake
+      include Goldable
 
       def name
         "香"
@@ -228,8 +221,7 @@ module Bushido
     end
 
     class Knight < Base
-      include AsGoldIfPromoted
-      include Narigatsukudake
+      include Goldable
 
       def name
         "桂"
@@ -240,7 +232,7 @@ module Bushido
       end
 
       def promoted_names
-        super + ["成桂馬"]
+        super + ["成桂"]
       end
 
       def basic_vectors1
@@ -249,8 +241,7 @@ module Bushido
     end
 
     class Silver < Base
-      include AsGoldIfPromoted
-      include Narigatsukudake
+      include Goldable
 
       def name
         "銀"

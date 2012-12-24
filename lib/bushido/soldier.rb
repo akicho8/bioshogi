@@ -13,7 +13,11 @@ module Bushido
       end
     end
 
-    def to_s
+    def to_s(format = :default)
+      send("to_s_#{format}")
+    end
+
+    def to_s_default
       "#{piece_current_name}#{@player.arrow}"
     end
 
@@ -26,14 +30,14 @@ module Bushido
     end
 
     def to_text
-      "#{@player.location_mark}#{current_point ? current_point.name : '(どこにも置いてない)'}#{self}"
+      "#{@player.location_mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end
 
     def name
       to_text
     end
 
-    def current_point
+    def point
       if xy = @player.board.matrix.invert[self]
         Point.parse(xy)
       end
@@ -63,19 +67,19 @@ module Bushido
 
     def __moveable_points(vectors, loop, options = {})
       normalized_vectors(vectors).each_with_object([]) do |vector, list|
-        point = current_point
+        pt = point
         loop do
-          point = point.add_vector(vector)
-          unless point.valid?
+          pt = pt.add_vector(vector)
+          unless pt.valid?
             break
           end
 
           if options[:ignore_the_other_pieces_on_the_board]
-            list << point
+            list << pt
           else
-            target = @player.board.fetch(point)
+            target = @player.board.fetch(pt)
             if target.nil?
-              list << point
+              list << pt
             else
               unless target.kind_of? Soldier
                 raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
@@ -85,7 +89,7 @@ module Bushido
                 break
               else
                 # 相手の駒だったので置ける
-                list << point
+                list << pt
                 break
               end
             end

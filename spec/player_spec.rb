@@ -37,19 +37,18 @@ module Bushido
         players << Player.create2(:white, board)
         players.each(&:piece_plot)
         board.to_s.should == <<-FIELD.strip_heredoc
-+------+------+------+------+------+------+------+------+------+----+
-|    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
-+------+------+------+------+------+------+------+------+------+----+
-| 香↓ | 桂↓ | 銀↓ | 金↓ | 玉↓ | 金↓ | 銀↓ | 桂↓ | 香↓ | 一 |
-|      | 飛↓ |      |      |      |      |      | 角↓ |      | 二 |
-| 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 三 |
-|      |      |      |      |      |      |      |      |      | 四 |
-|      |      |      |      |      |      |      |      |      | 五 |
-|      |      |      |      |      |      |      |      |      | 六 |
-| 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 七 |
-|      | 角   |      |      |      |      |      | 飛   |      | 八 |
-| 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   | 九 |
-+------+------+------+------+------+------+------+------+------+----+
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
 FIELD
       end
     end
@@ -77,8 +76,14 @@ FIELD
       end
 
       context "できない" do
-        it "動いてないので、と思うかもしれないけど、そこに来れる駒がないので" do
-          expect { Player.this_case(:init => "４二銀", :exec => "４二銀") }.to raise_error(MovableSoldierNotFound)
+        if false
+          # 持駒から探す処理が入ってない場合の仕様
+          it "動いてないので、と思うかもしれないけど、そこに来れる駒がないので" do
+            expect { Player.this_case(:init => "４二銀", :exec => "４二銀") }.to raise_error(MovableSoldierNotFound)
+          end
+        end
+        it "４二に来れる銀が見つからず、持駒の銀を打とうとしたが、４二にはすでに駒があった" do
+          expect { Player.this_case(:init => "４二銀", :exec => "４二銀") }.to raise_error(PieceAlredyExist)
         end
         it "推測結果が複数パターンがあったので" do
           expect { Player.this_case(:init => ["６九金", "４九金"], :exec => "５九金") }.to raise_error(AmbiguousFormatError)
@@ -138,6 +143,7 @@ FIELD
       context "取る" do
         context "取れる" do
           it "座標指定で" do
+            # FIXME: Frame のクラスメソッドにする
             frame = Frame.sit_down
             frame.players[0].initial_put_on("５六歩")
             frame.players[1].initial_put_on("５五飛")
@@ -164,6 +170,22 @@ FIELD
             expect { Player.this_case(:exec => "同歩") }.to raise_error(BeforePointNotFound)
           end
         end
+
+        # context "後手で同金直" do
+        #   it do
+        #     frame = Frame.sit_down
+        #     frame.players[0].initial_put_on("５六金")
+        #     frame.players[1].initial_put_on(["５四金", "６四金"])
+        #     frame.piece_discard
+        #     frame.players[0].execute("５五金")
+        #     frame.players[1].execute("同金直") # これが５四金を指すか６四金か指すかで迷うが、５四金が正解
+        #     frame.players[1].piece_names.should == ["金"]
+        #     frame.players[1].last_a_move.should == "5五金(54)"
+        #
+        #     # p Player.this_case2(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]).last_a_move
+        #     # expect {  }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
+        #   end
+        # end
       end
     end
 
@@ -177,7 +199,7 @@ FIELD
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く" do
           Player.this_case(:exec => "５五歩").should == ["▲5五歩"]
-          Player.this_case2(:exec => "５五歩").last_info_str.should == "5五歩打"
+          Player.this_case2(:exec => "５五歩").last_a_move.should == "5五歩打"
         end
 
         it "と金は二歩にならないので" do
@@ -213,16 +235,93 @@ FIELD
     end
 
     context "人間が入力する棋譜" do
-      it do
-        pending
-        # p Player.this_case(:init => ["４九金", "３九金"], :exec => "５八金右")
+      before do
+        @params = {
+          # :player => :white,
+          :deal => "飛" * 7,
+          # # "６四龍", "５四龍", "４四龍",
+          # # "６五龍",           "４五龍",
+          # "６六龍", "５六龍", "４六龍",
+        }
+      end
+
+      # it("左下から右上") { Player.this_case2(:init => ["６六金", "４六金"], :exec => "５五金左").last_a_move.should == "5五金(66)" }
+      # it("右下から左上") { Player.this_case2(:init => ["６六金", "４六金"], :exec => "５五金右").last_a_move.should == "5五金(46)" }
+      #
+      # # it("右上から左下") { Player.this_case2(:init => ["６四銀", "４四銀"], :exec => "５五銀引").last_a_move.should == "5五銀(44)" }
+      # # it("左上から右下") { Player.this_case2(:init => ["６四銀", "４四銀"], :exec => "５五銀左").last_a_move.should == "5五銀(44)" }
+      # # it("左上から右下") { Player.this_case2(:init => ["６四銀", "４四銀"], :exec => "５五銀引").last_a_move.should == "5五銀(44)" }
+      #
+      # it("左上から右下") { Player.this_case2(:init => ["６六金", "４六金"], :exec => "５五金右").last_a_move.should == "5五金(46)" }
+      # it("左から右")     { Player.this_case2(:init => ["６五金", "４五金"], :exec => "５五金左").last_a_move.should == "5五金(65)" }
+      # it("右から左")     { Player.this_case2(:init => ["６五金", "４五金"], :exec => "５五金右").last_a_move.should == "5五金(45)" }
+      # it("真下から真上") { Player.this_case2(:init => ["５四金", "５六金"], :exec => "５五金直").last_a_move.should == "5五金(56)" }
+      # it("真上から真下") { Player.this_case2(:init => ["５四金", "５六金"], :exec => "５五金引").last_a_move.should == "5五金(54)" }
+
+      # it "後手で直" do
+      #   Player.this_case2(:player => :white, :init => ["５四金", "６四金"], :exec => "５五金直").last_a_move.should == "5五金(54)"
+      # end
+
+      context "下に三枚ある状態" do
+        before do
+          @params.update({:init => [
+                nil, nil, nil,
+                nil, nil, nil,
+                "６六龍", "５六龍", "４六龍",
+              ]})
+        end
+        it("右下の") { Player.this_case2(@params.merge(:exec => "５五龍右")).last_a_move.should == "5五龍(46)" }
+        it("真下の") { Player.this_case2(@params.merge(:exec => "５五龍直")).last_a_move.should == "5五龍(56)" }
+        it("左下の") { Player.this_case2(@params.merge(:exec => "５五龍左")).last_a_move.should == "5五龍(66)" }
+      end
+      context "上に三枚ある状態(上に同じものが3枚あって3つとも中心に移動できる状態は、普通はない)" do
+        before do
+          @params.update({:init => [
+                "６四龍", "５四龍", "４四龍",
+                nil, nil, nil,
+                nil, nil, nil,
+              ]})
+        end
+        it("右上の") { Player.this_case2(@params.merge(:exec => "５五龍右")).last_a_move.should == "5五龍(44)" }
+        it("真上の") { Player.this_case2(@params.merge(:exec => "５五龍引")).last_a_move.should == "5五龍(54)" }
+        it("左上の") { Player.this_case2(@params.merge(:exec => "５五龍左")).last_a_move.should == "5五龍(64)" }
+      end
+      context "右に三枚ある状態" do
+        before do
+          @params.update({:init => [
+                nil, nil, "４四龍",
+                nil, nil, "４五龍",
+                nil, nil, "４六龍",
+              ]})
+        end
+        it("右上の") { Player.this_case2(@params.merge(:exec => "５五龍右引")).last_a_move.should == "5五龍(44)" }
+        it("真右の") { Player.this_case2(@params.merge(:exec => "５五龍寄")).last_a_move.should   == "5五龍(45)" }
+        it("右下の") { Player.this_case2(@params.merge(:exec => "５五龍右上")).last_a_move.should == "5五龍(46)" }
+      end
+
+      # この場合 "４七銀引" は３六の銀が斜め左下に移動する
+      #
+      #     ９ ８ ７ ６ ５ ４ ３ ２ １
+      #   +---------------------------+
+      #   |v香 ・ ・ ・ ・v歩v玉 ・v香|一
+      #   | ・ ・ ・ ・ 圭v銀v金v角 ・|二
+      #   | ・ ・ ・ とv歩 ・v歩v歩v桂|三
+      #   |v歩 ・ ・v歩 ・ ・ ・ ・v歩|四
+      #   | ・v歩 ・ ・ ・ ・ 歩v銀 ・|五
+      #   | 歩 ・ ・ ・ ・ ・ 銀 ・ 歩|六
+      #   |vと ・ ・ ・ 歩 ・ 角 歩 ・|七
+      #   | ・ ・ ・ 歩 ・ ・ 銀 玉 ・|八
+      #   | ・ 桂v龍 ・ ・ 金 ・ 桂 香|九
+      #   +---------------------------+
+      it "引で斜めに引く" do
+        Player.this_case2(:init => ["３六銀", "３八銀"], :exec => "４七銀引").last_a_move.should == "4七銀(36)"
       end
     end
 
     it "指したあと前回の手を確認できる" do
-      Player.this_case2(:init => "５五飛", :exec => "５一飛成").last_info_str.should == "5一飛成(55)"
-      Player.this_case2(:init => "５一龍", :exec => "１一龍").last_info_str.should   == "1一龍(51)"
-      Player.this_case2(:exec => "５五飛打").last_info_str.should                    == "5五飛打"
+      Player.this_case2(:init => "５五飛", :exec => "５一飛成").last_a_move.should == "5一飛成(55)"
+      Player.this_case2(:init => "５一龍", :exec => "１一龍").last_a_move.should   == "1一龍(51)"
+      Player.this_case2(:exec => "５五飛打").last_a_move.should                    == "5五飛打"
     end
 
     it "全体確認" do
@@ -236,19 +335,18 @@ FIELD
       players[0].execute("2二角成")
       players[0].pieces.collect(&:name).should == ["角"]
       board.to_s.should == <<-FIELD.strip_heredoc
-+------+------+------+------+------+------+------+------+------+----+
-|    9 |    8 |    7 |    6 |    5 |    4 |    3 |    2 |    1 |    |
-+------+------+------+------+------+------+------+------+------+----+
-| 香↓ | 桂↓ | 銀↓ | 金↓ | 玉↓ | 金↓ | 銀↓ | 桂↓ | 香↓ | 一 |
-|      | 飛↓ |      |      |      |      |      | 馬   |      | 二 |
-| 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ | 歩↓ |      | 歩↓ | 歩↓ | 三 |
-|      |      |      |      |      |      | 歩↓ |      |      | 四 |
-|      |      |      |      |      |      |      |      |      | 五 |
-|      |      | 歩   |      |      |      |      |      |      | 六 |
-| 歩   | 歩   |      | 歩   | 歩   | 歩   | 歩   | 歩   | 歩   | 七 |
-|      |      |      |      |      |      |      | 飛   |      | 八 |
-| 香   | 桂   | 銀   | 金   | 玉   | 金   | 銀   | 桂   | 香   | 九 |
-+------+------+------+------+------+------+------+------+------+----+
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・ 馬 ・|二
+|v歩v歩v歩v歩v歩v歩 ・v歩v歩|三
+| ・ ・ ・ ・ ・ ・v歩 ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ 歩 ・ ・ ・ ・ ・ ・|六
+| 歩 歩 ・ 歩 歩 歩 歩 歩 歩|七
+| ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
 FIELD
     end
   end

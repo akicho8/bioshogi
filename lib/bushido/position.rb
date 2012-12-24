@@ -46,6 +46,10 @@ module Bushido
       def inspect
         "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
       end
+
+      def ==(other)
+        self.class == other.class && @value == other.value
+      end
     end
 
     class Hpos < Base

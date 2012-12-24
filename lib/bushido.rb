@@ -17,6 +17,7 @@ module Bushido
   class UnconfirmedObject < BushidoError; end
   class MovableSoldierNotFound < BushidoError; end
   class AmbiguousFormatError < BushidoError; end
+  class SoldierEmpty < BushidoError; end
   class SyntaxError < BushidoError; end
   class PointSyntaxError < BushidoError; end
   class UnknownPositionName < BushidoError; end
@@ -47,7 +48,7 @@ module Bushido
   end
 
   def self.parse(file)
-    "#{name}/#{file.extname.gsub(".", "")}_format/parser".classify.constantize.parse(file.read)
+    "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read)
   rescue NameError
     raise FileFormatError, "拡張子がおかしい : #{file.expand_path}"
   end

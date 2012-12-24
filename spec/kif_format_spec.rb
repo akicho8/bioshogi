@@ -21,8 +21,8 @@ module Bushido
         @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50"}
       end
 
-      it "対戦前コメント" do
-        @result.start_comments.should == ["指し手に結び付かない対戦前コメント"]
+      it "対局前コメント" do
+        @result.first_comments.should == ["対局前コメント"]
       end
     end
 
@@ -32,7 +32,7 @@ module Bushido
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
       players.each(&:piece_plot)
-      board.to_kif_table.should == <<-FIELD.strip_heredoc
+      board.to_s_kakiki.should == <<-FIELD.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

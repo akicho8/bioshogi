@@ -41,7 +41,11 @@ module Bushido
       @matrix.delete(point.to_xy) or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
     end
 
-    def to_s
+    def to_s(format = :kakiki)
+      send("to_s_#{format}")
+    end
+
+    def to_s_default
       rows = Position::Vpos.units.size.times.collect{|y|
         Position::Hpos.units.size.times.collect{|x|
           @matrix[[x, y]]

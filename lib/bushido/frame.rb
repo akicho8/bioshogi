@@ -36,7 +36,11 @@ module Bushido
 
     def inspect
       s = ""
-      s << @board.to_kif_table
+      s << @board.to_s(:kakiki)
+      @players.each{|player|
+        s << "#{player.location}の持駒:" + player.pieces.collect(&:name).join + "\n"
+      }
+      s
     end
   end
 
@@ -54,7 +58,7 @@ module Bushido
         return
       end
       current_player.execute(str)
-      @a_move_logs << "#{white_or_black_mark}#{current_player.last_info_str}"
+      @a_move_logs << "#{white_or_black_mark}#{current_player.last_a_move}"
       @count += 1
     end
 

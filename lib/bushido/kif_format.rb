@@ -7,7 +7,7 @@ module Bushido
         new(source, options).tap{|o|o.parse}
       end
 
-      attr_reader :header, :move_infos, :start_comments, :source
+      attr_reader :header, :move_infos, :first_comments, :source
 
       def initialize(source, options = {})
         @source = source
@@ -16,7 +16,7 @@ module Bushido
         normalized_source
         @header = {}
         @move_infos = []
-        @start_comments = []
+        @first_comments = []
       end
 
       def default_options
@@ -50,14 +50,20 @@ module Bushido
       def comment_read(line)
         if md = line.match(/^\s*\*\s*(?<comment>.*)/)
           if @move_infos.empty?
-            # 1手目より前にコメントがある場合、結び付く手が無い→つまり開始前メッセージということになる
-            @start_comments << md[:comment]
+            add_to_first_comments(md[:comment])
           else
-            # 手に結び付いているコメント
-            @move_infos.last[:comments] ||= []
-            @move_infos.last[:comments] << md[:comment]
+            add_to_a_last_move_comments(md[:comment])
           end
         end
+      end
+
+      def add_to_first_comments(comment)
+        @first_comments << comment
+      end
+
+      def add_to_a_last_move_comments(comment)
+        @move_infos.last[:comments] ||= []
+        @move_infos.last[:comments] << comment
       end
 
       def normalized_source
@@ -70,28 +76,12 @@ module Bushido
     end
 
     module Soldier
-      extend ActiveSupport::Concern
-
-      included do
-      end
-
-      module ClassMethods
-      end
-
-      def to_kif_name
+      def to_s_kakiki
         "#{@player.location == :white ? 'v' : ' '}#{piece_current_name}"
       end
     end
 
     module Board
-      extend ActiveSupport::Concern
-
-      included do
-      end
-
-      module ClassMethods
-      end
-
       # kif形式詳細 (1) - 勝手に将棋トピックス http://d.hatena.ne.jp/mozuyama/20030909/p5
       #
       #   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -106,11 +96,11 @@ module Bushido
       # | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
       # | 香 桂 銀 金 玉 金 銀 桂 香|九
       # +---------------------------+
-      def to_kif_table
+      def to_s_kakiki
         rows = Position::Vpos.units.size.times.collect{|y|
           values = Position::Hpos.units.size.times.collect{|x|
             if soldier = @matrix[[x, y]]
-              soldier.to_kif_name
+              soldier.to_s_kakiki
             else
               " " + "・"
             end
