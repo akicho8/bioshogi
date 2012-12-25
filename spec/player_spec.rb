@@ -262,31 +262,42 @@ FIELD
       #   Player.this_case2(:player => :white, :init => ["５四金", "６四金"], :exec => "５五金直").last_a_move.should == "5五金(54)"
       # end
 
-      context "下に三枚ある状態" do
+      context "龍と馬は例外" do
         before do
           @params.update({:init => [
-                nil, nil, nil,
-                nil, nil, nil,
-                "６六龍", "５六龍", "４六龍",
+                nil, "６四龍", "５四龍", nil,
+                nil, nil, nil, nil,
               ]})
         end
-        it("右下の") { Player.this_case2(@params.merge(:exec => "５五龍右")).last_a_move.should == "5五龍(46)" }
-        it("真下の") { Player.this_case2(@params.merge(:exec => "５五龍直")).last_a_move.should == "5五龍(56)" }
-        it("左下の") { Player.this_case2(@params.merge(:exec => "５五龍左")).last_a_move.should == "5五龍(66)" }
+        it { Player.this_case2(@params.merge(:exec => "５五龍左")).last_a_move.should == "5五龍(64)" }
+        it { Player.this_case2(@params.merge(:exec => "５五龍右")).last_a_move.should == "5五龍(54)" }
       end
-      context "上に三枚ある状態(上に同じものが3枚あって3つとも中心に移動できる状態は、普通はない)" do
+
+      context "下面" do
         before do
           @params.update({:init => [
-                "６四龍", "５四龍", "４四龍",
-                nil, nil, nil,
-                nil, nil, nil,
+                nil,      nil,      nil,
+                nil,      nil,      nil,
+                "６六と", "５六と", "４六と",
               ]})
         end
-        it("右上の") { Player.this_case2(@params.merge(:exec => "５五龍右")).last_a_move.should == "5五龍(44)" }
-        it("真上の") { Player.this_case2(@params.merge(:exec => "５五龍引")).last_a_move.should == "5五龍(54)" }
-        it("左上の") { Player.this_case2(@params.merge(:exec => "５五龍左")).last_a_move.should == "5五龍(64)" }
+        it("右下の") { Player.this_case2(@params.merge(:exec => "５五と右")).last_a_move.should == "5五と(46)" }
+        it("真下の") { Player.this_case2(@params.merge(:exec => "５五と直")).last_a_move.should == "5五と(56)" }
+        it("左下の") { Player.this_case2(@params.merge(:exec => "５五と左")).last_a_move.should == "5五と(66)" }
       end
-      context "右に三枚ある状態" do
+      context "左面" do
+        before do
+          @params.update({:init => [
+                "６四龍", nil, nil,
+                "６五龍", nil, nil,
+                "６六龍", nil, nil,
+              ]})
+        end
+        it("左上の") { Player.this_case2(@params.merge(:exec => "５五龍左引")).last_a_move.should == "5五龍(64)" }
+        it("真左の") { Player.this_case2(@params.merge(:exec => "５五龍寄")).last_a_move.should   == "5五龍(65)" }
+        it("左下の") { Player.this_case2(@params.merge(:exec => "５五龍左上")).last_a_move.should == "5五龍(66)" }
+      end
+      context "右面" do
         before do
           @params.update({:init => [
                 nil, nil, "４四龍",

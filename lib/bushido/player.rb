@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
+
 module Bushido
   class Player
     # facade
@@ -280,58 +281,75 @@ module Bushido
                   raise SyntaxError, str
                 end
                 __saved_soldiers = soldiers
-                if md[:options].match(/右/)
-                  if @location == :black
-                    soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
-                  else
-                    soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                if piece.kind_of? Piece::Rook
+                  if md[:options].match(/右/)
+                    if @location == :black
+                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                    else
+                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                    end
                   end
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                  # end
-                end
-                if md[:options].match(/左/)
-                  if @location == :black
-                    soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
-                  else
-                    soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                  if md[:options].match(/左/)
+                    if @location == :black
+                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                    else
+                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                    end
                   end
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                  # end
-                end
-                if md[:options].match(/寄/)
-                  soldiers = soldiers.find_all{|soldier|soldier.point.y == point.y}
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                  # end
-                end
-                if md[:options].match(/直/)
-                  soldiers = soldiers.find_all{|soldier|soldier.point.x == point.x}
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                  # end
-                end
-                if md[:options].match(/上/)
-                  if @location == :black
-                    soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
-                  else
-                    soldiers = soldiers.find_all{|soldier|point.y.value > soldier.point.y.value}
+                else
+                  if md[:options].match(/右/)
+                    if @location == :black
+                      soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                    else
+                      soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                    end
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
                   end
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.x == soldier.point.x} # 同じ列
-                  # end
-                end
-                if md[:options].match(/引/)
-                  if @location == :black
-                    soldiers = soldiers.find_all{|soldier|point.y.value > soldier.point.y.value}
-                  else
-                    soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
+                  if md[:options].match(/左/)
+                    if @location == :black
+                      soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                    else
+                      soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                    end
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
                   end
-                  # # 上下で分けて二つ以上あったときだけX座標に絞る
-                  # if soldiers.size > 1
-                  #   soldiers = soldiers.find_all{|soldier|point.x.value == soldier.point.x.value}
+                  if md[:options].match(/寄/)
+                    soldiers = soldiers.find_all{|soldier|soldier.point.y == point.y}
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
+                  end
+                  if md[:options].match(/直/)
+                    soldiers = soldiers.find_all{|soldier|soldier.point.x == point.x}
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
+                  end
+                  if md[:options].match(/上/)
+                    if @location == :black
+                      soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
+                    else
+                      soldiers = soldiers.find_all{|soldier|point.y.value > soldier.point.y.value}
+                    end
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.x == soldier.point.x} # 同じ列
                   # end
+                  end
+                  if md[:options].match(/引/)
+                    if @location == :black
+                      soldiers = soldiers.find_all{|soldier|point.y.value > soldier.point.y.value}
+                    else
+                      soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
+                    end
+                    # # 上下で分けて二つ以上あったときだけX座標に絞る
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.x.value == soldier.point.x.value}
+                    # end
+                  end
                 end
                 if soldiers.empty?
                   raise "#{point.name}に来れる駒がなくなった。#{str.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})"
