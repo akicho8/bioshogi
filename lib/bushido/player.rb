@@ -3,7 +3,7 @@
 module Bushido
   class Player
     # facade
-    def self.this_case(params)
+    def self.test_case(params)
       params = {
         :player => :black,
         :return_player => false,
@@ -20,8 +20,8 @@ module Bushido
     end
 
     # facade
-    def self.this_case2(params)
-      this_case({:return_player => true}.merge(params))
+    def self.test_case2(params)
+      test_case({:return_player => true}.merge(params))
     end
 
     # 互換性のため一時的に。

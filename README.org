@@ -1,6 +1,7 @@
-#+TITLE: 将棋のプログラム
 #+OPTIONS: toc:nil num:nil author:nil creator:nil \n:nil |:t
 #+OPTIONS: @:t ::t ^:t -:t f:t *:t <:t
+
+* 将棋のプログラム
 
 : board = Board.new
 : players = []
