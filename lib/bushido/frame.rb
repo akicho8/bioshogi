@@ -4,7 +4,7 @@ module Bushido
   class Frame
     attr_accessor :players, :board
 
-    def self.sit_down
+    def self.players_join
       new.tap do |o|
         o.player_join(Player.create1(:black))
         o.player_join(Player.create1(:white))

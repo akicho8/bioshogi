@@ -144,7 +144,7 @@ FIELD
         context "取れる" do
           it "座標指定で" do
             # FIXME: Frame のクラスメソッドにする
-            frame = Frame.sit_down
+            frame = Frame.players_join
             frame.players[0].initial_put_on("５六歩")
             frame.players[1].initial_put_on("５五飛")
             frame.piece_discard
@@ -152,7 +152,7 @@ FIELD
             frame.players[0].piece_names.should == ["飛"]
           end
           it "同歩で取る" do
-            frame = Frame.sit_down
+            frame = Frame.players_join
             frame.players[0].initial_put_on("２五歩")
             frame.players[1].initial_put_on("２三歩")
             frame.piece_discard
@@ -173,7 +173,7 @@ FIELD
 
         # context "後手で同金直" do
         #   it do
-        #     frame = Frame.sit_down
+        #     frame = Frame.players_join
         #     frame.players[0].initial_put_on("５六金")
         #     frame.players[1].initial_put_on(["５四金", "６四金"])
         #     frame.piece_discard
@@ -215,7 +215,7 @@ FIELD
           expect { Player.test_case(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
         end
         it "相手の駒の上に" do
-          frame = Frame.sit_down
+          frame = Frame.players_join
           frame.players[1].initial_put_on("５五飛")
           expect { frame.players[0].execute("５五角打") }.to raise_error(PieceAlredyExist)
         end

@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Frame do
     it do
-      frame = Frame.sit_down
+      frame = Frame.players_join
       frame.players[0].initial_put_on("５六歩")
       frame.players[1].initial_put_on("５五飛")
       frame.piece_discard
@@ -36,7 +36,7 @@ module Bushido
 
       # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/龍王戦2012-25 渡辺丸山-5.ki2"))
 
-      frame = LiveFrame.sit_down
+      frame = LiveFrame.players_join
       frame.piece_plot
       @result.move_infos.each{|move_info|
         # p move_info[:input]
