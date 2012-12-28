@@ -4,56 +4,39 @@ require "spec_helper"
 
 module Bushido
   describe Piece do
-    describe ".create" do
-      subject { Piece.create(:pawn) }
-      it { should be_an_instance_of Piece::Pawn }
+    it "指定の駒を作る" do
+      Piece.create(:pawn).class.should == Piece::Pawn
     end
 
-    describe ".get" do
-      it { Piece.get("歩").class.should == Piece::Pawn }
-      it { Piece.get("").should == nil }
-      it { Piece.get(nil).should == nil }
+    it "すべての駒のコレクションを参照" do
+      Piece.collection
     end
 
-    it "駒の名前" do
-      Piece.get("角").name.should == "角"
-      Piece.get("馬").name.should == "角"
-
-      Piece.names.should == ["歩", "pawn", "と", "PAWN", "角", "bishop", "馬", "BISHOP", "飛", "rook", "龍", "ROOK", "竜", "香", "lance", "杏", "LANCE", "成香", "桂", "knight", "圭", "KNIGHT", "成桂馬", "銀", "silver", "全", "SILVER", "成銀", "金", "gold", "GOLD", "玉", "king", "KING"]
+    it "取得" do
+      Piece.get("歩").class.should == Piece::Pawn # !> possibly useless use of == in void context
+      Piece.get("").should == nil # !> possibly useless use of == in void context
+      Piece.get(nil).should == nil
     end
 
-    it "特殊な名前" do
-      Piece.get("圭").name.should == "桂"
-      Piece.get("全").name.should == "銀"
-      Piece.get("竜").name.should == "飛"
-    end
-
-    it "無効な名前シリーズ" do
+    it "get!の場合、無効な名前だったら例外を出す" do
       expect { Piece.get!("成龍") }.to raise_error(PieceNotFound)
       expect { Piece.get!("成と") }.to raise_error(PieceNotFound)
       expect { Piece.get!("成飛") }.to raise_error(PieceNotFound)
     end
-  end
 
-  # ここのテストが微妙
-  module Piece
-    describe Pawn do
-      its(:name) { should be_an_instance_of String }
-      its(:basic_vectors1) { should be_an_instance_of Array }
-      its(:promotable?) { should be_true }
-    end
-
-    describe Gold do
-      its(:promotable?) { should be_false }
-    end
-
-    describe King do
-      its(:promotable?) { should be_false }
-    end
-
-    describe "すべての駒" do
-      subject { [Pawn, Bishop, Rook, Lance, Knight, Silver, Gold, King].collect{|klass|klass.new.name}.join }
-      it { should == "歩角飛香桂銀金玉" }
+    it "駒の情報" do
+      piece = Piece.get("飛")
+      piece.name.should              == "飛"
+      piece.promoted_name.should     == "龍"
+      piece.basic_names.should       == ["飛", "rook"]
+      piece.promoted_names.should    == ["龍", "ROOK", "竜"]
+      piece.names.should             == ["飛", "rook", "龍", "ROOK", "竜"]
+      piece.sym_name.should          == :rook
+      piece.promotable?.should       == true
+      piece.basic_vectors1.should    == []
+      piece.basic_vectors2.should    == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
+      piece.promoted_vectors1.should == [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
+      piece.promoted_vectors2.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
     end
   end
 end

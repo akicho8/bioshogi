@@ -32,7 +32,7 @@ module Bushido
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
       players.each(&:piece_plot)
-      board.to_s_kakiki.should == <<-FIELD.strip_heredoc
+      board.to_s(:kakiki).should == <<-FIELD.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

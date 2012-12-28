@@ -12,14 +12,6 @@ module Bushido
       [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
     end
 
-    def basic_get(arg)
-      collection.find{|piece|piece.basic_names.include?(arg.to_s)}
-    end
-
-    def promoted_get(arg)
-      collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
-    end
-
     def get(arg)
       basic_get(arg) || promoted_get(arg)
     end
@@ -41,6 +33,16 @@ module Bushido
 
     def names
       collection.collect{|piece|piece.names}.flatten
+    end
+
+    private
+
+    def basic_get(arg)
+      collection.find{|piece|piece.basic_names.include?(arg.to_s)}
+    end
+
+    def promoted_get(arg)
+      collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
     end
 
     class Base
