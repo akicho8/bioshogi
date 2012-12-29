@@ -13,8 +13,8 @@ module Bushido
     end
 
     it "取得" do
-      Piece.get("歩").class.should == Piece::Pawn # !> possibly useless use of == in void context
-      Piece.get("").should == nil # !> possibly useless use of == in void context
+      Piece.get("歩").class.should == Piece::Pawn
+      Piece.get("").should == nil
       Piece.get(nil).should == nil
     end
 

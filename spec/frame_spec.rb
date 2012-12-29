@@ -32,19 +32,25 @@ module Bushido
       # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/九段戦1950-01 大山板谷-2.ki2"))
 
       # # どっちの銀か、わからない
-      @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/十段戦1968-07 大山加藤-7.ki2"))
+      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/十段戦1968-07 大山加藤-7.ki2"))
 
       # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/龍王戦2012-25 渡辺丸山-5.ki2"))
 
-      frame = LiveFrame.players_join
-      frame.piece_plot
-      @result.move_infos.each{|move_info|
-        # p move_info[:input]
-        frame.execute(move_info[:input])
-        frame.inspect
-        # p frame
+      file = "../resources/竜王戦_ki2/*.ki2"
+      file = "../resources/iphone_shogi_vs/kakinoki_vs_Bonanza.kif"
+
+      Pathname.glob(Pathname(__FILE__).dirname.join(file)).shuffle.each{|file|
+        @result = Bushido.parse(file)
+        frame = LiveFrame.players_join
+        frame.piece_plot
+        @result.move_infos.each{|move_info|
+          # p move_info[:input]
+          frame.execute(move_info[:input])
+          # puts frame.inspect
+        }
+        # puts frame.inspect
+        # puts frame.a_move_logs.join(" ")
       }
-      frame.a_move_logs.join(" ")
     end
   end
 end

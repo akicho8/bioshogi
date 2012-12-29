@@ -142,7 +142,7 @@ module Bushido
     end
 
     def piece_fetch!(piece)
-      piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません"
+      piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません\n#{board_with_pieces}"
     end
 
     def piece_fetch(piece)
@@ -253,6 +253,8 @@ module Bushido
         unless source_point
           soldiers = soldiers().find_all{|soldier|soldier.moveable_points.include?(point)}
           soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
+          soldiers = soldiers.find_all{|e|e.promoted == promoted}
+
           if soldiers.empty?
             if piece_fetch(piece)
 
@@ -272,63 +274,63 @@ module Bushido
           unless done
             if soldiers.size > 1
               if md[:options]
-                # FIXME: dry
-                # FIXME: 寄 と 右 の組み合わせも
-                if ["右", "左"].all?{|v|md[:options].include?(v)}
-                  raise SyntaxError, str
-                end
-                if ["引", "直"].all?{|v|md[:options].include?(v)}
-                  raise SyntaxError, str
-                end
+                _validate(str, md, "左右直")
+                _validate(str, md, "引上寄")
                 __saved_soldiers = soldiers
-                if piece.kind_of? Piece::Rook
-                  if md[:options].match(/右/)
-                    if @location == :black
-                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
-                    else
-                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
-                    end
-                  end
-                  if md[:options].match(/左/)
-                    if @location == :black
-                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
-                    else
-                      soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
-                    end
-                  end
+                if piece.kind_of?(Piece::Rook) && false
+                  # if md[:options].match(/右/)
+                  #   if @location == :black
+                  #     soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                  #   else
+                  #     soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                  #   end
+                  # end
+                  # if md[:options].match(/左/)
+                  #   if @location == :black
+                  #     soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                  #   else
+                  #     soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                  #   end
+                  # end
                 else
-                  if md[:options].match(/右/)
-                    if @location == :black
-                      soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
-                    else
-                      soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                  if piece.kind_of?(Piece::Brave)
+                    if md[:options].match(/右/)
+                      if @location == :black
+                        soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                      else
+                        soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                      end
                     end
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
-                  end
-                  if md[:options].match(/左/)
-                    if @location == :black
-                      soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
-                    else
-                      soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                    if md[:options].match(/左/)
+                      if @location == :black
+                        soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.first(1)
+                      else
+                        soldiers = soldiers.sort_by{|soldier|soldier.point.x.value}.last(1)
+                      end
                     end
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
+                  else
+                    if md[:options].match(/右/)
+                      if @location == :black
+                        soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                      else
+                        soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                      end
+                      # if soldiers.size > 1
+                      #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                      # end
+                    end
+                    if md[:options].match(/左/)
+                      if @location == :black
+                        soldiers = soldiers.find_all{|soldier|point.x.value > soldier.point.x.value}
+                      else
+                        soldiers = soldiers.find_all{|soldier|point.x.value < soldier.point.x.value}
+                      end
+                      # if soldiers.size > 1
+                      #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                      # end
+                    end
                   end
-                  if md[:options].match(/寄/)
-                    soldiers = soldiers.find_all{|soldier|soldier.point.y == point.y}
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
-                  end
-                  if md[:options].match(/直/)
-                    soldiers = soldiers.find_all{|soldier|soldier.point.x == point.x}
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
-                  end
+
                   if md[:options].match(/上/)
                     if @location == :black
                       soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
@@ -350,13 +352,26 @@ module Bushido
                     #   soldiers = soldiers.find_all{|soldier|point.x.value == soldier.point.x.value}
                     # end
                   end
+
+                  if md[:options].match(/寄/)
+                    soldiers = soldiers.find_all{|soldier|soldier.point.y == point.y}
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
+                  end
+                  if md[:options].match(/直/)
+                    soldiers = soldiers.find_all{|soldier|soldier.point.x == point.x}
+                    # if soldiers.size > 1
+                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
+                    # end
+                  end
                 end
                 if soldiers.empty?
-                  raise "#{point.name}に来れる駒がなくなった。#{str.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})"
+                  raise AmbiguousFormatError, "#{point.name}に移動できる駒がなくなった。#{str.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})\n#{board_with_pieces}"
                 end
               end
               if soldiers.size > 1
-                raise AmbiguousFormatError, "#{point.name}に来れる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})"
+                raise AmbiguousFormatError, "#{point.name}に移動できる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})\n#{board_with_pieces}"
               end
             end
 
@@ -369,11 +384,23 @@ module Bushido
 
           unless promote_trigger
             if source_soldier.promoted && !promoted
-              raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{str.inspect}の駒は#{source_soldier.piece_current_name}と書いてください"
+
+              # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
+              if piece_fetch(piece)
+                put_on_trigger = true
+                source_point = nil
+                @board.put_on_at(point, Soldier.new(self, pick_out(piece), promoted))
+                done = true
+              else
+                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{str.inspect}の駒は#{source_soldier.piece_current_name}と書いてください\n#{board_with_pieces}"
+              end
+
             end
           end
 
-          move_to(source_point, point, promote_trigger)
+          unless done
+            move_to(source_point, point, promote_trigger)
+          end
         end
       end
 
@@ -383,6 +410,13 @@ module Bushido
       @before_source_point    = source_point
       @before_promote_trigger = promote_trigger
       @before_put_on_trigger  = put_on_trigger
+    end
+
+    def _validate(str, md, chars)
+      _chars = chars.scan(/./).find_all{|v|md[:options].include?(v)}
+      if _chars.size > 1
+        raise SyntaxError, "#{_chars.join('と')}は同時に指定できません。【#{str}】を見直してください。\n#{board_with_pieces}"
+      end
     end
 
     # def last_info_reset
@@ -436,5 +470,12 @@ module Bushido
     #   end
     #   soldiers
     # end
+
+    def board_with_pieces
+      s = ""
+      s << @board.to_s(:kakiki)
+      s << "#{location_mark}の持駒:" + pieces.collect(&:name).join + "\n"
+      s
+    end
   end
 end
