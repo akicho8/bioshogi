@@ -254,6 +254,7 @@ module Bushido
           soldiers = soldiers().find_all{|soldier|soldier.moveable_points.include?(point)}
           soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
           soldiers = soldiers.find_all{|e|e.promoted == promoted}
+          candidate = soldiers
 
           if soldiers.empty?
             if piece_fetch(piece)
@@ -347,23 +348,13 @@ module Bushido
                     else
                       soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
                     end
-                    # # 上下で分けて二つ以上あったときだけX座標に絞る
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.x.value == soldier.point.x.value}
-                    # end
                   end
 
                   if md[:options].match(/寄/)
                     soldiers = soldiers.find_all{|soldier|soldier.point.y == point.y}
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
                   end
                   if md[:options].match(/直/)
                     soldiers = soldiers.find_all{|soldier|soldier.point.x == point.x}
-                    # if soldiers.size > 1
-                    #   soldiers = soldiers.find_all{|soldier|point.y == soldier.point.y}
-                    # end
                   end
                 end
                 if soldiers.empty?
@@ -410,6 +401,7 @@ module Bushido
       @before_source_point    = source_point
       @before_promote_trigger = promote_trigger
       @before_put_on_trigger  = put_on_trigger
+      @candidate              = candidate
     end
 
     def _validate(str, md, chars)
@@ -436,6 +428,7 @@ module Bushido
         :before_point           => @before_point,
         :before_piece           => @before_piece,
         :before_put_on_trigger  => @before_put_on_trigger,
+        :candidate              => @candidate,
       }
     end
 
@@ -458,6 +451,41 @@ module Bushido
       end
       if @before_source_point
         s << "(#{@before_source_point.to_s_digit})"
+      end
+      s.join
+    end
+
+    def last_a_move2
+      [last_a_move, last_a_move_kif2]
+    end
+
+    def last_a_move_kif2
+# {:before_promoted=>true,
+#  :before_promote_trigger=>nil,
+#  :before_source_point=>#<Bushido::Point:70361068894000 "4六">,
+#  :before_point=>#<Bushido::Point:70361082976580 "5五">,
+#  :before_piece=><Bushido::Piece::Pawn:70361068615920 歩 pawn>,
+#  :before_put_on_trigger=>nil,
+#  :candidate=>
+#   [<Bushido::Soldier:70361082478820 ▲6六と>,
+#    <Bushido::Soldier:70361084689580 ▲5六と>,
+#    <Bushido::Soldier:70361084645540 ▲5五と>]}
+
+      # return if @before_piece.nil?
+
+      s = []
+      s << @before_point.name
+      s << @before_piece.some_name(@before_promoted)
+      if @before_promote_trigger
+        s << "成"
+      end
+      if @before_put_on_trigger
+        s << "打"
+      end
+      if @candidate.size >= 3
+        if @before_point.x.value < @before_source_point.x.value
+          s << "右"
+        end
       end
       s.join
     end

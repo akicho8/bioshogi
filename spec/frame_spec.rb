@@ -52,5 +52,18 @@ module Bushido
         # puts frame.a_move_logs.join(" ")
       }
     end
+
+    # it "kif→ki2" do
+    #   @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
+    #   frame = LiveFrame.players_join
+    #   frame.piece_plot
+    #   @result.move_infos.each{|move_info|
+    #     # p move_info[:input]
+    #     frame.execute(move_info[:input])
+    #     # puts frame.inspect
+    #   }
+    #   # puts frame.inspect
+    #   puts frame.a_move_logs.join(" ")
+    # end
   end
 end
