@@ -308,8 +308,8 @@ FIELD
               "６六と", "５六と", "４六と",
             ]})
         Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(46)", "5五と右"]
-        Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move.should == "5五と(56)"
-        Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move.should == "5五と(66)"
+        Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move2.should == ["5五と(56)", "5五と直"]
+        Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(66)", "5五と左"]
       end
 
       it "縦に二つ" do
@@ -318,8 +318,8 @@ FIELD
               nil, nil,      nil,
               nil, "５六と", nil,
             ]})
-        Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move.should == "5五と(54)"
-        Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move.should == "5五と(56)"
+        Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move2.should == ["5五と(54)", "5五と引"]
+        Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(56)", "5五と上"]
       end
 
       it "左と左下" do

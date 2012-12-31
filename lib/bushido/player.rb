@@ -486,6 +486,20 @@ module Bushido
         if @before_point.x.value < @before_source_point.x.value
           s << "右"
         end
+        if @before_point.x.value == @before_source_point.x.value
+          s << "直"
+        end
+        if @before_point.x.value > @before_source_point.x.value
+          s << "左"
+        end
+      end
+      if @candidate.size >= 2
+        if @before_point.y.value < @before_source_point.y.value
+          s << "上"
+        end
+        if @before_point.y.value > @before_source_point.y.value
+          s << "引"
+        end
       end
       s.join
     end
