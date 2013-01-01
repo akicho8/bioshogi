@@ -8,6 +8,8 @@ module Bushido
     end
 
     def put_on_at(point, soldier)
+      soldier.point = point
+
       if fetch(point)
         raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
@@ -38,7 +40,9 @@ module Bushido
     end
 
     def pick_up!(point)
-      @matrix.delete(point.to_xy) or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
+      soldier = @matrix.delete(point.to_xy) or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
+      soldier.point = nil
+      soldier
     end
 
     def to_s(format = :kakiki)

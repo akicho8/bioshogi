@@ -254,7 +254,7 @@ module Bushido
           soldiers = soldiers().find_all{|soldier|soldier.moveable_points.include?(point)}
           soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
           soldiers = soldiers.find_all{|e|e.promoted == promoted}
-          candidate = soldiers
+          candidate = __clone__(soldiers)
 
           if soldiers.empty?
             if piece_fetch(piece)
@@ -404,6 +404,12 @@ module Bushido
       @candidate              = candidate
     end
 
+    def __clone__(soldiers)
+      soldiers = soldiers.collect{|s|s.clone}
+      # soldiers.each{|s|s.point2 = s.point}
+      # soldiers
+    end
+
     def _validate(str, md, chars)
       _chars = chars.scan(/./).find_all{|v|md[:options].include?(v)}
       if _chars.size > 1
@@ -482,20 +488,26 @@ module Bushido
       if @before_put_on_trigger
         s << "打"
       end
-      if @candidate.size >= 3
-        if @before_point.x.value < @before_source_point.x.value
-          s << "右"
+      if @candidate && @candidate.size >= 2
+        # p @candidate
+        if @candidate.all?{|s|s.point.y == @before_point.y}
+          if @before_point.x.value < @before_source_point.x.value
+            s << "右"
+          end
+          if @before_point.x.value > @before_source_point.x.value
+            s << "左"
+          end
         end
         if @before_point.x.value == @before_source_point.x.value
           s << "直"
         end
-        if @before_point.x.value > @before_source_point.x.value
-          s << "左"
-        end
       end
-      if @candidate.size >= 2
+      if @candidate && @candidate.size >= 2
         if @before_point.y.value < @before_source_point.y.value
           s << "上"
+        end
+        if @before_point.y.value == @before_source_point.y.value
+          s << "寄"
         end
         if @before_point.y.value > @before_source_point.y.value
           s << "引"

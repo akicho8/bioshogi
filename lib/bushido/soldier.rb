@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 module Bushido
   class Soldier
-    attr_accessor :player, :piece, :promoted
+    attr_accessor :player, :piece, :promoted, :point
 
     def initialize(player, piece, promoted = false)
       @player = player
@@ -37,7 +37,7 @@ module Bushido
       to_text
     end
 
-    def point
+    def read_point
       if xy = @player.board.matrix.invert[self]
         Point.parse(xy)
       end

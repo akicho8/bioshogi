@@ -301,56 +301,59 @@ FIELD
         end
       end
 
-      it "下面" do
-        @params.update({:init => [
-              nil,      nil,      nil,
-              nil,      nil,      nil,
-              "６六と", "５六と", "４六と",
-            ]})
-        Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(46)", "5五と右"]
-        Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move2.should == ["5五と(56)", "5五と直"]
-        Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(66)", "5五と左"]
-      end
-
-      it "縦に二つ" do
-        @params.update({:init => [
-              nil, "５四と", nil,
-              nil, nil,      nil,
-              nil, "５六と", nil,
-            ]})
-        Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move2.should == ["5五と(54)", "5五と引"]
-        Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(56)", "5五と上"]
-      end
-
-      it "左と左下" do
-        @params.update({:init => [
-              nil, nil, nil,
-              "６五と", nil, nil,
-              "６六と", nil, nil,
-            ]})
-        Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move.should   == "5五と(65)"
-        Player.test_case2(@params.merge(:exec => "５五と左上")).last_a_move.should == "5五と(66)"
-      end
-
-      it "左上と左下" do
-        @params.update({:init => [
-              "６四銀", nil, nil,
-              nil, nil, nil,
-              "６六銀", nil, nil,
-            ]})
-        Player.test_case2(@params.merge(:exec => "５五銀引")).last_a_move.should == "5五銀(64)"
-        Player.test_case2(@params.merge(:exec => "５五銀上")).last_a_move.should == "5五銀(66)"
-      end
-
-      it "左右" do
-        @params.update({:init => [
-              nil, nil, nil,
-              "６五と", nil, "４五と",
-              nil, nil, nil,
-            ]})
-        Player.test_case2(@params.merge(:exec => "５五と左寄")).last_a_move.should == "5五と(65)"
-        Player.test_case2(@params.merge(:exec => "５五と右寄")).last_a_move.should == "5五と(45)"
-      end
+      # it "下面" do
+      #   @params.update({:init => [
+      #         nil,      nil,      nil,
+      #         nil,      nil,      nil,
+      #         "６六と", "５六と", "４六と",
+      #       ]})
+      #   Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(46)", "5五と右"]
+      #   Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move2.should == ["5五と(56)", "5五と直"]
+      #   Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(66)", "5五と左"]
+      # end
+      # 
+      # it "縦に二つ" do
+      #   @params.update({:init => [
+      #         nil, "５四と", nil,
+      #         nil, nil,      nil,
+      #         nil, "５六と", nil,
+      #       ]})
+      #   Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move2.should == ["5五と(54)", "5五と引"]
+      #   Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(56)", "5五と上"]
+      # end
+      # 
+      # it "左と左下" do
+      #   @params.update({:init => [
+      #         nil, nil, nil,
+      #         "６五と", nil, nil,
+      #         "６六と", nil, nil,
+      #       ]})
+      #   Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move2.should == "5五と(65)"
+      #   Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == "5五と(66)"
+      # 
+      #   # Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move2.should == ["5五と(65)", "5五と寄"]
+      #   # Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(66)", "5五と上"]
+      # end
+      # 
+      # it "左上と左下" do
+      #   @params.update({:init => [
+      #         "６四銀", nil, nil,
+      #         nil, nil, nil,
+      #         "６六銀", nil, nil,
+      #       ]})
+      #   Player.test_case2(@params.merge(:exec => "５五銀引")).last_a_move.should == "5五銀(64)"
+      #   Player.test_case2(@params.merge(:exec => "５五銀上")).last_a_move.should == "5五銀(66)"
+      # end
+      # 
+      # it "左右" do
+      #   @params.update({:init => [
+      #         nil, nil, nil,
+      #         "６五と", nil, "４五と",
+      #         nil, nil, nil,
+      #       ]})
+      #   Player.test_case2(@params.merge(:exec => "５五と左寄")).last_a_move.should == "5五と(65)"
+      #   Player.test_case2(@params.merge(:exec => "５五と右寄")).last_a_move.should == "5五と(45)"
+      # end
     end
 
     it "指したあと前回の手を確認できる" do
