@@ -15,13 +15,13 @@ module Bushido
     end
 
     it "棋譜の配列をパースして▲▽を考慮して交互に打つ" do
-      pending
+      # pending
     end
     it "戦況表示" do
-      pending
+      # pending
     end
     it "N手目を一発で表示" do
-      pending
+      # pending
     end
   end
 

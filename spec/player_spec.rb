@@ -68,7 +68,8 @@ FIELD
           Player.test_case(:init => "４二龍", :exec => "３二龍").should == ["▲3二龍"]
         end
         it "駒の指定なしで動かす" do
-          pending
+          # 初手 "７六" とした場合、そこに来れるのは真下の、"歩" のみなので "７六歩" とする
+          # というのはやりすぎなので保留
         end
         it "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
           Player.test_case(:init => ["６九金", "４九金"], :exec => "５九金(49)").should == ["▲5九金", "▲6九金"]
@@ -76,22 +77,16 @@ FIELD
       end
 
       context "できない" do
-        if false
-          # 持駒から探す処理が入ってない場合の仕様
-          it "動いてないので、と思うかもしれないけど、そこに移動できる駒がないので" do
-            expect { Player.test_case(:init => "４二銀", :exec => "４二銀") }.to raise_error(MovableSoldierNotFound)
-          end
-        end
-        it "４二に移動できる銀が見つからず、持駒の銀を打とうとしたが、４二にはすでに駒があった" do
+        it "４二に移動できる銀が見つからず、持駒の銀を打とうとしたが、４二にはすでに駒があったので" do
           expect { Player.test_case(:init => "４二銀", :exec => "４二銀") }.to raise_error(PieceAlredyExist)
         end
         it "推測結果が複数パターンがあったので" do
           expect { Player.test_case(:init => ["６九金", "４九金"], :exec => "５九金") }.to raise_error(AmbiguousFormatError)
         end
-        it "成っている状態から成らない状態に戻ろうとしたので" do
+        it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので)" do
           expect { Player.test_case(:init => "５五龍", :exec => "５六飛") }.to raise_error(MovableSoldierNotFound)
         end
-        it "元の駒を明示してたとしても、成っている状態から成らない状態に戻ることは" do
+        it "ルール上、成っている状態から成らない状態に戻れないので(移動元を明記しても同様。ただ例外の種類が異なる)" do
           expect { Player.test_case(:init => "５五龍", :exec => "５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
         end
       end
@@ -247,113 +242,137 @@ FIELD
         context "龍" do
           it "パターンA" do
             @params.update(:init => ["９一龍", "８四龍"])
-            Player.test_case2(@params.merge(:exec => "８二龍引")).last_a_move.should == "8二龍(91)"
-            Player.test_case2(@params.merge(:exec => "８二龍上")).last_a_move.should == "8二龍(84)"
+            Player.test_case2(@params.merge(:exec => "８二龍引")).last_a_move2.should == ["8二龍(91)", "8二龍引"]
+            Player.test_case2(@params.merge(:exec => "８二龍上")).last_a_move2.should == ["8二龍(84)", "8二龍上"]
           end
           it "パターンB" do
             @params.update(:init => ["５二龍", "２三龍"])
-            Player.test_case2(@params.merge(:exec => "４三龍寄")).last_a_move.should == "4三龍(23)"
-            Player.test_case2(@params.merge(:exec => "４三龍引")).last_a_move.should == "4三龍(52)"
+            Player.test_case2(@params.merge(:exec => "４三龍寄")).last_a_move2.should == ["4三龍(23)", "4三龍寄"]
+            Player.test_case2(@params.merge(:exec => "４三龍引")).last_a_move2.should == ["4三龍(52)", "4三龍引"]
           end
           it "パターンC" do
             @params.update(:init => ["５五龍", "１五龍"])
-            Player.test_case2(@params.merge(:exec => "３五龍左")).last_a_move.should == "3五龍(55)"
-            Player.test_case2(@params.merge(:exec => "３五龍右")).last_a_move.should == "3五龍(15)"
+            Player.test_case2(@params.merge(:exec => "３五龍左")).last_a_move2.should == ["3五龍(55)", "3五龍左"]
+            Player.test_case2(@params.merge(:exec => "３五龍右")).last_a_move2.should == ["3五龍(15)", "3五龍右"]
           end
           it "パターンD" do
             @params.update(:init => ["９九龍", "８九龍"])
-            Player.test_case2(@params.merge(:exec => "８八龍左")).last_a_move.should == "8八龍(99)"
-            Player.test_case2(@params.merge(:exec => "８八龍右")).last_a_move.should == "8八龍(89)"
+            Player.test_case2(@params.merge(:exec => "８八龍左")).last_a_move2.should == ["8八龍(99)", "8八龍左"]
+            Player.test_case2(@params.merge(:exec => "８八龍右")).last_a_move2.should == ["8八龍(89)", "8八龍右"]
           end
           it "パターンE" do
             @params.update(:init => ["２八龍", "１九龍"])
-            Player.test_case2(@params.merge(:exec => "１七龍左")).last_a_move.should == "1七龍(28)"
-            Player.test_case2(@params.merge(:exec => "１七龍右")).last_a_move.should == "1七龍(19)"
+            Player.test_case2(@params.merge(:exec => "１七龍左")).last_a_move2.should == ["1七龍(28)", "1七龍左"]
+            Player.test_case2(@params.merge(:exec => "１七龍右")).last_a_move2.should == ["1七龍(19)", "1七龍右"]
           end
         end
 
         context "馬" do
           it "パターンA" do
             @params.update(:init => ["９一馬", "８一馬"])
-            Player.test_case2(@params.merge(:exec => "８二馬左")).last_a_move.should == "8二馬(91)"
-            Player.test_case2(@params.merge(:exec => "８二馬右")).last_a_move.should == "8二馬(81)"
+            Player.test_case2(@params.merge(:exec => "８二馬左")).last_a_move2.should == ["8二馬(91)", "8二馬左"]
+            Player.test_case2(@params.merge(:exec => "８二馬右")).last_a_move2.should == ["8二馬(81)", "8二馬右"]
           end
           it "パターンB" do
             @params.update(:init => ["９五馬", "６三馬"])
-            Player.test_case2(@params.merge(:exec => "８五馬寄")).last_a_move.should == "8五馬(95)"
-            Player.test_case2(@params.merge(:exec => "８五馬引")).last_a_move.should == "8五馬(63)"
+            Player.test_case2(@params.merge(:exec => "８五馬寄")).last_a_move2.should == ["8五馬(95)", "8五馬寄"]
+            Player.test_case2(@params.merge(:exec => "８五馬引")).last_a_move2.should == ["8五馬(63)", "8五馬引"]
           end
           it "パターンC" do
             @params.update(:init => ["１一馬", "３四馬"])
-            Player.test_case2(@params.merge(:exec => "１二馬引")).last_a_move.should == "1二馬(11)"
-            Player.test_case2(@params.merge(:exec => "１二馬上")).last_a_move.should == "1二馬(34)"
+            Player.test_case2(@params.merge(:exec => "１二馬引")).last_a_move2.should == ["1二馬(11)", "1二馬引"]
+            Player.test_case2(@params.merge(:exec => "１二馬上")).last_a_move2.should == ["1二馬(34)", "1二馬上"]
           end
           it "パターンD" do
             @params.update(:init => ["９九馬", "５九馬"])
-            Player.test_case2(@params.merge(:exec => "７七馬左")).last_a_move.should == "7七馬(99)"
-            Player.test_case2(@params.merge(:exec => "７七馬右")).last_a_move.should == "7七馬(59)"
+            Player.test_case2(@params.merge(:exec => "７七馬左")).last_a_move2.should == ["7七馬(99)", "7七馬左"]
+            Player.test_case2(@params.merge(:exec => "７七馬右")).last_a_move2.should == ["7七馬(59)", "7七馬右"]
           end
           it "パターンE" do
             @params.update(:init => ["４七馬", "１八馬"])
-            Player.test_case2(@params.merge(:exec => "２九馬左")).last_a_move.should == "2九馬(47)"
-            Player.test_case2(@params.merge(:exec => "２九馬右")).last_a_move.should == "2九馬(18)"
+            Player.test_case2(@params.merge(:exec => "２九馬左")).last_a_move2.should == ["2九馬(47)", "2九馬左"]
+            Player.test_case2(@params.merge(:exec => "２九馬右")).last_a_move2.should == ["2九馬(18)", "2九馬右"]
           end
         end
       end
 
-      # it "下面" do
-      #   @params.update({:init => [
-      #         nil,      nil,      nil,
-      #         nil,      nil,      nil,
-      #         "６六と", "５六と", "４六と",
-      #       ]})
-      #   Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(46)", "5五と右"]
-      #   Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move2.should == ["5五と(56)", "5五と直"]
-      #   Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(66)", "5五と左"]
-      # end
-      # 
-      # it "縦に二つ" do
-      #   @params.update({:init => [
-      #         nil, "５四と", nil,
-      #         nil, nil,      nil,
-      #         nil, "５六と", nil,
-      #       ]})
-      #   Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move2.should == ["5五と(54)", "5五と引"]
-      #   Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(56)", "5五と上"]
-      # end
-      # 
-      # it "左と左下" do
-      #   @params.update({:init => [
-      #         nil, nil, nil,
-      #         "６五と", nil, nil,
-      #         "６六と", nil, nil,
-      #       ]})
-      #   Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move2.should == "5五と(65)"
-      #   Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == "5五と(66)"
-      # 
-      #   # Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move2.should == ["5五と(65)", "5五と寄"]
-      #   # Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(66)", "5五と上"]
-      # end
-      # 
-      # it "左上と左下" do
-      #   @params.update({:init => [
-      #         "６四銀", nil, nil,
-      #         nil, nil, nil,
-      #         "６六銀", nil, nil,
-      #       ]})
-      #   Player.test_case2(@params.merge(:exec => "５五銀引")).last_a_move.should == "5五銀(64)"
-      #   Player.test_case2(@params.merge(:exec => "５五銀上")).last_a_move.should == "5五銀(66)"
-      # end
-      # 
-      # it "左右" do
-      #   @params.update({:init => [
-      #         nil, nil, nil,
-      #         "６五と", nil, "４五と",
-      #         nil, nil, nil,
-      #       ]})
-      #   Player.test_case2(@params.merge(:exec => "５五と左寄")).last_a_move.should == "5五と(65)"
-      #   Player.test_case2(@params.merge(:exec => "５五と右寄")).last_a_move.should == "5五と(45)"
-      # end
+      it "真右だけ" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "______", "______", "４五と",
+              "______", "______", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と")).last_a_move2.should == ["5五と(45)", "5五と"]
+      end
+
+      it "右下だけ" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "______", "______", "______",
+              "______", "______", "４六と",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と")).last_a_move2.should == ["5五と(46)", "5五と"]
+      end
+
+      it "真下だけ" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "______", "______", "______",
+              "______", "５六と", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と")).last_a_move2.should == ["5五と(56)", "5五と"]
+      end
+
+      it "下面" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "______", "______", "______",
+              "６六と", "５六と", "４六と",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(46)", "5五と右"]
+        Player.test_case2(@params.merge(:exec => "５五と直")).last_a_move2.should == ["5五と(56)", "5五と直"]
+        Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(66)", "5五と左"]
+      end
+
+      it "縦に二つ" do
+        @params.update({:init => [
+              "______", "５四と", "______",
+              "______", "______", "______",
+              "______", "５六と", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と引")).last_a_move2.should == ["5五と(54)", "5五と引"]
+        Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(56)", "5五と上"]
+      end
+
+      it "左と左下" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "６五と", "______", "______",
+              "６六と", "______", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と寄")).last_a_move2.should == ["5五と(65)", "5五と寄"]
+        Player.test_case2(@params.merge(:exec => "５五と上")).last_a_move2.should == ["5五と(66)", "5五と上"]
+      end
+
+      it "左上と左下" do
+        @params.update({:init => [
+              "６四銀", "______", "______",
+              "______", "______", "______",
+              "６六銀", "______", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五銀引")).last_a_move2.should == ["5五銀(64)", "5五銀引"]
+        Player.test_case2(@params.merge(:exec => "５五銀上")).last_a_move2.should == ["5五銀(66)", "5五銀上"]
+      end
+
+      it "左右" do
+        @params.update({:init => [
+              "______", "______", "______",
+              "６五と", "______", "４五と",
+              "______", "______", "______",
+            ]})
+        Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(65)", "5五と左"]
+        Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(45)", "5五と右"]
+      end
     end
 
     it "指したあと前回の手を確認できる" do

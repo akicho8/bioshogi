@@ -41,7 +41,7 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :pieces, :frame, :before_point
+    attr_accessor :name, :board, :location, :pieces, :frame, :moved_point
 
     def initialize
       @pieces = []
@@ -87,7 +87,7 @@ module Bushido
 
     def initial_put_on(arg)
       Array.wrap(arg).each{|arg|
-        next if arg.blank?      # テストを書きやすくするため
+        next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
         info = parse_arg(arg)
         soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
         @board.put_on_at(info[:point], soldier)
@@ -225,7 +225,7 @@ module Bushido
       md or raise SyntaxError, "表記が間違っています : #{str.inspect} (#{regexp.inspect} にマッチしません)"
 
       if md[:point] == "同"
-        point = next_player.before_point
+        point = next_player.moved_point
         unless point
           raise BeforePointNotFound, "同に対する座標が不明です : #{str.inspect}"
         end
@@ -254,7 +254,7 @@ module Bushido
           soldiers = soldiers().find_all{|soldier|soldier.moveable_points.include?(point)}
           soldiers = soldiers.find_all{|e|e.piece.class == piece.class}
           soldiers = soldiers.find_all{|e|e.promoted == promoted}
-          candidate = __clone__(soldiers)
+          candidate = soldiers.collect{|s|s.clone}
 
           if soldiers.empty?
             if piece_fetch(piece)
@@ -340,7 +340,7 @@ module Bushido
                     end
                     # if soldiers.size > 1
                     #   soldiers = soldiers.find_all{|soldier|point.x == soldier.point.x} # 同じ列
-                  # end
+                    # end
                   end
                   if md[:options].match(/引/)
                     if @location == :black
@@ -397,17 +397,11 @@ module Bushido
 
       @before_promoted        = promoted
       @before_piece           = piece
-      @before_point           = point
-      @before_source_point    = source_point
+      @moved_point            = point
+      @from_point             = source_point
       @before_promote_trigger = promote_trigger
       @before_put_on_trigger  = put_on_trigger
       @candidate              = candidate
-    end
-
-    def __clone__(soldiers)
-      soldiers = soldiers.collect{|s|s.clone}
-      # soldiers.each{|s|s.point2 = s.point}
-      # soldiers
     end
 
     def _validate(str, md, chars)
@@ -420,8 +414,8 @@ module Bushido
     # def last_info_reset
     #   @before_promoted        = nil
     #   @before_piece           = nil
-    #   @before_point           = nil
-    #   @before_source_point    = nil
+    #   @moved_point           = nil
+    #   @from_point    = nil
     #   @before_promote_trigger = nil
     #   @before_put_on_trigger  = nil
     # end
@@ -430,8 +424,8 @@ module Bushido
       {
         :before_promoted        => @before_promoted,
         :before_promote_trigger => @before_promote_trigger,
-        :before_source_point    => @before_source_point,
-        :before_point           => @before_point,
+        :from_point             => @from_point,
+        :moved_point            => @moved_point,
         :before_piece           => @before_piece,
         :before_put_on_trigger  => @before_put_on_trigger,
         :candidate              => @candidate,
@@ -439,15 +433,15 @@ module Bushido
     end
 
     #  @before_piece=<Bushido::Piece::Rook:70167310927440 飛 rook>,
-    #  @before_point=#<Bushido::Point:70167308998220 "5一">,
+    #  @moved_point=#<Bushido::Point:70167308998220 "5一">,
     #  @before_promote_trigger=true,
     #  @before_put_on_trigger=false,
-    #  @before_source_point=#<Bushido::Point:70167310511120 "5五">,
+    #  @from_point=#<Bushido::Point:70167310511120 "5五">,
     def last_a_move
       # return if @before_piece.nil?
 
       s = []
-      s << @before_point.name
+      s << @moved_point.name
       s << @before_piece.some_name(@before_promoted)
       if @before_promote_trigger
         s << "成"
@@ -455,8 +449,8 @@ module Bushido
       if @before_put_on_trigger
         s << "打"
       end
-      if @before_source_point
-        s << "(#{@before_source_point.to_s_digit})"
+      if @from_point
+        s << "(#{@from_point.to_s_digit})"
       end
       s.join
     end
@@ -466,21 +460,21 @@ module Bushido
     end
 
     def last_a_move_kif2
-# {:before_promoted=>true,
-#  :before_promote_trigger=>nil,
-#  :before_source_point=>#<Bushido::Point:70361068894000 "4六">,
-#  :before_point=>#<Bushido::Point:70361082976580 "5五">,
-#  :before_piece=><Bushido::Piece::Pawn:70361068615920 歩 pawn>,
-#  :before_put_on_trigger=>nil,
-#  :candidate=>
-#   [<Bushido::Soldier:70361082478820 ▲6六と>,
-#    <Bushido::Soldier:70361084689580 ▲5六と>,
-#    <Bushido::Soldier:70361084645540 ▲5五と>]}
+      # {:before_promoted=>true,
+      #  :before_promote_trigger=>nil,
+      #  :from_point=>#<Bushido::Point:70361068894000 "4六">,
+      #  :moved_point=>#<Bushido::Point:70361082976580 "5五">,
+      #  :before_piece=><Bushido::Piece::Pawn:70361068615920 歩 pawn>,
+      #  :before_put_on_trigger=>nil,
+      #  :candidate=>
+      #   [<Bushido::Soldier:70361082478820 ▲6六と>,
+      #    <Bushido::Soldier:70361084689580 ▲5六と>,
+      #    <Bushido::Soldier:70361084645540 ▲5五と>]}
 
       # return if @before_piece.nil?
 
       s = []
-      s << @before_point.name
+      s << @moved_point.name
       s << @before_piece.some_name(@before_promoted)
       if @before_promote_trigger
         s << "成"
@@ -488,48 +482,93 @@ module Bushido
       if @before_put_on_trigger
         s << "打"
       end
-      if @candidate && @candidate.size >= 2
-        # p @candidate
-        if @candidate.all?{|s|s.point.y == @before_point.y}
-          if @before_point.x.value < @before_source_point.x.value
-            s << "右"
+
+      # 候補が2つ以上あったとき
+      if @candidate && @candidate.size > 1
+        if @before_piece.kind_of?(Piece::Brave)
+          # 大駒の場合、
+          # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
+          if @candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる
+              @candidate.all?{|s|s.point.y.value < @moved_point.y.value},   # 移動先の水平線上よりすべて上または
+              @candidate.all?{|s|s.point.y.value > @moved_point.y.value},   #                     すべて下
+            ].any?
+
+            sorted_candidate = @candidate.sort_by{|soldier|soldier.point.x.value}
+            if sorted_candidate.last.point.x.value == @from_point.x.value
+              s << select_char("右左")
+            end
+            if sorted_candidate.first.point.x.value == @from_point.x.value
+              s << select_char("左右")
+            end
           end
-          if @before_point.x.value > @before_source_point.x.value
-            s << "左"
+        else
+          # 普通駒の場合、
+          # 左右がつくのは移動先の左側と右側の両方に駒があるとき
+          if [@candidate.any?{|s|s.point.x.value < @moved_point.x.value},      # 移動先の左側に駒がある、かつ
+              @candidate.any?{|s|s.point.x.value > @moved_point.x.value}].all? # 移動先の右側に駒がある
+            if @moved_point.x.value < @from_point.x.value
+              s << select_char("右左")
+            end
+            if @moved_point.x.value > @from_point.x.value
+              s << select_char("左右")
+            end
           end
-        end
-        if @before_point.x.value == @before_source_point.x.value
-          s << "直"
+
+          # 目標座標の左方向または右方向に駒があって、自分は縦の列から来た場合
+          if [@candidate.any?{|s|s.point.x.value < @moved_point.x.value},
+              @candidate.any?{|s|s.point.x.value > @moved_point.x.value}].any?
+            if @moved_point.x.value == @from_point.x.value
+              s << "直"
+            end
+          end
         end
       end
-      if @candidate && @candidate.size >= 2
-        if @before_point.y.value < @before_source_point.y.value
-          s << "上"
+
+      # 候補が2つ以上あって
+      if @candidate
+
+        # 目標地点の上と下、両方にあって区別がつかないとき、
+        if [@candidate.any?{|s|s.point.y.value < @moved_point.y.value},
+            @candidate.any?{|s|s.point.y.value > @moved_point.y.value}].all? ||
+            # 上か下にあって、水平線にもある
+            [@candidate.any?{|s|s.point.y.value < @moved_point.y.value},
+            @candidate.any?{|s|s.point.y.value > @moved_point.y.value}].any? && @candidate.any?{|s|s.point.y.value == @moved_point.y.value}
+
+          # 下から来たのなら、ひき"上"げる
+          if @moved_point.y.value < @from_point.y.value
+            s << select_char("上引")
+          end
+          # 上から来たなら、"引"く
+          if @moved_point.y.value > @from_point.y.value
+            s << select_char("引上")
+          end
         end
-        if @before_point.y.value == @before_source_point.y.value
-          s << "寄"
-        end
-        if @before_point.y.value > @before_source_point.y.value
-          s << "引"
+
+        # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
+        if [@candidate.any?{|s|s.point.y.value < @moved_point.y.value},
+            @candidate.any?{|s|s.point.y.value > @moved_point.y.value}].any?
+          if @moved_point.y.value == @from_point.y.value
+            s << "寄"
+          end
         end
       end
       s.join
     end
-
-    # def up_to_down(soldiers)
-    #   if @location == :black
-    #     soldiers = soldiers.find_all{|soldier|point.y.value > soldier.point.y.value}
-    #   else
-    #     soldiers = soldiers.find_all{|soldier|point.y.value < soldier.point.y.value}
-    #   end
-    #   soldiers
-    # end
 
     def board_with_pieces
       s = ""
       s << @board.to_s(:kakiki)
       s << "#{location_mark}の持駒:" + pieces.collect(&:name).join + "\n"
       s
+    end
+
+    def select_char(str)
+      chars = str.scan(/./)
+      if @location == :black
+        chars.first
+      else
+        chars.last
+      end
     end
   end
 end
