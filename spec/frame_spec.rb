@@ -38,6 +38,7 @@ module Bushido
 
       file = "../resources/竜王戦_ki2/*.ki2"
       file = "../resources/iphone_shogi_vs/kakinoki_vs_Bonanza.kif"
+      file = "../resources/竜王戦_ki2/龍王戦2010-23 渡辺羽生-6.ki2"
 
       Pathname.glob(Pathname(__FILE__).dirname.join(file)).shuffle.each{|file|
         @result = Bushido.parse(file)
@@ -49,7 +50,7 @@ module Bushido
           # puts frame.inspect
         }
         # puts frame.inspect
-        # puts frame.a_move_logs.join(" ")
+        # puts frame.a_move_logs2.join(" ")
       }
     end
 

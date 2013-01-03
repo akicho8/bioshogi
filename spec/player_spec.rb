@@ -29,14 +29,13 @@ module Bushido
       end
     end
 
-    describe "#setup" do
-      it "初期配置" do
-        board = Board.new
-        players = []
-        players << Player.create2(:black, board)
-        players << Player.create2(:white, board)
-        players.each(&:piece_plot)
-        board.to_s.should == <<-FIELD.strip_heredoc
+    it "初期配置" do
+      board = Board.new
+      players = []
+      players << Player.create2(:black, board)
+      players << Player.create2(:white, board)
+      players.each(&:piece_plot)
+      board.to_s.should == <<-FIELD.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -50,7 +49,6 @@ module Bushido
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 FIELD
-      end
     end
 
     context "移動" do
@@ -138,26 +136,16 @@ FIELD
       context "取る" do
         context "取れる" do
           it "座標指定で" do
-            # FIXME: Frame のクラスメソッドにする
-            frame = Frame.players_join
-            frame.players[0].initial_put_on("５六歩")
-            frame.players[1].initial_put_on("５五飛")
-            frame.piece_discard
-            frame.players[0].execute("５五歩")
-            frame.players[0].piece_names.should == ["飛"]
+            frame = LiveFrame.testcase3(:init => ["５六歩", "５五飛"], :exec => ["５五歩"])
+            frame.prev_player.last_piece.name.should == "飛"
           end
           it "同歩で取る" do
-            frame = Frame.players_join
-            frame.players[0].initial_put_on("２五歩")
-            frame.players[1].initial_put_on("２三歩")
-            frame.piece_discard
-            frame.players[0].execute("２四歩")
-            frame.players[1].execute("同 歩")
-            frame.players[1].piece_names.should == ["歩"]
+            frame = LiveFrame.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"])
+            frame.prev_player.last_piece.name.should == "歩"
           end
         end
         context "取れない" do
-          # MEMO: 相手がいないと同角は失敗するので「相手がいない」というエラーすることも検討
+          # 相手がいないと同角は失敗するので「相手がいない」というエラーすることも検討
           it "一人で同を使う(同角で２五がわかった上で移動しようとしたけど自分の飛車がいるために移動できなかった)" do
             expect { Player.test_case(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]) }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
           end
@@ -165,22 +153,6 @@ FIELD
             expect { Player.test_case(:exec => "同歩") }.to raise_error(BeforePointNotFound)
           end
         end
-
-        # context "後手で同金直" do
-        #   it do
-        #     frame = Frame.players_join
-        #     frame.players[0].initial_put_on("５六金")
-        #     frame.players[1].initial_put_on(["５四金", "６四金"])
-        #     frame.piece_discard
-        #     frame.players[0].execute("５五金")
-        #     frame.players[1].execute("同金直") # これが５四金を指すか６四金か指すかで迷うが、５四金が正解
-        #     frame.players[1].piece_names.should == ["金"]
-        #     frame.players[1].last_a_move.should == "5五金(54)"
-        #
-        #     # p Player.test_case2(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]).last_a_move
-        #     # expect {  }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
-        #   end
-        # end
       end
     end
 
@@ -372,6 +344,10 @@ FIELD
             ]})
         Player.test_case2(@params.merge(:exec => "５五と左")).last_a_move2.should == ["5五と(65)", "5五と左"]
         Player.test_case2(@params.merge(:exec => "５五と右")).last_a_move2.should == ["5五と(45)", "5五と右"]
+      end
+
+      it "同" do
+        LiveFrame.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.last_a_move2.should == ["2四歩(23)", "同歩"]
       end
     end
 

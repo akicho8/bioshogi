@@ -45,29 +45,51 @@ module Bushido
   end
 
   class LiveFrame < Frame
-    attr_reader :count, :a_move_logs
+    attr_reader :count, :a_move_logs, :a_move_logs2
+
+    def self.testcase3(params = {})
+      params = {
+        # :init => [],
+        # :piece_discard => false, # 持駒を捨てる？
+      }.merge(params)
+      frame = players_join
+      (params[:init] || []).each_with_index{|init, index|frame.players[index].initial_put_on(init)}
+      # if params[:piece_discard]
+      #   frame.piece_discard
+      # end
+      frame.execute(params[:exec])
+      frame
+    end
 
     def initialize(*)
       super
       @count = 0
       @a_move_logs = []
+      @a_move_logs2 = []
     end
 
     def execute(str)
-      if str == "投了"
-        return
+      Array.wrap(str).each do |str|
+        if str == "投了"
+          return
+        end
+        current_player.execute(str)
+        @a_move_logs << "#{white_or_black_mark}#{current_player.last_a_move}"
+        @a_move_logs2 << "#{white_or_black_mark}#{current_player.last_a_move_kif2}"
+        @count += 1
       end
-      current_player.execute(str)
-      @a_move_logs << "#{white_or_black_mark}#{current_player.last_a_move}"
-      @count += 1
     end
 
-    def current_player
-      players[current_index]
+    def prev_player
+      current_player(-1)
     end
 
-    def current_index
-      @count.modulo(@players.size)
+    def current_player(diff = 0)
+      players[current_index(diff)]
+    end
+
+    def current_index(diff = 0)
+      (@count + diff).modulo(@players.size)
     end
 
     def counter_human_name

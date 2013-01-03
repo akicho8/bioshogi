@@ -41,7 +41,7 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :pieces, :frame, :moved_point
+    attr_accessor :name, :board, :location, :pieces, :frame, :moved_point, :last_piece
 
     def initialize
       @pieces = []
@@ -181,6 +181,7 @@ module Bushido
         end
         @board.pick_up!(b)
         @pieces << target_soldier.piece
+        @last_piece = target_soldier.piece
       end
 
       if promote_trigger
@@ -217,6 +218,8 @@ module Bushido
         # last_info_reset
         return
       end
+
+      @last_piece = nil
 
       white_space = /\s#{[0x3000].pack('U')}/
 
@@ -395,6 +398,7 @@ module Bushido
         end
       end
 
+      @next_player_moved_point = next_player.moved_point
       @before_promoted        = promoted
       @before_piece           = piece
       @moved_point            = point
@@ -422,6 +426,7 @@ module Bushido
 
     def last_info
       {
+        :next_player_moved_point => @next_player_moved_point,
         :before_promoted        => @before_promoted,
         :before_promote_trigger => @before_promote_trigger,
         :from_point             => @from_point,
@@ -429,6 +434,7 @@ module Bushido
         :before_piece           => @before_piece,
         :before_put_on_trigger  => @before_put_on_trigger,
         :candidate              => @candidate,
+        :last_piece             => @last_piece,
       }
     end
 
@@ -441,6 +447,10 @@ module Bushido
       # return if @before_piece.nil?
 
       s = []
+      # if @next_player_moved_point == @moved_point
+      #   s << "同"
+      # else
+      # end
       s << @moved_point.name
       s << @before_piece.some_name(@before_promoted)
       if @before_promote_trigger
@@ -474,7 +484,11 @@ module Bushido
       # return if @before_piece.nil?
 
       s = []
-      s << @moved_point.name
+      if @next_player_moved_point == @moved_point
+        s << "同"
+      else
+        s << @moved_point.name
+      end
       s << @before_piece.some_name(@before_promoted)
       if @before_promote_trigger
         s << "成"
@@ -522,10 +536,6 @@ module Bushido
             end
           end
         end
-      end
-
-      # 候補が2つ以上あって
-      if @candidate
 
         # 目標地点の上と下、両方にあって区別がつかないとき、
         if [@candidate.any?{|s|s.point.y.value < @moved_point.y.value},
