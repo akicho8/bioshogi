@@ -2,7 +2,11 @@
 
 module Bushido
   module Ki2Format
-    class Parser < KifFormat::Parser
+    class Parser < BaseFormat::Parser
+      def self.resolved?(source)
+        !normalized_source(source).match(/^手数.*指手.*消費時間.*$/)
+      end
+
       def parse
         @_head, @_body = @source.split(/\n\n/, 2)
         read_header

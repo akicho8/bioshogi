@@ -27,12 +27,15 @@ module Bushido
 
     context "ファイル読み込み" do
       it "できる" do
-        Bushido.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-        Bushido.parse(Pathname(__FILE__).dirname.join("sample1.ki2"))
+        Bushido.parse_file(Pathname(__FILE__).dirname.join("sample1.kif"))
+        Bushido.parse_file(Pathname(__FILE__).dirname.join("sample1.ki2"))
       end
       it "できない" do
-        expect { Bushido.parse(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(FileFormatError)
+        expect { Bushido.parse_file(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(Errno::ENOENT)
       end
+    end
+    it "文字列読み込みできない" do
+      expect { Bushido.parse("") }.to raise_error
     end
   end
 end

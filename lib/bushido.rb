@@ -47,10 +47,23 @@ module Bushido
     end
   end
 
-  def self.parse(file)
-    "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read)
-  rescue NameError
-    raise FileFormatError, "拡張子がおかしい : #{file.expand_path}"
+  # def self.parse(file)
+  #   "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read)
+  # rescue NameError
+  #   raise FileFormatError, "拡張子がおかしい : #{file.expand_path}"
+  # end
+
+  # "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read, options)
+  def self.parse_file(file, options = {})
+    parse(Pathname(file).expand_path.read, options)
+  end
+
+  def self.parse(str, options = {})
+    options = {
+    }.merge(options)
+    parser = [KifFormat::Parser, Ki2Format::Parser].find{|parser|parser.resolved?(str)}
+    parser or raise FileFormatError, "フォーマットがおかしい : #{str}"
+    parser.parse(str, options)
   end
 end
 
@@ -63,6 +76,7 @@ require_relative "bushido/soldier"
 require_relative "bushido/player"
 require_relative "bushido/frame"
 
+require_relative "bushido/base_format"
 require_relative "bushido/kif_format"
 require_relative "bushido/ki2_format"
 

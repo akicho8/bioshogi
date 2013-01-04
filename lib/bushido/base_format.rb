@@ -1,26 +1,67 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
 
 module Bushido
-  module KifFormat
-    class Parser < BaseFormat::Parser
-      def self.resolved?(source)
-        normalized_source(source).match(/^手数.*指手.*消費時間.*$/)
+  module BaseFormat
+    class Parser
+      def self.parse(source, options = {})
+        new(source, options).tap{|o|o.parse}
       end
 
-      # | # ----  Kifu for Windows V6.26 棋譜ファイル  ----
-      # | key：value
-      # | 手数----指手---------消費時間--
-      # | *コメント0
-      # |    1 ７六歩(77)   ( 0:00/00:00:00)
+      def self.resolved?(source)
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      def self.normalized_source(source)
+        if source.kind_of? Pathname
+          source = source.expand_path.read
+        end
+        source.toutf8.gsub(/[#{[0x3000].pack('U')} ]*\r?\n/, "\n")
+      end
+
+      attr_reader :header, :move_infos, :first_comments, :source
+
+      def initialize(source, options = {})
+        @source = self.class.normalized_source(source)
+        @options = default_options.merge(options)
+
+        @header = {}
+        @move_infos = []
+        @first_comments = []
+      end
+
+      def default_options
+        {}
+      end
+
       def parse
-        @_head, @_body = @source.split(/^手数.*指手.*消費時間.*$/, 2)
-        read_header
-        @_body.lines.each do |line|
-          comment_read(line)
-          if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
-            @move_infos << {:index => md[:index], :input => md[:input], :spent_time => md[:spent_time]}
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      private
+
+      def read_header
+        @_head.scan(/^(\S.*)：(.*)$/).each{|key, value|
+          @header[key] = value
+        }
+      end
+
+      def comment_read(line)
+        if md = line.match(/^\s*\*\s*(?<comment>.*)/)
+          if @move_infos.empty?
+            add_to_first_comments(md[:comment])
+          else
+            add_to_a_last_move_comments(md[:comment])
           end
         end
+      end
+
+      def add_to_first_comments(comment)
+        @first_comments << comment
+      end
+
+      def add_to_a_last_move_comments(comment)
+        @move_infos.last[:comments] ||= []
+        @move_infos.last[:comments] << comment
       end
     end
 
