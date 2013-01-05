@@ -15,7 +15,51 @@ module Bushido
         if source.kind_of? Pathname
           source = source.expand_path.read
         end
-        source.toutf8.gsub(/[#{[0x3000].pack('U')} ]*\r?\n/, "\n")
+        source.to_s.toutf8.gsub(/[#{[0x3000].pack('U')} ]*\r?\n/, "\n")
+      end
+
+      # 柿木フォーマットのテーブル
+      #
+      #   str = "
+      #     ９ ８ ７ ６ ５ ４ ３ ２ １
+      #   +---------------------------+
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
+      #   | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
+      #   +---------------------------+
+      #   "
+      #
+      #   board_parse(str) # => {:white=>{:soldiers=>["４二玉"]}, :black=>{:soldiers=>[]}}
+      #
+      def self.board_parse(source)
+        str = normalized_source(source)
+        lines = str.strip.lines.to_a
+        x_units = lines.first.strip.split(/\s+/)                   # 一行目のX座標の単位取得
+        lines = lines.find_all{|line|line.start_with?("|")}
+        y_units = lines.collect{|line|line.match(/(?<y>.)\n/)[:y]}
+        lines = lines.collect{|line|line.match(/\|(?<content>.*)\|/)[:content]}
+
+        players = {}
+        players[:white] = {}
+        players[:black] = {}
+
+        lines.each_with_index{|line, y_index|
+          line.scan(/(.)(\S)/).each_with_index{|(prefix, piece), x_index|
+            player = players[prefix == " " ? :black : :white]
+            player[:soldiers] ||= []
+            if piece == "・"
+            else
+              player[:soldiers] << [x_units[x_index], y_units[y_index], piece].join
+            end
+          }
+        }
+        players
       end
 
       attr_reader :header, :move_infos, :first_comments, :source
@@ -99,9 +143,10 @@ module Bushido
         }
         s = []
         s << "  " + Position::Hpos.zenkaku_units.join(" ")
-        s << "+---------------------------+"
+        hline = "+" + "---" * Position::Hpos.zenkaku_units.size + "+"
+        s << hline
         s += rows
-        s << "+---------------------------+"
+        s << hline
         s.collect{|e|e + "\n"}.join
       end
     end

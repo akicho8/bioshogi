@@ -3,51 +3,48 @@
 require "spec_helper"
 
 module Bushido
-  describe Frame do
-    it do
-      frame = Frame.players_join
-      frame.players[0].initial_put_on("５六歩")
-      frame.players[1].initial_put_on("５五飛")
-      frame.piece_discard
-      frame.players[0].execute("５五歩")
-      frame.players[0].piece_names.should == ["飛"]
-      # p frame
-    end
-
-    it "棋譜の配列をパースして▲▽を考慮して交互に打つ" do
-      # pending
-    end
-    it "戦況表示" do
-      # pending
-    end
-    it "N手目を一発で表示" do
-      # pending
-    end
-  end
-
   describe LiveFrame do
-    it do
-      # @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif"))
-      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/九段戦1950-01 大山板谷-2.ki2"))
+    it "交互に打ちながら戦況表示" do
+      frame = LiveFrame.players_join
+      frame.piece_plot
+      frame.execute(["７六歩", "３四歩"])
+      frame.inspect.should == <<-FIELD
+3:▲先手番
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩 ・v歩v歩|三
+| ・ ・ ・ ・ ・ ・v歩 ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ 歩 ・ ・ ・ ・ ・ ・|六
+| 歩 歩 ・ 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+blackの持駒:
+whiteの持駒:
+FIELD
+    end
 
-      # # どっちの銀か、わからない
-      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/十段戦1968-07 大山加藤-7.ki2"))
-
-      # @result = Bushido.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/龍王戦2012-25 渡辺丸山-5.ki2"))
-
+    it "ファイル読み込み" do
       file = "../resources/竜王戦_ki2/*.ki2"
       file = "../resources/iphone_shogi_vs/kakinoki_vs_Bonanza.kif"
+      file = "../resources/詰将棋/*.kif"
+      file = "../resources/**/*.{kif,ki2}"
       file = "../resources/竜王戦_ki2/龍王戦2010-23 渡辺羽生-6.ki2"
-
-      Pathname.glob(Pathname(__FILE__).dirname.join(file)).shuffle.each{|file|
-        @result = Bushido.parse(file)
+      Pathname.glob(Pathname(__FILE__).dirname.join(file)).each{|file|
+        # p file
+        begin
+          kif_info = Bushido.parse(file)
+        rescue FileFormatError => error
+          # p error
+          next
+        end
         frame = LiveFrame.players_join
         frame.piece_plot
-        @result.move_infos.each{|move_info|
-          # p move_info[:input]
+        kif_info.move_infos.each{|move_info|
           frame.execute(move_info[:input])
-          # puts frame.inspect
         }
         # puts frame.inspect
         # puts frame.a_move_logs2.join(" ")

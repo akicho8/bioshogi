@@ -4,7 +4,8 @@ module Bushido
   module Ki2Format
     class Parser < BaseFormat::Parser
       def self.resolved?(source)
-        !normalized_source(source).match(/^手数.*指手.*消費時間.*$/)
+        source = normalized_source(source)
+        !source.match(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
       end
 
       def parse
