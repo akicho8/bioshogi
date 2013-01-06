@@ -349,6 +349,10 @@ FIELD
       it "同" do
         LiveFrame.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.last_a_move2.should == ["2四歩(23)", "同歩"]
       end
+
+      it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
+        Player.test_case2(:init => ["３四銀", "２四銀"], :exec => "２三銀直不成").last_a_move2.should == ["2三銀(24)", "2三銀直不成"]
+      end
     end
 
     it "指したあと前回の手を確認できる" do

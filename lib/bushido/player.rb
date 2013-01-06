@@ -223,7 +223,7 @@ module Bushido
 
       white_space = /\s#{[0x3000].pack('U')}/
 
-      regexp = /\A(?<point>同|..)[#{white_space}]*(?<piece>#{Piece.names.join("|")})(?<options>[成打右左直引寄上]+)?(\((?<from>.*)\))?/
+      regexp = /\A(?<point>同|..)[#{white_space}]*(?<piece>#{Piece.names.join("|")})(?<options>[不成打右左直引寄上]+)?(\((?<from>.*)\))?/
       md = str.match(regexp)
       md or raise SyntaxError, "表記が間違っています : #{str.inspect} (#{regexp.inspect} にマッチしません)"
 
@@ -237,7 +237,14 @@ module Bushido
       end
 
       promoted, piece = Piece.parse!(md[:piece])
-      promote_trigger = md[:options].to_s.match(/成/)
+
+      promote_trigger = false
+      case md[:options].to_s
+      when /不成/
+      when /成/
+        promote_trigger = true
+      end
+
       put_on_trigger = md[:options].to_s.match(/打/)
       source_point = nil
 
@@ -490,12 +497,6 @@ module Bushido
         s << @moved_point.name
       end
       s << @before_piece.some_name(@before_promoted)
-      if @before_promote_trigger
-        s << "成"
-      end
-      if @before_put_on_trigger
-        s << "打"
-      end
 
       # 候補が2つ以上あったとき
       if @candidate && @candidate.size > 1
@@ -562,6 +563,23 @@ module Bushido
           end
         end
       end
+
+      if @before_promote_trigger
+        s << "成"
+      else
+        if @from_point && @moved_point
+          if @from_point.promotable_area?(@location) || @moved_point.promotable_area?(@location)
+            unless @before_promoted
+              s << "不成"
+            end
+          end
+        end
+      end
+
+      if @before_put_on_trigger
+        s << "打"
+      end
+
       s.join
     end
 

@@ -425,8 +425,10 @@
     | 後手     | white    |
     | 対局室   | frame    |
 
-** \TODO
+** _TODO_
 
+   - +「２三銀直不成」対応+
+   - ２二銀引成、できる？
    - ▲24歩 をよむ
    - kif→ki2で"同"金
    - 持駒は「歩歩」は「歩二」
@@ -454,6 +456,3 @@
     - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
     - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
     - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html
-
-    - Rubyist Magazine - cairo: 2 次元画像描画ライブラリ http://jp.rubyist.net/magazine/?0019-cairo
-    - Emacs LispとRubyを使ってGoogle Chromeを操作する - saito’s blog http://d.hatena.ne.jp/saitodevel01/20110925/1316962117
