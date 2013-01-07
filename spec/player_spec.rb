@@ -353,6 +353,10 @@ FIELD
       it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
         Player.test_case2(:init => ["３四銀", "２四銀"], :exec => "２三銀直不成").last_a_move2.should == ["2三銀(24)", "2三銀直不成"]
       end
+
+      it "２三銀引成できる？" do
+        Player.test_case2(:init => ["３二銀", "３四銀"], :exec => "２三銀引成").last_a_move2.should == ["2三銀成(32)", "2三銀引成"]
+      end
     end
 
     it "指したあと前回の手を確認できる" do
