@@ -365,6 +365,10 @@ FIELD
       Player.test_case2(:exec => "５五飛打").last_a_move.should                    == "5五飛打"
     end
 
+    it "持駒の確認" do
+      Player.test_case2.pieces_compact_str.should == "歩九角飛香二桂二銀二金二玉"
+    end
+
     it "全体確認" do
       board = Board.new
       players = []

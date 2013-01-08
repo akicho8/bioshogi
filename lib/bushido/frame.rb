@@ -37,9 +37,7 @@ module Bushido
     def inspect
       s = ""
       s << @board.to_s(:kakiki)
-      @players.each{|player|
-        s << "#{player.location}の持駒:" + player.pieces.collect(&:name).join + "\n"
-      }
+      s << @players.collect{|player|"#{player.location}の持駒:#{player.pieces_compact_str}"}.join("\n") + "\n"
       s
     end
   end

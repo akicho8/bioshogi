@@ -3,7 +3,7 @@
 module Bushido
   class Player
     # facade
-    def self.test_case(params)
+    def self.test_case(params = {})
       params = {
         :player => :black,
         :return_player => false,
@@ -20,7 +20,7 @@ module Bushido
     end
 
     # facade
-    def self.test_case2(params)
+    def self.test_case2(params = {})
       test_case({:return_player => true}.merge(params))
     end
 
@@ -586,8 +586,21 @@ module Bushido
     def board_with_pieces
       s = ""
       s << @board.to_s(:kakiki)
-      s << "#{location_mark}の持駒:" + pieces.collect(&:name).join + "\n"
+      # s << "#{location_mark}の持駒:" + pieces.collect(&:name).join + "\n"
+      s << "#{location_mark}の持駒:#{pieces_compact_str}\n"
       s
+    end
+
+    # Player.test_case2.pieces_compact_str # => "歩九角飛香二桂二銀二金二玉"
+    def pieces_compact_str
+      pieces.group_by{|e|e.class}.collect{|klass, pieces|
+        if pieces.size > 1
+          num = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
+        else
+          num = ""
+        end
+        "#{pieces.first.name}#{num}"
+      }.join
     end
 
     def select_char(str)
