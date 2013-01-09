@@ -77,8 +77,5 @@ FIELD
 # EOT
 #       pp KifFormat::Parser.parse(contents)
 #     end
-
-    
-
   end
 end

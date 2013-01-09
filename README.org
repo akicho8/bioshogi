@@ -445,7 +445,7 @@
    - +２二銀引成、できる？+
    - +▲24歩 をよむ+
    - kif→ki2で"同"金
-   - 持駒は「歩歩」は「歩二」
+   - +持駒は「歩歩」は「歩二」+
    - executeとexecute!を作ってexecuteでは盤面を更新しない
    - "不成" の明示指定
    - 例外クラスは引数を受け取って自分でメッセージを作成する
@@ -464,8 +464,6 @@
 *** 参考リンク集
 
     - 棋譜の形式について http://wiki.optus.nu/shogi/index.php?post=%B4%FD%C9%E8%A4%CE%B7%C1%BC%B0%A4%CB%A4%C4%A4%A4%A4%C6
-    - 寺川唯子先生の将棋レッスン －棋譜の読み方－ ‐ ニコニコ動画:Q http://www.nicovideo.jp/watch/sm1452194
-    - 将棋を英語表記するときにblackは何故先手なのか？ - やねうらお－よっちゃんイカを食べながら、息子語録を書き綴る http://d.hatena.ne.jp/yaneurao/20101128
     - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
     - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
     - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/

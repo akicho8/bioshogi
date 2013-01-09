@@ -9,7 +9,7 @@ module Bushido
         :return_player => false,
       }.merge(params)
       player = Player.create2(params[:player], Board.new)
-      player.deal2(params[:deal])
+      player.deal(params[:deal])
       player.initial_put_on(params[:init])
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
       if params[:return_player]
@@ -47,13 +47,20 @@ module Bushido
       @pieces = []
     end
 
-    def deal
-      first_distributed_pieces.each{|info|deal2(info)}
-    end
-
-    def deal2(infos)
+    # 配布して持駒にする
+    #
+    #   player = Player.new
+    #   player.deal("飛 歩二")
+    #   player.pieces_compact_str # => "飛 歩二"
+    #
+    def deal(infos = first_distributed_pieces)
       if infos.kind_of? String
-        infos = infos.scan(/./).collect{|piece|{:piece => piece}}
+        str = infos
+        str = str.tr("〇一二三四五六七八九", "0-9")
+        infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
+          md = s.match(/\A(?<piece>#{Piece.names.join("|")})(?<count>\d+)?/)
+          {:piece => md[:piece], :count => (md[:count] || 1).to_i}
+        }
       end
       Array.wrap(infos).each{|info|
         @pieces += (info[:count] || 1).times.collect{ Piece.get!(info[:piece]) }
@@ -221,9 +228,7 @@ module Bushido
 
       @last_piece = nil
 
-      white_space = /\s#{[0x3000].pack('U')}/
-
-      regexp = /\A(?<point>同|..)[#{white_space}]*(?<piece>#{Piece.names.join("|")})(?<options>[不成打右左直引寄上]+)?(\((?<from>.*)\))?/
+      regexp = /\A(?<point>同|..)#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<options>[不成打右左直引寄上]+)?(\((?<from>.*)\))?/
       md = str.match(regexp)
       md or raise SyntaxError, "表記が間違っています : #{str.inspect} (#{regexp.inspect} にマッチしません)"
 
@@ -591,7 +596,7 @@ module Bushido
       s
     end
 
-    # Player.test_case2.pieces_compact_str # => "歩九角飛香二桂二銀二金二玉"
+    # Player.test_case2.pieces_compact_str # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
     def pieces_compact_str
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
         if pieces.size > 1
@@ -600,7 +605,7 @@ module Bushido
           num = ""
         end
         "#{pieces.first.name}#{num}"
-      }.join
+      }.join(SEPARATOR)
     end
 
     def select_char(str)

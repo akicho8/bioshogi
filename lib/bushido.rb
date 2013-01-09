@@ -11,6 +11,9 @@ module Bushido
   config_accessor :format
   config.format = :basic
 
+  WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
+  SEPARATOR = " "
+
   class BushidoError < StandardError; end
 
   class MustNotHappen < BushidoError; end

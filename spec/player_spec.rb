@@ -4,6 +4,12 @@ require "spec_helper"
 
 module Bushido
   describe Player do
+    it "持駒のパース"  do
+      player = Player.new
+      player.deal("飛 歩二")
+      player.pieces_compact_str.should == "飛 歩二"
+    end
+
     context "配置" do
       context "できる" do
         it "歩を相手の陣地に" do
@@ -207,7 +213,7 @@ FIELD
 
     context "人間が入力する棋譜" do
       before do
-        @params = {:deal => "飛角"}
+        @params = {:deal => "飛 角"}
       end
 
       context "http://www.shogi.or.jp/faq/kihuhyouki.html" do
@@ -366,7 +372,7 @@ FIELD
     end
 
     it "持駒の確認" do
-      Player.test_case2.pieces_compact_str.should == "歩九角飛香二桂二銀二金二玉"
+      Player.test_case2.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     end
 
     it "全体確認" do
