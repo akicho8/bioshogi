@@ -15,7 +15,7 @@ module Bushido
         if source.kind_of? Pathname
           source = source.expand_path.read
         end
-        source.to_s.toutf8.gsub(/[#{[0x3000].pack('U')} ]*\r?\n/, "\n")
+        source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
       end
 
       # 柿木フォーマットのテーブル
@@ -84,9 +84,21 @@ module Bushido
       private
 
       def read_header
+        read_key_value
+        read_board
+      end
+
+      def read_key_value
         @_head.scan(/^(\S.*)：(.*)$/).each{|key, value|
           @header[key] = value
         }
+      end
+
+      def read_board
+        if md = @_head.match(/^後手の持駒：.*?\n(?<board>.*)^先手の持駒：/m)
+          @header[:board_source] = md[:board]
+          @header[:board] = self.class.board_parse(md[:board])
+        end
       end
 
       def comment_read(line)
