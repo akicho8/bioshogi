@@ -69,7 +69,7 @@ module Bushido
         super
       end
 
-      def to_s_digit
+      def number_format
         name
       end
     end
@@ -91,7 +91,7 @@ module Bushido
         super
       end
 
-      def to_s_digit
+      def number_format
         name.tr(self.class.units.join, "1-9")
       end
     end

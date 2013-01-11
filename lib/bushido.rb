@@ -50,13 +50,6 @@ module Bushido
     end
   end
 
-  # def self.parse(file)
-  #   "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read)
-  # rescue NameError
-  #   raise FileFormatError, "拡張子がおかしい : #{file.expand_path}"
-  # end
-
-  # "#{name}/#{file.extname.sub(".", "")}_format/parser".classify.constantize.parse(file.read, options)
   def self.parse_file(file, options = {})
     parse(Pathname(file).expand_path.read, options)
   end
@@ -98,19 +91,21 @@ module Bushido
     frame.players << Player.create2(:white, frame.board)
     puts frame.board
 
-    # @board = Board.new
-    # @players = []
-    # @players << Player.create2(:black, @board)
-    # @players << Player.create2(:white, @board)
-    # @players.each(&:piece_plot)
-    # @players[0].execute("7六歩")
-    # puts @board
+    if false
+      @board = Board.new
+      @players = []
+      @players << Player.create2(:black, @board)
+      @players << Player.create2(:white, @board)
+      @players.each(&:piece_plot)
+      @players[0].execute("7六歩")
+      puts @board
 
-    # @players[0].move_to("7七", "7六")
-    # puts @board
-    # @players[1].move_to("3三", "3四")
-    # puts @board
-    # @players[0].move_to("8八", "2二")
-    # puts @board
+      @players[0].move_to("7七", "7六")
+      puts @board
+      @players[1].move_to("3三", "3四")
+      puts @board
+      @players[0].move_to("8八", "2二")
+      puts @board
+    end
   end
 end

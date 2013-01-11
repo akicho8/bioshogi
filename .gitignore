@@ -2,4 +2,7 @@
 /README.tex
 /Gemfile.lock
 /*.gem
-/.pryrc
+/.*
+/pkg
+/doc
+

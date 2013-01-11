@@ -472,7 +472,7 @@ module Bushido
         s << "打"
       end
       if @from_point
-        s << "(#{@from_point.to_s_digit})"
+        s << "(#{@from_point.number_format})"
       end
       s.join
     end

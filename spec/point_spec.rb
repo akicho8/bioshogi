@@ -29,8 +29,8 @@ module Bushido
       Point.parse([-1, -1]).name.should == "盤外"
     end
 
-    it "#to_s_digit は 7六歩(77) の 77 の部分を作るときに使う" do
-      Point.parse("４三").to_s_digit.should == "43"
+    it "#number_format は 7六歩(77) の 77 の部分を作るときに使う" do
+      Point.parse("４三").number_format.should == "43"
     end
   end
 end
