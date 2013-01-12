@@ -49,7 +49,7 @@ module Bushido
       def to_s_kakiki
         rows = Position::Vpos.units.size.times.collect{|y|
           values = Position::Hpos.units.size.times.collect{|x|
-            if soldier = @matrix[[x, y]]
+            if soldier = @surface[[x, y]]
               soldier.to_s(:kakiki)
             else
               " " + "・"

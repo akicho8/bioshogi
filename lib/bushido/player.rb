@@ -148,20 +148,23 @@ module Bushido
       @location == :black ? "▲" : "▽"
     end
 
+    # 必ず存在する持駒を参照する
     def piece_fetch!(piece)
       piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません\n#{board_with_pieces}"
     end
 
+    # 持駒を参照する
     def piece_fetch(piece)
       @pieces.find{|e|e.class == piece.class}
     end
 
+    # 持駒を取り出す
     def pick_out(piece)
       @pieces.delete(piece_fetch!(piece))
     end
 
     def soldiers
-      @board.matrix.values.find_all{|soldier|soldier.player == self}
+      @board.surface.values.find_all{|soldier|soldier.player == self}
     end
 
     def move_to(a, b, promote_trigger = false)
@@ -169,7 +172,7 @@ module Bushido
       b = Point.parse(b)
 
       if promote_trigger
-        if a.promotable_area?(location) || b.promotable_area?(location)
+        if a.promotable?(location) || b.promotable?(location)
         else
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
         end
@@ -381,7 +384,7 @@ module Bushido
               end
             end
 
-            source_point = Point[@board.matrix.invert[soldiers.first]]
+            source_point = Point[@board.surface.invert[soldiers.first]]
           end
         end
 
@@ -573,7 +576,7 @@ module Bushido
         s << "成"
       else
         if @from_point && @moved_point
-          if @from_point.promotable_area?(@location) || @moved_point.promotable_area?(@location)
+          if @from_point.promotable?(@location) || @moved_point.promotable?(@location)
             unless @before_promoted
               s << "不成"
             end

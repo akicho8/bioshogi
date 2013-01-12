@@ -38,7 +38,7 @@ module Bushido
     end
 
     def read_point
-      if xy = @player.board.matrix.invert[self]
+      if xy = @player.board.surface.invert[self]
         Point.parse(xy)
       end
     end

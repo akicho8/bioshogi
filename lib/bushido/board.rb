@@ -1,62 +1,90 @@
 # -*- coding: utf-8 -*-
+#
+# 盤面
+#   board = Board.new
+#   board["５五"] # => nil
+#
 module Bushido
   class Board
-    attr_accessor :matrix
+    attr_reader :surface
 
     def initialize
-      @matrix = {}
+      @surface = {}
     end
 
+    # 指定座標に駒を置く
+    #   board.put_on_at("５五", soldier)
     def put_on_at(point, soldier)
       soldier.point = point
-
-      if fetch(point)
-        raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
-      end
-
-      point.y.class.units.each{|y|
-        if obj = fetch(Point[[point.x, y]])
-          if obj.player == soldier.player &&
-              soldier.piece.kind_of?(Piece::Pawn) && !soldier.promoted &&
-              obj.piece.kind_of?(Piece::Pawn) && !obj.promoted
-            raise DoublePawn, "二歩です。#{obj.name}があるため#{point.name}に#{soldier}は打てません。"
-          end
-        end
-      }
-
-      @matrix[point.to_xy] = soldier
-
+      piece_alredy_exist_validation(point)
+      double_pawn_validation(point, soldier)
+      @surface[point.to_xy] = soldier
       if soldier.moveable_points(:ignore_the_other_pieces_on_the_board => true, :point => point).empty?
         raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       end
     end
 
+    # fetchのエイリアス
+    #   board["５五"] # => nil
     def [](point)
       fetch(point)
     end
 
+    # 盤面の指定座標の取得
+    #   board.fetch["５五"] # => nil
     def fetch(point)
-      @matrix[Point[point].to_xy]
+      @surface[Point.parse(point).to_xy]
     end
 
+    # 指定座標にある駒をを広い上げる
     def pick_up!(point)
-      soldier = @matrix.delete(point.to_xy) or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
+      soldier = @surface.delete(point.to_xy)
+      soldier or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
       soldier.point = nil
       soldier
     end
 
+    # 盤面表示
+    #   to_s(:kakiki)
+    #   to_s(:default)
     def to_s(format = :kakiki)
       send("to_s_#{format}")
     end
 
+    private
+
     def to_s_default
       rows = Position::Vpos.units.size.times.collect{|y|
         Position::Hpos.units.size.times.collect{|x|
-          @matrix[[x, y]]
+          @surface[[x, y]]
         }
       }
       rows = rows.zip(Position::Vpos.units).collect{|e, u|e + [u]}
       RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, :header => true)
+    end
+
+    # 盤上の指定座標にすでに物があるならエラーとする
+    def piece_alredy_exist_validation(point)
+      if fetch(point)
+        raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
+      end
+    end
+
+    # 二歩ならエラーとする。
+    # 置こうとしているのが歩で、同じ縦列に自分の歩があればエラーとする。
+    # FIXME: soldierの参照が多いということは soldier のメソッドにするべき
+    def double_pawn_validation(point, soldier)
+      if soldier.piece.kind_of?(Piece::Pawn) && !soldier.promoted
+        point.y.class.units.each{|y|
+          if s = fetch(Point.parse([point.x, y]))
+            if s.player == soldier.player
+              if soldier.piece.class == s.piece.class && !s.promoted
+                raise DoublePawn, "二歩です。#{s.name}があるため#{point.name}に#{soldier}は打てません。"
+              end
+            end
+          end
+        }
+      end
     end
   end
 end

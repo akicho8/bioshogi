@@ -38,5 +38,9 @@ module Bushido
       piece.promoted_vectors1.should == [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
       piece.promoted_vectors2.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
     end
+
+    it "同じ種類の駒でもオブジェクトは異なる" do
+      (Piece.get("歩") == Piece.get("歩")).should == false
+    end
   end
 end

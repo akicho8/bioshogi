@@ -37,7 +37,7 @@
   : # >>  "▲8八銀(79)",
   : # >>  "▽7七角成(22)"]
 
-** サンプル
+** サンプルコード
 
 *** 第23期竜王戦七番勝負第6局の再生
 
@@ -461,10 +461,10 @@
    - 5x5将棋配置
    - cli
 
-*** 参考リンク集
+** 参考リンク集
 
-    - 棋譜の形式について http://wiki.optus.nu/shogi/index.php?post=%B4%FD%C9%E8%A4%CE%B7%C1%BC%B0%A4%CB%A4%C4%A4%A4%A4%C6
-    - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
-    - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
-    - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
-    - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html
+   - 棋譜の形式について http://wiki.optus.nu/shogi/index.php?post=%B4%FD%C9%E8%A4%CE%B7%C1%BC%B0%A4%CB%A4%C4%A4%A4%A4%C6
+   - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
+   - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
+   - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
+   - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html

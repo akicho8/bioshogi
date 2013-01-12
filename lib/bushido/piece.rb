@@ -1,5 +1,8 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/piece_spec.rb" -*-
-
+#
+# 駒
+#   Piece["歩"].name # => "歩"
+#
 module Bushido
   module Piece
     extend self
@@ -10,6 +13,10 @@ module Bushido
 
     def collection
       [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
+    end
+
+    def [](arg)
+      get(arg)
     end
 
     def get(arg)
@@ -45,6 +52,11 @@ module Bushido
       collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
     end
 
+    # 駒共通クラス
+    #
+    # ここで == を定義すると面倒なことになるので注意。
+    # 持駒の歩を取り出すため `player.pieces.delete(Piece["歩"])' としたとき歩が全部消えてしまう。
+    # 同じ種類の駒、同じ種類の別の駒を分けて判別するためには == を定義しない方がいい。
     class Base
       module NameMethods
         def some_name(promoted)

@@ -45,6 +45,7 @@ FIELD
         frame.piece_plot
         kif_info.move_infos.each{|move_info|
           frame.execute(move_info[:input])
+          break
         }
         # puts frame.inspect
         # puts frame.a_move_logs2.join(" ")

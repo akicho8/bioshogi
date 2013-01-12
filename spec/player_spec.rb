@@ -4,10 +4,20 @@ require "spec_helper"
 
 module Bushido
   describe Player do
-    it "持駒のパース"  do
+    it "持駒を参照する" do
       player = Player.new
+      player.deal
+      player.piece_fetch(Piece["歩"]).name == "歩"
+    end
+
+    it "駒を配る" do
+      player = Player.new
+      player.pieces_compact_str.should == ""
       player.deal("飛 歩二")
       player.pieces_compact_str.should == "飛 歩二"
+      player.pieces.clear
+      player.deal
+      player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     end
 
     context "配置" do

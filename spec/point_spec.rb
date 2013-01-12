@@ -32,5 +32,36 @@ module Bushido
     it "#number_format は 7六歩(77) の 77 の部分を作るときに使う" do
       Point.parse("４三").number_format.should == "43"
     end
+
+    it "相手陣地に入っているか？" do
+      Point.parse("１二").promotable?(:black).should == true
+      Point.parse("１三").promotable?(:black).should == true
+      Point.parse("１四").promotable?(:black).should == false
+      Point.parse("１六").promotable?(:white).should == false
+      Point.parse("１七").promotable?(:white).should == true
+      Point.parse("１八").promotable?(:white).should == true
+    end
+
+    it "ベクトルを加算して新しい座標オブジェクトを返す" do
+      Point.parse("５五").add_vector([1, 2]).name.should == "4七"
+    end
+
+    it "内部座標を返す" do
+      Point["１一"].to_xy.should == [8, 0]
+    end
+
+    it "自分自身を返す" do
+      (object = Point["１一"]).to_point.object_id.should == object.object_id
+    end
+
+    it "盤面内か？" do
+      Point["１一"].add_vector([0, 0]).valid?.should  == true
+      Point["１一"].add_vector([1, 0]).valid?.should  == false
+      Point["１一"].add_vector([0, -1]).valid?.should == false
+    end
+
+    it "内部状態" do
+      Point["５五"].inspect
+    end
   end
 end

@@ -6,21 +6,22 @@
 #   Point["４三"].name  # => "4三"
 #   Point["43"].name    # => "4三"
 #
-module Bushido #:nodoc:
+module Bushido
   class Point
-    include ActiveSupport::Configurable
-    config_accessor :promoted_area_height
-    config.promoted_area_height = 3
+    PROMOTABLE_LENGTH = 3
 
     attr_accessor :x, :y
 
     private_class_method :new
 
     # parseのalias
+    #   Point["4三"].name # => "4三"
     def self.[](arg)
       parse(arg)
     end
 
+    # 座標のパース
+    #   Point.parse["4三"].name # => "4三"
     def self.parse(arg)
       x = nil
       y = nil
@@ -54,17 +55,30 @@ module Bushido #:nodoc:
       @y = y
     end
 
+    # 内部状態
+    #   Point["５五"].inspect # => #<Bushido::Point:70223123742360 "5五">
+    def inspect
+      "#<#{self.class.name}:#{object_id} #{name.inspect}>"
+    end
+
+    # 自分自身を返す
+    def to_point
+      self
+    end
+
+    # 内部座標を返す
+    #   Point["１一"].to_xy # => [8, 0]
+    def to_xy
+      [@x.value, @y.value]
+    end
+
     # 座標を反転させて新しいPointオブジェクトを返す
     def reverse
       self.class.parse([@x.reverse, @y.reverse])
     end
 
-    # 内部座標を返す
-    def to_xy
-      [@x.value, @y.value]
-    end
-
     # 座標を正式な名前で返す
+    #   Point["55"] # => "５五"
     def name
       if valid?
         [@x, @y].collect(&:name).join
@@ -79,33 +93,33 @@ module Bushido #:nodoc:
       [@x, @y].collect(&:number_format).join
     end
 
-    def inspect
-      "#<#{self.class.name}:#{object_id} #{name.inspect}>"
-    end
-
+    # ベクトルを加算して新しい座標オブジェクトを返す
+    #   Point.parse("５五").add_vector([1, 2]).name # => "4七"
     def add_vector(vector)
       x, y = vector
       self.class.parse([@x.value + x, @y.value + y])
     end
 
+    # 盤面内か？
     def valid?
       @x.valid? && @y.valid?
     end
 
-    def to_point
-      self
-    end
-
+    # 比較
+    #   Point["５五"] == Point["55"] # => true
     def ==(other)
       to_xy == other.to_xy
     end
 
-    def promotable_area?(location)
-      if location == :black
-        @y.value < promoted_area_height
-      else
-        @y.value >= (@y.class.units.size - promoted_area_height)
+    # 相手陣地に入っているか？
+    #   Point.parse("１三").promotable?(:black) # => true
+    #   Point.parse("１四").promotable?(:black) # => false
+    def promotable?(location)
+      v = @y
+      if location == :white
+        v = v.reverse
       end
+      v.value < PROMOTABLE_LENGTH
     end
   end
 end
