@@ -6,11 +6,14 @@ module Bushido
     def initialize(player, piece, promoted = false)
       @player = player
       @piece = piece
-      @promoted = promoted
+      self.promoted = promoted
+    end
 
-      if !piece.promotable? && promoted
-        raise NotPromotable, piece.inspect
+    def promoted=(promoted)
+      if !@piece.promotable? && promoted
+        raise NotPromotable, "成れない駒で成ろうとしています : #{piece.inspect}"
       end
+      @promoted = promoted
     end
 
     def to_s(format = :default)
@@ -98,6 +101,22 @@ module Bushido
             break
           end
         end
+      end
+    end
+
+    # 二歩チェック。
+    # 置こうとしているのが歩で、同じ縦列に自分の歩があればエラーとする。
+    def double_pawn_validation(board, point)
+      if piece.kind_of?(Piece::Pawn) && !promoted
+        point.y.class.units.each{|y|
+          if s = board.fetch(Point.parse([point.x, y]))
+            if s.player == player
+              if piece.class == s.piece.class && !s.promoted
+                raise DoublePawn, "二歩です。#{s.name}があるため#{point.name}に#{self}は打てません。"
+              end
+            end
+          end
+        }
       end
     end
   end
