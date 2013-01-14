@@ -7,6 +7,11 @@ module Bushido
     let(:board)  { Board.new }
     let(:player) { Player.create2(:black, board) }
 
+    it "駒の名前" do
+      Soldier.new(player, Piece::Pawn.new).piece_current_name.should == "歩"
+      Soldier.new(player, Piece::Pawn.new, true).piece_current_name.should == "と"
+    end
+
     it "文字列表現" do
       soldier = Soldier.new(player, Piece::Pawn.new)
       soldier.to_s.should == "歩"

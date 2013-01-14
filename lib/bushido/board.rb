@@ -19,7 +19,7 @@ module Bushido
       piece_alredy_exist_validation(point)
       soldier.double_pawn_validation(self, point)
       @surface[point.to_xy] = soldier
-      if soldier.moveable_points(:ignore_the_other_pieces_on_the_board => true, :point => point).empty?
+      if soldier.moveable_points(:board_object_collision_skip => true, :point => point).empty?
         raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       end
     end
