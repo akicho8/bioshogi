@@ -7,6 +7,10 @@ module Bushido
     let(:board)  { Board.new }
     let(:player) { Player.create2(:black, board) }
 
+    it "正式な棋譜の表記で返す" do
+      Player.test_case2(:init => "５五と").board["５五"].formality_name.should == "▲5五と"
+    end
+
     it "駒の名前" do
       Soldier.new(player, Piece::Pawn.new).piece_current_name.should == "歩"
       Soldier.new(player, Piece::Pawn.new, true).piece_current_name.should == "と"
@@ -18,7 +22,7 @@ module Bushido
       soldier = Soldier.new(player, Piece::Pawn.new, true)
       soldier.to_s.should == "と"
       soldier = Soldier.new(player, Piece::Pawn.new, true)
-      soldier.to_text.should == "▲(どこにも置いてない)と"
+      soldier.formality_name.should == "▲(どこにも置いてない)と"
     end
 
     describe "#moveable_points" do

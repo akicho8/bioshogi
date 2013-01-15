@@ -28,21 +28,23 @@ module Bushido
       "#{piece_current_name}#{@player.arrow}"
     end
 
+    def inspect
+      "<#{self.class.name}:#{object_id} #{formality_name}>"
+    end
+
     # 駒の名前
     def piece_current_name
       @piece.some_name(@promoted)
     end
 
-    def inspect
-      "<#{self.class.name}:#{object_id} #{to_text}>"
-    end
-
-    def to_text
+    # 正式な棋譜の表記で返す
+    #  Player.test_case2(:init => "５五と").board["５五"].formality_name # => "▲5五と"
+    def formality_name
       "#{@player.location_mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end
 
     def name
-      to_text
+      formality_name
     end
 
     def read_point

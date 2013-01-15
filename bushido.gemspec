@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage     = "https://github.com/akicho8/bushido"
   s.summary      = "Shogi library"
   s.description  = "Shogi library"
+  s.platform     = Gem::Platform::RUBY
 
   s.files        = `git ls-files`.split("\n")
   s.test_files   = `git ls-files -- {spec,features}/*`.split("\n")
@@ -23,6 +24,4 @@ Gem::Specification.new do |s|
   s.add_dependency "tapp"
   s.add_dependency "pry-debugger"
   s.add_dependency "yard"
-  # s.add_dependency "yard-rspec"
-  # s.add_dependency "yard-rubicle"
 end

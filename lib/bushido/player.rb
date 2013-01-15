@@ -211,7 +211,7 @@ module Bushido
 
     # soldier_names # => ["▽5五飛↓"]
     def soldier_names
-      soldiers.collect(&:to_text).sort
+      soldiers.collect(&:formality_name).sort
     end
 
     def piece_names
