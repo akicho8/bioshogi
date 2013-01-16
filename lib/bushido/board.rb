@@ -20,7 +20,7 @@ module Bushido
       soldier.double_pawn_validation(self, point)
       @surface[point.to_xy] = soldier
       if soldier.moveable_points(:board_object_collision_skip => true, :point => point).empty?
-        raise NotPutInPlaceNotBeMoved, "#{soldier.name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
+        raise NotPutInPlaceNotBeMoved, "#{soldier.formality_name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       end
     end
 

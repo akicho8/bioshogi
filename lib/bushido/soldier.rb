@@ -43,10 +43,7 @@ module Bushido
       "#{@player.location_mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end
 
-    def name
-      formality_name
-    end
-
+    # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
     def read_point
       if xy = @player.board.surface.invert[self]
         Point.parse(xy)
@@ -72,7 +69,7 @@ module Bushido
           if s = board.fetch(Point.parse([point.x, y]))
             if s.player == player
               if piece.class == s.piece.class && !s.promoted
-                raise DoublePawn, "二歩です。#{s.name}があるため#{point.name}に#{self}は打てません。"
+                raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{self}は打てません。"
               end
             end
           end

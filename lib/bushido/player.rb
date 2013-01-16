@@ -187,7 +187,7 @@ module Bushido
       target_soldier = @board.fetch(b)
       if target_soldier
         if target_soldier.player == self
-          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.name}があります"
+          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.formality_name}があります"
         end
         @board.pick_up!(b)
         @pieces << target_soldier.piece
@@ -215,7 +215,7 @@ module Bushido
     end
 
     def piece_names
-      pieces.collect(&:name).sort
+      pieces.collect(&:formality_name).sort
     end
 
     def piece_discard
@@ -376,11 +376,11 @@ module Bushido
                   end
                 end
                 if soldiers.empty?
-                  raise AmbiguousFormatError, "#{point.name}に移動できる駒がなくなった。#{str.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})\n#{board_with_pieces}"
+                  raise AmbiguousFormatError, "#{point.name}に移動できる駒がなくなった。#{str.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:formality_name).join(', ')})\n#{board_with_pieces}"
                 end
               end
               if soldiers.size > 1
-                raise AmbiguousFormatError, "#{point.name}に移動できる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:name).join(', ')})\n#{board_with_pieces}"
+                raise AmbiguousFormatError, "#{point.name}に移動できる駒が多すぎます。#{str.inspect} の表記を明確にしてください。(移動元候補: #{soldiers.collect(&:formality_name).join(', ')})\n#{board_with_pieces}"
               end
             end
 
@@ -594,7 +594,7 @@ module Bushido
     def board_with_pieces
       s = ""
       s << @board.to_s(:kakiki)
-      # s << "#{location_mark}の持駒:" + pieces.collect(&:name).join + "\n"
+      # s << "#{location_mark}の持駒:" + pieces.collect(&:formality_name).join + "\n"
       s << "#{location_mark}の持駒:#{pieces_compact_str}\n"
       s
     end

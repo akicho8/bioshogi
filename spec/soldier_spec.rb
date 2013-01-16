@@ -6,23 +6,18 @@ module Bushido
   describe Soldier do
     let(:board)  { Board.new }
     let(:player) { Player.create2(:black, board) }
+    let(:soldier) { Soldier.new(player, Piece::Pawn.new) }
 
-    it "正式な棋譜の表記で返す" do
-      Player.test_case2(:init => "５五と").board["５五"].formality_name.should == "▲5五と"
-    end
-
-    it "駒の名前" do
-      Soldier.new(player, Piece::Pawn.new).piece_current_name.should == "歩"
-      Soldier.new(player, Piece::Pawn.new, true).piece_current_name.should == "と"
-    end
-
-    it "文字列表現" do
-      soldier = Soldier.new(player, Piece::Pawn.new)
-      soldier.to_s.should == "歩"
-      soldier = Soldier.new(player, Piece::Pawn.new, true)
-      soldier.to_s.should == "と"
-      soldier = Soldier.new(player, Piece::Pawn.new, true)
-      soldier.formality_name.should == "▲(どこにも置いてない)と"
+    context "文字列表現" do
+      it "先手後手のマーク付き" do
+        Player.test_case2(:init => "５五と").board["５五"].formality_name.should == "▲5五と"
+      end
+      it "先手後手のマーク無し" do
+        Player.test_case2(:init => "５五と").board["５五"].piece_current_name.should == "と"
+      end
+      it "盤上に置いてない場合" do
+        soldier.formality_name.should == "▲(どこにも置いてない)歩"
+      end
     end
 
     describe "#moveable_points" do
