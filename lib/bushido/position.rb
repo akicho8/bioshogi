@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+#
+# 一次元座標管理
+#
 module Bushido
   module Position
     class Base
@@ -6,6 +9,8 @@ module Bushido
 
       private_class_method :new
 
+      # 座標をパースする
+      #   Position::Hpos.parse("１").name # => "1"
       def self.parse(arg)
         case arg
         when String
@@ -16,11 +21,7 @@ module Bushido
         else
           v = arg
         end
-        new(v).tap{|o|
-          if o.valid?
-            # raise MustNotHappen
-          end
-        }
+        new(v)
       end
 
       def self.value_range
