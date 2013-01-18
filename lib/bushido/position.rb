@@ -40,6 +40,10 @@ module Bushido
         self.class.units[@value]
       end
 
+      def number_format
+        name
+      end
+
       def reverse
         self.class.parse(self.class.units.size - 1 - @value)
       end
@@ -69,10 +73,6 @@ module Bushido
         end
         super
       end
-
-      def number_format
-        name
-      end
     end
 
     class Vpos < Base
@@ -93,7 +93,7 @@ module Bushido
       end
 
       def number_format
-        name.tr(self.class.units.join, "1-9")
+        super.tr(self.class.units.join, "1-9")
       end
     end
   end
