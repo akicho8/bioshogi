@@ -11,7 +11,7 @@ include Bushido
 info = Bushido.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 
-frame = LiveFrame.players_join
+frame = LiveFrame.basic_instance
 frame.piece_plot
 info.move_infos.each{|info|
   frame.execute(info[:input])

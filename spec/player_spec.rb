@@ -196,15 +196,13 @@ FIELD
 
       context "打てない" do
         it "場外に" do
-          expect { Player.test_case(:exec => "５十飛打") }.to raise_error(UnknownPositionName)
+          expect { Player.test_case(:exec => "５十飛打") }.to raise_error(PositionSyntaxError)
         end
         it "自分の駒の上に" do
           expect { Player.test_case(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
         end
         it "相手の駒の上に" do
-          frame = Frame.players_join
-          frame.players[1].initial_put_on("５五飛")
-          expect { frame.players[0].execute("５五角打") }.to raise_error(PieceAlredyExist)
+          expect { LiveFrame.testcase3(:exec => ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
         end
         it "卍という駒がないので" do
           expect { Player.test_case(:exec => "５五卍打") }.to raise_error(SyntaxError)

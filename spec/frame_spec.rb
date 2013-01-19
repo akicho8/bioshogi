@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe LiveFrame do
     it "交互に打ちながら戦況表示" do
-      frame = LiveFrame.players_join
+      frame = LiveFrame.basic_instance
       frame.piece_plot
       frame.execute(["７六歩", "３四歩"])
       frame.inspect.should == <<-FIELD
@@ -22,8 +22,8 @@ module Bushido
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-blackの持駒:
-whiteの持駒:
+▲先手の持駒:
+▽後手の持駒:
 FIELD
     end
 
@@ -41,7 +41,7 @@ FIELD
           # p error
           next
         end
-        frame = LiveFrame.players_join
+        frame = LiveFrame.basic_instance
         frame.piece_plot
         kif_info.move_infos.each{|move_info|
           frame.execute(move_info[:input])
@@ -54,7 +54,7 @@ FIELD
 
     # it "kif→ki2" do
     #   @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-    #   frame = LiveFrame.players_join
+    #   frame = LiveFrame.basic_instance
     #   frame.piece_plot
     #   @result.move_infos.each{|move_info|
     #     # p move_info[:input]

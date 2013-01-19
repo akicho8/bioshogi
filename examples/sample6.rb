@@ -8,7 +8,7 @@ end
 
 include Bushido
 
-frame = LiveFrame.players_join
+frame = LiveFrame.basic_instance
 frame.piece_plot
 [
   "７六歩", "８四歩", "７八金", "３二金",

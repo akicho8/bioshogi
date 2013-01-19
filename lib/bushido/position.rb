@@ -5,17 +5,16 @@
 module Bushido
   module Position
     class Base
-      attr_accessor :value
-
+      attr_reader :value
       private_class_method :new
 
       # 座標をパースする
       #   Position::Hpos.parse("１").name # => "1"
       def self.parse(arg)
         case arg
-        when String
+        when String, NilClass
           v = units.find_index{|e|e == arg}
-          v or raise UnknownPositionName, "#{arg.inspect} が #{units} の中にありません"
+          v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
         when Base
           v = arg.value
         else
@@ -24,46 +23,55 @@ module Bushido
         new(v)
       end
 
+      # 幅
       def self.value_range
         (0 .. units.size - 1)
-      end
-
-      def valid?
-        self.class.value_range.include?(@value)
       end
 
       def initialize(value)
         @value = value
       end
 
+      # 座標が盤上か？
+      def valid?
+        self.class.value_range.include?(@value)
+      end
+
+      # 名前
+      #   Position::Vpos.parse("一").name # => "一"
       def name
         self.class.units[@value]
       end
 
+      # 数字表記
+      #   Position::Vpos.parse("一").number_format # => "1"
       def number_format
         name
       end
 
+      # 座標反転
+      #   Position::Hpos.parse("1").reverse.name # => "9"
       def reverse
         self.class.parse(self.class.units.size - 1 - @value)
+      end
+
+      # インスタンスが異なっても同じ座標なら同じ
+      def ==(other)
+        self.class == other.class && @value == other.value
       end
 
       def inspect
         "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
       end
-
-      def ==(other)
-        self.class == other.class && @value == other.value
-      end
     end
 
     class Hpos < Base
       def self.units
-        "987654321".scan(/./)
+        "987654321".chars.to_a
       end
 
       def self.zenkaku_units
-        "９８７６５４３２１".scan(/./)
+        "９８７６５４３２１".chars.to_a
       end
 
       # "５五" の全角 "５" に対応するため
@@ -77,7 +85,7 @@ module Bushido
 
     class Vpos < Base
       def self.units
-        "一二三四五六七八九".scan(/./)
+        "一二三四五六七八九".chars.to_a
       end
 
       def self.zenkaku_units

@@ -116,7 +116,7 @@ module Bushido
     #   Point.parse("１四").promotable?(:black) # => false
     def promotable?(location)
       v = @y
-      if location == :white
+      if location.white?
         v = v.reverse
       end
       v.value < PROMOTABLE_LENGTH

@@ -40,7 +40,7 @@ module Bushido
     # 正式な棋譜の表記で返す
     #  Player.test_case2(:init => "５五と").board["５五"].formality_name # => "▲5五と"
     def formality_name
-      "#{@player.location_mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
+      "#{@player.location.mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end
 
     # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
@@ -81,7 +81,7 @@ module Bushido
 
     def normalized_vectors(vectors)
       vectors.uniq.compact.collect do |vector|
-        if player.location == :white
+        if player.location.white?
           vector = Vector.new(vector).reverse
         end
         vector

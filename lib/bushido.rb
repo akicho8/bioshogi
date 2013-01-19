@@ -22,21 +22,25 @@ module Bushido
   class AmbiguousFormatError < BushidoError; end
   class SoldierEmpty < BushidoError; end
   class SyntaxError < BushidoError; end
-  class PointSyntaxError < BushidoError; end
-  class UnknownPositionName < BushidoError; end
   class PieceNotFound < BushidoError; end
   class PieceAlredyExist < BushidoError; end
   class SamePlayerSoldierOverwrideError < BushidoError; end
-  class NotPromotable < BushidoError; end
-  class PromotedPiecePutOnError < BushidoError; end
   class AlredyPromoted < BushidoError; end
   class NotFoundOnBoard < BushidoError; end
   class PromotedPieceToNormalPiece < BushidoError; end
   class NotPutInPlaceNotBeMoved < BushidoError; end
-  class DoublePawn < BushidoError; end
   class BeforePointNotFound < BushidoError; end
-
   class FileFormatError < BushidoError; end
+  class RuleError < SyntaxError; end
+
+  # 構文エラーから発生する継続が難しいエラー
+  class PositionSyntaxError < SyntaxError; end
+  class PointSyntaxError < SyntaxError; end
+
+  # 別に問題ないけど将棋のルール上エラーとするもの
+  class NotPromotable < RuleError; end
+  class PromotedPiecePutOnError < RuleError; end
+  class DoublePawn < RuleError; end
 
   class Vector < Array
     def initialize(arg)
@@ -61,6 +65,44 @@ module Bushido
     parser or raise FileFormatError, "フォーマットがおかしい : #{str}"
     parser.parse(str, options)
   end
+
+  class Location
+    # Location.parse(:black).name # => "先手"
+    def self.parse(arg)
+      if arg.kind_of? self
+        return arg
+      end
+      info = [
+        {:key => :black, :mark => "▲", :name => "先手", :varrow => " ", :zarrow => ""},
+        {:key => :white, :mark => "▽", :name => "後手", :varrow => "v", :zarrow => "↓"},
+      ].find{|e|e.values.include?(arg)}
+      info or raise SyntaxError, "#{arg.inspect}"
+      new(info)
+    end
+
+    def initialize(info)
+      @info = info
+    end
+
+    [:key, :mark, :name, :varrow, :zarrow].each do |v|
+      define_method(v){
+        @info[v]
+      }
+    end
+
+    # mark_with_name # => "▲先手"
+    def mark_with_name
+      "#{mark}#{name}"
+    end
+
+    def black?
+      key == :black
+    end
+
+    def white?
+      key == :white
+    end
+  end
 end
 
 require_relative "bushido/version"
@@ -77,6 +119,9 @@ require_relative "bushido/kif_format"
 require_relative "bushido/ki2_format"
 
 module Bushido
+  Board.send(:include, BaseFormat::Board)
+  Soldier.send(:include, BaseFormat::Soldier)
+
   Board.send(:include, KifFormat::Board)
   Soldier.send(:include, KifFormat::Soldier)
 
@@ -86,26 +131,10 @@ end
 
 module Bushido
   if $0 == __FILE__
-    frame = Frame.new
-    frame.players << Player.create2(:black, frame.board)
-    frame.players << Player.create2(:white, frame.board)
-    puts frame.board
-
-    if false
-      @board = Board.new
-      @players = []
-      @players << Player.create2(:black, @board)
-      @players << Player.create2(:white, @board)
-      @players.each(&:piece_plot)
-      @players[0].execute("7六歩")
-      puts @board
-
-      @players[0].move_to("7七", "7六")
-      puts @board
-      @players[1].move_to("3三", "3四")
-      puts @board
-      @players[0].move_to("8八", "2二")
-      puts @board
-    end
+    frame = LiveFrame.basic_instance
+    frame.piece_plot
+    frame.execute("７六歩")
+    frame.execute("３四歩")
+    puts frame
   end
 end

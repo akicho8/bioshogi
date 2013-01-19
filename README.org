@@ -3,7 +3,7 @@
 
 * 将棋のプログラム
 
-  : frame = LiveFrame.players_join
+  : frame = LiveFrame.basic_instance
   : frame.piece_plot
   : [
   :   "７六歩", "８四歩", "７八金", "３二金",
@@ -59,7 +59,7 @@
 
     棋譜を入力していく
 
-    : frame = LiveFrame.players_join
+    : frame = LiveFrame.basic_instance
     : frame.piece_plot
     : info.move_infos.each{|info|
     :   frame.execute(info[:input])
@@ -307,7 +307,7 @@
     | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない   | 初手 "５八金"                      |
     | SyntaxError                     | とりあえず表記が違う                         | 駒の配置時に４二銀成とした         |
     | PointSyntaxError                | 座標の表記が違う                             | ４二のつもりで４と書いた           |
-    | UnknownPositionName             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた         |
+    | PositionSyntaxError             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた         |
     | PieceNotFound                   | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた             |
     | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"           |
     | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した               | 初手 "８八飛(28)"                  |

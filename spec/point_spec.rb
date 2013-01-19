@@ -9,7 +9,7 @@ module Bushido
       Point.parse("43").name.should   == "4三"
       Point.parse([0, 0]).name.should == "9一"
 
-      expect { Point.parse("四三") }.to raise_error(UnknownPositionName)
+      expect { Point.parse("四三") }.to raise_error(PositionSyntaxError)
       expect { Point.parse(nil)    }.to raise_error(MustNotHappen)
       expect { Point.parse("")     }.to raise_error(PointSyntaxError)
       expect { Point.parse("0")    }.to raise_error(PointSyntaxError)
@@ -34,12 +34,12 @@ module Bushido
     end
 
     it "相手陣地に入っているか？" do
-      Point.parse("１二").promotable?(:black).should == true
-      Point.parse("１三").promotable?(:black).should == true
-      Point.parse("１四").promotable?(:black).should == false
-      Point.parse("１六").promotable?(:white).should == false
-      Point.parse("１七").promotable?(:white).should == true
-      Point.parse("１八").promotable?(:white).should == true
+      Point.parse("１二").promotable?(Location.parse(:black)).should == true
+      Point.parse("１三").promotable?(Location.parse(:black)).should == true
+      Point.parse("１四").promotable?(Location.parse(:black)).should == false
+      Point.parse("１六").promotable?(Location.parse(:white)).should == false
+      Point.parse("１七").promotable?(Location.parse(:white)).should == true
+      Point.parse("１八").promotable?(Location.parse(:white)).should == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do

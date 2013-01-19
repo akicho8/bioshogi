@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-
+#
+# 全体管理
+#
 module Bushido
   class Frame
-    attr_accessor :players, :board
+    attr_reader :players, :board
 
-    def self.players_join
+    def self.basic_instance
       new.tap do |o|
         o.player_join(Player.create1(:black))
         o.player_join(Player.create1(:white))
@@ -34,10 +36,10 @@ module Bushido
     #   @players.each(&:deal)
     # end
 
-    def inspect
+    def to_s
       s = ""
       s << @board.to_s(:kakiki)
-      s << @players.collect{|player|"#{player.location}の持駒:#{player.pieces_compact_str}"}.join("\n") + "\n"
+      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.pieces_compact_str}"}.join("\n") + "\n"
       s
     end
   end
@@ -46,17 +48,10 @@ module Bushido
     attr_reader :count, :a_move_logs, :a_move_logs2
 
     def self.testcase3(params = {})
-      params = {
-        # :init => [],
-        # :piece_discard => false, # 持駒を捨てる？
-      }.merge(params)
-      frame = players_join
-      (params[:init] || []).each_with_index{|init, index|frame.players[index].initial_put_on(init)}
-      # if params[:piece_discard]
-      #   frame.piece_discard
-      # end
-      frame.execute(params[:exec])
-      frame
+      basic_instance.tap do |o|
+        (params[:init] || []).each_with_index{|init, index|o.players[index].initial_put_on(init)}
+        o.execute(params[:exec])
+      end
     end
 
     def initialize(*)
@@ -82,14 +77,7 @@ module Bushido
       current_player(-1)
     end
 
-    def current_player(diff = 0)
-      players[current_index(diff)]
-    end
-
-    def current_index(diff = 0)
-      (@count + diff).modulo(@players.size)
-    end
-
+    # N手目のN
     def counter_human_name
       @count.next
     end
@@ -99,19 +87,24 @@ module Bushido
     end
 
     def white_or_black
-      if current_index.zero?
-        "▲先手番"
-      else
-        "▽後手番"
-      end
+      white_or_black_mark + (current_index.zero? ? "先手番" : "後手番")
     end
 
     def white_or_black_mark
-      if current_index.zero?
-        "▲"
-      else
-        "▽"
-      end
+      current_index.zero? ? "▲" : "▽"
+    end
+
+    def best_score
+    end
+
+    private
+
+    def current_player(diff = 0)
+      players[current_index(diff)]
+    end
+
+    def current_index(diff = 0)
+      (@count + diff).modulo(@players.size)
     end
   end
 end
