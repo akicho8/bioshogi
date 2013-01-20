@@ -65,49 +65,12 @@ module Bushido
     parser or raise FileFormatError, "フォーマットがおかしい : #{str}"
     parser.parse(str, options)
   end
-
-  class Location
-    # Location.parse(:black).name # => "先手"
-    def self.parse(arg)
-      if arg.kind_of? self
-        return arg
-      end
-      info = [
-        {:key => :black, :mark => "▲", :name => "先手", :varrow => " ", :zarrow => ""},
-        {:key => :white, :mark => "▽", :name => "後手", :varrow => "v", :zarrow => "↓"},
-      ].find{|e|e.values.include?(arg)}
-      info or raise SyntaxError, "#{arg.inspect}"
-      new(info)
-    end
-
-    def initialize(info)
-      @info = info
-    end
-
-    [:key, :mark, :name, :varrow, :zarrow].each do |v|
-      define_method(v){
-        @info[v]
-      }
-    end
-
-    # mark_with_name # => "▲先手"
-    def mark_with_name
-      "#{mark}#{name}"
-    end
-
-    def black?
-      key == :black
-    end
-
-    def white?
-      key == :white
-    end
-  end
 end
 
 require_relative "bushido/version"
 require_relative "bushido/position"
 require_relative "bushido/point"
+require_relative "bushido/location"
 require_relative "bushido/piece"
 require_relative "bushido/board"
 require_relative "bushido/soldier"

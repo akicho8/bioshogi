@@ -69,22 +69,5 @@ module Bushido
         raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
     end
-
-    # 二歩ならエラーとする。
-    # 置こうとしているのが歩で、同じ縦列に自分の歩があればエラーとする。
-    # FIXME: soldierの参照が多いということは soldier のメソッドにするべき
-    def double_pawn_validation(point, soldier)
-      if soldier.piece.kind_of?(Piece::Pawn) && !soldier.promoted
-        point.y.class.units.each{|y|
-          if s = fetch(Point.parse([point.x, y]))
-            if s.player == soldier.player
-              if soldier.piece.class == s.piece.class && !s.promoted
-                raise DoublePawn, "二歩です。#{s.name}があるため#{point.name}に#{soldier}は打てません。"
-              end
-            end
-          end
-        }
-      end
-    end
   end
 end

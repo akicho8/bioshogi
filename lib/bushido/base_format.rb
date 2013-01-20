@@ -123,7 +123,7 @@ module Bushido
 
     module Soldier
       def to_s_kakiki
-        "#{@player.location.white? ? 'v' : ' '}#{piece_current_name}"
+        "#{@player.location.varrow}#{piece_current_name}"
       end
     end
 
