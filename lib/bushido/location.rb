@@ -14,31 +14,28 @@ module Bushido
       }
     end
 
+    # 「▲先手」みたいなのを返す
     # mark_with_name # => "▲先手"
     def mark_with_name
       "#{mark}#{name}"
     end
 
+    # 先手か？
     def black?
       key == :black
     end
 
+    # 後手か？
     def white?
       key == :white
     end
 
-    def values
+    # 属性っぽい値を全部返す
+    def match_target_values
       [key, mark, name]
     end
 
-    def first_or_last
-      _which(:first, :last)
-    end
-
-    def last_or_first
-      _which(:last, :first)
-    end
-
+    # 先手ならaを後手ならbを返す
     def _which(a, b)
       black? ? a : b
     end
@@ -48,12 +45,13 @@ module Bushido
       new(:key => :white, :mark => "▽", :name => "後手", :varrow => "v", :zarrow => "↓"),
     ]
 
-    # Location.parse(:black).name # => "先手"
+    # 引数に対応する先手または後手の情報を返す
+    #   Location.parse(:black).name # => "先手"
     def self.parse(arg)
       if arg.kind_of? self
         return arg
       end
-      @list.find{|e|e.values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
+      @list.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
     end
   end
 end
