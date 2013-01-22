@@ -47,6 +47,9 @@ module Bushido
       @pieces = []
     end
 
+    # 先手後手を設定は適当でいい
+    #   player.location = :white
+    #   player.location = "後手"
     def location=(location)
       @location = Location.parse(location)
     end
@@ -84,6 +87,7 @@ module Bushido
       ]
     end
 
+    # 平手の初期配置
     def piece_plot
       table = first_placements.collect{|arg|parse_arg(arg)}
       if location.white?
@@ -92,10 +96,7 @@ module Bushido
       side_soldiers_put_on(table)
     end
 
-    def side_soldiers_put_on(table)
-      table.each{|info|initial_put_on(info)}
-    end
-
+    # 持駒の配置
     def initial_put_on(arg)
       Array.wrap(arg).each{|arg|
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
@@ -158,10 +159,12 @@ module Bushido
       @pieces.delete(piece_fetch!(piece))
     end
 
+    # 盤上の自分の駒
     def soldiers
       @board.surface.values.find_all{|soldier|soldier.player == self}
     end
 
+    # 盤上の駒を a から b に移動する。成るなら promote_trigger を有効に。
     def move_to(a, b, promote_trigger = false)
       @last_piece = nil
 
@@ -198,6 +201,7 @@ module Bushido
       @board.put_on_at(b, soldier)
     end
 
+    # 次のプレイヤー
     def next_player
       if @frame
         @frame.players[@frame.players.find_index(self).next.modulo(frame.players.size)]
@@ -206,21 +210,26 @@ module Bushido
       end
     end
 
+    # 前のプレイヤー
     alias prev_player next_player
 
-    # soldier_names # => ["▽5五飛↓"]
+    # 盤上の駒の名前一覧(表示・デバッグ用)
+    #   soldier_names # => ["▽5五飛↓"]
     def soldier_names
       soldiers.collect(&:formality_name).sort
     end
 
+    # 持駒の名前一覧(表示・デバッグ用)
     def piece_names
       pieces.collect(&:formality_name).sort
     end
 
+    # 持駒を捨てる
     def piece_discard
       @pieces.clear
     end
 
+    # 棋譜の入力
     def execute(str)
       if str == "投了"
         return
@@ -247,6 +256,7 @@ module Bushido
       end
     end
 
+    # 盤面と持駒(表示用)
     def board_with_pieces
       s = ""
       s << @board.to_s(:kakiki)
@@ -264,6 +274,12 @@ module Bushido
         end
         "#{pieces.first.name}#{num}"
       }.join(SEPARATOR)
+    end
+
+    private
+
+    def side_soldiers_put_on(table)
+      table.each{|info|initial_put_on(info)}
     end
   end
 
