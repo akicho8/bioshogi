@@ -9,7 +9,7 @@ module Bushido
       frame.piece_plot
       frame.execute(["７六歩", "３四歩"])
       frame.inspect.should == <<-FIELD
-3:▲先手番
+3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -48,7 +48,7 @@ FIELD
           break
         }
         # puts frame.inspect
-        # puts frame.a_move_logs2.join(" ")
+        # puts frame.kif2_logs.join(" ")
       }
     end
 
@@ -62,7 +62,7 @@ FIELD
     #     # puts frame.inspect
     #   }
     #   # puts frame.inspect
-    #   puts frame.a_move_logs.join(" ")
+    #   puts frame.kif_logs.join(" ")
     # end
   end
 end

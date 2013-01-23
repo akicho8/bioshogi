@@ -53,6 +53,7 @@ module Bushido
 
     private
 
+    # 盤面の文字列化(開発用なので好きなフォーマットでいい)
     def to_s_default
       rows = Position::Vpos.units.size.times.collect{|y|
         Position::Hpos.units.size.times.collect{|x|

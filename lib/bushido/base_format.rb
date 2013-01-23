@@ -1,5 +1,7 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
-
+#
+# kif/kif2読み込みの共通処理
+#
 module Bushido
   module BaseFormat
     class Parser
@@ -18,7 +20,7 @@ module Bushido
         source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
       end
 
-      # 柿木フォーマットのテーブル
+      # 柿木フォーマットのテーブルの読み取り
       #
       #   str = "
       #     ９ ８ ７ ６ ５ ４ ３ ２ １

@@ -241,11 +241,11 @@ module Bushido
     end
 
     # 移譲シリーズ
-    def last_a_move
-      @parsed_info.last_a_move
+    def last_kif
+      @parsed_info.last_kif
     end
-    def last_a_move_kif2
-      @parsed_info.last_a_move_kif2
+    def last_kif2
+      @parsed_info.last_kif2
     end
     def last_a_move2
       @parsed_info.last_a_move2
@@ -454,7 +454,7 @@ module Bushido
       }
     end
 
-    def last_a_move
+    def last_kif
       s = []
       s << @point.name
       s << @piece.some_name(@promoted)
@@ -471,10 +471,10 @@ module Bushido
     end
 
     def last_a_move2
-      [last_a_move, last_a_move_kif2]
+      [last_kif, last_kif2]
     end
 
-    def last_a_move_kif2
+    def last_kif2
       s = []
       if @prev_player_point == @point
         s << "同"

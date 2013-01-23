@@ -24,11 +24,5 @@ module Bushido
         end
       end
     end
-
-    module Soldier
-    end
-
-    module Board
-    end
   end
 end

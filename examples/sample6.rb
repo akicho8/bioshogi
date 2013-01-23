@@ -18,7 +18,7 @@ frame.piece_plot
   frame.execute(input)
 }
 puts frame.board
-pp frame.a_move_logs
+pp frame.kif_logs
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一

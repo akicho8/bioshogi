@@ -182,11 +182,11 @@ FIELD
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く" do
           Player.test_case(:exec => "５五歩").should == ["▲5五歩"]
-          Player.test_case2(:exec => "５五歩").last_a_move.should == "5五歩打"
+          Player.test_case2(:exec => "５五歩").last_kif.should == "5五歩打"
         end
 
         it "盤上に龍があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れるケース)" do
-          Player.test_case2(:deal => "飛", :init => "１一龍", :exec => "２一飛").last_a_move.should == "2一飛打"
+          Player.test_case2(:deal => "飛", :init => "１一龍", :exec => "２一飛").last_kif.should == "2一飛打"
         end
 
         it "と金は二歩にならないので" do
@@ -374,9 +374,9 @@ FIELD
     end
 
     it "指したあと前回の手を確認できる" do
-      Player.test_case2(:init => "５五飛", :exec => "５一飛成").last_a_move.should == "5一飛成(55)"
-      Player.test_case2(:init => "５一龍", :exec => "１一龍").last_a_move.should   == "1一龍(51)"
-      Player.test_case2(:exec => "５五飛打").last_a_move.should                    == "5五飛打"
+      Player.test_case2(:init => "５五飛", :exec => "５一飛成").last_kif.should == "5一飛成(55)"
+      Player.test_case2(:init => "５一龍", :exec => "１一龍").last_kif.should   == "1一龍(51)"
+      Player.test_case2(:exec => "５五飛打").last_kif.should                    == "5五飛打"
     end
 
     it "持駒の確認" do

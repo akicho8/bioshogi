@@ -6,6 +6,7 @@ module Bushido
   class Frame
     attr_reader :players, :board
 
+    # 先手後手が座った状態で開始
     def self.basic_instance
       new.tap do |o|
         o.player_join(Player.create1(:black))
@@ -13,6 +14,7 @@ module Bushido
       end
     end
 
+    # 盤面だけある状態で開始
     def initialize
       @board = Board.new
       @players = []
@@ -24,10 +26,12 @@ module Bushido
       player.board = @board
     end
 
+    # プレイヤーたちの持駒から平手用の盤面の準備
     def piece_plot
       @players.collect(&:piece_plot)
     end
 
+    # プレイヤーたちの持駒を捨てる
     def piece_discard
       @players.collect(&:piece_discard)
     end
@@ -36,6 +40,7 @@ module Bushido
     #   @players.each(&:deal)
     # end
 
+    # 文字列表記
     def to_s
       s = ""
       s << @board.to_s(:kakiki)
@@ -44,9 +49,11 @@ module Bushido
     end
   end
 
+  # 棋譜入力対応の全体管理
   class LiveFrame < Frame
-    attr_reader :count, :a_move_logs, :a_move_logs2
+    attr_reader :count, :kif_logs, :kif2_logs
 
+    # テスト用
     def self.testcase3(params = {})
       basic_instance.tap do |o|
         (params[:init] || []).each_with_index{|init, index|o.players[index].initial_put_on(init)}
@@ -57,22 +64,24 @@ module Bushido
     def initialize(*)
       super
       @count = 0
-      @a_move_logs = []
-      @a_move_logs2 = []
+      @kif_logs = []
+      @kif2_logs = []
     end
 
+    # 棋譜入力
     def execute(str)
       Array.wrap(str).each do |str|
         if str == "投了"
           return
         end
         current_player.execute(str)
-        @a_move_logs << "#{white_or_black_mark}#{current_player.last_a_move}"
-        @a_move_logs2 << "#{white_or_black_mark}#{current_player.last_a_move_kif2}"
+        @kif_logs << "#{current_player.location.mark}#{current_player.last_kif}"
+        @kif2_logs << "#{current_player.location.mark}#{current_player.last_kif2}"
         @count += 1
       end
     end
 
+    # 前のプレイヤーを返す
     def prev_player
       current_player(-1)
     end
@@ -83,18 +92,7 @@ module Bushido
     end
 
     def inspect
-      "#{counter_human_name}:#{white_or_black}\n#{super}"
-    end
-
-    def white_or_black
-      white_or_black_mark + (current_index.zero? ? "先手番" : "後手番")
-    end
-
-    def white_or_black_mark
-      current_index.zero? ? "▲" : "▽"
-    end
-
-    def best_score
+      "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
     private

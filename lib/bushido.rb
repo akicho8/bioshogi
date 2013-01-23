@@ -84,12 +84,6 @@ require_relative "bushido/ki2_format"
 module Bushido
   Board.send(:include, BaseFormat::Board)
   Soldier.send(:include, BaseFormat::Soldier)
-
-  Board.send(:include, KifFormat::Board)
-  Soldier.send(:include, KifFormat::Soldier)
-
-  Board.send(:include, Ki2Format::Board)
-  Soldier.send(:include, Ki2Format::Soldier)
 end
 
 module Bushido
