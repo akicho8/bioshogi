@@ -14,9 +14,7 @@ module Bushido
         @_body.lines.each do |line|
           comment_read(line)
           if line.match(/^\s*[▲△]/)
-            line.scan(/[▲△]([^▲△\s]+)/).flatten.each{|input|
-              @move_infos << {:input => input}
-            }
+            @move_infos += line.scan(/[▲△]([^▲△\s]+)/).flatten.collect{|input|{:input => input}}
           end
         end
       end

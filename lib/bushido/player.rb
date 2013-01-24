@@ -234,10 +234,7 @@ module Bushido
       if str == "投了"
         return
       end
-      parser = OrderParser.new(self)
-      parser.parse(str)
-      parser.execute
-      @parsed_info = parser
+      @parsed_info = OrderParser.new(self).execute(str)
     end
 
     # 移譲シリーズ
@@ -247,8 +244,8 @@ module Bushido
     def last_kif2
       @parsed_info.last_kif2
     end
-    def last_a_move2
-      @parsed_info.last_a_move2
+    def last_kif_pair
+      @parsed_info.last_kif_pair
     end
     def moved_point
       if @parsed_info
@@ -297,7 +294,9 @@ module Bushido
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
     end
 
-    def execute
+    def execute(str)
+      parse(str)
+
       if @md[:point] == "同"
         @point = @player.next_player.moved_point
         unless @point
@@ -361,6 +360,8 @@ module Bushido
       end
 
       @prev_player_point = @player.prev_player.moved_point
+
+      self
     end
 
     def find_source_point
@@ -443,14 +444,14 @@ module Bushido
     def last_info
       {
         :prev_player_point => @prev_player_point,
-        :promoted                => @promoted,
-        :promote_trigger         => @promote_trigger,
-        :source_point            => @source_point,
-        :moved_point             => @point,
-        :piece                   => @piece,
-        :put_on_trigger          => @put_on_trigger,
-        :candidate               => @candidate,
-        :last_piece              => @last_piece,
+        :promoted          => @promoted,
+        :promote_trigger   => @promote_trigger,
+        :source_point      => @source_point,
+        :moved_point       => @point,
+        :piece             => @piece,
+        :put_on_trigger    => @put_on_trigger,
+        :candidate         => @candidate,
+        :last_piece        => @last_piece,
       }
     end
 
@@ -470,7 +471,7 @@ module Bushido
       s.join
     end
 
-    def last_a_move2
+    def last_kif_pair
       [last_kif, last_kif2]
     end
 
