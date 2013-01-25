@@ -41,7 +41,7 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :pieces, :frame, :last_piece
+    attr_accessor :name, :board, :location, :pieces, :frame, :last_piece, :parsed_info
 
     def initialize
       @pieces = []
@@ -237,16 +237,6 @@ module Bushido
       @parsed_info = OrderParser.new(self).execute(str)
     end
 
-    # 移譲シリーズ
-    def last_kif
-      @parsed_info.last_kif
-    end
-    def last_kif2
-      @parsed_info.last_kif2
-    end
-    def last_kif_pair
-      @parsed_info.last_kif_pair
-    end
     def moved_point
       if @parsed_info
         @parsed_info.point
@@ -441,6 +431,7 @@ module Bushido
       end
     end
 
+    # 未使用
     def last_info
       {
         :prev_player_point => @prev_player_point,
@@ -455,6 +446,7 @@ module Bushido
       }
     end
 
+    # KIF形式の最後の棋譜
     def last_kif
       s = []
       s << @point.name

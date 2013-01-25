@@ -75,8 +75,8 @@ module Bushido
           return
         end
         current_player.execute(str)
-        @kif_logs << "#{current_player.location.mark}#{current_player.last_kif}"
-        @kif2_logs << "#{current_player.location.mark}#{current_player.last_kif2}"
+        @kif_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif}"
+        @kif2_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif2}"
         @count += 1
       end
     end
