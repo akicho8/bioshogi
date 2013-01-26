@@ -246,7 +246,7 @@ module Bushido
     # 盤面と持駒(表示用)
     def board_with_pieces
       s = ""
-      s << @board.to_s(:kakiki)
+      s << @board.to_s
       s << "#{location.mark_with_name}の持駒:#{pieces_compact_str}\n"
       s
     end

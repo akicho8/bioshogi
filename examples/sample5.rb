@@ -16,7 +16,7 @@ players = []
 players << Player.create2(:black, board)
 players << Player.create2(:white, board)
 players.each(&:piece_plot)
-puts board.to_s(:kakiki)
+puts board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

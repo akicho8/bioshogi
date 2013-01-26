@@ -45,16 +45,22 @@ module Bushido
     end
 
     # 盤面表示
+    #   to_s
+    #   to_s(:debug)
     #   to_s(:kakiki)
-    #   to_s(:default)
-    def to_s(format = :kakiki)
+    def to_s(format = :default)
       send("to_s_#{format}")
     end
 
     private
 
-    # 盤面の文字列化(開発用なので好きなフォーマットでいい)
+    # 盤面の文字列化
     def to_s_default
+      to_s(:kakiki)
+    end
+
+    # 盤面の文字列化(開発用なので好きなフォーマットでいい)
+    def to_s_debug
       rows = Position::Vpos.units.size.times.collect{|y|
         Position::Hpos.units.size.times.collect{|x|
           @surface[[x, y]]

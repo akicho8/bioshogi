@@ -43,7 +43,7 @@ module Bushido
     # 文字列表記
     def to_s
       s = ""
-      s << @board.to_s(:kakiki)
+      s << @board.to_s
       s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.pieces_compact_str}"}.join("\n") + "\n"
       s
     end
