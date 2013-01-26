@@ -254,12 +254,11 @@ module Bushido
     # Player.test_case2.pieces_compact_str # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
     def pieces_compact_str
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
+        count = ""
         if pieces.size > 1
-          num = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
-        else
-          num = ""
+          count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
         end
-        "#{pieces.first.name}#{num}"
+        "#{pieces.first.name}#{count}"
       }.join(SEPARATOR)
     end
 
