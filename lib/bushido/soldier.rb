@@ -38,7 +38,7 @@ module Bushido
     end
 
     # 正式な棋譜の表記で返す
-    #  Player.test_case2(:init => "５五と").board["５五"].formality_name # => "▲5五と"
+    #  Player.basic_test(:init => "５五と").board["５五"].formality_name # => "▲5五と"
     def formality_name
       "#{@player.location.mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end

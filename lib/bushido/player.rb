@@ -2,26 +2,22 @@
 
 module Bushido
   class Player
-    # facade
-    def self.test_case(params = {})
+    def self.basic_test(params = {})
       params = {
         :player => :black,
-        :return_player => false,
       }.merge(params)
       player = Player.create2(params[:player], Board.new)
       player.deal(params[:deal])
       player.initial_put_on(params[:init])
-      Array.wrap(params[:exec]).each{|v|player.execute(v)}
-      if params[:return_player]
-        player
-      else
-        player.soldier_names.sort
+      if params[:piece_plot]
+        player.piece_plot
       end
+      Array.wrap(params[:exec]).each{|v|player.execute(v)}
+      player
     end
 
-    # facade
-    def self.test_case2(params = {})
-      test_case({:return_player => true}.merge(params))
+    def self.soldiers_test(params = {})
+      basic_test(params).soldier_names.sort
     end
 
     # 互換性のため一時的に。
@@ -251,7 +247,7 @@ module Bushido
       s
     end
 
-    # Player.test_case2.pieces_compact_str # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    # Player.basic_test.pieces_compact_str # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
     def pieces_compact_str
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
         count = ""
@@ -260,6 +256,10 @@ module Bushido
         end
         "#{pieces.first.name}#{count}"
       }.join(SEPARATOR)
+    end
+
+    def evaluate
+      Evaluate.new(self).evaluate
     end
 
     private
@@ -559,6 +559,30 @@ module Bushido
 
     def select_char(str)
       str.chars.to_a.send(@player.location._which(:first, :last))
+    end
+  end
+
+  class Evaluate
+    def initialize(player)
+      @player = player
+    end
+
+    def evaluate
+      score = 0
+
+      score += @player.soldiers.collect{|soldier|
+        if soldier.promoted
+          {:pawn => 1200, :bishop => 2000, :rook => 2200, :lance => 1200, :knight => 1200, :silver => 1200}[soldier.piece.sym_name]
+        else
+          {:pawn => 100, :bishop => 1800, :rook => 2000, :lance => 600, :knight => 700, :silver => 1000, :gold => 1200, :king => 9999}[soldier.piece.sym_name]
+        end
+      }.reduce(:+) || 0
+
+      score += @player.pieces.collect{|piece|
+        {:pawn => 105, :bishop => 1890, :rook => 2100, :lance => 630, :knight => 735, :silver => 1050, :gold => 1260, :king => 9999}[piece.sym_name]
+      }.reduce(:+) || 0
+
+      score
     end
   end
 end
