@@ -91,15 +91,16 @@ module Bushido
       @count.next
     end
 
+    # 手番のプレイヤー
+    def current_player(diff = 0)
+      players[current_index(diff)]
+    end
+
     def inspect
       "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
     private
-
-    def current_player(diff = 0)
-      players[current_index(diff)]
-    end
 
     def current_index(diff = 0)
       (@count + diff).modulo(@players.size)

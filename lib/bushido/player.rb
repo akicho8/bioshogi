@@ -262,6 +262,10 @@ module Bushido
       Evaluate.new(self).evaluate
     end
 
+    def generate_way
+      GenerateWay.new(self).generate_way
+    end
+
     private
 
     def side_soldiers_put_on(table)
@@ -583,6 +587,29 @@ module Bushido
       }.reduce(:+) || 0
 
       score
+    end
+  end
+
+  class GenerateWay
+    def initialize(player)
+      @player = player
+    end
+
+    def generate_way
+      mpoints = @player.soldiers.collect{|soldier|
+        soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
+      }.flatten
+      mpoint = mpoints.sample
+      soldier = mpoint[:soldier]
+      point = mpoint[:point]
+      promoted = soldier.promoted
+      promoted_trigger = nil
+      if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted
+        promoted = true
+        promoted_trigger = true
+      end
+      mpoint or raise "どこにも動けない"
+      [point.name, soldier.piece.some_name(promoted), (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
     end
   end
 end

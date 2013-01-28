@@ -64,5 +64,21 @@ FIELD
     #   # puts frame.inspect
     #   puts frame.kif_logs.join(" ")
     # end
+
+    if false
+      it "CPU同士で対局" do
+        frame = LiveFrame.basic_instance
+        frame.piece_plot
+        while true
+          way = frame.current_player.generate_way
+          frame.execute(way)
+          puts frame
+          last_piece = frame.prev_player.last_piece
+          if last_piece && last_piece.sym_name == :king
+            break
+          end
+        end
+      end
+    end
   end
 end

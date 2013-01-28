@@ -417,5 +417,12 @@ FIELD
         Player.basic_test(:piece_plot => true).evaluate.should == 21699
       end
     end
+
+    context "自動的に打つ" do
+      it "ランダムに盤上の駒を動かす" do
+        player = Player.basic_test(:piece_plot => true)
+        player.generate_way.should be_present
+      end
+    end
   end
 end
