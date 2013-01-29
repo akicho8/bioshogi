@@ -596,20 +596,36 @@ module Bushido
     end
 
     def generate_way
+      list = []
+
       mpoints = @player.soldiers.collect{|soldier|
         soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
       }.flatten
-      mpoint = mpoints.sample
-      soldier = mpoint[:soldier]
-      point = mpoint[:point]
-      promoted = soldier.promoted
-      promoted_trigger = nil
-      if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted
-        promoted = true
-        promoted_trigger = true
-      end
-      mpoint or raise "どこにも動けない"
-      [point.name, soldier.piece.some_name(promoted), (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
+
+      list += mpoints.collect{|mpoint|
+        soldier = mpoint[:soldier]
+        point = mpoint[:point]
+        promoted = soldier.promoted
+        promoted_trigger = nil
+        if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted
+          promoted = true
+          promoted_trigger = true
+        end
+        [point.name, soldier.piece.some_name(promoted), (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
+      }
+
+      blank_points = @player.board.blank_points
+      blank_points.each{|point|
+        @player.pieces.each{|piece|
+          if piece.sym_name == :pawn
+            # 二歩のチェックが難しいので
+          else
+            list << [point.name, piece.name, "打"].join
+          end
+        }
+      }
+
+      list.sample
     end
   end
 end

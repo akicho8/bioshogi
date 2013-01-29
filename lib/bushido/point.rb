@@ -50,6 +50,15 @@ module Bushido
       new(x, y)
     end
 
+    # すべての座標を返す
+    def self.all_points
+      Position::Vpos.units.size.times.collect{|y|
+        Position::Hpos.units.size.times.collect{|x|
+          Point[[x, y]]
+        }
+      }.flatten
+    end
+
     def initialize(x, y)
       @x = x
       @y = y

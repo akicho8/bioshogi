@@ -52,6 +52,11 @@ module Bushido
       send("to_s_#{format}")
     end
 
+    # 空いている場所のリスト
+    def blank_points
+      Point.all_points.find_all{|point|!fetch(point)}
+    end
+
     private
 
     # 盤面の文字列化
