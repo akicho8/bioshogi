@@ -266,6 +266,19 @@ module Bushido
       GenerateWay.new(self).generate_way
     end
 
+    # 持駒を配置してみた状態にする
+    def safe_put_on(arg, &block)
+      info = parse_arg(arg)
+      soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+      @board.put_on_at(info[:point], soldier)
+      begin
+        yield self
+      ensure
+        soldier = @board.pick_up!(info[:point])
+        @pieces << soldier.piece
+      end
+    end
+
     private
 
     def side_soldiers_put_on(table)

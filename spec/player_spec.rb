@@ -424,5 +424,20 @@ FIELD
         player.generate_way.should be_present
       end
     end
+
+    context "一時的に置いてみた状態にする" do
+      it "safe_put_on" do
+        player = Player.basic_test
+        player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+        player.safe_put_on("5五飛") do |player|
+          player.pieces_compact_str.should == "歩九 角 香二 桂二 銀二 金二 玉"
+          player.safe_put_on("4五角") do |player|
+            player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉"
+          end
+          player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角"
+        end
+        player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+      end
+    end
   end
 end
