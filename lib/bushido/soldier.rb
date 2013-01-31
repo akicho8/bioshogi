@@ -32,6 +32,12 @@ module Bushido
       "<#{self.class.name}:#{object_id} #{formality_name}>"
     end
 
+    [:promoted].each{|key|
+      if public_method_defined?(key)
+        define_method("#{key}?"){public_send(key)}
+      end
+    }
+
     # 駒の名前
     def piece_current_name
       @piece.some_name(@promoted)

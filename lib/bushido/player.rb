@@ -174,7 +174,7 @@ module Bushido
         end
 
         _soldier = @board.fetch(a)
-        if _soldier.promoted
+        if _soldier.promoted?
           raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っています"
         end
       end
@@ -263,16 +263,22 @@ module Bushido
     end
 
     def generate_way
-      GenerateWay.new(self).generate_way
+      _generate_way.generate_way
+    end
+
+    def _generate_way
+      GenerateWay.new(self)
     end
 
     # 持駒を配置してみた状態にする
     def safe_put_on(arg, &block)
       info = parse_arg(arg)
       soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      @board.put_on_at(info[:point], soldier)
       begin
-        yield self
+        @board.put_on_at(info[:point], soldier)
+        if block
+          yield soldier
+        end
       ensure
         soldier = @board.pick_up!(info[:point])
         @pieces << soldier.piece
@@ -344,7 +350,7 @@ module Bushido
           @source_soldier = @player.board.fetch(@source_point)
 
           unless @promote_trigger
-            if @source_soldier.promoted && !@promoted
+            if @source_soldier.promoted? && !@promoted
 
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
               if @player.piece_fetch(@piece)
@@ -588,7 +594,7 @@ module Bushido
       score = 0
 
       score += @player.soldiers.collect{|soldier|
-        if soldier.promoted
+        if soldier.promoted?
           {:pawn => 1200, :bishop => 2000, :rook => 2200, :lance => 1200, :knight => 1200, :silver => 1200}[soldier.piece.sym_name]
         else
           {:pawn => 100, :bishop => 1800, :rook => 2000, :lance => 600, :knight => 700, :silver => 1000, :gold => 1200, :king => 9999}[soldier.piece.sym_name]
@@ -609,36 +615,62 @@ module Bushido
     end
 
     def generate_way
+      generate_way_list.sample
+    end
+
+    def generate_way_list
+      soldiers_ways + pieces_ways
+    end
+
+    # 盤上の駒の全手筋
+    def soldiers_ways
       list = []
 
       mpoints = @player.soldiers.collect{|soldier|
         soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
       }.flatten
 
-      list += mpoints.collect{|mpoint|
+      mpoints.collect{|mpoint|
         soldier = mpoint[:soldier]
         point = mpoint[:point]
-        promoted = soldier.promoted
+
+        promoted = soldier.promoted?
         promoted_trigger = nil
-        if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted
+
+        # 移動先が成れる場所かつ、駒が成れる駒で、駒は成ってない状態であれば成る(ことで行き止まりの反則を防止する)
+        if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted?
           promoted = true
           promoted_trigger = true
         end
+
         [point.name, soldier.piece.some_name(promoted), (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
       }
+    end
+
+    # 持駒の全打筋
+    def pieces_ways
+      list = []
 
       blank_points = @player.board.blank_points
-      blank_points.each{|point|
-        @player.pieces.each{|piece|
+      blank_points.each do |point|
+        @player.pieces.each do |piece|
           if piece.sym_name == :pawn
-            # 二歩のチェックが難しいので
+            # 二歩のチェックが難しいのであとで
           else
-            list << [point.name, piece.name, "打"].join
+            str = [point.name, piece.name, "打"].join
+            begin
+              # 打てるかテスト
+              @player.safe_put_on(str)
+            rescue Bushido::NotPutInPlaceNotBeMoved => error
+              # 行き止まりだった
+            else
+              list << str
+            end
           end
-        }
-      }
+        end
+      end
 
-      list.sample
+      list
     end
   end
 end
