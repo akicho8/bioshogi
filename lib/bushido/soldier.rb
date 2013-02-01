@@ -67,21 +67,21 @@ module Bushido
       list.uniq{|e|e.to_xy}     # 龍などは vectors1 と vectors2 で左右上下が重複しているため
     end
 
-    # 二歩チェック。
-    # 置こうとしているのが歩で、同じ縦列に自分の歩があればエラーとする。
-    def double_pawn_validation(board, point)
-      if piece.kind_of?(Piece::Pawn) && !promoted
-        point.y.class.units.each{|y|
-          if s = board.fetch(Point.parse([point.x, y]))
-            if s.player == player
-              if piece.class == s.piece.class && !s.promoted
-                raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{self}は打てません。"
-              end
-            end
-          end
-        }
-      end
-    end
+    # # 二歩チェック。
+    # # 置こうとしているのが歩で、同じ縦列に自分の歩があればエラーとする。
+    # def double_pawn_validation(board, point)
+    #   if piece.kind_of?(Piece::Pawn) && !promoted
+    #     point.y.class.units.each{|y|
+    #       if s = board.fetch(Point.parse([point.x, y]))
+    #         if s.player == player
+    #           if piece.class == s.piece.class && !s.promoted
+    #             raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{self}は打てません。"
+    #           end
+    #         end
+    #       end
+    #     }
+    #   end
+    # end
 
     private
 

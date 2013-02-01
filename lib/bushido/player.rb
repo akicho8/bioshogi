@@ -98,7 +98,7 @@ module Bushido
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
         info = parse_arg(arg)
         soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-        @board.put_on_at(info[:point], soldier)
+        put_on_at2(info[:point], soldier)
       }
     end
 
@@ -194,7 +194,7 @@ module Bushido
         soldier.promoted = true
       end
 
-      @board.put_on_at(b, soldier)
+      put_on_at2(b, soldier)
     end
 
     # 次のプレイヤー
@@ -274,15 +274,42 @@ module Bushido
     def safe_put_on(arg, &block)
       info = parse_arg(arg)
       soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+      success = false
       begin
-        @board.put_on_at(info[:point], soldier)
+        put_on_at2(info[:point], soldier)
+        success = true
         if block
           yield soldier
         end
       ensure
-        soldier = @board.pick_up!(info[:point])
-        @pieces << soldier.piece
+        if success
+          soldier = @board.pick_up!(info[:point])
+          @pieces << soldier.piece
+        end
       end
+    end
+
+    # 二歩？
+    def double_pawn?(point, piece)
+      if piece.sym_name == :pawn
+        pawns_on_board(point).first
+      end
+    end
+
+    # 縦列の自分の歩たちを取得
+    def pawns_on_board(point)
+      soldiers = @board.pieces_of_vline(point.x)
+      soldiers = soldiers.find_all{|s|s.player == self}
+      soldiers = soldiers.find_all{|s|!s.promoted?}
+      soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
+      soldiers
+    end
+
+    def put_on_at2(point, soldier)
+      if s = double_pawn?(point, soldier.piece)
+        raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{soldier.piece}は打てません。"
+      end
+      @board.put_on_at(point, soldier)
     end
 
     private
@@ -337,7 +364,7 @@ module Bushido
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        @player.board.put_on_at(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+        @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
         @done = true
       else
         if @md[:source_point]
@@ -356,7 +383,7 @@ module Bushido
               if @player.piece_fetch(@piece)
                 @put_on_trigger = true
                 @source_point = nil
-                @player.board.put_on_at(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+                @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
                 @done = true
               else
                 raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
@@ -388,7 +415,7 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
           end
-          @player.board.put_on_at(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+          @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
           @done = true
         else
           raise MovableSoldierNotFound, "#{@point.name}に移動できる#{@piece.name}がありません。#{@source.inspect} の指定が間違っているのかもしれません"
@@ -615,10 +642,10 @@ module Bushido
     end
 
     def generate_way
-      generate_way_list.sample
+      all_ways.sample
     end
 
-    def generate_way_list
+    def all_ways
       soldiers_ways + pieces_ways
     end
 
@@ -654,18 +681,18 @@ module Bushido
       blank_points = @player.board.blank_points
       blank_points.each do |point|
         @player.pieces.each do |piece|
-          if piece.sym_name == :pawn
-            # 二歩のチェックが難しいのであとで
+          # 二歩のチェックが難しいのであとで
+          str = [point.name, piece.name, "打"].join
+          begin
+            # 打てるかテスト
+            @player.safe_put_on(str)
+          rescue Bushido::NotPutInPlaceNotBeMoved => error
+            # 行き止まりだった
+          rescue Bushido::DoublePawn => error
+            p error
+            # 二歩じゃん
           else
-            str = [point.name, piece.name, "打"].join
-            begin
-              # 打てるかテスト
-              @player.safe_put_on(str)
-            rescue Bushido::NotPutInPlaceNotBeMoved => error
-              # 行き止まりだった
-            else
-              list << str
-            end
+            list << str
           end
         end
       end

@@ -12,14 +12,36 @@ module Bushido
       @surface = {}
     end
 
+    # 縦列の盤上のすべての駒
+    def pieces_of_vline(x)
+      Position::Vpos.units.size.times.collect{|y|
+        fetch(Point.parse([x, y]))
+      }.compact
+    end
+
+    # # すでに歩が一つ以上ある？
+    # def pawns_on_board(player, point)
+    #   soldiers = pieces_of_vline(point.x)
+    #   soldiers = soldiers.find_all{|s|s.player == player}
+    #   soldiers = soldiers.find_all{|s|!s.promoted?}
+    #   soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
+    #   soldiers
+    # end
+
     # 指定座標に駒を置く
     #   board.put_on_at("５五", soldier)
-    def put_on_at(point, soldier)
+    def put_on_at(point, soldier) # FIXME: 何も書き換えないでエラーチェックするメソッドが必要。
+      assert_board_cell_is_blank(point)
+      # assert_not_double_pawn(player, point, piece)
+
+      save_point = soldier.point
       soldier.point = point
-      piece_alredy_exist_validation(point)
-      soldier.double_pawn_validation(self, point)
+      # soldier.double_pawn_validation(self, point)
+
       @surface[point.to_xy] = soldier
       if soldier.moveable_points(:board_object_collision_skip => true, :point => point).empty?
+        # soldier.point = save_point
+        # @surface[point.to_xy] = soldier
         raise NotPutInPlaceNotBeMoved, "#{soldier.formality_name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
       end
     end
@@ -76,10 +98,17 @@ module Bushido
     end
 
     # 盤上の指定座標にすでに物があるならエラーとする
-    def piece_alredy_exist_validation(point)
+    def assert_board_cell_is_blank(point)
       if fetch(point)
         raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
     end
+
+    # # 二歩？
+    # def assert_not_double_pawn(player, point, piece)
+    #   if s = double_pawn?(player, point, piece)
+    #     raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません。"
+    #   end
+    # end
   end
 end
