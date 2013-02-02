@@ -51,7 +51,7 @@ module Bushido
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
       players.each(&:piece_plot)
-      board.to_s.should == <<-FIELD.strip_heredoc
+      board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -64,7 +64,7 @@ module Bushido
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-FIELD
+EOT
     end
 
     context "移動" do
@@ -393,7 +393,7 @@ FIELD
       players[1].execute("3四歩")
       players[0].execute("2二角成")
       players[0].pieces.collect(&:name).should == ["角"]
-      board.to_s.should == <<-FIELD.strip_heredoc
+      board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -406,7 +406,7 @@ FIELD
 | ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-FIELD
+EOT
     end
 
     context "評価" do

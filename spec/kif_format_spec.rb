@@ -32,7 +32,7 @@ module Bushido
       players << Player.create2(:black, board)
       players << Player.create2(:white, board)
       players.each(&:piece_plot)
-      board.to_s.should == <<-FIELD.strip_heredoc
+      board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -45,7 +45,7 @@ module Bushido
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-FIELD
+EOT
     end
 
     it "詰将棋用のファイル" do

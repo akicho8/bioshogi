@@ -52,5 +52,27 @@ module Bushido
     it "インスタンスが異なっても同じ座標なら同じ" do
       Position::Vpos.parse("1").should == Position::Vpos.parse("一")
     end
+
+    context "5x5の盤面" do
+      before do
+        @ssave_size = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
+        Position::Hpos.ridge_length, Position::Vpos.ridge_length = [5, 5]
+      end
+      after do
+        Position::Hpos.ridge_length, Position::Vpos.ridge_length = @ssave_size
+      end
+      it do
+        Player.basic_test.board.to_s.should == <<-EOT.strip_heredoc
+  ５ ４ ３ ２ １
++---------------+
+| ・ ・ ・ ・ ・|一
+| ・ ・ ・ ・ ・|二
+| ・ ・ ・ ・ ・|三
+| ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・|五
++---------------+
+EOT
+      end
+    end
   end
 end

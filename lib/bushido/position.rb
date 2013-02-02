@@ -5,6 +5,12 @@
 module Bushido
   module Position
     class Base
+      include ActiveSupport::Configurable
+      config_accessor :ridge_length
+      config.ridge_length = 9
+
+      config_accessor :_units, :_zenkaku_units
+
       attr_reader :value
       private_class_method :new
 
@@ -67,11 +73,11 @@ module Bushido
 
     class Hpos < Base
       def self.units
-        "987654321".chars.to_a
+        "987654321".chars.to_a.last(ridge_length)
       end
 
       def self.zenkaku_units
-        "９８７６５４３２１".chars.to_a
+        "９８７６５４３２１".chars.to_a.last(ridge_length)
       end
 
       # "５五" の全角 "５" に対応するため
@@ -84,16 +90,15 @@ module Bushido
     end
 
     class Vpos < Base
-      include ActiveSupport::Configurable
       config_accessor :promotable_length
       config.promotable_length = 3
 
       def self.units
-        "一二三四五六七八九".chars.to_a
+        "一二三四五六七八九".chars.to_a.first(ridge_length)
       end
 
       def self.zenkaku_units
-        units
+        units.chars.to_a.first(ridge_length)
       end
 
       # "(52)" の "2" に対応するため

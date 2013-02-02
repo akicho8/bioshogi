@@ -8,7 +8,7 @@ module Bushido
       frame = LiveFrame.basic_instance
       frame.piece_plot
       frame.execute(["７六歩", "３四歩"])
-      frame.inspect.should == <<-FIELD
+      frame.inspect.should == <<-EOT
 3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -24,7 +24,7 @@ module Bushido
 +---------------------------+
 ▲先手の持駒:
 ▽後手の持駒:
-FIELD
+EOT
     end
 
     it "ファイル読み込み" do

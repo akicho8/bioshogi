@@ -145,8 +145,8 @@ module Bushido
       # | 香 桂 銀 金 玉 金 銀 桂 香|九
       # +---------------------------+
       def to_s_kakiki
-        rows = Position::Vpos.units.size.times.collect{|y|
-          values = Position::Hpos.units.size.times.collect{|x|
+        rows = Position::Vpos.ridge_length.times.collect{|y|
+          values = Position::Hpos.ridge_length.times.collect{|x|
             if soldier = @surface[[x, y]]
               soldier.to_s(:kakiki)
             else
@@ -157,7 +157,7 @@ module Bushido
         }
         s = []
         s << "  " + Position::Hpos.zenkaku_units.join(" ")
-        hline = "+" + "---" * Position::Hpos.zenkaku_units.size + "+"
+        hline = "+" + "---" * Position::Hpos.ridge_length + "+"
         s << hline
         s += rows
         s << hline

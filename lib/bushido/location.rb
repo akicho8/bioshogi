@@ -54,6 +54,8 @@ module Bushido
       @list.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
     end
 
+    # 引数に対応する先手または後手の情報を返す
+    #   Location[:black].name # => "先手"
     def self.[](*args)
       parse(*args)
     end

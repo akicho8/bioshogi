@@ -50,8 +50,8 @@ module Bushido
 
     # すべての座標を返す
     def self.all_points
-      Position::Vpos.units.size.times.collect{|y|
-        Position::Hpos.units.size.times.collect{|x|
+      Position::Vpos.ridge_length.times.collect{|y|
+        Position::Hpos.ridge_length.times.collect{|x|
           Point[[x, y]]
         }
       }.flatten

@@ -14,7 +14,7 @@ module Bushido
 
     # 縦列の盤上のすべての駒
     def pieces_of_vline(x)
-      Position::Vpos.units.size.times.collect{|y|
+      Position::Vpos.ridge_length.times.collect{|y|
         fetch(Point.parse([x, y]))
       }.compact
     end
@@ -88,8 +88,8 @@ module Bushido
 
     # 盤面の文字列化(開発用なので好きなフォーマットでいい)
     def to_s_debug
-      rows = Position::Vpos.units.size.times.collect{|y|
-        Position::Hpos.units.size.times.collect{|x|
+      rows = Position::Vpos.ridge_length.times.collect{|y|
+        Position::Hpos.ridge_length.times.collect{|x|
           @surface[[x, y]]
         }
       }
