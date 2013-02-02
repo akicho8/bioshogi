@@ -34,12 +34,12 @@ module Bushido
     end
 
     it "相手陣地に入っているか？" do
-      Point.parse("１二").promotable?(Location.parse(:black)).should == true
-      Point.parse("１三").promotable?(Location.parse(:black)).should == true
-      Point.parse("１四").promotable?(Location.parse(:black)).should == false
-      Point.parse("１六").promotable?(Location.parse(:white)).should == false
-      Point.parse("１七").promotable?(Location.parse(:white)).should == true
-      Point.parse("１八").promotable?(Location.parse(:white)).should == true
+      Point.parse("１二").promotable?(Location[:black]).should == true
+      Point.parse("１三").promotable?(Location[:black]).should == true
+      Point.parse("１四").promotable?(Location[:black]).should == false
+      Point.parse("１六").promotable?(Location[:white]).should == false
+      Point.parse("１七").promotable?(Location[:white]).should == true
+      Point.parse("１八").promotable?(Location[:white]).should == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do

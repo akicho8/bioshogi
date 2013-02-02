@@ -84,6 +84,10 @@ module Bushido
     end
 
     class Vpos < Base
+      include ActiveSupport::Configurable
+      config_accessor :promotable_length
+      config.promotable_length = 3
+
       def self.units
         "一二三四五六七八九".chars.to_a
       end
@@ -102,6 +106,17 @@ module Bushido
 
       def number_format
         super.tr(self.class.units.join, "1-9")
+      end
+
+      # 相手陣地に入っているか？
+      #   Point.parse("１三").promotable?(:black) # => true
+      #   Point.parse("１四").promotable?(:black) # => false
+      def promotable?(location)
+        v = self
+        if location.white?
+          v = v.reverse
+        end
+        v.value < promotable_length
       end
     end
   end

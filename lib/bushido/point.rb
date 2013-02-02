@@ -8,8 +8,6 @@
 #
 module Bushido
   class Point
-    PROMOTABLE_LENGTH = 3
-
     attr_accessor :x, :y
 
     private_class_method :new
@@ -124,11 +122,7 @@ module Bushido
     #   Point.parse("１三").promotable?(:black) # => true
     #   Point.parse("１四").promotable?(:black) # => false
     def promotable?(location)
-      v = @y
-      if location.white?
-        v = v.reverse
-      end
-      v.value < PROMOTABLE_LENGTH
+      @y.promotable?(location)
     end
   end
 end

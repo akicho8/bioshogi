@@ -53,5 +53,9 @@ module Bushido
       end
       @list.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
     end
+
+    def self.[](*args)
+      parse(*args)
+    end
   end
 end

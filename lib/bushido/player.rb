@@ -47,7 +47,7 @@ module Bushido
     #   player.location = :white
     #   player.location = "後手"
     def location=(location)
-      @location = Location.parse(location)
+      @location = Location[location]
     end
 
     # 配布して持駒にする
