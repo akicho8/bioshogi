@@ -9,7 +9,7 @@ module Bushido
       config_accessor :ridge_length
       config.ridge_length = 9
 
-      config_accessor :_units, :_zenkaku_units
+      config_accessor :_units, :_zenkaku_units, :_arrow, :_promotable_length
 
       attr_reader :value
       private_class_method :new
@@ -31,7 +31,11 @@ module Bushido
 
       # 幅
       def self.value_range
-        (0 .. units.size - 1)
+        (0...units.size)
+      end
+
+      def self.units(options = {})
+        (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a.send(_arrow, ridge_length)
       end
 
       def initialize(value)
@@ -69,16 +73,25 @@ module Bushido
       def inspect
         "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
       end
+
+      # 成れるか？
+      #   Point.parse("１三").promotable?(:black) # => true
+      #   Point.parse("１四").promotable?(:black) # => false
+      def promotable?(location)
+        v = self
+        if location.white?
+          v = v.reverse
+        end
+        if _promotable_length
+          v.value < _promotable_length
+        end
+      end
     end
 
     class Hpos < Base
-      def self.units
-        "987654321".chars.to_a.last(ridge_length)
-      end
-
-      def self.zenkaku_units
-        "９８７６５４３２１".chars.to_a.last(ridge_length)
-      end
+      config._units = "987654321"
+      config._zenkaku_units = "９８７６５４３２１"
+      config._arrow = :last
 
       # "５五" の全角 "５" に対応するため
       def self.parse(arg)
@@ -90,16 +103,10 @@ module Bushido
     end
 
     class Vpos < Base
-      config_accessor :promotable_length
-      config.promotable_length = 3
-
-      def self.units
-        "一二三四五六七八九".chars.to_a.first(ridge_length)
-      end
-
-      def self.zenkaku_units
-        units.chars.to_a.first(ridge_length)
-      end
+      config._units = "一二三四五六七八九"
+      config._zenkaku_units = "一二三四五六七八九"
+      config._arrow = :first
+      config._promotable_length = 3
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)
@@ -111,17 +118,6 @@ module Bushido
 
       def number_format
         super.tr(self.class.units.join, "1-9")
-      end
-
-      # 相手陣地に入っているか？
-      #   Point.parse("１三").promotable?(:black) # => true
-      #   Point.parse("１四").promotable?(:black) # => false
-      def promotable?(location)
-        v = self
-        if location.white?
-          v = v.reverse
-        end
-        v.value < promotable_length
       end
     end
   end

@@ -20,7 +20,7 @@ module Bushido
     end
 
     it "座標の幅" do
-      Position::Hpos.value_range.to_s.should == "0..8"
+      Position::Hpos.value_range.to_s.should == "0...9"
     end
 
     context "バリデーション" do
@@ -55,11 +55,11 @@ module Bushido
 
     context "5x5の盤面" do
       before do
-        @ssave_size = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
+        @save_size = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
         Position::Hpos.ridge_length, Position::Vpos.ridge_length = [5, 5]
       end
       after do
-        Position::Hpos.ridge_length, Position::Vpos.ridge_length = @ssave_size
+        Position::Hpos.ridge_length, Position::Vpos.ridge_length = @save_size
       end
       it do
         Player.basic_test.board.to_s.should == <<-EOT.strip_heredoc

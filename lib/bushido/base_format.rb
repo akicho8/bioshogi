@@ -156,7 +156,7 @@ module Bushido
           "|" + values.join + "|" + Position::Vpos.parse(y).name
         }
         s = []
-        s << "  " + Position::Hpos.zenkaku_units.join(" ")
+        s << "  " + Position::Hpos.units(:zenkaku => true).join(" ")
         hline = "+" + "---" * Position::Hpos.ridge_length + "+"
         s << hline
         s += rows
