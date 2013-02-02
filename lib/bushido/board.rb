@@ -8,6 +8,31 @@ module Bushido
   class Board
     attr_reader :surface
 
+    # 一時的に盤面のサイズを変更する(テスト用)
+    #
+    #   before do
+    #     @size_save = Board.size_change([3, 5])
+    #   end
+    #   after do
+    #     Board.size_change(@size_save)
+    #   end
+    #
+    def self.size_change(size, &block)
+      size_save = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
+      # p "#{size_save}を保存"
+      Position::Hpos.ridge_length, Position::Vpos.ridge_length = size
+      # p "#{size}に設定"
+      if block_given?
+        begin
+          yield
+        ensure
+          Position::Hpos.ridge_length, Position::Vpos.ridge_length = size_save
+          # p "#{size_save}に戻した"
+        end
+      end
+      size_save
+    end
+
     def initialize
       @surface = {}
     end
@@ -39,11 +64,13 @@ module Bushido
       # soldier.double_pawn_validation(self, point)
 
       @surface[point.to_xy] = soldier
-      if soldier.moveable_points(:board_object_collision_skip => true, :point => point).empty?
-        # soldier.point = save_point
-        # @surface[point.to_xy] = soldier
-        raise NotPutInPlaceNotBeMoved, "#{soldier.formality_name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
-      end
+
+      # # ↓これが書き込む前にわからないとだめ
+      # if soldier.moveable_points(:board_object_collision_skip => true, :point => point).empty?
+      #   # soldier.point = save_point
+      #   # @surface[point.to_xy] = soldier
+      #   raise NotPutInPlaceNotBeMoved, "#{soldier.formality_name}を#{point.name}に置いてもそれ以上動かせないので反則になります"
+      # end
     end
 
     # fetchのエイリアス

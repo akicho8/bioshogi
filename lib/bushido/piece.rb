@@ -15,14 +15,17 @@ module Bushido
       [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
     end
 
+    # Piece["歩"].name # => "歩"
     def [](arg)
       get(arg)
     end
 
+    # Piece.get("歩").name # => "歩"
     def get(arg)
       basic_get(arg) || promoted_get(arg)
     end
 
+    # Piece.get!("歩").name # => "歩"
     def get!(arg)
       get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
     end

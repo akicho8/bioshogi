@@ -2,17 +2,29 @@
 
 module Bushido
   class Player
+    # FIXME: deal と pieces がかぶっている
     def self.basic_test(params = {})
       params = {
         :player => :black,
       }.merge(params)
       player = Player.create2(params[:player], Board.new)
+
+      # 最初にくばるオプション
       player.deal(params[:deal])
+
       player.initial_put_on(params[:init])
       if params[:piece_plot]
         player.piece_plot
       end
+
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
+
+      # あとでくばる(というかセットする)
+      if params[:pieces]
+        player.piece_discard
+        player.deal(params[:pieces])
+      end
+
       player
     end
 
@@ -239,6 +251,10 @@ module Bushido
       end
     end
 
+    def inspect
+      [("-" * 40), super, board_with_pieces, ("-" * 40)].join("\n")
+    end
+
     # 盤面と持駒(表示用)
     def board_with_pieces
       s = ""
@@ -270,22 +286,19 @@ module Bushido
       GenerateWay.new(self)
     end
 
-    # 持駒を配置してみた状態にする
+    # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
     def safe_put_on(arg, &block)
       info = parse_arg(arg)
       soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      success = false
+      get_errors(info[:point], info[:piece]).each{|error|raise error}
       begin
         put_on_at2(info[:point], soldier)
-        success = true
         if block
           yield soldier
         end
       ensure
-        if success
-          soldier = @board.pick_up!(info[:point])
-          @pieces << soldier.piece
-        end
+        soldier = @board.pick_up!(info[:point])
+        @pieces << soldier.piece
       end
     end
 
@@ -305,11 +318,32 @@ module Bushido
       soldiers
     end
 
-    def put_on_at2(point, soldier)
-      if s = double_pawn?(point, soldier.piece)
-        raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{soldier.piece}は打てません。"
+    def put_on_at2(point, soldier, options = {})
+      options = {
+        :validate => true,
+      }.merge(options)
+
+      if options[:validate]
+        get_errors(point, soldier.piece).each{|error|raise error}
       end
+
       @board.put_on_at(point, soldier)
+    end
+
+    def get_errors(point, piece)
+      errors = []
+      if s = double_pawn?(point, piece)
+        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません。")
+      end
+      if moveable_points(point, piece, :board_object_collision_skip => true).empty?
+        errors << NotPutInPlaceNotBeMoved.new("#{piece}を#{point.name}に置いてもそれ以上動かせないので反則になります")
+      end
+      errors
+    end
+
+    # vectors1, vectors2 と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    def moveable_points(point, piece, options = {})
+      Movabler.moveable_points(self, point, piece, false, options)
     end
 
     private
@@ -404,7 +438,7 @@ module Bushido
     end
 
     def find_source_point
-      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.include?(@point)}
+      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points2.include?(@point)}
       @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}
       @soldiers = @soldiers.find_all{|e|e.promoted == @promoted}
       @candidate = @soldiers.collect{|s|s.clone}
@@ -654,7 +688,7 @@ module Bushido
       list = []
 
       mpoints = @player.soldiers.collect{|soldier|
-        soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
+        soldier.moveable_points2.collect{|point|{:soldier => soldier, :point => point}}
       }.flatten
 
       mpoints.collect{|mpoint|
@@ -677,26 +711,13 @@ module Bushido
     # 持駒の全打筋
     def pieces_ways
       list = []
-
-      blank_points = @player.board.blank_points
-      blank_points.each do |point|
+      @player.board.blank_points.each do |point|
         @player.pieces.each do |piece|
-          # 二歩のチェックが難しいのであとで
-          str = [point.name, piece.name, "打"].join
-          begin
-            # 打てるかテスト
-            @player.safe_put_on(str)
-          rescue Bushido::NotPutInPlaceNotBeMoved => error
-            # 行き止まりだった
-          rescue Bushido::DoublePawn => error
-            p error
-            # 二歩じゃん
-          else
-            list << str
+          if @player.get_errors(point, piece).empty?
+            list << [point.name, piece.name, "打"].join
           end
         end
       end
-
       list
     end
   end
