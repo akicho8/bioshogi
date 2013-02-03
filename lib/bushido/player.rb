@@ -703,7 +703,7 @@ module Bushido
           promoted_trigger = true
         end
 
-        [point.name, soldier.piece.some_name(promoted), (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
+        [point.name, soldier.piece_current_name, (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
       }
     end
 

@@ -497,15 +497,8 @@
 
 ** _TODO_
 
-   - BUG: player._generate_way.soldiers_ways.should == ["1一と成(12)", "3一圭成(23)", "1一圭成(23)"]
    - BUG: ▽6八金不成 ← 金の不成なんてない
    - ▽1八杏成 ではなく 香成
-   - +「２三銀直不成」対応+
-   - +２二銀引成、できる？+
-   - +▲24歩 をよむ+
-   - +kif→ki2で"同"金+
-   - +持駒は「歩歩」は「歩二」+
-   - +"不成" の明示指定+
    - executeとexecute!を作ってexecuteでは盤面を更新しない
    - 例外クラスは引数を受け取って自分でメッセージを作成する
    - 棋譜のXML
@@ -519,11 +512,17 @@
    - GUI表示
    - 5x5将棋配置
    - cli
+   - +BUG:"1一と成(12)" +
+   - +「２三銀直不成」対応+
+   - +２二銀引成、できる？+
+   - +▲24歩 をよむ+
+   - +kif→ki2で"同"金+
+   - +持駒は「歩歩」は「歩二」+
+   - +不成の明示指定+
 
 ** 参考リンク集
 
    - 棋譜の形式について http://wiki.optus.nu/shogi/index.php?post=%B4%FD%C9%E8%A4%CE%B7%C1%BC%B0%A4%CB%A4%C4%A4%A4%A4%C6
    - 二歩 - Wikipedia http://ja.wikipedia.org/wiki/%E4%BA%8C%E6%AD%A9#cite_note-4
-   - せっき～のゲーム屋さん 個性を持った将棋プログラムを目指してー強くするという目標を達成した後にー http://sekigames.gg-blog.com/Entry/242/
    - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
    - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html

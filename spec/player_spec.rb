@@ -450,7 +450,7 @@ EOT
 
       it "盤上の駒の全手筋" do
         player = Player.basic_test(:init => ["1二歩", "2三桂"])
-        player._generate_way.soldiers_ways.should == ["1一と成(12)", "3一圭成(23)", "1一圭成(23)"]
+        player._generate_way.soldiers_ways.should == ["1一歩成(12)", "3一圭成(23)", "1一圭成(23)"]
       end
 
       it "持駒の全手筋" do
