@@ -290,7 +290,7 @@ module Bushido
     def safe_put_on(arg, &block)
       info = parse_arg(arg)
       soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      get_errors(info[:point], info[:piece]).each{|error|raise error}
+      get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
       begin
         put_on_at2(info[:point], soldier)
         if block
@@ -303,8 +303,8 @@ module Bushido
     end
 
     # 二歩？
-    def double_pawn?(point, piece)
-      if piece.sym_name == :pawn
+    def double_pawn?(point, piece, promoted)
+      if piece.sym_name == :pawn && !promoted
         pawns_on_board(point).first
       end
     end
@@ -324,29 +324,28 @@ module Bushido
       }.merge(options)
 
       if options[:validate]
-        get_errors(point, soldier.piece).each{|error|raise error}
+        get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
       end
 
       @board.put_on_at(point, soldier)
     end
 
-    def get_errors(point, piece)
+    def get_errors(point, piece, promoted)
       errors = []
-      if s = double_pawn?(point, piece)
-        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません。")
+      if s = double_pawn?(point, piece, promoted)
+        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません")
       end
-      if moveable_points(point, piece, :board_object_collision_skip => true).empty?
-        errors << NotPutInPlaceNotBeMoved.new("#{piece}を#{point.name}に置いてもそれ以上動かせないので反則になります")
+      if moveable_points(point, piece, promoted, :board_object_collision_skip => true).empty?
+        errors << NotPutInPlaceNotBeMoved.new("#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")
       end
       errors
     end
 
-    # vectors1, vectors2 と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
-    def moveable_points(point, piece, options = {})
-      Movabler.moveable_points(self, point, piece, false, options)
-    end
-
     private
+
+    def moveable_points(point, piece, promoted, options = {})
+      Movabler.moveable_points(self, point, piece, promoted, options)
+    end
 
     def side_soldiers_put_on(table)
       table.each{|info|initial_put_on(info)}
@@ -713,7 +712,7 @@ module Bushido
       list = []
       @player.board.blank_points.each do |point|
         @player.pieces.each do |piece|
-          if @player.get_errors(point, piece).empty?
+          if @player.get_errors(point, piece, false).empty?
             list << [point.name, piece.name, "打"].join
           end
         end

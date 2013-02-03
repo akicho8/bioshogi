@@ -350,25 +350,32 @@
 *** 主な例外
 
     #+ATTR_HTML: border="1" rules="all" frame="all"
-    | 例外                            | 意味                                         | どんなときに起きる？               |
-    |---------------------------------+----------------------------------------------+------------------------------------|
-    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない           | ７七に歩がないのに７六歩           |
-    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない   | 初手 "５八金"                      |
-    | SyntaxError                     | とりあえず表記が違う                         | 駒の配置時に４二銀成とした         |
-    | PointSyntaxError                | 座標の表記が違う                             | ４二のつもりで４と書いた           |
-    | PositionSyntaxError             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた         |
-    | PieceNotFound                   | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた             |
-    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"           |
-    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した               | 初手 "８八飛(28)"                  |
-    | NotPromotable                   | 成れない条件で成ろうとした                   | 初手 "７六歩成"                    |
-    | PromotedPiecePutOnError         | 成った状態で打とうとした                     | ５五龍打                           |
-    | AlredyPromoted                  | すでに成っている                             | ５五の龍を５一飛成                 |
-    | NotFoundOnBoard                 | 盤面に指定の駒がない                         | ２七に歩がないのに２六歩(27)とした |
-    | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした           | ５五龍を５六飛                     |
-    | NotPutInPlaceNotBeMoved         | 移動の見込みがない状態で駒を指せない         | ▲１一桂                           |
-    | DoublePawn                      | 二歩                                         | 歩がある縦列に歩を打った           |
-    | BeforePointNotFound             | 同に対する座標が不明                         | 初手 "同歩"                        |
-    | SoldierEmpty                    | オプションで絞ったら移動できる駒がなくなった |                                    |
+    | 例外                            | 意味                                         | どんなときに起きる？       |
+    |---------------------------------+----------------------------------------------+----------------------------|
+    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない           | ７七に歩がないのに７六歩   |
+    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない   | 初手 "５八金"              |
+    | SyntaxError                     | とりあえず表記が違う                         | 駒の配置時に４二銀成とした |
+    | PointSyntaxError                | 座標の表記が違う                             | ４二のつもりで４と書いた   |
+    | PositionSyntaxError             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた |
+    | PieceNotFound                   | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた     |
+    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"   |
+    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した               | 初手 "８八飛(28)"          |
+    | NotPromotable                   | 成れない条件で成ろうとした                   | 初手 "７六歩成"            |
+    | AlredyPromoted                  | すでに成っている                             | ５五の龍を５一飛成         |
+    | BeforePointNotFound             | 同に対する座標が不明                         | 初手 "同歩"                |
+    | SoldierEmpty                    | オプションで絞ったら移動できる駒がなくなった |                            |
+    | BushidoError                    | 反則                                         | 二歩など                   |
+
+    反則系 (RuleError のサブクラス)
+
+    #+ATTR_HTML: border="1" rules="all" frame="all"
+    | 例外                       | 意味                                 | どんなときに起きる？               |
+    |----------------------------+--------------------------------------+------------------------------------|
+    | DoublePawn                 | 二歩                                 | 歩がある縦列に歩を打った           |
+    | NotFoundOnBoard            | 盤面に指定の駒がない                 | ２七に歩がないのに２六歩(27)とした |
+    | PromotedPiecePutOnError    | 成った状態で打とうとした             | ５五龍打                           |
+    | PromotedPieceToNormalPiece | 成駒を成ってない状態に戻そうとした   | ５五龍を５六飛                     |
+    | NotPutInPlaceNotBeMoved    | 移動の見込みがない状態で駒を指せない | ▲１一桂                           |
 
 *** 表示座標系
 
@@ -490,7 +497,6 @@
 
 ** _TODO_
 
-   - 歩があって同じ縦列に「と」があってそれを前に動かすことができるか？ 想像では今回の修正でできない気がする。テストを書こう
    - BUG: player._generate_way.soldiers_ways.should == ["1一と成(12)", "3一圭成(23)", "1一圭成(23)"]
    - BUG: ▽6八金不成 ← 金の不成なんてない
    - ▽1八杏成 ではなく 香成

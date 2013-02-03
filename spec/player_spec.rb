@@ -88,6 +88,14 @@ EOT
         it "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
           Player.soldiers_test(:init => ["６九金", "４九金"], :exec => "５九金(49)").should == ["▲5九金", "▲6九金"]
         end
+        context "「と」と「歩」が縦列にある状態でどちらを進めても二歩にならない" do
+          it "とを進める" do
+            Player.soldiers_test(:init => ["１二と", "１四歩"], :exec => "１三歩").should == ["▲1三歩", "▲1二と"]
+          end
+          it "歩を進める" do
+            Player.soldiers_test(:init => ["１二と", "１四歩"], :exec => "１一と").should == ["▲1一と", "▲1四歩"]
+          end
+        end
       end
 
       context "できない" do

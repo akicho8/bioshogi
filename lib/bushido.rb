@@ -27,7 +27,6 @@ module Bushido
   class SamePlayerSoldierOverwrideError < BushidoError; end
   class AlredyPromoted < BushidoError; end
   class NotFoundOnBoard < BushidoError; end
-  class PromotedPieceToNormalPiece < BushidoError; end
   class NotPutInPlaceNotBeMoved < BushidoError; end
   class BeforePointNotFound < BushidoError; end
   class FileFormatError < BushidoError; end
@@ -38,9 +37,10 @@ module Bushido
   class PointSyntaxError < SyntaxError; end
 
   # 別に問題ないけど将棋のルール上エラーとするもの
+  class DoublePawn < RuleError; end
   class NotPromotable < RuleError; end
   class PromotedPiecePutOnError < RuleError; end
-  class DoublePawn < RuleError; end
+  class PromotedPieceToNormalPiece < RuleError; end
 
   class Vector < Array
     def initialize(arg)
