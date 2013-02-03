@@ -38,5 +38,12 @@ module Bushido
         board["5三"].moveable_points2.collect(&:name).sort.should == ["6二", "5二", "4二", "6三", "4三", "6四", "5四", "4四", "5一", "7三", "8三", "9三", "3三", "2三", "1三", "5五", "5六", "5七", "5八", "5九"].sort
       end
     end
+
+    it "復元できるかテスト" do
+      player.put_on_at2(Point.parse("５五"), soldier)
+      soldier.formality_name.should == "▲5五歩"
+      soldier = Marshal.load(Marshal.dump(soldier()))
+      soldier.formality_name.should == "▲5五歩"
+    end
   end
 end

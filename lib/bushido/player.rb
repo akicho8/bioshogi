@@ -229,7 +229,7 @@ module Bushido
 
     # 持駒の名前一覧(表示・デバッグ用)
     def piece_names
-      pieces.collect(&:formality_name).sort
+      pieces.collect(&:name).sort
     end
 
     # 持駒を捨てる
@@ -341,6 +341,18 @@ module Bushido
       errors
     end
 
+    # モジュール化
+    begin
+      def create_memento
+        # @board → soldier → player の結び付きで戻ってくる(？) 要確認
+        Marshal.dump([@location, @pieces, @board])
+      end
+
+      def restore_memento(memento)
+        @location, @pieces, @board = Marshal.load(memento)
+      end
+    end
+
     private
 
     def moveable_points(point, piece, promoted, options = {})
@@ -433,6 +445,8 @@ module Bushido
 
       @prev_player_point = @player.prev_player.moved_point
 
+      @md = nil                 # MatchData を保持していると Marshal.dump できないため
+
       self
     end
 
@@ -446,12 +460,12 @@ module Bushido
         if @player.piece_fetch(@piece)
           @put_on_trigger = true
           if @promoted
-            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
+            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
           @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
           @done = true
         else
-          raise MovableSoldierNotFound, "#{@point.name}に移動できる#{@piece.name}がありません。#{@source.inspect} の指定が間違っているのかもしれません"
+          raise MovableSoldierNotFound, "#{@point.name}に移動できる#{@piece.name}がありません。'#{@source}' の入力が間違っているのかもしれません"
         end
       end
 
@@ -549,6 +563,7 @@ module Bushido
       [last_kif, last_kif2]
     end
 
+    # FIXME: ここだけでかすぎるので別モジュールにしよう
     def last_kif2
       s = []
       if @prev_player_point == @point

@@ -484,5 +484,22 @@ EOT
         player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
       end
     end
+
+    # # frameクラスのところだけでやった方がいいかも？ board は player がもっているんではなく frame がもってるし。
+    # it "復元できるかテスト" do
+    #   player = Player.basic_test(:init => "５九玉", :exec => "５八玉")
+    #   # s = player.soldiers.first
+    #   # p Marshal.dump(s)
+    # 
+    #   player.soldier_names.should == ["▲5八玉"]
+    #   player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    # 
+    #   memento = player.create_memento
+    #   player.restore_memento(memento)
+    # 
+    #   # ↓こける
+    #   player.soldier_names.should == ["▲5八玉"]
+    #   player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    # end
   end
 end
