@@ -694,12 +694,10 @@ module Bushido
         soldier = mpoint[:soldier]
         point = mpoint[:point]
 
-        promoted = soldier.promoted?
         promoted_trigger = nil
 
         # 移動先が成れる場所かつ、駒が成れる駒で、駒は成ってない状態であれば成る(ことで行き止まりの反則を防止する)
         if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted?
-          promoted = true
           promoted_trigger = true
         end
 
