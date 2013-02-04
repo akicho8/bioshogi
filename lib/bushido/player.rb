@@ -55,6 +55,14 @@ module Bushido
       @pieces = []
     end
 
+    def marshal_dump
+      [@name, @location, @pieces]
+    end
+
+    def marshal_load(variables)
+      @name, @location, @pieces = variables
+    end
+
     # 先手後手を設定は適当でいい
     #   player.location = :white
     #   player.location = "後手"

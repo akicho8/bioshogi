@@ -100,6 +100,17 @@ module Bushido
       "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
+    def create_memento
+      # @board, @players, 
+      object = [@count, @kif_logs, @kif2_logs]
+      # [@board, @players, @count, @kif_logs, @kif2_logs]
+      Marshal.dump(object)
+    end
+
+    def restore_memento(object)
+      @board, @players, @count, @kif_logs, @kif2_logs = Marshal.load(object)
+    end
+
     private
 
     def current_index(diff = 0)
