@@ -172,7 +172,10 @@ module Bushido
 
     # 持駒を取り出す
     def pick_out(piece)
-      @pieces.delete(piece_fetch!(piece))
+      piece_fetch!(piece)
+      if index = @pieces.find_index{|e|e.class == piece.class}
+        @pieces.slice!(index)
+      end
     end
 
     # 盤上の自分の駒

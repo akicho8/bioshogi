@@ -1,58 +1,81 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/piece_spec.rb" -*-
 #
 # 駒
-#   Piece["歩"].name # => "歩"
+#   Piece["歩"].name  # => "歩"
+#   Piece[:pawn].name # => "歩"
+#   Piece.each{|piece|...}
 #
+
+require "singleton"
+
 module Bushido
-  module Piece
-    extend self
+  class Piece
+    include Singleton
 
-    def create(key, *args)
-      "Bushido::Piece::#{key.to_s.classify}".constantize.new(*args)
-    end
+    class << self
+      include Enumerable
 
-    def collection
-      [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
-    end
+      private :instance
 
-    # Piece["歩"].name # => "歩"
-    def [](arg)
-      get(arg)
-    end
+      def each(&block)
+        instance.pool.each(&block)
+      end
 
-    # Piece.get("歩").name # => "歩"
-    def get(arg)
-      basic_get(arg) || promoted_get(arg)
-    end
+      # def create(key, *args)
+      #   "Bushido::Piece::#{key.to_s.classify}".constantize.new(*args)
+      # end
 
-    # Piece.get!("歩").name # => "歩"
-    def get!(arg)
-      get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
-    end
+      # def collection
+      #   # [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
+      # end
 
-    def parse!(arg)
-      case
-      when piece = basic_get(arg)
-        [false, piece]
-      when piece = promoted_get(arg)
-        [true, piece]
-      else
-        raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+      # Piece["歩"].name # => "歩"
+      def [](arg)
+        get(arg)
+      end
+
+      # Piece.get("歩").name # => "歩"
+      def get(arg)
+        basic_get(arg) || promoted_get(arg)
+      end
+
+      # Piece.get!("歩").name # => "歩"
+      def get!(arg)
+        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+      end
+
+      def parse!(arg)
+        case
+        when piece = basic_get(arg)
+          [false, piece]
+        when piece = promoted_get(arg)
+          [true, piece]
+        else
+          raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+        end
+      end
+
+      def names
+        collect(&:names).flatten
+      end
+
+      private
+
+      def basic_get(arg)
+        find{|piece|piece.basic_names.include?(arg.to_s)}
+      end
+
+      def promoted_get(arg)
+        find{|piece|piece.promoted_names.include?(arg.to_s)}
       end
     end
 
-    def names
-      collection.collect{|piece|piece.names}.flatten
-    end
+    attr_reader :pool
 
-    private
-
-    def basic_get(arg)
-      collection.find{|piece|piece.basic_names.include?(arg.to_s)}
-    end
-
-    def promoted_get(arg)
-      collection.find{|piece|piece.promoted_names.include?(arg.to_s)}
+    def initialize
+      @pool = [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|
+        "Bushido::Piece::#{key.to_s.classify}".constantize.new
+      }
     end
 
     # 駒共通クラス

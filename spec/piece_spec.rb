@@ -4,15 +4,16 @@ require "spec_helper"
 
 module Bushido
   describe Piece do
-    it "指定の駒を作る" do
-      Piece.create(:pawn).class.should == Piece::Pawn
-    end
+    # it "指定の駒を作る" do
+    #   Piece.create(:pawn).class.should == Piece::Pawn
+    # end
 
-    it "すべての駒のコレクションを参照" do
-      Piece.collection
-    end
+    # it "すべての駒のコレクションを参照" do
+    #   Piece.collection
+    # end
 
     it "取得" do
+      Piece.get(:pawn).class.should == Piece::Pawn
       Piece.get("歩").class.should == Piece::Pawn
       Piece.get("").should == nil
       Piece.get(nil).should == nil
@@ -39,8 +40,16 @@ module Bushido
       piece.promoted_vectors2.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
     end
 
-    it "同じ種類の駒でもオブジェクトは異なる" do
-      (Piece.get("歩") == Piece.get("歩")).should == false
+    it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do
+      (Piece.get("歩") == Piece.get("歩")).should == true
+      (Piece.get("歩").clone == Piece.get("歩")).should == false
     end
+
+    # it "シリアライズ" do
+    #   p Piece.get("歩")
+    #   s = Marshal.load(Marshal.dump(Piece.instance))
+    #   p s
+    #   p Piece.get("歩")
+    # end
   end
 end

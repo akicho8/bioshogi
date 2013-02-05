@@ -55,11 +55,10 @@ module Bushido
 
     # 指定座標に駒を置く
     #   board.put_on_at("５五", soldier)
-    def put_on_at(point, soldier) # FIXME: 何も書き換えないでエラーチェックするメソッドが必要。
+    def put_on_at(point, soldier)
       assert_board_cell_is_blank(point)
       # assert_not_double_pawn(player, point, piece)
 
-      save_point = soldier.point
       soldier.point = point
       # soldier.double_pawn_validation(self, point)
 
