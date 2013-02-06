@@ -29,7 +29,7 @@ module Bushido
     end
 
     def inspect
-      "<#{self.class.name}:#{object_id} #{formality_name}>"
+      "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{formality_name}>"
     end
 
     [:promoted].each{|key|
@@ -46,7 +46,13 @@ module Bushido
     # 正式な棋譜の表記で返す
     #  Player.basic_test(:init => "５五と").board["５五"].formality_name # => "▲5五と"
     def formality_name
-      "#{@player.location.mark}#{point ? point.name : '(どこにも置いてない)'}#{self}"
+      "#{@player.location.mark}#{formality_name2}"
+    end
+
+    # 正式な棋譜の表記で返す
+    #  Player.basic_test(:init => "５五と").board["５五"].formality_name2 # => "5五と"
+    def formality_name2
+      "#{point ? point.name : '(どこにも置いてない)'}#{self}"
     end
 
     # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)

@@ -470,20 +470,20 @@ EOT
       end
     end
 
-    context "一時的に置いてみた状態にする(これ不要かも)" do
-      it "safe_put_on" do
-        player = Player.basic_test
-        player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
-        player.safe_put_on("5五飛") do
-          player.pieces_compact_str.should == "歩九 角 香二 桂二 銀二 金二 玉"
-          player.safe_put_on("4五角") do
-            player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉"
-          end
-          player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角"
-        end
-        player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
-      end
-    end
+    # context "一時的に置いてみた状態にする(これ不要かも)" do
+    #   it "safe_put_on" do
+    #     player = Player.basic_test
+    #     player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    #     player.safe_put_on("5五飛") do
+    #       player.pieces_compact_str.should == "歩九 角 香二 桂二 銀二 金二 玉"
+    #       player.safe_put_on("4五角") do
+    #         player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉"
+    #       end
+    #       player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #     end
+    #     player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #   end
+    # end
 
     # # frameクラスのところだけでやった方がいいかも？ board は player がもっているんではなく frame がもってるし。
     # it "復元できるかテスト" do
@@ -494,12 +494,18 @@ EOT
     #   player.soldier_names.should == ["▲5八玉"]
     #   player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
     # 
-    #   memento = player.create_memento
-    #   player.restore_memento(memento)
+    #   p player.soldier_names
+    #   
+    #   d = Marshal.dump(player)
+    #   player2 = Marshal.load(d)
+    #   player2.board = player.board
     # 
-    #   # ↓こける
-    #   player.soldier_names.should == ["▲5八玉"]
-    #   player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    #   # memento = player.create_memento
+    #   # player.restore_memento(memento)
+    #   #
+    #   # # # ↓こける
+    #   # player.soldier_names.should == ["▲5八玉"]
+    #   # player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
     # end
   end
 end

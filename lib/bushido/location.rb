@@ -40,7 +40,7 @@ module Bushido
       black? ? a : b
     end
 
-    @list ||= [
+    @pool ||= [
       new(:key => :black, :mark => "▲", :name => "先手", :varrow => " ", :zarrow => ""),
       new(:key => :white, :mark => "▽", :name => "後手", :varrow => "v", :zarrow => "↓"),
     ]
@@ -51,7 +51,7 @@ module Bushido
       if arg.kind_of? self
         return arg
       end
-      @list.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
+      @pool.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
     end
 
     # 引数に対応する先手または後手の情報を返す

@@ -49,25 +49,33 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :pieces, :frame, :last_piece, :parsed_info
+    attr_accessor :name, :board, :location, :pieces, :soldiers, :frame, :last_piece, :parsed_info
 
     def initialize
       @pieces = []
+      @soldiers = []
     end
 
     def marshal_dump
-      [@name, @location, @pieces]
+      {
+        :name         => @name,
+        :location_key => @location.key,
+        :pieces       => @pieces.collect(&:sym_name),
+        :soldier_names => @pieces.collect(&:sym_name),
+      }
     end
 
-    def marshal_load(variables)
-      @name, @location, @pieces = variables
+    def marshal_load(attrs)
+      @name = attrs[:name]
+      self.location = attrs[:location_key]
+      @pieces = attrs[:pieces].collect{|v|Piece[v]}
     end
 
     # 先手後手を設定は適当でいい
     #   player.location = :white
     #   player.location = "後手"
-    def location=(location)
-      @location = Location[location]
+    def location=(key)
+      @location = Location[key]
     end
 
     # 配布して持駒にする
@@ -119,6 +127,7 @@ module Bushido
         info = parse_arg(arg)
         soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
         put_on_at2(info[:point], soldier)
+        @soldiers << soldier
       }
     end
 
@@ -178,10 +187,11 @@ module Bushido
       end
     end
 
-    # 盤上の自分の駒
-    def soldiers
-      @board.surface.values.find_all{|soldier|soldier.player == self}
-    end
+    # # 盤上の自分の駒
+    # def soldiers
+    #   @soldiers
+    #   # @ @board.surface.values.find_all{|soldier|soldier.player == self}
+    # end
 
     # 盤上の駒を a から b に移動する。成るなら promote_trigger を有効に。
     def move_to(a, b, promote_trigger = false)
@@ -236,6 +246,12 @@ module Bushido
     #   soldier_names # => ["▽5五飛↓"]
     def soldier_names
       soldiers.collect(&:formality_name).sort
+    end
+
+    # 盤上の駒の名前一覧(保存用)
+    #   soldier_names2 # => ["5五飛"]
+    def soldier_names2
+      soldiers.collect(&:formality_name2).sort
     end
 
     # 持駒の名前一覧(表示・デバッグ用)
@@ -297,21 +313,23 @@ module Bushido
       GenerateWay.new(self)
     end
 
-    # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
-    def safe_put_on(arg, &block)
-      info = parse_arg(arg)
-      soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
-      get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
-      begin
-        put_on_at2(info[:point], soldier)
-        if block
-          yield soldier
-        end
-      ensure
-        soldier = @board.pick_up!(info[:point])
-        @pieces << soldier.piece
-      end
-    end
+    # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
+    # def safe_put_on(arg, &block)
+    #   info = parse_arg(arg)
+    #   _soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+    #   get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
+    #   begin
+    #     @soldier << _soldier
+    #     put_on_at2(info[:point], soldier)
+    #     if block
+    #       yield soldier
+    #     end
+    #   ensure
+    #     soldier = @board.pick_up!(info[:point])
+    #     @pieces << _soldier.piece
+    #     @soldier.pop
+    #   end
+    # end
 
     # 二歩？
     def double_pawn?(point, piece, promoted)
@@ -352,17 +370,17 @@ module Bushido
       errors
     end
 
-    # モジュール化
-    begin
-      def create_memento
-        # @board → soldier → player の結び付きで戻ってくる(？) 要確認
-        Marshal.dump([@location, @pieces, @board])
-      end
-
-      def restore_memento(memento)
-        @location, @pieces, @board = Marshal.load(memento)
-      end
-    end
+    # # モジュール化
+    # begin
+    #   def create_memento
+    #     # @board → soldier → player の結び付きで戻ってくる(？) 要確認
+    #     Marshal.dump([@location, @pieces, @board])
+    #   end
+    #
+    #   def restore_memento(memento)
+    #     @location, @pieces, @board = Marshal.load(memento)
+    #   end
+    # end
 
     private
 
@@ -420,7 +438,9 @@ module Bushido
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+        soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+        @player.put_on_at2(@point, soldier)
+        @player.soldiers << soldier
         @done = true
       else
         if @md[:source_point]
@@ -439,7 +459,9 @@ module Bushido
               if @player.piece_fetch(@piece)
                 @put_on_trigger = true
                 @source_point = nil
-                @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+                soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+                @player.put_on_at2(@point, soldier)
+                @player.soldiers << soldier
                 @done = true
               else
                 raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
@@ -473,7 +495,9 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
-          @player.put_on_at2(@point, Soldier.new(@player, @player.pick_out(@piece), @promoted))
+          soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+          @player.put_on_at2(@point, soldier)
+          @player.soldiers << soldier
           @done = true
         else
           raise MovableSoldierNotFound, "#{@point.name}に移動できる#{@piece.name}がありません。'#{@source}' の入力が間違っているのかもしれません"

@@ -10,10 +10,13 @@ module Bushido
 
     context "文字列表現" do
       it "先手後手のマーク付き" do
-        Player.basic_test(:init => "５五と").board["５五"].formality_name.should == "▲5五と"
+        Player.basic_test(:init => "５五と").soldiers.first.formality_name.should == "▲5五と"
       end
-      it "先手後手のマーク無し" do
-        Player.basic_test(:init => "５五と").board["５五"].piece_current_name.should == "と"
+      it "先手後手のマークなし" do
+        Player.basic_test(:init => "５五と").soldiers.first.formality_name2.should == "5五と"
+      end
+      it "駒のみ" do
+        Player.basic_test(:init => "５五と").soldiers.first.piece_current_name.should == "と"
       end
       it "盤上に置いてない場合" do
         soldier.formality_name.should == "▲(どこにも置いてない)歩"
