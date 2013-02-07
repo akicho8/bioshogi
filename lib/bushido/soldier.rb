@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 #
 # 盤上の駒
+#   player を直接もつのではなく :white, :black を持てばいいような気もしている
+#   引数もバラバラではなく文字列だけで入力してインスタンスを生成できばらくかも
 #
 module Bushido
   class Soldier
     attr_accessor :player, :piece, :promoted, :point
 
-    def initialize(player, piece, promoted = false)
-      @player = player
-      @piece = piece
-      self.promoted = promoted
+    # 互換性用
+    def self.new2(player, piece, promoted = false)
+      new(:player => player, :piece => piece, :promoted => promoted)
+    end
+
+    def initialize(attrs)
+      @player = attrs[:player]
+      if attrs[:point]
+        @point = Point.parse(attrs[:point])
+      end
+      @piece = attrs[:piece]
+      self.promoted = attrs[:promoted]
     end
 
     # 成り/不成状態の設定
@@ -66,5 +76,14 @@ module Bushido
     def moveable_points2(options = {})
       Movabler.moveable_points(@player, @point, @piece, @promoted, options)
     end
+
+    # def self.from_attrs(attrs)
+    #   new(attrs)
+    # end
+    # 
+    # # シリアライズ用
+    # def to_attrs
+    #   {:player => (@player ? @player.location.key : nil) :point => @point.name, :piece => @piece.sym_name, :promoted => @promoted}
+    # end
   end
 end

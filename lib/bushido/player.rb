@@ -61,7 +61,7 @@ module Bushido
         :name         => @name,
         :location_key => @location.key,
         :pieces       => @pieces.collect(&:sym_name),
-        :soldier_names => @pieces.collect(&:sym_name),
+        :soldiers     => @soldiers.collect(&:formality_name2),
       }
     end
 
@@ -69,6 +69,10 @@ module Bushido
       @name = attrs[:name]
       self.location = attrs[:location_key]
       @pieces = attrs[:pieces].collect{|v|Piece[v]}
+      @soldiers = attrs[:soldiers].collect{|soldier|
+        info = parse_arg(soldier)
+        Soldier.new(info.merge(:player => self))
+      }
     end
 
     # 先手後手を設定は適当でいい
@@ -125,7 +129,7 @@ module Bushido
       Array.wrap(arg).each{|arg|
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
         info = parse_arg(arg)
-        soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+        soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
       }
@@ -316,7 +320,7 @@ module Bushido
     # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
     # def safe_put_on(arg, &block)
     #   info = parse_arg(arg)
-    #   _soldier = Soldier.new(self, pick_out(info[:piece]), info[:promoted])
+    #   _soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
     #   get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
     #   begin
     #     @soldier << _soldier

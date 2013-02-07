@@ -48,7 +48,7 @@ module Bushido
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+        soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
         @player.put_on_at2(@point, soldier)
         @player.soldiers << soldier
         @done = true
@@ -69,7 +69,7 @@ module Bushido
               if @player.piece_fetch(@piece)
                 @put_on_trigger = true
                 @source_point = nil
-                soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+                soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
                 @player.put_on_at2(@point, soldier)
                 @player.soldiers << soldier
                 @done = true
@@ -105,7 +105,7 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
-          soldier = Soldier.new(@player, @player.pick_out(@piece), @promoted)
+          soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
           @player.put_on_at2(@point, soldier)
           @player.soldiers << soldier
           @done = true

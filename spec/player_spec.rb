@@ -494,11 +494,13 @@ EOT
       player.soldier_names.should == ["▲5八玉"]
       player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
 
-      p player.soldier_names
+      # p player.soldier_names
 
-      d = Marshal.dump(player)
-      player2 = Marshal.load(d)
-      player2.board = player.board
+      player2 = Marshal.load(Marshal.dump(player))
+      # player2.board = player.board
+
+      player2.soldier_names.should == ["▲5八玉"]
+      player2.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
 
       # memento = player.create_memento
       # player.restore_memento(memento)

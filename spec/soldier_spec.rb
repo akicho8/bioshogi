@@ -6,7 +6,7 @@ module Bushido
   describe Soldier do
     let(:board)  { Board.new }
     let(:player) { Player.create2(:black, board) }
-    let(:soldier) { Soldier.new(player, Piece::Pawn.new) }
+    let(:soldier) { Soldier.new2(player, Piece::Pawn.new) }
 
     context "文字列表現" do
       it "先手後手のマーク付き" do
