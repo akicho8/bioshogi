@@ -75,6 +75,7 @@ require_relative "bushido/piece"
 require_relative "bushido/board"
 require_relative "bushido/soldier"
 require_relative "bushido/player"
+require_relative "bushido/order_parser"
 require_relative "bushido/movabler"
 require_relative "bushido/frame"
 
