@@ -70,8 +70,7 @@ module Bushido
       self.location = attrs[:location_key]
       @pieces = attrs[:pieces].collect{|v|Piece[v]}
       @soldiers = attrs[:soldiers].collect{|soldier|
-        info = parse_arg(soldier)
-        Soldier.new(info.merge(:player => self))
+        Soldier.new(Utils.parse_arg(soldier).merge(:player => self))
       }
     end
 
@@ -117,60 +116,22 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      table = first_placements.collect{|arg|parse_arg(arg)}
-      if location.white?
-        table.each{|info|info[:point] = info[:point].reverse}
-      end
-      side_soldiers_put_on(table)
-    end
-
-    # 持駒の配置
-    def initial_put_on(arg)
-      Array.wrap(arg).each{|arg|
-        next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
-        info = parse_arg(arg)
+      Utils.first_placements2(location).each{|info|
         soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
       }
     end
 
-    def parse_arg(arg)
-      if arg.kind_of?(String)
-        info = parse_string_arg(arg)
-        if info[:options] == "成"
-          raise SyntaxError, "駒の配置するときは「○成」ではなく「成○」: #{arg.inspect}"
-        end
-        info
-      else
-        if true
-          # FIXME: ここ使ってないわりにごちゃごちゃしているから消そう
-          piece = arg[:piece]
-          promoted = arg[:promoted]
-          if piece.kind_of?(String)
-            promoted, piece = Piece.parse!(piece)
-          end
-          arg.merge(:point => Point[arg[:point]], :piece => piece, :promoted => promoted)
-        else
-          arg
-        end
-      end
-    end
-
-    def parse_string_arg(str)
-      md = str.match(/\A(?<point>..)(?<piece>#{Piece.names.join("|")})(?<options>.*)/)
-      md or raise SyntaxError, "表記が間違っています : #{str.inspect}"
-      point = Point.parse(md[:point])
-      promoted, piece = Piece.parse!(md[:piece])
-      {:point => point, :piece => piece, :promoted => promoted, :options => md[:options]}
-    end
-
-    def first_placements
-      [
-        "9七歩", "8七歩", "7七歩", "6七歩", "5七歩", "4七歩", "3七歩", "2七歩", "1七歩",
-        "8八角", "2八飛",
-        "9九香", "8九桂", "7九銀", "6九金", "5九玉", "4九金", "3九銀", "2九桂", "1九香",
-      ]
+    # 持駒の配置
+    def initial_put_on(arg)
+      Array.wrap(arg).each{|arg|
+        next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
+        info = Utils.parse_arg(arg)
+        soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
+        put_on_at2(info[:point], soldier)
+        @soldiers << soldier
+      }
     end
 
     # 必ず存在する持駒を参照する
@@ -392,9 +353,9 @@ module Bushido
       Movabler.moveable_points(self, point, piece, promoted, options)
     end
 
-    def side_soldiers_put_on(table)
-      table.each{|info|initial_put_on(info)}
-    end
+    # def side_soldiers_put_on(table)
+    #   table.each{|info|initial_put_on(info)}
+    # end
   end
 
   class Evaluate
