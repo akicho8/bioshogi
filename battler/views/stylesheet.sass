@@ -1,13 +1,17 @@
+@import "compass/css3/transform"
+
 .white
-  -moz-transform: rotate(180deg)
+  @include transform(rotate(180deg))
 
 .board
-  background: #aaa
+  background: #ccc
   border-collapse: separate
   border-spacing: 1px
-  font-size: 32px
+  font-size: 12px
   td
-    min-width: 16px
-    min-height: 16px
+    text-align: center
+    min-width: 20px
+    min-height: 14px
     background: white
-    
+    &.last_point
+      font-weight: bold

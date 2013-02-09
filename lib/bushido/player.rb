@@ -49,11 +49,10 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :pieces, :soldiers, :frame, :last_piece, :parsed_info
+    attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info
 
     def initialize
-      @pieces = []
-      @soldiers = []
+      super
     end
 
     def marshal_dump
@@ -62,6 +61,7 @@ module Bushido
         :location_key => @location.key,
         :pieces       => @pieces.collect(&:sym_name),
         :soldiers     => @soldiers.collect(&:formality_name2),
+        :last_piece   => @last_piece ? @last_piece.sym_name : nil,
       }
     end
 
@@ -70,8 +70,11 @@ module Bushido
       self.location = attrs[:location_key]
       @pieces = attrs[:pieces].collect{|v|Piece[v]}
       @soldiers = attrs[:soldiers].collect{|soldier|
-        Soldier.new(Utils.parse_arg(soldier).merge(:player => self))
+        Soldier.new(Utils.parse_str(soldier).merge(:player => self))
       }
+      if attrs[:last_piece]
+        @last_piece = Piece[attrs[:last_piece]]
+      end
     end
 
     # 先手後手を設定は適当でいい
@@ -81,42 +84,9 @@ module Bushido
       @location = Location[key]
     end
 
-    # 配布して持駒にする
-    #
-    #   player = Player.new
-    #   player.deal("飛 歩二")
-    #   player.pieces_compact_str # => "飛 歩二"
-    #
-    def deal(infos = first_distributed_pieces)
-      if infos.kind_of? String
-        str = infos
-        str = str.tr("〇一二三四五六七八九", "0-9")
-        infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
-          md = s.match(/\A(?<piece>#{Piece.names.join("|")})(?<count>\d+)?/)
-          {:piece => md[:piece], :count => (md[:count] || 1).to_i}
-        }
-      end
-      Array.wrap(infos).each{|info|
-        @pieces += (info[:count] || 1).times.collect{ Piece.get!(info[:piece]) }
-      }
-    end
-
-    def first_distributed_pieces
-      [
-        {:piece => "歩", :count => 9},
-        {:piece => "角", :count => 1},
-        {:piece => "飛", :count => 1},
-        {:piece => "香", :count => 2},
-        {:piece => "桂", :count => 2},
-        {:piece => "銀", :count => 2},
-        {:piece => "金", :count => 2},
-        {:piece => "玉", :count => 1},
-      ]
-    end
-
     # 平手の初期配置
     def piece_plot
-      Utils.first_placements2(location).each{|info|
+      Utils.initial_placements_for(location).each{|info|
         soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
@@ -127,29 +97,11 @@ module Bushido
     def initial_put_on(arg)
       Array.wrap(arg).each{|arg|
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
-        info = Utils.parse_arg(arg)
+        info = Utils.parse_str(arg)
         soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
       }
-    end
-
-    # 必ず存在する持駒を参照する
-    def piece_fetch!(piece)
-      piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません\n#{board_with_pieces}"
-    end
-
-    # 持駒を参照する
-    def piece_fetch(piece)
-      @pieces.find{|e|e.class == piece.class}
-    end
-
-    # 持駒を取り出す
-    def pick_out(piece)
-      piece_fetch!(piece)
-      if index = @pieces.find_index{|e|e.class == piece.class}
-        @pieces.slice!(index)
-      end
     end
 
     # # 盤上の自分の駒
@@ -186,6 +138,7 @@ module Bushido
         @board.pick_up!(b)
         @pieces << target_soldier.piece
         @last_piece = target_soldier.piece
+        target_soldier.player.soldiers.delete(target_soldier)
       end
 
       if promote_trigger
@@ -206,28 +159,6 @@ module Bushido
 
     # 前のプレイヤー
     alias prev_player next_player
-
-    # 盤上の駒の名前一覧(表示・デバッグ用)
-    #   soldier_names # => ["▽5五飛↓"]
-    def soldier_names
-      soldiers.collect(&:formality_name).sort
-    end
-
-    # 盤上の駒の名前一覧(保存用)
-    #   soldier_names2 # => ["5五飛"]
-    def soldier_names2
-      soldiers.collect(&:formality_name2).sort
-    end
-
-    # 持駒の名前一覧(表示・デバッグ用)
-    def piece_names
-      pieces.collect(&:name).sort
-    end
-
-    # 持駒を捨てる
-    def piece_discard
-      @pieces.clear
-    end
 
     # 棋譜の入力
     def execute(str)
@@ -251,19 +182,117 @@ module Bushido
     def board_with_pieces
       s = ""
       s << @board.to_s
-      s << "#{location.mark_with_name}の持駒:#{pieces_compact_str}\n"
+      s << "#{location.mark_with_name}の持駒:#{to_s_pieces}\n"
       s
     end
 
-    # Player.basic_test.pieces_compact_str # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
-    def pieces_compact_str
-      pieces.group_by{|e|e.class}.collect{|klass, pieces|
-        count = ""
-        if pieces.size > 1
-          count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
+    # 持駒関連
+    module Pieceable
+      extend ActiveSupport::Concern
+
+      included do
+        attr_accessor :pieces
+      end
+
+      module ClassMethods
+      end
+
+      def initialize
+        super
+        @pieces = []
+      end
+
+      # 必ず存在する持駒を参照する
+      def piece_fetch!(piece)
+        piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません\n#{board_with_pieces}"
+      end
+
+      # 持駒を参照する
+      def piece_fetch(piece)
+        @pieces.find{|e|e.class == piece.class}
+      end
+
+      # 持駒を取り出す
+      def pick_out(piece)
+        piece_fetch!(piece)
+        if index = @pieces.find_index{|e|e.class == piece.class}
+          @pieces.slice!(index)
         end
-        "#{pieces.first.name}#{count}"
-      }.join(SEPARATOR)
+      end
+
+      # 持駒の名前一覧(表示・デバッグ用)
+      def piece_names
+        pieces.collect(&:name).sort
+      end
+
+      # 持駒を捨てる
+      def piece_discard
+        @pieces.clear
+      end
+
+      # 配布して持駒にする
+      #
+      #   player = Player.new
+      #   player.deal("飛 歩二")
+      #   player.to_s_pieces # => "飛 歩二"
+      #
+      def deal(str = Utils.first_distributed_pieces)
+        @pieces += Utils.pieces_parse(str)
+      end
+
+      # 持駒を文字列化したものをインポートする
+      #   player.import_from_s_pieces("歩九 角 飛 香二 桂二 銀二 金二 玉")
+      def import_from_s_pieces(str)
+        @pieces = Utils.pieces_parse(str)
+      end
+
+      # 持駒の文字列化
+      #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
+      def to_s_pieces
+        pieces.group_by{|e|e.class}.collect{|klass, pieces|
+          count = ""
+          if pieces.size > 1
+            count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
+          end
+          "#{pieces.first.name}#{count}"
+        }.join(SEPARATOR)
+      end
+    end
+
+    # 盤上の駒関連
+    module Soldierable
+      extend ActiveSupport::Concern
+
+      included do
+        attr_accessor :soldiers
+      end
+
+      module ClassMethods
+      end
+
+      def initialize
+        super
+        @soldiers = []
+      end
+
+      # 盤上の駒の名前一覧(表示・デバッグ用)
+      #   soldier_names # => ["▽5五飛↓"]
+      def soldier_names
+        @soldiers.collect(&:formality_name).sort
+      end
+
+      # 盤上の駒の名前一覧(保存用)
+      #   to_s_soldiers # => ["5五飛"]
+      def to_s_soldiers
+        @soldiers.collect(&:formality_name2).sort.join(" ")
+      end
+
+      # @boardに描画する
+      def render_soldiers
+        @soldiers.each{|soldier|
+          put_on_at2(soldier.point, soldier)
+        }
+      end
     end
 
     def evaluate
@@ -280,7 +309,7 @@ module Bushido
 
     # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
     # def safe_put_on(arg, &block)
-    #   info = parse_arg(arg)
+    #   info = parse_str(arg)
     #   _soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
     #   get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
     #   begin
@@ -356,6 +385,9 @@ module Bushido
     # def side_soldiers_put_on(table)
     #   table.each{|info|initial_put_on(info)}
     # end
+
+    include Pieceable
+    include Soldierable
   end
 
   class Evaluate

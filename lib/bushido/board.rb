@@ -98,6 +98,11 @@ module Bushido
       Point.all_points.find_all{|point|!fetch(point)}
     end
 
+    # 置いてる駒リスト
+    def to_s_soldiers
+      @surface.values.collect(&:formality_name2).sort.join(" ")
+    end
+
     private
 
     # 盤面の文字列化

@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 # 盤面のHTML化
 
-begin
-  require_relative "../lib/bushido"
-rescue LoadError
-  require File.expand_path(File.join(File.dirname(__FILE__), "../lib/bushido"))
-end
-
+require "bundler/setup"
+require "bushido"
 include Bushido
 
 require "delegate"

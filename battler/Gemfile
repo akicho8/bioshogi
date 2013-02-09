@@ -1,0 +1,7 @@
+source :rubygems
+gem "bushido", :path => ".."
+gem "sinatra", :require => "sinatra/base"
+gem "sinatra-contrib", :require => "sinatra/contrib"
+# gem "sinatra-compass", :require => "sinatra/compass"
+gem "compass"
+gem "sass"

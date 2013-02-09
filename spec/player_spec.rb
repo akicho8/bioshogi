@@ -12,12 +12,12 @@ module Bushido
 
     it "駒を配る" do
       player = Player.new
-      player.pieces_compact_str.should == ""
+      player.to_s_pieces.should == ""
       player.deal("飛 歩二")
-      player.pieces_compact_str.should == "飛 歩二"
+      player.to_s_pieces.should == "飛 歩二"
       player.pieces.clear
       player.deal
-      player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+      player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     end
 
     context "配置" do
@@ -29,7 +29,7 @@ module Bushido
           Player.soldiers_test(:init => "5三と").should == ["▲5三と"]
         end
         it "後手が置ける" do
-          Player.soldiers_test(:init => "５五飛", :player => :white).should == ["▽5五飛↓"]
+          Player.soldiers_test(:init => "５五飛", :player => :white).should == ["▽5五飛"]
         end
       end
       context "できない" do
@@ -73,7 +73,7 @@ EOT
           Player.soldiers_test(:init => "７七歩", :exec => "７六歩").should == ["▲7六歩"]
         end
         it "後手の歩を(画面上では下がることに注意)" do
-          Player.soldiers_test(:player => :white, :init => "３三歩", :exec => "３四歩").should == ["▽3四歩↓"]
+          Player.soldiers_test(:player => :white, :init => "３三歩", :exec => "３四歩").should == ["▽3四歩"]
         end
         it "成銀を" do
           Player.soldiers_test(:init => "４二成銀", :exec => "３二成銀").should == ["▲3二全"]
@@ -122,7 +122,7 @@ EOT
             Player.soldiers_test(:init => "５一飛", :exec => "５四飛成").should == ["▲5四龍"]
           end
           it "後手が相手の3段目に入ったタイミングで成る(バグっていたので消さないように)" do
-            Player.soldiers_test(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭↓"]
+            Player.soldiers_test(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭"]
           end
         end
         context "成れない" do
@@ -160,12 +160,20 @@ EOT
       context "取る" do
         context "取れる" do
           it "座標指定で" do
-            frame = LiveFrame.testcase3(:init => ["５六歩", "５五飛"], :exec => ["５五歩"])
-            frame.prev_player.last_piece.name.should == "飛"
+            frame = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+            frame.prev_player.last_piece.name.should == "歩"
+            frame.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+            frame.prev_player.to_s_soldiers.should == "1一玉 1三歩"
+            frame.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二"
+            frame.current_player.to_s_soldiers.should == "1五玉"
           end
           it "同歩で取る" do
             frame = LiveFrame.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"])
             frame.prev_player.last_piece.name.should == "歩"
+            frame.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+            frame.prev_player.to_s_soldiers.should == "2四歩"
+            frame.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+            frame.current_player.to_s_soldiers.should == ""
           end
         end
         context "取れない" do
@@ -193,7 +201,11 @@ EOT
           Player.basic_test(:exec => "５五歩").parsed_info.last_kif.should == "5五歩打"
         end
 
-        it "盤上に龍があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れるケース)" do
+        it "２二角成としたけど盤上に何もないので持駒の角を打った(打てていたけど、成と書いて打てるのはおかしいのでエラーとする)" do
+          expect { Player.basic_test(:exec => ["２二角成"]) }.to raise_error(IllegibleFormat)
+        end
+
+        it "盤上に竜があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れそうなケース。実際は竜なので来れない)" do
           Player.basic_test(:deal => "飛", :init => "１一龍", :exec => "２一飛").parsed_info.last_kif.should == "2一飛打"
         end
 
@@ -388,7 +400,7 @@ EOT
     end
 
     it "持駒の確認" do
-      Player.basic_test.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+      Player.basic_test.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     end
 
     it "全体確認" do
@@ -473,41 +485,27 @@ EOT
     # context "一時的に置いてみた状態にする(これ不要かも)" do
     #   it "safe_put_on" do
     #     player = Player.basic_test
-    #     player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    #     player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     #     player.safe_put_on("5五飛") do
-    #       player.pieces_compact_str.should == "歩九 角 香二 桂二 銀二 金二 玉"
+    #       player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
     #       player.safe_put_on("4五角") do
-    #         player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉"
+    #         player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
     #       end
-    #       player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #       player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
     #     end
-    #     player.pieces_compact_str.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #   end
     # end
 
-    # frameクラスのところだけでやった方がいいかも？ board は player がもっているんではなく frame がもってるし。
-    it "復元できるかテスト" do
-      player = Player.basic_test(:init => "５九玉", :exec => "５八玉")
-      # s = player.soldiers.first
-      # p Marshal.dump(s)
+    it "復元するのは持駒と盤上の駒のみ。復元時に盤を指してないことに注意" do
+      player1 = Player.basic_test(:init => "５九玉", :exec => "５八玉")
+      player1.soldier_names.should == ["▲5八玉"]
+      player1.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
 
-      player.soldier_names.should == ["▲5八玉"]
-      player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
-
-      # p player.soldier_names
-
-      player2 = Marshal.load(Marshal.dump(player))
-      # player2.board = player.board
-
+      player2 = Marshal.load(Marshal.dump(player1))
       player2.soldier_names.should == ["▲5八玉"]
-      player2.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
-
-      # memento = player.create_memento
-      # player.restore_memento(memento)
-      #
-      # # # ↓こける
-      # player.soldier_names.should == ["▲5八玉"]
-      # player.pieces_compact_str.should == "歩九 角 飛 香二 桂二 銀二 金二"
+      player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+      player2.board.should == nil
     end
   end
 end

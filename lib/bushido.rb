@@ -31,6 +31,7 @@ module Bushido
   class BeforePointNotFound < BushidoError; end
   class FileFormatError < BushidoError; end
   class RuleError < SyntaxError; end
+  class IllegibleFormat < SyntaxError; end
 
   # 構文エラーから発生する継続が難しいエラー
   class PositionSyntaxError < SyntaxError; end

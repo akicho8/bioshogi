@@ -84,6 +84,15 @@ module Bushido
       self.class.parse([@x.reverse, @y.reverse])
     end
 
+    # 後手なら反転する
+    def as_location(location)
+      if Location[location].white?
+        reverse
+      else
+        self
+      end
+    end
+
     # 座標を正式な名前で返す
     #   Point["55"] # => "５五"
     def name

@@ -44,14 +44,14 @@ module Bushido
     def to_s
       s = ""
       s << @board.to_s
-      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.pieces_compact_str}"}.join("\n") + "\n"
+      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
       s
     end
   end
 
   # 棋譜入力対応の全体管理
   class LiveFrame < Frame
-    attr_reader :count, :kif_logs, :kif2_logs
+    attr_reader :count, :kif_logs, :kif2_logs, :last_point
 
     # テスト用
     def self.testcase3(params = {})
@@ -64,6 +64,7 @@ module Bushido
     def initialize(*)
       super
       @count = 0
+      @last_point = nil
       @kif_logs = []
       @kif2_logs = []
     end
@@ -75,6 +76,7 @@ module Bushido
           return
         end
         current_player.execute(str)
+        @last_point = current_player.parsed_info.point
         @kif_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif}"
         @kif2_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif2}"
         @count += 1
@@ -100,15 +102,41 @@ module Bushido
       "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
-    def create_memento
-      # @board, @players, 
-      object = [@count, @kif_logs, @kif2_logs]
-      # [@board, @players, @count, @kif_logs, @kif2_logs]
-      Marshal.dump(object)
+    # def create_memento
+    #   # @board, @players,
+    #   object = [@count, @kif_logs, @kif2_logs]
+    #   # [@board, @players, @count, @kif_logs, @kif2_logs]
+    #   Marshal.dump(object)
+    # end
+    #
+    # def restore_memento(object)
+    #   @board, @players, @count, @kif_logs, @kif2_logs = Marshal.load(object)
+    # end
+
+    def marshal_dump
+      {
+        :count     => @count,
+        :players   => @players,
+        :kif_logs  => @kif_logs,
+        :kif2_logs => @kif2_logs,
+        :last_point => (@last_point ? @last_point.name : nil), # なぜそのままダンプできないのか
+      }
     end
 
-    def restore_memento(object)
-      @board, @players, @count, @kif_logs, @kif2_logs = Marshal.load(object)
+    def marshal_load(attrs)
+      @count = attrs[:count]
+      @players = attrs[:players]
+      @kif_logs = attrs[:kif_logs]
+      @kif2_logs = attrs[:kif2_logs]
+      @last_point = attrs[:last_point] ? Piece[attrs[:last_point]] : nil
+      @board = Board.new
+      @players.each{|player|
+        player.board = @board
+        player.frame = self
+      }
+      @players.collect{|player|
+        player.render_soldiers
+      }
     end
 
     private

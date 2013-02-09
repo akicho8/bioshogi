@@ -21,20 +21,17 @@ module Bushido
         instance.pool.each(&block)
       end
 
-      # def create(key, *args)
-      #   "Bushido::Piece::#{key.to_s.classify}".constantize.new(*args)
-      # end
-
-      # def collection
-      #   # [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|create(key)}
-      # end
-
-      # Piece["歩"].name # => "歩"
+      # get(arg) の alias
       def [](arg)
         get(arg)
       end
 
-      # Piece.get("歩").name # => "歩"
+      # 駒オブジェクトを得る
+      #   Piece.get(nil)       # => nil
+      #   Piece.get("歩").name # => "歩"
+      #   Piece.get("と").name # => "歩"
+      #   「と」も「歩」も区別しない。区別したい場合は parse! を使うこと
+      #   エラーにしたいときは get! を使う
       def get(arg)
         basic_get(arg) || promoted_get(arg)
       end
@@ -44,12 +41,13 @@ module Bushido
         get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
       end
 
+      # Piece.get!("歩").name # => "歩"
       def parse!(arg)
         case
         when piece = basic_get(arg)
-          [false, piece]
+          {:piece => piece, :promoted => false}
         when piece = promoted_get(arg)
-          [true, piece]
+          {:piece => piece, :promoted => true}
         else
           raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end

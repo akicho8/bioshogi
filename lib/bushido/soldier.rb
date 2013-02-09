@@ -2,7 +2,7 @@
 #
 # 盤上の駒
 #   player を直接もつのではなく :white, :black を持てばいいような気もしている
-#   引数もバラバラではなく文字列だけで入力してインスタンスを生成できばらくかも
+#   引数もバラバラではなく文字列だけで入力してインスタンスを生成
 #
 module Bushido
   class Soldier
@@ -62,7 +62,7 @@ module Bushido
     # 正式な棋譜の表記で返す
     #  Player.basic_test(:init => "５五と").board["５五"].formality_name2 # => "5五と"
     def formality_name2
-      "#{point ? point.name : '(どこにも置いてない)'}#{self}"
+      "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
     end
 
     # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)

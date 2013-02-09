@@ -82,33 +82,16 @@ EOT
       end
     end
 
-    # テストをかくこと。これ↓おかしいし。成ってないし。
-    # frame = LiveFrame.basic_instance
-    # frame.execute("７六歩")
-    # frame.execute("３四歩")
-    # frame.execute("２二角成")
-    # puts frame
-
-    # it "状態の復元" do
-    #   frame = LiveFrame.basic_instance
-    #   frame.piece_plot
-    #   frame.execute("７六歩")
-    #   frame.execute("３四歩")
-    #   frame.execute("２二角成") # ← これで Marshal.dump ができなくなる
-    #   puts frame
-    # 
-    #   p Marshal.dump(frame.board)
-    # 
-    #   # memento = frame.create_memento
-    #   # frame.restore_memento(memento)
-    #   #
-    #   # puts frame
-    # 
-    #   # player = Player.basic_test(:init => "５九玉", :exec => "５八玉")
-    #   # p player
-    #   # memento = player.create_memento
-    #   # player.restore_memento(memento)
-    #   # p player
-    # end
+    it "状態の復元" do
+      frame1 = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+      frame2 = Marshal.load(Marshal.dump(frame1))
+      frame1.count.should              == frame2.count
+      frame1.kif_logs.should           == frame2.kif_logs
+      frame1.kif2_logs.should          == frame2.kif2_logs
+      frame1.board.to_s_soldiers       == frame2.board.to_s_soldiers
+      frame1.prev_player.to_s_pieces   == frame2.prev_player.to_s_pieces
+      frame1.prev_player.to_s_soldiers == frame2.prev_player.to_s_soldiers
+      frame1.to_s.should               == frame2.to_s
+    end
   end
 end
