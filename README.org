@@ -3,6 +3,10 @@
 
 * 将棋のプログラム
 
+  [[https://raw.github.com/akicho8/bushido/master/battler/demo1.png]]
+
+  [[http://fast-plateau-7460.herokuapp.com/][→DEMO]]
+
   : frame = LiveFrame.basic_instance
   : frame.piece_plot
   : [
@@ -351,22 +355,21 @@
 *** 主な例外
 
     #+ATTR_HTML: border="1" rules="all" frame="all"
-    | 例外                            | 意味                                         | どんなときに起きる？                             |
-    |---------------------------------+----------------------------------------------+--------------------------------------------------|
-    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない           | ７七に歩がないのに７六歩                         |
-    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない   | 初手 "５八金"                                    |
-    | SyntaxError                     | とりあえず表記が違う                         | 駒の配置時に４二銀成とした                       |
-    | PointSyntaxError                | 座標の表記が違う                             | ４二のつもりで４と書いた                         |
-    | PositionSyntaxError             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた                       |
-    | PieceNotFound                   | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた                           |
-    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"                         |
-    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した               | 初手 "８八飛(28)"                                |
-    | NotPromotable                   | 成れない条件で成ろうとした                   | 初手 "７六歩成"                                  |
-    | AlredyPromoted                  | すでに成っている                             | ５五の龍を５一飛成                               |
-    | BeforePointNotFound             | 同に対する座標が不明                         | 初手 "同歩"                                      |
-    | SoldierEmpty                    | オプションで絞ったら移動できる駒がなくなった |                                                  |
-    | BushidoError                    | 反則                                         | 二歩など                                         |
-    | IllegibleFormat                 | 表記はあっているけど辻褄があってない         | 22角成→だが盤上に駒なし→持駒の角を打とうとした |
+    | 例外                            | 意味                                         | どんなときに起きる？       |
+    |---------------------------------+----------------------------------------------+----------------------------|
+    | MovableSoldierNotFound          | 指定座標に移動できる駒が一つもない           | ７七に歩がないのに７六歩   |
+    | AmbiguousFormatError            | 指定座標に移動できる駒が多くて特定できない   | 初手 "５八金"              |
+    | SyntaxError                     | とりあえず表記が違う                         | 駒の配置時に４二銀成とした |
+    | PointSyntaxError                | 座標の表記が違う                             | ４二のつもりで４と書いた   |
+    | PositionSyntaxError             | 座標の桁の指定が違う                         | ４二のつもりで四２と書いた |
+    | PieceNotFound                   | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた     |
+    | PieceAlredyExist                | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"   |
+    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した               | 初手 "８八飛(28)"          |
+    | NotPromotable                   | 成れない条件で成ろうとした                   | 初手 "７六歩成"            |
+    | AlredyPromoted                  | すでに成っている                             | ５五の龍を５一飛成         |
+    | BeforePointNotFound             | 同に対する座標が不明                         | 初手 "同歩"                |
+    | SoldierEmpty                    | オプションで絞ったら移動できる駒がなくなった |                            |
+    | BushidoError                    | 反則                                         | 二歩など                   |
 
     反則系 (RuleError のサブクラス)
 
@@ -499,9 +502,6 @@
 
 ** _TODO_
 
-   - セッションの容量が小さくて26手ぐらいしか打てない
-   - 相手の持駒も反転しないと
-   - BUG: LiveFrame で @last_point = current_player.parsed_info.point したものが Marshal.dump できない。Point.new がないのと関係ある？ 最終的にはPointクラスに marshal_dump を入れたほうがいい？
    - BUG: ▽6八金不成 ← 金の不成なんてない
    - ▽1八杏成 ではなく 香成
    - 例外クラスは引数を受け取って自分でメッセージを作成する

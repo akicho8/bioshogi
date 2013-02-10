@@ -1,5 +1,12 @@
+GIT
+  remote: https://github.com/akicho8/rain_table.git
+  revision: 630ac3c007f74d1bb9a91ebc79e65ffe1325ec41
+  specs:
+    rain_table (0.1.1)
+      activesupport
+
 PATH
-  remote: ..
+  remote: .
   specs:
     bushido (0.0.1)
       activesupport
@@ -28,7 +35,8 @@ GEM
       debugger-ruby_core_source (~> 1.1.7)
     debugger-linecache (1.1.2)
       debugger-ruby_core_source (>= 1.1.1)
-    debugger-ruby_core_source (1.1.8)
+    debugger-ruby_core_source (1.1.7)
+    diff-lcs (1.1.3)
     eventmachine (1.0.0)
     fssm (0.2.10)
     i18n (0.6.1)
@@ -46,9 +54,15 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rain_table (0.1.1)
-      activesupport
     redis (3.0.2)
+    rspec (2.12.0)
+      rspec-core (~> 2.12.0)
+      rspec-expectations (~> 2.12.0)
+      rspec-mocks (~> 2.12.0)
+    rspec-core (2.12.2)
+    rspec-expectations (2.12.1)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.12.1)
     sass (3.2.5)
     sinatra (1.3.4)
       rack (~> 1.4)
@@ -66,7 +80,7 @@ GEM
       thor
     thor (0.17.0)
     tilt (1.3.3)
-    yard (0.8.4.1)
+    yard (0.8.3)
 
 PLATFORMS
   ruby
@@ -74,7 +88,9 @@ PLATFORMS
 DEPENDENCIES
   bushido!
   compass
+  rain_table!
   redis
+  rspec
   sass
   sinatra
   sinatra-contrib
