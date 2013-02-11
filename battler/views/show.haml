@@ -1,0 +1,54 @@
+- if @error
+  %div= @error.message
+  %div= @error.class.name
+  .hr
+
+%div
+  %form{action: "/", method: "post"}
+    %input{name: "reset", type: "hidden", value: "true"}
+    %input{type: "submit", value: "リセット"}
+
+  %form{action: "/", method: "post"}
+    %input{name: "auto", type: "hidden", value: "true"}
+    %input{type: "submit", value: "代打ち"}
+
+.hr
+%div= "#{@frame.counter_human_name}手目 #{@frame.current_player.location.mark_with_name}番"
+.hr
+
+▽後手
+%form{action: "/", method: "post"}
+  %input{name: "location", type: "hidden", value: "white"}
+  %input{type: "text", name: "way", value: "", autofocus: @frame.current_player.location.white?}
+  %input{type: "submit", value: "打"}
+
+%div
+  - if @frame.players.last.pieces.present?
+    .pieces.white= @frame.players.last.to_s_pieces
+  = @frame_decorator.to_html_board
+  - if @frame.players.first.pieces.present?
+    .pieces.black= @frame.players.first.to_s_pieces
+
+▲先手
+%form{action: "/", method: "post"}
+  %input{name: "location", type: "hidden", value: "black"}
+  %input{type: "text", name: "way", value: "", autofocus: @frame.current_player.location.black?}
+  %input{type: "submit", value: "打"}
+
+.hr
+
+-# 棋譜
+-# = @frame.kif2_logs.join(" ")
+-# .hr
+
+- if @frame.kif2_logs.present?
+  %div
+    %select
+      - @frame.kif2_logs.each.with_index do |kif_log, index|
+        %option{selected: @frame.kif2_logs.last == kif_log}= "#{index.next} #{kif_log}"
+
+- if ENV['RACK_ENV'] == "development"
+  %div= "marshal: #{Marshal.dump(@frame).bytesize}"
+  %div= "session: " + env["rack.session"]["session_id"].to_s.slice(/^.{7}/)
+  %div= params.inspect
+  %div= ENV['RACK_ENV']

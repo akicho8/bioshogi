@@ -1,17 +1,57 @@
+@charset "UTF-8"
 @import "compass/css3/transform"
+@import "compass/css3/border-radius"
+@import "helper"
+
+$color:            #fff
+$background_color: #111
+$border_color:     #aaa
+$board_color:      #eee
+$piece_color:      #000
+
+body
+  @include ts-white-on-black
+  font-size: 12px
+  background: $background_color
+  color: $color
+  text-align: center
+
+.hr
+  margin: 0.5em
+  @include line-bottom
+    
+form
+  display: inline-block
 
 .white
   @include transform(rotate(180deg))
+  @include ts-white-on-black-reverse
+
+.pieces
+  margin: 0.5em auto
 
 .board
-  background: #ccc
+  font-size: 14px
+  /* @include border-radius(3px)
+  margin: 0.5em auto
+  border: 0px solid $border_color
+  background: $border_color
+  // background: url(http://mucho.girly.jp/bona/ban/ban_kaya_a.png)
   border-collapse: separate
   border-spacing: 1px
-  font-size: 12px
   td
+    empty-cells: show
+    color: $piece_color
     text-align: center
-    min-width: 20px
-    min-height: 14px
-    background: white
+    width: 24px
+    height: 24px
+    background: $board_color
     &.last_point
       font-weight: bold
+    &.black
+      @include ts-black-on-white
+    &.white
+      @include ts-black-on-white-reverse
+
+input[type=text]
+  width: 7em
