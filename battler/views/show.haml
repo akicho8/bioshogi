@@ -16,7 +16,7 @@
 %div= "#{@frame.counter_human_name}手目 #{@frame.current_player.location.mark_with_name}番"
 .hr
 
-▽後手
+= Bushido::Location[:white].mark_with_name
 %form{action: "/", method: "post"}
   %input{name: "location", type: "hidden", value: "white"}
   %input{type: "text", name: "way", value: "", autofocus: @frame.current_player.location.white?}
@@ -29,17 +29,13 @@
   - if @frame.players.first.pieces.present?
     .pieces.black= @frame.players.first.to_s_pieces
 
-▲先手
+= Bushido::Location[:black].mark_with_name
 %form{action: "/", method: "post"}
   %input{name: "location", type: "hidden", value: "black"}
   %input{type: "text", name: "way", value: "", autofocus: @frame.current_player.location.black?}
   %input{type: "submit", value: "打"}
 
 .hr
-
--# 棋譜
--# = @frame.kif2_logs.join(" ")
--# .hr
 
 - if @frame.kif2_logs.present?
   %div

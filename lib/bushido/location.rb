@@ -9,13 +9,13 @@ module Bushido
     end
 
     [:key, :mark, :name, :varrow, :zarrow].each do |v|
-      define_method(v){
+      define_method(v) do
         @info[v]
-      }
+      end
     end
 
     # 「▲先手」みたいなのを返す
-    # mark_with_name # => "▲先手"
+    #   mark_with_name # => "▲先手"
     def mark_with_name
       "#{mark}#{name}"
     end
