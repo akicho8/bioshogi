@@ -78,14 +78,11 @@ class Battler < Sinatra::Base
 
     REDIS.set(@session_id, Marshal.dump(@frame))
 
-    @frame_decorator = FrameDecorator.new(@frame)
-
     haml :show
   end
 
   error do
     @error = env["sinatra.error"]
-    @frame_decorator = FrameDecorator.new(@frame)
     haml :show
   end
 end

@@ -143,11 +143,19 @@ EOT
 
       context "不成" do
         context "できる" do
-          it "成と明示しなかったので" do
+          it "成を明示しなかったので" do
             Player.soldiers_test(:init => "５五桂", :exec => "４三桂").should == ["▲4三桂"]
           end
           it "不成の指定をしたので" do
             Player.soldiers_test(:init => "５五桂", :exec => "４三桂不成").should == ["▲4三桂"]
+          end
+          context "金が不成するケース" do
+            it "不成の指定をしたけど金は不成しかないのでまちがっちゃいないけど「金不成」と棋譜が残るのは違和感がある" do
+              expect { Player.basic_test(:init => "１四金", :exec => "１三金不成") }.to raise_error(NoPromotablePiece)
+            end
+            it "不成の指定をしなかった" do
+              Player.basic_test(:init => "１四金", :exec => "１三金").parsed_info.last_kif_pair.should== ["1三金(14)", "1三金"]
+            end
           end
         end
         context "できない" do

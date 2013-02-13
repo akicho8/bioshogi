@@ -27,11 +27,18 @@ module Bushido
 
       @promoted, @piece = Piece.parse!(@md[:piece]).values_at(:promoted, :piece)
 
-      @promote_trigger = false
-      case @md[:suffix].to_s
-      when /不成/
-      when /成/
-        @promote_trigger = true
+      begin
+        # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
+        if @md[:suffix].to_s.match(/不?成/) && !@piece.promotable?
+          raise NoPromotablePiece, "#{@md[:suffix].inspect} としましたが「#{@piece.name}」は表面しかないので「成」も「不成」も指定しちゃいけません : #{@source.inspect}"
+        end
+
+        @promote_trigger = nil
+        case @md[:suffix].to_s
+        when /不成/
+        when /成/
+          @promote_trigger = true
+        end
       end
 
       @put_on_trigger = @md[:suffix].to_s.match(/打/)
@@ -191,7 +198,9 @@ module Bushido
         if @source_point && @point
           if @source_point.promotable?(@player.location) || @point.promotable?(@player.location)
             unless @promoted
-              s << "不成"
+              if @piece.promotable?
+                s << "不成"
+              end
             end
           end
         end

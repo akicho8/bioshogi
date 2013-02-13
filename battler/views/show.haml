@@ -25,7 +25,7 @@
 %div
   - if @frame.players.last.pieces.present?
     .pieces.white= @frame.players.last.to_s_pieces
-  = @frame_decorator.to_html_board
+  = FrameDecorator.new(@frame).to_html_board
   - if @frame.players.first.pieces.present?
     .pieces.black= @frame.players.first.to_s_pieces
 

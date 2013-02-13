@@ -44,15 +44,6 @@ module Bushido
       }.compact
     end
 
-    # # すでに歩が一つ以上ある？
-    # def pawns_on_board(player, point)
-    #   soldiers = pieces_of_vline(point.x)
-    #   soldiers = soldiers.find_all{|s|s.player == player}
-    #   soldiers = soldiers.find_all{|s|!s.promoted?}
-    #   soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
-    #   soldiers
-    # end
-
     # 指定座標に駒を置く
     #   board.put_on_at("５五", soldier)
     def put_on_at(point, soldier)
@@ -127,12 +118,5 @@ module Bushido
         raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
       end
     end
-
-    # # 二歩？
-    # def assert_not_double_pawn(player, point, piece)
-    #   if s = double_pawn?(player, point, piece)
-    #     raise DoublePawn, "二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません。"
-    #   end
-    # end
   end
 end
