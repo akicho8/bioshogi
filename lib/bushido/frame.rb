@@ -83,10 +83,9 @@ module Bushido
       end
     end
 
-    # 前のプレイヤーを返す
-    def prev_player
-      current_player(-1)
-    end
+    # 前後のプレイヤーを返す
+    def prev_player; current_player(-1); end
+    def next_player; current_player(+1); end
 
     # N手目のN
     def counter_human_name

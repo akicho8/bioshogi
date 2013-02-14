@@ -75,5 +75,11 @@ module Bushido
     it "後手なら反転" do
       Point["７六"].as_location(:white).should == Point["３四"]
     end
+
+    it "シリアライズからの復元" do
+      point = Point["１一"]
+      point = Marshal.load(Marshal.dump(point))
+      point.should == Point["１一"]
+    end
   end
 end

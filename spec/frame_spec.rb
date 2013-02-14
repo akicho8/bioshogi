@@ -93,5 +93,13 @@ EOT
       frame1.prev_player.to_s_soldiers == frame2.prev_player.to_s_soldiers
       frame1.to_s.should               == frame2.to_s
     end
+
+    it "相手が前回打った位置が復元できてない転けるテスト" do
+      frame = LiveFrame.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
+      frame = Marshal.load(Marshal.dump(frame))
+      p frame.next_player
+      frame.execute("同歩")
+      p frame.prev_player.parsed_info.last_kif_pair
+    end
   end
 end

@@ -17,7 +17,7 @@ module Bushido
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
       if @md[:point] == "同"
-        @point = @player.next_player.moved_point
+        @point = @player.prev_player.moved_point
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
@@ -43,7 +43,6 @@ module Bushido
 
       @put_on_trigger = @md[:suffix].to_s.match(/打/)
       @source_point = nil
-
       @done = false
       @candidate = nil
 
@@ -51,10 +50,7 @@ module Bushido
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
-        @player.put_on_at2(@point, soldier)
-        @player.soldiers << soldier
-        @done = true
+        put_soldier
       else
         if @md[:source_point]
           @source_point = Point.parse(@md[:source_point])
@@ -67,19 +63,14 @@ module Bushido
 
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
-
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
               if @player.piece_fetch(@piece)
                 @put_on_trigger = true
                 @source_point = nil
-                soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
-                @player.put_on_at2(@point, soldier)
-                @player.soldiers << soldier
-                @done = true
+                put_soldier
               else
                 raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
               end
-
             end
           end
 
@@ -91,7 +82,7 @@ module Bushido
 
       @prev_player_point = @player.prev_player.moved_point
 
-      @md = nil                 # MatchData を保持していると Marshal.dump できないため
+      @md = nil                 # MatchData を保持していると Marshal.dump できないため。
 
       self
     end
@@ -312,6 +303,14 @@ module Bushido
 
     def select_char(str)
       str.chars.to_a.send(@player.location._which(:first, :last))
+    end
+
+
+    def put_soldier
+      soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
+      @player.put_on_at2(@point, soldier)
+      @player.soldiers << soldier
+      @done = true
     end
   end
 end

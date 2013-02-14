@@ -49,15 +49,18 @@ module Bushido
       end
     end
 
-    attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info
+    attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info, :moved_point
 
     def initialize
       super
     end
 
     def marshal_dump
+      # binding.pry
       {
         :name         => @name,
+        # :moved_point  => @moved_point ? @moved_point.to_xy : nil,
+        :moved_point  => @moved_point,
         :location_key => @location.key,
         :pieces       => @pieces.collect(&:sym_name),
         :soldiers     => @soldiers.collect(&:formality_name2),
@@ -67,6 +70,11 @@ module Bushido
 
     def marshal_load(attrs)
       @name = attrs[:name]
+      if attrs[:moved_point]
+        # @moved_point = Point[attrs[:moved_point]]
+        p attrs[:moved_point]
+        @moved_point = attrs[:moved_point]
+      end
       self.location = attrs[:location_key]
       @pieces = attrs[:pieces].collect{|v|Piece[v]}
       @soldiers = attrs[:soldiers].collect{|soldier|
@@ -151,7 +159,7 @@ module Bushido
     # 次のプレイヤー
     def next_player
       if @frame
-        @frame.players[@frame.players.find_index(self).next.modulo(frame.players.size)]
+        @frame.next_player
       else
         self
       end
@@ -166,13 +174,14 @@ module Bushido
         return
       end
       @parsed_info = OrderParser.new(self).execute(str)
+      @moved_point = @parsed_info.point
     end
 
-    def moved_point
-      if @parsed_info
-        @parsed_info.point
-      end
-    end
+    # def moved_point
+    #   if @parsed_info
+    #     @parsed_info.point
+    #   end
+    # end
 
     def inspect
       [("-" * 40), super, board_with_pieces, ("-" * 40)].join("\n")
@@ -345,11 +354,9 @@ module Bushido
       options = {
         :validate => true,
       }.merge(options)
-
       if options[:validate]
         get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
       end
-
       @board.put_on_at(point, soldier)
     end
 
@@ -390,6 +397,7 @@ module Bushido
     include Soldierable
   end
 
+  # 形勢判断
   class Evaluate
     def initialize(player)
       @player = player
