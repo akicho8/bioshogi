@@ -95,11 +95,23 @@ EOT
     end
 
     it "相手が前回打った位置が復元できてない転けるテスト" do
+      # md = /\A(?<point>..)/.match("１四")
+      # p md[:point]
+      # point = Point.parse(md[:point])
+      # p Marshal.dump(point)
+
       frame = LiveFrame.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
-      frame = Marshal.load(Marshal.dump(frame))
-      p frame.next_player
-      frame.execute("同歩")
-      p frame.prev_player.parsed_info.last_kif_pair
+      pt = frame.prev_player.parsed_info.point
+
+      p pt.class
+
+      Marshal.dump(pt)
+
+      # bin = Marshal.dump(frame)
+      # # frame = Marshal.load(bin)
+      # # p frame.next_player
+      # # frame.execute("同歩")
+      # # p frame.prev_player.parsed_info.last_kif_pair
     end
   end
 end
