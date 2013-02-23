@@ -25,9 +25,9 @@ module Bushido
       end
     end
 
-    # 持駒文字列をハッシュの配列に戻す
-    #   pieces_parse("飛 香二") # => [{:piece => Piece["飛"], :count => 1}, {:piece => Piece["香"], :count => 2}]
-    def pieces_parse(str)
+    # 台上の持駒文字列をハッシュ配列化
+    #   stand_parse("飛 香二") # => [{:piece => Piece["飛"], :count => 1}, {:piece => Piece["香"], :count => 2}]
+    def stand_parse(str)
       if str.kind_of? String
         str = str.tr("〇一二三四五六七八九", "0-9")
         infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
@@ -58,6 +58,12 @@ module Bushido
         {:piece => "金", :count => 2},
         {:piece => "玉", :count => 1},
       ]
+    end
+
+    # kif2形式に近い棋譜の羅列のパース
+    #   ki2_input_seq_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
+    def ki2_input_seq_parse(str)
+      str.to_s.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark].key, :input => input}}
     end
 
     private

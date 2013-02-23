@@ -97,15 +97,16 @@ module Bushido
     end
 
     # 持駒の配置
+    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:true にすると楽ちん
     def initial_put_on(arg, options = {})
       options = {
-        :from_piece => true, # 持駒から配置する
+        :from_piece => true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(arg).each{|arg|
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
         info = Utils.parse_str(arg)
         if options[:from_piece]
-          pick_out(info[:piece])
+          pick_out(info[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
         soldier = Soldier.new(info.merge(:player => self))
         put_on_at2(info[:point], soldier)
@@ -247,13 +248,13 @@ module Bushido
       #   player.to_s_pieces # => "飛 歩二"
       #
       def deal(str = Utils.first_distributed_pieces)
-        @pieces += Utils.pieces_parse(str)
+        @pieces += Utils.stand_parse(str)
       end
 
-      # 持駒を文字列化したものをインポートする
+      # 持駒を文字列化したものをインポートする(未使用)
       #   player.import_from_s_pieces("歩九 角 飛 香二 桂二 銀二 金二 玉")
       def import_from_s_pieces(str)
-        @pieces = Utils.pieces_parse(str)
+        @pieces = Utils.stand_parse(str)
       end
 
       # 持駒の文字列化

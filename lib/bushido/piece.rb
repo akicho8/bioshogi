@@ -57,6 +57,12 @@ module Bushido
         collect(&:names).flatten
       end
 
+      # 台上の持駒文字列をハッシュ配列化
+      #   stand_parse("飛 香二") # => [{:piece => Piece["飛"], :count => 1}, {:piece => Piece["香"], :count => 2}]
+      def stand_parse(*args)
+        Utils.stand_parse(*args)
+      end
+
       private
 
       def basic_get(arg)

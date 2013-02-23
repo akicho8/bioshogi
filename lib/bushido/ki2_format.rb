@@ -8,13 +8,18 @@ module Bushido
         !source.match(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
       end
 
+      # フォーマットは読み上げに近い、人間が入力したような "▲７六歩△３四歩" 形式
+      #  このフォーマットは▲△がついているので、うまいこと利用すればシミュレーションに使える。
+      #  先手だけ10連続で打つとか。
       def parse
         @_head, @_body = @source.split(/\n\n/, 2)
         read_header
         @_body.lines.each do |line|
           comment_read(line)
           if line.match(/^\s*[▲△]/)
-            @move_infos += line.scan(/[▲△]([^▲△\s]+)/).flatten.collect{|input|{:input => input}}
+            @move_infos += line.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|
+              {:location => Location[mark].key, :input => input}
+            }
           end
         end
       end
