@@ -108,7 +108,6 @@ module Bushido
       [last_kif, last_kif2]
     end
 
-    # FIXME: ここだけでかすぎるので別モジュールにしよう
     def last_kif2
       s = []
       if @prev_player_point == @point

@@ -37,7 +37,7 @@ module Bushido
       #   +---------------------------+
       #   "
       #
-      #   board_parse(str) # => {:white=>{:soldiers=>["４二玉"]}, :black=>{:soldiers=>[]}}
+      #   Bushido::BaseFormat::Parser.board_parse(str) # => {:white=>{:soldiers=>["４二玉"]}, :black=>{:soldiers=>[]}}
       #
       def self.board_parse(source)
         str = normalized_source(source)

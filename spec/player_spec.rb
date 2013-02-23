@@ -23,24 +23,24 @@ module Bushido
     context "配置" do
       context "できる" do
         it "歩を相手の陣地に" do
-          Player.soldiers_test(:init => "5三歩").should == ["▲5三歩"]
+          Player.basic_test2(:init => "5三歩").should == ["▲5三歩"]
         end
         it "成っている歩を相手の陣地に" do
-          Player.soldiers_test(:init => "5三と").should == ["▲5三と"]
+          Player.basic_test2(:init => "5三と").should == ["▲5三と"]
         end
         it "後手が置ける" do
-          Player.soldiers_test(:init => "５五飛", :player => :white).should == ["▽5五飛"]
+          Player.basic_test2(:init => "５五飛", :player => :white).should == ["▽5五飛"]
         end
       end
       context "できない" do
         it "成っている金を相手の陣地に" do
-          expect { Player.soldiers_test(:init => "5三成金").to }.to raise_error(SyntaxError)
+          expect { Player.basic_test2(:init => "5三成金").to }.to raise_error(SyntaxError)
         end
         it "すでに駒があるところに駒を配置できない" do
-          expect { Player.soldiers_test(:init => ["5三銀", "5三銀"]).to }.to raise_error(PieceAlredyExist)
+          expect { Player.basic_test2(:init => ["5三銀", "5三銀"]).to }.to raise_error(PieceAlredyExist)
         end
         it "飛車は二枚持ってないので二枚配置できない" do
-          expect { Player.soldiers_test(:init => ["5二飛", "5二飛"]) }.to raise_error(PieceNotFound)
+          expect { Player.basic_test2(:init => ["5二飛", "5二飛"]) }.to raise_error(PieceNotFound)
         end
       end
     end
@@ -70,73 +70,73 @@ EOT
     context "移動" do
       context "できる" do
         it "普通に" do
-          Player.soldiers_test(:init => "７七歩", :exec => "７六歩").should == ["▲7六歩"]
+          Player.basic_test2(:init => "７七歩", :exec => "７六歩").should == ["▲7六歩"]
         end
         it "後手の歩を(画面上では下がることに注意)" do
-          Player.soldiers_test(:player => :white, :init => "３三歩", :exec => "３四歩").should == ["▽3四歩"]
+          Player.basic_test2(:player => :white, :init => "３三歩", :exec => "３四歩").should == ["▽3四歩"]
         end
         it "成銀を" do
-          Player.soldiers_test(:init => "４二成銀", :exec => "３二成銀").should == ["▲3二全"]
+          Player.basic_test2(:init => "４二成銀", :exec => "３二成銀").should == ["▲3二全"]
         end
         it "龍を" do
-          Player.soldiers_test(:init => "４二龍", :exec => "３二龍").should == ["▲3二龍"]
+          Player.basic_test2(:init => "４二龍", :exec => "３二龍").should == ["▲3二龍"]
         end
         it "駒の指定なしで動かす" do
           # 初手 "７六" とした場合、そこに来れるのは真下の、"歩" のみなので "７六歩" とする
           # というのはやりすぎなので保留
         end
         it "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
-          Player.soldiers_test(:init => ["６九金", "４九金"], :exec => "５九金(49)").should == ["▲5九金", "▲6九金"]
+          Player.basic_test2(:init => ["６九金", "４九金"], :exec => "５九金(49)").should == ["▲5九金", "▲6九金"]
         end
         context "「と」と「歩」が縦列にある状態でどちらを進めても二歩にならない" do
           it "とを進める" do
-            Player.soldiers_test(:init => ["１二と", "１四歩"], :exec => "１三歩").should == ["▲1三歩", "▲1二と"]
+            Player.basic_test2(:init => ["１二と", "１四歩"], :exec => "１三歩").should == ["▲1三歩", "▲1二と"]
           end
           it "歩を進める" do
-            Player.soldiers_test(:init => ["１二と", "１四歩"], :exec => "１一と").should == ["▲1一と", "▲1四歩"]
+            Player.basic_test2(:init => ["１二と", "１四歩"], :exec => "１一と").should == ["▲1一と", "▲1四歩"]
           end
         end
       end
 
       context "できない" do
         it "４二に移動できる銀が見つからず、持駒の銀を打とうとしたが、４二にはすでに駒があったので" do
-          expect { Player.soldiers_test(:init => "４二銀", :exec => "４二銀") }.to raise_error(PieceAlredyExist)
+          expect { Player.basic_test2(:init => "４二銀", :exec => "４二銀") }.to raise_error(PieceAlredyExist)
         end
         it "推測結果が複数パターンがあったので" do
-          expect { Player.soldiers_test(:init => ["６九金", "４九金"], :exec => "５九金") }.to raise_error(AmbiguousFormatError)
+          expect { Player.basic_test2(:init => ["６九金", "４九金"], :exec => "５九金") }.to raise_error(AmbiguousFormatError)
         end
         it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので)" do
-          expect { Player.soldiers_test(:init => "５五龍", :exec => "５六飛") }.to raise_error(MovableSoldierNotFound)
+          expect { Player.basic_test2(:init => "５五龍", :exec => "５六飛") }.to raise_error(MovableSoldierNotFound)
         end
         it "ルール上、成っている状態から成らない状態に戻れないので(移動元を明記しても同様。ただ例外の種類が異なる)" do
-          expect { Player.soldiers_test(:init => "５五龍", :exec => "５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
+          expect { Player.basic_test2(:init => "５五龍", :exec => "５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
         end
       end
 
       context "成" do
         context "成れる" do
           it "相手陣地に入るときに成る" do
-            Player.soldiers_test(:init => "２四歩", :exec => "２三歩成").should == ["▲2三と"]
+            Player.basic_test2(:init => "２四歩", :exec => "２三歩成").should == ["▲2三と"]
           end
           it "相手陣地から出るときに成る" do
-            Player.soldiers_test(:init => "５一飛", :exec => "５四飛成").should == ["▲5四龍"]
+            Player.basic_test2(:init => "５一飛", :exec => "５四飛成").should == ["▲5四龍"]
           end
           it "後手が相手の3段目に入ったタイミングで成る(バグっていたので消さないように)" do
-            Player.soldiers_test(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭"]
+            Player.basic_test2(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭"]
           end
         end
         context "成れない" do
           it "自分の陣地に入るタイミングでは" do
-            expect { Player.soldiers_test(:init => "５五飛", :exec => "５九飛成") }.to raise_error(NotPromotable)
+            expect { Player.basic_test2(:init => "５五飛", :exec => "５九飛成") }.to raise_error(NotPromotable)
           end
           it "自分の陣地から出るタイミングでも" do
-            expect { Player.soldiers_test(:init => "５九飛", :exec => "５五飛成") }.to raise_error(NotPromotable)
+            expect { Player.basic_test2(:init => "５九飛", :exec => "５五飛成") }.to raise_error(NotPromotable)
           end
           it "天王山から一歩動いただけじゃ" do
-            expect { Player.soldiers_test(:init => "５五飛", :exec => "５六飛成") }.to raise_error(NotPromotable)
+            expect { Player.basic_test2(:init => "５五飛", :exec => "５六飛成") }.to raise_error(NotPromotable)
           end
           it "飛がないので" do
-            expect { Player.soldiers_test(:init => "５五龍", :exec => "５一飛成") }.to raise_error(MovableSoldierNotFound)
+            expect { Player.basic_test2(:init => "５五龍", :exec => "５一飛成") }.to raise_error(MovableSoldierNotFound)
           end
         end
       end
@@ -144,10 +144,10 @@ EOT
       context "不成" do
         context "できる" do
           it "成を明示しなかったので" do
-            Player.soldiers_test(:init => "５五桂", :exec => "４三桂").should == ["▲4三桂"]
+            Player.basic_test2(:init => "５五桂", :exec => "４三桂").should == ["▲4三桂"]
           end
           it "不成の指定をしたので" do
-            Player.soldiers_test(:init => "５五桂", :exec => "４三桂不成").should == ["▲4三桂"]
+            Player.basic_test2(:init => "５五桂", :exec => "４三桂不成").should == ["▲4三桂"]
           end
           context "金が不成するケース" do
             it "不成の指定をしたけど金は不成しかないのでまちがっちゃいないけど「金不成」と棋譜が残るのは違和感がある" do
@@ -160,7 +160,7 @@ EOT
         end
         context "できない" do
           it "移動できる見込みがないとき" do
-            expect { Player.soldiers_test(:init => "５三桂", :exec => "４一桂") }.to raise_error(NotPutInPlaceNotBeMoved)
+            expect { Player.basic_test2(:init => "５三桂", :exec => "４一桂") }.to raise_error(NotPutInPlaceNotBeMoved)
           end
         end
       end
@@ -187,10 +187,10 @@ EOT
         context "取れない" do
           # 相手がいないと同角は失敗するので「相手がいない」というエラーすることも検討
           it "一人で同を使う(同角で２五がわかった上で移動しようとしたけど自分の飛車がいるために移動できなかった)" do
-            expect { Player.soldiers_test(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]) }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
+            expect { Player.basic_test2(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]) }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
           end
           it "初手に同歩" do
-            expect { Player.soldiers_test(:exec => "同歩") }.to raise_error(BeforePointNotFound)
+            expect { Player.basic_test2(:exec => "同歩") }.to raise_error(BeforePointNotFound)
           end
         end
       end
@@ -199,13 +199,13 @@ EOT
     context "打つ" do
       context "打てる" do
         it "空いているところに" do
-          Player.soldiers_test(:exec => "５五歩打").should == ["▲5五歩"]
+          Player.basic_test2(:exec => "５五歩打").should == ["▲5五歩"]
         end
 
         # 棋譜の表記方法：日本将棋連盟 http://www.shogi.or.jp/faq/kihuhyouki.html
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く" do
-          Player.soldiers_test(:exec => "５五歩").should == ["▲5五歩"]
+          Player.basic_test2(:exec => "５五歩").should == ["▲5五歩"]
           Player.basic_test(:exec => "５五歩").parsed_info.last_kif.should == "5五歩打"
         end
 
@@ -218,31 +218,31 @@ EOT
         end
 
         it "と金は二歩にならないので" do
-          Player.soldiers_test(:init => "５五と", :exec => "５六歩打").should == ["▲5五と", "▲5六歩"]
+          Player.basic_test2(:init => "５五と", :exec => "５六歩打").should == ["▲5五と", "▲5六歩"]
         end
       end
 
       context "打てない" do
         it "場外に" do
-          expect { Player.soldiers_test(:exec => "５十飛打") }.to raise_error(PositionSyntaxError)
+          expect { Player.basic_test2(:exec => "５十飛打") }.to raise_error(PositionSyntaxError)
         end
         it "自分の駒の上に" do
-          expect { Player.soldiers_test(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
+          expect { Player.basic_test2(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
         end
         it "相手の駒の上に" do
           expect { LiveFrame.testcase3(:exec => ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
         end
         it "卍という駒がないので" do
-          expect { Player.soldiers_test(:exec => "５五卍打") }.to raise_error(SyntaxError)
+          expect { Player.basic_test2(:exec => "５五卍打") }.to raise_error(SyntaxError)
         end
         it "成った状態で" do
-          expect { Player.soldiers_test(:exec => "５五龍打") }.to raise_error(PromotedPiecePutOnError)
+          expect { Player.basic_test2(:exec => "５五龍打") }.to raise_error(PromotedPiecePutOnError)
         end
         it "１一歩打だとそれ以上動けないので" do
-          expect { Player.soldiers_test(:exec => "１一歩打") }.to raise_error(NotPutInPlaceNotBeMoved)
+          expect { Player.basic_test2(:exec => "１一歩打") }.to raise_error(NotPutInPlaceNotBeMoved)
         end
         it "二歩なので" do
-          expect { Player.soldiers_test(:init => "５五歩", :exec => "５九歩打") }.to raise_error(DoublePawn)
+          expect { Player.basic_test2(:init => "５五歩", :exec => "５九歩打") }.to raise_error(DoublePawn)
         end
       end
     end

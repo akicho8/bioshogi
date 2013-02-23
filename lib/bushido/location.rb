@@ -8,7 +8,7 @@ module Bushido
       @info = info
     end
 
-    [:key, :mark, :name, :varrow, :zarrow].each do |v|
+    [:key, :mark, :other_marks, :name, :varrow, :zarrow, :index].each do |v|
       define_method(v) do
         @info[v]
       end
@@ -32,7 +32,7 @@ module Bushido
 
     # 属性っぽい値を全部返す
     def match_target_values
-      [key, mark, name]
+      [key, mark, other_marks, name, name.chars.first, index].flatten
     end
 
     # 先手ならaを後手ならbを返す
@@ -41,23 +41,31 @@ module Bushido
     end
 
     @pool ||= [
-      new(:key => :black, :mark => "▲", :name => "先手", :varrow => " ", :zarrow => ""),
-      new(:key => :white, :mark => "▽", :name => "後手", :varrow => "v", :zarrow => "↓"),
+      new(:key => :black, :mark => "▲", :other_marks => [],     :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
+      new(:key => :white, :mark => "▽", :other_marks => ["△"], :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
     ]
 
-    # 引数に対応する先手または後手の情報を返す
-    #   Location.parse(:black).name # => "先手"
-    def self.parse(arg)
-      if arg.kind_of? self
-        return arg
+    class << self
+      # 引数に対応する先手または後手の情報を返す
+      #   Location.parse(:black).name # => "先手"
+      def parse(arg)
+        if arg.kind_of? self
+          return arg
+        end
+        find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
       end
-      @pool.find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
-    end
 
-    # 引数に対応する先手または後手の情報を返す
-    #   Location[:black].name # => "先手"
-    def self.[](*args)
-      parse(*args)
+      # 引数に対応する先手または後手の情報を返す
+      #   Location[:black].name # => "先手"
+      def [](*args)
+        parse(*args)
+      end
+
+      include Enumerable
+
+      def each(&block)
+        @pool.each(&block)
+      end
     end
   end
 end

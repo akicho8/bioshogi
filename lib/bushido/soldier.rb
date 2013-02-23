@@ -8,18 +8,22 @@ module Bushido
   class Soldier
     attr_accessor :player, :piece, :promoted, :point
 
-    # 互換性用
+    # 互換性用(DEPRECATION)
     def self.new2(player, piece, promoted = false)
       new(:player => player, :piece => piece, :promoted => promoted)
     end
 
     def initialize(attrs)
+      attrs.assert_valid_keys(:player, :piece, :promoted, :point)
       @player = attrs[:player]
+      @piece = attrs[:piece]
+      self.promoted = attrs[:promoted]
       if attrs[:point]
         @point = Point.parse(attrs[:point])
       end
-      @piece = attrs[:piece]
-      self.promoted = attrs[:promoted]
+      unless @player && @piece
+        raise ArgumentError, attrs.inspect
+      end
     end
 
     # 成り/不成状態の設定

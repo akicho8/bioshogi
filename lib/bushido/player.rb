@@ -28,7 +28,7 @@ module Bushido
       player
     end
 
-    def self.soldiers_test(params = {})
+    def self.basic_test2(params = {})
       basic_test(params).soldier_names.sort
     end
 
@@ -51,38 +51,33 @@ module Bushido
 
     attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info, :moved_point
 
-    def initialize
-      super
+    def initialize(params = {})
+      super() if defined? super
+      if v = params[:location]
+        self.location = v
+      end
     end
 
     def marshal_dump
-      # binding.pry
       {
         :name         => @name,
-        # :moved_point  => @moved_point ? @moved_point.to_xy : nil,
         :moved_point  => @moved_point,
-        :location_key => @location.key,
+        :location     => @location,
+        :last_piece   => @last_piece,
         :pieces       => @pieces.collect(&:sym_name),
         :soldiers     => @soldiers.collect(&:formality_name2),
-        :last_piece   => @last_piece ? @last_piece.sym_name : nil,
       }
     end
 
     def marshal_load(attrs)
-      @name = attrs[:name]
-      if attrs[:moved_point]
-        # @moved_point = Point[attrs[:moved_point]]
-        p attrs[:moved_point]
-        @moved_point = attrs[:moved_point]
-      end
-      self.location = attrs[:location_key]
-      @pieces = attrs[:pieces].collect{|v|Piece[v]}
+      @name        = attrs[:name]
+      @moved_point = attrs[:moved_point]
+      @location    = attrs[:location]
+      @last_piece  = attrs[:last_piece]
+      @pieces      = attrs[:pieces].collect{|v|Piece[v]}
       @soldiers = attrs[:soldiers].collect{|soldier|
         Soldier.new(Utils.parse_str(soldier).merge(:player => self))
       }
-      if attrs[:last_piece]
-        @last_piece = Piece[attrs[:last_piece]]
-      end
     end
 
     # 先手後手を設定は適当でいい
@@ -102,11 +97,17 @@ module Bushido
     end
 
     # 持駒の配置
-    def initial_put_on(arg)
+    def initial_put_on(arg, options = {})
+      options = {
+        :from_piece => true, # 持駒から配置する
+      }.merge(options)
       Array.wrap(arg).each{|arg|
         next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
         info = Utils.parse_str(arg)
-        soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
+        if options[:from_piece]
+          pick_out(info[:piece])
+        end
+        soldier = Soldier.new(info.merge(:player => self))
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
       }
@@ -206,7 +207,7 @@ module Bushido
       module ClassMethods
       end
 
-      def initialize
+      def initialize(*)
         super
         @pieces = []
       end
@@ -279,7 +280,7 @@ module Bushido
       module ClassMethods
       end
 
-      def initialize
+      def initialize(*)
         super
         @soldiers = []
       end

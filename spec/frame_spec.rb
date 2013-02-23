@@ -88,30 +88,22 @@ EOT
       frame1.count.should              == frame2.count
       frame1.kif_logs.should           == frame2.kif_logs
       frame1.kif2_logs.should          == frame2.kif2_logs
+      frame1.to_s.should               == frame2.to_s
+
       frame1.board.to_s_soldiers       == frame2.board.to_s_soldiers
+
+      frame1.prev_player.location      == frame2.prev_player.location
       frame1.prev_player.to_s_pieces   == frame2.prev_player.to_s_pieces
       frame1.prev_player.to_s_soldiers == frame2.prev_player.to_s_soldiers
-      frame1.to_s.should               == frame2.to_s
+      frame1.prev_player.moved_point   == frame2.prev_player.moved_point
+      frame1.prev_player.last_piece    == frame2.prev_player.last_piece
     end
 
-    it "相手が前回打った位置が復元できてない転けるテスト" do
-      # md = /\A(?<point>..)/.match("１四")
-      # p md[:point]
-      # point = Point.parse(md[:point])
-      # p Marshal.dump(point)
-
+    it "相手が前回打った位置を復元するので同歩ができる" do
       frame = LiveFrame.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
-      pt = frame.prev_player.parsed_info.point
-
-      p pt.class
-
-      Marshal.dump(pt)
-
-      # bin = Marshal.dump(frame)
-      # # frame = Marshal.load(bin)
-      # # p frame.next_player
-      # # frame.execute("同歩")
-      # # p frame.prev_player.parsed_info.last_kif_pair
+      frame = Marshal.load(Marshal.dump(frame))
+      frame.execute("同歩")
+      frame.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
     end
   end
 end

@@ -26,6 +26,13 @@ module Bushido
       player.board = @board
     end
 
+    # def players_init
+    #   @players.each{|player|
+    #     player.frame = self
+    #     player.board = @board
+    #   }
+    # end
+
     # プレイヤーたちの持駒から平手用の盤面の準備
     def piece_plot
       @players.collect(&:piece_plot)
@@ -114,20 +121,20 @@ module Bushido
 
     def marshal_dump
       {
-        :count     => @count,
-        :players   => @players,
-        :kif_logs  => @kif_logs,
-        :kif2_logs => @kif2_logs,
-        :last_point => (@last_point ? @last_point.name : nil), # なぜそのままダンプできないのか
+        :count      => @count,
+        :players    => @players,
+        :kif_logs   => @kif_logs,
+        :kif2_logs  => @kif2_logs,
+        :last_point => @last_point,
       }
     end
 
     def marshal_load(attrs)
-      @count = attrs[:count]
-      @players = attrs[:players]
-      @kif_logs = attrs[:kif_logs]
-      @kif2_logs = attrs[:kif2_logs]
-      @last_point = attrs[:last_point] ? Piece[attrs[:last_point]] : nil
+      @count      = attrs[:count]
+      @players    = attrs[:players]
+      @kif_logs   = attrs[:kif_logs]
+      @kif2_logs  = attrs[:kif2_logs]
+      @last_point = attrs[:last_point]
       @board = Board.new
       @players.each{|player|
         player.board = @board
