@@ -11,9 +11,10 @@ require "redis"
 require "sass"
 require "haml"
 require "compass"
+require "bushido/contrib/effective_patterns"
 
 class FrameDecorator < SimpleDelegator
-  def to_html_board
+  def to_html_board(type = :default)
     rows = Bushido::Position::Vpos.ridge_length.times.collect do |y|
       tds = Bushido::Position::Hpos.ridge_length.times.collect do |x|
         tag_class = []
@@ -29,7 +30,7 @@ class FrameDecorator < SimpleDelegator
       end
       "<tr>#{tds.join("\n")}</tr>"
     end
-    "<table class=\"board\">\n#{rows.join("\n")}\n</table>"
+    "<table class=\"board #{type}\">\n#{rows.join("\n")}\n</table>"
   end
 end
 
@@ -79,6 +80,17 @@ class Battler < Sinatra::Base
     REDIS.set(@session_id, Marshal.dump(@frame))
 
     haml :show
+  end
+
+  get "/effective_patterns" do
+    if params[:id]
+      @pattern = Bushido::EffectivePatterns[params[:id].to_i]
+    end
+    if @pattern
+      frame = Bushido::LiveFrame2.new(@pattern)
+      @frames = frame.to_all_frames
+    end
+    haml :effective_patterns
   end
 
   error do

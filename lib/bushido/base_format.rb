@@ -1,6 +1,6 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
 #
-# kif/kif2読み込みの共通処理
+# kif/ki2読み込みの共通処理
 #
 module Bushido
   module BaseFormat

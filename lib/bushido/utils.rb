@@ -60,7 +60,7 @@ module Bushido
       ]
     end
 
-    # kif2形式に近い棋譜の羅列のパース
+    # ki2形式に近い棋譜の羅列のパース
     #   ki2_input_seq_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
     def ki2_input_seq_parse(str)
       str.to_s.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark].key, :input => input}}

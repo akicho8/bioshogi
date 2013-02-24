@@ -105,10 +105,10 @@ module Bushido
     end
 
     def last_kif_pair
-      [last_kif, last_kif2]
+      [last_kif, last_ki2]
     end
 
-    def last_kif2
+    def last_ki2
       s = []
       if @prev_player_point == @point
         s << "同"

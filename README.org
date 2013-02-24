@@ -80,7 +80,7 @@
     : # >> ▲先手の持駒:歩 玉
     : # >> ▽後手の持駒:歩
 
-    : puts frame.kif2_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+    : puts frame.ki2_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
     : # >> ▲3八金(39) ▽4六歩打 ▲1二歩打 ▽3六歩(35) ▲5三桂成(65)
     : # >> ▲4八玉 ▽5二金 ▲5六歩 ▽6二飛 ▲1六歩 ▽7二飛 ▲5九玉 ▽6二玉
     : # >> ▲2六歩 ▽4二金 ▲4八飛 ▽5四歩 ▲7八銀 ▽5一金 ▲7六歩 ▽5五歩
@@ -163,7 +163,7 @@
 
     KI2形式の棋譜確認
 
-    : puts frame.kif2_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+    : puts frame.ki2_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
     : # >> ▲7六歩 ▽8四歩 ▲7八金 ▽3二金 ▲2六歩 ▽8五歩 ▲7七角 ▽3四歩
     : # >> ▲8八銀 ▽7七角成 ▲同銀 ▽4二銀 ▲3八銀 ▽7二銀 ▲9六歩 ▽9四歩
     : # >> ▲4六歩 ▽6四歩 ▲4七銀 ▽6三銀 ▲6八玉 ▽3三銀 ▲5八金 ▽5四銀
@@ -511,6 +511,7 @@
 
 ** _TODO_
 
+   - FrameDecorator で移動元・移動先のクラス指定
    - 「詰み」の状態を判断する
    - 形勢判断クラスをStrategyやadapterみたいにする
    - ▽1八杏成 ではなく 香成

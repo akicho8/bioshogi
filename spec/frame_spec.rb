@@ -48,7 +48,7 @@ EOT
           break
         }
         # puts frame.inspect
-        # puts frame.kif2_logs.join(" ")
+        # puts frame.ki2_logs.join(" ")
       }
     end
 
@@ -87,7 +87,7 @@ EOT
       frame2 = Marshal.load(Marshal.dump(frame1))
       frame1.count.should              == frame2.count
       frame1.kif_logs.should           == frame2.kif_logs
-      frame1.kif2_logs.should          == frame2.kif2_logs
+      frame1.ki2_logs.should          == frame2.ki2_logs
       frame1.to_s.should               == frame2.to_s
 
       frame1.board.to_s_soldiers       == frame2.board.to_s_soldiers

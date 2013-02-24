@@ -3,6 +3,55 @@
 # 全体管理
 #
 module Bushido
+  module Serialization
+    def marshal_dump
+      {
+        :count      => @count,
+        :players    => @players,
+        :kif_logs   => @kif_logs,
+        :ki2_logs   => @ki2_logs,
+        :last_point => @last_point,
+      }
+    end
+
+    def marshal_load(attrs)
+      @count      = attrs[:count]
+      @players    = attrs[:players]
+      @kif_logs   = attrs[:kif_logs]
+      @ki2_logs   = attrs[:ki2_logs]
+      @last_point = attrs[:last_point]
+      @board = Board.new
+      @players.each{|player|
+        player.board = @board
+        player.frame = self
+      }
+      @players.collect{|player|
+        player.render_soldiers
+      }
+    end
+
+    def deep_dup
+      Marshal.load(Marshal.dump(self))
+    end
+  end
+
+  module HistoryStack
+    def initialize(*)
+      super
+      @stack = []
+    end
+
+    def stack_push
+      @stack.push(deep_dup)
+    end
+
+    def stack_pop
+      if app = @stack.pop
+        marshal_load(app.marshal_dump)
+      end
+    end
+  end
+
   class Frame
     attr_reader :players, :board
 
@@ -58,7 +107,8 @@ module Bushido
 
   # 棋譜入力対応の全体管理
   class LiveFrame < Frame
-    attr_reader :count, :kif_logs, :kif2_logs, :last_point
+    include Serialization
+    attr_reader :count, :kif_logs, :ki2_logs, :last_point
 
     # テスト用
     def self.testcase3(params = {})
@@ -73,7 +123,7 @@ module Bushido
       @count = 0
       @last_point = nil
       @kif_logs = []
-      @kif2_logs = []
+      @ki2_logs = []
     end
 
     # 棋譜入力
@@ -83,11 +133,15 @@ module Bushido
           return
         end
         current_player.execute(str)
-        @last_point = current_player.parsed_info.point
-        @kif_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif}"
-        @kif2_logs << "#{current_player.location.mark}#{current_player.parsed_info.last_kif2}"
+        log_stock(current_player)
         @count += 1
       end
+    end
+
+    def log_stock(player)
+      @last_point = player.parsed_info.point
+      @kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
+      @ki2_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
     end
 
     # 前後のプレイヤーを返す
@@ -110,45 +164,53 @@ module Bushido
 
     # def create_memento
     #   # @board, @players,
-    #   object = [@count, @kif_logs, @kif2_logs]
-    #   # [@board, @players, @count, @kif_logs, @kif2_logs]
+    #   object = [@count, @kif_logs, @ki2_logs]
+    #   # [@board, @players, @count, @kif_logs, @ki2_logs]
     #   Marshal.dump(object)
     # end
     #
     # def restore_memento(object)
-    #   @board, @players, @count, @kif_logs, @kif2_logs = Marshal.load(object)
+    #   @board, @players, @count, @kif_logs, @ki2_logs = Marshal.load(object)
     # end
-
-    def marshal_dump
-      {
-        :count      => @count,
-        :players    => @players,
-        :kif_logs   => @kif_logs,
-        :kif2_logs  => @kif2_logs,
-        :last_point => @last_point,
-      }
-    end
-
-    def marshal_load(attrs)
-      @count      = attrs[:count]
-      @players    = attrs[:players]
-      @kif_logs   = attrs[:kif_logs]
-      @kif2_logs  = attrs[:kif2_logs]
-      @last_point = attrs[:last_point]
-      @board = Board.new
-      @players.each{|player|
-        player.board = @board
-        player.frame = self
-      }
-      @players.collect{|player|
-        player.render_soldiers
-      }
-    end
 
     private
 
     def current_index(diff = 0)
       (@count + diff).modulo(@players.size)
+    end
+  end
+
+  class LiveFrame2 < LiveFrame
+    include HistoryStack
+
+    def initialize(pattern)
+      super()
+      @pattern = pattern
+
+      Location.each{|loc|
+        player_join(Player.new(:location => loc))
+      }
+
+      board_info = BaseFormat::Parser.board_parse(@pattern[:board])
+      Location.each{|loc|
+        players[loc.index].initial_put_on(board_info[loc.key][:soldiers], :from_piece => false)
+      }
+
+      Location.each{|loc|
+        players[loc.index].deal(@pattern[:pieces][loc.key])
+      }
+    end
+
+    def to_all_frames
+      frames = []
+      frames << deep_dup
+      Utils.ki2_input_seq_parse(@pattern[:execute]).each{|hash|
+        player = players[Location[hash[:location]].index]
+        player.execute(hash[:input])
+        log_stock(player)
+        frames << deep_dup
+      }
+      frames
     end
   end
 end

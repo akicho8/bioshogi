@@ -5,10 +5,6 @@
 
 %div
   %form{action: "/", method: "post"}
-    %input{name: "reset", type: "hidden", value: "true"}
-    %input{type: "submit", value: "リセット"}
-
-  %form{action: "/", method: "post"}
     %input{name: "auto", type: "hidden", value: "true"}
     %input{type: "submit", value: "代打ち"}
 
@@ -37,11 +33,17 @@
 
 .hr
 
-- if @frame.kif2_logs.present?
+- if @frame.ki2_logs.present?
   %div
     %select
-      - @frame.kif2_logs.each.with_index do |kif_log, index|
-        %option{selected: @frame.kif2_logs.last == kif_log}= "#{index.next} #{kif_log}"
+      - @frame.ki2_logs.each.with_index do |kif_log, index|
+        %option{selected: @frame.ki2_logs.last == kif_log}= "#{index.next} #{kif_log}"
+  .hr
+
+.div
+  %form{action: "/", method: "post"}
+    %input{name: "reset", type: "hidden", value: "true"}
+    %input{type: "submit", value: "リセット"}
 
 - if ENV['RACK_ENV'] == "development"
   %div= "marshal: #{Marshal.dump(@frame).bytesize}"
