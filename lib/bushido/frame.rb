@@ -191,14 +191,28 @@ module Bushido
         player_join(Player.new(:location => loc))
       }
 
-      board_info = BaseFormat::Parser.board_parse(@pattern[:board])
-      Location.each{|loc|
-        players[loc.index].initial_put_on(board_info[loc.key][:soldiers], :from_piece => false)
-      }
+      if @pattern[:board].blank?
+        board_info = {}
+        Location.each{|loc|
+          board_info[loc.key] = Utils.initial_placements_for(loc)
+        }
+      elsif @pattern[:board].in?([:white, :black])
+        board_info = {}
+        loc = Location[@pattern[:board]]
+        board_info[loc.key] = Utils.initial_placements_for(loc)
+      else
+        board_info = BaseFormat::Parser.board_parse(@pattern[:board])
+      end
 
       Location.each{|loc|
-        players[loc.index].deal(@pattern[:pieces][loc.key])
+        players[loc.index].initial_put_on(board_info[loc.key], :from_piece => false)
       }
+
+      if @pattern[:pieces]
+        Location.each{|loc|
+          players[loc.index].deal(@pattern[:pieces][loc.key])
+        }
+      end
     end
 
     def to_all_frames

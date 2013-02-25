@@ -48,16 +48,15 @@ module Bushido
         lines = lines.collect{|line|line.match(/\|(?<content>.*)\|/)[:content]}
 
         players = {}
-        players[:white] = {}
-        players[:black] = {}
+        players[:white] = []
+        players[:black] = []
 
         lines.each_with_index{|line, y_index|
           line.scan(/(.)(\S)/).each_with_index{|(prefix, piece), x_index|
             player = players[prefix == " " ? :black : :white]
-            player[:soldiers] ||= []
             if piece == "・"
             else
-              player[:soldiers] << [x_units[x_index], y_units[y_index], piece].join
+              player << [x_units[x_index], y_units[y_index], piece].join
             end
           }
         }

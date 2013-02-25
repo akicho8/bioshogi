@@ -103,8 +103,14 @@ module Bushido
         :from_piece => true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(arg).each{|arg|
-        next if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
-        info = Utils.parse_str(arg)
+        if arg.kind_of? Hash
+          info = arg
+        else
+          if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
+            next
+          end
+          info = Utils.parse_str(arg)
+        end
         if options[:from_piece]
           pick_out(info[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
