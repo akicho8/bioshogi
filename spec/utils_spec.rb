@@ -11,5 +11,9 @@ module Bushido
     it "初期配置" do
       Utils.initial_placements_for(:white).should be_present
     end
+
+    it "初期配置" do
+      Utils.ki2_input_seq_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => :black, :input => "５五歩"}, {:location => :white, :input => "４四歩"}, "push", {:location => :black, :input => "３三歩"}, "pop"]
+    end
   end
 end

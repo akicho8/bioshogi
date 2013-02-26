@@ -191,7 +191,7 @@ module Bushido
         player_join(Player.new(:location => loc))
       }
 
-      if @pattern[:board].blank?
+      if @pattern[:board].blank? || @pattern[:board] == :default
         board_info = {}
         Location.each{|loc|
           board_info[loc.key] = Utils.initial_placements_for(loc)
@@ -215,14 +215,26 @@ module Bushido
       end
     end
 
-    def to_all_frames
+    def to_all_frames(&block)
       frames = []
       frames << deep_dup
+      if block
+        yield frames.last
+      end
       Utils.ki2_input_seq_parse(@pattern[:execute]).each{|hash|
-        player = players[Location[hash[:location]].index]
-        player.execute(hash[:input])
-        log_stock(player)
-        frames << deep_dup
+        if hash == "push"
+          stack_push
+        elsif hash == "pop"
+          stack_pop
+        else
+          player = players[Location[hash[:location]].index]
+          player.execute(hash[:input])
+          log_stock(player)
+          frames << deep_dup
+          if block
+            yield frames.last
+          end
+        end
       }
       frames
     end

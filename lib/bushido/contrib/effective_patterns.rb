@@ -36,11 +36,17 @@ EOT
       :execute => "▲７六歩 ▲２六歩 ▲２五歩 ▲４八銀 ▲６八玉 ▲７八玉 ▲５六歩 ▲９六歩 ▲５八金右 ▲３六歩 ▲６六角 ▲８八銀 ▲７七桂 ▲６八金寄 ▲８九玉 ▲７九金 ▲７八金寄 ▲５九銀 ▲６八銀",
       :board => :black,
     },
+    {
+      :title => "早石田戦法",
+      :comment => "飛車先からの攻めを受けずに王手飛車(途中に説明入れたい)",
+      :execute => "▲７六歩 △３四歩 ▲７五歩 △８四歩 ▲７八飛 push △８八角成 ▲同銀 △４五角 ▲７六角 △２七角成 ▲４三角成 pop △８五歩 ▲４八玉 △８六歩 ▲同歩 △同飛 ▲７四歩 △同歩 ▲２二角成 △同銀 ▲９五角",
+      :board => :default,
+    },
   ]
 
   if $0 == __FILE__
     frame = LiveFrame2.new(EffectivePatterns.last)
-    frame.to_all_frames.each{|f|
+    frame.to_all_frames{|f|
       p f
     }
   end

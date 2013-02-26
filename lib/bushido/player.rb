@@ -164,6 +164,13 @@ module Bushido
       put_on_at2(b, soldier)
     end
 
+    # 前の位置(同に使う)
+    def prev_point
+      if @frame
+        @frame.last_point
+      end
+    end
+
     # 次のプレイヤー
     def next_player
       if @frame
@@ -183,6 +190,7 @@ module Bushido
       end
       @parsed_info = OrderParser.new(self).execute(str)
       @moved_point = @parsed_info.point
+      # p [str, @moved_point]
     end
 
     # def moved_point

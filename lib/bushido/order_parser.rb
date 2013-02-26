@@ -17,7 +17,8 @@ module Bushido
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
       if @md[:point] == "同"
-        @point = @player.prev_player.moved_point
+        # FIXME: @player.prev_player.moved_point は使わないようにした方がいいかも。あとで嵌りそう
+        @point = @player.prev_point || @player.prev_player.moved_point
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
