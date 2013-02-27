@@ -8,6 +8,7 @@ $background_color: #111
 $border_color:     #aaa
 $board_color:      #eee
 $piece_color:      #000
+$last_point_color: #fdd
 
 body
   @include ts-white-on-black
@@ -16,6 +17,11 @@ body
   color: $color
   text-align: center
 
+a
+  color: $color
+  &:hover
+    color: $color
+  
 .hr
   margin: 0.5em
   @include line-bottom
@@ -48,6 +54,7 @@ form
     background: $board_color
     &.last_point
       font-weight: bold
+      background: $last_point_color
     &.black
       @include ts-black-on-white
     &.white
