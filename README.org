@@ -508,7 +508,6 @@
 ** BUG
 
    - LiveFrame2 で、ki2_logs に ▲７四歩 △同歩 としたとき二つ目が △７四歩 になって、同歩になってない
-   - ２二角成 同銀 ができない。BeforePointNotFound になる。たぶんMarshalで復元できてない。
 
 ** _TODO_
 

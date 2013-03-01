@@ -183,6 +183,10 @@ EOT
             frame.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
             frame.current_player.to_s_soldiers.should == ""
           end
+          it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
+            frame = LiveFrame.testcase3(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
+            frame.ki2_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
+          end
         end
         context "取れない" do
           # 相手がいないと同角は失敗するので「相手がいない」というエラーすることも検討

@@ -105,5 +105,17 @@ EOT
       frame.execute("同歩")
       frame.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
     end
+
+    # it "test" do
+    #   frame = LiveFrame.testcase3(:init => [["２七歩", "２八飛"], "２三歩"], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛"])
+    #   p frame.ki2_logs
+    #   p frame.deep_dup.ki2_logs
+    # end
+
+    it "同歩からの同飛にならないといけない" do
+      frame = LiveFrame2.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
+      frame.to_all_frames
+      frame.ki2_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+    end
   end
 end

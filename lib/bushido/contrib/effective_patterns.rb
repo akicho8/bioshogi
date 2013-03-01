@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8; compile-command: "be ruby effective_patterns.rb" -*-
 
 require_relative "../../bushido"
 
@@ -69,12 +69,22 @@ EOT
       :execute => "▲２六歩 △３四歩 ▲３八銀 △３二金 ▲２七銀 △４二銀 ▲２五歩 △３三銀 ▲２六銀 △１四歩 ▲１六歩 △６二銀 ▲１五歩 △同歩 ▲同銀 △同香 ▲同香 △１三歩 ▲１九香",
       :board => :default,
     },
+    {
+      :title => "2筋の取り合い",
+      # :execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛",
+      :execute => "▲２六歩 △２四歩 ▲２五歩 △同歩",
+      :tags => "test",
+      :board => :default,
+    },
   ]
 
   if $0 == __FILE__
     frame = LiveFrame2.new(EffectivePatterns.last)
     frame.to_all_frames{|f|
       p f
+      p f.ki2_logs
     }
+    p frame
+    p frame.ki2_logs
   end
 end
