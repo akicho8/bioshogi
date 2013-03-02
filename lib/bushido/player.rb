@@ -41,13 +41,13 @@ module Bushido
       end
     end
 
-    # 互換性のため一時的に。
-    def self.create1(location)
-      new.tap do |o|
-        o.location = location
-        o.deal
-      end
-    end
+    # # 互換性のため一時的に。
+    # def self.create1(location)
+    #   new.tap do |o|
+    #     o.location = location
+    #     o.deal
+    #   end
+    # end
 
     attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info, :moved_point
 
@@ -165,9 +165,9 @@ module Bushido
     end
 
     # 前の位置(同に使う)
-    def prev_point
+    def point_logs
       if @frame
-        @frame.last_point
+        @frame.point_logs
       end
     end
 
@@ -379,7 +379,7 @@ module Bushido
     def get_errors(point, piece, promoted)
       errors = []
       if s = double_pawn?(point, piece, promoted)
-        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece}は打てません")
+        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece.name}は打てません")
       end
       if moveable_points(point, piece, promoted, :board_object_collision_skip => true).empty?
         errors << NotPutInPlaceNotBeMoved.new("#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")

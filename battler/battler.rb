@@ -21,7 +21,7 @@ class FrameDecorator < SimpleDelegator
         cell = ""
         if soldier = board.surface[[x, y]]
           tag_class << soldier.player.location.key
-          if last_point == Bushido::Point[[x, y]]
+          if point_logs.last == Bushido::Point[[x, y]]
             tag_class << "last_point"
           end
           cell = soldier.piece_current_name

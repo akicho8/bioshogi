@@ -188,13 +188,13 @@ EOT
             frame.ki2_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
+
         context "取れない" do
-          # 相手がいないと同角は失敗するので「相手がいない」というエラーすることも検討
-          it "一人で同を使う(同角で２五がわかった上で移動しようとしたけど自分の飛車がいるために移動できなかった)" do
-            expect { Player.basic_test2(:init => ["２五飛", "８八角"], :exec => ["５五飛", "同角"]) }.to raise_error(MovableSoldierNotFound, /5五に移動できる角がありません/)
-          end
           it "初手に同歩" do
-            expect { Player.basic_test2(:exec => "同歩") }.to raise_error(BeforePointNotFound)
+            expect { LiveFrame.testcase3(:exec => "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
+          end
+          it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
+            expect { LiveFrame.testcase3(:players => 1, :init => ["１九香", "１八香"], :exec => ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
           end
         end
       end

@@ -16,15 +16,7 @@ module Bushido
       @md = @source.match(@regexp)
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
-      if @md[:point] == "同"
-        # FIXME: @player.prev_player.moved_point は使わないようにした方がいいかも。あとで嵌りそう
-        @point = @player.prev_point || @player.prev_player.moved_point
-        unless @point
-          raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
-        end
-      else
-        @point = Point.parse(@md[:point])
-      end
+      read_point
 
       @promoted, @piece = Piece.parse!(@md[:piece]).values_at(:promoted, :piece)
 
@@ -81,7 +73,7 @@ module Bushido
         end
       end
 
-      @prev_player_point = @player.prev_player.moved_point
+      # @prev_player_point = @player.prev_player.moved_point
 
       @md = nil                 # MatchData を保持していると Marshal.dump できないため。
 
@@ -111,7 +103,7 @@ module Bushido
 
     def last_ki2
       s = []
-      if @prev_player_point == @point
+      if @player.point_logs && @player.point_logs[-2] == @point
         s << "同"
       else
         s << @point.name
@@ -204,6 +196,20 @@ module Bushido
 
     private
 
+    def read_point
+      @point = nil
+      if @md[:point] == "同"
+        if @player.point_logs
+          @point = @player.point_logs.last
+        end
+        unless @point
+          raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
+        end
+      else
+        @point = Point.parse(@md[:point])
+      end
+    end
+
     def find_source_point
       @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points2.include?(@point)}
       @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}
@@ -289,7 +295,7 @@ module Bushido
     # 未使用
     def last_info
       {
-        :prev_player_point => @prev_player_point,
+        # :prev_player_point => @prev_player_point,
         :promoted          => @promoted,
         :promote_trigger   => @promote_trigger,
         :source_point      => @source_point,
@@ -304,7 +310,6 @@ module Bushido
     def select_char(str)
       str.chars.to_a.send(@player.location._which(:first, :last))
     end
-
 
     def put_soldier
       soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)

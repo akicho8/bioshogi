@@ -3,6 +3,28 @@
 # 全体管理
 #
 module Bushido
+  module PlayerSelector
+    extend ActiveSupport::Concern
+
+    included do
+      attr_reader :players
+    end
+
+    module ClassMethods
+    end
+
+    def initialize
+      super
+      @players = []
+    end
+
+    def player_join(player)
+      @players << player
+      player.frame = self
+      player.board = @board
+    end
+  end
+
   module Serialization
     def marshal_dump
       {
@@ -10,7 +32,7 @@ module Bushido
         :players    => @players,
         :kif_logs   => @kif_logs,
         :ki2_logs   => @ki2_logs,
-        :last_point => @last_point,
+        :point_logs => @point_logs,
       }
     end
 
@@ -19,7 +41,7 @@ module Bushido
       @players    = attrs[:players]
       @kif_logs   = attrs[:kif_logs]
       @ki2_logs   = attrs[:ki2_logs]
-      @last_point = attrs[:last_point]
+      @point_logs = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
         player.board = @board
@@ -53,26 +75,25 @@ module Bushido
   end
 
   class Frame
-    attr_reader :players, :board
+    include PlayerSelector
+
+    attr_reader :board
 
     # 先手後手が座った状態で開始
     def self.basic_instance
       new.tap do |o|
-        o.player_join(Player.create1(:black))
-        o.player_join(Player.create1(:white))
+        Location.each{|loc|
+          player = Player.new(:location => loc)
+          player.deal
+          o.player_join(player)
+        }
       end
     end
 
     # 盤面だけある状態で開始
     def initialize
+      super
       @board = Board.new
-      @players = []
-    end
-
-    def player_join(player)
-      @players << player
-      player.frame = self
-      player.board = @board
     end
 
     # def players_init
@@ -108,20 +129,30 @@ module Bushido
   # 棋譜入力対応の全体管理
   class LiveFrame < Frame
     include Serialization
-    attr_reader :count, :kif_logs, :ki2_logs, :last_point
+    attr_reader :count, :kif_logs, :ki2_logs, :point_logs
 
     # テスト用
     def self.testcase3(params = {})
-      basic_instance.tap do |o|
-        (params[:init] || []).each_with_index{|init, index|o.players[index].initial_put_on(init)}
-        o.execute(params[:exec])
+      params = {
+        :players => 2,
+      }.merge(params)
+
+      object = new
+      params[:players].times do |i|
+        player = Player.new
+        player.location = Location[i]
+        player.deal
+        object.player_join(player)
       end
+      (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_put_on(init)}
+      object.execute(params[:exec])
+      object
     end
 
     def initialize(*)
       super
       @count = 0
-      @last_point = nil
+      @point_logs = []
       @kif_logs = []
       @ki2_logs = []
     end
@@ -138,8 +169,9 @@ module Bushido
       end
     end
 
+    # player.execute の直後に呼んで保存する
     def log_stock(player)
-      @last_point = player.parsed_info.point
+      @point_logs << player.parsed_info.point
       @kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
       @ki2_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
     end
