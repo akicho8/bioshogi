@@ -12,7 +12,7 @@ module Bushido
       # 最初にくばるオプション
       player.deal(params[:deal])
 
-      player.initial_put_on(params[:init])
+      player.initial_soldiers(params[:init])
       if params[:piece_plot]
         player.piece_plot
       end
@@ -97,8 +97,8 @@ module Bushido
     end
 
     # 持駒の配置
-    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:true にすると楽ちん
-    def initial_put_on(arg, options = {})
+    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
+    def initial_soldiers(arg, options = {})
       options = {
         :from_piece => true, # 持駒から配置する？
       }.merge(options)
@@ -170,18 +170,6 @@ module Bushido
         @frame.point_logs
       end
     end
-
-    # 次のプレイヤー
-    def next_player
-      if @frame
-        @frame.next_player
-      else
-        self
-      end
-    end
-
-    # 前のプレイヤー
-    alias prev_player next_player
 
     # 棋譜の入力
     def execute(str)
@@ -406,7 +394,7 @@ module Bushido
     end
 
     # def side_soldiers_put_on(table)
-    #   table.each{|info|initial_put_on(info)}
+    #   table.each{|info|initial_soldiers(info)}
     # end
 
     include Pieceable

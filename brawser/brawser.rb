@@ -42,7 +42,7 @@ end
 REDIS = Redis.new(redis_args)
 REDIS.flushdb
 
-class Battler < Sinatra::Base
+class Brawser < Sinatra::Base
   register Sinatra::MultiRoute
 
   configure :development do
@@ -52,6 +52,7 @@ class Battler < Sinatra::Base
   set :sessions, true
 
   get "/stylesheet.css" do
+    # FIXME: cache
     sass :stylesheet, Compass.sass_engine_options
   end
 
@@ -87,10 +88,31 @@ class Battler < Sinatra::Base
       @pattern = Bushido::EffectivePatterns[params[:id].to_i]
     end
     if @pattern
-      frame = Bushido::LiveFrame2.new(@pattern)
+      frame = Bushido::SimulatorFrame.new(@pattern)
       @frames = frame.to_all_frames
     end
     haml :effective_patterns
+  end
+
+  get "/board_points" do
+    session[:test_count] ||= 0
+    session[:start_time] ||= Time.now
+    if params[:count].blank?
+      session[:test_count] = 0
+      session[:start_time] = Time.now
+    end
+    count = params[:count].to_i
+    session[:test_count] += count
+    begin
+      @frame = Bushido::LiveFrame.basic_instance
+      count.times do
+        arg = {:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample}
+        @frame.players.sample.initial_soldiers(arg, :from_piece => false)
+      end
+    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
+      retry
+    end
+    haml :board_points
   end
 
   error do

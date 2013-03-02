@@ -9,7 +9,7 @@ include Bushido
 
 board = Board.new
 player = Player.create2(:black, board)
-player.initial_put_on("５五馬")
+player.initial_soldiers("５五馬")
 player.soldiers.first.moveable_points.each{|point|
   board.put_on_at(point, "○")
 }

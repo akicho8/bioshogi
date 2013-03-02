@@ -5,10 +5,10 @@
 # run Sinatra::Application
 
 # アプリ起動用
-require "./battler/battler"
+require "./brawser/brawser"
 
 require "rack/contrib"
 use Rack::Runtime
 use Rack::ProcTitle
 
-run Battler
+run Brawser

@@ -7,7 +7,7 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :players
+      attr_reader :players, :count
     end
 
     module ClassMethods
@@ -16,12 +16,26 @@ module Bushido
     def initialize
       super
       @players = []
+      @count = 0
     end
 
     def player_join(player)
       @players << player
       player.frame = self
       player.board = @board
+    end
+
+    # 前後のプレイヤーを返す
+    def prev_player; current_player(-1); end
+    def next_player; current_player(+1); end
+
+    # 手番のプレイヤー
+    def current_player(diff = 0)
+      players[current_index(diff)]
+    end
+
+    def current_index(diff = 0)
+      (@count + diff).modulo(@players.size)
     end
   end
 
@@ -30,8 +44,8 @@ module Bushido
       {
         :count      => @count,
         :players    => @players,
-        :kif_logs   => @kif_logs,
-        :ki2_logs   => @ki2_logs,
+        :simple_kif_logs   => @simple_kif_logs,
+        :humane_kif_logs   => @humane_kif_logs,
         :point_logs => @point_logs,
       }
     end
@@ -39,8 +53,8 @@ module Bushido
     def marshal_load(attrs)
       @count      = attrs[:count]
       @players    = attrs[:players]
-      @kif_logs   = attrs[:kif_logs]
-      @ki2_logs   = attrs[:ki2_logs]
+      @simple_kif_logs   = attrs[:simple_kif_logs]
+      @humane_kif_logs   = attrs[:humane_kif_logs]
       @point_logs = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
@@ -129,32 +143,31 @@ module Bushido
   # 棋譜入力対応の全体管理
   class LiveFrame < Frame
     include Serialization
-    attr_reader :count, :kif_logs, :ki2_logs, :point_logs
+    attr_reader :count, :simple_kif_logs, :humane_kif_logs, :point_logs
 
     # テスト用
     def self.testcase3(params = {})
       params = {
-        :players => 2,
+        :nplayers => 2,
       }.merge(params)
 
       object = new
-      params[:players].times do |i|
+      params[:nplayers].times do |i|
         player = Player.new
         player.location = Location[i]
         player.deal
         object.player_join(player)
       end
-      (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_put_on(init)}
+      (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_soldiers(init)}
       object.execute(params[:exec])
       object
     end
 
     def initialize(*)
       super
-      @count = 0
       @point_logs = []
-      @kif_logs = []
-      @ki2_logs = []
+      @simple_kif_logs = []
+      @humane_kif_logs = []
     end
 
     # 棋譜入力
@@ -172,47 +185,21 @@ module Bushido
     # player.execute の直後に呼んで保存する
     def log_stock(player)
       @point_logs << player.parsed_info.point
-      @kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
-      @ki2_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
-    end
-
-    # 前後のプレイヤーを返す
-    def prev_player; current_player(-1); end
-    def next_player; current_player(+1); end
-
-    # N手目のN
-    def counter_human_name
-      @count.next
-    end
-
-    # 手番のプレイヤー
-    def current_player(diff = 0)
-      players[current_index(diff)]
+      @simple_kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
+      @humane_kif_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
     end
 
     def inspect
       "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
-    # def create_memento
-    #   # @board, @players,
-    #   object = [@count, @kif_logs, @ki2_logs]
-    #   # [@board, @players, @count, @kif_logs, @ki2_logs]
-    #   Marshal.dump(object)
-    # end
-    #
-    # def restore_memento(object)
-    #   @board, @players, @count, @kif_logs, @ki2_logs = Marshal.load(object)
-    # end
-
-    private
-
-    def current_index(diff = 0)
-      (@count + diff).modulo(@players.size)
+    # N手目のN
+    def counter_human_name
+      @count.next
     end
   end
 
-  class LiveFrame2 < LiveFrame
+  class SimulatorFrame < LiveFrame
     include HistoryStack
 
     def initialize(pattern)
@@ -237,7 +224,7 @@ module Bushido
       end
 
       Location.each{|loc|
-        players[loc.index].initial_put_on(board_info[loc.key], :from_piece => false)
+        players[loc.index].initial_soldiers(board_info[loc.key], :from_piece => false)
       }
 
       if @pattern[:pieces]

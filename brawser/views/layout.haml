@@ -11,5 +11,10 @@
   %body
     %a{href: "/"}= "TOP"
     %a{href: "/effective_patterns"}= "ライブラリ"
+    %a{href: "/board_points"}= "座標テスト"
     .hr
+    - if @error
+      %div= @error.message
+      %div= @error.class.name
+      .hr
     = yield

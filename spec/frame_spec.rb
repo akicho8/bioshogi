@@ -48,7 +48,7 @@ EOT
           break
         }
         # puts frame.inspect
-        # puts frame.ki2_logs.join(" ")
+        # puts frame.humane_kif_logs.join(" ")
       }
     end
 
@@ -62,7 +62,7 @@ EOT
     #     # puts frame.inspect
     #   }
     #   # puts frame.inspect
-    #   puts frame.kif_logs.join(" ")
+    #   puts frame.simple_kif_logs.join(" ")
     # end
 
     if false
@@ -83,20 +83,20 @@ EOT
     end
 
     it "状態の復元" do
-      frame1 = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
-      frame2 = Marshal.load(Marshal.dump(frame1))
-      frame1.count.should              == frame2.count
-      frame1.kif_logs.should           == frame2.kif_logs
-      frame1.ki2_logs.should          == frame2.ki2_logs
-      frame1.to_s.should               == frame2.to_s
+      frame = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+      dup = frame.deep_dup
+      frame.count.should              == dup.count
+      frame.simple_kif_logs.should           == dup.simple_kif_logs
+      frame.humane_kif_logs.should           == dup.humane_kif_logs
+      frame.to_s.should               == dup.to_s
 
-      frame1.board.to_s_soldiers       == frame2.board.to_s_soldiers
+      frame.board.to_s_soldiers       == dup.board.to_s_soldiers
 
-      frame1.prev_player.location      == frame2.prev_player.location
-      frame1.prev_player.to_s_pieces   == frame2.prev_player.to_s_pieces
-      frame1.prev_player.to_s_soldiers == frame2.prev_player.to_s_soldiers
-      frame1.prev_player.moved_point   == frame2.prev_player.moved_point
-      frame1.prev_player.last_piece    == frame2.prev_player.last_piece
+      frame.prev_player.location      == dup.prev_player.location
+      frame.prev_player.to_s_pieces   == dup.prev_player.to_s_pieces
+      frame.prev_player.to_s_soldiers == dup.prev_player.to_s_soldiers
+      frame.prev_player.moved_point   == dup.prev_player.moved_point
+      frame.prev_player.last_piece    == dup.prev_player.last_piece
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
@@ -106,16 +106,10 @@ EOT
       frame.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
     end
 
-    # it "test" do
-    #   frame = LiveFrame.testcase3(:init => [["２七歩", "２八飛"], "２三歩"], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛"])
-    #   p frame.ki2_logs
-    #   p frame.deep_dup.ki2_logs
-    # end
-
-    it "同歩からの同飛にならないといけない" do
-      frame = LiveFrame2.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
+    it "同歩からの同飛になること" do
+      frame = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
       frame.to_all_frames
-      frame.ki2_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      frame.humane_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
   end
 end

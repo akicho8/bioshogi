@@ -4,15 +4,12 @@ require "spec_helper"
 
 module Bushido
   describe Piece do
-    # it "指定の駒を作る" do
-    #   Piece.create(:pawn).class.should == Piece::Pawn
-    # end
-
-    # it "すべての駒のコレクションを参照" do
-    #   Piece.collection
-    # end
+    it "コレクション" do
+      Piece.each.should be_present
+    end
 
     it "取得" do
+      Piece[:pawn].class.should == Piece::Pawn
       Piece.get(:pawn).class.should == Piece::Pawn
       Piece.get("歩").class.should == Piece::Pawn
       Piece.get("").should == nil
@@ -53,3 +50,4 @@ module Bushido
     # end
   end
 end
+

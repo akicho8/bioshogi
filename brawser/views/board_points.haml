@@ -1,0 +1,11 @@
+.test_count
+  = session[:test_count]
+
+= FrameDecorator.new(@frame).to_html_board
+
+.board_points_links
+  - [1, 3, 5, 9].each do |count|
+    %a{href: "/board_points?count=#{count}"}= count
+
+%div
+  = "#{(Time.now - session[:start_time]).to_i} 秒経過"

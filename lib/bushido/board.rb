@@ -86,7 +86,7 @@ module Bushido
 
     # 空いている場所のリスト
     def blank_points
-      Point.all_points.find_all{|point|!fetch(point)}
+      Point.find_all{|point|!fetch(point)}
     end
 
     # 置いてる駒リスト

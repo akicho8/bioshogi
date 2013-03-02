@@ -10,51 +10,56 @@ module Bushido
   class Point
     attr_accessor :x, :y
 
-    private_class_method :new
+    class << self
+      private :new
 
-    # parseのalias
-    #   Point["4三"].name # => "4三"
-    def self.[](arg)
-      parse(arg)
-    end
+      include Enumerable
 
-    # 座標のパース
-    #   Point.parse["4三"].name # => "4三"
-    def self.parse(arg)
-      x = nil
-      y = nil
-
-      case arg
-      when Point
-        a, b = arg.to_xy
-        x = Position::Hpos.parse(a)
-        y = Position::Vpos.parse(b)
-      when Array
-        a, b = arg
-        x = Position::Hpos.parse(a)
-        y = Position::Vpos.parse(b)
-      when String
-        if md = arg.match(/\A(.)(.)\z/)
-          a, b = md.captures
-          x = Position::Hpos.parse(a)
-          y = Position::Vpos.parse(b)
-        else
-          raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
-        end
-      else
-        raise MustNotHappen, "引数がめちゃくちゃです : Point.parse(#{arg.inspect})"
+      # すべての座標を返す
+      #   Point.collect{|point|...}
+      def each(&block)
+        Position::Vpos.ridge_length.times.collect{|y|
+          Position::Hpos.ridge_length.times.collect{|x|
+            Point[[x, y]]
+          }
+        }.flatten.each(&block)
       end
 
-      new(x, y)
-    end
+      # parseのalias
+      #   Point["4三"].name # => "4三"
+      def [](arg)
+        parse(arg)
+      end
 
-    # すべての座標を返す
-    def self.all_points
-      Position::Vpos.ridge_length.times.collect{|y|
-        Position::Hpos.ridge_length.times.collect{|x|
-          Point[[x, y]]
-        }
-      }.flatten
+      # 座標のパース
+      #   Point.parse["4三"].name # => "4三"
+      def parse(arg)
+        x = nil
+        y = nil
+
+        case arg
+        when Point
+          a, b = arg.to_xy
+          x = Position::Hpos.parse(a)
+          y = Position::Vpos.parse(b)
+        when Array
+          a, b = arg
+          x = Position::Hpos.parse(a)
+          y = Position::Vpos.parse(b)
+        when String
+          if md = arg.match(/\A(.)(.)\z/)
+            a, b = md.captures
+            x = Position::Hpos.parse(a)
+            y = Position::Vpos.parse(b)
+          else
+            raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
+          end
+        else
+          raise MustNotHappen, "引数がめちゃくちゃです : Point.parse(#{arg.inspect})"
+        end
+
+        new(x, y)
+      end
     end
 
     def initialize(x, y)

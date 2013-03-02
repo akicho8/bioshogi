@@ -13,7 +13,7 @@
       %a{href: @pattern[:url]}= "参考URL"
   .hr
   - @frames.each do |frame|
-    %div= frame.ki2_logs.last
+    %div= frame.humane_kif_logs.last
     = FrameDecorator.new(frame).to_html_board(:small)
     .hr
 

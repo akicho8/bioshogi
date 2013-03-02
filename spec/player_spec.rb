@@ -185,7 +185,7 @@ EOT
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
             frame = LiveFrame.testcase3(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
-            frame.ki2_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
+            frame.humane_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
 
@@ -194,7 +194,7 @@ EOT
             expect { LiveFrame.testcase3(:exec => "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
           end
           it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
-            expect { LiveFrame.testcase3(:players => 1, :init => ["１九香", "１八香"], :exec => ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
+            expect { LiveFrame.testcase3(:nplayers => 1, :init => ["１九香", "１八香"], :exec => ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
           end
         end
       end
