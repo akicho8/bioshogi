@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+# KIFファイルの読み込み
 
-require "bundler/setup"
-require "bushido"
-include Bushido
+require "./example_helper"
 
 info = Bushido.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 
-frame = LiveFrame.basic_instance
+frame = LiveFrame.start
 frame.piece_plot
 info.move_infos.each{|info|
   frame.execute(info[:input])
@@ -26,7 +25,7 @@ puts frame.humane_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.
 # >>  "手合割"=>"平手",
 # >>  "先手"=>"羽生善治",
 # >>  "後手"=>"渡辺　明"}
-# >> 147:▲先手番
+# >> 147手目: ▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・v桂 ・ ・ 馬 ・ ・v桂v香|一
@@ -39,8 +38,8 @@ puts frame.humane_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.
 # >> | 歩 ・ 玉 香 ・ ・ ・ ・ 香|八
 # >> | 香 桂 ・ ・ ・ ・ 飛 ・ ・|九
 # >> +---------------------------+
-# >> blackの持駒:歩三金
-# >> whiteの持駒:金二歩三銀
+# >> ▲先手の持駒:歩三 金
+# >> ▽後手の持駒:金二 歩三 銀
 # >> ▲7六歩(77) ▽8四歩(83) ▲7八金(69) ▽3二金(41) ▲2六歩(27) ▽8五歩(84) ▲7七角(88) ▽3四歩(33)
 # >> ▲8八銀(79) ▽7七角成(22) ▲7七銀(88) ▽4二銀(31) ▲3八銀(39) ▽7二銀(71) ▲9六歩(97) ▽9四歩(93)
 # >> ▲4六歩(47) ▽6四歩(63) ▲4七銀(38) ▽6三銀(72) ▲6八玉(59) ▽3三銀(42) ▲5八金(49) ▽5四銀(63)

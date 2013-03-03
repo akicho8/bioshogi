@@ -46,12 +46,9 @@ module Bushido
     end
 
     it "初期配置" do
-      board = Board.new
-      players = []
-      players << Player.create2(:black, board)
-      players << Player.create2(:white, board)
-      players.each(&:piece_plot)
-      board.to_s.should == <<-EOT.strip_heredoc
+      frame = BasicFrame.start
+      frame.piece_plot
+      frame.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -416,16 +413,13 @@ EOT
     end
 
     it "全体確認" do
-      board = Board.new
-      players = []
-      players << Player.create2(:black, board)
-      players << Player.create2(:white, board)
-      players.each(&:piece_plot)
-      players[0].execute("7六歩")
-      players[1].execute("3四歩")
-      players[0].execute("2二角成")
-      players[0].pieces.collect(&:name).should == ["角"]
-      board.to_s.should == <<-EOT.strip_heredoc
+      frame = BasicFrame.start
+      frame.piece_plot
+      frame.execute("7六歩")
+      frame.execute("3四歩")
+      frame.execute("2二角成")
+      frame.player_at(:black).to_s_pieces.should == "角"
+      frame.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

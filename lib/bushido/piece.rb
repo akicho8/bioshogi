@@ -166,6 +166,22 @@ module Bushido
       def inspect
         "<#{self.class.name}:#{object_id} #{name} #{sym_name}>"
       end
+
+      def to_h
+        [
+          :name,
+          :promoted_name,
+          :basic_names,
+          :promoted_names,
+          :names,
+          :sym_name,
+          :promotable?,
+          :basic_vectors1,
+          :basic_vectors2,
+          :promoted_vectors1,
+          :promoted_vectors2,
+        ].inject({}){|h, key|h.merge(key => public_send(key))}
+      end
     end
 
     module Goldable

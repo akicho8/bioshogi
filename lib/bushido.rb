@@ -3,7 +3,7 @@
 require "active_support/core_ext/string"
 require "active_support/configurable"
 require "active_support/core_ext/class/attribute_accessors"
-require "pry-debugger"
+# require "pry-debugger" # これを有効にすると pry + rcodetools の環境でバックトレースがでまくる
 
 require "rain_table"
 
@@ -94,7 +94,7 @@ end
 
 module Bushido
   if $0 == __FILE__
-    frame = LiveFrame.basic_instance
+    frame = LiveFrame.start
     frame.piece_plot
     frame.execute("７六歩")
     frame.execute("３四歩")

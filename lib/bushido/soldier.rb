@@ -8,11 +8,6 @@ module Bushido
   class Soldier
     attr_accessor :player, :piece, :promoted, :point
 
-    # 互換性用(DEPRECATION)
-    def self.new2(player, piece, promoted = false)
-      new(:player => player, :piece => piece, :promoted => promoted)
-    end
-
     def initialize(attrs)
       attrs.assert_valid_keys(:player, :piece, :promoted, :point)
       @player = attrs[:player]
@@ -63,6 +58,8 @@ module Bushido
       "#{@player.location.mark}#{formality_name2}"
     end
 
+    alias name formality_name
+
     # 正式な棋譜の表記で返す
     #  Player.basic_test(:init => "５五と").board["５五"].formality_name2 # => "5五と"
     def formality_name2
@@ -77,14 +74,14 @@ module Bushido
     end
 
     # 移動可能な座標を取得
-    def moveable_points2(options = {})
+    def moveable_points(options = {})
       Movabler.moveable_points(@player, @point, @piece, @promoted, options)
     end
 
     # def self.from_attrs(attrs)
     #   new(attrs)
     # end
-    # 
+    #
     # # シリアライズ用
     # def to_attrs
     #   {:player => (@player ? @player.location.key : nil) :point => @point.name, :piece => @piece.sym_name, :promoted => @promoted}

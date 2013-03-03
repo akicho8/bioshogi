@@ -7,9 +7,10 @@ module Bushido
       params = {
         :player => :black,
       }.merge(params)
-      player = Player.create2(params[:player], Board.new)
 
-      # 最初にくばるオプション
+      player = Player.new(:location => params[:player], :board => Board.new, :deal => true)
+
+      # 最初にくばるオプション(追加で)
       player.deal(params[:deal])
 
       player.initial_soldiers(params[:init])
@@ -32,29 +33,18 @@ module Bushido
       basic_test(params).soldier_names.sort
     end
 
-    # 互換性のため一時的に。
-    def self.create2(location, board)
-      new.tap do |o|
-        o.location = location
-        o.board = board
-        o.deal
-      end
-    end
-
-    # # 互換性のため一時的に。
-    # def self.create1(location)
-    #   new.tap do |o|
-    #     o.location = location
-    #     o.deal
-    #   end
-    # end
-
     attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info, :moved_point
 
     def initialize(params = {})
       super() if defined? super
       if v = params[:location]
         self.location = v
+      end
+      if v = params[:board]
+        @board = v
+      end
+      if v = params[:deal]
+        deal
       end
     end
 
@@ -90,7 +80,8 @@ module Bushido
     # 平手の初期配置
     def piece_plot
       Utils.initial_placements_for(location).each{|info|
-        soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
+        pick_out(info[:piece])
+        soldier = Soldier.new(info.merge(:player => self))
         put_on_at2(info[:point], soldier)
         @soldiers << soldier
       }
@@ -98,6 +89,9 @@ module Bushido
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
+    #   player.initial_soldiers(["５五飛", "３三飛"], :from_piece => false)
+    #   player.initial_soldiers("#{point}馬")
+    #   player.initial_soldiers({:point => point, :piece => Piece["角"], :promoted => true}, :from_piece => false)
     def initial_soldiers(arg, options = {})
       options = {
         :from_piece => true, # 持駒から配置する？
@@ -178,7 +172,6 @@ module Bushido
       end
       @parsed_info = OrderParser.new(self).execute(str)
       @moved_point = @parsed_info.point
-      # p [str, @moved_point]
     end
 
     # def moved_point
@@ -444,7 +437,7 @@ module Bushido
       list = []
 
       mpoints = @player.soldiers.collect{|soldier|
-        soldier.moveable_points2.collect{|point|{:soldier => soldier, :point => point}}
+        soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
       }.flatten
 
       mpoints.collect{|mpoint|

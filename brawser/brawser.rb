@@ -60,7 +60,7 @@ class Brawser < Sinatra::Base
     @session_id = env["rack.session"]["session_id"]
 
     if !params[:reset].nil? || REDIS.get(@session_id).nil?
-      frame = Bushido::LiveFrame.basic_instance
+      frame = Bushido::LiveFrame.start
       frame.piece_plot
       REDIS.set(@session_id, Marshal.dump(frame))
     end
@@ -104,7 +104,7 @@ class Brawser < Sinatra::Base
     count = params[:count].to_i
     session[:test_count] += count
     begin
-      @frame = Bushido::LiveFrame.basic_instance
+      @frame = Bushido::LiveFrame.start
       count.times do
         arg = {:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample}
         @frame.players.sample.initial_soldiers(arg, :from_piece => false)

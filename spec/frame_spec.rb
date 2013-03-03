@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe LiveFrame do
     it "交互に打ちながら戦況表示" do
-      frame = LiveFrame.basic_instance
+      frame = LiveFrame.start
       frame.piece_plot
       frame.execute(["７六歩", "３四歩"])
       frame.inspect.should == <<-EOT
@@ -41,7 +41,7 @@ EOT
           # p error
           next
         end
-        frame = LiveFrame.basic_instance
+        frame = LiveFrame.start
         frame.piece_plot
         kif_info.move_infos.each{|move_info|
           frame.execute(move_info[:input])
@@ -54,7 +54,7 @@ EOT
 
     # it "kif→ki2" do
     #   @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-    #   frame = LiveFrame.basic_instance
+    #   frame = LiveFrame.start
     #   frame.piece_plot
     #   @result.move_infos.each{|move_info|
     #     # p move_info[:input]
@@ -67,7 +67,7 @@ EOT
 
     if false
       it "CPU同士で対局" do
-        frame = LiveFrame.basic_instance
+        frame = LiveFrame.start
         frame.piece_plot
         while true
           way = frame.current_player.generate_way
@@ -85,9 +85,9 @@ EOT
     it "状態の復元" do
       frame = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
       dup = frame.deep_dup
-      frame.count.should              == dup.count
-      frame.simple_kif_logs.should           == dup.simple_kif_logs
-      frame.humane_kif_logs.should           == dup.humane_kif_logs
+      frame.counter.should            == dup.counter
+      frame.simple_kif_logs.should    == dup.simple_kif_logs
+      frame.humane_kif_logs.should    == dup.humane_kif_logs
       frame.to_s.should               == dup.to_s
 
       frame.board.to_s_soldiers       == dup.board.to_s_soldiers

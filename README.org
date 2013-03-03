@@ -7,7 +7,7 @@
 
   [[http://fast-plateau-7460.herokuapp.com/][→DEMO]]
 
-  : frame = LiveFrame.basic_instance
+  : frame = LiveFrame.start
   : frame.piece_plot
   : [
   :   "７六歩", "８四歩", "７八金", "３二金",
@@ -52,7 +52,7 @@
 
 *** CPU同士の対局 (ルールを守った上でランダムに指してみる)
 
-    : frame = LiveFrame.basic_instance
+    : frame = LiveFrame.start
     : frame.piece_plot
     : while true
     :   way = frame.current_player.generate_way
@@ -113,7 +113,7 @@
 
     棋譜を入力していく
 
-    : frame = LiveFrame.basic_instance
+    : frame = LiveFrame.start
     : frame.piece_plot
     : info.move_infos.each{|info|
     :   frame.execute(info[:input])
@@ -186,26 +186,25 @@
 
 *** 駒が動ける場所
 
-    : board = Board.new
-    : player = Player.create2(:black, board)
+    : frame = BasicFrame.start
+    : player = frame.player_at(:black)
     : player.initial_soldiers("５五馬")
     : player.soldiers.first.moveable_points.each{|point|
-    :   board.put_on_at(point, "○")
+    :   player.initial_soldiers("#{point}馬", :from_piece => false)
     : }
-    : puts board
-
-#+ATTR_HTML: border="1" rules="all" frame="all"
-    | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  |    |
-    |----+----+----+----+----+----+----+----+----+----|
-    | ○ |    |    |    |    |    |    |    | ○ | 一 |
-    |    | ○ |    |    |    |    |    | ○ |    | 二 |
-    |    |    | ○ |    |    |    | ○ |    |    | 三 |
-    |    |    |    | ○ | ○ | ○ |    |    |    | 四 |
-    |    |    |    | ○ | 馬 | ○ |    |    |    | 五 |
-    |    |    |    | ○ | ○ | ○ |    |    |    | 六 |
-    |    |    | ○ |    |    |    | ○ |    |    | 七 |
-    |    | ○ |    |    |    |    |    | ○ |    | 八 |
-    | ○ |    |    |    |    |    |    |    | ○ | 九 |
+    : puts frame.board
+    : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
+    : # >> +---------------------------+
+    : # >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|一
+    : # >> | ・ 馬 ・ ・ ・ ・ ・ 馬 ・|二
+    : # >> | ・ ・ 馬 ・ ・ ・ 馬 ・ ・|三
+    : # >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|四
+    : # >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|五
+    : # >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|六
+    : # >> | ・ ・ 馬 ・ ・ ・ 馬 ・ ・|七
+    : # >> | ・ 馬 ・ ・ ・ ・ ・ 馬 ・|八
+    : # >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|九
+    : # >> +---------------------------+
 
 *** 座標のパース
 
@@ -225,18 +224,19 @@
 
 *** 駒の情報取得例
 
-    : piece = Piece.get("角")
-    : piece.name              # => "角"
-    : piece.promoted_name     # => "馬"
-    : piece.basic_names       # => ["角", "bishop"]
-    : piece.promoted_names    # => ["馬", "BISHOP"]
-    : piece.names             # => ["角", "bishop", "馬", "BISHOP"]
-    : piece.sym_name          # => :bishop
-    : piece.promotable?       # => true
-    : piece.basic_vectors1    # => []
-    : piece.basic_vectors2    # => [[-1, -1], nil, [1, -1], nil, nil, nil, [-1, 1], nil, [1, 1]]
-    : piece.promoted_vectors1 # => [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
-    : piece.promoted_vectors2 # => [[-1, -1], nil, [1, -1], nil, nil, nil, [-1, 1], nil, [1, 1]]
+    : pp Piece["飛"].to_h
+    : # >> {:name=>"飛",
+    : # >>  :promoted_name=>"龍",
+    : # >>  :basic_names=>["飛", "rook"],
+    : # >>  :promoted_names=>["龍", "ROOK", "竜"],
+    : # >>  :names=>["飛", "rook", "龍", "ROOK", "竜"],
+    : # >>  :sym_name=>:rook,
+    : # >>  :promotable?=>true,
+    : # >>  :basic_vectors1=>[],
+    : # >>  :basic_vectors2=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
+    : # >>  :promoted_vectors1=>
+    : # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
+    : # >>  :promoted_vectors2=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
 
 *** 盤面テキストのパース
 
@@ -270,39 +270,16 @@
     :   },
     : }
 
-*** 盤面上の駒の確認
+*** KIF形式の盤面表示と盤面の駒の確認
 
-    : board = Board.new
-    : player = Player.create2(:black, board)
-    : player.piece_plot
-    : puts board
-
-#+ATTR_HTML: border="1" rules="all" frame="all"
-    | 9  | 8  | 7  | 6  | 5  | 4  | 3  | 2  | 1  |    |
-    |----+----+----+----+----+----+----+----+----+----|
-    |    |    |    |    |    |    |    |    |    | 一 |
-    |    |    |    |    |    |    |    |    |    | 二 |
-    |    |    |    |    |    |    |    |    |    | 三 |
-    |    |    |    |    |    |    |    |    |    | 四 |
-    |    |    |    |    |    |    |    |    |    | 五 |
-    |    |    |    |    |    |    |    |    |    | 六 |
-    | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 歩 | 七 |
-    |    | 角 |    |    |    |    |    | 飛 |    | 八 |
-    | 香 | 桂 | 銀 | 金 | 玉 | 金 | 銀 | 桂 | 香 | 九 |
-
-    : board["５五"]      # => nil
-    : board["８八"].name # => "▲8八角"
-    : board["２八"].name # => "▲2八飛"
-    : board["５九"].name # => "▲5九玉"
-
-*** KIF形式の盤面
-
-    : board = Board.new
-    : players = []
-    : players << Player.create2(:black, board)
-    : players << Player.create2(:white, board)
-    : players.each(&:piece_plot)
-    : puts board
+    : frame = BasicFrame.start
+    : frame.piece_plot
+    : puts frame.board
+    :
+    : frame.board["５五"]      # => nil
+    : frame.board["８八"].name # => "▲8八角"
+    : frame.board["２八"].name # => "▲2八飛"
+    : frame.board["５九"].name # => "▲5九玉"
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
     : # >> +---------------------------+
     : # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -506,8 +483,6 @@
     | 対局室   | frame    |
 
 ** BUG
-
-   - SimulatorFrame で、humane_kif_logs に ▲７四歩 △同歩 としたとき二つ目が △７四歩 になって、同歩になってない
 
 ** _TODO_
 

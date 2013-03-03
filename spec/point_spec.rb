@@ -33,6 +33,10 @@ module Bushido
       Point.parse([-1, -1]).name.should == "盤外"
     end
 
+    it "to_s は name の alias" do
+      Point.parse("4三").to_s.should == "4三"
+    end
+
     it "#number_format は 7六歩(77) の 77 の部分を作るときに使う" do
       Point.parse("４三").number_format.should == "43"
     end

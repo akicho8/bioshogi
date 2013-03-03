@@ -27,12 +27,9 @@ module Bushido
     end
 
     it "盤面表示" do
-      board = Board.new
-      players = []
-      players << Player.create2(:black, board)
-      players << Player.create2(:white, board)
-      players.each(&:piece_plot)
-      board.to_s.should == <<-EOT.strip_heredoc
+      frame = BasicFrame.start
+      frame.piece_plot
+      frame.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

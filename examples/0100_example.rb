@@ -1,22 +1,15 @@
 # -*- coding: utf-8 -*-
-#
-# 移動する駒の推測
-#
+# 棋譜の入力
 
-require "bundler/setup"
-require "bushido"
-include Bushido
+require "./example_helper"
 
-board = Board.new
-players = []
-players << Player.create2(:black, board)
-players << Player.create2(:white, board)
-players.each(&:piece_plot)
-players[0].execute("7六歩")
-players[1].execute("3四歩")
-players[0].execute("2二角成")
-players[0].pieces.collect(&:name) # => ["角"]
-puts board
+frame = BasicFrame.start
+frame.piece_plot
+frame.execute("7六歩")
+frame.execute("3四歩")
+frame.execute("2二角成")
+frame.player_at(:black).to_s_pieces # => "角"
+puts frame.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

@@ -211,7 +211,7 @@ module Bushido
     end
 
     def find_source_point
-      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points2.include?(@point)}
+      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.include?(@point)}
       @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}
       @soldiers = @soldiers.find_all{|e|e.promoted == @promoted}
       @candidate = @soldiers.collect{|s|s.clone}
@@ -225,7 +225,7 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
-          soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
+          soldier = Soldier.new(:player => @player, :piece => @player.pick_out(@piece), :promoted => @promoted)
           @player.put_on_at2(@point, soldier)
           @player.soldiers << soldier
           @done = true
@@ -312,7 +312,7 @@ module Bushido
     end
 
     def put_soldier
-      soldier = Soldier.new2(@player, @player.pick_out(@piece), @promoted)
+      soldier = Soldier.new(:player => @player, :piece => @player.pick_out(@piece), :promoted => @promoted)
       @player.put_on_at2(@point, soldier)
       @player.soldiers << soldier
       @done = true

@@ -7,22 +7,36 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :players, :count
+      attr_reader :players, :counter
     end
 
     module ClassMethods
+      # 先手後手が座った状態で開始
+      def start
+        new.tap do |o|
+          Location.each{|loc|
+            player = Player.new(:location => loc)
+            player.deal
+            o.player_join(player)
+          }
+        end
+      end
     end
 
     def initialize
       super
       @players = []
-      @count = 0
+      @counter = 0
     end
 
     def player_join(player)
       @players << player
       player.frame = self
       player.board = @board
+    end
+
+    def player_at(location)
+      @players[Location[location].index]
     end
 
     # 前後のプレイヤーを返す
@@ -35,14 +49,49 @@ module Bushido
     end
 
     def current_index(diff = 0)
-      (@count + diff).modulo(@players.size)
+      (@counter + diff).modulo(@players.size)
+    end
+
+    # プレイヤーたちの持駒から平手用の盤面の準備
+    def piece_plot
+      @players.collect(&:piece_plot)
+    end
+
+    # プレイヤーたちの持駒を捨てる
+    def piece_discard
+      @players.collect(&:piece_discard)
+    end
+
+    # def deal
+    #   @players.each(&:deal)
+    # end
+
+    # N手目のN
+    def counter_human_name
+      @counter.next
+    end
+  end
+
+  module Boardable
+    extend ActiveSupport::Concern
+
+    included do
+      attr_reader :board
+    end
+
+    module ClassMethods
+    end
+
+    def initialize
+      super
+      @board = Board.new
     end
   end
 
   module Serialization
     def marshal_dump
       {
-        :count      => @count,
+        :counter      => @counter,
         :players    => @players,
         :simple_kif_logs   => @simple_kif_logs,
         :humane_kif_logs   => @humane_kif_logs,
@@ -51,7 +100,7 @@ module Bushido
     end
 
     def marshal_load(attrs)
-      @count      = attrs[:count]
+      @counter      = attrs[:counter]
       @players    = attrs[:players]
       @simple_kif_logs   = attrs[:simple_kif_logs]
       @humane_kif_logs   = attrs[:humane_kif_logs]
@@ -88,79 +137,30 @@ module Bushido
     end
   end
 
-  class Frame
-    include PlayerSelector
+  module Executer
+    extend ActiveSupport::Concern
 
-    attr_reader :board
+    included do
+      attr_reader :counter, :simple_kif_logs, :humane_kif_logs, :point_logs
+    end
 
-    # 先手後手が座った状態で開始
-    def self.basic_instance
-      new.tap do |o|
-        Location.each{|loc|
-          player = Player.new(:location => loc)
+    module ClassMethods
+      def testcase3(params = {})
+        params = {
+          :nplayers => 2,
+        }.merge(params)
+
+        object = new
+        params[:nplayers].times do |i|
+          player = Player.new
+          player.location = Location[i]
           player.deal
-          o.player_join(player)
-        }
+          object.player_join(player)
+        end
+        (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_soldiers(init)}
+        object.execute(params[:exec])
+        object
       end
-    end
-
-    # 盤面だけある状態で開始
-    def initialize
-      super
-      @board = Board.new
-    end
-
-    # def players_init
-    #   @players.each{|player|
-    #     player.frame = self
-    #     player.board = @board
-    #   }
-    # end
-
-    # プレイヤーたちの持駒から平手用の盤面の準備
-    def piece_plot
-      @players.collect(&:piece_plot)
-    end
-
-    # プレイヤーたちの持駒を捨てる
-    def piece_discard
-      @players.collect(&:piece_discard)
-    end
-
-    # def deal
-    #   @players.each(&:deal)
-    # end
-
-    # 文字列表記
-    def to_s
-      s = ""
-      s << @board.to_s
-      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
-      s
-    end
-  end
-
-  # 棋譜入力対応の全体管理
-  class LiveFrame < Frame
-    include Serialization
-    attr_reader :count, :simple_kif_logs, :humane_kif_logs, :point_logs
-
-    # テスト用
-    def self.testcase3(params = {})
-      params = {
-        :nplayers => 2,
-      }.merge(params)
-
-      object = new
-      params[:nplayers].times do |i|
-        player = Player.new
-        player.location = Location[i]
-        player.deal
-        object.player_join(player)
-      end
-      (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_soldiers(init)}
-      object.execute(params[:exec])
-      object
     end
 
     def initialize(*)
@@ -178,7 +178,7 @@ module Bushido
         end
         current_player.execute(str)
         log_stock(current_player)
-        @count += 1
+        @counter += 1
       end
     end
 
@@ -193,14 +193,29 @@ module Bushido
       "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
     end
 
-    # N手目のN
-    def counter_human_name
-      @count.next
+    def to_s
+      s = ""
+      s << @board.to_s
+      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
+      s
     end
   end
 
-  class SimulatorFrame < LiveFrame
+  class BasicFrame
+    include PlayerSelector
+    include Boardable
+    include Executer
+    include Serialization
     include HistoryStack
+  end
+
+  class Frame < BasicFrame
+  end
+
+  class LiveFrame < Frame
+  end
+
+  class SimulatorFrame < LiveFrame
 
     def initialize(pattern)
       super()

@@ -108,6 +108,12 @@ module Bushido
       end
     end
 
+    # 座標を正式な名前で返す
+    #   "#{point}歩" などと気軽に書けるようにするため
+    def to_s
+      name
+    end
+
     # kif形式用の二桁の数座標を返す
     #   Point["２四"].number_format # => "24"
     def number_format

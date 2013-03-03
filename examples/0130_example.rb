@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-#
-# KIF形式で表示
-#
+# 盤面と盤上の駒を確認
 
-require "bundler/setup"
-require "bushido"
-include Bushido
+require_relative "example_helper"
 
-board = Board.new
-players = []
-players << Player.create2(:black, board)
-players << Player.create2(:white, board)
-players.each(&:piece_plot)
-puts board
+frame = BasicFrame.start
+frame.piece_plot
+puts frame.board
+
+frame.board["５五"]      # => nil
+frame.board["８八"].name # => "▲8八角"
+frame.board["２八"].name # => "▲2八飛"
+frame.board["５九"].name # => "▲5九玉"
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

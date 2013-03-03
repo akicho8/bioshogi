@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 # 盤面のHTML化
 
-require "bundler/setup"
-require "bushido"
-include Bushido
+require "./example_helper"
 
 require "delegate"
 
@@ -26,8 +24,9 @@ class FrameDecorator < SimpleDelegator
   end
 end
 
-frame = LiveFrame.basic_instance
+frame = LiveFrame.start
 frame.piece_plot
 frame_decorator = FrameDecorator.new(frame)
 puts frame_decorator.to_html
 Pathname("_frame.html").open("w"){|f|f << frame_decorator.to_html}
+# `open _frame.html`
