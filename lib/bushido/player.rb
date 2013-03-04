@@ -82,7 +82,7 @@ module Bushido
       Utils.initial_placements_for(location).each{|info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(:player => self))
-        put_on_at2(info[:point], soldier)
+        put_on_with_valid(info[:point], soldier)
         @soldiers << soldier
       }
     end
@@ -109,7 +109,7 @@ module Bushido
           pick_out(info[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
         soldier = Soldier.new(info.merge(:player => self))
-        put_on_at2(info[:point], soldier)
+        put_on_with_valid(info[:point], soldier)
         @soldiers << soldier
       }
     end
@@ -155,7 +155,7 @@ module Bushido
         soldier.promoted = true
       end
 
-      put_on_at2(b, soldier)
+      put_on_with_valid(b, soldier)
     end
 
     # 前の位置(同に使う)
@@ -296,7 +296,7 @@ module Bushido
       # @boardに描画する
       def render_soldiers
         @soldiers.each{|soldier|
-          put_on_at2(soldier.point, soldier)
+          put_on_with_valid(soldier.point, soldier)
         }
       end
     end
@@ -320,7 +320,7 @@ module Bushido
     #   get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
     #   begin
     #     @soldier << _soldier
-    #     put_on_at2(info[:point], soldier)
+    #     put_on_with_valid(info[:point], soldier)
     #     if block
     #       yield soldier
     #     end
@@ -347,14 +347,14 @@ module Bushido
       soldiers
     end
 
-    def put_on_at2(point, soldier, options = {})
+    def put_on_with_valid(point, soldier, options = {})
       options = {
         :validate => true,
       }.merge(options)
       if options[:validate]
         get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
       end
-      @board.put_on_at(point, soldier)
+      @board.put_on(point, soldier)
     end
 
     def get_errors(point, piece, promoted)

@@ -44,7 +44,7 @@ module Bushido
     end
 
     it "復元できるかテスト" do
-      player.put_on_at2(Point.parse("５五"), soldier)
+      player.put_on_with_valid(Point.parse("５五"), soldier)
       soldier.formality_name.should == "▲5五歩"
       soldier = Marshal.load(Marshal.dump(soldier()))
       soldier.formality_name.should == "▲5五歩"

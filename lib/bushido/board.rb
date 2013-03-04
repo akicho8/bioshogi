@@ -19,15 +19,12 @@ module Bushido
     #
     def self.size_change(size, &block)
       size_save = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
-      # p "#{size_save}を保存"
       Position::Hpos.ridge_length, Position::Vpos.ridge_length = size
-      # p "#{size}に設定"
       if block_given?
         begin
           yield
         ensure
           Position::Hpos.ridge_length, Position::Vpos.ridge_length = size_save
-          # p "#{size_save}に戻した"
         end
       end
       size_save
@@ -45,8 +42,8 @@ module Bushido
     end
 
     # 指定座標に駒を置く
-    #   board.put_on_at("５五", soldier)
-    def put_on_at(point, soldier)
+    #   board.put_on("５五", soldier)
+    def put_on(point, soldier)
       assert_board_cell_is_blank(point)
       # assert_not_double_pawn(player, point, piece)
 
