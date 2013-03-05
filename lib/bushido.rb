@@ -22,16 +22,18 @@ module Bushido
   class MovableSoldierNotFound < BushidoError; end
   class AmbiguousFormatError < BushidoError; end
   class SoldierEmpty < BushidoError; end
-  class SyntaxError < BushidoError; end
   class PieceNotFound < BushidoError; end
   class PieceAlredyExist < BushidoError; end
   class AlredyPromoted < BushidoError; end
   class NotPutInPlaceNotBeMoved < BushidoError; end
   class BeforePointNotFound < BushidoError; end
   class FileFormatError < BushidoError; end
-  class RuleError < SyntaxError; end
-  class IllegibleFormat < SyntaxError; end
 
+  # 構文エラー
+  class SyntaxError < BushidoError; end
+  class IllegibleFormat < SyntaxError; end
+  class RuleError < SyntaxError; end
+  
   # 構文エラーから発生する継続が難しいエラー
   class PositionSyntaxError < SyntaxError; end
   class PointSyntaxError < SyntaxError; end
@@ -39,7 +41,7 @@ module Bushido
   # 別に問題ないけど将棋のルール上エラーとするもの
   class DoublePawn < RuleError; end
   class NoPromotablePiece < RuleError; end
-  class NotFoundOnBoard < BushidoError; end
+  class NotFoundOnBoard < RuleError; end
   class NotPromotable < RuleError; end
   class PromotedPiecePutOnError < RuleError; end
   class PromotedPieceToNormalPiece < RuleError; end
