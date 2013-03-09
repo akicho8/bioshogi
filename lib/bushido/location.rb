@@ -41,18 +41,32 @@ module Bushido
     end
 
     @pool ||= [
-      new(:key => :black, :mark => "▲", :other_marks => [],     :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
-      new(:key => :white, :mark => "▽", :other_marks => ["△"], :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
+      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼"], :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
+      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"], :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
     ]
 
     class << self
       # 引数に対応する先手または後手の情報を返す
-      #   Location.parse(:black).name # => "先手"
+      #   Location.parse(:black).name   # => "先手"
+      #   Location.parse("▲").name     # => "先手"
+      #   Location.parse("先手").name   # => "先手"
+      #   Location.parse(0).name        # => "先手"
+      #   Location.parse(1).name        # => "後手"
+      #   Location.parse(2)             # => SyntaxError
+      #   Location.parse("1手目").name  # => "先手"
+      #   Location.parse("2手目").name  # => "後手"
+      #   Location.parse("3手目").name  # => "先手"
       def parse(arg)
-        if arg.kind_of? self
+        if self === arg
           return arg
         end
-        find{|e|e.match_target_values.include?(arg)} or raise SyntaxError, "#{arg.inspect}"
+        r = find{|e|e.match_target_values.include?(arg)}
+        unless r
+          if String === arg && md = arg.match(/(?<location_index>\d+)手目/)
+            r = parse((md[:location_index].to_i - 1).modulo(each.count))
+          end
+        end
+        r or raise SyntaxError, "#{arg.inspect}"
       end
 
       # 引数に対応する先手または後手の情報を返す

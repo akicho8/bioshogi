@@ -4,19 +4,34 @@ require "spec_helper"
 
 module Bushido
   describe Location do
-    it do
-      Location.parse(:black).name.should == "先手"
-      Location[:black].name.should == "先手"
+    it "参照できるシリーズ" do
+      Location[:black].key.should  == :black
+      Location["▲"].key.should    == :black
+      Location["▼"].key.should    == :black
+      Location["b"].key.should     == :black
+      Location["先手"].key.should  == :black
+      Location[0].key.should       == :black
+      Location["1手目"].key.should == :black
+    end
+
+    it "「n手目」は特別に n - 1 を index として parse している" do
+      Location["0手目"].name.should == "後手" # 反則として「0手目」があるため上下限チェックは入れず緩くしておく
+      Location["1手目"].name.should == "先手"
+      Location["2手目"].name.should == "後手"
+      Location["3手目"].name.should == "先手"
+    end
+
+    it "間違った引数シリーズ" do
+      expect { Location[nil]     }.to raise_error(SyntaxError)
+      expect { Location[""]      }.to raise_error(SyntaxError)
+      expect { Location["foo"]   }.to raise_error(SyntaxError)
+      expect { Location["1手"]   }.to raise_error(SyntaxError)
+      expect { Location[-1]      }.to raise_error(SyntaxError)
+      expect { Location[2]       }.to raise_error(SyntaxError)
     end
 
     it "Enumerable対応" do
       Location.each.should be_present
-    end
-
-    it "手番を表すものが大量にあるので何でもパースできるようにしてある" do
-      Location.to_a.last.match_target_values.should == [:white, "▽", "△", "後手", "後", 1]
-      Location["△"].name.should == "後手"
-      Location[1].name.should == "後手"
     end
   end
 end
