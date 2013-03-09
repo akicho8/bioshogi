@@ -11,6 +11,14 @@ module Bushido
       # フォーマットは読み上げに近い、人間が入力したような "▲７六歩△３四歩" 形式
       #  このフォーマットは▲△がついているので、うまいこと利用すればシミュレーションに使える。
       #  先手だけ10連続で打つとか。
+      #
+      #   @result.move_infos.should == [
+      #     {:location => :black, :input => "７六歩"},
+      #     {:location => :white, :input => "３四歩", :comments => ["コメント1"]},
+      #     {:location => :black, :input => "６六歩"},
+      #     {:location => :white, :input => "８四歩", :comments => ["コメント2"]},
+      #   ]
+      #
       def parse
         @_head, @_body = @source.split(/\n\n/, 2)
         read_header

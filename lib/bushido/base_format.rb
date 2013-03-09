@@ -7,7 +7,7 @@ module Bushido
     # source が Pathname ならそのファイルから読み込み、文字列なら何もしない
     #   こういう設計はいまいちな感もあるけど open-uri で open がURLからも読み込むようになるのに似ているからいいとする
     def self.normalized_source(source)
-      if source.kind_of? Pathname
+      if Pathname === source
         source = source.expand_path.read
       end
       source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")

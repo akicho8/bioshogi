@@ -17,8 +17,8 @@ module Bushido
       end
 
       it "棋譜の羅列" do
-        @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
-        @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50"}
+        @result.move_infos.first.should == {:index => "1", :location => :black, :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
+        @result.move_infos.last.should  == {:index => "5", :location => :black, :input => "投了", :spent_time => "0:10/00:00:50"}
       end
 
       it "対局前コメント" do

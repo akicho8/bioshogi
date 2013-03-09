@@ -28,7 +28,7 @@ module Bushido
     # 台上の持駒文字列をハッシュ配列化
     #   stand_parse("飛 香二") # => [{:piece => Piece["飛"], :count => 1}, {:piece => Piece["香"], :count => 2}]
     def stand_parse(str)
-      if str.kind_of? String
+      if String === str
         str = str.tr("〇一二三四五六七八九", "0-9")
         infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
           md = s.match(/\A(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?\z/)

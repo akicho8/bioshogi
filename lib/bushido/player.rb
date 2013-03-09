@@ -97,7 +97,7 @@ module Bushido
         :from_piece => true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(arg).each{|arg|
-        if arg.kind_of? Hash
+        if Hash === arg
           info = arg
         else
           if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため

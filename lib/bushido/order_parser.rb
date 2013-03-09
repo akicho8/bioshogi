@@ -112,7 +112,7 @@ module Bushido
 
       # 候補が2つ以上あったとき
       if @candidate && @candidate.size > 1
-        if @piece.kind_of?(Piece::Brave)
+        if Piece::Brave === @piece
           # 大駒の場合、
           # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
           if @candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる
@@ -254,7 +254,7 @@ module Bushido
       __saved_soldiers = @soldiers
       cond = "左右"
       if @md[:suffix].match(/[#{cond}]/)
-        if @piece.kind_of?(Piece::Brave)
+        if Piece::Brave === @piece
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else

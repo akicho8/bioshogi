@@ -33,7 +33,7 @@ module Bushido
   class SyntaxError < BushidoError; end
   class IllegibleFormat < SyntaxError; end
   class RuleError < SyntaxError; end
-  
+
   # 構文エラーから発生する継続が難しいエラー
   class PositionSyntaxError < SyntaxError; end
   class PointSyntaxError < SyntaxError; end

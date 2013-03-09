@@ -5,7 +5,7 @@
 
   [[https://raw.github.com/akicho8/bushido/master/brawser/demo1.png]]
 
-  [[http://fast-plateau-7460.herokuapp.com/][→DEMO]]
+  DEMO → http://fast-plateau-7460.herokuapp.com/
 
   : frame = LiveFrame.start
   : frame.piece_plot
@@ -534,6 +534,7 @@
 
 ** _TODO_
 
+   - どうぶつ将棋の例
    - ブラウザ 駒のドラッグ
    - FrameDecorator で移動元・移動先のクラス指定
    - 「詰み」の状態を判断する

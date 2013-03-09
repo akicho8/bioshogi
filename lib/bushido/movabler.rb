@@ -37,7 +37,7 @@ module Bushido
             if target.nil?
               list << pt
             else
-              unless target.kind_of?(Soldier)
+              unless Soldier === target
                 raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
               end
               # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)

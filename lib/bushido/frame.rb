@@ -255,14 +255,14 @@ module Bushido
       if block
         yield frames.last
       end
-      Utils.ki2_input_seq_parse(@pattern[:execute]).each{|hash|
-        if hash == "push"
+      Utils.ki2_input_seq_parse(@pattern[:execute]).each{|op|
+        if op == "push"
           stack_push
-        elsif hash == "pop"
+        elsif op == "pop"
           stack_pop
         else
-          player = players[Location[hash[:location]].index]
-          player.execute(hash[:input])
+          player = players[Location[op[:location]].index]
+          player.execute(op[:input])
           log_stock(player)
           frames << deep_dup
           if block

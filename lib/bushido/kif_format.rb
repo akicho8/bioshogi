@@ -13,13 +13,17 @@ module Bushido
       # | 手数----指手---------消費時間--
       # | *コメント0
       # |    1 ７六歩(77)   ( 0:00/00:00:00)
+      #
+      #   @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
+      #   @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50"}
+      #
       def parse
         @_head, @_body = @source.split(/^手数.*指手.*消費時間.*$/, 2)
         read_header
         @_body.lines.each do |line|
           comment_read(line)
           if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
-            @move_infos << {:index => md[:index], :input => md[:input], :spent_time => md[:spent_time]}
+            @move_infos << {:index => md[:index], :location => Location["#{md[:index]}手目"].key, :input => md[:input], :spent_time => md[:spent_time]}
           end
         end
       end

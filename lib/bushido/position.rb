@@ -92,7 +92,7 @@ module Bushido
 
       # "５五" の全角 "５" に対応するため
       def self.parse(arg)
-        if arg.kind_of?(String) && arg.match(/[１-９]/)
+        if String === arg && arg.match(/[１-９]/)
           arg = arg.tr("１-９", units.reverse.join)
         end
         super
@@ -107,7 +107,7 @@ module Bushido
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)
-        if arg.kind_of?(String) && arg.match(/\d/)
+        if String === arg && arg.match(/\d/)
           arg = arg.tr("1-9", units.join)
         end
         super
