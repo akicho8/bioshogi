@@ -76,7 +76,7 @@ module Bushido
     end
 
     def __ki2_input_seq_parse(str)
-      str.to_s.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark].key, :input => input}}
+      Array.wrap(str).join(" ").scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark].key, :input => input}}
     end
 
     private

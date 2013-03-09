@@ -33,6 +33,7 @@ module Bushido
   class SyntaxError < BushidoError; end
   class IllegibleFormat < SyntaxError; end
   class RuleError < SyntaxError; end
+  class HistroyStackEmpty < SyntaxError; end
 
   # 構文エラーから発生する継続が難しいエラー
   class PositionSyntaxError < SyntaxError; end
@@ -83,6 +84,7 @@ require_relative "bushido/soldier"
 require_relative "bushido/player"
 require_relative "bushido/order_parser"
 require_relative "bushido/movabler"
+require_relative "bushido/kifu_dsl"
 require_relative "bushido/frame"
 
 require_relative "bushido/base_format"

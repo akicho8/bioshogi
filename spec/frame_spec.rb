@@ -111,5 +111,13 @@ EOT
       frame.to_all_frames
       frame.humane_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
+
+    it "Sequencer" do
+      data = KifuDsl.build{}
+      sequencer = Sequencer.new
+      sequencer.pattern = data
+      sequencer.evaluate
+      sequencer.frames
+    end
   end
 end

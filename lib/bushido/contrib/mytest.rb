@@ -18,8 +18,8 @@ module Bushido
       :board => <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
-| ・ ・ ・ ・ ・ ・v銀 ・ ・|一
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|二
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|一
+| ・ ・ ・ ・ ・ ・v銀 ・ ・|二
 | ・ ・ ・ ・ ・ ・ 銀 ・ ・|三
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
@@ -33,7 +33,7 @@ EOT
   ]
 
   if $0 == __FILE__
-    frame = SimulatorFrame.new(Mytest.last)
+    frame = Sequencer.new(Mytest.last)
     frame.to_all_frames{|f|
       p f
       p f.humane_kif_logs

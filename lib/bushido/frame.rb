@@ -86,16 +86,30 @@ module Bushido
       super
       @board = Board.new
     end
+
+    # TODO: 「香落ち」対応。香落ちなどは先手と決まっている
+    def board_reset(value)
+      if value.blank? || value == :default || value == "平手"
+        hash = Location.inject({}){|hash, v|hash.merge(v => Utils.initial_placements_for(v))}
+      elsif Array === value
+        hash = value.inject({}){|hash, v|hash.merge(v => Utils.initial_placements_for(v))}
+      else
+        hash = BaseFormat.board_parse(value)
+      end
+      hash.each{|k, v|
+        player_at(k).initial_soldiers(v, :from_piece => false)
+      }
+    end
   end
 
   module Serialization
     def marshal_dump
       {
-        :counter      => @counter,
-        :players    => @players,
-        :simple_kif_logs   => @simple_kif_logs,
-        :humane_kif_logs   => @humane_kif_logs,
-        :point_logs => @point_logs,
+        :counter         => @counter,
+        :players         => @players,
+        :simple_kif_logs => @simple_kif_logs,
+        :humane_kif_logs => @humane_kif_logs,
+        :point_logs      => @point_logs,
       }
     end
 
@@ -131,9 +145,10 @@ module Bushido
     end
 
     def stack_pop
-      if app = @stack.pop
-        marshal_load(app.marshal_dump)
+      if @stack.empty?
+        raise HistroyStackEmpty
       end
+      marshal_load(@stack.pop.marshal_dump)
     end
   end
 
@@ -216,7 +231,6 @@ module Bushido
   end
 
   class SimulatorFrame < LiveFrame
-
     def initialize(pattern)
       super()
       @pattern = pattern
@@ -225,22 +239,7 @@ module Bushido
         player_join(Player.new(:location => loc))
       }
 
-      if @pattern[:board].blank? || @pattern[:board] == :default
-        board_info = {}
-        Location.each{|loc|
-          board_info[loc.key] = Utils.initial_placements_for(loc)
-        }
-      elsif @pattern[:board].in?([:white, :black])
-        board_info = {}
-        loc = Location[@pattern[:board]]
-        board_info[loc.key] = Utils.initial_placements_for(loc)
-      else
-        board_info = BaseFormat.board_parse(@pattern[:board])
-      end
-
-      Location.each{|loc|
-        players[loc.index].initial_soldiers(board_info[loc.key], :from_piece => false)
-      }
+      board_reset(@pattern[:board])
 
       if @pattern[:pieces]
         Location.each{|loc|
@@ -271,6 +270,59 @@ module Bushido
         end
       }
       frames
+    end
+  end
+
+  # FIXME: pattern をこの中に入れたらどうなる？
+  class Sequencer < LiveFrame
+    attr_reader :frames, :variables
+    attr_accessor :pattern
+
+    def initialize(pattern = nil)
+      super()
+      @pattern = pattern
+      @frames = []
+      @variables = {}
+      @instruction_pointer = 0
+
+      Location.each{|loc|
+        player_join(Player.new(:location => loc))
+      }
+    end
+
+    def set(key, value)
+      @variables[key] = value
+    end
+
+    def get(key)
+      @variables[key]
+    end
+
+    def marshal_dump
+      super.merge(:variables => @variables)
+    end
+
+    def marshal_load(attrs)
+      super
+      @variables = attrs[:variables]
+    end
+
+    def evaluate
+      @pattern.evaluate(self)
+    end
+
+    def eval_step
+      loop do
+        expr = @pattern.seqs[@instruction_pointer]
+        @instruction_pointer += 1
+        unless expr
+          break
+        end
+        expr.evaluate(self)
+        if KifuDsl::Mov === expr
+          break
+        end
+      end
     end
   end
 end
