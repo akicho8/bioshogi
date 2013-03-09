@@ -4,6 +4,58 @@
 #
 module Bushido
   module BaseFormat
+    # source が Pathname ならそのファイルから読み込み、文字列なら何もしない
+    #   こういう設計はいまいちな感もあるけど open-uri で open がURLからも読み込むようになるのに似ているからいいとする
+    def self.normalized_source(source)
+      if source.kind_of? Pathname
+        source = source.expand_path.read
+      end
+      source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
+    end
+
+    # ほぼ標準の柿木フォーマットのテーブルの読み取り
+    #
+    #   str = "
+    #     ９ ８ ７ ６ ５ ４ ３ ２ １
+    #   +---------------------------+
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
+    #   | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+    #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
+    #   +---------------------------+
+    #   "
+    #
+    #   Bushido::BaseFormat.board_parse(str) # => {:white => ["４二玉"], :black => []}
+    #
+    def self.board_parse(source)
+      str = BaseFormat.normalized_source(source)
+      lines = str.strip.lines.to_a
+      x_units = lines.first.strip.split(/\s+/)                   # 一行目のX座標の単位取得
+      lines = lines.find_all{|line|line.start_with?("|")}
+      y_units = lines.collect{|line|line.match(/(?<y>.)\n/)[:y]}
+      lines = lines.collect{|line|line.match(/\|(?<content>.*)\|/)[:content]}
+
+      players = {}
+      players[:white] = []
+      players[:black] = []
+
+      lines.each_with_index{|line, y_index|
+        line.scan(/(.)(\S)/).each_with_index{|(prefix, piece), x_index|
+          player = players[prefix == " " ? :black : :white]
+          if piece == "・"
+          else
+            player << [x_units[x_index], y_units[y_index], piece].join
+          end
+        }
+      }
+      players
+    end
+
     class Parser
       def self.parse(source, options = {})
         new(source, options).tap{|o|o.parse}
@@ -13,60 +65,10 @@ module Bushido
         raise NotImplementedError, "#{__method__} is not implemented"
       end
 
-      def self.normalized_source(source)
-        if source.kind_of? Pathname
-          source = source.expand_path.read
-        end
-        source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
-      end
-
-      # 柿木フォーマットのテーブルの読み取り
-      #
-      #   str = "
-      #     ９ ８ ７ ６ ５ ４ ３ ２ １
-      #   +---------------------------+
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
-      #   | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-      #   +---------------------------+
-      #   "
-      #
-      #   Bushido::BaseFormat::Parser.board_parse(str) # => {:white=>{:soldiers=>["４二玉"]}, :black=>{:soldiers=>[]}}
-      #
-      def self.board_parse(source)
-        str = normalized_source(source)
-        lines = str.strip.lines.to_a
-        x_units = lines.first.strip.split(/\s+/)                   # 一行目のX座標の単位取得
-        lines = lines.find_all{|line|line.start_with?("|")}
-        y_units = lines.collect{|line|line.match(/(?<y>.)\n/)[:y]}
-        lines = lines.collect{|line|line.match(/\|(?<content>.*)\|/)[:content]}
-
-        players = {}
-        players[:white] = []
-        players[:black] = []
-
-        lines.each_with_index{|line, y_index|
-          line.scan(/(.)(\S)/).each_with_index{|(prefix, piece), x_index|
-            player = players[prefix == " " ? :black : :white]
-            if piece == "・"
-            else
-              player << [x_units[x_index], y_units[y_index], piece].join
-            end
-          }
-        }
-        players
-      end
-
       attr_reader :header, :move_infos, :first_comments, :source
 
       def initialize(source, options = {})
-        @source = self.class.normalized_source(source)
+        @source = BaseFormat.normalized_source(source)
         @options = default_options.merge(options)
 
         @header = {}
@@ -98,7 +100,7 @@ module Bushido
       def read_board
         if md = @_head.match(/^後手の持駒：.*?\n(?<board>.*)^先手の持駒：/m)
           @header[:board_source] = md[:board]
-          @header[:board] = self.class.board_parse(md[:board])
+          @header[:board] = BaseFormat.board_parse(md[:board])
         end
       end
 

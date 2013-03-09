@@ -235,7 +235,7 @@ module Bushido
         loc = Location[@pattern[:board]]
         board_info[loc.key] = Utils.initial_placements_for(loc)
       else
-        board_info = BaseFormat::Parser.board_parse(@pattern[:board])
+        board_info = BaseFormat.board_parse(@pattern[:board])
       end
 
       Location.each{|loc|

@@ -254,7 +254,7 @@
     : | 香 桂 ・ ・ ・ ・ 飛 ・ ・|九
     : +---------------------------+
     : EOT
-    : BaseFormat::Parser.board_parse(board)
+    : BaseFormat.board_parse(board)
     : # => {
     :   :white => {
     :      :soldiers => [
