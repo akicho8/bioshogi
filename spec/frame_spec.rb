@@ -48,7 +48,7 @@ EOT
           break
         }
         # puts frame.inspect
-        # puts frame.humane_kif_logs.join(" ")
+        # puts frame.human_kif_logs.join(" ")
       }
     end
 
@@ -87,7 +87,7 @@ EOT
       dup = frame.deep_dup
       frame.counter.should            == dup.counter
       frame.simple_kif_logs.should    == dup.simple_kif_logs
-      frame.humane_kif_logs.should    == dup.humane_kif_logs
+      frame.human_kif_logs.should    == dup.human_kif_logs
       frame.to_s.should               == dup.to_s
 
       frame.board.to_s_soldiers       == dup.board.to_s_soldiers
@@ -109,7 +109,7 @@ EOT
     it "同歩からの同飛になること" do
       frame = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
       frame.to_all_frames
-      frame.humane_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      frame.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
 
     it "Sequencer" do

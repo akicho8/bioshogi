@@ -135,15 +135,22 @@ EOT
 +---------------------------+
 EOT
     },
+    {
+      :title => "原始鬼殺し",
+      :comment => "",
+      :url => "http://ja.wikipedia.org/wiki/%E9%AC%BC%E6%AE%BA%E3%81%97_%28%E5%B0%86%E6%A3%8B%29",
+      :execute => "▲7六歩 △3四歩 ▲7七桂 △8四歩 ▲6五桂 △6二銀 ▲7五歩 △6四歩 ▲2二角成 △同銀 ▲5五角 △3三銀 ▲6四角 △5二金右 ▲7四歩 △6三金 ▲7八飛 △6四金 ▲7三歩成",
+      :board => :default,
+    },
   ]
 
   if $0 == __FILE__
     frame = SimulatorFrame.new(EffectivePatterns.last)
     frame.to_all_frames{|f|
       p f
-      p f.humane_kif_logs
+      p f.human_kif_logs
     }
     p frame
-    p frame.humane_kif_logs
+    p frame.human_kif_logs
   end
 end

@@ -48,11 +48,19 @@ module Bushido
         test_sequencer{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.should == "歩 桂二"
       end
 
-      it "push pop" do
-        test_sequencer { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.should == 1
-        test_sequencer { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.should == 0
-        test_sequencer { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.should == 0
-        expect { test_sequencer { pop } }.to raise_error(HistroyStackEmpty)
+      describe "stack" do
+        it "push にブロック指定" do
+          test_sequencer { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.should == 0
+        end
+        it "明示的に pop で戻る" do
+          test_sequencer { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.should == 0
+        end
+        it "pushのみ" do
+          test_sequencer { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.should == 1
+        end
+        it "スタックが空のときにpopできない" do
+          expect { test_sequencer { pop } }.to raise_error(HistroyStackEmpty)
+        end
       end
     end
   end

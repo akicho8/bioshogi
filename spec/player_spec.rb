@@ -182,7 +182,7 @@ EOT
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
             frame = LiveFrame.testcase3(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
-            frame.humane_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
+            frame.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
 

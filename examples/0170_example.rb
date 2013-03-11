@@ -15,7 +15,7 @@ while true
 end
 p frame
 puts frame.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts frame.humane_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts frame.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> 362手目: ▽後手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

@@ -28,11 +28,11 @@
 
 .hr
 
-- if @frame.humane_kif_logs.present?
+- if @frame.human_kif_logs.present?
   %div
     %select
-      - @frame.humane_kif_logs.each.with_index do |kif_log, index|
-        %option{selected: @frame.humane_kif_logs.last == kif_log}= "#{index.next} #{kif_log}"
+      - @frame.human_kif_logs.each.with_index do |kif_log, index|
+        %option{selected: @frame.human_kif_logs.last == kif_log}= "#{index.next} #{kif_log}"
   .hr
 
 .div

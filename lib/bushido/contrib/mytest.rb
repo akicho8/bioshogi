@@ -36,9 +36,9 @@ EOT
     frame = Sequencer.new(Mytest.last)
     frame.to_all_frames{|f|
       p f
-      p f.humane_kif_logs
+      p f.human_kif_logs
     }
     p frame
-    p frame.humane_kif_logs
+    p frame.human_kif_logs
   end
 end

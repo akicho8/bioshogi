@@ -108,7 +108,7 @@ module Bushido
         :counter         => @counter,
         :players         => @players,
         :simple_kif_logs => @simple_kif_logs,
-        :humane_kif_logs => @humane_kif_logs,
+        :human_kif_logs => @human_kif_logs,
         :point_logs      => @point_logs,
       }
     end
@@ -117,7 +117,7 @@ module Bushido
       @counter      = attrs[:counter]
       @players    = attrs[:players]
       @simple_kif_logs   = attrs[:simple_kif_logs]
-      @humane_kif_logs   = attrs[:humane_kif_logs]
+      @human_kif_logs   = attrs[:human_kif_logs]
       @point_logs = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
@@ -156,7 +156,7 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :counter, :simple_kif_logs, :humane_kif_logs, :point_logs
+      attr_reader :counter, :simple_kif_logs, :human_kif_logs, :point_logs
     end
 
     module ClassMethods
@@ -182,7 +182,7 @@ module Bushido
       super
       @point_logs = []
       @simple_kif_logs = []
-      @humane_kif_logs = []
+      @human_kif_logs = []
     end
 
     # 棋譜入力
@@ -201,7 +201,7 @@ module Bushido
     def log_stock(player)
       @point_logs << player.parsed_info.point
       @simple_kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
-      @humane_kif_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
+      @human_kif_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
     end
 
     def inspect
