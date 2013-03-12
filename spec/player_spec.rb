@@ -488,18 +488,38 @@ EOT
       end
     end
 
-    # context "一時的に置いてみた状態にする(これ不要かも)" do
+    # context "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
-    #     player = Player.basic_test
-    #     player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
-    #     player.safe_put_on("5五飛") do
-    #       player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
-    #       player.safe_put_on("4五角") do
-    #         player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
-    #       end
-    #       player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #     player = Player.basic_test(:init => "２二歩", :pieces => "歩")
+    #     p player.to_s_soldiers
+    #     p player.to_s_pieces
+    #     player.safe_put_on("１二歩打") do
+    #       p player.to_s_soldiers
+    #       p player.to_s_pieces
     #     end
-    #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #     p player.to_s_soldiers
+    #     p player.to_s_pieces
+    #
+    #     # player = Player.basic_test
+    #     # player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    #     # player.safe_put_on("5五飛") do
+    #     #   player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
+    #     #   player.safe_put_on("4五角") do
+    #     #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
+    #     #   end
+    #     #   player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #     # end
+    #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #
+    #     # player = Player.basic_test(:init => "２二歩", :pieces => "歩")
+    #     # p player.to_s_soldiers
+    #     # p player.to_s_pieces
+    #     # player.safe_put_on("１二歩打") do
+    #     #   p player.to_s_soldiers
+    #     #   p player.to_s_pieces
+    #     # end
+    #     # p player.to_s_soldiers
+    #     # p player.to_s_pieces
     #   end
     # end
 
@@ -512,6 +532,16 @@ EOT
       player2.soldier_names.should == ["▲5八玉"]
       player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
       player2.board.should == nil
+    end
+
+    it "サンドボックス実行(インスタンスを作り直すわけではないので @board は残っている)" do
+      player = Player.basic_test(:init => "１二歩", :pieces => "歩")
+      player.to_s_soldiers.should == "1二歩"
+      player.to_s_pieces.should == "歩"
+      player.sandbox_for { player.execute("２二歩打") }
+      player.to_s_soldiers.should == "1二歩"
+      player.to_s_pieces.should == "歩"
+      player.board.should be_present
     end
   end
 end

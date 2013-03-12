@@ -9,15 +9,15 @@ module Bushido
   module Movabler
     extend self
 
-    # vectors1, vectors2 と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def moveable_points(player, point, piece, promoted, options = {})
       options = {
         :board_object_collision_skip => false, # 盤上の他の駒を考慮しない？
       }.merge(options)
       list = []
-      list += moveable_points_block(player, point, piece.vectors1(promoted), false, options)
-      list += moveable_points_block(player, point, piece.vectors2(promoted), true, options)
-      list.uniq{|e|e.to_xy}     # 龍などは vectors1 と vectors2 で左右上下が重複しているため
+      list += moveable_points_block(player, point, piece.step_vectors(promoted), false, options)
+      list += moveable_points_block(player, point, piece.series_vectors(promoted), true, options)
+      list.uniq{|e|e.to_xy}     # 龍などは step_vectors と series_vectors で左右上下が重複しているため
     end
 
     private

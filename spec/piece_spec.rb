@@ -31,10 +31,10 @@ module Bushido
       piece.names.should             == ["飛", "rook", "龍", "ROOK", "竜"]
       piece.sym_name.should          == :rook
       piece.promotable?.should       == true
-      piece.basic_vectors1.should    == []
-      piece.basic_vectors2.should    == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
-      piece.promoted_vectors1.should == [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
-      piece.promoted_vectors2.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
+      piece.basic_step_vectors.should    == []
+      piece.basic_series_vectors.should    == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
+      piece.promoted_step_vectors.should == [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
+      piece.promoted_series_vectors.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
     end
 
     it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do

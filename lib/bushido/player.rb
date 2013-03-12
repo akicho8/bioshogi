@@ -59,6 +59,7 @@ module Bushido
       }
     end
 
+    # TODO: 高速化
     def marshal_load(attrs)
       @name        = attrs[:name]
       @moved_point = attrs[:moved_point]
@@ -68,6 +69,18 @@ module Bushido
       @soldiers = attrs[:soldiers].collect{|soldier|
         Soldier.new(Utils.parse_str(soldier).merge(:player => self))
       }
+    end
+
+    # サンドボックス実行用
+    def sandbox_for(&block)
+      _save = marshal_dump
+      begin
+        if block_given?
+          yield self
+        end
+      ensure
+        marshal_load(_save)
+      end
     end
 
     # 先手後手を設定は適当でいい
@@ -314,22 +327,28 @@ module Bushido
     end
 
     # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
-    # def safe_put_on(arg, &block)
-    #   info = parse_str(arg)
-    #   _soldier = Soldier.new2(self, pick_out(info[:piece]), info[:promoted])
-    #   get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
-    #   begin
-    #     @soldier << _soldier
-    #     put_on_with_valid(info[:point], soldier)
-    #     if block
-    #       yield soldier
-    #     end
-    #   ensure
-    #     soldier = @board.pick_up!(info[:point])
-    #     @pieces << _soldier.piece
-    #     @soldier.pop
-    #   end
-    # end
+    def safe_put_on(arg, &block)
+      _save = marshal_dump
+      execute(arg)
+      if block
+        yield self
+      end
+      marshal_load(_save)
+      # info = Utils.parse_str(arg)
+      # _soldier = Soldier.new(info.merge(:player => self))
+      # get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
+      # begin
+      #   @soldiers << _soldier
+      #   put_on_with_valid(info[:point], soldier)
+      #   if block
+      #     yield soldier
+      #   end
+      # ensure
+      #   soldier = @board.pick_up!(info[:point])
+      #   @pieces << _soldier.piece
+      #   @soldiers.pop
+      # end
+    end
 
     # 二歩？
     def double_pawn?(point, piece, promoted)

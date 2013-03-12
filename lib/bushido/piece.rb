@@ -124,30 +124,30 @@ module Bushido
       include NameMethods
 
       module VectorMethods
-        def basic_vectors1
+        def basic_step_vectors
           []
         end
 
-        def basic_vectors2
+        def basic_series_vectors
           []
         end
 
-        def promoted_vectors1
+        def promoted_step_vectors
           []
         end
 
-        def promoted_vectors2
+        def promoted_series_vectors
           []
         end
 
-        def vectors1(promoted = false)
+        def step_vectors(promoted = false)
           assert_promotable(promoted)
-          promoted ? promoted_vectors1 : basic_vectors1
+          promoted ? promoted_step_vectors : basic_step_vectors
         end
 
-        def vectors2(promoted = false)
+        def series_vectors(promoted = false)
           assert_promotable(promoted)
-          promoted ? promoted_vectors2 : basic_vectors2
+          promoted ? promoted_series_vectors : basic_series_vectors
         end
       end
 
@@ -176,27 +176,27 @@ module Bushido
           :names,
           :sym_name,
           :promotable?,
-          :basic_vectors1,
-          :basic_vectors2,
-          :promoted_vectors1,
-          :promoted_vectors2,
+          :basic_step_vectors,
+          :basic_series_vectors,
+          :promoted_step_vectors,
+          :promoted_series_vectors,
         ].inject({}){|h, key|h.merge(key => public_send(key))}
       end
     end
 
     module Goldable
-      def promoted_vectors1
+      def promoted_step_vectors
         Gold.basic_pattern
       end
     end
 
     module Brave
-      def promoted_vectors1
+      def promoted_step_vectors
         King.basic_pattern
       end
 
-      def promoted_vectors2
-        basic_vectors2
+      def promoted_series_vectors
+        basic_series_vectors
       end
     end
 
@@ -211,7 +211,7 @@ module Bushido
         "と"
       end
 
-      def basic_vectors1
+      def basic_step_vectors
         [[0, -1]]
       end
     end
@@ -227,7 +227,7 @@ module Bushido
         "馬"
       end
 
-      def basic_vectors2
+      def basic_series_vectors
         [
           [-1, -1], nil, [1, -1],
           nil,      nil,     nil,
@@ -251,7 +251,7 @@ module Bushido
         super + ["竜"]
       end
 
-      def basic_vectors2
+      def basic_series_vectors
         [
           nil,      [0, -1],     nil,
           [-1,  0],          [1,  0],
@@ -275,7 +275,7 @@ module Bushido
         super + ["成香"]
       end
 
-      def basic_vectors2
+      def basic_series_vectors
         [[0, -1]]
       end
     end
@@ -295,7 +295,7 @@ module Bushido
         super + ["成桂"]
       end
 
-      def basic_vectors1
+      def basic_step_vectors
         [[-1, -2], [1, -2]]
       end
     end
@@ -315,7 +315,7 @@ module Bushido
         super + ["成銀"]
       end
 
-      def basic_vectors1
+      def basic_step_vectors
         [
           [-1, -1], [0, -1], [1, -1],
           nil,          nil,     nil,
@@ -337,7 +337,7 @@ module Bushido
         "金"
       end
 
-      def basic_vectors1
+      def basic_step_vectors
         self.class.basic_pattern
       end
 
@@ -359,7 +359,7 @@ module Bushido
         "玉"
       end
 
-      def basic_vectors1
+      def basic_step_vectors
         self.class.basic_pattern
       end
 

@@ -11,8 +11,8 @@ pp Piece["飛"].to_h
 # >>  :names=>["飛", "rook", "龍", "ROOK", "竜"],
 # >>  :sym_name=>:rook,
 # >>  :promotable?=>true,
-# >>  :basic_vectors1=>[],
-# >>  :basic_vectors2=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
-# >>  :promoted_vectors1=>
+# >>  :basic_step_vectors=>[],
+# >>  :basic_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
+# >>  :promoted_step_vectors=>
 # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
-# >>  :promoted_vectors2=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
+# >>  :promoted_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
