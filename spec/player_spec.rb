@@ -451,7 +451,7 @@ EOT
       end
       it "全手筋" do
         player = Player.basic_test(:piece_plot => true)
-        player._generate_way.all_ways.should == ["9六歩(97)", "8六歩(87)", "7六歩(77)", "6六歩(67)", "5六歩(57)", "4六歩(47)", "3六歩(37)", "2六歩(27)", "1六歩(17)", "3八飛(28)", "4八飛(28)", "5八飛(28)", "6八飛(28)", "7八飛(28)", "1八飛(28)", "9八香(99)", "7八銀(79)", "6八銀(79)", "7八金(69)", "6八金(69)", "5八金(69)", "6八玉(59)", "5八玉(59)", "4八玉(59)", "5八金(49)", "4八金(49)", "3八金(49)", "4八銀(39)", "3八銀(39)", "1八香(19)"]
+        player.brain.all_ways.should == ["9六歩(97)", "8六歩(87)", "7六歩(77)", "6六歩(67)", "5六歩(57)", "4六歩(47)", "3六歩(37)", "2六歩(27)", "1六歩(17)", "3八飛(28)", "4八飛(28)", "5八飛(28)", "6八飛(28)", "7八飛(28)", "1八飛(28)", "9八香(99)", "7八銀(79)", "6八銀(79)", "7八金(69)", "6八金(69)", "5八金(69)", "6八玉(59)", "5八玉(59)", "4八玉(59)", "5八金(49)", "4八金(49)", "3八金(49)", "4八銀(39)", "3八銀(39)", "1八香(19)"]
       end
     end
 
@@ -468,7 +468,7 @@ EOT
 
       it "盤上の駒の全手筋" do
         player = Player.basic_test(:init => ["1二歩", "2三桂"])
-        player._generate_way.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
+        player.brain.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
       end
 
       it "持駒の全手筋" do
@@ -484,8 +484,19 @@ EOT
         #
         Board.size_change([3, 3])
         player = Player.basic_test(:init => "２二歩", :pieces => "歩")
-        player._generate_way.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
+        player.brain.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
       end
+
+      # it "一番得するように打つ" do
+      #   # Board.size_change([2, 2])
+      #   # player = Player.basic_test(:init => "２二歩", :pieces => "歩 香")
+      #   # player.brain.eval_list.should == [{:way => "2一歩成(22)", :score => 1935}, {:way => "1二歩打", :score => 830}, {:way => "1二香打", :score => 805}]
+      #   # player.brain.best_way.should == "2一歩成(22)"
+      #
+      #   Board.size_change([2, 2])
+      #   frame = LiveFrame.testcase3(:init => ["１二歩"])
+      #   frame.player_at(:black).brain.eval_list.should == [{:way => "2一歩成(22)", :score => 1935}, {:way => "1二歩打", :score => 830}, {:way => "1二香打", :score => 805}]
+      # end
     end
 
     # context "一時的に置いてみた状態にする" do
@@ -534,14 +545,33 @@ EOT
       player2.board.should == nil
     end
 
-    it "サンドボックス実行(インスタンスを作り直すわけではないので @board は残っている)" do
+    it "サンドボックス実行(インスタンスを作り直すわけではないので @board は残っている。というか更新されたまま…)" do
       player = Player.basic_test(:init => "１二歩", :pieces => "歩")
       player.to_s_soldiers.should == "1二歩"
       player.to_s_pieces.should == "歩"
+      player.board.to_s_soldiers.should == "1二歩"
       player.sandbox_for { player.execute("２二歩打") }
       player.to_s_soldiers.should == "1二歩"
       player.to_s_pieces.should == "歩"
       player.board.should be_present
+      player.board.to_s_soldiers.should == "1二歩 2二歩" # ← こうなるのが問題
     end
+
+    # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
+    #   frame = LiveFrame.testcase3(:init => ["１二歩"])
+    #   frame.player_at(:black).to_s_soldiers.should == "1二歩"
+    #   # frame.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # frame.player_at(:black).board.to_s_soldiers.should == "1二歩"
+    #
+    #   # puts frame.board
+    #   frame.sandbox_for { frame.player_at(:black).execute("２二歩打") }
+    #   # puts frame.board
+    #
+    #   frame.player_at(:black).to_s_soldiers.should == "1二歩"
+    #
+    #   # frame.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # frame.player_at(:black).board.should be_present
+    #   # frame.player_at(:black).board.to_s_soldiers.should == "1二歩" # ← こうなるのが問題
+    # end
   end
 end

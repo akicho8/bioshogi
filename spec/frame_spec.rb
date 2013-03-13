@@ -119,5 +119,14 @@ EOT
       sequencer.evaluate
       sequencer.frames
     end
+
+    it "フレームのサンドボックス実行(ここは deep_dup のテストがあるから不要か)" do
+      frame = LiveFrame.testcase3(:init => ["１二歩"])
+      frame.player_at(:black).to_s_soldiers.should == "1二歩"
+      frame.player_at(:black).board.to_s_soldiers.should == "1二歩"
+      frame.sandbox_for { frame.player_at(:black).execute("２二歩打") }
+      frame.player_at(:black).to_s_soldiers.should == "1二歩"
+      frame.player_at(:black).board.to_s_soldiers.should == "1二歩"
+    end
   end
 end

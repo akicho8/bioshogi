@@ -103,6 +103,7 @@ module Bushido
   end
 
   module Serialization
+    # TODO: Player の marshal_dump が使われてない件について調べる
     def marshal_dump
       {
         :counter         => @counter,
@@ -131,6 +132,18 @@ module Bushido
 
     def deep_dup
       Marshal.load(Marshal.dump(self))
+    end
+
+    # サンドボックス実行用
+    def sandbox_for(&block)
+      stack_push
+      begin
+        if block_given?
+          yield self
+        end
+      ensure
+        stack_pop
+      end
     end
   end
 

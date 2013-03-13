@@ -48,6 +48,7 @@ module Bushido
       end
     end
 
+    # TODO: これ不要かも
     def marshal_dump
       {
         :name         => @name,
@@ -60,6 +61,8 @@ module Bushido
     end
 
     # TODO: 高速化
+    # というか frame で marshal_dump したとき、呼ばれてない？
+    # これ不要かも
     def marshal_load(attrs)
       @name        = attrs[:name]
       @moved_point = attrs[:moved_point]
@@ -69,9 +72,17 @@ module Bushido
       @soldiers = attrs[:soldiers].collect{|soldier|
         Soldier.new(Utils.parse_str(soldier).merge(:player => self))
       }
+
+      # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
+      # 継ぎ接ぎ的なコードが多いからそう感じるだけなのか、それとも合っているのか
+      # if @board
+      #   @board.surface.clear
+      #   render_soldiers
+      # end
     end
 
     # サンドボックス実行用
+    # TODO: これも不要かも
     def sandbox_for(&block)
       _save = marshal_dump
       begin
@@ -319,10 +330,10 @@ module Bushido
     end
 
     def generate_way
-      _generate_way.generate_way
+      brain.generate_way
     end
 
-    def _generate_way
+    def brain
       GenerateWay.new(self)
     end
 
@@ -450,6 +461,25 @@ module Bushido
     def all_ways
       soldiers_ways + pieces_ways
     end
+
+    def best_way
+      eval_list.first[:way]
+    end
+
+    # def eval_list
+    #   score_info = all_ways.each_with_object([]){|way, ary|
+    #     # @player.sandbox_for do
+    #     #   @player.execute(way)
+    #     #   ary << {:way => way, :score => @player.evaluate}
+    #     # end
+    #     # @player.frame.sandbox_for do
+    #     #   p @player.board
+    #     #   @player.execute(way)
+    #     #   ary << {:way => way, :score => @player.evaluate}
+    #     # end
+    #   }
+    #   score_info.sort_by{|e|-e[:score]}
+    # end
 
     # 盤上の駒の全手筋
     def soldiers_ways

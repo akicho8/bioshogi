@@ -7,6 +7,7 @@
 %div= "#{@frame.counter_human_name}手目 #{@frame.current_player.location.mark_with_name}番"
 .hr
 
+%div= @frame.player_at(:white).evaluate
 = Bushido::Location[:white].mark_with_name
 %form{action: "/", method: "post"}
   %input{name: "location", type: "hidden", value: "white"}
@@ -25,6 +26,7 @@
   %input{name: "location", type: "hidden", value: "black"}
   %input{type: "text", name: "way", value: "", autofocus: @frame.current_player.location.black?}
   %input{type: "submit", value: "打"}
+%div= @frame.player_at(:black).evaluate
 
 .hr
 

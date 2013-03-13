@@ -73,6 +73,7 @@ class Brawser < Sinatra::Base
       end
       if params[:auto].present?
         if way = @frame.current_player.generate_way.presence
+          # if way = @frame.current_player.brain.best_way.presence
           @frame.execute(way)
         end
       end
