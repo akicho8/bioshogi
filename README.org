@@ -530,6 +530,7 @@
 
 ** _TODO_
 
+   - board と player に mediator を【常に】渡す
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。frame.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
    - @board を複製できるようにする
    - DSLに rem(仮) 追加
