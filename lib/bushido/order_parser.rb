@@ -246,7 +246,8 @@ module Bushido
           end
         end
 
-        @source_point = Point[@player.board.surface.invert[@soldiers.first]]
+        # Point[@player.board.surface.invert[@soldiers.first]] として引くことも可能だけど遅い
+        @source_point = @soldiers.first.point
       end
     end
 
