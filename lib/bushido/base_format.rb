@@ -124,13 +124,13 @@ module Bushido
       end
     end
 
-    module Soldier
+    module Soldier2
       def to_s_kakiki
-        "#{@player.location.varrow}#{piece_current_name}"
+        "#{@location.varrow}#{piece_current_name}"
       end
     end
 
-    module Board
+    module Board2
       # kif形式詳細 (1) - 勝手に将棋トピックス http://d.hatena.ne.jp/mozuyama/20030909/p5
       #    ９ ８ ７ ６ ５ ４ ３ ２ １
       #  +---------------------------+
@@ -147,7 +147,8 @@ module Bushido
       def to_s_kakiki
         rows = Position::Vpos.ridge_length.times.collect{|y|
           values = Position::Hpos.ridge_length.times.collect{|x|
-            if soldier = @surface[[x, y]]
+            if shash2 = @surface[[x, y]]
+              soldier = Soldier.new(shash2)
               soldier.to_s(:kakiki)
             else
               " " + "・"

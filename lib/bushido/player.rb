@@ -157,14 +157,20 @@ module Bushido
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
         end
 
-        _soldier = @board.fetch(a)
+        _soldier = board_fetch_as_soldier(a)
         if _soldier.promoted?
           raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っています"
         end
       end
 
-      soldier = @board.pick_up!(a)
-      target_soldier = @board.fetch(b)
+      shash2 = @board.pick_up!(a)
+      if @frame
+        soldier = Soldier.new(shash2.merge(:player => @frame.player_at(shash2[:location])))
+      else
+        soldier = Soldier.new(shash2.merge(:player => self))
+      end
+
+      target_soldier = board_fetch_as_soldier(b)
       if target_soldier
         if target_soldier.player == self
           raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.formality_name}があります"
@@ -362,7 +368,7 @@ module Bushido
     end
 
     # 二歩？
-    def double_pawn?(point, piece, promoted)
+    def double_pawn(point, piece, promoted)
       if piece.sym_name == :pawn && !promoted
         pawns_on_board(point).first
       end
@@ -370,11 +376,11 @@ module Bushido
 
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
-      soldiers = @board.pieces_of_vline(point.x)
-      soldiers = soldiers.find_all{|s|s.player == self}
-      soldiers = soldiers.find_all{|s|!s.promoted?}
-      soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
-      soldiers
+      shash2s = @board.pieces_of_vline(point.x)
+      shash2s = shash2s.find_all{|s|s[:location] == location}
+      shash2s = shash2s.find_all{|s|!s[:promoted]}
+      shash2s = shash2s.find_all{|s|s[:piece].sym_name == :pawn}
+      shash2s
     end
 
     def put_on_with_valid(point, soldier, options = {})
@@ -384,13 +390,15 @@ module Bushido
       if options[:validate]
         get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
       end
-      @board.put_on(point, soldier)
+      @board.put_on(:point => point, :piece => soldier.piece, :promoted => soldier.promoted, :location => location)
+      soldier.point = point
+      # p [(soldier.point == point), soldier.point, point]
     end
 
     def get_errors(point, piece, promoted)
       errors = []
-      if s = double_pawn?(point, piece, promoted)
-        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece.name}は打てません")
+      if shash = double_pawn(point, piece, promoted)
+        errors << DoublePawn.new("二歩です。#{shash[:point].name}に#{shash[:piece].name}があるため#{point.name}に#{piece.name}は打てません")
       end
       if moveable_points(point, piece, promoted, :board_object_collision_skip => true).empty?
         errors << NotPutInPlaceNotBeMoved.new("#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")
@@ -409,6 +417,18 @@ module Bushido
     #     @location, @pieces, @board = Marshal.load(memento)
     #   end
     # end
+
+    def board_fetch_as_soldier(pt)
+      if shash = board.fetch(pt)
+        if @frame
+          player = @frame.player_at(shash[:location])
+        else
+          player = self
+        end
+        Soldier.new(shash.merge(:player => player))
+      end
+      # target = player.board_fetch_as_soldier(pt)
+    end
 
     private
 

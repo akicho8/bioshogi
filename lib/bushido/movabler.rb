@@ -33,7 +33,7 @@ module Bushido
           if options[:board_object_collision_skip]
             list << pt
           else
-            target = player.board.fetch(pt)
+            target = player.board_fetch_as_soldier(pt)
             if target.nil?
               list << pt
             else

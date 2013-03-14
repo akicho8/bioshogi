@@ -42,15 +42,11 @@ module Bushido
     end
 
     # 指定座標に駒を置く
-    #   board.put_on("５五", soldier)
-    def put_on(point, soldier)
-      assert_board_cell_is_blank(point)
+    def put_on(shash2)
+      assert_board_cell_is_blank(shash2[:point])
       # assert_not_double_pawn(player, point, piece)
-
-      soldier.point = point
       # soldier.double_pawn_validation(self, point)
-
-      @surface[point.to_xy] = soldier
+      @surface[shash2[:point].to_xy] = shash2
     end
 
     # fetchのエイリアス
@@ -67,10 +63,10 @@ module Bushido
 
     # 指定座標にある駒をを広い上げる
     def pick_up!(point)
-      soldier = @surface.delete(point.to_xy)
-      soldier or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
-      soldier.point = nil
-      soldier
+      shash2 = @surface.delete(point.to_xy)
+      shash2 or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
+      # soldier.point = nil
+      shash2
     end
 
     # 盤面表示

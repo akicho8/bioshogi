@@ -52,7 +52,7 @@ module Bushido
           find_source_point
         end
         unless @done
-          @source_soldier = @player.board.fetch(@source_point)
+          @source_soldier = @player.board_fetch_as_soldier(@source_point)
 
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
@@ -246,7 +246,8 @@ module Bushido
           end
         end
 
-        @source_point = Point[@player.board.surface.invert[@soldiers.first]]
+        # @source_point = Point[@player.board.surface.invert[@soldiers.first.to_h]]
+        @source_point = @soldiers.first.point
       end
     end
 

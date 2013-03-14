@@ -6,17 +6,25 @@
 #
 module Bushido
   class Soldier
-    attr_accessor :player, :piece, :promoted, :point
+    attr_accessor :player, :piece, :promoted, :point, :location
 
     def initialize(attrs)
-      attrs.assert_valid_keys(:player, :piece, :promoted, :point)
+      attrs.assert_valid_keys(:player, :piece, :promoted, :point, :location)
       @player = attrs[:player]
+      if @player
+        @location = @player.location
+      else
+        @location = attrs[:location]
+      end
       @piece = attrs[:piece]
       self.promoted = attrs[:promoted]
       if attrs[:point]
         @point = Point.parse(attrs[:point])
       end
-      unless @player && @piece
+      # unless @player && @piece
+      #   raise ArgumentError, attrs.inspect
+      # end
+      unless @piece
         raise ArgumentError, attrs.inspect
       end
     end
@@ -68,7 +76,7 @@ module Bushido
 
     # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
     def read_point
-      if xy = @player.board.surface.invert[self]
+      if xy = @player.board.surface.invert[to_h]
         Point.parse(xy)
       end
     end
@@ -76,6 +84,10 @@ module Bushido
     # 移動可能な座標を取得
     def moveable_points(options = {})
       Movabler.moveable_points(@player, @point, @piece, @promoted, options)
+    end
+
+    def to_h
+      {:location => @player.location, :point => @point, :piece => @piece, :promoted => @promoted}
     end
 
     # def self.from_attrs(attrs)
