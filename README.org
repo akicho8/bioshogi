@@ -366,7 +366,7 @@
 
 *** 棋譜の表記
 
-    #+ATTR_HTML: border="1" rules="all" mediator="all"
+    #+ATTR_HTML: border="1" rules="all" frame="all"
     | 表記       | 意味                     |
     |------------+--------------------------|
     | ７六歩(77) | ７七の歩を７六に移動     |
@@ -377,7 +377,7 @@
 
 *** 主な例外
 
-    #+ATTR_HTML: border="1" rules="all" mediator="all"
+    #+ATTR_HTML: border="1" rules="all" frame="all"
     | 例外                            | 意味                                         | どんなときに起きる？       |
     |---------------------------------+----------------------------------------------+----------------------------|
     | BushidoError                    | すべての例外の親                             |                            |
@@ -395,7 +395,7 @@
 
     反則系 (RuleError のサブクラス)
 
-    #+ATTR_HTML: border="1" rules="all" mediator="all"
+    #+ATTR_HTML: border="1" rules="all" frame="all"
     | 例外                            | 意味                                 | どんなときに起きる？               |
     |---------------------------------+--------------------------------------+------------------------------------|
     | DoublePawn                      | 二歩                                 | 歩がある縦列に歩を打った           |
@@ -409,7 +409,7 @@
 
 *** 表示座標系
 
-    #+ATTR_HTML: border="1" rules="all" mediator="all"
+    #+ATTR_HTML: border="1" rules="all" frame="all"
     | 9   | 8 |   7 | 6 | 5 | 4 |   3 | 2 | 1   |    |
     |-----+---+-----+---+---+---+-----+---+-----+----|
     | 9一 |   |     |   |   |   |     |   | 1一 | 一 |
@@ -424,7 +424,7 @@
 
 *** コード座標系
 
-    #+ATTR_HTML: border="1" rules="all" mediator="all"
+    #+ATTR_HTML: border="1" rules="all" frame="all"
     |   | 0   | 1 |   2 | 3 | 4 | 5 |   6 | 7 | 8   |
     |---+-----+---+-----+---+---+---+-----+---+-----|
     | 0 | 0,0 |   |     |   |   |   |     |   | 8,0 |
