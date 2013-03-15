@@ -4,27 +4,27 @@
 require "./example_helper"
 
 Board.size_change([5, 5])
-frame = LiveFrame.start
+mediator = Mediator.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
-frame.players.each do |player|
+mediator.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = Utils.parse_str(s)
     s.merge(:point => s[:point].as_location(player.location))
   }
   player.initial_soldiers(_soldiers)
 end
-frame.piece_discard
-p frame
-frame.execute("２四銀")
-frame.execute("４二銀")
-frame.execute("３四角")
-frame.execute("３二角")
-frame.execute("２三銀")
-frame.execute("４三銀")
-frame.execute("１二銀")
-frame.execute("同金")
-frame.execute("同角")
-p frame
+mediator.piece_discard
+p mediator
+mediator.execute("２四銀")
+mediator.execute("４二銀")
+mediator.execute("３四角")
+mediator.execute("３二角")
+mediator.execute("２三銀")
+mediator.execute("４三銀")
+mediator.execute("１二銀")
+mediator.execute("同金")
+mediator.execute("同角")
+p mediator
 # >> 1手目: ▲先手番
 # >>   ５ ４ ３ ２ １
 # >> +---------------+

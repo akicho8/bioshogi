@@ -7,33 +7,29 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :players, :counter
+      attr_accessor :players, :counter
     end
 
     module ClassMethods
       # 先手後手が座った状態で開始
       def start
-        new.tap do |o|
-          Location.each{|loc|
-            player = Player.new(:location => loc)
-            player.deal
-            o.player_join(player)
-          }
-        end
+        mediator = new
+        mediator.players.each{|player|player.deal}
+        mediator
       end
     end
 
     def initialize
       super
-      @players = []
+      @players = Location.collect{|loc|Player.new(self, :location => loc)}
       @counter = 0
     end
 
-    def player_join(player)
-      @players << player
-      player.frame = self
-      player.board = @board
-    end
+    # def player_join(player)
+    #   @players << player
+    #   player.mediator = self
+    #   player.board = @board
+    # end
 
     def player_at(location)
       @players[Location[location].index]
@@ -122,8 +118,8 @@ module Bushido
       @point_logs = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
-        player.board = @board
-        player.frame = self
+        # player.board = @board
+        player.mediator = self
       }
       @players.collect{|player|
         player.render_soldiers
@@ -177,17 +173,11 @@ module Bushido
         params = {
           :nplayers => 2,
         }.merge(params)
-
-        object = new
-        params[:nplayers].times do |i|
-          player = Player.new
-          player.location = Location[i]
-          player.deal
-          object.player_join(player)
-        end
-        (params[:init] || []).each_with_index{|init, index|object.current_player(index).initial_soldiers(init)}
-        object.execute(params[:exec])
-        object
+        mediator = start
+        mediator.players = mediator.players.first(params[:nplayers])
+        (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init)}
+        mediator.execute(params[:exec])
+        mediator
       end
     end
 
@@ -229,7 +219,7 @@ module Bushido
     end
   end
 
-  class BasicFrame
+  class Mediator
     include PlayerSelector
     include Boardable
     include Executer
@@ -237,20 +227,14 @@ module Bushido
     include HistoryStack
   end
 
-  class Frame < BasicFrame
-  end
-
-  class LiveFrame < Frame
-  end
-
-  class SimulatorFrame < LiveFrame
+  class SimulatorFrame < Mediator
     def initialize(pattern)
       super()
       @pattern = pattern
 
-      Location.each{|loc|
-        player_join(Player.new(:location => loc))
-      }
+      # Location.each{|loc|
+      #   player_join(Player.new(:location => loc))
+      # }
 
       board_reset(@pattern[:board])
 
@@ -287,7 +271,7 @@ module Bushido
   end
 
   # FIXME: pattern をこの中に入れたらどうなる？
-  class Sequencer < LiveFrame
+  class Sequencer < Mediator
     attr_reader :frames, :variables
     attr_accessor :pattern
 
@@ -298,9 +282,9 @@ module Bushido
       @variables = {}
       @instruction_pointer = 0
 
-      Location.each{|loc|
-        player_join(Player.new(:location => loc))
-      }
+      # Location.each{|loc|
+      #   player_join(Player.new(:location => loc))
+      # }
     end
 
     def set(key, value)

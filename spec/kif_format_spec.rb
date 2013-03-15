@@ -27,9 +27,9 @@ module Bushido
     end
 
     it "盤面表示" do
-      frame = BasicFrame.start
-      frame.piece_plot
-      frame.board.to_s.should == <<-EOT.strip_heredoc
+      mediator = Mediator.start
+      mediator.piece_plot
+      mediator.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

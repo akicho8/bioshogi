@@ -33,12 +33,12 @@ EOT
   ]
 
   if $0 == __FILE__
-    frame = Sequencer.new(Mytest.last)
-    frame.to_all_frames{|f|
+    mediator = Sequencer.new(Mytest.last)
+    mediator.to_all_frames{|f|
       p f
       p f.human_kif_logs
     }
-    p frame
-    p frame.human_kif_logs
+    p mediator
+    p mediator.human_kif_logs
   end
 end

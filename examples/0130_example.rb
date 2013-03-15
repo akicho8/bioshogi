@@ -3,14 +3,14 @@
 
 require "./example_helper"
 
-frame = BasicFrame.start
-frame.piece_plot
-puts frame.board
+mediator = Mediator.start
+mediator.piece_plot
+puts mediator.board
 
-frame.board["５五"]      # => nil
-frame.board["８八"].name # => "▲8八角"
-frame.board["２八"].name # => "▲2八飛"
-frame.board["５九"].name # => "▲5九玉"
+mediator.board["５五"]      # => nil
+mediator.board["８八"].name # => "▲8八角"
+mediator.board["２八"].name # => "▲2八飛"
+mediator.board["５九"].name # => "▲5九玉"
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

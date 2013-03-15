@@ -6,14 +6,14 @@ require "./example_helper"
 info = Bushido.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 
-frame = LiveFrame.start
-frame.piece_plot
+mediator = Mediator.start
+mediator.piece_plot
 info.move_infos.each{|info|
-  frame.execute(info[:input])
+  mediator.execute(info[:input])
 }
-puts frame.inspect
-puts frame.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts frame.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.inspect
+puts mediator.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> {"対局ID"=>"333",
 # >>  "開始日時"=>"2010/12/14 9:00",
 # >>  "終了日時"=>"2010/12/15 19:13",

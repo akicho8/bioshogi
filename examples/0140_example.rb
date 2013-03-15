@@ -3,14 +3,14 @@
 
 require "./example_helper"
 
-frame = LiveFrame.start
-frame.piece_plot
+mediator = Mediator.start
+mediator.piece_plot
 [
   "７六歩", "８四歩", "７八金", "３二金",
 ].each{|input|
-  frame.execute(input)
+  mediator.execute(input)
 }
-puts frame.board
-pp frame.simple_kif_logs
+puts mediator.board
+pp mediator.simple_kif_logs
 # ~> -:4:in `require_relative': cannot infer basepath (LoadError)
 # ~> 	from -:4:in `<main>'

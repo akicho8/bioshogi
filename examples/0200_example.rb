@@ -3,16 +3,16 @@
 
 require "./example_helper"
 
-frame = LiveFrame.start
-frame.piece_plot
-frame.execute(["７六歩", "３四歩", "２二角成"])
-p frame
-frame.stack_push
-frame.execute("８四歩")
-p frame
-frame.stack_pop
-frame.execute("同銀")
-p frame
+mediator = Mediator.start
+mediator.piece_plot
+mediator.execute(["７六歩", "３四歩", "２二角成"])
+p mediator
+mediator.stack_push
+mediator.execute("８四歩")
+p mediator
+mediator.stack_pop
+mediator.execute("同銀")
+p mediator
 # >> 4手目: ▽後手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

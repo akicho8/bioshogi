@@ -3,12 +3,12 @@
 require "spec_helper"
 
 module Bushido
-  describe LiveFrame do
+  describe Mediator do
     it "交互に打ちながら戦況表示" do
-      frame = LiveFrame.start
-      frame.piece_plot
-      frame.execute(["７六歩", "３四歩"])
-      frame.inspect.should == <<-EOT
+      mediator = Mediator.start
+      mediator.piece_plot
+      mediator.execute(["７六歩", "３四歩"])
+      mediator.inspect.should == <<-EOT
 3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -41,40 +41,40 @@ EOT
           # p error
           next
         end
-        frame = LiveFrame.start
-        frame.piece_plot
+        mediator = Mediator.start
+        mediator.piece_plot
         kif_info.move_infos.each{|move_info|
-          frame.execute(move_info[:input])
+          mediator.execute(move_info[:input])
           break
         }
-        # puts frame.inspect
-        # puts frame.human_kif_logs.join(" ")
+        # puts mediator.inspect
+        # puts mediator.human_kif_logs.join(" ")
       }
     end
 
     # it "kif→ki2" do
     #   @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-    #   frame = LiveFrame.start
-    #   frame.piece_plot
+    #   mediator = Mediator.start
+    #   mediator.piece_plot
     #   @result.move_infos.each{|move_info|
     #     # p move_info[:input]
-    #     frame.execute(move_info[:input])
-    #     # puts frame.inspect
+    #     mediator.execute(move_info[:input])
+    #     # puts mediator.inspect
     #   }
-    #   # puts frame.inspect
-    #   puts frame.simple_kif_logs.join(" ")
+    #   # puts mediator.inspect
+    #   puts mediator.simple_kif_logs.join(" ")
     # end
 
     if false
       it "CPU同士で対局" do
-        frame = LiveFrame.start
-        frame.piece_plot
+        mediator = Mediator.start
+        mediator.piece_plot
         while true
-          way = frame.current_player.generate_way
+          way = mediator.current_player.generate_way
           p way
-          p frame
-          frame.execute(way)
-          last_piece = frame.prev_player.last_piece
+          p mediator
+          mediator.execute(way)
+          last_piece = mediator.prev_player.last_piece
           if last_piece && last_piece.sym_name == :king
             break
           end
@@ -83,33 +83,33 @@ EOT
     end
 
     it "状態の復元" do
-      frame = LiveFrame.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
-      dup = frame.deep_dup
-      frame.counter.should            == dup.counter
-      frame.simple_kif_logs.should    == dup.simple_kif_logs
-      frame.human_kif_logs.should    == dup.human_kif_logs
-      frame.to_s.should               == dup.to_s
+      mediator = Mediator.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+      dup = mediator.deep_dup
+      mediator.counter.should            == dup.counter
+      mediator.simple_kif_logs.should    == dup.simple_kif_logs
+      mediator.human_kif_logs.should    == dup.human_kif_logs
+      mediator.to_s.should               == dup.to_s
 
-      frame.board.to_s_soldiers       == dup.board.to_s_soldiers
+      mediator.board.to_s_soldiers       == dup.board.to_s_soldiers
 
-      frame.prev_player.location      == dup.prev_player.location
-      frame.prev_player.to_s_pieces   == dup.prev_player.to_s_pieces
-      frame.prev_player.to_s_soldiers == dup.prev_player.to_s_soldiers
-      frame.prev_player.moved_point   == dup.prev_player.moved_point
-      frame.prev_player.last_piece    == dup.prev_player.last_piece
+      mediator.prev_player.location      == dup.prev_player.location
+      mediator.prev_player.to_s_pieces   == dup.prev_player.to_s_pieces
+      mediator.prev_player.to_s_soldiers == dup.prev_player.to_s_soldiers
+      mediator.prev_player.moved_point   == dup.prev_player.moved_point
+      mediator.prev_player.last_piece    == dup.prev_player.last_piece
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      frame = LiveFrame.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
-      frame = Marshal.load(Marshal.dump(frame))
-      frame.execute("同歩")
-      frame.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
+      mediator = Mediator.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
+      mediator = Marshal.load(Marshal.dump(mediator))
+      mediator.execute("同歩")
+      mediator.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
-      frame = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
-      frame.to_all_frames
-      frame.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      mediator = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => :default})
+      mediator.to_all_frames
+      mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
 
     it "Sequencer" do
@@ -121,12 +121,12 @@ EOT
     end
 
     it "フレームのサンドボックス実行(ここは deep_dup のテストがあるから不要か)" do
-      frame = LiveFrame.testcase3(:init => ["１二歩"])
-      frame.player_at(:black).to_s_soldiers.should == "1二歩"
-      frame.player_at(:black).board.to_s_soldiers.should == "1二歩"
-      frame.sandbox_for { frame.player_at(:black).execute("２二歩打") }
-      frame.player_at(:black).to_s_soldiers.should == "1二歩"
-      frame.player_at(:black).board.to_s_soldiers.should == "1二歩"
+      mediator = Mediator.testcase3(:init => ["１二歩"])
+      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
+      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
+      mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
+      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
+      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
     end
   end
 end

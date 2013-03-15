@@ -98,10 +98,10 @@ end
 
 module Bushido
   if $0 == __FILE__
-    frame = LiveFrame.start
-    frame.piece_plot
-    frame.execute("７六歩")
-    frame.execute("３四歩")
-    puts frame
+    mediator = Mediator.start
+    mediator.piece_plot
+    mediator.execute("７六歩")
+    mediator.execute("３四歩")
+    puts mediator
   end
 end

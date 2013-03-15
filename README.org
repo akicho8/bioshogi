@@ -7,17 +7,17 @@
 
   DEMO → http://fast-plateau-7460.herokuapp.com/
 
-  : frame = LiveFrame.start
-  : frame.piece_plot
+  : mediator = Mediator.start
+  : mediator.piece_plot
   : [
   :   "７六歩", "８四歩", "７八金", "３二金",
   :   "２六歩", "８五歩", "７七角", "３四歩",
   :   "８八銀", "７七角成",
   : ].each{|input|
-  :   frame.execute(input)
+  :   mediator.execute(input)
   : }
-  : puts frame.board
-  : pp frame.simple_kif_logs
+  : puts mediator.board
+  : pp mediator.simple_kif_logs
   : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
   : # >> +---------------------------+
   : # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一
@@ -52,18 +52,18 @@
 
 *** CPU同士の対局 (ルールを守った上でランダムに指してみる)
 
-    : frame = LiveFrame.start
-    : frame.piece_plot
+    : mediator = Mediator.start
+    : mediator.piece_plot
     : while true
-    :   way = frame.current_player.generate_way
-    :   frame.execute(way)
-    :   last_piece = frame.prev_player.last_piece
+    :   way = mediator.current_player.generate_way
+    :   mediator.execute(way)
+    :   last_piece = mediator.prev_player.last_piece
     :   if last_piece && last_piece.sym_name == :king
     :     break
     :   end
     : end
 
-    : p frame
+    : p mediator
     : # >> 78手目: ▽後手番
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
     : # >> +---------------------------+
@@ -80,7 +80,7 @@
     : # >> ▲先手の持駒:歩 玉
     : # >> ▽後手の持駒:歩
 
-    : puts frame.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+    : puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
     : # >> ▲3八金(39) ▽4六歩打 ▲1二歩打 ▽3六歩(35) ▲5三桂成(65)
     : # >> ▲4八玉 ▽5二金 ▲5六歩 ▽6二飛 ▲1六歩 ▽7二飛 ▲5九玉 ▽6二玉
     : # >> ▲2六歩 ▽4二金 ▲4八飛 ▽5四歩 ▲7八銀 ▽5一金 ▲7六歩 ▽5五歩
@@ -113,15 +113,15 @@
 
     棋譜を入力していく
 
-    : frame = LiveFrame.start
-    : frame.piece_plot
+    : mediator = Mediator.start
+    : mediator.piece_plot
     : info.move_infos.each{|info|
-    :   frame.execute(info[:input])
+    :   mediator.execute(info[:input])
     : }
 
     最終形
 
-    : puts frame.inspect
+    : puts mediator.inspect
     : # >> 147:▲先手番
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
     : # >> +---------------------------+
@@ -140,7 +140,7 @@
 
     KIF形式の棋譜確認
 
-    : puts frame.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+    : puts mediator.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
     : # >> ▲7六歩(77) ▽8四歩(83) ▲7八金(69) ▽3二金(41) ▲2六歩(27) ▽8五歩(84) ▲7七角(88) ▽3四歩(33)
     : # >> ▲8八銀(79) ▽7七角成(22) ▲7七銀(88) ▽4二銀(31) ▲3八銀(39) ▽7二銀(71) ▲9六歩(97) ▽9四歩(93)
     : # >> ▲4六歩(47) ▽6四歩(63) ▲4七銀(38) ▽6三銀(72) ▲6八玉(59) ▽3三銀(42) ▲5八金(49) ▽5四銀(63)
@@ -163,7 +163,7 @@
 
     KI2形式の棋譜確認
 
-    : puts frame.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+    : puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
     : # >> ▲7六歩 ▽8四歩 ▲7八金 ▽3二金 ▲2六歩 ▽8五歩 ▲7七角 ▽3四歩
     : # >> ▲8八銀 ▽7七角成 ▲同銀 ▽4二銀 ▲3八銀 ▽7二銀 ▲9六歩 ▽9四歩
     : # >> ▲4六歩 ▽6四歩 ▲4七銀 ▽6三銀 ▲6八玉 ▽3三銀 ▲5八金 ▽5四銀
@@ -186,13 +186,13 @@
 
 *** 駒が動ける場所
 
-    : frame = BasicFrame.start
-    : player = frame.player_at(:black)
+    : mediator = Mediator.start
+    : player = mediator.player_at(:black)
     : player.initial_soldiers("５五馬")
     : player.soldiers.first.moveable_points.each{|point|
     :   player.initial_soldiers("#{point}馬", :from_piece => false)
     : }
-    : puts frame.board
+    : puts mediator.board
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
     : # >> +---------------------------+
     : # >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|一
@@ -267,14 +267,14 @@
 
 *** KIF形式の盤面表示と盤面の駒の確認
 
-    : frame = BasicFrame.start
-    : frame.piece_plot
-    : puts frame.board
+    : mediator = Mediator.start
+    : mediator.piece_plot
+    : puts mediator.board
     :
-    : frame.board["５五"]      # => nil
-    : frame.board["８八"].name # => "▲8八角"
-    : frame.board["２八"].name # => "▲2八飛"
-    : frame.board["５九"].name # => "▲5九玉"
+    : mediator.board["５五"]      # => nil
+    : mediator.board["８八"].name # => "▲8八角"
+    : mediator.board["２八"].name # => "▲2八飛"
+    : mediator.board["５九"].name # => "▲5九玉"
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
     : # >> +---------------------------+
     : # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -291,17 +291,17 @@
 *** ５五将棋の例
 
     : Board.size_change([5, 5])
-    : frame = LiveFrame.start
+    : mediator = Mediator.start
     : soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
-    : frame.players.each do |player|
+    : mediator.players.each do |player|
     :   _soldiers = soldiers.collect{|s|
     :     s = Utils.parse_str(s)
     :     s.merge(:point => s[:point].as_location(player.location))
     :   }
     :   player.initial_soldiers(_soldiers)
     : end
-    : frame.piece_discard
-    : p frame
+    : mediator.piece_discard
+    : p mediator
     : # >> 1手目: ▲先手番
     : # >>   ５ ４ ３ ２ １
     : # >> +---------------+
@@ -314,16 +314,16 @@
     : # >> ▲先手の持駒:
     : # >> ▽後手の持駒:
     :
-    : frame.execute("２四銀")
-    : frame.execute("４二銀")
-    : frame.execute("３四角")
-    : frame.execute("３二角")
-    : frame.execute("２三銀")
-    : frame.execute("４三銀")
-    : frame.execute("１二銀")
-    : frame.execute("同金")
-    : frame.execute("同角")
-    : p frame
+    : mediator.execute("２四銀")
+    : mediator.execute("４二銀")
+    : mediator.execute("３四角")
+    : mediator.execute("３二角")
+    : mediator.execute("２三銀")
+    : mediator.execute("４三銀")
+    : mediator.execute("１二銀")
+    : mediator.execute("同金")
+    : mediator.execute("同角")
+    : p mediator
     : # >> 10手目: ▽後手番
     : # >>   ５ ４ ３ ２ １
     : # >> +---------------+
@@ -366,7 +366,7 @@
 
 *** 棋譜の表記
 
-    #+ATTR_HTML: border="1" rules="all" frame="all"
+    #+ATTR_HTML: border="1" rules="all" mediator="all"
     | 表記       | 意味                     |
     |------------+--------------------------|
     | ７六歩(77) | ７七の歩を７六に移動     |
@@ -377,7 +377,7 @@
 
 *** 主な例外
 
-    #+ATTR_HTML: border="1" rules="all" frame="all"
+    #+ATTR_HTML: border="1" rules="all" mediator="all"
     | 例外                            | 意味                                         | どんなときに起きる？       |
     |---------------------------------+----------------------------------------------+----------------------------|
     | BushidoError                    | すべての例外の親                             |                            |
@@ -395,7 +395,7 @@
 
     反則系 (RuleError のサブクラス)
 
-    #+ATTR_HTML: border="1" rules="all" frame="all"
+    #+ATTR_HTML: border="1" rules="all" mediator="all"
     | 例外                            | 意味                                 | どんなときに起きる？               |
     |---------------------------------+--------------------------------------+------------------------------------|
     | DoublePawn                      | 二歩                                 | 歩がある縦列に歩を打った           |
@@ -409,7 +409,7 @@
 
 *** 表示座標系
 
-    #+ATTR_HTML: border="1" rules="all" frame="all"
+    #+ATTR_HTML: border="1" rules="all" mediator="all"
     | 9   | 8 |   7 | 6 | 5 | 4 |   3 | 2 | 1   |    |
     |-----+---+-----+---+---+---+-----+---+-----+----|
     | 9一 |   |     |   |   |   |     |   | 1一 | 一 |
@@ -424,7 +424,7 @@
 
 *** コード座標系
 
-    #+ATTR_HTML: border="1" rules="all" frame="all"
+    #+ATTR_HTML: border="1" rules="all" mediator="all"
     |   | 0   | 1 |   2 | 3 | 4 | 5 |   6 | 7 | 8   |
     |---+-----+---+-----+---+---+---+-----+---+-----|
     | 0 | 0,0 |   |     |   |   |   |     |   | 8,0 |
@@ -523,14 +523,15 @@
     | 相対座標 | vector   |
     | 先手     | black    |
     | 後手     | white    |
-    | 対局室   | frame    |
+    | 対局室   | mediator    |
 
 ** BUG
 
 ** _TODO_
 
+   - mediator の元を mediator にする
    - board と player に mediator を【常に】渡す
-   - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。frame.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
+   - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
    - @board を複製できるようにする
    - DSLに rem(仮) 追加
    - コードが雑になるので blank? を使うのを禁止する

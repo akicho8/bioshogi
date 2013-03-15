@@ -145,12 +145,12 @@ EOT
   ]
 
   if $0 == __FILE__
-    frame = SimulatorFrame.new(EffectivePatterns.last)
-    frame.to_all_frames{|f|
+    mediator = SimulatorFrame.new(EffectivePatterns.last)
+    mediator.to_all_frames{|f|
       p f
       p f.human_kif_logs
     }
-    p frame
-    p frame.human_kif_logs
+    p mediator
+    p mediator.human_kif_logs
   end
 end

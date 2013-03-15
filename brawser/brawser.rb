@@ -60,26 +60,26 @@ class Brawser < Sinatra::Base
     @session_id = env["rack.session"]["session_id"]
 
     if !params[:reset].nil? || REDIS.get(@session_id).nil?
-      frame = Bushido::LiveFrame.start
-      frame.piece_plot
-      REDIS.set(@session_id, Marshal.dump(frame))
+      mediator = Bushido::Mediator.start
+      mediator.piece_plot
+      REDIS.set(@session_id, Marshal.dump(mediator))
     end
 
-    @frame = Marshal.load(REDIS.get(@session_id))
+    @mediator = Marshal.load(REDIS.get(@session_id))
 
-    if params[:location].blank? || @frame.current_player.location.key.to_s == params[:location]
+    if params[:location].blank? || @mediator.current_player.location.key.to_s == params[:location]
       if params[:way].present?
-        @frame.execute(params[:way])
+        @mediator.execute(params[:way])
       end
       if params[:auto].present?
-        if way = @frame.current_player.generate_way.presence
-          # if way = @frame.current_player.brain.best_way.presence
-          @frame.execute(way)
+        if way = @mediator.current_player.generate_way.presence
+          # if way = @mediator.current_player.brain.best_way.presence
+          @mediator.execute(way)
         end
       end
     end
 
-    REDIS.set(@session_id, Marshal.dump(@frame))
+    REDIS.set(@session_id, Marshal.dump(@mediator))
 
     haml :show
   end
@@ -89,8 +89,8 @@ class Brawser < Sinatra::Base
       @pattern = Bushido::EffectivePatterns[params[:id].to_i]
     end
     if @pattern
-      frame = Bushido::SimulatorFrame.new(@pattern)
-      @frames = frame.to_all_frames
+      mediator = Bushido::SimulatorFrame.new(@pattern)
+      @frames = mediator.to_all_frames
     end
     haml :effective_patterns
   end
@@ -105,10 +105,10 @@ class Brawser < Sinatra::Base
     count = params[:count].to_i
     session[:test_count] += count
     begin
-      @frame = Bushido::LiveFrame.start
+      @mediator = Bushido::Mediator.start
       count.times do
         arg = {:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample}
-        @frame.players.sample.initial_soldiers(arg, :from_piece => false)
+        @mediator.players.sample.initial_soldiers(arg, :from_piece => false)
       end
     rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
       retry

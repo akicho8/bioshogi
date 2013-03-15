@@ -3,19 +3,19 @@
 
 require "./example_helper"
 
-frame = LiveFrame.start
-frame.piece_plot
+mediator = Mediator.start
+mediator.piece_plot
 while true
-  way = frame.current_player.generate_way
-  frame.execute(way)
-  last_piece = frame.prev_player.last_piece
+  way = mediator.current_player.generate_way
+  mediator.execute(way)
+  last_piece = mediator.prev_player.last_piece
   if last_piece && last_piece.sym_name == :king
     break
   end
 end
-p frame
-puts frame.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts frame.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+p mediator
+puts mediator.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> 362手目: ▽後手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

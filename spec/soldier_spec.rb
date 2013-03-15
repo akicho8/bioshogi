@@ -4,20 +4,22 @@ require "spec_helper"
 
 module Bushido
   describe Soldier do
-    let(:board)  { Board.new }
-    let(:player) { Player.new(:location => :black, :board => board, :deal => true) }
+    # FIXME: ↓撲滅する
+    let(:mediator)  { Mediator.new }
+    let(:board)  { mediator.board }
+    let(:player) { mediator.player_at(:black).tap{|e|e.deal} }
     let(:soldier) { Soldier.new(:player => player, :piece => Piece[:pawn]) }
 
     context "文字列表現" do
       it "先手後手のマーク付き" do
-        Player.basic_test(:init => "５五と").soldiers.first.formality_name.should == "▲5五と"
-        Player.basic_test(:init => "５五と").soldiers.first.name.should == "▲5五と"
+        player_basic_test(:init => "５五と").soldiers.first.formality_name.should == "▲5五と"
+        player_basic_test(:init => "５五と").soldiers.first.name.should == "▲5五と"
       end
       it "先手後手のマークなし" do
-        Player.basic_test(:init => "５五と").soldiers.first.formality_name2.should == "5五と"
+        player_basic_test(:init => "５五と").soldiers.first.formality_name2.should == "5五と"
       end
       it "駒のみ" do
-        Player.basic_test(:init => "５五と").soldiers.first.piece_current_name.should == "と"
+        player_basic_test(:init => "５五と").soldiers.first.piece_current_name.should == "と"
       end
       it "盤上に置いてない場合" do
         soldier.formality_name.should == "▲(どこにも置いてない)歩"

@@ -2,50 +2,55 @@
 
 module Bushido
   class Player
-    # FIXME: deal と pieces がかぶっている
-    def self.basic_test(params = {})
-      params = {
-        :player => :black,
-      }.merge(params)
+    # # FIXME: deal と pieces がかぶっている
+    # def self.basic_test(params = {})
+    #   params = {
+    #     :player => :black,
+    #   }.merge(params)
+    # 
+    #   player = Player.new(:location => params[:player], :board => Board.new, :deal => true)
+    # 
+    #   # 最初にくばるオプション(追加で)
+    #   player.deal(params[:deal])
+    # 
+    #   player.initial_soldiers(params[:init])
+    #   if params[:piece_plot]
+    #     player.piece_plot
+    #   end
+    # 
+    #   Array.wrap(params[:exec]).each{|v|player.execute(v)}
+    # 
+    #   # あとでくばる(というかセットする)
+    #   if params[:pieces]
+    #     player.piece_discard
+    #     player.deal(params[:pieces])
+    #   end
+    # 
+    #   player
+    # end
 
-      player = Player.new(:location => params[:player], :board => Board.new, :deal => true)
+    # def self.basic_test2(params = {})
+    #   basic_test(params).soldier_names.sort
+    # end
 
-      # 最初にくばるオプション(追加で)
-      player.deal(params[:deal])
+    attr_accessor :name, :location, :mediator, :last_piece, :parsed_info, :moved_point
 
-      player.initial_soldiers(params[:init])
-      if params[:piece_plot]
-        player.piece_plot
-      end
-
-      Array.wrap(params[:exec]).each{|v|player.execute(v)}
-
-      # あとでくばる(というかセットする)
-      if params[:pieces]
-        player.piece_discard
-        player.deal(params[:pieces])
-      end
-
-      player
-    end
-
-    def self.basic_test2(params = {})
-      basic_test(params).soldier_names.sort
-    end
-
-    attr_accessor :name, :board, :location, :frame, :last_piece, :parsed_info, :moved_point
-
-    def initialize(params = {})
+    def initialize(mediator, params = {})
       super() if defined? super
+      @mediator = mediator
       if v = params[:location]
         self.location = v
       end
-      if v = params[:board]
-        @board = v
-      end
+      # if v = params[:board]
+      #   @board = v
+      # end
       if v = params[:deal]
         deal
       end
+    end
+
+    def board
+      @mediator.board
     end
 
     # TODO: これ不要かも
@@ -61,7 +66,7 @@ module Bushido
     end
 
     # TODO: 高速化
-    # というか frame で marshal_dump したとき、呼ばれてない？
+    # というか mediator で marshal_dump したとき、呼ばれてない？
     # これ不要かも
     def marshal_load(attrs)
       @name        = attrs[:name]
@@ -75,8 +80,8 @@ module Bushido
 
       # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
       # 継ぎ接ぎ的なコードが多いからそう感じるだけなのか、それとも合っているのか
-      # if @board
-      #   @board.surface.clear
+      # if board
+      #   board.surface.clear
       #   render_soldiers
       # end
     end
@@ -141,7 +146,7 @@ module Bushido
     # # 盤上の自分の駒
     # def soldiers
     #   @soldiers
-    #   # @ @board.surface.values.find_all{|soldier|soldier.player == self}
+    #   # @ board.surface.values.find_all{|soldier|soldier.player == self}
     # end
 
     # 盤上の駒を a から b に移動する。成るなら promote_trigger を有効に。
@@ -157,19 +162,19 @@ module Bushido
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
         end
 
-        _soldier = @board.fetch(a)
+        _soldier = board.fetch(a)
         if _soldier.promoted?
           raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っています"
         end
       end
 
-      soldier = @board.pick_up!(a)
-      target_soldier = @board.fetch(b)
+      soldier = board.pick_up!(a)
+      target_soldier = board.fetch(b)
       if target_soldier
         if target_soldier.player == self
           raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.formality_name}があります"
         end
-        @board.pick_up!(b)
+        board.pick_up!(b)
         @pieces << target_soldier.piece
         @last_piece = target_soldier.piece
         target_soldier.player.soldiers.delete(target_soldier)
@@ -184,8 +189,8 @@ module Bushido
 
     # 前の位置(同に使う)
     def point_logs
-      if @frame
-        @frame.point_logs
+      if @mediator
+        @mediator.point_logs
       end
     end
 
@@ -211,7 +216,7 @@ module Bushido
     # 盤面と持駒(表示用)
     def board_with_pieces
       s = ""
-      s << @board.to_s
+      s << board.to_s
       s << "#{location.mark_with_name}の持駒:#{to_s_pieces}\n"
       s
     end
@@ -317,7 +322,7 @@ module Bushido
         @soldiers.collect(&:formality_name2).sort.join(" ")
       end
 
-      # @boardに描画する
+      # boardに描画する
       def render_soldiers
         @soldiers.each{|soldier|
           put_on_with_valid(soldier.point, soldier)
@@ -355,7 +360,7 @@ module Bushido
       #     yield soldier
       #   end
       # ensure
-      #   soldier = @board.pick_up!(info[:point])
+      #   soldier = board.pick_up!(info[:point])
       #   @pieces << _soldier.piece
       #   @soldiers.pop
       # end
@@ -370,7 +375,7 @@ module Bushido
 
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
-      soldiers = @board.pieces_of_vline(point.x)
+      soldiers = board.pieces_of_vline(point.x)
       soldiers = soldiers.find_all{|s|s.player == self}
       soldiers = soldiers.find_all{|s|!s.promoted?}
       soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
@@ -384,7 +389,7 @@ module Bushido
       if options[:validate]
         get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
       end
-      @board.put_on(point, soldier)
+      board.put_on(point, soldier)
     end
 
     def get_errors(point, piece, promoted)
@@ -401,12 +406,12 @@ module Bushido
     # # モジュール化
     # begin
     #   def create_memento
-    #     # @board → soldier → player の結び付きで戻ってくる(？) 要確認
-    #     Marshal.dump([@location, @pieces, @board])
+    #     # board → soldier → player の結び付きで戻ってくる(？) 要確認
+    #     Marshal.dump([@location, @pieces, board])
     #   end
     #
     #   def restore_memento(memento)
-    #     @location, @pieces, @board = Marshal.load(memento)
+    #     @location, @pieces, board = Marshal.load(memento)
     #   end
     # end
 
@@ -472,7 +477,7 @@ module Bushido
     #     #   @player.execute(way)
     #     #   ary << {:way => way, :score => @player.evaluate}
     #     # end
-    #     # @player.frame.sandbox_for do
+    #     # @player.mediator.sandbox_for do
     #     #   p @player.board
     #     #   @player.execute(way)
     #     #   ary << {:way => way, :score => @player.evaluate}

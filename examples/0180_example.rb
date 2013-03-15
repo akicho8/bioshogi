@@ -24,9 +24,9 @@ class FrameDecorator < SimpleDelegator
   end
 end
 
-frame = LiveFrame.start
-frame.piece_plot
-frame_decorator = FrameDecorator.new(frame)
+mediator = Mediator.start
+mediator.piece_plot
+frame_decorator = FrameDecorator.new(mediator)
 puts frame_decorator.to_html
 Pathname("_frame.html").open("w"){|f|f << frame_decorator.to_html}
 # `open _frame.html`
