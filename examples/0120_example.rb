@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 駒の情報
 
-require_relative "example_helper"
+require "./example_helper"
 
 pp Piece["飛"].to_h
 # >> {:name=>"飛",

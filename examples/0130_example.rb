@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 盤面と盤上の駒を確認
 
-require_relative "example_helper"
+require "./example_helper"
 
 frame = BasicFrame.start
 frame.piece_plot

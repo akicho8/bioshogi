@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # 移動可能なルートの確認
 
-require_relative "example_helper"
+require "./example_helper"
 
 frame = BasicFrame.start
 player = frame.player_at(:black)
