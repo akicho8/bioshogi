@@ -87,7 +87,7 @@ EOT
       dup = mediator.deep_dup
       mediator.counter.should            == dup.counter
       mediator.simple_kif_logs.should    == dup.simple_kif_logs
-      mediator.human_kif_logs.should    == dup.human_kif_logs
+      mediator.human_kif_logs.should     == dup.human_kif_logs
       mediator.to_s.should               == dup.to_s
 
       mediator.board.to_s_soldiers       == dup.board.to_s_soldiers

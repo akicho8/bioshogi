@@ -187,7 +187,7 @@ module Bushido
       put_on_with_valid(b, soldier)
     end
 
-    # 前の位置(同に使う)
+    # # 前の位置(同に使う)
     def point_logs
       if @mediator
         @mediator.point_logs

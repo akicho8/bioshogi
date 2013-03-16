@@ -62,7 +62,7 @@ module Bushido
         Position::Hpos.ridge_length, Position::Vpos.ridge_length = @save_size
       end
       it do
-        player_basic_test.board.to_s.should == <<-EOT.strip_heredoc
+        player_test.board.to_s.should == <<-EOT.strip_heredoc
   ５ ４ ３ ２ １
 +---------------+
 | ・ ・ ・ ・ ・|一
