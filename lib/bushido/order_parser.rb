@@ -73,8 +73,6 @@ module Bushido
         end
       end
 
-      # @prev_player_point = @player.prev_player.moved_point
-
       @md = nil                 # MatchData を保持していると Marshal.dump できないため。
 
       self
@@ -300,7 +298,6 @@ module Bushido
         :promoted          => @promoted,
         :promote_trigger   => @promote_trigger,
         :source_point      => @source_point,
-        :moved_point       => @point,
         :piece             => @piece,
         :put_on_trigger    => @put_on_trigger,
         :candidate         => @candidate,

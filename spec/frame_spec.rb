@@ -95,7 +95,6 @@ EOT
       mediator.prev_player.location      == dup.prev_player.location
       mediator.prev_player.to_s_pieces   == dup.prev_player.to_s_pieces
       mediator.prev_player.to_s_soldiers == dup.prev_player.to_s_soldiers
-      mediator.prev_player.moved_point   == dup.prev_player.moved_point
       mediator.prev_player.last_piece    == dup.prev_player.last_piece
     end
 

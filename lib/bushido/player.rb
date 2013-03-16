@@ -33,7 +33,7 @@ module Bushido
     #   basic_test(params).soldier_names.sort
     # end
 
-    attr_accessor :name, :location, :mediator, :last_piece, :parsed_info, :moved_point
+    attr_accessor :name, :location, :mediator, :last_piece, :parsed_info
 
     def initialize(mediator, params = {})
       super() if defined? super
@@ -57,7 +57,6 @@ module Bushido
     def marshal_dump
       {
         :name         => @name,
-        :moved_point  => @moved_point,
         :location     => @location,
         :last_piece   => @last_piece,
         :pieces       => @pieces.collect(&:sym_name),
@@ -70,7 +69,6 @@ module Bushido
     # これ不要かも
     def marshal_load(attrs)
       @name        = attrs[:name]
-      @moved_point = attrs[:moved_point]
       @location    = attrs[:location]
       @last_piece  = attrs[:last_piece]
       @pieces      = attrs[:pieces].collect{|v|Piece[v]}
@@ -198,15 +196,8 @@ module Bushido
         return
       end
       @parsed_info = OrderParser.new(self).execute(str)
-      @moved_point = @parsed_info.point
       @mediator.log_stock(self)
     end
-
-    # def moved_point
-    #   if @parsed_info
-    #     @parsed_info.point
-    #   end
-    # end
 
     def inspect
       [("-" * 40), super, board_with_pieces, ("-" * 40)].join("\n")
