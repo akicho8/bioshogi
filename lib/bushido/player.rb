@@ -189,9 +189,7 @@ module Bushido
 
     # # 前の位置(同に使う)
     def point_logs
-      if @mediator
-        @mediator.point_logs
-      end
+      @mediator.point_logs
     end
 
     # 棋譜の入力
@@ -201,6 +199,7 @@ module Bushido
       end
       @parsed_info = OrderParser.new(self).execute(str)
       @moved_point = @parsed_info.point
+      @mediator.log_stock(self)
     end
 
     # def moved_point

@@ -195,7 +195,7 @@ module Bushido
           return
         end
         current_player.execute(str)
-        log_stock(current_player)
+        # log_stock(current_player)
         @counter += 1
       end
     end
@@ -259,7 +259,7 @@ module Bushido
         else
           player = players[Location[op[:location]].index]
           player.execute(op[:input])
-          log_stock(player)
+          # log_stock(player)
           frames << deep_dup
           if block
             yield frames.last
