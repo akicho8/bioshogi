@@ -43,12 +43,12 @@ module Bushido
       end
     end
 
-    it "復元できるかテスト" do
-      player = player_test(:init => "5五歩")
-      soldier = player.soldiers.first
-      soldier.formality_name.should == "▲5五歩"
-      soldier = Marshal.load(Marshal.dump(soldier))
-      soldier.formality_name.should == "▲5五歩"
-    end
+    # it "復元できるかテスト" do
+    #   player = player_test(:init => "5五歩")
+    #   soldier = player.soldiers.first
+    #   soldier.formality_name.should == "▲5五歩"
+    #   soldier = Marshal.load(Marshal.dump(soldier))
+    #   soldier.formality_name.should == "▲5五歩"
+    # end
   end
 end

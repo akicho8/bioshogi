@@ -65,16 +65,18 @@ class Brawser < Sinatra::Base
       REDIS.set(@session_id, Marshal.dump(mediator))
     end
 
-    @mediator = Marshal.load(REDIS.get(@session_id))
+    dump = Marshal.load(REDIS.get(@session_id))
+    @mediator = Bushido::Mediator.from_dump(dump)
 
     if params[:location].blank? || @mediator.current_player.location.key.to_s == params[:location]
       if params[:way].present?
         @mediator.execute(params[:way])
       end
       if params[:auto].present?
-        if way = @mediator.current_player.generate_way.presence
-          # if way = @mediator.current_player.brain.best_way.presence
-          @mediator.execute(way)
+        # if way = @mediator.current_player.generate_way.presence
+        eval_list = @mediator.current_player.brain.eval_list
+        if info = eval_list.first(2).sample
+          @mediator.execute(info[:way])
         end
       end
     end

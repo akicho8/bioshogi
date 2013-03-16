@@ -527,8 +527,11 @@
 
 ** BUG
 
+   - TypeError at /effective_patterns can't dump MatchData file: frame.rb location: dump line: 156
+
 ** _TODO_
 
+   - 手の候補を表示する
    - mediator の元を mediator にする
    - board と player に mediator を【常に】渡す
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。

@@ -119,7 +119,7 @@ EOT
       sequencer.frames
     end
 
-    it "フレームのサンドボックス実行(ここは deep_dup のテストがあるから不要か)" do
+    it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.testcase3(:init => ["１二歩"])
       mediator.player_at(:black).to_s_soldiers.should == "1二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"

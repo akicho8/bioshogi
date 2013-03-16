@@ -99,31 +99,57 @@ module Bushido
   end
 
   module Serialization
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def from_dump(object)
+        o = new
+        o.replace(object)
+        o
+      end
+    end
+
     # TODO: Player の marshal_dump が使われてない件について調べる
     def marshal_dump
       {
         :counter         => @counter,
         :players         => @players,
         :simple_kif_logs => @simple_kif_logs,
-        :human_kif_logs => @human_kif_logs,
+        :human_kif_logs  => @human_kif_logs,
         :point_logs      => @point_logs,
       }
     end
 
     def marshal_load(attrs)
-      @counter      = attrs[:counter]
-      @players    = attrs[:players]
-      @simple_kif_logs   = attrs[:simple_kif_logs]
-      @human_kif_logs   = attrs[:human_kif_logs]
-      @point_logs = attrs[:point_logs]
+      @counter         = attrs[:counter]
+      @players         = attrs[:players]
+      @simple_kif_logs = attrs[:simple_kif_logs]
+      @human_kif_logs  = attrs[:human_kif_logs]
+      @point_logs      = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
-        # player.board = @board
         player.mediator = self
       }
       @players.collect{|player|
         player.render_soldiers
       }
+    end
+
+    # deep_dup しておくこと
+    def replace(object)
+      @counter         = object.counter
+      @players         = object.players
+      @simple_kif_logs = object.simple_kif_logs
+      @human_kif_logs  = object.human_kif_logs
+      @point_logs      = object.point_logs
+      @board = Board.new
+      @players.each{|player|
+        player.mediator = self
+      }
+      @players.collect{|player|
+        player.render_soldiers
+      }
+      self
     end
 
     def deep_dup
@@ -150,14 +176,15 @@ module Bushido
     end
 
     def stack_push
-      @stack.push(deep_dup)
+      @stack.push(Marshal.dump(self))
     end
 
     def stack_pop
       if @stack.empty?
         raise HistroyStackEmpty
       end
-      marshal_load(@stack.pop.marshal_dump)
+      bin = @stack.pop
+      replace(Marshal.load(bin))
     end
   end
 
@@ -179,6 +206,14 @@ module Bushido
         mediator.execute(params[:exec])
         mediator
       end
+      # def testcase4(params = {})
+      #   params = {
+      #   }.merge(params)
+      #   mediator = new
+      #   (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init, :from_piece => false)}
+      #   mediator.execute(params[:exec])
+      #   mediator
+      # end
     end
 
     def initialize(*)

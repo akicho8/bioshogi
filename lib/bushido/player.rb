@@ -7,25 +7,25 @@ module Bushido
     #   params = {
     #     :player => :black,
     #   }.merge(params)
-    # 
+    #
     #   player = Player.new(:location => params[:player], :board => Board.new, :deal => true)
-    # 
+    #
     #   # 最初にくばるオプション(追加で)
     #   player.deal(params[:deal])
-    # 
+    #
     #   player.initial_soldiers(params[:init])
     #   if params[:piece_plot]
     #     player.piece_plot
     #   end
-    # 
+    #
     #   Array.wrap(params[:exec]).each{|v|player.execute(v)}
-    # 
+    #
     #   # あとでくばる(というかセットする)
     #   if params[:pieces]
     #     player.piece_discard
     #     player.deal(params[:pieces])
     #   end
-    # 
+    #
     #   player
     # end
 
@@ -53,49 +53,49 @@ module Bushido
       @mediator.board
     end
 
-    # TODO: これ不要かも
-    def marshal_dump
-      {
-        :name         => @name,
-        :location     => @location,
-        :last_piece   => @last_piece,
-        :pieces       => @pieces.collect(&:sym_name),
-        :soldiers     => @soldiers.collect(&:formality_name2),
-      }
-    end
+    # # TODO: これ不要かも
+    # def marshal_dump
+    #   {
+    #     :name         => @name,
+    #     :location     => @location,
+    #     :last_piece   => @last_piece,
+    #     :pieces       => @pieces.collect(&:sym_name),
+    #     :soldiers     => @soldiers.collect(&:formality_name2),
+    #   }
+    # end
+    #
+    # # TODO: 高速化
+    # # というか mediator で marshal_dump したとき、呼ばれてない？
+    # # これ不要かも
+    # def marshal_load(attrs)
+    #   @name        = attrs[:name]
+    #   @location    = attrs[:location]
+    #   @last_piece  = attrs[:last_piece]
+    #   @pieces      = attrs[:pieces].collect{|v|Piece[v]}
+    #   @soldiers = attrs[:soldiers].collect{|soldier|
+    #     Soldier.new(Utils.parse_str(soldier).merge(:player => self))
+    #   }
+    #
+    #   # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
+    #   # 継ぎ接ぎ的なコードが多いからそう感じるだけなのか、それとも合っているのか
+    #   # if board
+    #   #   board.surface.clear
+    #   #   render_soldiers
+    #   # end
+    # end
 
-    # TODO: 高速化
-    # というか mediator で marshal_dump したとき、呼ばれてない？
-    # これ不要かも
-    def marshal_load(attrs)
-      @name        = attrs[:name]
-      @location    = attrs[:location]
-      @last_piece  = attrs[:last_piece]
-      @pieces      = attrs[:pieces].collect{|v|Piece[v]}
-      @soldiers = attrs[:soldiers].collect{|soldier|
-        Soldier.new(Utils.parse_str(soldier).merge(:player => self))
-      }
-
-      # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
-      # 継ぎ接ぎ的なコードが多いからそう感じるだけなのか、それとも合っているのか
-      # if board
-      #   board.surface.clear
-      #   render_soldiers
-      # end
-    end
-
-    # サンドボックス実行用
-    # TODO: これも不要かも
-    def sandbox_for(&block)
-      _save = marshal_dump
-      begin
-        if block_given?
-          yield self
-        end
-      ensure
-        marshal_load(_save)
-      end
-    end
+    # # サンドボックス実行用
+    # # TODO: これも不要かも
+    # def sandbox_for(&block)
+    #   _save = marshal_dump
+    #   begin
+    #     if block_given?
+    #       yield self
+    #     end
+    #   ensure
+    #     marshal_load(_save)
+    #   end
+    # end
 
     # 先手後手を設定は適当でいい
     #   player.location = :white
@@ -366,6 +366,10 @@ module Bushido
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
       soldiers = board.pieces_of_vline(point.x)
+
+      # p "%x" % object_id
+      # p soldiers
+
       soldiers = soldiers.find_all{|s|s.player == self}
       soldiers = soldiers.find_all{|s|!s.promoted?}
       soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
@@ -461,20 +465,21 @@ module Bushido
       eval_list.first[:way]
     end
 
-    # def eval_list
-    #   score_info = all_ways.each_with_object([]){|way, ary|
-    #     # @player.sandbox_for do
-    #     #   @player.execute(way)
-    #     #   ary << {:way => way, :score => @player.evaluate}
-    #     # end
-    #     # @player.mediator.sandbox_for do
-    #     #   p @player.board
-    #     #   @player.execute(way)
-    #     #   ary << {:way => way, :score => @player.evaluate}
-    #     # end
-    #   }
-    #   score_info.sort_by{|e|-e[:score]}
-    # end
+    def eval_list
+      score_info = all_ways.each_with_object([]){|way, ary|
+        @player.mediator.sandbox_for do |_mediator|
+          _player = _mediator.player_at(@player.location)
+          _player.execute(way)
+          ary << {:way => way, :score => _player.evaluate}
+        end
+        # @player.mediator.sandbox_for do
+        #   p @player.board
+        #   @player.execute(way)
+        #   ary << {:way => way, :score => @player.evaluate}
+        # end
+      }
+      score_info.sort_by{|e|-e[:score]}
+    end
 
     # 盤上の駒の全手筋
     def soldiers_ways
