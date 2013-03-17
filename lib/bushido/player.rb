@@ -262,25 +262,19 @@ module Bushido
       #   player.to_s_pieces # => "飛 歩二"
       #
       def deal(str = Utils.first_distributed_pieces)
-        @pieces += Utils.stand_parse(str)
+        @pieces += Utils.stand_unpack(str)
       end
 
       # 持駒を文字列化したものをインポートする(未使用)
       #   player.import_from_s_pieces("歩九 角 飛 香二 桂二 銀二 金二 玉")
       def import_from_s_pieces(str)
-        @pieces = Utils.stand_parse(str)
+        @pieces = Utils.stand_unpack(str)
       end
 
       # 持駒の文字列化
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
-        pieces.group_by{|e|e.class}.collect{|klass, pieces|
-          count = ""
-          if pieces.size > 1
-            count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
-          end
-          "#{pieces.first.name}#{count}"
-        }.join(SEPARATOR)
+        Utils.stand_pack(pieces)
       end
     end
 

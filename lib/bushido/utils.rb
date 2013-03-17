@@ -25,9 +25,21 @@ module Bushido
       end
     end
 
-    # 台上の持駒文字列をハッシュ配列化
-    #   stand_parse("飛 香二") # => [{:piece => Piece["飛"], :count => 1}, {:piece => Piece["香"], :count => 2}]
-    def stand_parse(str)
+    # 持駒表記変換 (人間表記 → コード)
+    #  Utils.stand_pack([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二 飛"
+    def stand_pack(pieces)
+      pieces.group_by{|e|e.class}.collect{|klass, pieces|
+        count = ""
+        if pieces.size > 1
+          count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
+        end
+        "#{pieces.first.name}#{count}"
+      }.join(SEPARATOR)
+    end
+
+    # 持駒表記変換 (コード → 人間表記)
+    #   Utils.stand_unpack("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
+    def stand_unpack(str)
       if String === str
         str = str.tr("〇一二三四五六七八九", "0-9")
         infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
