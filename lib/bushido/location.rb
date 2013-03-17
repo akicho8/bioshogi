@@ -32,7 +32,7 @@ module Bushido
 
     # 属性っぽい値を全部返す
     def match_target_values
-      [key, mark, other_marks, name, name.chars.first, index].flatten
+      [key, mark, other_marks, name, name.chars.first, index, varrow].flatten
     end
 
     # 先手ならaを後手ならbを返す
@@ -41,8 +41,8 @@ module Bushido
     end
 
     @pool ||= [
-      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼"], :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
-      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"], :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
+      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
+      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"],      :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
     ]
 
     class << self

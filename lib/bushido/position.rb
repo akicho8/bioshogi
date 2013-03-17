@@ -34,6 +34,15 @@ module Bushido
         (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a.send(_arrow, ridge_length)
       end
 
+      # # 右上からのインデックスで参照できるように返す
+      # def self.units_from_right_top(index, options = {})
+      #   if _arrow == :last
+      #     units.reverse
+      #   else
+      #     units
+      #   end
+      # end
+
       def initialize(value)
         @value = value
       end

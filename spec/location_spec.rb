@@ -14,6 +14,12 @@ module Bushido
       Location["1手目"].key.should == :black
     end
 
+    it "板パース時に楽するため" do
+      Location[" "].key.should     == :black
+      Location["^"].key.should     == :black
+      Location["v"].key.should     == :white
+    end
+
     it "「n手目」は特別に n - 1 を index として parse している" do
       Location["0手目"].name.should == "後手" # 反則として「0手目」があるため上下限チェックは入れず緩くしておく
       Location["1手目"].name.should == "先手"

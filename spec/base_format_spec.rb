@@ -4,22 +4,54 @@ require "spec_helper"
 
 module Bushido
   describe BaseFormat do
-    it "盤面のパース" do
-      contents = <<-EOT
-  ９ ８ ７ ６ ５ ４ ３ ２ １
-+---------------------------+
-| ・v桂 ・ ・ 馬 ・ ・v桂v香|一
-|v飛 ・ ・ ・ ・ と ・ ・ ・|二
-| ・ ・ ・ 全v歩 ・v玉 ・ ・|三
-| ・ ・ ・ ・ ・ ・v桂 ・v金|四
-| ・v歩 ・ ・ ・ 銀v歩v歩v歩|五
-|v歩 ・ 歩v角 ・ ・ ・ ・ ・|六
-| ・ 歩 銀v歩vと ・ ・ ・ ・|七
-| 歩 ・ 玉 香 ・ ・ ・ ・ 香|八
-| 香 桂 ・ ・ ・ ・ 飛 ・ ・|九
-+---------------------------+
-EOT
-      BaseFormat.board_parse(contents).should == {:white => ["８一桂", "２一桂", "１一香", "９二飛", "５三歩", "３三玉", "３四桂", "１四金", "８五歩", "３五歩", "２五歩", "１五歩", "９六歩", "６六角", "６七歩", "５七と"], :black => ["５一馬", "４二と", "６三全", "４五銀", "７六歩", "８七歩", "７七銀", "９八歩", "７八玉", "６八香", "１八香", "９九香", "８九桂", "３九飛"]}
+    it "座標がない場合は右上の盤面とする" do
+      BaseFormat.board_parse(<<-BOARD).should == {:white => ["１一歩"], :black => ["１二歩"]}
++------+
+| ・v歩|
+| ・ 歩|
++------+
+BOARD
+    end
+
+    it "座標の指定があれば任意のエリアを表現できる" do
+      BaseFormat.board_parse(<<-BOARD).should == {:black => ["８九歩"], :white => ["８八歩"]}
+  ９ ８
++------+
+| ・v歩|八
+| ・ 歩|九
++------+
+BOARD
+    end
+
+    it "盤面の「・」は不要" do
+      BaseFormat.board_parse(<<-BOARD).should == {:white => ["１一歩"], :black => ["１二歩"]}
++------+
+|   v歩|
+|    歩|
++------+
+BOARD
+    end
+
+    it "先手後手の表現" do
+      BaseFormat.board_parse("+---+\| 金|\n+---+").should == {:black => ["１一金"], :white => []}
+      BaseFormat.board_parse("+---+\|^金|\n+---+").should == {:black => ["１一金"], :white => []}
+      BaseFormat.board_parse("+---+\|v金|\n+---+").should == {:black => [],         :white => ["１一金"]}
+    end
+
+    context "あえて緩くしている部分" do
+      it "駒のチェックなし" do
+        BaseFormat.board_parse("+---+\| ★|\n+---+").should == {:black => ["１一★"], :white => []}
+      end
+
+      it "座標の名前のチェックなし" do
+        BaseFormat.board_parse(<<-BOARD).should == {:black => ["AY歩"], :white => ["AX歩"]}
+  B  A
++------+
+| ・v歩|X
+| ・ 歩|Y
++------+
+BOARD
+      end
     end
   end
 end

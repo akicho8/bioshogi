@@ -35,21 +35,23 @@ module Bushido
     def self.board_parse(source)
       str = BaseFormat.normalized_source(source)
       lines = str.strip.lines.to_a
-      x_units = lines.first.strip.split(/\s+/)                   # 一行目のX座標の単位取得
-      lines = lines.find_all{|line|line.start_with?("|")}
-      y_units = lines.collect{|line|line.match(/(?<y>.)\n/)[:y]}
-      lines = lines.collect{|line|line.match(/\|(?<content>.*)\|/)[:content]}
 
-      players = {}
-      players[:white] = []
-      players[:black] = []
+      s = lines.first
+      if s.match("-")
+        x_units = Position::Hpos.units(:zenkaku => true).last(s.gsub("---", "-").count("-"))
+      else
+        x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
+      end
 
-      lines.each_with_index{|line, y_index|
-        line.scan(/(.)(\S)/).each_with_index{|(prefix, piece), x_index|
-          player = players[prefix == " " ? :black : :white]
-          if piece == "・"
-          else
-            player << [x_units[x_index], y_units[y_index], piece].join
+      mds = lines.collect{|v|v.match(/\|(?<inline>.*)\|(?<y>.)?/)}.compact
+      y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(:zenkaku => true)[i]}
+      inlines = mds.collect{|v|v[:inline]}
+
+      players = Location.inject({}){|h, location|h.merge(location.key => [])}
+      inlines.each_with_index{|s, y|
+        s.scan(/(.)(\S|\s{2})/).each_with_index{|(prefix, piece), x|
+          unless piece == "・" || piece.strip == ""
+            players[Location[prefix].key] << [x_units[x], y_units[y], piece].join
           end
         }
       }
