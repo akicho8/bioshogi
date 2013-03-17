@@ -13,6 +13,10 @@ module Bushido
       source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
     end
 
+    def self.board_string?(source)
+      BaseFormat.normalized_source(source).match(/^[\+\|]/)
+    end
+
     # ほぼ標準の柿木フォーマットのテーブルの読み取り
     #
     #   str = "

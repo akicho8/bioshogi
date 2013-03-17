@@ -285,6 +285,7 @@ module Bushido
         elsif op == "pop"
           stack_pop
         else
+          # p op
           player = players[Location[op[:location]].index]
           player.execute(op[:input])
           # log_stock(player)

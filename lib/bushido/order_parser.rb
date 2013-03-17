@@ -16,6 +16,9 @@ module Bushido
       @md = @source.match(@regexp)
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
+      # # @md が MatchData のままだと Marshal.dump できない病で死にます
+      # @md = @md.names.inject({}){|h, k|h.merge(k.to_sym => @md[k])} # to_h とかあるはず(？)
+
       read_point
 
       @promoted, @piece = Piece.parse!(@md[:piece]).values_at(:promoted, :piece)
@@ -73,7 +76,7 @@ module Bushido
         end
       end
 
-      @md = nil                 # MatchData を保持していると Marshal.dump できないため。
+      @md = nil                 # MatchData を保持していると Marshal.dump できないため。(これやるまえにraiseで飛んでるんだろうか)
 
       self
     end

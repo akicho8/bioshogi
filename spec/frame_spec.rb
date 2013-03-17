@@ -141,12 +141,96 @@ EOT
 
     # it "EffectivePatterns" do
     #   require "bushido/contrib/effective_patterns"
-    #   v = EffectivePatterns[1]
-    #   p v
-    #   mediator = SimulatorFrame.new(v)
-    #   p mediator.players.first
-    #
-    #   p mediator.to_all_frames
+    #   EffectivePatterns.each{|v|
+    #     p v
+    #     mediator = SimulatorFrame.new(v)
+    #     puts mediator.board
+    #     mediator.to_all_frames
+    #   }
     # end
+
+    # it "歩を打つとエラー？？？ → かんけいなし" do
+    #   value = {
+    #     :pieces  => {:black => "歩"},
+    #     :execute => "▲５五歩",
+    #     :board   => "全落ち",
+    #   }
+    #   mediator = SimulatorFrame.new(value)
+    #   p mediator
+    #   # puts mediator.board
+    #   mediator.to_all_frames{|f|p f}
+    # end
+
+    if true
+      it "これがおかしい。▲９七歩打 で Marshal.dump に失敗する。MatchData を誰がもっているのか。" do
+        value = {
+          :title => "後手棒銀の矢倉崩し",
+          :comment => "9筋の突破",
+          :url => "http://home.att.ne.jp/aqua/DAIJIN/joseki/bougin10.html",
+          # :execute => "▲７六歩 △８四歩 ▲６八銀 △８五歩 ▲７七銀 △３四歩 ▲７八金 △４二銀 ▲４八銀 △５二金右 ▲５六歩 △５四歩 ▲２六歩 △４四歩 ▲６九玉 △４三金 ▲５八金 △３三銀 ▲６六歩 △３一角 ▲６七金右 △４二玉 ▲３六歩 △３二玉 ▲７九角 △２二玉 ▲６八角 △３二金 ▲７九玉 △９四歩 ▲９六歩 △７二銀 ▲８八玉 △８三銀 ▲２五歩 △８四銀 ▲４六歩 △９五歩 ▲同歩 △同銀 ▲同香 △同香 ▲９七歩打 △９二飛 ▲９八銀打 △９三香打 ▲４七銀 △９七香成 ▲同桂 △同香成 ▲同銀 △同角成 ▲８九玉 △９八銀打",
+          :execute => [
+            "▲７六歩",
+            "△８四歩",
+            "▲６八銀",
+            "△８五歩",
+            "▲７七銀",
+            "△３四歩",
+            "▲７八金",
+            "△４二銀",
+            "▲４八銀",
+            "△５二金右",
+            "▲５六歩",
+            "△５四歩",
+            "▲２六歩",
+            "△４四歩",
+            "▲６九玉",
+            "△４三金",
+            "▲５八金",
+            "△３三銀",
+            "▲６六歩",
+            "△３一角",
+            "▲６七金右",
+            "△４二玉",
+            "▲３六歩",
+            "△３二玉",
+            "▲７九角",
+            "△２二玉",
+            "▲６八角",
+            "△３二金",
+            "▲７九玉",
+            "△９四歩",
+            "▲９六歩",
+            "△７二銀",
+            "▲８八玉",
+            "△８三銀",
+            "▲２五歩",
+            "△８四銀",
+            "▲４六歩",
+            "△９五歩",
+            "▲同歩",
+            "△同銀",
+            "▲同香",
+            "△同香",
+            "▲９七歩打",
+            "△９二飛",
+            "▲９八銀打",
+            "△９三香打",
+            "▲４七銀",
+            "△９七香成",
+            "▲同桂",
+            "△同香成",
+            "▲同銀",
+            "△同角成",
+            "▲８九玉",
+            # "△９八銀打",
+          ].join(" "),
+          :board => "平手",
+        }
+        mediator = SimulatorFrame.new(value)
+        # puts mediator.board
+        # mediator.to_all_frames{|f|p f}
+        mediator.to_all_frames
+      end
+    end
   end
 end

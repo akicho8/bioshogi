@@ -21,13 +21,16 @@ module Bushido
     #   Utils.initial_placements_for(:black, "+----+\n|...") # => [...]
     def initial_placements_for(location, name = nil)
       name = name.presence || "平手"
-      if name.match(/^\s*\|.*\|/) # フィールドの場合
+      if BaseFormat.board_string?(name)
         board_lib = name
       else
         # board_lib = BoardLibs.fetch(name.presence || "平手")
         board_lib = BoardLibs.fetch(name)
       end
       initial_placements = BaseFormat.board_parse(board_lib)
+      if initial_placements[:white].present?
+        raise SyntaxError, "先手側から見たデータを反転して使うのでここでは後手のデータは定義できません : #{name}"
+      end
       initial_placements[:black].collect do |arg|
         info = Utils.parse_str(arg)
         info[:point] = info[:point].as_location(location)
@@ -40,10 +43,16 @@ module Bushido
     end
 
     # 要テスト
+    #   board_init_type("+-----")                              # そのまま棋譜が入ってれいばそのままパース
+    #   board_init_type("角落ち")                              # 先手だけが角落ち(下と同じ)
+    #   board_init_type("先手" => "角落ち", "後手" => "平手")  # 先手だけが角落ち
+    #   board_init_type("先手" => "平手", "後手" => "角落ち")  # 後手が角落ち
     def board_init_type(value = nil)
       if Hash === value
         # {"先手" => "角落ち", "後手" => "香落ち"}
         value.inject({}){|hash, (k, v)|hash.merge(k => Utils.initial_placements_for(k, v))}
+      elsif BaseFormat.board_string?(value)
+        BaseFormat.board_parse(value)
       else
         # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
         board_init_type("先手" => (value || "平手"), "後手" => "平手")
