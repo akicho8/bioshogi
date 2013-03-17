@@ -8,10 +8,5 @@ module Bushido
       board = Board.new
       board["５五"].should == nil
     end
-
-    it "サンプル" do
-      board = Board.new
-      board["５五"].should == nil
-    end
   end
 end

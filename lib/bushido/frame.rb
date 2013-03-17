@@ -83,15 +83,8 @@ module Bushido
       @board = Board.new
     end
 
-    # TODO: 「香落ち」対応。香落ちなどは先手と決まっている
-    def board_reset(value)
-      if value.blank? || value == :default || value == "平手"
-        hash = Location.inject({}){|hash, v|hash.merge(v => Utils.initial_placements_for(v))}
-      elsif Array === value
-        hash = value.inject({}){|hash, v|hash.merge(v => Utils.initial_placements_for(v))}
-      else
-        hash = BaseFormat.board_parse(value)
-      end
+    def board_reset(name = nil)
+      hash = Utils.board_init_type(name)
       hash.each{|k, v|
         player_at(k).initial_soldiers(v, :from_piece => false)
       }

@@ -16,12 +16,37 @@ module Bushido
     end
 
     # 平手での指定プレイヤー側の初期配置
-    #   Utils.initial_placements_for(:black) # => ["9七歩", "8七歩", ...]
-    def initial_placements_for(location)
-      initial_placements.collect do |arg|
-        Utils.parse_str(arg).tap do |info|
-          info[:point] = info[:point].as_location(location)
-        end
+    #   Utils.initial_placements_for(:black, "平手") # => ["9七歩", "8七歩", ...]
+    #   Utils.initial_placements_for(:black, "角落ち") # => [...]
+    #   Utils.initial_placements_for(:black, "+----+\n|...") # => [...]
+    def initial_placements_for(location, name = nil)
+      name = name.presence || "平手"
+      if name.match(/^\s*\|.*\|/) # フィールドの場合
+        board_lib = name
+      else
+        # board_lib = BoardLibs.fetch(name.presence || "平手")
+        board_lib = BoardLibs.fetch(name)
+      end
+      initial_placements = BaseFormat.board_parse(board_lib)
+      initial_placements[:black].collect do |arg|
+        info = Utils.parse_str(arg)
+        info[:point] = info[:point].as_location(location)
+        info
+      end
+    end
+
+    def sinfo_to_s(sinfo)
+      "#{sinfo[:point].name}#{sinfo[:piece].some_name(sinfo[:promoted])}"
+    end
+
+    # 要テスト
+    def board_init_type(value = nil)
+      if Hash === value
+        # {"先手" => "角落ち", "後手" => "香落ち"}
+        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.initial_placements_for(k, v))}
+      else
+        # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
+        board_init_type("先手" => (value || "平手"), "後手" => "平手")
       end
     end
 
@@ -93,12 +118,12 @@ module Bushido
 
     private
 
-    def initial_placements
-      [
-        "9七歩", "8七歩", "7七歩", "6七歩", "5七歩", "4七歩", "3七歩", "2七歩", "1七歩",
-        "8八角", "2八飛",
-        "9九香", "8九桂", "7九銀", "6九金", "5九玉", "4九金", "3九銀", "2九桂", "1九香",
-      ].compact
-    end
+    # def initial_placements
+    #   [
+    #     "9七歩", "8七歩", "7七歩", "6七歩", "5七歩", "4七歩", "3七歩", "2七歩", "1七歩",
+    #     "8八角", "2八飛",
+    #     "9九香", "8九桂", "7九銀", "6九金", "5九玉", "4九金", "3九銀", "2九桂", "1九香",
+    #   ].compact
+    # end
   end
 end

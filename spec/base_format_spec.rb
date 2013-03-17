@@ -39,10 +39,6 @@ BOARD
     end
 
     context "あえて緩くしている部分" do
-      it "駒のチェックなし" do
-        BaseFormat.board_parse("+---+\| ★|\n+---+").should == {:black => ["１一★"], :white => []}
-      end
-
       it "座標の名前のチェックなし" do
         BaseFormat.board_parse(<<-BOARD).should == {:black => ["AY歩"], :white => ["AX歩"]}
   B  A
@@ -50,6 +46,20 @@ BOARD
 | ・v歩|X
 | ・ 歩|Y
 +------+
+BOARD
+      end
+    end
+
+    context "エラー" do
+      it "駒がおかしい" do
+        expect { BaseFormat.board_parse("+---+\| ★|\n+---+") }.to raise_error(SyntaxError, /駒の指定が違う/)
+      end
+
+      it "横幅が3桁毎になっていない" do
+        expect { BaseFormat.board_parse(<<-BOARD) }.to raise_error(SyntaxError, /横幅が3桁毎になっていない/)
++--+
+|歩|
++--+
 BOARD
       end
     end

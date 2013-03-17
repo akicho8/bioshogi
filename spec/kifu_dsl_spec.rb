@@ -34,9 +34,7 @@ module Bushido
       end
 
       it "board" do
-        test_sequencer{ board :default }.board
         test_sequencer{ board "平手" }.board
-        test_sequencer{ board ["先手"] }.board # FIXME: この仕様ちょっと変だ。検討
         test_sequencer{ board }.board
       end
 

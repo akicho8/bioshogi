@@ -185,7 +185,7 @@ module Bushido
       title "(title)"
       comment "(comment)"
       pieces :black => "歩"
-      board :default
+      board "平手"
       mov "▲７六歩", "▲２六歩"
       mov "△３四歩"
       # push

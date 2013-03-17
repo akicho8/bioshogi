@@ -85,6 +85,7 @@ require_relative "bushido/player"
 require_relative "bushido/order_parser"
 require_relative "bushido/movabler"
 require_relative "bushido/kifu_dsl"
+require_relative "bushido/board_libs"
 require_relative "bushido/frame"
 
 require_relative "bushido/base_format"
@@ -105,3 +106,4 @@ module Bushido
     puts mediator
   end
 end
+

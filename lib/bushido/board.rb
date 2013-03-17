@@ -90,6 +90,9 @@ module Bushido
     def to_s_soldiers
       @surface.values.collect(&:formality_name2).sort.join(" ")
     end
+    def to_s_soldiers2
+      @surface.values.collect(&:formality_name).sort.join(" ")
+    end
 
     private
 
