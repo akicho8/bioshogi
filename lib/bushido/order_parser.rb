@@ -37,7 +37,7 @@ module Bushido
         end
       end
 
-      @put_on_trigger = @md[:suffix].to_s.match(/打/)
+      @put_on_trigger = @md[:suffix].to_s.include?("打")
       @source_point = nil
       @done = false
       @candidate = nil
