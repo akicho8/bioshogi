@@ -38,7 +38,7 @@ BOARD
       BaseFormat.board_parse("+---+\|v金|\n+---+").should == {:black => [],         :white => ["１一金"]}
     end
 
-    context "あえて緩くしている部分" do
+    describe "あえて緩くしている部分" do
       it "座標の名前のチェックなし" do
         BaseFormat.board_parse(<<-BOARD).should == {:black => ["AY歩"], :white => ["AX歩"]}
   B  A
@@ -50,7 +50,7 @@ BOARD
       end
     end
 
-    context "エラー" do
+    describe "エラー" do
       it "駒がおかしい" do
         expect { BaseFormat.board_parse("+---+\| ★|\n+---+") }.to raise_error(SyntaxError, /駒の指定が違う/)
       end

@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe Soldier do
-    context "文字列表現" do
+    describe "文字列表現" do
       before do
         @soldier = player_test(:init => "５五と").soldiers.first
       end

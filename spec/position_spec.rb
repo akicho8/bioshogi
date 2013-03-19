@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe Position do
-    context "座標パース" do
+    describe "座標パース" do
       it "エラー" do
         expect { Position::Hpos.parse("")  }.to raise_error(PositionSyntaxError)
         expect { Position::Hpos.parse(nil) }.to raise_error(PositionSyntaxError)
@@ -23,7 +23,7 @@ module Bushido
       Position::Hpos.value_range.to_s.should == "0...9"
     end
 
-    context "バリデーション" do
+    describe "バリデーション" do
       it "正しい座標" do
         Position::Hpos.parse(0).valid?.should == true
       end
@@ -53,7 +53,7 @@ module Bushido
       Position::Vpos.parse("1").should == Position::Vpos.parse("一")
     end
 
-    context "5x5の盤面" do
+    describe "5x5の盤面" do
       before do
         @save_size = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
         Position::Hpos.ridge_length, Position::Vpos.ridge_length = [5, 5]

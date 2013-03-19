@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe KifFormat do
-    context "kif読み込み" do
+    describe "kif読み込み" do
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path

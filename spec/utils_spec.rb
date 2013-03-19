@@ -12,7 +12,7 @@ module Bushido
       Utils.ki2_input_seq_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => :black, :input => "５五歩"}, {:location => :white, :input => "４四歩"}, "push", {:location => :black, :input => "３三歩"}, "pop"]
     end
 
-    context "持駒表記変換" do
+    describe "持駒表記変換" do
       it "人間表記 → コード" do
         Utils.stand_unpack("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
       end

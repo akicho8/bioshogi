@@ -8,7 +8,7 @@ module Bushido
       player_test.piece_fetch(Piece["歩"]).name.should == "歩"
     end
 
-    context "駒を配る" do
+    describe "駒を配る" do
       it "平手のデフォルト" do
         player_test.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
       end
@@ -17,8 +17,8 @@ module Bushido
       end
     end
 
-    context "配置" do
-      context "できる" do
+    describe "配置" do
+      describe "できる" do
         it "歩を相手の陣地に" do
           player_test2(:init => "5三歩").should == ["▲5三歩"]
         end
@@ -29,7 +29,7 @@ module Bushido
           player_test2(:init => "５五飛", :player => :white).should == ["▽5五飛"]
         end
       end
-      context "できない" do
+      describe "できない" do
         it "成っている金を相手の陣地に" do
           expect { player_test2(:init => "5三成金").to }.to raise_error(SyntaxError)
         end
@@ -61,8 +61,8 @@ module Bushido
 EOT
     end
 
-    context "移動" do
-      context "できる" do
+    describe "移動" do
+      describe "できる" do
         it "普通に" do
           player_test2(:init => "７七歩", :exec => "７六歩").should == ["▲7六歩"]
         end
@@ -82,7 +82,7 @@ EOT
         it "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
           player_test2(:init => ["６九金", "４九金"], :exec => "５九金(49)").should == ["▲5九金", "▲6九金"]
         end
-        context "「と」と「歩」が縦列にある状態でどちらを進めても二歩にならない" do
+        describe "「と」と「歩」が縦列にある状態でどちらを進めても二歩にならない" do
           it "とを進める" do
             player_test2(:init => ["１二と", "１四歩"], :exec => "１三歩").should == ["▲1三歩", "▲1二と"]
           end
@@ -92,7 +92,7 @@ EOT
         end
       end
 
-      context "できない" do
+      describe "できない" do
         it "４二に移動できる銀が見つからず、持駒の銀を打とうとしたが、４二にはすでに駒があったので" do
           expect { player_test2(:init => "４二銀", :exec => "４二銀") }.to raise_error(PieceAlredyExist)
         end
@@ -107,8 +107,8 @@ EOT
         end
       end
 
-      context "成" do
-        context "成れる" do
+      describe "成" do
+        describe "成れる" do
           it "相手陣地に入るときに成る" do
             player_test2(:init => "２四歩", :exec => "２三歩成").should == ["▲2三と"]
           end
@@ -119,7 +119,7 @@ EOT
             player_test2(:player => :white, :init => "４五桂", :exec => "５七桂成").should == ["▽5七圭"]
           end
         end
-        context "成れない" do
+        describe "成れない" do
           it "自分の陣地に入るタイミングでは" do
             expect { player_test2(:init => "５五飛", :exec => "５九飛成") }.to raise_error(NotPromotable)
           end
@@ -135,15 +135,15 @@ EOT
         end
       end
 
-      context "不成" do
-        context "できる" do
+      describe "不成" do
+        describe "できる" do
           it "成を明示しなかったので" do
             player_test2(:init => "５五桂", :exec => "４三桂").should == ["▲4三桂"]
           end
           it "不成の指定をしたので" do
             player_test2(:init => "５五桂", :exec => "４三桂不成").should == ["▲4三桂"]
           end
-          context "金が不成するケース" do
+          describe "金が不成するケース" do
             it "不成の指定をしたけど金は不成しかないのでまちがっちゃいないけど「金不成」と棋譜が残るのは違和感がある" do
               expect { player_test(:init => "１四金", :exec => "１三金不成") }.to raise_error(NoPromotablePiece)
             end
@@ -152,15 +152,15 @@ EOT
             end
           end
         end
-        context "できない" do
+        describe "できない" do
           it "移動できる見込みがないとき" do
             expect { player_test2(:init => "５三桂", :exec => "４一桂") }.to raise_error(NotPutInPlaceNotBeMoved)
           end
         end
       end
 
-      context "取る" do
-        context "取れる" do
+      describe "取る" do
+        describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
             mediator.prev_player.last_piece.name.should == "歩"
@@ -183,7 +183,7 @@ EOT
           end
         end
 
-        context "取れない" do
+        describe "取れない" do
           it "初手に同歩" do
             expect { Mediator.testcase3(:exec => "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
           end
@@ -194,8 +194,8 @@ EOT
       end
     end
 
-    context "打つ" do
-      context "打てる" do
+    describe "打つ" do
+      describe "打てる" do
         it "空いているところに" do
           player_test2(:exec => "５五歩打").should == ["▲5五歩"]
         end
@@ -220,7 +220,7 @@ EOT
         end
       end
 
-      context "打てない" do
+      describe "打てない" do
         it "場外に" do
           expect { player_test2(:exec => "５十飛打") }.to raise_error(PositionSyntaxError)
         end
@@ -245,13 +245,13 @@ EOT
       end
     end
 
-    context "人間が入力する棋譜" do
+    describe "人間が入力する棋譜" do
       before do
         @params = {:append_pieces => "飛 角"}
       end
 
-      context "http://www.shogi.or.jp/faq/kihuhyouki.html" do
-        context "龍" do
+      describe "http://www.shogi.or.jp/faq/kihuhyouki.html" do
+        describe "龍" do
           it "パターンA" do
             @params.update(:init => ["９一龍", "８四龍"])
             player_test(@params.merge(:exec => "８二龍引")).parsed_info.last_kif_pair.should == ["8二龍(91)", "8二龍引"]
@@ -279,7 +279,7 @@ EOT
           end
         end
 
-        context "馬" do
+        describe "馬" do
           it "パターンA" do
             @params.update(:init => ["９一馬", "８一馬"])
             player_test(@params.merge(:exec => "８二馬左")).parsed_info.last_kif_pair.should == ["8二馬(91)", "8二馬左"]
@@ -432,7 +432,7 @@ EOT
 EOT
     end
 
-    context "評価" do
+    describe "評価" do
       it "駒を置いてないとき" do
         player_test.evaluate.should == 22284
       end
@@ -441,7 +441,7 @@ EOT
       end
     end
 
-    context "自動的に打つ" do
+    describe "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
         player = player_test(:run_piece_plot => true)
         player.generate_way.present?.should == true
@@ -452,7 +452,7 @@ EOT
       end
     end
 
-    context "GenerateWay" do
+    describe "GenerateWay" do
       before do
         @save_size = Board.size_change([3, 3])
       end
@@ -499,7 +499,7 @@ EOT
       end
     end
 
-    # context "一時的に置いてみた状態にする" do
+    # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
     #     player = player_test(:init => "２二歩", :reset_pieces => "歩")
     #     p player.to_s_soldiers

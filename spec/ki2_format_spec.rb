@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe Ki2Format do
-    context "ki2読み込み" do
+    describe "ki2読み込み" do
       before do
         file = Pathname(__FILE__).dirname.join("sample1.ki2").expand_path
         @result = Ki2Format::Parser.parse(file.read)
@@ -28,7 +28,7 @@ module Bushido
       end
     end
 
-    context "読み込み練習" do
+    describe "読み込み練習" do
       it do
         result = Ki2Format::Parser.parse(Pathname(__FILE__).dirname.join("../resources/竜王戦_ki2/龍王戦2002-15 羽生阿部-3.ki2").read)
         # result.tapp

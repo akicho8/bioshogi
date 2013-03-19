@@ -134,14 +134,14 @@ EOT
     end
 
     # it "盤面初期設定" do
-    #   def test_board_reset(value)
+    #   def board_reset_test(value)
     #     mediator = Mediator.new
     #     mediator.board_reset(value)
     #     mediator.board.to_s
     #   end
-    #   puts test_board_reset("角落ち")
-    #   # test_board_reset("平手").should == "▲1七歩 ▲1九香 ▲2七歩 ▲2九桂 ▲2八飛 ▲3七歩 ▲3九銀 ▲4七歩 ▲4九金 ▲5七歩 ▲5九玉 ▲6七歩 ▲6九金 ▲7七歩 ▲7九銀 ▲8七歩 ▲8九桂 ▲8八角 ▲9七歩 ▲9九香 ▽1一香 ▽1三歩 ▽2一桂 ▽2三歩 ▽2二角 ▽3一銀 ▽3三歩 ▽4一金 ▽4三歩 ▽5一玉 ▽5三歩 ▽6一金 ▽6三歩 ▽7一銀 ▽7三歩 ▽8一桂 ▽8三歩 ▽8二飛 ▽9一香 ▽9三歩"
-    #   # test_board_reset("先手" => "角落ち")
+    #   puts board_reset_test("角落ち")
+    #   # board_reset_test("平手").should == "▲1七歩 ▲1九香 ▲2七歩 ▲2九桂 ▲2八飛 ▲3七歩 ▲3九銀 ▲4七歩 ▲4九金 ▲5七歩 ▲5九玉 ▲6七歩 ▲6九金 ▲7七歩 ▲7九銀 ▲8七歩 ▲8九桂 ▲8八角 ▲9七歩 ▲9九香 ▽1一香 ▽1三歩 ▽2一桂 ▽2三歩 ▽2二角 ▽3一銀 ▽3三歩 ▽4一金 ▽4三歩 ▽5一玉 ▽5三歩 ▽6一金 ▽6三歩 ▽7一銀 ▽7三歩 ▽8一桂 ▽8三歩 ▽8二飛 ▽9一香 ▽9三歩"
+    #   # board_reset_test("先手" => "角落ち")
     # end
 
     # it "EffectivePatterns" do
