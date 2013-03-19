@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Point do
     it "コレクション" do
-      Point.each.should be_present
+      Point.each.present?.should == true
     end
 
     it ".parse は、適当な文字列を内部座標に変換する" do

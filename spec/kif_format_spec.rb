@@ -74,7 +74,7 @@ EOT
 EOT
       info = KifFormat::Parser.parse(contents)
       # pp info
-      info.header[:board].should be_present
+      info.header[:board].present?.should == true
     end
   end
 end

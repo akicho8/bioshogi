@@ -37,7 +37,7 @@ module Bushido
     end
 
     it "Enumerable対応" do
-      Location.each.should be_present
+      Location.each.present?.should == true
     end
   end
 end

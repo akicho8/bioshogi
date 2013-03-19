@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Piece do
     it "コレクション" do
-      Piece.each.should be_present
+      Piece.each.present?.should == true
     end
 
     it "取得" do

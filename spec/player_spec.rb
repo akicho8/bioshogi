@@ -444,7 +444,7 @@ EOT
     context "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
         player = player_test(:run_piece_plot => true)
-        player.generate_way.should be_present
+        player.generate_way.present?.should == true
       end
       it "全手筋" do
         player = player_test(:run_piece_plot => true)
@@ -542,7 +542,7 @@ EOT
     #   player2 = Marshal.load(Marshal.dump(player1))
     #   player2.soldier_names.should == ["▲5八玉"]
     #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
-    #   # player2.board.should be_present # @mediator が nil になっている
+    #   # player2.board.present?.should == true # @mediator が nil になっている
     # end
 
     # it "サンドボックス実行(インスタンスを作り直すわけではないので @board は残っている。というか更新されたまま…)" do
@@ -553,7 +553,7 @@ EOT
     #   player.sandbox_for { player.execute("２二歩打") }
     #   player.to_s_soldiers.should == "1二歩"
     #   player.to_s_pieces.should == "歩"
-    #   player.board.should be_present
+    #   player.board.present?.should == true
     #   player.board.to_s_soldiers.should == "1二歩 2二歩" # ← こうなるのが問題
     # end
 
@@ -570,7 +570,7 @@ EOT
     #   mediator.player_at(:black).to_s_soldiers.should == "1二歩"
     #
     #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_at(:black).board.should be_present
+    #   # mediator.player_at(:black).board.present?.should == true
     #   # mediator.player_at(:black).board.to_s_soldiers.should == "1二歩" # ← こうなるのが問題
     # end
   end
