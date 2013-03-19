@@ -235,12 +235,9 @@ module Bushido
       @human_kif_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
     end
 
-    def inspect
-      "#{counter_human_name}手目: #{current_player.location.mark_with_name}番\n#{super}"
-    end
-
     def to_s
       s = ""
+      s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
       s << @board.to_s
       s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
       s

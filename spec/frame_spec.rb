@@ -8,7 +8,7 @@ module Bushido
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute(["７六歩", "３四歩"])
-      mediator.inspect.should == <<-EOT
+      mediator.to_s.should == <<-EOT
 3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
