@@ -17,7 +17,7 @@ module Bushido
     end
 
     describe "各コマンド" do
-      def test_sequencer(&block)
+      def seq_test(&block)
         builder = KifuDsl.build(&block)
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
@@ -26,38 +26,38 @@ module Bushido
       end
 
       it "title" do
-        test_sequencer{ title "(title)" }.variables[:title].should   == "(title)"
+        seq_test{ title "(title)" }.variables[:title].must_equal "(title)"
       end
 
       it "comment" do
-        test_sequencer{ comment "(comment)" }.variables[:comment].should == "(comment)"
+        seq_test{ comment "(comment)" }.variables[:comment].must_equal "(comment)"
       end
 
       it "board" do
-        test_sequencer{ board "平手" }.board
-        test_sequencer{ board }.board
+        seq_test{ board "平手" }.board
+        seq_test{ board }.board
       end
 
       it "mov" do
-        test_sequencer{ board; mov "▲７六歩" }
+        seq_test{ board; mov "▲７六歩" }
       end
 
       it "pieces" do
-        test_sequencer{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.should == "歩 桂二"
+        seq_test{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.must_equal "歩 桂二"
       end
 
       describe "stack" do
         it "push にブロック指定" do
-          test_sequencer { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.should == 0
+          seq_test { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.must_equal 0
         end
         it "明示的に pop で戻る" do
-          test_sequencer { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.should == 0
+          seq_test { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.must_equal 0
         end
         it "pushのみ" do
-          test_sequencer { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.should == 1
+          seq_test { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.must_equal 1
         end
         it "スタックが空のときにpopできない" do
-          expect { test_sequencer { pop } }.to raise_error(HistroyStackEmpty)
+          proc { seq_test { pop } }.must_raise HistroyStackEmpty
         end
       end
     end

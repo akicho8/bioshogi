@@ -60,7 +60,7 @@ module Bushido
     end
 
     # 持駒表記変換 (人間表記 → コード)
-    #  Utils.stand_pack([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二 飛"
+    #  Utils.stand_pack([Piece["歩"], Piece["歩"], Piece["飛"]]).must_equal "歩二 飛"
     def stand_pack(pieces)
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
         count = ""
@@ -72,7 +72,7 @@ module Bushido
     end
 
     # 持駒表記変換 (コード → 人間表記)
-    #   Utils.stand_unpack("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
+    #   Utils.stand_unpack("歩2 飛").must_equal [Piece["歩"], Piece["歩"], Piece["飛"]]
     def stand_unpack(str)
       if String === str
         str = str.tr("〇一二三四五六七八九", "0-9")
