@@ -17,7 +17,7 @@ module Bushido
     end
 
     describe "各コマンド" do
-      def seq_test(&block)
+      def test_sequencer(&block)
         builder = KifuDsl.build(&block)
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
@@ -26,38 +26,38 @@ module Bushido
       end
 
       it "title" do
-        seq_test{ title "(title)" }.variables[:title].must_equal "(title)"
+        test_sequencer{ title "(title)" }.variables[:title].should   == "(title)"
       end
 
       it "comment" do
-        seq_test{ comment "(comment)" }.variables[:comment].must_equal "(comment)"
+        test_sequencer{ comment "(comment)" }.variables[:comment].should == "(comment)"
       end
 
       it "board" do
-        seq_test{ board "平手" }.board
-        seq_test{ board }.board
+        test_sequencer{ board "平手" }.board
+        test_sequencer{ board }.board
       end
 
       it "mov" do
-        seq_test{ board; mov "▲７六歩" }
+        test_sequencer{ board; mov "▲７六歩" }
       end
 
       it "pieces" do
-        seq_test{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.must_equal "歩 桂二"
+        test_sequencer{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.should == "歩 桂二"
       end
 
       describe "stack" do
         it "push にブロック指定" do
-          seq_test { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.must_equal 0
+          test_sequencer { board; push { mov "▲７六歩" }    }.simple_kif_logs.count.should == 0
         end
         it "明示的に pop で戻る" do
-          seq_test { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.must_equal 0
+          test_sequencer { board; push;  mov "▲７六歩"; pop }.simple_kif_logs.count.should == 0
         end
         it "pushのみ" do
-          seq_test { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.must_equal 1
+          test_sequencer { board; push;  mov "▲７六歩"      }.simple_kif_logs.count.should == 1
         end
         it "スタックが空のときにpopできない" do
-          proc { seq_test { pop } }.must_raise HistroyStackEmpty
+          expect { test_sequencer { pop } }.to raise_error(HistroyStackEmpty)
         end
       end
     end

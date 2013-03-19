@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Bushido
   describe KifFormat do
-    describe "kif読み込み" do
+    context "kif読み込み" do
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
@@ -13,23 +13,23 @@ module Bushido
       end
 
       it "ヘッダー部" do
-        @result.header.must_equal({"開始日時"=>"2000/01/01 00:00:00", "終了日時"=>"2000/01/01 01:00:00", "棋戦"=>"(棋戦)", "持ち時間"=>"(持ち時間)", "手合割"=>"平手", "先手"=>"(先手)", "後手"=>"(後手)"})
+        @result.header.should == {"開始日時"=>"2000/01/01 00:00:00", "終了日時"=>"2000/01/01 01:00:00", "棋戦"=>"(棋戦)", "持ち時間"=>"(持ち時間)", "手合割"=>"平手", "先手"=>"(先手)", "後手"=>"(後手)"}
       end
 
       it "棋譜の羅列" do
-        @result.move_infos.first.must_equal({:index => "1", :location => :black, :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]})
-        @result.move_infos.last.must_equal({:index => "5", :location => :black, :input => "投了", :spent_time => "0:10/00:00:50"})
+        @result.move_infos.first.should == {:index => "1", :location => :black, :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
+        @result.move_infos.last.should  == {:index => "5", :location => :black, :input => "投了", :spent_time => "0:10/00:00:50"}
       end
 
       it "対局前コメント" do
-        @result.first_comments.must_equal ["対局前コメント"]
+        @result.first_comments.should == ["対局前コメント"]
       end
     end
 
     it "盤面表示" do
       mediator = Mediator.start
       mediator.piece_plot
-      mediator.board.to_s.must_equal <<-EOT.strip_heredoc
+      mediator.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -74,7 +74,7 @@ EOT
 EOT
       info = KifFormat::Parser.parse(contents)
       # pp info
-      info.header[:board].present?.must_equal true
+      info.header[:board].present?.should == true
     end
   end
 end

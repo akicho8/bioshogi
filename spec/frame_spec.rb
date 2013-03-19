@@ -8,7 +8,7 @@ module Bushido
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute(["７六歩", "３四歩"])
-      mediator.to_s.must_equal <<-EOT
+      mediator.to_s.should == <<-EOT
 3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -85,10 +85,10 @@ EOT
     it "状態の復元" do
       mediator = Mediator.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
-      mediator.counter.must_equal dup.counter
-      mediator.simple_kif_logs.must_equal dup.simple_kif_logs
-      mediator.human_kif_logs.must_equal dup.human_kif_logs
-      mediator.to_s.must_equal dup.to_s
+      mediator.counter.should            == dup.counter
+      mediator.simple_kif_logs.should    == dup.simple_kif_logs
+      mediator.human_kif_logs.should     == dup.human_kif_logs
+      mediator.to_s.should               == dup.to_s
 
       mediator.board.to_s_soldiers       == dup.board.to_s_soldiers
 
@@ -102,13 +102,13 @@ EOT
       mediator = Mediator.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.prev_player.parsed_info.last_kif_pair.must_equal ["1四歩(13)", "同歩"]
+      mediator.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
       mediator = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => "平手"})
       mediator.to_all_frames
-      mediator.human_kif_logs.must_equal ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
 
     it "Sequencer" do
@@ -121,11 +121,11 @@ EOT
 
     it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.testcase3(:init => ["１二歩"])
-      mediator.player_at(:black).to_s_soldiers.must_equal "1二歩"
-      mediator.player_at(:black).board.to_s_soldiers.must_equal "1二歩"
+      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
+      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
       mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
-      mediator.player_at(:black).to_s_soldiers.must_equal "1二歩"
-      mediator.player_at(:black).board.to_s_soldiers.must_equal "1二歩"
+      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
+      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
@@ -134,14 +134,14 @@ EOT
     end
 
     # it "盤面初期設定" do
-    #   def board_reset_test(value)
+    #   def test_board_reset(value)
     #     mediator = Mediator.new
     #     mediator.board_reset(value)
     #     mediator.board.to_s
     #   end
-    #   puts board_reset_test("角落ち")
-    #   # board_reset_test("平手").must_equal "▲1七歩 ▲1九香 ▲2七歩 ▲2九桂 ▲2八飛 ▲3七歩 ▲3九銀 ▲4七歩 ▲4九金 ▲5七歩 ▲5九玉 ▲6七歩 ▲6九金 ▲7七歩 ▲7九銀 ▲8七歩 ▲8九桂 ▲8八角 ▲9七歩 ▲9九香 ▽1一香 ▽1三歩 ▽2一桂 ▽2三歩 ▽2二角 ▽3一銀 ▽3三歩 ▽4一金 ▽4三歩 ▽5一玉 ▽5三歩 ▽6一金 ▽6三歩 ▽7一銀 ▽7三歩 ▽8一桂 ▽8三歩 ▽8二飛 ▽9一香 ▽9三歩"
-    #   # board_reset_test("先手" => "角落ち")
+    #   puts test_board_reset("角落ち")
+    #   # test_board_reset("平手").should == "▲1七歩 ▲1九香 ▲2七歩 ▲2九桂 ▲2八飛 ▲3七歩 ▲3九銀 ▲4七歩 ▲4九金 ▲5七歩 ▲5九玉 ▲6七歩 ▲6九金 ▲7七歩 ▲7九銀 ▲8七歩 ▲8九桂 ▲8八角 ▲9七歩 ▲9九香 ▽1一香 ▽1三歩 ▽2一桂 ▽2三歩 ▽2二角 ▽3一銀 ▽3三歩 ▽4一金 ▽4三歩 ▽5一玉 ▽5三歩 ▽6一金 ▽6三歩 ▽7一銀 ▽7三歩 ▽8一桂 ▽8三歩 ▽8二飛 ▽9一香 ▽9三歩"
+    #   # test_board_reset("先手" => "角落ち")
     # end
 
     # it "EffectivePatterns" do

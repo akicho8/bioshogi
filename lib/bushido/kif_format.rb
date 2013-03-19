@@ -14,7 +14,7 @@ module Bushido
       # | *コメント0
       # |    1 ７六歩(77)   ( 0:00/00:00:00)
       #
-      #   @result.move_infos.first.must_equal {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
+      #   @result.move_infos.first.should == {:index => "1", :input => "７六歩(77)", :spent_time => "0:10/00:00:10", :comments => ["コメント1"]}
       #   @result.move_infos.last.should  == {:index => "5", :input => "投了", :spent_time => "0:10/00:00:50"}
       #
       def parse

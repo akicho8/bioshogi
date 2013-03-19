@@ -12,7 +12,7 @@ module Bushido
       #  このフォーマットは▲△がついているので、うまいこと利用すればシミュレーションに使える。
       #  先手だけ10連続で打つとか。
       #
-      #   @result.move_infos.must_equal [
+      #   @result.move_infos.should == [
       #     {:location => :black, :input => "７六歩"},
       #     {:location => :white, :input => "３四歩", :comments => ["コメント1"]},
       #     {:location => :black, :input => "６六歩"},
