@@ -86,7 +86,7 @@ require_relative "bushido/order_parser"
 require_relative "bushido/movabler"
 require_relative "bushido/kifu_dsl"
 require_relative "bushido/board_libs"
-require_relative "bushido/frame"
+require_relative "bushido/mediator"
 
 require_relative "bushido/base_format"
 require_relative "bushido/kif_format"
