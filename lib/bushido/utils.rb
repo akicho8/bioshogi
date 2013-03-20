@@ -15,7 +15,7 @@ module Bushido
       Piece.parse!(md[:piece]).merge(:point => Point.parse(md[:point]))
     end
 
-    # 平手での指定プレイヤー側の初期配置
+    # 指定プレイヤー側の初期配置
     #   Utils.initial_placements_for(:black, "平手") # => ["9七歩", "8七歩", ...]
     #   Utils.initial_placements_for(:black, "角落ち") # => [...]
     #   Utils.initial_placements_for(:black, "+----+\n|...") # => [...]
@@ -25,7 +25,8 @@ module Bushido
         board_lib = name
       else
         # board_lib = BoardLibs.fetch(name.presence || "平手")
-        board_lib = BoardLibs.fetch(name)
+        board_info = BoardLibs.fetch(name)
+        board_lib = board_info[:board]
       end
       initial_placements = BaseFormat.board_parse(board_lib)
       if initial_placements[:white].present?

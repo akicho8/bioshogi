@@ -162,7 +162,7 @@ EOT
       describe "取る" do
         describe "取れる" do
           it "座標指定で" do
-            mediator = Mediator.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+            mediator = Mediator.test(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
             mediator.prev_player.last_piece.name.should == "歩"
             mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
             mediator.prev_player.to_s_soldiers.should == "1一玉 1三歩"
@@ -170,7 +170,7 @@ EOT
             mediator.current_player.to_s_soldiers.should == "1五玉"
           end
           it "同歩で取る" do
-            mediator = Mediator.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"])
+            mediator = Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"])
             mediator.prev_player.last_piece.name.should == "歩"
             mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
             mediator.prev_player.to_s_soldiers.should == "2四歩"
@@ -178,17 +178,17 @@ EOT
             mediator.current_player.to_s_soldiers.should == ""
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
-            mediator = Mediator.testcase3(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
+            mediator = Mediator.test(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
             mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
 
         describe "取れない" do
           it "初手に同歩" do
-            expect { Mediator.testcase3(:exec => "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
+            expect { Mediator.test(:exec => "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
           end
           it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
-            expect { Mediator.testcase3(:nplayers => 1, :init => ["１九香", "１八香"], :exec => ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
+            expect { Mediator.test(:nplayers => 1, :init => ["１九香", "１八香"], :exec => ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
           end
         end
       end
@@ -228,7 +228,7 @@ EOT
           expect { player_test2(:init => "５五飛", :exec => "５五角打") }.to raise_error(PieceAlredyExist)
         end
         it "相手の駒の上に" do
-          expect { Mediator.testcase3(:exec => ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
+          expect { Mediator.test(:exec => ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
         end
         it "卍という駒がないので" do
           expect { player_test2(:exec => "５五卍打") }.to raise_error(SyntaxError)
@@ -387,7 +387,7 @@ EOT
       end
 
       it "同" do
-        Mediator.testcase3(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.parsed_info.last_kif_pair.should == ["2四歩(23)", "同歩"]
+        Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.parsed_info.last_kif_pair.should == ["2四歩(23)", "同歩"]
       end
 
       it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
@@ -558,7 +558,7 @@ EOT
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
-    #   mediator = Mediator.testcase3(:init => ["１二歩"])
+    #   mediator = Mediator.test(:init => ["１二歩"])
     #   mediator.player_at(:black).to_s_soldiers.should == "1二歩"
     #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"

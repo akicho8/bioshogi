@@ -188,27 +188,6 @@ module Bushido
       attr_reader :counter, :simple_kif_logs, :human_kif_logs, :point_logs
     end
 
-    module ClassMethods
-      def testcase3(params = {})
-        params = {
-          :nplayers => 2,
-        }.merge(params)
-        mediator = start
-        mediator.players = mediator.players.first(params[:nplayers])
-        (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init)}
-        mediator.execute(params[:exec])
-        mediator
-      end
-      # def testcase4(params = {})
-      #   params = {
-      #   }.merge(params)
-      #   mediator = new
-      #   (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init, :from_piece => false)}
-      #   mediator.execute(params[:exec])
-      #   mediator
-      # end
-    end
-
     def initialize(*)
       super
       @point_logs = []
@@ -241,6 +220,23 @@ module Bushido
       s << @board.to_s
       s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
       s
+    end
+  end
+
+  module MediatorTestHelper
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def test(params = {})
+        params = {
+          :nplayers => 2,
+        }.merge(params)
+        mediator = start
+        mediator.players = mediator.players.first(params[:nplayers])
+        (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init)}
+        mediator.execute(params[:exec])
+        mediator
+      end
     end
   end
 

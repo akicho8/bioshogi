@@ -83,7 +83,7 @@ EOT
     end
 
     it "状態の復元" do
-      mediator = Mediator.testcase3(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+      mediator = Mediator.test(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
       mediator.counter.should            == dup.counter
       mediator.simple_kif_logs.should    == dup.simple_kif_logs
@@ -99,7 +99,7 @@ EOT
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      mediator = Mediator.testcase3(:init => ["１五歩", "１三歩"], :exec => "１四歩")
+      mediator = Mediator.test(:init => ["１五歩", "１三歩"], :exec => "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
       mediator.prev_player.parsed_info.last_kif_pair.should == ["1四歩(13)", "同歩"]
@@ -120,7 +120,7 @@ EOT
     end
 
     it "フレームのサンドボックス実行(重要)" do
-      mediator = Mediator.testcase3(:init => ["１二歩"])
+      mediator = Mediator.test(:init => ["１二歩"])
       mediator.player_at(:black).to_s_soldiers.should == "1二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
       mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
@@ -129,8 +129,41 @@ EOT
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
-      mediator = Mediator.testcase3(:exec => "１二歩打")
+      mediator = Mediator.test(:exec => "１二歩打")
       mediator.deep_dup
+    end
+
+    it "wazacheck" do
+      value = <<-BOARD
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+| ・ 角 金 銀 金 ・ ・ ・ ・|八
+| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+      mediator = Mediator.new
+      mediator.board_reset(value)
+      mediator.board.to_s
+      # p mediator.player_at(:black).to_s_soldiers
+
+      key = "カニ囲い"
+      a = Utils.initial_placements_for(:black, key).collect{|e|Utils.sinfo_to_s(e)}
+      # 指した手が a に含まれるか？
+      b = mediator.player_at(:black).soldiers.collect(&:to_h).collect{|e|Utils.sinfo_to_s(e)}
+      if (a - b).empty?
+        p key
+      end
+
+      # a = BaseFormat.board_parse(value)
+      # p a
+      # p Utils.initial_placements_for(:black, a)
     end
 
     # it "盤面初期設定" do

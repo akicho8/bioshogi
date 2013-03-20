@@ -3,6 +3,10 @@ require "bundler/setup"
 require "tapp"
 require "bushido"
 
+module Bushido
+  Mediator.send(:include, MediatorTestHelper)
+end
+
 RSpec.configure do |config|
   config.before(:each) do
   end

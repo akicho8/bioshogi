@@ -86,5 +86,9 @@ module Bushido
     # def to_attrs
     #   {:player => (@player ? @player.location.key : nil) :point => @point.name, :piece => @piece.sym_name, :promoted => @promoted}
     # end
+
+    def to_h
+      {:point => @point, :piece => @piece, :promoted => @promoted}
+    end
   end
 end
