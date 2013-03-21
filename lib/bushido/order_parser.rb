@@ -195,6 +195,10 @@ module Bushido
       s.join
     end
 
+    def last_sinfo
+      {:point => @point, :piece => @piece, :promoted => @promoted}
+    end
+
     private
 
     def read_point

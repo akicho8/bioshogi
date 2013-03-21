@@ -133,7 +133,7 @@ EOT
       mediator.deep_dup
     end
 
-    it "wazacheck" do
+    it "囲いチェック" do
       value = <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -148,22 +148,19 @@ EOT
 | ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
 +---------------------------+
 BOARD
+      # リアルタイムに調べる
       mediator = Mediator.new
       mediator.board_reset(value)
-      mediator.board.to_s
-      # p mediator.player_at(:black).to_s_soldiers
+      # p mediator.board.to_s
+      mediator.player_at(:black).defense_form_keys.should == ["カニ囲い"]
+      mediator.player_at(:black).defense_forms.should == []
 
-      key = "カニ囲い"
-      a = Utils.initial_placements_for(:black, key).collect{|e|Utils.sinfo_to_s(e)}
-      # 指した手が a に含まれるか？
-      b = mediator.player_at(:black).soldiers.collect(&:to_h).collect{|e|Utils.sinfo_to_s(e)}
-      if (a - b).empty?
-        p key
-      end
-
-      # a = BaseFormat.board_parse(value)
-      # p a
-      # p Utils.initial_placements_for(:black, a)
+      # 打った直後に記録する
+      mediator.player_at(:black).defense_forms.should == []
+      mediator.player_at(:black).defense_from_add.should == false
+      mediator.execute("９九角")
+      mediator.player_at(:black).defense_forms.should == ["カニ囲い"]
+      mediator.player_at(:black).defense_from_add.should == true
     end
 
     # it "盤面初期設定" do

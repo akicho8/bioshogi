@@ -453,19 +453,11 @@ EOT
     end
 
     describe "GenerateWay" do
-      before do
-        @save_size = Board.size_change([3, 3])
-      end
-
-      after do
-        if @save_size
-          Board.size_change(@save_size)
-        end
-      end
-
       it "盤上の駒の全手筋" do
-        player = player_test(:init => ["1二歩", "2三桂"])
-        player.brain.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
+        Board.size_change([3, 3]) do
+          player = player_test(:init => ["1二歩", "2三桂"])
+          player.brain.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
+        end
       end
 
       it "持駒の全手筋" do
@@ -479,23 +471,28 @@ EOT
         # | ・ ・ ・|三    | 歩 ・ 歩|三
         # +---------+      +---------+
         #
-        Board.size_change([3, 3])
-        player = player_test(:init => "２二歩", :reset_pieces => "歩")
-        player.brain.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
+        Board.size_change([3, 3]) do
+          player = player_test(:init => "２二歩", :reset_pieces => "歩")
+          player.brain.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
+        end
       end
 
       it "一番得するように打つ" do
-        # Board.size_change([2, 2])
-        # player = player_test(:init => "２二歩", :pieces => "歩 香")
-        # player.brain.eval_list.should == [{:way => "2一歩成(22)", :score => 1935}, {:way => "1二歩打", :score => 830}, {:way => "1二香打", :score => 805}]
-        # player.brain.best_way.should == "2一歩成(22)"
+        Board.size_change([2, 2]) do
+          # Board.size_change([2, 2])
+          # player = player_test(:init => "２二歩", :pieces => "歩 香")
+          # player.brain.eval_list.should == [{:way => "2一歩成(22)", :score => 1935}, {:way => "1二歩打", :score => 830}, {:way => "1二香打", :score => 805}]
+          # player.brain.best_way.should == "2一歩成(22)"
 
-        Board.size_change([2, 2])
-        mediator = Mediator.new
-        player = mediator.player_at(:black)
-        player.initial_soldiers("１二歩", :from_piece => false)
-        player.deal("歩")
-        player.brain.eval_list.should == [{:way => "1一歩成(12)", :score => 1305}, {:way => "2二歩打", :score => 200}]
+          # Board.size_change([2, 2])
+          mediator = Mediator.new
+          player = mediator.player_at(:black)
+
+          player.initial_soldiers("１二歩", :from_piece => false)
+          player.deal("歩")
+
+          player.brain.eval_list.should == [{:way => "1一歩成(12)", :score => 1305}, {:way => "2二歩打", :score => 200}]
+        end
       end
     end
 

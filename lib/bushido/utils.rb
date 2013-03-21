@@ -16,22 +16,32 @@ module Bushido
     end
 
     # 指定プレイヤー側の初期配置
-    #   Utils.initial_placements_for(:black, "平手") # => ["9七歩", "8七歩", ...]
-    #   Utils.initial_placements_for(:black, "角落ち") # => [...]
-    #   Utils.initial_placements_for(:black, "+----+\n|...") # => [...]
-    def initial_placements_for(location, name = nil)
+    #   Utils.initial_side_placements_for(:black, "平手") # => ["9七歩", "8七歩", ...]
+    #   Utils.initial_side_placements_for(:black, "角落ち") # => [...]
+    #   Utils.initial_side_placements_for(:black, "+----+\n|...") # => [...]
+    def initial_side_placements_for(location, name = nil)
       name = name.presence || "平手"
       if BaseFormat.board_string?(name)
-        board_lib = name
+        board_aa = name
       else
-        # board_lib = BoardLibs.fetch(name.presence || "平手")
-        board_info = BoardLibs.fetch(name)
-        board_lib = board_info[:board]
+        # board_aa = BoardLibs.fetch(name.presence || "平手")
+        board_aa = BoardLibs.fetch(name)[:board]
+
       end
-      initial_placements = BaseFormat.board_parse(board_lib)
+      # puts board_aa
+      initial_side_placements_for2(location, board_aa)
+    end
+
+    def initial_side_placements_for2(location, board_aa)
+      # puts board_aa
+      initial_placements = BaseFormat.board_parse(board_aa)
+
       if initial_placements[:white].present?
-        raise SyntaxError, "先手側から見たデータを反転して使うのでここでは後手のデータは定義できません : #{name}"
+        raise SyntaxError, "先手側から見たデータを反転して使うのでここでは後手のデータは定義できません : #{board_aa}"
       end
+
+      # p initial_placements
+
       initial_placements[:black].collect do |arg|
         info = Utils.parse_str(arg)
         info[:point] = info[:point].as_location(location)
@@ -51,7 +61,7 @@ module Bushido
     def board_init_type(value = nil)
       if Hash === value
         # {"先手" => "角落ち", "後手" => "香落ち"}
-        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.initial_placements_for(k, v))}
+        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.initial_side_placements_for(k, v))}
       elsif BaseFormat.board_string?(value)
         BaseFormat.board_parse(value)
       else

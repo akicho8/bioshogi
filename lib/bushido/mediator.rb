@@ -237,6 +237,15 @@ module Bushido
         mediator.execute(params[:exec])
         mediator
       end
+
+      def test2(params = {})
+        mediator = start
+        Utils.ki2_input_seq_parse(params[:exec]).each{|op|
+          player = mediator.players[Location[op[:location]].index]
+          player.execute(op[:input])
+        }
+        mediator
+      end
     end
   end
 

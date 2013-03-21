@@ -31,7 +31,11 @@ module Bushido
       end
 
       def self.units(options = {})
-        (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a.send(_arrow, ridge_length)
+        orig_units(options).send(_arrow, ridge_length)
+      end
+
+      def self.orig_units(options = {})
+        (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a
       end
 
       # # 右上からのインデックスで参照できるように返す

@@ -23,6 +23,16 @@ BOARD
 BOARD
     end
 
+    it "盤面サイズを変更していても定義は9x9を元にしているので問題なくパースできる" do
+      Board.size_change([2, 2]) do
+        BaseFormat.board_parse(<<-BOARD).should == {:black => ["３一歩"], :white => []}
++---------+
+| 歩 ・ ・|
++---------+
+BOARD
+      end
+    end
+
     it "盤面の「・」は不要" do
       BaseFormat.board_parse(<<-BOARD).should == {:white => ["１一歩"], :black => ["１二歩"]}
 +------+

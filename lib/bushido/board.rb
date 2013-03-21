@@ -30,6 +30,16 @@ module Bushido
       size_save
     end
 
+    # サイズ毎のクラスがいるかも
+    # かなりやっつけの仮
+    def self.size_type
+      key = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
+      {
+        [5, 5] => :x55,
+        [9, 9] => :x99,
+      }[key]
+    end
+
     def initialize
       @surface = {}
     end

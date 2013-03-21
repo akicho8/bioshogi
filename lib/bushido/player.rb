@@ -106,7 +106,7 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      Utils.initial_placements_for(location).each{|info|
+      Utils.initial_side_placements_for(location).each{|info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(:player => self))
         put_on_with_valid(info[:point], soldier)
@@ -196,6 +196,7 @@ module Bushido
         return
       end
       @parsed_info = OrderParser.new(self).execute(str)
+      defense_form_store
       @mediator.log_stock(self)
     end
 
@@ -283,7 +284,7 @@ module Bushido
       extend ActiveSupport::Concern
 
       included do
-        attr_accessor :soldiers
+        attr_accessor :soldiers, :defense_forms, :defense_from_add
       end
 
       module ClassMethods
@@ -292,6 +293,8 @@ module Bushido
       def initialize(*)
         super
         @soldiers = []
+        @defense_forms = []
+        @defense_from_add = false
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
@@ -310,6 +313,41 @@ module Bushido
       def render_soldiers
         @soldiers.each{|soldier|
           put_on_with_valid(soldier.point, soldier)
+        }
+      end
+
+      def defense_form_store
+        @defense_from_add = false
+        defense_form_keys.each do |key|
+          unless @defense_forms.include?(key)
+            @defense_forms << key
+            @defense_from_add = true
+          end
+        end
+      end
+
+      def defense_form_keys
+        defense_form_infos.find_all{|e|e[:match]}.collect{|e|e[:key]}
+      end
+
+      def defense_form_infos
+        unless Bushido.config[:defense_form_check]
+          return []
+        end
+
+        size_type = Board.size_type
+
+        # x99の盤面だけに絞る
+        libs = BoardLibs.find_all{|k, v|(v[:size_type] || :x99) == size_type}
+
+        # ここがかなり重い
+        libs.find_all{|k, v|v[:defense_p]}.collect{|key, value|
+          placements = Utils.initial_side_placements_for2(location, value[:board])
+
+          a = placements.collect{|e|Utils.sinfo_to_s(e)}
+          b = @soldiers.collect(&:to_h).collect{|e|Utils.sinfo_to_s(e)}
+
+          {:key => key, :placements => placements, :match => (a - b).empty?}
         }
       end
     end

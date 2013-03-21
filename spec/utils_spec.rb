@@ -23,8 +23,8 @@ module Bushido
     end
 
     it "先手か後手かを指定した初期配置" do
-      Utils.initial_placements_for(:white, "平手")
-      Utils.initial_placements_for(:white, "角落ち")
+      Utils.initial_side_placements_for(:white, "平手")
+      Utils.initial_side_placements_for(:white, "角落ち")
     end
   end
 end

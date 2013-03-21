@@ -12,6 +12,9 @@ module Bushido
   config_accessor :format
   config.format = :basic
 
+  config_accessor :defense_form_check
+  config.defense_form_check = true
+
   WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
   SEPARATOR = " "
 

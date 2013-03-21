@@ -45,7 +45,7 @@ module Bushido
         if s.count("-").modulo(3).nonzero?
           raise SyntaxError, "横幅が3桁毎になっていない"
         end
-        x_units = Position::Hpos.units(:zenkaku => true).last(s.gsub("---", "-").count("-"))
+        x_units = Position::Hpos.orig_units(:zenkaku => true).last(s.gsub("---", "-").count("-"))
       else
         x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
       end
@@ -62,6 +62,7 @@ module Bushido
               raise SyntaxError, "駒の指定が違う : #{piece.inspect}"
             end
             location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"
+            raise SyntaxError unless x_units[x] && y_units[y]
             players[location.key] << [x_units[x], y_units[y], piece].join
           end
         }

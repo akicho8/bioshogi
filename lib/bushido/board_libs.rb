@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 Bushido::BoardLibs = {
   "平手" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
@@ -10,6 +11,7 @@ Bushido::BoardLibs = {
 BOARD
   },
   "香落ち" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
@@ -19,6 +21,7 @@ BOARD
 BOARD
   },
   "角落ち" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
@@ -28,6 +31,7 @@ BOARD
 BOARD
   },
   "両落ち" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
@@ -37,6 +41,7 @@ BOARD
 BOARD
   },
   "玉のみ" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 |             玉            |九
@@ -44,6 +49,7 @@ BOARD
 BOARD
   },
   "全落ち" => {
+    :defense_p => false,
     :board => <<-BOARD,
 +---------------------------+
 +---------------------------+
@@ -51,6 +57,7 @@ BOARD
   },
   "カニ囲い" => {
     :url => "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/ichigogakoi.html",
+    :defense_p => true,
     :board => <<-BOARD,
 +---------------------------+
 | ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
