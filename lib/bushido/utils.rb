@@ -8,49 +8,45 @@ module Bushido
     extend self
 
     # 人間が入力する *初期配置* の "４二竜" などをハッシュに分割する
-    #   Utils.parse_str("４二竜") # => {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
-    def parse_str(str)
+    #   Utils.str_to_shash("４二竜") # => {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
+    def str_to_shash(str)
       md = str.match(/\A(?<point>..)(?<piece>#{Piece.names.join("|")})\z/)
       md or raise SyntaxError, "表記が間違っています。'４二竜' や '42竜' のように入力してください : #{str.inspect}"
-      Piece.parse!(md[:piece]).merge(:point => Point.parse(md[:point]))
+      Piece.promoted_fetch(md[:piece]).merge(:point => Point.parse(md[:point]))
     end
 
-    # 指定プレイヤー側の初期配置
-    #   Utils.initial_side_placements_for(:black, "平手") # => ["9七歩", "8七歩", ...]
-    #   Utils.initial_side_placements_for(:black, "角落ち") # => [...]
-    #   Utils.initial_side_placements_for(:black, "+----+\n|...") # => [...]
-    def initial_side_placements_for(location, name = nil)
-      name = name.presence || "平手"
-      if BaseFormat.board_string?(name)
-        board_aa = name
+    # ハッシュにした駒を人間が入力する表記に戻す
+    #   Utils.shash_to_s(Utils.str_to_shash("４二竜")) # => "４二竜"
+    def shash_to_s(shash)
+      "#{shash[:point].name}#{shash[:piece].some_name(shash[:promoted])}"
+    end
+
+    # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
+    #   Utils.location_soldiers(:black, "平手")         # => ["9七歩", "8七歩", ...]
+    #   Utils.location_soldiers(:black, "角落ち")       # => ["9七歩", "8七歩", ...]
+    #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
+    def location_soldiers(location, name_or_char_board = nil)
+      name_or_char_board = name_or_char_board.presence || "平手"
+      if BaseFormat.board_string?(name_or_char_board)
+        char_board = name_or_char_board
       else
-        # board_aa = BoardLibs.fetch(name.presence || "平手")
-        board_aa = BoardLibs.fetch(name)[:board]
-
+        char_board = BoardLibs.fetch(name_or_char_board)[:board]
       end
-      # puts board_aa
-      initial_side_placements_for2(location, board_aa)
+      location_soldiers_from_char_board(location, char_board)
     end
 
-    def initial_side_placements_for2(location, board_aa)
-      # puts board_aa
-      initial_placements = BaseFormat.board_parse(board_aa)
-
-      if initial_placements[:white].present?
-        raise SyntaxError, "先手側から見たデータを反転して使うのでここでは後手のデータは定義できません : #{board_aa}"
+    # 指定プレイヤー側の初期配置(盤面のみ対応)
+    #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
+    def location_soldiers_from_char_board(location, char_board)
+      mini_soldiers_pair = BaseFormat.board_parse(char_board)
+      if mini_soldiers_pair[:white].present?
+        raise BoardIsBlackOnly, "後手側データは定義できません : #{char_board}"
       end
-
-      # p initial_placements
-
-      initial_placements[:black].collect do |arg|
-        info = Utils.parse_str(arg)
+      mini_soldiers_pair[:black].collect do |arg|
+        info = Utils.str_to_shash(arg)
         info[:point] = info[:point].as_location(location)
         info
       end
-    end
-
-    def sinfo_to_s(sinfo)
-      "#{sinfo[:point].name}#{sinfo[:piece].some_name(sinfo[:promoted])}"
     end
 
     # 要テスト
@@ -61,7 +57,7 @@ module Bushido
     def board_init_type(value = nil)
       if Hash === value
         # {"先手" => "角落ち", "後手" => "香落ち"}
-        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.initial_side_placements_for(k, v))}
+        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.location_soldiers(k, v))}
       elsif BaseFormat.board_string?(value)
         BaseFormat.board_parse(value)
       else
@@ -100,7 +96,7 @@ module Bushido
 
     def pieces_parse2(list)
       Array.wrap(list).collect{|info|
-        (info[:count] || 1).times.collect{ Piece.get!(info[:piece]) }
+        (info[:count] || 1).times.collect{ Piece.fetch(info[:piece]) }
       }.flatten
     end
 

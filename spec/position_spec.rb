@@ -5,17 +5,25 @@ require "spec_helper"
 module Bushido
   describe Position do
     describe "座標パース" do
-      it "エラー" do
+      it "引数が根本的にダメなのでエラー" do
         expect { Position::Hpos.parse("")  }.to raise_error(PositionSyntaxError)
         expect { Position::Hpos.parse(nil) }.to raise_error(PositionSyntaxError)
       end
-      it "横" do
-        Position::Hpos.parse("1").name.should == "1"
-        Position::Hpos.parse("１").name.should == "1"
+      it "横「３」→「3」の変換がかかる→枠を越えている→正常にエラー" do
+        expect { Board.size_change([2, 2]){ Position::Hpos.parse("３") } }.to raise_error(PositionSyntaxError)
       end
-      it "縦" do
-        Position::Vpos.parse("一").name.should == "一"
-        Position::Vpos.parse("1").name.should == "一"
+      it "縦「3」→「三」の変換がかかる→枠を越えている→正常にエラー" do
+        expect { Board.size_change([2, 2]){ Position::Vpos.parse("三")  } }.to raise_error(PositionSyntaxError)
+      end
+      describe "正常" do
+        it "横" do
+          Position::Hpos.parse("1").name.should == "1"
+          Position::Hpos.parse("１").name.should == "1"
+        end
+        it "縦" do
+          Position::Vpos.parse("一").name.should == "一"
+          Position::Vpos.parse("1").name.should == "一"
+        end
       end
     end
 

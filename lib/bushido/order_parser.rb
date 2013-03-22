@@ -21,7 +21,7 @@ module Bushido
 
       read_point
 
-      @promoted, @piece = Piece.parse!(@md[:piece]).values_at(:promoted, :piece)
+      @promoted, @piece = Piece.promoted_fetch(@md[:piece]).values_at(:promoted, :piece)
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
@@ -195,7 +195,7 @@ module Bushido
       s.join
     end
 
-    def last_sinfo
+    def last_shash
       {:point => @point, :piece => @piece, :promoted => @promoted}
     end
 

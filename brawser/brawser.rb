@@ -68,7 +68,7 @@ class Brawser < Sinatra::Base
     dump = Marshal.load(REDIS.get(@session_id))
     @mediator = Bushido::Mediator.from_dump(dump)
 
-    if params[:location].blank? || @mediator.current_player.location.key.to_s == params[:location]
+    if params[:location].nil? || @mediator.current_player.location.key.to_s == params[:location]
       if params[:way].present?
         @mediator.execute(params[:way])
       end
@@ -100,7 +100,7 @@ class Brawser < Sinatra::Base
   get "/board_points" do
     session[:test_count] ||= 0
     session[:start_time] ||= Time.now
-    if params[:count].blank?
+    unless params[:count]
       session[:test_count] = 0
       session[:start_time] = Time.now
     end
@@ -109,8 +109,8 @@ class Brawser < Sinatra::Base
     begin
       @mediator = Bushido::Mediator.start
       count.times do
-        arg = {:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample}
-        @mediator.players.sample.initial_soldiers(arg, :from_piece => false)
+        mini_soldier = MiniSoldier[:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
+        @mediator.players.sample.initial_soldiers(mini_soldier, :from_piece => false)
       end
     rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
       retry

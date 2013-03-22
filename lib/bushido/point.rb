@@ -47,10 +47,9 @@ module Bushido
           x = Position::Hpos.parse(a)
           y = Position::Vpos.parse(b)
         when String
-          if md = arg.match(/\A(.)(.)\z/)
-            a, b = md.captures
-            x = Position::Hpos.parse(a)
-            y = Position::Vpos.parse(b)
+          if md = arg.match(/\A(?<x>.)(?<y>.)\z/)
+            x = Position::Hpos.parse(md[:x])
+            y = Position::Vpos.parse(md[:y])
           else
             raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
           end

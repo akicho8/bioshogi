@@ -38,6 +38,9 @@ module Bushido
   class RuleError < SyntaxError; end
   class HistroyStackEmpty < SyntaxError; end
 
+  # 盤面定義のエラー
+  class BoardIsBlackOnly < SyntaxError; end
+
   # 構文エラーから発生する継続が難しいエラー
   class PositionSyntaxError < SyntaxError; end
   class PointSyntaxError < SyntaxError; end
@@ -81,6 +84,7 @@ require_relative "bushido/position"
 require_relative "bushido/point"
 require_relative "bushido/location"
 require_relative "bushido/piece"
+require_relative "bushido/mini_soldier"
 require_relative "bushido/board"
 require_relative "bushido/utils"
 require_relative "bushido/soldier"

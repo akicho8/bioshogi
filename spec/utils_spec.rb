@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Utils do
     it "文字列の分解" do
-      Utils.parse_str("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
+      Utils.str_to_shash("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
     end
 
     it "棋譜入力の分離" do
@@ -23,8 +23,8 @@ module Bushido
     end
 
     it "先手か後手かを指定した初期配置" do
-      Utils.initial_side_placements_for(:white, "平手")
-      Utils.initial_side_placements_for(:white, "角落ち")
+      Utils.location_soldiers(:white, "平手")
+      Utils.location_soldiers(:white, "角落ち")
     end
   end
 end

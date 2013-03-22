@@ -30,24 +30,24 @@ module Bushido
       #   Piece.get(nil)       # => nil
       #   Piece.get("歩").name # => "歩"
       #   Piece.get("と").name # => "歩"
-      #   「と」も「歩」も区別しない。区別したい場合は parse! を使うこと
-      #   エラーにしたいときは get! を使う
+      #   「と」も「歩」も区別しない。区別したい場合は promoted_fetch を使うこと
+      #   エラーにしたいときは fetch を使う
       def get(arg)
         basic_get(arg) || promoted_get(arg)
       end
 
-      # Piece.get!("歩").name # => "歩"
-      def get!(arg)
+      # Piece.fetch("歩").name # => "歩"
+      def fetch(arg)
         get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
       end
 
-      # Piece.get!("歩").name # => "歩"
-      def parse!(arg)
+      # Piece.fetch("歩").name # => "歩"
+      def promoted_fetch(arg)
         case
         when piece = basic_get(arg)
-          {:piece => piece, :promoted => false}
+          MiniSoldier[:piece => piece, :promoted => false]
         when piece = promoted_get(arg)
-          {:piece => piece, :promoted => true}
+          MiniSoldier[:piece => piece, :promoted => true]
         else
           raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end

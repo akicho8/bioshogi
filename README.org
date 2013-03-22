@@ -45,7 +45,7 @@
 
 *** 初期配置文字列のパース
 
-    : info = Utils.parse_str("７六と")
+    : info = Utils.str_to_shash("７六と")
     : info[:point].name # => "7六"
     : info[:promoted]   # => true
     : info[:piece].name # => "歩"
@@ -295,7 +295,7 @@
     : soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
     : mediator.players.each do |player|
     :   _soldiers = soldiers.collect{|s|
-    :     s = Utils.parse_str(s)
+    :     s = Utils.str_to_shash(s)
     :     s.merge(:point => s[:point].as_location(player.location))
     :   }
     :   player.initial_soldiers(_soldiers)
@@ -523,7 +523,7 @@
     | 相対座標 | vector   |
     | 先手     | black    |
     | 後手     | white    |
-    | 対局室   | mediator    |
+    | 対局室   | mediator |
 
 ** BUG
 
@@ -533,7 +533,6 @@
 
    - 手の候補を表示する
    - mediator の元を mediator にする
-   - board と player に mediator を【常に】渡す
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
    - @board を複製できるようにする
    - DSLに rem(仮) 追加
@@ -556,6 +555,7 @@
    - Windowsブリッジ
    - GUI表示
    - cli
+   - +board と player に mediator を【常に】渡す+
    - +5x5将棋配置+
    - +BUG:"1一と成(12)" +
    - +「２三銀直不成」対応+

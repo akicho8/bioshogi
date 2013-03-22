@@ -73,7 +73,7 @@ module Bushido
     #   @last_piece  = attrs[:last_piece]
     #   @pieces      = attrs[:pieces].collect{|v|Piece[v]}
     #   @soldiers = attrs[:soldiers].collect{|soldier|
-    #     Soldier.new(Utils.parse_str(soldier).merge(:player => self))
+    #     Soldier.new(Utils.str_to_shash(soldier).merge(:player => self))
     #   }
     #
     #   # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
@@ -106,7 +106,7 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      Utils.initial_side_placements_for(location).each{|info|
+      Utils.location_soldiers(location).each{|info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(:player => self))
         put_on_with_valid(info[:point], soldier)
@@ -119,24 +119,24 @@ module Bushido
     #   player.initial_soldiers(["５五飛", "３三飛"], :from_piece => false)
     #   player.initial_soldiers("#{point}馬")
     #   player.initial_soldiers({:point => point, :piece => Piece["角"], :promoted => true}, :from_piece => false)
-    def initial_soldiers(arg, options = {})
+    def initial_soldiers(mini_soldier_or_str, options = {})
       options = {
         :from_piece => true, # 持駒から配置する？
       }.merge(options)
-      Array.wrap(arg).each{|arg|
-        if Hash === arg
-          info = arg
+      Array.wrap(mini_soldier_or_str).each{|mini_soldier_or_str|
+        if Hash === mini_soldier_or_str
+          mini_soldier = mini_soldier_or_str
         else
-          if arg.to_s.gsub(/_/, "").blank? # テストを書きやすくするため
+          if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end
-          info = Utils.parse_str(arg)
+          mini_soldier = Utils.str_to_shash(mini_soldier_or_str)
         end
         if options[:from_piece]
-          pick_out(info[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        soldier = Soldier.new(info.merge(:player => self))
-        put_on_with_valid(info[:point], soldier)
+        soldier = Soldier.new(mini_soldier.merge(:player => self))
+        put_on_with_valid(mini_soldier[:point], soldier)
         @soldiers << soldier
       }
     end
@@ -342,10 +342,10 @@ module Bushido
 
         # ここがかなり重い
         libs.find_all{|k, v|v[:defense_p]}.collect{|key, value|
-          placements = Utils.initial_side_placements_for2(location, value[:board])
+          placements = Utils.location_soldiers_from_char_board(location, value[:board])
 
-          a = placements.collect{|e|Utils.sinfo_to_s(e)}
-          b = @soldiers.collect(&:to_h).collect{|e|Utils.sinfo_to_s(e)}
+          a = placements.collect{|e|Utils.shash_to_s(e)}
+          b = @soldiers.collect(&:to_h).collect{|e|Utils.shash_to_s(e)}
 
           {:key => key, :placements => placements, :match => (a - b).empty?}
         }
@@ -372,17 +372,17 @@ module Bushido
         yield self
       end
       marshal_load(_save)
-      # info = Utils.parse_str(arg)
-      # _soldier = Soldier.new(info.merge(:player => self))
-      # get_errors(info[:point], info[:piece], info[:promoted]).each{|error|raise error}
+      # shash = Utils.str_to_shash(arg)
+      # _soldier = Soldier.new(shash.merge(:player => self))
+      # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
       #   @soldiers << _soldier
-      #   put_on_with_valid(info[:point], soldier)
+      #   put_on_with_valid(shash[:point], soldier)
       #   if block
       #     yield soldier
       #   end
       # ensure
-      #   soldier = board.pick_up!(info[:point])
+      #   soldier = board.pick_up!(shash[:point])
       #   @pieces << _soldier.piece
       #   @soldiers.pop
       # end

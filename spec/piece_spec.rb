@@ -16,10 +16,10 @@ module Bushido
       Piece.get(nil).should == nil
     end
 
-    it "get!の場合、無効な名前だったら例外を出す" do
-      expect { Piece.get!("成龍") }.to raise_error(PieceNotFound)
-      expect { Piece.get!("成と") }.to raise_error(PieceNotFound)
-      expect { Piece.get!("成飛") }.to raise_error(PieceNotFound)
+    it "fetchの場合、無効な名前だったら例外を出す" do
+      expect { Piece.fetch("成龍") }.to raise_error(PieceNotFound)
+      expect { Piece.fetch("成と") }.to raise_error(PieceNotFound)
+      expect { Piece.fetch("成飛") }.to raise_error(PieceNotFound)
     end
 
     it "駒の情報" do

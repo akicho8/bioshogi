@@ -9,7 +9,7 @@
   %div= @pattern[:title]
   %div
     = @pattern[:comment]
-    - if @pattern[:url].present?
+    - if @pattern[:url]
       %a{href: @pattern[:url]}= "参考URL"
   .hr
   - @frames.each do |mediator|
