@@ -88,7 +88,7 @@ module Bushido
     # end
 
     def to_h
-      {:point => @point, :piece => @piece, :promoted => @promoted}
+      MiniSoldier[:point => @point, :piece => @piece, :promoted => @promoted]
     end
   end
 end

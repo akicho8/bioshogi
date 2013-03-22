@@ -73,7 +73,7 @@ module Bushido
     #   @last_piece  = attrs[:last_piece]
     #   @pieces      = attrs[:pieces].collect{|v|Piece[v]}
     #   @soldiers = attrs[:soldiers].collect{|soldier|
-    #     Soldier.new(Utils.str_to_shash(soldier).merge(:player => self))
+    #     Soldier.new(MiniSoldier.from_str(soldier).merge(:player => self))
     #   }
     #
     #   # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
@@ -130,7 +130,7 @@ module Bushido
           if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end
-          mini_soldier = Utils.str_to_shash(mini_soldier_or_str)
+          mini_soldier = MiniSoldier.from_str(mini_soldier_or_str)
         end
         if options[:from_piece]
           pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
@@ -344,8 +344,8 @@ module Bushido
         libs.find_all{|k, v|v[:defense_p]}.collect{|key, value|
           placements = Utils.location_soldiers_from_char_board(location, value[:board])
 
-          a = placements.collect{|e|Utils.shash_to_s(e)}
-          b = @soldiers.collect(&:to_h).collect{|e|Utils.shash_to_s(e)}
+          a = placements.collect(&:to_s)
+          b = @soldiers.collect(&:to_h).collect(&:to_s)
 
           {:key => key, :placements => placements, :match => (a - b).empty?}
         }
@@ -372,7 +372,7 @@ module Bushido
         yield self
       end
       marshal_load(_save)
-      # shash = Utils.str_to_shash(arg)
+      # shash = MiniSoldier.from_str(arg)
       # _soldier = Soldier.new(shash.merge(:player => self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin

@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Utils do
     it "文字列の分解" do
-      Utils.str_to_shash("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
+      MiniSoldier.from_str("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
     end
 
     it "棋譜入力の分離" do

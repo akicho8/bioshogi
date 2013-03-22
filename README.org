@@ -45,7 +45,7 @@
 
 *** 初期配置文字列のパース
 
-    : info = Utils.str_to_shash("７六と")
+    : info = MiniSoldier.from_str("７六と")
     : info[:point].name # => "7六"
     : info[:promoted]   # => true
     : info[:piece].name # => "歩"
@@ -295,7 +295,7 @@
     : soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
     : mediator.players.each do |player|
     :   _soldiers = soldiers.collect{|s|
-    :     s = Utils.str_to_shash(s)
+    :     s = MiniSoldier.from_str(s)
     :     s.merge(:point => s[:point].as_location(player.location))
     :   }
     :   player.initial_soldiers(_soldiers)
