@@ -72,11 +72,15 @@ class Brawser < Sinatra::Base
       if params[:way].present?
         @mediator.execute(params[:way])
       end
-      if params[:auto].present?
-        # if way = @mediator.current_player.generate_way.presence
+      if params[:auto1].present?
         eval_list = @mediator.current_player.brain.eval_list
-        if info = eval_list.first(2).sample
+        if info = eval_list.first
           @mediator.execute(info[:way])
+        end
+      end
+      if params[:auto2].present?
+        if way = @mediator.current_player.generate_way.presence
+          @mediator.execute(way)
         end
       end
     end

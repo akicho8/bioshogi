@@ -1,7 +1,10 @@
 %div
   %form{action: "/", method: "post"}
-    %input{name: "auto", type: "hidden", value: "true"}
-    %input{type: "submit", value: "代打ち"}
+    %input{name: "auto1", type: "hidden", value: "true"}
+    %input{type: "submit", value: "賢い代指"}
+  %form{action: "/", method: "post"}
+    %input{name: "auto2", type: "hidden", value: "true"}
+    %input{type: "submit", value: "ランダム"}
 
 .hr
 %div= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"

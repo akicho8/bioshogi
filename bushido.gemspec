@@ -23,6 +23,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rain_table" # :git => "https://github.com/akicho8/rain_table.git" ← なんでダメ？
   s.add_dependency "tapp"
   s.add_dependency "pry"
-  s.add_dependency "pry-debugger"
+  # s.add_dependency "pry-debugger"
   s.add_dependency "yard"
 end
