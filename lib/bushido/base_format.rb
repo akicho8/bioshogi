@@ -34,11 +34,11 @@ module Bushido
     #   +---------------------------+
     #   "
     #
-    #   Bushido::BaseFormat.board_parse(str) # => {:white => ["４二玉"], :black => []}
+    #   Bushido::BaseFormat.board_parse_as_str(str) # => {:white => ["４二玉"], :black => []}
+    #   Bushido::BaseFormat.board_parse(str)        # => {:white => [<MiniSoldier ...>], :black => []}
     #
     def self.board_parse(source)
-      str = BaseFormat.normalized_source(source)
-      lines = str.strip.lines.to_a
+      lines = BaseFormat.normalized_source(source).strip.lines.to_a
 
       s = lines.first
       if s.match("-")
@@ -64,8 +64,9 @@ module Bushido
             location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"
             raise SyntaxError unless x_units[x] && y_units[y]
             mini_soldier = MiniSoldier[:point => Point[[x_units[x], y_units[y]].join], :piece => Piece.fetch(piece)]
-            # FIXME: MiniSoldier のまま格納する
-            players[location.key] << mini_soldier.to_s
+            # # FIXME: MiniSoldier のまま格納する
+            # players[location.key] << mini_soldier.to_s
+            players[location.key] << mini_soldier
           end
         }
       }

@@ -47,6 +47,10 @@ RSpec.configure do |config|
     def player_test2(*args)
       player_test(*args).soldier_names.sort
     end
+
+    def board_parse_test(source)
+      Bushido::BaseFormat.board_parse(source).inject({}){|hash, (key, value)|hash.merge(key => value.collect(&:to_s))}
+    end
   end
 
   config.include TestHelper

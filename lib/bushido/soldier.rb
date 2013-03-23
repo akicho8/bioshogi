@@ -12,7 +12,7 @@ module Bushido
       attrs.assert_valid_keys(:player, :piece, :promoted, :point)
       @player = attrs[:player]
       @piece = attrs[:piece]
-      self.promoted = attrs[:promoted]
+      self.promoted = !!attrs[:promoted]
       if attrs[:point]
         @point = Point.parse(attrs[:point])
       end

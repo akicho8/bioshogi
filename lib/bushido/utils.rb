@@ -28,10 +28,8 @@ module Bushido
       if mini_soldiers_pair[:white].present?
         raise BoardIsBlackOnly, "後手側データは定義できません : #{char_board}"
       end
-      mini_soldiers_pair[:black].collect do |arg|
-        info = MiniSoldier.from_str(arg)
-        info[:point] = info[:point].as_location(location)
-        info
+      mini_soldiers_pair[:black].collect do |s|
+        s.merge(:point => s[:point].as_location(location))
       end
     end
 

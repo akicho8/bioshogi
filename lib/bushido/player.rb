@@ -124,13 +124,13 @@ module Bushido
         :from_piece => true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(mini_soldier_or_str).each{|mini_soldier_or_str|
-        if Hash === mini_soldier_or_str
-          mini_soldier = mini_soldier_or_str
-        else
+        if String === mini_soldier_or_str
           if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end
           mini_soldier = MiniSoldier.from_str(mini_soldier_or_str)
+        else
+          mini_soldier = mini_soldier_or_str
         end
         if options[:from_piece]
           pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
