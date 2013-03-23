@@ -6,12 +6,13 @@
 $color:            #fff
 $background_color: #111
 $border_color:     #aaa
-$board_color:      #eee
+$board_color:      #fff
 $piece_color:      #000
-$last_point_color: #fdd
+$last_point_color: #ddd
+$last_point_color2: #eee
 
 body
-  @include ts-white-on-black
+  /* @include ts-white-on-black
   font-size: 12px
   background: $background_color
   color: $color
@@ -31,13 +32,13 @@ form
 
 .white
   @include transform(rotate(180deg))
-  @include ts-white-on-black-reverse
+  /* @include ts-white-on-black-reverse
 
 .pieces
   margin: 0.5em auto
 
 .board
-  font-size: 22px
+  font-size: 14px
   /* @include border-radius(3px)
   margin: 0.5em auto
   border: 0px solid $border_color
@@ -49,16 +50,18 @@ form
     empty-cells: show
     color: $piece_color
     text-align: center
-    width: 30px
-    height: 30px
+    width: 20px
+    height: 20px
     background: $board_color
     &.last_point
       font-weight: bold
       background: $last_point_color
+    &.last_point2
+      background: $last_point_color2
     &.black
-      @include ts-black-on-white
+      /* @include ts-black-on-white
     &.white
-      @include ts-black-on-white-reverse
+      /* @include ts-black-on-white-reverse
 
   &.small
     font-size: 12px

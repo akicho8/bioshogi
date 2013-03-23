@@ -107,8 +107,7 @@ module Bushido
       {
         :counter         => @counter,
         :players         => @players,
-        :simple_kif_logs => @simple_kif_logs,
-        :human_kif_logs  => @human_kif_logs,
+        :kif_logs   => @kif_logs,
         :point_logs      => @point_logs,
       }
     end
@@ -116,8 +115,7 @@ module Bushido
     def marshal_load(attrs)
       @counter         = attrs[:counter]
       @players         = attrs[:players]
-      @simple_kif_logs = attrs[:simple_kif_logs]
-      @human_kif_logs  = attrs[:human_kif_logs]
+      @kif_logs   = attrs[:kif_logs]
       @point_logs      = attrs[:point_logs]
       @board = Board.new
       @players.each{|player|
@@ -132,8 +130,7 @@ module Bushido
     def replace(object)
       @counter         = object.counter
       @players         = object.players
-      @simple_kif_logs = object.simple_kif_logs
-      @human_kif_logs  = object.human_kif_logs
+      @kif_logs   = object.kif_logs
       @point_logs      = object.point_logs
       @board = Board.new
       @players.each{|player|
@@ -185,14 +182,14 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :counter, :simple_kif_logs, :human_kif_logs, :point_logs
+      attr_reader :counter, :point_logs, :origin_point, :kif_logs
     end
 
     def initialize(*)
       super
       @point_logs = []
-      @simple_kif_logs = []
-      @human_kif_logs = []
+      @kif_logs = []
+      @origin_point = nil       # FIXME
     end
 
     # 棋譜入力
@@ -202,16 +199,21 @@ module Bushido
           return
         end
         current_player.execute(str)
-        # log_stock(current_player)
         @counter += 1
       end
     end
 
     # player.execute の直後に呼んで保存する
     def log_stock(player)
-      @point_logs << player.parsed_info.point
-      @simple_kif_logs << "#{player.location.mark}#{player.parsed_info.last_kif}"
-      @human_kif_logs << "#{player.location.mark}#{player.parsed_info.last_ki2}"
+      @point_logs << player.put_info.point
+      @kif_logs << player.put_info.kif_log
+      @origin_point = player.put_info.origin_point # FIXME
+    end
+
+    # 互換性用
+    if true
+      def simple_kif_logs; kif_logs.collect{|e|e.to_s_simple(:with_mark => true)}; end
+      def human_kif_logs;  kif_logs.collect{|e|e.to_s_human(:with_mark => true)};  end
     end
 
     def to_s
@@ -290,7 +292,6 @@ module Bushido
           # p op
           player = players[Location[op[:location]].index]
           player.execute(op[:input])
-          # log_stock(player)
           frames << deep_dup
           if block
             yield frames.last

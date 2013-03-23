@@ -14,6 +14,6 @@
   .hr
   - @frames.each do |mediator|
     %div= mediator.human_kif_logs.last
-    = FrameDecorator.new(mediator).to_html_board(:small)
+    = MediatorDecorator.new(mediator).to_html_board(:small)
     .hr
 

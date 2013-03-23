@@ -4,15 +4,22 @@
 #
 module Bushido
   class OrderParser
-    attr_reader :point
+    attr_reader :point, :origin_point
 
     def initialize(player)
       @player = player
+
+      @point = nil
+      @piece = nil
+      @promoted = nil
+      @promote_trigger = nil
+      @origin_point = nil
+      @candidate = nil
     end
 
     def execute(str)
       @source = str
-      @regexp = /\A(?<point>同|..)#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<source_point>.*)\))?/
+      @regexp = /\A(?<point>同|..)#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
@@ -38,7 +45,7 @@ module Bushido
       end
 
       @put_on_trigger = @md[:suffix].to_s.include?("打")
-      @source_point = nil
+      @origin_point = nil
       @done = false
       @candidate = nil
 
@@ -48,21 +55,21 @@ module Bushido
         end
         put_soldier
       else
-        if @md[:source_point]
-          @source_point = Point.parse(@md[:source_point])
+        if @md[:origin_point]
+          @origin_point = Point.parse(@md[:origin_point])
         end
-        unless @source_point
-          find_source_point
+        unless @origin_point
+          find_origin_point
         end
         unless @done
-          @source_soldier = @player.board.fetch(@source_point)
+          @source_soldier = @player.board.fetch(@origin_point)
 
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
               if @player.piece_fetch(@piece)
                 @put_on_trigger = true
-                @source_point = nil
+                @origin_point = nil
                 put_soldier
               else
                 raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
@@ -71,7 +78,7 @@ module Bushido
           end
 
           unless @done
-            @player.move_to(@source_point, @point, @promote_trigger)
+            @player.move_to(@origin_point, @point, @promote_trigger)
           end
         end
       end
@@ -81,123 +88,45 @@ module Bushido
       self
     end
 
-    # KIF形式の最後の棋譜
-    def last_kif
-      s = []
-      s << @point.name
-      s << @piece.some_name(@promoted)
-      if @promote_trigger
-        s << "成"
-      end
-      if @put_on_trigger
-        s << "打"
-      end
-      if @source_point
-        s << "(#{@source_point.number_format})"
-      end
-      s.join
+    def kif_log
+      KifLog.new({
+          :point           => @point,
+          :piece           => @piece,
+          :promoted        => @promoted,
+          :promote_trigger => @promote_trigger,
+          :put_on_trigger  => @put_on_trigger,
+          :origin_point    => @origin_point,
+          :player          => @player,
+          :candidate       => @candidate,
+          :same_point      => same_point?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
+        })
     end
 
-    def last_kif_pair
-      [last_kif, last_ki2]
-    end
+    # # 互換性用
+    # def to_s_simple
+    #   kif_log.to_s_simple
+    # end
+    # 
+    # def to_s_human
+    #   kif_log.to_s_human
+    # end
 
-    def last_ki2
-      s = []
-      if @player.point_logs && @player.point_logs[-2] == @point
-        s << "同"
-      else
-        s << @point.name
-      end
-      s << @piece.some_name(@promoted)
+    # def last_shash
+    #   {:point => @point, :piece => @piece, :promoted => @promoted}
+    # end
 
-      # 候補が2つ以上あったとき
-      if @candidate && @candidate.size > 1
-        if Piece::Brave === @piece
-          # 大駒の場合、
-          # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
-          if @candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる
-              @candidate.all?{|s|s.point.y.value < @point.y.value},   # 移動先の水平線上よりすべて上または
-              @candidate.all?{|s|s.point.y.value > @point.y.value},   #                     すべて下
-            ].any?
-
-            sorted_candidate = @candidate.sort_by{|soldier|soldier.point.x.value}
-            if sorted_candidate.last.point.x.value == @source_point.x.value
-              s << select_char("右左")
-            end
-            if sorted_candidate.first.point.x.value == @source_point.x.value
-              s << select_char("左右")
-            end
-          end
-        else
-          # 普通駒の場合、
-          # 左右がつくのは移動先の左側と右側の両方に駒があるとき
-          if [@candidate.any?{|s|s.point.x.value < @point.x.value},      # 移動先の左側に駒がある、かつ
-              @candidate.any?{|s|s.point.x.value > @point.x.value}].all? # 移動先の右側に駒がある
-            if @point.x.value < @source_point.x.value
-              s << select_char("右左")
-            end
-            if @point.x.value > @source_point.x.value
-              s << select_char("左右")
-            end
-          end
-
-          # 目標座標の左方向または右方向に駒があって、自分は縦の列から来た場合
-          if [@candidate.any?{|s|s.point.x.value < @point.x.value},
-              @candidate.any?{|s|s.point.x.value > @point.x.value}].any?
-            if @point.x.value == @source_point.x.value
-              s << "直"
-            end
-          end
-        end
-
-        # 目標地点の上と下、両方にあって区別がつかないとき、
-        if [@candidate.any?{|s|s.point.y.value < @point.y.value},
-            @candidate.any?{|s|s.point.y.value > @point.y.value}].all? ||
-            # 上か下にあって、水平線にもある
-            [@candidate.any?{|s|s.point.y.value < @point.y.value},
-            @candidate.any?{|s|s.point.y.value > @point.y.value}].any? && @candidate.any?{|s|s.point.y.value == @point.y.value}
-
-          # 下から来たのなら、ひき"上"げる
-          if @point.y.value < @source_point.y.value
-            s << select_char("上引")
-          end
-          # 上から来たなら、"引"く
-          if @point.y.value > @source_point.y.value
-            s << select_char("引上")
-          end
-        end
-
-        # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
-        if [@candidate.any?{|s|s.point.y.value < @point.y.value},
-            @candidate.any?{|s|s.point.y.value > @point.y.value}].any?
-          if @point.y.value == @source_point.y.value
-            s << "寄"
-          end
-        end
-      end
-      if @promote_trigger
-        s << "成"
-      else
-        if @source_point && @point
-          if @source_point.promotable?(@player.location) || @point.promotable?(@player.location)
-            unless @promoted
-              if @piece.promotable?
-                s << "不成"
-              end
-            end
-          end
-        end
-      end
-      if @put_on_trigger
-        s << "打"
-      end
-      s.join
-    end
-
-    def last_shash
-      {:point => @point, :piece => @piece, :promoted => @promoted}
-    end
+    # def last_info
+    #   {
+    #     # :prev_player_point => @prev_player_point,
+    #     :promoted          => @promoted,
+    #     :promote_trigger   => @promote_trigger,
+    #     :origin_point      => @origin_point,
+    #     :piece             => @piece,
+    #     :put_on_trigger    => @put_on_trigger,
+    #     :candidate         => @candidate,
+    #     :last_piece        => @last_piece,
+    #   }
+    # end
 
     private
 
@@ -215,7 +144,7 @@ module Bushido
       end
     end
 
-    def find_source_point
+    def find_origin_point
       @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.include?(@point)} # この場所にあるもの
       @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}                         # 同じ駒
       @soldiers = @soldiers.find_all{|e|e.promoted == @promoted}                               # 成っているかどうか
@@ -253,7 +182,7 @@ module Bushido
         end
 
         # Point[@player.board.surface.invert[@soldiers.first]] として引くことも可能だけど遅い
-        @source_point = @soldiers.first.point
+        @origin_point = @soldiers.first.point
       end
     end
 
@@ -299,29 +228,23 @@ module Bushido
       end
     end
 
-    # 未使用
-    def last_info
-      {
-        # :prev_player_point => @prev_player_point,
-        :promoted          => @promoted,
-        :promote_trigger   => @promote_trigger,
-        :source_point      => @source_point,
-        :piece             => @piece,
-        :put_on_trigger    => @put_on_trigger,
-        :candidate         => @candidate,
-        :last_piece        => @last_piece,
-      }
-    end
-
-    def select_char(str)
-      str.chars.to_a.send(@player.location._which(:first, :last))
-    end
-
     def put_soldier
       soldier = Soldier.new(:player => @player, :piece => @player.pick_out(@piece), :promoted => @promoted)
       @player.put_on_with_valid(@point, soldier)
       @player.soldiers << soldier
       @done = true
+    end
+
+    def same_point?
+      if @player.mediator && logs = @player.mediator.kif_logs
+        # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
+        # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
+        if log = logs.reverse.find{|log|log.player.location != @player.location} # player == player で動くか確認
+          if log.point == @point
+            true
+          end
+        end
+      end
     end
   end
 end

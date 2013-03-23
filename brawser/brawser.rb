@@ -13,7 +13,7 @@ require "haml"
 require "compass"
 require "bushido/contrib/effective_patterns"
 
-class FrameDecorator < SimpleDelegator
+class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
     rows = Bushido::Position::Vpos.ridge_length.times.collect do |y|
       tds = Bushido::Position::Hpos.ridge_length.times.collect do |x|
@@ -21,10 +21,13 @@ class FrameDecorator < SimpleDelegator
         cell = ""
         if soldier = board.surface[[x, y]]
           tag_class << soldier.player.location.key
-          if point_logs.last == Bushido::Point[[x, y]]
-            tag_class << "last_point"
-          end
           cell = soldier.piece_current_name
+        end
+        if point_logs.last == Bushido::Point[[x, y]]
+          tag_class << "last_point"
+        end
+        if origin_point == Bushido::Point[[x, y]]
+          tag_class << "last_point2" # FIXME
         end
         "<td class=\"#{tag_class.join(' ')}\">#{cell}</td>"
       end

@@ -5,7 +5,7 @@ require "./example_helper"
 
 require "delegate"
 
-class FrameDecorator < SimpleDelegator
+class MediatorDecorator < SimpleDelegator
   def to_html
     rows = Position::Vpos.ridge_length.times.collect{|y|
       tds = Position::Hpos.ridge_length.times.collect{|x|
@@ -26,7 +26,7 @@ end
 
 mediator = Mediator.start
 mediator.piece_plot
-frame_decorator = FrameDecorator.new(mediator)
+frame_decorator = MediatorDecorator.new(mediator)
 puts frame_decorator.to_html
 Pathname("_frame.html").open("w"){|f|f << frame_decorator.to_html}
 # `open _frame.html`

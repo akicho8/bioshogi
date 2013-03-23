@@ -531,6 +531,7 @@
 
 ** _TODO_
 
+   - human_kif_logs ともう一つを別々に管理しているのがおかしい kif_logs.first から分岐すべき
    - 手の候補を表示する
    - mediator の元を mediator にする
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
@@ -540,7 +541,7 @@
    - 「香落ち」対応。香落ちなどは先手と決まっている
    - どうぶつ将棋の例
    - ブラウザ 駒のドラッグ
-   - FrameDecorator で移動元・移動先のクラス指定
+   - MediatorDecorator で移動元・移動先のクラス指定
    - 「詰み」の状態を判断する
    - 形勢判断クラスをStrategyやadapterみたいにする
    - ▽1八杏成 ではなく 香成

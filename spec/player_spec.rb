@@ -148,7 +148,7 @@ EOT
               expect { player_test(:init => "１四金", :exec => "１三金不成") }.to raise_error(NoPromotablePiece)
             end
             it "不成の指定をしなかった" do
-              player_test(:init => "１四金", :exec => "１三金").parsed_info.last_kif_pair.should== ["1三金(14)", "1三金"]
+              player_test(:init => "１四金", :exec => "１三金").put_info.kif_log.to_pair.should== ["1三金(14)", "1三金"]
             end
           end
         end
@@ -204,7 +204,7 @@ EOT
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く" do
           player_test2(:exec => "５五歩").should == ["▲5五歩"]
-          player_test(:exec => "５五歩").parsed_info.last_kif.should == "5五歩打"
+          player_test(:exec => "５五歩").put_info.kif_log.to_s_simple.should == "5五歩打"
         end
 
         it "２二角成としたけど盤上に何もないので持駒の角を打った(打てていたけど、成と書いて打てるのはおかしいのでエラーとする)" do
@@ -212,7 +212,7 @@ EOT
         end
 
         it "盤上に竜があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れそうなケース。実際は竜なので来れない)" do
-          player_test(:append_pieces => "飛", :init => "１一龍", :exec => "２一飛").parsed_info.last_kif.should == "2一飛打"
+          player_test(:append_pieces => "飛", :init => "１一龍", :exec => "２一飛").put_info.kif_log.to_s_simple.should == "2一飛打"
         end
 
         it "と金は二歩にならないので" do
@@ -254,56 +254,56 @@ EOT
         describe "龍" do
           it "パターンA" do
             @params.update(:init => ["９一龍", "８四龍"])
-            player_test(@params.merge(:exec => "８二龍引")).parsed_info.last_kif_pair.should == ["8二龍(91)", "8二龍引"]
-            player_test(@params.merge(:exec => "８二龍上")).parsed_info.last_kif_pair.should == ["8二龍(84)", "8二龍上"]
+            read_spec(@params.merge(:exec => "８二龍引")).should == ["8二龍(91)", "8二龍引"]
+            read_spec(@params.merge(:exec => "８二龍上")).should == ["8二龍(84)", "8二龍上"]
           end
           it "パターンB" do
             @params.update(:init => ["５二龍", "２三龍"])
-            player_test(@params.merge(:exec => "４三龍寄")).parsed_info.last_kif_pair.should == ["4三龍(23)", "4三龍寄"]
-            player_test(@params.merge(:exec => "４三龍引")).parsed_info.last_kif_pair.should == ["4三龍(52)", "4三龍引"]
+            read_spec(@params.merge(:exec => "４三龍寄")).should == ["4三龍(23)", "4三龍寄"]
+            read_spec(@params.merge(:exec => "４三龍引")).should == ["4三龍(52)", "4三龍引"]
           end
           it "パターンC" do
             @params.update(:init => ["５五龍", "１五龍"])
-            player_test(@params.merge(:exec => "３五龍左")).parsed_info.last_kif_pair.should == ["3五龍(55)", "3五龍左"]
-            player_test(@params.merge(:exec => "３五龍右")).parsed_info.last_kif_pair.should == ["3五龍(15)", "3五龍右"]
+            read_spec(@params.merge(:exec => "３五龍左")).should == ["3五龍(55)", "3五龍左"]
+            read_spec(@params.merge(:exec => "３五龍右")).should == ["3五龍(15)", "3五龍右"]
           end
           it "パターンD" do
             @params.update(:init => ["９九龍", "８九龍"])
-            player_test(@params.merge(:exec => "８八龍左")).parsed_info.last_kif_pair.should == ["8八龍(99)", "8八龍左"]
-            player_test(@params.merge(:exec => "８八龍右")).parsed_info.last_kif_pair.should == ["8八龍(89)", "8八龍右"]
+            read_spec(@params.merge(:exec => "８八龍左")).should == ["8八龍(99)", "8八龍左"]
+            read_spec(@params.merge(:exec => "８八龍右")).should == ["8八龍(89)", "8八龍右"]
           end
           it "パターンE" do
             @params.update(:init => ["２八龍", "１九龍"])
-            player_test(@params.merge(:exec => "１七龍左")).parsed_info.last_kif_pair.should == ["1七龍(28)", "1七龍左"]
-            player_test(@params.merge(:exec => "１七龍右")).parsed_info.last_kif_pair.should == ["1七龍(19)", "1七龍右"]
+            read_spec(@params.merge(:exec => "１七龍左")).should == ["1七龍(28)", "1七龍左"]
+            read_spec(@params.merge(:exec => "１七龍右")).should == ["1七龍(19)", "1七龍右"]
           end
         end
 
         describe "馬" do
           it "パターンA" do
             @params.update(:init => ["９一馬", "８一馬"])
-            player_test(@params.merge(:exec => "８二馬左")).parsed_info.last_kif_pair.should == ["8二馬(91)", "8二馬左"]
-            player_test(@params.merge(:exec => "８二馬右")).parsed_info.last_kif_pair.should == ["8二馬(81)", "8二馬右"]
+            read_spec(@params.merge(:exec => "８二馬左")).should == ["8二馬(91)", "8二馬左"]
+            read_spec(@params.merge(:exec => "８二馬右")).should == ["8二馬(81)", "8二馬右"]
           end
           it "パターンB" do
             @params.update(:init => ["９五馬", "６三馬"])
-            player_test(@params.merge(:exec => "８五馬寄")).parsed_info.last_kif_pair.should == ["8五馬(95)", "8五馬寄"]
-            player_test(@params.merge(:exec => "８五馬引")).parsed_info.last_kif_pair.should == ["8五馬(63)", "8五馬引"]
+            read_spec(@params.merge(:exec => "８五馬寄")).should == ["8五馬(95)", "8五馬寄"]
+            read_spec(@params.merge(:exec => "８五馬引")).should == ["8五馬(63)", "8五馬引"]
           end
           it "パターンC" do
             @params.update(:init => ["１一馬", "３四馬"])
-            player_test(@params.merge(:exec => "１二馬引")).parsed_info.last_kif_pair.should == ["1二馬(11)", "1二馬引"]
-            player_test(@params.merge(:exec => "１二馬上")).parsed_info.last_kif_pair.should == ["1二馬(34)", "1二馬上"]
+            read_spec(@params.merge(:exec => "１二馬引")).should == ["1二馬(11)", "1二馬引"]
+            read_spec(@params.merge(:exec => "１二馬上")).should == ["1二馬(34)", "1二馬上"]
           end
           it "パターンD" do
             @params.update(:init => ["９九馬", "５九馬"])
-            player_test(@params.merge(:exec => "７七馬左")).parsed_info.last_kif_pair.should == ["7七馬(99)", "7七馬左"]
-            player_test(@params.merge(:exec => "７七馬右")).parsed_info.last_kif_pair.should == ["7七馬(59)", "7七馬右"]
+            read_spec(@params.merge(:exec => "７七馬左")).should == ["7七馬(99)", "7七馬左"]
+            read_spec(@params.merge(:exec => "７七馬右")).should == ["7七馬(59)", "7七馬右"]
           end
           it "パターンE" do
             @params.update(:init => ["４七馬", "１八馬"])
-            player_test(@params.merge(:exec => "２九馬左")).parsed_info.last_kif_pair.should == ["2九馬(47)", "2九馬左"]
-            player_test(@params.merge(:exec => "２九馬右")).parsed_info.last_kif_pair.should == ["2九馬(18)", "2九馬右"]
+            read_spec(@params.merge(:exec => "２九馬左")).should == ["2九馬(47)", "2九馬左"]
+            read_spec(@params.merge(:exec => "２九馬右")).should == ["2九馬(18)", "2九馬右"]
           end
         end
       end
@@ -314,7 +314,7 @@ EOT
               "______", "______", "４五と",
               "______", "______", "______",
             ]})
-        player_test(@params.merge(:exec => "５五と")).parsed_info.last_kif_pair.should == ["5五と(45)", "5五と"]
+        read_spec(@params.merge(:exec => "５五と")).should == ["5五と(45)", "5五と"]
       end
 
       it "右下だけ" do
@@ -323,7 +323,7 @@ EOT
               "______", "______", "______",
               "______", "______", "４六と",
             ]})
-        player_test(@params.merge(:exec => "５五と")).parsed_info.last_kif_pair.should == ["5五と(46)", "5五と"]
+        read_spec(@params.merge(:exec => "５五と")).should == ["5五と(46)", "5五と"]
       end
 
       it "真下だけ" do
@@ -332,7 +332,7 @@ EOT
               "______", "______", "______",
               "______", "５六と", "______",
             ]})
-        player_test(@params.merge(:exec => "５五と")).parsed_info.last_kif_pair.should == ["5五と(56)", "5五と"]
+        read_spec(@params.merge(:exec => "５五と")).should == ["5五と(56)", "5五と"]
       end
 
       it "下面" do
@@ -341,9 +341,9 @@ EOT
               "______", "______", "______",
               "６六と", "５六と", "４六と",
             ]})
-        player_test(@params.merge(:exec => "５五と右")).parsed_info.last_kif_pair.should == ["5五と(46)", "5五と右"]
-        player_test(@params.merge(:exec => "５五と直")).parsed_info.last_kif_pair.should == ["5五と(56)", "5五と直"]
-        player_test(@params.merge(:exec => "５五と左")).parsed_info.last_kif_pair.should == ["5五と(66)", "5五と左"]
+        read_spec(@params.merge(:exec => "５五と右")).should == ["5五と(46)", "5五と右"]
+        read_spec(@params.merge(:exec => "５五と直")).should == ["5五と(56)", "5五と直"]
+        read_spec(@params.merge(:exec => "５五と左")).should == ["5五と(66)", "5五と左"]
       end
 
       it "縦に二つ" do
@@ -352,8 +352,8 @@ EOT
               "______", "______", "______",
               "______", "５六と", "______",
             ]})
-        player_test(@params.merge(:exec => "５五と引")).parsed_info.last_kif_pair.should == ["5五と(54)", "5五と引"]
-        player_test(@params.merge(:exec => "５五と上")).parsed_info.last_kif_pair.should == ["5五と(56)", "5五と上"]
+        read_spec(@params.merge(:exec => "５五と引")).should == ["5五と(54)", "5五と引"]
+        read_spec(@params.merge(:exec => "５五と上")).should == ["5五と(56)", "5五と上"]
       end
 
       it "左と左下" do
@@ -362,8 +362,8 @@ EOT
               "６五と", "______", "______",
               "６六と", "______", "______",
             ]})
-        player_test(@params.merge(:exec => "５五と寄")).parsed_info.last_kif_pair.should == ["5五と(65)", "5五と寄"]
-        player_test(@params.merge(:exec => "５五と上")).parsed_info.last_kif_pair.should == ["5五と(66)", "5五と上"]
+        read_spec(@params.merge(:exec => "５五と寄")).should == ["5五と(65)", "5五と寄"]
+        read_spec(@params.merge(:exec => "５五と上")).should == ["5五と(66)", "5五と上"]
       end
 
       it "左上と左下" do
@@ -372,8 +372,8 @@ EOT
               "______", "______", "______",
               "６六銀", "______", "______",
             ]})
-        player_test(@params.merge(:exec => "５五銀引")).parsed_info.last_kif_pair.should == ["5五銀(64)", "5五銀引"]
-        player_test(@params.merge(:exec => "５五銀上")).parsed_info.last_kif_pair.should == ["5五銀(66)", "5五銀上"]
+        read_spec(@params.merge(:exec => "５五銀引")).should == ["5五銀(64)", "5五銀引"]
+        read_spec(@params.merge(:exec => "５五銀上")).should == ["5五銀(66)", "5五銀上"]
       end
 
       it "左右" do
@@ -382,27 +382,27 @@ EOT
               "６五と", "______", "４五と",
               "______", "______", "______",
             ]})
-        player_test(@params.merge(:exec => "５五と左")).parsed_info.last_kif_pair.should == ["5五と(65)", "5五と左"]
-        player_test(@params.merge(:exec => "５五と右")).parsed_info.last_kif_pair.should == ["5五と(45)", "5五と右"]
+        read_spec(@params.merge(:exec => "５五と左")).should == ["5五と(65)", "5五と左"]
+        read_spec(@params.merge(:exec => "５五と右")).should == ["5五と(45)", "5五と右"]
       end
 
       it "同" do
-        Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.parsed_info.last_kif_pair.should == ["2四歩(23)", "同歩"]
+        Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"]).prev_player.put_info.kif_log.to_pair.should == ["2四歩(23)", "同歩"]
       end
 
       it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
-        player_test(:init => ["３四銀", "２四銀"], :exec => "２三銀直不成").parsed_info.last_kif_pair.should == ["2三銀(24)", "2三銀直不成"]
+        read_spec(:init => ["３四銀", "２四銀"], :exec => "２三銀直不成").should == ["2三銀(24)", "2三銀直不成"]
       end
 
       it "２三銀引成できる？" do
-        player_test(:init => ["３二銀", "３四銀"], :exec => "２三銀引成").parsed_info.last_kif_pair.should == ["2三銀成(32)", "2三銀引成"]
+        read_spec(:init => ["３二銀", "３四銀"], :exec => "２三銀引成").should == ["2三銀成(32)", "2三銀引成"]
       end
     end
 
     it "指したあと前回の手を確認できる" do
-      player_test(:init => "５五飛", :exec => "５一飛成").parsed_info.last_kif.should == "5一飛成(55)"
-      player_test(:init => "５一龍", :exec => "１一龍").parsed_info.last_kif.should   == "1一龍(51)"
-      player_test(:exec => "５五飛打").parsed_info.last_kif.should                    == "5五飛打"
+      player_test(:init => "５五飛", :exec => "５一飛成").put_info.kif_log.to_s_simple.should == "5一飛成(55)"
+      player_test(:init => "５一龍", :exec => "１一龍").put_info.kif_log.to_s_simple.should   == "1一龍(51)"
+      player_test(:exec => "５五飛打").put_info.to_s_simple.should                    == "5五飛打"
     end
 
     it "持駒の確認" do

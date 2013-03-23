@@ -48,6 +48,11 @@ RSpec.configure do |config|
       player_test(*args).soldier_names.sort
     end
 
+    def read_spec(*args)
+      elems = player_test(*args).put_info.kif_log.to_pair
+      # elems = elems.collect{|e|e.gsub(/[▲△▽]/, "")}
+    end
+
     def board_parse_test(source)
       Bushido::BaseFormat.board_parse(source).inject({}){|hash, (key, value)|hash.merge(key => value.collect(&:to_s))}
     end

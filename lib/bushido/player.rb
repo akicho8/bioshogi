@@ -33,7 +33,7 @@ module Bushido
     #   basic_test(params).soldier_names.sort
     # end
 
-    attr_accessor :name, :location, :mediator, :last_piece, :parsed_info
+    attr_accessor :name, :location, :mediator, :last_piece, :put_info
 
     def initialize(mediator, params = {})
       super() if defined? super
@@ -195,7 +195,7 @@ module Bushido
       if str == "投了"
         return
       end
-      @parsed_info = OrderParser.new(self).execute(str)
+      @put_info = OrderParser.new(self).execute(str)
       defense_form_store
       @mediator.log_stock(self)
     end
