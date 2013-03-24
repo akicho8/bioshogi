@@ -35,6 +35,9 @@ module Bushido
       @players[Location[location].index]
     end
 
+    def black_player; player_at(:black); end
+    def white_player; player_at(:white); end
+
     # 前後のプレイヤーを返す
     def prev_player; current_player(-1); end
     def next_player; current_player(+1); end
@@ -277,6 +280,7 @@ module Bushido
         yield frames.last
       end
       Utils.ki2_input_seq_parse(@pattern[:execute]).each{|op|
+        # FIXME: push pop 非対応
         if op == "push"
           stack_push
         elsif op == "pop"

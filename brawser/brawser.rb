@@ -12,6 +12,7 @@ require "sass"
 require "haml"
 require "compass"
 require "bushido/contrib/effective_patterns"
+require "bushido/contrib/effective_patterns2"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
@@ -104,6 +105,20 @@ class Brawser < Sinatra::Base
       @frames = mediator.to_all_frames
     end
     haml :effective_patterns
+  end
+
+  get "/effective_patterns2" do
+    if params[:id]
+      @pattern = Bushido::EffectivePatterns2[params[:id].to_i]
+    end
+    if @pattern
+      mediator = Bushido::Sequencer.new
+      mediator.pattern = @pattern[:dsl]
+      mediator.evaluate
+      mediator.frames
+      @frames = mediator.frames
+    end
+    haml :effective_patterns2
   end
 
   get "/board_points" do

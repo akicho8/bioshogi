@@ -18,11 +18,11 @@
   %input{type: "submit", value: "打"}
 
 %div
-  - if @mediator.players.last.pieces.present?
-    .pieces.white= @mediator.players.last.to_s_pieces
+  - if @mediator.player_at(:white).pieces.present?
+    .pieces.white= @mediator.player_at(:white).last.to_s_pieces
   = MediatorDecorator.new(@mediator).to_html_board
-  - if @mediator.players.first.pieces.present?
-    .pieces.black= @mediator.players.first.to_s_pieces
+  - if @mediator.player_at(:black).pieces.present?
+    .pieces.black= @mediator.player_at(:black).last.to_s_pieces
 
 = Bushido::Location[:black].mark_with_name
 %form{action: "/", method: "post"}

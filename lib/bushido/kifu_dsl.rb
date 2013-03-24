@@ -113,13 +113,30 @@ module Bushido
         Utils.__ki2_input_seq_parse(@value).each do |hash|
           player = context.player_at(hash[:location])
           player.execute(hash[:input])
-          # context.log_stock(player)
-          context.frames << context.deep_dup
+          # context.frames << context.deep_dup
         end
       end
 
       def dump
         [:mov, Utils.__ki2_input_seq_parse(@value)]
+      end
+    end
+
+    class Disp < Expression
+      def initialize(value = nil)
+        @value = value
+      end
+
+      def evaluate(context)
+        if @value
+          context.set(:comment, @value)
+        end
+        context.frames << context.deep_dup
+        context.set(:comment, nil)
+      end
+
+      def dump
+        [:disp, @value]
       end
     end
 
@@ -175,6 +192,10 @@ module Bushido
 
     def board(*args)
       @seqs << Board.new(*args)
+    end
+
+    def disp(*args)
+      @seqs << Disp.new(*args)
     end
   end
 

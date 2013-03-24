@@ -51,15 +51,30 @@ BOARD
             pieces "先手" => "歩4"
             mov "▲１五歩"
             mov "△同歩"
+            push {
+              mov "▲１二歩"
+              mov "△同香"
+              mov "▲１三歩"
+              mov "△同香"
+              mov "▲１四歩"
+              mov "△同香"
+              mov "▲２四歩"
+              mov "△同歩"
+              mov "▲同飛"
+              mov "△２三歩"
+              mov "▲１四飛"
+              disp "香車ゲット"
+            }
+            mov "▲１三歩"
+            mov "△同桂"
             mov "▲１二歩"
             mov "△同香"
-            mov "▲１三歩"
-            mov "△同香"
             mov "▲１四歩"
-            mov "△同香"
-            mov "▲２四歩"
-            mov "△同歩"
-            mov "▲同飛"
+            mov "▲１五香"
+            mov "▲１三歩成"
+            mov "△１三香"
+            mov "▲１三香成"
+            disp "桂馬と香車とゲット"
           end
         }
       ]
@@ -72,9 +87,9 @@ BOARD
         if r.nil?
           break
         end
-        p sequencer.kif_logs.last.to_s_human
-        p sequencer.board
-        p sequencer.variables
+        # p sequencer.kif_logs.last.to_s_human
+        # p sequencer
+        # p sequencer.variables
       end
     end
 
