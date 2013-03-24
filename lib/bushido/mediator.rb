@@ -105,18 +105,16 @@ module Bushido
     # TODO: Player の marshal_dump が使われてない件について調べる
     def marshal_dump
       {
-        :counter         => @counter,
-        :players         => @players,
-        :kif_logs   => @kif_logs,
-        :point_logs      => @point_logs,
+        :counter  => @counter,
+        :players  => @players,
+        :kif_logs => @kif_logs,
       }
     end
 
     def marshal_load(attrs)
-      @counter         = attrs[:counter]
-      @players         = attrs[:players]
-      @kif_logs   = attrs[:kif_logs]
-      @point_logs      = attrs[:point_logs]
+      @counter  = attrs[:counter]
+      @players  = attrs[:players]
+      @kif_logs = attrs[:kif_logs]
       @board = Board.new
       @players.each{|player|
         player.mediator = self
@@ -128,10 +126,9 @@ module Bushido
 
     # deep_dup しておくこと
     def replace(object)
-      @counter         = object.counter
-      @players         = object.players
-      @kif_logs   = object.kif_logs
-      @point_logs      = object.point_logs
+      @counter  = object.counter
+      @players  = object.players
+      @kif_logs = object.kif_logs
       @board = Board.new
       @players.each{|player|
         player.mediator = self
@@ -182,14 +179,12 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :counter, :point_logs, :origin_point, :kif_logs
+      attr_reader :counter, :kif_logs
     end
 
     def initialize(*)
       super
-      @point_logs = []
       @kif_logs = []
-      @origin_point = nil       # FIXME
     end
 
     # 棋譜入力
@@ -205,9 +200,7 @@ module Bushido
 
     # player.execute の直後に呼んで保存する
     def log_stock(player)
-      @point_logs << player.runner.point
       @kif_logs << player.runner.kif_log
-      @origin_point = player.runner.origin_point # FIXME
     end
 
     # 互換性用

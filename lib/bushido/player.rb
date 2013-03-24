@@ -185,10 +185,10 @@ module Bushido
       put_on_with_valid(b, soldier)
     end
 
-    # # 前の位置(同に使う)
-    def point_logs
-      @mediator.point_logs
-    end
+    # # # 前の位置(同に使う)
+    # def point_logs
+    #   @mediator.point_logs
+    # end
 
     # 棋譜の入力
     def execute(str)

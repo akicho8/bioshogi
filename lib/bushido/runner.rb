@@ -133,8 +133,8 @@ module Bushido
     def read_point
       @point = nil
       if @md[:point] == "同"
-        if @player.point_logs
-          @point = @player.point_logs.last
+        if @player.mediator && kif_log = @player.mediator.kif_logs.last
+          @point = kif_log.point
         end
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"

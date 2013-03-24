@@ -23,11 +23,13 @@ class MediatorDecorator < SimpleDelegator
           tag_class << soldier.player.location.key
           cell = soldier.piece_current_name
         end
-        if point_logs.last == Bushido::Point[[x, y]]
-          tag_class << "last_point"
-        end
-        if origin_point == Bushido::Point[[x, y]]
-          tag_class << "last_point2" # FIXME
+        if kif_log = kif_logs.last
+          if kif_log.point == Bushido::Point[[x, y]]
+            tag_class << "last_point"
+          end
+          if kif_log.origin_point == Bushido::Point[[x, y]]
+            tag_class << "last_point2"
+          end
         end
         "<td class=\"#{tag_class.join(' ')}\">#{cell}</td>"
       end
