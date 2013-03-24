@@ -102,7 +102,7 @@ EOT
       mediator = Mediator.test(:init => ["１五歩", "１三歩"], :exec => "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.prev_player.put_info.kif_log.to_pair.should == ["1四歩(13)", "同歩"]
+      mediator.prev_player.runner.kif_log.to_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do

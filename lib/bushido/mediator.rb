@@ -205,9 +205,9 @@ module Bushido
 
     # player.execute の直後に呼んで保存する
     def log_stock(player)
-      @point_logs << player.put_info.point
-      @kif_logs << player.put_info.kif_log
-      @origin_point = player.put_info.origin_point # FIXME
+      @point_logs << player.runner.point
+      @kif_logs << player.runner.kif_log
+      @origin_point = player.runner.origin_point # FIXME
     end
 
     # 互換性用

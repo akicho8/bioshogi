@@ -49,7 +49,7 @@ RSpec.configure do |config|
     end
 
     def read_spec(*args)
-      elems = player_test(*args).put_info.kif_log.to_pair
+      elems = player_test(*args).runner.kif_log.to_pair
       # elems = elems.collect{|e|e.gsub(/[▲△▽]/, "")}
     end
 

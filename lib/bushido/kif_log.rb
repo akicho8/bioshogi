@@ -4,7 +4,7 @@
 #
 module Bushido
   class KifLog < Hash
-    attr_reader :point, :piece, :promoted, :promote_trigger, :put_on_trigger, :origin_point, :player, :candidate, :same_point
+    attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
 
     def initialize(attrs)
       attrs.each{|k, v|
@@ -26,7 +26,7 @@ module Bushido
       if @promote_trigger
         s << "成"
       end
-      if @put_on_trigger
+      if @strike_trigger
         s << "打"
       end
       if @origin_point
@@ -47,7 +47,7 @@ module Bushido
       if options[:with_mark]
         s << @player.location.mark
       end
-      if @same_point
+      if @point_same_p
       # if __same_point?
         s << "同"
       else
@@ -133,7 +133,7 @@ module Bushido
           end
         end
       end
-      if @put_on_trigger
+      if @strike_trigger
         s << "打"
       end
       s.join

@@ -3,7 +3,7 @@
 # Player#execute 実体
 #
 module Bushido
-  class OrderParser
+  class Runner
     attr_reader :point, :origin_point
 
     def initialize(player)
@@ -44,12 +44,12 @@ module Bushido
         end
       end
 
-      @put_on_trigger = @md[:suffix].to_s.include?("打")
+      @strike_trigger = @md[:suffix].to_s.include?("打")
       @origin_point = nil
       @done = false
       @candidate = nil
 
-      if @put_on_trigger
+      if @strike_trigger
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
@@ -68,7 +68,7 @@ module Bushido
             if @source_soldier.promoted? && !@promoted
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
               if @player.piece_fetch(@piece)
-                @put_on_trigger = true
+                @strike_trigger = true
                 @origin_point = nil
                 put_soldier
               else
@@ -94,11 +94,11 @@ module Bushido
           :piece           => @piece,
           :promoted        => @promoted,
           :promote_trigger => @promote_trigger,
-          :put_on_trigger  => @put_on_trigger,
+          :strike_trigger  => @strike_trigger,
           :origin_point    => @origin_point,
           :player          => @player,
           :candidate       => @candidate,
-          :same_point      => same_point?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
+          :point_same_p    => point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
         })
     end
 
@@ -122,7 +122,7 @@ module Bushido
     #     :promote_trigger   => @promote_trigger,
     #     :origin_point      => @origin_point,
     #     :piece             => @piece,
-    #     :put_on_trigger    => @put_on_trigger,
+    #     :strike_trigger    => @strike_trigger,
     #     :candidate         => @candidate,
     #     :last_piece        => @last_piece,
     #   }
@@ -156,7 +156,7 @@ module Bushido
           if @promote_trigger
             raise IllegibleFormat, "「2二角打」または「2二角」(打の省略形)とするところを「2二角成打」と書いている系のエラーです。: '#{@source.inspect}'"
           end
-          @put_on_trigger = true
+          @strike_trigger = true
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
@@ -235,14 +235,12 @@ module Bushido
       @done = true
     end
 
-    def same_point?
-      if @player.mediator && logs = @player.mediator.kif_logs
+    def point_same?
+      if @player.mediator && kif_logs = @player.mediator.kif_logs
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
-        if log = logs.reverse.find{|log|log.player.location != @player.location} # player == player で動くか確認
-          if log.point == @point
-            true
-          end
+        if kif_log = kif_logs.reverse.find{|e|e.player.location != @player.location}
+          kif_log.point == @point
         end
       end
     end
