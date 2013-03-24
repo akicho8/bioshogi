@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/pattern_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_dsl_spec.rb" -*-
 #
 # 棋譜ビルダー
 #   テキストをがんばってパースするぐらいならDSLにする方がいい、という考えから生まれているので、
@@ -123,7 +123,7 @@ module Bushido
       end
     end
 
-    def self.build(&block)
+    def self.define(&block)
       new.tap{|e|e.instance_eval(&block)}
     end
 
@@ -181,7 +181,7 @@ module Bushido
   if $0 == __FILE__
     require "../bushido"
     require "pp"
-    builder = KifuDsl.build do
+    builder = KifuDsl.define do
       title "(title)"
       comment "(comment)"
       pieces :black => "歩"

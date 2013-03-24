@@ -112,7 +112,7 @@ EOT
     end
 
     it "Sequencer" do
-      data = KifuDsl.build{}
+      data = KifuDsl.define{}
       sequencer = Sequencer.new
       sequencer.pattern = data
       sequencer.evaluate

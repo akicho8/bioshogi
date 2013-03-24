@@ -336,10 +336,10 @@ module Bushido
     def eval_step
       loop do
         expr = @pattern.seqs[@instruction_pointer]
-        @instruction_pointer += 1
         unless expr
           break
         end
+        @instruction_pointer += 1
         expr.evaluate(self)
         if KifuDsl::Mov === expr
           break
