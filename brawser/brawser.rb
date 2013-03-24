@@ -101,24 +101,17 @@ class Brawser < Sinatra::Base
       @pattern = Bushido::EffectivePatterns[params[:id].to_i]
     end
     if @pattern
-      mediator = Bushido::SimulatorFrame.new(@pattern)
-      @frames = mediator.to_all_frames
+      if @pattern[:dsl]
+        mediator = Bushido::Sequencer.new
+        mediator.pattern = @pattern[:dsl]
+        mediator.evaluate
+        @frames = mediator.frames
+      else
+        mediator = Bushido::SimulatorFrame.new(@pattern)
+        @frames = mediator.to_all_frames
+      end
     end
     haml :effective_patterns
-  end
-
-  get "/effective_patterns2" do
-    if params[:id]
-      @pattern = Bushido::EffectivePatterns2[params[:id].to_i]
-    end
-    if @pattern
-      mediator = Bushido::Sequencer.new
-      mediator.pattern = @pattern[:dsl]
-      mediator.evaluate
-      mediator.frames
-      @frames = mediator.frames
-    end
-    haml :effective_patterns2
   end
 
   get "/board_points" do

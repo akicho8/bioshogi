@@ -18,19 +18,45 @@ module Bushido
       def evaluate(context)
         context.stack_push
       end
-
-      def dump
-        :push
-      end
     end
 
     class Pop < Expression
       def evaluate(context)
         context.stack_pop
       end
+    end
 
-      def dump
-        :pop
+    # class AutoFlushing < Expression
+    #   def initialize(value = nil)
+    #     @value = value
+    #   end
+    #
+    #   def evaluate(context)
+    #     context.variables[:auto_flushing] = @
+    #   end
+    #
+    #   def dump
+    #     :push
+    #   end
+    # end
+
+    class VarPush < Expression
+      def initialize(key)
+        @key = key
+      end
+
+      def evaluate(context)
+        context.var_push(@key)
+      end
+    end
+
+    class VarPop < Expression
+      def initialize(key)
+        @key = key
+      end
+
+      def evaluate(context)
+        context.var_pop(@key)
       end
     end
 
@@ -42,9 +68,16 @@ module Bushido
       def evaluate(context)
         Utils.__ki2_input_seq_parse(@value)
       end
+    end
 
-      def dump
-        [:mov, Utils.__ki2_input_seq_parse(@value)]
+    class Set < Expression
+      def initialize(key, value)
+        @key = key
+        @value = value
+      end
+
+      def evaluate(context)
+        context.variables[@key] = @value
       end
     end
 
@@ -54,11 +87,7 @@ module Bushido
       end
 
       def evaluate(context)
-        context.set(:title, @value)
-      end
-
-      def dump
-        [:title, @value]
+        context.variables[:title] = @value
       end
     end
 
@@ -68,11 +97,7 @@ module Bushido
       end
 
       def evaluate(context)
-        context.set(:comment, @value)
-      end
-
-      def dump
-        [:comment, @value]
+        context.variables[:comment] = @value
       end
     end
 
@@ -84,10 +109,6 @@ module Bushido
       def evaluate(context)
         @value.each{|k, v|context.player_at(k).deal(v)}
       end
-
-      def dump
-        [:pieces, @value]
-      end
     end
 
     class Board < Expression
@@ -98,11 +119,9 @@ module Bushido
       def evaluate(context)
         context.board_reset(@value)
       end
-
-      def dump
-        [:board, @value]
-      end
     end
+
+    # TODO: silent_mov も作る
 
     class Mov < Expression
       def initialize(value)
@@ -113,12 +132,10 @@ module Bushido
         Utils.__ki2_input_seq_parse(@value).each do |hash|
           player = context.player_at(hash[:location])
           player.execute(hash[:input])
-          # context.frames << context.deep_dup
+          if context.variables[:auto_flushing]
+            context.frames << context.deep_dup
+          end
         end
-      end
-
-      def dump
-        [:mov, Utils.__ki2_input_seq_parse(@value)]
       end
     end
 
@@ -133,10 +150,6 @@ module Bushido
         end
         context.frames << context.deep_dup
         context.set(:comment, nil)
-      end
-
-      def dump
-        [:disp, @value]
       end
     end
 
@@ -176,6 +189,21 @@ module Bushido
 
     def pop
       @seqs << Pop.new
+    end
+
+    def auto_flushing(value = true, &block)
+      if block_given?
+        @seqs << VarPush.new(:auto_flushing)
+        set(:auto_flushing, value)
+        instance_eval(&block)
+        @seqs << VarPop.new(:auto_flushing)
+      else
+        set(:auto_flushing, value)
+      end
+    end
+
+    def set(*args)
+      @seqs << Set.new(*args)
     end
 
     def title(*args)

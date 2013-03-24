@@ -247,12 +247,41 @@ module Bushido
     end
   end
 
+  module Variables
+    attr_reader :variables, :var_stack
+
+    def initialize(*)
+      super
+      @variables = {}
+      @var_stack = Hash.new([])
+    end
+
+    def marshal_dump
+      super.merge(:variables => @variables, :var_stack => @var_stack)
+    end
+
+    def marshal_load(attrs)
+      super
+      @variables = attrs[:variables]
+      @var_stack = attrs[:var_stack]
+    end
+
+    def var_push(key)
+      @var_stack[key] << @variables[key]
+    end
+
+    def var_pop(key)
+      @variables[key] = @var_stack[key].pop
+    end
+  end
+
   class Mediator
     include PlayerSelector
     include Boardable
     include Executer
     include Serialization
     include HistoryStack
+    include Variables
   end
 
   class SimulatorFrame < Mediator
@@ -280,19 +309,13 @@ module Bushido
         yield frames.last
       end
       Utils.ki2_input_seq_parse(@pattern[:execute]).each{|op|
-        # FIXME: push pop 非対応
-        if op == "push"
-          stack_push
-        elsif op == "pop"
-          stack_pop
-        else
-          # p op
-          player = players[Location[op[:location]].index]
-          player.execute(op[:input])
-          frames << deep_dup
-          if block
-            yield frames.last
-          end
+        if String === op
+          raise SyntaxError, op
+        end
+        player_at(op[:location]).execute(op[:input])
+        frames << deep_dup
+        if block
+          yield frames.last
         end
       }
       frames
@@ -301,7 +324,7 @@ module Bushido
 
   # FIXME: pattern をこの中に入れたらどうなる？
   class Sequencer < Mediator
-    attr_reader :frames, :variables
+    attr_reader :frames
     attr_accessor :pattern
     attr_accessor :instruction_pointer
 
@@ -309,7 +332,6 @@ module Bushido
       super()
       @pattern = pattern
       @frames = []
-      @variables = {}
       @instruction_pointer = 0
 
       # Location.each{|loc|
@@ -323,15 +345,6 @@ module Bushido
 
     def get(key)
       @variables[key]
-    end
-
-    def marshal_dump
-      super.merge(:variables => @variables)
-    end
-
-    def marshal_load(attrs)
-      super
-      @variables = attrs[:variables]
     end
 
     def evaluate

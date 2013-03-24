@@ -530,11 +530,12 @@
 
    - TypeError at /effective_patterns can't dump MatchData file: frame.rb location: dump line: 156
 
+     - 「早囲いから飛車を追い返す方法」がうごかない
+
 ** _TODO_
 
-   - human_kif_logs ともう一つを別々に管理しているのがおかしい kif_logs.first から分岐すべき
+   - KifuDsl.define{} は -> {} でいいような気がする
    - 手の候補を表示する
-   - mediator の元を mediator にする
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
    - @board を複製できるようにする
    - DSLに rem(仮) 追加
@@ -558,6 +559,8 @@
    - GUI表示
    - cli
    - +board と player に mediator を【常に】渡す+
+   - +human_kif_logs ともう一つを別々に管理しているのがおかしい kif_logs.first から分岐すべき+
+   - +mediator の元を mediator にする+
    - +5x5将棋配置+
    - +BUG:"1一と成(12)" +
    - +「２三銀直不成」対応+
