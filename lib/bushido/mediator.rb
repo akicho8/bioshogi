@@ -299,6 +299,7 @@ module Bushido
   class Sequencer < Mediator
     attr_reader :frames, :variables
     attr_accessor :pattern
+    attr_accessor :instruction_pointer
 
     def initialize(pattern = nil)
       super()
@@ -334,6 +335,7 @@ module Bushido
     end
 
     def eval_step
+      expr = nil
       loop do
         expr = @pattern.seqs[@instruction_pointer]
         unless expr
@@ -345,6 +347,7 @@ module Bushido
           break
         end
       end
+      expr
     end
   end
 end

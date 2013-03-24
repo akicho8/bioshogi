@@ -17,9 +17,10 @@ module Bushido
       @candidate = nil
     end
 
+    # このパース部分も別クラスにする
     def execute(str)
       @source = str
-      @regexp = /\A(?<point>同|..)#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
+      @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
       @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
 
@@ -132,12 +133,18 @@ module Bushido
 
     def read_point
       @point = nil
-      if @md[:point] == "同"
+      if @md[:same] == "同"
         if @player.mediator && kif_log = @player.mediator.kif_logs.last
           @point = kif_log.point
         end
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
+        end
+        if @md[:point]
+          prefix_pt = Point.parse(@md[:point])
+          if Point.parse(@md[:point]) != @point
+            raise SamePointDiff, "「同」は#{@point}を意味しますが、前置した座標は「#{prefix_pt}」です : #{@source}"
+          end
         end
       else
         @point = Point.parse(@md[:point])

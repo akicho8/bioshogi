@@ -37,6 +37,7 @@ module Bushido
   class IllegibleFormat < SyntaxError; end
   class RuleError < SyntaxError; end
   class HistroyStackEmpty < SyntaxError; end
+  class SamePointDiff < SyntaxError; end
 
   # 盤面定義のエラー
   class BoardIsBlackOnly < SyntaxError; end

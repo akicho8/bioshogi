@@ -59,6 +59,10 @@ module Bushido
 
         new(x, y)
       end
+
+      def regexp
+        /#{Position::Hpos.regexp}#{Position::Vpos.regexp}/
+      end
     end
 
     def initialize(x, y)

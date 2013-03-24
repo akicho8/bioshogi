@@ -14,6 +14,68 @@ module Bushido
         mov "△３四歩"
       end
       builder.dump
+
+      # sequencer = Sequencer.new
+      # sequencer.pattern = builder
+      #
+      # sequencer.eval_step
+      # p sequencer.board
+      # p sequencer.variables
+      #
+      # sequencer.eval_step
+      # p sequencer.board
+      # p sequencer.variables
+    end
+
+    it "試行錯誤用2" do
+      table = [
+        {
+          :title => "付き捨て+タタキ+合わせ",
+          :dsl => KifuDsl.define do
+            # title "(title)"
+            # comment "(comment)"
+            board <<-BOARD
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・ ・ ・ ・ ・ ・ ・v桂v香|一
+| ・ ・ ・ ・ ・ ・v金 ・ ・|二
+| ・ ・ ・ ・ ・v歩 ・v歩 ・|三
+| ・ ・ ・ ・ ・ ・v歩 ・v歩|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ 歩 ・ 歩|六
+| ・ ・ ・ ・ ・ 歩 ・ ・ ・|七
+| ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
+| ・ ・ ・ ・ ・ ・ ・ 桂 香|九
++---------------------------+
+BOARD
+            pieces "先手" => "歩4"
+            mov "▲１五歩"
+            mov "△同歩"
+            mov "▲１二歩"
+            mov "△同香"
+            mov "▲１三歩"
+            mov "△同香"
+            mov "▲１四歩"
+            mov "△同香"
+            mov "▲２四歩"
+            mov "△同歩"
+            mov "▲同飛"
+          end
+        }
+      ]
+
+      sequencer = Sequencer.new
+      sequencer.pattern = table.first[:dsl]
+
+      loop do
+        r = sequencer.eval_step
+        if r.nil?
+          break
+        end
+        p sequencer.kif_logs.last.to_s_human
+        p sequencer.board
+        p sequencer.variables
+      end
     end
 
     describe "各コマンド" do

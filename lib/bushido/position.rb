@@ -102,6 +102,7 @@ module Bushido
       cattr_accessor(:_zenkaku_units)     {"９８７６５４３２１"}
       cattr_accessor(:_arrow)             {:last}
       cattr_accessor(:_promotable_length) {nil}
+      cattr_accessor(:regexp)            {/[１-９1-9]/}
 
       # "５五" の全角 "５" に対応するため
       def self.parse(arg)
@@ -117,6 +118,7 @@ module Bushido
       cattr_accessor(:_zenkaku_units)     {"一二三四五六七八九"}
       cattr_accessor(:_arrow)             {:first}
       cattr_accessor(:_promotable_length) {3}
+      cattr_accessor(:regexp)            {/[一二三四五六七八九1-9]/}
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)
