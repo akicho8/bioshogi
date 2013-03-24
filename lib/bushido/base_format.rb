@@ -63,9 +63,8 @@ module Bushido
             end
             location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"
             raise SyntaxError unless x_units[x] && y_units[y]
-            mini_soldier = MiniSoldier[:point => Point[[x_units[x], y_units[y]].join], :piece => Piece.fetch(piece)]
-            # # FIXME: MiniSoldier のまま格納する
-            # players[location.key] << mini_soldier.to_s
+            point = Point[[x_units[x], y_units[y]].join]
+            mini_soldier = Piece.promoted_fetch(piece).merge(:point => point)
             players[location.key] << mini_soldier
           end
         }

@@ -204,5 +204,23 @@ BOARD
     #     # mediator.to_all_frames
     #   end
     # end
+
+    if false
+      it "EffectivePatterns", :p => true do
+        require "bushido/contrib/effective_patterns"
+        EffectivePatterns.each do |pattern|
+          if pattern[:dsl]
+            mediator = Sequencer.new
+            mediator.pattern = pattern[:dsl]
+            mediator.evaluate
+            # p mediator.frames
+          else
+            mediator = SimulatorFrame.new(pattern)
+            mediator.to_all_frames
+            # mediator.to_all_frames{|e|p e}
+          end
+        end
+      end
+    end
   end
 end

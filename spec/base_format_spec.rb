@@ -23,6 +23,14 @@ BOARD
 BOARD
     end
 
+    it "成駒を認識できる" do
+      board_parse_test(<<-BOARD).should == {:black => [], :white => ["1一龍"]}
++---+
+|v龍|
++---+
+BOARD
+    end
+
 #     it "盤面サイズを変更していても定義は9x9を元にしているので問題なくパースできる" do
 #       Board.size_change([2, 2]) do
 #         p Point["３一"]

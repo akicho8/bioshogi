@@ -200,12 +200,24 @@ BOARD
   ]
 
   if $0 == __FILE__
-    mediator = SimulatorFrame.new(EffectivePatterns.last)
-    mediator.to_all_frames{|f|
-      p f
-      p f.human_kif_logs
-    }
-    p mediator
-    p mediator.human_kif_logs
+    # mediator = SimulatorFrame.new(EffectivePatterns.last)
+    # mediator.to_all_frames{|f|
+    #   p f
+    #   p f.human_kif_logs
+    # }
+    # p mediator
+    # p mediator.human_kif_logs
+
+    EffectivePatterns.each do |pattern|
+      if pattern[:dsl]
+        mediator = Sequencer.new
+        mediator.pattern = pattern[:dsl]
+        mediator.evaluate
+        p mediator.frames
+      else
+        mediator = SimulatorFrame.new(pattern)
+        mediator.to_all_frames{|e|p e}
+      end
+    end
   end
 end
