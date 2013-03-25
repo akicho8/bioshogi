@@ -201,7 +201,7 @@ BOARD
 
   if $0 == __FILE__
     # mediator = SimulatorFrame.new(EffectivePatterns.last)
-    # mediator.to_all_frames{|f|
+    # mediator.build_frames{|f|
     #   p f
     #   p f.human_kif_logs
     # }
@@ -216,7 +216,7 @@ BOARD
         p mediator.frames
       else
         mediator = SimulatorFrame.new(pattern)
-        mediator.to_all_frames{|e|p e}
+        mediator.build_frames{|e|p e}
       end
     end
   end

@@ -12,7 +12,6 @@ require "sass"
 require "haml"
 require "compass"
 require "bushido/contrib/effective_patterns"
-require "bushido/contrib/effective_patterns2"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
@@ -108,7 +107,7 @@ class Brawser < Sinatra::Base
         @frames = mediator.frames
       else
         mediator = Bushido::SimulatorFrame.new(@pattern)
-        @frames = mediator.to_all_frames
+        @frames = mediator.build_frames
       end
     end
     haml :effective_patterns

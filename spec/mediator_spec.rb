@@ -107,7 +107,7 @@ EOT
 
     it "同歩からの同飛になること" do
       mediator = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => "平手"})
-      mediator.to_all_frames
+      mediator.build_frames
       mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
 
@@ -180,7 +180,7 @@ BOARD
     #     p v
     #     mediator = SimulatorFrame.new(v)
     #     puts mediator.board
-    #     mediator.to_all_frames
+    #     mediator.build_frames
     #   }
     # end
 
@@ -193,15 +193,15 @@ BOARD
     #   mediator = SimulatorFrame.new(value)
     #   p mediator
     #   # puts mediator.board
-    #   mediator.to_all_frames{|f|p f}
+    #   mediator.build_frames{|f|p f}
     # end
 
     # if true
     #   it "これがおかしい。▲９七歩打 で Marshal.dump に失敗する。MatchData を誰がもっているのか。" do
     #     mediator = SimulatorFrame.new(value)
     #     # puts mediator.board
-    #     mediator.to_all_frames{|f|}
-    #     # mediator.to_all_frames
+    #     mediator.build_frames{|f|}
+    #     # mediator.build_frames
     #   end
     # end
 
@@ -216,8 +216,8 @@ BOARD
             # p mediator.frames
           else
             mediator = SimulatorFrame.new(pattern)
-            mediator.to_all_frames
-            # mediator.to_all_frames{|e|p e}
+            mediator.build_frames
+            # mediator.build_frames{|e|p e}
           end
         end
       end

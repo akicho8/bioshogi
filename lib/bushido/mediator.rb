@@ -302,7 +302,7 @@ module Bushido
       end
     end
 
-    def to_all_frames(&block)
+    def build_frames(&block)
       frames = []
       frames << deep_dup
       if block

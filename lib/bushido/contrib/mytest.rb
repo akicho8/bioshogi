@@ -34,7 +34,7 @@ EOT
 
   if $0 == __FILE__
     mediator = Sequencer.new(Mytest.last)
-    mediator.to_all_frames{|f|
+    mediator.build_frames{|f|
       p f
       p f.human_kif_logs
     }
