@@ -9,9 +9,6 @@ require "rain_table"
 
 module Bushido
   include ActiveSupport::Configurable
-  config_accessor :format
-  config.format = :basic
-
   config_accessor :defense_form_check
   config.defense_form_check = true
 
@@ -115,4 +112,3 @@ module Bushido
     puts mediator
   end
 end
-

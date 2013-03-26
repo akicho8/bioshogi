@@ -34,7 +34,7 @@ module Bushido
     end
 
     def to_s_default
-      "#{piece_current_name}#{@player.location.zarrow}"
+      "#{@player.location.varrow}#{piece_current_name}"
     end
 
     def inspect

@@ -4,13 +4,13 @@
 #
 module Bushido
   class Location
-    def initialize(info)
-      @info = info
+    def initialize(attributes)
+      @attributes = attributes
     end
 
-    [:key, :mark, :other_marks, :name, :varrow, :zarrow, :index].each do |v|
+    [:key, :mark, :other_marks, :name, :varrow, :index].each do |v|
       define_method(v) do
-        @info[v]
+        @attributes[v]
       end
     end
 
@@ -41,21 +41,21 @@ module Bushido
     end
 
     @pool ||= [
-      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :zarrow => "",   :index => 0),
-      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"],      :name => "後手", :varrow => "v", :zarrow => "↓", :index => 1),
+      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :index => 0),
+      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"],      :name => "後手", :varrow => "v", :index => 1),
     ]
 
     class << self
       # 引数に対応する先手または後手の情報を返す
-      #   Location.parse(:black).name   # => "先手"
-      #   Location.parse("▲").name     # => "先手"
-      #   Location.parse("先手").name   # => "先手"
-      #   Location.parse(0).name        # => "先手"
-      #   Location.parse(1).name        # => "後手"
-      #   Location.parse(2)             # => SyntaxError
-      #   Location.parse("1手目").name  # => "先手"
-      #   Location.parse("2手目").name  # => "後手"
-      #   Location.parse("3手目").name  # => "先手"
+      #   Location[:black].name   # => "先手"
+      #   Location["▲"].name     # => "先手"
+      #   Location["先手"].name   # => "先手"
+      #   Location[0].name        # => "先手"
+      #   Location[1].name        # => "後手"
+      #   Location[2]             # => SyntaxError
+      #   Location["1手目"].name  # => "先手"
+      #   Location["2手目"].name  # => "後手"
+      #   Location["3手目"].name  # => "先手"
       def parse(arg)
         if self === arg
           return arg

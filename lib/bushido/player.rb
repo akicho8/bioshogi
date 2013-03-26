@@ -343,10 +343,8 @@ module Bushido
         # ここがかなり重い
         libs.find_all{|k, v|v[:defense_p]}.collect{|key, value|
           placements = Utils.location_soldiers_from_char_board(location, value[:board])
-
           a = placements.collect(&:to_s)
           b = @soldiers.collect(&:to_h).collect(&:to_s)
-
           {:key => key, :placements => placements, :match => (a - b).empty?}
         }
       end
@@ -398,10 +396,6 @@ module Bushido
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
       soldiers = board.pieces_of_vline(point.x)
-
-      # p "%x" % object_id
-      # p soldiers
-
       soldiers = soldiers.find_all{|s|s.player == self}
       soldiers = soldiers.find_all{|s|!s.promoted?}
       soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}

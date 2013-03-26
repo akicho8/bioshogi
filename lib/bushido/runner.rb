@@ -103,32 +103,6 @@ module Bushido
         })
     end
 
-    # # 互換性用
-    # def to_s_simple
-    #   kif_log.to_s_simple
-    # end
-    # 
-    # def to_s_human
-    #   kif_log.to_s_human
-    # end
-
-    # def last_shash
-    #   {:point => @point, :piece => @piece, :promoted => @promoted}
-    # end
-
-    # def last_info
-    #   {
-    #     # :prev_player_point => @prev_player_point,
-    #     :promoted          => @promoted,
-    #     :promote_trigger   => @promote_trigger,
-    #     :origin_point      => @origin_point,
-    #     :piece             => @piece,
-    #     :strike_trigger    => @strike_trigger,
-    #     :candidate         => @candidate,
-    #     :last_piece        => @last_piece,
-    #   }
-    # end
-
     private
 
     def read_point
