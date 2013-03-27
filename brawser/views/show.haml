@@ -19,10 +19,10 @@
 
 %div
   - if @mediator.player_at(:white).pieces.present?
-    .pieces.white= @mediator.player_at(:white).last.to_s_pieces
+    .pieces.white= @mediator.player_at(:white).to_s_pieces
   = MediatorDecorator.new(@mediator).to_html_board
   - if @mediator.player_at(:black).pieces.present?
-    .pieces.black= @mediator.player_at(:black).last.to_s_pieces
+    .pieces.black= @mediator.player_at(:black).to_s_pieces
 
 = Bushido::Location[:black].mark_with_name
 %form{action: "/", method: "post"}

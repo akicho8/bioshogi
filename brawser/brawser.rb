@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 # WEBインタフェース
 
-require "bundler/setup"
-require "bushido"
-require "sinatra/base"
-require "sinatra/multi_route"
-require "sinatra/reloader"
-require "uri"
-require "redis"
-require "sass"
-require "haml"
-require "compass"
+require "bundler"
+Bundler.require(:default, :webif)
+
+# require "bushido"
+# require "sinatra/base"
+# require "sinatra/multi_route"
+# require "sinatra/reloader"
+# require "uri"
+# require "redis"
+# require "sass"
+# require "haml"
+# require "compass"
 require "bushido/contrib/effective_patterns"
 
 class MediatorDecorator < SimpleDelegator
@@ -54,11 +56,19 @@ class Brawser < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  configure :production do
+    set :server, :puma
+  end
+
   set :sessions, true
 
   get "/stylesheet.css" do
     # FIXME: cache
     sass :stylesheet, Compass.sass_engine_options
+  end
+
+  get "/slim" do
+    slim :slim_index
   end
 
   route :get, :post, "/" do

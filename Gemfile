@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-source 'https://rubygems.org'
+source "https://rubygems.org"
 gemspec
 gem "rain_table", :git => "https://github.com/akicho8/rain_table.git" # gemspec で効かないので
 
@@ -13,4 +13,12 @@ group :webif do
   gem "rack-contrib" # Rack::Runtime 等
   gem "haml"         # for view
   gem "hpricot"      # for html2haml
+
+  gem "slim"
+  gem "puma"
+end
+
+group :development do
+  gem "foreman"
+  # gem "sinatra-contrib", github: "sinatra/sinatra-contrib", require: "sinatra/reloader"
 end

@@ -3,18 +3,32 @@
   %head
     %meta{charset: "utf-8"}
     %link{href: "/stylesheet.css", media: "screen", rel: "stylesheet", type: "text/css"}
+    %link{href: "/css/bootstrap.min.css", media: "screen", rel: "stylesheet", type: "text/css"}
     %meta{name: "viewport", content: "initial-scale=1.0; maximum-scale=1.0; width=device-width; user-scalable=0"}
     -# %meta{name: "viewport", content: "initial-scale=1.0; maximum-scale=1.0; user-scalable=0"}
     -# %meta{name: "viewport", content: "initial-scale=1.0"}
     %meta{name: "apple-mobile-web-app-capable", content: "yes"}
     %meta{name: "apple-mobile-web-app-status-bar-style", content: "black-translucent"}
-  %body{style: "background:black;text-align:center"}
-    %a{href: "/"}= "TOP"
-    %a{href: "/effective_patterns"}= "ライブラリ"
-    %a{href: "/board_points"}= "座標テスト"
-    .hr
-    - if @error
-      %div= @error.message
-      %div= @error.class.name
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand{href:"/"}= "将棋"
+    .container
+      %a{href: "/"}= "TOP"
+      %a{href: "/effective_patterns"}= "ライブラリ"
+      %a{href: "/board_points"}= "座標テスト"
       .hr
-    = yield
+      - if @error
+        %div= @error.message
+        %div= @error.class.name
+        .hr
+      = yield
+      .hr
+      .p
+        = RUBY_DESCRIPTION
+    - if Sinatra::Base.environment == :production
+      %script{src: "http://code.jquery.com/jquery.js"}
+    - else
+      %script{src: "/js/jquery.js"}
+    %script{src: "/js/bootstrap.min.js"}
