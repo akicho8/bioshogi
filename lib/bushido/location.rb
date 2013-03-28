@@ -40,6 +40,11 @@ module Bushido
       black? ? a : b
     end
 
+    # 反対を返す
+    def reverse
+      self.class.parse(index.next.modulo(count))
+    end
+
     @pool ||= [
       new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :index => 0),
       new(:key => :white, :mark => "▽", :other_marks => ["w", "△"],      :name => "後手", :varrow => "v", :index => 1),

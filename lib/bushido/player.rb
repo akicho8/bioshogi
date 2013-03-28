@@ -341,10 +341,10 @@ module Bushido
         libs = BoardLibs.find_all{|k, v|(v[:size_type] || :x99) == size_type}
 
         # ここがかなり重い
-        libs.find_all{|k, v|v[:defense_p]}.collect{|key, value|
-          placements = Utils.location_soldiers_from_char_board(location, value[:board])
-          a = placements.collect(&:to_s)
-          b = @soldiers.collect(&:to_h).collect(&:to_s)
+        libs.find_all{|k, v|v[:defense_p] || v[:system_p]}.collect{|key, value|
+          placements = Utils.location_soldiers_from_char_board2(location, value[:board])
+          a = placements.values.flatten.collect(&:to_s)
+          b = board.surface.values.collect(&:to_h).collect(&:to_s)
           {:key => key, :placements => placements, :match => (a - b).empty?}
         }
       end

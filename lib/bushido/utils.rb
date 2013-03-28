@@ -32,6 +32,13 @@ module Bushido
         s.merge(:point => s[:point].as_location(location))
       end
     end
+    # location から見た盤面情報
+    def location_soldiers_from_char_board2(location, char_board)
+      mini_soldiers_pair = BaseFormat.board_parse(char_board)
+      mini_soldiers_pair.inject({}){|h, (key, value)|
+        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(location))})
+      }
+    end
 
     # 要テスト
     #   board_init_type("+-----")                              # そのまま棋譜が入ってれいばそのままパース
