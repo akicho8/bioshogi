@@ -131,7 +131,119 @@ BOARD
 +---------------------------+
 BOARD
   },
+  "カニ囲い" => {
+    :shogi_wars_code => "000",
+    :url => "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/ichigogakoi.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+| ・ ・ 金 銀 金 ・ ・ ・ ・|八
+| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "金矢倉" => {
+    :shogi_wars_code => "001",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-89.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
+| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "銀矢倉" => {
+    :shogi_wars_code => "002",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-90.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 銀 ・ ・ ・ ・ ・|七
+| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "片矢倉" => {
+    :shogi_wars_code => "003",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-91.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
+| ・ ・ 玉 金 ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "総矢倉" => {
+    :shogi_wars_code => "004",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-92.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 金 銀 ・ ・ ・ ・|七
+| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "矢倉穴熊" => {
+    :shogi_wars_code => "005",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-93.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
+| 香 ・ 金 ・ ・ ・ ・ ・ ・|八
+| 玉 ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "菊水穴熊" => {
+    :shogi_wars_code => "006",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-94.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ ・ 金 ・ ・ ・ ・ ・|七
+| ・ 銀 金 ・ ・ ・ ・ ・ ・|八
+| 香 玉 ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "銀立ち矢倉" => {
+    :shogi_wars_code => "007",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-95.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ 銀 ・ ・ ・ ・ ・ ・|六
+| ・ ・ ・ 金 ・ ・ ・ ・ ・|七
+| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  "菱矢倉" => {
+    :shogi_wars_code => "008",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-96.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ ・ 銀 ・ ・ ・ ・ ・|六
+| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
+| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
   "いちご囲い" => {
+    :shogi_wars_code => "500",
     :url => "http://mijinko83.blog110.fc2.com/blog-entry-124.html",
     :defense_p => true,
     :board => <<-BOARD,
@@ -144,24 +256,13 @@ BOARD
 BOARD
   },
   "アヒル囲い" => {
+    :shogi_wars_code => "405",
     :url => "http://mijinko83.blog110.fc2.com/blog-entry-123.html",
     :defense_p => true,
     :board => <<-BOARD,
 +---------------------------+
 | ・ ・ ・ 銀 玉 銀 ・ ・ ・|八
 | ・ ・ 金 ・ ・ ・ 金 ・ ・|九
-+---------------------------+
-BOARD
-  },
-  "カニ囲い" => {
-    :url => "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/ichigogakoi.html",
-    :defense_p => true,
-    :board => <<-BOARD,
-+---------------------------+
-| ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-| ・ ・ 金 銀 金 ・ ・ ・ ・|八
-| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
 +---------------------------+
 BOARD
   },
