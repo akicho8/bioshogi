@@ -49,12 +49,12 @@ module Bushido
     end
 
     it "成れるか？" do
-      Position::Vpos.parse("二").promotable?(Location[:black]).should == true
-      Position::Vpos.parse("三").promotable?(Location[:black]).should == true
-      Position::Vpos.parse("四").promotable?(Location[:black]).should == false
-      Position::Vpos.parse("六").promotable?(Location[:white]).should == false
-      Position::Vpos.parse("七").promotable?(Location[:white]).should == true
-      Position::Vpos.parse("八").promotable?(Location[:white]).should == true
+      Position::Vpos.parse("二").promotable?(L.b).should == true
+      Position::Vpos.parse("三").promotable?(L.b).should == true
+      Position::Vpos.parse("四").promotable?(L.b).should == false
+      Position::Vpos.parse("六").promotable?(L.w).should == false
+      Position::Vpos.parse("七").promotable?(L.w).should == true
+      Position::Vpos.parse("八").promotable?(L.w).should == true
     end
 
     it "インスタンスが異なっても同じ座標なら同じ" do

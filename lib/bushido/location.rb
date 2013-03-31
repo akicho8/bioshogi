@@ -85,6 +85,11 @@ module Bushido
       def each(&block)
         @pool.each(&block)
       end
+
+      def b; self[:black]; end
+      def w; self[:white]; end
     end
   end
+
+  L = Location
 end

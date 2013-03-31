@@ -37,6 +37,7 @@ module Bushido
   class SamePointDiff < SyntaxError; end
 
   # 盤面定義のエラー
+  class BoardKeyNotFound < SyntaxError; end
   class BoardIsBlackOnly < SyntaxError; end
 
   # 構文エラーから発生する継続が難しいエラー
@@ -86,12 +87,13 @@ require_relative "bushido/kif_log"
 require_relative "bushido/mini_soldier"
 require_relative "bushido/board"
 require_relative "bushido/utils"
+require_relative "bushido/board_libs"
+require_relative "bushido/stock"
 require_relative "bushido/soldier"
 require_relative "bushido/player"
 require_relative "bushido/runner"
 require_relative "bushido/movabler"
 require_relative "bushido/kifu_dsl"
-require_relative "bushido/board_libs"
 require_relative "bushido/mediator"
 
 require_relative "bushido/base_format"

@@ -110,9 +110,15 @@ BOARD
         dsl_block{ comment "(comment)" }.variables[:comment].should == "(comment)"
       end
 
-      it "board" do
-        dsl_block{ board "平手" }.board
-        dsl_block{ board }.board
+      describe "board" do
+        it { dsl_block{ board "平手" }.board }
+        it { dsl_block{ board }.board }
+        it { dsl_block{ board <<-BOARD }.board }
++---+
+|v香|一
+| 香|九
++---+
+BOARD
       end
 
       it "mov" do

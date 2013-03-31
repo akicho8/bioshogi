@@ -415,6 +415,12 @@ EOT
       player_test.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     end
 
+    it "piece_plot" do
+      player = Bushido::Mediator.new.black_player
+      player.deal
+      player.piece_plot
+    end
+
     it "全体確認" do
       mediator = Mediator.start
       mediator.piece_plot

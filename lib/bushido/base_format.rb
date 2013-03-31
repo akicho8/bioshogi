@@ -13,8 +13,8 @@ module Bushido
       source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
     end
 
-    def self.board_string?(source)
-      BaseFormat.normalized_source(source).match(/^[\+\|]/)
+    def self.board_format?(source)
+      normalized_source(source).match(/^[\+\|]/)
     end
 
     # ほぼ標準の柿木フォーマットのテーブルの読み取り
@@ -38,7 +38,7 @@ module Bushido
     #   Bushido::BaseFormat.board_parse(str)        # => {:white => [<MiniSoldier ...>], :black => []}
     #
     def self.board_parse(source)
-      lines = BaseFormat.normalized_source(source).strip.lines.to_a
+      lines = normalized_source(source).strip.lines.to_a
 
       s = lines.first
       if s.match("-")
@@ -54,7 +54,7 @@ module Bushido
       y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(:zenkaku => true)[i]}
       inlines = mds.collect{|v|v[:inline]}
 
-      players = Location.inject({}){|h, location|h.merge(location.key => [])}
+      players = Location.inject({}){|h, location|h.merge(location => [])}
       inlines.each_with_index{|s, y|
         s.scan(/(.)(\S|\s{2})/).each_with_index{|(prefix, piece), x|
           unless piece == "・" || piece.strip == ""
@@ -65,7 +65,7 @@ module Bushido
             raise SyntaxError unless x_units[x] && y_units[y]
             point = Point[[x_units[x], y_units[y]].join]
             mini_soldier = Piece.promoted_fetch(piece).merge(:point => point)
-            players[location.key] << mini_soldier
+            players[location] << mini_soldier
           end
         }
       }

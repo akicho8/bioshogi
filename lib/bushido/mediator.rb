@@ -87,9 +87,8 @@ module Bushido
     end
 
     def board_reset(name = nil)
-      hash = Utils.board_init_type(name)
-      hash.each{|k, v|
-        player_at(k).initial_soldiers(v, :from_piece => false)
+      Utils.board_reset_args(name).each{|location, v|
+        player_at(location).initial_soldiers(v, :from_piece => false)
       }
     end
   end

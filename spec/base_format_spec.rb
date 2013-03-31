@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe BaseFormat do
     it "座標がない場合は右上の盤面とする" do
-      board_parse_test(<<-BOARD).should == {:white => ["1一歩"], :black => ["1二歩"]}
+      board_parse_test(<<-BOARD).should == {L.w => ["1一歩"], L.b => ["1二歩"]}
 +------+
 | ・v歩|
 | ・ 歩|
@@ -14,7 +14,7 @@ BOARD
     end
 
     it "座標の指定があれば任意のエリアを表現できる" do
-      board_parse_test(<<-BOARD).should == {:black => ["8九歩"], :white => ["8八歩"]}
+      board_parse_test(<<-BOARD).should == {L.b => ["8九歩"], L.w => ["8八歩"]}
   ９ ８
 +------+
 | ・v歩|八
@@ -24,7 +24,7 @@ BOARD
     end
 
     it "成駒を認識できる" do
-      board_parse_test(<<-BOARD).should == {:black => [], :white => ["1一龍"]}
+      board_parse_test(<<-BOARD).should == {L.b => [], L.w => ["1一龍"]}
 +---+
 |v龍|
 +---+
@@ -35,7 +35,7 @@ BOARD
 #       Board.size_change([2, 2]) do
 #         p Point["３一"]
 #
-# #         board_parse_test(<<-BOARD).should == {:black => ["3一歩"], :white => []}
+# #         board_parse_test(<<-BOARD).should == {L.b => ["3一歩"], L.w => []}
 # # +---------+
 # # | 歩 ・ ・|
 # # +---------+
@@ -44,7 +44,7 @@ BOARD
 #     end
 
     it "盤面の「・」は不要" do
-      board_parse_test(<<-BOARD).should == {:white => ["1一歩"], :black => ["1二歩"]}
+      board_parse_test(<<-BOARD).should == {L.w => ["1一歩"], L.b => ["1二歩"]}
 +------+
 |   v歩|
 |    歩|
@@ -53,14 +53,14 @@ BOARD
     end
 
     it "先手後手の表現" do
-      board_parse_test("+---+\| 金|\n+---+").should == {:black => ["1一金"], :white => []}
-      board_parse_test("+---+\|^金|\n+---+").should == {:black => ["1一金"], :white => []}
-      board_parse_test("+---+\|v金|\n+---+").should == {:black => [],        :white => ["1一金"]}
+      board_parse_test("+---+\| 金|\n+---+").should == {L.b => ["1一金"], L.w => []}
+      board_parse_test("+---+\|^金|\n+---+").should == {L.b => ["1一金"], L.w => []}
+      board_parse_test("+---+\|v金|\n+---+").should == {L.b => [],        L.w => ["1一金"]}
     end
 
 #     describe "あえて緩くしている部分" do
 #       it "座標の名前のチェックなし" do
-#         board_parse_test(<<-BOARD).should == {:black => ["AY歩"], :white => ["AX歩"]}
+#         board_parse_test(<<-BOARD).should == {L.b => ["AY歩"], L.w => ["AX歩"]}
 #   B  A
 # +------+
 # | ・v歩|X

@@ -106,7 +106,9 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      Utils.location_soldiers(location).each{|info|
+      location_soldiers = Utils.location_soldiers(:location => location, :key => "平手")
+      # location_soldiers2 = location_soldiers[location.key]
+      location_soldiers.each{|info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(:player => self))
         put_on_with_valid(info[:point], soldier)
@@ -338,14 +340,15 @@ module Bushido
         size_type = Board.size_type
 
         # x99の盤面だけに絞る
-        libs = BoardLibs.find_all{|k, v|(v[:size_type] || :x99) == size_type}
+        stocks = Stock.list.find_all{|v|(v[:size_type] || :x99) == size_type}
+        stocks = stocks.find_all{|v|v[:defense_p] || v[:system_p]}
 
         # ここがかなり重い
-        libs.find_all{|k, v|v[:defense_p] || v[:system_p]}.collect{|key, value|
-          placements = Utils.location_soldiers_from_char_board2(location, value[:board])
+        stocks.collect{|stock|
+          placements = Utils.both_soldiers_from_char_board2(:location => location, :stock => stock)
           a = placements.values.flatten.collect(&:to_s)
           b = board.surface.values.collect(&:to_h).collect(&:to_s)
-          {:key => key, :placements => placements, :match => (a - b).empty?}
+          {:key => stock[:key], :placements => placements, :match => (a - b).empty?}
         }
       end
     end

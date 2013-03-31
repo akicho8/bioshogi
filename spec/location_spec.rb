@@ -39,5 +39,12 @@ module Bushido
     it "Enumerable対応" do
       Location.each.present?.should == true
     end
+
+    it "ショートカット" do
+      Location.b.should == Location[:black]
+      Location.w.should == Location[:white]
+      L.b.should == Location[:black]
+      L.w.should == Location[:white]
+    end
   end
 end

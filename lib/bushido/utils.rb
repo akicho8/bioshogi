@@ -11,51 +11,92 @@ module Bushido
     #   Utils.location_soldiers(:black, "平手")         # => ["9七歩", "8七歩", ...]
     #   Utils.location_soldiers(:black, "角落ち")       # => ["9七歩", "8七歩", ...]
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
-    def location_soldiers(location, name_or_char_board = nil)
-      name_or_char_board = name_or_char_board.presence || "平手"
-      if BaseFormat.board_string?(name_or_char_board)
-        char_board = name_or_char_board
+    def location_soldiers(options)
+      options = {
+        :location => nil,
+        :key => nil,
+      }.merge(options)
+
+      # if BaseFormat.board_format?(name_or_char_board)
+      #   raise ArgumentError
+      #   # char_board = name_or_char_board
+      # end
+
+      if BaseFormat.board_format?(options[:key])
+        stock = Stock.new(:board => options[:key])
+        r = both_soldiers_from_char_board2(options.merge(:stock => stock))
+        r[L.b]
       else
-        char_board = BoardLibs.fetch(name_or_char_board)[:board]
+        stock = Stock.list.find{|v|v[:key] == options[:key]}
+        stock or raise BoardKeyNotFound, "盤面データがありません : #{options[:key].inspect}"
+        r = valid_both_soldiers_from_char_board(options.merge(:stock => stock))
+        r[L.b]
       end
-      location_soldiers_from_char_board(location, char_board)
+
+      # p stock
+      # p r
+      # p options[:location]
     end
 
     # 指定プレイヤー側の初期配置(盤面のみ対応)
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
-    def location_soldiers_from_char_board(location, char_board)
-      mini_soldiers_pair = BaseFormat.board_parse(char_board)
-      if mini_soldiers_pair[:white].present?
-        raise BoardIsBlackOnly, "後手側データは定義できません : #{char_board}"
+    def valid_both_soldiers_from_char_board(options = {})
+      options = {
+        :validate => true,
+      }.merge(options)
+      if options[:validate]
+        if options[:stock].parse_data[:white].present?
+          raise BoardIsBlackOnly, "後手側データは定義できません : #{options[:stock].parse_data[:white].inspect}"
+        end
       end
-      mini_soldiers_pair[:black].collect do |s|
-        s.merge(:point => s[:point].as_location(location))
-      end
+      both_soldiers_from_char_board2(options)
     end
-    # location から見た盤面情報
-    def location_soldiers_from_char_board2(location, char_board)
-      mini_soldiers_pair = BaseFormat.board_parse(char_board)
-      mini_soldiers_pair.inject({}){|h, (key, value)|
-        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(location))})
+
+    def both_soldiers_from_char_board2(options)
+      options[:stock].parse_data.inject({}){|h, (key, value)|
+        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(options[:location]))})
       }
     end
 
-    # 要テスト
-    #   board_init_type("+-----")                              # そのまま棋譜が入ってれいばそのままパース
-    #   board_init_type("角落ち")                              # 先手だけが角落ち(下と同じ)
-    #   board_init_type("先手" => "角落ち", "後手" => "平手")  # 先手だけが角落ち
-    #   board_init_type("先手" => "平手", "後手" => "角落ち")  # 後手が角落ち
-    def board_init_type(value = nil)
-      if Hash === value
-        # {"先手" => "角落ち", "後手" => "香落ち"}
-        value.inject({}){|hash, (k, v)|hash.merge(k => Utils.location_soldiers(k, v))}
-      elsif BaseFormat.board_string?(value)
+    # board_reset の引数の解釈
+    #
+    #   board_reset_args("+-----")                              # そのまま棋譜が入ってれいばそのままパース
+    #   board_reset_args("角落ち")                              # 先手だけが角落ち(下と同じ)
+    #   board_reset_args("先手" => "角落ち", "後手" => "平手")  # 先手だけが角落ち
+    #
+    #   => {
+    #       "先手" => [<MiniSoldier>, ...],
+    #       "後手" => [<MiniSoldier>, ...],
+    #     }
+    #
+    def board_reset_args(value = nil)
+      if BaseFormat.board_format?(value)
+        # Stock.new(:board => value).parse_data
         BaseFormat.board_parse(value)
       else
-        # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
-        board_init_type("先手" => (value || "平手"), "後手" => "平手")
+        if Hash === value
+          # {"先手" => "角落ち", "後手" => "香落ち"}
+          value.inject({}){|hash, (k, v)|
+            hash.merge(Location[k] => Utils.location_soldiers(:location => k, :key => v))
+          }
+        else
+          # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
+          board_reset_args(:black => (value || "平手"), :white => "平手")
+        end
       end
     end
+
+    # def board_init_type2(value = nil)
+    #   if Hash === value
+    #     # {"先手" => "角落ち", "後手" => "香落ち"}
+    #     value.inject({}){|hash, (k, v)|hash.merge(k => Utils.location_soldiers(k, v))}
+    #   elsif BaseFormat.board_format?(value)
+    #     BaseFormat.board_parse(value)
+    #   else
+    #     # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
+    #     board_init_type2("先手" => (value || "平手"), "後手" => "平手")
+    #   end
+    # end
 
     # 持駒表記変換 (人間表記 → コード)
     #  Utils.stand_pack([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二 飛"

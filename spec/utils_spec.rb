@@ -22,9 +22,36 @@ module Bushido
       end
     end
 
-    it "先手か後手かを指定した初期配置" do
-      Utils.location_soldiers(:white, "平手")
-      Utils.location_soldiers(:white, "角落ち")
+    describe "初期配置" do
+      before do
+        @white_king = [MiniSoldier[:piece => Piece["玉"], :promoted => false, :point => Point["５一"]]]
+        @black_king = [MiniSoldier[:piece => Piece["玉"], :promoted => false, :point => Point["５九"]]]
+        @black_rook = [MiniSoldier[:piece => Piece["飛"], :promoted => false, :point => Point["１一"]]]
+      end
+
+      it "先手か後手の一方用" do
+        Utils.location_soldiers(:location => L.w, :key => "裸玉").should == @white_king
+      end
+
+      describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
+        it "先手→裸玉 後手→平手" do
+          r = Utils.board_reset_args("裸玉")
+          r[L.b].should == @black_king
+          r[L.w].should be_a Array # 平手
+        end
+
+        it "先手→裸玉 後手→裸玉" do
+          r = Utils.board_reset_args("先手" => "裸玉", "後手" => "裸玉")
+          r[L.b].should == @black_king
+          r[L.w].should == @white_king
+        end
+
+        it "先手は１一の飛車のみ" do
+          r = Utils.board_reset_args(board_one_cell(" 飛"))
+          r[L.b].should == @black_rook
+          r[L.w].should be_a Array
+        end
+      end
     end
   end
 end

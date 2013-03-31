@@ -393,6 +393,8 @@
     | SoldierEmpty           | オプションで絞ったら移動できる駒がなくなった |                                                    |
     | RuleError              | 反則                                         | 二歩など                                           |
     | SamePointDiff          | 座標と「同」を同時に指定したが一致しない     | 同歩だけでいいのに２四同歩と書いてその２四が不一致 |
+    | BoardKeyNotFound     | ハンデの名前が間違い                         | 「角落ち」と間違えて「玉落ち」と書いた             |
+    | BoardIsBlackOnly       | 先手のみの盤面のはずが後手も含まれている     |                                                    |
 
     反則系 (RuleError のサブクラス)
 
