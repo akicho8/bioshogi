@@ -33,13 +33,11 @@ BOARD
 
 #     it "盤面サイズを変更していても定義は9x9を元にしているので問題なくパースできる" do
 #       Board.size_change([2, 2]) do
-#         p Point["３一"]
-#
-# #         board_parse_test(<<-BOARD).should == {L.b => ["3一歩"], L.w => []}
-# # +---------+
-# # | 歩 ・ ・|
-# # +---------+
-# # BOARD
+#         board_parse_test(<<-BOARD).should == {L.b => ["3一歩"], L.w => []}
+# +---------+
+# | 歩 ・ ・|
+# +---------+
+# BOARD
 #       end
 #     end
 

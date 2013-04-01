@@ -2,31 +2,38 @@
 %html
   %head
     %meta{charset: "utf-8"}
-    %link{href: "/stylesheet.css", media: "screen", rel: "stylesheet", type: "text/css"}
     %link{href: "/css/bootstrap.min.css", media: "screen", rel: "stylesheet", type: "text/css"}
-    %meta{name: "viewport", content: "initial-scale=1.0; maximum-scale=1.0; width=device-width; user-scalable=0"}
+    %link{href: "/css/bootstrap-responsive.min.css", media: "screen", rel: "stylesheet", type: "text/css"}
+    %link{href: "/stylesheet.css", media: "screen", rel: "stylesheet", type: "text/css"}
+    -# %meta{name: "viewport", content: "initial-scale=1.0; maximum-scale=1.0; width=device-width; user-scalable=0"}
     -# %meta{name: "viewport", content: "initial-scale=1.0; maximum-scale=1.0; user-scalable=0"}
     -# %meta{name: "viewport", content: "initial-scale=1.0"}
-    %meta{name: "apple-mobile-web-app-capable", content: "yes"}
-    %meta{name: "apple-mobile-web-app-status-bar-style", content: "black-translucent"}
+    -# %meta{name: "apple-mobile-web-app-capable", content: "yes"}
+    -# %meta{name: "apple-mobile-web-app-status-bar-style", content: "black-translucent"}
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
         .container
+          %a{:class => "btn btn-navbar", "data-toggle" => "collapse", "data-target" => ".nav-collapse"}
+            %span{class:"icon-bar"}
+            %span{class:"icon-bar"}
+            %span{class:"icon-bar"}
           %a.brand{href:"/"}= "将棋"
+          .nav-collapse
+            %ul{class:"nav"}
+              %li
+                %a{href: "/effective_patterns"}= "ライブラリ"
+              %li
+                %a{href: "/board_points"}= "座標テスト"
     .container
-      %a{href: "/"}= "TOP"
-      %a{href: "/effective_patterns"}= "ライブラリ"
-      %a{href: "/board_points"}= "座標テスト"
-      .hr
       - if @error
         %div= @error.message
         %div= @error.class.name
-        .hr
+        %hr
       = yield
-      .hr
-      .p
-        = RUBY_DESCRIPTION
+      -# %hr
+      -# .p
+      -#   = RUBY_DESCRIPTION
     - if Sinatra::Base.environment == :production
       %script{src: "http://code.jquery.com/jquery.js"}
     - else

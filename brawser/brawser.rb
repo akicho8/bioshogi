@@ -6,7 +6,6 @@ Bundler.require(:default, :webif)
 
 # require "bushido"
 # require "sinatra/base"
-# require "sinatra/multi_route"
 # require "sinatra/reloader"
 # require "uri"
 # require "redis"

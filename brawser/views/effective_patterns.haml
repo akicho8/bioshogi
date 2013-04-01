@@ -1,9 +1,7 @@
-%ul
-- Bushido::EffectivePatterns.each.with_index do |pattern, id|
-  %li
-    %a{:href => "/effective_patterns?id=#{id}"}= pattern[:title]
-
-.hr
+%ul.unstyled
+  - Bushido::EffectivePatterns.each.with_index do |pattern, id|
+    %li
+      %a{:href => "/effective_patterns?id=#{id}"}= pattern[:title]
 
 - if @pattern
   %div= @pattern[:title]
@@ -11,7 +9,7 @@
     = @pattern[:comment]
     - if @pattern[:url]
       %a{href: @pattern[:url]}= "参考URL"
-  .hr
+  %hr
   - @frames.each do |mediator|
     %div= mediator.human_kif_logs.join(" ")
     - if v = mediator.variables[:comment]
@@ -21,4 +19,4 @@
     = MediatorDecorator.new(mediator).to_html_board(:small)
     - if mediator.player_at(:black).pieces.present?
       .pieces.black= mediator.player_at(:black).to_s_pieces
-    .hr
+    %hr
