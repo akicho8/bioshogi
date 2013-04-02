@@ -2,17 +2,19 @@
   %a{href:"/?auto1=true", :class => "btn"} 賢い代指
   %a{href:"/?auto2=true", :class => "btn"} ランダム
 
-%hr
-%div= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
-%hr
+%p
+  %div{class: "progress"}
+    %div{class:"bar"           , style:"width:#{@scores[Bushido::Location[:black]]}%"}= @eval_results[Bushido::Location[:black]]
+    %div{class:"bar bar-danger", style:"width:#{@scores[Bushido::Location[:white]]}%"}= @eval_results[Bushido::Location[:white]]
 
-%div= @mediator.player_at(:white).evaluate
+%p= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
+
 %form{action: "/", method: "post", :class => "form-inline"}
   .control-group
     .controls
       %label{:class => "control-label"}= Bushido::Location[:white].mark_with_name
       %input{name: "location", type: "hidden", value: "white"}
-      %input{type: "text", name: "way", value: "", autofocus: @mediator.current_player.location.white?}
+      %input{type: "text", name: "way", value: "", class:"input-mini", autofocus: @mediator.current_player.location.white?}
       %input{type: "submit", value: "打", :class => "btn btn-primary"}
 
 %div
@@ -27,12 +29,8 @@
     .controls
       %label{:class => "control-label"}= Bushido::Location[:black].mark_with_name
       %input{name: "location", type: "hidden", value: "black"}
-      %input{type: "text", name: "way", value: "", autofocus: @mediator.current_player.location.black?}
+      %input{type: "text", name: "way", value: "", class:"input-mini", autofocus: @mediator.current_player.location.black?}
       %input{type: "submit", value: "打", :class => "btn btn-primary"}
-
-%div= @mediator.player_at(:black).evaluate
-
-%hr
 
 - if @mediator.human_kif_logs.present?
   %div

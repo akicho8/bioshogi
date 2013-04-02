@@ -15,8 +15,8 @@
     - if v = mediator.variables[:comment]
       %div= v
     - if mediator.player_at(:white).pieces.present?
-      .pieces.white= mediator.player_at(:white).to_s_pieces
+      .pieces= mediator.player_at(:white).to_s_pieces
     = MediatorDecorator.new(mediator).to_html_board(:small)
     - if mediator.player_at(:black).pieces.present?
-      .pieces.black= mediator.player_at(:black).to_s_pieces
+      .pieces= mediator.player_at(:black).to_s_pieces
     %hr

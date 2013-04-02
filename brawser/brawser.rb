@@ -3,15 +3,6 @@
 
 require "bundler"
 Bundler.require(:default, :webif)
-
-# require "bushido"
-# require "sinatra/base"
-# require "sinatra/reloader"
-# require "uri"
-# require "redis"
-# require "sass"
-# require "haml"
-# require "compass"
 require "bushido/contrib/effective_patterns"
 
 class MediatorDecorator < SimpleDelegator
@@ -101,6 +92,10 @@ class Brawser < Sinatra::Base
 
     REDIS.set(@session_id, Marshal.dump(@mediator))
 
+    @eval_results = Bushido::Location.inject({}){|hash, loc|hash.merge(loc => @mediator.player_at(loc).evaluate)}
+    total = @eval_results.values.reduce(:+)
+    @scores = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
+
     haml :show
   end
 
@@ -146,5 +141,11 @@ class Brawser < Sinatra::Base
   error do
     @error = env["sinatra.error"]
     haml :show
+  end
+
+  helpers do
+    def bar(name)
+      "#{name}bar"
+    end
   end
 end
