@@ -2,7 +2,7 @@
 # WEBインタフェース
 
 require "bundler"
-Bundler.require(:default, :webif)
+Bundler.require(:default, :brawser_env)
 require "bushido/contrib/effective_patterns"
 
 class MediatorDecorator < SimpleDelegator
@@ -92,6 +92,7 @@ class Brawser < Sinatra::Base
 
     REDIS.set(@session_id, Marshal.dump(@mediator))
 
+    @bar_colors = {Bushido::Location[:white] => "bar-danger"}
     @eval_results = Bushido::Location.inject({}){|hash, loc|hash.merge(loc => @mediator.player_at(loc).evaluate)}
     total = @eval_results.values.reduce(:+)
     @scores = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
@@ -129,7 +130,7 @@ class Brawser < Sinatra::Base
     begin
       @mediator = Bushido::Mediator.start
       count.times do
-        mini_soldier = MiniSoldier[:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
+        mini_soldier = Bushido::MiniSoldier[:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
         @mediator.players.sample.initial_soldiers(mini_soldier, :from_piece => false)
       end
     rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error

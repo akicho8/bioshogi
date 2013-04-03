@@ -1,14 +1,17 @@
-%ul.unstyled
+.well
   - Bushido::EffectivePatterns.each.with_index do |pattern, id|
-    %li
-      %a{:href => "/effective_patterns?id=#{id}"}= pattern[:title]
+    %a{:href => "/effective_patterns?id=#{id}"}= "【#{pattern[:title]}】"
 
 - if @pattern
-  %div= @pattern[:title]
-  %div
-    = @pattern[:comment]
-    - if @pattern[:url]
-      %a{href: @pattern[:url]}= "参考URL"
+  %p
+    %strong= @pattern[:title]
+  - if @pattern[:url]
+    %p
+      %a{href: @pattern[:url]}
+        = @pattern[:url]
+  - if @pattern[:comment]
+    %p
+      = @pattern[:comment]
   %hr
   - @frames.each do |mediator|
     %div= mediator.human_kif_logs.join(" ")

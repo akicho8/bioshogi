@@ -4,8 +4,8 @@
 
 %p
   %div{class: "progress"}
-    %div{class:"bar"           , style:"width:#{@scores[Bushido::Location[:black]]}%"}= @eval_results[Bushido::Location[:black]]
-    %div{class:"bar bar-danger", style:"width:#{@scores[Bushido::Location[:white]]}%"}= @eval_results[Bushido::Location[:white]]
+    - Bushido::Location.each do |loc|
+      %div{class:"bar #{@bar_colors[loc]}", style:"width:#{@scores[loc]}%"}= "#{loc.mark}#{@eval_results[loc]}"
 
 %p= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
 
@@ -33,17 +33,17 @@
       %input{type: "submit", value: "打", :class => "btn btn-primary"}
 
 - if @mediator.human_kif_logs.present?
-  %div
+  %p
     %select
       - @mediator.human_kif_logs.each.with_index do |kif_log, index|
         %option{selected: @mediator.human_kif_logs.last == kif_log}= "#{index.next} #{kif_log}"
-  %hr
 
-.div
+%p
   %a{href:"/?reset=true", :class => "btn"} リセット
 
 - if ENV['RACK_ENV'] == "development"
-  %div= "marshal: #{Marshal.dump(@mediator).bytesize}"
-  %div= "session: " + env["rack.session"]["session_id"].to_s.slice(/^.{7}/)
-  %div= params.inspect
-  %div= ENV['RACK_ENV']
+  .well
+    %div= "marshal: #{Marshal.dump(@mediator).bytesize}"
+    %div= "session: " + env["rack.session"]["session_id"].to_s.slice(/^.{7}/)
+    %div= params.inspect
+    %div= ENV['RACK_ENV']

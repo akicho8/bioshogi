@@ -4,7 +4,7 @@ gemspec
 gem "rain_table", :git => "https://github.com/akicho8/rain_table.git" # gemspec で効かないので
 
 # web i/f 用なんだけどここには書きたくなかった
-group :webif do
+group :brawser_env do
   gem "sinatra"
   gem "sinatra-contrib"
   gem "compass"      # for stylesheet.css
