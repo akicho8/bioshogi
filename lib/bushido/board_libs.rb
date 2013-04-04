@@ -292,19 +292,6 @@ BOARD
 BOARD
   },
   {
-    :key => "矢倉囲い",
-    :url => "",
-    :defense_p => true,
-    :board => <<-BOARD,
-+---------------------------+
-| ・ ・ 歩 歩 ・ ・ ・ ・ ・|六
-| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
-| ・ 玉 金 角 ・ ・ ・ ・ ・|八
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-+---------------------------+
-BOARD
-  },
-  {
     :key => "脇システム",
     :url => "http://mijinko83.blog110.fc2.com/blog-entry-159.html",
     :system_p => true,

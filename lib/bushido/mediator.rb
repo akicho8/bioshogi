@@ -214,6 +214,12 @@ module Bushido
     def to_s
       s = ""
       s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
+      s << to_s2
+      s
+    end
+
+    def to_s2
+      s = ""
       s << @board.to_s
       s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
       s
@@ -274,6 +280,17 @@ module Bushido
     end
   end
 
+  module Textie
+    def to_text
+      out = []
+      out << "-" * 40 + "\n"
+      out << "棋譜: #{human_kif_logs.join(" ")}\n"
+      out << variables.inspect + "\n"
+      out << to_s2
+      out.join.strip
+    end
+  end
+
   class Mediator
     include PlayerSelector
     include Boardable
@@ -281,6 +298,7 @@ module Bushido
     include Serialization
     include HistoryStack
     include Variables
+    include Textie
   end
 
   class SimulatorFrame < Mediator
@@ -333,6 +351,10 @@ module Bushido
       @frames = []
       @instruction_pointer = 0
 
+      # if @pattern[:board]
+      #   board_reset(@pattern[:board])
+      # end
+
       # Location.each{|loc|
       #   player_join(Player.new(:location => loc))
       # }
@@ -364,6 +386,21 @@ module Bushido
         end
       end
       expr
+    end
+  end
+
+  class HybridSequencer
+    def self.execute(pattern)
+      if pattern[:dsl]
+        mediator = Sequencer.new
+        mediator.pattern = pattern[:dsl]
+        mediator.evaluate
+        mediator.frames
+      else
+        mediator = SimulatorFrame.new(pattern)
+        # mediator.build_frames{|e|p e}
+        mediator.build_frames
+      end
     end
   end
 end

@@ -536,6 +536,7 @@
 
 ** _TODO_
 
+   - EffectivePatterns を Rails の routing.rb を参考に綺麗に書けるようにする 
    - KifuDsl.define{} は -> {} でいいような気がする
    - 手の候補を表示する
    - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。

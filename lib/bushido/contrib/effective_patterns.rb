@@ -58,8 +58,7 @@ EOT
 EOT
     },
     {
-      :title => "棒銀",
-      :comment => "一筋を香車で突破",
+      :title => "棒銀(一筋を香車で突破編)",
       :execute => "▲２六歩 △３四歩 ▲３八銀 △３二金 ▲２七銀 △４二銀 ▲２五歩 △３三銀 ▲２六銀 △１四歩 ▲１六歩 △６二銀 ▲１五歩 △同歩 ▲同銀 △同香 ▲同香 △１三歩 ▲１九香",
       :board => "平手",
     },
@@ -197,27 +196,68 @@ BOARD
         disp "桂馬と香車とゲット"
       end,
     },
+    {
+      :title => "相掛かり棒銀",
+      :dsl => KifuDsl.define do
+        board "平手"
+        auto_flushing(false) {
+          mov "▲２六歩"
+          mov "△８四歩"
+          mov "▲２五歩"
+          mov "△８五歩"
+          mov "▲７八金"
+          mov "△３二金"
+          mov "▲２四歩"
+          mov "△同歩"
+          mov "▲同飛"
+          mov "△２三歩"
+          mov "▲２八飛"
+          mov "△８六歩"
+          mov "▲同歩"
+          mov "△同飛"
+          mov "▲８七歩"
+          # set :foo, 1
+          mov "△８二飛"
+        }
+        auto_flushing(true) {
+          mov "▲３八銀"
+          mov "△６二銀"
+          mov "▲２七銀"
+          mov "△６四歩"
+          mov "▲２六銀"
+          mov "△６三銀"
+          mov "▲２五銀"
+          mov "△５四銀"
+          mov "▲２四歩"
+          mov "△同歩"
+          mov "▲同銀"
+        }
+
+        # ここで新しい盤面を準備したときに持駒をクリアできないとだめ
+        # pieces で追加じゃなくてセットにしたらいいかも
+#         board <<-BOARD
+#   ９ ８ ７ ６ ５ ４ ３ ２ １
+# +---------------------------+
+# |v香v桂 ・v金v玉 ・v銀v桂v香|一
+# | ・v飛 ・v銀 ・ ・v金v角 ・|二
+# |v歩 ・v歩   v歩v歩 ・v歩v歩|三
+# | ・ ・ ・v歩 ・ ・v歩 ・ ・|四
+# | ・v歩 ・ ・ ・ ・ ・ 歩 ・|五
+# | ・ ・ ・ ・ ・ ・ ・ 銀 ・|六
+# | 歩 歩 歩 歩 歩 歩 歩 ・ 歩|七
+# | ・ 角 金 ・ ・ ・ ・ 飛 ・|八
+# | 香 桂 銀 ・ 玉 金 ・ 桂 香|九
+# +---------------------------+
+# BOARD
+      end,
+    },
   ]
 
   if $0 == __FILE__
-    # mediator = SimulatorFrame.new(EffectivePatterns.last)
-    # mediator.build_frames{|f|
-    #   p f
-    #   p f.human_kif_logs
-    # }
-    # p mediator
-    # p mediator.human_kif_logs
+    # EffectivePatterns.each{|pattern|HybridSequencer.execute(pattern)}
 
-    EffectivePatterns.each do |pattern|
-      if pattern[:dsl]
-        mediator = Sequencer.new
-        mediator.pattern = pattern[:dsl]
-        mediator.evaluate
-        p mediator.frames
-      else
-        mediator = SimulatorFrame.new(pattern)
-        mediator.build_frames{|e|p e}
-      end
-    end
+    HybridSequencer.execute(EffectivePatterns.last).each{|frame|
+      puts frame.to_text
+    }
   end
 end

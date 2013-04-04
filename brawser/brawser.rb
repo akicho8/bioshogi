@@ -101,19 +101,16 @@ class Brawser < Sinatra::Base
   end
 
   get "/effective_patterns" do
+    if Sinatra::Base.environment == :development
+      Bushido::EffectivePatterns
+      load "bushido/contrib/effective_patterns.rb"
+    end
+
     if params[:id]
       @pattern = Bushido::EffectivePatterns[params[:id].to_i]
     end
     if @pattern
-      if @pattern[:dsl]
-        mediator = Bushido::Sequencer.new
-        mediator.pattern = @pattern[:dsl]
-        mediator.evaluate
-        @frames = mediator.frames
-      else
-        mediator = Bushido::SimulatorFrame.new(@pattern)
-        @frames = mediator.build_frames
-      end
+      @frames = Bushido::HybridSequencer.execute(@pattern)
     end
     haml :effective_patterns
   end
