@@ -266,6 +266,19 @@ BOARD
 BOARD
   },
   {
+    :key => "雁木囲い",
+    :shogi_wars_code => "009",
+    :url => "http://mijinko83.blog110.fc2.com/blog-entry-97.html",
+    :defense_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ ・ 銀 銀 ・ ・ ・ ・|七
+| ・ ・ 金 ・ 金 ・ ・ ・ ・|八
+| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+  {
     :key => "いちご囲い",
     :shogi_wars_code => "500",
     :url => "http://mijinko83.blog110.fc2.com/blog-entry-124.html",
