@@ -52,9 +52,9 @@ module Bushido
       both_soldiers_from_char_board2(options)
     end
 
-    def both_soldiers_from_char_board2(options)
-      options[:stock].parse_data.inject({}){|h, (key, value)|
-        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(options[:location]))})
+    def both_soldiers_from_char_board2(params)
+      params[:stock].parse_data.inject({}){|h, (key, value)|
+        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(params[:location]))})
       }
     end
 

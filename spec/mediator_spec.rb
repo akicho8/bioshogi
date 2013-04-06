@@ -133,36 +133,6 @@ EOT
       mediator.deep_dup
     end
 
-    it "囲いチェック" do
-      value = <<-BOARD
-  ９ ８ ７ ６ ５ ４ ３ ２ １
-+---------------------------+
-|v香v桂v銀v金v玉v金v銀v桂v香|一
-| ・v飛 ・ ・ ・ ・ ・v角 ・|二
-|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-| ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-| ・ 角 金 銀 金 ・ ・ ・ ・|八
-| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
-+---------------------------+
-BOARD
-      # リアルタイムに調べる
-      mediator = Mediator.new
-      mediator.board_reset(value)
-      # p mediator.board.to_s
-      mediator.player_at(:black).defense_form_keys.should == ["カニ囲い"]
-      mediator.player_at(:black).defense_forms.should == []
-
-      # 打った直後に記録する
-      mediator.player_at(:black).defense_forms.should == []
-      mediator.player_at(:black).defense_from_add.should == false
-      mediator.execute("９九角")
-      mediator.player_at(:black).defense_forms.should == ["カニ囲い"]
-      mediator.player_at(:black).defense_from_add.should == true
-    end
-
     # it "盤面初期設定" do
     #   def board_reset_test(value)
     #     mediator = Mediator.new

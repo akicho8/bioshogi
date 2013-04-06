@@ -286,7 +286,7 @@ module Bushido
       extend ActiveSupport::Concern
 
       included do
-        attr_accessor :soldiers, :defense_forms, :defense_from_add
+        attr_accessor :soldiers, :complete_defense_names
       end
 
       module ClassMethods
@@ -294,9 +294,10 @@ module Bushido
 
       def initialize(*)
         super
+        # インスタンス変数は何もしなければ自動的に Marshal の対象になる
         @soldiers = []
-        @defense_forms = []
-        @defense_from_add = false
+        @complete_defense_names = []
+        @defense_name_append = false
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
@@ -319,13 +320,17 @@ module Bushido
       end
 
       def defense_form_store
-        @defense_from_add = false
+        @defense_name_append = false
         defense_form_keys.each do |key|
-          unless @defense_forms.include?(key)
-            @defense_forms << key
-            @defense_from_add = true
+          unless @complete_defense_names.include?(key)
+            @complete_defense_names << key
+            @defense_name_append = true
           end
         end
+      end
+
+      def defense_name_append?
+        !!@defense_name_append
       end
 
       def defense_form_keys
@@ -348,7 +353,8 @@ module Bushido
           placements = Utils.both_soldiers_from_char_board2(:location => location, :stock => stock)
           a = placements.values.flatten.collect(&:to_s)
           b = board.surface.values.collect(&:to_h).collect(&:to_s)
-          {:key => stock[:key], :placements => placements, :match => (a - b).empty?}
+          match_p = (a - b).empty?
+          {:key => stock[:key], :placements => placements, :match => match_p}
         }
       end
     end

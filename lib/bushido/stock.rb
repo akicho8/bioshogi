@@ -21,8 +21,7 @@ module Bushido
     end
 
     def parse_data
-      return @parse_data if @parse_data
-      @parse_data = BaseFormat.board_parse(self[:board])
+      @parse_data ||= BaseFormat.board_parse(self[:board])
     end
 
     store BoardLibs

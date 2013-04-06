@@ -40,6 +40,11 @@ module Bushido
     def self.board_parse(source)
       lines = normalized_source(source).strip.lines.to_a
 
+      if lines.blank?
+        # board_parse("") の場合
+        return {}
+      end
+
       s = lines.first
       if s.match("-")
         if s.count("-").modulo(3).nonzero?
