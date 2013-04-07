@@ -115,7 +115,7 @@ class Brawser < Sinatra::Base
     haml :effective_patterns
   end
 
-  get "/board_points" do
+  get "/learn_board_points" do
     session[:test_count] ||= 0
     session[:start_time] ||= Time.now
     unless params[:count]
@@ -133,7 +133,7 @@ class Brawser < Sinatra::Base
     rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
       retry
     end
-    haml :board_points
+    haml :learn_board_points
   end
 
   error do
