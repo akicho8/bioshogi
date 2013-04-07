@@ -102,7 +102,6 @@ class Brawser < Sinatra::Base
 
   get "/effective_patterns" do
     if Sinatra::Base.environment == :development
-      Bushido::EffectivePatterns
       load "bushido/contrib/effective_patterns.rb"
     end
 
@@ -113,6 +112,20 @@ class Brawser < Sinatra::Base
       @frames = Bushido::HybridSequencer.execute(@pattern)
     end
     haml :effective_patterns
+  end
+
+  get "/tactics_and_enclosure" do
+    # # if Sinatra::Base.environment == :development
+    # # end
+    # if params[:key]
+    #   # @pattern = Bushido::Stock.list.find{|stock|stock[:key] == params[:key]]
+    # 
+    #   @mediator = Mediator.new
+    #   @mediator.board_reset(params[:key])
+    #   # @mediator.board.to_s
+    # end
+    load "bushido/board_libs.rb"
+    haml :tactics_and_enclosure
   end
 
   get "/learn_board_points" do

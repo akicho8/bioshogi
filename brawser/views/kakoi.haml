@@ -1,0 +1,16 @@
+.well
+  - Bushido::Stock.list.find_all{|e|e[:defense_p] || e[:attack_p]}.each do |stock|
+    %a{href:"/tactics_and_enclosure##{stock[:key]}"}= "【#{stock[:key]}】"
+
+- Bushido::Stock.list.find_all{|e|e[:defense_p] || e[:attack_p]}.each do |stock|
+  - mediator = Bushido::Mediator.new
+  - mediator.board_reset("先手" => stock[:key], "後手" => stock[:key])
+  %a{name:"#{stock[:key]}"}
+  %p
+    = stock[:key]
+  = MediatorDecorator.new(mediator).to_html_board(:small)
+  %p
+    - if stock[:form_check_url]
+      %a{href:"#{stock[:form_check_url]}"}= "LINK"
+    %a{href:"#{stock.guguru_url}"}= "検索"
+  %hr

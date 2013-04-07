@@ -346,7 +346,7 @@ module Bushido
 
         # x99の盤面だけに絞る
         stocks = Stock.list.find_all{|v|(v[:size_type] || :x99) == size_type}
-        stocks = stocks.find_all{|v|v[:defense_p] || v[:system_p]}
+        stocks = stocks.find_all{|v|v[:defense_p] || v[:attack_p]}
 
         # ここがかなり重い
         stocks.collect{|stock|

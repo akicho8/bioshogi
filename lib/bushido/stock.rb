@@ -4,8 +4,6 @@
 #
 module Bushido
   class Stock < Hash
-    attr_reader :data
-
     @list = []
 
     def self.store(objects)
@@ -16,12 +14,18 @@ module Bushido
       @list
     end
 
-    def initialize(data)
-      replace(data)
+    def initialize(obj)
+      replace(obj)
     end
 
-    def parse_data
-      @parse_data ||= BaseFormat.board_parse(self[:board])
+    def parsed_board
+      @parsed_board ||= BaseFormat.board_parse(self[:board])
+    end
+
+    def guguru_url
+      require "active_support/core_ext/object/to_query"
+      str = [self[:key], "将棋"].join(" ")
+      "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{:q => str.tosjis}.to_query}"
     end
 
     store BoardLibs
