@@ -3,7 +3,9 @@
 
 require "bundler"
 Bundler.require(:default, :brawser_env)
+
 require "bushido/contrib/effective_patterns"
+require "bushido/contrib/tactical_move_of_glance"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
@@ -102,14 +104,16 @@ class Brawser < Sinatra::Base
 
   get "/effective_patterns" do
     if Sinatra::Base.environment == :development
+      Bushido::XtraPattern.list.clear
       load "bushido/contrib/effective_patterns.rb"
+      load "bushido/contrib/tactical_move_of_glance.rb"
     end
 
     if params[:id]
-      @pattern = Bushido::EffectivePatterns[params[:id].to_i]
-    end
-    if @pattern
-      @frames = Bushido::HybridSequencer.execute(@pattern)
+      @pattern = Bushido::XtraPattern.list[params[:id].to_i]
+      if @pattern
+        @frames = Bushido::HybridSequencer.execute(@pattern)
+      end
     end
     haml :effective_patterns
   end

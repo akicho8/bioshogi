@@ -5,7 +5,7 @@ require "./example_helper"
 
 mediator = Mediator.start
 mediator.piece_plot
-while true
+loop do
   way = mediator.current_player.generate_way
   mediator.execute(way)
   last_piece = mediator.prev_player.last_piece

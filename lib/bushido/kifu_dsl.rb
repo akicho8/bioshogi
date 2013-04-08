@@ -134,6 +134,7 @@ module Bushido
           player.execute(hash[:input])
           if context.variables[:auto_flushing]
             context.frames << context.deep_dup
+            context.set(:comment, nil)
           end
         end
       end

@@ -1,5 +1,5 @@
 .well
-  - Bushido::EffectivePatterns.each.with_index do |pattern, id|
+  - Bushido::XtraPattern.each.with_index do |pattern, id|
     %a{:href => "/effective_patterns?id=#{id}"}= "【#{pattern[:title]}】"
 
 - if @pattern
@@ -14,9 +14,10 @@
       = @pattern[:comment]
   %hr
   - @frames.each do |mediator|
-    %div= mediator.human_kif_logs.join(" ")
     - if v = mediator.variables[:comment]
-      %div= v
+      %p
+        = v
+    %div= mediator.human_kif_logs.join(" ")
     - if mediator.player_at(:white).pieces.present?
       .pieces= mediator.player_at(:white).to_s_pieces
     = MediatorDecorator.new(mediator).to_html_board(:small)

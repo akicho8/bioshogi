@@ -69,7 +69,7 @@ EOT
       it "CPU同士で対局" do
         mediator = Mediator.start
         mediator.piece_plot
-        while true
+        loop do
           way = mediator.current_player.generate_way
           p way
           p mediator
@@ -144,9 +144,9 @@ EOT
     #   # board_reset_test("先手" => "角落ち")
     # end
 
-    # it "EffectivePatterns" do
+    # it "XtraPattern" do
     #   require "bushido/contrib/effective_patterns"
-    #   EffectivePatterns.each{|v|
+    #   XtraPattern.each{|v|
     #     p v
     #     mediator = SimulatorFrame.new(v)
     #     puts mediator.board
@@ -176,9 +176,9 @@ EOT
     # end
 
     if false
-      it "EffectivePatterns", :p => true do
+      it "XtraPattern", :p => true do
         require "bushido/contrib/effective_patterns"
-        EffectivePatterns.each do |pattern|
+        XtraPattern.each do |pattern|
           if pattern[:dsl]
             mediator = Sequencer.new
             mediator.pattern = pattern[:dsl]
