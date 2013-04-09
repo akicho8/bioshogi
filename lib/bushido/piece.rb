@@ -359,6 +359,10 @@ module Bushido
         "玉"
       end
 
+      def basic_names
+        super + ["王"]
+      end
+
       def basic_step_vectors
         self.class.basic_pattern
       end

@@ -1,22 +1,36 @@
 # -*- coding: utf-8 -*-
+
+require "pathname"
+
 module Bushido
   class XtraPattern < Hash
     @list = []
+    @load_paths = []
+    @load_paths << Pathname(__FILE__).dirname.join("contrib/xfiles/0*.rb").expand_path
 
-    def self.list
-      @list
-    end
+    class << self
+      attr_accessor :list, :load_paths
 
-    def self.each(&block)
-      @list.each(&block)
-    end
+      def each(&block)
+        @list.each(&block)
+      end
 
-    def self.store(objects)
-      @list += Array.wrap(objects).collect{|e|new(e)}
-    end
+      def store(objects)
+        @list += Array.wrap(objects).collect{|e|new(e)}
+      end
 
-    def self.define(&block)
-      store(block.call)
+      def define(&block)
+        store(block.call)
+      end
+
+      def reload_all
+        @list.clear
+        @load_paths.each do |path|
+          Pathname.glob(path) do |file|
+            load file
+          end
+        end
+      end
     end
 
     def initialize(obj)

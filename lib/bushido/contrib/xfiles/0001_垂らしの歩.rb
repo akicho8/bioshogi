@@ -1,13 +1,12 @@
-# -*- coding: utf-8; compile-command: "be ruby tactical_move_of_glance.rb" -*-
+# -*- coding: utf-8 -*-
 
-require_relative "../../bushido"
+require_relative "../../../bushido"
 
 module Bushido
   XtraPattern.define do
     [
-      # --------------------------------------------------------------------------------
       {
-        :title => "垂らしの歩",
+        :title => Pathname(__FILE__).basename(".*"),
         :dsl => KifuDsl.define do
           board <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -36,7 +35,7 @@ BOARD
               mov "▲２三歩"
               mov "△３一角"
               mov "▲２二歩成"
-              mov "△２二金"
+              mov "△２二角"
             }
           }
         end,
@@ -46,7 +45,7 @@ BOARD
 
   if $0 == __FILE__
     # XtraPattern.each{|pattern|HybridSequencer.execute(pattern)}
-    HybridSequencer.execute(XtraPattern.each.to_a.last).each{|frame|
+    HybridSequencer.execute(XtraPattern.list.last).each{|frame|
       puts frame.to_text
     }
   end

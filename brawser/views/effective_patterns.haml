@@ -15,7 +15,7 @@
   %hr
   - @frames.each do |mediator|
     - if v = mediator.variables[:comment]
-      %p
+      .alert
         = v
     %div= mediator.human_kif_logs.join(" ")
     - if mediator.player_at(:white).pieces.present?

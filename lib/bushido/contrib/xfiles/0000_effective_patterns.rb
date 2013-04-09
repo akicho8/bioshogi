@@ -1,6 +1,6 @@
 # -*- coding: utf-8; compile-command: "be ruby effective_patterns.rb" -*-
 
-require_relative "../../bushido"
+require_relative "../../../bushido"
 
 module Bushido
   XtraPattern.define do

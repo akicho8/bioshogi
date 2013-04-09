@@ -3,9 +3,7 @@
 
 require "bundler"
 Bundler.require(:default, :brawser_env)
-
-require "bushido/contrib/effective_patterns"
-require "bushido/contrib/tactical_move_of_glance"
+Bushido::XtraPattern.reload_all
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
@@ -104,9 +102,7 @@ class Brawser < Sinatra::Base
 
   get "/effective_patterns" do
     if Sinatra::Base.environment == :development
-      Bushido::XtraPattern.list.clear
-      load "bushido/contrib/effective_patterns.rb"
-      load "bushido/contrib/tactical_move_of_glance.rb"
+      Bushido::XtraPattern.reload_all
     end
 
     if params[:id]
@@ -119,15 +115,6 @@ class Brawser < Sinatra::Base
   end
 
   get "/tactics_and_enclosure" do
-    # # if Sinatra::Base.environment == :development
-    # # end
-    # if params[:key]
-    #   # @pattern = Bushido::Stock.list.find{|stock|stock[:key] == params[:key]]
-    # 
-    #   @mediator = Mediator.new
-    #   @mediator.board_reset(params[:key])
-    #   # @mediator.board.to_s
-    # end
     load "bushido/board_libs.rb"
     haml :tactics_and_enclosure
   end
