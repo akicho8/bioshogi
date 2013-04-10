@@ -6,7 +6,7 @@ module Bushido
   class XtraPattern < Hash
     @list = []
     @load_paths = []
-    @load_paths << Pathname(__FILE__).dirname.join("contrib/xfiles/0*.rb").expand_path
+    @load_paths << Pathname(__FILE__).dirname.join("contrib/other_files/[0-9]*.rb").expand_path
 
     class << self
       attr_accessor :list, :load_paths
@@ -26,15 +26,13 @@ module Bushido
       def reload_all
         @list.clear
         @load_paths.each do |path|
-          Pathname.glob(path) do |file|
-            load file
-          end
+          Pathname.glob(path).sort.each{|file|load file}
         end
       end
     end
 
-    def initialize(obj)
-      replace(obj)
+    def initialize(object)
+      replace(object)
     end
   end
 end

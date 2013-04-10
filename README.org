@@ -530,7 +530,7 @@
 
 ** BUG
 
-   - TypeError at /effective_patterns can't dump MatchData file: frame.rb location: dump line: 156
+   - TypeError at /tactics can't dump MatchData file: frame.rb location: dump line: 156
 
      - 「早囲いから飛車を追い返す方法」がうごかない
 

@@ -100,7 +100,7 @@ class Brawser < Sinatra::Base
     haml :show
   end
 
-  get "/effective_patterns" do
+  get "/tactics" do
     if Sinatra::Base.environment == :development
       Bushido::XtraPattern.reload_all
     end
@@ -111,7 +111,7 @@ class Brawser < Sinatra::Base
         @frames = Bushido::HybridSequencer.execute(@pattern)
       end
     end
-    haml :effective_patterns
+    haml :tactics
   end
 
   get "/tactics_and_enclosure" do

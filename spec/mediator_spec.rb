@@ -145,7 +145,7 @@ EOT
     # end
 
     # it "XtraPattern" do
-    #   require "bushido/contrib/effective_patterns"
+    #   XtraPattern.reload_all
     #   XtraPattern.each{|v|
     #     p v
     #     mediator = SimulatorFrame.new(v)
@@ -177,7 +177,7 @@ EOT
 
     if false
       it "XtraPattern", :p => true do
-        require "bushido/contrib/effective_patterns"
+        XtraPattern.reload_all
         XtraPattern.each do |pattern|
           if pattern[:dsl]
             mediator = Sequencer.new

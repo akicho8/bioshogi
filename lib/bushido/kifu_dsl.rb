@@ -193,13 +193,43 @@ module Bushido
     end
 
     def auto_flushing(value = true, &block)
+      local_vars(:auto_flushing => value, &block)
+
+      # if block_given?
+      #   @seqs << VarPush.new(:auto_flushing)
+      #   set(:auto_flushing, value)
+      #   instance_eval(&block)
+      #   @seqs << VarPop.new(:auto_flushing)
+      # else
+      #   set(:auto_flushing, value)
+      # end
+    end
+
+    # def local_var(key, value, &block)
+    #   if block_given?
+    #     @seqs << VarPush.new(:auto_flushing)
+    #     set(:auto_flushing, value)
+    #     instance_eval(&block)
+    #     @seqs << VarPop.new(:auto_flushing)
+    #   else
+    #     set(:auto_flushing, value)
+    #   end
+    # end
+
+    def local_vars(attrs, &block)
       if block_given?
-        @seqs << VarPush.new(:auto_flushing)
-        set(:auto_flushing, value)
+        attrs.each{|k, v|
+          @seqs << VarPush.new(k)
+          set(k, v)
+        }
         instance_eval(&block)
-        @seqs << VarPop.new(:auto_flushing)
+        attrs.reverse_each{|k, v|
+          @seqs << VarPop.new(k)
+        }
       else
-        set(:auto_flushing, value)
+        attrs.each{|k, v|
+          set(k, v)
+        }
       end
     end
 

@@ -1,5 +1,4 @@
-# -*- coding: utf-8; compile-command: "be ruby effective_patterns.rb" -*-
-
+# -*- coding: utf-8 -*-
 require_relative "../../../bushido"
 
 module Bushido
