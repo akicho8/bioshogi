@@ -66,7 +66,7 @@ module Bushido
       end
 
       def evaluate(context)
-        Utils.__ki2_input_seq_parse(@value)
+        Utils.safe_ki2_parse(@value)
       end
     end
 
@@ -129,7 +129,7 @@ module Bushido
       end
 
       def evaluate(context)
-        Utils.__ki2_input_seq_parse(@value).each do |hash|
+        Utils.safe_ki2_parse(@value).each do |hash|
           player = context.player_at(hash[:location])
           player.execute(hash[:input])
           if context.variables[:auto_flushing]

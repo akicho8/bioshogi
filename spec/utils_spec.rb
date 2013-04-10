@@ -8,8 +8,17 @@ module Bushido
       MiniSoldier.from_str("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
     end
 
-    it "棋譜入力の分離" do
-      Utils.ki2_input_seq_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => :black, :input => "５五歩"}, {:location => :white, :input => "４四歩"}, "push", {:location => :black, :input => "３三歩"}, "pop"]
+    it "棋譜入力の分離(ゴミは保持)" do
+      Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, "push", {:location => L.b, :input => "３三歩"}, "pop"]
+    end
+
+    describe "safe_ki2_parse" do
+      it "棋譜入力の分離(ゴミがあっても無視)" do
+        Utils.safe_ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, {:location => L.b, :input => "３三歩"}]
+      end
+      it "先手後手がわからないと無視する" do
+        Utils.safe_ki2_parse("５五歩").should == []
+      end
     end
 
     describe "持駒表記変換" do

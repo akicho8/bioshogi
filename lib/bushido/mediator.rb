@@ -243,7 +243,7 @@ module Bushido
 
       def test2(params = {})
         mediator = start
-        Utils.ki2_input_seq_parse(params[:exec]).each{|op|
+        Utils.ki2_parse(params[:exec]).each{|op|
           player = mediator.players[Location[op[:location]].index]
           player.execute(op[:input])
         }
@@ -325,7 +325,7 @@ module Bushido
       if block
         yield frames.last
       end
-      Utils.ki2_input_seq_parse(@pattern[:execute]).each{|op|
+      Utils.ki2_parse(@pattern[:execute]).each{|op|
         if String === op
           raise SyntaxError, op
         end

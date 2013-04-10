@@ -136,22 +136,22 @@ module Bushido
     end
 
     # ki2形式に近い棋譜の羅列のパース
-    #   ki2_input_seq_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
-    def ki2_input_seq_parse(str)
+    #   ki2_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
+    def ki2_parse(str)
       str = str.to_s
       str = str.gsub(/([▲△])/, ' \1')
       str = str.squish
       str.split(/\s+/).collect{|s|
         if s.match(/\A[▲△]/)
-          __ki2_input_seq_parse(s)
+          safe_ki2_parse(s)
         else
           s
         end
       }.flatten
     end
 
-    def __ki2_input_seq_parse(str)
-      Array.wrap(str).join(" ").scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark].key, :input => input}}
+    def safe_ki2_parse(str)
+      Array.wrap(str).join(" ").scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark], :input => input}}
     end
 
     private
