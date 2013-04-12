@@ -14,6 +14,11 @@ module Bushido
       @list
     end
 
+    def self.reload_all
+      @list.clear
+      store BoardLibs
+    end
+
     def initialize(obj)
       replace(obj)
     end
@@ -28,7 +33,7 @@ module Bushido
       "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{:q => str.tosjis}.to_query}"
     end
 
-    store BoardLibs
+    reload_all
   end
 
   # class Stock

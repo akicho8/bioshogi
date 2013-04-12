@@ -160,7 +160,9 @@ auto_flushing {
   end
 
   get "/tactics_and_enclosure" do
-    load "bushido/board_libs.rb"
+    if Sinatra::Base.environment == :development
+      Bushido::Stock.reload_all
+    end
     haml :tactics_and_enclosure
   end
 

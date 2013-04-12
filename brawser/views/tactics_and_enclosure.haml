@@ -8,9 +8,8 @@
   %a{name:"#{stock[:key]}"}
   %p
     = stock[:key]
-  = MediatorDecorator.new(mediator).to_html_board(:small)
-  %p
     - if stock[:form_check_url]
-      %a{href:"#{stock[:form_check_url]}"}= "LINK"
-    %a{href:"#{stock.guguru_url}"}= "検索"
+      %a{href:"#{stock[:form_check_url]}"}= "将ウ"
+    %a{href:"#{stock.guguru_url}"}= "ググる"
+  = MediatorDecorator.new(mediator).to_html_board(:small)
   %hr
