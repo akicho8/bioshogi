@@ -114,6 +114,51 @@ class Brawser < Sinatra::Base
     haml :tactics
   end
 
+  get "/kif_form" do
+    @pattern_body_default = %(
+board <<-BOARD
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・ ・ ・ ・ ・ ・ ・v桂v香|一
+| ・ ・ ・ ・ ・v銀v金v角 ・|二
+| ・ ・ ・ ・ ・v歩v歩 ・v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| ・ ・ ・ ・ ・ ・ 歩 ・ 歩|七
+| ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
+| ・ ・ ・ ・ ・ ・ ・ 桂 香|九
++---------------------------+
+BOARD
+pieces "先手" => "歩1"
+auto_flushing {
+  push {
+    comment "成功するパターン"
+    mov "▲２四歩"
+    mov "△３一角"
+    mov "▲２三歩成"
+  }
+  push {
+    comment "最初に戻って失敗するパターン"
+    mov "▲２三歩"
+    mov "△３一角"
+    mov "▲２二歩成"
+    mov "△２二角"
+  }
+})
+    if params[:kif_title].present?
+      @pattern = Bushido::XtraPattern.new({
+          :title => params[:kif_title],
+          :dsl => Bushido::KifuDsl.define(params){|params|eval(params[:kif_body])},
+        })
+      @frames = Bushido::HybridSequencer.execute(@pattern)
+    else
+      params[:kif_title] ||= "垂らしの歩"
+      params[:kif_body] ||= @pattern_body_default
+    end
+    haml :kif_form
+  end
+
   get "/tactics_and_enclosure" do
     load "bushido/board_libs.rb"
     haml :tactics_and_enclosure

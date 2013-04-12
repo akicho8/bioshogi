@@ -15,4 +15,5 @@ pp Piece["飛"].to_h
 # >>  :basic_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
 # >>  :promoted_step_vectors=>
 # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
-# >>  :promoted_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
+# >>  :promoted_series_vectors=>
+# >>   [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}

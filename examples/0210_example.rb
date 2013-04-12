@@ -22,7 +22,7 @@ mediator.execute("３二角")
 mediator.execute("２三銀")
 mediator.execute("４三銀")
 mediator.execute("１二銀")
-mediator.execute("同金")
+mediator.execute("同金") # !> method redefined; discarding old promoted=
 mediator.execute("同角")
 p mediator
 # >> 1手目: ▲先手番

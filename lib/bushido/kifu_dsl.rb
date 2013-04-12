@@ -154,8 +154,8 @@ module Bushido
       end
     end
 
-    def self.define(&block)
-      new.tap{|e|e.instance_eval(&block)}
+    def self.define(*args, &block)
+      new.tap{|e|e.instance_exec(*args, &block)}
     end
 
     attr_reader :seqs

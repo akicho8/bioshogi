@@ -14,7 +14,7 @@ module Bushido
     end
 
     def self.board_format?(source)
-      normalized_source(source).match(/^[\+\|]/)
+      normalized_source(source).match(/^\s*[\+\|]/)
     end
 
     # ほぼ標準の柿木フォーマットのテーブルの読み取り
@@ -34,8 +34,8 @@ module Bushido
     #   +---------------------------+
     #   "
     #
-    #   Bushido::BaseFormat.board_parse_as_str(str) # => {:white => ["４二玉"], :black => []}
-    #   Bushido::BaseFormat.board_parse(str)        # => {:white => [<MiniSoldier ...>], :black => []}
+    #   Bushido::BaseFormat.board_parse(str) # => {:white => ["４二玉"], :black => []}
+    #   Bushido::BaseFormat.board_parse(str) # => {:white => [<MiniSoldier ...>], :black => []}
     #
     def self.board_parse(source)
       lines = normalized_source(source).strip.lines.to_a
@@ -60,7 +60,7 @@ module Bushido
       inlines = mds.collect{|v|v[:inline]}
 
       players = Location.inject({}){|h, location|h.merge(location => [])}
-      inlines.each_with_index{|s, y|
+      inlines.each_with_index{|s, y| # !> shadowing outer local variable - s
         s.scan(/(.)(\S|\s{2})/).each_with_index{|(prefix, piece), x|
           unless piece == "・" || piece.strip == ""
             unless Piece.names.include?(piece)

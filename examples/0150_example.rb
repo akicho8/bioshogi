@@ -8,7 +8,7 @@ pp info.header
 
 mediator = Mediator.start
 mediator.piece_plot
-info.move_infos.each{|info|
+info.move_infos.each{|info| # !> shadowing outer local variable - info
   mediator.execute(info[:input])
 }
 puts mediator.inspect
