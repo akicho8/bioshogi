@@ -60,16 +60,6 @@ module Bushido
       end
     end
 
-    class Mov < Expression
-      def initialize(value)
-        @value = value
-      end
-
-      def evaluate(context)
-        Utils.safe_ki2_parse(@value)
-      end
-    end
-
     class Set < Expression
       def initialize(key, value)
         @key = key

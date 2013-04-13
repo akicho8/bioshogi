@@ -261,6 +261,14 @@ module Bushido
       @var_stack = Hash.new([])
     end
 
+    def set(key, value)
+      @variables[key] = value
+    end
+
+    def get(key)
+      @variables[key]
+    end
+
     def marshal_dump
       super.merge(:variables => @variables, :var_stack => @var_stack)
     end
@@ -358,14 +366,6 @@ module Bushido
       # Location.each{|loc|
       #   player_join(Player.new(:location => loc))
       # }
-    end
-
-    def set(key, value)
-      @variables[key] = value
-    end
-
-    def get(key)
-      @variables[key]
     end
 
     def evaluate

@@ -187,9 +187,29 @@ auto_flushing {
     haml :learn_board_points
   end
 
+  get "/basic_format_form" do
+    if params[:body].present?
+      @pattern = Bushido::XtraPattern.new({
+          :title => params[:title],
+          :dsl => Bushido::KifuDsl.define(params){|params|
+            board "平手"
+            auto_flushing
+            mov params[:body]
+          },
+        })
+      @frames = Bushido::HybridSequencer.execute(@pattern)
+    else
+      if Sinatra::Base.environment == :development
+        params[:body] ||= "▲７六歩 △３四歩 ▲２六歩"
+        # params[:title] ||= ""
+      end
+    end
+    haml :basic_format_form
+  end
+
   error do
     @error = env["sinatra.error"]
-    haml :show
+    haml :error
   end
 
   helpers do
