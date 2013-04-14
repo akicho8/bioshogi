@@ -650,18 +650,48 @@ BOARD
 BOARD
   },
 
+# 相手の駒も関係してくるので定義が難しい
+#   {
+#     :key => "脇システム",
+#     :shogi_wars_code => "2001",
+#     :form_check_url => "http://mijinko83.blog110.fc2.com/blog-entry-159.html",
+#     :attack_p => true,
+#     :not_same => true,
+#     :board => <<-BOARD,
+# +---------------------------+
+# | ・ ・ ・v角 ・ ・ ・ ・ ・|四
+# | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+# | ・ ・ ・ ・ ・ 角 ・ ・ ・|六
+# | ・ ・ 銀 金 ・ ・ 銀 ・ ・|七
+# | ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+# | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
+# +---------------------------+
+# BOARD
+#   },
+
   {
-    :key => "脇システム",
-    :form_check_url => "http://mijinko83.blog110.fc2.com/blog-entry-159.html",
+    :key => "３七銀戦法",
+    :shogi_wars_code => "2000",
+    :form_check_url => "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
     :attack_p => true,
-    :not_same => true,
     :board => <<-BOARD,
 +---------------------------+
-| ・ ・ ・v角 ・ ・ ・ ・ ・|四
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-| ・ ・ ・ ・ ・ 角 ・ ・ ・|六
-| ・ ・ 銀 金 ・ ・ 銀 ・ ・|七
-| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
+| ・ ・ 銀 ・ ・ ・ 銀 ・ ・|七
+| ・ ・ 金 ・ ・ ・ ・ 飛 ・|八
+| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
++---------------------------+
+BOARD
+  },
+
+  {
+    :key => "森下システム",
+    :shogi_wars_code => "2003",
+    :form_check_url => "http://mijinko83.blog110.fc2.com/blog-entry-150.html",
+    :attack_p => true,
+    :board => <<-BOARD,
++---------------------------+
+| ・ ・ ・ ・ ・ ・ 桂 ・ ・|七
+| ・ ・ 金 ・ 金 銀 飛 ・ ・|八
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 BOARD
