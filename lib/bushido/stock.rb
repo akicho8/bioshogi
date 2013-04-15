@@ -16,7 +16,7 @@ module Bushido
 
     def self.reload_all
       @list.clear
-      store BoardLibs
+      store StaticBoard
     end
 
     def initialize(obj)
@@ -59,6 +59,6 @@ module Bushido
   #   #   instance.stocks.each(&block)
   #   # end
   #
-  #   instance.store(BoardLibs)
+  #   instance.store(StaticBoard)
   # end
 end

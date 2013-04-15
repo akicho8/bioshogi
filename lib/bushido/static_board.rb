@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-Bushido::BoardLibs = [
+Bushido::StaticBoard = [
   {
     :key => "平手",
     :defense_p => false,

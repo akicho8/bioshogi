@@ -537,7 +537,6 @@
 ** _TODO_
 
    - :dsl => KifuDsl.define("文字列") とも書けるようにする。evalのように。
-   - フォームで入力した棋譜の再生
    - 囲い一覧をWEBブラウザで確認できるようにする
    - XtraPattern を Rails の routing.rb を参考に綺麗に書けるようにする 
    - KifuDsl.define{} は -> {} でいいような気がする
@@ -564,6 +563,7 @@
    - Windowsブリッジ
    - GUI表示
    - cli
+   - +フォームで入力した棋譜の再生+
    - +board と player に mediator を【常に】渡す+
    - +human_kif_logs ともう一つを別々に管理しているのがおかしい kif_logs.first から分岐すべき+
    - +mediator の元を mediator にする+
