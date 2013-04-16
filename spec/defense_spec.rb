@@ -58,7 +58,7 @@ BOARD
 #         # puts mediator.board
 #         mediator.player_at(:black).defense_form_keys.include?("カニ囲い").should == true
 #         mediator.player_at(:black).complete_defense_names.should == []
-# 
+#
 #         # 打った直後に記録する
 #         mediator.player_at(:black).complete_defense_names.should == []
 #         mediator.player_at(:black).defense_name_append?.should == false

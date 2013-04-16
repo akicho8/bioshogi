@@ -76,5 +76,10 @@ EOT
       # pp info
       info.header[:board].present?.should == true
     end
+
+    it "foo" do
+      # result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../doc/oui201207240101.kif").read)
+      # p result
+    end
   end
 end
