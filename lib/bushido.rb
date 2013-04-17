@@ -53,18 +53,6 @@ module Bushido
   class PromotedPieceToNormalPiece < RuleError; end
   class SamePlayerSoldierOverwrideError < RuleError; end
 
-  class Vector < Array
-    def initialize(arg)
-      super()
-      replace(arg)
-    end
-
-    def reverse
-      x, y = self
-      self.class.new([-x, -y])
-    end
-  end
-
   def self.parse_file(file, options = {})
     parse(Pathname(file).expand_path.read, options)
   end
@@ -79,6 +67,7 @@ module Bushido
 end
 
 require_relative "bushido/version"
+require_relative "bushido/vector"
 require_relative "bushido/position"
 require_relative "bushido/point"
 require_relative "bushido/location"

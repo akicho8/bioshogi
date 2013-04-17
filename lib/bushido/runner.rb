@@ -22,7 +22,9 @@ module Bushido
       @source = str
       @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
-      @md or raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+      unless @md
+        raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+      end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
       # @md = @md.names.inject({}){|h, k|h.merge(k.to_sym => @md[k])} # to_h とかあるはず(？)
@@ -77,7 +79,6 @@ module Bushido
               end
             end
           end
-
           unless @done
             @player.move_to(@origin_point, @point, @promote_trigger)
           end

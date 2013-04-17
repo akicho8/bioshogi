@@ -59,10 +59,11 @@ module Bushido
 
     def normalized_vectors(player, vectors)
       vectors.uniq.compact.collect do |vector|
+        v = Vector[*vector]
         if player.location.white?
-          vector = Vector.new(vector).reverse
+          v = v.reverse_sign
         end
-        vector
+        v
       end
     end
   end
