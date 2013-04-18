@@ -31,7 +31,7 @@ module Bushido
       table = [
         {
           :title => "付き捨て+タタキ+合わせ",
-          :dsl => KifuDsl.define do
+          :dsl => proc do
             # title "(title)"
             # comment "(comment)"
             board <<-BOARD

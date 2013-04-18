@@ -368,6 +368,14 @@ module Bushido
       # }
     end
 
+    def pattern=(block)
+      if block.kind_of? Proc
+        @pattern = KifuDsl.define(&block)
+      else
+        @pattern = block
+      end
+    end
+
     def evaluate
       @pattern.evaluate(self)
     end

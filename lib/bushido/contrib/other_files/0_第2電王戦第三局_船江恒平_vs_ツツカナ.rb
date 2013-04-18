@@ -7,7 +7,7 @@ module Bushido
     [
       {
         :title => Pathname(__FILE__).basename(".*"),
-        :dsl => KifuDsl.define do
+        :dsl => lambda do
           board "平手"
           auto_flushing {
             set :hide_human_kif_logs, true

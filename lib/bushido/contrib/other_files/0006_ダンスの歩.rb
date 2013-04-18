@@ -7,7 +7,7 @@ module Bushido
     [
       {
         :title => Pathname(__FILE__).basename(".*"),
-        :dsl => KifuDsl.define do
+        :dsl => lambda do
           board <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

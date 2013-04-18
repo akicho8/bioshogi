@@ -139,7 +139,7 @@ EOT
         :title => "早石田戦法",
         :comment => "飛車先からの攻めを受けずに王手飛車(途中に説明入れたい)",
         # :board => "平手",
-        :dsl => KifuDsl.define do
+        :dsl => lambda do
           board "平手"
           auto_flushing {
             mov "▲７六歩 △３四歩 ▲７五歩 △８四歩 ▲７八飛"
@@ -152,7 +152,7 @@ EOT
       },
       {
         :title => "付き捨て+タタキ+合わせ",
-        :dsl => KifuDsl.define do
+        :dsl => lambda do
           board <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -198,7 +198,7 @@ BOARD
       },
       {
         :title => "相掛かり棒銀",
-        :dsl => KifuDsl.define do
+        :dsl => lambda do
           board "平手"
           auto_flushing(false) {
             mov "▲２六歩"
