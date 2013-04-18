@@ -7,7 +7,7 @@ mediator = Mediator.start
 mediator.piece_plot
 mediator.execute("7六歩")
 mediator.execute("3四歩")
-mediator.execute("2二角成")
+mediator.execute("２五角成")
 mediator.player_at(:black).to_s_pieces # => "角"
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

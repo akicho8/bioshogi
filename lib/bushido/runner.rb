@@ -4,7 +4,7 @@
 #
 module Bushido
   class Runner
-    attr_reader :point, :origin_point
+    attr_reader :point, :origin_point, :piece, :source, :player
 
     def initialize(player)
       @player = player
@@ -147,7 +147,7 @@ module Bushido
           @player.soldiers << soldier
           @done = true
         else
-          raise MovableSoldierNotFound, "#{@point.name}に移動できる#{@piece.name}がありません。'#{@source}' の入力が間違っているのかもしれません"
+          raise MovableSoldierNotFound.new(self)
         end
       end
 

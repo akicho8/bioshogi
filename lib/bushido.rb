@@ -15,44 +15,6 @@ module Bushido
   WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
   SEPARATOR = " "
 
-  class BushidoError < StandardError; end
-
-  class MustNotHappen < BushidoError; end
-  class UnconfirmedObject < BushidoError; end
-  class MovableSoldierNotFound < BushidoError; end
-  class AmbiguousFormatError < BushidoError; end
-  class SoldierEmpty < BushidoError; end
-  class PieceNotFound < BushidoError; end
-  class PieceAlredyExist < BushidoError; end
-  class AlredyPromoted < BushidoError; end
-  class NotPutInPlaceNotBeMoved < BushidoError; end
-  class BeforePointNotFound < BushidoError; end
-  class FileFormatError < BushidoError; end
-
-  # 構文エラー
-  class SyntaxError < BushidoError; end
-  class IllegibleFormat < SyntaxError; end
-  class RuleError < SyntaxError; end
-  class HistroyStackEmpty < SyntaxError; end
-  class SamePointDiff < SyntaxError; end
-
-  # 盤面定義のエラー
-  class BoardKeyNotFound < SyntaxError; end
-  class BoardIsBlackOnly < SyntaxError; end
-
-  # 構文エラーから発生する継続が難しいエラー
-  class PositionSyntaxError < SyntaxError; end
-  class PointSyntaxError < SyntaxError; end
-
-  # 別に問題ないけど将棋のルール上エラーとするもの
-  class DoublePawn < RuleError; end
-  class NoPromotablePiece < RuleError; end
-  class NotFoundOnBoard < RuleError; end
-  class NotPromotable < RuleError; end
-  class PromotedPiecePutOnError < RuleError; end
-  class PromotedPieceToNormalPiece < RuleError; end
-  class SamePlayerSoldierOverwrideError < RuleError; end
-
   def self.parse_file(file, options = {})
     parse(Pathname(file).expand_path.read, options)
   end
@@ -68,6 +30,7 @@ end
 
 require_relative "bushido/version"
 require_relative "bushido/vector"
+require_relative "bushido/errors"
 require_relative "bushido/position"
 require_relative "bushido/point"
 require_relative "bushido/location"
