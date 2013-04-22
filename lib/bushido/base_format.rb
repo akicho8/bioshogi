@@ -166,23 +166,35 @@ module Bushido
       #  | 香 桂 銀 金 玉 金 銀 桂 香|九
       #  +---------------------------+
       def to_s_kakiki
-        rows = Position::Vpos.ridge_length.times.collect{|y|
-          values = Position::Hpos.ridge_length.times.collect{|x|
+        [
+          kakiki_header,
+          kakiki_line,
+          *kakiki_rows,
+          kakiki_line,
+        ].join("\n") + "\n"
+      end
+
+      private
+
+      def kakiki_header
+        "  " + Position::Hpos.units(:zenkaku => true).join(" ")
+      end
+
+      def kakiki_line
+        "+" + "---" * Position::Hpos.ridge_length + "+"
+      end
+
+      def kakiki_rows
+        Position::Vpos.ridge_length.times.collect{|y|
+          fields = Position::Hpos.ridge_length.times.collect{|x|
             if soldier = @surface[[x, y]]
               soldier.to_s(:kakiki)
             else
               " " + "・"
             end
           }
-          "|" + values.join + "|" + Position::Vpos.parse(y).name
+          "|#{fields.join}|" + Position::Vpos.parse(y).name
         }
-        s = []
-        s << "  " + Position::Hpos.units(:zenkaku => true).join(" ")
-        hline = "+" + "---" * Position::Hpos.ridge_length + "+"
-        s << hline
-        s += rows
-        s << hline
-        s.collect{|e|e + "\n"}.join
       end
     end
   end
