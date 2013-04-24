@@ -152,6 +152,10 @@ module Bushido
     end
 
     module Board
+      def to_s_kakiki
+        KakikiFormat.new(self).to_s
+      end
+
       # kif形式詳細 (1) - 勝手に将棋トピックス http://d.hatena.ne.jp/mozuyama/20030909/p5
       #    ９ ８ ７ ６ ５ ４ ３ ２ １
       #  +---------------------------+
@@ -165,36 +169,37 @@ module Bushido
       #  | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
       #  | 香 桂 銀 金 玉 金 銀 桂 香|九
       #  +---------------------------+
-      def to_s_kakiki
-        [
-          kakiki_header,
-          kakiki_line,
-          *kakiki_rows,
-          kakiki_line,
-        ].join("\n") + "\n"
-      end
+      class KakikiFormat
+        def initialize(board)
+          @board = board
+        end
 
-      private
+        def to_s
+          [header, line, *rows, line].join("\n") + "\n"
+        end
 
-      def kakiki_header
-        "  " + Position::Hpos.units(:zenkaku => true).join(" ")
-      end
+        private
 
-      def kakiki_line
-        "+" + "---" * Position::Hpos.ridge_length + "+"
-      end
+        def header
+          "  " + Position::Hpos.units(:zenkaku => true).join(" ")
+        end
 
-      def kakiki_rows
-        Position::Vpos.ridge_length.times.collect{|y|
-          fields = Position::Hpos.ridge_length.times.collect{|x|
-            if soldier = @surface[[x, y]]
-              soldier.to_s(:kakiki)
-            else
-              " " + "・"
-            end
+        def line
+          "+" + "---" * Position::Hpos.ridge_length + "+"
+        end
+
+        def rows
+          Position::Vpos.ridge_length.times.collect{|y|
+            fields = Position::Hpos.ridge_length.times.collect{|x|
+              if soldier = @board.surface[[x, y]]
+                soldier.to_s(:kakiki)
+              else
+                " " + "・"
+              end
+            }
+            "|#{fields.join}|" + Position::Vpos.parse(y).name
           }
-          "|#{fields.join}|" + Position::Vpos.parse(y).name
-        }
+        end
       end
     end
   end
