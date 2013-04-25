@@ -243,7 +243,7 @@ module Bushido
       @seqs << Board.new(*args)
     end
 
-    def disp(*args)
+    def snapshot(*args)
       @seqs << Disp.new(*args)
     end
   end

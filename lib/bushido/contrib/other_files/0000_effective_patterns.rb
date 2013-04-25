@@ -182,7 +182,7 @@ BOARD
             mov "▲同飛"
             mov "△２三歩"
             mov "▲１四飛"
-            disp "香車ゲット"
+            snapshot "香車ゲット"
           }
           mov "▲１三歩"
           mov "△同桂"
@@ -193,7 +193,7 @@ BOARD
           mov "▲１三歩成"
           mov "△１三香"
           mov "▲１三香成"
-          disp "桂馬と香車とゲット"
+          snapshot "桂馬と香車とゲット"
         end,
       },
       {
