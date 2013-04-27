@@ -78,6 +78,9 @@ EOT
     end
 
     it "foo" do
+      # result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../gps.kif").read)
+      # pp result.header
+      # pp result.move_infos
       # result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../doc/oui201207240101.kif").read)
       # p result
     end

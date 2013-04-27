@@ -22,7 +22,7 @@ module Bushido
         read_header
         @_body.lines.each do |line|
           comment_read(line)
-          if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S.*?)\s+\(\s*(?<spent_time>.*)\)/)
+          if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
             location = Location["#{md[:index]}手目"]
             @move_infos << {:index => md[:index], :location => location, :input => md[:input], :mov => "#{location.mark}#{md[:input]}", :spent_time => md[:spent_time]}
           end
