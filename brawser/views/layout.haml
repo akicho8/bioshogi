@@ -30,9 +30,13 @@
               %li
                 %a{href:"/kif_form"}= "DSLフォーム"
               %li
-                %a{href:"/basic_format_form"}= "棋譜だけフォーム"
+                %a{href:"/simple_kifu_form"}= "棋譜入力"
               %li
-                %a{href:"/learn_board_points"}= "座標"
+                %a{href:"/standard_kifu_form"}= "KIF/KI2入力"
+              %li
+                %a{href:"/kifu_url_form"}= "KIF/KI2 URL"
+              %li
+                %a{href:"/learn_board_points"}= "座標暗記"
     .container
       - if @error
         %div= @error.message

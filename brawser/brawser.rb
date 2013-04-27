@@ -5,6 +5,8 @@ require "bundler"
 Bundler.require(:default, :brawser_env)
 Bushido::XtraPattern.reload_all
 
+require "open-uri"
+
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
     rows = Bushido::Position::Vpos.ridge_length.times.collect do |y|
@@ -187,7 +189,7 @@ auto_flushing {
     haml :learn_board_points
   end
 
-  get "/basic_format_form" do
+  get "/simple_kifu_form" do
     if params[:body].present?
       @pattern = Bushido::XtraPattern.new({
           :title => params[:title],
@@ -204,7 +206,43 @@ auto_flushing {
         # params[:title] ||= ""
       end
     end
-    haml :basic_format_form
+    haml :simple_kifu_form
+  end
+
+  post "/standard_kifu_form" do
+    kifu_form_action_shared
+    haml :standard_kifu_form
+  end
+
+  get "/standard_kifu_form" do
+    kifu_form_action_shared
+    haml :standard_kifu_form
+  end
+
+  get "/kifu_url_form" do
+    kifu_form_action_shared
+    haml :kifu_url_form
+  end
+
+  def kifu_form_action_shared
+    if params[:url].present?
+      params[:body] = URI(params[:url]).read.to_s.toutf8
+    end
+    if params[:body].present?
+      @kif_info = Bushido.parse(params[:body])
+      @pattern = Bushido::XtraPattern.new({
+          :title => params[:title],
+          :dsl => Bushido::KifuDsl.define(@kif_info){|kif_info|
+            board "平手"
+            auto_flushing
+            kif_info.move_infos.each{|move_info|
+              comment move_info[:comments]
+              mov move_info[:mov]
+            }
+          },
+        })
+      @frames = Bushido::HybridSequencer.execute(@pattern)
+    end
   end
 
   error do

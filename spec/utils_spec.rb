@@ -12,12 +12,12 @@ module Bushido
       Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, "push", {:location => L.b, :input => "３三歩"}, "pop"]
     end
 
-    describe "safe_ki2_parse" do
+    describe "mov_split" do
       it "棋譜入力の分離(ゴミがあっても無視)" do
-        Utils.safe_ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, {:location => L.b, :input => "３三歩"}]
+        Utils.mov_split("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, {:location => L.b, :input => "３三歩"}]
       end
       it "先手後手がわからないと無視する" do
-        Utils.safe_ki2_parse("５五歩").should == []
+        Utils.mov_split("５五歩").should == []
       end
     end
 

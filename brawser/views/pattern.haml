@@ -1,14 +1,3 @@
-%form{action: "/basic_format_form", method: "get", :class => "form-vertical"}
-  .control-group
-    %label{:class => "control-label"}= "棋譜データ"
-    .controls
-      %tt
-        %textarea{:name => "body", :class => "input-xxlarge", :rows => [10, params[:body].to_s.lines.count].max, :style => "font-family:monospace", :placeholder => "▲７六歩 △３四歩 ▲２六歩 ..."}
-          = preserve do
-            = params[:body]
-  .form-actions
-    %input{type: "submit", value: "実行", :class => "btn btn-primary"}
-
 - if @pattern
   %p
     %strong= @pattern[:title]
@@ -21,9 +10,13 @@
       = @pattern[:comment]
   %hr
   - @frames.each do |mediator|
+    - if v = mediator.variables[:comment]
+      .alert.alert-info
+        = Array.wrap(v).join("<br/>")
     - if mediator.variables[:hide_human_kif_logs]
     - else
-      %p= mediator.human_kif_logs.join(" ")
+      -# %p= mediator.human_kif_logs.join(" ")
+      %p= mediator.human_kif_logs.last
     - if mediator.player_at(:white).pieces.present?
       .pieces= mediator.player_at(:white).to_s_pieces
     = MediatorDecorator.new(mediator).to_html_board(:small)

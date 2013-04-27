@@ -1,0 +1,11 @@
+- if @kif_info
+  %dl.dl-horizontal
+    - @kif_info.header.each do |key, value|
+      %dt= key
+      %dd= value
+
+  - if v = @kif_info.first_comments
+    .lead
+      = Array.wrap(v).join("<br/>")
+
+-# = @kif_info.move_infos.collect{|e|e[:comments]}

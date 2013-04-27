@@ -1,0 +1,10 @@
+%form{action: "/kifu_url_form", method: "get", :class => "form-vertical"}
+  .control-group
+    %label{:class => "control-label"}= "KIF/KI2のURLを指定しよう"
+    .controls
+      %input{:type => "text", :name => "url", :value => params[:url], :class => "input-xxlarge", :placeholder => "http://example.net/file.kif"}
+  .form-actions
+    %input{type: "submit", value: "読み込み", :class => "btn btn-primary"}
+
+= haml :kif_info
+= haml :pattern

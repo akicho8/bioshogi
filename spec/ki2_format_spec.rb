@@ -16,10 +16,10 @@ module Bushido
 
       it "棋譜の羅列" do
         @result.move_infos.should == [
-          {:location => :black, :input => "７六歩"},
-          {:location => :white, :input => "３四歩", :comments => ["コメント1"]},
-          {:location => :black, :input => "６六歩"},
-          {:location => :white, :input => "８四歩", :comments => ["コメント2"]},
+          {:location => L.b, :input => "７六歩", :mov => "▲７六歩"},
+          {:location => L.w, :input => "３四歩", :mov => "▽３四歩", :comments => ["コメント1"]},
+          {:location => L.b, :input => "６六歩", :mov => "▲６六歩"},
+          {:location => L.w, :input => "８四歩", :mov => "▽８四歩", :comments => ["コメント2"]},
         ]
       end
 

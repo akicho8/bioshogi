@@ -88,6 +88,10 @@ module Bushido
 
       def b; self[:black]; end
       def w; self[:white]; end
+
+      def triangles
+        "▲△▼▽"
+      end
     end
   end
 

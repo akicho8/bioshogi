@@ -139,19 +139,19 @@ module Bushido
     #   ki2_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
     def ki2_parse(str)
       str = str.to_s
-      str = str.gsub(/([▲△])/, ' \1')
+      str = str.gsub(/([#{Location.triangles}])/, ' \1')
       str = str.squish
       str.split(/\s+/).collect{|s|
-        if s.match(/\A[▲△]/)
-          safe_ki2_parse(s)
+        if s.match(/\A[#{Location.triangles}]/)
+          mov_split(s)
         else
           s
         end
       }.flatten
     end
 
-    def safe_ki2_parse(str)
-      Array.wrap(str).join(" ").scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|{:location => Location[mark], :input => input}}
+    def mov_split(str)
+      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect{|mark, input|{:location => Location[mark], :input => input}}
     end
 
     private

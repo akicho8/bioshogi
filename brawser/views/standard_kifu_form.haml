@@ -1,0 +1,12 @@
+%form{action: "/standard_kifu_form", method: "post", :class => "form-vertical"}
+  .control-group
+    %label{:class => "control-label"}= "KIF/KI2の内容をコピペしよう"
+    .controls
+      %textarea{:name => "body", :class => "input-xxlarge", :rows => 10, :style => "font-family:monospace"}
+        = preserve do
+          = params[:body]
+  .form-actions
+    %input{type: "submit", value: "変換", :class => "btn btn-primary"}
+
+= haml :kif_info
+= haml :pattern

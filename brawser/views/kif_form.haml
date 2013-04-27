@@ -17,27 +17,4 @@
   .form-actions
     %input{type: "submit", value: "実行", :class => "btn btn-primary"}
 
-- if @pattern
-  %p
-    %strong= @pattern[:title]
-  - if @pattern[:url]
-    %p
-      %a{href: @pattern[:url]}
-        = @pattern[:url]
-  - if @pattern[:comment]
-    %p
-      = @pattern[:comment]
-  %hr
-  - @frames.each do |mediator|
-    - if v = mediator.variables[:comment]
-      .alert
-        = v
-    - if mediator.variables[:hide_human_kif_logs]
-    - else
-      %p= mediator.human_kif_logs.join(" ")
-    - if mediator.player_at(:white).pieces.present?
-      .pieces= mediator.player_at(:white).to_s_pieces
-    = MediatorDecorator.new(mediator).to_html_board(:small)
-    - if mediator.player_at(:black).pieces.present?
-      .pieces= mediator.player_at(:black).to_s_pieces
-    %hr
+= haml :pattern

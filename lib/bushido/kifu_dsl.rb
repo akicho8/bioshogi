@@ -119,7 +119,7 @@ module Bushido
       end
 
       def evaluate(context)
-        Utils.safe_ki2_parse(@value).each do |hash|
+        Utils.mov_split(@value).each do |hash|
           player = context.player_at(hash[:location])
           player.execute(hash[:input])
           if context.variables[:auto_flushing]
