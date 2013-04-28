@@ -302,7 +302,7 @@ EOT
     describe "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
         player = player_test(:run_piece_plot => true)
-        player.generate_way.present?.should == true
+        player.brain.generate_way.present?.should == true
       end
       it "全手筋" do
         player = player_test(:run_piece_plot => true)

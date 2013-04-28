@@ -6,7 +6,7 @@ require "./example_helper"
 mediator = Mediator.start
 mediator.piece_plot
 loop do
-  way = mediator.current_player.generate_way
+  way = mediator.current_player.brain.generate_way
   mediator.execute(way)
   last_piece = mediator.prev_player.last_piece
   if last_piece && last_piece.sym_name == :king

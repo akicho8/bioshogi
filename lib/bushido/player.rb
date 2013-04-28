@@ -363,10 +363,6 @@ module Bushido
       Evaluate.new(self).evaluate
     end
 
-    def generate_way
-      brain.generate_way
-    end
-
     def brain
       Brain.new(self)
     end
