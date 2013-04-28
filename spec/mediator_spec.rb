@@ -70,7 +70,7 @@ EOT
         mediator = Mediator.start
         mediator.piece_plot
         loop do
-          way = mediator.current_player.brain.generate_way
+          way = mediator.current_player.brain.all_ways.sample
           p way
           p mediator
           mediator.execute(way)

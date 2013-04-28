@@ -86,7 +86,7 @@ class Brawser < Sinatra::Base
         end
       end
       if params[:random_put].present?
-        if way = @mediator.current_player.brain.generate_way.presence
+        if way = @mediator.current_player.brain.all_ways.sample.presence
           @mediator.execute(way)
         end
       end

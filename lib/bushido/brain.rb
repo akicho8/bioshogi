@@ -6,10 +6,6 @@ module Bushido
       @player = player
     end
 
-    def generate_way
-      all_ways.sample
-    end
-
     def all_ways
       soldiers_ways + pieces_ways
     end
