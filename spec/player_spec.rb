@@ -148,7 +148,7 @@ EOT
               expect { player_test(:init => "１四金", :exec => "１三金不成") }.to raise_error(NoPromotablePiece)
             end
             it "不成の指定をしなかった" do
-              player_test(:init => "１四金", :exec => "１三金").runner.kif_log.to_pair.should== ["1三金(14)", "1三金"]
+              player_test(:init => "１四金", :exec => "１三金").runner.hand_log.to_pair.should== ["1三金(14)", "1三金"]
             end
           end
         end
@@ -171,7 +171,7 @@ EOT
           end
           it "同歩で取る" do
             mediator = Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "同歩"])
-            mediator.kif_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
+            mediator.hand_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
 
             mediator.prev_player.last_piece.name.should == "歩"
             mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
@@ -181,11 +181,11 @@ EOT
           end
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
             mediator = Mediator.test(:init => ["２五歩", "２三歩"], :exec => ["２四歩", "２四同歩"])
-            mediator.kif_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
+            mediator.hand_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
             mediator = Mediator.test(:init => [["２七歩", "２八飛"], ["２三歩", "２二飛"]], :exec => ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
-            mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
+            mediator.human_hand_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
 
@@ -210,7 +210,7 @@ EOT
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く" do
           player_test2(:exec => "５五歩").should == ["▲5五歩"]
-          player_test(:exec => "５五歩").runner.kif_log.to_s_simple.should == "5五歩打"
+          player_test(:exec => "５五歩").runner.hand_log.to_s_simple.should == "5五歩打"
         end
 
         it "２二角成としたけど盤上に何もないので持駒の角を打った(打てていたけど、成と書いて打てるのはおかしいのでエラーとする)" do
@@ -218,7 +218,7 @@ EOT
         end
 
         it "盤上に竜があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れそうなケース。実際は竜なので来れない)" do
-          player_test(:append_pieces => "飛", :init => "１一龍", :exec => "２一飛").runner.kif_log.to_s_simple.should == "2一飛打"
+          player_test(:append_pieces => "飛", :init => "１一龍", :exec => "２一飛").runner.hand_log.to_s_simple.should == "2一飛打"
         end
 
         it "と金は二歩にならないので" do
@@ -252,9 +252,9 @@ EOT
     end
 
     it "指したあと前回の手を確認できる" do
-      player_test(:init => "５五飛", :exec => "５一飛成").runner.kif_log.to_s_simple.should == "5一飛成(55)"
-      player_test(:init => "５一龍", :exec => "１一龍").runner.kif_log.to_s_simple.should   == "1一龍(51)"
-      player_test(:exec => "５五飛打").runner.kif_log.to_s_simple.should                    == "5五飛打"
+      player_test(:init => "５五飛", :exec => "５一飛成").runner.hand_log.to_s_simple.should == "5一飛成(55)"
+      player_test(:init => "５一龍", :exec => "１一龍").runner.hand_log.to_s_simple.should   == "1一龍(51)"
+      player_test(:exec => "５五飛打").runner.hand_log.to_s_simple.should                    == "5五飛打"
     end
 
     it "持駒の確認" do
@@ -310,7 +310,7 @@ EOT
       end
     end
 
-    describe "GenerateWay" do
+    describe "Brain" do
       it "盤上の駒の全手筋" do
         Board.size_change([3, 3]) do
           player = player_test(:init => ["1二歩", "2三桂"])

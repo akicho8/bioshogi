@@ -11,7 +11,7 @@ mediator.piece_plot
   mediator.execute(input)
 }
 puts mediator.board
-pp mediator.simple_kif_logs
+pp mediator.simple_hand_logs
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一

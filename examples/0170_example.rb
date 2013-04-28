@@ -14,8 +14,8 @@ loop do
   end
 end
 p mediator
-puts mediator.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.simple_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.human_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> 362手目: ▽後手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

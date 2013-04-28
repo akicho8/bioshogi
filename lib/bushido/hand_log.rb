@@ -3,7 +3,7 @@
 # 棋譜の一手分の保存用
 #
 module Bushido
-  class KifLog < Hash
+  class HandLog < Hash
     attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
 
     def initialize(attrs)
@@ -143,10 +143,10 @@ module Bushido
 
     # 未使用
     # リアルタイムに探すバージョン
-    # @player.mediator.kif_logs にすでに自分が記録されているとする
+    # @player.mediator.hand_logs にすでに自分が記録されているとする
     def __same_point?
       if @player.mediator
-        logs = @player.mediator.kif_logs
+        logs = @player.mediator.hand_logs
         logs = logs[0..logs.index(self)] # ← ここがだめっぽい
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる

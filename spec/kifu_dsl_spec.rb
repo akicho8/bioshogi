@@ -87,7 +87,7 @@ BOARD
         if r.nil?
           break
         end
-        # p sequencer.kif_logs.last.to_s_human
+        # p sequencer.hand_logs.last.to_s_human
         # p sequencer
         # p sequencer.variables
       end
@@ -131,13 +131,13 @@ BOARD
 
       describe "stack" do
         it "push にブロック指定" do
-          dsl_block { board; push { mov "▲７六歩" }    }.kif_logs.count.should == 0
+          dsl_block { board; push { mov "▲７六歩" }    }.hand_logs.count.should == 0
         end
         it "明示的に pop で戻る" do
-          dsl_block { board; push;  mov "▲７六歩"; pop }.kif_logs.count.should == 0
+          dsl_block { board; push;  mov "▲７六歩"; pop }.hand_logs.count.should == 0
         end
         it "pushのみ" do
-          dsl_block { board; push;  mov "▲７六歩"      }.kif_logs.count.should == 1
+          dsl_block { board; push;  mov "▲７六歩"      }.hand_logs.count.should == 1
         end
         it "スタックが空のときにpopできない" do
           expect { dsl_block { pop } }.to raise_error(HistroyStackEmpty)

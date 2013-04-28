@@ -12,8 +12,8 @@ info.move_infos.each{|info| # !> shadowing outer local variable - info
   mediator.execute(info[:input])
 }
 puts mediator.inspect
-puts mediator.simple_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts mediator.human_kif_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.simple_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.human_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> {"対局ID"=>"333",
 # >>  "開始日時"=>"2010/12/14 9:00",
 # >>  "終了日時"=>"2010/12/15 19:13",

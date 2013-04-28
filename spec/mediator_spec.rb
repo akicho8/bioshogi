@@ -48,7 +48,7 @@ EOT
           break
         }
         # puts mediator.inspect
-        # puts mediator.human_kif_logs.join(" ")
+        # puts mediator.human_hand_logs.join(" ")
       }
     end
 
@@ -62,7 +62,7 @@ EOT
     #     # puts mediator.inspect
     #   }
     #   # puts mediator.inspect
-    #   puts mediator.simple_kif_logs.join(" ")
+    #   puts mediator.simple_hand_logs.join(" ")
     # end
 
     if false
@@ -86,8 +86,8 @@ EOT
       mediator = Mediator.test(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
       mediator.counter.should            == dup.counter
-      mediator.simple_kif_logs.should    == dup.simple_kif_logs
-      mediator.human_kif_logs.should     == dup.human_kif_logs
+      mediator.simple_hand_logs.should    == dup.simple_hand_logs
+      mediator.human_hand_logs.should     == dup.human_hand_logs
       mediator.to_s.should               == dup.to_s
 
       mediator.board.to_s_soldiers       == dup.board.to_s_soldiers
@@ -102,13 +102,13 @@ EOT
       mediator = Mediator.test(:init => ["１五歩", "１三歩"], :exec => "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.prev_player.runner.kif_log.to_pair.should == ["1四歩(13)", "同歩"]
+      mediator.prev_player.runner.hand_log.to_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
       mediator = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => "平手"})
       mediator.build_frames
-      mediator.human_kif_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      mediator.human_hand_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
 
     it "Sequencer" do

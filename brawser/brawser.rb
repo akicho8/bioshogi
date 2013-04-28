@@ -17,11 +17,11 @@ class MediatorDecorator < SimpleDelegator
           tag_class << soldier.player.location.key
           cell = soldier.piece_current_name
         end
-        if kif_log = kif_logs.last
-          if kif_log.point == Bushido::Point[[x, y]]
+        if hand_log = hand_logs.last
+          if hand_log.point == Bushido::Point[[x, y]]
             tag_class << "last_point"
           end
-          if kif_log.origin_point == Bushido::Point[[x, y]]
+          if hand_log.origin_point == Bushido::Point[[x, y]]
             tag_class << "last_point2"
           end
         end
@@ -79,13 +79,13 @@ class Brawser < Sinatra::Base
       if params[:way].present?
         @mediator.execute(params[:way])
       end
-      if params[:auto1].present?
+      if params[:think_put].present?
         eval_list = @mediator.current_player.brain.eval_list
         if info = eval_list.first
           @mediator.execute(info[:way])
         end
       end
-      if params[:auto2].present?
+      if params[:random_put].present?
         if way = @mediator.current_player.generate_way.presence
           @mediator.execute(way)
         end
@@ -116,7 +116,7 @@ class Brawser < Sinatra::Base
     haml :tactics
   end
 
-  get "/kif_form" do
+  get "/dsl_form" do
     @pattern_body_default = %(
 board <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -158,7 +158,7 @@ auto_flushing {
       params[:kif_title] ||= "垂らしの歩"
       params[:kif_body] ||= @pattern_body_default
     end
-    haml :kif_form
+    haml :dsl_form
   end
 
   get "/tactics_and_enclosure" do

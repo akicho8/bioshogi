@@ -90,8 +90,8 @@ module Bushido
       self
     end
 
-    def kif_log
-      KifLog.new({
+    def hand_log
+      HandLog.new({
           :point           => @point,
           :piece           => @piece,
           :promoted        => @promoted,
@@ -109,8 +109,8 @@ module Bushido
     def read_point
       @point = nil
       if @md[:same] == "同"
-        if @player.mediator && kif_log = @player.mediator.kif_logs.last
-          @point = kif_log.point
+        if @player.mediator && hand_log = @player.mediator.hand_logs.last
+          @point = hand_log.point
         end
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
@@ -218,11 +218,11 @@ module Bushido
     end
 
     def point_same?
-      if @player.mediator && kif_logs = @player.mediator.kif_logs
+      if @player.mediator && hand_logs = @player.mediator.hand_logs
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
-        if kif_log = kif_logs.reverse.find{|e|e.player.location != @player.location}
-          kif_log.point == @point
+        if hand_log = hand_logs.reverse.find{|e|e.player.location != @player.location}
+          hand_log.point == @point
         end
       end
     end

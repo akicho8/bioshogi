@@ -368,7 +368,7 @@ module Bushido
     end
 
     def brain
-      GenerateWay.new(self)
+      Brain.new(self)
     end
 
     # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
@@ -480,76 +480,6 @@ module Bushido
       }.reduce(:+) || 0
 
       score
-    end
-  end
-
-  class GenerateWay
-    def initialize(player)
-      @player = player
-    end
-
-    def generate_way
-      all_ways.sample
-    end
-
-    def all_ways
-      soldiers_ways + pieces_ways
-    end
-
-    def best_way
-      eval_list.first[:way]
-    end
-
-    def eval_list
-      score_info = all_ways.each_with_object([]){|way, ary|
-        @player.mediator.sandbox_for do |_mediator|
-          _player = _mediator.player_at(@player.location)
-          _player.execute(way)
-          ary << {:way => way, :score => _player.evaluate}
-        end
-        # @player.mediator.sandbox_for do
-        #   p @player.board
-        #   @player.execute(way)
-        #   ary << {:way => way, :score => @player.evaluate}
-        # end
-      }
-      score_info.sort_by{|e|-e[:score]}
-    end
-
-    # 盤上の駒の全手筋
-    def soldiers_ways
-      list = []
-
-      mpoints = @player.soldiers.collect{|soldier|
-        soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
-      }.flatten
-
-      mpoints.collect{|mpoint|
-        soldier = mpoint[:soldier]
-        point = mpoint[:point]
-
-        promoted_trigger = nil
-
-        # 移動先が成れる場所かつ、駒が成れる駒で、駒は成ってない状態であれば成る(ことで行き止まりの反則を防止する)
-        if point.promotable?(@player.location) && soldier.piece.promotable? && !soldier.promoted?
-          promoted_trigger = true
-        end
-
-        [point.name, soldier.piece_current_name, (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
-      }
-    end
-
-    # 持駒の全打筋
-    def pieces_ways
-      list = []
-      @player.board.blank_points.each do |point|
-        @player.pieces.each do |piece|
-          if @player.get_errors(point, piece, false).empty?
-            list << [point.name, piece.name, "打"].join
-          end
-        end
-      end
-      list
     end
   end
 end

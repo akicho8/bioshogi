@@ -109,14 +109,14 @@ module Bushido
       {
         :counter  => @counter,
         :players  => @players,
-        :kif_logs => @kif_logs,
+        :hand_logs => @hand_logs,
       }
     end
 
     def marshal_load(attrs)
       @counter  = attrs[:counter]
       @players  = attrs[:players]
-      @kif_logs = attrs[:kif_logs]
+      @hand_logs = attrs[:hand_logs]
       @board = Board.new
       @players.each{|player|
         player.mediator = self
@@ -130,7 +130,7 @@ module Bushido
     def replace(object)
       @counter  = object.counter
       @players  = object.players
-      @kif_logs = object.kif_logs
+      @hand_logs = object.hand_logs
       @board = Board.new
       @players.each{|player|
         player.mediator = self
@@ -181,12 +181,12 @@ module Bushido
     extend ActiveSupport::Concern
 
     included do
-      attr_reader :counter, :kif_logs
+      attr_reader :counter, :hand_logs
     end
 
     def initialize(*)
       super
-      @kif_logs = []
+      @hand_logs = []
     end
 
     # 棋譜入力
@@ -202,13 +202,13 @@ module Bushido
 
     # player.execute の直後に呼んで保存する
     def log_stock(player)
-      @kif_logs << player.runner.kif_log
+      @hand_logs << player.runner.hand_log
     end
 
     # 互換性用
     if true
-      def simple_kif_logs; kif_logs.collect{|e|e.to_s_simple(:with_mark => true)}; end
-      def human_kif_logs;  kif_logs.collect{|e|e.to_s_human(:with_mark => true)};  end
+      def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(:with_mark => true)}; end
+      def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(:with_mark => true)};  end
     end
 
     def to_s
@@ -292,7 +292,7 @@ module Bushido
     def to_text
       out = []
       out << "-" * 40 + "\n"
-      out << "棋譜: #{human_kif_logs.join(" ")}\n"
+      out << "棋譜: #{human_hand_logs.join(" ")}\n"
       out << variables.inspect + "\n"
       out << to_s2
       out.join.strip
