@@ -35,6 +35,14 @@ module Bushido
   end
 
   class NotPutInPlaceNotBeMoved < BushidoError
+    def initialize(player, *args)
+      @player = player
+      super(*args)
+    end
+
+    def message
+      "#{super}\n#{@player.board}"
+    end
   end
 
   class BeforePointNotFound < BushidoError

@@ -84,19 +84,6 @@ module Bushido
     #   # end
     # end
 
-    # # サンドボックス実行用
-    # # TODO: これも不要かも
-    # def sandbox_for(&block)
-    #   _save = marshal_dump
-    #   begin
-    #     if block_given?
-    #       yield self
-    #     end
-    #   ensure
-    #     marshal_load(_save)
-    #   end
-    # end
-
     # 先手後手を設定は適当でいい
     #   player.location = :white
     #   player.location = "後手"
@@ -423,7 +410,7 @@ module Bushido
         errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece.name}は打てません")
       end
       if moveable_points(point, piece, promoted, :board_object_collision_skip => true).empty?
-        errors << NotPutInPlaceNotBeMoved.new("#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")
+        errors << NotPutInPlaceNotBeMoved.new(self, "#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")
       end
       errors
     end

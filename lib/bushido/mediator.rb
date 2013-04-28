@@ -149,9 +149,7 @@ module Bushido
     def sandbox_for(&block)
       stack_push
       begin
-        if block_given?
-          yield self
-        end
+        yield self
       ensure
         stack_pop
       end

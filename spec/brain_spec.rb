@@ -24,49 +24,51 @@ module Bushido
       end
     end
 
-    describe "Brain" do
-      it "盤上の駒の全手筋" do
-        Board.size_change([3, 3]) do
-          player = player_test(:init => ["1二歩", "2三桂"])
-          player.brain.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
-        end
-      end
-
-      it "持駒の全手筋" do
-        #
-        # この状態↓から打てるのはこれ↓
-        #
-        #   ３ ２ １         ３ ２ １
-        # +---------+      +---------+
-        # | ・ ・ ・|一    | ・ ・ ・|一
-        # | ・ 歩 ・|二 → | 歩 ・ 歩|二
-        # | ・ ・ ・|三    | 歩 ・ 歩|三
-        # +---------+      +---------+
-        #
-        Board.size_change([3, 3]) do
-          player = player_test(:init => "２二歩", :reset_pieces => "歩")
-          player.brain.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
-        end
-      end
-
-      it "一番得するように打つ" do
-        Board.size_change([2, 2]) do
-          # Board.size_change([2, 2])
-          # player = player_test(:init => "２二歩", :pieces => "歩 香")
-          # player.brain.eval_list.should == [{:way => "2一歩成(22)", :score => 1935}, {:way => "1二歩打", :score => 830}, {:way => "1二香打", :score => 805}]
-          # player.brain.best_way.should == "2一歩成(22)"
-
-          # Board.size_change([2, 2])
-          mediator = Mediator.new
-          player = mediator.player_at(:black)
-
-          player.initial_soldiers("１二歩", :from_piece => false)
-          player.deal("歩")
-
-          player.brain.eval_list.should == [{:way => "1一歩成(12)", :score => 1305}, {:way => "2二歩打", :score => 200}]
-        end
+    it "盤上の駒の全手筋" do
+      Board.size_change([3, 3]) do
+        player = player_test(:init => ["1二歩", "2三桂"])
+        player.brain.soldiers_ways.should == ["1一歩成(12)", "3一桂成(23)", "1一桂成(23)"]
       end
     end
+
+    it "持駒の全手筋" do
+      #
+      # この状態↓から打てるのはこれ↓
+      #
+      #   ３ ２ １         ３ ２ １
+      # +---------+      +---------+
+      # | ・ ・ ・|一    | ・ ・ ・|一
+      # | ・ 歩 ・|二 → | 歩 ・ 歩|二
+      # | ・ ・ ・|三    | 歩 ・ 歩|三
+      # +---------+      +---------+
+      #
+      Board.size_change([3, 3]) do
+        player = player_test(:init => "２二歩", :reset_pieces => "歩")
+        player.brain.pieces_ways.should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
+      end
+    end
+
+    it "一番得するように打つ" do
+      Board.size_change([2, 2]) do
+        mediator = Mediator.new
+        player = mediator.player_at(:black)
+
+        player.initial_soldiers("１二歩", :from_piece => false)
+        player.deal("歩")
+
+        player.brain.eval_list.should == [{:way => "1一歩成(12)", :score => 1305}, {:way => "2二歩打", :score => 200}]
+      end
+    end
+
+    # it "一番得するように打つその2" do
+    #   Board.size_change([2, 2]) do
+    #     mediator = Mediator.new
+    #     mediator.player_at(:white).initial_soldiers(["１一歩", "２一金"], :from_piece => false)
+    #     mediator.player_at(:black).initial_soldiers(["１二飛"], :from_piece => false)
+    #     puts mediator
+    #     mediator.player_at(:black).brain.doredore
+    #   end
+    # end
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
@@ -112,18 +114,6 @@ module Bushido
     #   player2.soldier_names.should == ["▲5八玉"]
     #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #   # player2.board.present?.should == true # @mediator が nil になっている
-    # end
-
-    # it "サンドボックス実行(インスタンスを作り直すわけではないので @board は残っている。というか更新されたまま…)" do
-    #   player = player_test(:init => "１二歩", :reset_pieces => "歩")
-    #   player.to_s_soldiers.should == "1二歩"
-    #   player.to_s_pieces.should == "歩"
-    #   player.board.to_s_soldiers.should == "1二歩"
-    #   player.sandbox_for { player.execute("２二歩打") }
-    #   player.to_s_soldiers.should == "1二歩"
-    #   player.to_s_pieces.should == "歩"
-    #   player.board.present?.should == true
-    #   player.board.to_s_soldiers.should == "1二歩 2二歩" # ← こうなるのが問題
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do

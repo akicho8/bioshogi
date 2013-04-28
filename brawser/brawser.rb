@@ -74,6 +74,7 @@ class Brawser < Sinatra::Base
 
     dump = Marshal.load(REDIS.get(@session_id))
     @mediator = Bushido::Mediator.from_dump(dump)
+    # @mediator = dump
 
     if params[:location].nil? || @mediator.current_player.location.key.to_s == params[:location]
       if params[:way].present?

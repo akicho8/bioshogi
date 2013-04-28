@@ -14,6 +14,20 @@ module Bushido
       eval_list.first[:way]
     end
 
+    # def doredore(depth = 0)
+    #   mediator = @player.mediator
+    #   score_info = all_ways.each_with_object([]){|way, ary|
+    #     mediator.sandbox_for do |_mediator|
+    #       _player = _mediator.player_at(@player.location)
+    #       _player.execute(way)
+    #       ary << {:way => way, :score => _player.evaluate}
+    #       
+    #       
+    #     end
+    #   }
+    #   score_info.sort_by{|e|-e[:score]}
+    # end
+
     def eval_list
       score_info = all_ways.each_with_object([]){|way, ary|
         @player.mediator.sandbox_for do |_mediator|
@@ -21,11 +35,6 @@ module Bushido
           _player.execute(way)
           ary << {:way => way, :score => _player.evaluate}
         end
-        # @player.mediator.sandbox_for do
-        #   p @player.board
-        #   @player.execute(way)
-        #   ary << {:way => way, :score => @player.evaluate}
-        # end
       }
       score_info.sort_by{|e|-e[:score]}
     end
