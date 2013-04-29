@@ -4,48 +4,56 @@
 #
 module Bushido
   module Position
-    class Base
-      cattr_accessor(:ridge_length){9}
+    module Base
+      extend ActiveSupport::Concern
 
-      attr_reader :value
-      private_class_method :new
+      included do
+        class_attribute :ridge_length
+        self.ridge_length = 9
 
-      # 座標をパースする
-      #   Position::Hpos.parse("１").name # => "1"
-      def self.parse(arg)
-        case arg
-        when String, NilClass
-          v = units.find_index{|e|e == arg}
-          v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
-        when Base
-          v = arg.value
-        else
-          v = arg
+        attr_reader :value
+        private_class_method :new
+      end
+
+      module ClassMethods
+        # 座標をパースする
+        #   Position::Hpos.parse("１").name # => "1"
+        def parse(arg)
+          case arg
+          when String, NilClass
+            v = units.find_index{|e|e == arg}
+            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
+          when Base
+            v = arg.value
+          else
+            v = arg
+          end
+          new(v)
         end
-        new(v)
-      end
 
-      # 幅
-      def self.value_range
-        (0...units.size)
-      end
+        # 幅
+        def value_range
+          (0...units.size)
+        end
 
-      def self.units(options = {})
-        orig_units(options).send(_arrow, ridge_length)
-      end
+        def units(options = {})
+          orig_units(options).send(_arrow, ridge_length)
+        end
 
-      def self.orig_units(options = {})
-        (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a
-      end
+        def orig_units(options = {})
+          (options[:zenkaku] ? _zenkaku_units : _units).chars.to_a
+        end
 
-      # # 右上からのインデックスで参照できるように返す
-      # def self.units_from_right_top(index, options = {})
-      #   if _arrow == :last
-      #     units.reverse
-      #   else
-      #     units
-      #   end
-      # end
+        # # 右上からのインデックスで参照できるように返す
+        # def units_from_right_top(index, options = {})
+        #   if _arrow == :last
+        #     units.reverse
+        #   else
+        #     units
+        #   end
+        # end
+
+      end
 
       def initialize(value)
         @value = value
@@ -97,7 +105,8 @@ module Bushido
       end
     end
 
-    class Hpos < Base
+    class Hpos
+      include Base
       cattr_accessor(:_units)             {"987654321"}
       cattr_accessor(:_zenkaku_units)     {"９８７６５４３２１"}
       cattr_accessor(:_arrow)             {:last}
@@ -113,7 +122,8 @@ module Bushido
       end
     end
 
-    class Vpos < Base
+    class Vpos
+      include Base
       cattr_accessor(:_units)             {"一二三四五六七八九"}
       cattr_accessor(:_zenkaku_units)     {"一二三四五六七八九"}
       cattr_accessor(:_arrow)             {:first}
