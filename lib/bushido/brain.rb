@@ -3,7 +3,10 @@
 module Bushido
   class HandInfo < Hash
     def to_s
-      "%s %+5d" % [fetch(:hand), fetch(:score)]
+      "%s %+5d" % [self[:hand], self[:score]]
+    end
+    def to_s_short
+      "#{self[:hand]}(#{self[:score]})"
     end
   end
 
@@ -15,6 +18,7 @@ module Bushido
         :level => 0,            # 現在の深さ
         :ways => [],
       }.merge(params)
+      logs = []
       player = params[:player]
       mediator = player.mediator
       all_ways = player.brain.all_ways
@@ -24,25 +28,31 @@ module Bushido
           hand = "#{_player.location.mark}#{way}"
           log_puts params, "試打 #{hand} (%d/%d)" % [index.next, all_ways.size]
           _player.execute(way)
+          child_max_hand_info = nil
           if params[:level] < params[:depth]
             # 木の途中
             child_max_hand_info = nega_max(params.merge(:player => _player.next_player, :level => params[:level].next))
-            params[:ways] << child_max_hand_info[:hand]
+            # p _logs
+            # logs += _logs
+            # params[:ways] << child_max_hand_info[:hand]
             # p params[:ways]
             score = -child_max_hand_info[:score]
+            hand_info = HandInfo[:hand => hand, :score => score, :level => params[:level], :hands => [hand] + child_max_hand_info[:hands]]
           else
             # 木の末端
             score = _player.evaluate
+            hand_info = HandInfo[:hand => hand, :score => score, :level => params[:level], :hands => [hand]]
           end
-          hand_info = HandInfo[:hand => hand, :score => score, :level => params[:level]]
           log_puts params, "評価 #{hand_info}"
           ary << hand_info
         end
       }
       # Maxなものを選択する
-      hand_info = ary.sort_by{|e|e[:score]}.last
-
-      log_puts params, "確定 #{hand_info}"
+      sorted_ary = ary.sort_by{|e|e[:score]}
+      hand_info = sorted_ary.last
+      _debug_info = sorted_ary.collect{|e|e.to_s_short}.join(" ")
+      log_puts params, "確定 #{hand_info} 候補:[#{_debug_info}]"
+      # logs << hand_info[:hand]
 
       hand_info
     end
@@ -118,8 +128,14 @@ module Bushido
           promoted_trigger = true
         end
 
+        # ここのテストを書くこと(消すなよここ)
+        # Vpos._promotable_length = 0 だった場合に promoted_trigger は true にならないので1段に歩を打ってしまう可能性がある
+        # if @player.moveable_points(point, soldier.piece, (promoted_trigger || soldier.promoted?), :board_object_collision_skip => true).empty?
+        # end
+
         [point.name, soldier.piece_current_name, (promoted_trigger ? "成" : ""), "(", soldier.point.number_format, ")"].join
-      }
+
+      }.compact
     end
 
     # 持駒の全打筋
@@ -127,6 +143,11 @@ module Bushido
       list = []
       @player.board.blank_points.each do |point|
         @player.pieces.each do |piece|
+          if piece.name == "香"
+            p [point, piece, false]
+            p @player.get_errors(point, piece, false)
+          end
+
           if @player.get_errors(point, piece, false).empty?
             list << [point.name, piece.name, "打"].join
           end

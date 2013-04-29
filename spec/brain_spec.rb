@@ -60,16 +60,121 @@ module Bushido
       end
     end
 
-    it "一番得するように打つその2" do
-      Board.size_change([2, 3]) do
-        mediator = Mediator.new
-        mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], :from_piece => false)
-        mediator.player_at(:black).initial_soldiers(["１三飛"], :from_piece => false)
-        puts mediator
-        # mediator.player_at(:black).brain.doredore
-        p Brain.nega_max(:player => mediator.player_at(:black), :depth => 1)
+    describe "NegaMax" do
+      describe "戦況1" do
+        def example1
+          Board.size_change([2, 3]) do
+            mediator = Mediator.new
+            mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], :from_piece => false)
+            mediator.player_at(:black).initial_soldiers(["１三飛"], :from_piece => false)
+            yield mediator
+          end
+        end
+
+        it "確認" do
+          example1 do |mediator|
+            mediator.to_s.rstrip.should == <<-EOT.rstrip
+1手目: ▲先手番
+  ２ １
++------+
+| ・v香|一
+| ・v歩|二
+| ・ 飛|三
++------+
+▲先手の持駒:
+▽後手の持駒:
+EOT
+          end
+        end
+
+        it "0手先を読む - 目先の歩得を優先してしまう" do
+          example1 do |mediator|
+            Brain.nega_max(:player => mediator.player_at(:black), :depth => 0).should == {:hand => "▲1二飛成(13)", :score => 2305, :level => 0}
+          end
+        end
+
+        it "1手先を読む - 歩をとると飛車を取られて相手のスコアが増大するので２三飛を選択する" do
+          example1 do |mediator|
+            Brain.nega_max(:player => mediator.player_at(:black), :depth => 1).should == {:hand => "▲2三飛成(13)", :score => -1800, :level => 0, :hands => ["▲2三飛成(13)", "▽1三歩成(12)"]}
+          end
+        end
+      end
+
+      describe "戦況2" do
+        def example2
+          Board.disable_promotable do
+            Board.size_change([1, 8]) do
+              mediator = Mediator.new
+              mediator.player_at(:white).initial_soldiers(["１二飛", "１三香", "１四歩"], :from_piece => false)
+              mediator.player_at(:black).initial_soldiers(["１六香", "１七飛"], :from_piece => false)
+              yield mediator
+            end
+          end
+        end
+
+        it "確認" do
+          example2 do |mediator|
+            mediator.to_s.rstrip.should == <<-EOT.rstrip
+1手目: ▲先手番
+  １
++---+
+| ・|一
+|v飛|二
+|v香|三
+|v歩|四
+| ・|五
+| 香|六
+| 飛|七
+| ・|八
++---+
+▲先手の持駒:
+▽後手の持駒:
+EOT
+          end
+        end
+
+        it "0手先の場合、駒得だけを考えて歩を取りにいく" do
+          example2 do |mediator|
+            p Brain.nega_max(:player => mediator.player_at(:black), :depth => 0).should == {:hand=>"▲1四香(16)", :score=>2705, :level=>0, :hands => ["▲1四香(16)"]}
+          end
+        end
+
+        it "1手先の場合は歩を取ると取り返されるので飛車を移動する(相手は１一飛と１五歩をするけど両方同じ得点なのでどっちかになる曖昧)" do
+          example2 do |mediator|
+            Brain.nega_max(:player => mediator.player_at(:black), :depth => 1).should == {:hand=>"▲1八飛(17)", :score=>-2700, :level=>0, :hands=>["▲1八飛(17)", "▽1五歩(14)"]}
+          end
+        end
+
+        it "2手先の場合は香を取り返せるところまでわかるので香がつっこむ" do
+          example2 do |mediator|
+            Brain.nega_max(:player => mediator.player_at(:black), :depth => 2).should == {:hand=>"▲1四香(16)", :score=>2735, :level=>0, :hands=>["▲1四香(16)", "▽1四香(13)", "▲1四飛(17)"]}
+          end
+        end
+
+        it "3手先の場合は最後に飛車で取られて全滅することがわかるので香車はつっこまない" do
+          example2 do |mediator|
+            p Brain.nega_max(:player => mediator.player_at(:black), :depth => 3)
+          end
+        end
+
+        # it "2手先の場合" do
+        #   example2 do |mediator|
+        #     p Brain.nega_max(:player => mediator.player_at(:black), :depth => 2)
+        #   end
+        # end
       end
     end
+
+    # it "一番得するように打つその3" do
+    #   Board.size_change([2, 3]) do
+    #     mediator = Mediator.new
+    #     mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], :from_piece => false)
+    #     mediator.player_at(:black).initial_soldiers(["１三飛"], :from_piece => false)
+    #     puts mediator
+    #     # mediator.player_at(:black).brain.doredore
+    #     p Brain.nega_max(:player => mediator.player_at(:black), :depth => 1)
+    #   end
+    # end
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do

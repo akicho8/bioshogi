@@ -431,11 +431,11 @@ module Bushido
     #   end
     # end
 
-    private
-
     def moveable_points(point, piece, promoted, options = {})
       Movabler.moveable_points(self, point, piece, promoted, options)
     end
+
+    private
 
     # def side_soldiers_put_on(table)
     #   table.each{|info|initial_soldiers(info)}
