@@ -67,7 +67,7 @@ module Bushido
         mediator.player_at(:black).initial_soldiers(["１三飛"], :from_piece => false)
         puts mediator
         # mediator.player_at(:black).brain.doredore
-        p Brain.nega_max(:player => mediator.player_at(:black), :depth => 0)
+        p Brain.nega_max(:player => mediator.player_at(:black), :depth => 1)
       end
     end
 
