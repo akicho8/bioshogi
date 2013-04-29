@@ -60,15 +60,16 @@ module Bushido
       end
     end
 
-    # it "一番得するように打つその2" do
-    #   Board.size_change([2, 2]) do
-    #     mediator = Mediator.new
-    #     mediator.player_at(:white).initial_soldiers(["１一歩", "２一金"], :from_piece => false)
-    #     mediator.player_at(:black).initial_soldiers(["１二飛"], :from_piece => false)
-    #     puts mediator
-    #     mediator.player_at(:black).brain.doredore
-    #   end
-    # end
+    it "一番得するように打つその2" do
+      Board.size_change([2, 3]) do
+        mediator = Mediator.new
+        mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], :from_piece => false)
+        mediator.player_at(:black).initial_soldiers(["１三飛"], :from_piece => false)
+        puts mediator
+        # mediator.player_at(:black).brain.doredore
+        p Brain.nega_max(:player => mediator.player_at(:black), :depth => 0)
+      end
+    end
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do

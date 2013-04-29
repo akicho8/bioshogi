@@ -53,6 +53,10 @@ module Bushido
       @mediator.board
     end
 
+    def next_player
+      @mediator.player_at(location.reverse)
+    end
+
     # # TODO: これ不要かも
     # def marshal_dump
     #   {

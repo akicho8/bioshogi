@@ -42,7 +42,7 @@ module Bushido
 
     # 反対を返す
     def reverse
-      self.class.parse(index.next.modulo(count))
+      self.class.parse(index.next.modulo(self.class.count))
     end
 
     @pool ||= [

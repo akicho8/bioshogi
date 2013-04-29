@@ -23,7 +23,7 @@ module Bushido
     private
 
     def moveable_points_block(player, point, vectors, loop, options)
-      normalized_vectors(player, vectors).each_with_object([]) do |vector, list|
+      normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
         pt = point
         loop do
           pt = pt.add_vector(vector)
