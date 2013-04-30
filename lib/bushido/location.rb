@@ -42,8 +42,10 @@ module Bushido
 
     # 反対を返す
     def reverse
-      self.class.parse(index.next.modulo(count))
+      self.class.parse(index.next.modulo(self.class.count))
     end
+
+    alias next_location reverse
 
     @pool ||= [
       new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :index => 0),

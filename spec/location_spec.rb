@@ -14,13 +14,14 @@ module Bushido
       Location["1手目"].key.should == :black
     end
 
-    it "板パース時に楽するため" do
+    it "盤面を読み取るときに楽するため" do
       Location[" "].key.should     == :black
       Location["^"].key.should     == :black
       Location["v"].key.should     == :white
     end
 
-    it "「n手目」は特別に n - 1 を index として parse している" do
+    it "KIF形式でインデックスから手番に変換するとき楽するため" do
+      # 内部的には「n手目」は特別に n - 1 を index として parse している
       Location["0手目"].name.should == "後手" # 反則として「0手目」があるため上下限チェックは入れず緩くしておく
       Location["1手目"].name.should == "先手"
       Location["2手目"].name.should == "後手"
@@ -45,6 +46,11 @@ module Bushido
       Location.w.should == Location[:white]
       L.b.should == Location[:black]
       L.w.should == Location[:white]
+    end
+
+    it "次の手番を返す" do
+      Location[:white].reverse.should == Location[:black]
+      Location[:white].next_location.should == Location[:black]
     end
   end
 end
