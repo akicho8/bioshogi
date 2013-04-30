@@ -41,9 +41,7 @@ module Bushido
       Location.each.present?.should == true
     end
 
-    it "ショートカット" do
-      Location.b.should == Location[:black]
-      Location.w.should == Location[:white]
+    it "とにかく短かく書きたいとき用のエイリアス" do
       L.b.should == Location[:black]
       L.w.should == Location[:white]
     end

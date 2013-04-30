@@ -379,9 +379,9 @@ module Bushido
     end
 
     # 二歩？
-    def double_pawn?(point, piece, promoted)
-      if piece.sym_name == :pawn && !promoted
-        pawns_on_board(point).first
+    def find_collisione_pawn(mini_soldier)
+      if mini_soldier[:piece].sym_name == :pawn && !mini_soldier[:promoted]
+        pawns_on_board(mini_soldier[:point]).first
       end
     end
 
@@ -399,18 +399,18 @@ module Bushido
         :validate => true,
       }.merge(options)
       if options[:validate]
-        get_errors(point, soldier.piece, soldier.promoted).each{|error|raise error}
+        get_errors(soldier.to_mini_soldier.merge(:point => point)).each{|error|raise error}
       end
       board.put_on(point, soldier)
     end
 
-    def get_errors(point, piece, promoted)
+    def get_errors(mini_soldier)
       errors = []
-      if s = double_pawn?(point, piece, promoted)
-        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{point.name}に#{piece.name}は打てません")
+      if s = find_collisione_pawn(mini_soldier)
+        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{mini_soldier}は打てません")
       end
-      if moveable_points(point, piece, promoted, :board_object_collision_skip => true).empty?
-        errors << NotPutInPlaceNotBeMoved.new(self, "#{piece.some_name(promoted)}を#{point.name}に置いてもそれ以上動かせないので反則です")
+      if moveable_points(mini_soldier, :board_object_collision_skip => true).empty?
+        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
       end
       errors
     end
@@ -429,8 +429,8 @@ module Bushido
 
     private
 
-    def moveable_points(point, piece, promoted, options = {})
-      Movabler.moveable_points(self, point, piece, promoted, options)
+    def moveable_points(mini_soldier, options = {})
+      Movabler.moveable_points(self, mini_soldier, options)
     end
 
     # def side_soldiers_put_on(table)

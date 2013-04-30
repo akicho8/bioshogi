@@ -33,9 +33,9 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[:piece => Piece["玉"], :promoted => false, :point => Point["５一"]]]
-        @black_king = [MiniSoldier[:piece => Piece["玉"], :promoted => false, :point => Point["５九"]]]
-        @black_rook = [MiniSoldier[:piece => Piece["飛"], :promoted => false, :point => Point["１一"]]]
+        @white_king = [MiniSoldier[:piece => Piece["玉"], :point => Point["５一"]]]
+        @black_king = [MiniSoldier[:piece => Piece["玉"], :point => Point["５九"]]]
+        @black_rook = [MiniSoldier[:piece => Piece["飛"], :point => Point["１一"]]]
       end
 
       it "先手か後手の一方用" do

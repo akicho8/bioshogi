@@ -40,6 +40,17 @@ module Bushido
       }[key]
     end
 
+    # 一時的に成れない状況にする
+    def self.disable_promotable
+      begin
+        _promotable_length = Position::Vpos._promotable_length
+        Position::Vpos._promotable_length = nil
+        yield
+      ensure
+        Position::Vpos._promotable_length = _promotable_length
+      end
+    end
+
     def initialize
       @surface = {}
     end

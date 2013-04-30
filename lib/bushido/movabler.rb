@@ -10,20 +10,20 @@ module Bushido
     extend self
 
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
-    def moveable_points(player, point, piece, promoted, options = {})
+    def moveable_points(player, mini_soldier, options = {})
       options = {
         :board_object_collision_skip => false, # 盤上の他の駒を考慮しない？
       }.merge(options)
       list = []
-      list += moveable_points_block(player, point, piece.step_vectors(promoted), false, options)
-      list += moveable_points_block(player, point, piece.series_vectors(promoted), true, options)
+      list += moveable_points_block(player, mini_soldier[:point], mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
+      list += moveable_points_block(player, mini_soldier[:point], mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
       list.uniq{|e|e.to_xy}     # 龍などは step_vectors と series_vectors で左右上下が重複しているため
     end
 
     private
 
     def moveable_points_block(player, point, vectors, loop, options)
-      normalized_vectors(player, vectors).each_with_object([]) do |vector, list|
+      normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
         pt = point
         loop do
           pt = pt.add_vector(vector)

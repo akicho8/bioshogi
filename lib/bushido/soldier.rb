@@ -75,7 +75,7 @@ module Bushido
 
     # 移動可能な座標を取得
     def moveable_points(options = {})
-      Movabler.moveable_points(@player, @point, @piece, @promoted, options)
+      Movabler.moveable_points(@player, to_mini_soldier, options)
     end
 
     # def self.from_attrs(attrs)
@@ -87,8 +87,12 @@ module Bushido
     #   {:player => (@player ? @player.location.key : nil) :point => @point.name, :piece => @piece.sym_name, :promoted => @promoted}
     # end
 
-    def to_h
+    def to_mini_soldier
       MiniSoldier[:point => @point, :piece => @piece, :promoted => @promoted]
+    end
+
+    def to_h
+      to_mini_soldier
     end
   end
 end

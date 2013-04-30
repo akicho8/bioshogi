@@ -45,7 +45,7 @@ module Bushido
       def promoted_fetch(arg)
         case
         when piece = basic_get(arg)
-          MiniSoldier[:piece => piece, :promoted => false]
+          MiniSoldier[:piece => piece]
         when piece = promoted_get(arg)
           MiniSoldier[:piece => piece, :promoted => true]
         else

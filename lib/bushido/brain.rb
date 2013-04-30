@@ -16,7 +16,7 @@ module Bushido
 
     # def doredore(depth = 0)
     #   mediator = @player.mediator
-    #   score_info = all_ways.each_with_object([]){|way, ary|
+    #   score_info = all_ways.each.with_object([]){|way, ary|
     #     mediator.sandbox_for do |_mediator|
     #       _player = _mediator.player_at(@player.location)
     #       _player.execute(way)
@@ -29,7 +29,7 @@ module Bushido
     # end
 
     def eval_list
-      score_info = all_ways.each_with_object([]){|way, ary|
+      score_info = all_ways.each.with_object([]){|way, ary|
         @player.mediator.sandbox_for do |_mediator|
           _player = _mediator.player_at(@player.location)
           _player.execute(way)
@@ -67,7 +67,7 @@ module Bushido
       list = []
       @player.board.blank_points.each do |point|
         @player.pieces.each do |piece|
-          if @player.get_errors(point, piece, false).empty?
+          if @player.get_errors(MiniSoldier[:point => point, :piece => piece]).empty?
             list << [point.name, piece.name, "打"].join
           end
         end
