@@ -129,7 +129,7 @@ module Bushido
     def find_origin_point
       @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.include?(@point)} # この場所にあるもの
       @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}                         # 同じ駒
-      @soldiers = @soldiers.find_all{|e|e.promoted == @promoted}                               # 成っているかどうか
+      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted}                           # 成っているかどうか
       @candidate = @soldiers.collect{|s|s.clone}
 
       if @soldiers.empty?

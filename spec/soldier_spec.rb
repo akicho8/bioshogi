@@ -41,6 +41,18 @@ module Bushido
         player = player_test(:init => "5三龍")
         player.board["5三"].moveable_points.collect(&:name).sort.should == ["6二", "5二", "4二", "6三", "4三", "6四", "5四", "4四", "5一", "7三", "8三", "9三", "3三", "2三", "1三", "5五", "5六", "5七", "5八", "5九"].sort
       end
+
+      it "移動可能な場所は成が含まれていないため不整合が生じる" do
+        Board.size_change([1, 3]) do
+          mediator = Mediator.new
+          mediator.player_at(:black).initial_soldiers("１三香", :from_piece => false)
+          p mediator.board["１三"].moveable_points
+          pending "ここで１一まで行ってしまうのがだめ"
+          # 座標と成るかどうかの二つの要素で返さないといけない
+          puts mediator
+          # player.brain.eval_list.should == [{:way => "1一歩成(12)", :score => 1305}, {:way => "2二歩打", :score => 200}]
+        end
+      end
     end
 
     # it "復元できるかテスト" do
