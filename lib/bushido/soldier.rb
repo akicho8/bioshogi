@@ -84,11 +84,11 @@ module Bushido
     #
     # # シリアライズ用
     # def to_attrs
-    #   {:player => (@player ? @player.location.key : nil) :point => @point.name, :piece => @piece.sym_name, :promoted => @promoted}
+    #   {:player => (@player ? @player.location.key : nil) point: @point.name, piece: @piece.sym_name, :promoted => @promoted}
     # end
 
     def to_mini_soldier
-      MiniSoldier[:point => @point, :piece => @piece, :promoted => @promoted]
+      MiniSoldier[point: @point, piece: @piece, :promoted => @promoted]
     end
 
     def to_h

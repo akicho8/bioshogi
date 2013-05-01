@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Utils do
     it "文字列の分解" do
-      MiniSoldier.from_str("４二竜").should == {:point => Point["４二"], :piece => Piece["竜"], :promoted => true}
+      MiniSoldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["竜"], :promoted => true}
     end
 
     it "棋譜入力の分離(ゴミは保持)" do
@@ -33,9 +33,9 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[:piece => Piece["玉"], :point => Point["５一"]]]
-        @black_king = [MiniSoldier[:piece => Piece["玉"], :point => Point["５九"]]]
-        @black_rook = [MiniSoldier[:piece => Piece["飛"], :point => Point["１一"]]]
+        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"]]]
+        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"]]]
+        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"]]]
       end
 
       it "先手か後手の一方用" do

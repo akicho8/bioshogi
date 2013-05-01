@@ -9,7 +9,7 @@ module Bushido
     end
 
     it "#to_s" do
-      MiniSoldier[:point => Point["５一"], :piece => Piece["玉"]].to_s.should == "5一玉"
+      MiniSoldier[point: Point["５一"], piece: Piece["玉"]].to_s.should == "5一玉"
     end
   end
 end

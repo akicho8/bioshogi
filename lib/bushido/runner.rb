@@ -142,7 +142,7 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
           end
-          soldier = Soldier.new(:player => @player, :piece => @player.pick_out(@piece), :promoted => @promoted)
+          soldier = Soldier.new(:player => @player, piece: @player.pick_out(@piece), :promoted => @promoted)
           @player.put_on_with_valid(@point, soldier)
           @player.soldiers << soldier
           @done = true
@@ -211,7 +211,7 @@ module Bushido
     end
 
     def put_soldier
-      soldier = Soldier.new(:player => @player, :piece => @player.pick_out(@piece), :promoted => @promoted)
+      soldier = Soldier.new(:player => @player, piece: @player.pick_out(@piece), :promoted => @promoted)
       @player.put_on_with_valid(@point, soldier)
       @player.soldiers << soldier
       @done = true

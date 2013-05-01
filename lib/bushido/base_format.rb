@@ -69,7 +69,7 @@ module Bushido
             location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"
             raise SyntaxError unless x_units[x] && y_units[y]
             point = Point[[x_units[x], y_units[y]].join]
-            mini_soldier = Piece.promoted_fetch(piece).merge(:point => point)
+            mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
             players[location] << mini_soldier
           end
         }

@@ -45,7 +45,7 @@ module Bushido
 
     def both_soldiers_from_char_board2(params)
       params[:stock].parsed_board.inject({}){|h, (key, value)|
-        h.merge(key => value.collect{|s|s.merge(:point => s[:point].as_location(params[:location]))})
+        h.merge(key => value.collect{|s|s.merge(point: s[:point].as_location(params[:location]))})
       }
     end
 
@@ -108,7 +108,7 @@ module Bushido
         infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
           md = s.match(/\A(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?\z/)
           md or raise SyntaxError, "例:「飛 歩2」 : #{str.inspect}"
-          {:piece => md[:piece], :count => (md[:count] || 1).to_i}
+          {piece: md[:piece], :count => (md[:count] || 1).to_i}
         }
       else
         infos = str
@@ -124,14 +124,14 @@ module Bushido
 
     def first_distributed_pieces
       [
-        {:piece => "歩", :count => 9},
-        {:piece => "角", :count => 1},
-        {:piece => "飛", :count => 1},
-        {:piece => "香", :count => 2},
-        {:piece => "桂", :count => 2},
-        {:piece => "銀", :count => 2},
-        {:piece => "金", :count => 2},
-        {:piece => "玉", :count => 1},
+        {piece: "歩", :count => 9},
+        {piece: "角", :count => 1},
+        {piece: "飛", :count => 1},
+        {piece: "香", :count => 2},
+        {piece: "桂", :count => 2},
+        {piece: "銀", :count => 2},
+        {piece: "金", :count => 2},
+        {piece: "玉", :count => 1},
       ]
     end
 

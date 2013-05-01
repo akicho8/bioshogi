@@ -181,7 +181,7 @@ auto_flushing {
     begin
       @mediator = Bushido::Mediator.start
       count.times do
-        mini_soldier = Bushido::MiniSoldier[:point => Bushido::Point.to_a.sample, :piece => Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
+        mini_soldier = Bushido::MiniSoldier[point: Bushido::Point.to_a.sample, piece: Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
         @mediator.players.sample.initial_soldiers(mini_soldier, :from_piece => false)
       end
     rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error

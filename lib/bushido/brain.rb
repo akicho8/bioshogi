@@ -44,7 +44,7 @@ module Bushido
       list = []
 
       mpoints = @player.soldiers.collect{|soldier|
-        soldier.moveable_points.collect{|point|{:soldier => soldier, :point => point}}
+        soldier.moveable_points.collect{|point|{:soldier => soldier, point: point}}
       }.flatten
 
       mpoints.collect{|mpoint|
@@ -67,7 +67,7 @@ module Bushido
       list = []
       @player.board.blank_points.each do |point|
         @player.pieces.each do |piece|
-          if @player.get_errors(MiniSoldier[:point => point, :piece => piece]).empty?
+          if @player.get_errors(MiniSoldier[point: point, piece: piece]).empty?
             list << [point.name, piece.name, "打"].join
           end
         end

@@ -107,7 +107,7 @@ module Bushido
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
     #   player.initial_soldiers(["５五飛", "３三飛"], :from_piece => false)
     #   player.initial_soldiers("#{point}馬")
-    #   player.initial_soldiers({:point => point, :piece => Piece["角"], :promoted => true}, :from_piece => false)
+    #   player.initial_soldiers({point: point, piece: Piece["角"], :promoted => true}, :from_piece => false)
     def initial_soldiers(mini_soldier_or_str, options = {})
       options = {
         :from_piece => true, # 持駒から配置する？
@@ -399,7 +399,7 @@ module Bushido
         :validate => true,
       }.merge(options)
       if options[:validate]
-        get_errors(soldier.to_mini_soldier.merge(:point => point)).each{|error|raise error}
+        get_errors(soldier.to_mini_soldier.merge(point: point)).each{|error|raise error}
       end
       board.put_on(point, soldier)
     end

@@ -46,7 +46,8 @@ module Bushido
         Board.size_change([1, 3]) do
           mediator = Mediator.new
           mediator.player_at(:black).initial_soldiers("１三香", :from_piece => false)
-          p mediator.board["１三"].moveable_points
+          puts mediator
+          p mediator.board["１三"].moveable_points(:with_promoted => true)
           pending "ここで１一まで行ってしまうのがだめ"
           # 座標と成るかどうかの二つの要素で返さないといけない
           puts mediator
