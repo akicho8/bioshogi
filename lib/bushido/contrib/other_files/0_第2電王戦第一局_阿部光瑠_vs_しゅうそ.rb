@@ -6,8 +6,8 @@ module Bushido
   XtraPattern.define do
     [
       {
-        :title => Pathname(__FILE__).basename(".*"),
-        :dsl => lambda do
+        title: Pathname(__FILE__).basename(".*"),
+        dsl: lambda do
           board "平手"
           auto_flushing {
             set :hide_human_hand_logs, true

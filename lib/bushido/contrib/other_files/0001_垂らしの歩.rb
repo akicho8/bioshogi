@@ -6,8 +6,8 @@ module Bushido
   XtraPattern.define do
     [
       {
-        :title => Pathname(__FILE__).basename(".*"),
-        :dsl => lambda do
+        title: Pathname(__FILE__).basename(".*"),
+        dsl: lambda do
           board <<-BOARD
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

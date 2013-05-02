@@ -47,7 +47,7 @@ module Bushido
         when piece = basic_get(arg)
           MiniSoldier[piece: piece]
         when piece = promoted_get(arg)
-          MiniSoldier[piece: piece, :promoted => true]
+          MiniSoldier[piece: piece, promoted: true]
         else
           raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end
@@ -58,7 +58,7 @@ module Bushido
       end
 
       # 台上の持駒文字列をハッシュ配列化
-      #   stand_unpack("飛 香二") # => [{piece: Piece["飛"], :count => 1}, {piece: Piece["香"], :count => 2}]
+      #   stand_unpack("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
       def stand_unpack(*args)
         Utils.stand_unpack(*args)
       end

@@ -1,20 +1,20 @@
 -# .well
 -#   - Bushido::XtraPattern.each.with_index do |pattern, id|
--#     %a{:href => "/tactics?id=#{id}"}= "【#{pattern[:title]}】"
+-#     %a{href: "/tactics?id=#{id}"}= "【#{pattern[:title]}】"
 
-%form{action: "/dsl_form", method: "get", :class => "form-vertical"}
+%form{action: "/dsl_form", method: "get", class: "form-vertical"}
   .control-group
-    %label{:class => "control-label"}= "タイトル"
+    %label{class: "control-label"}= "タイトル"
     .controls
-      %input{type: "text", :name => "kif_title", :value => params[:kif_title], :class => "input-xxlarge"}
+      %input{type: "text", name: "kif_title", value: params[:kif_title], class: "input-xxlarge"}
   .control-group
-    %label{:class => "control-label"}= "棋譜データ"
+    %label{class: "control-label"}= "棋譜データ"
     .controls
       %tt
-        %textarea{:name => "kif_body", :class => "input-xxlarge", :rows => [10, params[:kif_body].to_s.lines.count].max, :style => "font-family:monospace"}
+        %textarea{name: "kif_body", class: "input-xxlarge", rows: [10, params[:kif_body].to_s.lines.count].max, style: "font-family:monospace"}
           = preserve do
             = params[:kif_body]
   .form-actions
-    %input{type: "submit", value: "実行", :class => "btn btn-primary"}
+    %input{type: "submit", value: "実行", class: "btn btn-primary"}
 
 = haml :pattern

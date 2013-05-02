@@ -7,7 +7,7 @@ mediator = Mediator.start
 player = mediator.player_at(:black)
 player.initial_soldiers("５五馬")
 player.soldiers.first.moveable_points.each{|point|
-  player.initial_soldiers("#{point}馬", :from_piece => false)
+  player.initial_soldiers("#{point}馬", from_piece: false)
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

@@ -13,10 +13,10 @@ module Bushido
       #  先手だけ10連続で打つとか。
       #
       #   @result.move_infos.should == [
-      #     {:location => :black, :input => "７六歩"},
-      #     {:location => :white, :input => "３四歩", :comments => ["コメント1"]},
-      #     {:location => :black, :input => "６六歩"},
-      #     {:location => :white, :input => "８四歩", :comments => ["コメント2"]},
+      #     {location: :black, input: "７六歩"},
+      #     {location: :white, input: "３四歩", comments: ["コメント1"]},
+      #     {location: :black, input: "６六歩"},
+      #     {location: :white, input: "８四歩", comments: ["コメント2"]},
       #   ]
       #
       def parse
@@ -27,7 +27,7 @@ module Bushido
           if line.match(/^\s*[▲△]/)
             @move_infos += line.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|
               location = Location[mark]
-              {:location => location, :input => input, :mov => "#{location.mark}#{input}"}
+              {location: location, input: input, mov: "#{location.mark}#{input}"}
             }
           end
         end

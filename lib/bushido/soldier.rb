@@ -53,7 +53,7 @@ module Bushido
     end
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(:init => "５五と").board["５五"].formality_name # => "▲5五と"
+    #  Player.basic_test(init: "５五と").board["５五"].formality_name # => "▲5五と"
     def formality_name
       "#{@player.location.mark}#{formality_name2}"
     end
@@ -61,7 +61,7 @@ module Bushido
     alias name formality_name
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(:init => "５五と").board["５五"].formality_name2 # => "5五と"
+    #  Player.basic_test(init: "５五と").board["５五"].formality_name2 # => "5五と"
     def formality_name2
       "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
     end
@@ -84,11 +84,11 @@ module Bushido
     #
     # # シリアライズ用
     # def to_attrs
-    #   {:player => (@player ? @player.location.key : nil) point: @point.name, piece: @piece.sym_name, :promoted => @promoted}
+    #   {player: (@player ? @player.location.key : nil) point: @point.name, piece: @piece.sym_name, promoted: @promoted}
     # end
 
     def to_mini_soldier
-      MiniSoldier[point: @point, piece: @piece, :promoted => @promoted]
+      MiniSoldier[point: @point, piece: @piece, promoted: @promoted]
     end
 
     def to_h

@@ -14,8 +14,8 @@ RSpec.configure do |config|
   module TestHelper
     def player_test(params = {})
       params = {
-        :player => :black,
-        :initial_deal => true,
+        player: :black,
+        initial_deal: true,
       }.merge(params)
 
       mediator = Bushido::Mediator.new

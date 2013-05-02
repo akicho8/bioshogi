@@ -5,16 +5,16 @@ require "spec_helper"
 module Bushido
   describe Utils do
     it "文字列の分解" do
-      MiniSoldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["竜"], :promoted => true}
+      MiniSoldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["竜"], promoted: true}
     end
 
     it "棋譜入力の分離(ゴミは保持)" do
-      Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, "push", {:location => L.b, :input => "３三歩"}, "pop"]
+      Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: L.b, input: "５五歩"}, {location: L.w, input: "４四歩"}, "push", {location: L.b, input: "３三歩"}, "pop"]
     end
 
     describe "mov_split" do
       it "棋譜入力の分離(ゴミがあっても無視)" do
-        Utils.mov_split("▲５五歩△４四歩 push ▲３三歩 pop").should == [{:location => L.b, :input => "５五歩"}, {:location => L.w, :input => "４四歩"}, {:location => L.b, :input => "３三歩"}]
+        Utils.mov_split("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: L.b, input: "５五歩"}, {location: L.w, input: "４四歩"}, {location: L.b, input: "３三歩"}]
       end
       it "先手後手がわからないと無視する" do
         Utils.mov_split("５五歩").should == []
@@ -39,7 +39,7 @@ module Bushido
       end
 
       it "先手か後手の一方用" do
-        Utils.location_soldiers(:location => L.w, :key => "裸玉").should == @white_king
+        Utils.location_soldiers(location: L.w, key: "裸玉").should == @white_king
       end
 
       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do

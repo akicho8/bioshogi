@@ -130,7 +130,7 @@ module Bushido
         }
       }
       rows = rows.zip(Position::Vpos.units).collect{|e, u|e + [u]}
-      RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, :header => true)
+      RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, header: true)
     end
 
     # 盤上の指定座標にすでに物があるならエラーとする

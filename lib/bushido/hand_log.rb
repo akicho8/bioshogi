@@ -15,7 +15,7 @@ module Bushido
     # KIF形式の最後の棋譜
     def to_s_simple(options = {})
       options = {
-        :with_mark => false,
+        with_mark: false,
       }.merge(options)
       s = []
       if options[:with_mark]
@@ -41,7 +41,7 @@ module Bushido
 
     def to_s_human(options = {})
       options = {
-        :with_mark => false,
+        with_mark: false,
       }.merge(options)
       s = []
       if options[:with_mark]

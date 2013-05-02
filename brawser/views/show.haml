@@ -1,6 +1,6 @@
 %div
-  %a{href:"/?think_put=true", :class => "btn"} 賢い代指
-  %a{href:"/?random_put=true", :class => "btn"} ランダム
+  %a{href:"/?think_put=true", class: "btn"} 賢い代指
+  %a{href:"/?random_put=true", class: "btn"} ランダム
 
 %p
   %div{class: "progress"}
@@ -9,13 +9,13 @@
 
 %p= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
 
-%form{action: "/", method: "post", :class => "form-inline"}
+%form{action: "/", method: "post", class: "form-inline"}
   .control-group
     .controls
-      %label{:class => "control-label"}= Bushido::Location[:white].mark_with_name
+      %label{class: "control-label"}= Bushido::Location[:white].mark_with_name
       %input{name: "location", type: "hidden", value: "white"}
       %input{type: "text", name: "way", value: "", class:"input-mini", autofocus: @mediator.current_player.location.white?}
-      %input{type: "submit", value: "打", :class => "btn btn-primary"}
+      %input{type: "submit", value: "打", class: "btn btn-primary"}
 
 %div
   - if @mediator.player_at(:white).pieces.present?
@@ -24,13 +24,13 @@
   - if @mediator.player_at(:black).pieces.present?
     .pieces= @mediator.player_at(:black).to_s_pieces
 
-%form{action: "/", method: "post", :class => "form-inline"}
+%form{action: "/", method: "post", class: "form-inline"}
   .control-group
     .controls
-      %label{:class => "control-label"}= Bushido::Location[:black].mark_with_name
+      %label{class: "control-label"}= Bushido::Location[:black].mark_with_name
       %input{name: "location", type: "hidden", value: "black"}
       %input{type: "text", name: "way", value: "", class:"input-mini", autofocus: @mediator.current_player.location.black?}
-      %input{type: "submit", value: "打", :class => "btn btn-primary"}
+      %input{type: "submit", value: "打", class: "btn btn-primary"}
 
 - if @mediator.human_hand_logs.present?
   %p
@@ -39,7 +39,7 @@
         %option{selected: @mediator.human_hand_logs.last == hand_log}= "#{index.next} #{hand_log}"
 
 %p
-  %a{href:"/?reset=true", :class => "btn"} リセット
+  %a{href:"/?reset=true", class: "btn"} リセット
 
 - if ENV['RACK_ENV'] == "development"
   .well

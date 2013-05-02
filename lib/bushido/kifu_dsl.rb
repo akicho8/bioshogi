@@ -183,7 +183,7 @@ module Bushido
     end
 
     def auto_flushing(value = true, &block)
-      local_vars(:auto_flushing => value, &block)
+      local_vars(auto_flushing: value, &block)
 
       # if block_given?
       #   @seqs << VarPush.new(:auto_flushing)
@@ -254,7 +254,7 @@ module Bushido
     builder = KifuDsl.define do
       title "(title)"
       comment "(comment)"
-      pieces :black => "歩"
+      pieces black: "歩"
       board "平手"
       mov "▲７六歩", "▲２六歩"
       mov "△３四歩"

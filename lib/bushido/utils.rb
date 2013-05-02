@@ -13,18 +13,18 @@ module Bushido
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
     def location_soldiers(params)
       params = {
-        :location => nil,
-        :key => nil,
+        location: nil,
+        key: nil,
       }.merge(params)
 
       if BaseFormat.board_format?(params[:key])
-        stock = Stock.new(:board => params[:key])
-        r = both_soldiers_from_char_board2(params.merge(:stock => stock))
+        stock = Stock.new(board: params[:key])
+        r = both_soldiers_from_char_board2(params.merge(stock: stock))
         r[L.b]
       else
         stock = Stock.list.find{|v|v[:key] == params[:key]}
         stock or raise BoardKeyNotFound, "盤面データがありません : #{params[:key].inspect}"
-        r = valid_both_soldiers_from_char_board(params.merge(:stock => stock))
+        r = valid_both_soldiers_from_char_board(params.merge(stock: stock))
         r[L.b]
       end
     end
@@ -33,7 +33,7 @@ module Bushido
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
     def valid_both_soldiers_from_char_board(params = {})
       params = {
-        :validate => true,
+        validate: true,
       }.merge(params)
       if params[:validate]
         if params[:stock].parsed_board[:white].present?
@@ -63,16 +63,16 @@ module Bushido
     def board_reset_args(value = nil)
       case
       when BaseFormat.board_format?(value)
-        # Stock.new(:board => value).parsed_board
+        # Stock.new(board: value).parsed_board
         BaseFormat.board_parse(value)
       when Hash === value
         # {"先手" => "角落ち", "後手" => "香落ち"}
         value.inject({}){|hash, (k, v)|
-          hash.merge(Location[k] => Utils.location_soldiers(:location => k, :key => v))
+          hash.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
         }
       else
         # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
-        board_reset_args(:black => (value || "平手"), :white => "平手")
+        board_reset_args(black: (value || "平手"), white: "平手")
       end
     end
 
@@ -108,7 +108,7 @@ module Bushido
         infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
           md = s.match(/\A(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?\z/)
           md or raise SyntaxError, "例:「飛 歩2」 : #{str.inspect}"
-          {piece: md[:piece], :count => (md[:count] || 1).to_i}
+          {piece: md[:piece], count: (md[:count] || 1).to_i}
         }
       else
         infos = str
@@ -124,19 +124,19 @@ module Bushido
 
     def first_distributed_pieces
       [
-        {piece: "歩", :count => 9},
-        {piece: "角", :count => 1},
-        {piece: "飛", :count => 1},
-        {piece: "香", :count => 2},
-        {piece: "桂", :count => 2},
-        {piece: "銀", :count => 2},
-        {piece: "金", :count => 2},
-        {piece: "玉", :count => 1},
+        {piece: "歩", count: 9},
+        {piece: "角", count: 1},
+        {piece: "飛", count: 1},
+        {piece: "香", count: 2},
+        {piece: "桂", count: 2},
+        {piece: "銀", count: 2},
+        {piece: "金", count: 2},
+        {piece: "玉", count: 1},
       ]
     end
 
     # ki2形式に近い棋譜の羅列のパース
-    #   ki2_parse("▲４二銀△４二銀") # => [{:location => :black, :input => "４二銀"}, {:location => :white, :input => "４二銀"}]
+    #   ki2_parse("▲４二銀△４二銀") # => [{location: :black, input: "４二銀"}, {location: :white, input: "４二銀"}]
     def ki2_parse(str)
       str = str.to_s
       str = str.gsub(/([#{Location.triangles}])/, ' \1')
@@ -151,7 +151,7 @@ module Bushido
     end
 
     def mov_split(str)
-      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect{|mark, input|{:location => Location[mark], :input => input}}
+      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect{|mark, input|{location: Location[mark], input: input}}
     end
 
     private

@@ -12,8 +12,8 @@ module Bushido
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def moveable_points(player, mini_soldier, options = {})
       options = {
-        :board_object_collision_skip => false, # 盤上の他の駒を考慮しない？
-        :with_promoted => false,               # 成って行けるのかどうかの情報を付加する
+        board_object_collision_skip: false, # 盤上の他の駒を考慮しない？
+        with_promoted: false,               # 成って行けるのかどうかの情報を付加する
       }.merge(options)
       list = []
       if options[:with_promoted]
@@ -43,7 +43,7 @@ module Bushido
             target = player.board.fetch(pt)
             if target.nil?
               if options[:with_promoted]
-                ways = moveable_points(player, mini_soldier.merge(point: pt), :board_object_collision_skip => true)
+                ways = moveable_points(player, mini_soldier.merge(point: pt), board_object_collision_skip: true)
                 p ways
                 # TODO: ここで何も取得できなかったらいきどまりなので、成フラグをいっしょに座標を返さないといけない
               end

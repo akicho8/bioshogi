@@ -20,7 +20,7 @@ module Bushido
     #     mediator.sandbox_for do |_mediator|
     #       _player = _mediator.player_at(@player.location)
     #       _player.execute(way)
-    #       ary << {:way => way, :score => _player.evaluate}
+    #       ary << {way: way, score: _player.evaluate}
     #       
     #       
     #     end
@@ -33,7 +33,7 @@ module Bushido
         @player.mediator.sandbox_for do |_mediator|
           _player = _mediator.player_at(@player.location)
           _player.execute(way)
-          ary << {:way => way, :score => _player.evaluate}
+          ary << {way: way, score: _player.evaluate}
         end
       }
       score_info.sort_by{|e|-e[:score]}
@@ -44,7 +44,7 @@ module Bushido
       list = []
 
       mpoints = @player.soldiers.collect{|soldier|
-        soldier.moveable_points.collect{|point|{:soldier => soldier, point: point}}
+        soldier.moveable_points.collect{|point|{soldier: soldier, point: point}}
       }.flatten
 
       mpoints.collect{|mpoint|

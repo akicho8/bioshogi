@@ -9,7 +9,7 @@ module Bushido
         title "(title)"
         comment "(comment)"
         board "平手"
-        # pieces :black => "歩"
+        # pieces black: "歩"
         mov "▲７六歩"
         mov "△３四歩"
       end
@@ -30,8 +30,8 @@ module Bushido
     it "試行錯誤用2" do
       table = [
         {
-          :title => "付き捨て+タタキ+合わせ",
-          :dsl => proc do
+          title: "付き捨て+タタキ+合わせ",
+          dsl: proc do
             # title "(title)"
             # comment "(comment)"
             board <<-BOARD

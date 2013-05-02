@@ -5,10 +5,10 @@ module Bushido
     # # FIXME: deal と pieces がかぶっている
     # def self.basic_test(params = {})
     #   params = {
-    #     :player => :black,
+    #     player: :black,
     #   }.merge(params)
     #
-    #   player = Player.new(:location => params[:player], :board => Board.new, :deal => true)
+    #   player = Player.new(location: params[:player], board: Board.new, deal: true)
     #
     #   # 最初にくばるオプション(追加で)
     #   player.deal(params[:deal])
@@ -56,11 +56,11 @@ module Bushido
     # # TODO: これ不要かも
     # def marshal_dump
     #   {
-    #     :name         => @name,
-    #     :location     => @location,
-    #     :last_piece   => @last_piece,
-    #     :pieces       => @pieces.collect(&:sym_name),
-    #     :soldiers     => @soldiers.collect(&:formality_name2),
+    #     name: @name,
+    #     location: @location,
+    #     last_piece: @last_piece,
+    #     pieces: @pieces.collect(&:sym_name),
+    #     soldiers: @soldiers.collect(&:formality_name2),
     #   }
     # end
     #
@@ -73,7 +73,7 @@ module Bushido
     #   @last_piece  = attrs[:last_piece]
     #   @pieces      = attrs[:pieces].collect{|v|Piece[v]}
     #   @soldiers = attrs[:soldiers].collect{|soldier|
-    #     Soldier.new(MiniSoldier.from_str(soldier).merge(:player => self))
+    #     Soldier.new(MiniSoldier.from_str(soldier).merge(player: self))
     #   }
     #
     #   # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
@@ -93,11 +93,11 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      location_soldiers = Utils.location_soldiers(:location => location, :key => "平手")
+      location_soldiers = Utils.location_soldiers(location: location, key: "平手")
       # location_soldiers2 = location_soldiers[location.key]
       location_soldiers.each{|info|
         pick_out(info[:piece])
-        soldier = Soldier.new(info.merge(:player => self))
+        soldier = Soldier.new(info.merge(player: self))
         put_on_with_valid(info[:point], soldier)
         @soldiers << soldier
       }
@@ -105,12 +105,12 @@ module Bushido
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
-    #   player.initial_soldiers(["５五飛", "３三飛"], :from_piece => false)
+    #   player.initial_soldiers(["５五飛", "３三飛"], from_piece: false)
     #   player.initial_soldiers("#{point}馬")
-    #   player.initial_soldiers({point: point, piece: Piece["角"], :promoted => true}, :from_piece => false)
+    #   player.initial_soldiers({point: point, piece: Piece["角"], promoted: true}, from_piece: false)
     def initial_soldiers(mini_soldier_or_str, options = {})
       options = {
-        :from_piece => true, # 持駒から配置する？
+        from_piece: true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(mini_soldier_or_str).each{|mini_soldier_or_str|
         if String === mini_soldier_or_str
@@ -124,7 +124,7 @@ module Bushido
         if options[:from_piece]
           pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        soldier = Soldier.new(mini_soldier.merge(:player => self))
+        soldier = Soldier.new(mini_soldier.merge(player: self))
         put_on_with_valid(mini_soldier[:point], soldier)
         @soldiers << soldier
       }
@@ -337,11 +337,11 @@ module Bushido
 
         # ここがかなり重い
         stocks.collect{|stock|
-          placements = Utils.both_soldiers_from_char_board2(:location => location, :stock => stock)
+          placements = Utils.both_soldiers_from_char_board2(location: location, stock: stock)
           a = placements.values.flatten.collect(&:to_s)
           b = board.surface.values.collect(&:to_h).collect(&:to_s)
           match_p = (a - b).empty?
-          {:key => stock[:key], :placements => placements, :match => match_p}
+          {key: stock[:key], placements: placements, match: match_p}
         }
       end
     end
@@ -363,7 +363,7 @@ module Bushido
       end
       marshal_load(_save)
       # shash = MiniSoldier.from_str(arg)
-      # _soldier = Soldier.new(shash.merge(:player => self))
+      # _soldier = Soldier.new(shash.merge(player: self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
       #   @soldiers << _soldier
@@ -396,7 +396,7 @@ module Bushido
 
     def put_on_with_valid(point, soldier, options = {})
       options = {
-        :validate => true,
+        validate: true,
       }.merge(options)
       if options[:validate]
         get_errors(soldier.to_mini_soldier.merge(point: point)).each{|error|raise error}
@@ -409,7 +409,7 @@ module Bushido
       if s = find_collisione_pawn(mini_soldier)
         errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{mini_soldier}は打てません")
       end
-      if moveable_points(mini_soldier, :board_object_collision_skip => true).empty?
+      if moveable_points(mini_soldier, board_object_collision_skip: true).empty?
         errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
       end
       errors
@@ -452,14 +452,14 @@ module Bushido
 
       score += @player.soldiers.collect{|soldier|
         if soldier.promoted?
-          {:pawn => 1200, :bishop => 2000, :rook => 2200, :lance => 1200, :knight => 1200, :silver => 1200}[soldier.piece.sym_name]
+          {pawn: 1200, bishop: 2000, rook: 2200, lance: 1200, knight: 1200, silver: 1200}[soldier.piece.sym_name]
         else
-          {:pawn => 100, :bishop => 1800, :rook => 2000, :lance => 600, :knight => 700, :silver => 1000, :gold => 1200, :king => 9999}[soldier.piece.sym_name]
+          {pawn: 100, bishop: 1800, rook: 2000, lance: 600, knight: 700, silver: 1000, gold: 1200, king: 9999}[soldier.piece.sym_name]
         end
       }.reduce(:+) || 0
 
       score += @player.pieces.collect{|piece|
-        {:pawn => 105, :bishop => 1890, :rook => 2100, :lance => 630, :knight => 735, :silver => 1050, :gold => 1260, :king => 9999}[piece.sym_name]
+        {pawn: 105, bishop: 1890, rook: 2100, lance: 630, knight: 735, silver: 1050, gold: 1260, king: 9999}[piece.sym_name]
       }.reduce(:+) || 0
 
       score

@@ -83,7 +83,7 @@ EOT
     end
 
     it "状態の復元" do
-      mediator = Mediator.test(:init => [["１五玉", "１四歩"], ["１一玉", "１二歩"]], :exec => ["１三歩成", "１三歩"])
+      mediator = Mediator.test(init: [["１五玉", "１四歩"], ["１一玉", "１二歩"]], exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
       mediator.counter.should            == dup.counter
       mediator.simple_hand_logs.should    == dup.simple_hand_logs
@@ -99,14 +99,14 @@ EOT
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      mediator = Mediator.test(:init => ["１五歩", "１三歩"], :exec => "１四歩")
+      mediator = Mediator.test(init: ["１五歩", "１三歩"], exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
       mediator.prev_player.runner.hand_log.to_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
-      mediator = SimulatorFrame.new({:execute => "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", :board => "平手"})
+      mediator = SimulatorFrame.new({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
       mediator.build_frames
       mediator.human_hand_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
     end
@@ -120,7 +120,7 @@ EOT
     end
 
     it "フレームのサンドボックス実行(重要)" do
-      mediator = Mediator.test(:init => ["１二歩"])
+      mediator = Mediator.test(init: ["１二歩"])
       mediator.player_at(:black).to_s_soldiers.should == "1二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
       mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
@@ -129,7 +129,7 @@ EOT
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
-      mediator = Mediator.test(:exec => "１二歩打")
+      mediator = Mediator.test(exec: "１二歩打")
       mediator.deep_dup
     end
 
@@ -156,9 +156,9 @@ EOT
 
     # it "歩を打つとエラー？？？ → かんけいなし" do
     #   value = {
-    #     :pieces  => {:black => "歩"},
-    #     :execute => "▲５五歩",
-    #     :board   => "全落ち",
+    #     pieces: {black: "歩"},
+    #     execute: "▲５五歩",
+    #     board: "全落ち",
     #   }
     #   mediator = SimulatorFrame.new(value)
     #   p mediator
@@ -176,7 +176,7 @@ EOT
     # end
 
     if false
-      it "XtraPattern", :p => true do
+      it "XtraPattern", p: true do
         XtraPattern.reload_all
         XtraPattern.each do |pattern|
           if pattern[:dsl]

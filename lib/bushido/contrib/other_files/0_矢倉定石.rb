@@ -6,8 +6,8 @@ module Bushido
   XtraPattern.define do
     [
       {
-        :title => Pathname(__FILE__).basename(".*"),
-        :dsl => lambda do
+        title: Pathname(__FILE__).basename(".*"),
+        dsl: lambda do
           board "平手"
           mov "▲７六歩 △８四歩 ▲６八銀 △３四歩 ▲７七銀 △８五歩"
           # snapshot

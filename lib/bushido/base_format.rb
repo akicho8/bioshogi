@@ -34,8 +34,8 @@ module Bushido
     #   +---------------------------+
     #   "
     #
-    #   Bushido::BaseFormat.board_parse(str) # => {:white => ["４二玉"], :black => []}
-    #   Bushido::BaseFormat.board_parse(str) # => {:white => [<MiniSoldier ...>], :black => []}
+    #   Bushido::BaseFormat.board_parse(str) # => {white: ["４二玉"], black: []}
+    #   Bushido::BaseFormat.board_parse(str) # => {white: [<MiniSoldier ...>], black: []}
     #
     def self.board_parse(source)
       lines = normalized_source(source).strip.lines.to_a
@@ -50,13 +50,13 @@ module Bushido
         if s.count("-").modulo(3).nonzero?
           raise SyntaxError, "横幅が3桁毎になっていない"
         end
-        x_units = Position::Hpos.orig_units(:zenkaku => true).last(s.gsub("---", "-").count("-"))
+        x_units = Position::Hpos.orig_units(zenkaku: true).last(s.gsub("---", "-").count("-"))
       else
         x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
       end
 
       mds = lines.collect{|v|v.match(/\|(?<inline>.*)\|(?<y>.)?/)}.compact
-      y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(:zenkaku => true)[i]}
+      y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(zenkaku: true)[i]}
       inlines = mds.collect{|v|v[:inline]}
 
       players = Location.inject({}){|h, location|h.merge(location => [])}
@@ -181,7 +181,7 @@ module Bushido
         private
 
         def header
-          "  " + Position::Hpos.units(:zenkaku => true).join(" ")
+          "  " + Position::Hpos.units(zenkaku: true).join(" ")
         end
 
         def line

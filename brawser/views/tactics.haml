@@ -1,6 +1,6 @@
 .well
   - Bushido::XtraPattern.each.with_index do |pattern, id|
-    %a{:href => "/tactics?id=#{id}"}= "【#{pattern[:title]}】"
+    %a{href: "/tactics?id=#{id}"}= "【#{pattern[:title]}】"
 
 - if @pattern
   %p

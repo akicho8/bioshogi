@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 source "https://rubygems.org"
 gemspec
-gem "rain_table", :git => "https://github.com/akicho8/rain_table.git" # gemspec で効かないので
+gem "rain_table", git: "https://github.com/akicho8/rain_table.git" # gemspec で効かないので
 
 # web i/f 用なんだけどここには書きたくなかった
 group :brawser_env do

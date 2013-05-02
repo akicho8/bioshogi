@@ -36,7 +36,7 @@ end
 redis_args = {}
 if ENV["REDISTOGO_URL"]
   uri = URI.parse(ENV["REDISTOGO_URL"])
-  redis_args = {:host => uri.host, :port => uri.port, :password => uri.password}
+  redis_args = {host: uri.host, port: uri.port, password: uri.password}
 end
 REDIS = Redis.new(redis_args)
 REDIS.flushdb
@@ -151,8 +151,8 @@ auto_flushing {
 })
     if params[:kif_title].present?
       @pattern = Bushido::XtraPattern.new({
-          :title => params[:kif_title],
-          :dsl => Bushido::KifuDsl.define(params){|params|eval(params[:kif_body])},
+          title: params[:kif_title],
+          dsl: Bushido::KifuDsl.define(params){|params|eval(params[:kif_body])},
         })
       @frames = Bushido::HybridSequencer.execute(@pattern)
     else
@@ -181,10 +181,10 @@ auto_flushing {
     begin
       @mediator = Bushido::Mediator.start
       count.times do
-        mini_soldier = Bushido::MiniSoldier[point: Bushido::Point.to_a.sample, piece: Bushido::Piece.to_a.sample, :promoted => [true, false].sample]
-        @mediator.players.sample.initial_soldiers(mini_soldier, :from_piece => false)
+        mini_soldier = Bushido::MiniSoldier[point: Bushido::Point.to_a.sample, piece: Bushido::Piece.to_a.sample, promoted: [true, false].sample]
+        @mediator.players.sample.initial_soldiers(mini_soldier, from_piece: false)
       end
-    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
+    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido:PieceAlredyExist: error
       retry
     end
     haml :learn_board_points
@@ -193,8 +193,8 @@ auto_flushing {
   get "/simple_kifu_form" do
     if params[:body].present?
       @pattern = Bushido::XtraPattern.new({
-          :title => params[:title],
-          :dsl => Bushido::KifuDsl.define(params){|params|
+          title: params[:title],
+          dsl: Bushido::KifuDsl.define(params){|params|
             board "平手"
             auto_flushing
             mov params[:body]
@@ -232,8 +232,8 @@ auto_flushing {
     if params[:body].present?
       @kif_info = Bushido.parse(params[:body])
       @pattern = Bushido::XtraPattern.new({
-          :title => params[:title],
-          :dsl => Bushido::KifuDsl.define(@kif_info){|kif_info|
+          title: params[:title],
+          dsl: Bushido::KifuDsl.define(@kif_info){|kif_info|
             board "平手"
             auto_flushing
             kif_info.move_infos.each{|move_info|

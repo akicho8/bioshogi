@@ -190,7 +190,7 @@
     : player = mediator.player_at(:black)
     : player.initial_soldiers("５五馬")
     : player.soldiers.first.moveable_points.each{|point|
-    :   player.initial_soldiers("#{point}馬", :from_piece => false)
+    :   player.initial_soldiers("#{point}馬", from_piece: false)
     : }
     : puts mediator.board
     : # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -225,18 +225,17 @@
 *** 駒の情報取得例
 
     : pp Piece["飛"].to_h
-    : # >> {:name=>"飛",
-    : # >>  :promoted_name=>"龍",
-    : # >>  :basic_names=>["飛", "rook"],
-    : # >>  :promoted_names=>["龍", "ROOK", "竜"],
-    : # >>  :names=>["飛", "rook", "龍", "ROOK", "竜"],
-    : # >>  :sym_name=>:rook,
+    : # >> {name: "飛",
+    : # >>  promoted_name: "龍",
+    : # >>  basic_names: ["飛", "rook"],
+    : # >>  promoted_names: ["龍", "ROOK", "竜"],
+    : # >>  names: ["飛", "rook", "龍", "ROOK", "竜"],
+    : # >>  sym_name: :rook,
     : # >>  :promotable?=>true,
-    : # >>  :basic_step_vectors=>[],
-    : # >>  :basic_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
-    : # >>  :promoted_step_vectors=>
-    : # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
-    : # >>  :promoted_series_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
+    : # >>  basic_step_vectors: [],
+    : # >>  basic_series_vectors: [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
+    : # >>  promoted_step_vectors:     : # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
+    : # >>  promoted_series_vectors: [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}
 
 *** 盤面テキストのパース
 
@@ -255,11 +254,11 @@
     : EOT
     : BaseFormat.board_parse(board)
     : # => {
-    :   :white => {
+    :   white: {
     :     "８一桂", "２一桂", "１一香", "９二飛", "５三歩", "３三玉", "３四桂", "１四金",
     :     "８五歩", "３五歩", "２五歩", "１五歩", "９六歩", "６六角", "６七歩", "５七と",
     :   },
-    :   :black => {
+    :   black: {
     :     "５一馬", "４二と", "６三全", "４五銀", "７六歩", "８七歩", "７七銀", "９八歩",
     :     "７八玉", "６八香", "１八香", "９九香", "８九桂", "３九飛",
     :   },
@@ -539,7 +538,7 @@
    - 1x8の盤面、「成」を無効、「１一香」の移動可能な位置を調べると、１八がでてくる。ここは「成らず」はできないのでエラーになる
    - push {} のところで深さを出す。で、コメントのところで A-B-C A-B-A とかラベルをつけれるようにする
    - 人間用の難しい棋譜パース部分を別モジュール化してコアをシンプルにする
-   - :dsl => KifuDsl.define("文字列") とも書けるようにする。evalのように。
+   - dsl: KifuDsl.define("文字列") とも書けるようにする。evalのように。
    - 囲い一覧をWEBブラウザで確認できるようにする
    - XtraPattern を Rails の routing.rb を参考に綺麗に書けるようにする 
    - KifuDsl.define{} は -> {} でいいような気がする

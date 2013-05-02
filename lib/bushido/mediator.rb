@@ -21,7 +21,7 @@ module Bushido
 
     def initialize
       super
-      @players = Location.collect{|loc|Player.new(self, :location => loc)}
+      @players = Location.collect{|loc|Player.new(self, location: loc)}
       @counter = 0
     end
 
@@ -88,7 +88,7 @@ module Bushido
 
     def board_reset(name = nil)
       Utils.board_reset_args(name).each{|location, v|
-        player_at(location).initial_soldiers(v, :from_piece => false)
+        player_at(location).initial_soldiers(v, from_piece: false)
       }
     end
   end
@@ -107,9 +107,9 @@ module Bushido
     # TODO: Player の marshal_dump が使われてない件について調べる
     def marshal_dump
       {
-        :counter  => @counter,
-        :players  => @players,
-        :hand_logs => @hand_logs,
+        counter: @counter,
+        players: @players,
+        hand_logs: @hand_logs,
       }
     end
 
@@ -205,8 +205,8 @@ module Bushido
 
     # 互換性用
     if true
-      def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(:with_mark => true)}; end
-      def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(:with_mark => true)};  end
+      def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(with_mark: true)}; end
+      def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(with_mark: true)};  end
     end
 
     def to_s
@@ -230,7 +230,7 @@ module Bushido
     module ClassMethods
       def test(params = {})
         params = {
-          :nplayers => 2,
+          nplayers: 2,
         }.merge(params)
         mediator = start
         mediator.players = mediator.players.first(params[:nplayers])
@@ -268,7 +268,7 @@ module Bushido
     end
 
     def marshal_dump
-      super.merge(:variables => @variables, :var_stack => @var_stack)
+      super.merge(variables: @variables, var_stack: @var_stack)
     end
 
     def marshal_load(attrs)
@@ -313,7 +313,7 @@ module Bushido
       @pattern = pattern
 
       # Location.each{|loc|
-      #   player_join(Player.new(:location => loc))
+      #   player_join(Player.new(location: loc))
       # }
 
       board_reset(@pattern[:board])
@@ -362,7 +362,7 @@ module Bushido
       # end
 
       # Location.each{|loc|
-      #   player_join(Player.new(:location => loc))
+      #   player_join(Player.new(location: loc))
       # }
     end
 

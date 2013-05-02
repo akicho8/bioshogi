@@ -48,8 +48,8 @@ module Bushido
     alias next_location reverse
 
     @pool ||= [
-      new(:key => :black, :mark => "▲", :other_marks => ["b", "▼", "^"], :name => "先手", :varrow => " ", :index => 0),
-      new(:key => :white, :mark => "▽", :other_marks => ["w", "△"],      :name => "後手", :varrow => "v", :index => 1),
+      new(key: :black, mark: "▲", other_marks: ["b", "▼", "^"], name: "先手", varrow: " ", index: 0),
+      new(key: :white, mark: "▽", other_marks: ["w", "△"],      name: "後手", varrow: "v", index: 1),
     ]
 
     class << self
