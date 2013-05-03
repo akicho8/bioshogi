@@ -94,5 +94,13 @@ module Bushido
     def to_h
       to_mini_soldier
     end
+
+    # この盤上の駒を消す
+    def abone
+      @player.board.__abone_cell(@point)
+      @player.soldiers.delete(self)
+      @point = nil
+      self
+    end
   end
 end

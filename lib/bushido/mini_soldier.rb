@@ -13,10 +13,44 @@ module Bushido
       Piece.promoted_fetch(md[:piece]).merge(point: Point.parse(md[:point]))
     end
 
-    # ハッシュにした駒を人間が入力する表記に戻す
-    #   Utils.shash_to_s(MiniSoldier.from_str("４二竜")) # => "４二竜"
+    # 「１一香成」ではなく「１一杏」を返す
+    # 指し手を返すには to_hand を使うこと
     def to_s
-      "#{self[:point].name}#{self[:piece].some_name(self[:promoted])}"
+      [self[:point].name, self[:piece].some_name(self[:promoted])].join
+    end
+
+    def some_name
+      self[:piece].some_name(self[:promoted])
+    end
+
+    # 現状の状態から成れるか？
+    def sarani_nareru?(location)
+      !self[:promoted] && self[:piece].promotable? && self[:point].promotable?(location)
+    end
+
+    def point
+      self[:point]
+    end
+
+    # def inspect
+    #   s = collect{|k, v|"#{k}:#{v}"}.join(" ")
+    #   "<MiniSoldier #{s}>"
+    # end
+  end
+
+  # どこからどこへ 成るかどうかの情報を含めたもの
+  # origin_soldier と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
+  class SoldierMove < MiniSoldier
+    def to_hand
+      [self[:point].name, self[:origin_soldier].some_name, (self[:promoted_trigger] ? "成" : ""), "(", self[:origin_soldier].point.number_format, ")"].join
+      # [self[:point].name, self[:origin_soldier].piece_current_name, (self[:promoted_trigger] ? "成" : ""), "(", self[:origin_soldier].point.number_format, ")"].join
+    end
+  end
+
+  # 打
+  class PieceStake < MiniSoldier
+    def to_hand
+      [self[:point].name, self[:piece].name, "打"].join
     end
   end
 end

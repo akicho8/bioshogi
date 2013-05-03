@@ -55,8 +55,8 @@
     : mediator = Mediator.start
     : mediator.piece_plot
     : loop do
-    :   way = mediator.current_player.brain.all_ways.sample
-    :   mediator.execute(way)
+    :   hand = mediator.current_player.brain.all_hands.sample
+    :   mediator.execute(hand)
     :   last_piece = mediator.prev_player.last_piece
     :   if last_piece && last_piece.sym_name == :king
     :     break
@@ -299,7 +299,7 @@
     :   }
     :   player.initial_soldiers(_soldiers)
     : end
-    : mediator.piece_discard
+    : mediator.pieces_clear
     : p mediator
     : # >> 1手目: ▲先手番
     : # >>   ５ ４ ３ ２ １
@@ -536,6 +536,7 @@
 ** _TODO_
 
    - 1x8の盤面、「成」を無効、「１一香」の移動可能な位置を調べると、１八がでてくる。ここは「成らず」はできないのでエラーになる
+   - soldiers_ways のテスト
    - push {} のところで深さを出す。で、コメントのところで A-B-C A-B-A とかラベルをつけれるようにする
    - 人間用の難しい棋譜パース部分を別モジュール化してコアをシンプルにする
    - dsl: KifuDsl.define("文字列") とも書けるようにする。evalのように。

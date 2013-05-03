@@ -63,6 +63,14 @@ EOT
 
     describe "移動" do
       describe "できる" do
+        # it "foo" do
+        #   player = player_test
+        #   # puts player.mediator
+        #   player.initial_soldiers("７七歩")
+        #   puts player.mediator
+        #   player.execute("７六歩")
+        #   puts player.mediator
+        # end
         it "普通に" do
           player_test2(init: "７七歩", exec: "７六歩").should == ["▲7六歩"]
         end
@@ -162,7 +170,7 @@ EOT
       describe "取る" do
         describe "取れる" do
           it "座標指定で" do
-            mediator = Mediator.test(init: [["１五玉", "１四歩"], ["１一玉", "１二歩"]], exec: ["１三歩成", "１三歩"])
+            mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
             mediator.prev_player.last_piece.name.should == "歩"
             mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
             mediator.prev_player.to_s_soldiers.should == "1一玉 1三歩"
@@ -170,7 +178,7 @@ EOT
             mediator.current_player.to_s_soldiers.should == "1五玉"
           end
           it "同歩で取る" do
-            mediator = Mediator.test(init: ["２五歩", "２三歩"], exec: ["２四歩", "同歩"])
+            mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
 
             mediator.prev_player.last_piece.name.should == "歩"
@@ -180,11 +188,11 @@ EOT
             mediator.current_player.to_s_soldiers.should == ""
           end
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
-            mediator = Mediator.test(init: ["２五歩", "２三歩"], exec: ["２四歩", "２四同歩"])
+            mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "２四同歩"])
             mediator.hand_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
-            mediator = Mediator.test(init: [["２七歩", "２八飛"], ["２三歩", "２二飛"]], exec: ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
+            mediator = Mediator.test(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", exec: ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
             mediator.human_hand_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛", "▽同飛"]
           end
         end
@@ -194,7 +202,7 @@ EOT
             expect { Mediator.test(exec: "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明です/)
           end
           it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
-            expect { Mediator.test(nplayers: 1, init: ["１九香", "１八香"], exec: ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
+            expect { Mediator.test(nplayers: 1, init: "▲１九香 ▲１八香", exec: ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
           end
         end
       end
@@ -273,7 +281,7 @@ EOT
       mediator.execute("7六歩")
       mediator.execute("3四歩")
       mediator.execute("2二角成")
-      mediator.player_at(:black).to_s_pieces.should == "角"
+      mediator.player_b.to_s_pieces.should == "角"
       mediator.board.to_s.should == <<-EOT.strip_heredoc
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -292,7 +300,7 @@ EOT
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
-    #     player = player_test(init: "２二歩", reset_pieces: "歩")
+    #     player = player_test(init: "２二歩", pinit: "歩")
     #     p player.to_s_soldiers
     #     p player.to_s_pieces
     #     player.safe_put_on("１二歩打") do
@@ -313,7 +321,7 @@ EOT
     #     # end
     #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
-    #     # player = player_test(init: "２二歩", reset_pieces: "歩")
+    #     # player = player_test(init: "２二歩", pinit: "歩")
     #     # p player.to_s_soldiers
     #     # p player.to_s_pieces
     #     # player.safe_put_on("１二歩打") do
@@ -338,19 +346,19 @@ EOT
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
-    #   mediator.player_at(:black).to_s_soldiers.should == "1二歩"
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
+    #   mediator.player_b.to_s_soldiers.should == "1二歩"
+    #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_b.board.to_s_soldiers.should == "1二歩"
     #
     #   # puts mediator.board
-    #   mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
+    #   mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
     #   # puts mediator.board
     #
-    #   mediator.player_at(:black).to_s_soldiers.should == "1二歩"
+    #   mediator.player_b.to_s_soldiers.should == "1二歩"
     #
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_at(:black).board.present?.should == true
-    #   # mediator.player_at(:black).board.to_s_soldiers.should == "1二歩" # ← こうなるのが問題
+    #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_b.board.present?.should == true
+    #   # mediator.player_b.board.to_s_soldiers.should == "1二歩" # ← こうなるのが問題
     # end
   end
 end

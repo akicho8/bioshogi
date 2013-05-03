@@ -6,8 +6,8 @@ require "./example_helper"
 mediator = Mediator.start
 mediator.piece_plot
 loop do
-  way = mediator.current_player.brain.all_ways.sample
-  mediator.execute(way)
+  hand = mediator.current_player.brain.all_hands.sample
+  mediator.execute(hand)
   last_piece = mediator.prev_player.last_piece
   if last_piece && last_piece.sym_name == :king
     break

@@ -38,6 +38,9 @@ module Bushido
     def black_player; player_at(:black); end
     def white_player; player_at(:white); end
 
+    alias player_b black_player
+    alias player_w white_player
+
     # 前後のプレイヤーを返す
     def prev_player; current_player(-1); end
     def next_player; current_player(+1); end
@@ -57,8 +60,8 @@ module Bushido
     end
 
     # プレイヤーたちの持駒を捨てる
-    def piece_discard
-      @players.collect(&:piece_discard)
+    def pieces_clear
+      @players.collect(&:pieces_clear)
     end
 
     # def deal
@@ -212,15 +215,29 @@ module Bushido
     def to_s
       s = ""
       s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
-      s << to_s2
+      s << to_hand
       s
     end
 
-    def to_s2
+    def to_hand
       s = ""
       s << @board.to_s
       s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
       s
+    end
+  end
+
+  module Other
+    def initial_soldiers(str, options = {})
+      Utils.initial_soldiers_split(str).each{|info|
+        player_at(info[:location]).initial_soldiers(info[:input], options)
+      }
+    end
+
+    def reset_pieces_from_str(str)
+      Utils.triangle_hold_pieces_str_to_hash(str).each{|location, pieces_str|
+        player_at(location).reset_pieces_from_str(pieces_str)
+      }
     end
   end
 
@@ -231,11 +248,38 @@ module Bushido
       def test(params = {})
         params = {
           nplayers: 2,
+          # sim: false,
         }.merge(params)
+
+        # if params[:sim]
+        #   mediator = new
+        # else
+        #   mediator = start
+        # end
         mediator = start
         mediator.players = mediator.players.first(params[:nplayers])
-        (params[:init] || []).each_with_index{|init, index|mediator.current_player(index).initial_soldiers(init)}
+        if params[:init]
+          mediator.initial_soldiers(params[:init])
+        end
+        if params[:init2]
+          mediator.initial_soldiers(params[:init2], :from_piece => false)
+        end
+        if params[:pinit]
+          mediator.reset_pieces_from_str(params[:pinit])
+        end
+        if params[:pieces_clear]
+          mediator.pieces_clear
+        end
         mediator.execute(params[:exec])
+        mediator
+      end
+
+      def simple_test(params = {})
+        params = {
+        }.merge(params)
+        mediator = new
+        mediator.initial_soldiers(params[:init], :from_piece => false)
+        mediator.reset_pieces_from_str(params[:pinit])
         mediator
       end
 
@@ -292,7 +336,7 @@ module Bushido
       out << "-" * 40 + "\n"
       out << "棋譜: #{human_hand_logs.join(" ")}\n"
       out << variables.inspect + "\n"
-      out << to_s2
+      out << to_hand
       out.join.strip
     end
   end
@@ -300,6 +344,7 @@ module Bushido
   class Mediator
     include PlayerSelector
     include Boardable
+    include Other
     include Executer
     include Serialization
     include HistoryStack

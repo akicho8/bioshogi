@@ -24,15 +24,15 @@ BOARD
         mediator = Mediator.new
         mediator.board_reset(value)
         # puts mediator.board
-        mediator.player_at(:black).defense_form_keys.include?("カニ囲い").should == true
-        mediator.player_at(:black).complete_defense_names.should == []
+        mediator.player_b.defense_form_keys.include?("カニ囲い").should == true
+        mediator.player_b.complete_defense_names.should == []
 
         # 打った直後に記録する
-        mediator.player_at(:black).complete_defense_names.should == []
-        mediator.player_at(:black).defense_name_append?.should == false
+        mediator.player_b.complete_defense_names.should == []
+        mediator.player_b.defense_name_append?.should == false
         mediator.execute("９九角")
-        mediator.player_at(:black).complete_defense_names.include?("カニ囲い").should == true
-        mediator.player_at(:black).defense_name_append?.should == true
+        mediator.player_b.complete_defense_names.include?("カニ囲い").should == true
+        mediator.player_b.defense_name_append?.should == true
       end
 
       it "空白の部分が重要な「坊主美濃」のチェックが可能" do
@@ -56,15 +56,15 @@ BOARD
 #         mediator = Mediator.new
 #         mediator.board_reset(value)
 #         # puts mediator.board
-#         mediator.player_at(:black).defense_form_keys.include?("カニ囲い").should == true
-#         mediator.player_at(:black).complete_defense_names.should == []
+#         mediator.player_b.defense_form_keys.include?("カニ囲い").should == true
+#         mediator.player_b.complete_defense_names.should == []
 #
 #         # 打った直後に記録する
-#         mediator.player_at(:black).complete_defense_names.should == []
-#         mediator.player_at(:black).defense_name_append?.should == false
+#         mediator.player_b.complete_defense_names.should == []
+#         mediator.player_b.defense_name_append?.should == false
 #         mediator.execute("９九角")
-#         mediator.player_at(:black).complete_defense_names.include?("カニ囲い").should == true
-#         mediator.player_at(:black).defense_name_append?.should == true
+#         mediator.player_b.complete_defense_names.include?("カニ囲い").should == true
+#         mediator.player_b.defense_name_append?.should == true
       end
 
       #       it "test" do
@@ -84,15 +84,15 @@ BOARD
       # +---------------------------+
       # BOARD
       #         # p mediator.board.to_s
-      #         mediator.player_at(:black).defense_form_keys.should == ["カニ囲い"]
-      #         mediator.player_at(:black).complete_defense_names.should == []
+      #         mediator.player_b.defense_form_keys.should == ["カニ囲い"]
+      #         mediator.player_b.complete_defense_names.should == []
       #
       #         # 打った直後に記録する
-      #         mediator.player_at(:black).complete_defense_names.should == []
-      #         mediator.player_at(:black).defense_name_append?.should == false
+      #         mediator.player_b.complete_defense_names.should == []
+      #         mediator.player_b.defense_name_append?.should == false
       #         mediator.execute("９九角")
-      #         mediator.player_at(:black).complete_defense_names.should == ["カニ囲い"]
-      #         mediator.player_at(:black).defense_name_append?.should == true
+      #         mediator.player_b.complete_defense_names.should == ["カニ囲い"]
+      #         mediator.player_b.defense_name_append?.should == true
       #       end
       #     end
     end

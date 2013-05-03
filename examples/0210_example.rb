@@ -13,7 +13,7 @@ mediator.players.each do |player|
   }
   player.initial_soldiers(_soldiers)
 end
-mediator.piece_discard
+mediator.pieces_clear
 p mediator
 mediator.execute("２四銀")
 mediator.execute("４二銀")

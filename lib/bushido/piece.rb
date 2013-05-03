@@ -41,7 +41,9 @@ module Bushido
         get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
       end
 
-      # Piece.fetch("歩").name # => "歩"
+      # 「歩」や「と」を駒オブジェクトと成フラグに分離
+      #   Piece.promoted_fetch("歩") # => <MiniSoldier piece:"歩">
+      #   Piece.promoted_fetch("と") # => <MiniSoldier piece:"歩", promoted: true>
       def promoted_fetch(arg)
         case
         when piece = basic_get(arg)
@@ -58,9 +60,9 @@ module Bushido
       end
 
       # 台上の持駒文字列をハッシュ配列化
-      #   stand_unpack("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
-      def stand_unpack(*args)
-        Utils.stand_unpack(*args)
+      #   hold_pieces_str_to_array("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
+      def hold_pieces_str_to_array(*args)
+        Utils.hold_pieces_str_to_array(*args)
       end
 
       private

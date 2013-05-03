@@ -119,7 +119,7 @@ module Bushido
       end
 
       def evaluate(context)
-        Utils.mov_split(@value).each do |hash|
+        Utils.movs_split(@value).each do |hash|
           player = context.player_at(hash[:location])
           player.execute(hash[:input])
           if context.variables[:auto_flushing]

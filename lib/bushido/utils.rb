@@ -89,8 +89,8 @@ module Bushido
     # end
 
     # 持駒表記変換 (人間表記 → コード)
-    #  Utils.stand_pack([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二 飛"
-    def stand_pack(pieces)
+    #  Utils.hold_pieces_array_to_str([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二飛"
+    def hold_pieces_array_to_str(pieces)
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
         count = ""
         if pieces.size > 1
@@ -101,14 +101,12 @@ module Bushido
     end
 
     # 持駒表記変換 (コード → 人間表記)
-    #   Utils.stand_unpack("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
-    def stand_unpack(str)
+    #   Utils.hold_pieces_str_to_array("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
+    def hold_pieces_str_to_array(str)
       if String === str
         str = str.tr("〇一二三四五六七八九", "0-9")
-        infos = str.split(/#{WHITE_SPACE}+/).collect{|s|
-          md = s.match(/\A(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?\z/)
-          md or raise SyntaxError, "例:「飛 歩2」 : #{str.inspect}"
-          {piece: md[:piece], count: (md[:count] || 1).to_i}
+        infos = str.scan(/(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?/).collect{|piece, count|
+          {piece: piece, count: (count || 1).to_i}
         }
       else
         infos = str
@@ -122,17 +120,22 @@ module Bushido
       }.flatten
     end
 
-    def first_distributed_pieces
-      [
-        {piece: "歩", count: 9},
-        {piece: "角", count: 1},
-        {piece: "飛", count: 1},
-        {piece: "香", count: 2},
-        {piece: "桂", count: 2},
-        {piece: "銀", count: 2},
-        {piece: "金", count: 2},
-        {piece: "玉", count: 1},
-      ]
+    # def first_distributed_pieces
+    #   "歩9角飛香2桂2銀2金2玉"
+    # end
+
+    def triangle_hold_pieces_str_to_hash(str)
+      hash = {}
+      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each{|mark, pieces_str|
+        location = Location[mark]
+        hash[location] ||= ""
+        hash[location] << pieces_str
+      }
+      hash
+    end
+
+    def triangle_hold_pieces_hash_to_str(hash)
+      hash.collect{|location, pieces_str|"#{location.mark}#{pieces_str}"}.join(" ")
     end
 
     # ki2形式に近い棋譜の羅列のパース
@@ -143,15 +146,28 @@ module Bushido
       str = str.squish
       str.split(/\s+/).collect{|s|
         if s.match(/\A[#{Location.triangles}]/)
-          mov_split(s)
+          movs_split(s)
         else
           s
         end
       }.flatten
     end
 
-    def mov_split(str)
-      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect{|mark, input|{location: Location[mark], input: input}}
+    def movs_split(str)
+      regexp = /([#{Location.triangles}])([^#{Location.triangles}\s]+)/
+      Array.wrap(str).join(" ").scan(regexp).collect{|mark, input|
+        {location: Location[mark], input: input}
+      }
+    end
+
+    def initial_soldiers_split(str)
+      movs_split(str.gsub(/_+/, " "))
+    end
+
+    def mov_split_one(str)
+      md = str.match(/(?<mark>[#{Location.triangles}])(?<input>.*)/)
+      # md or raise(ArgumentError)
+      {location: Location[md[:mark]], input: md[:input]}
     end
 
     private

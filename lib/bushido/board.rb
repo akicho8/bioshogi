@@ -115,6 +115,20 @@ module Bushido
       @surface.values.collect(&:formality_name).sort.join(" ")
     end
 
+    # 駒をすべて削除する
+    def abone_all
+      @surface.values.each(&:abone)
+    end
+
+    # 指定のセルを削除する
+    # プレイヤー側の soldiers からは削除しないので注意
+    def __abone_cell(value)
+      if Point === value
+        value = value.to_xy
+      end
+      @surface.delete(value)
+    end
+
     private
 
     # 盤面の文字列化

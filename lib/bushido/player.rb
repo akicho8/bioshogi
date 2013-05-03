@@ -22,7 +22,7 @@ module Bushido
     #
     #   # あとでくばる(というかセットする)
     #   if params[:pieces]
-    #     player.piece_discard
+    #     player.pieces_clear
     #     player.deal(params[:pieces])
     #   end
     #
@@ -51,6 +51,10 @@ module Bushido
 
     def board
       @mediator.board
+    end
+
+    def next_player
+      @mediator.player_at(location.reverse)
     end
 
     # # TODO: これ不要かも
@@ -241,7 +245,7 @@ module Bushido
       end
 
       # 持駒を捨てる
-      def piece_discard
+      def pieces_clear
         @pieces.clear
       end
 
@@ -251,20 +255,24 @@ module Bushido
       #   player.deal("飛 歩二")
       #   player.to_s_pieces # => "飛 歩二"
       #
-      def deal(str = Utils.first_distributed_pieces)
-        @pieces += Utils.stand_unpack(str)
+      def deal(str = "歩9角飛香2桂2銀2金2玉")
+        @pieces += Utils.hold_pieces_str_to_array(str)
+      end
+
+      def reset_pieces_from_str(str)
+        @pieces = Utils.hold_pieces_str_to_array(str)
       end
 
       # 持駒を文字列化したものをインポートする(未使用)
       #   player.import_from_s_pieces("歩九 角 飛 香二 桂二 銀二 金二 玉")
       def import_from_s_pieces(str)
-        @pieces = Utils.stand_unpack(str)
+        @pieces = Utils.hold_pieces_str_to_array(str)
       end
 
       # 持駒の文字列化
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
-        Utils.stand_pack(pieces)
+        Utils.hold_pieces_array_to_str(pieces)
       end
     end
 
@@ -409,7 +417,7 @@ module Bushido
       if s = find_collisione_pawn(mini_soldier)
         errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{mini_soldier}は打てません")
       end
-      if moveable_points(mini_soldier, board_object_collision_skip: true).empty?
+      if Movabler.moveable_points2(self, mini_soldier).empty?
         errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
       end
       errors
@@ -432,6 +440,8 @@ module Bushido
     def moveable_points(mini_soldier, options = {})
       Movabler.moveable_points(self, mini_soldier, options)
     end
+
+    private
 
     # def side_soldiers_put_on(table)
     #   table.each{|info|initial_soldiers(info)}

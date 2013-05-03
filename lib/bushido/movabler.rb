@@ -11,58 +11,104 @@ module Bushido
 
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def moveable_points(player, mini_soldier, options = {})
-      options = {
-        board_object_collision_skip: false, # 盤上の他の駒を考慮しない？
-        with_promoted: false,               # 成って行けるのかどうかの情報を付加する
-      }.merge(options)
       list = []
-      if options[:with_promoted]
-        list += moveable_points_block(player, mini_soldier, mini_soldier[:point], mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
-        list += moveable_points_block(player, mini_soldier, mini_soldier[:point], mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
-        list.uniq{|e|e.to_xy}     # 龍などは step_vectors と series_vectors で左右上下が重複しているため
-      else
-        list += moveable_points_block(player, mini_soldier, mini_soldier[:point], mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
-        list += moveable_points_block(player, mini_soldier, mini_soldier[:point], mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
-        list.uniq{|e|e.to_xy}     # 龍などは step_vectors と series_vectors で左右上下が重複しているため
-      end
+      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
+      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
+      # list.each{|e|e.update(:origin_soldier => mini_soldier)}
+      list.uniq{|e|e.to_s}
+    end
+
+    # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    def moveable_points2(player, mini_soldier, options = {})
+      list = []
+      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
+      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
+      list.uniq{|e|e.to_s} # FIXME: もしかして同じものがあるかも。あとで確認
     end
 
     private
 
-    def moveable_points_block(player, mini_soldier, point, vectors, loop, options)
+    # アルゴリズム
+    #
+    #     １       １
+    #   +---+    +---+
+    #   | ・|一  | ・|一
+    #   | ・|二  | ・|二
+    #   | 香|三  | 杏 |三
+    #   +---+    +---+
+    #
+    #   ▲１三香の場合
+    #   A. "１二" に移動してみて、その状態でさらに動けるなら "１二香" をストアしつつ、成れるなら成ってさらに動けるなら "１二杏" もストア
+    #   B. "１一" に移動してみて、その状態でさらに動けるなら "１一杏" をストアしつつ、成れるなら成ってさらに動けるなら "１三杏" をストア
+    #
+    #   ▲１三杏 の場合
+    #   C. "１二" に移動してみて、その状態でさらに動けるなら "１二杏" をストア。動けないので成れるなら成って→成れない
+    #   D. "１一" に移動してみて → 移動できない
+    #
+    #   となるので成っているかどうかにかかわらず B の方法でやればいい
+    #
+    def moveable_points_block(player, mini_soldier, vectors, loop, options)
       normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
-        pt = point
+        pt = mini_soldier[:point]
         loop do
           pt = pt.add_vector(vector)
           unless pt.valid?
             break
           end
-          if options[:board_object_collision_skip]
-            list << pt
+          target = player.board.fetch(pt)
+          if target.nil?
+            func2(list, player, mini_soldier, pt)
           else
-            target = player.board.fetch(pt)
-            if target.nil?
-              if options[:with_promoted]
-                ways = moveable_points(player, mini_soldier.merge(point: pt), board_object_collision_skip: true)
-                p ways
-                # TODO: ここで何も取得できなかったらいきどまりなので、成フラグをいっしょに座標を返さないといけない
-              end
-              list << pt
+            unless Soldier === target
+              raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
+            end
+            # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
+            if target.player == player
+              break
             else
-              unless Soldier === target
-                raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
-              end
-              # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
-              if target.player == player
-                break
-              else
-                # 相手の駒だったので置ける
-                list << pt
-                break
-              end
+              # 相手の駒だったので置ける
+              func2(list, player, mini_soldier, pt)
+              break
             end
           end
           unless loop
+            break
+          end
+        end
+      end
+    end
+
+    def func2(list, player, mini_soldier, pt)
+      m = mini_soldier.merge(point: pt)
+      ways = moveable_points2(player, m)
+      if !ways.empty?
+        list << SoldierMove[m.merge(:origin_soldier => mini_soldier)]
+      end
+      if m.sarani_nareru?(player.location)
+        m = m.merge(promoted: true)
+        ways = moveable_points2(player, m)
+        if !ways.empty?
+          list << SoldierMove[m.merge(:origin_soldier => mini_soldier, :promoted_trigger => true)]
+        end
+      end
+    end
+
+    def moveable_points_block2(player, mini_soldier, vectors, loop, options)
+      normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
+        pt = mini_soldier[:point]
+        loop do
+          pt = pt.add_vector(vector)
+          if pt.valid?
+            # 移動可能
+            list << mini_soldier.merge(:point => pt)
+          else
+            # 盤外
+            break
+          end
+          if loop
+            # 飛角香のベクトルは繰り返す
+          else
+            # 金銀桂などのベクトルは繰り返さない
             break
           end
         end

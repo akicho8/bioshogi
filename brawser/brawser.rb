@@ -77,18 +77,25 @@ class Brawser < Sinatra::Base
     # @mediator = dump
 
     if params[:location].nil? || @mediator.current_player.location.key.to_s == params[:location]
-      if params[:way].present?
-        @mediator.execute(params[:way])
+      if params[:hand].present?
+        @mediator.execute(params[:hand])
       end
-      if params[:think_put].present?
-        eval_list = @mediator.current_player.brain.eval_list
-        if info = eval_list.first
-          @mediator.execute(info[:way])
-        end
+      # if params[:think_put].present?
+      #   eval_list = @mediator.current_player.brain.eval_list
+      #   if info = eval_list.first
+      #     @mediator.execute(info[:hand])
+      #   end
+      # end
+      if params[:think_put_lv].present?
+        @runtime = Time.now
+        @think_result = @mediator.current_player.brain.think_by_minmax(:depth => params[:think_put_lv].to_i)
+        @runtime = Time.now - @runtime
+        input = Bushido::Utils.mov_split_one(@think_result[:hand])[:input]
+        @mediator.execute(input)
       end
       if params[:random_put].present?
-        if way = @mediator.current_player.brain.all_ways.sample.presence
-          @mediator.execute(way)
+        if hand = @mediator.current_player.brain.all_hands.sample.presence
+          @mediator.execute(hand)
         end
       end
     end
@@ -184,7 +191,7 @@ auto_flushing {
         mini_soldier = Bushido::MiniSoldier[point: Bushido::Point.to_a.sample, piece: Bushido::Piece.to_a.sample, promoted: [true, false].sample]
         @mediator.players.sample.initial_soldiers(mini_soldier, from_piece: false)
       end
-    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido:PieceAlredyExist: error
+    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
       retry
     end
     haml :learn_board_points

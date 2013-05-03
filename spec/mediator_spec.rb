@@ -70,10 +70,10 @@ EOT
         mediator = Mediator.start
         mediator.piece_plot
         loop do
-          way = mediator.current_player.brain.all_ways.sample
-          p way
+          hand = mediator.current_player.brain.all_hands.sample
+          p hand
           p mediator
-          mediator.execute(way)
+          mediator.execute(hand)
           last_piece = mediator.prev_player.last_piece
           if last_piece && last_piece.sym_name == :king
             break
@@ -83,7 +83,7 @@ EOT
     end
 
     it "状態の復元" do
-      mediator = Mediator.test(init: [["１五玉", "１四歩"], ["１一玉", "１二歩"]], exec: ["１三歩成", "１三歩"])
+      mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
       mediator.counter.should            == dup.counter
       mediator.simple_hand_logs.should    == dup.simple_hand_logs
@@ -99,7 +99,7 @@ EOT
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      mediator = Mediator.test(init: ["１五歩", "１三歩"], exec: "１四歩")
+      mediator = Mediator.test(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
       mediator.prev_player.runner.hand_log.to_pair.should == ["1四歩(13)", "同歩"]
@@ -120,12 +120,12 @@ EOT
     end
 
     it "フレームのサンドボックス実行(重要)" do
-      mediator = Mediator.test(init: ["１二歩"])
-      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
-      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
-      mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
-      mediator.player_at(:black).to_s_soldiers.should == "1二歩"
-      mediator.player_at(:black).board.to_s_soldiers.should == "1二歩"
+      mediator = Mediator.test(init: "▲１二歩")
+      mediator.player_b.to_s_soldiers.should == "1二歩"
+      mediator.player_b.board.to_s_soldiers.should == "1二歩"
+      mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
+      mediator.player_b.to_s_soldiers.should == "1二歩"
+      mediator.player_b.board.to_s_soldiers.should == "1二歩"
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do

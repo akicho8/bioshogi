@@ -126,10 +126,13 @@ module Bushido
       end
     end
 
+    # 「７六歩」とした場合「７六歩打」なのか「７六歩(nn)」なのか判断できないので
+    # 「７六」に来ることができる歩があれば「７六歩(nn)」と判断する
+    # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
-      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.include?(@point)} # この場所にあるもの
-      @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}                         # 同じ駒
-      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted}                           # 成っているかどうか
+      @soldiers = @player.soldiers.find_all{|soldier|soldier.moveable_points.any?{|e|e[:point] == @point}} # 指定の場所に来れる盤上の駒に絞る
+      @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}                         # 同じ駒に絞る
+      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted}                           # 成っているかどうかで絞る
       @candidate = @soldiers.collect{|s|s.clone}
 
       if @soldiers.empty?

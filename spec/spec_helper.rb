@@ -35,10 +35,8 @@ RSpec.configure do |config|
 
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
 
-      # あとでくばる(というかセットする)
-      if v = params[:reset_pieces]
-        player.piece_discard
-        player.deal(v)
+      if v = params[:pinit]
+        player.reset_pieces_from_str(v)
       end
 
       player
