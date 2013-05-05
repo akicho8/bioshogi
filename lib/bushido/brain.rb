@@ -39,7 +39,7 @@ module Bushido
             # 木の末端
             score = _player.evaluate
             @@eval_count += 1
-            p [:@@eval_count, @@eval_count]
+            # p [:@@eval_count, @@eval_count]
             hand_info = HandInfo[:hand => mhand, :score => score, :level => params[:level], :reading_hands => [mhand]]
           end
           log_puts params, "評価 #{hand_info}"

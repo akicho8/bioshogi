@@ -70,8 +70,10 @@ EOT
         mediator = Mediator.start
         mediator.piece_plot
         loop do
-          hand = mediator.current_player.brain.all_hands.sample
-          p hand
+          think_result = mediator.current_player.brain.think_by_minmax(:depth => 0)
+          hand = Bushido::Utils.mov_split_one(think_result[:hand])[:input]
+          # hand = mediator.current_player.brain.all_hands.sample
+          # p hand
           p mediator
           mediator.execute(hand)
           last_piece = mediator.prev_player.last_piece
@@ -79,6 +81,7 @@ EOT
             break
           end
         end
+        p mediator.simple_hand_logs.join(" ")
       end
     end
 
