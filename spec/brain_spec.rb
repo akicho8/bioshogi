@@ -84,14 +84,14 @@ EOT
 
         it "0手先を読む - 目先の歩得を優先してしまう" do
           example1 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 0)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 0)
             r.should == {:hand => "▲1二飛成(13)", :score => 2305, :level => 0, :reading_hands => ["▲1二飛成(13)"]}
           end
         end
 
         it "1手先を読む - 歩をとると飛車を取られて相手のスコアが増大するので２三飛を選択する" do
           example1 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 1)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
             r.should == {:hand => "▲2三飛成(13)", :score => -1800, :level => 0, :reading_hands => ["▲2三飛成(13)", "▽1三歩成(12)"]}
           end
         end
@@ -130,28 +130,28 @@ EOT
 
         it "0手先の場合、駒得だけを考えて歩を取りにいく" do
           example2 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 0)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 0)
             r.should == {hand: "▲1四香(16)", score: 2705, level:  0, reading_hands: ["▲1四香(16)"]}
           end
         end
 
         it "1手先の場合は歩を取ると取り返されるので飛車を移動する(相手は１一飛と１五歩をするけど両方同じ得点なのでどっちかになる曖昧)" do
           example2 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 1)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
             r.should == {:hand=>"▲1八飛(17)", :score=>-2700, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)"]}
           end
         end
 
         it "2手先の場合は香を取り返せるところまでわかるので香がつっこむ" do
           example2 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 2)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 2)
             r.should == {:hand=>"▲1四香(16)", :score=>2735, :level=>0, :reading_hands=>["▲1四香(16)", "▽1四香(13)", "▲1四飛(17)"]}
           end
         end
 
         it "3手先の場合は最後に飛車で取られて全滅することがわかるので香車はつっこまない" do
           example2 do |mediator|
-            r = Brain.nega_max(:player => mediator.player_b, :depth => 3)
+            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 3)
             r.should == {:hand=>"▲1八飛(17)", :score=>-3230, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
           end
         end
@@ -165,7 +165,7 @@ EOT
     #     mediator.player_b.initial_soldiers(["１三飛"], :from_piece => false)
     #     puts mediator
     #     # mediator.player_b.brain.doredore
-    #     p Brain.nega_max(:player => mediator.player_b, :depth => 1)
+    #     p NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
     #   end
     # end
 

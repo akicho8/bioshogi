@@ -10,10 +10,22 @@ module Bushido
     end
   end
 
-  class Brain
-    @@eval_count = 0
+  class NegaMaxRunner
+    def self.run(params)
+      object = new(params)
+      object.nega_max(params)
+    end
 
-    def self.nega_max(params)
+    attr_accessor :eval_count
+
+    def initialize(params)
+      @params = {
+        :random => true,        # 未実装
+      }.merge(params)
+      @eval_count = 0
+    end
+
+    def nega_max(params = {})
       params = {
         :depth => 0,            # 最大の深さ
         # temporay
@@ -38,8 +50,8 @@ module Bushido
           else
             # 木の末端
             score = _player.evaluate
-            @@eval_count += 1
-            # p [:@@eval_count, @@eval_count]
+            @eval_count += 1
+            # p [:@@eval_count, @eval_count]
             hand_info = HandInfo[:hand => mhand, :score => score, :level => params[:level], :reading_hands => [mhand]]
           end
           log_puts params, "評価 #{hand_info}"
@@ -56,17 +68,19 @@ module Bushido
       hand_info
     end
 
-    def self.log_puts(params, str)
+    def log_puts(params, str)
       # puts "%s %d %s %s" % [(params[:level] < params[:depth] ? "  " : "葉"), params[:level], " " * 4 * params[:level], str]
     end
+  end
 
+  class Brain
     def initialize(player)
       @player = player
     end
 
     # {:hand=>"▲1八飛(17)", :score=>-3230, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
     def think_by_minmax(options = {})
-      Brain.nega_max({:player => @player}.merge(options))
+      NegaMaxRunner.run({:player => @player}.merge(options))
     end
 
     def all_hands
