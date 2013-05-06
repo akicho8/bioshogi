@@ -10,17 +10,17 @@ module Bushido
     extend self
 
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
-    def moveable_points(player, mini_soldier, options = {})
+    def movable_points(player, mini_soldier, options = {})
       list = []
-      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
+      list += movable_points_block(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
       # list.each{|e|e.update(:origin_soldier => mini_soldier)}
       list.uniq{|e|e.to_s}
     end
 
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
-    def moveable_points2(player, mini_soldier, options = {})
+    def movable_points2(player, mini_soldier, options = {})
       list = []
-      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
+      list += movable_points_block2(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
       list.uniq{|e|e.to_s} # FIXME: もしかして同じものがあるかも。あとで確認
     end
 
@@ -45,7 +45,7 @@ module Bushido
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def moveable_points_block(player, mini_soldier, vecs, options)
+    def movable_points_block(player, mini_soldier, vecs, options)
       normalized_vectors(player, vecs).each.with_object([]) do |vec, list|
         pt = mini_soldier[:point]
         loop do
@@ -78,20 +78,20 @@ module Bushido
 
     def func2(list, player, mini_soldier, pt)
       m = mini_soldier.merge(point: pt)
-      ways = moveable_points2(player, m)
+      ways = movable_points2(player, m)
       if !ways.empty?
         list << SoldierMove[m.merge(:origin_soldier => mini_soldier)]
       end
       if m.sarani_nareru?(player.location)
         m = m.merge(promoted: true)
-        ways = moveable_points2(player, m)
+        ways = movable_points2(player, m)
         if !ways.empty?
           list << SoldierMove[m.merge(:origin_soldier => mini_soldier, :promoted_trigger => true)]
         end
       end
     end
 
-    def moveable_points_block2(player, mini_soldier, vecs, options)
+    def movable_points_block2(player, mini_soldier, vecs, options)
       normalized_vectors(player, vecs).each.with_object([]) do |vec, list|
         pt = mini_soldier[:point]
         loop do

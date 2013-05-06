@@ -7,7 +7,7 @@ mediator = Mediator.new
 player = mediator.player_at(:black)
 Piece.each{|piece|
   player.initial_soldiers("５五#{piece.name}", from_piece: false)
-  player.board["５五"].moveable_points.each{|v|
+  player.board["５五"].movable_points.each{|v|
     soldier = player.board[v[:point]]
     draw = false
     if false
