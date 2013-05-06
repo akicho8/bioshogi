@@ -417,7 +417,7 @@ module Bushido
       if s = find_collisione_pawn(mini_soldier)
         errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{mini_soldier}は打てません")
       end
-      if Movabler.movable_points2(self, mini_soldier).empty?
+      if Movabler.movable_infos2(self, mini_soldier).empty?
         errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
       end
       errors
@@ -437,8 +437,8 @@ module Bushido
 
     private
 
-    def movable_points(mini_soldier, options = {})
-      Movabler.movable_points(self, mini_soldier, options)
+    def movable_infos(mini_soldier, options = {})
+      Movabler.movable_infos(self, mini_soldier, options)
     end
 
     private

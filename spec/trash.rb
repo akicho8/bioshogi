@@ -19,7 +19,7 @@
 #     mediator = Mediator.new
 #     mediator.player_b.initial_soldiers("１三香", from_piece: false)
 #     # puts mediator
-#     mediator.board["１三"].movable_points(with_promoted: true).collect(&:to_s).should == ["1二香", "1一杏"]
+#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["1二香", "1一杏"]
 #     # mediator.board.abone_all
 #   end
 # end
@@ -35,7 +35,7 @@
 #     mediator = Mediator.new
 #     mediator.player_b.initial_soldiers("１三杏", from_piece: false)
 #     # puts mediator
-#     mediator.board["１三"].movable_points(with_promoted: true).collect(&:to_s).should == ["1二杏"]
+#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["1二杏"]
 #     # mediator.board.abone_all
 #   end
 # end
