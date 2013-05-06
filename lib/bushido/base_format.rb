@@ -191,14 +191,22 @@ module Bushido
         def rows
           Position::Vpos.ridge_length.times.collect{|y|
             fields = Position::Hpos.ridge_length.times.collect{|x|
-              if soldier = @board.surface[[x, y]]
-                soldier.to_s(:kakiki)
-              else
-                " " + "・"
-              end
+              object_to_s(@board.surface[[x, y]])
             }
             "|#{fields.join}|" + Position::Vpos.parse(y).name
           }
+        end
+
+        def object_to_s(object)
+          if object
+            object.to_s(:kakiki)
+            # if Soldier === object
+            # else
+            #   "%-3s" % object.to_s
+            # end
+          else
+            " " + "・"
+          end
         end
       end
     end

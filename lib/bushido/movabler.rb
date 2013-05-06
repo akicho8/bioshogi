@@ -12,8 +12,7 @@ module Bushido
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def moveable_points(player, mini_soldier, options = {})
       list = []
-      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
-      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
+      list += moveable_points_block(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
       # list.each{|e|e.update(:origin_soldier => mini_soldier)}
       list.uniq{|e|e.to_s}
     end
@@ -21,8 +20,7 @@ module Bushido
     # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def moveable_points2(player, mini_soldier, options = {})
       list = []
-      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].step_vectors(mini_soldier[:promoted]), false, options)
-      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].series_vectors(mini_soldier[:promoted]), true, options)
+      list += moveable_points_block2(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
       list.uniq{|e|e.to_s} # FIXME: もしかして同じものがあるかも。あとで確認
     end
 
@@ -47,11 +45,11 @@ module Bushido
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def moveable_points_block(player, mini_soldier, vectors, loop, options)
-      normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
+    def moveable_points_block(player, mini_soldier, vecs, options)
+      normalized_vectors(player, vecs).each.with_object([]) do |vec, list|
         pt = mini_soldier[:point]
         loop do
-          pt = pt.add_vector(vector)
+          pt = pt.add_vector(vec)
           unless pt.valid?
             break
           end
@@ -71,7 +69,7 @@ module Bushido
               break
             end
           end
-          unless loop
+          if OnceVector === vec
             break
           end
         end
@@ -93,31 +91,25 @@ module Bushido
       end
     end
 
-    def moveable_points_block2(player, mini_soldier, vectors, loop, options)
-      normalized_vectors(player, vectors).each.with_object([]) do |vector, list|
+    def moveable_points_block2(player, mini_soldier, vecs, options)
+      normalized_vectors(player, vecs).each.with_object([]) do |vec, list|
         pt = mini_soldier[:point]
         loop do
-          pt = pt.add_vector(vector)
+          pt = pt.add_vector(vec)
           if pt.valid?
-            # 移動可能
             list << mini_soldier.merge(:point => pt)
           else
-            # 盤外
             break
           end
-          if loop
-            # 飛角香のベクトルは繰り返す
-          else
-            # 金銀桂などのベクトルは繰り返さない
+          if OnceVector === vec
             break
           end
         end
       end
     end
 
-    def normalized_vectors(player, vectors)
-      vectors.uniq.compact.collect do |vector|
-        v = Vector[*vector]
+    def normalized_vectors(player, vecs)
+      vecs.collect do |v|
         if player.location.white?
           v = v.reverse_sign
         end

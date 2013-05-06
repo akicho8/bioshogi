@@ -24,17 +24,15 @@ module Bushido
 
     it "駒の情報" do
       piece = Piece.get("飛")
-      piece.name.should              == "飛"
-      piece.promoted_name.should     == "龍"
-      piece.basic_names.should       == ["飛", "rook"]
-      piece.promoted_names.should    == ["龍", "ROOK", "竜"]
-      piece.names.should             == ["飛", "rook", "龍", "ROOK", "竜"]
-      piece.sym_name.should          == :rook
-      piece.promotable?.should       == true
-      piece.basic_step_vectors.should    == []
-      piece.basic_series_vectors.should    == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
-      piece.promoted_step_vectors.should == [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]]
-      piece.promoted_series_vectors.should == [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]
+      piece.name.should                 == "飛"
+      piece.promoted_name.should        == "龍"
+      piece.basic_names.should          == ["飛", "rook"]
+      piece.promoted_names.should       == ["龍", "ROOK", "竜"]
+      piece.names.should                == ["飛", "rook", "龍", "ROOK", "竜"]
+      piece.sym_name.should             == :rook
+      piece.promotable?.should          == true
+      piece.select_vectors.should       == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.select_vectors(true).should == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
     end
 
     it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do

@@ -134,6 +134,10 @@ module Bushido
           []
         end
 
+        def basic_vectors
+          build_vectors(basic_step_vectors, basic_series_vectors)
+        end
+
         def promoted_step_vectors
           []
         end
@@ -142,14 +146,19 @@ module Bushido
           []
         end
 
-        def step_vectors(promoted = false)
-          assert_promotable(promoted)
-          promoted ? promoted_step_vectors : basic_step_vectors
+        def promoted_vectors
+          build_vectors(promoted_step_vectors, promoted_series_vectors)
         end
 
-        def series_vectors(promoted = false)
+        def select_vectors(promoted = false)
           assert_promotable(promoted)
-          promoted ? promoted_series_vectors : basic_series_vectors
+          promoted ? promoted_vectors : basic_vectors
+        end
+
+        private
+
+        def build_vectors(ov, rv)
+          Set[*(ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]})]
         end
       end
 
@@ -186,6 +195,26 @@ module Bushido
       end
     end
 
+    module Pattern
+      extend self
+
+      def pattern_plus
+        [
+          nil,    [0,-1],   nil,
+          [-1, 0],       [1, 0],
+          nil,    [0, 1],   nil,
+        ]
+      end
+
+      def pattern_x
+        [
+          [-1, -1], nil, [1, -1],
+          nil,      nil,     nil,
+          [-1,  1], nil, [1,  1],
+        ]
+      end
+    end
+
     module Goldable
       def promoted_step_vectors
         Gold.basic_pattern
@@ -193,10 +222,6 @@ module Bushido
     end
 
     module Brave
-      def promoted_step_vectors
-        King.basic_pattern
-      end
-
       def promoted_series_vectors
         basic_series_vectors
       end
@@ -229,12 +254,12 @@ module Bushido
         "馬"
       end
 
+      def promoted_step_vectors
+        Pattern.pattern_plus
+      end
+
       def basic_series_vectors
-        [
-          [-1, -1], nil, [1, -1],
-          nil,      nil,     nil,
-          [-1,  1], nil, [1,  1],
-        ]
+        Pattern.pattern_x
       end
     end
 
@@ -253,12 +278,12 @@ module Bushido
         super + ["竜"]
       end
 
+      def promoted_step_vectors
+        Pattern.pattern_x
+      end
+
       def basic_series_vectors
-        [
-          nil,      [0, -1],     nil,
-          [-1,  0],          [1,  0],
-          nil,      [0,  1],     nil,
-        ]
+        Pattern.pattern_plus
       end
     end
 

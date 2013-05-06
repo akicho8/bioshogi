@@ -31,10 +31,10 @@ module Bushido
       end
       describe "できない" do
         it "成っている金を相手の陣地に" do
-          expect { player_test2(init: "5三成金").to }.to raise_error(SyntaxError)
+          expect { player_test2(init: "5三成金") }.to raise_error(SyntaxError)
         end
         it "すでに駒があるところに駒を配置できない" do
-          expect { player_test2(init: ["5三銀", "5三銀"]).to }.to raise_error(PieceAlredyExist)
+          expect { player_test2(init: ["5三銀", "5三銀"]) }.to raise_error(PieceAlredyExist)
         end
         it "飛車は二枚持ってないので二枚配置できない" do
           expect { player_test2(init: ["5二飛", "5二飛"]) }.to raise_error(PieceNotFound)

@@ -71,7 +71,12 @@ module Bushido
       soldier.point = point
       # soldier.double_pawn_validation(self, point)
 
-      @surface[point.to_xy] = soldier
+      set(point, soldier)
+    end
+
+    # 指定座標に何かを置く
+    def set(point, object)
+      @surface[Point[point].to_xy] = object
     end
 
     # fetchのエイリアス
@@ -117,7 +122,7 @@ module Bushido
 
     # 駒をすべて削除する
     def abone_all
-      @surface.values.each(&:abone)
+      @surface.values.find_all{|e|Soldier === e}.each(&:abone)
     end
 
     # 指定のセルを削除する
@@ -147,10 +152,13 @@ module Bushido
       RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, header: true)
     end
 
-    # 盤上の指定座標にすでに物があるならエラーとする
+    # 盤上の指定座標に駒があるならエラーとする
     def assert_board_cell_is_blank(point)
-      if fetch(point)
-        raise PieceAlredyExist, "#{point.name}にはすでに何かがあります"
+      object = fetch(point)
+      if object
+        # if Soldier === object
+        # end
+        raise PieceAlredyExist, "#{point.name}にはすでに#{object}があります\n#{self}"
       end
     end
   end
