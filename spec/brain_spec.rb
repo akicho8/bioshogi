@@ -138,7 +138,7 @@ EOT
         it "1手先の場合は歩を取ると取り返されるので飛車を移動する(相手は１一飛と１五歩をするけど両方同じ得点なのでどっちかになる曖昧)" do
           example2 do |mediator|
             r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
-            r.should == {:hand=>"▲1八飛(17)", :score=>-2700, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)"]}
+            r.should == {:hand=>"▲1八飛(17)", :score=>-2700, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1一飛(12)"]}
           end
         end
 

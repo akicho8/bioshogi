@@ -70,13 +70,14 @@ EOT
         mediator = Mediator.start
         mediator.piece_plot
         loop do
-          think_result = mediator.current_player.brain.think_by_minmax(:depth => 0)
+          think_result = mediator.current_player.brain.think_by_minmax(:depth => 0, :random => true)
           hand = Bushido::Utils.mov_split_one(think_result[:hand])[:input]
           # hand = mediator.current_player.brain.all_hands.sample
-          # p hand
-          p mediator
+          p hand
           mediator.execute(hand)
+          p mediator
           last_piece = mediator.prev_player.last_piece
+          break
           if last_piece && last_piece.sym_name == :king
             break
           end

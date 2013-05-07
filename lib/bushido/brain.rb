@@ -20,56 +20,63 @@ module Bushido
 
     def initialize(params)
       @params = {
-        :random => true,        # 未実装
+        :random => false,
       }.merge(params)
       @eval_count = 0
     end
 
-    def nega_max(params = {})
-      params = {
+    def nega_max(locals = {})
+      locals = {
         :depth => 0,            # 最大の深さ
         # temporay
         :level => 0,            # 現在の深さ
-      }.merge(params)
+      }.merge(@params).merge(locals)
+
       logs = []
-      player = params[:player]
+      player = locals[:player]
       mediator = player.mediator
       all_hands = player.brain.all_hands
       ary = all_hands.each.with_object([]).with_index{|(hand, ary), index|
         mediator.sandbox_for do |_mediator|
           _player = _mediator.player_at(player.location)
           mhand = "#{_player.location.mark}#{hand}"
-          log_puts params, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
+          log_puts locals, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
           _player.execute(hand)
           child_max_hand_info = nil
-          if params[:level] < params[:depth]
+          if locals[:level] < locals[:depth]
             # 木の途中
-            child_max_hand_info = nega_max(params.merge(:player => _player.next_player, :level => params[:level].next))
+            child_max_hand_info = nega_max(locals.merge(:player => _player.next_player, :level => locals[:level].next))
             score = -child_max_hand_info[:score]
-            hand_info = HandInfo[:hand => mhand, :score => score, :level => params[:level], :reading_hands => [mhand] + child_max_hand_info[:reading_hands]]
+            hand_info = HandInfo[:hand => mhand, :score => score, :level => locals[:level], :reading_hands => [mhand] + child_max_hand_info[:reading_hands]]
           else
             # 木の末端
             score = _player.evaluate
             @eval_count += 1
             # p [:@@eval_count, @eval_count]
-            hand_info = HandInfo[:hand => mhand, :score => score, :level => params[:level], :reading_hands => [mhand]]
+            hand_info = HandInfo[:hand => mhand, :score => score, :level => locals[:level], :reading_hands => [mhand]]
           end
-          log_puts params, "評価 #{hand_info}"
+          log_puts locals, "評価 #{hand_info}"
           ary << hand_info
         end
       }
-      # Maxなものを選択する
-      sorted_ary = ary.sort_by{|e|e[:score]}
-      hand_info = sorted_ary.last
-      _debug_info = sorted_ary.collect{|e|e.to_s_short}.join(" ")
-      log_puts params, "確定 #{hand_info} 候補:[#{_debug_info}]"
-      # logs << hand_info[:hand]
+
+      sorted_ary = ary.sort_by{|e|-e[:score]}
+      _candidate = sorted_ary.collect{|e|e.to_s_short}.join(" ")
+      _score, top_same_score_ary = ary.group_by{|e|e[:score]}.sort_by{|score, ary|-score}.first
+      if @params[:random]
+        hand_info = top_same_score_ary.sample
+      else
+        # テスト時にゆらぐのを防ぐため強引だけど文字列化してソートして先頭を取り出す
+        hand_info = top_same_score_ary.sort_by(&:to_s).first
+      end
+
+      log_puts locals, "確定 #{hand_info} 候補:[#{_candidate}]"
 
       hand_info
     end
 
-    def log_puts(params, str)
-      # puts "%s %d %s %s" % [(params[:level] < params[:depth] ? "  " : "葉"), params[:level], " " * 4 * params[:level], str]
+    def log_puts(locals, str)
+      # puts "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]
     end
   end
 
@@ -79,8 +86,8 @@ module Bushido
     end
 
     # {:hand=>"▲1八飛(17)", :score=>-3230, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
-    def think_by_minmax(options = {})
-      NegaMaxRunner.run({:player => @player}.merge(options))
+    def think_by_minmax(params = {})
+      NegaMaxRunner.run({:player => @player}.merge(params))
     end
 
     def all_hands
