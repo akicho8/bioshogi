@@ -4,6 +4,7 @@ require "active_support/core_ext/string"
 require "active_support/configurable"
 require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/class/attribute_accessors"
+require "active_support/buffered_logger"
 
 # require "pry-debugger" # これを有効にすると pry + rcodetools の環境でバックトレースがでまくる
 
@@ -31,6 +32,7 @@ module Bushido
 end
 
 require_relative "bushido/version"
+require_relative "bushido/logger"
 require_relative "bushido/vector"
 require_relative "bushido/errors"
 require_relative "bushido/position"

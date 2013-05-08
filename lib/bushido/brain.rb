@@ -76,7 +76,7 @@ module Bushido
     end
 
     def log_puts(locals, str)
-      # puts "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]
+      Bushido.logger.info "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]
     end
   end
 
