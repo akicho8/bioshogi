@@ -70,7 +70,7 @@ EOT
         mediator = Mediator.start
         mediator.piece_plot
         loop do
-          think_result = mediator.current_player.brain.think_by_minmax(:depth => 0, :random => true)
+          think_result = mediator.current_player.brain.think_by_minmax(depth: 0, random: true)
           hand = Bushido::Utils.mov_split_one(think_result[:hand])[:input]
           # hand = mediator.current_player.brain.all_hands.sample
           p hand

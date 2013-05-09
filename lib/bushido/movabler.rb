@@ -13,7 +13,7 @@ module Bushido
     def movable_infos(player, mini_soldier, options = {})
       list = []
       list += movable_infos_block(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
-      # list.each{|e|e.update(:origin_soldier => mini_soldier)}
+      # list.each{|e|e.update(origin_soldier: mini_soldier)}
       list.uniq{|e|e.to_s}
     end
 
@@ -80,13 +80,13 @@ module Bushido
       m = mini_soldier.merge(point: pt)
       ways = movable_infos2(player, m)
       if !ways.empty?
-        list << SoldierMove[m.merge(:origin_soldier => mini_soldier)]
+        list << SoldierMove[m.merge(origin_soldier: mini_soldier)]
       end
       if m.sarani_nareru?(player.location)
         m = m.merge(promoted: true)
         ways = movable_infos2(player, m)
         if !ways.empty?
-          list << SoldierMove[m.merge(:origin_soldier => mini_soldier, :promoted_trigger => true)]
+          list << SoldierMove[m.merge(origin_soldier: mini_soldier, promoted_trigger: true)]
         end
       end
     end
@@ -97,7 +97,7 @@ module Bushido
         loop do
           pt = pt.add_vector(vec)
           if pt.valid?
-            list << mini_soldier.merge(:point => pt)
+            list << mini_soldier.merge(point: pt)
           else
             break
           end

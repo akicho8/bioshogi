@@ -20,16 +20,16 @@ module Bushido
 
     def initialize(params)
       @params = {
-        :random => false,
+        random: false,
       }.merge(params)
       @eval_count = 0
     end
 
     def nega_max(locals = {})
       locals = {
-        :depth => 0,            # 最大の深さ
+        depth: 0,            # 最大の深さ
         # temporay
-        :level => 0,            # 現在の深さ
+        level: 0,            # 現在の深さ
       }.merge(@params).merge(locals)
 
       logs = []
@@ -45,15 +45,15 @@ module Bushido
           child_max_hand_info = nil
           if locals[:level] < locals[:depth]
             # 木の途中
-            child_max_hand_info = nega_max(locals.merge(:player => _player.next_player, :level => locals[:level].next))
+            child_max_hand_info = nega_max(locals.merge(player: _player.next_player, level: locals[:level].next))
             score = -child_max_hand_info[:score]
-            hand_info = HandInfo[:hand => mhand, :score => score, :level => locals[:level], :reading_hands => [mhand] + child_max_hand_info[:reading_hands]]
+            hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand] + child_max_hand_info[:reading_hands]]
           else
             # 木の末端
             score = _player.evaluate
             @eval_count += 1
             # p [:@@eval_count, @eval_count]
-            hand_info = HandInfo[:hand => mhand, :score => score, :level => locals[:level], :reading_hands => [mhand]]
+            hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand]]
           end
           log_puts locals, "評価 #{hand_info}"
           ary << hand_info
@@ -85,9 +85,9 @@ module Bushido
       @player = player
     end
 
-    # {:hand=>"▲1八飛(17)", :score=>-3230, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
+    # {hand: "▲1八飛(17)", score: -3230, level: 0, reading_hands: ["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
     def think_by_minmax(params = {})
-      NegaMaxRunner.run({:player => @player}.merge(params))
+      NegaMaxRunner.run({player: @player}.merge(params))
     end
 
     def all_hands
@@ -105,11 +105,11 @@ module Bushido
     #       mediator.sandbox_for do |_mediator|
     #         _player = _mediator.player_at(@player.location)
     #         _player.execute(hand)
-    #         ary << {:hand => hand, :score => _player.evaluate}
+    #         ary << {hand: hand, score: _player.evaluate}
     #       end
     #     }
     #     score_info.sort_by{|e|-e[:score]}
-    #     ary << {:hand => hand, :score => _player.evaluate}
+    #     ary << {hand: hand, score: _player.evaluate}
     #   end
     # end
 

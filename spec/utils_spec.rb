@@ -5,7 +5,7 @@ require "spec_helper"
 module Bushido
   describe Utils do
     it "初期配置情報の塊を分離" do
-      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{:location => L.b, :input => "４二銀"}, {:location => L.w, :input => "４二銀"}]
+      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{location: L.b, input: "４二銀"}, {location: L.w, input: "４二銀"}]
     end
 
     it "座標と駒の分解" do

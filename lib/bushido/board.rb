@@ -94,7 +94,7 @@ module Bushido
     # 指定座標にある駒をを広い上げる
     def pick_up!(point)
       soldier = @surface.delete(point.to_xy)
-      soldier or raise NotFoundOnBoard, "#{point.name}の位置には何もありません"
+      soldier or raise NotFoundOnBoard, "#{point.name}の位置には何もない"
       soldier.point = nil
       soldier
     end
@@ -114,10 +114,10 @@ module Bushido
 
     # 置いてる駒リスト
     def to_s_soldiers
-      @surface.values.collect(&:formality_name2).sort.join(" ")
+      @surface.values.collect(&:to_s_formal_name).sort.join(" ")
     end
     def to_s_soldiers2
-      @surface.values.collect(&:formality_name).sort.join(" ")
+      @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
     end
 
     # 駒をすべて削除する

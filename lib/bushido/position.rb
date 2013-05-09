@@ -22,7 +22,7 @@ module Bushido
           case arg
           when String, NilClass
             v = units.find_index{|e|e == arg}
-            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
+            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にない"
           when Base
             v = arg.value
           else

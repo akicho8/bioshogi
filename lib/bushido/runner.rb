@@ -113,12 +113,12 @@ module Bushido
           @point = hand_log.point
         end
         unless @point
-          raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
+          raise BeforePointNotFound, "同に対する座標が不明 : #{@source.inspect}"
         end
         if @md[:point]
           prefix_pt = Point.parse(@md[:point])
           if Point.parse(@md[:point]) != @point
-            raise SamePointDiff, "「同」は#{@point}を意味しますが、前置した座標は「#{prefix_pt}」です : #{@source}"
+            raise SamePointDiff, "「同」は#{@point}を意味するが、前置した座標は「#{prefix_pt}」 (入力:#{@source.inspect})"
           end
         end
       else
@@ -162,7 +162,7 @@ module Bushido
             find_soldiers
           end
           if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:formality_name).join(', ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
           end
         end
 
@@ -194,7 +194,7 @@ module Bushido
         @soldiers = @soldiers.find_all{|soldier|soldier.point.send(m) == @point.send(m)}
       end
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなった。#{@source.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:formality_name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなった。#{@source.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 

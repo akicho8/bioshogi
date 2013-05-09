@@ -3,9 +3,9 @@
 # it "復元できるかテスト" do
 #   player = player_test(init: "5五歩")
 #   soldier = player.soldiers.first
-#   soldier.formality_name.should == "▲5五歩"
+#   soldier.mark_with_formal_name.should == "▲5五歩"
 #   soldier = Marshal.load(Marshal.dump(soldier))
-#   soldier.formality_name.should == "▲5五歩"
+#   soldier.mark_with_formal_name.should == "▲5五歩"
 # end
 
 # it "１三香は１一香になれないが１一杏にならなれる" do

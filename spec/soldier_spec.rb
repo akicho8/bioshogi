@@ -9,18 +9,18 @@ module Bushido
         @soldier = player_test(init: "５五と").soldiers.first
       end
       it "先手後手のマーク付き" do
-        @soldier.formality_name.should == "▲5五と"
+        @soldier.mark_with_formal_name.should == "▲5五と"
         @soldier.name.should == "▲5五と"
       end
       it "先手後手のマークなし" do
-        @soldier.formality_name2.should == "5五と"
+        @soldier.to_s_formal_name.should == "5五と"
       end
       it "駒のみ" do
         @soldier.piece_current_name.should == "と"
       end
       it "盤上に置いてない場合" do
         @soldier.point = nil
-        @soldier.formality_name.should == "▲(どこにも置いてない)と"
+        @soldier.mark_with_formal_name.should == "▲(どこにも置いてない)と"
       end
     end
 

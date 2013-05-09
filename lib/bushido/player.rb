@@ -2,37 +2,6 @@
 
 module Bushido
   class Player
-    # # FIXME: deal と pieces がかぶっている
-    # def self.basic_test(params = {})
-    #   params = {
-    #     player: :black,
-    #   }.merge(params)
-    #
-    #   player = Player.new(location: params[:player], board: Board.new, deal: true)
-    #
-    #   # 最初にくばるオプション(追加で)
-    #   player.deal(params[:deal])
-    #
-    #   player.initial_soldiers(params[:init])
-    #   if params[:piece_plot]
-    #     player.piece_plot
-    #   end
-    #
-    #   Array.wrap(params[:exec]).each{|v|player.execute(v)}
-    #
-    #   # あとでくばる(というかセットする)
-    #   if params[:pieces]
-    #     player.pieces_clear
-    #     player.deal(params[:pieces])
-    #   end
-    #
-    #   player
-    # end
-
-    # def self.basic_test2(params = {})
-    #   basic_test(params).soldier_names.sort
-    # end
-
     attr_accessor :name, :location, :mediator, :last_piece, :runner
 
     def initialize(mediator, params = {})
@@ -56,37 +25,6 @@ module Bushido
     def next_player
       @mediator.player_at(location.reverse)
     end
-
-    # # TODO: これ不要かも
-    # def marshal_dump
-    #   {
-    #     name: @name,
-    #     location: @location,
-    #     last_piece: @last_piece,
-    #     pieces: @pieces.collect(&:sym_name),
-    #     soldiers: @soldiers.collect(&:formality_name2),
-    #   }
-    # end
-    #
-    # # TODO: 高速化
-    # # というか mediator で marshal_dump したとき、呼ばれてない？
-    # # これ不要かも
-    # def marshal_load(attrs)
-    #   @name        = attrs[:name]
-    #   @location    = attrs[:location]
-    #   @last_piece  = attrs[:last_piece]
-    #   @pieces      = attrs[:pieces].collect{|v|Piece[v]}
-    #   @soldiers = attrs[:soldiers].collect{|soldier|
-    #     Soldier.new(MiniSoldier.from_str(soldier).merge(player: self))
-    #   }
-    #
-    #   # ここまでしないといけないのは流石にデータ構造がまちがってる気がする
-    #   # 継ぎ接ぎ的なコードが多いからそう感じるだけなのか、それとも合っているのか
-    #   # if board
-    #   #   board.surface.clear
-    #   #   render_soldiers
-    #   # end
-    # end
 
     # 先手後手を設定は適当でいい
     #   player.location = :white
@@ -163,7 +101,7 @@ module Bushido
       target_soldier = board.fetch(b)
       if target_soldier
         if target_soldier.player == self
-          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.formality_name}があります"
+          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.mark_with_formal_name}があります"
         end
         board.pick_up!(b)
         @pieces << target_soldier.piece
@@ -223,7 +161,7 @@ module Bushido
 
       # 必ず存在する持駒を参照する
       def piece_fetch!(piece)
-        piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がありません\n#{board_with_pieces}"
+        piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がない\n#{board_with_pieces}"
       end
 
       # 持駒を参照する
@@ -298,13 +236,13 @@ module Bushido
       # 盤上の駒の名前一覧(表示・デバッグ用)
       #   soldier_names # => ["▽5五飛↓"]
       def soldier_names
-        @soldiers.collect(&:formality_name).sort
+        @soldiers.collect(&:mark_with_formal_name).sort
       end
 
       # 盤上の駒の名前一覧(保存用)
       #   to_s_soldiers # => ["5五飛"]
       def to_s_soldiers
-        @soldiers.collect(&:formality_name2).sort.join(" ")
+        @soldiers.collect(&:to_s_formal_name).sort.join(" ")
       end
 
       # boardに描画する
@@ -415,10 +353,10 @@ module Bushido
     def get_errors(mini_soldier)
       errors = []
       if s = find_collisione_pawn(mini_soldier)
-        errors << DoublePawn.new("二歩です。#{s.formality_name}があるため#{mini_soldier}は打てません")
+        errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てない)")
       end
       if Movabler.movable_infos2(self, mini_soldier).empty?
-        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
+        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則")
       end
       errors
     end

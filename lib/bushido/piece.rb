@@ -38,7 +38,7 @@ module Bushido
 
       # Piece.fetch("歩").name # => "歩"
       def fetch(arg)
-        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がない"
       end
 
       # 「歩」や「と」を駒オブジェクトと成フラグに分離
@@ -51,7 +51,7 @@ module Bushido
         when piece = promoted_get(arg)
           MiniSoldier[piece: piece, promoted: true]
         else
-          raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+          raise PieceNotFound, "#{arg.inspect} に対応する駒がない"
         end
       end
 

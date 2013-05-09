@@ -53,7 +53,7 @@ module Bushido
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
         mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
-        mediator.player_b.brain.eval_list.should == [{:hand => "1一歩成(12)", :score => 1305}, {:hand => "2二歩打", :score => 200}]
+        mediator.player_b.brain.eval_list.should == [{hand: "1一歩成(12)", score: 1305}, {hand: "2二歩打", score: 200}]
       end
     end
 
@@ -61,7 +61,7 @@ module Bushido
       describe "戦況1" do
         def example1
           Board.size_change([2, 3]) do
-            mediator = Mediator.simple_test(:init => "▲１三飛 △１一香 △１二歩")
+            mediator = Mediator.simple_test(init: "▲１三飛 △１一香 △１二歩")
             yield mediator
           end
         end
@@ -84,15 +84,15 @@ EOT
 
         it "0手先を読む - 目先の歩得を優先してしまう" do
           example1 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 0)
-            r.should == {:hand => "▲1二飛成(13)", :score => 2305, :level => 0, :reading_hands => ["▲1二飛成(13)"]}
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 0)
+            r.should == {hand: "▲1二飛成(13)", score: 2305, level: 0, reading_hands: ["▲1二飛成(13)"]}
           end
         end
 
         it "1手先を読む - 歩をとると飛車を取られて相手のスコアが増大するので２三飛を選択する" do
           example1 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
-            r.should == {:hand => "▲2三飛成(13)", :score => -1800, :level => 0, :reading_hands => ["▲2三飛成(13)", "▽1三歩成(12)"]}
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
+            r.should == {hand: "▲2三飛成(13)", score: -1800, level: 0, reading_hands: ["▲2三飛成(13)", "▽1三歩成(12)"]}
           end
         end
       end
@@ -101,7 +101,7 @@ EOT
         def example2
           Board.disable_promotable do
             Board.size_change([1, 8]) do
-              mediator = Mediator.simple_test(:init => "▲１六香 ▲１七飛 △１二飛 △１三香 △１四歩")
+              mediator = Mediator.simple_test(init: "▲１六香 ▲１七飛 △１二飛 △１三香 △１四歩")
               yield mediator
             end
           end
@@ -130,29 +130,29 @@ EOT
 
         it "0手先の場合、駒得だけを考えて歩を取りにいく" do
           example2 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 0)
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 0)
             r.should == {hand: "▲1四香(16)", score: 2705, level:  0, reading_hands: ["▲1四香(16)"]}
           end
         end
 
         it "1手先の場合は歩を取ると取り返されるので飛車を移動する(相手は１一飛と１五歩をするけど両方同じ得点なのでどっちかになる曖昧)" do
           example2 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
-            r.should == {:hand=>"▲1八飛(17)", :score=>-2700, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1一飛(12)"]}
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
+            r.should == {hand: "▲1八飛(17)", score: -2700, level: 0, reading_hands: ["▲1八飛(17)", "▽1一飛(12)"]}
           end
         end
 
         it "2手先の場合は香を取り返せるところまでわかるので香がつっこむ" do
           example2 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 2)
-            r.should == {:hand=>"▲1四香(16)", :score=>2735, :level=>0, :reading_hands=>["▲1四香(16)", "▽1四香(13)", "▲1四飛(17)"]}
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 2)
+            r.should == {hand: "▲1四香(16)", score: 2735, level: 0, reading_hands: ["▲1四香(16)", "▽1四香(13)", "▲1四飛(17)"]}
           end
         end
 
         it "3手先の場合は最後に飛車で取られて全滅することがわかるので香車はつっこまない" do
           example2 do |mediator|
-            r = NegaMaxRunner.run(:player => mediator.player_b, :depth => 3)
-            r.should == {:hand=>"▲1八飛(17)", :score=>-3230, :level=>0, :reading_hands=>["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 3)
+            r.should == {hand: "▲1八飛(17)", score: -3230, level: 0, reading_hands: ["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
           end
         end
       end
@@ -161,11 +161,11 @@ EOT
     # it "一番得するように打つその3" do
     #   Board.size_change([2, 3]) do
     #     mediator = Mediator.new
-    #     mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], :from_piece => false)
-    #     mediator.player_b.initial_soldiers(["１三飛"], :from_piece => false)
+    #     mediator.player_at(:white).initial_soldiers(["１一香", "１二歩"], from_piece: false)
+    #     mediator.player_b.initial_soldiers(["１三飛"], from_piece: false)
     #     puts mediator
     #     # mediator.player_b.brain.doredore
-    #     p NegaMaxRunner.run(:player => mediator.player_b, :depth => 1)
+    #     p NegaMaxRunner.run(player: mediator.player_b, depth: 1)
     #   end
     # end
 

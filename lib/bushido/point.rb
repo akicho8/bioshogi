@@ -51,10 +51,10 @@ module Bushido
             x = Position::Hpos.parse(md[:x])
             y = Position::Vpos.parse(md[:y])
           else
-            raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
+            raise PointSyntaxError, "座標を2文字で表記していない : #{arg.inspect}"
           end
         else
-          raise MustNotHappen, "引数がめちゃくちゃです : Point.parse(#{arg.inspect})"
+          raise MustNotHappen, "引数が異常 : #{arg.inspect}"
         end
 
         new(x, y)

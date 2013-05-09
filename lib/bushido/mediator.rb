@@ -262,7 +262,7 @@ module Bushido
           mediator.initial_soldiers(params[:init])
         end
         if params[:init2]
-          mediator.initial_soldiers(params[:init2], :from_piece => false)
+          mediator.initial_soldiers(params[:init2], from_piece: false)
         end
         if params[:pinit]
           mediator.reset_pieces_from_str(params[:pinit])
@@ -278,7 +278,7 @@ module Bushido
         params = {
         }.merge(params)
         mediator = new
-        mediator.initial_soldiers(params[:init], :from_piece => false)
+        mediator.initial_soldiers(params[:init], from_piece: false)
         mediator.reset_pieces_from_str(params[:pinit])
         mediator
       end

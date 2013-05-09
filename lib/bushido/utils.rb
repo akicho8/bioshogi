@@ -23,7 +23,7 @@ module Bushido
         r[L.b]
       else
         stock = Stock.list.find{|v|v[:key] == params[:key]}
-        stock or raise BoardKeyNotFound, "盤面データがありません : #{params[:key].inspect}"
+        stock or raise BoardKeyNotFound, "盤面データがない : #{params[:key].inspect}"
         r = valid_both_soldiers_from_char_board(params.merge(stock: stock))
         r[L.b]
       end

@@ -38,7 +38,7 @@ module Bushido
     end
 
     def inspect
-      "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{formality_name}>"
+      "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
     end
 
     [:promoted].each{|key|
@@ -53,25 +53,25 @@ module Bushido
     end
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].formality_name # => "▲5五と"
-    def formality_name
-      "#{@player.location.mark}#{formality_name2}"
+    #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲5五と"
+    def mark_with_formal_name
+      "#{@player.location.mark}#{to_s_formal_name}"
     end
 
-    alias name formality_name
+    alias name mark_with_formal_name
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].formality_name2 # => "5五と"
-    def formality_name2
+    #  Player.basic_test(init: "５五と").board["５五"].to_s_formal_name # => "5五と"
+    def to_s_formal_name
       "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
     end
 
-    # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
-    def read_point
-      if xy = @player.board.surface.invert[self]
-        Point.parse(xy)
-      end
-    end
+    # # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
+    # def read_point
+    #   if xy = @player.board.surface.invert[self]
+    #     Point.parse(xy)
+    #   end
+    # end
 
     # 移動可能な座標を取得
     def movable_infos(options = {})
