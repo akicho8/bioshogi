@@ -9,7 +9,7 @@ module Bushido
   module Movabler
     extend self
 
-    # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    # once_vectors, repeat_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def movable_infos(player, mini_soldier, options = {})
       list = []
       list += movable_infos_block(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)
@@ -17,7 +17,7 @@ module Bushido
       list.uniq{|e|e.to_s}
     end
 
-    # step_vectors, series_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
+    # once_vectors, repeat_vectors と分けるのではなくベクトル自体に繰り返しフラグを持たせる方法も検討
     def movable_infos2(player, mini_soldier, options = {})
       list = []
       list += movable_infos_block2(player, mini_soldier, mini_soldier[:piece].select_vectors(mini_soldier[:promoted]), options)

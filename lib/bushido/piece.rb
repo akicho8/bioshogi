@@ -37,6 +37,7 @@ module Bushido
       end
 
       # Piece.fetch("歩").name # => "歩"
+      # Piece.fetch("卍")      # => PieceNotFound
       def fetch(arg)
         get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がない"
       end
@@ -126,36 +127,46 @@ module Bushido
       include NameMethods
 
       module VectorMethods
-        def basic_step_vectors
-          []
-        end
-
-        def basic_series_vectors
-          []
-        end
-
-        def basic_vectors
-          build_vectors(basic_step_vectors, basic_series_vectors)
-        end
-
-        def promoted_step_vectors
-          []
-        end
-
-        def promoted_series_vectors
-          []
-        end
-
-        def promoted_vectors
-          build_vectors(promoted_step_vectors, promoted_series_vectors)
-        end
-
+        # ベクトル取得の唯一の外部インタフェース
         def select_vectors(promoted = false)
           assert_promotable(promoted)
           promoted ? promoted_vectors : basic_vectors
         end
 
         private
+
+        # オーバーライド用
+        begin
+          # 通常の1ベクトル
+          def basic_once_vectors
+            []
+          end
+
+          # 通常の繰り返しベクトル
+          def basic_repeat_vectors
+            []
+          end
+
+          # 成ったときの1ベクトル
+          def promoted_once_vectors
+            []
+          end
+
+          # 成ったときの繰り返しベクトル
+          def promoted_repeat_vectors
+            []
+          end
+        end
+
+        # 通常の合成ベクトル
+        def basic_vectors
+          build_vectors(basic_once_vectors, basic_repeat_vectors)
+        end
+
+        # 成ったときの合成ベクトル
+        def promoted_vectors
+          build_vectors(promoted_once_vectors, promoted_repeat_vectors)
+        end
 
         def build_vectors(ov, rv)
           Set[*(ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]})]
@@ -187,10 +198,10 @@ module Bushido
           :names,
           :sym_name,
           :promotable?,
-          :basic_step_vectors,
-          :basic_series_vectors,
-          :promoted_step_vectors,
-          :promoted_series_vectors,
+          :basic_once_vectors,
+          :basic_repeat_vectors,
+          :promoted_once_vectors,
+          :promoted_repeat_vectors,
         ].inject({}){|h, key|h.merge(key => public_send(key))}
       end
     end
@@ -216,14 +227,16 @@ module Bushido
     end
 
     module Goldable
-      def promoted_step_vectors
+      private
+      def promoted_once_vectors
         Gold.basic_pattern
       end
     end
 
     module Brave
-      def promoted_series_vectors
-        basic_series_vectors
+      private
+      def promoted_repeat_vectors
+        basic_repeat_vectors
       end
     end
 
@@ -238,7 +251,9 @@ module Bushido
         "と"
       end
 
-      def basic_step_vectors
+      private
+
+      def basic_once_vectors
         [[0, -1]]
       end
     end
@@ -254,11 +269,13 @@ module Bushido
         "馬"
       end
 
-      def promoted_step_vectors
+      private
+
+      def promoted_once_vectors
         Pattern.pattern_plus
       end
 
-      def basic_series_vectors
+      def basic_repeat_vectors
         Pattern.pattern_x
       end
     end
@@ -278,11 +295,13 @@ module Bushido
         super + ["竜"]
       end
 
-      def promoted_step_vectors
+      private
+
+      def promoted_once_vectors
         Pattern.pattern_x
       end
 
-      def basic_series_vectors
+      def basic_repeat_vectors
         Pattern.pattern_plus
       end
     end
@@ -302,7 +321,9 @@ module Bushido
         super + ["成香"]
       end
 
-      def basic_series_vectors
+      private
+
+      def basic_repeat_vectors
         [[0, -1]]
       end
     end
@@ -322,7 +343,9 @@ module Bushido
         super + ["成桂"]
       end
 
-      def basic_step_vectors
+      private
+
+      def basic_once_vectors
         [[-1, -2], [1, -2]]
       end
     end
@@ -342,7 +365,9 @@ module Bushido
         super + ["成銀"]
       end
 
-      def basic_step_vectors
+      private
+
+      def basic_once_vectors
         [
           [-1, -1], [0, -1], [1, -1],
           nil,          nil,     nil,
@@ -364,12 +389,14 @@ module Bushido
         "金"
       end
 
-      def basic_step_vectors
-        self.class.basic_pattern
-      end
-
       def promotable?
         false
+      end
+
+      private
+
+      def basic_once_vectors
+        self.class.basic_pattern
       end
     end
 
@@ -390,12 +417,14 @@ module Bushido
         super + ["王"]
       end
 
-      def basic_step_vectors
-        self.class.basic_pattern
-      end
-
       def promotable?
         false
+      end
+
+      private
+
+      def basic_once_vectors
+        self.class.basic_pattern
       end
     end
   end
