@@ -58,7 +58,7 @@ module Bushido
             func2(list, player, mini_soldier, pt)
           else
             unless Soldier === target
-              raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
+              raise UnconfirmedObject, "得体の知れないものが盤上にいる : #{target.inspect}"
             end
             # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
             if target.player == player

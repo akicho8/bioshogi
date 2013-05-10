@@ -88,12 +88,12 @@ module Bushido
       if promote_trigger
         if a.promotable?(location) || b.promotable?(location)
         else
-          raise NotPromotable, "#{a.name}から#{b.name}への移動では成れません"
+          raise NotPromotable, "#{a.name}から#{b.name}への移動では成れない"
         end
 
         _soldier = board.fetch(a)
         if _soldier.promoted?
-          raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っています"
+          raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っている"
         end
       end
 
@@ -101,7 +101,7 @@ module Bushido
       target_soldier = board.fetch(b)
       if target_soldier
         if target_soldier.player == self
-          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.mark_with_formal_name}があります"
+          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.mark_with_formal_name}がある"
         end
         board.pick_up!(b)
         @pieces << target_soldier.piece

@@ -23,7 +23,7 @@ module Bushido
       @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
       unless @md
-        raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+        raise SyntaxError, "表記が間違っている : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -75,7 +75,7 @@ module Bushido
                 @origin_point = nil
                 put_soldier
               else
-                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述している。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
               end
             end
           end

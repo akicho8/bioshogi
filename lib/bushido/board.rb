@@ -158,7 +158,7 @@ module Bushido
       if object
         # if Soldier === object
         # end
-        raise PieceAlredyExist, "#{point.name}にはすでに#{object}があります\n#{self}"
+        raise PieceAlredyExist, "#{point.name}にはすでに#{object}がある\n#{self}"
       end
     end
   end

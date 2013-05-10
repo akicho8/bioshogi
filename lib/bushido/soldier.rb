@@ -24,7 +24,7 @@ module Bushido
     # 成り/不成状態の設定
     def promoted=(promoted)
       if !@piece.promotable? && promoted
-        raise NotPromotable, "成れない駒で成ろうとしています : #{piece.inspect}"
+        raise NotPromotable, "成れない駒で成ろうとしている : #{piece.inspect}"
       end
       @promoted = promoted
     end
