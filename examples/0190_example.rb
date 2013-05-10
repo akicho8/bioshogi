@@ -1,9 +1,32 @@
 # -*- coding: utf-8 -*-
-# 初期配置文字列のパース
+# 盤面のHTML化
 
 require "./example_helper"
 
-info = MiniSoldier.from_str("７六と")
-info[:piece].name # => "歩"
-info[:promoted]   # => true
-info[:point].name # => "7六"
+require "delegate"
+
+class MediatorDecorator < SimpleDelegator
+  def to_html
+    rows = Position::Vpos.ridge_length.times.collect{|y|
+      tds = Position::Hpos.ridge_length.times.collect{|x|
+        style = ""
+        if soldier = board.surface[[x, y]]
+          if soldier.player.location.white?
+            style = "-moz-transform: rotate(180deg)"
+          end
+          cell = soldier.piece_current_name
+        end
+        "<td style=\"#{style}\">#{cell}</td>"
+      }
+      "<tr>#{tds.join("\n")}</tr>"
+    }
+    html = "<table>#{rows.join("\n")}</table>"
+  end
+end
+
+mediator = Mediator.start
+mediator.piece_plot
+frame_decorator = MediatorDecorator.new(mediator)
+puts frame_decorator.to_html
+Pathname("_frame.html").open("w"){|f|f << frame_decorator.to_html}
+# `open _frame.html`

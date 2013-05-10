@@ -1,25 +1,19 @@
 # -*- coding: utf-8 -*-
-# 盤面と盤上の駒を確認
+# 駒の情報
 
 require "./example_helper"
 
-mediator = Mediator.start
-mediator.piece_plot
-puts mediator.board
-
-mediator.board["５五"]      # => nil
-mediator.board["８八"].name # => "▲8八角"
-mediator.board["２八"].name # => "▲2八飛"
-mediator.board["５九"].name # => "▲5九玉"
-# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# >> +---------------------------+
-# >> |v香v桂v銀v金v玉v金v銀v桂v香|一
-# >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
-# >> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-# >> | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-# >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-# >> | 香 桂 銀 金 玉 金 銀 桂 香|九
-# >> +---------------------------+
+pp Piece["飛"].to_h
+# >> {:name=>"飛",
+# >>  :promoted_name=>"龍",
+# >>  :basic_names=>["飛", "rook"],
+# >>  :promoted_names=>["龍", "ROOK", "竜"],
+# >>  :names=>["飛", "rook", "龍", "ROOK", "竜"],
+# >>  :sym_name=>:rook,
+# >>  :promotable?=>true,
+# >>  :basic_once_vectors=>[],
+# >>  :basic_repeat_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
+# >>  :promoted_once_vectors=>
+# >>   [[-1, -1], nil, [1, -1], nil, nil, nil, [-1, 1], nil, [1, 1]],
+# >>  :promoted_repeat_vectors=>
+# >>   [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil]}

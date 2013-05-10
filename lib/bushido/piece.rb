@@ -202,7 +202,7 @@ module Bushido
           :basic_repeat_vectors,
           :promoted_once_vectors,
           :promoted_repeat_vectors,
-        ].inject({}){|h, key|h.merge(key => public_send(key))}
+        ].inject({}){|h, key|h.merge(key => send(key))}
       end
     end
 
