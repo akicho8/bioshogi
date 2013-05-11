@@ -50,5 +50,13 @@ module Bushido
       Location[:white].reverse.should == Location[:black]
       Location[:white].next_location.should == Location[:black]
     end
+
+    it "属性っぽい値を全部返す" do
+      L.b.match_target_values.should be_an_instance_of Array
+    end
+
+    it "先手後手を表す文字一覧の正規表現" do
+      L.triangles.should == "▲▼▽△"
+    end
   end
 end

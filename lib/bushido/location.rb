@@ -8,7 +8,7 @@ module Bushido
       @attributes = attributes
     end
 
-    [:key, :mark, :other_marks, :name, :varrow, :index].each do |v|
+    [:key, :mark, :reverse_mark, :other_marks, :name, :varrow, :index].each do |v|
       define_method(v) do
         @attributes[v]
       end
@@ -32,7 +32,7 @@ module Bushido
 
     # 属性っぽい値を全部返す
     def match_target_values
-      [key, mark, other_marks, name, name.chars.first, index, varrow].flatten
+      [key, mark, reverse_mark, other_marks, name, name.chars.first, index, varrow].flatten
     end
 
     # 先手ならaを後手ならbを返す
@@ -48,8 +48,8 @@ module Bushido
     alias next_location reverse
 
     @pool ||= [
-      new(key: :black, mark: "▲", other_marks: ["b", "▼", "^"], name: "先手", varrow: " ", index: 0),
-      new(key: :white, mark: "▽", other_marks: ["w", "△"],      name: "後手", varrow: "v", index: 1),
+      new(key: :black, mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], name: "先手", varrow: " ", index: 0),
+      new(key: :white, mark: "▽", reverse_mark: "△", other_marks: ["w"],      name: "後手", varrow: "v", index: 1),
     ]
 
     class << self
@@ -92,7 +92,7 @@ module Bushido
       def w; self[:white]; end
 
       def triangles
-        "▲△▼▽"
+        collect{|e|[e.mark, e.reverse_mark]}.join
       end
     end
   end
