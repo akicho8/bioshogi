@@ -76,20 +76,8 @@ module Bushido
       end
     end
 
-    # def board_init_type2(value = nil)
-    #   if Hash === value
-    #     # {"先手" => "角落ち", "後手" => "香落ち"}
-    #     value.inject({}){|hash, (k, v)|hash.merge(k => Utils.location_soldiers(k, v))}
-    #   elsif BaseFormat.board_format?(value)
-    #     BaseFormat.board_parse(value)
-    #   else
-    #     # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
-    #     board_init_type2("先手" => (value || "平手"), "後手" => "平手")
-    #   end
-    # end
-
     # 持駒表記変換 (人間表記 → コード)
-    #  Utils.hold_pieces_array_to_str([Piece["歩"], Piece["歩"], Piece["飛"]]).should == "歩二飛"
+    #  Utils.hold_pieces_array_to_str([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
     def hold_pieces_array_to_str(pieces)
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
         count = ""
@@ -101,7 +89,7 @@ module Bushido
     end
 
     # 持駒表記変換 (コード → 人間表記)
-    #   Utils.hold_pieces_str_to_array("歩2 飛").should == [Piece["歩"], Piece["歩"], Piece["飛"]]
+    #   Utils.hold_pieces_str_to_array("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
     def hold_pieces_str_to_array(str)
       if String === str
         str = str.tr("〇一二三四五六七八九", "0-9")
@@ -114,16 +102,8 @@ module Bushido
       pieces_parse2(infos)
     end
 
-    def pieces_parse2(list)
-      Array.wrap(list).collect{|info|
-        (info[:count] || 1).times.collect{ Piece.fetch(info[:piece]) }
-      }.flatten
-    end
-
-    # def first_distributed_pieces
-    #   "歩9角飛香2桂2銀2金2玉"
-    # end
-
+    # 適当な持駒文字列を先手後手に分離
+    #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {L.b => "歩2 飛 金", L.w => "歩二飛 "}
     def triangle_hold_pieces_str_to_hash(str)
       hash = {}
       Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each{|mark, pieces_str|
@@ -134,6 +114,8 @@ module Bushido
       hash
     end
 
+    # 先手後手に分離した持駒情報を文字列化
+    #   Utils.triangle_hold_pieces_hash_to_str({L.b => "歩2 飛 金", L.w => "歩二飛 "}) # => "▲歩2 飛 金 ▽歩二飛 "
     def triangle_hold_pieces_hash_to_str(hash)
       hash.collect{|location, pieces_str|"#{location.mark}#{pieces_str}"}.join(" ")
     end
@@ -172,12 +154,10 @@ module Bushido
 
     private
 
-    # def initial_placements
-    #   [
-    #     "9七歩", "8七歩", "7七歩", "6七歩", "5七歩", "4七歩", "3七歩", "2七歩", "1七歩",
-    #     "8八角", "2八飛",
-    #     "9九香", "8九桂", "7九銀", "6九金", "5九玉", "4九金", "3九銀", "2九桂", "1九香",
-    #   ].compact
-    # end
+    def pieces_parse2(list)
+      Array.wrap(list).collect{|info|
+        (info[:count] || 1).times.collect{ Piece.fetch(info[:piece]) }
+      }.flatten
+    end
   end
 end
