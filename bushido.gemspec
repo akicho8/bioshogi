@@ -1,28 +1,32 @@
-# -*- coding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "bushido/version"
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'bushido/version'
 
-Gem::Specification.new do |s|
-  s.name         = "bushido"
-  s.version      = Bushido::VERSION
-  s.author       = "akicho8"
-  s.email        = "akicho8@gmail.com"
-  s.homepage     = "https://github.com/akicho8/bushido"
-  s.summary      = "Shogi library"
-  s.description  = "Shogi library"
-  s.platform     = Gem::Platform::RUBY
+Gem::Specification.new do |spec|
+  spec.name         = "bushido"
+  spec.version      = Bushido::VERSION
+  spec.author       = "akicho8"
+  spec.email        = "akicho8@gmail.com"
+  spec.homepage     = "https://github.com/akicho8/bushido"
+  spec.summary      = "Shogi library"
+  spec.description  = "Shogi library"
+  spec.platform     = Gem::Platform::RUBY
 
-  s.files        = `git ls-files`.split("\n")
-  s.test_files   = `git ls-files -- {spec,features}/*`.split("\n")
-  s.executables  = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
-  s.rdoc_options = ["--line-numbers", "--inline-source", "--charset=UTF-8", "--diagram", "--image-format=jpg"]
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+  spec.rdoc_options  = ["--line-numbers", "--inline-source", "--charset=UTF-8", "--diagram", "--image-format=jpg"]
 
-  s.add_development_dependency "rspec"
-  s.add_dependency "activesupport"
-  s.add_dependency "rain_table" # git: "https://github.com/akicho8/rain_table.git" ← なんでダメ？
-  s.add_dependency "tapp"
-  s.add_dependency "pry"
-  # s.add_dependency "pry-debugger"
-  s.add_dependency "yard"
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+
+  spec.add_dependency "activesupport"
+  spec.add_dependency "rain_table" # git: "https://github.com/akicho8/rain_table.git" ← なんでダメ？
+  spec.add_dependency "tapp"
+  spec.add_dependency "pry"
+  #pec s.add_dependency "pry-debugger"
+  spec.add_dependency "yard"
 end

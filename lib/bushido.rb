@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+require "bushido/version"
+
 require "active_support/core_ext/string"
 require "active_support/configurable"
 require "active_support/core_ext/class/attribute"
@@ -31,7 +33,6 @@ module Bushido
   end
 end
 
-require_relative "bushido/version"
 require_relative "bushido/logger"
 require_relative "bushido/vector"
 require_relative "bushido/errors"
