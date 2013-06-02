@@ -76,7 +76,7 @@ EOT
           p hand
           mediator.execute(hand)
           p mediator
-          last_piece = mediator.prev_player.last_piece
+          last_piece = mediator.reverse_player.last_piece
           break
           if last_piece && last_piece.sym_name == :king
             break
@@ -96,17 +96,17 @@ EOT
 
       mediator.board.to_s_soldiers       == dup.board.to_s_soldiers
 
-      mediator.prev_player.location      == dup.prev_player.location
-      mediator.prev_player.to_s_pieces   == dup.prev_player.to_s_pieces
-      mediator.prev_player.to_s_soldiers == dup.prev_player.to_s_soldiers
-      mediator.prev_player.last_piece    == dup.prev_player.last_piece
+      mediator.reverse_player.location      == dup.reverse_player.location
+      mediator.reverse_player.to_s_pieces   == dup.reverse_player.to_s_pieces
+      mediator.reverse_player.to_s_soldiers == dup.reverse_player.to_s_soldiers
+      mediator.reverse_player.last_piece    == dup.reverse_player.last_piece
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
       mediator = Mediator.test(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.prev_player.runner.hand_log.to_pair.should == ["1四歩(13)", "同歩"]
+      mediator.reverse_player.runner.hand_log.to_pair.should == ["1四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do

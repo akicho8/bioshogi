@@ -41,9 +41,8 @@ module Bushido
     alias player_b black_player
     alias player_w white_player
 
-    # 前後のプレイヤーを返す
-    def prev_player; current_player(-1); end
-    def next_player; current_player(+1); end
+    # 相手プレイヤーを返す
+    def reverse_player; current_player(+1); end
 
     # 手番のプレイヤー
     def current_player(diff = 0)

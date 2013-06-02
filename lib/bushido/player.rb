@@ -22,7 +22,7 @@ module Bushido
       @mediator.board
     end
 
-    def next_player
+    def reverse_player
       @mediator.player_at(location.reverse)
     end
 

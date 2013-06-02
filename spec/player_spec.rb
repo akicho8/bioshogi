@@ -171,9 +171,9 @@ EOT
         describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-            mediator.prev_player.last_piece.name.should == "歩"
-            mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
-            mediator.prev_player.to_s_soldiers.should == "1一玉 1三歩"
+            mediator.reverse_player.last_piece.name.should == "歩"
+            mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+            mediator.reverse_player.to_s_soldiers.should == "1一玉 1三歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二"
             mediator.current_player.to_s_soldiers.should == "1五玉"
           end
@@ -181,9 +181,9 @@ EOT
             mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_pair.should == ["2四歩(23)", "同歩"]
 
-            mediator.prev_player.last_piece.name.should == "歩"
-            mediator.prev_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
-            mediator.prev_player.to_s_soldiers.should == "2四歩"
+            mediator.reverse_player.last_piece.name.should == "歩"
+            mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+            mediator.reverse_player.to_s_soldiers.should == "2四歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
             mediator.current_player.to_s_soldiers.should == ""
           end

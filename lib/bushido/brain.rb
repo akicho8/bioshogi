@@ -42,10 +42,11 @@ module Bushido
           mhand = "#{_player.location.mark}#{hand}"
           log_puts locals, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
           _player.execute(hand)
+          # puts _player.board
           child_max_hand_info = nil
           if locals[:level] < locals[:depth]
             # 木の途中
-            child_max_hand_info = nega_max(locals.merge(player: _player.next_player, level: locals[:level].next))
+            child_max_hand_info = nega_max(locals.merge(player: _player.reverse_player, level: locals[:level].next))
             score = -child_max_hand_info[:score]
             hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand] + child_max_hand_info[:reading_hands]]
           else
@@ -66,7 +67,7 @@ module Bushido
       if @params[:random]
         hand_info = top_same_score_ary.sample
       else
-        # テスト時にゆらぐのを防ぐため強引だけど文字列化してソートして先頭を取り出す
+        # テスト時にゆらぐのを防ぐため強引だけど文字列化してソートして先頭を取り出す ← これが微妙。同じスコアなら二つ返した方がいいかも。ただし最後なら。
         hand_info = top_same_score_ary.sort_by(&:to_s).first
       end
 

@@ -58,6 +58,25 @@ module Bushido
     end
 
     describe "NegaMax" do
+      describe "自分の駒だけではなく相手の駒の状態も含めて戦況評価していることを確認するテスト(重要)" do
+        it do
+          Board.size_change([3, 3]) do
+            mediator = Mediator.simple_test(init: "▲３三歩 △１一歩")
+            # puts mediator.to_s.rstrip
+            # 1手目: ▲先手番
+            #   ３ ２ １
+            # +---------+
+            # | ・ ・v歩|一
+            # | ・ ・ ・|二
+            # | 歩 ・ ・|三
+            # +---------+
+            # ▲先手の持駒:
+            # ▽後手の持駒:
+            r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
+            r.should == {:hand => "▲3二歩成(33)", :score => 0, :level => 0, :reading_hands => ["▲3二歩成(33)", "▽1二歩成(11)"]}
+          end
+        end
+      end
 
       describe "戦況1" do
         def example1
@@ -86,14 +105,14 @@ EOT
         it "0手先を読む - 目先の歩得を優先してしまう" do
           example1 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 0)
-            r.should == {hand: "▲1二飛成(13)", score: 2305, level: 0, reading_hands: ["▲1二飛成(13)"]}
+            r.should == {hand: "▲1二飛成(13)", score: 1705, level: 0, reading_hands: ["▲1二飛成(13)"]}
           end
         end
 
         it "1手先を読む - 歩をとると飛車を取られて相手のスコアが増大するので２三飛を選択する" do
           example1 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
-            r.should == {hand: "▲2三飛成(13)", score: -1800, level: 0, reading_hands: ["▲2三飛成(13)", "▽1三歩成(12)"]}
+            r.should == {hand: "▲2三飛成(13)", score: 400, level: 0, reading_hands: ["▲2三飛成(13)", "▽1三歩成(12)"]}
           end
         end
       end
@@ -132,18 +151,19 @@ EOT
         it "0手先の場合、駒得だけを考えて歩を取りにいく" do
           example2 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 0)
-            r.should == {hand: "▲1四香(16)", score: 2705, level:  0, reading_hands: ["▲1四香(16)"]}
+            r.should == {hand: "▲1四香(16)", score: 105, level:  0, reading_hands: ["▲1四香(16)"]}
           end
         end
 
         it "1手先の場合は歩を取ると取り返されるので飛車を移動する(相手は１一飛と１五歩をするけど両方同じ得点なのでどっちかになる曖昧)" do
           example2 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
-            r.should == {hand: "▲1八飛(17)", score: -2700, level: 0, reading_hands: ["▲1八飛(17)", "▽1一飛(12)"]}
+            r.should == {hand: "▲1八飛(17)", score: -100, level: 0, reading_hands: ["▲1八飛(17)", "▽1一飛(12)"]}
           end
         end
 
         it "2手先の場合は香を取り返せるところまでわかるので香がつっこむ" do
+          # TODO: 2013-06-02 なぜか二通りの答えがでている。実際にどうなのか検証。
           example2 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 2)
             r.should == {hand: "▲1四香(16)", score: 2735, level: 0, reading_hands: ["▲1四香(16)", "▽1四香(13)", "▲1四飛(17)"]}
@@ -153,7 +173,7 @@ EOT
         it "3手先の場合は最後に飛車で取られて全滅することがわかるので香車はつっこまない" do
           example2 do |mediator|
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 3)
-            r.should == {hand: "▲1八飛(17)", score: -3230, level: 0, reading_hands: ["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
+            r.should == {hand: "▲1八飛(17)", score: -1125, level: 0, reading_hands: ["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
           end
         end
       end

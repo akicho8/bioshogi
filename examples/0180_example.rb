@@ -8,7 +8,7 @@ mediator.piece_plot
 loop do
   hand = mediator.current_player.brain.all_hands.sample
   mediator.execute(hand)
-  last_piece = mediator.prev_player.last_piece
+  last_piece = mediator.reverse_player.last_piece
   if last_piece && last_piece.sym_name == :king
     break
   end

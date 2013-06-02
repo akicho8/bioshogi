@@ -11,7 +11,7 @@ loop do
   p hand
   mediator.execute(hand)
   p mediator
-  last_piece = mediator.prev_player.last_piece
+  last_piece = mediator.reverse_player.last_piece
   # break
   if last_piece && last_piece.sym_name == :king
     break
