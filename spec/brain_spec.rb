@@ -58,6 +58,7 @@ module Bushido
     end
 
     describe "NegaMax" do
+
       describe "戦況1" do
         def example1
           Board.size_change([2, 3]) do

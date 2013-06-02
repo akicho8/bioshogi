@@ -54,7 +54,7 @@ module Bushido
 
       if @strike_trigger
         if @promoted
-          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
+          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできない : #{@source.inspect}"
         end
         put_soldier
       else
@@ -143,7 +143,7 @@ module Bushido
           end
           @strike_trigger = true
           if @promoted
-            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : '#{@source.inspect}'"
+            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできない : '#{@source.inspect}'"
           end
           soldier = Soldier.new(player: @player, piece: @player.pick_out(@piece), promoted: @promoted)
           @player.put_on_with_valid(@point, soldier)
@@ -162,7 +162,7 @@ module Bushido
             find_soldiers
           end
           if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にすること。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
           end
         end
 
@@ -194,7 +194,7 @@ module Bushido
         @soldiers = @soldiers.find_all{|soldier|soldier.point.send(m) == @point.send(m)}
       end
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなった。#{@source.inspect} の表記を明確にしてください。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなった。#{@source.inspect} の表記を明確にすること。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -209,7 +209,7 @@ module Bushido
     def assert_valid_format(valid_list)
       _chars = valid_list.chars.to_a.find_all{|v|@md[:suffix].include?(v)}
       if _chars.size > 1
-        raise SyntaxError, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.board_with_pieces}"
+        raise SyntaxError, "#{_chars.join('と')}は同時に指定できない。【#{@source}】を見直すこと。\n#{@player.board_with_pieces}"
       end
     end
 

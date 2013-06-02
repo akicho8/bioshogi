@@ -355,7 +355,7 @@ module Bushido
       if s = find_collisione_pawn(mini_soldier)
         errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てない)")
       end
-      if Movabler.movable_infos2(self, mini_soldier).empty?
+      if Movabler.simple_movable_infos(self, mini_soldier).empty?
         errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則")
       end
       errors
