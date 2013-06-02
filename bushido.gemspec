@@ -22,11 +22,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "yard"
+  spec.add_development_dependency "redcarpet"
 
   spec.add_dependency "activesupport"
   spec.add_dependency "rain_table" # git: "https://github.com/akicho8/rain_table.git" ← なんでダメ？
   spec.add_dependency "tapp"
   spec.add_dependency "pry"
   #pec s.add_dependency "pry-debugger"
-  spec.add_dependency "yard"
 end
