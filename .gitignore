@@ -4,5 +4,5 @@
 /*.gem
 /.*
 /pkg
-# /doc
+/doc/yardoc
 /examples/_*

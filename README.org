@@ -3,9 +3,9 @@
 
 * 将棋のプログラム
 
-  https://travis-ci.org/akicho8/bushido.png
+  [[https://travis-ci.org/akicho8/bushido.png]]
 
-  https://raw.github.com/akicho8/bushido/master/brawser/demo2.png
+  [[https://raw.github.com/akicho8/bushido/master/brawser/demo2.png]]
 
   DEMO → http://fast-plateau-7460.herokuapp.com/
 

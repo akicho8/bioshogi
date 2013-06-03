@@ -8,6 +8,7 @@ module Bushido
     extend self
 
     # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
+    # @example
     #   Utils.location_soldiers(:black, "平手")         # => ["9七歩", "8七歩", ...]
     #   Utils.location_soldiers(:black, "角落ち")       # => ["9七歩", "8七歩", ...]
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]

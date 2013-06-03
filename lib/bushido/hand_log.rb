@@ -143,7 +143,7 @@ module Bushido
 
     # 未使用
     # リアルタイムに探すバージョン
-    # @player.mediator.hand_logs にすでに自分が記録されているとする
+    # player.mediator.hand_logs にすでに自分が記録されているとする
     def __same_point?
       if @player.mediator
         logs = @player.mediator.hand_logs
