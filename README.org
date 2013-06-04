@@ -3,8 +3,8 @@
 
 * 将棋のプログラム
 
-  [[https://travis-ci.org/akicho8/bushido][travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
-  [[https://gemnasium.com/akicho8/bushido/][gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
+  - [[https://travis-ci.org/akicho8/bushido][travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
+  - [[https://gemnasium.com/akicho8/bushido/][gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
 
   [[https://raw.github.com/akicho8/bushido/master/brawser/demo2.png]]
 
