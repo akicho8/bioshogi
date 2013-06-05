@@ -5,6 +5,8 @@ require "bundler"
 Bundler.require(:default, :brawser_env)
 Bushido::XtraPattern.reload_all
 
+require "bushido/contrib/other_files/swars_items"
+
 require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
@@ -102,10 +104,10 @@ class Brawser < Sinatra::Base
 
     REDIS.set(@session_id, Marshal.dump(@mediator))
 
-    @bar_colors = {Bushido::Location[:white] => "bar-danger"}
-    @eval_results = Bushido::Location.inject({}){|hash, loc|hash.merge(loc => @mediator.player_at(loc).evaluate)}
-    total = @eval_results.values.reduce(:+)
-    @scores = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
+    # @bar_colors = {Bushido::Location[:white] => "bar-danger"}
+    # @eval_results = Bushido::Location.inject({}){|hash, loc|hash.merge(loc => @mediator.player_at(loc).evaluate)}
+    # # total = @eval_results.values.reduce(:+)
+    # @scores = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
 
     haml :show
   end
@@ -251,6 +253,10 @@ auto_flushing {
         })
       @frames = Bushido::HybridSequencer.execute(@pattern)
     end
+  end
+
+  get "/swars_items" do
+    haml :swars_items
   end
 
   error do

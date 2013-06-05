@@ -5,10 +5,11 @@
   %a{href:"/?think_put_lv=1", class: "btn"} 読深1
   %a{href:"/?think_put_lv=2", class: "btn"} 読深2
 
-%p
-  %div{class: "progress"}
-    - Bushido::Location.each do |loc|
-      %div{class:"bar #{@bar_colors[loc]}", style:"width:#{@scores[loc]}%"}= "#{loc.mark}#{@eval_results[loc]}"
+- if @scores  
+  %p
+    %div{class: "progress"}
+      - Bushido::Location.each do |loc|
+        %div{class:"bar #{@bar_colors[loc]}", style:"width:#{@scores[loc]}%"}= "#{loc.mark}#{@eval_results[loc]}"
 
 %p= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
 
