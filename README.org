@@ -3,12 +3,13 @@
 
 * 将棋のプログラム
 
-  - [[https://travis-ci.org/akicho8/bushido][travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
-  - [[https://gemnasium.com/akicho8/bushido/][gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
+  - [[https://travis-ci.org/akicho8/bushido][Travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
+  - [[https://gemnasium.com/akicho8/bushido/][Gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
+  - [[https://codeclimate.com/github/akicho8/bushido][Code Climat]]: [[https://codeclimate.com/github/akicho8/bushido.png]]
+
+  [[http://fast-plateau-7460.herokuapp.com/][DEMO]]
 
   [[https://raw.github.com/akicho8/bushido/master/brawser/demo2.png]]
-
-  DEMO → http://fast-plateau-7460.herokuapp.com/
 
   : mediator = Mediator.start
   : mediator.piece_plot

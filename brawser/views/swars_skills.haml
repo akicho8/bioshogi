@@ -1,0 +1,45 @@
+%ul{:class => "nav nav-pills"}
+  %li
+    %a{href: "/swars_skills"}= "シンプル"
+  %li
+    %a{href: "/swars_skills?only=name,description"}= "説明だけ読む"
+  %li
+    %a{href: "/swars_skills?only=image_url,name"}= "画像確認"
+  %li
+    %a{href: "/swars_skills?type=pc"}= "ごちゃまぜ"
+  %li
+    %a{href: "/swars_skills.xml"}= "XML"
+  %li
+    %a{href: "/swars_skills.json"}= "JSON"
+
+%table{:class => "table swars_skills"}
+  %thead
+    %tr
+      - @columns.each do |column|
+        %th= @columns_hash[column.to_sym][:label]
+  %tbody
+    - @swars_skills.each do |row|
+      %tr
+        - @columns.each do |column|
+          %td
+            - case column
+            - when "xs_image_url"
+              %img{:src => row[:xs_image_url], :width => 16}
+            - when "image_url"
+              %img{:src => row[:image_url], :width => 128}
+            - when "game_url"
+              %a{href: row[:game_url]}= "▲"
+            - when "name"
+              %span.nowrap
+                %img{:src => row[:xs_image_url], :width => 16}
+                %a{href: row[:game_url]}= row[:name]
+            - when "rarity_stars"
+              = "★" * row[:rarity]
+            - when "ranking_url"
+              %a{href: row[:ranking_url]}= "★"
+            - when "code"
+              = "%04d" % row[:code]
+            - when "rate"
+              = "%.2f" % [row[:count].to_f / row[:uu_count]]
+            - else
+              = row[column.to_sym]

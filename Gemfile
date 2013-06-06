@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 source "https://rubygems.org"
 gemspec
-gem "rain_table", git: "https://github.com/akicho8/rain_table.git" # gemspec で効かないので
+gem "rain_table", git: "https://github.com/akicho8/rain_table.git" # gemspec で効かないのなんで？？
 
 # web i/f 用なんだけどここには書きたくなかった
 group :brawser_env do
@@ -13,11 +13,14 @@ group :brawser_env do
   gem "rack-contrib" # Rack::Runtime 等
   gem "haml"         # for view
   gem "hpricot"      # for html2haml
+  gem "builder"      # for active_support の to_xml ?
+  gem "multi_json"   # for sinatra/json ?
 
   gem "slim"
   gem "puma"
 end
 
+# なんだこれ？
 group :development do
   gem "foreman"
   # gem "sinatra-contrib", github: "sinatra/sinatra-contrib", require: "sinatra/reloader"

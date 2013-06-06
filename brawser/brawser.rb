@@ -3,10 +3,17 @@
 
 require "bundler"
 Bundler.require(:default, :brawser_env)
+
+require "active_support/core_ext/array/conversions"
+
 Bushido::XtraPattern.reload_all
 
-require "bushido/contrib/other_files/swars_items"
+# for /swars_skills
+# require 'active_support'
+# require 'active_support/core_ext/object/to_json'
+require "bushido/contrib/other_files/swars_skills"
 
+require "sinatra/json"
 require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
@@ -44,6 +51,7 @@ REDIS = Redis.new(redis_args)
 REDIS.flushdb
 
 class Brawser < Sinatra::Base
+  helpers Sinatra::JSON
   register Sinatra::MultiRoute
 
   configure :development do
@@ -255,8 +263,53 @@ auto_flushing {
     end
   end
 
-  get "/swars_items" do
-    haml :swars_items
+  get "/swars_skills.?:format?" do
+    @swars_skills = SwarsSkills
+
+    @columns_hash = {
+      :image_url    => {:label => "画像"},
+      :code         => {:label => "Code"},
+      :name         => {:label => "名前"},
+      :rarity       => {:label => "レア度"},
+      :rarity_stars => {:label => "レア度"},
+      :uu_count     => {:label => "UU"},
+      :count        => {:label => "回数"},
+      :description  => {:label => "説明"},
+      :game_url     => {:label => "対戦"},
+      :ranking_url  => {:label => "ランキング"},
+      :xs_image_url => {:label => "画像(小)"},
+      :type         => {:label => "Type"},
+      :key          => {:label => "キー"},
+      :page         => {:label => "Page"},
+      :rate         => {:label => "割合"},
+    }
+
+    case params[:type]
+    when "pc"
+      # @columns = [:name, :code, :uu_count].collect(&:to_s)
+      # @columns = SwarsSkills.first.keys.collect(&:to_s)
+      @columns = @columns_hash.keys.collect(&:to_s)
+      # when "sp"
+      #   @columns = SwarsSkills.first.keys.collect(&:to_s)
+      #   # @columns = @columns_hash.keys.collect(&:to_s)
+    else
+      @columns = [:name, :code, :rate, :uu_count, :count, :rarity].collect(&:to_s)
+    end
+    if only = params[:only]
+      @columns = only.scan(/\w+/)
+    elsif except = params[:except]
+      @columns = @columns - except.scan(/\w+/)
+    end
+
+    case params[:format]
+    when "json"
+      json @swars_skills
+    when "xml"
+      content_type :xml
+      @swars_skills.to_xml
+    else
+      haml :swars_skills
+    end
   end
 
   error do

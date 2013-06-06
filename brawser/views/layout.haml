@@ -38,7 +38,7 @@
               %li
                 %a{href:"/learn_board_points"}= "座標暗記"
               %li
-                %a{href:"/swars_items"}= "将棋ウオーズ戦法"
+                %a{href:"/swars_skills"}= "将棋ウォーズ"
     .container
       - if @error
         %div= @error.message
@@ -48,8 +48,7 @@
       -# %hr
       -# .p
       -#   = RUBY_DESCRIPTION
-    - if Sinatra::Base.environment == :production
-      %script{src:"http://code.jquery.com/jquery.js"}
-    - else
-      %script{src:"/js/jquery.js"}
+    %script{src: Sinatra::Base.environment == :production ? "http://code.jquery.com/jquery.js" : "/js/jquery.js"}
     %script{src:"/js/bootstrap.min.js"}
+    %script{src:"/js/jquery.tablesorter.min.js"}
+    %script{src:"/js/application.js"}
