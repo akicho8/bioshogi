@@ -14,7 +14,7 @@
   %body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        .container
+        .container-fluid
           %a{"class" => "btn btn-navbar", "data-toggle" => "collapse", "data-target" => ".nav-collapse"}
             - 3.times do
               %span{class:"icon-bar"}
@@ -39,7 +39,7 @@
                 %a{href:"/learn_board_points"}= "座標暗記"
               %li
                 %a{href:"/swars_skills"}= "将棋ウォーズ"
-    .container
+    .container-fluid
       - if @error
         %div= @error.message
         %div= @error.class.name
