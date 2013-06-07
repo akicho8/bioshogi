@@ -269,19 +269,21 @@ auto_flushing {
     @columns_hash = {
       :image_url    => {:label => "画像"},
       :code         => {:label => "Code"},
-      :name         => {:label => "名前"},
+      :name         => {:label => "技名"},
+      :iname        => {:label => "技名"},
       :rarity       => {:label => "レア度"},
       :rarity_stars => {:label => "レア度"},
       :uu_count     => {:label => "UU"},
       :count        => {:label => "回数"},
-      :description  => {:label => "説明"},
+      :description  => {:label => "コメント"},
       :game_url     => {:label => "対戦"},
       :ranking_url  => {:label => "ランキング"},
       :xs_image_url => {:label => "画像(小)"},
       :type         => {:label => "Type"},
       :key          => {:label => "キー"},
       :page         => {:label => "Page"},
-      :rate         => {:label => "割合"},
+      :rate         => {:label => "人気"},
+      :name_with_description => {:label => "コメント"},
     }
 
     case params[:type]
@@ -293,7 +295,7 @@ auto_flushing {
       #   @columns = SwarsSkills.first.keys.collect(&:to_s)
       #   # @columns = @columns_hash.keys.collect(&:to_s)
     else
-      @columns = [:name, :code, :rate, :uu_count, :count, :rarity].collect(&:to_s)
+      @columns = [:iname, :rate, :rarity, :code].collect(&:to_s)
     end
     if only = params[:only]
       @columns = only.scan(/\w+/)
