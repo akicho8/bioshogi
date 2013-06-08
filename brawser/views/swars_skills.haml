@@ -26,10 +26,10 @@
           %td
             - case column
             - when "xs_image_url"
-              %img{:src => row[:xs_image_url], :width => 16}
+              %img{:src => row[:xs_image_url], :width => 16, :class => "image_preview", :alt => row[:name]}
             - when "image_url"
               %a{href: row[:game_url]}
-                %img{:src => row[:image_url], :width => 300}
+                %img{:src => row[:image_url], :width => 300, :alt => row[:name]}
             - when "game_url"
               %a{href: row[:game_url]}= "▲"
             - when "iname"

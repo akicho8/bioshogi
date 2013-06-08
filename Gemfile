@@ -16,6 +16,9 @@ group :brawser_env do
   gem "builder"      # for active_support の to_xml ?
   gem "multi_json"   # for sinatra/json ?
 
+  gem 'coffee-script'
+  gem 'execjs'
+  
   gem "slim"
   gem "puma"
 end

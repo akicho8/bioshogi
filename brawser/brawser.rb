@@ -69,6 +69,10 @@ class Brawser < Sinatra::Base
     sass :stylesheet, Compass.sass_engine_options
   end
 
+  get "/:name.js" do
+    coffee params[:name].to_sym
+  end
+
   get "/slim" do
     slim :slim_index
   end
