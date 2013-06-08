@@ -197,7 +197,9 @@ module Bushido
         @pieces += Utils.hold_pieces_str_to_array(str)
       end
 
-      def reset_pieces_from_str(str)
+      # 持駒表記変換 (コード → 人間表記)
+      #   pieces_set_from_human_format_string("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
+      def pieces_set_from_human_format_string(str)
         @pieces = Utils.hold_pieces_str_to_array(str)
       end
 
@@ -292,9 +294,11 @@ module Bushido
       end
     end
 
-    def evaluate
-      Evaluate.new(self).evaluate
+    def evaluator
+      Evaluate.new(self)
     end
+
+    delegate :evaluate, :score_percentage, :to => :evaluator
 
     def brain
       Brain.new(self)

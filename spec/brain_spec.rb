@@ -5,11 +5,25 @@ require "spec_helper"
 module Bushido
   describe Brain do
     describe "評価" do
-      it "駒を置いてないとき" do
-        player_test.evaluate.should == 22284
+      it "先手だけが歩を置いた状態" do
+        Mediator.simple_test(init: "▲９七歩").players.collect{|e|e.evaluate}.should == [100, -100]
       end
-      it "駒を置いているとき" do
-        player_test(run_piece_plot: true).evaluate.should == 21699
+
+      it "後手も歩を置いた状態" do
+        Mediator.simple_test(init: "▲９七歩 △１三歩").players.collect{|e|e.evaluate}.should == [0, 0]
+      end
+
+      it "評価バー" do
+        Mediator.simple_test(init: "▲９七歩").players.collect{|e|e.score_percentage(500)}.should == [60.0, 40.0]
+      end
+
+      describe "わかりにくい古いテスト" do
+        it "先手だけが駒を持っている状態" do
+          player_test.evaluate.should == 22284
+        end
+        it "先手だけ駒を置いているとき" do
+          player_test(run_piece_plot: true).evaluate.should == 21699
+        end
       end
     end
 

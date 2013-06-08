@@ -42,7 +42,7 @@ RSpec.configure do |config|
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
 
       if v = params[:pinit]
-        player.reset_pieces_from_str(v)
+        player.pieces_set_from_human_format_string(v)
       end
 
       player

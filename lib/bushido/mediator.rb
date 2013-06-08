@@ -227,15 +227,23 @@ module Bushido
   end
 
   module Other
+    # 両者の駒の配置を決める
+    # @example 持駒から配置する場合(持駒がなければエラーになる)
+    #   initial_soldiers("▲３三歩 △１一歩")
+    # @example 持駒から配置しない場合(無限に駒が置ける)
+    #   initial_soldiers("▲３三歩 △１一歩", from_piece: false)
     def initial_soldiers(str, options = {})
       Utils.initial_soldiers_split(str).each{|info|
         player_at(info[:location]).initial_soldiers(info[:input], options)
       }
     end
 
-    def reset_pieces_from_str(str)
+    # 一般の持駒表記で両者に駒を配る
+    # @example
+    #   mediator.pieces_set_from_human_format_string("▲歩2 飛 △歩二飛 ▲金")
+    def pieces_set_from_human_format_string(str)
       Utils.triangle_hold_pieces_str_to_hash(str).each{|location, pieces_str|
-        player_at(location).reset_pieces_from_str(pieces_str)
+        player_at(location).pieces_set_from_human_format_string(pieces_str)
       }
     end
   end
@@ -264,7 +272,7 @@ module Bushido
           mediator.initial_soldiers(params[:init2], from_piece: false)
         end
         if params[:pinit]
-          mediator.reset_pieces_from_str(params[:pinit])
+          mediator.pieces_set_from_human_format_string(params[:pinit])
         end
         if params[:pieces_clear]
           mediator.pieces_clear
@@ -273,12 +281,16 @@ module Bushido
         mediator
       end
 
+      # mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
+      # mediator = Mediator.simple_test(init: "▲３三歩 △１一歩")
+      # mediator = Mediator.simple_test(init: "▲１三飛 △１一香 △１二歩")
+      # mediator = Mediator.simple_test(init: "▲１六香 ▲１七飛 △１二飛 △１三香 △１四歩")
       def simple_test(params = {})
         params = {
         }.merge(params)
         mediator = new
         mediator.initial_soldiers(params[:init], from_piece: false)
-        mediator.reset_pieces_from_str(params[:pinit])
+        mediator.pieces_set_from_human_format_string(params[:pinit])
         mediator
       end
 

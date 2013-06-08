@@ -116,10 +116,23 @@ class Brawser < Sinatra::Base
 
     REDIS.set(@session_id, Marshal.dump(@mediator))
 
+    # black:+100 white:-100
+    # 50%
+
     # @bar_colors = {Bushido::Location[:white] => "bar-danger"}
     # @eval_results = Bushido::Location.inject({}){|hash, loc|hash.merge(loc => @mediator.player_at(loc).evaluate)}
     # # total = @eval_results.values.reduce(:+)
-    # @scores = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
+    # @score_rates = @eval_results.inject({}){|h, (k, v)|h.merge(k => (v * 100.0 / total).round)}
+
+    # 評価バー
+    @score_bars = @mediator.players.collect do |player|
+      {
+        :location => player.location,
+        :score    => player.evaluate,
+        :rate     => player.score_percentage,
+        :color    => {:white => "bar-danger"}[player.location.key],
+      }
+    end
 
     haml :show
   end

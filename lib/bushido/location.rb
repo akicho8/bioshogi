@@ -45,6 +45,11 @@ module Bushido
       self.class.parse(index.next.modulo(self.class.count))
     end
 
+    # # オブジェクトIDが異なってもキーが同じなら一致(Marshal関連で復活させたとき不一致になるため追加)
+    # def ==(other)
+    #   key == other.key
+    # end
+
     alias next_location reverse
 
     @pool ||= [

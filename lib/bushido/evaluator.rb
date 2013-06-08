@@ -3,6 +3,8 @@
 module Bushido
   # 形勢判断
   class Evaluate
+    Maximum = 22284              # 最大値は適当
+
     def initialize(player)
       @player = player
     end
@@ -30,6 +32,17 @@ module Bushido
       }.reduce(:+) || 0
 
       score
+    end
+
+    #       |----------| ← この部分の幅をパーセンテージで返す
+    # -1500 [==][======] +1500
+    #    +0 [====][====] 0
+    # +1500 [======][==] -1500
+    # +3000 [========][] -3000
+    def score_percentage(max = Maximum)
+      half = 100.0 / @player.mediator.players.size
+      v = half + (evaluate.to_f / max * half)
+      [0, [100.0, v.round].min].max
     end
   end
 end

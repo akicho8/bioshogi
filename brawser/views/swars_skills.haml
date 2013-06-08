@@ -26,7 +26,7 @@
           %td
             - case column
             - when "xs_image_url"
-              %img{:src => row[:xs_image_url], :width => 16, :class => "image_preview", :alt => row[:name]}
+              %img{:src => row[:xs_image_url], :width => 16, :alt => row[:name]}
             - when "image_url"
               %a{href: row[:game_url]}
                 %img{:src => row[:image_url], :width => 300, :alt => row[:name]}
@@ -34,6 +34,8 @@
               %a{href: row[:game_url]}= "▲"
             - when "iname"
               %span.nowrap
+                -# %a{:href => row[:xs_image_url], :class => "image_preview"}
+                -#   %img{:src => row[:xs_image_url], :width => 16}
                 %img{:src => row[:xs_image_url], :width => 16}
                 %a{href: row[:game_url]}= row[:name]
             - when "name"
