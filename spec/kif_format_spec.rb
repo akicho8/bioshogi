@@ -77,12 +77,19 @@ EOT
       info.header[:board].present?.should == true
     end
 
-    it "foo" do
+    it "テスト1" do
       # result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../gps.kif").read)
       # pp result.header
       # pp result.move_infos
       # result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../doc/oui201207240101.kif").read)
       # p result
+    end
+
+    # curl -O http://swks.sakura.ne.jp/wars/kifu/akicho8-JackTuti-20130609_201346.kif
+    it "テスト2" do
+      info = KifFormat::Parser.parse(Pathname("../resources/akicho8-JackTuti-20130609_201346.kif"))
+      info.header.should be_present
+      info.move_infos.should be_present
     end
   end
 end

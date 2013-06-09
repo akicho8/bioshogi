@@ -1,14 +1,9 @@
+
 %ul{:class => "nav nav-pills"}
-  %li
-    %a{href: "/swars_skills"}= "シンプル"
-  %li
-    %a{href: "/swars_skills?only=iname,description"}= "技のコメ"
-  %li
-    %a{href: "/swars_skills?only=iname,rate,uu_count,count,rarity,code"}= "統計"
-  %li
-    %a{href: "/swars_skills?only=image_url"}= "画像確認"
-  %li
-    %a{href: "/swars_skills?type=pc"}= "ごちゃまぜ"
+  - @types_hash.each do |type, attrs|
+    %li{:class => (params[:type] == type.to_s) ? "active" : ""}
+      %a{href: "/swars_skills?type=#{type}&&only=#{attrs[:columns].join(",")}"}
+        = attrs[:label]
   %li
     %a{href: "/swars_skills.xml"}= "XML"
   %li
@@ -50,12 +45,14 @@
             - when "rate"
               = "%.2f" % [row[:count].to_f / row[:uu_count]]
             - when "description"
-              %small
-                = row[:description]
+              %small= row[:description]
             - when "name_with_description"
-              .pull-left
+              .pull-left{:style => "padding-right:8px"}
                 %a{href: row[:game_url]}
                   %img{:src => row[:xs_image_url], :width => 64}
-              = row[:description]
+              %span.nowrap
+                %a{href: row[:game_url]}= row[:name]
+              %br
+              %small= row[:description]
             - else
               = row[column.to_sym]

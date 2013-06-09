@@ -3,9 +3,19 @@
 module Bushido
   module KifFormat
     class Parser < BaseFormat::Parser
+      # KIFフォーマットかどうかの判定
+      # @example 将棋ウォーズ棋譜検索β http://swks.sakura.ne.jp/wars/kifusearch/ での棋譜フォーマット
+      #   開始日時：2013/06/09 20:13:46
+      #   棋戦：将棋ウォーズ(弾丸)
+      #   持ち時間：3分切れ負け
+      #   手合割：平手
+      #   先手：akicho8
+      #   後手：JackTuti
+      #   手数----指手---------消費時間--
+      #   1 ７六歩(77)   ( 00:01/00:00:01)
       def self.resolved?(source)
         source = BaseFormat.normalized_source(source)
-        source.match(/^手数.*指手.*消費時間.*$/) && !source.match(/^変化：/)
+        source.match(/^手数-+指手-+消費時間-+$/)
       end
 
       # | # ----  Kifu for Windows V6.26 棋譜ファイル  ----
@@ -22,7 +32,7 @@ module Bushido
         read_header
         @_body.lines.each do |line|
           comment_read(line)
-          if md = line.match(/^\s+(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
+          if md = line.match(/^\s*(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
             location = Location["#{md[:index]}手目"]
             @move_infos << {index: md[:index], location: location, input: md[:input], mov: "#{location.mark}#{md[:input]}", spent_time: md[:spent_time]}
           end

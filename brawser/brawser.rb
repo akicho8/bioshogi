@@ -284,36 +284,35 @@ auto_flushing {
     @swars_skills = SwarsSkills
 
     @columns_hash = {
-      :image_url    => {:label => "画像"},
-      :code         => {:label => "Code"},
-      :name         => {:label => "技名"},
-      :iname        => {:label => "技名"},
-      :rarity       => {:label => "レア度"},
-      :rarity_stars => {:label => "レア度"},
-      :uu_count     => {:label => "UU"},
-      :count        => {:label => "回数"},
-      :description  => {:label => "コメント"},
-      :game_url     => {:label => "対戦"},
-      :ranking_url  => {:label => "ランキング"},
-      :xs_image_url => {:label => "画像(小)"},
-      :type         => {:label => "Type"},
-      :key          => {:label => "キー"},
-      :page         => {:label => "Page"},
-      :rate         => {:label => "人気"},
-      :name_with_description => {:label => "コメント"},
+      :image_url             => {:label => "画像"},
+      :code                  => {:label => "Code"},
+      :name                  => {:label => "技名"},
+      :iname                 => {:label => "技名"},
+      :rarity                => {:label => "レア度"},
+      :rarity_stars          => {:label => "レア度"},
+      :uu_count              => {:label => "UU"},
+      :count                 => {:label => "回数"},
+      :description           => {:label => "コメント"},
+      :game_url              => {:label => "対戦"},
+      :ranking_url           => {:label => "ランキング"},
+      :xs_image_url          => {:label => "画像(小)"},
+      :type                  => {:label => "Type"},
+      :key                   => {:label => "キー"},
+      :page                  => {:label => "Page"},
+      :rate                  => {:label => "人気"},
+      :name_with_description => {:label => "技"},
     }
 
-    case params[:type]
-    when "pc"
-      # @columns = [:name, :code, :uu_count].collect(&:to_s)
-      # @columns = SwarsSkills.first.keys.collect(&:to_s)
-      @columns = @columns_hash.keys.collect(&:to_s)
-      # when "sp"
-      #   @columns = SwarsSkills.first.keys.collect(&:to_s)
-      #   # @columns = @columns_hash.keys.collect(&:to_s)
-    else
-      @columns = [:iname, :rate, :rarity, :code].collect(&:to_s)
-    end
+    @types_hash = {
+      :t_a => {:label => "技",         :columns => %w(name_with_description)},
+      :t_b => {:label => "シンプル",   :columns => %w(iname rate rarity code)},
+      :t_c => {:label => "統計",       :columns => %w(iname rate uu_count count rarity code)},
+      :t_e => {:label => "ランキング", :columns => %w(iname ranking_url code)},
+      :t_d => {:label => "画像",       :columns => %w(image_url)},
+    }
+
+    params[:type] ||= @types_hash.keys.first.to_s
+    @columns ||= @types_hash[params[:type].to_sym][:columns]
     if only = params[:only]
       @columns = only.scan(/\w+/)
     elsif except = params[:except]
