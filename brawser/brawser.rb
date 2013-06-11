@@ -64,9 +64,8 @@ class Brawser < Sinatra::Base
 
   set :sessions, true
 
-  get "/stylesheet.css" do
-    # FIXME: cache
-    sass :stylesheet, Compass.sass_engine_options
+  get "/:name.css" do
+    sass params[:name].to_sym, Compass.sass_engine_options
   end
 
   get "/:name.js" do
@@ -301,13 +300,14 @@ auto_flushing {
       :page                  => {:label => "Page"},
       :rate                  => {:label => "人気"},
       :name_with_description => {:label => "技"},
+      :dan_avg               => {:label => "棋力"},
     }
 
     @types_hash = {
       :t_a => {:label => "技",         :columns => %w(name_with_description)},
-      :t_b => {:label => "シンプル",   :columns => %w(iname rate rarity code)},
-      :t_c => {:label => "統計",       :columns => %w(iname rate uu_count count rarity code)},
-      :t_e => {:label => "ランキング", :columns => %w(iname ranking_url code)},
+      # :t_b => {:label => "シンプル",   :columns => %w(iname rate rarity code)},
+      :t_c => {:label => "統計",       :columns => %w(iname dan_avg rate uu_count count rarity code)},
+      # :t_e => {:label => "ランキング", :columns => %w(iname ranking_url code)},
       :t_d => {:label => "画像",       :columns => %w(image_url)},
     }
 

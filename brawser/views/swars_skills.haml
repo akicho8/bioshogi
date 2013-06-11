@@ -1,4 +1,3 @@
-
 %ul{:class => "nav nav-pills"}
   - @types_hash.each do |type, attrs|
     %li{:class => (params[:type] == type.to_s) ? "active" : ""}
@@ -13,7 +12,8 @@
   %thead
     %tr
       - @columns.each do |column|
-        %th= @columns_hash[column.to_sym][:label]
+        %th.blue
+          = @columns_hash[column.to_sym][:label]
   %tbody
     - @swars_skills.each do |row|
       %tr
@@ -38,12 +38,15 @@
                 %a{href: row[:game_url]}= row[:name]
             - when "rarity_stars"
               = "★" * row[:rarity]
-            - when "ranking_url"
-              %a{href: row[:ranking_url]}= "★"
+            - when "ranking_url", "dan_avg"
+              %a{href: row[:ranking_url]}= "%.2f" % row[:dan_avg]
             - when "code"
               = "%04d" % row[:code]
             - when "rate"
               = "%.2f" % [row[:count].to_f / row[:uu_count]]
+            - when "dan_avg"
+              -# = row[:dan_avg].floor.abs.to_s + (row[:dan_avg] < 0 ? "級" : "段")
+              = "%.2f" % row[:dan_avg]
             - when "description"
               %small= row[:description]
             - when "name_with_description"
