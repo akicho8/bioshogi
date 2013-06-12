@@ -55,6 +55,8 @@
                   %img{:src => row[:xs_image_url], :width => 64}
               %span.nowrap
                 %a{href: row[:game_url]}= row[:name]
+                %small.yellow
+                  = "★" * row[:rarity]
               %br
               %small= row[:description]
             - else

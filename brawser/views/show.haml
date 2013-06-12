@@ -1,40 +1,43 @@
 %div
-  -# %a{href:"/?think_put=true", class: "btn"} 読み0(旧)
-  %a{href:"/?random_put=true", class: "btn"} ランダム
-  %a{href:"/?think_put_lv=0", class: "btn"} 読深0
-  %a{href:"/?think_put_lv=1", class: "btn"} 読深1
-  %a{href:"/?think_put_lv=2", class: "btn"} 読深2
+  .text-center
+    .btn-group
+      %a{href:"/?random_put=true", class: "btn"} ランダム
+      %a{href:"/?think_put_lv=0", class: "btn"} 読深0
+      %a{href:"/?think_put_lv=1", class: "btn"} 読深1
+      %a{href:"/?think_put_lv=2", class: "btn"} 読深2
 
 - if @score_bars
-  %p
-    %div{class: "progress"}
+  .text-center{:style => "margin-top:0.5em"}
+    .progress
       - @score_bars.each do |sb|
-        %div{class:"bar #{sb[:color]}", style:"width:#{sb[:rate]}%"}= "#{sb[:location].mark}#{sb[:score]}"
+        %div{class:"bar #{sb[:style]}", style:"width:#{sb[:rate]}%"}= "#{sb[:location].mark}#{sb[:score]}"
 
-%p= "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
+.text-center
+  = "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
 
-%form{action: "/", method: "post", class: "form-inline"}
-  .control-group
-    .controls
-      %label{class: "control-label"}= Bushido::Location[:white].mark_with_name
-      %input{name: "location", type: "hidden", value: "white"}
-      %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.white?}
-      %input{type: "submit", value: "打", class: "btn btn-primary"}
+.text-center
+  %form{action: "/", method: "post", class: "form-inline kif-input-form"}
+    .control-group
+      .controls
+        %label{class: "control-label"}= Bushido::Location[:white].mark_with_name
+        %input{name: "location", type: "hidden", value: "white"}
+        %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.white?}
+        %input{type: "submit", value: "打", class: "btn btn-primary"}
 
-%div
-  - if @mediator.player_at(:white).pieces.present?
-    .pieces= @mediator.player_at(:white).to_s_pieces
-  = MediatorDecorator.new(@mediator).to_html_board
-  - if @mediator.player_at(:black).pieces.present?
-    .pieces= @mediator.player_at(:black).to_s_pieces
+  %div
+    - if @mediator.player_at(:white).pieces.present?
+      .pieces= @mediator.player_at(:white).to_s_pieces
+    = MediatorDecorator.new(@mediator).to_html_board
+    - if @mediator.player_at(:black).pieces.present?
+      .pieces= @mediator.player_at(:black).to_s_pieces
 
-%form{action: "/", method: "post", class: "form-inline"}
-  .control-group
-    .controls
-      %label{class: "control-label"}= Bushido::Location[:black].mark_with_name
-      %input{name: "location", type: "hidden", value: "black"}
-      %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.black?}
-      %input{type: "submit", value: "打", class: "btn btn-primary"}
+  %form{action: "/", method: "post", class: "form-inline kif-input-form"}
+    .control-group
+      .controls
+        %label{class: "control-label"}= Bushido::Location[:black].mark_with_name
+        %input{name: "location", type: "hidden", value: "black"}
+        %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.black?}
+        %input{type: "submit", value: "打", class: "btn btn-primary"}
 
 - if @mediator.human_hand_logs.present?
   %p
