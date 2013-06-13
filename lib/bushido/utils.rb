@@ -3,6 +3,8 @@
 # 汎用の便利メソッド集
 #
 
+require "active_support/core_ext/object/to_query"
+
 module Bushido
   module Utils
     extend self
@@ -151,6 +153,15 @@ module Bushido
       md = str.match(/(?<mark>[#{Location.triangles}])(?<input>.*)/)
       # md or raise(ArgumentError)
       {location: Location[md[:mark]], input: md[:input]}
+    end
+
+    # Google検索用URL
+    # @example
+    #   guguru_url("UFO銀")
+    #   guguru_url(["UFO銀", "急戦"])
+    def guguru_url(keywords)
+      str = Array.wrap(keywords).compact.uniq.join(" ")
+      "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{q: str.tosjis}.to_query}"
     end
 
     private

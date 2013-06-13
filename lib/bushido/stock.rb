@@ -28,9 +28,7 @@ module Bushido
     end
 
     def guguru_url
-      require "active_support/core_ext/object/to_query"
-      str = [self[:key], "将棋"].join(" ")
-      "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{q: str.tosjis}.to_query}"
+      Utils.guguru_url(self[:key])
     end
 
     reload_all
