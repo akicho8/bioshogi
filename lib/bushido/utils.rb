@@ -54,6 +54,7 @@ module Bushido
 
     # board_reset の引数の解釈
     #
+    # @example
     #   board_reset_args("+-----")                              # そのまま棋譜が入ってれいばそのままパース
     #   board_reset_args("角落ち")                              # 先手だけが角落ち(下と同じ)
     #   board_reset_args("先手" => "角落ち", "後手" => "平手")  # 先手だけが角落ち
