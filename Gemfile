@@ -18,7 +18,7 @@ group :brawser_env do
 
   gem 'coffee-script'
   gem 'execjs'
-  
+
   gem "slim"
   gem "puma"
 end

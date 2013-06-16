@@ -42,7 +42,8 @@ module Bushido
           mhand = "#{_player.location.mark}#{hand}"
           log_puts locals, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
           _player.execute(hand)
-          # puts _player.board
+          # ログに盤面を入れる場合
+          # log_puts locals, _player.board
           child_max_hand_info = nil
           if locals[:level] < locals[:depth]
             # 木の途中
@@ -77,6 +78,10 @@ module Bushido
     end
 
     def log_puts(locals, str)
+      str = str.to_s
+      if str.match(/\n/)
+        str = "\n" + str
+      end
       Bushido.logger.info "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]
     end
   end
