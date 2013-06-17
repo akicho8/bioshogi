@@ -7,7 +7,7 @@
   - [[https://gemnasium.com/akicho8/bushido/][Gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
   - [[https://codeclimate.com/github/akicho8/bushido][Code Climat]]: [[https://codeclimate.com/github/akicho8/bushido.png]]
 
-  [[http://fast-plateau-7460.herokuapp.com/][DEMO]]
+  デモ → http://fast-plateau-7460.herokuapp.com/
 
   [[https://raw.github.com/akicho8/bushido/master/brawser/demo2.png]]
 
@@ -589,21 +589,16 @@
 
    - mini_soldier.rb ののこり2つのテスト
    - NegaMaxで同点の答えが二つある場合は二つ返すようにする
-   - テスト転けてる原因調査
    - COM同士の対戦スクリプト作成(インタフェースを改善する)
-   - logger
    - CLI
 
-   - 1x8の盤面、「成」を無効、「１一香」の移動可能な位置を調べると、１八がでてくる。ここは「成らず」はできないのでエラーになる
    - soldiers_ways のテスト
    - push {} のところで深さを出す。で、コメントのところで A-B-C A-B-A とかラベルをつけれるようにする
    - 人間用の難しい棋譜パース部分を別モジュール化してコアをシンプルにする
    - dsl: KifuDsl.define("文字列") とも書けるようにする。evalのように。
    - 囲い一覧をWEBブラウザで確認できるようにする
-   - XtraPattern を Rails の routing.rb を参考に綺麗に書けるようにする
    - KifuDsl.define{} は -> {} でいいような気がする
    - 手の候補を表示する
-   - @board が独立して marshal_dump/load できないから面倒なことになる。board 単体で push pop できるようにする → 設計ミス。player.sandbox_for しているのが間違い。mediator.sandbox_for なら辻褄があう。やっぱり @board はコピーできるようにする。
    - @board を複製できるようにする
    - DSLに rem(仮) 追加
    - コードが雑になるので blank? を使うのを禁止する
@@ -613,7 +608,6 @@
    - MediatorDecorator で移動元・移動先のクラス指定
    - 「詰み」の状態を判断する
    - 形勢判断クラスをStrategyやadapterみたいにする
-   - ▽1八杏成 ではなく 香成
    - 例外クラスは引数を受け取って自分でメッセージを作成する
    - 棋譜のXML
    - ki2 kif 相互変換
