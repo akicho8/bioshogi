@@ -18,13 +18,13 @@ module Bushido
     #   end
     #
     def self.size_change(size, &block)
-      size_save = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
-      Position::Hpos.ridge_length, Position::Vpos.ridge_length = size
+      size_save = [Position::Hpos.size, Position::Vpos.size]
+      Position::Hpos.size, Position::Vpos.size = size
       if block_given?
         begin
           yield
         ensure
-          Position::Hpos.ridge_length, Position::Vpos.ridge_length = size_save
+          Position::Hpos.size, Position::Vpos.size = size_save
         end
       end
       size_save
@@ -33,7 +33,7 @@ module Bushido
     # サイズ毎のクラスがいるかも
     # かなりやっつけの仮
     def self.size_type
-      key = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
+      key = [Position::Hpos.size, Position::Vpos.size]
       {
         [5, 5] => :x55,
         [9, 9] => :x99,
@@ -43,11 +43,11 @@ module Bushido
     # 一時的に成れない状況にする
     def self.disable_promotable
       begin
-        _promotable_length = Position::Vpos._promotable_length
-        Position::Vpos._promotable_length = nil
+        _promotable_size = Position::Vpos._promotable_size
+        Position::Vpos._promotable_size = nil
         yield
       ensure
-        Position::Vpos._promotable_length = _promotable_length
+        Position::Vpos._promotable_size = _promotable_size
       end
     end
 
@@ -57,7 +57,7 @@ module Bushido
 
     # 縦列の盤上のすべての駒
     def pieces_of_vline(x)
-      Position::Vpos.ridge_length.times.collect{|y|
+      Position::Vpos.size.times.collect{|y|
         fetch(Point.parse([x, y]))
       }.compact
     end
@@ -143,8 +143,8 @@ module Bushido
 
     # 盤面の文字列化(開発用なので好きなフォーマットでいい)
     def to_s_debug
-      rows = Position::Vpos.ridge_length.times.collect{|y|
-        Position::Hpos.ridge_length.times.collect{|x|
+      rows = Position::Vpos.size.times.collect{|y|
+        Position::Hpos.size.times.collect{|x|
           @surface[[x, y]]
         }
       }

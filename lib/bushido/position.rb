@@ -8,8 +8,8 @@ module Bushido
       extend ActiveSupport::Concern
 
       included do
-        class_attribute :ridge_length
-        self.ridge_length = 9
+        class_attribute :size
+        self.size = 9
 
         attr_reader :value
         private_class_method :new
@@ -37,7 +37,7 @@ module Bushido
         end
 
         def units(options = {})
-          orig_units(options).send(_arrow, ridge_length)
+          orig_units(options).send(_arrow, size)
         end
 
         def orig_units(options = {})
@@ -99,8 +99,8 @@ module Bushido
         if location.white?
           v = v.reverse
         end
-        if _promotable_length
-          v.value < _promotable_length
+        if _promotable_size
+          v.value < _promotable_size
         end
       end
     end
@@ -110,7 +110,7 @@ module Bushido
       cattr_accessor(:_units)             {"987654321"}
       cattr_accessor(:_zenkaku_units)     {"９８７６５４３２１"}
       cattr_accessor(:_arrow)             {:last}
-      cattr_accessor(:_promotable_length) {nil}
+      cattr_accessor(:_promotable_size) {nil}
       cattr_accessor(:regexp)             {/[１-９1-9]/o}
 
       # "５五" の全角 "５" に対応するため
@@ -127,7 +127,7 @@ module Bushido
       cattr_accessor(:_units)             {"一二三四五六七八九"}
       cattr_accessor(:_zenkaku_units)     {"一二三四五六七八九"}
       cattr_accessor(:_arrow)             {:first}
-      cattr_accessor(:_promotable_length) {3}
+      cattr_accessor(:_promotable_size) {3}
       cattr_accessor(:regexp)             {/[一二三四五六七八九1-9]/o}
 
       # "(52)" の "2" に対応するため

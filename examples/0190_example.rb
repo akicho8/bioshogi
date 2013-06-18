@@ -7,8 +7,8 @@ require "delegate"
 
 class MediatorDecorator < SimpleDelegator
   def to_html
-    rows = Position::Vpos.ridge_length.times.collect{|y|
-      tds = Position::Hpos.ridge_length.times.collect{|x|
+    rows = Position::Vpos.size.times.collect{|y|
+      tds = Position::Hpos.size.times.collect{|x|
         style = ""
         if soldier = board.surface[[x, y]]
           if soldier.player.location.white?

@@ -185,12 +185,12 @@ module Bushido
         end
 
         def line
-          "+" + "---" * Position::Hpos.ridge_length + "+"
+          "+" + "---" * Position::Hpos.size + "+"
         end
 
         def rows
-          Position::Vpos.ridge_length.times.collect do |y|
-            fields = Position::Hpos.ridge_length.times.collect do |x|
+          Position::Vpos.size.times.collect do |y|
+            fields = Position::Hpos.size.times.collect do |x|
               object_to_s(@board.surface[[x, y]])
             end
             "|#{fields.join}|" + Position::Vpos.parse(y).name

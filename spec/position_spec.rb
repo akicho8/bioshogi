@@ -63,11 +63,11 @@ module Bushido
 
     describe "5x5の盤面" do
       before do
-        @save_size = [Position::Hpos.ridge_length, Position::Vpos.ridge_length]
-        Position::Hpos.ridge_length, Position::Vpos.ridge_length = [5, 5]
+        @save_size = [Position::Hpos.size, Position::Vpos.size]
+        Position::Hpos.size, Position::Vpos.size = [5, 5]
       end
       after do
-        Position::Hpos.ridge_length, Position::Vpos.ridge_length = @save_size
+        Position::Hpos.size, Position::Vpos.size = @save_size
       end
       it do
         player_test.board.to_s.should == <<-EOT.strip_heredoc

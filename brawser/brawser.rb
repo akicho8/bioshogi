@@ -18,8 +18,8 @@ require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
-    rows = Bushido::Position::Vpos.ridge_length.times.collect do |y|
-      tds = Bushido::Position::Hpos.ridge_length.times.collect do |x|
+    rows = Bushido::Position::Vpos.size.times.collect do |y|
+      tds = Bushido::Position::Hpos.size.times.collect do |x|
         tag_class = []
         cell = ""
         if soldier = board.surface[[x, y]]

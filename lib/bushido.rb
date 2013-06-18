@@ -64,13 +64,3 @@ module Bushido
   Board.send(:include, BaseFormat::Board)
   Soldier.send(:include, BaseFormat::Soldier)
 end
-
-module Bushido
-  if $0 == __FILE__
-    mediator = Mediator.start
-    mediator.piece_plot
-    mediator.execute("７六歩")
-    mediator.execute("３四歩")
-    puts mediator
-  end
-end
