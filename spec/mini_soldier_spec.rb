@@ -19,6 +19,9 @@ module Bushido
     end
   end
 
-  # describe PieceStake do
-  # end
+  describe PieceStake do
+    it "#to_hand" do
+      PieceStake[point: Point["１三"], piece: Piece["銀"]].to_hand.should == "1三銀打"
+    end
+  end
 end
