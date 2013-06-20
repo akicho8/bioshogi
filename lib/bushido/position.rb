@@ -17,6 +17,7 @@ module Bushido
 
       module ClassMethods
         # 座標をパースする
+        # @example
         #   Position::Hpos.parse("１").name # => "1"
         def parse(arg)
           case arg
@@ -65,18 +66,21 @@ module Bushido
       end
 
       # 名前
+      # @example
       #   Position::Vpos.parse("一").name # => "一"
       def name
         self.class.units[@value]
       end
 
       # 数字表記
+      # @example
       #   Position::Vpos.parse("一").number_format # => "1"
       def number_format
         name
       end
 
       # 座標反転
+      # @example
       #   Position::Hpos.parse("1").reverse.name # => "9"
       def reverse
         self.class.parse(self.class.units.size - 1 - @value)
@@ -92,6 +96,7 @@ module Bushido
       end
 
       # 成れるか？
+      # @example
       #   Point.parse("１三").promotable?(:black) # => true
       #   Point.parse("１四").promotable?(:black) # => false
       def promotable?(location)

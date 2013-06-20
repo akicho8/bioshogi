@@ -33,6 +33,7 @@ module Bushido
     end
 
     # 指定プレイヤー側の初期配置(盤面のみ対応)
+    # @example
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
     def valid_both_soldiers_from_char_board(params = {})
       params = {
@@ -81,6 +82,7 @@ module Bushido
     end
 
     # 持駒表記変換 (人間表記 → コード)
+    # @example
     #  Utils.hold_pieces_array_to_str([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
     def hold_pieces_array_to_str(pieces)
       pieces.group_by{|e|e.class}.collect{|klass, pieces|
@@ -93,6 +95,7 @@ module Bushido
     end
 
     # 持駒表記変換 (コード → 人間表記)
+    # @example
     #   Utils.hold_pieces_str_to_array("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
     def hold_pieces_str_to_array(str)
       if String === str
@@ -107,6 +110,7 @@ module Bushido
     end
 
     # 適当な持駒文字列を先手後手に分離
+    # @example
     #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {L.b => "歩2 飛 金", L.w => "歩二飛 "}
     def triangle_hold_pieces_str_to_hash(str)
       hash = {}
@@ -119,12 +123,14 @@ module Bushido
     end
 
     # 先手後手に分離した持駒情報を文字列化
+    # @example
     #   Utils.triangle_hold_pieces_hash_to_str({L.b => "歩2 飛 金", L.w => "歩二飛 "}) # => "▲歩2 飛 金 ▽歩二飛 "
     def triangle_hold_pieces_hash_to_str(hash)
       hash.collect{|location, pieces_str|"#{location.mark}#{pieces_str}"}.join(" ")
     end
 
     # ki2形式に近い棋譜の羅列のパース
+    # @example
     #   ki2_parse("▲４二銀△４二銀") # => [{location: :black, input: "４二銀"}, {location: :white, input: "４二銀"}]
     def ki2_parse(str)
       str = str.to_s
