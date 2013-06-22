@@ -1,9 +1,0 @@
-.text-center
-  .label
-    = "#{session[:test_count]}"
-  = MediatorDecorator.new(@mediator).to_html_board
-  %p
-    - [1, 3, 5, 9].each do |count|
-      %a.badge{href: "/learn_board_points?count=#{count}"}= count
-  %p
-    = "#{(Time.now - session[:start_time]).to_i} 秒経過"

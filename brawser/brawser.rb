@@ -194,27 +194,6 @@ auto_flushing {
     haml :tactics_and_enclosure
   end
 
-  get "/learn_board_points" do
-    session[:test_count] ||= 0
-    session[:start_time] ||= Time.now
-    unless params[:count]
-      session[:test_count] = 0
-      session[:start_time] = Time.now
-    end
-    count = params[:count].to_i
-    session[:test_count] += count
-    begin
-      @mediator = Bushido::Mediator.start
-      count.times do
-        mini_soldier = Bushido::MiniSoldier[point: Bushido::Point.to_a.sample, piece: Bushido::Piece.to_a.sample, promoted: [true, false].sample]
-        @mediator.players.sample.initial_soldiers(mini_soldier, from_piece: false)
-      end
-    rescue Bushido::NotPutInPlaceNotBeMoved, Bushido::NotPromotable, Bushido::PieceAlredyExist => error
-      retry
-    end
-    haml :learn_board_points
-  end
-
   get "/simple_kifu_form" do
     if params[:body].present?
       @pattern = Bushido::XtraPattern.new({
