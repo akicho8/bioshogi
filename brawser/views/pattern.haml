@@ -1,25 +1,26 @@
 - if @pattern
-  %p
-    %strong= @pattern[:title]
-  - if @pattern[:url]
+  .text-center
     %p
-      %a{href: @pattern[:url]}
-        = @pattern[:url]
-  - if @pattern[:comment]
-    %p
-      = @pattern[:comment]
-  %hr
-  - @frames.each do |mediator|
-    - if v = mediator.variables[:comment]
-      .alert.alert-info
-        = Array.wrap(v).join("<br/>")
-    - if mediator.variables[:hide_human_hand_logs]
-    - else
-      -# %p= mediator.human_hand_logs.join(" ")
-      %p= mediator.human_hand_logs.last
-    - if mediator.player_at(:white).pieces.present?
-      .pieces= mediator.player_at(:white).to_s_pieces
-    = MediatorDecorator.new(mediator).to_html_board(:small)
-    - if mediator.player_at(:black).pieces.present?
-      .pieces= mediator.player_at(:black).to_s_pieces
+      %strong= @pattern[:title]
+    - if @pattern[:url]
+      %p
+        %a{href: @pattern[:url]}
+          = @pattern[:url]
+    - if @pattern[:comment]
+      %p
+        = @pattern[:comment]
     %hr
+    - @frames.each do |mediator|
+      - if v = mediator.variables[:comment]
+        .alert.alert-info
+          = Array.wrap(v).join("<br/>")
+      - if mediator.variables[:hide_human_hand_logs]
+      - else
+        -# %p= mediator.human_hand_logs.join(" ")
+        %p= mediator.human_hand_logs.last
+      - if mediator.player_at(:white).pieces.present?
+        .pieces= mediator.player_at(:white).to_s_pieces
+      = MediatorDecorator.new(mediator).to_html_board(:small)
+      - if mediator.player_at(:black).pieces.present?
+        .pieces= mediator.player_at(:black).to_s_pieces
+      %hr
