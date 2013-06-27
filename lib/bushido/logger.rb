@@ -1,4 +1,4 @@
 module Bushido
   mattr_accessor :logger
-  self.logger = ActiveSupport::BufferedLogger.new("/dev/null")
+  self.logger = ActiveSupport::Logger.new("/dev/null")
 end

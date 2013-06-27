@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard-rspec"
   spec.add_development_dependency "yard-rubicle"
 
-  spec.add_dependency "activesupport"
+  spec.add_dependency "activesupport", ">= 4.0.0"
   spec.add_dependency "rain_table" # git: "https://github.com/akicho8/rain_table.git" ← なんでダメ？
   spec.add_dependency "tapp"
   spec.add_dependency "pry"

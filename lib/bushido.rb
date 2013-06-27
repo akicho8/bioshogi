@@ -2,11 +2,13 @@
 
 require "bushido/version"
 
-require "active_support/core_ext/string"
+require "active_support/logger"
 require "active_support/configurable"
+require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/class/attribute_accessors"
-require "active_support/buffered_logger"
+require "active_support/core_ext/module/attribute_accessors"
+require "active_support/core_ext/string"
 
 # require "pry-debugger" # これを有効にすると pry + rcodetools の環境でバックトレースがでまくる
 

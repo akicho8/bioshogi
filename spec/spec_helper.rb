@@ -7,7 +7,7 @@ require "bundler/setup"
 require "tapp"
 require "bushido"
 
-Bushido.logger = ActiveSupport::BufferedLogger.new(Pathname(__FILE__).dirname.join("../log/test.log").expand_path)
+Bushido.logger = ActiveSupport::Logger.new(Pathname(__FILE__).dirname.join("../log/test.log").expand_path)
 
 module Bushido
   Mediator.send(:include, MediatorTestHelper)
