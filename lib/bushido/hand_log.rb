@@ -161,24 +161,5 @@ module Bushido
     def to_pair
       [to_s_simple, to_s_human]
     end
-
-    private
-
-    # 未使用
-    # リアルタイムに探すバージョン
-    # player.mediator.hand_logs にすでに自分が記録されているとする
-    def __same_point?
-      if @player.mediator
-        logs = @player.mediator.hand_logs
-        logs = logs[0..logs.index(self)] # ← ここがだめっぽい
-        # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
-        # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
-        if log = logs.reverse.find{|log|log.player.location != @player.location} # player == player で動くか確認
-          if log.point == @point
-            true
-          end
-        end
-      end
-    end
   end
 end
