@@ -203,7 +203,7 @@ module Bushido
       if @md[:suffix].match(/#{str_a_or_b.last}/)
         method_a_or_b = method_a_or_b.reverse
       end
-      @player.location._which(*method_a_or_b)
+      @player.location.where_value(*method_a_or_b)
     end
 
     def assert_valid_format(valid_list)

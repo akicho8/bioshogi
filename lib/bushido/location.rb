@@ -36,7 +36,7 @@ module Bushido
     end
 
     # 先手ならaを後手ならbを返す
-    def _which(a, b)
+    def where_value(a, b)
       black? ? a : b
     end
 
