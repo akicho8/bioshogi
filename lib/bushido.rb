@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require "bushido/version"
+require_relative "bushido/version"
 
 require "active_support/logger"
 require "active_support/configurable"
