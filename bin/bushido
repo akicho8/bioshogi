@@ -1,3 +1,8 @@
 #!/usr/bin/env ruby
-
-require 'bushido'
+begin
+  require "bushido/cli"
+rescue LoadError
+  require "rubygems"
+  require "bushido/cli"
+end
+Bushido::Cli.execute

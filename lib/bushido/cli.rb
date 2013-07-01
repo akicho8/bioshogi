@@ -8,6 +8,7 @@ module Bushido
   class Cli
     Commands = [
       "PieceList",
+      "Versus",
     ]
 
     attr_accessor :options
@@ -34,7 +35,7 @@ module Bushido
       common_options(opts, options)
       opts.separator("COMMAND:")
       opts.on(Commands.collect{|sub_command|
-          klass = "Bushido::#{sub_command}".constantize
+          klass = "Bushido::Cli::#{sub_command.camelize}".constantize
           "#{opts.summary_indent}#{sub_command.underscore.ljust(16)} #{klass.script_name}\n"}.join
         )
       opts.order!(args)
@@ -45,7 +46,7 @@ module Bushido
       [args, options]
     end
 
-    def self.execute(args, options = {})
+    def self.execute(args = ARGV, options = {})
       new(*process_args(args, options)).execute
     end
 
@@ -56,7 +57,7 @@ module Bushido
 
     def execute
       command_name = @args.first
-      klass = "Bushido::#{command_name.classify}".constantize
+      klass = "Bushido::Cli::#{command_name.camelize}".constantize
       klass.new(*klass.process_args(@args, @options)).execute
     end
 
@@ -64,29 +65,10 @@ module Bushido
       puts str
     end
   end
-
-  class PieceList < Cli
-    def self.script_name
-      "駒情報一覧"
-    end
-
-    def self.process_args(args, options)
-      options = {
-        :foo_bar => nil,
-      }.merge(default_options).merge(options)
-
-      opts = OptionParser.new
-      opts.on("-e", "--email=EMAIL", String, "メールアドレス"){|v|options[:email] = v}
-      common_options(opts, options)
-      opts.parse!(args)
-      [args, options]
-    end
-
-    def execute
-      Piece.each{|e|p e.name}
-    end
-  end
 end
+
+require_relative "cli/piece_list"
+require_relative "cli/versus"
 
 if $0 == __FILE__
   Bushido::Cli.execute(ARGV)
