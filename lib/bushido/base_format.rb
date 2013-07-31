@@ -41,7 +41,7 @@ module Bushido
     def self.board_parse(source)
       lines = normalized_source(source).strip.lines.to_a
 
-      if lines.blank?
+      if lines.empty?
         # board_parse("") の場合
         return {}
       end
