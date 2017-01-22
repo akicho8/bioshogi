@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 source "https://rubygems.org"
+ruby "2.4.0"
 gemspec
 gem "rain_table", git: "https://github.com/akicho8/rain_table.git" # gemspec で効かないのなんで？？
 
