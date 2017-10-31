@@ -19,12 +19,12 @@ Piece.each{|piece|
     end
     if draw
       # 歩だと二歩になるので
-      player.initial_soldiers("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_piece: false) # !> assigned but unused variable - logs
+      player.initial_soldiers("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_piece: false)
     end
   }
-  puts mediator.board # !> method redefined; discarding old promoted=
-  player.board.abone_all # !> shadowing outer local variable - ary
-} # !> shadowing outer local variable - parser
+  puts mediator.board
+  player.board.abone_all
+}
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一

@@ -1,4 +1,3 @@
-
 require_relative "bushido/version"
 
 require "active_support/logger"
@@ -27,8 +26,13 @@ module Bushido
   def self.parse(str, options = {})
     options = {
     }.merge(options)
-    parser = [KifFormat::Parser, Ki2Format::Parser].find{|parser|parser.resolved?(str)}
-    parser or raise FileFormatError, "フォーマットがおかしい : #{str}"
+
+    parser = [KifFormat::Parser, Ki2Format::Parser].find { |parser|
+      parser.resolved?(str)
+    }
+    unless parser
+      raise FileFormatError, "フォーマットがおかしい : #{str}"
+    end
     parser.parse(str, options)
   end
 end
@@ -62,6 +66,6 @@ require_relative "bushido/kif_format"
 require_relative "bushido/ki2_format"
 
 module Bushido
-  Board.send(:include, BaseFormat::Board)
-  Soldier.send(:include, BaseFormat::Soldier)
+  Board.include BaseFormat::Board
+  Soldier.include BaseFormat::Soldier
 end
