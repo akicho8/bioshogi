@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 盤面の読み取り
 
 require "./example_helper"

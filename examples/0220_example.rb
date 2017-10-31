@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ５五将棋の例
 
 require "./example_helper"

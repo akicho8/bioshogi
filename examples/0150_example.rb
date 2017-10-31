@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 棋譜の入力とkif形式のログ確認
 
 require "./example_helper"

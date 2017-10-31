@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CPU同士の対局
 
 require "./example_helper"

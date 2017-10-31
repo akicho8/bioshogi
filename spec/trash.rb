@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # it "復元できるかテスト" do
 #   player = player_test(init: "5五歩")
 #   soldier = player.soldiers.first

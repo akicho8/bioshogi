@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 SwarsSkills =
   [{:code=>"0",
     :type=>"kakoi",

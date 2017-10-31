@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # min max アルゴリズム
 
 class Node

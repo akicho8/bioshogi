@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module Bushido
   class BushidoError < StandardError
   end

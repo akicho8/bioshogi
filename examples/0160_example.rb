@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # KIFファイルの読み込み
 
 require "./example_helper"

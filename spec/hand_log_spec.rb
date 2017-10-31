@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require "spec_helper"
 
 # standard_kif_spec でいろんなパターンをテストしているのでここでテストするのは基本のメソッドだけでOK

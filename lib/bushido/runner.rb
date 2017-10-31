@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Player#execute 実体
 #

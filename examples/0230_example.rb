@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # NegaMaxアルゴリズム同士の対決
 
 require "./example_helper"

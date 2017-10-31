@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # NegaMaxのログの見方
 
 require "./example_helper"

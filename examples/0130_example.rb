@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 駒の情報
 
 require "./example_helper"

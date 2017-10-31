@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 module Bushido
   class Cli
     class Versus < self

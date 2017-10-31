@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # 盤面
 #   board = Board.new

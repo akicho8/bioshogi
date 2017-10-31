@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 盤面のHTML化
 
 require "./example_helper"

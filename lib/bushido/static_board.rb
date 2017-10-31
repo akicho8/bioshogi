@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 Bushido::StaticBoard = [
   {
     key: "平手",

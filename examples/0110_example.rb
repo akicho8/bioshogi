@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 移動可能なルートの確認
 
 require "./example_helper"

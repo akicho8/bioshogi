@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 初期配置文字列のパース
 
 require "./example_helper"

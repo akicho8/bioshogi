@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 戦況の一次退避
 
 require "./example_helper"

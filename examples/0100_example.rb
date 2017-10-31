@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # 棋譜の入力
 
 require "./example_helper"
