@@ -17,12 +17,12 @@ module Bushido
     # def evaluate_pair
     #   [evaluate_self, evaluate_reverse]
     # end
-    # 
+    #
     # # 自分側の状態だけを考慮して取得
     # def evaluate_self
     #   evaluate_for(@player)
     # end
-    # 
+    #
     # # 相手側の状態だけを考慮して取得
     # def evaluate_reverse
     #   evaluate_for(@player.reverse_player)

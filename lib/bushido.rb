@@ -12,7 +12,7 @@ require "active_support/core_ext/string"
 
 # require "pry-debugger" # これを有効にすると pry + rcodetools の環境でバックトレースがでまくる
 
-require "rain_table"
+require "org_tp"
 
 module Bushido
   include ActiveSupport::Configurable
