@@ -3,15 +3,13 @@
 #
 module Bushido
   class Location
-    def initialize(attributes)
-      @attributes = attributes
-    end
+    include MemoryRecord
+    memory_record [
+      {key: :black, mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], name: "先手", varrow: " "},
+      {key: :white, mark: "▽", reverse_mark: "△", other_marks: ["w"],      name: "後手", varrow: "v"},
+    ]
 
-    [:key, :mark, :reverse_mark, :other_marks, :name, :varrow, :index].each do |v|
-      define_method(v) do
-        @attributes[v]
-      end
-    end
+    alias index code
 
     # 「▲先手」みたいなのを返す
     #   mark_with_name # => "▲先手"
@@ -51,11 +49,6 @@ module Bushido
 
     alias next_location reverse
 
-    @pool ||= [
-      new(key: :black, mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], name: "先手", varrow: " ", index: 0),
-      new(key: :white, mark: "▽", reverse_mark: "△", other_marks: ["w"],      name: "後手", varrow: "v", index: 1),
-    ]
-
     class << self
       # 引数に対応する先手または後手の情報を返す
       #   Location[:black].name   # => "先手"
@@ -68,13 +61,13 @@ module Bushido
       #   Location["2手目"].name  # => "後手"
       #   Location["3手目"].name  # => "先手"
       def parse(arg)
-        if self === arg
-          return arg
-        end
-        r = find{|e|e.match_target_values.include?(arg)}
+        r = lookup(arg)
         unless r
-          if String === arg && md = arg.match(/(?<location_index>\d+)手目/)
-            r = parse((md[:location_index].to_i - 1).modulo(each.count))
+          r = find { |e| e.match_target_values.include?(arg) }
+        end
+        unless r
+          if arg.kind_of?(String) && md = arg.match(/(?<location_index>\d+)手目/)
+            r = parse(md[:location_index].to_i.pred.modulo(each.count))
           end
         end
         r or raise SyntaxError, "#{arg.inspect}"
@@ -86,17 +79,11 @@ module Bushido
         parse(*args)
       end
 
-      include Enumerable
-
-      def each(&block)
-        @pool.each(&block)
-      end
-
       def b; self[:black]; end
       def w; self[:white]; end
 
       def triangles
-        collect{|e|[e.mark, e.reverse_mark]}.join
+        collect { |e| [e.mark, e.reverse_mark] }.join
       end
     end
   end
