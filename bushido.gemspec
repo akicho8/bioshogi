@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard-rubicle"
 
   spec.add_dependency "activesupport"
+  spec.add_dependency "actionview"
   spec.add_dependency "org_tp"
   spec.add_dependency "memory_record"
   spec.add_dependency "tapp"
