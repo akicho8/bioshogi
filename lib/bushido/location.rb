@@ -5,8 +5,8 @@ module Bushido
   class Location
     include MemoryRecord
     memory_record [
-      {key: :black, mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], name: "先手", varrow: " "},
-      {key: :white, mark: "▽", reverse_mark: "△", other_marks: ["w"],      name: "後手", varrow: "v"},
+      {key: :black, mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], name: "先手", varrow: " ", angle: 0,   },
+      {key: :white, mark: "▽", reverse_mark: "△", other_marks: ["w"],      name: "後手", varrow: "v", angle: 180, },
     ]
 
     alias index code
@@ -48,6 +48,13 @@ module Bushido
     # end
 
     alias next_location reverse
+
+    # HTMLにするとき楽なように後手なら transform: rotate(180deg) を返す
+    def style_transform
+      if angle.nonzero?
+        "transform: rotate(#{angle}deg)"
+      end
+    end
 
     class << self
       # 引数に対応する先手または後手の情報を返す

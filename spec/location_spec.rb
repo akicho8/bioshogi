@@ -56,5 +56,10 @@ module Bushido
     it "先手後手を表す文字一覧の正規表現" do
       L.triangles.should == "▲▼▽△"
     end
+
+    it "cssのstyle" do
+      L.w.style_transform.should == "transform: rotate(180deg)"
+      L.b.style_transform.should == nil
+    end
   end
 end
