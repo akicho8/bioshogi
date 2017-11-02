@@ -1,5 +1,4 @@
 # KIFファイルの読み込み
-
 require "./example_helper"
 
 info = Bushido.parse(Pathname("ryuou20101214.kif"))

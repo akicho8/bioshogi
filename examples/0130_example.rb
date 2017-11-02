@@ -1,5 +1,4 @@
 # 駒の情報
-
 require "./example_helper"
 
 pp Piece["飛"].to_h

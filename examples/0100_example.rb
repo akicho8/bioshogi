@@ -1,5 +1,4 @@
 # 棋譜の入力
-
 require "./example_helper"
 
 mediator = Mediator.start

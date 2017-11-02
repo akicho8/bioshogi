@@ -1,5 +1,4 @@
 # 移動可能なルートの確認
-
 require "./example_helper"
 
 mediator = Mediator.new

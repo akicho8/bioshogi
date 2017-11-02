@@ -1,5 +1,4 @@
 # 初期配置文字列のパース
-
 require "./example_helper"
 
 info = MiniSoldier.from_str("７六と")

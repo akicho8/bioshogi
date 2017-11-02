@@ -2,7 +2,7 @@
 
 require "./example_helper"
 
-Board.logger = ActiveSupport::BufferedLogger.new(STDOUT)
+Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do
   mediator = Mediator.new
   mediator.initial_soldiers("▲３三歩 △１一歩", from_piece: false)
