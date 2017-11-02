@@ -217,6 +217,10 @@ module Bushido
       s
     end
 
+    def inspect
+      to_s
+    end
+
     def to_hand
       s = ""
       s << @board.to_s
