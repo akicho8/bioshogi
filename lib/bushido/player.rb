@@ -151,7 +151,7 @@ module Bushido
         attr_accessor :pieces
       end
 
-      module ClassMethods
+      class_methods do
       end
 
       def initialize(*)
@@ -224,7 +224,7 @@ module Bushido
         attr_accessor :soldiers, :complete_defense_names
       end
 
-      module ClassMethods
+      class_methods do
       end
 
       def initialize(*)

@@ -14,7 +14,7 @@ module Bushido
         private_class_method :new
       end
 
-      module ClassMethods
+      class_methods do
         # 座標をパースする
         # @example
         #   Position::Hpos.parse("１").name # => "1"

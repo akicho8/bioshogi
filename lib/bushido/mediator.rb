@@ -2,259 +2,294 @@
 # 全体管理
 #
 module Bushido
-  module PlayerSelector
-    extend ActiveSupport::Concern
-
-    included do
-      attr_accessor :players, :counter
-    end
-
-    module ClassMethods
-      # 先手後手が座った状態で開始
-      def start
-        mediator = new
-        mediator.players.each{|player|player.deal}
-        mediator
+  class Mediator
+    concerning :PlayerSelector do
+      included do
+        attr_accessor :players, :counter
       end
-    end
 
-    def initialize
-      super
-      @players = Location.collect{|loc|Player.new(self, location: loc)}
-      @counter = 0
-    end
-
-    # def player_join(player)
-    #   @players << player
-    #   player.mediator = self
-    #   player.board = @board
-    # end
-
-    def player_at(location)
-      @players[Location[location].index]
-    end
-
-    def black_player; player_at(:black); end
-    def white_player; player_at(:white); end
-
-    alias player_b black_player
-    alias player_w white_player
-
-    # 相手プレイヤーを返す
-    def reverse_player; current_player(+1); end
-
-    # 手番のプレイヤー
-    def current_player(diff = 0)
-      players[current_index(diff)]
-    end
-
-    def current_index(diff = 0)
-      (@counter + diff).modulo(@players.size)
-    end
-
-    # プレイヤーたちの持駒から平手用の盤面の準備
-    def piece_plot
-      @players.collect(&:piece_plot)
-    end
-
-    # プレイヤーたちの持駒を捨てる
-    def pieces_clear
-      @players.collect(&:pieces_clear)
-    end
-
-    # def deal
-    #   @players.each(&:deal)
-    # end
-
-    # N手目のN
-    def counter_human_name
-      @counter.next
-    end
-  end
-
-  module Boardable
-    extend ActiveSupport::Concern
-
-    included do
-      attr_reader :board
-    end
-
-    module ClassMethods
-    end
-
-    def initialize
-      super
-      @board = Board.new
-    end
-
-    def board_reset(name = nil)
-      Utils.board_reset_args(name).each{|location, v|
-        player_at(location).initial_soldiers(v, from_piece: false)
-      }
-    end
-  end
-
-  module Serialization
-    extend ActiveSupport::Concern
-
-    module ClassMethods
-      def from_dump(object)
-        o = new
-        o.replace(object)
-        o
-      end
-    end
-
-    # TODO: Player の marshal_dump が使われてない件について調べる
-    def marshal_dump
-      {
-        counter: @counter,
-        players: @players,
-        hand_logs: @hand_logs,
-      }
-    end
-
-    def marshal_load(attrs)
-      @counter  = attrs[:counter]
-      @players  = attrs[:players]
-      @hand_logs = attrs[:hand_logs]
-      @board = Board.new
-      @players.each{|player|
-        player.mediator = self
-      }
-      @players.collect{|player|
-        player.render_soldiers
-      }
-    end
-
-    # deep_dup しておくこと
-    def replace(object)
-      @counter  = object.counter
-      @players  = object.players
-      @hand_logs = object.hand_logs
-      @board = Board.new
-      @players.each{|player|
-        player.mediator = self
-      }
-      @players.collect{|player|
-        player.render_soldiers
-      }
-      self
-    end
-
-    def deep_dup
-      Marshal.load(Marshal.dump(self))
-    end
-
-    # サンドボックス実行用
-    def sandbox_for(&block)
-      stack_push
-      begin
-        yield self
-      ensure
-        stack_pop
-      end
-    end
-  end
-
-  module HistoryStack
-    def initialize(*)
-      super
-      @stack = []
-    end
-
-    def stack_push
-      @stack.push(Marshal.dump(self))
-    end
-
-    def stack_pop
-      if @stack.empty?
-        raise HistroyStackEmpty
-      end
-      bin = @stack.pop
-      replace(Marshal.load(bin))
-    end
-  end
-
-  module Executer
-    extend ActiveSupport::Concern
-
-    included do
-      attr_reader :counter, :hand_logs
-    end
-
-    def initialize(*)
-      super
-      @hand_logs = []
-    end
-
-    # 棋譜入力
-    def execute(str)
-      Array.wrap(str).each do |str|
-        if str == "投了"
-          return
+      class_methods do
+        # 先手後手が座った状態で開始
+        def start
+          mediator = new
+          mediator.players.each(&:deal)
+          mediator
         end
-        current_player.execute(str)
-        @counter += 1
+      end
+
+      def initialize
+        super
+        @players = Location.collect { |loc|
+          Player.new(self, location: loc)
+        }
+        @counter = 0
+      end
+
+      # def player_join(player)
+      #   @players << player
+      #   player.mediator = self
+      #   player.board = @board
+      # end
+
+      def player_at(location)
+        @players[Location[location].index]
+      end
+
+      def black_player; player_at(:black); end
+      def white_player; player_at(:white); end
+
+      alias player_b black_player
+      alias player_w white_player
+
+      # 相手プレイヤーを返す
+      def reverse_player
+        current_player(+1)
+      end
+
+      # 手番のプレイヤー
+      def current_player(diff = 0)
+        players[current_index(diff)]
+      end
+
+      def current_index(diff = 0)
+        (@counter + diff).modulo(@players.size)
+      end
+
+      # プレイヤーたちの持駒から平手用の盤面の準備
+      def piece_plot
+        @players.collect(&:piece_plot)
+      end
+
+      # プレイヤーたちの持駒を捨てる
+      def pieces_clear
+        @players.collect(&:pieces_clear)
+      end
+
+      # def deal
+      #   @players.each(&:deal)
+      # end
+
+      # N手目のN
+      def counter_human_name
+        @counter.next
       end
     end
 
-    # player.execute の直後に呼んで保存する
-    def log_stock(player)
-      @hand_logs << player.runner.hand_log
+    concerning :Boardable do
+      included do
+        attr_reader :board
+      end
+
+      class_methods do
+      end
+
+      def initialize
+        super
+        @board = Board.new
+      end
+
+      def board_reset(name = nil)
+        Utils.board_reset_args(name).each do |location, v|
+          player_at(location).initial_soldiers(v, from_piece: false)
+        end
+      end
     end
 
-    # 互換性用
-    if true
-      def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(with_mark: true)}; end
-      def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(with_mark: true)};  end
+    concerning :Other do
+      # 両者の駒の配置を決める
+      # @example 持駒から配置する場合(持駒がなければエラーになる)
+      #   initial_soldiers("▲３三歩 △１一歩")
+      # @example 持駒から配置しない場合(無限に駒が置ける)
+      #   initial_soldiers("▲３三歩 △１一歩", from_piece: false)
+      def initial_soldiers(str, options = {})
+        Utils.initial_soldiers_split(str).each do |info|
+          player_at(info[:location]).initial_soldiers(info[:input], options)
+        end
+      end
+
+      # 一般の持駒表記で両者に駒を配る
+      # @example
+      #   mediator.pieces_set_from_human_format_string("▲歩2 飛 △歩二飛 ▲金")
+      def pieces_set_from_human_format_string(str)
+        Utils.triangle_hold_pieces_str_to_hash(str).each do |location, pieces_str|
+          player_at(location).pieces_set_from_human_format_string(pieces_str)
+        end
+      end
     end
 
-    def to_s
-      s = ""
-      s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
-      s << to_hand
-      s
+    concerning :Executer do
+      included do
+        attr_reader :counter, :hand_logs
+      end
+
+      def initialize(*)
+        super
+        @hand_logs = []
+      end
+
+      # 棋譜入力
+      def execute(str)
+        Array.wrap(str).each do |str|
+          if str == "投了"
+            return
+          end
+          current_player.execute(str)
+          @counter += 1
+        end
+      end
+
+      # player.execute の直後に呼んで保存する
+      def log_stock(player)
+        @hand_logs << player.runner.hand_log
+      end
+
+      # 互換性用
+      if true
+        def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(with_mark: true)}; end
+        def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(with_mark: true)};  end
+      end
+
+      def to_s
+        s = ""
+        s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
+        s << to_hand
+        s
+      end
+
+      def inspect
+        to_s
+      end
+
+      def to_hand
+        s = ""
+        s << @board.to_s
+        s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
+        s
+      end
     end
 
-    def inspect
-      to_s
+    concerning :Serialization do
+      class_methods do
+        def from_dump(object)
+          new.tap do |o|
+            o.replace(object)
+          end
+        end
+      end
+
+      # TODO: Player の marshal_dump が使われてない件について調べる
+      def marshal_dump
+        {
+          counter: @counter,
+          players: @players,
+          hand_logs: @hand_logs,
+        }
+      end
+
+      def marshal_load(attrs)
+        @counter  = attrs[:counter]
+        @players  = attrs[:players]
+        @hand_logs = attrs[:hand_logs]
+        @board = Board.new
+        @players.each { |player| player.mediator = self }
+        @players.collect { |player| player.render_soldiers }
+      end
+
+      # deep_dup しておくこと
+      def replace(object)
+        @counter = object.counter
+        @players = object.players
+        @hand_logs = object.hand_logs
+        @board = Board.new
+        @players.each { |player| player.mediator = self }
+        @players.collect { |player| player.render_soldiers }
+        self
+      end
+
+      def deep_dup
+        Marshal.load(Marshal.dump(self))
+      end
+
+      # サンドボックス実行用
+      def sandbox_for(&block)
+        stack_push
+        begin
+          yield self
+        ensure
+          stack_pop
+        end
+      end
     end
 
-    def to_hand
-      s = ""
-      s << @board.to_s
-      s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
-      s
+    concerning :HistoryStack do
+      def initialize(*)
+        super
+        @stack = []
+      end
+
+      def stack_push
+        @stack.push(Marshal.dump(self))
+      end
+
+      def stack_pop
+        if @stack.empty?
+          raise HistroyStackEmpty
+        end
+        bin = @stack.pop
+        replace(Marshal.load(bin))
+      end
+    end
+
+    concerning :Variables do
+      attr_reader :variables, :var_stack
+
+      def initialize(*)
+        super
+        @variables = {}
+        @var_stack = Hash.new([])
+      end
+
+      def set(key, value)
+        @variables[key] = value
+      end
+
+      def get(key)
+        @variables[key]
+      end
+
+      def marshal_dump
+        super.merge(variables: @variables, var_stack: @var_stack)
+      end
+
+      def marshal_load(attrs)
+        super
+        @variables = attrs[:variables]
+        @var_stack = attrs[:var_stack]
+      end
+
+      def var_push(key)
+        @var_stack[key] << @variables[key]
+      end
+
+      def var_pop(key)
+        @variables[key] = @var_stack[key].pop
+      end
+    end
+
+    concerning :Textie do
+      def to_text
+        out = []
+        out << "-" * 40 + "\n"
+        out << "棋譜: #{human_hand_logs.join(" ")}\n"
+        out << variables.inspect + "\n"
+        out << to_hand
+        out.join.strip
+      end
     end
   end
 
-  module Other
-    # 両者の駒の配置を決める
-    # @example 持駒から配置する場合(持駒がなければエラーになる)
-    #   initial_soldiers("▲３三歩 △１一歩")
-    # @example 持駒から配置しない場合(無限に駒が置ける)
-    #   initial_soldiers("▲３三歩 △１一歩", from_piece: false)
-    def initial_soldiers(str, options = {})
-      Utils.initial_soldiers_split(str).each{|info|
-        player_at(info[:location]).initial_soldiers(info[:input], options)
-      }
-    end
-
-    # 一般の持駒表記で両者に駒を配る
-    # @example
-    #   mediator.pieces_set_from_human_format_string("▲歩2 飛 △歩二飛 ▲金")
-    def pieces_set_from_human_format_string(str)
-      Utils.triangle_hold_pieces_str_to_hash(str).each{|location, pieces_str|
-        player_at(location).pieces_set_from_human_format_string(pieces_str)
-      }
-    end
-  end
-
-  module MediatorTestHelper
-    extend ActiveSupport::Concern
-
-    module ClassMethods
+  concern :MediatorTestHelper do
+    class_methods do
       def test(params = {})
         params = {
           nplayers: 2,
@@ -291,79 +326,21 @@ module Bushido
       def simple_test(params = {})
         params = {
         }.merge(params)
-        mediator = new
-        mediator.initial_soldiers(params[:init], from_piece: false)
-        mediator.pieces_set_from_human_format_string(params[:pinit])
-        mediator
+        new.tap do |o|
+          o.initial_soldiers(params[:init], from_piece: false)
+          o.pieces_set_from_human_format_string(params[:pinit])
+        end
       end
 
       def test2(params = {})
-        mediator = start
-        Utils.ki2_parse(params[:exec]).each{|op|
-          player = mediator.players[Location[op[:location]].index]
-          player.execute(op[:input])
-        }
-        mediator
+        start.tap do |o|
+          Utils.ki2_parse(params[:exec]).each do |op|
+            player = o.players[Location[op[:location]].index]
+            player.execute(op[:input])
+          end
+        end
       end
     end
-  end
-
-  module Variables
-    attr_reader :variables, :var_stack
-
-    def initialize(*)
-      super
-      @variables = {}
-      @var_stack = Hash.new([])
-    end
-
-    def set(key, value)
-      @variables[key] = value
-    end
-
-    def get(key)
-      @variables[key]
-    end
-
-    def marshal_dump
-      super.merge(variables: @variables, var_stack: @var_stack)
-    end
-
-    def marshal_load(attrs)
-      super
-      @variables = attrs[:variables]
-      @var_stack = attrs[:var_stack]
-    end
-
-    def var_push(key)
-      @var_stack[key] << @variables[key]
-    end
-
-    def var_pop(key)
-      @variables[key] = @var_stack[key].pop
-    end
-  end
-
-  module Textie
-    def to_text
-      out = []
-      out << "-" * 40 + "\n"
-      out << "棋譜: #{human_hand_logs.join(" ")}\n"
-      out << variables.inspect + "\n"
-      out << to_hand
-      out.join.strip
-    end
-  end
-
-  class Mediator
-    include PlayerSelector
-    include Boardable
-    include Other
-    include Executer
-    include Serialization
-    include HistoryStack
-    include Variables
-    include Textie
   end
 
   class SimulatorFrame < Mediator
@@ -378,9 +355,9 @@ module Bushido
       board_reset(@pattern[:board])
 
       if @pattern[:pieces]
-        Location.each{|loc|
+        Location.each do |loc|
           players[loc.index].deal(@pattern[:pieces][loc.key])
-        }
+        end
       end
     end
 
@@ -390,7 +367,7 @@ module Bushido
       if block
         yield frames.last
       end
-      Utils.ki2_parse(@pattern[:execute]).each{|op|
+      Utils.ki2_parse(@pattern[:execute]).each do |op|
         if String === op
           raise SyntaxError, op
         end
@@ -399,7 +376,7 @@ module Bushido
         if block
           yield frames.last
         end
-      }
+      end
       frames
     end
   end
@@ -457,10 +434,11 @@ module Bushido
   class HybridSequencer
     def self.execute(pattern)
       if pattern[:dsl]
-        mediator = Sequencer.new
-        mediator.pattern = pattern[:dsl]
-        mediator.evaluate
-        mediator.frames
+        Sequencer.new.tap do |o|
+          o.pattern = pattern[:dsl]
+          o.evaluate
+          o.frames
+        end
       else
         mediator = SimulatorFrame.new(pattern)
         # mediator.build_frames{|e|p e}
