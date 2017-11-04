@@ -1,4 +1,3 @@
-#
 # 盤面
 #   board = Board.new
 #   board["５五"] # => nil
@@ -7,46 +6,48 @@ module Bushido
   class Board
     attr_reader :surface
 
-    # 一時的に盤面のサイズを変更する(テスト用)
-    #
-    #   before do
-    #     @size_save = Board.size_change([3, 5])
-    #   end
-    #   after do
-    #     Board.size_change(@size_save)
-    #   end
-    #
-    def self.size_change(size, &block)
-      size_save = [Position::Hpos.size, Position::Vpos.size]
-      Position::Hpos.size, Position::Vpos.size = size
-      if block_given?
+    class << self
+      # 一時的に盤面のサイズを変更する(テスト用)
+      #
+      #   before do
+      #     @size_save = Board.size_change([3, 5])
+      #   end
+      #   after do
+      #     Board.size_change(@size_save)
+      #   end
+      #
+      def size_change(size, &block)
+        size_save = [Position::Hpos.size, Position::Vpos.size]
+        Position::Hpos.size, Position::Vpos.size = size
+        if block_given?
+          begin
+            yield
+          ensure
+            Position::Hpos.size, Position::Vpos.size = size_save
+          end
+        end
+        size_save
+      end
+
+      # サイズ毎のクラスがいるかも
+      # かなりやっつけの仮
+      def size_type
+        key = [Position::Hpos.size, Position::Vpos.size]
+        {
+          [5, 5] => :x55,
+          [9, 9] => :x99,
+        }[key]
+      end
+
+      # 一時的に成れない状況にする
+      def disable_promotable
         begin
+          _promotable_size = Position::Vpos._promotable_size
+          Position::Vpos._promotable_size = nil
           yield
         ensure
-          Position::Hpos.size, Position::Vpos.size = size_save
+          Position::Vpos._promotable_size = _promotable_size
         end
-      end
-      size_save
-    end
-
-    # サイズ毎のクラスがいるかも
-    # かなりやっつけの仮
-    def self.size_type
-      key = [Position::Hpos.size, Position::Vpos.size]
-      {
-        [5, 5] => :x55,
-        [9, 9] => :x99,
-      }[key]
-    end
-
-    # 一時的に成れない状況にする
-    def self.disable_promotable
-      begin
-        _promotable_size = Position::Vpos._promotable_size
-        Position::Vpos._promotable_size = nil
-        yield
-      ensure
-        Position::Vpos._promotable_size = _promotable_size
       end
     end
 
@@ -56,7 +57,7 @@ module Bushido
 
     # 縦列の盤上のすべての駒
     def pieces_of_vline(x)
-      Position::Vpos.size.times.collect{|y|
+      Position::Vpos.size.times.collect { |y|
         fetch(Point.parse([x, y]))
       }.compact
     end
@@ -108,7 +109,7 @@ module Bushido
 
     # 空いている場所のリスト
     def blank_points
-      Point.find_all{|point|!fetch(point)}
+      Point.find_all { |point| !fetch(point) }
     end
 
     # 置いてる駒リスト
@@ -121,13 +122,13 @@ module Bushido
 
     # 駒をすべて削除する
     def abone_all
-      @surface.values.find_all{|e|Soldier === e}.each(&:abone)
+      @surface.values.find_all { |e| e.kind_of?(Soldier) }.each(&:abone)
     end
 
     # 指定のセルを削除する
     # プレイヤー側の soldiers からは削除しないので注意
     def __abone_cell(value)
-      if Point === value
+      if value.kind_of?(Point)
         value = value.to_xy
       end
       @surface.delete(value)
@@ -142,12 +143,14 @@ module Bushido
 
     # 盤面の文字列化(開発用なので好きなフォーマットでいい)
     def to_s_debug
-      rows = Position::Vpos.size.times.collect{|y|
-        Position::Hpos.size.times.collect{|x|
+      rows = Position::Vpos.size.times.collect do |y|
+        Position::Hpos.size.times.collect do |x|
           @surface[[x, y]]
-        }
+        end
+      end
+      rows = rows.zip(Position::Vpos.units).collect { |e, u|
+        e + [u]
       }
-      rows = rows.zip(Position::Vpos.units).collect{|e, u|e + [u]}
       RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, header: true)
     end
 

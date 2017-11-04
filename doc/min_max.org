@@ -1,6 +1,3 @@
-#+OPTIONS: toc:nil num:nil author:nil creator:nil \n:nil |:t
-#+OPTIONS: @:t ::t ^:t -:t f:t *:t <:t
-
 * MiniMaxアルゴリズム
 
   ▲７四歩 ▲２六歩 ▲２五歩から、先手には次の二つの手があるとする

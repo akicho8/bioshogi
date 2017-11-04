@@ -6,9 +6,9 @@ module Bushido
     attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
 
     def initialize(attrs)
-      attrs.each{|k, v|
+      attrs.each do |k, v|
         instance_variable_set("@#{k}", v)
-      }
+      end
     end
 
     # "7六歩" のようなCPUに優しいKIF形式の表記で返す
@@ -16,6 +16,7 @@ module Bushido
       options = {
         with_mark: false,
       }.merge(options)
+
       s = []
       if options[:with_mark]
         s << @player.location.mark

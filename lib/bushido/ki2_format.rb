@@ -25,10 +25,10 @@ module Bushido
         @_body.lines.each do |line|
           comment_read(line)
           if line.match(/^\s*[▲△]/)
-            @move_infos += line.scan(/([▲△])([^▲△\s]+)/).collect{|mark, input|
+            @move_infos += line.scan(/([▲△])([^▲△\s]+)/).collect do |mark, input|
               location = Location[mark]
               {location: location, input: input, mov: "#{location.mark}#{input}"}
-            }
+            end
           end
         end
       end
