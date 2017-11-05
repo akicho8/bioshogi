@@ -42,7 +42,7 @@ module Bushido
           if target.nil?         # 「１二」に何もないなら
             piece_store(infos, player, mini_soldier, pt) # 駒を置く
           else
-            unless Soldier === target
+            unless target.kind_of?(Soldier)
               raise UnconfirmedObject, "得体の知れないものが盤上にいる : #{target.inspect}"
             end
             # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
@@ -55,7 +55,7 @@ module Bushido
             end
           end
           # 繰り返しベクトルでなければ一つ動いて終わり
-          if OnceVector === vec
+          if vec.kind_of?(OnceVector)
             break
           end
         end
@@ -81,7 +81,7 @@ module Bushido
           else
             break
           end
-          if OnceVector === vec
+          if vec.kind_of?(OnceVector)
             break
           end
         end

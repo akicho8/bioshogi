@@ -18,7 +18,9 @@ module Bushido
     # 人間が入力する *初期配置* の "４二竜" などをハッシュに分割する
     #   MiniSoldier.from_str("４二竜") # => {point: Point["４二"], piece: Piece["竜"], promoted: true}
     def self.from_str(str)
-      return str if MiniSoldier === str
+      if str.kind_of?(MiniSoldier)
+        return str
+      end
       md = str.match(/\A(?<point>..)(?<piece>#{Piece.names.join("|")})\z/)
       md or raise SyntaxError, "表記が間違っている。'４二竜' や '42竜' のように入力すること : #{str.inspect}"
       Piece.promoted_fetch(md[:piece]).merge(point: Point.parse(md[:point]))

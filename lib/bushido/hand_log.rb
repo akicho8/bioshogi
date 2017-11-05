@@ -87,7 +87,7 @@ module Bushido
         s = []
         # 候補が2つ以上あったとき
         if @hand_log.candidate && @hand_log.candidate.size > 1
-          if Piece::Brave === @hand_log.piece
+          if @hand_log.piece.kind_of?(Piece::Brave)
             # 大駒の場合、
             # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
             if @hand_log.candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる

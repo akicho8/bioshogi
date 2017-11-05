@@ -55,7 +55,7 @@ module Bushido
         from_piece: true, # 持駒から配置する？
       }.merge(options)
       Array.wrap(mini_soldier_or_str).each{|mini_soldier_or_str|
-        if String === mini_soldier_or_str
+        if mini_soldier_or_str.kind_of?(String)
           if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end

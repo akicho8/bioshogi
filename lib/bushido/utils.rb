@@ -70,7 +70,7 @@ module Bushido
       when BaseFormat.board_format?(value)
         # Stock.new(board: value).parsed_board
         BaseFormat.board_parse(value)
-      when Hash === value
+      when value.kind_of?(Hash)
         # {"先手" => "角落ち", "後手" => "香落ち"}
         value.inject({}){|hash, (k, v)|
           hash.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
@@ -98,7 +98,7 @@ module Bushido
     # @example
     #   Utils.hold_pieces_str_to_array("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
     def hold_pieces_str_to_array(str)
-      if String === str
+      if str.kind_of?(String)
         str = str.tr("〇一二三四五六七八九", "0-9")
         infos = str.scan(/(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?/).collect{|piece, count|
           {piece: piece, count: (count || 1).to_i}

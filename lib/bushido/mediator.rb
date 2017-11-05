@@ -368,7 +368,7 @@ module Bushido
         yield frames.last
       end
       Utils.ki2_parse(@pattern[:execute]).each do |op|
-        if String === op
+        if op.kind_of?(String)
           raise SyntaxError, op
         end
         player_at(op[:location]).execute(op[:input])
@@ -423,7 +423,7 @@ module Bushido
         end
         @instruction_pointer += 1
         expr.evaluate(self)
-        if KifuDsl::Mov === expr
+        if expr.kind_of?(KifuDsl::Mov)
           break
         end
       end

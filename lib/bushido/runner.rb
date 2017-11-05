@@ -174,7 +174,7 @@ module Bushido
       __saved_soldiers = @soldiers
       cond = "左右"
       if @md[:suffix].match(/[#{cond}]/)
-        if Piece::Brave === @piece
+        if @piece.kind_of?(Piece::Brave)
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else
