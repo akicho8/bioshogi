@@ -10,7 +10,7 @@ module Bushido
       if source.kind_of?(Pathname)
         source = source.expand_path.read
       end
-      source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\r?\n/, "\n")
+      source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\R/, "\n")
     end
 
     def self.board_format?(source)
