@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 
 module Bushido
   describe "将棋連盟が定めている人間向け棋譜入力" do

@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 
 module Bushido
   describe Ki2Format do

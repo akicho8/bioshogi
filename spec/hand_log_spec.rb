@@ -1,4 +1,4 @@
-require "spec_helper"
+require_relative "spec_helper"
 
 # standard_kif_spec でいろんなパターンをテストしているのでここでテストするのは基本のメソッドだけでOK
 module Bushido
