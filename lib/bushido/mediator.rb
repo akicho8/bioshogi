@@ -434,11 +434,10 @@ module Bushido
   class HybridSequencer
     def self.execute(pattern)
       if pattern[:dsl]
-        Sequencer.new.tap do |o|
-          o.pattern = pattern[:dsl]
-          o.evaluate
-          o.frames
-        end
+        mediator = Sequencer.new
+        mediator.pattern = pattern[:dsl]
+        mediator.evaluate
+        mediator.frames
       else
         mediator = SimulatorFrame.new(pattern)
         # mediator.build_frames{|e|p e}
