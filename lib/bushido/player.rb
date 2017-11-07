@@ -6,14 +6,18 @@ module Bushido
 
     def initialize(mediator, params = {})
       super() if defined? super
+
       @mediator = mediator
+
       if v = params[:location]
         self.location = v
       end
+
       # if v = params[:board]
       #   @board = v
       # end
-      if v = params[:deal]
+
+      if params[:deal]
         deal
       end
     end
@@ -37,12 +41,12 @@ module Bushido
     def piece_plot
       location_soldiers = Utils.location_soldiers(location: location, key: "平手")
       # location_soldiers2 = location_soldiers[location.key]
-      location_soldiers.each{|info|
+      location_soldiers.each do |info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(player: self))
         put_on_with_valid(info[:point], soldier)
         @soldiers << soldier
-      }
+      end
     end
 
     # 持駒の配置
@@ -52,9 +56,10 @@ module Bushido
     #   player.initial_soldiers({point: point, piece: Piece["角"], promoted: true}, from_piece: false)
     def initial_soldiers(mini_soldier_or_str, options = {})
       options = {
-        from_piece: true, # 持駒から配置する？
+        from_piece: true, # 持駒から取り出して配置する？
       }.merge(options)
-      Array.wrap(mini_soldier_or_str).each{|mini_soldier_or_str|
+
+      Array.wrap(mini_soldier_or_str).each do |mini_soldier_or_str|
         if mini_soldier_or_str.kind_of?(String)
           if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
@@ -69,7 +74,7 @@ module Bushido
         soldier = Soldier.new(mini_soldier.merge(player: self))
         put_on_with_valid(mini_soldier[:point], soldier)
         @soldiers << soldier
-      }
+      end
     end
 
     # # 盤上の自分の駒

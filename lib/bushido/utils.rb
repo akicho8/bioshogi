@@ -41,7 +41,7 @@ module Bushido
       }.merge(params)
       if params[:validate]
         if params[:stock].parsed_board[:white].present?
-          raise BoardIsBlackOnly, "後手側データは定義できない : #{params[:stock].parsed_board[:white].inspect}"
+          raise BoardIsBlackOnly, "後手側データは定義できません: #{params[:stock].parsed_board[:white].inspect}"
         end
       end
       both_soldiers_from_char_board2(params)

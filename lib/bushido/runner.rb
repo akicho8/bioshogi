@@ -22,7 +22,7 @@ module Bushido
       @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
       unless @md
-        raise SyntaxError, "表記が間違っている : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+        raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -35,7 +35,7 @@ module Bushido
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
         if @md[:suffix].to_s.match(/不?成/) && !@piece.promotable?
-          raise NoPromotablePiece, "#{@md[:suffix].inspect} としましたが「#{@piece.name}」は表面しかないので「成」も「不成」も指定しちゃいけません : #{@source.inspect}"
+          raise NoPromotablePiece, "#{@md[:suffix].inspect} としましたが「#{@piece.name}」は裏がないので「成」も「不成」も指定しちゃいけません : #{@source.inspect}"
         end
 
         @promote_trigger = nil
@@ -53,9 +53,9 @@ module Bushido
 
       if @strike_trigger
         if @promoted
-          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできない : #{@source.inspect}"
+          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        put_soldier
+        soldier_put
       else
         if @md[:origin_point]
           @origin_point = Point.parse(@md[:origin_point])
@@ -72,9 +72,9 @@ module Bushido
               if @player.piece_fetch(@piece)
                 @strike_trigger = true
                 @origin_point = nil
-                put_soldier
+                soldier_put
               else
-                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述している。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
               end
             end
           end
@@ -84,7 +84,7 @@ module Bushido
         end
       end
 
-      @md = nil                 # MatchData を保持していると Marshal.dump できないため。(これやるまえにraiseで飛んでるんだろうか)
+      @md = nil # MatchData を保持していると Marshal.dump できないため。(これやるまえにraiseで飛んでるんだろうか)
 
       self
     end
@@ -112,12 +112,12 @@ module Bushido
           @point = hand_log.point
         end
         unless @point
-          raise BeforePointNotFound, "同に対する座標が不明 : #{@source.inspect}"
+          raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
         if @md[:point]
           prefix_pt = Point.parse(@md[:point])
           if Point.parse(@md[:point]) != @point
-            raise SamePointDiff, "「同」は#{@point}を意味するが、前置した座標は「#{prefix_pt}」 (入力:#{@source.inspect})"
+            raise SamePointDiff, "「同」は#{@point}を意味しますが、前置した座標は「#{prefix_pt}」です (入力:#{@source.inspect})"
           end
         end
       else
@@ -129,20 +129,21 @@ module Bushido
     # 「７六」に来ることができる歩があれば「７六歩(nn)」と判断する
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
-      @soldiers = @player.soldiers.find_all{|soldier|soldier.movable_infos.any?{|e|e[:point] == @point}} # 指定の場所に来れる盤上の駒に絞る
-      @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class}                         # 同じ駒に絞る
-      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted}                           # 成っているかどうかで絞る
+      # 指定の場所に来れる盤上の駒に絞る
+      @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
+      @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class} # 同じ駒に絞る
+      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
       @candidate = @soldiers.collect{|s|s.clone}
 
       if @soldiers.empty?
         # 「打」を省略している場合、持駒から探す
         if @player.piece_fetch(@piece)
           if @promote_trigger
-            raise IllegibleFormat, "「2二角打」または「2二角」(打の省略形)とするところを「2二角成打」と書いている系のエラーです。: '#{@source.inspect}'"
+            raise IllegibleFormat, "「2二角打」または「2二角」(打の省略形)とするところを「2二角成打」と書いている系のエラーです : '#{@source.inspect}'"
           end
           @strike_trigger = true
           if @promoted
-            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできない : '#{@source.inspect}'"
+            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
           soldier = Soldier.new(player: @player, piece: @player.pick_out(@piece), promoted: @promoted)
           @player.put_on_with_valid(@point, soldier)
@@ -193,7 +194,7 @@ module Bushido
         @soldiers = @soldiers.find_all{|soldier|soldier.point.send(m) == @point.send(m)}
       end
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなった。#{@source.inspect} の表記を明確にすること。(移動元候補だったけどなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -208,11 +209,11 @@ module Bushido
     def assert_valid_format(valid_list)
       _chars = valid_list.chars.to_a.find_all{|v|@md[:suffix].include?(v)}
       if _chars.size > 1
-        raise SyntaxError, "#{_chars.join('と')}は同時に指定できない。【#{@source}】を見直すこと。\n#{@player.board_with_pieces}"
+        raise SyntaxError, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.board_with_pieces}"
       end
     end
 
-    def put_soldier
+    def soldier_put
       soldier = Soldier.new(player: @player, piece: @player.pick_out(@piece), promoted: @promoted)
       @player.put_on_with_valid(@point, soldier)
       @player.soldiers << soldier
@@ -223,7 +224,7 @@ module Bushido
       if @player.mediator && hand_logs = @player.mediator.hand_logs
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
-        if hand_log = hand_logs.reverse.find{|e|e.player.location != @player.location}
+        if hand_log = hand_logs.reverse.find { |e| e.player.location != @player.location }
           hand_log.point == @point
         end
       end

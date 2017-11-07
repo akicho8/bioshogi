@@ -11,7 +11,7 @@ module Bushido
       attrs.assert_valid_keys(:player, :piece, :promoted, :point)
       @player = attrs[:player]
       @piece = attrs[:piece]
-      self.promoted = !!attrs[:promoted]
+      self.promoted = attrs[:promoted]
       if attrs[:point]
         @point = Point.parse(attrs[:point])
       end
@@ -22,8 +22,9 @@ module Bushido
 
     # 成り/不成状態の設定
     def promoted=(promoted)
+      promoted = !!promoted
       if !@piece.promotable? && promoted
-        raise NotPromotable, "成れない駒で成ろうとしている : #{piece.inspect}"
+        raise NotPromotable, "成れない駒で成ろうとしています : #{piece.inspect}"
       end
       @promoted = promoted
     end
@@ -40,11 +41,11 @@ module Bushido
       "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
     end
 
-    [:promoted].each{|key|
+    [:promoted].each do |key|
       if public_method_defined?(key)
-        define_method("#{key}?"){public_send(key)}
+        define_method("#{key}?") { public_send(key) }
       end
-    }
+    end
 
     # 駒の名前
     def piece_current_name

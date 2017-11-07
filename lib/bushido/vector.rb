@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/vector_spec.rb" -*-
+# -*- compile-command: "bundle exec rspec ../../spec/vector_spec.rb" -*-
 #
 # 駒の移動ベクトル定義用
 #

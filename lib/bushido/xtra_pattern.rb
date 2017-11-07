@@ -1,4 +1,3 @@
-
 require "pathname"
 
 module Bushido
@@ -15,7 +14,7 @@ module Bushido
       end
 
       def store(objects)
-        @list += Array.wrap(objects).collect{|e|new(e)}
+        @list += Array.wrap(objects).collect { |e| new(e) }
       end
 
       def define(&block)
@@ -25,7 +24,7 @@ module Bushido
       def reload_all
         @list.clear
         @load_paths.each do |path|
-          Pathname.glob(path).sort.each{|file|load file}
+          Pathname.glob(path).sort.each { |file| load file }
         end
       end
     end
