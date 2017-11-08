@@ -16,7 +16,7 @@ module Bushido
       @candidate = nil
     end
 
-    # このパース部分も別クラスにする
+    # TODO: このパース部分も別クラスにする
     def execute(str)
       @source = str
       @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/

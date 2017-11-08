@@ -43,7 +43,7 @@ module Bushido
             piece_store(infos, player, mini_soldier, pt) # 駒を置く
           else
             unless target.kind_of?(Soldier)
-              raise UnconfirmedObject, "得体の知れないものが盤上にいる : #{target.inspect}"
+              raise UnconfirmedObject, "得体の知れないものが盤上にいます : #{target.inspect}"
             end
             # 自分の駒は追い抜けない(駒の所有者が自分だったので追い抜けない)
             if target.player == player
