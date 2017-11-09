@@ -21,7 +21,7 @@ module Bushido
       if str.kind_of?(MiniSoldier)
         return str
       end
-      md = str.match(/\A(?<point>..)(?<piece>#{Piece.names.join("|")})\z/)
+      md = str.match(/\A(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/)
       md or raise SyntaxError, "表記が間違っています。'４二竜' や '42竜' のように入力してください : #{str.inspect}"
       Piece.promoted_fetch(md[:piece]).merge(point: Point.parse(md[:point]))
     end

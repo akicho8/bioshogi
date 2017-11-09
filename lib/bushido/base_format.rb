@@ -65,7 +65,7 @@ module Bushido
         inlines.each_with_index{|s, y| # !> shadowing outer local variable - s
           s.scan(/(.)(\S|\s{2})/).each_with_index{|(prefix, piece), x|
             unless piece == "・" || piece.strip == ""
-              unless Piece.names.include?(piece)
+              unless Piece.all_names.include?(piece)
                 raise SyntaxError, "駒の指定が違う : #{piece.inspect}"
               end
               location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"

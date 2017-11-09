@@ -10,17 +10,19 @@ require "singleton"
 
 module Bushido
   class Piece
-    include Singleton
+    include MemoryRecord
+    memory_record [
+      {key: :pawn,   },
+      {key: :bishop, },
+      {key: :rook,   },
+      {key: :lance,  },
+      {key: :knight, },
+      {key: :silver, },
+      {key: :gold,   },
+      {key: :king,   },
+    ]
 
     class << self
-      include Enumerable
-
-      private :instance
-
-      def each(&block)
-        instance.pool.each(&block)
-      end
-
       # get(arg) の alias
       def [](arg)
         get(arg)
@@ -33,7 +35,9 @@ module Bushido
       #   「と」も「歩」も区別しない。区別したい場合は promoted_fetch を使うこと
       #   エラーにしたいときは fetch を使う
       def get(arg)
-        basic_get(arg) || promoted_get(arg)
+        if v = basic_get(arg) || promoted_get(arg)
+          v.object
+        end
       end
 
       # Piece.fetch("歩").name # => "歩"
@@ -48,16 +52,20 @@ module Bushido
       def promoted_fetch(arg)
         case
         when piece = basic_get(arg)
-          MiniSoldier[piece: piece]
+          MiniSoldier[piece: piece.object]
         when piece = promoted_get(arg)
-          MiniSoldier[piece: piece, promoted: true]
+          MiniSoldier[piece: piece.object, promoted: true]
         else
           raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end
       end
 
-      def names
-        collect(&:names).flatten
+      def all_names
+        @all_names ||= collect(&:names).flatten.flatten
+      end
+
+      def all_basic_names
+        @all_basic_names ||= collect(&:basic_names).flatten
       end
 
       # 台上の持駒文字列をハッシュ配列化
@@ -81,12 +89,10 @@ module Bushido
       end
     end
 
-    attr_reader :pool
+    delegate :names, :basic_names, :promoted_names, to: :object
 
-    def initialize
-      @pool = [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect do |key|
-        "Bushido::Piece::#{key.to_s.classify}".constantize.new
-      end
+    def object
+      @object ||= "bushido/piece/#{key}".classify.constantize.new
     end
 
     # 駒共通クラス
@@ -95,7 +101,7 @@ module Bushido
     # 持駒の歩を取り出すため `player.pieces.delete(Piece["歩"])' としたとき歩が全部消えてしまう。
     # 同じ種類の駒、同じ種類の別の駒を分けて判別するためには == を定義しない方がいい。
     class Base
-      module NameMethods
+      concerning :NameMethods do
         def some_name(promoted)
           if promoted
             promoted_name
@@ -128,9 +134,7 @@ module Bushido
         end
       end
 
-      include NameMethods
-
-      module VectorMethods
+      concerning :VectorMethods do
         # ベクトル取得の唯一の外部インタフェース
         def select_vectors(promoted = false)
           assert_promotable(promoted)
@@ -176,8 +180,6 @@ module Bushido
           Set[*(ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]})]
         end
       end
-
-      include VectorMethods
 
       def promotable?
         true

@@ -100,7 +100,7 @@ module Bushido
     def hold_pieces_str_to_array(str)
       if str.kind_of?(String)
         str = str.tr("〇一二三四五六七八九", "0-9")
-        infos = str.scan(/(?<piece>#{Piece.collect(&:basic_names).flatten.join("|")})(?<count>\d+)?/).collect{|piece, count|
+        infos = str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect{|piece, count|
           {piece: piece, count: (count || 1).to_i}
         }
       else
