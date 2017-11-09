@@ -39,7 +39,7 @@ module Bushido
       # Piece.fetch("歩").name # => "歩"
       # Piece.fetch("卍")      # => PieceNotFound
       def fetch(arg)
-        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がない"
+        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
       end
 
       # 「歩」や「と」を駒オブジェクトと成フラグに分離
@@ -52,7 +52,7 @@ module Bushido
         when piece = promoted_get(arg)
           MiniSoldier[piece: piece, promoted: true]
         else
-          raise PieceNotFound, "#{arg.inspect} に対応する駒がない"
+          raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end
       end
 
@@ -69,20 +69,24 @@ module Bushido
       private
 
       def basic_get(arg)
-        find{|piece|piece.basic_names.include?(arg.to_s)}
+        find do |piece|
+          piece.basic_names.include?(arg.to_s)
+        end
       end
 
       def promoted_get(arg)
-        find{|piece|piece.promoted_names.include?(arg.to_s)}
+        find do |piece|
+          piece.promoted_names.include?(arg.to_s)
+        end
       end
     end
 
     attr_reader :pool
 
     def initialize
-      @pool = [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect{|key|
+      @pool = [:pawn, :bishop, :rook, :lance, :knight, :silver, :gold, :king].collect do |key|
         "Bushido::Piece::#{key.to_s.classify}".constantize.new
-      }
+      end
     end
 
     # 駒共通クラス
