@@ -5,217 +5,223 @@
 #   Piece[:pawn].name # => "歩"
 #   Piece.each{|piece|...}
 #
-
-require "singleton"
+# 意味
+#   basic_once_vectors      通常の1ベクトル
+#   basic_repeat_vectors    通常の繰り返しベクトル
+#   promoted_once_vectors   成ったときの1ベクトル
+#   promoted_repeat_vectors 成ったときの繰り返しベクトル
+#
+# 注意点
+#   == を定義すると面倒なことになる
+#   持駒の歩を取り出すため `player.pieces.delete(Piece["歩"])' としたとき歩が全部消えてしまう
+#   同じ種類の駒、同じ種類の別の駒を分けて判別するためには == を定義しない方がいい
+#
 
 module Bushido
   class Piece
     include MemoryRecord
     memory_record [
-      {key: :pawn,   },
-      {key: :bishop, },
-      {key: :rook,   },
-      {key: :lance,  },
-      {key: :knight, },
-      {key: :silver, },
-      {key: :gold,   },
-      {key: :king,   },
+      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x},
+      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus},
+      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
+      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
     ]
 
     class << self
-      # get(arg) の alias
-      def [](arg)
-        get(arg)
-      end
-
-      # 駒オブジェクトを得る
-      #   Piece.get(nil)       # => nil
-      #   Piece.get("歩").name # => "歩"
-      #   Piece.get("と").name # => "歩"
-      #   「と」も「歩」も区別しない。区別したい場合は promoted_fetch を使うこと
-      #   エラーにしたいときは fetch を使う
-      def get(arg)
-        if v = basic_get(arg) || promoted_get(arg)
-          v.object
+      prepend Module.new {
+        # 駒オブジェクトを得る
+        #   Piece.get(nil)       # => nil
+        #   Piece.get("歩").name # => "歩"
+        #   Piece.get("と").name # => "歩"
+        #   「と」も「歩」も区別しない。区別したい場合は promoted_fetch を使うこと
+        #   エラーにしたいときは fetch を使う
+        def lookup(arg)
+          super || basic_get(arg) || promoted_get(arg)
         end
-      end
 
-      # Piece.fetch("歩").name # => "歩"
-      # Piece.fetch("卍")      # => PieceNotFound
-      def fetch(arg)
-        get(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
-      end
+        alias [] lookup
 
-      # 「歩」や「と」を駒オブジェクトと成フラグに分離
-      #   Piece.promoted_fetch("歩") # => <MiniSoldier piece:"歩">
-      #   Piece.promoted_fetch("と") # => <MiniSoldier piece:"歩", promoted: true>
-      def promoted_fetch(arg)
-        case
-        when piece = basic_get(arg)
-          MiniSoldier[piece: piece.object]
-        when piece = promoted_get(arg)
-          MiniSoldier[piece: piece.object, promoted: true]
-        else
-          raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+        alias get lookup
+
+        # Piece.fetch("歩").name # => "歩"
+        # Piece.fetch("卍")      # => PieceNotFound
+        def fetch(arg)
+          lookup(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         end
-      end
 
-      def all_names
-        @all_names ||= collect(&:names).flatten.flatten
-      end
-
-      def all_basic_names
-        @all_basic_names ||= collect(&:basic_names).flatten
-      end
-
-      # 台上の持駒文字列をハッシュ配列化
-      #   hold_pieces_str_to_array("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
-      def hold_pieces_str_to_array(*args)
-        Utils.hold_pieces_str_to_array(*args)
-      end
-
-      private
-
-      def basic_get(arg)
-        find do |piece|
-          piece.basic_names.include?(arg.to_s)
-        end
-      end
-
-      def promoted_get(arg)
-        find do |piece|
-          piece.promoted_names.include?(arg.to_s)
-        end
-      end
-    end
-
-    delegate :names, :basic_names, :promoted_names, to: :object
-
-    def object
-      @object ||= "bushido/piece/#{key}".classify.constantize.new
-    end
-
-    # 駒共通クラス
-    #
-    # ここで == を定義すると面倒なことになるので注意。
-    # 持駒の歩を取り出すため `player.pieces.delete(Piece["歩"])' としたとき歩が全部消えてしまう。
-    # 同じ種類の駒、同じ種類の別の駒を分けて判別するためには == を定義しない方がいい。
-    class Base
-      concerning :NameMethods do
-        def some_name(promoted)
-          if promoted
-            promoted_name
+        # 「歩」や「と」を駒オブジェクトと成フラグに分離
+        #   Piece.promoted_fetch("歩") # => <MiniSoldier piece:"歩">
+        #   Piece.promoted_fetch("と") # => <MiniSoldier piece:"歩", promoted: true>
+        def promoted_fetch(arg)
+          case
+          when piece = basic_get(arg)
+            MiniSoldier[piece: piece]
+          when piece = promoted_get(arg)
+            MiniSoldier[piece: piece, promoted: true]
           else
-            name
+            raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
           end
         end
 
-        def name
-          raise NotImplementedError, "#{__method__} is not implemented"
-        end
-
-        def sym_name
-          self.class.name.demodulize.underscore.to_sym
-        end
-
-        def promoted_name
-        end
-
-        def names
-          basic_names + promoted_names
-        end
-
-        def basic_names
-          [name, sym_name.to_s]
-        end
-
-        def promoted_names
-          [promoted_name, sym_name.to_s.upcase].compact
-        end
-      end
-
-      concerning :VectorMethods do
-        # ベクトル取得の唯一の外部インタフェース
-        def select_vectors(promoted = false)
-          assert_promotable(promoted)
-          promoted ? promoted_vectors : basic_vectors
+        # 台上の持駒文字列をハッシュ配列化
+        #   hold_pieces_str_to_array("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
+        def hold_pieces_str_to_array(*args)
+          Utils.hold_pieces_str_to_array(*args)
         end
 
         private
 
-        # オーバーライド用
-        begin
-          # 通常の1ベクトル
-          def basic_once_vectors
-            []
-          end
-
-          # 通常の繰り返しベクトル
-          def basic_repeat_vectors
-            []
-          end
-
-          # 成ったときの1ベクトル
-          def promoted_once_vectors
-            []
-          end
-
-          # 成ったときの繰り返しベクトル
-          def promoted_repeat_vectors
-            []
+        def basic_get(arg)
+          find do |piece|
+            piece.basic_names.include?(arg.to_s)
           end
         end
 
-        # 通常の合成ベクトル
-        def basic_vectors
-          build_vectors(basic_once_vectors, basic_repeat_vectors)
+        def promoted_get(arg)
+          find do |piece|
+            piece.promoted_names.include?(arg.to_s)
+          end
+        end
+      }
+    end
+
+    def inspect
+      "<#{self.class.name}:#{object_id} #{name} #{key}>"
+    end
+
+    def to_h
+      [
+        :name,
+        :promoted_name,
+        :basic_names,
+        :promoted_names,
+        :names,
+        :key,
+        :promotable?,
+        :basic_once_vectors,
+        :basic_repeat_vectors,
+        :promoted_once_vectors,
+        :promoted_repeat_vectors,
+      ].inject({}) do |a, e|
+        a.merge(e => send(e))
+      end
+    end
+
+    concerning :NameMethods do
+      class_methods do
+        def all_names
+          @all_names ||= collect(&:names).flatten
         end
 
-        # 成ったときの合成ベクトル
-        def promoted_vectors
-          build_vectors(promoted_once_vectors, promoted_repeat_vectors)
-        end
-
-        def build_vectors(ov, rv)
-          Set[*(ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]})]
+        def all_basic_names
+          @all_basic_names ||= collect(&:basic_names).flatten
         end
       end
 
+      def some_name(promoted)
+        if promoted
+          promoted_name
+        else
+          name
+        end
+      end
+
+      # 名前すべて
+      def names
+        basic_names + promoted_names
+      end
+
+      # 成ってないときの名前たち
+      def basic_names
+        [name, key.to_s, basic_alias].flatten.compact
+      end
+
+      # 成ったときの名前たち
+      # 「キーの大文字」を成名としているのはおまけ
+      def promoted_names
+        [promoted_name, key.to_s.upcase, promoted_alias].flatten.compact
+      end
+    end
+
+    concerning :OtherMethods do
+      # 飛角か？
+      def brave?
+        attributes[:promoted_repeat_vectors]
+      end
+
+      # 成れる駒か？
       def promotable?
-        true
+        !!promotable
       end
+
+      private
 
       def assert_promotable(promoted)
         if !promotable? && promoted
           raise NotPromotable
         end
       end
-
-      def inspect
-        "<#{self.class.name}:#{object_id} #{name} #{sym_name}>"
-      end
-
-      def to_h
-        [
-          :name,
-          :promoted_name,
-          :basic_names,
-          :promoted_names,
-          :names,
-          :sym_name,
-          :promotable?,
-          :basic_once_vectors,
-          :basic_repeat_vectors,
-          :promoted_once_vectors,
-          :promoted_repeat_vectors,
-        ].inject({}) do |a, e|
-          a.merge(e => send(e))
-        end
-      end
     end
 
-    module Pattern
-      extend self
+    concerning :VectorMethods do
+      # ベクトル取得の唯一の外部インタフェース
+      def select_vectors(promoted = false)
+        assert_promotable(promoted)
+
+        if promoted
+          promoted_vectors
+        else
+          basic_vectors
+        end
+      end
+
+      private
+
+      # 通常の合成ベクトル
+      def basic_vectors
+        @basic_vectors ||= build_vectors(basic_once_vectors, basic_repeat_vectors)
+      end
+
+      # 成ったときの合成ベクトル
+      def promoted_vectors
+        @promoted_vectors ||= build_vectors(promoted_once_vectors, promoted_repeat_vectors)
+      end
+
+      def build_vectors(ov, rv)
+        (ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]}).to_set
+      end
+
+      def basic_once_vectors
+        __vectors_at(super)
+      end
+
+      def basic_repeat_vectors
+        __vectors_at(super)
+      end
+
+      def promoted_once_vectors
+        __vectors_at(super)
+      end
+
+      def promoted_repeat_vectors
+        __vectors_at(super)
+      end
+
+      def __vectors_at(value)
+        if value
+          if value.kind_of?(Symbol)
+            send(value)
+          else
+            value
+          end
+        else
+          []
+        end
+      end
 
       def pattern_plus
         [
@@ -232,160 +238,16 @@ module Bushido
           [-1,  1], nil, [1,  1],
         ]
       end
-    end
 
-    module Goldable
-      private
-      def promoted_once_vectors
-        Gold.basic_pattern
-      end
-    end
-
-    module Brave
-      private
-      def promoted_repeat_vectors
-        basic_repeat_vectors
-      end
-    end
-
-    class Pawn < Base
-      include Goldable
-
-      def name
-        "歩"
-      end
-
-      def promoted_name
-        "と"
-      end
-
-      private
-
-      def basic_once_vectors
-        [[0, -1]]
-      end
-    end
-
-    class Bishop < Base
-      include Brave
-
-      def name
-        "角"
-      end
-
-      def promoted_name
-        "馬"
-      end
-
-      private
-
-      def promoted_once_vectors
-        Pattern.pattern_plus
-      end
-
-      def basic_repeat_vectors
-        Pattern.pattern_x
-      end
-    end
-
-    class Rook < Base
-      include Brave
-
-      def name
-        "飛"
-      end
-
-      def promoted_name
-        "龍"
-      end
-
-      def promoted_names
-        super + ["竜"]
-      end
-
-      private
-
-      def promoted_once_vectors
-        Pattern.pattern_x
-      end
-
-      def basic_repeat_vectors
-        Pattern.pattern_plus
-      end
-    end
-
-    class Lance < Base
-      include Goldable
-
-      def name
-        "香"
-      end
-
-      def promoted_name
-        "杏"
-      end
-
-      def promoted_names
-        super + ["成香"]
-      end
-
-      private
-
-      def basic_repeat_vectors
-        [[0, -1]]
-      end
-    end
-
-    class Knight < Base
-      include Goldable
-
-      def name
-        "桂"
-      end
-
-      def promoted_name
-        "圭"
-      end
-
-      def promoted_names
-        super + ["成桂"]
-      end
-
-      private
-
-      def basic_once_vectors
-        [[-1, -2], [1, -2]]
-      end
-    end
-
-    class Silver < Base
-      include Goldable
-
-      def name
-        "銀"
-      end
-
-      def promoted_name
-        "全"
-      end
-
-      def promoted_names
-        super + ["成銀"]
-      end
-
-      private
-
-      def basic_once_vectors
+      def pattern_silver
         [
           [-1, -1], [0, -1], [1, -1],
           nil,          nil,     nil,
           [-1,  1],     nil, [1,  1],
         ]
       end
-    end
 
-    class Gold < Base
-      def self.basic_pattern
+      def pattern_gold
         [
           [-1, -1], [0, -1], [1, -1],
           [-1,  0],          [1,  0],
@@ -393,46 +255,12 @@ module Bushido
         ]
       end
 
-      def name
-        "金"
-      end
-
-      def promotable?
-        false
-      end
-
-      private
-
-      def basic_once_vectors
-        self.class.basic_pattern
-      end
-    end
-
-    class King < Base
-      def self.basic_pattern
+      def pattern_king
         [
           [-1, -1], [0, -1], [1, -1],
           [-1,  0],     nil, [1,  0],
           [-1,  1], [0,  1], [1,  1],
         ]
-      end
-
-      def name
-        "玉"
-      end
-
-      def basic_names
-        super + ["王"]
-      end
-
-      def promotable?
-        false
-      end
-
-      private
-
-      def basic_once_vectors
-        self.class.basic_pattern
       end
     end
   end

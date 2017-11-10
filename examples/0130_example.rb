@@ -7,7 +7,7 @@ pp Piece["飛"].to_h
 # >>  :basic_names=>["飛", "rook"],
 # >>  :promoted_names=>["龍", "ROOK", "竜"],
 # >>  :names=>["飛", "rook", "龍", "ROOK", "竜"],
-# >>  :sym_name=>:rook,
+# >>  :key=>:rook,
 # >>  :promotable?=>true,
 # >>  :basic_once_vectors=>[],
 # >>  :basic_repeat_vectors=>[nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],

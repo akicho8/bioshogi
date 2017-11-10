@@ -7,9 +7,10 @@ module Bushido
     end
 
     it "取得" do
-      Piece[:pawn].class.should == Piece::Pawn
-      Piece.get(:pawn).class.should == Piece::Pawn
-      Piece.get("歩").class.should == Piece::Pawn
+      Piece[:pawn].class.should == Piece
+      Piece[:pawn].key.should == :pawn
+      Piece.get(:pawn).class.should == Piece
+      Piece.get("歩").name.should == "歩"
       Piece.get("").should == nil
       Piece.get(nil).should == nil
     end
@@ -27,7 +28,7 @@ module Bushido
       piece.basic_names.should          == ["飛", "rook"]
       piece.promoted_names.should       == ["龍", "ROOK", "竜"]
       piece.names.should                == ["飛", "rook", "龍", "ROOK", "竜"]
-      piece.sym_name.should             == :rook
+      piece.key.should             == :rook
       piece.promotable?.should          == true
       piece.select_vectors.should       == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
       piece.select_vectors(true).should == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]

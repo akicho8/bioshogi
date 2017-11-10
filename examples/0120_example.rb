@@ -3,7 +3,7 @@ require "./example_helper"
 
 mediator = Mediator.new
 player = mediator.player_at(:black)
-Piece.each{|piece|
+Piece.each do |piece|
   player.initial_soldiers("５五#{piece.name}", from_piece: false)
   player.board["５五"].movable_infos.each{|v|
     soldier = player.board[v[:point]]
@@ -23,7 +23,7 @@ Piece.each{|piece|
   }
   puts mediator.board
   player.board.abone_all
-}
+end
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一

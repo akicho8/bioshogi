@@ -68,6 +68,10 @@ module Bushido
         else
           mini_soldier = mini_soldier_or_str
         end
+
+        # p mini_soldier
+        # p options[:from_piece]
+
         if options[:from_piece]
           pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
@@ -171,13 +175,13 @@ module Bushido
 
       # 持駒を参照する
       def piece_fetch(piece)
-        @pieces.find{|e|e.class == piece.class}
+        @pieces.find { |e| e.key == piece.key }
       end
 
       # 持駒を取り出す
       def pick_out(piece)
         piece_fetch!(piece)
-        if index = @pieces.find_index{|e|e.class == piece.class}
+        if index = @pieces.find_index { |e| e.key == piece.key }
           @pieces.slice!(index)
         end
       end
@@ -335,7 +339,7 @@ module Bushido
 
     # 二歩？
     def find_collisione_pawn(mini_soldier)
-      if mini_soldier[:piece].sym_name == :pawn && !mini_soldier[:promoted]
+      if mini_soldier[:piece].key == :pawn && !mini_soldier[:promoted]
         pawns_on_board(mini_soldier[:point]).first
       end
     end
@@ -345,7 +349,7 @@ module Bushido
       soldiers = board.pieces_of_vline(point.x)
       soldiers = soldiers.find_all{|s|s.player == self}
       soldiers = soldiers.find_all{|s|!s.promoted?}
-      soldiers = soldiers.find_all{|s|s.piece.sym_name == :pawn}
+      soldiers = soldiers.find_all{|s|s.piece.key == :pawn}
       soldiers
     end
 

@@ -76,7 +76,7 @@ EOT
           p mediator
           last_piece = mediator.reverse_player.last_piece
           break
-          if last_piece && last_piece.sym_name == :king
+          if last_piece && last_piece.key == :king
             break
           end
         end

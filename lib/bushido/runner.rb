@@ -131,7 +131,7 @@ module Bushido
     def find_origin_point
       # 指定の場所に来れる盤上の駒に絞る
       @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
-      @soldiers = @soldiers.find_all{|e|e.piece.class == @piece.class} # 同じ駒に絞る
+      @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
       @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
       @candidate = @soldiers.collect{|s|s.clone}
 
@@ -175,7 +175,7 @@ module Bushido
       __saved_soldiers = @soldiers
       cond = "左右"
       if @md[:suffix].match(/[#{cond}]/)
-        if @piece.kind_of?(Piece::Brave)
+        if @piece.brave?
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else
