@@ -1,7 +1,7 @@
 module Bushido
-  class Cli
-    class Versus < self
-      def self.script_name
+  module Cli
+    class VersusCommand < Base
+      def self.command_name
         "NegaMaxアルゴリズム同士の対決"
       end
 

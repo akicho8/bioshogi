@@ -1,8 +1,9 @@
+# -*- compile-command: "ruby base.rb piece_list" -*-
 
 module Bushido
-  class Cli
-    class PieceList < self
-      def self.script_name
+  module Cli
+    class PieceListCommand < Base
+      def self.command_name
         "駒情報一覧"
       end
 
