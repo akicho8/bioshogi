@@ -6,12 +6,20 @@ module Bushido
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
-        file = Pathname(__FILE__).dirname.join("sample1.kif").expand_path
+        file = Pathname(__FILE__).dirname.join("files/sample1.kif").expand_path
         @result = KifFormat::Parser.parse(file.read)
       end
 
       it "ヘッダー部" do
-        @result.header.should == {"開始日時"=>"2000/01/01 00:00:00", "終了日時"=>"2000/01/01 01:00:00", "棋戦"=>"(棋戦)", "持ち時間"=>"(持ち時間)", "手合割"=>"平手", "先手"=>"(先手)", "後手"=>"(後手)"}
+        @result.header.should == {
+          "開始日時" => "2000/01/01 00:00:00",
+          "終了日時" => "2000/01/01 01:00:00",
+          "棋戦"     => "(棋戦)",
+          "持ち時間" => "(持ち時間)",
+          "手合割"   => "平手",
+          "先手"     => "(先手)",
+          "後手"     => "(後手)",
+        }
       end
 
       it "棋譜の羅列" do
