@@ -48,7 +48,7 @@ module Bushido
 
       # "▲▼▽△" を返す
       def triangles
-        collect { |e| [e.mark, e.reverse_mark] }.join
+        @triangles ||= collect { |e| [e.mark, e.reverse_mark] }.join
       end
     end
 
