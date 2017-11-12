@@ -60,9 +60,19 @@ module Bushido
         if @md[:origin_point]
           @origin_point = Point.parse(@md[:origin_point])
         end
+
+        # kif → ki2 変換するときのために @candidate は必要
+        # 指定の場所に来れる盤上の駒に絞る
+        @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
+        @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
+        @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
+        @candidate = @soldiers.collect{|s|s.clone}
+
         unless @origin_point
+          # ki2 の場合
           find_origin_point
         end
+
         unless @done
           @source_soldier = @player.board.fetch(@origin_point)
 
@@ -129,11 +139,11 @@ module Bushido
     # 「７六」に来ることができる歩があれば「７六歩(nn)」と判断する
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
-      # 指定の場所に来れる盤上の駒に絞る
-      @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
-      @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
-      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
-      @candidate = @soldiers.collect{|s|s.clone}
+      # # 指定の場所に来れる盤上の駒に絞る
+      # @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
+      # @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
+      # @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
+      # @candidate = @soldiers.collect{|s|s.clone}
 
       if @soldiers.empty?
         # 「打」を省略している場合、持駒から探す
@@ -157,12 +167,13 @@ module Bushido
       unless @done
         if @soldiers.size > 1
           if @md[:suffix]
+            assert_valid_format("直上")
             assert_valid_format("左右直")
             assert_valid_format("引上寄")
             find_soldiers
           end
           if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にすること。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
           end
         end
 
@@ -173,6 +184,8 @@ module Bushido
 
     def find_soldiers
       __saved_soldiers = @soldiers
+
+      # 上下左右は後手なら反転する
       cond = "左右"
       if @md[:suffix].match(/[#{cond}]/)
         if @piece.brave?
@@ -188,11 +201,20 @@ module Bushido
         m = _method([:<, :>], cond)
         @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
       end
-      cond = "寄直"
-      if @md[:suffix].match(/[#{cond}]/)
-        m = _method([:y, :x], cond)
-        @soldiers = @soldiers.find_all{|soldier|soldier.point.send(m) == @point.send(m)}
+
+      # 寄 と 直 は先手後手関係ないので反転する必要なし
+      if true
+        if @md[:suffix].include?("寄")
+          # TODO: 厳密には左右1個分だけチェックする
+          @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
+        end
+
+        if @md[:suffix].include?("直")
+          # TODO: 厳密には下にあるもののみとする
+          @soldiers = @soldiers.find_all { |e| e.point.x == @point.x }
+        end
       end
+
       if @soldiers.empty?
         raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
