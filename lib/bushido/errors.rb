@@ -14,7 +14,7 @@ module Bushido
     end
 
     def message
-      "#{@runner.point.name}に移動できる#{@runner.piece.name}がない。入力した #{@runner.source.inspect} が間違っているのかもしれない\n#{@runner.player.mediator}"
+      "「#{@runner.point.name}」に移動できる「#{@runner.piece.name}」がありません。入力した「#{@runner.source.inspect}」が間違っているのかもしれません\n#{@runner.player.mediator}"
     end
   end
 
