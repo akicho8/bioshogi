@@ -296,6 +296,16 @@ EOT
 EOT
     end
 
+    it "「5八金(49)」を入力した結果からKI2変換したとき「58金右」となる" do
+      # これはいままで ki2 入力でしか試していなかったため不具合を発見できなかった
+      # 移動元が明確な kif で入力し、ki2 変換してみると candidate が nil だったので「右」がつかなかった
+      # 「将棋DB2」にも同様の不具合がある
+      mediator = Mediator.start
+      mediator.piece_plot
+      mediator.execute("5八金(49)")
+      mediator.hand_logs.first.to_s_ki2.should == "5八金右"
+    end
+
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
     #     player = player_test(init: "２二歩", pinit: "歩")

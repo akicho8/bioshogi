@@ -135,6 +135,19 @@ EOT
       mediator.deep_dup
     end
 
+    #     it "debug" do
+    #       mediator = Mediator.start
+    #       mediator.board_reset(<<~BOARD)
+    # +------+
+    # | 金 ・|
+    # | ・ 金|
+    # +------+
+    # BOARD
+    #       puts mediator.board.to_s
+    #       mediator.execute("2二金直上")
+    #       puts mediator.board.to_s
+    #     end
+
     # it "盤面初期設定" do
     #   def board_reset_test(value)
     #     mediator = Mediator.new

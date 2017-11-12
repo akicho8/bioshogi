@@ -153,5 +153,9 @@ module Bushido
     it "２三銀引成できる？" do
       read_spec(init: ["３二銀", "３四銀"], exec: "２三銀引成").should == ["2三銀成(32)", "2三銀引成"]
     end
+
+    it "「直上」ではなく「直」になる" do
+      read_spec(init: ["２九金", "１九金"], exec: "２八金直").should == ["2八金(29)", "2八金直"]
+    end
   end
 end
