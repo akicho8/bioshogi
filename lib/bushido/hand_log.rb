@@ -90,6 +90,8 @@ module Bushido
 
       # 左右引寄直
       def get_suffix
+        direct = false
+
         s = []
         # 候補が2つ以上あったとき
         if @hand_log.candidate && @hand_log.candidate.size > 1
@@ -127,31 +129,34 @@ module Bushido
                 @hand_log.candidate.any?{|s|s.point.x.value > @hand_log.point.x.value}].any?
               if @hand_log.point.x.value == @hand_log.origin_point.x.value
                 s << "直"
+                direct = true   # 「直上」とならないようにするため
               end
             end
           end
 
-          # 目標地点の上と下、両方にあって区別がつかないとき、
-          if [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
-              @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].all? ||
-              # 上か下にあって、水平線にもある
-              [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
-              @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].any? && @hand_log.candidate.any?{|s|s.point.y.value == @hand_log.point.y.value}
+          unless direct
+            # 目標地点の上と下、両方にあって区別がつかないとき、
+            if [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
+                @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].all? ||
+                # 上か下にあって、水平線にもある
+                [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
+                @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].any? && @hand_log.candidate.any?{|s|s.point.y.value == @hand_log.point.y.value}
 
-            # 下から来たのなら、ひき"上"げ、
-            # 上から来たなら、"引"く
-            if @hand_log.point.y.value < @hand_log.origin_point.y.value
-              s << which_char("上", "引")
-            elsif @hand_log.point.y.value > @hand_log.origin_point.y.value
-              s << which_char("引", "上")
+              # 下から来たのなら、ひき"上"げ、
+              # 上から来たなら、"引"く
+              if @hand_log.point.y.value < @hand_log.origin_point.y.value
+                s << which_char("上", "引")
+              elsif @hand_log.point.y.value > @hand_log.origin_point.y.value
+                s << which_char("引", "上")
+              end
             end
-          end
 
-          # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
-          if [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
-              @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].any?
-            if @hand_log.point.y.value == @hand_log.origin_point.y.value
-              s << "寄"
+            # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
+            if [@hand_log.candidate.any?{|s|s.point.y.value < @hand_log.point.y.value},
+                @hand_log.candidate.any?{|s|s.point.y.value > @hand_log.point.y.value}].any?
+              if @hand_log.point.y.value == @hand_log.origin_point.y.value
+                s << "寄"
+              end
             end
           end
         end
