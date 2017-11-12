@@ -4,9 +4,9 @@ require "./example_helper"
 mediator = Mediator.new
 player = mediator.player_at(:black)
 player.initial_soldiers("５五馬", from_piece: false)
-player.soldiers.first.movable_infos.each{|v|
+player.soldiers.first.movable_infos.each do |v|
   player.initial_soldiers("#{v[:point]}馬", from_piece: false)
-}
+end
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

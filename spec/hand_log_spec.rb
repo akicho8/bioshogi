@@ -11,15 +11,15 @@ module Bushido
     end
 
     it "CPU向けの表記を返す" do
-      @hand_log.to_s_simple.should == "7六歩(77)"
+      @hand_log.to_s_kif.should == "7六歩(77)"
     end
 
     it "人間向けの表記を返す" do
-      @hand_log.to_s_human.should == "7六歩"
+      @hand_log.to_s_ki2.should == "7六歩"
     end
 
     it "両方返す" do
-      @hand_log.to_pair.should == ["7六歩(77)", "7六歩"]
+      @hand_log.to_kif_ki2.should == ["7六歩(77)", "7六歩"]
     end
   end
 end

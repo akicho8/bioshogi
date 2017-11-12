@@ -101,7 +101,7 @@ module Bushido
         :promoted_names,
         :names,
         :key,
-        :promotable?,
+        :promotable,
         :basic_once_vectors,
         :basic_repeat_vectors,
         :promoted_once_vectors,

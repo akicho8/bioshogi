@@ -34,10 +34,33 @@ module Bushido
           comment_read(line)
           if md = line.match(/^\s*(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
             location = Location["#{md[:index]}手目"]
-            @move_infos << {index: md[:index], location: location, input: md[:input], mov: "#{location.mark}#{md[:input]}", spent_time: md[:spent_time]}
+            input = md[:input].remove(/#{WHITE_SPACE}/)
+            @move_infos << {index: md[:index], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
           end
         end
       end
+
+      def to_kif
+        out = ""
+        out << @header.collect { |key, value| "#{key}：#{value}\n" }.join
+        out << "手数----指手---------消費時間--\n"
+        @move_infos.each do |e|
+          out << "%s %s (%s)\n" % [e[:index], e[:input], e[:spent_time]]
+        end
+
+        # 最後が「投了」でない場合に kif フォーマットと見なされない場合がある(将棋山脈など)
+        # そのため最後が投了でない場合、自動的に投了を入れている
+        if true
+          last = @move_infos.last
+          unless last[:input] == "投了"
+            out << "%s 投了\n" % last[:index].next
+          end
+        end
+
+        out
+      end
+
+      alias to_s to_kif
     end
   end
 end

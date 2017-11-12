@@ -48,7 +48,7 @@ module Bushido
           exit(1)
         end
 
-        command_name = args.first
+        command_name = args.shift
         klass = command_class(command_name)
         klass.new(args, options).execute
       end

@@ -30,7 +30,7 @@ module Bushido
             break
           end
         end
-        p mediator.simple_hand_logs.join(" ")
+        p mediator.kif_hand_logs.join(" ")
       end
     end
   end

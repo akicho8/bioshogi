@@ -19,9 +19,9 @@ module Bushido
 
       def initialize
         super
-        @players = Location.collect { |loc|
-          Player.new(self, location: loc)
-        }
+        @players = Location.collect do |e|
+          Player.new(self, location: e)
+        end
         @counter = 0
       end
 
@@ -145,8 +145,8 @@ module Bushido
 
       # 互換性用
       if true
-        def simple_hand_logs; hand_logs.collect{|e|e.to_s_simple(with_mark: true)}; end
-        def human_hand_logs;  hand_logs.collect{|e|e.to_s_human(with_mark: true)};  end
+        def kif_hand_logs; hand_logs.collect { |e| e.to_s_kif(with_mark: true) }; end
+        def ki2_hand_logs; hand_logs.collect { |e| e.to_s_ki2(with_mark: true) }; end
       end
 
       def to_s
@@ -165,6 +165,10 @@ module Bushido
         s << @board.to_s
         s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
         s
+      end
+
+      def last_message
+        "まで#{@counter}手で#{reverse_player.location.name}の勝ち"
       end
     end
 
@@ -280,7 +284,7 @@ module Bushido
       def to_text
         out = []
         out << "-" * 40 + "\n"
-        out << "棋譜: #{human_hand_logs.join(" ")}\n"
+        out << "棋譜: #{ki2_hand_logs.join(" ")}\n"
         out << variables.inspect + "\n"
         out << to_hand
         out.join.strip

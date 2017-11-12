@@ -85,7 +85,7 @@ BOARD
         if r.nil?
           break
         end
-        # p sequencer.hand_logs.last.to_s_human
+        # p sequencer.hand_logs.last.to_s_ki2
         # p sequencer
         # p sequencer.variables
       end

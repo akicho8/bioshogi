@@ -6,6 +6,7 @@ mediator.piece_plot
 puts mediator.board
 
 mediator.board["５五"]      # => nil
+mediator.board["８八"]      # => <Bushido::Soldier:70199354955120 @player=#<Bushido::Player:0x007fb11fc43420> @piece=角 ▲8八角>
 mediator.board["８八"].name # => "▲8八角"
 mediator.board["２八"].name # => "▲2八飛"
 mediator.board["５九"].name # => "▲5九玉"

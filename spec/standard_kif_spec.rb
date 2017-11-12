@@ -143,7 +143,7 @@ module Bushido
     end
 
     it "同" do
-      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_pair.should == ["2四歩(23)", "同歩"]
+      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["2四歩(23)", "同歩"]
     end
 
     it "直と不成が重なるとき「不成」と「直」の方が先にくる" do

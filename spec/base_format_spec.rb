@@ -68,11 +68,11 @@ BOARD
 
     describe "エラー" do
       it "駒がおかしい" do
-        expect { board_parse_test("+---+\| ★|\n+---+") }.to raise_error(SyntaxError, /駒の指定が違う/)
+        expect { board_parse_test("+---+\| ★|\n+---+") }.to raise_error(SyntaxError, /駒の指定が違います/)
       end
 
-      it "横幅が3桁毎になっていない" do
-        expect { board_parse_test(<<-BOARD) }.to raise_error(SyntaxError, /横幅が3桁毎になっていない/)
+      it "横幅が3桁毎になっていません" do
+        expect { board_parse_test(<<-BOARD) }.to raise_error(SyntaxError, /横幅が3桁毎になっていません/)
 +--+
 |歩|
 +--+

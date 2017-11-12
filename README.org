@@ -19,7 +19,7 @@ mediator.piece_plot
   mediator.execute(input)
 }
 puts mediator.board
-pp mediator.simple_hand_logs
+pp mediator.kif_hand_logs
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一
@@ -86,7 +86,7 @@ p mediator
 # >> ▲先手の持駒:歩 玉
 # >> ▽後手の持駒:歩
 
-puts mediator.human_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲3八金(39) ▽4六歩打 ▲1二歩打 ▽3六歩(35) ▲5三桂成(65)
 # >> ▲4八玉 ▽5二金 ▲5六歩 ▽6二飛 ▲1六歩 ▽7二飛 ▲5九玉 ▽6二玉
 # >> ▲2六歩 ▽4二金 ▲4八飛 ▽5四歩 ▲7八銀 ▽5一金 ▲7六歩 ▽5五歩
@@ -154,7 +154,7 @@ puts mediator.inspect
     KIF形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.simple_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.kif_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲7六歩(77) ▽8四歩(83) ▲7八金(69) ▽3二金(41) ▲2六歩(27) ▽8五歩(84) ▲7七角(88) ▽3四歩(33)
 # >> ▲8八銀(79) ▽7七角成(22) ▲7七銀(88) ▽4二銀(31) ▲3八銀(39) ▽7二銀(71) ▲9六歩(97) ▽9四歩(93)
 # >> ▲4六歩(47) ▽6四歩(63) ▲4七銀(38) ▽6三銀(72) ▲6八玉(59) ▽3三銀(42) ▲5八金(49) ▽5四銀(63)
@@ -179,7 +179,7 @@ puts mediator.simple_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|
     KI2形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.human_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲7六歩 ▽8四歩 ▲7八金 ▽3二金 ▲2六歩 ▽8五歩 ▲7七角 ▽3四歩
 # >> ▲8八銀 ▽7七角成 ▲同銀 ▽4二銀 ▲3八銀 ▽7二銀 ▲9六歩 ▽9四歩
 # >> ▲4六歩 ▽6四歩 ▲4七銀 ▽6三銀 ▲6八玉 ▽3三銀 ▲5八金 ▽5四銀
@@ -257,7 +257,7 @@ pp Piece["飛"].to_h
 # >>  promoted_names: ["龍", "ROOK", "竜"],
 # >>  names: ["飛", "rook", "龍", "ROOK", "竜"],
 # >>  key: :rook,
-# >>  :promotable?=>true,
+# >>  :promotable=>true,
 # >>  basic_once_vectors: [],
 # >>  basic_repeat_vectors: [nil, [0, -1], nil, [-1, 0], [1, 0], nil, [0, 1], nil],
 # >>  promoted_once_vectors: # >>   [[-1, -1], [0, -1], [1, -1], [-1, 0], nil, [1, 0], [-1, 1], [0, 1], [1, 1]],
@@ -642,7 +642,7 @@ end
    - cli
    - +フォームで入力した棋譜の再生+
    - +board と player に mediator を【常に】渡す+
-   - +human_hand_logs ともう一つを別々に管理しているのがおかしい hand_logs.first から分岐すべき+
+   - +ki2_hand_logs ともう一つを別々に管理しているのがおかしい hand_logs.first から分岐すべき+
    - +mediator の元を mediator にする+
    - +5x5将棋配置+
    - +BUG:"1一と成(12)" +

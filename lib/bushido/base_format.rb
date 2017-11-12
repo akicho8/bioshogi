@@ -50,7 +50,7 @@ module Bushido
         s = lines.first
         if s.match("-")
           if s.count("-").modulo(3).nonzero?
-            raise SyntaxError, "横幅が3桁毎になっていない"
+            raise SyntaxError, "横幅が3桁毎になっていません"
           end
           x_units = Position::Hpos.orig_units(zenkaku: true).last(s.gsub("---", "-").count("-"))
         else
@@ -61,28 +61,31 @@ module Bushido
         y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(zenkaku: true)[i]}
         inlines = mds.collect{|v|v[:inline]}
 
-        players = Location.inject({}){|h, location|h.merge(location => [])}
-        inlines.each_with_index{|s, y| # !> shadowing outer local variable - s
-          s.scan(/(.)(\S|\s{2})/).each_with_index{|(prefix, piece), x|
+        players = Location.inject({}) do |a, location|
+          a.merge(location => [])
+        end
+
+        inlines.each.with_index do |s, y|
+          s.scan(/(.)(\S|\s{2})/).each_with_index do |(prefix, piece), x|
             unless piece == "・" || piece.strip == ""
               unless Piece.all_names.include?(piece)
-                raise SyntaxError, "駒の指定が違う : #{piece.inspect}"
+                raise SyntaxError, "駒の指定が違います : #{piece.inspect}"
               end
-              location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違う"
+              location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違います"
               raise SyntaxError unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
               mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
               players[location] << mini_soldier
             end
-          }
-        }
+          end
+        end
         players
       end
     end
 
     class Parser
       class << self
-        def parse(source, options = {})
+        def parse(source, **options)
           new(source, options).tap(&:parse)
         end
 
@@ -93,7 +96,7 @@ module Bushido
 
       attr_reader :header, :move_infos, :first_comments, :source
 
-      def initialize(source, options = {})
+      def initialize(source, **options)
         @source = BaseFormat.normalized_source(source)
         @options = default_options.merge(options)
 
@@ -118,9 +121,9 @@ module Bushido
       end
 
       def read_key_value
-        @_head.scan(/^(\S.*)：(.*)$/).each { |key, value|
+        @_head.scan(/^(\S.*)：(.*)$/).each do |key, value|
           @header[key] = value
-        }
+        end
       end
 
       def read_board

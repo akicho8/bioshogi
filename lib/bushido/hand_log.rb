@@ -11,8 +11,14 @@ module Bushido
       end
     end
 
+    # 両方返す
+    # 主にテスト用
+    def to_kif_ki2
+      [to_s_kif, to_s_ki2]
+    end
+
     # "7六歩" のようなCPUに優しいKIF形式の表記で返す
-    def to_s_simple(options = {})
+    def to_s_kif(options = {})
       options = {
         with_mark: false,
       }.merge(options)
@@ -35,12 +41,12 @@ module Bushido
       s.join
     end
 
-    # "7六歩(77)" のような人間向けの表記を返す
-    def to_s_human(options = {})
-      HumanFormatConv.new(self, options).to_s
+    # "58金右" のような人間向けの表記を返す
+    def to_s_ki2(options = {})
+      Ki2FormatConv.new(self, options).to_s
     end
 
-    class HumanFormatConv
+    class Ki2FormatConv
       def initialize(hand_log, options = {})
         @hand_log = hand_log
         @options = {
@@ -48,7 +54,7 @@ module Bushido
         }.merge(options)
       end
 
-      # "7六歩(77)" のような人間向けの表記を返す
+      # "同銀" のような人間向けの表記を返す
       def to_s
         s = []
         if @options[:with_mark]
@@ -155,11 +161,6 @@ module Bushido
       def which_char(*args)
         @hand_log.player.location.where_value(*args)
       end
-    end
-
-    # 両方返す
-    def to_pair
-      [to_s_simple, to_s_human]
     end
   end
 end

@@ -6,10 +6,10 @@ Board.size_change([5, 5])
 mediator = Mediator.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 mediator.players.each do |player|
-  _soldiers = soldiers.collect{|s|
+  _soldiers = soldiers.collect do |s|
     s = MiniSoldier.from_str(s)
     s.merge(point: s[:point].as_location(player.location))
-  }
+  end
   player.initial_soldiers(_soldiers)
 end
 mediator.pieces_clear

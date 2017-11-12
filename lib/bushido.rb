@@ -20,21 +20,23 @@ module Bushido
   WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
   SEPARATOR = " "
 
-  def self.parse_file(file, options = {})
-    parse(Pathname(file).expand_path.read, options)
-  end
-
-  def self.parse(str, options = {})
-    options = {
-    }.merge(options)
-
-    parser = [KifFormat::Parser, Ki2Format::Parser].find { |parser|
-      parser.resolved?(str)
-    }
-    unless parser
-      raise FileFormatError, "フォーマットがおかしい : #{str}"
+  class << self
+    def parse_file(file, **options)
+      parse(Pathname(file).expand_path.read, options)
     end
-    parser.parse(str, options)
+
+    def parse(str, **options)
+      options = {
+      }.merge(options)
+
+      parser = [KifFormat::Parser, Ki2Format::Parser].find do |e|
+        e.resolved?(str)
+      end
+      unless parser
+        raise FileFormatError, "棋譜のフォーマットが異常です : #{str}"
+      end
+      parser.parse(str, options)
+    end
   end
 end
 
