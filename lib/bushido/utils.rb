@@ -137,7 +137,7 @@ module Bushido
       str = str.gsub(/([#{Location.triangles}])/, ' \1')
       str = str.squish
       str.split(/\s+/).collect{|s|
-        if s.match(/\A[#{Location.triangles}]/)
+        if s.match?(/\A[#{Location.triangles}]/)
           movs_split(s)
         else
           s

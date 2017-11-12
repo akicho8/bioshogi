@@ -15,7 +15,7 @@ module Bushido
       #   1 ７六歩(77)   ( 00:01/00:00:01)
       def self.resolved?(source)
         source = BaseFormat.normalized_source(source)
-        source.match(/^手数-+指手-+消費時間-+$/)
+        source.match?(/^手数-+指手-+消費時間-+$/)
       end
 
       # | # ----  Kifu for Windows V6.26 棋譜ファイル  ----

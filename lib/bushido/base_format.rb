@@ -15,7 +15,7 @@ module Bushido
       end
 
       def board_format?(source)
-        normalized_source(source).match(/^\s*[\+\|]/)
+        normalized_source(source).match?(/^\s*[\+\|]/)
       end
 
       # ほぼ標準の柿木フォーマットのテーブルの読み取り
@@ -48,7 +48,7 @@ module Bushido
         end
 
         s = lines.first
-        if s.match("-")
+        if s.include?("-")
           if s.count("-").modulo(3).nonzero?
             raise SyntaxError, "横幅が3桁毎になっていません"
           end

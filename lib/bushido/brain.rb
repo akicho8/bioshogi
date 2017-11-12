@@ -79,7 +79,7 @@ module Bushido
 
     def log_puts(locals, str)
       str = str.to_s
-      if str.match(/\n/)
+      if str.match?(/\n/)
         str = "\n" + str
       end
       Bushido.logger.info "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]

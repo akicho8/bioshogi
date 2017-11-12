@@ -34,7 +34,7 @@ module Bushido
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
-        if @md[:suffix].to_s.match(/不?成/) && !@piece.promotable?
+        if @md[:suffix].to_s.match?(/不?成/) && !@piece.promotable?
           raise NoPromotablePiece, "#{@md[:suffix].inspect} としましたが「#{@piece.name}」は裏がないので「成」も「不成」も指定しちゃいけません : #{@source.inspect}"
         end
 
@@ -187,7 +187,7 @@ module Bushido
 
       # 上下左右は後手なら反転する
       cond = "左右"
-      if @md[:suffix].match(/[#{cond}]/)
+      if @md[:suffix].match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
@@ -197,7 +197,7 @@ module Bushido
         end
       end
       cond = "上引"
-      if @md[:suffix].match(/[#{cond}]/)
+      if @md[:suffix].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
         @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
       end
@@ -222,7 +222,7 @@ module Bushido
 
     def _method(method_a_or_b, str_a_or_b)
       str_a_or_b = str_a_or_b.chars.to_a
-      if @md[:suffix].match(/#{str_a_or_b.last}/)
+      if @md[:suffix].match?(/#{str_a_or_b.last}/)
         method_a_or_b = method_a_or_b.reverse
       end
       @player.location.where_value(*method_a_or_b)
