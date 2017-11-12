@@ -33,7 +33,7 @@ module Bushido
         e.resolved?(str)
       end
       unless parser
-        raise FileFormatError, "棋譜のフォーマットが異常です : #{str}"
+        raise FileFormatError, "棋譜のフォーマットが不明です : #{str}"
       end
       parser.parse(str, options)
     end
