@@ -2,7 +2,7 @@
 # 棋譜の一手分の保存用
 #
 module Bushido
-  class HandLog < Hash
+  class HandLog
     attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
 
     def initialize(attrs)
