@@ -5,7 +5,8 @@ module Bushido
     class Parser < BaseFormat::Parser
       def self.resolved?(source)
         source = BaseFormat.normalized_source(source)
-        !source.match(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
+        # 「手数----指手---------消費時間--」が無いかつ「空行がある」
+        !source.match?(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
       end
 
       # フォーマットは読み上げに近い、人間が入力したような "▲７六歩△３四歩" 形式
@@ -24,8 +25,8 @@ module Bushido
         read_header
         @_body.lines.each do |line|
           comment_read(line)
-          if line.match(/^\s*[▲△]/)
-            @move_infos += line.scan(/([▲△])([^▲△\s]+)/).collect do |mark, input|
+          if line.match(/^\s*[#{Location.triangles}]/)
+            @move_infos += line.scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect do |mark, input|
               location = Location[mark]
               {location: location, input: input, mov: "#{location.mark}#{input}"}
             end
