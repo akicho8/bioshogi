@@ -43,7 +43,7 @@ module Bushido
     it "初期配置" do
       mediator = Mediator.start
       mediator.piece_plot
-      mediator.board.to_s.should == <<-EOT.strip_heredoc
+      mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -280,7 +280,7 @@ EOT
       mediator.execute("3四歩")
       mediator.execute("2二角成")
       mediator.player_b.to_s_pieces.should == "角"
-      mediator.board.to_s.should == <<-EOT.strip_heredoc
+      mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

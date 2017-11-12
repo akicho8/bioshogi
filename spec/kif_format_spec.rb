@@ -35,7 +35,7 @@ module Bushido
     it "盤面表示" do
       mediator = Mediator.start
       mediator.piece_plot
-      mediator.board.to_s.should == <<-EOT.strip_heredoc
+      mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

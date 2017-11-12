@@ -68,7 +68,7 @@ module Bushido
         Position::Hpos.size, Position::Vpos.size = @save_size
       end
       it do
-        player_test.board.to_s.should == <<-EOT.strip_heredoc
+        player_test.board.to_s.should == <<~EOT
   ５ ４ ３ ２ １
 +---------------+
 | ・ ・ ・ ・ ・|一
