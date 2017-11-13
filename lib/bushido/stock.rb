@@ -15,7 +15,7 @@ module Bushido
 
     def self.reload_all
       @list.clear
-      store StaticBoard
+      store StaticBoardInfo
     end
 
     def initialize(obj)
