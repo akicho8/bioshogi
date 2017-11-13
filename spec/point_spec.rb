@@ -16,8 +16,8 @@ module Bushido
       expect { Point.parse("")     }.to raise_error(PointSyntaxError)
       expect { Point.parse("0")    }.to raise_error(PointSyntaxError)
 
-      expect { Board.size_change([2, 2]){ Point.parse("33")  } }.to raise_error(SyntaxError)
-      expect { Board.size_change([2, 2]){ Point.parse("３三") } }.to raise_error(SyntaxError)
+      expect { Board.size_change([2, 2]){ Point.parse("33")  } }.to raise_error(SyntaxDefact)
+      expect { Board.size_change([2, 2]){ Point.parse("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it ".[] は .parse の alias" do

@@ -51,33 +51,33 @@ module Bushido
   end
 
   # 構文エラー
-  class SyntaxError < BushidoError
+  class SyntaxDefact < BushidoError
   end
 
-  class IllegibleFormat < SyntaxError
+  class IllegibleFormat < SyntaxDefact
   end
 
-  class RuleError < SyntaxError
+  class RuleError < SyntaxDefact
   end
 
-  class HistroyStackEmpty < SyntaxError
+  class HistroyStackEmpty < SyntaxDefact
   end
 
-  class SamePointDiff < SyntaxError
+  class SamePointDiff < SyntaxDefact
   end
 
   # 盤面定義のエラー
-  class BoardKeyNotFound < SyntaxError
+  class BoardKeyNotFound < SyntaxDefact
   end
 
-  class BoardIsBlackOnly < SyntaxError
+  class BoardIsBlackOnly < SyntaxDefact
   end
 
   # 構文エラーから発生する継続が難しいエラー
-  class PositionSyntaxError < SyntaxError
+  class PositionSyntaxError < SyntaxDefact
   end
 
-  class PointSyntaxError < SyntaxError
+  class PointSyntaxError < SyntaxDefact
   end
 
   # 別に問題ないけど将棋のルール上エラーとするもの

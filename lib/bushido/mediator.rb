@@ -373,7 +373,7 @@ module Bushido
       end
       Utils.ki2_parse(@pattern[:execute]).each do |op|
         if op.kind_of?(String)
-          raise SyntaxError, op
+          raise SyntaxDefact, op
         end
         player_at(op[:location]).execute(op[:input])
         frames << deep_dup

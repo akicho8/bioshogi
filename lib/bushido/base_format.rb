@@ -50,16 +50,16 @@ module Bushido
         s = lines.first
         if s.include?("-")
           if s.count("-").modulo(3).nonzero?
-            raise SyntaxError, "横幅が3桁毎になっていません"
+            raise SyntaxDefact, "横幅が3桁毎になっていません"
           end
           x_units = Position::Hpos.orig_units(zenkaku: true).last(s.gsub("---", "-").count("-"))
         else
           x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
         end
 
-        mds = lines.collect{|v|v.match(/\|(?<inline>.*)\|(?<y>.)?/)}.compact
-        y_units = mds.collect.with_index{|v, i|v[:y] || Position::Vpos.units(zenkaku: true)[i]}
-        inlines = mds.collect{|v|v[:inline]}
+        mds = lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
+        y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units(zenkaku: true)[i] }
+        inlines = mds.collect { |v| v[:inline] }
 
         players = Location.inject({}) do |a, location|
           a.merge(location => [])
@@ -69,10 +69,10 @@ module Bushido
           s.scan(/(.)(\S|\s{2})/).each_with_index do |(prefix, piece), x|
             unless piece == "・" || piece.strip == ""
               unless Piece.all_names.include?(piece)
-                raise SyntaxError, "駒の指定が違います : #{piece.inspect}"
+                raise SyntaxDefact, "駒の指定が違います : #{piece.inspect}"
               end
-              location = Location[prefix] or raise SyntaxError, "「#{str}」の先手後手のマークが違います"
-              raise SyntaxError unless x_units[x] && y_units[y]
+              location = Location[prefix] or raise SyntaxDefact, "先手後手のマークが違います : #{prefix}"
+              raise SyntaxDefact unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
               mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
               players[location] << mini_soldier

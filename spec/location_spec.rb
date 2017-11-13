@@ -27,12 +27,12 @@ module Bushido
     end
 
     it "間違った引数シリーズ" do
-      expect { Location[nil]     }.to raise_error(SyntaxError)
-      expect { Location[""]      }.to raise_error(SyntaxError)
-      expect { Location["foo"]   }.to raise_error(SyntaxError)
-      expect { Location["1手"]   }.to raise_error(SyntaxError)
-      expect { Location[-1]      }.to raise_error(SyntaxError)
-      expect { Location[2]       }.to raise_error(SyntaxError)
+      expect { Location[nil]     }.to raise_error(SyntaxDefact)
+      expect { Location[""]      }.to raise_error(SyntaxDefact)
+      expect { Location["foo"]   }.to raise_error(SyntaxDefact)
+      expect { Location["1手"]   }.to raise_error(SyntaxDefact)
+      expect { Location[-1]      }.to raise_error(SyntaxDefact)
+      expect { Location[2]       }.to raise_error(SyntaxDefact)
     end
 
     it "Enumerable対応" do

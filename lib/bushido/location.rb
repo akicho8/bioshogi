@@ -18,7 +18,7 @@ module Bushido
       #   Location["先手"].name   # => "先手"
       #   Location[0].name        # => "先手"
       #   Location[1].name        # => "後手"
-      #   Location[2]             # => SyntaxError
+      #   Location[2]             # => SyntaxDefact
       #   Location["1手目"].name  # => "先手"
       #   Location["2手目"].name  # => "後手"
       #   Location["3手目"].name  # => "先手"
@@ -33,7 +33,7 @@ module Bushido
             r = parse(index.modulo(each.count))
           end
         end
-        r or raise SyntaxError, "#{arg.inspect}"
+        r or raise SyntaxDefact, "#{arg.inspect}"
       end
 
       # 引数に対応する先手または後手の情報を返す

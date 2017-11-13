@@ -22,7 +22,7 @@ module Bushido
       @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.all_names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
       @md = @source.match(@regexp)
       unless @md
-        raise SyntaxError, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -231,7 +231,7 @@ module Bushido
     def assert_valid_format(valid_list)
       _chars = valid_list.chars.to_a.find_all{|v|@md[:suffix].include?(v)}
       if _chars.size > 1
-        raise SyntaxError, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.board_with_pieces}"
+        raise SyntaxDefact, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.board_with_pieces}"
       end
     end
 

@@ -29,7 +29,7 @@ module Bushido
       end
       describe "できない" do
         it "成っている金を相手の陣地に" do
-          expect { player_test2(init: "5三成金") }.to raise_error(SyntaxError)
+          expect { player_test2(init: "5三成金") }.to raise_error(SyntaxDefact)
         end
         it "すでに駒があるところに駒を配置できない" do
           expect { player_test2(init: ["5三銀", "5三銀"]) }.to raise_error(PieceAlredyExist)
@@ -234,7 +234,7 @@ EOT
 
       describe "打てない" do
         it "場外に" do
-          expect { player_test2(exec: "５十飛打") }.to raise_error(SyntaxError)
+          expect { player_test2(exec: "５十飛打") }.to raise_error(SyntaxDefact)
         end
         it "自分の駒の上に" do
           expect { player_test2(init: "５五飛", exec: "５五角打") }.to raise_error(PieceAlredyExist)
@@ -243,7 +243,7 @@ EOT
           expect { Mediator.test(exec: ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
         end
         it "卍という駒がないので" do
-          expect { player_test2(exec: "５五卍打") }.to raise_error(SyntaxError)
+          expect { player_test2(exec: "５五卍打") }.to raise_error(SyntaxDefact)
         end
         it "成った状態で" do
           expect { player_test2(exec: "５五龍打") }.to raise_error(PromotedPiecePutOnError)
