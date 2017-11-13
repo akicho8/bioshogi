@@ -21,13 +21,12 @@ module Bushido
       }.merge(params)
 
       if BaseFormat.board_format?(params[:key])
-        stock = Stock.new(board: params[:key])
-        r = both_soldiers_from_char_board2(params.merge(stock: stock))
+        both_board_info = BaseFormat.board_parse(params[:key])
+        r = both_soldiers_from_char_board2(params.merge(both_board_info: both_board_info))
         r[L.b]
       else
-        stock = Stock.list.find{|v|v[:key] == params[:key]}
-        stock or raise BoardKeyNotFound, "盤面データがない : #{params[:key].inspect}"
-        r = valid_both_soldiers_from_char_board(params.merge(stock: stock))
+        static_board_info = StaticBoardInfo.fetch(params[:key])
+        r = __valid_both_soldiers_from_char_board(params.merge(both_board_info: static_board_info.both_board_info))
         r[L.b]
       end
     end
@@ -35,22 +34,24 @@ module Bushido
     # 指定プレイヤー側の初期配置(盤面のみ対応)
     # @example
     #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
-    def valid_both_soldiers_from_char_board(params = {})
+    def __valid_both_soldiers_from_char_board(params = {})
       params = {
         validate: true,
       }.merge(params)
+
       if params[:validate]
-        if params[:stock].parsed_board[:white].present?
-          raise BoardIsBlackOnly, "後手側データは定義できません: #{params[:stock].parsed_board[:white].inspect}"
+        if v = params[:both_board_info][:white].presence
+          raise BoardIsBlackOnly, "後手側データは定義できません: #{v.inspect}"
         end
       end
+
       both_soldiers_from_char_board2(params)
     end
 
     def both_soldiers_from_char_board2(params)
-      params[:stock].parsed_board.inject({}){|h, (key, value)|
-        h.merge(key => value.collect{|s|s.merge(point: s[:point].as_location(params[:location]))})
-      }
+      params[:both_board_info].inject({}) do |a, (key, value)|
+        a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
+      end
     end
 
     # board_reset の引数の解釈
@@ -71,9 +72,9 @@ module Bushido
         # Stock.new(board: value).parsed_board
         BaseFormat.board_parse(value)
       when value.kind_of?(Hash)
-        # {"先手" => "角落ち", "後手" => "香落ち"}
-        value.inject({}){|hash, (k, v)|
-          hash.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
+        # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
+        value.inject({}) {|a, (k, v)|
+          a.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
         }
       else
         # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}

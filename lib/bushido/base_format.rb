@@ -14,6 +14,7 @@ module Bushido
         source.to_s.toutf8.gsub(/#{WHITE_SPACE}*\R/, "\n")
       end
 
+      # 盤面テキスト？
       def board_format?(source)
         normalized_source(source).match?(/^\s*[\+\|]/)
       end
@@ -40,6 +41,8 @@ module Bushido
       #   Bushido::BaseFormat.board_parse(str) # => {white: [<MiniSoldier ...>], black: []}
       #
       def board_parse(source)
+        cell_width = 3
+
         lines = normalized_source(source).strip.lines.to_a
 
         if lines.empty?
@@ -49,8 +52,8 @@ module Bushido
 
         s = lines.first
         if s.include?("-")
-          if s.count("-").modulo(3).nonzero?
-            raise SyntaxDefact, "横幅が3桁毎になっていません"
+          if s.count("-").modulo(cell_width).nonzero?
+            raise SyntaxDefact, "横幅が#{cell_width}桁毎になっていません"
           end
           x_units = Position::Hpos.orig_units(zenkaku: true).last(s.gsub("---", "-").count("-"))
         else

@@ -5,8 +5,8 @@ info = Bushido.parse(Pathname("katomomo.ki2"))
 out = ""
 out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
-mediator = Mediator.start
-mediator.piece_plot
+mediator = Mediator.new
+mediator.board_reset(info.header["手合割"])
 info.move_infos.each do |info|
   mediator.execute(info[:input])
   # puts "-------------------------------------------"

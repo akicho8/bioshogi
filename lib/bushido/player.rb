@@ -288,17 +288,17 @@ module Bushido
         size_type = Board.size_type
 
         # x99の盤面だけに絞る
-        stocks = Stock.list.find_all{|v|(v[:size_type] || :x99) == size_type}
-        stocks = stocks.find_all{|v|v[:defense_p] || v[:attack_p]}
+        static_board_infos = StaticBoardInfo.find_all{|v|(v[:size_type] || :x99) == size_type}
+        static_board_infos = static_board_infos.find_all{|v|v[:defense_p] || v[:attack_p]}
 
         # ここがかなり重い
-        stocks.collect{|stock|
-          placements = Utils.both_soldiers_from_char_board2(location: location, stock: stock)
+        static_board_infos.collect do |static_board_info|
+          placements = Utils.both_soldiers_from_char_board2(location: location, board: static_board_info)
           a = placements.values.flatten.collect(&:to_s)
           b = board.surface.values.collect(&:to_h).collect(&:to_s)
           match_p = (a - b).empty?
-          {key: stock[:key], placements: placements, match: match_p}
-        }
+          {key: static_board_info.key, placements: placements, match: match_p}
+        end
       end
     end
 
