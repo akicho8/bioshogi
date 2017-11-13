@@ -187,9 +187,6 @@ auto_flushing {
   end
 
   get "/tactics_and_enclosure" do
-    # if Sinatra::Base.environment == :development
-    #   Bushido::Stock.reload_all
-    # end
     haml :tactics_and_enclosure
   end
 

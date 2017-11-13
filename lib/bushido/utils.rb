@@ -69,7 +69,6 @@ module Bushido
     def board_reset_args(value = nil)
       case
       when BaseFormat.board_format?(value)
-        # Stock.new(board: value).parsed_board
         BaseFormat.board_parse(value)
       when value.kind_of?(Hash)
         # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
