@@ -102,5 +102,9 @@ module Bushido
       @point = nil
       self
     end
+
+    def to_s_kakiki
+      "#{@player.location.varrow}#{piece_current_name}"
+    end
   end
 end

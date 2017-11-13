@@ -118,18 +118,13 @@ module Bushido
 
       private
 
-      def read_header
-        read_key_value
-        read_board
-      end
-
-      def read_key_value
+      def header_read
         @_head.scan(/^(\S.*)：(.*)$/).each do |key, value|
           @header[key] = value
         end
       end
 
-      def read_board
+      def board_read
         if md = @_head.match(/^後手の持駒：.*?\n(?<board>.*)^先手の持駒：/m)
           @header[:board_source] = md[:board]
           @header[:board] = BaseFormat.board_parse(md[:board])
@@ -153,68 +148,6 @@ module Bushido
       def add_to_a_last_move_comments(comment)
         @move_infos.last[:comments] ||= []
         @move_infos.last[:comments] << comment
-      end
-    end
-
-    module Soldier
-      def to_s_kakiki
-        "#{@player.location.varrow}#{piece_current_name}"
-      end
-    end
-
-    module Board
-      def to_s_kakiki
-        KakikiFormat.new(self).to_s
-      end
-
-      # kif形式詳細 (1) - 勝手に将棋トピックス http://d.hatena.ne.jp/mozuyama/20030909/p5
-      #    ９ ８ ７ ６ ５ ４ ３ ２ １
-      #  +---------------------------+
-      #  | ・v桂v銀v金v玉v金v銀v桂v香|一
-      #  | ・v飛 ・ ・ ・ ・ ・v角 ・|二
-      #  |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-      #  | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-      #  | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-      #  | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-      #  | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-      #  | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-      #  | 香 桂 銀 金 玉 金 銀 桂 香|九
-      #  +---------------------------+
-      class KakikiFormat
-        def initialize(board)
-          @board = board
-        end
-
-        def to_s
-          [header, line, *rows, line].join("\n") + "\n"
-        end
-
-        private
-
-        def header
-          "  " + Position::Hpos.units(zenkaku: true).join(" ")
-        end
-
-        def line
-          "+" + "---" * Position::Hpos.size + "+"
-        end
-
-        def rows
-          Position::Vpos.size.times.collect do |y|
-            fields = Position::Hpos.size.times.collect do |x|
-              object_to_s(@board.surface[[x, y]])
-            end
-            "|#{fields.join}|" + Position::Vpos.parse(y).name
-          end
-        end
-
-        def object_to_s(object)
-          if object
-            object.to_s(:kakiki)
-          else
-            " " + "・"
-          end
-        end
       end
     end
   end

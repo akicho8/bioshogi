@@ -49,6 +49,7 @@ require_relative "bushido/location"
 require_relative "bushido/piece"
 require_relative "bushido/hand_log"
 require_relative "bushido/mini_soldier"
+require_relative "bushido/kakiki_format"
 require_relative "bushido/board"
 require_relative "bushido/utils"
 require_relative "bushido/static_board_info"
@@ -66,8 +67,3 @@ require_relative "bushido/evaluator"
 require_relative "bushido/base_format"
 require_relative "bushido/kif_format"
 require_relative "bushido/ki2_format"
-
-module Bushido
-  Board.include BaseFormat::Board
-  Soldier.include BaseFormat::Soldier
-end

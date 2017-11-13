@@ -29,7 +29,8 @@ module Bushido
       #
       def parse
         @_head, @_body = @source.split(/^手数.*指手.*消費時間.*$/, 2)
-        read_header
+        header_read
+        board_read
         @_body.lines.each do |line|
           comment_read(line)
           if md = line.match(/^\s*(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)

@@ -134,6 +134,10 @@ module Bushido
       @surface.delete(value)
     end
 
+    def to_s_kakiki
+      KakikiFormat.new(self).to_s
+    end
+
     private
 
     # 盤面の文字列化

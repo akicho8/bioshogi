@@ -22,7 +22,8 @@ module Bushido
       #
       def parse
         @_head, @_body = @source.split(/\n\n/, 2)
-        read_header
+        header_read
+        board_read
         @_body.lines.each do |line|
           comment_read(line)
           if line.match?(/^\s*[#{Location.triangles}]/)
