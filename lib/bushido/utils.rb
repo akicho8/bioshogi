@@ -20,8 +20,8 @@ module Bushido
         key: nil,
       }.merge(params)
 
-      if BaseFormat.board_format?(params[:key])
-        both_board_info = BaseFormat.board_parse(params[:key])
+      if Parser::Base.board_format?(params[:key])
+        both_board_info = Parser::Base.board_parse(params[:key])
         r = both_soldiers_from_char_board2(params.merge(both_board_info: both_board_info))
         r[L.b]
       else
@@ -68,8 +68,8 @@ module Bushido
     #
     def board_reset_args(value = nil)
       case
-      when BaseFormat.board_format?(value)
-        BaseFormat.board_parse(value)
+      when Parser::Base.board_format?(value)
+        Parser::Base.board_parse(value)
       when value.kind_of?(Hash)
         # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
         value.inject({}) {|a, (k, v)|

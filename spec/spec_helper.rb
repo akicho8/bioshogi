@@ -62,7 +62,7 @@ RSpec.configure do |config|
     end
 
     def board_parse_test(source)
-      Bushido::BaseFormat.board_parse(source).inject({}){|hash, (key, value)|hash.merge(key => value.collect(&:to_s))}
+      Bushido::Parser::Base.board_parse(source).inject({}){|hash, (key, value)|hash.merge(key => value.collect(&:to_s))}
     end
 
     def board_one_cell(str)

@@ -29,7 +29,7 @@ module Bushido
       options = {
       }.merge(options)
 
-      parser = [KifFormat::Parser, Ki2Format::Parser].find do |e|
+      parser = [Parser::KifParser, Parser::Ki2Parser].find do |e|
         e.resolved?(str)
       end
       unless parser
@@ -64,6 +64,4 @@ require_relative "bushido/mediator"
 require_relative "bushido/brain"
 require_relative "bushido/evaluator"
 
-require_relative "bushido/base_format"
-require_relative "bushido/kif_format"
-require_relative "bushido/ki2_format"
+require_relative "bushido/parser"

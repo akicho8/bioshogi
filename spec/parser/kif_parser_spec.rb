@@ -1,13 +1,13 @@
-require_relative "spec_helper"
+require_relative "../spec_helper"
 
 module Bushido
-  describe KifFormat do
+  describe Parser::KifParser do
     describe "kif読み込み" do
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
-        file = Pathname(__FILE__).dirname.join("files/sample1.kif").expand_path
-        @result = KifFormat::Parser.parse(file.read)
+        file = Pathname(__FILE__).dirname.join("../files/sample1.kif").expand_path
+        @result = Parser::KifParser.parse(file.read)
       end
 
       it "ヘッダー部" do
@@ -78,14 +78,14 @@ EOT
    1 ６四角打     ( 0:00/00:00:00)
    2 ５三角打     ( 0:00/00:00:00)
 EOT
-      info = KifFormat::Parser.parse(contents)
+      info = Parser::KifParser.parse(contents)
       # pp info
       info.header[:board].present?.should == true
     end
 
     # curl -O http://swks.sakura.ne.jp/wars/kifu/akicho8-JackTuti-20130609_201346.kif
     it "将棋ウォーズ棋譜変換サイトが生成したKIFフォーマットが読める" do
-      info = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("../resources/akicho8-JackTuti-20130609_201346.kif").expand_path)
+      info = Parser::KifParser.parse(Pathname(__FILE__).dirname.join("../../resources/akicho8-JackTuti-20130609_201346.kif").expand_path)
       info.header.should be_present
       info.move_infos.should be_present
     end

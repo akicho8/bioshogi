@@ -1,7 +1,7 @@
-require_relative "spec_helper"
+require_relative "../spec_helper"
 
 module Bushido
-  describe BaseFormat do
+  describe Parser::Base do
     it "座標がない場合は右上の盤面とする" do
       board_parse_test(<<-BOARD).should == {L.w => ["1一歩"], L.b => ["1二歩"]}
 +------+

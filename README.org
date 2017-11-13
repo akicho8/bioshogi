@@ -280,7 +280,7 @@ board = <<-EOT
 | 香 桂 ・ ・ ・ ・ 飛 ・ ・|
 +---------------------------+
 EOT
-BaseFormat.board_parse(board)
+Parser::Base.board_parse(board)
 # => {
   white: {
     "８一桂", "２一桂", "１一香", "９二飛", "５三歩", "３三玉", "３四桂", "１四金",

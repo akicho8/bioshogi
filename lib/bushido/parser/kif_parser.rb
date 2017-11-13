@@ -1,8 +1,8 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
 
 module Bushido
-  module KifFormat
-    class Parser < BaseFormat::Parser
+  module Parser
+    class KifParser < Base
       # KIFフォーマットかどうかの判定
       # @example 将棋ウォーズ棋譜検索β http://swks.sakura.ne.jp/wars/kifusearch/ での棋譜フォーマット
       #   開始日時：2013/06/09 20:13:46
@@ -14,7 +14,7 @@ module Bushido
       #   手数----指手---------消費時間--
       #   1 ７六歩(77)   ( 00:01/00:00:01)
       def self.resolved?(source)
-        source = BaseFormat.normalized_source(source)
+        source = Parser::Base.normalized_source(source)
         source.match?(/^手数-+指手-+消費時間-+$/)
       end
 

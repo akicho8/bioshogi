@@ -713,7 +713,7 @@ BOARD
     ]
 
     def both_board_info
-      @both_board_info ||= BaseFormat.board_parse(board_body)
+      @both_board_info ||= Parser::Base.board_parse(board_body)
     end
   end
 end

@@ -1,10 +1,10 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/ki2_format_spec.rb" -*-
 
 module Bushido
-  module Ki2Format
-    class Parser < BaseFormat::Parser
+  module Parser
+    class Ki2Parser < Base
       def self.resolved?(source)
-        source = BaseFormat.normalized_source(source)
+        source = Parser::Base.normalized_source(source)
         # 「手数----指手---------消費時間--」が無いかつ「空行がある」
         !source.match?(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
       end

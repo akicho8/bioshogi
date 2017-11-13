@@ -51,7 +51,7 @@ EOT
     end
 
     # it "kif→ki2" do
-    #   @result = KifFormat::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
+    #   @result = KifParser::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
     #   mediator = Mediator.start
     #   mediator.piece_plot
     #   @result.move_infos.each{|move_info|
