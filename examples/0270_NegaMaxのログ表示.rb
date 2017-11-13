@@ -1,4 +1,4 @@
-# NegaMaxのログの見方
+# NegaMaxのログ表示
 
 require "./example_helper"
 
@@ -7,7 +7,7 @@ Board.size_change([3, 3]) do
   mediator = Mediator.new
   mediator.initial_soldiers("▲３三歩 △１一歩", from_piece: false)
   puts mediator
-  pp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
+  tp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １
@@ -33,7 +33,9 @@ end
 # >> 葉 1      確定 ▽1二歩成(11)    +0 候補:[▽1二歩成(11)(0) ▽1二歩(11)(-1100)]
 # >>    0  評価 ▲3二歩成(33)    +0
 # >>    0  確定 ▲3二歩成(33)    +0 候補:[▲3二歩成(33)(0) ▲3二歩(33)(-1100)]
-# >> {:hand=>"▲3二歩成(33)",
-# >>  :score=>0,
-# >>  :level=>0,
-# >>  :reading_hands=>["▲3二歩成(33)", "▽1二歩成(11)"]}
+# >> |---------------+------------------------------------|
+# >> |          hand | ▲3二歩成(33)                      |
+# >> |         score | 0                                  |
+# >> |         level | 0                                  |
+# >> | reading_hands | ["▲3二歩成(33)", "▽1二歩成(11)"] |
+# >> |---------------+------------------------------------|
