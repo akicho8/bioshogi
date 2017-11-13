@@ -40,7 +40,6 @@ module Bushido
     # 平手の初期配置
     def piece_plot
       location_soldiers = Utils.location_soldiers(location: location, key: "平手")
-      # location_soldiers2 = location_soldiers[location.key]
       location_soldiers.each do |info|
         pick_out(info[:piece])
         soldier = Soldier.new(info.merge(player: self))
