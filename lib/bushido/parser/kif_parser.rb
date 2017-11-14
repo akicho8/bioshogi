@@ -26,8 +26,8 @@ module Bushido
       # | *コメント0
       # |    1 ７六歩(77)   ( 0:00/00:00:00)
       #
-      #   @result.move_infos.first.should == {index: "1", input: "７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
-      #   @result.move_infos.last.should  == {index: "5", input: "投了", spent_time: "0:10/00:00:50"}
+      #   @result.move_infos.first.should == {turn_number: "1", input: "７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
+      #   @result.move_infos.last.should  == {turn_number: "5", input: "投了", spent_time: "0:10/00:00:50"}
       #
       def parse
         @_head, @_body = normalized_source.split(/^手数.*指手.*消費時間.*$/, 2)
@@ -35,10 +35,10 @@ module Bushido
         board_read
         @_body.lines.each do |line|
           comment_read(line)
-          if md = line.match(/^\s*(?<index>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
-            location = Location["#{md[:index]}手目"]
+          if md = line.match(/^\s*(?<turn_number>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
+            location = Location["#{md[:turn_number]}手目"]
             input = md[:input].remove(/#{WHITE_SPACE}/)
-            @move_infos << {index: md[:index], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
+            @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
           end
         end
       end
@@ -49,7 +49,7 @@ module Bushido
         out << @header.collect { |key, value| "#{key}：#{value}\n" }.join
         out << "手数----指手---------消費時間--\n"
         @move_infos.each do |e|
-          out << "%s %s (%s)\n" % [e[:index], e[:input], e[:spent_time]]
+          out << "%s %s (%s)\n" % [e[:turn_number], e[:input], e[:spent_time]]
         end
 
         # 最後が「投了」でない場合に kif フォーマットと見なされない場合がある(将棋山脈など)
@@ -57,7 +57,7 @@ module Bushido
         if true
           last = @move_infos.last
           unless last[:input] == "投了"
-            out << "%s 投了\n" % last[:index].next
+            out << "%s 投了\n" % last[:turn_number].next
           end
         end
 

@@ -28,8 +28,8 @@ module Bushido
           r = find { |e| e.match_target_values.include?(arg) }
         end
         unless r
-          if arg.kind_of?(String) && md = arg.match(/(?<order_number>\d+)手目/)
-            index = md[:order_number].to_i.pred
+          if arg.kind_of?(String) && md = arg.match(/(?<turn_number>\d+)手目/)
+            index = md[:turn_number].to_i.pred
             r = parse(index.modulo(each.count))
           end
         end
