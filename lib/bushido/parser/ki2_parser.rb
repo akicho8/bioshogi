@@ -3,10 +3,12 @@
 module Bushido
   module Parser
     class Ki2Parser < Base
-      def self.resolved?(source)
-        source = Parser.source_normalize(source)
-        # 「手数----指手---------消費時間--」が無いかつ「空行がある」
-        !source.match?(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
+      class << self
+        # 適当に入力したもので解釈できるように厳密にはしない
+        def resolved?(source)
+          source = Parser.source_normalize(source)
+          source.blank? || source.match?(/^\s*[#{Location.triangles}]/)
+        end
       end
 
       # フォーマットは読み上げに近い、人間が入力したような "▲７六歩△３四歩" 形式
@@ -21,7 +23,12 @@ module Bushido
       #   ]
       #
       def parse
-        @_head, @_body = normalized_source.split(/\n\n/, 2)
+        if normalized_source.match?(/\n\n/)
+          @_head, @_body = normalized_source.split(/\n\n/, 2)
+        else
+          @_head = ""
+          @_body = ""
+        end
         header_read
         board_read
         @_body.lines.each do |line|
