@@ -15,7 +15,7 @@ module Bushido
         #   手数----指手---------消費時間--
         #   1 ７六歩(77)   ( 00:01/00:00:01)
         def resolved?(source)
-          source = Parser.normalized_source(source)
+          source = Parser.source_normalize(source)
           source.match?(/^手数-+指手-+消費時間-+$/)
         end
       end

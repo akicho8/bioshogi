@@ -16,7 +16,7 @@ module Bushido
 
       # source が Pathname ならそのファイルから読み込み、文字列なら何もしない
       #   こういう設計はいまいちな感もあるけど open-uri で open がURLからも読み込むようになるのに似ているからいいとする
-      def normalized_source(source)
+      def source_normalize(source)
         if source.kind_of?(Pathname)
           source = source.expand_path.read
         end
@@ -26,7 +26,7 @@ module Bushido
       # 盤面テキストか？
       # private にしていないのは他のクラスでも直接使っているため
       def board_format?(source)
-        normalized_source(source).match?(/^\s*[\+\|]/)
+        source_normalize(source).match?(/^\s*[\+\|]/)
       end
 
       # ほぼ標準の柿木フォーマットのテーブルの読み取り
@@ -53,7 +53,7 @@ module Bushido
       def board_parse(source)
         cell_width = 3
 
-        lines = normalized_source(source).strip.lines.to_a
+        lines = source_normalize(source).strip.lines.to_a
 
         if lines.empty?
           # board_parse("") の場合
@@ -117,7 +117,7 @@ module Bushido
       attr_reader :header, :move_infos, :first_comments, :source
 
       def initialize(source, **options)
-        @source = Parser.normalized_source(source)
+        @source = Parser.source_normalize(source)
         @options = default_options.merge(options)
 
         @header = {}

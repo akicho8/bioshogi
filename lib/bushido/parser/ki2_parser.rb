@@ -4,7 +4,7 @@ module Bushido
   module Parser
     class Ki2Parser < Base
       def self.resolved?(source)
-        source = Parser.normalized_source(source)
+        source = Parser.source_normalize(source)
         # 「手数----指手---------消費時間--」が無いかつ「空行がある」
         !source.match?(/^手数.*指手.*消費時間.*$/) && source.match(/\n\n/)
       end
