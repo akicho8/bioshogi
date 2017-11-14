@@ -67,6 +67,8 @@ module Bushido
         end
       end
 
+      class_attribute :command_name
+
       attr_accessor :options
 
       def initialize(args, options)

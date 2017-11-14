@@ -3,9 +3,7 @@
 module Bushido
   module Cli
     class KifNormalizerCommand < Base
-      def self.command_name
-        "KIFの正規化"
-      end
+      self.command_name = "KIFの正規化"
 
       def execute
         @args.each do |file|

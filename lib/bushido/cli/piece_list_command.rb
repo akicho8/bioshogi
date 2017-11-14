@@ -3,24 +3,10 @@
 module Bushido
   module Cli
     class PieceListCommand < Base
-      def self.command_name
-        "駒情報一覧"
-      end
-
-      def self.process_args(args, options)
-        options = {
-          :foo_bar => nil,
-        }.merge(default_options).merge(options)
-
-        opts = OptionParser.new
-        opts.on("-e", "--email=EMAIL", String, "メールアドレス"){|v|options[:email] = v}
-        common_options(opts, options)
-        opts.parse!(args)
-        [args, options]
-      end
+      self.command_name = "駒情報一覧"
 
       def execute
-        Piece.each{|e|p e.name}
+        tp Piece.collect(&:attributes)
       end
     end
   end
