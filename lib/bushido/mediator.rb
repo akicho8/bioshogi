@@ -145,7 +145,7 @@ module Bushido
 
       # 互換性用
       if true
-        def kif_hand_logs; hand_logs.collect { |e| e.to_s_kif(with_mark: true) }; end
+        def kif_hand_logs; hand_logs.collect { |e| e.to_s_kif(with_mark: false) }; end
         def ki2_hand_logs; hand_logs.collect { |e| e.to_s_ki2(with_mark: true) }; end
       end
 
