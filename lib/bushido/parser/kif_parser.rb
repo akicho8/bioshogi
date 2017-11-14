@@ -3,19 +3,21 @@
 module Bushido
   module Parser
     class KifParser < Base
-      # KIFフォーマットかどうかの判定
-      # @example 将棋ウォーズ棋譜検索β http://swks.sakura.ne.jp/wars/kifusearch/ での棋譜フォーマット
-      #   開始日時：2013/06/09 20:13:46
-      #   棋戦：将棋ウォーズ(弾丸)
-      #   持ち時間：3分切れ負け
-      #   手合割：平手
-      #   先手：akicho8
-      #   後手：JackTuti
-      #   手数----指手---------消費時間--
-      #   1 ７六歩(77)   ( 00:01/00:00:01)
-      def self.resolved?(source)
-        source = Parser::Base.normalized_source(source)
-        source.match?(/^手数-+指手-+消費時間-+$/)
+      class << self
+        # KIFフォーマットかどうかの判定
+        # @example 将棋ウォーズ棋譜検索β http://swks.sakura.ne.jp/wars/kifusearch/ での棋譜フォーマット
+        #   開始日時：2013/06/09 20:13:46
+        #   棋戦：将棋ウォーズ(弾丸)
+        #   持ち時間：3分切れ負け
+        #   手合割：平手
+        #   先手：akicho8
+        #   後手：JackTuti
+        #   手数----指手---------消費時間--
+        #   1 ７六歩(77)   ( 00:01/00:00:01)
+        def resolved?(source)
+          source = Parser.normalized_source(source)
+          source.match?(/^手数-+指手-+消費時間-+$/)
+        end
       end
 
       # | # ----  Kifu for Windows V6.26 棋譜ファイル  ----
@@ -41,6 +43,7 @@ module Bushido
         end
       end
 
+      # これは簡易版
       def to_kif
         out = ""
         out << @header.collect { |key, value| "#{key}：#{value}\n" }.join

@@ -105,7 +105,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
     KIFファイルを読み込み
 
 #+BEGIN_SRC ruby
-info = Bushido.parse(Pathname("ryuou20101214.kif"))
+info = Bushido::Parser.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 # >> {"対局ID"=>"333",
 # >>  "開始日時"=>"2010/12/14 9:00",
@@ -280,7 +280,7 @@ board = <<-EOT
 | 香 桂 ・ ・ ・ ・ 飛 ・ ・|
 +---------------------------+
 EOT
-Parser::Base.board_parse(board)
+Parser.board_parse(board)
 # => {
   white: {
     "８一桂", "２一桂", "１一香", "９二飛", "５三歩", "３三玉", "３四桂", "１四金",

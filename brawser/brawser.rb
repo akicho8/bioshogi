@@ -230,7 +230,7 @@ auto_flushing {
       params[:body] = URI(params[:url]).read.to_s.toutf8
     end
     if params[:body].present?
-      @kif_info = Bushido.parse(params[:body])
+      @kif_info = Bushido::Parser.parse(params[:body])
       @pattern = Bushido::XtraPattern.new({
           title: params[:title],
           dsl: Bushido::KifuDsl.define(@kif_info){|kif_info|

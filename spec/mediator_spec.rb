@@ -34,7 +34,7 @@ EOT
       Pathname.glob(Pathname(__FILE__).dirname.join(file)).each{|file|
         # p file
         begin
-          kif_info = Bushido.parse(file)
+          kif_info = Bushido::Parser.parse(file)
         rescue FileFormatError => error
           # p error
           next

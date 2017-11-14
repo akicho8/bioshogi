@@ -19,25 +19,6 @@ module Bushido
 
   WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
   SEPARATOR = " "
-
-  class << self
-    def parse_file(file, **options)
-      parse(Pathname(file).expand_path.read, options)
-    end
-
-    def parse(str, **options)
-      options = {
-      }.merge(options)
-
-      parser = [Parser::KifParser, Parser::Ki2Parser].find do |e|
-        e.resolved?(str)
-      end
-      unless parser
-        raise FileFormatError, "棋譜のフォーマットが不明です : #{str}"
-      end
-      parser.parse(str, options)
-    end
-  end
 end
 
 require_relative "bushido/logger"
