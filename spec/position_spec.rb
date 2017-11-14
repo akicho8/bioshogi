@@ -46,6 +46,10 @@ module Bushido
       Position::Vpos.parse("一").number_format.should == "1"
     end
 
+    it "全角数字表記" do
+      Position::Vpos.parse("９").number_format.should == "9"
+    end
+
     it "成れるか？" do
       Position::Vpos.parse("二").promotable?(L.b).should == true
       Position::Vpos.parse("三").promotable?(L.b).should == true

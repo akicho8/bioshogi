@@ -22,7 +22,7 @@ module Bushido
           case arg
           when String, NilClass
             v = units.find_index { |e| e == arg }
-            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にない"
+            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
           when Base
             v = arg.value
           else
@@ -132,12 +132,13 @@ module Bushido
       cattr_accessor(:_zenkaku_units)     {"一二三四五六七八九"}
       cattr_accessor(:_arrow)             {:first}
       cattr_accessor(:_promotable_size) {3}
-      cattr_accessor(:regexp)             {/[一二三四五六七八九1-9]/o}
+      cattr_accessor(:regexp)             {/[一二三四五六七八九１-９1-9]/o}
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)
-        if arg.kind_of?(String) && arg.match(/\d/)
+        if arg.kind_of?(String)
           arg = arg.tr("1-9", _units)
+          arg = arg.tr("１-９", _units)
         end
         super
       end
