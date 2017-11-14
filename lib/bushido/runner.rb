@@ -16,13 +16,11 @@ module Bushido
       @candidate = nil
     end
 
-    # TODO: このパース部分も別クラスにする
     def execute(str)
       @source = str
-      @regexp = /\A(?<point>#{Point.regexp})?(?<same>同)?#{WHITE_SPACE}*(?<piece>#{Piece.all_names.join("|")})(?<suffix>[不成打右左直引寄上]+)?(\((?<origin_point>.*)\))?/
-      @md = @source.match(@regexp)
+      @md = @source.match(input_regexp)
       unless @md
-        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{@regexp.inspect} にマッチしません)"
+        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{input_regexp.inspect} にマッチしません)"
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -34,19 +32,14 @@ module Bushido
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
-        if @md[:suffix].to_s.match?(/不?成/) && !@piece.promotable?
-          raise NoPromotablePiece, "#{@md[:suffix].inspect} としましたが「#{@piece.name}」は裏がないので「成」も「不成」も指定しちゃいけません : #{@source.inspect}"
+        if @md[:motion2].to_s.match?(/不?成/) && !@piece.promotable?
+          raise NoPromotablePiece, "#{@md[:motion1].inspect} としましたが「#{@piece.name}」は裏がないので「成」も「不成」も指定できません : #{@source.inspect}"
         end
 
-        @promote_trigger = nil
-        case @md[:suffix].to_s
-        when /不成/
-        when /成/
-          @promote_trigger = true
-        end
+        @promote_trigger = (@md[:motion2] == "成")
       end
 
-      @strike_trigger = @md[:suffix].to_s.include?("打")
+      @strike_trigger = @md[:motion2].to_s.include?("打")
       @origin_point = nil
       @done = false
       @candidate = nil
@@ -166,7 +159,7 @@ module Bushido
 
       unless @done
         if @soldiers.size > 1
-          if @md[:suffix]
+          if @md[:motion1]
             assert_valid_format("直上")
             assert_valid_format("左右直")
             assert_valid_format("引上寄")
@@ -187,7 +180,7 @@ module Bushido
 
       # 上下左右は後手なら反転する
       cond = "左右"
-      if @md[:suffix].match?(/[#{cond}]/)
+      if @md[:motion1].match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
@@ -197,19 +190,19 @@ module Bushido
         end
       end
       cond = "上引"
-      if @md[:suffix].match?(/[#{cond}]/)
+      if @md[:motion1].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
         @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
       if true
-        if @md[:suffix].include?("寄")
+        if @md[:motion1].include?("寄")
           # TODO: 厳密には左右1個分だけチェックする
           @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
         end
 
-        if @md[:suffix].include?("直")
+        if @md[:motion1].include?("直")
           # TODO: 厳密には下にあるもののみとする
           @soldiers = @soldiers.find_all { |e| e.point.x == @point.x }
         end
@@ -222,14 +215,14 @@ module Bushido
 
     def _method(method_a_or_b, str_a_or_b)
       str_a_or_b = str_a_or_b.chars.to_a
-      if @md[:suffix].match?(/#{str_a_or_b.last}/)
+      if @md[:motion1].match?(/#{str_a_or_b.last}/)
         method_a_or_b = method_a_or_b.reverse
       end
       @player.location.where_value(*method_a_or_b)
     end
 
     def assert_valid_format(valid_list)
-      _chars = valid_list.chars.to_a.find_all{|v|@md[:suffix].include?(v)}
+      _chars = valid_list.chars.to_a.find_all{|v|@md[:motion1].include?(v)}
       if _chars.size > 1
         raise SyntaxDefact, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.board_with_pieces}"
       end
@@ -250,6 +243,18 @@ module Bushido
           hand_log.point == @point
         end
       end
+    end
+
+    def input_regexp
+      /\A
+        (?<point>#{Point.regexp})?
+        (?<same>同)?
+        \p{blank}*
+        (?<piece>#{Piece.all_names.join("|")})
+        (?<motion1>右上|右引|右|左上|左引|左|直|引|寄|上)?
+        (?<motion2>不成|成|打)?
+        (\((?<origin_point>.*)\))
+      ?/ox
     end
   end
 end
