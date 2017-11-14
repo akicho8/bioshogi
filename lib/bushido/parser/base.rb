@@ -159,18 +159,19 @@ module Bushido
       def comment_read(line)
         if md = line.match(/^\s*\*\s*(?<comment>.*)/)
           if @move_infos.empty?
-            add_to_first_comments(md[:comment])
+            first_comments_add(md[:comment])
           else
-            add_to_a_last_move_comments(md[:comment])
+            note_add(md[:comment])
           end
         end
       end
 
-      def add_to_first_comments(comment)
+      def first_comments_add(comment)
         @first_comments << comment
       end
 
-      def add_to_a_last_move_comments(comment)
+      # コメントは直前の棋譜の情報と共にする
+      def note_add(comment)
         @move_infos.last[:comments] ||= []
         @move_infos.last[:comments] << comment
       end
