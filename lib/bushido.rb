@@ -17,7 +17,6 @@ module Bushido
   include ActiveSupport::Configurable
   config_accessor(:defense_form_check) { false }
 
-  WHITE_SPACE = /[ #{[0x3000].pack('U')}]/
   SEPARATOR = " "
 end
 
