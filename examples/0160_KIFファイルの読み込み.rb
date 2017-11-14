@@ -1,7 +1,7 @@
 # KIFファイルの読み込み
 require "./example_helper"
 
-info = Bushido::Parser.parse(Pathname("ryuou20101214.kif"))
+info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.header
 
 mediator = Mediator.start

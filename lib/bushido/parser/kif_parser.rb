@@ -37,14 +37,14 @@ module Bushido
           comment_read(line)
           if md = line.match(/^\s*(?<turn_number>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
             location = Location["#{md[:turn_number]}手目"]
-            input = md[:input].remove(/#{WHITE_SPACE}/)
+            input = md[:input].remove(/\p{blank}/)
             @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
           end
         end
       end
 
       # これは簡易版
-      def to_kif
+      def to_direct_kif
         out = ""
         out << @header.collect { |key, value| "#{key}：#{value}\n" }.join
         out << "手数----指手---------消費時間--\n"
@@ -64,7 +64,7 @@ module Bushido
         out
       end
 
-      alias to_s to_kif
+      # alias to_s to_direct_kif
     end
   end
 end

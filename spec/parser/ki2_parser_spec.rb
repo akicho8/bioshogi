@@ -42,6 +42,14 @@ module Bushido
       end
     end
 
+    it "ヘッダーがなく、いきなり棋譜入力しているデータも読み取れる" do
+      info = Parser::Ki2Parser.parse("▲７六歩")
+      info.move_infos.should == [
+        {location: L.b, input: "７六歩", mov: "▲７六歩"},
+      ]
+      info.header.should == {}
+    end
+
     describe "読み込み練習" do
       it do
         result = Parser::Ki2Parser.parse(Pathname(__FILE__).dirname.join("../../resources/竜王戦_ki2/龍王戦2002-15 羽生阿部-3.ki2").read)

@@ -27,7 +27,7 @@ module Bushido
           @_head, @_body = normalized_source.split(/\n\n/, 2)
         else
           @_head = ""
-          @_body = ""
+          @_body = normalized_source
         end
         header_read
         board_read
