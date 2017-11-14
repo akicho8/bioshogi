@@ -96,6 +96,18 @@ EOT
             player_test2(init: ["１二と", "１四歩"], exec: "１一と").should == ["▲1一と", "▲1四歩"]
           end
         end
+
+        # このテストは read_spec で書くので不要
+        # it "真下と斜め右にある銀の右側の銀が左上に移動し、KI2形式の指し手が「○右」となる" do
+        #   player_test(init: "▲29銀 ▲19銀", exec: "28銀(19)").runner.hand_log.to_kif_ki2.should== ["2八銀(19)", "2八銀右"]
+        #
+        #   # mediator = Mediator.test(init: "▲29銀 ▲19銀", exec: ["28銀(19)"])
+        #   # mediator.hand_logs.last.to_kif_ki2.should == ["2八銀(19)", "2八銀右"]
+        # end
+        # it "真下と斜め左にある銀の左側の銀が右上に移動し、KI2形式の指し手が「○左」となる" do
+        #   mediator = Mediator.test(init: "▲29銀 ▲19銀", exec: ["28銀(19)"])
+        #   mediator.hand_logs.last.to_kif_ki2.should == ["2八銀(19)", "2八銀右"]
+        # end
       end
 
       describe "できない" do

@@ -102,6 +102,16 @@ module Bushido
       read_spec(@params.merge(exec: "５五と左")).should == ["5五と(66)", "5五と左"]
     end
 
+    it "左下と下" do
+      @params.update({init: [
+            "______", "______", "______",
+            "______", "______", "______",
+            "６六と", "５六と", "______",
+          ]})
+      read_spec(@params.merge(exec: "５五と左")).should == ["5五と(66)", "5五と左"]
+      read_spec(@params.merge(exec: "５五と直")).should == ["5五と(56)", "5五と直"]
+    end
+
     it "縦に二つ" do
       @params.update({init: [
             "______", "５四と", "______",
@@ -142,10 +152,6 @@ module Bushido
       read_spec(@params.merge(exec: "５五と右")).should == ["5五と(45)", "5五と右"]
     end
 
-    it "同" do
-      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["2四歩(23)", "同歩"]
-    end
-
     it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
       read_spec(init: ["３四銀", "２四銀"], exec: "２三銀直不成").should == ["2三銀(24)", "2三銀直不成"]
     end
@@ -156,6 +162,11 @@ module Bushido
 
     it "「直上」ではなく「直」になる" do
       read_spec(init: ["２九金", "１九金"], exec: "２八金直").should == ["2八金(29)", "2八金直"]
+    end
+
+    # FIXME: このテスト関係ない
+    it "同" do
+      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["2四歩(23)", "同歩"]
     end
   end
 end
