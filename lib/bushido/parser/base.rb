@@ -109,15 +109,19 @@ module Bushido
           new(source, options).tap(&:parse)
         end
 
+        def parse_file(file, **options)
+          parse(Pathname(file).expand_path.read, options)
+        end
+
         def resolved?(source)
           raise NotImplementedError, "#{__method__} is not implemented"
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments, :source
+      attr_reader :header, :move_infos, :first_comments
 
       def initialize(source, **options)
-        @source = Parser.source_normalize(source)
+        @source = source
         @options = default_options.merge(options)
 
         @header = {}
@@ -131,6 +135,10 @@ module Bushido
 
       def parse
         raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      def normalized_source
+        @normalized_source ||= Parser.source_normalize(@source)
       end
 
       private

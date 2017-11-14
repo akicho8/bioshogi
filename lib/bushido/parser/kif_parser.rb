@@ -30,7 +30,7 @@ module Bushido
       #   @result.move_infos.last.should  == {index: "5", input: "投了", spent_time: "0:10/00:00:50"}
       #
       def parse
-        @_head, @_body = @source.split(/^手数.*指手.*消費時間.*$/, 2)
+        @_head, @_body = normalized_source.split(/^手数.*指手.*消費時間.*$/, 2)
         header_read
         board_read
         @_body.lines.each do |line|

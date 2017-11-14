@@ -21,7 +21,7 @@ module Bushido
       #   ]
       #
       def parse
-        @_head, @_body = @source.split(/\n\n/, 2)
+        @_head, @_body = normalized_source.split(/\n\n/, 2)
         header_read
         board_read
         @_body.lines.each do |line|
