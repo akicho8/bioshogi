@@ -24,15 +24,9 @@ module Bushido
       #   ]
       #
       def parse
-        if normalized_source.match?(/\n\n/)
-          @_head, @_body = normalized_source.split(/\n\n/, 2)
-        else
-          @_head = ""
-          @_body = normalized_source
-        end
         header_read
         board_read
-        @_body.lines.each do |line|
+        normalized_source.lines.each do |line|
           comment_read(line)
           if line.match?(/^\s*[#{Location.triangles}]/)
             @move_infos += line.scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/o).collect do |mark, input|

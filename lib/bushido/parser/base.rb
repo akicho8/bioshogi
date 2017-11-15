@@ -104,6 +104,8 @@ module Bushido
 
     # kif/ki2読み込みの共通処理
     class Base
+      cattr_accessor(:header_sep) { "：" }
+
       class << self
         def parse(source, **options)
           new(source, options).tap(&:parse)
@@ -144,13 +146,13 @@ module Bushido
       private
 
       def header_read
-        @_head.scan(/^(\S.*)：(.*)$/).each do |key, value|
+        normalized_source.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
           @header[key] = value
         end
       end
 
       def board_read
-        if md = @_head.match(/^後手の持駒：.*?\n(?<board>.*)^先手の持駒：/m)
+        if md = normalized_source.match(/^後手の持駒#{header_sep}.*?\n(?<board>.*)^先手の持駒#{header_sep}/om)
           @header[:board_source] = md[:board]
           @header[:board] = Parser.board_parse(md[:board])
         end
