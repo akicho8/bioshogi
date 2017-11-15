@@ -1,5 +1,5 @@
 # CPU同士の対局
-require_relative "example_helper"
+require "./example_helper"
 
 mediator = Mediator.start
 mediator.piece_plot

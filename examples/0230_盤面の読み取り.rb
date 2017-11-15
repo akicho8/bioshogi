@@ -1,5 +1,5 @@
 # 盤面の読み取り
-require_relative "example_helper"
+require "./example_helper"
 
 Parser.board_parse(<<~EOT) # => {#<Bushido::Location:0x007fa0408c3628 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :reverse_mark=>"▼", :other_marks=>["b", "^"], :varrow=>" ", :angle=>0, :code=>0}>=>[{:piece=><Bushido::Piece:70163131487940 歩 pawn>, :point=>#<Bushido::Point:70163120336680 "1一">}], #<Bushido::Location:0x007fa0408c3560 @attributes={:key=>:white, :name=>"後手", :mark=>"▽", :reverse_mark=>"△", :other_marks=>["w"], :varrow=>"v", :angle=>180, :code=>1}>=>[]}
 +---+

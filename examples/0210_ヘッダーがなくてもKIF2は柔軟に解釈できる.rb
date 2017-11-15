@@ -1,4 +1,4 @@
-require_relative "example_helper"
+require "./example_helper"
 
 Parser::Ki2Parser.accept?("▲2六歩") # => 
 Parser::Ki2Parser.parse("▲2六歩") # => 

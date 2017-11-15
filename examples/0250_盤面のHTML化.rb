@@ -1,5 +1,5 @@
 # 盤面のHTML化
-require_relative "example_helper"
+require "./example_helper"
 
 require "delegate"
 require "action_view"

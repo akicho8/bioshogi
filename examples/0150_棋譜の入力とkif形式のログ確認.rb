@@ -1,5 +1,5 @@
 # 棋譜の入力とkif形式のログ確認
-require_relative "example_helper"
+require "./example_helper"
 
 mediator = Mediator.start
 mediator.piece_plot

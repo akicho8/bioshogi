@@ -1,4 +1,4 @@
-require_relative "example_helper"
+require "./example_helper"
 
 info = Bushido::Parser.parse(Pathname("katomomo.ki2"))
 

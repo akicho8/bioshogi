@@ -1,6 +1,6 @@
 # ５五将棋の例
 
-require_relative "example_helper"
+require "./example_helper"
 
 Board.size_change([5, 5])
 mediator = Mediator.start

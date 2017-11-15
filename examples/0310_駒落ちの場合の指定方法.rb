@@ -1,4 +1,4 @@
-require_relative "example_helper"
+require "./example_helper"
 
 mediator = Mediator.new
 mediator.board_reset("角落ち")

@@ -1,5 +1,5 @@
 # 初期配置文字列のパース
-require_relative "example_helper"
+require "./example_helper"
 
 info = MiniSoldier.from_str("７六と")
 info[:piece].name # => "歩"

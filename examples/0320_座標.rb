@@ -1,4 +1,4 @@
-require_relative "example_helper"
+require "./example_helper"
 
 # 座標の縦軸を「漢数字」での表現は禁止
 Position::Hpos.parse("9")  # => #<Bushido::Position::Hpos:70287334993080 "9" 0>

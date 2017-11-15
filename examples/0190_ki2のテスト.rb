@@ -1,4 +1,4 @@
-require_relative "example_helper"
+require "./example_helper"
 
 def assert_equal(a, b)
   if a == b
