@@ -161,7 +161,7 @@ module Bushido
         # 「打」を省略している場合、持駒から探す
         if @player.piece_fetch(@piece)
           if @promote_trigger
-            raise IllegibleFormat, "「2二角打」または「2二角」(打の省略形)とするところを「2二角成打」と書いている系のエラーです : '#{@source.inspect}'"
+            raise IllegibleFormat, "「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている系のエラーです : '#{@source.inspect}'"
           end
           @strike_trigger = true
           if @promoted

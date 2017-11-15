@@ -24,7 +24,7 @@ module Bushido
     private
 
     def header
-      "  " + Position::Hpos.units(zenkaku: true).join(" ")
+      "  " + Position::Hpos.units.join(" ")
     end
 
     def line

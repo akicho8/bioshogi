@@ -53,7 +53,7 @@ module Bushido
     end
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲5五と"
+    #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲５五と"
     def mark_with_formal_name
       "#{@player.location.mark}#{to_s_formal_name}"
     end
@@ -61,7 +61,7 @@ module Bushido
     alias name mark_with_formal_name
 
     # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].to_s_formal_name # => "5五と"
+    #  Player.basic_test(init: "５五と").board["５五"].to_s_formal_name # => "５五と"
     def to_s_formal_name
       "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
     end

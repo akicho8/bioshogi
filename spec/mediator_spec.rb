@@ -104,13 +104,13 @@ EOT
       mediator = Mediator.test(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.reverse_player.runner.hand_log.to_kif_ki2.should == ["1四歩(13)", "同歩"]
+      mediator.reverse_player.runner.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
       mediator = SimulatorFrame.new({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
       mediator.build_frames
-      mediator.ki2_hand_logs.should == ["▲2六歩", "▽2四歩", "▲2五歩", "▽同歩", "▲同飛"]
+      mediator.ki2_hand_logs.should == ["▲２六歩", "▽２四歩", "▲２五歩", "▽同歩", "▲同飛"]
     end
 
     it "Sequencer" do
@@ -123,11 +123,11 @@ EOT
 
     it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.test(init: "▲１二歩")
-      mediator.player_b.to_s_soldiers.should == "1二歩"
-      mediator.player_b.board.to_s_soldiers.should == "1二歩"
+      mediator.player_b.to_s_soldiers.should == "１二歩"
+      mediator.player_b.board.to_s_soldiers.should == "１二歩"
       mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
-      mediator.player_b.to_s_soldiers.should == "1二歩"
-      mediator.player_b.board.to_s_soldiers.should == "1二歩"
+      mediator.player_b.to_s_soldiers.should == "１二歩"
+      mediator.player_b.board.to_s_soldiers.should == "１二歩"
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
@@ -144,7 +144,7 @@ EOT
     # +------+
     # BOARD
     #       puts mediator.board.to_s
-    #       mediator.execute("2二金直上")
+    #       mediator.execute("２二金直上")
     #       puts mediator.board.to_s
     #     end
 
@@ -155,7 +155,7 @@ EOT
     #     mediator.board.to_s
     #   end
     #   puts board_reset_test("角落ち")
-    #   # board_reset_test("平手").should == "▲1七歩 ▲1九香 ▲2七歩 ▲2九桂 ▲2八飛 ▲3七歩 ▲3九銀 ▲4七歩 ▲4九金 ▲5七歩 ▲5九玉 ▲6七歩 ▲6九金 ▲7七歩 ▲7九銀 ▲8七歩 ▲8九桂 ▲8八角 ▲9七歩 ▲9九香 ▽1一香 ▽1三歩 ▽2一桂 ▽2三歩 ▽2二角 ▽3一銀 ▽3三歩 ▽4一金 ▽4三歩 ▽5一玉 ▽5三歩 ▽6一金 ▽6三歩 ▽7一銀 ▽7三歩 ▽8一桂 ▽8三歩 ▽8二飛 ▽9一香 ▽9三歩"
+    #   # board_reset_test("平手").should == "▲１七歩 ▲１九香 ▲２七歩 ▲２九桂 ▲２八飛 ▲３七歩 ▲３九銀 ▲４七歩 ▲４九金 ▲５七歩 ▲５九玉 ▲６七歩 ▲６九金 ▲７七歩 ▲７九銀 ▲８七歩 ▲８九桂 ▲８八角 ▲９七歩 ▲９九香 ▽１一香 ▽１三歩 ▽２一桂 ▽２三歩 ▽２二角 ▽３一銀 ▽３三歩 ▽４一金 ▽４三歩 ▽５一玉 ▽５三歩 ▽６一金 ▽６三歩 ▽７一銀 ▽７三歩 ▽８一桂 ▽８三歩 ▽８二飛 ▽９一香 ▽９三歩"
     #   # board_reset_test("先手" => "角落ち")
     # end
 

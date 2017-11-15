@@ -1,9 +1,9 @@
 #
 # 座標
 #
-#   Point["4三"].name   # => "4三"
-#   Point["４三"].name  # => "4三"
-#   Point["43"].name    # => "4三"
+#   Point["４三"].name   # => "４三"
+#   Point["４三"].name  # => "４三"
+#   Point["43"].name    # => "４三"
 #
 module Bushido
   class Point
@@ -25,13 +25,13 @@ module Bushido
       end
 
       # parseのalias
-      #   Point["4三"].name # => "4三"
+      #   Point["４三"].name # => "４三"
       def [](arg)
         parse(arg)
       end
 
       # 座標のパース
-      #   Point.parse["4三"].name # => "4三"
+      #   Point.parse["４三"].name # => "４三"
       def parse(arg)
         x = nil
         y = nil
@@ -70,7 +70,7 @@ module Bushido
     end
 
     # 内部状態
-    #   Point["５五"].inspect # => #<Bushido::Point:70223123742360 "5五">
+    #   Point["５五"].inspect # => #<Bushido::Point:70223123742360 "５五">
     def inspect
       "#<#{self.class.name}:#{object_id} #{name.inspect}>"
     end
@@ -123,7 +123,7 @@ module Bushido
     end
 
     # ベクトルを加算して新しい座標オブジェクトを返す
-    #   Point.parse("５五").add_vector([1, 2]).name # => "4七"
+    #   Point.parse("５五").add_vector([1, 2]).name # => "４七"
     def add_vector(vector)
       x, y = vector
       self.class.parse([@x.value + x, @y.value + y])

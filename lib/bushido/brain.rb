@@ -91,7 +91,7 @@ module Bushido
       @player = player
     end
 
-    # {hand: "▲1八飛(17)", score: -3230, level: 0, reading_hands: ["▲1八飛(17)", "▽1五歩(14)", "▲1五香(16)", "▽1五香(13)"]}
+    # {hand: "▲１八飛(17)", score: -3230, level: 0, reading_hands: ["▲１八飛(17)", "▽１五歩(14)", "▲１五香(16)", "▽１五香(13)"]}
     def think_by_minmax(params = {})
       NegaMaxRunner.run({player: @player}.merge(params))
     end

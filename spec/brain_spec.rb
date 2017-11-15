@@ -32,15 +32,15 @@ module Bushido
       end
       it "全手筋" do
         player = player_test(run_piece_plot: true)
-        player.brain.all_hands.should == ["9六歩(97)", "8六歩(87)", "7六歩(77)", "6六歩(67)", "5六歩(57)", "4六歩(47)", "3六歩(37)", "2六歩(27)", "1六歩(17)", "3八飛(28)", "4八飛(28)", "5八飛(28)", "6八飛(28)", "7八飛(28)", "1八飛(28)", "9八香(99)", "7八銀(79)", "6八銀(79)", "7八金(69)", "6八金(69)", "5八金(69)", "6八玉(59)", "5八玉(59)", "4八玉(59)", "5八金(49)", "4八金(49)", "3八金(49)", "4八銀(39)", "3八銀(39)", "1八香(19)"]
+        player.brain.all_hands.should == ["９六歩(97)", "８六歩(87)", "７六歩(77)", "６六歩(67)", "５六歩(57)", "４六歩(47)", "３六歩(37)", "２六歩(27)", "１六歩(17)", "３八飛(28)", "４八飛(28)", "５八飛(28)", "６八飛(28)", "７八飛(28)", "１八飛(28)", "９八香(99)", "７八銀(79)", "６八銀(79)", "７八金(69)", "６八金(69)", "５八金(69)", "６八玉(59)", "５八玉(59)", "４八玉(59)", "５八金(49)", "４八金(49)", "３八金(49)", "４八銀(39)", "３八銀(39)", "１八香(19)"]
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
         mediator = Mediator.test(init: "▲１五香")
-        mediator.player_b.brain.__soldiers_hands.collect(&:to_hand).should == ["1四香(15)", "1三香(15)", "1三香成(15)", "1二香(15)", "1二香成(15)", "1一香成(15)"] # 入力文字列
-        mediator.player_b.brain.__soldiers_hands.collect(&:to_s).should == ["1四香", "1三香", "1三杏", "1二香", "1二杏", "1一杏"]             # 指した後の駒の状態
+        mediator.player_b.brain.__soldiers_hands.collect(&:to_hand).should == ["１四香(15)", "１三香(15)", "１三香成(15)", "１二香(15)", "１二香成(15)", "１一香成(15)"] # 入力文字列
+        mediator.player_b.brain.__soldiers_hands.collect(&:to_s).should == ["１四香", "１三香", "１三杏", "１二香", "１二杏", "１一杏"]             # 指した後の駒の状態
       end
     end
 
@@ -57,15 +57,15 @@ module Bushido
       #
       Board.size_change([3, 3]) do
         player = player_test(init: "２二歩", pinit: "歩")
-        player.brain.__pieces_hands.collect(&:to_hand).should == ["3二歩打", "1二歩打", "3三歩打", "1三歩打"]
-        player.brain.__pieces_hands.collect(&:to_s).should == ["3二歩", "1二歩", "3三歩", "1三歩"]
+        player.brain.__pieces_hands.collect(&:to_hand).should == ["３二歩打", "１二歩打", "３三歩打", "１三歩打"]
+        player.brain.__pieces_hands.collect(&:to_s).should == ["３二歩", "１二歩", "３三歩", "１三歩"]
       end
     end
 
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
         mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
-        mediator.player_b.brain.eval_list.should == [{hand: "1一歩成(12)", score: 1305}, {hand: "2二歩打", score: 200}]
+        mediator.player_b.brain.eval_list.should == [{hand: "１一歩成(12)", score: 1305}, {hand: "２二歩打", score: 200}]
       end
     end
 
@@ -85,7 +85,7 @@ module Bushido
             # ▲先手の持駒:
             # ▽後手の持駒:
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
-            r.should == {:hand => "▲3二歩成(33)", :score => 0, :level => 0, :reading_hands => ["▲3二歩成(33)", "▽1二歩成(11)"]}
+            r.should == {:hand => "▲３二歩成(33)", :score => 0, :level => 0, :reading_hands => ["▲３二歩成(33)", "▽１二歩成(11)"]}
           end
         end
       end
@@ -118,8 +118,8 @@ EOT
         # 0: ランダムに打って一番得になるものを選ぶため駒損を気にせず歩を取ってしまう
         # 1: 香車で取り返されることを予測するため回避する。またその場にいるだけでも取られるので２三に逃げる。また成った方が良いと判断する
         it do
-          example1 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 0)[:hand].should == "▲1二飛成(13)" }
-          example1 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 1)[:hand].should == "▲2三飛成(13)" }
+          example1 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 0)[:hand].should == "▲１二飛成(13)" }
+          example1 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 1)[:hand].should == "▲２三飛成(13)" }
         end
       end
 
@@ -153,9 +153,9 @@ EOT
         # 0: 最善手は歩と取ること
         # 1: 相手に飛車を取られて大損するため回避
         # 2: 香車で取り返せるのでやっぱり歩を取る筋で行く
-        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 0)[:hand].should == "▲1二飛(13)" } }
-        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 1)[:hand].should == "▲2三飛(13)" } }
-        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 2)[:hand].should == "▲1二飛(13)" } }
+        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 0)[:hand].should == "▲１二飛(13)" } }
+        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 1)[:hand].should == "▲２三飛(13)" } }
+        it { example2 {|mediator| NegaMaxRunner.run(player: mediator.player_b, depth: 2)[:hand].should == "▲１二飛(13)" } }
       end
     end
 
@@ -184,9 +184,9 @@ EOT
     #
     #     # player = player_test
     #     # player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
-    #     # player.safe_put_on("5五飛") do
+    #     # player.safe_put_on("５五飛") do
     #     #   player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
-    #     #   player.safe_put_on("4五角") do
+    #     #   player.safe_put_on("４五角") do
     #     #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
     #     #   end
     #     #   player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
@@ -207,30 +207,30 @@ EOT
 
     # it "復元するのは持駒と盤上の駒のみ(boardはmediator経由)" do # FIXME: なんのテストなのかよくわからない
     #   player1 = player_test(init: "５九玉", exec: "５八玉")
-    #   player1.soldier_names.should == ["▲5八玉"]
+    #   player1.soldier_names.should == ["▲５八玉"]
     #   player1.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #
     #   player2 = Marshal.load(Marshal.dump(player1))
-    #   player2.soldier_names.should == ["▲5八玉"]
+    #   player2.soldier_names.should == ["▲５八玉"]
     #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #   # player2.board.present?.should == true # @mediator が nil になっている
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
-    #   mediator.player_b.to_s_soldiers.should == "1二歩"
+    #   mediator.player_b.to_s_soldiers.should == "１二歩"
     #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_b.board.to_s_soldiers.should == "1二歩"
+    #   # mediator.player_b.board.to_s_soldiers.should == "１二歩"
     #
     #   # puts mediator.board
     #   mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
     #   # puts mediator.board
     #
-    #   mediator.player_b.to_s_soldiers.should == "1二歩"
+    #   mediator.player_b.to_s_soldiers.should == "１二歩"
     #
     #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_b.board.present?.should == true
-    #   # mediator.player_b.board.to_s_soldiers.should == "1二歩" # ← こうなるのが問題
+    #   # mediator.player_b.board.to_s_soldiers.should == "１二歩" # ← こうなるのが問題
     # end
   end
 end

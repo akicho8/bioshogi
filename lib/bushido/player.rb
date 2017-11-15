@@ -244,13 +244,13 @@ module Bushido
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
-      #   soldier_names # => ["▽5五飛↓"]
+      #   soldier_names # => ["▽５五飛↓"]
       def soldier_names
         @soldiers.collect(&:mark_with_formal_name).sort
       end
 
       # 盤上の駒の名前一覧(保存用)
-      #   to_s_soldiers # => ["5五飛"]
+      #   to_s_soldiers # => ["５五飛"]
       def to_s_soldiers
         @soldiers.collect(&:to_s_formal_name).sort.join(" ")
       end

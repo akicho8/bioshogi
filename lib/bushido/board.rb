@@ -145,19 +145,6 @@ module Bushido
       to_s(:kakiki)
     end
 
-    # 盤面の文字列化(開発用なので好きなフォーマットでいい)
-    def to_s_debug
-      rows = Position::Vpos.size.times.collect do |y|
-        Position::Hpos.size.times.collect do |x|
-          @surface[[x, y]]
-        end
-      end
-      rows = rows.zip(Position::Vpos.units).collect { |e, u|
-        e + [u]
-      }
-      RainTable::TableFormatter.format(Position::Hpos.units + [""], rows, header: true)
-    end
-
     # 盤上の指定座標に駒があるならエラーとする
     def assert_board_cell_is_blank(point)
       object = fetch(point)

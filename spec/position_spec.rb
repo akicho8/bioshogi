@@ -7,20 +7,24 @@ module Bushido
         expect { Position::Hpos.parse("")  }.to raise_error(PositionSyntaxError)
         expect { Position::Hpos.parse(nil) }.to raise_error(PositionSyntaxError)
       end
-      it "横「３」→「3」の変換がかかる→枠を越えている→正常にエラー" do
-        expect { Board.size_change([2, 2]){ Position::Hpos.parse("３") } }.to raise_error(PositionSyntaxError)
+      it "横の範囲外" do
+        expect { Board.size_change([2, 2]) { Position::Hpos.parse("３") } }.to raise_error(PositionSyntaxError)
       end
-      it "縦「3」→「三」の変換がかかる→枠を越えている→正常にエラー" do
-        expect { Board.size_change([2, 2]){ Position::Vpos.parse("三")  } }.to raise_error(PositionSyntaxError)
+      it "縦の範囲外" do
+        expect { Board.size_change([2, 2]) { Position::Vpos.parse("三")  } }.to raise_error(PositionSyntaxError)
       end
+
       describe "正常" do
         it "横" do
-          Position::Hpos.parse("1").name.should == "1"
-          Position::Hpos.parse("１").name.should == "1"
+          Position::Hpos.parse("1").name.should == "１"
+          Position::Hpos.parse("１").name.should == "１"
+          Position::Hpos.parse("一").name.should == "１"
         end
+
         it "縦" do
-          Position::Vpos.parse("一").name.should == "一"
           Position::Vpos.parse("1").name.should == "一"
+          Position::Vpos.parse("１").name.should == "一"
+          Position::Vpos.parse("一").name.should == "一"
         end
       end
     end
@@ -39,7 +43,7 @@ module Bushido
     end
 
     it "座標反転" do
-      Position::Hpos.parse("1").reverse.name.should == "9"
+      Position::Hpos.parse("１").reverse.name.should == "９"
     end
 
     it "数字表記" do

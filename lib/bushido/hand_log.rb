@@ -17,7 +17,7 @@ module Bushido
       [to_s_kif, to_s_ki2]
     end
 
-    # "7六歩" のようなCPUに優しいKIF形式の表記で返す
+    # "７六歩" のようなCPUに優しいKIF形式の表記で返す
     def to_s_kif(options = {})
       options = {
         with_mark: false,

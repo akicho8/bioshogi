@@ -1,14 +1,14 @@
 require "./example_helper"
 
-Parser::Ki2Parser.accept?("▲2六歩") # => 
-Parser::Ki2Parser.parse("▲2六歩") # => 
+Parser::Ki2Parser.accept?("▲２六歩") # => 
+Parser::Ki2Parser.parse("▲２六歩") # => 
 
-puts Parser.parse("▲2六歩").to_kif
-puts Parser.parse("▲2六歩").to_ki2
+puts Parser.parse("▲２六歩").to_kif
+puts Parser.parse("▲２六歩").to_ki2
 
 info = Parser.parse(<<~EOT)
-▲2六歩 ▽3四歩 ▲2五歩 ▽3三角 ▲7六歩
-▽4二銀 ▲4八銀 ▽5四歩 ▲6八玉 ▽5五歩
+▲２六歩 ▽３四歩 ▲２五歩 ▽３三角 ▲７六歩
+▽４二銀 ▲４八銀 ▽５四歩 ▲６八玉 ▽５五歩
 EOT
 puts info.to_ki2
 

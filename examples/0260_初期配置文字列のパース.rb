@@ -4,15 +4,15 @@ require "./example_helper"
 info = MiniSoldier.from_str("７六と")
 info[:piece].name # => "歩"
 info[:promoted]   # => true
-info[:point].name # => "7六"
+info[:point].name # => "７六"
 
 pp info
 tp info
 # >> {:piece=><Bushido::Piece:70194336782280 歩 pawn>,
 # >>  :promoted=>true,
-# >>  :point=>#<Bushido::Point:70194334374740 "7六">}
+# >>  :point=>#<Bushido::Point:70194334374740 "７六">}
 # >> |----------+------|
 # >> |    piece | 歩   |
 # >> | promoted | true |
-# >> |    point | 7六  |
+# >> |    point | ７六  |
 # >> |----------+------|

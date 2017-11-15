@@ -6,10 +6,10 @@ mediator.piece_plot
 puts mediator.board
 
 mediator.board["５五"]      # => nil
-mediator.board["８八"]      # => <Bushido::Soldier:70199354955120 @player=#<Bushido::Player:0x007fb11fc43420> @piece=角 ▲8八角>
-mediator.board["８八"].name # => "▲8八角"
-mediator.board["２八"].name # => "▲2八飛"
-mediator.board["５九"].name # => "▲5九玉"
+mediator.board["８八"]      # => <Bushido::Soldier:70199354955120 @player=#<Bushido::Player:0x007fb11fc43420> @piece=角 ▲８八角>
+mediator.board["８八"].name # => "▲８八角"
+mediator.board["２八"].name # => "▲２八飛"
+mediator.board["５九"].name # => "▲５九玉"
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一

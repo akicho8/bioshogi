@@ -1,9 +1,9 @@
 # it "復元できるかテスト" do
-#   player = player_test(init: "5五歩")
+#   player = player_test(init: "５五歩")
 #   soldier = player.soldiers.first
-#   soldier.mark_with_formal_name.should == "▲5五歩"
+#   soldier.mark_with_formal_name.should == "▲５五歩"
 #   soldier = Marshal.load(Marshal.dump(soldier))
-#   soldier.mark_with_formal_name.should == "▲5五歩"
+#   soldier.mark_with_formal_name.should == "▲５五歩"
 # end
 
 # it "１三香は１一香になれないが１一杏にならなれる" do
@@ -17,7 +17,7 @@
 #     mediator = Mediator.new
 #     mediator.player_b.initial_soldiers("１三香", from_piece: false)
 #     # puts mediator
-#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["1二香", "1一杏"]
+#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["１二香", "１一杏"]
 #     # mediator.board.abone_all
 #   end
 # end
@@ -33,7 +33,7 @@
 #     mediator = Mediator.new
 #     mediator.player_b.initial_soldiers("１三杏", from_piece: false)
 #     # puts mediator
-#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["1二杏"]
+#     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["１二杏"]
 #     # mediator.board.abone_all
 #   end
 # end

@@ -10,56 +10,56 @@ module Bushido
       describe "龍" do
         it "パターンA" do
           @params.update(init: ["９一龍", "８四龍"])
-          read_spec(@params.merge(exec: "８二龍引")).should == ["8二龍(91)", "8二龍引"]
-          read_spec(@params.merge(exec: "８二龍上")).should == ["8二龍(84)", "8二龍上"]
+          read_spec(@params.merge(exec: "８二龍引")).should == ["８二龍(91)", "８二龍引"]
+          read_spec(@params.merge(exec: "８二龍上")).should == ["８二龍(84)", "８二龍上"]
         end
         it "パターンB" do
           @params.update(init: ["５二龍", "２三龍"])
-          read_spec(@params.merge(exec: "４三龍寄")).should == ["4三龍(23)", "4三龍寄"]
-          read_spec(@params.merge(exec: "４三龍引")).should == ["4三龍(52)", "4三龍引"]
+          read_spec(@params.merge(exec: "４三龍寄")).should == ["４三龍(23)", "４三龍寄"]
+          read_spec(@params.merge(exec: "４三龍引")).should == ["４三龍(52)", "４三龍引"]
         end
         it "パターンC" do
           @params.update(init: ["５五龍", "１五龍"])
-          read_spec(@params.merge(exec: "３五龍左")).should == ["3五龍(55)", "3五龍左"]
-          read_spec(@params.merge(exec: "３五龍右")).should == ["3五龍(15)", "3五龍右"]
+          read_spec(@params.merge(exec: "３五龍左")).should == ["３五龍(55)", "３五龍左"]
+          read_spec(@params.merge(exec: "３五龍右")).should == ["３五龍(15)", "３五龍右"]
         end
         it "パターンD" do
           @params.update(init: ["９九龍", "８九龍"])
-          read_spec(@params.merge(exec: "８八龍左")).should == ["8八龍(99)", "8八龍左"]
-          read_spec(@params.merge(exec: "８八龍右")).should == ["8八龍(89)", "8八龍右"]
+          read_spec(@params.merge(exec: "８八龍左")).should == ["８八龍(99)", "８八龍左"]
+          read_spec(@params.merge(exec: "８八龍右")).should == ["８八龍(89)", "８八龍右"]
         end
         it "パターンE" do
           @params.update(init: ["２八龍", "１九龍"])
-          read_spec(@params.merge(exec: "１七龍左")).should == ["1七龍(28)", "1七龍左"]
-          read_spec(@params.merge(exec: "１七龍右")).should == ["1七龍(19)", "1七龍右"]
+          read_spec(@params.merge(exec: "１七龍左")).should == ["１七龍(28)", "１七龍左"]
+          read_spec(@params.merge(exec: "１七龍右")).should == ["１七龍(19)", "１七龍右"]
         end
       end
 
       describe "馬" do
         it "パターンA" do
           @params.update(init: ["９一馬", "８一馬"])
-          read_spec(@params.merge(exec: "８二馬左")).should == ["8二馬(91)", "8二馬左"]
-          read_spec(@params.merge(exec: "８二馬右")).should == ["8二馬(81)", "8二馬右"]
+          read_spec(@params.merge(exec: "８二馬左")).should == ["８二馬(91)", "８二馬左"]
+          read_spec(@params.merge(exec: "８二馬右")).should == ["８二馬(81)", "８二馬右"]
         end
         it "パターンB" do
           @params.update(init: ["９五馬", "６三馬"])
-          read_spec(@params.merge(exec: "８五馬寄")).should == ["8五馬(95)", "8五馬寄"]
-          read_spec(@params.merge(exec: "８五馬引")).should == ["8五馬(63)", "8五馬引"]
+          read_spec(@params.merge(exec: "８五馬寄")).should == ["８五馬(95)", "８五馬寄"]
+          read_spec(@params.merge(exec: "８五馬引")).should == ["８五馬(63)", "８五馬引"]
         end
         it "パターンC" do
           @params.update(init: ["１一馬", "３四馬"])
-          read_spec(@params.merge(exec: "１二馬引")).should == ["1二馬(11)", "1二馬引"]
-          read_spec(@params.merge(exec: "１二馬上")).should == ["1二馬(34)", "1二馬上"]
+          read_spec(@params.merge(exec: "１二馬引")).should == ["１二馬(11)", "１二馬引"]
+          read_spec(@params.merge(exec: "１二馬上")).should == ["１二馬(34)", "１二馬上"]
         end
         it "パターンD" do
           @params.update(init: ["９九馬", "５九馬"])
-          read_spec(@params.merge(exec: "７七馬左")).should == ["7七馬(99)", "7七馬左"]
-          read_spec(@params.merge(exec: "７七馬右")).should == ["7七馬(59)", "7七馬右"]
+          read_spec(@params.merge(exec: "７七馬左")).should == ["７七馬(99)", "７七馬左"]
+          read_spec(@params.merge(exec: "７七馬右")).should == ["７七馬(59)", "７七馬右"]
         end
         it "パターンE" do
           @params.update(init: ["４七馬", "１八馬"])
-          read_spec(@params.merge(exec: "２九馬左")).should == ["2九馬(47)", "2九馬左"]
-          read_spec(@params.merge(exec: "２九馬右")).should == ["2九馬(18)", "2九馬右"]
+          read_spec(@params.merge(exec: "２九馬左")).should == ["２九馬(47)", "２九馬左"]
+          read_spec(@params.merge(exec: "２九馬右")).should == ["２九馬(18)", "２九馬右"]
         end
       end
     end
@@ -70,7 +70,7 @@ module Bushido
             "______", "______", "４五と",
             "______", "______", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と")).should == ["5五と(45)", "5五と"]
+      read_spec(@params.merge(exec: "５五と")).should == ["５五と(45)", "５五と"]
     end
 
     it "右下だけ" do
@@ -79,7 +79,7 @@ module Bushido
             "______", "______", "______",
             "______", "______", "４六と",
           ]})
-      read_spec(@params.merge(exec: "５五と")).should == ["5五と(46)", "5五と"]
+      read_spec(@params.merge(exec: "５五と")).should == ["５五と(46)", "５五と"]
     end
 
     it "真下だけ" do
@@ -88,7 +88,7 @@ module Bushido
             "______", "______", "______",
             "______", "５六と", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と")).should == ["5五と(56)", "5五と"]
+      read_spec(@params.merge(exec: "５五と")).should == ["５五と(56)", "５五と"]
     end
 
     it "下面" do
@@ -97,9 +97,9 @@ module Bushido
             "______", "______", "______",
             "６六と", "５六と", "４六と",
           ]})
-      read_spec(@params.merge(exec: "５五と右")).should == ["5五と(46)", "5五と右"]
-      read_spec(@params.merge(exec: "５五と直")).should == ["5五と(56)", "5五と直"]
-      read_spec(@params.merge(exec: "５五と左")).should == ["5五と(66)", "5五と左"]
+      read_spec(@params.merge(exec: "５五と右")).should == ["５五と(46)", "５五と右"]
+      read_spec(@params.merge(exec: "５五と直")).should == ["５五と(56)", "５五と直"]
+      read_spec(@params.merge(exec: "５五と左")).should == ["５五と(66)", "５五と左"]
     end
 
     it "左下と下" do
@@ -108,8 +108,8 @@ module Bushido
             "______", "______", "______",
             "６六と", "５六と", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と左")).should == ["5五と(66)", "5五と左"]
-      read_spec(@params.merge(exec: "５五と直")).should == ["5五と(56)", "5五と直"]
+      read_spec(@params.merge(exec: "５五と左")).should == ["５五と(66)", "５五と左"]
+      read_spec(@params.merge(exec: "５五と直")).should == ["５五と(56)", "５五と直"]
     end
 
     it "縦に二つ" do
@@ -118,8 +118,8 @@ module Bushido
             "______", "______", "______",
             "______", "５六と", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と引")).should == ["5五と(54)", "5五と引"]
-      read_spec(@params.merge(exec: "５五と上")).should == ["5五と(56)", "5五と上"]
+      read_spec(@params.merge(exec: "５五と引")).should == ["５五と(54)", "５五と引"]
+      read_spec(@params.merge(exec: "５五と上")).should == ["５五と(56)", "５五と上"]
     end
 
     it "左と左下" do
@@ -128,8 +128,8 @@ module Bushido
             "６五と", "______", "______",
             "６六と", "______", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と寄")).should == ["5五と(65)", "5五と寄"]
-      read_spec(@params.merge(exec: "５五と上")).should == ["5五と(66)", "5五と上"]
+      read_spec(@params.merge(exec: "５五と寄")).should == ["５五と(65)", "５五と寄"]
+      read_spec(@params.merge(exec: "５五と上")).should == ["５五と(66)", "５五と上"]
     end
 
     it "左上と左下" do
@@ -138,8 +138,8 @@ module Bushido
             "______", "______", "______",
             "６六銀", "______", "______",
           ]})
-      read_spec(@params.merge(exec: "５五銀引")).should == ["5五銀(64)", "5五銀引"]
-      read_spec(@params.merge(exec: "５五銀上")).should == ["5五銀(66)", "5五銀上"]
+      read_spec(@params.merge(exec: "５五銀引")).should == ["５五銀(64)", "５五銀引"]
+      read_spec(@params.merge(exec: "５五銀上")).should == ["５五銀(66)", "５五銀上"]
     end
 
     it "左右" do
@@ -148,8 +148,8 @@ module Bushido
             "６五と", "______", "４五と",
             "______", "______", "______",
           ]})
-      read_spec(@params.merge(exec: "５五と左")).should == ["5五と(65)", "5五と左"]
-      read_spec(@params.merge(exec: "５五と右")).should == ["5五と(45)", "5五と右"]
+      read_spec(@params.merge(exec: "５五と左")).should == ["５五と(65)", "５五と左"]
+      read_spec(@params.merge(exec: "５五と右")).should == ["５五と(45)", "５五と右"]
     end
 
     describe "打" do
@@ -159,7 +159,7 @@ module Bushido
               "______", "______", "______",
               "______", "______", "______",
             ]})
-        read_spec(@params.merge(exec: "５五銀")).should == ["5五銀打", "5五銀"]
+        read_spec(@params.merge(exec: "５五銀")).should == ["５五銀打", "５五銀"]
       end
 
       it "盤上の駒の移動と重複するため明示" do
@@ -168,25 +168,25 @@ module Bushido
               "______", "______", "______",
               "______", "５六銀", "______",
             ]})
-        read_spec(@params.merge(exec: "５五銀打")).should == ["5五銀打", "5五銀打"]
+        read_spec(@params.merge(exec: "５五銀打")).should == ["５五銀打", "５五銀打"]
       end
     end
 
     it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
-      read_spec(init: ["３四銀", "２四銀"], exec: "２三銀直不成").should == ["2三銀(24)", "2三銀直不成"]
+      read_spec(init: ["３四銀", "２四銀"], exec: "２三銀直不成").should == ["２三銀(24)", "２三銀直不成"]
     end
 
     it "２三銀引成できる？" do
-      read_spec(init: ["３二銀", "３四銀"], exec: "２三銀引成").should == ["2三銀成(32)", "2三銀引成"]
+      read_spec(init: ["３二銀", "３四銀"], exec: "２三銀引成").should == ["２三銀成(32)", "２三銀引成"]
     end
 
     it "「直上」ではなく「直」になる" do
-      read_spec(init: ["２九金", "１九金"], exec: "２八金直").should == ["2八金(29)", "2八金直"]
+      read_spec(init: ["２九金", "１九金"], exec: "２八金直").should == ["２八金(29)", "２八金直"]
     end
 
     # FIXME: このテスト関係ない
     it "同" do
-      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["2四歩(23)", "同歩"]
+      Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["２四歩(23)", "同歩"]
     end
   end
 end
