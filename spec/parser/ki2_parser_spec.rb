@@ -4,8 +4,30 @@ module Bushido
   describe Parser::Ki2Parser do
     describe "ki2読み込み" do
       before do
-        file = Pathname(__FILE__).dirname.join("../files/sample1.ki2").expand_path
-        @result = Parser::Ki2Parser.parse(file.read)
+        @result = Parser::Ki2Parser.parse(<<~EOT)
+        開始日時：2000/01/01 00:00
+        終了日時：2000/01/01 01:00
+        表題：(表題)
+        棋戦：(棋戦)
+        戦型：(戦型)
+        持ち時間：(持ち時間)
+        場所：(場所)
+        掲載：(掲載)
+        立会人：(立会人)
+        副立会人：(副立会人)
+        記録係：(記録係)
+        Web Page：(Web Page)
+        通算成績：(通算成績)
+        先手：(先手)
+        後手：(後手)
+
+        *対局前コメント
+        ▲７六歩    △３四歩
+        *コメント1
+        ▲６六歩△８四歩
+        *コメント2
+        まで4手で後手の勝ち
+        EOT
       end
 
       it "ヘッダー部" do
