@@ -30,10 +30,9 @@ module Bushido
       #   @result.move_infos.last.should  == {turn_number: "5", input: "投了", spent_time: "0:10/00:00:50"}
       #
       def parse
-        @_head, @_body = normalized_source.split(/^手数.*指手.*消費時間.*$/, 2)
         header_read
         board_read
-        @_body.lines.each do |line|
+        normalized_source.lines.each do |line|
           comment_read(line)
           if md = line.match(/^\s*(?<turn_number>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
             location = Location["#{md[:turn_number]}手目"]
