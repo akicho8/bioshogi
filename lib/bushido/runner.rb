@@ -3,6 +3,24 @@
 #
 module Bushido
   class Runner
+    class << self
+      def input_regexp
+        /\A#{input_regexp2}/o
+      end
+
+      def input_regexp2
+        /
+          (?<point>#{Point.regexp})?
+          (?<same>同)?
+          \p{blank}*
+          (?<piece>#{Piece.all_names.join("|")})
+          (?<motion1>右上|右引|右|左上|左引|左|直|引|寄|上)?
+          (?<motion2>不成|成|打)?
+          (\((?<origin_point>.*)\))?
+        /ox
+      end
+    end
+
     attr_reader :point, :origin_point, :piece, :source, :player
 
     def initialize(player)
@@ -18,9 +36,9 @@ module Bushido
 
     def execute(str)
       @source = str
-      @md = @source.match(input_regexp)
+      @md = @source.match(self.class.input_regexp)
       unless @md
-        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{input_regexp.inspect} にマッチしません)"
+        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{self.class.input_regexp.inspect} にマッチしません)"
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -244,18 +262,6 @@ module Bushido
           hand_log.point == @point
         end
       end
-    end
-
-    def input_regexp
-      /\A
-        (?<point>#{Point.regexp})?
-        (?<same>同)?
-        \p{blank}*
-        (?<piece>#{Piece.all_names.join("|")})
-        (?<motion1>右上|右引|右|左上|左引|左|直|引|寄|上)?
-        (?<motion2>不成|成|打)?
-        (\((?<origin_point>.*)\))
-      ?/ox
     end
   end
 end

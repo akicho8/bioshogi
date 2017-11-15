@@ -28,10 +28,11 @@ module Bushido
         board_read
         normalized_source.lines.each do |line|
           comment_read(line)
-          if line.match?(/^\s*[#{Location.triangles}]/)
-            @move_infos += line.scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/o).collect do |mark, input|
-              location = Location[mark]
-              {location: location, input: input, mov: "#{location.mark}#{input}"}
+          if line.match?(/^\p{blank}*[#{Location.triangles}]?\p{blank}*#{Runner.input_regexp2}/)
+            line.scan(Runner.input_regexp2).each do |parts|
+              input = parts.join
+              location = Location[@move_infos.count.modulo(Location.count)]
+              @move_infos << {location: location, input: input, mov: "#{location.mark}#{input}"}
             end
           end
         end

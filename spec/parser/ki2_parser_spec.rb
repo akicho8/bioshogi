@@ -2,6 +2,26 @@ require_relative "../spec_helper"
 
 module Bushido
   describe Parser::Ki2Parser do
+    it "棋譜部分のパース" do
+      def parse_test(s)
+        Parser::Ki2Parser.parse(s).move_infos.collect{|e|e[:mov]}.join(" ")
+      end
+
+      # ▲は見ていない
+      parse_test("７六歩").should           == "▲７六歩"
+      parse_test("▲７六歩").should         == "▲７六歩"
+      parse_test("▲１一歩△２二歩").should == "▲１一歩 ▽２二歩"
+      parse_test("△１一歩▲２二歩").should == "▲１一歩 ▽２二歩"
+    end
+
+    it "ヘッダーがなく、いきなり棋譜入力しているデータも読み取れる" do
+      info = Parser::Ki2Parser.parse("▲７六歩")
+      info.move_infos.should == [
+        {location: L.b, input: "７六歩", mov: "▲７六歩"},
+      ]
+      info.header.should == {}
+    end
+
     describe "ki2読み込み" do
       before do
         @result = Parser::Ki2Parser.parse(<<~EOT)
@@ -62,14 +82,6 @@ module Bushido
       it "対局前コメント" do
         @result.first_comments.should == ["対局前コメント"]
       end
-    end
-
-    it "ヘッダーがなく、いきなり棋譜入力しているデータも読み取れる" do
-      info = Parser::Ki2Parser.parse("▲７六歩")
-      info.move_infos.should == [
-        {location: L.b, input: "７六歩", mov: "▲７六歩"},
-      ]
-      info.header.should == {}
     end
 
     describe "読み込み練習" do
