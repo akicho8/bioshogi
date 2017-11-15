@@ -180,7 +180,6 @@ module Bushido
         def to_kif
           out = ""
           header_write(out)
-          mediator = mediator_try_to_run
           out << "手数----指手---------消費時間--\n"
           out << mediator.kif_hand_logs.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
           out << "#{mediator.kif_hand_logs.size.next} 投了\n"
@@ -215,7 +214,6 @@ module Bushido
             header_write(out)
             out << "\n"
           end
-          mediator = mediator_try_to_run
           out << mediator.ki2_hand_logs.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
           out << mediator.last_message
           out
@@ -229,13 +227,13 @@ module Bushido
           end
         end
 
-        def mediator_try_to_run
-          mediator = Mediator.new
-          mediator.board_reset(header["手合割"])
-          move_infos.each do |info|
-            mediator.execute(info[:input])
+        def mediator
+          @mediator ||= Mediator.new.tap do |mediator|
+            mediator.board_reset(header["手合割"])
+            move_infos.each do |info|
+              mediator.execute(info[:input])
+            end
           end
-          mediator
         end
       end
     end
