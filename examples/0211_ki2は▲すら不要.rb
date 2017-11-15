@@ -1,3 +1,4 @@
 require "./example_helper"
 
-Parser::Ki2Parser.parse("７六歩 ▲７六歩") # => #<Bushido::Parser::Ki2Parser:0x007ff77d244cb8 @source="７六歩 ▲７六歩", @options={}, @header={}, @move_infos=[{:location=>#<Bushido::Location:0x007ff77c47cf68 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :reverse_mark=>"▼", :other_marks=>["b", "^"], :varrow=>" ", :angle=>0, :code=>0}>, :input=>"７六歩", :mov=>"▲７六歩"}, {:location=>#<Bushido::Location:0x007ff77c47cea0 @attributes={:key=>:white, :name=>"後手", :mark=>"▽", :reverse_mark=>"△", :other_marks=>["w"], :varrow=>"v", :angle=>180, :code=>1}>, :input=>"７六歩", :mov=>"▽７六歩"}], @first_comments=[], @normalized_source="７六歩 ▲７六歩">
+Parser::Ki2Parser.parse("７六歩").move_infos.collect { |e| e[:mov] } # => ["▲７六歩"]
+Parser::Ki2Parser.parse("７六歩打 ▲７六歩").move_infos.collect { |e| e[:mov] } # => ["▲７六歩打", "▽７六歩"]
