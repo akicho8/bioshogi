@@ -1,4 +1,7 @@
 # -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
+
+require "time"
+
 module Bushido
   module Parser
     class << self
@@ -148,6 +151,12 @@ module Bushido
       def header_read
         normalized_source.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
           @header[key] = value
+        end
+
+        ["開始日時", "終了日時"].each do |e|
+          if v = @header[e].presence
+            @header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
+          end
         end
       end
 
