@@ -28,7 +28,7 @@ module Bushido
 
       read_point
 
-      @promoted, @piece = Piece.promoted_fetch(@md[:piece]).values_at(:promoted, :piece)
+      @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
@@ -46,10 +46,11 @@ module Bushido
 
       # kif → ki2 変換するときのために @candidate は必要
       # 指定の場所に来れる盤上の駒に絞る
-      @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
-      @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
-      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
-      @candidate = @soldiers.collect{|s|s.clone}
+      @soldiers = @player.soldiers
+      @soldiers = @soldiers.find_all { |e| e.piece.key == @piece.key }                    # 同じ種類に絞る
+      @soldiers = @soldiers.find_all { |e| !!e.promoted == !!@promoted }                  # 成っているかどうかで絞る
+      @soldiers = @soldiers.find_all { |e| e.movable_infos.any?{|e|e[:point] == @point} } # その場所に凝れる
+      @candidate = @soldiers.collect(&:clone)
 
       if @strike_trigger
         if @promoted
