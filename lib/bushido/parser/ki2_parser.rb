@@ -34,7 +34,7 @@ module Bushido
         @_body.lines.each do |line|
           comment_read(line)
           if line.match?(/^\s*[#{Location.triangles}]/)
-            @move_infos += line.scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/).collect do |mark, input|
+            @move_infos += line.scan(/([#{Location.triangles}])([^#{Location.triangles}\s]+)/o).collect do |mark, input|
               location = Location[mark]
               {location: location, input: input, mov: "#{location.mark}#{input}"}
             end
