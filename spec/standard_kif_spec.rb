@@ -152,6 +152,26 @@ module Bushido
       read_spec(@params.merge(exec: "５五と右")).should == ["5五と(45)", "5五と右"]
     end
 
+    describe "打" do
+      it "基本表示しない" do
+        @params.update({init: [
+              "______", "______", "______",
+              "______", "______", "______",
+              "______", "______", "______",
+            ]})
+        read_spec(@params.merge(exec: "５五銀")).should == ["5五銀打", "5五銀"]
+      end
+
+      it "盤上の駒の移動と重複するため明示" do
+        @params.update({init: [
+              "______", "______", "______",
+              "______", "______", "______",
+              "______", "５六銀", "______",
+            ]})
+        read_spec(@params.merge(exec: "５五銀打")).should == ["5五銀打", "5五銀打"]
+      end
+    end
+
     it "直と不成が重なるとき「不成」と「直」の方が先にくる" do
       read_spec(init: ["３四銀", "２四銀"], exec: "２三銀直不成").should == ["2三銀(24)", "2三銀直不成"]
     end

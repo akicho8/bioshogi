@@ -55,6 +55,7 @@ module Bushido
         @hand_log = hand_log
         @options = {
           with_mark: false,
+          strike_force: false, # 「打」を省略できるときでも「打」を明示する
         }.merge(options)
       end
 
@@ -79,22 +80,29 @@ module Bushido
           if @hand_log.promote_trigger
             s << "成"
           else
-            if @hand_log.origin_point && @hand_log.point
-              if @hand_log.origin_point.promotable?(@hand_log.player.location) || @hand_log.point.promotable?(@hand_log.player.location)
-                unless @hand_log.promoted
-                  if @hand_log.piece.promotable?
+            if @hand_log.origin_point && @hand_log.point                          # 移動した and
+              if @hand_log.origin_point.promotable?(@hand_log.player.location) || # 移動元が相手の相手陣地 or
+                  @hand_log.point.promotable?(@hand_log.player.location)          # 移動元が相手の相手陣地
+                unless @hand_log.promoted                                         # 成ってない and
+                  if @hand_log.piece.promotable?                                  # 成駒になれる
                     s << "不成"
                   end
                 end
               end
             end
           end
-          # 日本将棋連盟のルールによると「駒を移動することも、持駒の打つこともできる場合に限り、持駒を打ったときだけ打を入れる」とある
-          # 言いかえると「なるべく打は書かない」のが正しい
-          # しかし、読みにくいのと入れていても支障ないので入れている
-          # TODO: オプションで切り替える
+
+          # 日本将棋連盟 棋譜の表記方法
+          # https://www.shogi.or.jp/faq/kihuhyouki.html
+          #
+          # > 到達地点に盤上の駒が移動することも、持駒を打つこともできる場合
+          # > 盤上の駒が動いた場合は通常の表記と同じ
+          # > 持駒を打った場合は「打」と記入
+          # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
           if @hand_log.strike_trigger
-            s << "打"
+            if @options[:strike_force] || @hand_log.candidate.present?
+              s << "打"
+            end
           end
         end
 

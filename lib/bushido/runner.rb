@@ -44,6 +44,13 @@ module Bushido
       @done = false
       @candidate = nil
 
+      # kif → ki2 変換するときのために @candidate は必要
+      # 指定の場所に来れる盤上の駒に絞る
+      @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
+      @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
+      @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
+      @candidate = @soldiers.collect{|s|s.clone}
+
       if @strike_trigger
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
@@ -53,13 +60,6 @@ module Bushido
         if @md[:origin_point]
           @origin_point = Point.parse(@md[:origin_point])
         end
-
-        # kif → ki2 変換するときのために @candidate は必要
-        # 指定の場所に来れる盤上の駒に絞る
-        @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
-        @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
-        @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
-        @candidate = @soldiers.collect{|s|s.clone}
 
         unless @origin_point
           # ki2 の場合
