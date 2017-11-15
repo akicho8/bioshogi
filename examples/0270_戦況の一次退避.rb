@@ -1,6 +1,6 @@
 # 戦況の一次退避
 
-require "./example_helper"
+require_relative "example_helper"
 
 mediator = Mediator.start
 mediator.piece_plot

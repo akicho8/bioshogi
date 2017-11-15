@@ -1,6 +1,6 @@
 # NegaMaxのログ表示
 
-require "./example_helper"
+require_relative "example_helper"
 
 Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do

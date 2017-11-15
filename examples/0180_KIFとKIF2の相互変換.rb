@@ -1,4 +1,4 @@
-require "./example_helper"
+require_relative "example_helper"
 
 a = Parser.parse_file("katomomo.kif")
 b = Parser.parse_file("katomomo.ki2")

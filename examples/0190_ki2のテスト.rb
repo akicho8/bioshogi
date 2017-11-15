@@ -1,4 +1,4 @@
-require "./example_helper"
+require_relative "example_helper"
 
 def assert_equal(a, b)
   if a == b
@@ -8,7 +8,7 @@ def assert_equal(a, b)
   end
 end
 
-files = Pathname.glob("../resources/竜王戦_ki2/*.ki2")
+files = Pathname.glob("#{__dir__}/../resources/竜王戦_ki2/*.ki2")
 files.each do |file|
   puts file
 

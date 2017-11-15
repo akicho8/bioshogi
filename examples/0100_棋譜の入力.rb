@@ -1,5 +1,5 @@
 # 棋譜の入力
-require "./example_helper"
+require_relative "example_helper"
 
 mediator = Mediator.start
 mediator.piece_plot

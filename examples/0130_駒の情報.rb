@@ -1,5 +1,5 @@
 # 駒の情報
-require "./example_helper"
+require_relative "example_helper"
 
 tp Piece["飛"].to_h
 # >> |-------------------------+---------------------------------------------------------------|

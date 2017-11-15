@@ -1,5 +1,5 @@
 # すべての駒の移動可能なルートの確認
-require "./example_helper"
+require_relative "example_helper"
 
 mediator = Mediator.new
 player = mediator.player_at(:black)
