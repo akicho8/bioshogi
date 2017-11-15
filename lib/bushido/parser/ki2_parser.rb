@@ -5,9 +5,10 @@ module Bushido
     class Ki2Parser < Base
       class << self
         # 適当に入力したもので解釈できるように厳密にはしない
-        def resolved?(source)
-          source = Parser.source_normalize(source)
-          source.blank? || source.match?(/^\s*[#{Location.triangles}]/)
+        def accept?(source)
+          # source = Parser.source_normalize(source)
+          # source.blank? || source.match?(/^\s*[#{Location.triangles}]/)
+          !KifParser.accept?(source)
         end
       end
 
