@@ -21,7 +21,7 @@ RSpec.configure do |config|
   config.before(:each) do
   end
 
-  module TestHelper
+  config.include Module.new {
     def player_test(params = {})
       params = {
         player: :black,
@@ -58,17 +58,16 @@ RSpec.configure do |config|
 
     def read_spec(*args)
       elems = player_test(*args).runner.hand_log.to_kif_ki2
-      # elems = elems.collect{|e|e.gsub(/[▲△▽]/, "")}
     end
 
     def board_parse_test(source)
-      Bushido::Parser.board_parse(source).inject({}){|hash, (key, value)|hash.merge(key => value.collect(&:to_s))}
+      Bushido::Parser.board_parse(source).inject({}) do |a, (key, value)|
+        a.merge(key => value.collect(&:to_s))
+      end
     end
 
     def board_one_cell(str)
       "+---+\n|#{str}|\n+---+"
     end
-  end
-
-  config.include TestHelper
+  }
 end
