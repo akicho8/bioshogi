@@ -4,7 +4,7 @@ module Bushido
     class << self
       # 棋譜ファイルのコンテンツを読み込む
       def parse(str, **options)
-        parser = support_parsers.find { |e| e.resolved?(str) }
+        parser = support_parsers.find { |e| e.accept?(str) }
         parser or raise FileFormatError, "棋譜のフォーマットが不明です : #{str}"
         parser.parse(str, options)
       end
@@ -113,7 +113,7 @@ module Bushido
           parse(Pathname(file).expand_path.read, options)
         end
 
-        def resolved?(source)
+        def accept?(source)
           raise NotImplementedError, "#{__method__} is not implemented"
         end
       end
