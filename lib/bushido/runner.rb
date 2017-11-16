@@ -14,8 +14,8 @@ module Bushido
           (?<same>同)?
           \p{blank}*
           (?<piece>#{Piece.all_names.join("|")})
-          (?<motion1>右上|右引|右|左上|左引|左|直|引|寄|上)?
-          (?<motion2>不成|成|打)?
+          (?<motion1>[左右][上引]?|[直引寄上])?
+          (?<motion2>不?成|打)?
           (\((?<origin_point>.*)\))?
         /ox
       end
