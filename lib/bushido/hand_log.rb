@@ -18,7 +18,7 @@ module Bushido
     end
 
     # "７六歩" のようなCPUに優しいKIF形式の表記で返す
-    def to_s_kif(options = {})
+    def to_s_kif(**options)
       options = {
         with_mark: false,
       }.merge(options)
@@ -42,7 +42,7 @@ module Bushido
     end
 
     # "58金右" のような人間向けの表記を返す
-    def to_s_ki2(options = {})
+    def to_s_ki2(**options)
       Ki2FormatConv.new(self, options).to_s
     end
 
@@ -56,6 +56,7 @@ module Bushido
         @options = {
           with_mark: false,
           strike_force: false, # 「打」を省略できるときでも「打」を明示する
+          same_suffix: "",
         }.merge(options)
       end
 
@@ -66,7 +67,7 @@ module Bushido
           s << @hand_log.player.location.mark
         end
         if @hand_log.point_same_p
-          s << "同"
+          s << "同" + @options[:same_suffix]
         else
           s << @hand_log.point.name
         end
