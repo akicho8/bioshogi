@@ -72,8 +72,22 @@ module Bushido
         end
         s << @hand_log.piece.some_name(@hand_log.promoted)
 
-        # motion1
-        s << motin1_get
+        # motion1 / motion2 で分けない方がよいな
+        if @hand_log.strike_trigger
+          # 日本将棋連盟 棋譜の表記方法
+          # https://www.shogi.or.jp/faq/kihuhyouki.html
+          #
+          # > 到達地点に盤上の駒が移動することも、持駒を打つこともできる場合
+          # > 盤上の駒が動いた場合は通常の表記と同じ
+          # > 持駒を打った場合は「打」と記入
+          # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
+          if @options[:strike_force] || @hand_log.candidate.present?
+            s << "打"
+          end
+        else
+          # "打" ではないときだけ
+          s << motin1_get
+        end
 
         # motion2
         if true
@@ -89,19 +103,6 @@ module Bushido
                   end
                 end
               end
-            end
-          end
-
-          # 日本将棋連盟 棋譜の表記方法
-          # https://www.shogi.or.jp/faq/kihuhyouki.html
-          #
-          # > 到達地点に盤上の駒が移動することも、持駒を打つこともできる場合
-          # > 盤上の駒が動いた場合は通常の表記と同じ
-          # > 持駒を打った場合は「打」と記入
-          # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
-          if @hand_log.strike_trigger
-            if @options[:strike_force] || @hand_log.candidate.present?
-              s << "打"
             end
           end
         end
@@ -204,6 +205,14 @@ module Bushido
       # 移動元
       def ox
         @ox ||= @hand_log.origin_point.x.value
+        # rescue
+        #   p "error"
+        #   p @hand_log.strike_trigger
+        #   p @hand_log.point.name
+        #   p @hand_log.piece.name
+        #   p @hand_log.candidate.collect{|e|e.name}
+        #   puts @hand_log.player.mediator
+        #   exit
       end
 
       def oy

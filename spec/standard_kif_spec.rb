@@ -162,13 +162,22 @@ module Bushido
         read_spec(@params.merge(exec: "５五銀")).should == ["５五銀打", "５五銀"]
       end
 
-      it "盤上の駒の移動と重複するため明示" do
+      it "盤上の駒1つ移動と重複するため明示" do
         @params.update({init: [
               "______", "______", "______",
               "______", "______", "______",
               "______", "５六銀", "______",
             ]})
         read_spec(@params.merge(exec: "５五銀打")).should == ["５五銀打", "５五銀打"]
+      end
+
+      it "盤上の駒2つ以上の移動と重複するため明示(盤上の重複の解決処理と打の関係)" do
+        @params.update({init: [
+              "______", "______", "______",
+              "______", "______", "______",
+              "６六銀", "５六銀", "______",
+            ]})
+        read_spec(@params.merge(append_pieces: "銀", exec: "５五銀打")).should == ["５五銀打", "５五銀打"]
       end
     end
 
