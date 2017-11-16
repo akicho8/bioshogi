@@ -57,7 +57,7 @@ RSpec.configure do |config|
     end
 
     def read_spec(*args)
-      elems = player_test(*args).runner.hand_log.to_kif_ki2
+      player_test(*args).runner.hand_log.to_kif_ki2
     end
 
     def board_parse_test(source)
