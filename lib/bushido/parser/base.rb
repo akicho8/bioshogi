@@ -29,7 +29,7 @@ module Bushido
       # 盤面テキストか？
       # private にしていないのは他のクラスでも直接使っているため
       def board_format?(source)
-        source_normalize(source).match?(/^\s*[\+\|]/)
+        source_normalize(source).match?(/^\p{blank}*[\+\|]/)
       end
 
       # ほぼ標準の柿木フォーマットのテーブルの読み取り
