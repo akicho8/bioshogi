@@ -1,6 +1,7 @@
 # -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
 
 require "time"
+require "kconv"
 
 module Bushido
   module Parser
@@ -189,12 +190,19 @@ module Bushido
       end
 
       concerning :ConverterMethods do
-        def to_kif
+        def to_kif(**options)
+          options = {
+            length: 12,
+            number_width: 4,
+          }.merge(options)
+
           out = ""
           header_write(out)
           out << "手数----指手---------消費時間--\n"
-          out << mediator.kif_hand_logs.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
-          out << "#{mediator.kif_hand_logs.size.next} 投了\n"
+          out << mediator.hand_logs.collect.with_index(1).collect {|e, i|
+            "%*d %s (00:00/00:00:00)\n" % [options[:number_width], i, mb_ljust(e.to_s_kif, options[:length])]
+          }.join
+          out << "%*d %s\n" % [options[:number_width], mediator.hand_logs.size.next, "投了"]
           out
         end
 
@@ -220,13 +228,24 @@ module Bushido
         # >> ▲同馬 ▽５九飛打 ▲６六桂打 ▽７三金直 ▲５二角打 ▽６四金直 ▲同馬 ▽同金 ▲６五歩打 ▽４八角打
         # >> ▲６四歩 ▽６六角成 ▲７三金打
         # >> まで113手で先手の勝ち
-        def to_ki2
+        def to_ki2(**options)
+          options = {
+            cols: 10,
+            length: 11,
+            same_suffix: "　",
+          }.merge(options)
+
           out = ""
           if header.present?
             header_write(out)
             out << "\n"
           end
-          out << mediator.ki2_hand_logs.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
+          out << mediator.hand_logs.group_by.with_index{|_, i| i / options[:cols] }.values.collect { |v|
+            v.collect { |e|
+              s = e.to_s_ki2(with_mark: true, same_suffix: options[:same_suffix])
+              mb_ljust(s, options[:length])
+            }.join.strip + "\n"
+          }.join
           out << mediator.last_message
           out
         end
@@ -246,6 +265,17 @@ module Bushido
               mediator.execute(info[:input])
             end
           end
+        end
+
+        # mb_ljust("あ", 3)               # => "あ "
+        # mb_ljust("1", 3)                # => "1  "
+        # mb_ljust("123", 3)              # => "123"
+        def mb_ljust(s, w)
+          n = w - s.toeuc.bytesize
+          if n < 0
+            n = 0
+          end
+          s + " " * n
         end
       end
     end
