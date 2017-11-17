@@ -11,6 +11,7 @@ puts Parser.parse("７六歩 ３四歩").to_csa # => nil
 # >> P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
 # >> P8 * +KA *  *  *  *  * +HI * 
 # >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+# >> +
 # >> +7677FU
 # >> -3433FU
 # >> %TORYO

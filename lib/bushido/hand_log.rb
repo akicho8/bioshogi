@@ -49,10 +49,12 @@ module Bushido
     def to_s_csa(**options)
       s = ""
       s << @player.location.csa_sign
-      s << @point.number_format
       if @origin_point
         s << @origin_point.number_format
+      else
+        s << "00"               # 駒台
       end
+      s << @point.number_format
       s << @piece.some_name2(@promoted)
       s
     end
