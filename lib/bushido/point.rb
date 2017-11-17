@@ -60,7 +60,7 @@ module Bushido
       end
 
       def regexp
-        /#{Position::Hpos.regexp}#{Position::Vpos.regexp}/o
+        /[一二三四五六七八九１-９1-9]{2}/
       end
     end
 

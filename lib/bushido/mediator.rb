@@ -4,10 +4,6 @@
 module Bushido
   class Mediator
     concerning :PlayerSelector do
-      included do
-        attr_accessor :players, :counter
-      end
-
       class_methods do
         # 先手後手が座った状態で開始
         def start
@@ -16,6 +12,10 @@ module Bushido
           mediator
         end
       end
+
+      attr_accessor :players, :counter
+
+      alias turn_max counter
 
       def initialize
         super
@@ -131,7 +131,7 @@ module Bushido
       def execute(str)
         Array.wrap(str).each do |str|
           if str == "投了"
-            return
+            break
           end
           current_player.execute(str)
           @counter += 1

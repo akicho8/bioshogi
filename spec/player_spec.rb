@@ -2,6 +2,12 @@ require_relative "spec_helper"
 
 module Bushido
   describe Player do
+    it "座標を漢字・全角数字・半角数字のみでも指定できる" do
+      player_test2(init: "五五歩", exec: "五四歩").should == ["▲５四歩"]
+      player_test2(init: "55歩", exec: "54歩").should == ["▲５四歩"]
+      player_test2(init: "５５歩", exec: "５４歩").should == ["▲５四歩"]
+    end
+
     it "持駒を参照する" do
       player_test.piece_fetch(Piece["歩"]).name.should == "歩"
     end
@@ -380,5 +386,6 @@ EOT
     #   # mediator.player_b.board.present?.should == true
     #   # mediator.player_b.board.to_s_soldiers.should == "１二歩" # ← こうなるのが問題
     # end
+
   end
 end

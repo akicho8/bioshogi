@@ -102,7 +102,6 @@ module Bushido
       cattr_accessor(:_units)     { "９８７６５４３２１" }
       cattr_accessor(:_arrow)             { :last } # ←左方向に増加
       cattr_accessor(:_promotable_size)   { nil }
-      cattr_accessor(:regexp)             { /[１-９1-9]/ }
 
       def self.parse(arg)
         if arg.kind_of?(String)
@@ -122,7 +121,6 @@ module Bushido
       cattr_accessor(:_units)     { "一二三四五六七八九" }
       cattr_accessor(:_arrow)             { :first } # 右方向に増加→
       cattr_accessor(:_promotable_size)   { 3 }      # 相手の陣地の成れる縦幅
-      cattr_accessor(:regexp)             { /[一二三四五六七八九１-９1-9]/ }
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)

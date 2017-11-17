@@ -5,10 +5,6 @@ module Bushido
   class Runner
     class << self
       def input_regexp
-        /\A#{input_regexp2}/o
-      end
-
-      def input_regexp2
         /
           (?<point>#{Point.regexp})?
           (?<same>同)?
@@ -16,7 +12,7 @@ module Bushido
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右][上引]?|[直引寄上])?
           (?<motion2>不?成|打)?
-          (\((?<origin_point>.*)\))?
+          (\((?<origin_point>\d{2})\))?
         /ox
       end
     end
@@ -129,7 +125,8 @@ module Bushido
 
     def read_point
       @point = nil
-      if @md[:same] == "同"
+      case
+      when @md[:same] == "同"
         if @player.mediator && hand_log = @player.mediator.hand_logs.last
           @point = hand_log.point
         end
@@ -142,8 +139,10 @@ module Bushido
             raise SamePointDiff, "「同」は#{@point}を意味しますが、前置した座標は「#{prefix_pt}」です (入力:#{@source.inspect})"
           end
         end
-      else
+      when @md[:point]
         @point = Point.parse(@md[:point])
+      else
+        raise PointSyntaxError, "移動先の座標が不明です : #{@source.inspect}"
       end
     end
 

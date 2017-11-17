@@ -154,20 +154,20 @@ module Bushido
 
       def header_read
         normalized_source.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
-          @header[key] = value
+          header[key] = value
         end
 
         ["開始日時", "終了日時"].each do |e|
-          if v = @header[e].presence
-            @header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
+          if v = header[e].presence
+            header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
           end
         end
       end
 
       def board_read
         if md = normalized_source.match(/^後手の持駒#{header_sep}.*?\n(?<board>.*)^先手の持駒#{header_sep}/om)
-          @header[:board_source] = md[:board]
-          @header[:board] = Parser.board_parse(md[:board])
+          header[:board_source] = md[:board]
+          header[:board] = Parser.board_parse(md[:board])
         end
       end
 
@@ -199,7 +199,7 @@ module Bushido
           }.merge(options)
 
           out = ""
-          header_write(out)
+          out << header_part_string
           out << "手数----指手---------消費時間--\n"
           out << mediator.hand_logs.collect.with_index(1).collect {|e, i|
             "%*d %s (00:00/00:00:00)\n" % [options[:number_width], i, mb_ljust(e.to_s_kif, options[:length])]
@@ -239,7 +239,7 @@ module Bushido
 
           out = ""
           if header.present?
-            header_write(out)
+            out << header_part_string
             out << "\n"
           end
 
@@ -268,26 +268,24 @@ module Bushido
             out << list2.collect { |e| e.join(" ").strip + "\n" }.join
           end
 
-          out << mediator.last_message + "\n"
+          out << mediator.judgment_message + "\n"
           out
-        end
-
-        private
-
-        def header_write(io)
-          if header.present?
-            io << header.collect { |key, value| "#{key}：#{value}\n" }.join
-          end
         end
 
         def mediator
           @mediator ||= Mediator.new.tap do |mediator|
-            mediator.board_reset(header["手合割"])
+            mediator.board_reset(header["手合割"]) # FIXME: 盤面が指定されているとき、それを指定する
             move_infos.each do |info|
               mediator.execute(info[:input])
             end
           end
         end
+
+        def header_part_string
+          header.collect { |key, value| "#{key}：#{value}\n" }.join
+        end
+
+        private
 
         # mb_ljust("あ", 3)               # => "あ "
         # mb_ljust("1", 3)                # => "1  "

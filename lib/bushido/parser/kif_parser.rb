@@ -34,7 +34,7 @@ module Bushido
         board_read
         normalized_source.lines.each do |line|
           comment_read(line)
-          if md = line.match(/^\s*(?<turn_number>\d+)\s+(?<input>\S+)(\s+\(\s*(?<spent_time>.*)\))?/)
+          if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{Runner.input_regexp}|投了)(\p{blank}+\(\p{blank}*(?<spent_time>.*)\))?/o)
             location = Location["#{md[:turn_number]}手目"]
             input = md[:input].remove(/\p{blank}/)
             @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
