@@ -5,6 +5,8 @@ require "kconv"                 # for toeuc
 
 require "active_support/core_ext/array/grouping" # for in_groups_of
 
+require_relative "header_info"
+
 module Bushido
   module Parser
     class << self
@@ -192,6 +194,60 @@ module Bushido
       end
 
       concerning :ConverterMethods do
+        # CSA標準棋譜ファイル形式
+        # http://www.computer-shogi.org/protocol/record_v22.html
+        #
+        #   V2.2
+        #   N+久保利明 王将
+        #   N-都成竜馬 四段
+        #   $EVENT:王位戦
+        #   $SITE:関西将棋会館
+        #   $START_TIME:2017/11/16 10:00:00
+        #   $END_TIME:2017/11/16 19:04:00
+        #   $OPENING:相振飛車
+        #   P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+        #   P2 * -HI *  *  *  *  * -KA *
+        #   P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+        #   P4 *  *  *  *  *  *  *  *  *
+        #   P5 *  *  *  *  *  *  *  *  *
+        #   P6 *  *  *  *  *  *  *  *  *
+        #   P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+        #   P8 * +KA *  *  *  *  * +HI *
+        #   P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+        #   +
+        #   +7776FU
+        #   -3334FU
+        #   %TORYO
+        #
+        def to_csa(**options)
+          options = {
+          }.merge(options)
+
+          out = ""
+          out << "V2.2\n"
+
+          out << HeaderInfo.collect { |e|
+            if v = header[e.kif_key].presence
+              e.csa_key + v + "\n"
+            end
+          }.join
+
+          obj = Mediator.new
+          obj.board_reset(header["手合割"])
+          out << obj.board.to_csa
+
+          # 手番
+          out << Location[:black].csa_sign + "\n"
+
+          out << mediator.hand_logs.collect { |e|
+            e.to_s_csa + "\n"
+          }.join
+
+          out << "%TORYO" + "\n"
+
+          out
+        end
+
         def to_kif(**options)
           options = {
             length: 12,
@@ -208,29 +264,7 @@ module Bushido
           out
         end
 
-        # >> 開始日時：2017/11/11 10:00:00
-        # >> 終了日時：2017/11/11 17:22:00
-        # >> 棋戦：女流王座戦
-        # >> 場所：大阪・芝苑
-        # >> 手合割：平手
-        # >> 先手：加藤桃子 女王
-        # >> 後手：里見香奈 女流王座
-        # >> 戦型：ゴキゲン中飛車
-        # >>
-        # >> ▲２六歩 ▽３四歩 ▲２五歩 ▽３三角 ▲７六歩 ▽４二銀 ▲４八銀 ▽５四歩 ▲６八玉 ▽５五歩
-        # >> ▲３六歩 ▽５二飛 ▲３七銀 ▽５三銀 ▲４六銀 ▽４四銀 ▲５八金右 ▽６二玉 ▲７八玉 ▽７二玉
-        # >> ▲６六歩 ▽８二玉 ▲６七金 ▽７二銀 ▲７七角 ▽９四歩 ▲８八玉 ▽９五歩 ▲９八香 ▽８四歩
-        # >> ▲９九玉 ▽８三銀 ▲８八銀 ▽７二金 ▲６五歩 ▽７四歩 ▲６六金 ▽７三桂 ▲８六角 ▽５一飛
-        # >> ▲７八飛 ▽８五歩 ▲５九角 ▽４二角 ▲７九金 ▽３三桂 ▲７五歩 ▽同歩 ▲同金 ▽同角
-        # >> ▲同飛 ▽７四歩打 ▲７六飛 ▽７五金打 ▲７八飛 ▽５六歩 ▲同歩 ▽６五金 ▲５五歩 ▽５六歩打
-        # >> ▲２六角 ▽１四歩 ▲６二歩打 ▽５二金 ▲６一歩成 ▽同飛 ▲５四歩 ▽６六金 ▲６八飛 ▽７六金
-        # >> ▲７七歩打 ▽７五金 ▲５八飛 ▽６六金 ▲６八飛 ▽６五金 ▲３二角打 ▽８六歩 ▲同歩 ▽３五歩
-        # >> ▲２三角成 ▽６四歩 ▲３五歩 ▽２一飛 ▲３四馬 ▽９二香 ▲４八角 ▽９一飛 ▲２四歩 ▽７五金
-        # >> ▲５六馬 ▽８四歩打 ▲７五角 ▽同歩 ▲６四飛 ▽６三金左 ▲６八飛 ▽６五角打 ▲同飛 ▽同桂
-        # >> ▲同馬 ▽５九飛打 ▲６六桂打 ▽７三金直 ▲５二角打 ▽６四金直 ▲同馬 ▽同金 ▲６五歩打 ▽４八角打
-        # >> ▲６四歩 ▽６六角成 ▲７三金打
-        # >> まで113手で先手の勝ち
-        def to_ki2(**options)
+                                                                                                                                                                                        def to_ki2(**options)
           options = {
             cols: 10,
             # length: 11,

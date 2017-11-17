@@ -37,6 +37,10 @@ module Bushido
       "#{@player.location.varrow}#{piece_current_name}"
     end
 
+    def to_csa
+      "#{@player.location.csa_sign}#{@piece.some_name2(@promoted)}"
+    end
+
     def inspect
       "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
     end

@@ -21,7 +21,7 @@ module Bushido
       if str.kind_of?(MiniSoldier)
         return str
       end
-      md = str.match(/\A(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/)
+      md = str.match(/\A(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/) # FIXME: 他のところと同様に厳密にチェックする
       md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
       Piece.promoted_fetch(md[:piece]).merge(point: Point.parse(md[:point]))
     end
@@ -34,6 +34,10 @@ module Bushido
 
     def some_name
       self[:piece].some_name(self[:promoted])
+    end
+
+    def some_name2
+      self[:piece].some_name2(self[:promoted])
     end
 
     # 現状の状態から成れるか？

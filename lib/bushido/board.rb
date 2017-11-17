@@ -138,6 +138,10 @@ module Bushido
       KakikiFormat.new(self).to_s
     end
 
+    def to_csa
+      CsaBoardFormat.new(self).to_s
+    end
+
     private
 
     # 盤面の文字列化

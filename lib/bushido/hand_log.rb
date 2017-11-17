@@ -46,6 +46,17 @@ module Bushido
       Ki2FormatConv.new(self, options).to_s
     end
 
+    def to_s_csa(**options)
+      s = ""
+      s << @player.location.csa_sign
+      s << @point.number_format
+      if @origin_point
+        s << @origin_point.number_format
+      end
+      s << @piece.some_name2(@promoted)
+      s
+    end
+
     def to_h
       [:point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p].inject({}) {|a, key| a.merge(key => send(key)) }
     end
