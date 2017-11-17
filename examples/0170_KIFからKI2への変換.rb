@@ -13,7 +13,7 @@ info.move_infos.each do |info|
   mediator.execute(info[:input])
 end
 out << mediator.ki2_hand_logs.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
-out << mediator.last_message
+out << mediator.judgment_message
 puts out
 
 # >> 開始日時：2017/11/11 10:00:00

@@ -167,7 +167,7 @@ module Bushido
         s
       end
 
-      def last_message
+      def judgment_message
         "まで#{@counter}手で#{reverse_player.location.name}の勝ち"
       end
     end

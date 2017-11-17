@@ -6,6 +6,7 @@ module Bushido
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute(["７六歩", "３四歩"])
+      mediator.judgment_message == "まで2手で後手の勝ち"
       mediator.to_s.should == <<-EOT
 3手目: ▲先手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
