@@ -133,10 +133,12 @@ module Bushido
         unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
+
+        # 記事などで改ページしたとき、明示的に "同２四歩" と書く場合もあるとのこと
         if @md[:point]
           prefix_pt = Point.parse(@md[:point])
           if Point.parse(@md[:point]) != @point
-            raise SamePointDiff, "「同」は#{@point}を意味しますが、前置した座標は「#{prefix_pt}」です (入力:#{@source.inspect})"
+            raise SamePointDiff, "同は#{@point}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
           end
         end
       when @md[:point]
