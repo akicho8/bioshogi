@@ -355,7 +355,7 @@ module Bushido
         errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てません)")
       end
       if Movabler.simple_movable_infos(self, mini_soldier).empty?
-        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
+        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier.to_s}成」の間違いの可能性があります。")
       end
       errors
     end

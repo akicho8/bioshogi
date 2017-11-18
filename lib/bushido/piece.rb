@@ -145,13 +145,13 @@ module Bushido
 
       # 成ってないときの名前たち
       def basic_names
-        [name, basic_alias, csa_name1].flatten.compact
+        [name, basic_alias].flatten.compact
       end
 
       # 成ったときの名前たち
       # 「キーの大文字」を成名としているのはおまけ
       def promoted_names
-        [promoted_name, promoted_alias, csa_name2].flatten.compact
+        [promoted_name, promoted_alias].flatten.compact
       end
     end
 

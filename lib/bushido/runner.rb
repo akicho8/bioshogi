@@ -6,6 +6,7 @@ module Bushido
     class << self
       def input_regexp
         Regexp.union(input_regexp1, input_regexp2)
+        # input_regexp1
       end
 
       def input_regexp1
@@ -21,10 +22,13 @@ module Bushido
       end
 
       def input_regexp2
+        csa_names1 = Piece.collect{|e|e.csa_name1}.compact.join("|")
+        csa_names2 = Piece.collect{|e|e.csa_name2}.compact.join("|")
+
         /
-          (?<origin_point>#{Point.regexp})
-          (?<point>#{Point.regexp})
-          (?<piece>#{Piece.all_names.join("|")})
+          (?<csa_from>[0-9]{2}) # 00 = 駒台
+          (?<csa_to>[1-9]{2})
+          ((?<csa_basic_piece>#{csa_names1})|(?<csa_promoted_piece>#{csa_names2}))
         /ox
       end
     end
@@ -43,10 +47,51 @@ module Bushido
     end
 
     def execute(str)
+      @origin_point = nil
+      @done = false
+      @candidate = nil
+      @strike_trigger = nil
+
       @source = str
+
       @md = @source.match(self.class.input_regexp)
       unless @md
         raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{self.class.input_regexp.inspect} にマッチしません)"
+      end
+      @md = @md.named_captures.symbolize_keys
+
+      if @md[:csa_basic_piece] || @md[:csa_promoted_piece]
+        # p @source
+        # p self.class.input_regexp2
+        # p @source.match(self.class.input_regexp2)
+        if @md[:csa_from] == "00"
+          @md[:csa_from] = nil
+          @md[:motion2] = "打"
+        end
+
+        if @md[:csa_from]
+          @md[:origin_point] = @md[:csa_from]
+        end
+
+        @md[:point] = @md[:csa_to]
+
+        if @md[:csa_basic_piece]
+          # 普通の駒
+          v = Piece.find{|e|e.csa_name1 == @md[:csa_basic_piece]}
+          @md[:piece] = v.name
+        end
+
+        if @md[:csa_promoted_piece]
+          # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
+          # だから移動元の駒の情報で判断するしかない
+          v = Piece.find{|e|e.csa_name2 == @md[:csa_promoted_piece]}
+          @md[:piece] = v.name
+
+          v = @player.board[@md[:origin_point]] or raise MustNotHappen
+          unless v.promoted?
+            @md[:motion2] = "成"
+          end
+        end
       end
 
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
@@ -66,9 +111,6 @@ module Bushido
       end
 
       @strike_trigger = @md[:motion2].to_s.include?("打")
-      @origin_point = nil
-      @done = false
-      @candidate = nil
 
       # kif → ki2 変換するときのために @candidate は必要
       # 指定の場所に来れる盤上の駒に絞る
