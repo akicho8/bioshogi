@@ -6,9 +6,14 @@ module Bushido
     attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
 
     def initialize(attrs)
+      # FIXME: こんなんやるんなら ActiveModel でいいんじゃね？
       attrs.each do |k, v|
         instance_variable_set("@#{k}", v)
       end
+
+      raise MustNotHappen, "成駒を打った" if @strike_trigger && @promoted
+      raise MustNotHappen, "打つと同時に成った" if @strike_trigger && @promote_trigger
+      raise MustNotHappen, "成駒をさらに成った" if @promoted && @promote_trigger
     end
 
     # 両方返す
@@ -55,7 +60,7 @@ module Bushido
         s << "00"               # 駒台
       end
       s << @point.number_format
-      s << @piece.some_name2(@promoted)
+      s << @piece.some_name2(@promoted || @promote_trigger)
       s
     end
 
