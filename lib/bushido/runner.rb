@@ -87,7 +87,7 @@ module Bushido
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
-              if @player.piece_fetch(@piece)
+              if @player.piece_lookup(@piece)
                 @strike_trigger = true
                 @origin_point = nil
                 soldier_put
@@ -160,7 +160,7 @@ module Bushido
 
       if @soldiers.empty?
         # 「打」を省略している場合、持駒から探す
-        if @player.piece_fetch(@piece)
+        if @player.piece_lookup(@piece)
           if @promote_trigger
             raise IllegibleFormat, "「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている系のエラーです : '#{@source.inspect}'"
           end
@@ -168,7 +168,7 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
-          soldier = Soldier.new(player: @player, piece: @player.pick_out(@piece), promoted: @promoted)
+          soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted)
           @player.put_on_with_valid(@point, soldier)
           @player.soldiers << soldier
           @done = true
@@ -249,7 +249,7 @@ module Bushido
     end
 
     def soldier_put
-      soldier = Soldier.new(player: @player, piece: @player.pick_out(@piece), promoted: @promoted)
+      soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted)
       @player.put_on_with_valid(@point, soldier)
       @player.soldiers << soldier
       @done = true

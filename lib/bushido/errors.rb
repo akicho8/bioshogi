@@ -27,6 +27,9 @@ module Bushido
   class PieceNotFound < BushidoError
   end
 
+  class HoldPieceNotFound < BushidoError
+  end
+
   class PieceAlredyExist < BushidoError
   end
 

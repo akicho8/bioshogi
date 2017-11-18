@@ -9,7 +9,7 @@ module Bushido
     end
 
     it "持駒を参照する" do
-      player_test.piece_fetch(Piece["歩"]).name.should == "歩"
+      player_test.piece_lookup(Piece["歩"]).name.should == "歩"
     end
 
     describe "駒を配る" do
@@ -41,7 +41,7 @@ module Bushido
           expect { player_test2(init: ["５三銀", "５三銀"]) }.to raise_error(PieceAlredyExist)
         end
         it "飛車は二枚持ってないので二枚配置できない" do
-          expect { player_test2(init: ["５二飛", "５二飛"]) }.to raise_error(PieceNotFound)
+          expect { player_test2(init: ["５二飛", "５二飛"]) }.to raise_error(HoldPieceNotFound)
         end
       end
     end
@@ -287,7 +287,7 @@ EOT
 
     it "piece_plot" do
       player = Bushido::Mediator.new.black_player
-      player.deal
+      player.pieces_add
       player.piece_plot
     end
 

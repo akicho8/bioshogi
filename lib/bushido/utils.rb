@@ -83,8 +83,8 @@ module Bushido
 
     # 持駒表記変換 (コード → 人間表記)
     # @example
-    #  Utils.hold_pieces_array_to_str([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
-    def hold_pieces_array_to_str(pieces)
+    #  Utils.hold_pieces_a_to_s([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
+    def hold_pieces_a_to_s(pieces)
       pieces.group_by{|e|e.key}.collect{|key, pieces|
         count = ""
         if pieces.size > 1
@@ -96,8 +96,8 @@ module Bushido
 
     # 持駒表記変換 (人間表記 → コード)
     # @example
-    #   Utils.hold_pieces_str_to_array("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
-    def hold_pieces_str_to_array(str)
+    #   Utils.hold_pieces_s_to_a("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
+    def hold_pieces_s_to_a(str)
       if str.kind_of?(String)
         str = str.tr("〇一二三四五六七八九", "0-9")
         infos = str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect{|piece, count|

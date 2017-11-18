@@ -8,7 +8,7 @@ module Bushido
         # 先手後手が座った状態で開始
         def start
           mediator = new
-          mediator.players.each(&:deal)
+          mediator.players.each(&:pieces_add)
           mediator
         end
       end
@@ -65,8 +65,8 @@ module Bushido
         @players.collect(&:pieces_clear)
       end
 
-      # def deal
-      #   @players.each(&:deal)
+      # def pieces_add
+      #   @players.each(&:pieces_add)
       # end
 
       # N手目のN
@@ -109,10 +109,10 @@ module Bushido
 
       # 一般の持駒表記で両者に駒を配る
       # @example
-      #   mediator.pieces_set_from_human_format_string("▲歩2 飛 △歩二飛 ▲金")
-      def pieces_set_from_human_format_string(str)
+      #   mediator.pieces_set("▲歩2 飛 △歩二飛 ▲金")
+      def pieces_set(str)
         Utils.triangle_hold_pieces_str_to_hash(str).each do |location, pieces_str|
-          player_at(location).pieces_set_from_human_format_string(pieces_str)
+          player_at(location).pieces_set(pieces_str)
         end
       end
     end
@@ -314,7 +314,7 @@ module Bushido
           mediator.initial_soldiers(params[:init2], from_piece: false)
         end
         if params[:pinit]
-          mediator.pieces_set_from_human_format_string(params[:pinit])
+          mediator.pieces_set(params[:pinit])
         end
         if params[:pieces_clear]
           mediator.pieces_clear
@@ -332,7 +332,7 @@ module Bushido
         }.merge(params)
         new.tap do |o|
           o.initial_soldiers(params[:init], from_piece: false)
-          o.pieces_set_from_human_format_string(params[:pinit])
+          o.pieces_set(params[:pinit])
         end
       end
 
@@ -360,7 +360,7 @@ module Bushido
 
       if @pattern[:pieces]
         Location.each do |loc|
-          players[loc.index].deal(@pattern[:pieces][loc.key])
+          players[loc.index].pieces_add(@pattern[:pieces][loc.key])
         end
       end
     end

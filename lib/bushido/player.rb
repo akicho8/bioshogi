@@ -17,8 +17,8 @@ module Bushido
       #   @board = v
       # end
 
-      if params[:deal]
-        deal
+      if params[:pieces_add]
+        pieces_add
       end
     end
 
@@ -41,7 +41,7 @@ module Bushido
     def piece_plot
       location_soldiers = Utils.location_soldiers(location: location, key: "平手")
       location_soldiers.each do |info|
-        pick_out(info[:piece])
+        piece_pick_out(info[:piece])
         soldier = Soldier.new(info.merge(player: self))
         put_on_with_valid(info[:point], soldier)
         @soldiers << soldier
@@ -72,7 +72,7 @@ module Bushido
         # p options[:from_piece]
 
         if options[:from_piece]
-          pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          piece_pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
         soldier = Soldier.new(mini_soldier.merge(player: self))
         put_on_with_valid(mini_soldier[:point], soldier)
@@ -152,14 +152,10 @@ module Bushido
     end
 
     # 持駒関連
-    module Pieceable
-      extend ActiveSupport::Concern
-
+    # ここは駒台クラスとして一段下げる方法もある
+    concerning :Pieceable do
       included do
         attr_accessor :pieces
-      end
-
-      class_methods do
       end
 
       def initialize(*)
@@ -167,27 +163,26 @@ module Bushido
         @pieces = []
       end
 
-      # 必ず存在する持駒を参照する
-      def piece_fetch!(piece)
-        piece_fetch(piece) or raise PieceNotFound, "持駒に#{piece.name}がない\n#{board_with_pieces}"
-      end
+      # # 必ず存在する持駒を参照する
+      # def piece_fetch(piece)
+      #   piece_lookup(piece) or raise PieceNotFound, "持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
+      # end
 
       # 持駒を参照する
-      def piece_fetch(piece)
+      def piece_lookup(piece)
         @pieces.find { |e| e.key == piece.key }
       end
 
       # 持駒を取り出す
-      def pick_out(piece)
-        piece_fetch!(piece)
-        if index = @pieces.find_index { |e| e.key == piece.key }
-          @pieces.slice!(index)
-        end
+      def piece_pick_out(piece)
+        index = @pieces.find_index { |e| e.key == piece.key }
+        index or raise HoldPieceNotFound, "持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
+        @pieces.slice!(index)
       end
 
       # 持駒の名前一覧(表示・デバッグ用)
       def piece_names
-        pieces.collect(&:name).sort
+        @pieces.collect(&:name).sort
       end
 
       # 持駒を捨てる
@@ -198,41 +193,30 @@ module Bushido
       # 配布して持駒にする
       #
       #   player = Player.new
-      #   player.deal("飛 歩二")
+      #   player.pieces_add("飛 歩二")
       #   player.to_s_pieces # => "飛 歩二"
       #
-      def deal(str = "歩9角飛香2桂2銀2金2玉")
-        @pieces += Utils.hold_pieces_str_to_array(str)
+      def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
+        @pieces += Utils.hold_pieces_s_to_a(str)
       end
 
       # 持駒表記変換 (コード → 人間表記)
-      #   pieces_set_from_human_format_string("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
-      def pieces_set_from_human_format_string(str)
-        @pieces = Utils.hold_pieces_str_to_array(str)
-      end
-
-      # 持駒を文字列化したものをインポートする(未使用)
-      #   player.import_from_s_pieces("歩九 角 飛 香二 桂二 銀二 金二 玉")
-      def import_from_s_pieces(str)
-        @pieces = Utils.hold_pieces_str_to_array(str)
+      #   pieces_set("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
+      def pieces_set(str)
+        @pieces = Utils.hold_pieces_s_to_a(str)
       end
 
       # 持駒の文字列化
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
-        Utils.hold_pieces_array_to_str(pieces)
+        Utils.hold_pieces_a_to_s(@pieces)
       end
     end
 
     # 盤上の駒関連
-    module Soldierable
-      extend ActiveSupport::Concern
-
+    concerning :SoldierMethods do
       included do
         attr_accessor :soldiers, :complete_defense_names
-      end
-
-      class_methods do
       end
 
       def initialize(*)
@@ -346,29 +330,32 @@ module Bushido
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
       soldiers = board.pieces_of_vline(point.x)
-      soldiers = soldiers.find_all{|s|s.player == self}
-      soldiers = soldiers.find_all{|s|!s.promoted?}
-      soldiers = soldiers.find_all{|s|s.piece.key == :pawn}
-      soldiers
+      soldiers = soldiers.find_all { |s| s.player == self }
+      soldiers = soldiers.find_all { |s| !s.promoted? }
+      soldiers = soldiers.find_all { |s| s.piece.key == :pawn }
     end
 
     def put_on_with_valid(point, soldier, options = {})
       options = {
         validate: true,
       }.merge(options)
+
       if options[:validate]
-        get_errors(soldier.to_mini_soldier.merge(point: point)).each{|error|raise error}
+        get_errors(soldier.to_mini_soldier.merge(point: point)).each do |e|
+          raise e
+        end
       end
+
       board.put_on(point, soldier)
     end
 
     def get_errors(mini_soldier)
       errors = []
       if s = find_collisione_pawn(mini_soldier)
-        errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てない)")
+        errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てません)")
       end
       if Movabler.simple_movable_infos(self, mini_soldier).empty?
-        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則")
+        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier}はそれ以上動かせないので反則です")
       end
       errors
     end
@@ -391,13 +378,8 @@ module Bushido
       Movabler.movable_infos(self, mini_soldier, options)
     end
 
-    private
-
     # def side_soldiers_put_on(table)
     #   table.each{|info|initial_soldiers(info)}
     # end
-
-    include Pieceable
-    include Soldierable
   end
 end

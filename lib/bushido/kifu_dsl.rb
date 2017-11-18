@@ -97,7 +97,7 @@ module Bushido
       end
 
       def evaluate(context)
-        @value.each{|k, v|context.player_at(k).deal(v)}
+        @value.each{|k, v|context.player_at(k).pieces_add(v)}
       end
     end
 

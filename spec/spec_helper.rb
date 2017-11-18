@@ -32,10 +32,10 @@ RSpec.configure do |config|
       player = mediator.player_at(params[:player])
 
       if params[:initial_deal]
-        player.deal
+        player.pieces_add
       end
 
-      player.deal(params[:append_pieces])
+      player.pieces_add(params[:append_pieces])
 
       player.initial_soldiers(params[:init])
 
@@ -46,7 +46,7 @@ RSpec.configure do |config|
       Array.wrap(params[:exec]).each{|v|player.execute(v)}
 
       if v = params[:pinit]
-        player.pieces_set_from_human_format_string(v)
+        player.pieces_set(v)
       end
 
       player

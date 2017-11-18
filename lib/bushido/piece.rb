@@ -68,9 +68,9 @@ module Bushido
         end
 
         # 台上の持駒文字列をハッシュ配列化
-        #   hold_pieces_str_to_array("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
-        def hold_pieces_str_to_array(*args)
-          Utils.hold_pieces_str_to_array(*args)
+        #   hold_pieces_s_to_a("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
+        def hold_pieces_s_to_a(*args)
+          Utils.hold_pieces_s_to_a(*args)
         end
 
         private

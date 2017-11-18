@@ -33,14 +33,14 @@ module Bushido
 
       describe "プレイヤーのスコープ" do
         it "人間表記 → コード" do
-          Utils.hold_pieces_str_to_array("歩2 飛").should    == @pieces
-          Utils.hold_pieces_str_to_array("歩二 飛").should   == @pieces
-          Utils.hold_pieces_str_to_array("歩二飛").should    == @pieces
-          Utils.hold_pieces_str_to_array(" 歩二 飛 ").should == @pieces
-          Utils.hold_pieces_str_to_array(" 歩 二飛 ").should_not == @pieces
+          Utils.hold_pieces_s_to_a("歩2 飛").should    == @pieces
+          Utils.hold_pieces_s_to_a("歩二 飛").should   == @pieces
+          Utils.hold_pieces_s_to_a("歩二飛").should    == @pieces
+          Utils.hold_pieces_s_to_a(" 歩二 飛 ").should == @pieces
+          Utils.hold_pieces_s_to_a(" 歩 二飛 ").should_not == @pieces
         end
         it "コード → 人間表記" do
-          Utils.hold_pieces_array_to_str(@pieces).should == "歩二 飛"
+          Utils.hold_pieces_a_to_s(@pieces).should == "歩二 飛"
         end
       end
 

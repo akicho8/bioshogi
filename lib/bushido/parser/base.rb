@@ -138,6 +138,7 @@ module Bushido
         @header = {}
         @move_infos = []
         @first_comments = []
+        @board_source = nil
       end
 
       def default_options
@@ -159,17 +160,30 @@ module Bushido
           header[key] = value
         end
 
-        ["開始日時", "終了日時"].each do |e|
-          if v = header[e].presence
-            header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
+        # 正規化。別にしなくてもいい
+        if true
+          ["開始日時", "終了日時"].each do |e|
+            if v = header[e].presence
+              header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
+            end
+          end
+
+          Location.each do |e|
+            key = "#{e.name}の持駒"
+            if v = header[key]
+              v = Utils.hold_pieces_s_to_a(v)
+              v = Utils.hold_pieces_a_to_s(v)
+              header[key] = v
+            end
           end
         end
       end
 
       def board_read
+        # FIXME: 間にある前提ではなく、どこに書いていても拾えるようにしたい
         if md = normalized_source.match(/^後手の持駒#{header_sep}.*?\n(?<board>.*)^先手の持駒#{header_sep}/om)
-          header[:board_source] = md[:board]
-          header[:board] = Parser.board_parse(md[:board])
+          @board_source = md[:board]
+          # header[:board] = Parser.board_parse(md[:board]) # TODO: 使ってない
         end
       end
 
@@ -232,9 +246,11 @@ module Bushido
             end
           }.join
 
-          obj = Mediator.new
-          obj.board_reset(header["手合割"])
-          out << obj.board.to_csa
+          if true
+            obj = Mediator.new
+            obj.board_reset(@board_source || header["手合割"])
+            out << obj.board.to_csa
+          end
 
           # 手番
           out << Location[:black].csa_sign + "\n"
@@ -264,7 +280,7 @@ module Bushido
           out
         end
 
-                                                                                                                                                                                        def to_ki2(**options)
+        def to_ki2(**options)
           options = {
             cols: 10,
             # length: 11,
@@ -308,7 +324,35 @@ module Bushido
 
         def mediator
           @mediator ||= Mediator.new.tap do |mediator|
-            mediator.board_reset(header["手合割"]) # FIXME: 盤面が指定されているとき、それを指定する
+
+            # 手合割：平手　　
+            # 後手の持駒：飛二　角　銀二　桂四　香四　歩九　
+            #   ９ ８ ７ ６ ５ ４ ３ ２ １
+            # +---------------------------+
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
+            # | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
+            # +---------------------------+
+            # 先手の持駒：角　金四　銀二　歩九　
+
+            Location.each do |e|
+              if v = @header["#{e.name}の持駒"]
+                mediator.player_at(e).pieces_set(v)
+              end
+            end
+
+            if @board_source
+              mediator.board_reset(@board_source)
+            else
+              mediator.board_reset(header["手合割"])
+            end
+
             move_infos.each do |info|
               mediator.execute(info[:input])
             end
@@ -316,7 +360,26 @@ module Bushido
         end
 
         def header_part_string
-          header.collect { |key, value| "#{key}：#{value}\n" }.join
+          if @board_source
+            header["後手の持駒"] ||= nil
+            header["先手の持駒"] ||= nil
+          end
+
+          str = header.collect { |key, value|
+            "#{key}：#{value}\n"
+          }.join
+
+          # 盤面を埋め込む
+          # 「後手の持駒」がある前提にしているのはいまいちか
+          if true
+            if @board_source
+              obj = Mediator.new
+              obj.board_reset(@board_source)
+              str = str.gsub(/(後手の持駒：.*\n)/, '\1' + obj.board.to_s)
+            end
+          end
+
+          str
         end
 
         private
@@ -335,3 +398,5 @@ module Bushido
     end
   end
 end
+# ~> -:8:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:8:in `<main>'
