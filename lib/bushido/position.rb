@@ -3,18 +3,14 @@
 #
 module Bushido
   module Position
-    module Base
-      extend ActiveSupport::Concern
+    class Base
+      class_attribute :size
+      self.size = 9
 
-      included do
-        class_attribute :size
-        self.size = 9
+      attr_reader :value
+      private_class_method :new
 
-        attr_reader :value
-        private_class_method :new
-      end
-
-      class_methods do
+      class << self
         # 座標をパースする
         # @example
         #   Position::Hpos.parse("１").name # => "1"
@@ -97,11 +93,10 @@ module Bushido
       end
     end
 
-    class Hpos
-      include Base # FIXME: Base を継承して cattr_accessor を class_attribute に変更
-      cattr_accessor(:_units)     { "９８７６５４３２１" }
-      cattr_accessor(:_arrow)             { :last } # ←左方向に増加
-      cattr_accessor(:_promotable_size)   { nil }
+    class Hpos < Base
+      cattr_accessor(:_units)           { "９８７６５４３２１" }
+      cattr_accessor(:_arrow)           { :last } # ←左方向に増加
+      cattr_accessor(:_promotable_size) { nil }
 
       def self.parse(arg)
         if arg.kind_of?(String)
@@ -116,11 +111,10 @@ module Bushido
       end
     end
 
-    class Vpos
-      include Base
-      cattr_accessor(:_units)     { "一二三四五六七八九" }
-      cattr_accessor(:_arrow)             { :first } # 右方向に増加→
-      cattr_accessor(:_promotable_size)   { 3 }      # 相手の陣地の成れる縦幅
+    class Vpos < Base
+      cattr_accessor(:_units)           { "一二三四五六七八九" }
+      cattr_accessor(:_arrow)           { :first } # 右方向に増加→
+      cattr_accessor(:_promotable_size) { 3 }      # 相手の陣地の成れる縦幅
 
       # "(52)" の "2" に対応するため
       def self.parse(arg)
