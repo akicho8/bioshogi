@@ -37,20 +37,17 @@ module Bushido
 
     def initialize(player)
       @player = player
-
-      @point = nil
-      @piece = nil
-      @promoted = nil
-      @promote_trigger = nil
-      @origin_point = nil
-      @candidate = nil
     end
 
     def execute(str)
+      @point = nil
+      @piece = nil
       @origin_point = nil
+      @strike_trigger = nil
+      @promote_trigger = nil
+      @candidate = nil
       @done = false
       @candidate = nil
-      @strike_trigger = nil
 
       @source = str
 
@@ -84,11 +81,13 @@ module Bushido
         if @md[:csa_promoted_piece]
           # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
           # だから移動元の駒の情報で判断するしかない
-          v = Piece.find{|e|e.csa_name2 == @md[:csa_promoted_piece]}
-          @md[:piece] = v.name
+          _piece = Piece.find{|e|e.csa_name2 == @md[:csa_promoted_piece]}
 
           v = @player.board[@md[:origin_point]] or raise MustNotHappen
-          unless v.promoted?
+          if v.promoted?
+            @md[:piece] = v.piece.promoted_name
+          else
+            @md[:piece] = v.piece.name
             @md[:motion2] = "成"
           end
         end
@@ -99,7 +98,15 @@ module Bushido
 
       read_point
 
-      @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
+      begin
+        @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
+      rescue => error
+        p @md
+        p @md[:piece]
+        p error
+        p @source
+        raise
+      end
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。

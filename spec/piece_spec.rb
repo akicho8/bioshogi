@@ -25,9 +25,9 @@ module Bushido
       piece = Piece.get("飛")
       piece.name.should                 == "飛"
       piece.promoted_name.should        == "龍"
-      piece.basic_names.should          == ["飛", "HI"]
-      piece.promoted_names.should       == ["龍", "竜", "RY"]
-      piece.names.should                == ["飛", "HI", "龍", "竜", "RY"]
+      piece.basic_names.should          == ["飛"]
+      piece.promoted_names.should       == ["龍", "竜"]
+      piece.names.should                == ["飛", "龍", "竜"]
       piece.key.should             == :rook
       piece.promotable?.should          == true
       piece.select_vectors.should       == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]

@@ -67,6 +67,18 @@ module Bushido
           end
         end
 
+        # FIXME: 速くする
+        def csa_promoted_fetch(arg)
+          case
+          when piece = find{|e|e.csa_name1 == arg}
+            MiniSoldier[piece: piece]
+          when piece = find{|e|e.csa_name2 == arg}
+            MiniSoldier[piece: piece, promoted: true]
+          else
+            raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+          end
+        end
+
         # 台上の持駒文字列をハッシュ配列化
         #   hold_pieces_s_to_a("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
         def hold_pieces_s_to_a(*args)

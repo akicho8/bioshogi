@@ -112,7 +112,7 @@ module Bushido
               if md = e.match(/(?<mark>\S)(?<piece>\S{2})/)
                 location = Location[md[:mark]]
                 point = Point["#{x}#{y}"]
-                mini_soldier = Piece.promoted_fetch(md[:piece]).merge(point: point)
+                mini_soldier = Piece.csa_promoted_fetch(md[:piece]).merge(point: point)
                 players[location] << mini_soldier
               end
             end

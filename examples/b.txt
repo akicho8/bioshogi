@@ -1,66 +1,13 @@
-require "./example_helper"
-
-def assert_equal(a, b)
-  if a == b
-    puts "OK"
-  else
-    puts "ERROR"
-  end
-end
-
-files = Pathname.glob("../resources/竜王戦_ki2/*.ki2")
-files.each do |file|
-  puts file
-
-  info = Parser.parse_file(file)
-  kif_str = info.to_kif
-  ki2_str = info.to_ki2
-  csa_str = info.to_csa
-
-  # v = Parser.parse(kif_str)
-  # assert_equal(v.to_kif, kif_str)
-  # assert_equal(v.to_ki2, ki2_str)
-  # assert_equal(v.to_csa, csa_str)
-  # 
-  # v = Parser.parse(ki2_str)
-  # assert_equal(v.to_kif, kif_str)
-  # assert_equal(v.to_ki2, ki2_str)
-  # assert_equal(v.to_csa, csa_str)
-
-  # puts csa_str
-
-  v = Parser.parse(csa_str)
-  puts v.to_kif
-  # puts kif_str
-  
-  # assert_equal(v.to_kif, kif_str)
-  # assert_equal(v.to_ki2, ki2_str)
-  # assert_equal(v.to_csa, csa_str)
-
-  break
-end
-# >> ../resources/竜王戦_ki2/九段戦1950-01 大山板谷-2.ki2
-# >> 先手：大山康晴八段
-# >> 後手：板谷四郎八段
-# >> 棋戦：第01期九段戦
-# >> 場所：静岡県熱海温泉・和楽荘
 # >> 開始日時：1950/07/06 10:00:00
 # >> 終了日時：1950/07/07 03:20:00
+# >> 表題：三番勝負第２局
+# >> 棋戦：第01期九段戦
 # >> 戦型：矢倉
-# >> 後手の持駒：
-# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# >> +---------------------------+
-# >> |v香v桂v銀v金v玉v金v銀v桂v香|一
-# >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
-# >> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-# >> | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-# >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-# >> | 香 桂 銀 金 玉 金 銀 桂 香|九
-# >> +---------------------------+
-# >> 先手の持駒：
+# >> 持ち時間：８時間
+# >> 場所：静岡県熱海温泉・和楽荘
+# >> 掲載：讀賣新聞
+# >> 先手：大山康晴八段
+# >> 後手：板谷四郎八段
 # >> 手数----指手---------消費時間--
 # >>    1 ７六歩(77)   (00:00/00:00:00)
 # >>    2 ８四歩(83)   (00:00/00:00:00)
