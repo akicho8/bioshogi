@@ -1,9 +1,9 @@
 .well
-  - Bushido::StaticBoardInfo.find_all{|e|e[:defense_p] || e[:attack_p]}.each do |stock|
+  - Bushido::StaticBoardInfo.each do |stock|
     %a{href:"/tactics_and_enclosure##{stock[:key]}"}= "【#{stock[:key]}】"
 
 .text-center
-  - Bushido::StaticBoardInfo.find_all{|e|e[:defense_p] || e[:attack_p]}.each do |stock|
+  - Bushido::StaticBoardInfo.each do |stock|
     - mediator = Bushido::Mediator.new
     - mediator.board_reset("先手" => stock[:key], "後手" => stock[:key])
     %a{name:"#{stock[:key]}"}

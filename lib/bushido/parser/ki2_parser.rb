@@ -8,7 +8,7 @@ module Bushido
         def accept?(source)
           # source = Parser.source_normalize(source)
           # source.blank? || source.match?(/^\s*[#{Location.triangles}]/)
-          !KifParser.accept?(source)
+          !KifParser.accept?(source) && !CsaParser.accept?(source)
         end
       end
 

@@ -7,6 +7,8 @@ require "active_support/core_ext/array/grouping" # for in_groups_of
 
 require_relative "header_info"
 
+require_relative "board_parser"
+
 module Bushido
   module Parser
     class << self
@@ -33,81 +35,26 @@ module Bushido
 
       # 盤面テキストか？
       # private にしていないのは他のクラスでも直接使っているため
-      def board_format?(source)
-        source_normalize(source).match?(/^\p{blank}*[\+\|]/)
+      def board_format?(str)
+        support_board_parsers.find {|e| e.board_format?(str) }
       end
 
-      # ほぼ標準の柿木フォーマットのテーブルの読み取り
-      #
-      # @example
-      #   str = "
-      #     ９ ８ ７ ６ ５ ４ ３ ２ １
-      #   +---------------------------+
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
-      #   | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
-      #   | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-      #   +---------------------------+
-      #   "
-      #
-      #   Bushido::Parser.board_parse(str) # => {white: ["４二玉"], black: []}
-      #   Bushido::Parser.board_parse(str) # => {white: [<MiniSoldier ...>], black: []}
-      #
-      def board_parse(source)
-        cell_width = 3
-
-        lines = source_normalize(source).strip.lines.to_a
-
-        if lines.empty?
-          # board_parse("") の場合
-          return {}
-        end
-
-        s = lines.first
-        if s.include?("-")
-          if s.count("-").modulo(cell_width).nonzero?
-            raise SyntaxDefact, "横幅が#{cell_width}桁毎になっていません"
-          end
-          count = s.gsub("---", "-").count("-")
-          x_units = Position::Hpos.units.last(count)
-        else
-          x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
-        end
-
-        mds = lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
-        inlines = mds.collect { |v| v[:inline] }
-
-        players = Location.inject({}) do |a, location|
-          a.merge(location => [])
-        end
-
-        inlines.each.with_index do |s, y|
-          s.scan(/(.)(\S|\s{2})/).each_with_index do |(prefix, piece), x|
-            unless piece == "・" || piece.strip == ""
-              unless Piece.all_names.include?(piece)
-                raise SyntaxDefact, "駒の指定が違います : #{piece.inspect}"
-              end
-              location = Location[prefix] or raise SyntaxDefact, "先手後手のマークが違います : #{prefix}"
-              raise SyntaxDefact unless x_units[x] && y_units[y]
-              point = Point[[x_units[x], y_units[y]].join]
-              mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
-              players[location] << mini_soldier
-            end
-          end
-        end
-        players
+      # 盤面テキストか？
+      # private にしていないのは他のクラスでも直接使っているため
+      def board_parse(str, **options)
+        parser = board_format?(str)
+        parser or raise FileFormatError, "盤面のフォーマットが不明です : #{str}"
+        parser.new(str, options).parse
       end
 
       private
 
       def support_parsers
-        [KifParser, Ki2Parser]
+        [KifParser, CsaParser, Ki2Parser]
+      end
+
+      def support_board_parsers
+        [KixBoardParser, CsaBoardParser]
       end
     end
 
@@ -241,8 +188,8 @@ module Bushido
           out << "V2.2\n"
 
           out << HeaderInfo.collect { |e|
-            if v = header[e.kif_key].presence
-              e.csa_key + v + "\n"
+            if v = header[e.replace_key].presence
+              "#{e.csa_key}#{v}\n"
             end
           }.join
 
@@ -399,4 +346,4 @@ module Bushido
   end
 end
 # ~> -:8:in `require_relative': cannot infer basepath (LoadError)
-# ~> 	from -:8:in `<main>'
+# ~>    from -:8:in `<main>'

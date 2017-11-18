@@ -5,6 +5,10 @@ module Bushido
   class Runner
     class << self
       def input_regexp
+        Regexp.union(input_regexp1, input_regexp2)
+      end
+
+      def input_regexp1
         /
           (?<point>#{Point.regexp})?
           (?<same>同)?
@@ -13,6 +17,14 @@ module Bushido
           (?<motion1>[左右][上引]?|[直引寄上])?
           (?<motion2>不?成|打)?
           (\((?<origin_point>\d{2})\))?
+        /ox
+      end
+
+      def input_regexp2
+        /
+          (?<origin_point>#{Point.regexp})
+          (?<point>#{Point.regexp})
+          (?<piece>#{Piece.all_names.join("|")})
         /ox
       end
     end

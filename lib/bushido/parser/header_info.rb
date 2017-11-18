@@ -15,14 +15,17 @@ module Bushido
     class HeaderInfo
       include MemoryRecord
       memory_record [
-        {csa_key: "N+",           kif_key: "先手",     },
-        {csa_key: "N-",           kif_key: "後手",     },
-        {csa_key: "$EVENT:",      kif_key: "棋戦",     },
-        {csa_key: "$SITE:",       kif_key: "場所",     },
-        {csa_key: "$START_TIME:", kif_key: "開始日時", },
-        {csa_key: "$END_TIME:",   kif_key: "終了日時", },
-        {csa_key: "$OPENING:",    kif_key: "戦型",     },
+        # CSA側               KIF/KI2 形式
+        {key: "N+",           replace_key: "先手",     },
+        {key: "N-",           replace_key: "後手",     },
+        {key: "$EVENT:",      replace_key: "棋戦",     },
+        {key: "$SITE:",       replace_key: "場所",     },
+        {key: "$START_TIME:", replace_key: "開始日時", },
+        {key: "$END_TIME:",   replace_key: "終了日時", },
+        {key: "$OPENING:",    replace_key: "戦型",     },
       ]
+
+      alias csa_key key
     end
   end
 end

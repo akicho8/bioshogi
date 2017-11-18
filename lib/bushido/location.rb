@@ -13,6 +13,7 @@ module Bushido
 
     class << self
       # 引数に対応する先手または後手の情報を返す
+      #
       #   Location[:black].name   # => "先手"
       #   Location["▲"].name     # => "先手"
       #   Location["先手"].name   # => "先手"
@@ -22,6 +23,9 @@ module Bushido
       #   Location["1手目"].name  # => "先手"
       #   Location["2手目"].name  # => "後手"
       #   Location["3手目"].name  # => "先手"
+      #   Location["+"].name      # => "先手"
+      #   Location["-"].name      # => "後手"
+      #
       def parse(arg)
         r = lookup(arg)
         unless r
@@ -70,7 +74,7 @@ module Bushido
 
     # 属性っぽい値を全部返す
     def match_target_values
-      [key, mark, reverse_mark, other_marks, name, name.chars.first, index, varrow].flatten
+      [key, mark, reverse_mark, other_marks, name, name.chars.first, index, varrow, csa_sign].flatten
     end
 
     # 先手ならaを後手ならbを返す

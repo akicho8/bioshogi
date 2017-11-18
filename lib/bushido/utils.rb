@@ -25,7 +25,7 @@ module Bushido
         r = both_soldiers_from_char_board2(params.merge(both_board_info: both_board_info))
         r[L.b]
       else
-        static_board_info = StaticBoardInfo.fetch(params[:key])
+        static_board_info = TeaiInfo.fetch(params[:key])
         r = __valid_both_soldiers_from_char_board(params.merge(both_board_info: static_board_info.both_board_info))
         r[L.b]
       end
