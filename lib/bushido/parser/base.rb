@@ -325,7 +325,9 @@ module Bushido
           obj = Mediator.new
           obj.board_reset(@board_source || header["手合割"])
           if v = obj.board.teai_name
-            header["手合割"] = v
+            unless v == "平手"
+              header["手合割"] = v
+            end
           else
             embed = obj.board.to_s
           end
