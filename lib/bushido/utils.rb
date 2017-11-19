@@ -22,7 +22,7 @@ module Bushido
 
       if Parser.board_format?(params[:key])
         both_board_info = Parser.board_parse(params[:key])
-        r = both_soldiers_from_char_board2(params.merge(both_board_info: both_board_info))
+        r = point_normalize_if_white(params.merge(both_board_info: both_board_info))
         r[L.b]
       else
         static_board_info = TeaiInfo.fetch(params[:key])
@@ -45,10 +45,11 @@ module Bushido
         end
       end
 
-      both_soldiers_from_char_board2(params)
+      point_normalize_if_white(params)
     end
 
-    def both_soldiers_from_char_board2(params)
+    # 後手のみ先手用になっている初期駒配置を反転させる
+    def point_normalize_if_white(params)
       params[:both_board_info].inject({}) do |a, (key, value)|
         a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
       end

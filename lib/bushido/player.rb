@@ -277,7 +277,7 @@ module Bushido
 
         # ここがかなり重い
         static_board_infos.collect do |static_board_info|
-          placements = Utils.both_soldiers_from_char_board2(location: location, board: static_board_info)
+          placements = Utils.point_normalize_if_white(location: location, board: static_board_info)
           a = placements.values.flatten.collect(&:to_s)
           b = board.surface.values.collect(&:to_h).collect(&:to_s)
           match_p = (a - b).empty?
