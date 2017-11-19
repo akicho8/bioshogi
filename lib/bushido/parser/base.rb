@@ -224,10 +224,11 @@ module Bushido
           options = {
             length: 12,
             number_width: 4,
+            header_skip: false,
           }.merge(options)
 
           out = ""
-          out << header_part_string
+          out << header_part_string unless options[:header_skip]
           out << "手数----指手---------消費時間--\n"
           out << mediator.hand_logs.collect.with_index(1).collect {|e, i|
             "%*d %s (00:00/00:00:00)\n" % [options[:number_width], i, mb_ljust(e.to_s_kif, options[:length])]
@@ -241,10 +242,11 @@ module Bushido
             cols: 10,
             # length: 11,
             same_suffix: "　",
+            header_skip: false,
           }.merge(options)
 
           out = ""
-          if header.present?
+          if header.present? && !options[:header_skip]
             out << header_part_string
             out << "\n"
           end
@@ -303,11 +305,7 @@ module Bushido
               end
             end
 
-            if @board_source
-              mediator.board_reset(@board_source)
-            else
-              mediator.board_reset(header["手合割"])
-            end
+            mediator.board_reset(@board_source || header["手合割"])
 
             move_infos.each do |info|
               mediator.execute(info[:input])
@@ -316,7 +314,23 @@ module Bushido
         end
 
         def header_part_string
-          if @board_source
+          @header_part_string ||= __header_part_string
+        end
+
+        private
+
+        def __header_part_string
+          embed = nil
+
+          obj = Mediator.new
+          obj.board_reset(@board_source || header["手合割"])
+          if v = obj.board.teai_name
+            header["手合割"] = v
+          else
+            embed = obj.board.to_s
+          end
+
+          if embed
             header["後手の持駒"] ||= nil
             header["先手の持駒"] ||= nil
           end
@@ -325,20 +339,12 @@ module Bushido
             "#{key}：#{value}\n"
           }.join
 
-          # 盤面を埋め込む
-          # 「後手の持駒」がある前提にしているのはいまいちか
-          if true
-            if @board_source
-              obj = Mediator.new
-              obj.board_reset(@board_source)
-              str = str.gsub(/(後手の持駒：.*\n)/, '\1' + obj.board.to_s)
-            end
+          if embed
+            str = str.gsub(/(後手の持駒：.*\n)/, '\1' + embed)
           end
 
           str
         end
-
-        private
 
         # mb_ljust("あ", 3)               # => "あ "
         # mb_ljust("1", 3)                # => "1  "

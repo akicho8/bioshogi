@@ -49,7 +49,7 @@ module Bushido
         end
 
         # 盤面
-        @board_source = s.scan(/^P\d.*\n/).join
+        @board_source = s.scan(/^P\d.*\n/).join.presence
 
         # 棋譜
         s.scan(/^[+-](\d+\w+)\n(?:T(\d+))?/) do |value, time|
