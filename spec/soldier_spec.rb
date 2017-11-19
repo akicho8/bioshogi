@@ -11,7 +11,7 @@ module Bushido
         @soldier.name.should == "▲５五と"
       end
       it "先手後手のマークなし" do
-        @soldier.to_s_formal_name.should == "５五と"
+        @soldier.formal_name.should == "５五と"
       end
       it "駒のみ" do
         @soldier.piece_current_name.should == "と"

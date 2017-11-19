@@ -14,7 +14,7 @@ module Bushido
 
       include Enumerable
 
-      # すべての座標を返す
+      # すべての座標を返す  ← これいる？？？
       #   Point.collect{|point|...}
       def each(&block)
         Position::Vpos.size.times.collect{|y|
@@ -123,8 +123,8 @@ module Bushido
     end
 
     # ベクトルを加算して新しい座標オブジェクトを返す
-    #   Point.parse("５五").add_vector([1, 2]).name # => "４七"
-    def add_vector(vector)
+    #   Point.parse("５五").vector_add([1, 2]).name # => "４七"
+    def vector_add(vector)
       x, y = vector
       self.class.parse([@x.value + x, @y.value + y])
     end
@@ -138,6 +138,11 @@ module Bushido
     #   Point["５五"] == Point["55"] # => true
     def ==(other)
       to_xy == other.to_xy
+    end
+
+    # ソート用
+    def <=>(other)
+      to_xy <=> other.to_xy
     end
 
     # 相手陣地に入っているか？

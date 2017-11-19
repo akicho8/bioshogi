@@ -21,14 +21,14 @@ module Bushido
   class Piece
     include MemoryRecord
     memory_record [
-      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_name1: "OU", csa_name2: nil,  basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
-      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_name1: "KI", csa_name2: nil,  basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
-      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_name1: "GI", csa_name2: "NG", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
-      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_name1: "KE", csa_name2: "NK", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
-      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_name1: "KY", csa_name2: "NY", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
-      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_name1: "KA", csa_name2: "UM", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x},
-      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_name1: "HI", csa_name2: "RY", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus},
-      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_name1: "FU", csa_name2: "TO", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
+      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil},
+      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_basic_name: "KY", csa_promoted_name: "NY", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
+      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_basic_name: "KA", csa_promoted_name: "UM", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x},
+      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_basic_name: "HI", csa_promoted_name: "RY", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus},
+      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil},
     ]
 
     class << self
@@ -70,9 +70,9 @@ module Bushido
         # FIXME: 速くする
         def csa_promoted_fetch(arg)
           case
-          when piece = find{|e|e.csa_name1 == arg}
+          when piece = find{|e|e.csa_basic_name == arg}
             MiniSoldier[piece: piece]
-          when piece = find{|e|e.csa_name2 == arg}
+          when piece = find{|e|e.csa_promoted_name == arg}
             MiniSoldier[piece: piece, promoted: true]
           else
             raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
@@ -142,11 +142,11 @@ module Bushido
         end
       end
 
-      def some_name2(promoted)
+      def csa_some_name(promoted)
         if promoted
-          csa_name2
+          csa_promoted_name
         else
-          csa_name1
+          csa_basic_name
         end
       end
 

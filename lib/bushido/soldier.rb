@@ -29,45 +29,8 @@ module Bushido
       @promoted = promoted
     end
 
-    def to_s(format = :default)
-      send("to_s_#{format}")
-    end
-
-    def to_s_default
-      "#{@player.location.varrow}#{piece_current_name}"
-    end
-
-    def to_csa
-      "#{@player.location.csa_sign}#{@piece.some_name2(@promoted)}"
-    end
-
-    def inspect
-      "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
-    end
-
-    [:promoted].each do |key|
-      if public_method_defined?(key)
-        define_method("#{key}?") { public_send(key) }
-      end
-    end
-
-    # 駒の名前
-    def piece_current_name
-      @piece.some_name(@promoted)
-    end
-
-    # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲５五と"
-    def mark_with_formal_name
-      "#{@player.location.mark}#{to_s_formal_name}"
-    end
-
-    alias name mark_with_formal_name
-
-    # 正式な棋譜の表記で返す
-    #  Player.basic_test(init: "５五と").board["５五"].to_s_formal_name # => "５五と"
-    def to_s_formal_name
-      "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
+    def promoted?
+      !!@promoted
     end
 
     # # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
@@ -91,12 +54,13 @@ module Bushido
     #   {player: (@player ? @player.location.key : nil) point: @point.name, piece: @piece.key, promoted: @promoted}
     # end
 
+    # 盤面情報と比較するならこれを使う
     def to_mini_soldier
       MiniSoldier[point: @point, piece: @piece, promoted: @promoted]
     end
 
     def to_h
-      to_mini_soldier
+      to_mini_soldier.to_h
     end
 
     # この盤上の駒を消す
@@ -107,8 +71,44 @@ module Bushido
       self
     end
 
-    def to_s_kakiki
-      "#{@player.location.varrow}#{piece_current_name}"
+    concerning :NameMethods do
+      def name
+        mark_with_formal_name
+      end
+
+      def to_s
+        mark_with_formal_name
+      end
+
+      def to_csa
+        "#{@player.location.csa_sign}#{@piece.csa_some_name(@promoted)}"
+      end
+
+      def inspect
+        "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
+      end
+
+      # 駒の名前
+      def piece_current_name
+        @piece.some_name(@promoted)
+      end
+
+      # 正式な棋譜の表記で返す
+      #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲５五と"
+      def mark_with_formal_name
+        "#{@player.location.mark}#{formal_name}"
+      end
+
+      # 正式な棋譜の表記で返す
+      #  Player.basic_test(init: "５五と").board["５五"].formal_name # => "５五と"
+      def formal_name
+        "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
+      end
+
+      # 柿木盤面用
+      def to_s_kakiki
+        "#{@player.location.varrow}#{piece_current_name}"
+      end
     end
   end
 end

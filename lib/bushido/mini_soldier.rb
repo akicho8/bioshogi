@@ -29,15 +29,23 @@ module Bushido
     # 「１一香成」ではなく「１一杏」を返す
     # 指し手を返すには to_hand を使うこと
     def to_s
-      [self[:point].name, self[:piece].some_name(self[:promoted])].join
+      formal_name
     end
 
-    def some_name
+    def name
+      formal_name
+    end
+
+    def formal_name
+      [point.name, piece_name].join
+    end
+
+    def piece_name
       self[:piece].some_name(self[:promoted])
     end
 
-    def some_name2
-      self[:piece].some_name2(self[:promoted])
+    def csa_piece_name
+      self[:piece].csa_some_name(self[:promoted])
     end
 
     # 現状の状態から成れるか？
@@ -49,10 +57,11 @@ module Bushido
       self[:point]
     end
 
-    # def inspect
-    #   s = collect{|k, v|"#{k}:#{v}"}.join(" ")
-    #   "<MiniSoldier #{s}>"
-    # end
+    # mini_soldiers.sort できるようにする
+    # 座標順にする
+    def <=>(other)
+      point <=> other.point
+    end
   end
 
   # MiniSoldier にどこからどこへ成るかどうかの情報を含めたもの
@@ -61,7 +70,7 @@ module Bushido
     def to_hand
       [
         self[:point].name,
-        self[:origin_soldier].some_name,
+        self[:origin_soldier].piece_name,
         (self[:promoted_trigger] ? "成" : ""),
         "(", self[:origin_soldier].point.number_format, ")",
       ].join

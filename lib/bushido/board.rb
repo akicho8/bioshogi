@@ -114,7 +114,7 @@ module Bushido
 
     # 置いてる駒リスト
     def to_s_soldiers
-      @surface.values.collect(&:to_s_formal_name).sort.join(" ")
+      @surface.values.collect(&:formal_name).sort.join(" ")
     end
     def to_s_soldiers2
       @surface.values.collect(&:mark_with_formal_name).sort.join(" ")

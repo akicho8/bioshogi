@@ -5,11 +5,10 @@ module Bushido
   class Runner
     class << self
       def input_regexp
-        Regexp.union(input_regexp1, input_regexp2)
-        # input_regexp1
+        @input_regexp ||= Regexp.union(human_input_regexp, csa_input_regexp)
       end
 
-      def input_regexp1
+      def human_input_regexp
         /
           (?<point>#{Point.regexp})?
           (?<same>同)?
@@ -21,14 +20,14 @@ module Bushido
         /ox
       end
 
-      def input_regexp2
-        csa_names1 = Piece.collect{|e|e.csa_name1}.compact.join("|")
-        csa_names2 = Piece.collect{|e|e.csa_name2}.compact.join("|")
+      def csa_input_regexp
+        csa_basic_names = Piece.collect(&:csa_basic_name).compact.join("|")
+        csa_promoted_names = Piece.collect(&:csa_promoted_name).compact.join("|")
 
         /
           (?<csa_from>[0-9]{2}) # 00 = 駒台
           (?<csa_to>[1-9]{2})
-          ((?<csa_basic_piece>#{csa_names1})|(?<csa_promoted_piece>#{csa_names2}))
+          ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))
         /ox
       end
     end
@@ -40,6 +39,8 @@ module Bushido
     end
 
     def execute(str)
+      @source = str
+
       @point = nil
       @piece = nil
       @origin_point = nil
@@ -47,9 +48,6 @@ module Bushido
       @promote_trigger = nil
       @candidate = nil
       @done = false
-      @candidate = nil
-
-      @source = str
 
       @md = @source.match(self.class.input_regexp)
       unless @md
@@ -57,10 +55,10 @@ module Bushido
       end
       @md = @md.named_captures.symbolize_keys
 
-      if @md[:csa_basic_piece] || @md[:csa_promoted_piece]
+      if @md[:csa_basic_piece] || @md[:csa_promoted_name]
         # p @source
-        # p self.class.input_regexp2
-        # p @source.match(self.class.input_regexp2)
+        # p self.class.csa_input_regexp
+        # p @source.match(self.class.csa_input_regexp)
         if @md[:csa_from] == "00"
           @md[:csa_from] = nil
           @md[:motion2] = "打"
@@ -74,14 +72,14 @@ module Bushido
 
         if @md[:csa_basic_piece]
           # 普通の駒
-          v = Piece.find{|e|e.csa_name1 == @md[:csa_basic_piece]}
+          v = Piece.find{|e|e.csa_basic_name == @md[:csa_basic_piece]}
           @md[:piece] = v.name
         end
 
-        if @md[:csa_promoted_piece]
+        if @md[:csa_promoted_name]
           # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
           # だから移動元の駒の情報で判断するしかない
-          _piece = Piece.find{|e|e.csa_name2 == @md[:csa_promoted_piece]}
+          _piece = Piece.find{|e|e.csa_promoted_name == @md[:csa_promoted_name]}
 
           v = @player.board[@md[:origin_point]] or raise MustNotHappen
           if v.promoted?

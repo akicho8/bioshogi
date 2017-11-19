@@ -34,7 +34,7 @@ module Bushido
       infos = normalized_vectors(player, vecs).each.with_object([]) do |vec, infos|
         pt = mini_soldier[:point]
         loop do
-          pt = pt.add_vector(vec) # １三香 → １二香
+          pt = pt.vector_add(vec) # １三香 → １二香
           unless pt.valid?        # １三香 → １三香 の場合、それ以上動けないのでbreakする
             break
           end
@@ -75,7 +75,7 @@ module Bushido
       infos = normalized_vectors(player, vecs).each.with_object([]) do |vec, infos|
         pt = mini_soldier[:point]
         loop do
-          pt = pt.add_vector(vec)
+          pt = pt.vector_add(vec)
           if pt.valid?
             infos << mini_soldier.merge(point: pt)
           else

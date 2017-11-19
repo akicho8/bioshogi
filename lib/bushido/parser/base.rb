@@ -196,6 +196,8 @@ module Bushido
           if true
             obj = Mediator.new
             obj.board_reset(@board_source || header["手合割"])
+            
+            
             out << obj.board.to_csa
           end
 

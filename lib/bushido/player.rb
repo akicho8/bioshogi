@@ -236,7 +236,7 @@ module Bushido
       # 盤上の駒の名前一覧(保存用)
       #   to_s_soldiers # => ["５五飛"]
       def to_s_soldiers
-        @soldiers.collect(&:to_s_formal_name).sort.join(" ")
+        @soldiers.collect(&:formal_name).sort.join(" ")
       end
 
       # boardに描画する
@@ -269,17 +269,11 @@ module Bushido
           return []
         end
 
-        size_type = Board.size_type
-
-        # x99の盤面だけに絞る
-        static_board_infos = StaticBoardInfo.find_all{|v|(v[:size_type] || :x99) == size_type}
-        static_board_infos = static_board_infos.find_all{|v|v[:defense_p] || v[:attack_p]}
-
         # ここがかなり重い
-        static_board_infos.collect do |static_board_info|
-          placements = Utils.point_normalize_if_white(location: location, board: static_board_info)
+        StaticBoardInfo.collect do |static_board_info|
+          placements = Utils.point_normalize_if_white(location: location, both_board_info: static_board_info.both_board_info)
           a = placements.values.flatten.collect(&:to_s)
-          b = board.surface.values.collect(&:to_h).collect(&:to_s)
+          b = board.surface.values.collect(&:to_mini_soldier).collect(&:to_s)
           match_p = (a - b).empty?
           {key: static_board_info.key, placements: placements, match: match_p}
         end

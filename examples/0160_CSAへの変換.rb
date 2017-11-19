@@ -1,6 +1,8 @@
 require "./example_helper"
 
 puts Parser.parse("７六歩 ３四歩").to_csa
+# >> nil
+# >> nil
 # >> V2.2
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 # >> P2 * -HI *  *  *  *  * -KA * 

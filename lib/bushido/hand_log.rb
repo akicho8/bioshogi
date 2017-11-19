@@ -64,7 +64,7 @@ module Bushido
         s << "00"               # 駒台
       end
       s << @point.number_format
-      s << @piece.some_name2(@promoted || @promote_trigger)
+      s << @piece.csa_some_name(@promoted || @promote_trigger)
       s
     end
 

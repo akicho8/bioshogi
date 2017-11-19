@@ -53,7 +53,7 @@ module Bushido
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do
-      Point.parse("５五").add_vector([1, 2]).name.should == "４七"
+      Point.parse("５五").vector_add([1, 2]).name.should == "４七"
     end
 
     it "内部座標を返す" do
@@ -65,9 +65,9 @@ module Bushido
     end
 
     it "盤面内か？" do
-      Point["１一"].add_vector([0, 0]).valid?.should  == true
-      Point["１一"].add_vector([1, 0]).valid?.should  == false
-      Point["１一"].add_vector([0, -1]).valid?.should == false
+      Point["１一"].vector_add([0, 0]).valid?.should  == true
+      Point["１一"].vector_add([1, 0]).valid?.should  == false
+      Point["１一"].vector_add([0, -1]).valid?.should == false
     end
 
     it "内部状態" do
@@ -90,6 +90,12 @@ module Bushido
       point = Point["１一"]
       point = Marshal.load(Marshal.dump(point))
       point.should == Point["１一"]
+    end
+
+    it "ソートできる" do
+      a = Point["１一"]
+      b = Point["２一"]
+      [a, b].sort.should == [b, a]
     end
   end
 end

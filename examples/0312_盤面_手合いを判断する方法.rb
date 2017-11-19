@@ -19,4 +19,3 @@ info2 = TeaiInfo["香落ち"].both_board_info
 info1[L.b] == info2[L.b]        # => true
 
 TeaiInfo.find {|e| e.both_board_info[L.b] == info1[L.b] }.name # => "香落ち"
-
