@@ -104,10 +104,14 @@ module Bushido
       private
 
       def header_read
-        normalized_source.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
+        s = normalized_source
+        s = s.gsub(/^#.*/, "")
+        s.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
           header[key] = value
         end
+      end
 
+      def header_normalize
         # 正規化。別にしなくてもいい
         if true
           ["開始日時", "終了日時"].each do |e|
