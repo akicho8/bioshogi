@@ -55,7 +55,7 @@ module Bushido
       end
       @md = @md.named_captures.symbolize_keys
 
-      if @md[:csa_basic_piece] || @md[:csa_promoted_name]
+      if @md[:csa_basic_name] || @md[:csa_promoted_name]
         # p @source
         # p self.class.csa_input_regexp
         # p @source.match(self.class.csa_input_regexp)
@@ -70,9 +70,9 @@ module Bushido
 
         @md[:point] = @md[:csa_to]
 
-        if @md[:csa_basic_piece]
+        if @md[:csa_basic_name]
           # 普通の駒
-          v = Piece.find{|e|e.csa_basic_name == @md[:csa_basic_piece]}
+          v = Piece.find{|e|e.csa_basic_name == @md[:csa_basic_name]}
           @md[:piece] = v.name
         end
 
