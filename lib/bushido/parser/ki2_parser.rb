@@ -25,7 +25,9 @@ module Bushido
       #
       def parse
         header_read
+        header_normalize
         board_read
+
         normalized_source.lines.each do |line|
           comment_read(line)
           if line.match?(/^\p{blank}*[#{Location.triangles}]?\p{blank}*#{Runner.input_regexp}/)
