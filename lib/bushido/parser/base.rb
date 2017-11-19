@@ -135,7 +135,7 @@ module Bushido
       end
 
       def comment_read(line)
-        if md = line.match(/^\s*\*\s*(?<comment>.*)/)
+        if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
           if @move_infos.empty?
             first_comments_add(md[:comment])
           else
