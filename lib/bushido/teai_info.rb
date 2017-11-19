@@ -126,5 +126,9 @@ EOT
     def black_mini_soldiers
       @black_mini_soldiers ||= both_board_info[Location[:black]].sort
     end
+
+    def name
+      key.to_s
+    end
   end
 end

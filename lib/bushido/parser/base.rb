@@ -182,6 +182,7 @@ module Bushido
         #
         def to_csa(**options)
           options = {
+            board_expansion: false,
           }.merge(options)
 
           out = ""
@@ -196,9 +197,15 @@ module Bushido
           if true
             obj = Mediator.new
             obj.board_reset(@board_source || header["手合割"])
-            
-            
-            out << obj.board.to_csa
+            if options[:board_expansion]
+              out << obj.board.to_csa
+            else
+              if obj.board.teai_name == "平手"
+                out << "PI\n"
+              else
+                out << obj.board.to_csa
+              end
+            end
           end
 
           # 手番

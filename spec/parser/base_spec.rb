@@ -49,6 +49,28 @@ V2.2
 N+(先手)
 N-(後手)
 $SITE:(場所)
+PI
++
++7776FU
+-3142GI
++2726FU
+-5354FU
++2625FU
+-4253GI
++2524FU
+-2324FU
++5756FU
+-4132KI
+%TORYO
+EOT
+      end
+
+      it "to_csa(board_expansion: true)" do
+        @info.to_csa(board_expansion: true).should == <<~EOT
+V2.2
+N+(先手)
+N-(後手)
+$SITE:(場所)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA * 
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU

@@ -158,5 +158,36 @@ module Bushido
         raise PieceAlredyExist, "#{point.name}にはすでに#{object}がある\n#{self}"
       end
     end
+
+    concerning :TeaiMethods do
+      # 後手が平手であることが条件
+      def teai_name
+        if teai_name_by_location(:white) == "平手"
+          teai_name_by_location(:black)
+        end
+      end
+
+      private
+
+      # location 側の手合いを文字列で得る
+      def teai_name_by_location(location)
+        teai_info_by_location(:white)&.name
+      end
+
+      # location 側の手合いを得る
+      def teai_info_by_location(location)
+        location = Location[location]
+
+        mini_soldiers = @surface.values.collect { |e|
+          if e.player.location.key == location.key
+            e.to_mini_soldier.merge(point: e.point.as_location(location))
+          end
+        }.compact.sort
+
+        TeaiInfo.find do |e|
+          e.black_mini_soldiers == mini_soldiers
+        end
+      end
+    end
   end
 end
