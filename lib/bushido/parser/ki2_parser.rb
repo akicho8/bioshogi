@@ -31,7 +31,7 @@ module Bushido
           if line.match?(/^\p{blank}*[#{Location.triangles}]?\p{blank}*#{Runner.input_regexp}/)
             line.scan(Runner.input_regexp).each do |parts|
               input = parts.join
-              location = Location[@move_infos.count.modulo(Location.count)]
+              location = Location[@move_infos.count]
               @move_infos << {location: location, input: input, mov: "#{location.mark}#{input}"}
             end
           end

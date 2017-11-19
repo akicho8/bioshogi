@@ -466,8 +466,9 @@ end
     | SyntaxDefact           | とりあえず表記が違う                         | 駒の配置時に "４二銀成" とした                                                          |
     | PointSyntaxError       | 座標の表記が違う                             | "４二" のつもりで "４" と書いた                                                         |
     | PositionSyntaxError    | 座標の桁の指定が違う                         | "４二" のつもりで "四２" と書いた                                                       |
+    | TurnNumberSyntaxError  | 手番の表記が違う                             |                                                                                         |
     | PieceNotFound          | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた                                                                  |
-    | HoldPieceNotFound         | 持駒にそんな名前の駒は存在しない             | 歩を持っていないのに歩を打とうとした                                                    |
+    | HoldPieceNotFound      | 持駒にそんな名前の駒は存在しない             | 歩を持っていないのに歩を打とうとした                                                    |
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"                                                                |
     | AlredyPromoted         | すでに成っている                             | "５五" の龍を "５一飛成"                                                                |
     | BeforePointNotFound    | 同に対する座標が不明                         | 初手 "同歩"                                                                             |

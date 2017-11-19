@@ -83,6 +83,10 @@ module Bushido
   class PointSyntaxError < SyntaxDefact
   end
 
+  # 手番の表記がおかしい
+  class TurnNumberSyntaxError < SyntaxDefact
+  end
+
   # 別に問題ないけど将棋のルール上エラーとするもの
   class DoublePawn < RuleError
   end

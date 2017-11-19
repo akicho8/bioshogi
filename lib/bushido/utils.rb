@@ -40,19 +40,12 @@ module Bushido
       }.merge(params)
 
       if params[:validate]
-        if v = params[:both_board_info][:white].presence
+        if v = params[:both_board_info][Location[:white]].presence
           raise BoardIsBlackOnly, "後手側データは定義できません: #{v.inspect}"
         end
       end
 
       point_normalize_if_white(params)
-    end
-
-    # 後手のみ先手用になっている初期駒配置を反転させる
-    def point_normalize_if_white(params)
-      params[:both_board_info].inject({}) do |a, (key, value)|
-        a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
-      end
     end
 
     # board_reset の引数の解釈
@@ -178,6 +171,13 @@ module Bushido
       Array.wrap(list).collect{|info|
         (info[:count] || 1).times.collect{ Piece.fetch(info[:piece]) }
       }.flatten
+    end
+
+    # 後手のみ先手用になっている初期駒配置を反転させる
+    def point_normalize_if_white(params)
+      params[:both_board_info].inject({}) do |a, (key, value)|
+        a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
+      end
     end
   end
 end

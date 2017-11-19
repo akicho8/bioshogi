@@ -26,24 +26,23 @@ module Bushido
       #   Location["+"].name      # => "先手"
       #   Location["-"].name      # => "後手"
       #
-      def parse(arg)
-        r = lookup(arg)
-        unless r
-          r = find { |e| e.match_target_values.include?(arg) }
+      def lookup(value)
+        v = super
+        unless v
+          v = find { |e| e.match_target_values.include?(value) }
         end
-        unless r
-          if arg.kind_of?(String) && md = arg.match(/(?<turn_number>\d+)手目/)
-            index = md[:turn_number].to_i.pred
-            r = parse(index.modulo(each.count))
+        unless v
+          if value.kind_of?(Integer)
+            v = lookup(value.modulo(count))
           end
         end
-        r or raise SyntaxDefact, "#{arg.inspect}"
-      end
-
-      # 引数に対応する先手または後手の情報を返す
-      #   Location[:black].name # => "先手"
-      def [](*args)
-        parse(*args)
+        unless v
+          if value.kind_of?(String) && md = value.match(/(?<turn_number>\d+)/)
+            index = md[:turn_number].to_i.pred
+            v = lookup(index.modulo(count))
+          end
+        end
+        v or raise TurnNumberSyntaxError, value.inspect
       end
 
       # 簡潔に書きたいとき用
