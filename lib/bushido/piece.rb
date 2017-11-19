@@ -59,7 +59,7 @@ module Bushido
         def promoted_fetch(arg)
           case
           when piece = basic_get(arg)
-            MiniSoldier[piece: piece]
+            MiniSoldier[piece: piece, promoted: false]
           when piece = promoted_get(arg)
             MiniSoldier[piece: piece, promoted: true]
           else
@@ -71,7 +71,7 @@ module Bushido
         def csa_promoted_fetch(arg)
           case
           when piece = find{|e|e.csa_basic_name == arg}
-            MiniSoldier[piece: piece]
+            MiniSoldier[piece: piece, promoted: false]
           when piece = find{|e|e.csa_promoted_name == arg}
             MiniSoldier[piece: piece, promoted: true]
           else

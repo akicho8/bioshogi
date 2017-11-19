@@ -7,7 +7,7 @@ module Bushido
     end
 
     it "座標と駒の分解" do
-      MiniSoldier.from_str("４二銀").should == {point: Point["４二"], piece: Piece["銀"]}
+      MiniSoldier.from_str("４二銀").should == {point: Point["４二"], piece: Piece["銀"], promoted: false}
       MiniSoldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["飛"], promoted: true}
     end
 
@@ -57,9 +57,9 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"]]]
-        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"]]]
-        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"]]]
+        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"], promoted: false]]
+        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"], promoted: false]]
+        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"], promoted: false]]
       end
 
       it "先手か後手の一方用" do

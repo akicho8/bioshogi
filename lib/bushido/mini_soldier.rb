@@ -37,16 +37,17 @@ module Bushido
     end
 
     def formal_name
-      [point.name, piece_name].join
+      [self[:point].name, piece_name].join
     end
 
     def piece_name
       self[:piece].some_name(self[:promoted])
     end
 
-    def csa_piece_name
-      self[:piece].csa_some_name(self[:promoted])
-    end
+    # つかってない
+    # def csa_piece_name
+    #   self[:piece].csa_some_name(self[:promoted])
+    # end
 
     # 現状の状態から成れるか？
     def more_promote?(location)

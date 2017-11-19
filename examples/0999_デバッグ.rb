@@ -15,12 +15,8 @@ teai_info.sort.collect(&:name)     # => ["９七歩", "９九香", "８七歩", 
 
 mini_soldiers.sort == teai_info.sort # => false
 
-mini_soldiers.sort.first        # => {:point=>#<Bushido::Point:70351400960560 "９七">, :piece=><Bushido::Piece:70351395611600 歩 pawn>, :promoted=>false}
-teai_info.sort.first            # => {:piece=><Bushido::Piece:70351395611600 歩 pawn>, :point=>#<Bushido::Point:70351400960560 "９七">}
-
-
-
-
+mini_soldiers.sort.first        # => {:point=>#<Bushido::Point:70170924237440 "９七">, :piece=><Bushido::Piece:70170922755640 歩 pawn>, :promoted=>false}
+teai_info.sort.first            # => {:piece=><Bushido::Piece:70170922755640 歩 pawn>, :point=>#<Bushido::Point:70170924237440 "９七">}
 
 #         # ここがかなり重い
 #         StaticBoardInfo.collect do |static_board_info|
