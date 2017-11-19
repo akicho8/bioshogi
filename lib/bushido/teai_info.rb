@@ -111,23 +111,7 @@ EOT
 EOT
       },
       {
-        key: "裸玉",
-        url: "http://ja.wikipedia.org/wiki/%E5%B0%86%E6%A3%8B%E3%81%AE%E6%89%8B%E5%90%88%E5%89%B2",
-        board_body: <<~EOT,
-+---------------------------+
-| ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
-+---------------------------+
-EOT
-      },
-      {
         key: "二十枚落ち",
-        board_body: <<~EOT,
-+---------------------------+
-+---------------------------+
-EOT
-      },
-      {
-        key: "なし",
         board_body: <<~EOT,
 +---------------------------+
 +---------------------------+
@@ -137,6 +121,10 @@ EOT
 
     def both_board_info
       @both_board_info ||= Parser.board_parse(board_body)
+    end
+
+    def black_mini_soldiers
+      @black_mini_soldiers ||= both_board_info[Location[:black]].sort
     end
   end
 end

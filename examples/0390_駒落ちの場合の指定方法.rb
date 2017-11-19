@@ -5,7 +5,7 @@ mediator.board_reset("角落ち")
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset("先手" => "八枚落ち", "後手" => "裸玉")
+mediator.board_reset("先手" => "八枚落ち", "後手" => "十九枚落ち")
 puts mediator
 
 mediator = Mediator.new

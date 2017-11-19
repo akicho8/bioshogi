@@ -63,18 +63,18 @@ module Bushido
       end
 
       it "先手か後手の一方用" do
-        Utils.location_soldiers(location: L.w, key: "裸玉").should == @white_king
+        Utils.location_soldiers(location: L.w, key: "十九枚落ち").should == @white_king
       end
 
       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
-        it "先手→裸玉 後手→平手" do
-          r = Utils.board_reset_args("裸玉")
+        it "先手→十九枚落ち 後手→平手" do
+          r = Utils.board_reset_args("十九枚落ち")
           r[L.b].should == @black_king
           r[L.w].should be_a Array # 平手
         end
 
-        it "先手→裸玉 後手→裸玉" do
-          r = Utils.board_reset_args("先手" => "裸玉", "後手" => "裸玉")
+        it "先手→十九枚落ち 後手→十九枚落ち" do
+          r = Utils.board_reset_args("先手" => "十九枚落ち", "後手" => "十九枚落ち")
           r[L.b].should == @black_king
           r[L.w].should == @white_king
         end
