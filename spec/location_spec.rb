@@ -12,6 +12,7 @@ module Bushido
       Location["▼"].key.should    == :black
       Location["b"].key.should     == :black
       Location["先手"].key.should  == :black
+      Location["上手"].key.should  == :black
       Location["1手目"].key.should == :black
       Location["3"].key.should     == :black
     end
