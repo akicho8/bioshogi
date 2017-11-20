@@ -38,7 +38,7 @@ module Bushido
           unless pt.valid?        # １三香 → １三香 の場合、それ以上動けないのでbreakする
             break
           end
-          target = player.board.fetch(pt)
+          target = player.board.lookup(pt)
           if target.nil?         # 「１二」に何もないなら
             piece_store(infos, player, mini_soldier, pt) # 駒を置く
           else

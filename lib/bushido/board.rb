@@ -58,7 +58,7 @@ module Bushido
     # 縦列の盤上のすべての駒
     def pieces_of_vline(x)
       Position::Vpos.size.times.collect { |y|
-        fetch(Point.parse([x, y]))
+        lookup(Point.parse([x, y]))
       }.compact
     end
 
@@ -79,22 +79,22 @@ module Bushido
       @surface[Point[point].to_xy] = object
     end
 
-    # fetchのエイリアス
+    # lookupのエイリアス
     #   board["５五"] # => nil
     def [](point)
-      fetch(point)
+      lookup(point)
     end
 
     # 盤面の指定座標の取得
-    #   board.fetch["５五"] # => nil
-    def fetch(point)
+    #   board.lookup["５五"] # => nil
+    def lookup(point)
       @surface[Point.parse(point).to_xy]
     end
 
     # 指定座標にある駒をを広い上げる
     def pick_up!(point)
       soldier = @surface.delete(point.to_xy)
-      soldier or raise NotFoundOnBoard, "#{point.name}の位置には何もない"
+      soldier or raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
       soldier.point = nil
       soldier
     end
@@ -109,7 +109,7 @@ module Bushido
 
     # 空いている場所のリスト
     def blank_points
-      Point.find_all { |point| !fetch(point) }
+      Point.find_all { |point| !lookup(point) }
     end
 
     # 置いてる駒リスト
@@ -151,7 +151,7 @@ module Bushido
 
     # 盤上の指定座標に駒があるならエラーとする
     def assert_board_cell_is_blank(point)
-      object = fetch(point)
+      object = lookup(point)
       if object
         # if Soldier === object
         # end

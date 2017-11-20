@@ -99,14 +99,14 @@ module Bushido
           raise NotPromotable, "#{a.name}から#{b.name}への移動では成れない"
         end
 
-        _soldier = board.fetch(a)
+        _soldier = board.lookup(a)
         if _soldier.promoted?
           raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っている"
         end
       end
 
       soldier = board.pick_up!(a)
-      target_soldier = board.fetch(b)
+      target_soldier = board.lookup(b)
       if target_soldier
         if target_soldier.player == self
           raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.mark_with_formal_name}がある"

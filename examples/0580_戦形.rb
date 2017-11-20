@@ -1,8 +1,7 @@
-# 棋譜の入力
 require "./example_helper"
 
-mediator = Mediator.start
-mediator.piece_plot
+mediator = Mediator.new
+mediator.board_reset
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("２二角成")

@@ -1,4 +1,3 @@
-# 盤面の読み取り
 require "./example_helper"
 
 info1 = Parser.board_parse(<<~EOT)

@@ -137,7 +137,7 @@ module Bushido
         end
 
         unless @done
-          @source_soldier = @player.board.fetch(@origin_point)
+          @source_soldier = @player.board.lookup(@origin_point)
 
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
