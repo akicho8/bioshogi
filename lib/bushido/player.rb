@@ -228,7 +228,7 @@ module Bushido
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
-      #   soldier_names # => ["▽５五飛↓"]
+      #   soldier_names # => ["△５五飛↓"]
       def soldier_names
         @soldiers.collect(&:mark_with_formal_name).sort
       end

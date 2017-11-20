@@ -6,7 +6,7 @@ module Bushido
     include MemoryRecord
     memory_record [
       {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], varrow: " ", angle: 0,   csa_sign: "+"},
-      {key: :white, name: "後手", mark: "▽", reverse_mark: "△", other_marks: ["w"],      varrow: "v", angle: 180, csa_sign: "-"},
+      {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["w"],      varrow: "v", angle: 180, csa_sign: "-"},
     ]
 
     alias index code
@@ -49,7 +49,7 @@ module Bushido
       def b; self[:black]; end
       def w; self[:white]; end
 
-      # "▲▼▽△" を返す
+      # "▲▼△△" を返す
       def triangles
         @triangles ||= collect { |e| [e.mark, e.reverse_mark] }.join
       end

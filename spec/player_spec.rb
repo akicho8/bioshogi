@@ -30,7 +30,7 @@ module Bushido
           player_test2(init: "５三と").should == ["▲５三と"]
         end
         it "後手が置ける" do
-          player_test2(init: "５五飛", player: :white).should == ["▽５五飛"]
+          player_test2(init: "５五飛", player: :white).should == ["△５五飛"]
         end
       end
       describe "できない" do
@@ -79,7 +79,7 @@ EOT
           player_test2(init: "７七歩", exec: "７六歩").should == ["▲７六歩"]
         end
         it "後手の歩を(画面上では下がることに注意)" do
-          player_test2(player: :white, init: "３三歩", exec: "３四歩").should == ["▽３四歩"]
+          player_test2(player: :white, init: "３三歩", exec: "３四歩").should == ["△３四歩"]
         end
         it "成銀を" do
           player_test2(init: "４二成銀", exec: "３二成銀").should == ["▲３二全"]
@@ -140,7 +140,7 @@ EOT
             player_test2(init: "５一飛", exec: "５四飛成").should == ["▲５四龍"]
           end
           it "後手が相手の3段目に入ったタイミングで成る(バグっていたので消さないように)" do
-            player_test2(player: :white, init: "４五桂", exec: "５七桂成").should == ["▽５七圭"]
+            player_test2(player: :white, init: "４五桂", exec: "５七桂成").should == ["△５七圭"]
           end
         end
         describe "成れない" do
@@ -213,7 +213,7 @@ EOT
           end
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
             mediator = Mediator.test(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", exec: ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
-            mediator.ki2_hand_logs.should == ["▲２六歩", "▽２四歩", "▲２五歩", "▽同歩", "▲同飛", "▽同飛"]
+            mediator.ki2_hand_logs.should == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛", "△同飛"]
           end
         end
 

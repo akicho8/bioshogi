@@ -59,7 +59,7 @@ module Bushido
           Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金").should == @hash
         end
         it "コード → 表記" do
-          Utils.triangle_hold_pieces_hash_to_str(@hash).should == "▲歩2 飛 金 ▽歩二飛 "
+          Utils.triangle_hold_pieces_hash_to_str(@hash).should == "▲歩2 飛 金 △歩二飛 "
         end
       end
     end

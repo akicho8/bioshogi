@@ -43,7 +43,7 @@ module Bushido
     end
 
     it "先手後手を表す文字一覧の正規表現" do
-      Location.triangles.should == "▲▼▽△"
+      Location.triangles.should == "▲▼△▽"
     end
 
     it "cssのstyle" do

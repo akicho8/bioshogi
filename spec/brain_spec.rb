@@ -83,9 +83,9 @@ module Bushido
             # | 歩 ・ ・|三
             # +---------+
             # ▲先手の持駒:
-            # ▽後手の持駒:
+            # △後手の持駒:
             r = NegaMaxRunner.run(player: mediator.player_b, depth: 1)
-            r.should == {:hand => "▲３二歩成(33)", :score => 0, :level => 0, :reading_hands => ["▲３二歩成(33)", "▽１二歩成(11)"]}
+            r.should == {:hand => "▲３二歩成(33)", :score => 0, :level => 0, :reading_hands => ["▲３二歩成(33)", "△１二歩成(11)"]}
           end
         end
       end
@@ -109,7 +109,7 @@ module Bushido
 | ・ 飛|三
 +------+
 ▲先手の持駒:
-▽後手の持駒:
+△後手の持駒:
 EOT
           end
         end
@@ -145,7 +145,7 @@ EOT
 | ・ 香|四
 +------+
 ▲先手の持駒:
-▽後手の持駒:
+△後手の持駒:
 EOT
           end
         end

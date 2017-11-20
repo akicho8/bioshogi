@@ -15,7 +15,7 @@ module Bushido
       mediator.execute("８五歩")
       mediator.execute("5341NK") # 元位置の 53 の地点の駒を調べてもらい、成っていないのであれば NK は「４一桂成」で、成っていれば「４一成銀」になる
       mediator.inspect.should == <<~EOT
-10手目: ▽後手番
+10手目: △後手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉 圭v銀v桂v香|一
@@ -29,7 +29,7 @@ module Bushido
 | 香 ・ 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 ▲先手の持駒:歩
-▽後手の持駒:
+△後手の持駒:
 EOT
     end
 
@@ -38,7 +38,7 @@ EOT
       mediator.board_reset
       mediator.execute("7776FU")
       mediator.inspect.should == <<~EOT
-2手目: ▽後手番
+2手目: △後手番
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -52,7 +52,7 @@ EOT
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 ▲先手の持駒:
-▽後手の持駒:
+△後手の持駒:
 EOT
     end
   end

@@ -129,7 +129,7 @@ module Bushido
 
     # 先手後手に分離した持駒情報を文字列化
     # @example
-    #   Utils.triangle_hold_pieces_hash_to_str({L.b => "歩2 飛 金", L.w => "歩二飛 "}) # => "▲歩2 飛 金 ▽歩二飛 "
+    #   Utils.triangle_hold_pieces_hash_to_str({L.b => "歩2 飛 金", L.w => "歩二飛 "}) # => "▲歩2 飛 金 △歩二飛 "
     def triangle_hold_pieces_hash_to_str(hash)
       hash.collect{|location, pieces_str|"#{location.mark}#{pieces_str}"}.join(" ")
     end
