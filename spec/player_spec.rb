@@ -167,9 +167,13 @@ EOT
           it "不成の指定をしたので" do
             player_test2(init: "５五桂", exec: "４三桂不成").should == ["▲４三桂"]
           end
+          it "不成の指定をしたので (不成は生とも書ける)" do
+            player_test2(init: "５五桂", exec: "４三桂生").should == ["▲４三桂"]
+          end
           describe "金が不成するケース" do
             it "不成の指定をしたけど金は不成しかないのでまちがっちゃいないけど「金不成」と棋譜が残るのは違和感がある" do
               expect { player_test(init: "１四金", exec: "１三金不成") }.to raise_error(NoPromotablePiece)
+              expect { player_test(init: "１四金", exec: "１三金生")   }.to raise_error(NoPromotablePiece)
             end
             it "不成の指定をしなかった" do
               player_test(init: "１四金", exec: "１三金").runner.hand_log.to_kif_ki2.should== ["１三金(14)", "１三金"]

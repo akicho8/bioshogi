@@ -15,7 +15,7 @@ module Bushido
           \p{blank}*
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右][上引]?|[直引寄上])?
-          (?<motion2>不?成|打)?
+          (?<motion2>不?成|打|生)?
           (\((?<origin_point>\d{2})\))?
         /ox
       end
@@ -99,17 +99,13 @@ module Bushido
       begin
         @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
       rescue => error
-        p @md
-        p @md[:piece]
-        p error
-        p @source
-        raise
+        raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
       end
 
       begin
         # この例外を入れると入力が正確になるだけなので、まー無くてもいい。"１三金不成" で入力しても "１三金" の棋譜になるので。
-        if @md[:motion2].to_s.match?(/不?成/) && !@piece.promotable?
-          raise NoPromotablePiece, "#{@md[:motion1].inspect} としましたが「#{@piece.name}」は裏がないので「成」も「不成」も指定できません : #{@source.inspect}"
+        if @md[:motion2].to_s.match?(/不?成|生/) && !@piece.promotable?
+          raise NoPromotablePiece, "#{@md[:motion1].inspect} としましたが #{@piece.name.inspect} は裏がないので「成・不成・生」は指定できません : #{@source.inspect}"
         end
 
         @promote_trigger = (@md[:motion2] == "成")

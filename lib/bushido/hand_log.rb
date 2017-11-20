@@ -122,7 +122,7 @@ module Bushido
                   @hand_log.point.promotable?(@hand_log.player.location)          # 移動元が相手の相手陣地
                 unless @hand_log.promoted                                         # 成ってない and
                   if @hand_log.piece.promotable?                                  # 成駒になれる
-                    s << "不成"
+                    s << "不成" # or "生"
                   end
                 end
               end
