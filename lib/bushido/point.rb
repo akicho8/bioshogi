@@ -26,34 +26,34 @@ module Bushido
 
       # parseのalias
       #   Point["４三"].name # => "４三"
-      def [](arg)
-        parse(arg)
+      def [](value)
+        parse(value)
       end
 
       # 座標のパース
       #   Point.parse["４三"].name # => "４三"
-      def parse(arg)
+      def parse(value)
         x = nil
         y = nil
 
-        case arg
+        case value
         when Point
-          a, b = arg.to_xy
+          a, b = value.to_xy
           x = Position::Hpos.parse(a)
           y = Position::Vpos.parse(b)
         when Array
-          a, b = arg
+          a, b = value
           x = Position::Hpos.parse(a)
           y = Position::Vpos.parse(b)
         when String
-          if md = arg.match(/\A(?<x>.)(?<y>.)\z/)
+          if md = value.match(/\A(?<x>.)(?<y>.)\z/)
             x = Position::Hpos.parse(md[:x])
             y = Position::Vpos.parse(md[:y])
           else
-            raise PointSyntaxError, "座標を2文字で表記していません : #{arg.inspect}"
+            raise PointSyntaxError, "座標を2文字で表記していません : #{value.inspect}"
           end
         else
-          raise MustNotHappen, "引数が異常です : #{arg.inspect}"
+          raise MustNotHappen, "引数が異常です : #{value.inspect}"
         end
 
         new(x, y)
