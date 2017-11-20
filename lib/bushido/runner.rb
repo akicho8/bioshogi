@@ -15,7 +15,7 @@ module Bushido
           \p{blank}*
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右][上引]?|[直引寄上])?
-          (?<motion2>不?成|打|生)?
+          (?<motion2>不?成|[打合]|生)?
           (\((?<origin_point>\d{2})\))?
         /ox
       end
@@ -111,7 +111,7 @@ module Bushido
         @promote_trigger = (@md[:motion2] == "成")
       end
 
-      @strike_trigger = @md[:motion2].to_s.include?("打")
+      @strike_trigger = @md[:motion2].to_s.match?(/[打合]/)
 
       # kif → ki2 変換するときのために @candidate は必要
       # 指定の場所に来れる盤上の駒に絞る

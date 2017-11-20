@@ -232,11 +232,12 @@ EOT
       describe "打てる" do
         it "空いているところに" do
           player_test2(exec: "５五歩打").should == ["▲５五歩"]
+          player_test2(exec: "５五歩合").should == ["▲５五歩"]
         end
 
         # 棋譜の表記方法：日本将棋連盟 http://www.shogi.or.jp/faq/kihuhyouki.html
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
-        it "打は曖昧なときだけ付く" do
+        it "打は曖昧なときだけ付く (このテストはログの変換のテストで入力のテストにはなっていない)" do
           player_test2(exec: "５五歩").should == ["▲５五歩"]
           player_test(exec: "５五歩").runner.hand_log.to_s_kif.should == "５五歩打"
         end
@@ -275,6 +276,16 @@ EOT
         end
         it "二歩なので" do
           expect { player_test2(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawn)
+        end
+      end
+
+      describe "打の意味が重要なケース" do
+        it "打を明示していないので駒を動かした" do
+          player_test(append_pieces: "飛", init: "１一飛", exec: "１二飛").runner.hand_log.to_kif_ki2_csa.should == ["１二飛(11)", "１二飛不成", "+1112HI"]
+        end
+        it "打を明示したので駒を打つ" do
+          player_test(append_pieces: "飛", init: "１一飛", exec: "１二飛打").runner.hand_log.to_kif_ki2_csa.should == ["１二飛打", "１二飛打", "+0012HI"]
+          player_test(append_pieces: "飛", init: "１一飛", exec: "１二飛合").runner.hand_log.to_kif_ki2_csa.should == ["１二飛打", "１二飛打", "+0012HI"]
         end
       end
     end
