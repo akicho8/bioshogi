@@ -41,6 +41,8 @@ module Bushido
         end
         it "コード → 人間表記" do
           Utils.hold_pieces_a_to_s(@pieces).should == "歩二 飛"
+          Utils.hold_pieces_a_to_s(@pieces, ordered: true).should == "飛 歩二"
+          Utils.hold_pieces_a_to_s(@pieces, separator: "").should == "歩二飛"
         end
       end
 

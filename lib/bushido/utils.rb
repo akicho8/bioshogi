@@ -78,14 +78,25 @@ module Bushido
     # 持駒表記変換 (コード → 人間表記)
     # @example
     #  Utils.hold_pieces_a_to_s([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
-    def hold_pieces_a_to_s(pieces)
-      pieces.group_by(&:key).collect{|key, pieces|
-        count = ""
-        if pieces.size > 1
-          count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
+    def hold_pieces_a_to_s(pieces, **options)
+      options = {
+        ordered: false,         # 価値のある駒順に並べる
+        separator: " ",
+      }.merge(options)
+
+      if options[:ordered]
+        pieces = pieces.sort_by(&:basic_weight).reverse
+      end
+
+      pieces.group_by(&:key).collect { |key, pieces|
+        count = pieces.size
+        if count > 1
+          count = count.to_s.tr("0-9", "〇一二三四五六七八九")
+        else
+          count = ""
         end
         "#{pieces.first.name}#{count}"
-      }.join(SEPARATOR)
+      }.join(options[:separator])
     end
 
     # 持駒表記変換 (人間表記 → コード)
@@ -94,9 +105,9 @@ module Bushido
     def hold_pieces_s_to_a(str)
       if str.kind_of?(String)
         str = str.tr("〇一二三四五六七八九", "0-9")
-        infos = str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect{|piece, count|
+        infos = str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect do |piece, count|
           {piece: piece, count: (count || 1).to_i}
-        }
+        end
       else
         infos = str
       end
@@ -168,8 +179,8 @@ module Bushido
     private
 
     def pieces_parse2(list)
-      Array.wrap(list).collect{|info|
-        (info[:count] || 1).times.collect{ Piece.fetch(info[:piece]) }
+      Array.wrap(list).collect { |info|
+        (info[:count] || 1).times.collect { Piece.fetch(info[:piece]) }
       }.flatten
     end
 

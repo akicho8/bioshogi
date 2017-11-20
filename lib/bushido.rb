@@ -16,8 +16,6 @@ require "memory_record"
 module Bushido
   include ActiveSupport::Configurable
   config_accessor(:defense_form_check) { false }
-
-  SEPARATOR = " "
 end
 
 require_relative "bushido/logger"

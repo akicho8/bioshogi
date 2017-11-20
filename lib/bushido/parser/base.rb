@@ -124,7 +124,7 @@ module Bushido
             key = "#{e.name}の持駒"
             if v = header[key]
               v = Utils.hold_pieces_s_to_a(v)
-              v = Utils.hold_pieces_a_to_s(v)
+              v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
               header[key] = v
             end
           end
