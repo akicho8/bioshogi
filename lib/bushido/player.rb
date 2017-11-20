@@ -39,21 +39,21 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      location_soldiers = Utils.location_soldiers(location: location, key: "平手")
-      location_soldiers.each do |info|
-        piece_pick_out(info[:piece])
-        soldier = Soldier.new(info.merge(player: self))
-        put_on_with_valid(info[:point], soldier)
+      mini_soldiers = Utils.location_mini_soldiers(location: location, key: "平手")
+      mini_soldiers.each do |mini_soldier|
+        piece_pick_out(mini_soldier[:piece])
+        soldier = Soldier.new(mini_soldier.merge(player: self))
+        put_on_with_valid(mini_soldier[:point], soldier)
         @soldiers << soldier
       end
     end
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
-    #   player.initial_soldiers(["５五飛", "３三飛"], from_piece: false)
-    #   player.initial_soldiers("#{point}馬")
-    #   player.initial_soldiers({point: point, piece: Piece["角"], promoted: true}, from_piece: false)
-    def initial_soldiers(mini_soldier_or_str, options = {})
+    #   player.soldiers_create(["５五飛", "３三飛"], from_piece: false)
+    #   player.soldiers_create("#{point}馬")
+    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_piece: false)
+    def soldiers_create(mini_soldier_or_str, options = {})
       options = {
         from_piece: true, # 持駒から取り出して配置する？
       }.merge(options)
@@ -269,14 +269,17 @@ module Bushido
           return []
         end
 
-        # ここがかなり重い
-        StaticBoardInfo.collect do |static_board_info|
-          placements = Utils.point_normalize_if_white(location: location, both_board_info: static_board_info.both_board_info)
-          a = placements.values.flatten.collect(&:to_s)
-          b = board.surface.values.collect(&:to_mini_soldier).collect(&:to_s)
-          match_p = (a - b).empty?
-          {key: static_board_info.key, placements: placements, match: match_p}
-        end
+        # # ここがかなり重い
+        # StaticBoardInfo.collect do |static_board_info|
+        #   placements = Utils.board_point_realize(location: location, both_board_info: static_board_info.both_board_info)
+        #   a = placements.values.flatten.collect(&:to_s)
+        #   b = board.surface.values.collect(&:to_mini_soldier).collect(&:to_s)
+        #   match_p = (a - b).empty?
+        #   {key: static_board_info.key, placements: placements, match: match_p}
+        # end
+
+        []
+
       end
     end
 
@@ -373,7 +376,7 @@ module Bushido
     end
 
     # def side_soldiers_put_on(table)
-    #   table.each{|info|initial_soldiers(info)}
+    #   table.each{|info|soldiers_create(info)}
     # end
   end
 end

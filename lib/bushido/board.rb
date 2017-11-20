@@ -76,7 +76,7 @@ module Bushido
 
     # 指定座標に何かを置く
     def set(point, object)
-      @surface[Point[point].to_xy] = object
+      @surface[Point[point].to_xy] = object # TODO: Point オブジェクトのままセットすることはできないか？
     end
 
     # lookupのエイリアス

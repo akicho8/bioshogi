@@ -90,7 +90,7 @@ module Bushido
 
       def board_reset(name = nil)
         Utils.board_reset_args(name).each do |location, v|
-          player_at(location).initial_soldiers(v, from_piece: false)
+          player_at(location).soldiers_create(v, from_piece: false)
         end
       end
     end
@@ -98,12 +98,12 @@ module Bushido
     concerning :Other do
       # 両者の駒の配置を決める
       # @example 持駒から配置する場合(持駒がなければエラーになる)
-      #   initial_soldiers("▲３三歩 △１一歩")
+      #   soldiers_create("▲３三歩 △１一歩")
       # @example 持駒から配置しない場合(無限に駒が置ける)
-      #   initial_soldiers("▲３三歩 △１一歩", from_piece: false)
-      def initial_soldiers(str, options = {})
+      #   soldiers_create("▲３三歩 △１一歩", from_piece: false)
+      def soldiers_create(str, options = {})
         Utils.initial_soldiers_split(str).each do |info|
-          player_at(info[:location]).initial_soldiers(info[:input], options)
+          player_at(info[:location]).soldiers_create(info[:input], options)
         end
       end
 
@@ -308,10 +308,10 @@ module Bushido
         mediator = start
         mediator.players = mediator.players.first(params[:nplayers])
         if params[:init]
-          mediator.initial_soldiers(params[:init])
+          mediator.soldiers_create(params[:init])
         end
         if params[:init2]
-          mediator.initial_soldiers(params[:init2], from_piece: false)
+          mediator.soldiers_create(params[:init2], from_piece: false)
         end
         if params[:pinit]
           mediator.pieces_set(params[:pinit])
@@ -331,7 +331,7 @@ module Bushido
         params = {
         }.merge(params)
         new.tap do |o|
-          o.initial_soldiers(params[:init], from_piece: false)
+          o.soldiers_create(params[:init], from_piece: false)
           o.pieces_set(params[:pinit])
         end
       end

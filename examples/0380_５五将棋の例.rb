@@ -10,7 +10,7 @@ mediator.players.each do |player|
     s = MiniSoldier.from_str(s)
     s.merge(point: s[:point].as_location(player.location))
   end
-  player.initial_soldiers(_soldiers)
+  player.soldiers_create(_soldiers)
 end
 mediator.pieces_clear
 p mediator

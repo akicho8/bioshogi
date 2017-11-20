@@ -4,7 +4,7 @@ require "./example_helper"
 mediator = Mediator.new
 player = mediator.player_at(:black)
 Piece.each do |piece|
-  player.initial_soldiers("５五#{piece.name}", from_piece: false)
+  player.soldiers_create("５五#{piece.name}", from_piece: false)
   player.board["５五"].movable_infos.each do |v|
     soldier = player.board[v[:point]]
     draw = false
@@ -18,7 +18,7 @@ Piece.each do |piece|
     end
     if draw
       # 歩だと二歩になるので
-      player.initial_soldiers("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_piece: false)
+      player.soldiers_create("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_piece: false)
     end
   end
   puts mediator.board

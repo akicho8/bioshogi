@@ -20,7 +20,7 @@ teai_info.sort.first            # => {:piece=><Bushido::Piece:70289707271520 歩
 
 #         # ここがかなり重い
 #         StaticBoardInfo.collect do |static_board_info|
-#           placements = Utils.point_normalize_if_white(location: location, both_board_info: static_board_info.both_board_info)
+#           placements = Utils.board_point_realize(location: location, both_board_info: static_board_info.both_board_info)
 #           a = placements.values.flatten.collect(&:to_s)
 #           b = board.surface.values.collect(&:to_h).collect(&:to_s)
 #           match_p = (a - b).empty?

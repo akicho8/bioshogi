@@ -11,10 +11,9 @@ module Bushido
 
     # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
     # @example
-    #   Utils.location_soldiers(:black, "平手")         # => ["９七歩", "８七歩", ...]
-    #   Utils.location_soldiers(:black, "角落ち")       # => ["９七歩", "８七歩", ...]
-    #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
-    def location_soldiers(params)
+    #   Utils.location_mini_soldiers(location: location, key: "平手")
+    #   Utils.location_mini_soldiers(location: location, key: "+---...")
+    def location_mini_soldiers(params)
       params = {
         location: nil,
         key: nil,
@@ -22,31 +21,31 @@ module Bushido
 
       if Parser.board_format?(params[:key])
         both_board_info = Parser.board_parse(params[:key])
-        r = point_normalize_if_white(params.merge(both_board_info: both_board_info))
-        r[L.b]
       else
-        static_board_info = TeaiInfo.fetch(params[:key])
-        r = __valid_both_soldiers_from_char_board(params.merge(both_board_info: static_board_info.both_board_info))
-        r[L.b]
-      end
-    end
-
-    # 指定プレイヤー側の初期配置(盤面のみ対応)
-    # @example
-    #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
-    def __valid_both_soldiers_from_char_board(params = {})
-      params = {
-        validate: true,
-      }.merge(params)
-
-      if params[:validate]
-        if v = params[:both_board_info][Location[:white]].presence
-          raise BoardIsBlackOnly, "後手側データは定義できません: #{v.inspect}"
-        end
+        teai_info = TeaiInfo.fetch(params[:key])
+        both_board_info = teai_info.both_board_info
       end
 
-      point_normalize_if_white(params)
+      mini_soldiers = both_board_info[Location[:black]]
+      mini_soldiers = board_point_realize2(mini_soldiers, params[:location])
     end
+
+    # # 指定プレイヤー側の初期配置(盤面のみ対応)
+    # # @example
+    # #   Utils.location_mini_soldiers(:black, "+----+\n|...") # => [...]
+    # def __valid_both_soldiers_from_char_board(params = {})
+    #   params = {
+    #     validate: true,
+    #   }.merge(params)
+    #
+    #   if params[:validate]
+    #     if v = params[:both_board_info][Location[:white]].presence
+    #       raise BoardIsBlackOnly, "後手側データは定義できません: #{v.inspect}"
+    #     end
+    #   end
+    #
+    #   board_point_realize(params)
+    # end
 
     # board_reset の引数の解釈
     #
@@ -67,7 +66,7 @@ module Bushido
       when value.kind_of?(Hash)
         # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
         value.inject({}) {|a, (k, v)|
-          a.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
+          a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
         }
       else
         # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
@@ -176,19 +175,24 @@ module Bushido
       "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{q: str.tosjis}.to_query}"
     end
 
+    # # 後手のみ先手用になっている初期駒配置を反転させる
+    # def board_point_realize(params)
+    #   params[:both_board_info].inject({}) do |a, (key, value)|
+    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
+    #   end
+    # end
+
+    # mini_soldiers を location 側の配置に変更したのを返す
+    def board_point_realize2(mini_soldiers, location)
+      mini_soldiers.collect { |e| e.merge(point: e[:point].as_location(location)) }
+    end
+
     private
 
     def pieces_parse2(list)
       Array.wrap(list).collect { |info|
         (info[:count] || 1).times.collect { Piece.fetch(info[:piece]) }
       }.flatten
-    end
-
-    # 後手のみ先手用になっている初期駒配置を反転させる
-    def point_normalize_if_white(params)
-      params[:both_board_info].inject({}) do |a, (key, value)|
-        a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
-      end
     end
   end
 end

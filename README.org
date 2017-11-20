@@ -206,9 +206,9 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 #+BEGIN_SRC ruby
 mediator = Mediator.start
 player = mediator.player_at(:black)
-player.initial_soldiers("５五馬")
+player.soldiers_create("５五馬")
 player.soldiers.first.movable_infos.each{|point|
-  player.initial_soldiers("#{point}馬", from_piece: false)
+  player.soldiers_create("#{point}馬", from_piece: false)
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -329,7 +329,7 @@ mediator.players.each do |player|
     s = MiniSoldier.from_str(s)
     s.merge(point: s[:point].as_location(player.location))
   }
-  player.initial_soldiers(_soldiers)
+  player.soldiers_create(_soldiers)
 end
 mediator.pieces_clear
 p mediator
@@ -376,7 +376,7 @@ p mediator
 Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do
   mediator = Mediator.new
-  mediator.initial_soldiers("▲３三歩 △１一歩", from_piece: false)
+  mediator.soldiers_create("▲３三歩 △１一歩", from_piece: false)
   puts mediator
   pp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
 end

@@ -72,7 +72,7 @@ module Bushido
       end
 
       it "先手か後手の一方用" do
-        Utils.location_soldiers(location: L.w, key: "十九枚落ち").should == @white_king
+        Utils.location_mini_soldiers(location: L.w, key: "十九枚落ち").should == @white_king
       end
 
       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
