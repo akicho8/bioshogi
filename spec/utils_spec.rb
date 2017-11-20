@@ -29,18 +29,25 @@ module Bushido
     end
 
     describe "持駒表記変換" do
-      before { @pieces = [Piece["歩"], Piece["歩"], Piece["飛"]] }
+      before do
+        @pieces = [Piece["歩"], Piece["歩"], Piece["飛"]]
+      end
 
       describe "プレイヤーのスコープ" do
         it "人間表記 → コード" do
-          Utils.hold_pieces_s_to_a("歩2 飛").should    == @pieces
-          Utils.hold_pieces_s_to_a("歩二 飛").should   == @pieces
-          Utils.hold_pieces_s_to_a("歩二飛").should    == @pieces
-          Utils.hold_pieces_s_to_a(" 歩二 飛 ").should == @pieces
-          Utils.hold_pieces_s_to_a(" 歩 二飛 ").should_not == @pieces
+          Utils.hold_pieces_s_to_a("歩2 飛").should           == @pieces
+          Utils.hold_pieces_s_to_a("歩歩 飛").should          == @pieces
+          Utils.hold_pieces_s_to_a("歩2 飛1").should          == @pieces
+          Utils.hold_pieces_s_to_a("歩2 飛 角0").should       == @pieces
+          Utils.hold_pieces_s_to_a("歩二 飛").should          == @pieces
+          Utils.hold_pieces_s_to_a("歩二飛角〇").should       == @pieces
+          Utils.hold_pieces_s_to_a("　歩二　\n　飛　").should == @pieces
+          Utils.hold_pieces_s_to_a(" 歩二 飛 ").should        == @pieces
+          Utils.hold_pieces_s_to_a(" 歩 二飛 ").should_not    == @pieces
         end
+
         it "コード → 人間表記" do
-          Utils.hold_pieces_a_to_s(@pieces).should == "歩二 飛"
+          Utils.hold_pieces_a_to_s(@pieces).should                == "歩二 飛"
           Utils.hold_pieces_a_to_s(@pieces, ordered: true).should == "飛 歩二"
           Utils.hold_pieces_a_to_s(@pieces, separator: "").should == "歩二飛"
         end
