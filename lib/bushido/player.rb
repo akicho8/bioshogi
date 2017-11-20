@@ -281,10 +281,10 @@ module Bushido
     end
 
     def evaluator
-      Evaluate.new(self)
+      Evaluator.new(self)
     end
 
-    delegate :evaluate, :score_percentage, :to => :evaluator
+    delegate :evaluate, :score_percentage, to: :evaluator
 
     def brain
       Brain.new(self)

@@ -2,7 +2,7 @@
 
 module Bushido
   # 形勢判断
-  class Evaluate
+  class Evaluator
     Maximum = 22284              # 最大値は適当
 
     def initialize(player)
@@ -11,41 +11,7 @@ module Bushido
 
     # 自分の駒が良い状態なのは自分がプラスになり、相手の形勢が良いときは自分にとってマイナスになる
     def evaluate
-      evaluate_for(@player) - evaluate_for(@player.reverse_player)
-    end
-
-    # def evaluate_pair
-    #   [evaluate_self, evaluate_reverse]
-    # end
-    #
-    # # 自分側の状態だけを考慮して取得
-    # def evaluate_self
-    #   evaluate_for(@player)
-    # end
-    #
-    # # 相手側の状態だけを考慮して取得
-    # def evaluate_reverse
-    #   evaluate_for(@player.reverse_player)
-    # end
-
-    def evaluate_for(player)
-      score = 0
-
-      # 盤上の駒
-      score += player.soldiers.collect{|soldier|
-        if soldier.promoted?
-          {pawn: 1200, bishop: 2000, rook: 2200, lance: 1200, knight: 1200, silver: 1200}[soldier.piece.key]
-        else
-          {pawn: 100, bishop: 1800, rook: 2000, lance: 600, knight: 700, silver: 1000, gold: 1200, king: 9999}[soldier.piece.key]
-        end
-      }.reduce(:+) || 0
-
-      # 持駒
-      score += player.pieces.collect{|piece|
-        {pawn: 105, bishop: 1890, rook: 2100, lance: 630, knight: 735, silver: 1050, gold: 1260, king: 9999}[piece.key]
-      }.reduce(:+) || 0
-
-      score
+      player_score_for(@player) - player_score_for(@player.reverse_player)
     end
 
     #       |----------| ← この部分の幅をパーセンテージで返す
@@ -57,6 +23,42 @@ module Bushido
       half = 100.0 / @player.mediator.players.size
       v = half + (evaluate.to_f / max * half)
       [0, [100.0, v.round].min].max
+    end
+
+    private
+
+    # def evaluate_pair
+    #   [evaluate_self, evaluate_reverse]
+    # end
+    #
+    # # 自分側の状態だけを考慮して取得
+    # def evaluate_self
+    #   player_score_for(@player)
+    # end
+    #
+    # # 相手側の状態だけを考慮して取得
+    # def evaluate_reverse
+    #   player_score_for(@player.reverse_player)
+    # end
+
+    def player_score_for(player)
+      score = 0
+
+      # 盤上の駒
+      score += player.soldiers.collect { |e|
+        if e.promoted?
+          e.piece.promoted_weight
+        else
+          e.piece.basic_weight
+        end
+      }.sum
+
+      # 持駒
+      score += player.pieces.collect { |e|
+        e.mochigoma_weight
+      }.sum
+
+      score
     end
   end
 end

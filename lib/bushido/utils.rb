@@ -79,7 +79,7 @@ module Bushido
     # @example
     #  Utils.hold_pieces_a_to_s([Piece["歩"], Piece["歩"], Piece["飛"]]) # => "歩二飛"
     def hold_pieces_a_to_s(pieces)
-      pieces.group_by{|e|e.key}.collect{|key, pieces|
+      pieces.group_by(&:key).collect{|key, pieces|
         count = ""
         if pieces.size > 1
           count = pieces.size.to_s.tr("0-9", "〇一二三四五六七八九")
