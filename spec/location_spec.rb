@@ -23,10 +23,14 @@ module Bushido
       Location["v"].key.should == :white
     end
 
-    it "変換不能" do
-      expect { Location[nil]   }.to raise_error(SyntaxDefact)
-      expect { Location[""]    }.to raise_error(SyntaxDefact)
-      expect { Location["foo"] }.to raise_error(SyntaxDefact)
+    it "変換不能で nil" do
+      Location["xxx"].should == nil
+    end
+
+    it "変換不能でエラー" do
+      expect { Location.fetch(nil)   }.to raise_error(LocationNotFound)
+      expect { Location.fetch("")    }.to raise_error(LocationNotFound)
+      expect { Location.fetch("foo") }.to raise_error(LocationNotFound)
     end
 
     it "簡潔に書きたいとき用" do

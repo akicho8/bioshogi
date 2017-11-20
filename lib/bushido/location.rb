@@ -5,8 +5,6 @@ module Bushido
   class Location
     include MemoryRecord
     memory_record [
-      {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["b", "^"], varrow: " ", angle: 0,   csa_sign: "+"},
-      {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["w"],      varrow: "v", angle: 180, csa_sign: "-"},
       {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["上手", "b", "^"], varrow: " ", angle: 0,   csa_sign: "+"},
       {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["下手", "w"],      varrow: "v", angle: 180, csa_sign: "-"},
     ]
@@ -44,7 +42,15 @@ module Bushido
             v = lookup(index.modulo(count))
           end
         end
-        v or raise TurnNumberSyntaxError, value.inspect
+        v
+      end
+
+      def fetch(value)
+        begin
+          super
+        rescue
+          raise LocationNotFound, value.inspect
+        end
       end
 
       # 簡潔に書きたいとき用

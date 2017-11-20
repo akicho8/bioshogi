@@ -84,7 +84,7 @@ module Bushido
   end
 
   # 手番の表記がおかしい
-  class TurnNumberSyntaxError < SyntaxDefact
+  class LocationNotFound < SyntaxDefact
   end
 
   # 別に問題ないけど将棋のルール上エラーとするもの
