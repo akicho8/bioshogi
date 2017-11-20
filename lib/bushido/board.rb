@@ -171,7 +171,7 @@ module Bushido
 
       # location 側の手合割を文字列で得る
       def teai_name_by_location(location)
-        teai_info_by_location(:white)&.name
+        teai_info_by_location(location)&.name
       end
 
       # location 側の手合割を得る
