@@ -44,7 +44,7 @@ module Bushido
     end
 
     it "属性っぽい値を全部返す" do
-      Location[:black].match_target_values.should be_an_instance_of Array
+      Location[:black].match_target_values_set.should be_an_instance_of Set
     end
 
     it "先手後手を表す文字一覧の正規表現" do

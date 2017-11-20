@@ -28,20 +28,27 @@ module Bushido
       #
       def lookup(value)
         v = super
-        unless v
-          v = find { |e| e.match_target_values.include?(value) }
-        end
+
+        # -1 など
         unless v
           if value.kind_of?(Integer)
             v = lookup(value.modulo(count))
           end
         end
+
+        # "先手" など
+        unless v
+          v = find { |e| e.match_target_values_set.include?(value) }
+        end
+
+        # "2手目" など
         unless v
           if value.kind_of?(String) && md = value.match(/(?<turn_number>\d+)/)
             index = md[:turn_number].to_i.pred
             v = lookup(index.modulo(count))
           end
         end
+
         v
       end
 
@@ -79,11 +86,6 @@ module Bushido
       key == :white
     end
 
-    # 属性っぽい値を全部返す
-    def match_target_values
-      [key, mark, reverse_mark, other_marks, name, name.chars.first, index, varrow, csa_sign].flatten
-    end
-
     # 先手ならaを後手ならbを返す
     def where_value(a, b)
       black? ? a : b
@@ -106,6 +108,22 @@ module Bushido
       if angle.nonzero?
         "transform: rotate(#{angle}deg)"
       end
+    end
+
+    # lookup で引ける値のセットを返す
+    # 自分のクラスメソッド内で使っているだけなので protected にしたいけど ruby はできない
+    def match_target_values_set
+      @match_target_values_set ||= [
+        key,
+        mark,
+        reverse_mark,
+        other_marks,
+        name,
+        name.chars.first,
+        index,
+        varrow,
+        csa_sign,
+      ].flatten.to_set
     end
   end
 
