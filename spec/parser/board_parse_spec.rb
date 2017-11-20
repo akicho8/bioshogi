@@ -50,8 +50,7 @@ BOARD
 
     it "先手後手の表現" do
       board_parse_test("+---+\| 金|\n+---+").should == {L.b => ["１一金"], L.w => []}
-      board_parse_test("+---+\|^金|\n+---+").should == {L.b => ["１一金"], L.w => []}
-      board_parse_test("+---+\|v金|\n+---+").should == {L.b => [],        L.w => ["１一金"]}
+      board_parse_test("+---+\|v金|\n+---+").should == {L.b => [],         L.w => ["１一金"]}
     end
 
 #     describe "あえて緩くしている部分" do

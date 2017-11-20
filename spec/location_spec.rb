@@ -10,6 +10,7 @@ module Bushido
       Location[:black].key.should  == :black
       Location["▲"].key.should    == :black
       Location["▼"].key.should    == :black
+      Location["☗"].key.should    == :black
       Location["b"].key.should     == :black
       Location["先手"].key.should  == :black
       Location["上手"].key.should  == :black
@@ -19,7 +20,6 @@ module Bushido
 
     it "盤面読み取り用" do
       Location[" "].key.should == :black
-      Location["^"].key.should == :black
       Location["v"].key.should == :white
     end
 
