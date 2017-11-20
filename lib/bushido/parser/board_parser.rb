@@ -71,16 +71,12 @@ module Bushido
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|
-          s.scan(/(.)(\S|\s{2})/).each_with_index do |(prefix, piece), x|
+          s.scan(/(.)(#{Piece.all_names.join("|")}|・|\s{2})/o).each_with_index do |(prefix, piece), x|
             unless piece == "・" || piece.strip == ""
-              unless Piece.all_names.include?(piece)
-                raise SyntaxDefact, "駒の指定が違います : #{piece.inspect}"
-              end
-              location = Location[prefix] or raise SyntaxDefact, "先手後手のマークが違います : #{prefix}"
               raise SyntaxDefact unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
               mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
-              players[location] << mini_soldier
+              players[Location.fetch(prefix)] << mini_soldier
             end
           end
         end
