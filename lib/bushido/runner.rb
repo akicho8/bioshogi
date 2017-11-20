@@ -14,8 +14,8 @@ module Bushido
           (?<same>同)?
           \p{blank}*
           (?<piece>#{Piece.all_names.join("|")})
-          (?<motion1>[左右][上引]?|[直引寄上])?
-          (?<motion2>不?成|[打合]|生)?
+          (?<motion1>[左右直]?[寄引上]?)
+          (?<motion2>不?成|打|合|生)?
           (\((?<origin_point>\d{2})\))?
         /ox
       end
@@ -235,9 +235,10 @@ module Bushido
       unless @done
         if @soldiers.size > 1
           if @md[:motion1]
+            # TODO: 入力の正規表現を改めたのでこのチェックは不要かもしれない
             assert_valid_format("直上")
             assert_valid_format("左右直")
-            assert_valid_format("引上寄")
+            assert_valid_format("寄引上")
             find_soldiers
           end
           if @soldiers.size > 1

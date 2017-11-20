@@ -17,7 +17,7 @@ module Bushido
 | 桂 ・ 桂 ・ ・ ・ ・ ・ ・|
 +---------------------------+
 EOT
-      mediator.current_player.pieces_add("歩金銀桂2")
+      mediator.current_player.pieces_add("歩金銀桂")
       mediator.execute(str)
       mediator.hand_logs.last.to_kif_ki2_csa
     end
@@ -25,11 +25,11 @@ EOT
     describe "打" do
       it "７三に動ける盤上の駒があるので打を明示する" do
         test1("７三銀打").should == ["７三銀打", "７三銀打", "+0073GI"]
-        test1("７三銀合").should == ["７三銀打", "７三銀打", "+0073GI"] # 入力では代わりに合と書いてもよい
+        test1("７三銀合").should == ["７三銀打", "７三銀打", "+0073GI"] # 入力では「打」の代わりに「合」と書いてもよい
       end
       it "７二に動ける盤上の銀がないので打を省略する" do
         test1("７二銀").should   == ["７二銀打", "７二銀", "+0072GI"]
-        test1("７二銀打").should == ["７二銀打", "７二銀", "+0072GI"] # 入力では明示的に書いてもよい
+        test1("７二銀打").should == ["７二銀打", "７二銀", "+0072GI"] # 入力では明示的に「打」を書いてもよい
       end
     end
 
