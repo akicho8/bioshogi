@@ -1,21 +1,63 @@
 module Bushido
-  module Parser
-    class BoardParser
+  module BoardParser
+    class << self
+      def accept?(source)
+        !!parser_class_for(source)
+      end
+
+      def parse(source, **options)
+        parser = parser_class_for(source)
+        parser or raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
+        parser.parse(source, options)
+      end
+
+      private
+
+      def parser_class_for(source)
+        support_parsers.find {|e| e.accept?(source) }
+      end
+
+      def support_parsers
+        [KifBoardParser, CsaBoardParser]
+      end
+    end
+
+    class Base
+      class << self
+        def accept?
+          raise NotImplementedError, "#{__method__} is not implemented"
+        end
+
+        def parse(source, options)
+          new(source, options).tap(&:parse)
+        end
+      end
+
       def initialize(source, **options)
         @source = source
         @options = options
+      end
+
+      def both_board_info
+        @both_board_info ||= __both_board_info
+      end
+
+      def __both_board_info
+        v = mini_soldiers.group_by { |e| e[:location] }
+        Location.each do |e|
+          v[e] ||= []
+        end
+        v
+      end
+
+      def mini_soldiers
+        @mini_soldiers ||= []
       end
 
       private
 
       def lines
         @lines ||= Parser.source_normalize(@source).strip.lines.to_a
-      end
-
-      def players
-        @players ||= Location.inject({}) do |a, location|
-          a.merge(location => [])
-        end
       end
     end
 
@@ -37,23 +79,20 @@ module Bushido
     #   +---------------------------+
     #   "
     #
-    #   Bushido::Parser.board_parse(str) # => {white: ["４二玉"], black: []}
-    #   Bushido::Parser.board_parse(str) # => {white: [<MiniSoldier ...>], black: []}
+    #   Bushido::BoardParser.parse(str) # => {white: ["４二玉"], black: []}
+    #   Bushido::BoardParser.parse(str) # => {white: [<MiniSoldier ...>], black: []}
     #
-    class KixBoardParser < BoardParser
-      # 盤面テキストか？
-      # private にしていないのは他のクラスでも直接使っているため
-      def self.board_format?(source)
-        Parser.source_normalize(source).match?(/^\p{blank}*[\+\|]/)
+    class KifBoardParser < Base
+      class << self
+        # 盤面テキストか？
+        # private にしていないのは他のクラスでも直接使っているため
+        def accept?(source)
+          Parser.source_normalize(source).match?(/^\p{blank}*[\+\|]/)
+        end
       end
 
       def parse
         cell_width = 3
-
-        if lines.empty?
-          # board_parse("") の場合
-          return {}
-        end
 
         s = lines.first
         if s.include?("-")
@@ -75,12 +114,11 @@ module Bushido
             unless piece == "・" || piece.strip == ""
               raise SyntaxDefact unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
-              mini_soldier = Piece.promoted_fetch(piece).merge(point: point)
-              players[Location.fetch(prefix)] << mini_soldier
+              location = Location.fetch(prefix)
+              mini_soldiers << Piece.promoted_fetch(piece).merge(point: point, location: location)
             end
           end
         end
-        players
       end
     end
 
@@ -93,8 +131,8 @@ module Bushido
     # P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
     # P8 * +KA *  *  *  *  * +HI *
     # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-    class CsaBoardParser < BoardParser
-      def self.board_format?(source)
+    class CsaBoardParser < Base
+      def self.accept?(source)
         Parser.source_normalize(source).match?(/^P\d+/)
       end
 
@@ -108,13 +146,11 @@ module Bushido
               if md = e.match(/(?<mark>\S)(?<piece>\S{2})/)
                 location = Location[md[:mark]]
                 point = Point["#{x}#{y}"]
-                mini_soldier = Piece.csa_promoted_fetch(md[:piece]).merge(point: point)
-                players[location] << mini_soldier
+                mini_soldiers << Piece.csa_promoted_fetch(md[:piece]).merge(point: point, location: location)
               end
             end
           end
         end
-        players
       end
     end
   end

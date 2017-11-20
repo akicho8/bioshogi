@@ -92,7 +92,7 @@ module Bushido
     end
 
     # 後手なら反転する
-    def as_location(location)
+    def reverse_if_white(location)
       if Location[location].key == :white
         reverse
       else

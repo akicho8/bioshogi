@@ -178,11 +178,15 @@ module Bushido
       def teai_info_by_location(location)
         location = Location[location]
 
+        # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
         mini_soldiers = @surface.values.collect { |e|
           if e.player.location.key == location.key
-            e.to_mini_soldier.merge(point: e.point.as_location(location))
+            e.to_mini_soldier.merge(point: e.point.reverse_if_white(location), location: Location[:black])
           end
         }.compact.sort
+
+        # p mini_soldiers.first
+        # p TeaiInfo.first.black_mini_soldiers.first
 
         TeaiInfo.find do |e|
           e.black_mini_soldiers == mini_soldiers

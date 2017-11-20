@@ -3,7 +3,7 @@ require_relative "spec_helper"
 module Bushido
   describe Utils do
     it "初期配置情報の塊を分離" do
-      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{location: L.b, input: "４二銀"}, {location: L.w, input: "４二銀"}]
+      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
     end
 
     it "座標と駒の分解" do
@@ -12,16 +12,16 @@ module Bushido
     end
 
     it "棋譜入力の分離(ゴミは保持)" do
-      Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: L.b, input: "５五歩"}, {location: L.w, input: "４四歩"}, "push", {location: L.b, input: "３三歩"}, "pop"]
+      Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: Location[:black], input: "５五歩"}, {location: Location[:white], input: "４四歩"}, "push", {location: Location[:black], input: "３三歩"}, "pop"]
     end
 
     it "棋譜入力の分離(一つだけ)" do
-      Utils.mov_split_one("▲５五歩").should == {location: L.b, input: "５五歩"}
+      Utils.mov_split_one("▲５五歩").should == {location: Location[:black], input: "５五歩"}
     end
 
     describe "movs_split" do
       it "棋譜入力の分離(ゴミがあっても無視)" do
-        Utils.movs_split("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: L.b, input: "５五歩"}, {location: L.w, input: "４四歩"}, {location: L.b, input: "３三歩"}]
+        Utils.movs_split("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: Location[:black], input: "５五歩"}, {location: Location[:white], input: "４四歩"}, {location: Location[:black], input: "３三歩"}]
       end
       it "先手後手がわからないと無視する" do
         Utils.movs_split("５五歩").should == []
@@ -54,7 +54,7 @@ module Bushido
       end
 
       describe "全体スコープ" do
-        before { @hash = {L.b => "歩2 飛 金", L.w => "歩二飛 "} }
+        before { @hash = {Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "} }
         it "人間表記 → コード" do
           Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金").should == @hash
         end
@@ -66,32 +66,32 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"], promoted: false]]
-        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"], promoted: false]]
-        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"], promoted: false]]
+        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"], promoted: false, location: Location[:black]]]
+        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"], promoted: false, location: Location[:black]]]
+        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"], promoted: false, location: Location[:black]]]
       end
 
       it "先手か後手の一方用" do
-        Utils.location_mini_soldiers(location: L.w, key: "十九枚落ち").should == @white_king
+        Utils.location_mini_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
       end
 
       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
         it "先手→十九枚落ち 後手→平手" do
           r = Utils.board_reset_args("十九枚落ち")
-          r[L.b].should == @black_king
-          r[L.w].should be_a Array # 平手
+          r[Location[:black]].should == @black_king
+          r[Location[:white]].should be_a Array # 平手
         end
 
         it "先手→十九枚落ち 後手→十九枚落ち" do
           r = Utils.board_reset_args("先手" => "十九枚落ち", "後手" => "十九枚落ち")
-          r[L.b].should == @black_king
-          r[L.w].should == @white_king
+          r[Location[:black]].should == @black_king
+          r[Location[:white]].should == @white_king
         end
 
         it "先手は１一の飛車のみ" do
           r = Utils.board_reset_args(board_one_cell(" 飛"))
-          r[L.b].should == @black_rook
-          r[L.w].should be_a Array
+          r[Location[:black]].should == @black_rook
+          r[Location[:white]].should be_a Array
         end
       end
     end

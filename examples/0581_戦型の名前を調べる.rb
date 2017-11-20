@@ -2,7 +2,7 @@ require "./example_helper"
 
 location = Location[:white]
 
-both_board_info = Parser.board_parse(<<~EOT)
+both_board_info = BoardParser.parse(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・v銀 ・ ・|
 | ・ ・ ・ ・ ・ ・v金v角 ・|
@@ -17,8 +17,8 @@ both_board_info = Parser.board_parse(<<~EOT)
 EOT
 info = Utils.board_point_realize2(location: location, both_board_info: both_board_info)
 
-info[L.b].collect(&:name) # => 
-info[L.w].collect(&:name) # => 
+info[Location[:black]].collect(&:name) # => 
+info[Location[:white]].collect(&:name) # => 
 
 mediator = Mediator.new
 mediator.board_reset(<<~EOT)

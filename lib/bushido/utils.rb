@@ -19,8 +19,8 @@ module Bushido
         key: nil,
       }.merge(params)
 
-      if Parser.board_format?(params[:key])
-        both_board_info = Parser.board_parse(params[:key])
+      if BoardParser.accept?(params[:key])
+        both_board_info = BoardParser.parse(params[:key]).both_board_info
       else
         teai_info = TeaiInfo.fetch(params[:key])
         both_board_info = teai_info.both_board_info
@@ -61,8 +61,8 @@ module Bushido
     #
     def board_reset_args(value = nil)
       case
-      when Parser.board_format?(value)
-        Parser.board_parse(value)
+      when BoardParser.accept?(value)
+        BoardParser.parse(value).both_board_info
       when value.kind_of?(Hash)
         # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
         value.inject({}) {|a, (k, v)|
@@ -115,7 +115,7 @@ module Bushido
 
     # 適当な持駒文字列を先手後手に分離
     # @example
-    #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {L.b => "歩2 飛 金", L.w => "歩二飛 "}
+    #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "}
     def triangle_hold_pieces_str_to_hash(str)
       hash = {}
       Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each{|mark, pieces_str|
@@ -128,7 +128,7 @@ module Bushido
 
     # 先手後手に分離した持駒情報を文字列化
     # @example
-    #   Utils.triangle_hold_pieces_hash_to_str({L.b => "歩2 飛 金", L.w => "歩二飛 "}) # => "▲歩2 飛 金 △歩二飛 "
+    #   Utils.triangle_hold_pieces_hash_to_str({Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "}) # => "▲歩2 飛 金 △歩二飛 "
     def triangle_hold_pieces_hash_to_str(hash)
       hash.collect{|location, pieces_str|"#{location.mark}#{pieces_str}"}.join(" ")
     end
@@ -178,13 +178,13 @@ module Bushido
     # # 後手のみ先手用になっている初期駒配置を反転させる
     # def board_point_realize(params)
     #   params[:both_board_info].inject({}) do |a, (key, value)|
-    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].as_location(params[:location])) })
+    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].reverse_if_white(params[:location])) })
     #   end
     # end
 
     # mini_soldiers を location 側の配置に変更したのを返す
     def board_point_realize2(mini_soldiers, location)
-      mini_soldiers.collect { |e| e.merge(point: e[:point].as_location(location)) }
+      mini_soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
     end
 
     private

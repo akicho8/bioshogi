@@ -17,7 +17,7 @@ module Bushido
     it "ヘッダーがなく、いきなり棋譜入力しているデータも読み取れる" do
       info = Parser::Ki2Parser.parse("▲７六歩")
       info.move_infos.should == [
-        {location: L.b, input: "７六歩", mov: "▲７六歩"},
+        {location: Location[:black], input: "７六歩", mov: "▲７六歩"},
       ]
       info.header.should == {}
     end
@@ -93,10 +93,10 @@ EOT
 
       it "棋譜の羅列" do
         @result.move_infos.should == [
-          {location: L.b, input: "７六歩", mov: "▲７六歩"},
-          {location: L.w, input: "３四歩", mov: "△３四歩", comments: ["コメント1"]},
-          {location: L.b, input: "６六歩", mov: "▲６六歩"},
-          {location: L.w, input: "８四歩", mov: "△８四歩", comments: ["コメント2"]},
+          {location: Location[:black], input: "７六歩", mov: "▲７六歩"},
+          {location: Location[:white], input: "３四歩", mov: "△３四歩", comments: ["コメント1"]},
+          {location: Location[:black], input: "６六歩", mov: "▲６六歩"},
+          {location: Location[:white], input: "８四歩", mov: "△８四歩", comments: ["コメント2"]},
         ]
       end
 

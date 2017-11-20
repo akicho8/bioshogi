@@ -8,13 +8,19 @@ module Bushido
     attr_accessor :player, :piece, :promoted, :point
 
     def initialize(attrs)
+      attrs = attrs.except(:location) # 互換性のため暫定的に。FIXME: location も持たせたらいいんじゃね？
+
       attrs.assert_valid_keys(:player, :piece, :promoted, :point)
+
       @player = attrs[:player]
       @piece = attrs[:piece]
+
       self.promoted = attrs[:promoted]
+
       if attrs[:point]
         @point = Point.parse(attrs[:point])
       end
+
       unless @player && @piece
         raise ArgumentError, attrs.inspect
       end
@@ -56,7 +62,7 @@ module Bushido
 
     # 盤面情報と比較するならこれを使う
     def to_mini_soldier
-      MiniSoldier[point: @point, piece: @piece, promoted: @promoted]
+      MiniSoldier[piece: @piece, promoted: @promoted, point: @point]
     end
 
     def to_h

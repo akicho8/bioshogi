@@ -23,8 +23,8 @@ module Bushido
       end
 
       it "棋譜の羅列" do
-        @info.move_infos.first.should == {turn_number: "1", location: L.b, input: "７六歩(77)", mov: "▲７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
-        @info.move_infos.last.should  == {turn_number: "5", location: L.b, input: "投了", mov: "▲投了", spent_time: "0:10/00:00:50"}
+        @info.move_infos.first.should == {turn_number: "1", location: Location[:black], input: "７六歩(77)", mov: "▲７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
+        @info.move_infos.last.should  == {turn_number: "5", location: Location[:black], input: "投了", mov: "▲投了", spent_time: "0:10/00:00:50"}
       end
 
       it "対局前コメント" do

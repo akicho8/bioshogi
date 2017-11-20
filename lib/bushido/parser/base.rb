@@ -7,16 +7,14 @@ require "active_support/core_ext/array/grouping" # for in_groups_of
 
 require_relative "header_info"
 
-require_relative "board_parser"
-
 module Bushido
   module Parser
     class << self
       # 棋譜ファイルのコンテンツを読み込む
-      def parse(str, **options)
-        parser = support_parsers.find { |e| e.accept?(str) }
-        parser or raise FileFormatError, "棋譜のフォーマットが不明です : #{str}"
-        parser.parse(str, options)
+      def parse(source, **options)
+        parser = support_parsers.find { |e| e.accept?(source) }
+        parser or raise FileFormatError, "棋譜のフォーマットが不明です : #{source}"
+        parser.parse(source, options)
       end
 
       # 棋譜ファイル自体を読み込む
@@ -34,28 +32,10 @@ module Bushido
         s = s.gsub(/\p{blank}*\R/, "\n")
       end
 
-      # 盤面テキストか？
-      # private にしていないのは他のクラスでも直接使っているため
-      def board_format?(str)
-        support_board_parsers.find {|e| e.board_format?(str) }
-      end
-
-      # 盤面テキストか？
-      # private にしていないのは他のクラスでも直接使っているため
-      def board_parse(str, **options)
-        parser = board_format?(str)
-        parser or raise FileFormatError, "盤面のフォーマットが不明です : #{str}"
-        parser.new(str, options).parse
-      end
-
       private
 
       def support_parsers
         [KifParser, CsaParser, Ki2Parser]
-      end
-
-      def support_board_parsers
-        [KixBoardParser, CsaBoardParser]
       end
     end
 
@@ -135,7 +115,7 @@ module Bushido
         # FIXME: 間にある前提ではなく、どこに書いていても拾えるようにしたい
         if md = normalized_source.match(/^後手の持駒#{header_sep}.*?\n(?<board>.*)^先手の持駒#{header_sep}/om)
           @board_source = md[:board]
-          # header[:board] = Parser.board_parse(md[:board]) # TODO: 使ってない
+          # header[:board] = BoardParser.parse(md[:board]) # TODO: 使ってない
         end
       end
 

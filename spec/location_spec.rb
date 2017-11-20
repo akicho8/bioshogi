@@ -34,8 +34,8 @@ module Bushido
     end
 
     it "簡潔に書きたいとき用" do
-      L.b.key.should == :black
-      L.w.key.should == :white
+      Location[:black].key.should == :black
+      Location[:white].key.should == :white
     end
 
     it "次の手番を返す" do

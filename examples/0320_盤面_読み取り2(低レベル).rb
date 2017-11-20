@@ -1,6 +1,6 @@
 require "./example_helper"
 
-info = Parser.board_parse(<<~EOT)
+info = BoardParser.parse(<<~EOT)
 +---------------------------+
 | ・v桂 ・ ・ 馬 ・ ・v桂v香|
 |v飛 ・ ・ ・ ・ と ・ ・ ・|

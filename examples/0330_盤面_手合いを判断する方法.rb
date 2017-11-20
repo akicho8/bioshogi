@@ -1,6 +1,6 @@
 require "./example_helper"
 
-info1 = Parser.board_parse(<<~EOT)
+info1 = BoardParser.parse(<<~EOT)
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
 | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -15,6 +15,6 @@ info1 = Parser.board_parse(<<~EOT)
 EOT
 
 info2 = TeaiInfo["香落ち"].both_board_info
-info1[L.b] == info2[L.b]        # => true
+info1[Location[:black]] == info2[Location[:black]]        # => true
 
-TeaiInfo.find {|e| e.both_board_info[L.b] == info1[L.b] }.name # => "香落ち"
+TeaiInfo.find {|e| e.both_board_info[Location[:black]] == info1[Location[:black]] }.name # => "香落ち"

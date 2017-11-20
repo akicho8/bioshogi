@@ -1,6 +1,6 @@
 require "./example_helper"
 
-teai_info = TeaiInfo["平手"].both_board_info[L.b]
+teai_info = TeaiInfo["平手"].both_board_info[Location[:black]]
 
 mediator = Mediator.start
 mediator.board_reset

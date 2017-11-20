@@ -61,7 +61,7 @@ RSpec.configure do |config|
     end
 
     def board_parse_test(source)
-      Bushido::Parser.board_parse(source).inject({}) do |a, (key, value)|
+      Bushido::BoardParser.parse(source).both_board_info.inject({}) do |a, (key, value)|
         a.merge(key => value.collect(&:to_s))
       end
     end

@@ -44,12 +44,12 @@ module Bushido
     end
 
     it "相手陣地に入っているか？" do
-      Point.parse("１二").promotable?(L.b).should == true
-      Point.parse("１三").promotable?(L.b).should == true
-      Point.parse("１四").promotable?(L.b).should == false
-      Point.parse("１六").promotable?(L.w).should == false
-      Point.parse("１七").promotable?(L.w).should == true
-      Point.parse("１八").promotable?(L.w).should == true
+      Point.parse("１二").promotable?(Location[:black]).should == true
+      Point.parse("１三").promotable?(Location[:black]).should == true
+      Point.parse("１四").promotable?(Location[:black]).should == false
+      Point.parse("１六").promotable?(Location[:white]).should == false
+      Point.parse("１七").promotable?(Location[:white]).should == true
+      Point.parse("１八").promotable?(Location[:white]).should == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do
@@ -83,7 +83,7 @@ module Bushido
     end
 
     it "後手なら反転" do
-      Point["７六"].as_location(:white).should == Point["３四"]
+      Point["７六"].reverse_if_white(:white).should == Point["３四"]
     end
 
     it "シリアライズからの復元" do
