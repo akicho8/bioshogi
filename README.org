@@ -208,7 +208,7 @@ mediator = Mediator.start
 player = mediator.player_at(:black)
 player.soldiers_create("５五馬")
 player.soldiers.first.movable_infos.each{|point|
-  player.soldiers_create("#{point}馬", from_piece: false)
+  player.soldiers_create("#{point}馬", from_stand: false)
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -376,7 +376,7 @@ p mediator
 Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do
   mediator = Mediator.new
-  mediator.soldiers_create("▲３三歩 △１一歩", from_piece: false)
+  mediator.soldiers_create("▲３三歩 △１一歩", from_stand: false)
   puts mediator
   pp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
 end

@@ -2,9 +2,14 @@
 
 module Bushido
   class Player
-    attr_accessor :name, :location, :mediator, :last_piece_taken_from_opponent, :runner
+    attr_accessor :name
+    attr_accessor :location
+    attr_accessor :mediator
+    attr_accessor :runner
 
-    def initialize(mediator, params = {})
+    attr_accessor :last_piece_taken_from_opponent
+
+    def initialize(mediator, **params)
       super() if defined? super
 
       @mediator = mediator
@@ -12,10 +17,6 @@ module Bushido
       if v = params[:location]
         self.location = v
       end
-
-      # if v = params[:board]
-      #   @board = v
-      # end
 
       if params[:pieces_add]
         pieces_add
@@ -42,20 +43,18 @@ module Bushido
       mini_soldiers = Utils.location_mini_soldiers(location: location, key: "平手")
       mini_soldiers.each do |mini_soldier|
         piece_pick_out(mini_soldier[:piece])
-        soldier = Soldier.new(mini_soldier.merge(player: self))
-        put_on_with_valid(mini_soldier[:point], soldier)
-        @soldiers << soldier
+        __soldiers_create(mini_soldier)
       end
     end
 
     # 持駒の配置
-    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_piece:false にすると楽ちん
-    #   player.soldiers_create(["５五飛", "３三飛"], from_piece: false)
+    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
+    #   player.soldiers_create(["５五飛", "３三飛"], from_stand: false)
     #   player.soldiers_create("#{point}馬")
-    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_piece: false)
+    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
     def soldiers_create(mini_soldier_or_str, options = {})
       options = {
-        from_piece: true, # 持駒から取り出して配置する？
+        from_stand: true, # 持駒から取り出して配置する？
       }.merge(options)
 
       Array.wrap(mini_soldier_or_str).each do |mini_soldier_or_str|
@@ -67,17 +66,17 @@ module Bushido
         else
           mini_soldier = mini_soldier_or_str
         end
-
-        # p mini_soldier
-        # p options[:from_piece]
-
-        if options[:from_piece]
+        if options[:from_stand]
           piece_pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        soldier = Soldier.new(mini_soldier.merge(player: self))
-        put_on_with_valid(mini_soldier[:point], soldier)
-        @soldiers << soldier
+        __soldiers_create(mini_soldier)
       end
+    end
+
+    def __soldiers_create(mini_soldier, options = {})
+      soldier = Soldier.new(mini_soldier.merge(player: self))
+      put_on_with_valid(mini_soldier[:point], soldier)
+      @soldiers << soldier
     end
 
     # # 盤上の自分の駒
@@ -343,8 +342,6 @@ module Bushido
           raise error
         end
       end
-
-      # p(self.location != soldier.location)
 
       board.put_on(point, soldier)
     end

@@ -162,8 +162,8 @@ EOT
     # it "一番得するように打つその3" do
     #   Board.size_change([2, 3]) do
     #     mediator = Mediator.new
-    #     mediator.player_at(:white).soldiers_create(["１一香", "１二歩"], from_piece: false)
-    #     mediator.player_b.soldiers_create(["１三飛"], from_piece: false)
+    #     mediator.player_at(:white).soldiers_create(["１一香", "１二歩"], from_stand: false)
+    #     mediator.player_b.soldiers_create(["１三飛"], from_stand: false)
     #     puts mediator
     #     # mediator.player_b.brain.doredore
     #     p NegaMaxRunner.run(player: mediator.player_b, depth: 1)
