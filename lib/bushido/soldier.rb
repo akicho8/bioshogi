@@ -10,8 +10,15 @@ module Bushido
     def initialize(attrs)
       attrs.assert_valid_keys(:player, :piece, :promoted, :point, :location)
 
+      if attrs[:location]
+        if attrs[:location] != attrs[:player].location
+          raise MustNotHappen
+        end
+      end
+
       @player = attrs[:player]
       @piece = attrs[:piece]
+      @location = @player.location
 
       self.promoted = attrs[:promoted]
 

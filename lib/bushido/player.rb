@@ -122,6 +122,7 @@ module Bushido
         from_soldier.promoted = true
       end
 
+      raise MustNotHappen unless location == from_soldier.location
       put_on_with_valid(to, from_soldier)
     end
 
@@ -342,6 +343,8 @@ module Bushido
           raise error
         end
       end
+
+      # p(self.location != soldier.location)
 
       board.put_on(point, soldier)
     end
