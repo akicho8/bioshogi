@@ -15,24 +15,18 @@ mediator.board_reset(<<~EOT)
 | ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
 +---------------------------+
   EOT
-# mediator.execute("３四歩")
-# mediator.execute("２二角成")
-# mediator.player_at(:black).to_s_pieces # => "角"
-# puts mediator
 
 location = Location[:black]
 
 static_board_info = StaticBoardInfo["カニ囲い"]
-
-info = Utils.board_point_realize(location: location, both_board_info: static_board_info.both_board_info)
-mini_soldiers = info[location]
+mini_soldiers = static_board_info.board_parser.mini_soldiers.collect do |e|
+  e.merge(point: e[:point].reverse_if_white_location(location), location: location)
+end
 
 # location 駒に絞って調べる
 flag = mini_soldiers.all? do |e|
   if soldier = mediator.board[e[:point]]
-    if soldier.player.location == location
-      e == soldier.to_mini_soldier
-    end
+    e == soldier.to_mini_soldier
   end
 end
 

@@ -19,15 +19,17 @@ module Bushido
         key: nil,
       }.merge(params)
 
+      location = Location[params[:location]]
+
       if BoardParser.accept?(params[:key])
-        both_board_info = BoardParser.parse(params[:key]).both_board_info
+        board_parser = BoardParser.parse(params[:key])
       else
-        teai_info = TeaiInfo.fetch(params[:key])
-        both_board_info = teai_info.both_board_info
+        board_parser = TeaiInfo.fetch(params[:key]).board_parser
       end
 
-      mini_soldiers = both_board_info[Location[:black]]
-      mini_soldiers = board_point_realize2(mini_soldiers, params[:location])
+      board_parser.mini_soldiers.collect do |e|
+        e.merge(point: e[:point].reverse_if_white_location(location), location: location)
+      end
     end
 
     # # 指定プレイヤー側の初期配置(盤面のみ対応)
@@ -178,13 +180,13 @@ module Bushido
     # # 後手のみ先手用になっている初期駒配置を反転させる
     # def board_point_realize(params)
     #   params[:both_board_info].inject({}) do |a, (key, value)|
-    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].reverse_if_white(params[:location])) })
+    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].reverse_if_white_location(params[:location])) })
     #   end
     # end
 
     # mini_soldiers を location 側の配置に変更したのを返す
     def board_point_realize2(mini_soldiers, location)
-      mini_soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
+      mini_soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white_location(location)) }
     end
 
     private

@@ -66,13 +66,14 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[piece: Piece["玉"], point: Point["５一"], promoted: false, location: Location[:black]]]
-        @black_king = [MiniSoldier[piece: Piece["玉"], point: Point["５九"], promoted: false, location: Location[:black]]]
-        @black_rook = [MiniSoldier[piece: Piece["飛"], point: Point["１一"], promoted: false, location: Location[:black]]]
+        @white_king = [MiniSoldier[piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white]]]
+        @black_king = [MiniSoldier[piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black]]]
+        @black_rook = [MiniSoldier[piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black]]]
       end
 
       it "先手か後手の一方用" do
         Utils.location_mini_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
+        Utils.location_mini_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
       end
 
       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
@@ -82,16 +83,29 @@ module Bushido
           r[Location[:white]].should be_a Array # 平手
         end
 
-        it "先手→十九枚落ち 後手→十九枚落ち" do
+        it "先手→十九枚落ち 後手→十九枚落ち(DSL用)" do
           r = Utils.board_reset_args("先手" => "十九枚落ち", "後手" => "十九枚落ち")
           r[Location[:black]].should == @black_king
           r[Location[:white]].should == @white_king
         end
 
-        it "先手は１一の飛車のみ" do
-          r = Utils.board_reset_args(board_one_cell(" 飛"))
-          r[Location[:black]].should == @black_rook
-          r[Location[:white]].should be_a Array
+        it "盤面指定" do
+          r = Utils.board_reset_args(<<~EOT)
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・ ・ ・ ・v玉 ・ ・ ・ ・|一
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|二
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+| ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
++---------------------------+
+EOT
+          r[Location[:black]].should == @black_king
+          r[Location[:white]].should == @white_king
         end
       end
     end

@@ -83,7 +83,7 @@ module Bushido
     end
 
     it "後手なら反転" do
-      Point["７六"].reverse_if_white(:white).should == Point["３四"]
+      Point["７六"].reverse_if_white_location(:white).should == Point["３四"]
     end
 
     it "シリアライズからの復元" do

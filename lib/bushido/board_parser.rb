@@ -38,23 +38,29 @@ module Bushido
         @options = options
       end
 
-      def both_board_info
-        @both_board_info ||= __both_board_info
-      end
-
-      def __both_board_info
-        v = mini_soldiers.group_by { |e| e[:location] }
-        Location.each do |e|
-          v[e] ||= []
-        end
-        v
-      end
-
       def mini_soldiers
         @mini_soldiers ||= []
       end
 
+      def both_board_info
+        @both_board_info ||= __both_board_info
+      end
+
+      def side_board_info_by(location)
+        both_board_info[location] || []
+      end
+
+      def black_side_mini_soldiers
+        both_board_info[Location[:black]] || []
+      end
+
       private
+
+      def __both_board_info
+        v = mini_soldiers.group_by { |e| e[:location] }
+        Location.each { |e| v[e] ||= [] }
+        v
+      end
 
       def lines
         @lines ||= Parser.source_normalize(@source).strip.lines.to_a

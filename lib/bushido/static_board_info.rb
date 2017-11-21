@@ -567,8 +567,12 @@ BOARD
       },
     ]
 
+    def board_parser
+      @board_parser ||= BoardParser.parse(board_body)
+    end
+
     def both_board_info
-      @both_board_info ||= BoardParser.parse(board_body).both_board_info
+      @both_board_info ||= board_parser.both_board_info
     end
   end
 end

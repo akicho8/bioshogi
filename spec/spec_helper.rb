@@ -65,9 +65,5 @@ RSpec.configure do |config|
         a.merge(key => value.collect(&:to_s))
       end
     end
-
-    def board_one_cell(str)
-      "+---+\n|#{str}|\n+---+"
-    end
   }
 end

@@ -181,7 +181,7 @@ module Bushido
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
         mini_soldiers = @surface.values.collect { |e|
           if e.player.location.key == location.key
-            e.to_mini_soldier.merge(point: e.point.reverse_if_white(location), location: Location[:black])
+            e.to_mini_soldier.merge(point: e.point.reverse_if_white_location(location), location: Location[:black])
           end
         }.compact.sort
 
