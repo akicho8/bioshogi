@@ -127,11 +127,8 @@ module Bushido
 
     # 指定のセルを削除する
     # プレイヤー側の soldiers からは削除しないので注意
-    def __abone_cell(value)
-      if value.kind_of?(Point)
-        value = value.to_xy
-      end
-      @surface.delete(value)
+    def __abone_cell(point)
+      @surface.delete(point.to_xy)
     end
 
     def to_s_kakiki
