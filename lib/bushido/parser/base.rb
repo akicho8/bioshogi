@@ -182,7 +182,7 @@ module Bushido
           }.merge(options)
 
           out = ""
-          out << header_part_string unless options[:header_skip]
+          out << header_as_string unless options[:header_skip]
           out << "手数----指手---------消費時間--\n"
           out << mediator.hand_logs.collect.with_index(1).collect {|e, i|
             "%*d %s (00:00/00:00:00)\n" % [options[:number_width], i, mb_ljust(e.to_s_kif, options[:length])]
@@ -201,7 +201,7 @@ module Bushido
 
           out = ""
           if header.present? && !options[:header_skip]
-            out << header_part_string
+            out << header_as_string
             out << "\n"
           end
 
@@ -267,14 +267,14 @@ module Bushido
           end
         end
 
-        def header_part_string
-          @header_part_string ||= __header_part_string
+        def header_as_string
+          @header_as_string ||= __header_as_string
         end
 
         private
 
-        def __header_part_string
-          embed = nil
+        def __header_as_string
+          out = ""
 
           obj = Mediator.new
           obj.board_reset(@board_source || header["手合割"])
@@ -282,24 +282,20 @@ module Bushido
             unless v == "平手"
               header["手合割"] = v
             end
+            out << raw_header_as_string
           else
-            embed = obj.board.to_s
+            header["後手の持駒"] ||= ""
+            header["先手の持駒"] ||= ""
+            out << raw_header_as_string.gsub(/(後手の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
-          if embed
-            header["後手の持駒"] ||= nil
-            header["先手の持駒"] ||= nil
-          end
+          out
+        end
 
-          str = header.collect { |key, value|
+        def raw_header_as_string
+          header.collect { |key, value|
             "#{key}：#{value}\n"
           }.join
-
-          if embed
-            str = str.gsub(/(後手の持駒：.*\n)/, '\1' + embed)
-          end
-
-          str
         end
 
         # mb_ljust("あ", 3)               # => "あ "
@@ -316,5 +312,3 @@ module Bushido
     end
   end
 end
-# ~> -:8:in `require_relative': cannot infer basepath (LoadError)
-# ~>    from -:8:in `<main>'
