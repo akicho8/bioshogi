@@ -61,13 +61,10 @@ module Bushido
       #   board.put_on("５五", soldier)
       def put_on(point, soldier)
         assert_board_cell_is_blank(point)
-        soldier.point = point
-        set(point, soldier)
-      end
-
-      # 指定座標に何かを置く
-      def set(point, object)
-        @surface[Point[point].to_xy] = object # TODO: Point オブジェクトのままセットすることはできないか？
+        raise MustNotHappen if soldier.point != point
+        # soldier.point = point
+        # set(point, soldier)
+        @surface[Point[point].to_xy] = soldier # TODO: Point オブジェクトのままセットすることはできないか？
       end
 
       # 指定座標にある駒をを広い上げる

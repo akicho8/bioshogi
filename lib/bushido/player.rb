@@ -116,7 +116,8 @@ module Bushido
       end
 
       raise MustNotHappen unless location == from_soldier.location
-      put_on_with_valid(to, from_soldier)
+      from_soldier.point = to
+      put_on_with_valid(from_soldier)
     end
 
     # # # 前の位置(同に使う)
@@ -224,7 +225,7 @@ module Bushido
 
       def soldiers_create_from_mini_soldier(mini_soldier)
         soldier = Soldier.new(mini_soldier.merge(player: self))
-        put_on_with_valid(mini_soldier[:point], soldier)
+        put_on_with_valid(soldier)
         @soldiers << soldier
       end
 
@@ -243,7 +244,7 @@ module Bushido
       # boardに描画する
       def render_soldiers
         @soldiers.each do |soldier|
-          put_on_with_valid(soldier.point, soldier)
+          put_on_with_valid(soldier)
         end
       end
 
@@ -317,42 +318,22 @@ module Bushido
       # end
     end
 
-    # これ以上動かせない？
-    def dead_end?(mini_soldier)
-      Movabler.simple_movable_infos(self, mini_soldier).empty?
-    end
-
-    # 二歩？
-    def find_collisione_pawn(mini_soldier)
-      if mini_soldier[:piece].key == :pawn && !mini_soldier[:promoted]
-        pawns_on_board(mini_soldier[:point]).first
-      end
-    end
-
-    # 縦列の自分の歩たちを取得
-    def pawns_on_board(point)
-      soldiers = board.vertical_pieces(point.x)
-      soldiers = soldiers.find_all { |s| s.player == self }
-      soldiers = soldiers.find_all { |s| !s.promoted? }
-      soldiers = soldiers.find_all { |s| s.piece.key == :pawn }
-    end
-
-    def put_on_with_valid(point, soldier, **options)
+    def put_on_with_valid(soldier, **options)
       options = {
         validate: true,
       }.merge(options)
 
       if options[:validate]
-        mini_soldier = soldier.to_mini_soldier.merge(point: point)
+        mini_soldier = soldier.to_mini_soldier
         if s = find_collisione_pawn(mini_soldier)
           raise DoublePawn, "二歩 (#{s.mark_with_formal_name}があるため#{soldier}が打てません)"
         end
         if dead_end?(mini_soldier)
-          raise NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier}成」の間違いの可能性があります。")
+          raise NotPutInPlaceNotBeMoved, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier}成」の間違いの可能性があります。\n#{@board}"
         end
       end
 
-      board.put_on(point, soldier)
+      board.put_on(soldier.point, soldier)
     end
 
     # 二歩でも行き止まりでもない？
@@ -374,7 +355,26 @@ module Bushido
 
     private
 
-    def movable_infos(mini_soldier, options = {})
+    # これ以上動かせない？
+    def dead_end?(mini_soldier)
+      Movabler.simple_movable_infos(self, mini_soldier).empty?
+    end
+
+    # 二歩？
+    def find_collisione_pawn(mini_soldier)
+      if mini_soldier[:piece].key == :pawn && !mini_soldier[:promoted]
+        pawns_on_board(mini_soldier[:point]).first
+      end
+    end
+
+    # 縦列の自分の歩たちを取得
+    def pawns_on_board(point)
+      board.vertical_pieces(point.x).find_all do |e|
+        e.player == self && e.piece.key == :pawn && !e.promoted
+      end
+    end
+
+    def movable_infos(mini_soldier, **options)
       Movabler.movable_infos(self, mini_soldier, options)
     end
 
