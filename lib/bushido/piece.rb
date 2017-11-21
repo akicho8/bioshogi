@@ -179,11 +179,9 @@ module Bushido
         !!promotable
       end
 
-      private
-
-      def assert_promotable(promoted)
-        if !promotable? && promoted
-          raise NotPromotable
+      def assert_promotable(v)
+        if !promotable? && v
+          raise NotPromotable, "成れない駒で成ろうとしています : #{piece.inspect}"
         end
       end
     end
