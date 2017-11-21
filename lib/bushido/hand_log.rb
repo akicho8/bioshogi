@@ -140,9 +140,15 @@ module Bushido
         direct = false
         s = []
 
-        # 候補が2つ以上あったとき
-        if @hand_log.candidate && @hand_log.candidate.size > 1
-          if @hand_log.piece.brave?
+        if @hand_log.piece.brave?
+          if idoudekiru_koma_no_kazu >= 2
+            # case
+            # when ty < oy
+            #   s << which_char("上", "引")
+            # when ty > oy
+            #   s << which_char("引", "上")
+            # end
+
             # 大駒の場合、
             # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
             if @hand_log.candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる
@@ -157,59 +163,212 @@ module Bushido
               if sorted_candidate.first.point.x.value == ox
                 s << which_char("左", "右")
               end
-            end
-          else
-            # 普通駒の場合、
-            # 左右がつくのは移動先の左側と右側の両方に駒があるとき
-            # それだけではなく次の場合の「右側の銀が○に移動するとき」も「右」が付く
-            # |----+----|
-            # | ○ |    |
-            # |----+----|
-            # | 銀 | 銀 |
-            # |----+----|
-            # 以前は、移動先の左側に駒がある、かつ移動先の右側に駒があるとしていたが、
-            # 左の銀と右の銀の間に行き先が含まれるか？ で判定する方法に変更
-            if x_range.cover?(tx)
-              if tx < ox
-                s << which_char("右", "左")
-              elsif tx > ox
-                s << which_char("左", "右")
-              end
-            end
+            else
+              # p ["#{__FILE__}:#{__LINE__}", __method__, ]
 
-            # 目標座標の左方向または右方向に駒があって、自分は縦の列から来た場合
-            if x_range.min < tx || tx < x_range.max
-              if tx == ox
-                s << "直"
-                direct = true   # 「直上」とならないようにするため
-              end
-            end
-          end
-
-          unless direct
-            # 目標地点の上と下、両方にあって区別がつかないとき、
-            if y_range.min < ty && ty < y_range.max ||
-                # 上か下にあって、水平線にもある
-                (y_range.min < ty || ty < y_range.max) && @hand_log.candidate.any?{|s|s.point.y.value == ty}
-
-              # 下から来たのなら、ひき"上"げ、
-              # 上から来たなら、"引"く
-              if ty < oy
-                s << which_char("上", "引")
-              elsif ty > oy
+              if oy < ty
                 s << which_char("引", "上")
-              end
-            end
-
-            # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
-            if y_range.min < ty || ty < y_range.max
-              if ty == oy
+              elsif oy > ty
+                s << which_char("上", "引")
+              elsif oy == ty
                 s << "寄"
               end
             end
+
+          end
+
+        else
+          if idoudekiru_koma_no_kazu >= 2
+            # p agaru_koma_no_kazu
+            # p yoreru_koma_no_kazu
+            #
+            # p @hand_log.candidate.collect(&:name)
+
+            if false
+              # when yoreru_koma_no_kazu == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
+              #   s << "寄"
+            elsif idoudekiru_koma_no_kazu >= 3
+              case
+                # when yoreru_koma_no_kazu == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
+                #   s << "寄"
+                #   # else
+                #   # when agaru_koma_no_kazu >= 3
+                # P3 P3A 到達地点に3枚以上の同じ駒が動ける場合、動作でどの駒が動いたかわからない時
+              when oy == ty && yoreru_koma_no_kazu == 1 # (tx == (ox + 1) || tx == (ox - 1)) # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
+                s << "寄"
+              when ox == tx && (ty + 1) == oy # P3B
+                s << which_char("直", "引")
+              when ox == tx && (ty - 1) == oy # P3B
+                s << which_char("引", "直")
+              when tx < ox && migi_niaru_koma_no_kazu == 1 # P3B, P3C
+                s << which_char("右", "左")
+              when tx < ox && migi_niaru_koma_no_kazu >= 2 # P3B
+                s << which_char("右上", "左上")
+              when ox < tx && hidari_niaru_koma_no_kazu == 1
+                s << which_char("左", "右")
+              when ox < tx && hidari_niaru_koma_no_kazu >= 2 && ty < oy # P3B
+                s << which_char("左上", "右上")
+              when ox < tx && hidari_niaru_koma_no_kazu >= 2 && ty > oy # P3B, P3C
+                s << which_char("左引", "右引")
+              end
+
+              # if tx < ox
+              #   s << which_char("右", "左")
+              # elsif ox < tx
+              #   s << which_char("左", "右")
+              # else
+              #   raise MustNotHappen
+              # end
+            elsif agaru_koma_no_kazu >= 2 && oy.pred == ty && ox == tx # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
+              s << "直"
+            elsif agaru_koma_no_kazu == 2 # P2A 同じ駒で上がる駒が2枚ある場合「上」を省略して「左」「右」
+              if tx < ox
+                s << which_char("右", "左")
+              elsif ox < tx
+                s << which_char("左", "右")
+              else
+                raise MustNotHappen
+              end
+            elsif yoreru_koma_no_kazu == 2 # P2B 同じ駒で寄る駒が2枚ある場合「寄」を省略して「左」「右」
+              if tx < ox
+                s << which_char("右", "左")
+              elsif ox < tx
+                s << which_char("左", "右")
+              else
+                raise MustNotHappen
+              end
+            elsif sagaru_koma_no_kazu == 2 # P2C 同じ駒で引く駒が2枚ある場合「引」を省略して「左」「右」
+              if tx < ox
+                s << which_char("右", "左")
+              elsif ox < tx
+                s << which_char("左", "右")
+              else
+                raise MustNotHappen
+              end
+            else
+              # P1A P1B P1C P1D P1E 到達地点に複数の同じ駒が動ける場合、「上」または「寄」または「引」
+              case
+              when ty < oy
+                s << which_char("上", "引")
+              when ty > oy
+                s << which_char("引", "上")
+              when ty == oy
+                s << "寄"
+              else
+                raise MustNotHappen
+              end
+            end
+
+            # if x_range.cover?(tx)
+            #   if tx < ox
+            #     s << which_char("右", "左")
+            #   elsif ox < tx
+            #     s << which_char("左", "右")
+            #   end
+            # end
+
           end
         end
+
+        # # 候補が2つ以上あったとき
+        # if @hand_log.candidate && @hand_log.candidate.size > 1
+        #   if @hand_log.piece.brave?
+        #     # 大駒の場合、
+        #     # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
+        #     if @hand_log.candidate.collect{|s|s.point.y.value}.uniq.size == 1 || [     # 移動元で二つの龍が水平線上にいる
+        #         @hand_log.candidate.all?{|s|s.point.y.value < ty},   # 移動先の水平線上よりすべて上または
+        #         @hand_log.candidate.all?{|s|s.point.y.value > ty},   #                     すべて下
+        #       ].any?
+        #
+        #       sorted_candidate = @hand_log.candidate.sort_by{|soldier|soldier.point.x.value}
+        #       if sorted_candidate.last.point.x.value == ox
+        #         s << which_char("右", "左")
+        #       end
+        #       if sorted_candidate.first.point.x.value == ox
+        #         s << which_char("左", "右")
+        #       end
+        #     end
+        #   else
+        #     # # 普通駒の場合、
+        #     # # 左右がつくのは移動先の左側と右側の両方に駒があるとき
+        #     # # それだけではなく次の場合の「右側の銀が○に移動するとき」も「右」が付く
+        #     # # |----+----|
+        #     # # | ○ |    |
+        #     # # |----+----|
+        #     # # | 銀 | 銀 |
+        #     # # |----+----|
+        #     # # 以前は、移動先の左側に駒がある、かつ移動先の右側に駒があるとしていたが、
+        #     # # 左の銀と右の銀の間に行き先が含まれるか？ で判定する方法に変更
+        #     # if x_range.cover?(tx)
+        #     #   if tx < ox
+        #     #     s << which_char("右", "左")
+        #     #   elsif ox < tx
+        #     #     s << which_char("左", "右")
+        #     #   end
+        #     # end
+        #     #
+        #     # # 目標座標の左方向または右方向に駒があって、自分は縦の列から来た場合
+        #     # if x_range.min < tx || tx < x_range.max
+        #     #   if tx == ox
+        #     #     s << "直"
+        #     #     direct = true   # 「直上」とならないようにするため
+        #     #   end
+        #     # end
+        #   end
+        #
+        #   # unless direct
+        #   #   # 目標地点の上と下、両方にあって区別がつかないとき、
+        #   #   if y_range.min < ty && ty < y_range.max ||
+        #   #       # 上か下にあって、水平線にもある
+        #   #       (y_range.min < ty || ty < y_range.max) && @hand_log.candidate.any?{|s|s.point.y.value == ty}
+        #   #
+        #   #     # 下から来たのなら、ひき"上"げ、
+        #   #     # 上から来たなら、"引"く
+        #   #     if ty < oy
+        #   #       s << which_char("上", "引")
+        #   #     elsif ty > oy
+        #   #       s << which_char("引", "上")
+        #   #     end
+        #   #   end
+        #   #
+        #   #   # 目標座標の上方向または下方向に駒があって、自分は真横の列から来た場合
+        #   #   if y_range.min < ty || ty < y_range.max
+        #   #     if ty == oy
+        #   #       s << "寄"
+        #   #     end
+        #   #   end
+        #   # end
+        # end
+
         s
+      end
+
+      def agaru_koma_no_kazu
+        # p ty
+        # p @hand_log.candidate.collect{|e|e.name}
+        # p @hand_log.candidate.count { |s| s.point.y.value < ty }
+
+        @hand_log.candidate.count { |s| s.point.y.value > ty }
+      end
+
+      def sagaru_koma_no_kazu
+        @hand_log.candidate.count { |s| s.point.y.value < ty }
+      end
+
+      def yoreru_koma_no_kazu
+        @hand_log.candidate.count { |s| s.point.y.value == ty }
+      end
+
+      def idoudekiru_koma_no_kazu
+        (@hand_log.candidate || []).count
+      end
+
+      def hidari_niaru_koma_no_kazu
+        @hand_log.candidate.count { |s| s.point.x.value < tx }
+      end
+
+      def migi_niaru_koma_no_kazu
+        @hand_log.candidate.count { |s| s.point.x.value > tx }
       end
 
       def which_char(*args)

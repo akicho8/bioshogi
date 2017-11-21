@@ -116,8 +116,8 @@ module Bushido
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|
-          s.scan(/(.)(#{Piece.all_names.join("|")}|・|\s{2})/o).each_with_index do |(prefix, piece), x|
-            unless piece == "・" || piece.strip == ""
+          s.scan(/(.)(#{Piece.all_names.join("|")}|[#{blank_chars}]|\s{2})/o).each_with_index do |(prefix, piece), x|
+            unless blank_chars.include?(piece) || piece.strip == ""
               raise SyntaxDefact unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
               location = Location.fetch(prefix)
@@ -125,6 +125,10 @@ module Bushido
             end
           end
         end
+      end
+
+      def blank_chars
+        "・○◎×"
       end
     end
 

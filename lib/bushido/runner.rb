@@ -278,9 +278,12 @@ module Bushido
           @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
         end
 
+        # 真下にあるもの
         if @md[:motion1].include?("直")
-          # TODO: 厳密には下にあるもののみとする
-          @soldiers = @soldiers.find_all { |e| e.point.x == @point.x }
+          @soldiers = @soldiers.find_all { |e|
+            e.point.x == @point.x &&
+            e.point.y.value == @point.y.value + @player.location.where_value(1, -1)
+          }
         end
       end
 
