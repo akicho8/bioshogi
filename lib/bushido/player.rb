@@ -2,7 +2,7 @@
 
 module Bushido
   class Player
-    attr_accessor :name, :location, :mediator, :last_piece, :runner
+    attr_accessor :name, :location, :mediator, :last_piece_taken_from_opponent, :runner
 
     def initialize(mediator, params = {})
       super() if defined? super
@@ -86,42 +86,43 @@ module Bushido
     #   # @ board.surface.values.find_all{|soldier|soldier.player == self}
     # end
 
-    # 盤上の駒を a から b に移動する。成るなら promote_trigger を有効に。
-    def move_to(a, b, promote_trigger = false)
-      @last_piece = nil
+    # 盤上の駒を from から to に移動する。成るなら promote_trigger を有効に。
+    def move_to(from, to, promote_trigger = false)
+      @last_piece_taken_from_opponent = nil # 最後に取った駒 FIXME:名前がだめ
 
-      a = Point.parse(a)
-      b = Point.parse(b)
-
-      if promote_trigger
-        if a.promotable?(location) || b.promotable?(location)
-        else
-          raise NotPromotable, "#{a.name}から#{b.name}への移動では成れない"
-        end
-
-        _soldier = board.lookup(a)
-        if _soldier.promoted?
-          raise AlredyPromoted, "#{_soldier.point.name}の#{_soldier.piece.name}はすでに成っている"
-        end
-      end
-
-      soldier = board.pick_up!(a)
-      target_soldier = board.lookup(b)
-      if target_soldier
-        if target_soldier.player == self
-          raise SamePlayerSoldierOverwrideError, "移動先の#{b.name}に自分の#{target_soldier.mark_with_formal_name}がある"
-        end
-        board.pick_up!(b)
-        @pieces << target_soldier.piece
-        @last_piece = target_soldier.piece
-        target_soldier.player.soldiers.delete(target_soldier)
-      end
+      from = Point.parse(from)
+      to = Point.parse(to)
 
       if promote_trigger
-        soldier.promoted = true
+        if !from.promotable?(location) && !to.promotable?(location)
+          raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
+        end
+
+        soldier = board.lookup(from)
+        if soldier.promoted?
+          raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
+        end
       end
 
-      put_on_with_valid(b, soldier)
+      from_soldier = board.pick_up!(from)
+
+      # 移動先に相手の駒があれば取って駒台に移動する
+      to_soldier = board.lookup(to)
+      if to_soldier
+        if to_soldier.player == self
+          raise SamePlayerSoldierOverwrideError, "移動先の #{to.name} には自分の駒 #{to_soldier.mark_with_formal_name.inspect} があります"
+        end
+        board.pick_up!(to)
+        @pieces << to_soldier.piece
+        @last_piece_taken_from_opponent = to_soldier.piece
+        to_soldier.player.soldiers.delete(to_soldier)
+      end
+
+      if promote_trigger
+        from_soldier.promoted = true
+      end
+
+      put_on_with_valid(to, from_soldier)
     end
 
     # # # 前の位置(同に使う)
@@ -241,9 +242,9 @@ module Bushido
 
       # boardに描画する
       def render_soldiers
-        @soldiers.each{|soldier|
+        @soldiers.each do |soldier|
           put_on_with_valid(soldier.point, soldier)
-        }
+        end
       end
 
       def defense_form_store
@@ -279,7 +280,6 @@ module Bushido
         # end
 
         []
-
       end
     end
 
@@ -326,20 +326,20 @@ module Bushido
 
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
-      soldiers = board.pieces_of_vline(point.x)
+      soldiers = board.vertical_pieces(point.x)
       soldiers = soldiers.find_all { |s| s.player == self }
       soldiers = soldiers.find_all { |s| !s.promoted? }
       soldiers = soldiers.find_all { |s| s.piece.key == :pawn }
     end
 
-    def put_on_with_valid(point, soldier, options = {})
+    def put_on_with_valid(point, soldier, **options)
       options = {
         validate: true,
       }.merge(options)
 
       if options[:validate]
-        get_errors(soldier.to_mini_soldier.merge(point: point)).each do |e|
-          raise e
+        get_errors(soldier.to_mini_soldier.merge(point: point)).each do |error|
+          raise error
         end
       end
 

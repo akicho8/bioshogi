@@ -10,9 +10,9 @@ loop do
   p hand
   mediator.execute(hand)
   p mediator
-  last_piece = mediator.reverse_player.last_piece
+  last_piece_taken_from_opponent = mediator.reverse_player.last_piece_taken_from_opponent
   # break
-  if last_piece && last_piece.key == :king
+  if last_piece_taken_from_opponent && last_piece_taken_from_opponent.key == :king
     break
   end
 end

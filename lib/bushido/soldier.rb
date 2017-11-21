@@ -1,15 +1,13 @@
-#
-# 盤上の駒
-#   player を直接もつのではなく :white, :black を持てばいいような気もしている
-#   引数もバラバラではなく文字列だけで入力してインスタンスを生成
-#
 module Bushido
+  #
+  # 盤上の駒
+  #   player を直接もつのではなく :white, :black を持てばいいような気もしている
+  #   引数もバラバラではなく文字列だけで入力してインスタンスを生成
+  #
   class Soldier
-    attr_accessor :player, :piece, :promoted, :point
+    attr_accessor :player, :piece, :promoted, :point, :location
 
     def initialize(attrs)
-      # attrs = attrs.except(:location) # 互換性のため暫定的に。FIXME: location も持たせたらいいんじゃね？
-
       attrs.assert_valid_keys(:player, :piece, :promoted, :point, :location)
 
       @player = attrs[:player]
@@ -22,7 +20,7 @@ module Bushido
       end
 
       unless @player && @piece
-        raise ArgumentError, attrs.inspect
+        raise MustNotHappen, attrs.inspect
       end
     end
 
@@ -68,7 +66,7 @@ module Bushido
 
     # この盤上の駒を消す
     def abone
-      @player.board.__abone_cell(@point)
+      @player.board.abone_on(@point)
       @player.soldiers.delete(self)
       @point = nil
       self

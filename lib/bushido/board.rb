@@ -55,104 +55,96 @@ module Bushido
       @surface = {}
     end
 
-    # 縦列の盤上のすべての駒
-    def pieces_of_vline(x)
-      Position::Vpos.size.times.collect { |y|
-        lookup(Point.parse([x, y]))
-      }.compact
+    # 破壊的
+    concerning :UpdateMethods do
+      # 指定座標に駒を置く
+      #   board.put_on("５五", soldier)
+      def put_on(point, soldier)
+        assert_board_cell_is_blank(point)
+        soldier.point = point
+        set(point, soldier)
+      end
+
+      # 指定座標に何かを置く
+      def set(point, object)
+        @surface[Point[point].to_xy] = object # TODO: Point オブジェクトのままセットすることはできないか？
+      end
+
+      # 指定座標にある駒をを広い上げる
+      def pick_up!(point)
+        soldier = @surface.delete(point.to_xy)
+        unless soldier
+          raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
+        end
+        soldier.point = nil
+        soldier
+      end
+
+      # 駒をすべて削除する
+      def abone_all
+        @surface.values.find_all { |e| e.kind_of?(Soldier) }.each(&:abone)
+      end
+
+      # 指定のセルを削除する
+      # プレイヤー側の soldiers からは削除しないので注意
+      def abone_on(point)
+        @surface.delete(point.to_xy)
+      end
     end
 
-    # 指定座標に駒を置く
-    #   board.put_on("５五", soldier)
-    def put_on(point, soldier)
-      assert_board_cell_is_blank(point)
-      # assert_not_double_pawn(player, point, piece)
+    concerning :ReaderMethods do
+      # 盤面の指定座標の取得
+      #   board.lookup["５五"] # => nil
+      def lookup(point)
+        @surface[Point[point].to_xy]
+      end
 
-      soldier.point = point
-      # soldier.double_pawn_validation(self, point)
+      # lookupのエイリアス
+      #   board["５五"] # => nil
+      def [](point)
+        lookup(point)
+      end
 
-      set(point, soldier)
-    end
+      # 空いている場所のリスト
+      def blank_points
+        Point.find_all { |point| !lookup(point) }
+      end
 
-    # 指定座標に何かを置く
-    def set(point, object)
-      @surface[Point[point].to_xy] = object # TODO: Point オブジェクトのままセットすることはできないか？
-    end
+      # X列の駒たち
+      def vertical_pieces(x)
+        Position::Vpos.size.times.collect { |y|
+          lookup(Point[[x, y]])
+        }.compact
+      end
 
-    # lookupのエイリアス
-    #   board["５五"] # => nil
-    def [](point)
-      lookup(point)
-    end
+      def to_s_soldiers
+        @surface.values.collect(&:formal_name).sort.join(" ")
+      end
 
-    # 盤面の指定座標の取得
-    #   board.lookup["５五"] # => nil
-    def lookup(point)
-      @surface[Point.parse(point).to_xy]
-    end
+      def to_s_soldiers2
+        @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
+      end
 
-    # 指定座標にある駒をを広い上げる
-    def pick_up!(point)
-      soldier = @surface.delete(point.to_xy)
-      soldier or raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
-      soldier.point = nil
-      soldier
-    end
+      def to_s_kakiki
+        KakikiFormat.new(self).to_s
+      end
 
-    # 盤面表示
-    #   to_s
-    #   to_s(:debug)
-    #   to_s(:kakiki)
-    def to_s(format = :default)
-      send("to_s_#{format}")
-    end
+      def to_csa
+        CsaBoardFormat.new(self).to_s
+      end
 
-    # 空いている場所のリスト
-    def blank_points
-      Point.find_all { |point| !lookup(point) }
-    end
-
-    # 置いてる駒リスト
-    def to_s_soldiers
-      @surface.values.collect(&:formal_name).sort.join(" ")
-    end
-    def to_s_soldiers2
-      @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
-    end
-
-    # 駒をすべて削除する
-    def abone_all
-      @surface.values.find_all { |e| e.kind_of?(Soldier) }.each(&:abone)
-    end
-
-    # 指定のセルを削除する
-    # プレイヤー側の soldiers からは削除しないので注意
-    def __abone_cell(point)
-      @surface.delete(point.to_xy)
-    end
-
-    def to_s_kakiki
-      KakikiFormat.new(self).to_s
-    end
-
-    def to_csa
-      CsaBoardFormat.new(self).to_s
+      def to_s
+        to_s_kakiki
+      end
     end
 
     private
 
-    # 盤面の文字列化
-    def to_s_default
-      to_s(:kakiki)
-    end
-
     # 盤上の指定座標に駒があるならエラーとする
     def assert_board_cell_is_blank(point)
-      object = lookup(point)
-      if object
-        # if Soldier === object
-        # end
-        raise PieceAlredyExist, "#{point.name}にはすでに#{object}がある\n#{self}"
+      soldier = lookup(point)
+      if soldier
+        raise PieceAlredyExist, "#{point.name}にはすでに#{soldier}があります\n#{self}"
       end
     end
 

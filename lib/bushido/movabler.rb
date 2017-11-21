@@ -60,8 +60,9 @@ module Bushido
           end
         end
       end
+
       # infos.each{|e|e.update(origin_soldier: mini_soldier)}
-      infos.uniq{|e|e.to_s}
+      infos.uniq{|e|e.to_s} # FIXME: 高速化の余地あり
     end
 
     # player の mini_soldier が vecs の方向(複数)へ移動したときの手を取得
@@ -110,8 +111,6 @@ module Bushido
         end
       end
     end
-
-    private
 
     def normalized_vectors(player, vecs)
       vecs.collect do |v|

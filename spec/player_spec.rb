@@ -191,7 +191,7 @@ EOT
         describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-            mediator.reverse_player.last_piece.name.should == "歩"
+            mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
             mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
             mediator.reverse_player.to_s_soldiers.should == "１一玉 １三歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二"
@@ -201,7 +201,7 @@ EOT
             mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
-            mediator.reverse_player.last_piece.name.should == "歩"
+            mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
             mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
             mediator.reverse_player.to_s_soldiers.should == "２四歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"

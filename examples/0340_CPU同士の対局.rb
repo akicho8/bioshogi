@@ -6,8 +6,8 @@ mediator.piece_plot
 loop do
   hand = mediator.current_player.brain.all_hands.sample
   mediator.execute(hand)
-  last_piece = mediator.reverse_player.last_piece
-  if last_piece && last_piece.key == :king
+  last_piece_taken_from_opponent = mediator.reverse_player.last_piece_taken_from_opponent
+  if last_piece_taken_from_opponent && last_piece_taken_from_opponent.key == :king
     break
   end
 end
