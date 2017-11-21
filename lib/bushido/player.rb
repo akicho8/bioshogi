@@ -43,7 +43,7 @@ module Bushido
       mini_soldiers = Utils.location_mini_soldiers(location: location, key: "平手")
       mini_soldiers.each do |mini_soldier|
         piece_pick_out(mini_soldier[:piece])
-        __soldiers_create(mini_soldier)
+        soldiers_create_from_mini_soldier(mini_soldier)
       end
     end
 
@@ -69,14 +69,8 @@ module Bushido
         if options[:from_stand]
           piece_pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        __soldiers_create(mini_soldier)
+        soldiers_create_from_mini_soldier(mini_soldier)
       end
-    end
-
-    def __soldiers_create(mini_soldier, options = {})
-      soldier = Soldier.new(mini_soldier.merge(player: self))
-      put_on_with_valid(mini_soldier[:point], soldier)
-      @soldiers << soldier
     end
 
     # # 盤上の自分の駒
@@ -228,6 +222,12 @@ module Bushido
         @defense_name_append = false
       end
 
+      def soldiers_create_from_mini_soldier(mini_soldier)
+        soldier = Soldier.new(mini_soldier.merge(player: self))
+        put_on_with_valid(mini_soldier[:point], soldier)
+        @soldiers << soldier
+      end
+
       # 盤上の駒の名前一覧(表示・デバッグ用)
       #   soldier_names # => ["△５五飛↓"]
       def soldier_names
@@ -317,6 +317,11 @@ module Bushido
       # end
     end
 
+    # これ以上動かせない？
+    def dead_end?(mini_soldier)
+      Movabler.simple_movable_infos(self, mini_soldier).empty?
+    end
+
     # 二歩？
     def find_collisione_pawn(mini_soldier)
       if mini_soldier[:piece].key == :pawn && !mini_soldier[:promoted]
@@ -338,23 +343,21 @@ module Bushido
       }.merge(options)
 
       if options[:validate]
-        get_errors(soldier.to_mini_soldier.merge(point: point)).each do |error|
-          raise error
+        mini_soldier = soldier.to_mini_soldier.merge(point: point)
+        if s = find_collisione_pawn(mini_soldier)
+          raise DoublePawn, "二歩 (#{s.mark_with_formal_name}があるため#{soldier}が打てません)"
+        end
+        if dead_end?(mini_soldier)
+          raise NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier}成」の間違いの可能性があります。")
         end
       end
 
       board.put_on(point, soldier)
     end
 
-    def get_errors(mini_soldier)
-      errors = []
-      if s = find_collisione_pawn(mini_soldier)
-        errors << DoublePawn.new("二歩 (#{s.mark_with_formal_name}があるため#{mini_soldier}が打てません)")
-      end
-      if Movabler.simple_movable_infos(self, mini_soldier).empty?
-        errors << NotPutInPlaceNotBeMoved.new(self, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier.to_s}成」の間違いの可能性があります。")
-      end
-      errors
+    # 二歩でも行き止まりでもない？
+    def rule_valid?(mini_soldier)
+      !find_collisione_pawn(mini_soldier) && !dead_end?(mini_soldier)
     end
 
     # # モジュール化

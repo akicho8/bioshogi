@@ -148,7 +148,7 @@ module Bushido
       @player.board.blank_points.collect do |point|
         @player.pieces.collect do |piece|
           m = MiniSoldier[point: point, piece: piece]
-          if @player.get_errors(m).empty?
+          if @player.rule_valid?(m)
             PieceStake[m]
           end
         end
