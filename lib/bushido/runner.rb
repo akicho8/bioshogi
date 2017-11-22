@@ -132,8 +132,7 @@ module Bushido
         end
 
         unless @origin_point
-          # ki2 の場合
-          find_origin_point
+          find_origin_point     # KI2の場合
         end
 
         unless @done
@@ -282,7 +281,7 @@ module Bushido
         if @md[:motion1].include?("直")
           @soldiers = @soldiers.find_all { |e|
             e.point.x == @point.x &&
-            e.point.y.value == @point.y.value + @player.location.where_value(1, -1)
+            e.point.y.value == @point.y.value + @player.location.which_val(1, -1)
           }
         end
       end
@@ -297,7 +296,7 @@ module Bushido
       if @md[:motion1].match?(/#{str_a_or_b.last}/)
         method_a_or_b = method_a_or_b.reverse
       end
-      @player.location.where_value(*method_a_or_b)
+      @player.location.which_val(*method_a_or_b)
     end
 
     def assert_valid_format(valid_list)

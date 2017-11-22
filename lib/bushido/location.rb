@@ -87,7 +87,7 @@ module Bushido
     end
 
     # 先手ならaを後手ならbを返す
-    def where_value(a, b)
+    def which_val(a, b)
       black? ? a : b
     end
 

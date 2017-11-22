@@ -51,6 +51,10 @@ module Bushido
         players[current_index(diff)]
       end
 
+      def next_player
+        current_player(1)
+      end
+
       def current_index(diff = 0)
         (@counter + diff).modulo(@players.size)
       end

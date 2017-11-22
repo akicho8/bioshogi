@@ -182,7 +182,7 @@ EOT
         end
         describe "できない" do
           it "移動できる見込みがないとき" do
-            expect { player_test2(init: "５三桂", exec: "４一桂") }.to raise_error(NotPutInPlaceNotBeMoved)
+            expect { player_test2(init: "５三桂", exec: "４一桂") }.to raise_error(DeadPieceRuleError)
           end
         end
       end
@@ -272,7 +272,7 @@ EOT
           expect { player_test2(exec: "５五龍打") }.to raise_error(PromotedPiecePutOnError)
         end
         it "１一歩打だとそれ以上動けないので" do
-          expect { player_test2(exec: "１一歩打") }.to raise_error(NotPutInPlaceNotBeMoved)
+          expect { player_test2(exec: "１一歩打") }.to raise_error(DeadPieceRuleError)
         end
         it "二歩なので" do
           expect { player_test2(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawn)
