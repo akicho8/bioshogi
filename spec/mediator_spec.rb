@@ -10,7 +10,7 @@ module Bushido
       mediator.turn_max.should == 2
       mediator.judgment_message == "まで2手で後手の勝ち"
       mediator.to_s.should == <<-EOT
-3手目: ▲先手番
+後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -23,8 +23,8 @@ module Bushido
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-▲先手の持駒:
-△後手の持駒:
+先手の持駒：なし
+手数＝2 △３四歩(33) まで
 EOT
     end
 

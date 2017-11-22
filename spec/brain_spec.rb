@@ -100,16 +100,16 @@ module Bushido
 
         it "戦況1の確認" do
           example1 do |mediator|
-            mediator.to_s.rstrip.should == <<-EOT.rstrip
-1手目: ▲先手番
+            mediator.to_s.should == <<~EOT
+後手の持駒：なし
   ２ １
 +------+
 | ・v香|一
 | ・v歩|二
 | ・ 飛|三
 +------+
-▲先手の持駒:
-△後手の持駒:
+先手の持駒：なし
+手数＝0 まで
 EOT
           end
         end
@@ -136,7 +136,7 @@ EOT
         it "戦況2の確認" do
           example2 do |mediator|
             mediator.to_s.rstrip.should == <<-EOT.rstrip
-1手目: ▲先手番
+後手の持駒：なし
   ２ １
 +------+
 | ・v飛|一
@@ -144,8 +144,8 @@ EOT
 | ・ 飛|三
 | ・ 香|四
 +------+
-▲先手の持駒:
-△後手の持駒:
+先手の持駒：なし
+手数＝0 まで
 EOT
           end
         end

@@ -35,8 +35,13 @@ module Bushido
         @players[Location[location].index]
       end
 
-      def black_player; player_at(:black); end
-      def white_player; player_at(:white); end
+      def black_player
+        player_at(:black)
+      end
+
+      def white_player
+        player_at(:white)
+      end
 
       alias player_b black_player
       alias player_w white_player
@@ -74,9 +79,9 @@ module Bushido
       # end
 
       # N手目のN
-      def counter_human_name
-        @counter.next
-      end
+      # def counter_human_name
+      #   @counter.next
+      # end
     end
 
     concerning :Boardable do
@@ -155,8 +160,20 @@ module Bushido
 
       def to_s
         s = ""
-        s << "#{counter_human_name}手目: #{current_player.location.mark_with_name}番" + "\n"
-        s << to_hand
+        s << white_player.hold_pieces_snap + "\n"
+        s << @board.to_s
+        s << black_player.hold_pieces_snap + "\n"
+
+        last = ""
+        if hand_log = hand_logs.last
+          last = hand_log.to_s_kif(with_mark: true)
+        end
+
+        s << "手数＝#{@counter} #{last} まで".squish + "\n"
+        if current_player.location.key == :white
+          s << "\n"
+          s << "後手番\n"
+        end
         s
       end
 
@@ -167,7 +184,9 @@ module Bushido
       def to_hand
         s = ""
         s << @board.to_s
-        s << @players.collect{|player|"#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"}.join("\n") + "\n"
+        s << @players.collect { |player|
+          "#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"
+        }.join("\n") + "\n"
         s
       end
 

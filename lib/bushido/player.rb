@@ -143,7 +143,7 @@ module Bushido
     def board_with_pieces
       s = ""
       s << board.to_s
-      s << "#{location.mark_with_name}の持駒:#{to_s_pieces}\n"
+      s << "#{hold_pieces_snap}\n"
       s
     end
 
@@ -206,6 +206,10 @@ module Bushido
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
         Utils.hold_pieces_a_to_s(@pieces)
+      end
+
+      def hold_pieces_snap
+        "#{location.name}の持駒：#{to_s_pieces.presence || "なし"}"
       end
     end
 
