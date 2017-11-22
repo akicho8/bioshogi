@@ -328,8 +328,8 @@ module Bushido
         if s = find_collisione_pawn(mini_soldier)
           raise DoublePawn, "二歩 (#{s.mark_with_formal_name}があるため#{soldier}が打てません)"
         end
-        if dead_end?(mini_soldier)
-          raise NotPutInPlaceNotBeMoved, "#{mini_soldier.to_s.inspect} はそれ以上動かせないので反則です。「#{mini_soldier}成」の間違いの可能性があります。\n#{@board}"
+        if dead_piece?(mini_soldier)
+          raise DeadPieceRuleError, "#{mini_soldier.to_s.inspect} は死に駒です。「#{mini_soldier}成」の間違いの可能性があります。\n#{@board}"
         end
       end
 
@@ -338,7 +338,7 @@ module Bushido
 
     # 二歩でも行き止まりでもない？
     def rule_valid?(mini_soldier)
-      !find_collisione_pawn(mini_soldier) && !dead_end?(mini_soldier)
+      !find_collisione_pawn(mini_soldier) && !dead_piece?(mini_soldier)
     end
 
     # # モジュール化
@@ -355,8 +355,8 @@ module Bushido
 
     private
 
-    # これ以上動かせない？
-    def dead_end?(mini_soldier)
+    # 死に駒
+    def dead_piece?(mini_soldier)
       Movabler.simple_movable_infos(self, mini_soldier).empty?
     end
 

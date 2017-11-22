@@ -36,7 +36,7 @@ module Bushido
   class AlredyPromoted < BushidoError
   end
 
-  class NotPutInPlaceNotBeMoved < BushidoError
+  class DeadPieceRuleError < BushidoError
   end
 
   class BeforePointNotFound < BushidoError

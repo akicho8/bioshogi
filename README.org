@@ -466,7 +466,7 @@ end
     | SyntaxDefact           | とりあえず表記が違う                         | 駒の配置時に "４二銀成" とした                                                          |
     | PointSyntaxError       | 座標の表記が違う                             | "４二" のつもりで "４" と書いた                                                         |
     | PositionSyntaxError    | 座標の桁の指定が違う                         | "４二" のつもりで "四２" と書いた                                                       |
-    | LocationNotFound  | 手番の表記が違う                             | 先手を千手とかいた                                                                      |
+    | LocationNotFound       | 手番の表記が違う                             | 先手を千手とかいた                                                                      |
     | PieceNotFound          | そんな名前の駒は存在しない                   | 龍のつもりで蛇と書いた                                                                  |
     | HoldPieceNotFound      | 持駒にそんな名前の駒は存在しない             | 歩を持っていないのに歩を打とうとした                                                    |
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"                                                                |
@@ -486,7 +486,7 @@ end
     | NoPromotablePiece               | "成" "不成" は指定できない         | １三金不成、３三玉成               |
     | NotFoundOnBoard                 | 盤面に指定の駒がない               | ２七に歩がないのに２六歩(27)とした |
     | NotPromotable                   | 成れない条件で成ろうとした         | 初手 "７六歩成"                    |
-    | NotPutInPlaceNotBeMoved         | 移動の見込みがない状態で駒を指した | ▲１一桂                           |
+    | DeadPieceRuleError              | 死に駒(行きどころのない駒)を作った | ▲１一桂                           |
     | PromotedPiecePutOnError         | 成った状態で打とうとした           | ５五龍打                           |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした | ５五龍を５六飛                     |
     | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した     | 初手 "８八飛(28)"                  |
