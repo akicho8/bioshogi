@@ -65,7 +65,7 @@ module Bushido
         if true
           ["開始日時", "終了日時"].each do |e|
             if v = header[e].presence
-              header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S")
+              header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S") rescue nil
             end
           end
 
