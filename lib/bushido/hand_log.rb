@@ -118,9 +118,8 @@ module Bushido
         }
       end
 
-      # "同銀" のような人間向けの表記を返す
       def to_s
-        s = []
+        s = ""
 
         if @hand_log.point_same_p
           s << "同" + @options[:same_suffix]
@@ -130,7 +129,6 @@ module Bushido
 
         s << @hand_log.piece.some_name(@hand_log.promoted)
 
-        # motion1 / motion2 で分けない方がよいな
         if @hand_log.strike_trigger
           # 日本将棋連盟 棋譜の表記方法
           # https://www.shogi.or.jp/faq/kihuhyouki.html
@@ -143,18 +141,14 @@ module Bushido
             s << "打"
           end
         else
-          # "打" ではないときだけ
           if koreru_c >= 2
             if @hand_log.piece.brave?
               s << brave_motion
             else
-              s << normal_motion
+              s << basic_motion
             end
           end
-        end
 
-        # motion2
-        if true
           if @hand_log.promote_trigger
             s << "成"
           else
@@ -171,9 +165,7 @@ module Bushido
           end
         end
 
-        s = s.join
-
-        # 3文字以上なら詰める
+        # 3文字以上なら空白を詰める
         if @options[:compact]
           if s.size > 3
             s = s.remove(/\p{blank}/)
@@ -190,79 +182,88 @@ module Bushido
       private
 
       def brave_motion
-        # 大駒の場合、
-        # 【移動元で二つの龍が水平線上にいる】or【移動先の水平線上よりすべて上かすべて下】
-        if idou_moto_no_ryu_ga_suihei_ni_iru || [     # 移動元で二つの龍が水平線上にいる
-            candidate.all?{|s|s.point.y.value < _ty},   # 移動先の水平線上よりすべて上または
-            candidate.all?{|s|s.point.y.value > _ty},   #                     すべて下
-          ].any?
-
-          sorted_candidate = candidate.sort_by{|soldier|soldier.point.x.value}
-          if sorted_candidate.last.point.x.value == _ox
+        # 連盟の複雑そうなルールをコードに落とし込むには次の方法でよさそう
+        #
+        #  左右だけがつく場合
+        #
+        #   1. 移動元で二つの龍が水平線上にいる
+        #   2. または、水平線上よりすべて上かすべて下
+        #
+        #  1, 2 に該当しなかったら
+        #
+        #   ・下移動なら → 引
+        #   ・上移動なら → 上
+        #   ・横移動なら → 寄
+        #
+        if idou_moto_no_ryu_ga_suihei_ni_iru || idousakino_suiheisenjou_yori_subete_ue_mataha_shita
+          case
+          when _xr.max == _ox
             _i("右")
-          elsif sorted_candidate.first.point.x.value == _ox
+          when _xr.min == _ox
             _i("左")
+          else
+            raise MustNotHappen
           end
         else
-          if _oy < _ty
+          case
+          when _shita_idou
             _i("引")
-          elsif _oy > _ty
+          when _ue_idou
             _i("上")
-          elsif _oy == _ty
+          when slide_idou
             "寄"
           end
         end
       end
 
-      def normal_motion
-        s = ""
+      def basic_motion
         case
         when koreru_c >= 3
           case
-          when _oy == _ty && yoreru_c == 1 # (_tx == (_ox + 1) || _tx == (_ox - 1)) # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
-            s << "寄"
+          when _oy == _ty && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
+            "寄"
           when _ox == _tx && (_ty + 1) == _oy # P3B
-            s << _w("直", "引")
+            _w("直", "引")
           when _ox == _tx && (_ty - 1) == _oy # P3B
-            s << _w("引", "直")
+            _w("引", "直")
 
           when _hidari_idou && _migi_kara_c == 1 # P3B, P3C
-            s << _i("右")
+            _i("右")
           when _hidari_idou && _migi_kara_c >= 2 && _ue_idou # P3B
-            s << _i("右") + _i("上")
+            _i("右") + _i("上")
           when _hidari_idou && _migi_kara_c >= 2 && _shita_idou # P3B, P3C
-            s << _i("右") + _i("引")
+            _i("右") + _i("引")
 
           when _migi_idou && _hidari_kara_c == 1
-            s << _i("左")
+            _i("左")
           when _migi_idou && _hidari_kara_c >= 2 && _ue_idou # P3B
-            s << _i("左") + "上"
+            _i("左") + "上"
           when _migi_idou && _hidari_kara_c >= 2 && _shita_idou # P3B, P3C
-            s << _i("左") + "引"
+            _i("左") + "引"
           end
         when agareru_c >= 2 && shita_y == _oy && _ox == _tx # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
-          s << "直"
-        when agareru_c == 2 # P2A 同じ駒で上がる駒が2枚ある場合「上」を省略して「左」「右」
+          "直"
+        when agareru_c == 2 # P2A 上がる駒が2枚ある場合「上」を省略して「左」「右」
           if _hidari_idou
-            s << _i("右")
+            _i("右")
           elsif _migi_idou
-            s << _i("左")
+            _i("左")
           else
             raise MustNotHappen
           end
-        when yoreru_c == 2 # P2B 同じ駒で寄る駒が2枚ある場合「寄」を省略して「左」「右」
+        when yoreru_c == 2 # P2B 寄る駒が2枚ある場合「寄」を省略して「左」「右」
           if _hidari_idou
-            s << _i("右")
+            _i("右")
           elsif _migi_idou
-            s << _i("左")
+            _i("左")
           else
             raise MustNotHappen
           end
-        when sagareru_c == 2 # P2C 同じ駒で引く駒が2枚ある場合「引」を省略して「左」「右」
+        when sagareru_c == 2 # P2C 引く駒が2枚ある場合「引」を省略して「左」「右」
           if _hidari_idou
-            s << _i("右")
+            _i("右")
           elsif _migi_idou
-            s << _i("左")
+            _i("左")
           else
             raise MustNotHappen
           end
@@ -270,16 +271,15 @@ module Bushido
           # P1A P1B P1C P1D P1E 到達地点に複数の同じ駒が動ける場合、「上」または「寄」または「引」
           case
           when _ue_idou
-            s << _w("上", "引")
+            _w("上", "引")
           when _shita_idou
-            s << _w("引", "上")
+            _w("引", "上")
           when _ty == _oy
-            s << "寄"
+            "寄"
           else
             raise MustNotHappen
           end
         end
-        s
       end
 
       # →
@@ -300,6 +300,10 @@ module Bushido
       # ↓
       def _shita_idou
         _oy < _ty
+      end
+
+      def slide_idou
+        _oy == _ty
       end
 
       # 移動先にこれる数
@@ -373,6 +377,12 @@ module Bushido
       # 移動元で二つの龍が水平線上にいる
       def idou_moto_no_ryu_ga_suihei_ni_iru
         candidate.collect { |e| e.point.y.value }.uniq.size == 1
+      end
+
+      # 移動先の水平線上よりすべて上 or すべて下 → 言いかえると移動先のYが候補のYの範囲に含まれていないということ
+      # candidate.all?{|s|s.point.y.value < _ty} || candidate.all?{|s|s.point.y.value > _ty} → !_yr.cover?(_ty)
+      def idousakino_suiheisenjou_yori_subete_ue_mataha_shita
+        !_yr.cover?(_ty)
       end
 
       def location
