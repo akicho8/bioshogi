@@ -116,19 +116,16 @@ module Bushido
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|
-          s.scan(/(.)(#{Piece.all_names.join("|")}|[#{blank_chars}]|\s{2})/o).each_with_index do |(prefix, piece), x|
-            unless blank_chars.include?(piece) || piece.strip == ""
+          # 1文字 + (全角1文字 or 半角2文字)
+          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each_with_index do |(location_char, piece), x|
+            if Piece.all_names.include?(piece)
               raise SyntaxDefact unless x_units[x] && y_units[y]
               point = Point[[x_units[x], y_units[y]].join]
-              location = Location.fetch(prefix)
+              location = Location.fetch(location_char)
               mini_soldiers << Piece.promoted_fetch(piece).merge(point: point, location: location)
             end
           end
         end
-      end
-
-      def blank_chars
-        "・○◎×"
       end
     end
 
