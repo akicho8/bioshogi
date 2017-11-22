@@ -1,7 +1,7 @@
 #
 # 棋譜の一手分の保存用
 #
-# FIXME: 後手から見るには point 関連をすべて反転させて調べた方がよさそう
+# FIXME: 後手から見るには point 関連をすべて反転させて調べる方法もありそう
 
 module Bushido
   class HandLog
@@ -99,10 +99,10 @@ module Bushido
           to_s: to_s,
           candidate: candidate.collect(&:name),
           koreru_c: koreru_c,
-          _migi_idou: _migi_idou,
-          _hidari_idou: _hidari_idou,
-          _ue_idou: _ue_idou,
-          _shita_idou: _shita_idou,
+          _migi_idou: _migi_idou?,
+          _hidari_idou: _hidari_idou?,
+          _ue_idou: _ue_idou?,
+          _shita_idou: _shita_idou?,
           _hidari_kara_c: _hidari_kara_c,
           _migi_kara_c: _migi_kara_c,
           yoreru_c: yoreru_c,
@@ -195,7 +195,7 @@ module Bushido
         #   ・上移動なら → 上
         #   ・横移動なら → 寄
         #
-        if idou_moto_no_ryu_ga_suihei_ni_iru || idousakino_suiheisenjou_yori_subete_ue_mataha_shita
+        if idou_moto_no_ryu_ga_suihei_ni_iru? || idousakino_suiheisenjou_yori_subete_ue_mataha_shita?
           case
           when _xr.max == _ox
             _i("右")
@@ -206,11 +206,11 @@ module Bushido
           end
         else
           case
-          when _shita_idou
+          when _shita_idou?
             _i("引")
-          when _ue_idou
+          when _ue_idou?
             _i("上")
-          when slide_idou
+          when yoko_idou?
             "寄"
           end
         end
@@ -220,49 +220,50 @@ module Bushido
         case
         when koreru_c >= 3
           case
-          when _oy == _ty && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
+          when yoko_idou? && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
             "寄"
-          when _ox == _tx && (_ty + 1) == _oy # P3B
+
+          when tate_idou? && (_ty + 1) == _oy # P3B
             _w("直", "引")
-          when _ox == _tx && (_ty - 1) == _oy # P3B
+          when tate_idou? && (_ty - 1) == _oy # P3B
             _w("引", "直")
 
-          when _hidari_idou && _migi_kara_c == 1 # P3B, P3C
+          when _hidari_idou? && _migi_kara_c == 1 # P3B, P3C
             _i("右")
-          when _hidari_idou && _migi_kara_c >= 2 && _ue_idou # P3B
+          when _hidari_idou? && _migi_kara_c >= 2 && _ue_idou? # P3B
             _i("右") + _i("上")
-          when _hidari_idou && _migi_kara_c >= 2 && _shita_idou # P3B, P3C
+          when _hidari_idou? && _migi_kara_c >= 2 && _shita_idou? # P3B, P3C
             _i("右") + _i("引")
 
-          when _migi_idou && _hidari_kara_c == 1
+          when _migi_idou? && _hidari_kara_c == 1
             _i("左")
-          when _migi_idou && _hidari_kara_c >= 2 && _ue_idou # P3B
+          when _migi_idou? && _hidari_kara_c >= 2 && _ue_idou? # P3B
             _i("左") + "上"
-          when _migi_idou && _hidari_kara_c >= 2 && _shita_idou # P3B, P3C
+          when _migi_idou? && _hidari_kara_c >= 2 && _shita_idou? # P3B, P3C
             _i("左") + "引"
           end
-        when agareru_c >= 2 && shita_y == _oy && _ox == _tx # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
+        when agareru_c >= 2 && shita_y == _oy && tate_idou? # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
           "直"
         when agareru_c == 2 # P2A 上がる駒が2枚ある場合「上」を省略して「左」「右」
-          if _hidari_idou
+          if _hidari_idou?
             _i("右")
-          elsif _migi_idou
+          elsif _migi_idou?
             _i("左")
           else
             raise MustNotHappen
           end
         when yoreru_c == 2 # P2B 寄る駒が2枚ある場合「寄」を省略して「左」「右」
-          if _hidari_idou
+          if _hidari_idou?
             _i("右")
-          elsif _migi_idou
+          elsif _migi_idou?
             _i("左")
           else
             raise MustNotHappen
           end
         when sagareru_c == 2 # P2C 引く駒が2枚ある場合「引」を省略して「左」「右」
-          if _hidari_idou
+          if _hidari_idou?
             _i("右")
-          elsif _migi_idou
+          elsif _migi_idou?
             _i("左")
           else
             raise MustNotHappen
@@ -270,9 +271,9 @@ module Bushido
         else
           # P1A P1B P1C P1D P1E 到達地点に複数の同じ駒が動ける場合、「上」または「寄」または「引」
           case
-          when _ue_idou
+          when _ue_idou?
             _w("上", "引")
-          when _shita_idou
+          when _shita_idou?
             _w("引", "上")
           when _ty == _oy
             "寄"
@@ -283,27 +284,33 @@ module Bushido
       end
 
       # →
-      def _migi_idou
+      def _migi_idou?
         _ox < _tx
       end
 
       # ←
-      def _hidari_idou
+      def _hidari_idou?
         _tx < _ox
       end
 
       # ↑
-      def _ue_idou
+      def _ue_idou?
         _ty < _oy
       end
 
       # ↓
-      def _shita_idou
+      def _shita_idou?
         _oy < _ty
       end
 
-      def slide_idou
+      # 左右移動
+      def yoko_idou?
         _oy == _ty
+      end
+
+      # 上下移動
+      def tate_idou?
+        _ox == _tx
       end
 
       # 移動先にこれる数
@@ -351,6 +358,11 @@ module Bushido
         _ty + _i(1)
       end
 
+      # プレイヤーの視点から見た移動先の一つ上
+      def ue_y
+        _ty + _i(-1)
+      end
+
       # 移動元X
       def _ox
         @_ox ||= @hand_log.origin_point.x.value
@@ -370,19 +382,20 @@ module Bushido
         @_yr ||= Range.new(*candidate.collect { |e| e.point.y.value }.minmax)
       end
 
-      def candidate
-        @hand_log.candidate || []
-      end
-
       # 移動元で二つの龍が水平線上にいる
-      def idou_moto_no_ryu_ga_suihei_ni_iru
+      def idou_moto_no_ryu_ga_suihei_ni_iru?
         candidate.collect { |e| e.point.y.value }.uniq.size == 1
       end
 
-      # 移動先の水平線上よりすべて上 or すべて下 → 言いかえると移動先のYが候補のYの範囲に含まれていないということ
-      # candidate.all?{|s|s.point.y.value < _ty} || candidate.all?{|s|s.point.y.value > _ty} → !_yr.cover?(_ty)
-      def idousakino_suiheisenjou_yori_subete_ue_mataha_shita
+      # 移動先の水平線上よりすべて上 or すべて下
+      # つまり、移動先のYが候補のYの範囲に含まれている
+      # だから candidate.all?{|s|s.point.y.value < _ty} || candidate.all?{|s|s.point.y.value > _ty} から !_yr.cover?(_ty) に変更できる
+      def idousakino_suiheisenjou_yori_subete_ue_mataha_shita?
         !_yr.cover?(_ty)
+      end
+
+      def candidate
+        @hand_log.candidate || []
       end
 
       def location
@@ -397,7 +410,7 @@ module Bushido
         end
 
         def _i(v)
-          _w(v, invertable_hash[v])
+          _w(v, invertable_hash.fetch(v))
         end
 
         def invertable_hash

@@ -18,27 +18,24 @@ mediator.next_player.execute("８二銀左引")
 official_formatter = mediator.hand_logs.last.official_formatter
 tp official_formatter.to_debug_hash
 tp official_formatter.options
-# >> 2
-# >> false
-# >> false
 # >> |----------------+--------------------------------------------------|
 # >> |   origin_point | ７三                                             |
 # >> |          point | ８二                                             |
 # >> |           to_s | ８二銀左引                                       |
 # >> |      candidate | ["△８一銀", "△７一銀", "△９三銀", "△７三銀"] |
+# >> |       koreru_c | 4                                                |
 # >> |     _migi_idou | false                                            |
 # >> |   _hidari_idou | true                                             |
 # >> |       _ue_idou | true                                             |
 # >> |    _shita_idou | false                                            |
-# >> |       koreru_c | 4                                                |
 # >> | _hidari_kara_c | 1                                                |
 # >> |   _migi_kara_c | 2                                                |
 # >> |       yoreru_c | 0                                                |
 # >> |      agareru_c | 2                                                |
 # >> |     sagareru_c | 2                                                |
+# >> |        shita_y | 0                                                |
 # >> |            _tx | 1                                                |
 # >> |            _ty | 1                                                |
-# >> |        shita_y | 0                                                |
 # >> |            _ox | 2                                                |
 # >> |            _oy | 2                                                |
 # >> |            _xr | 0..2                                             |
