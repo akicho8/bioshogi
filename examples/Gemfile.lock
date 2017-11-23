@@ -1,0 +1,93 @@
+PATH
+  remote: ..
+  specs:
+    bushido (0.0.1)
+      actionview
+      activesupport
+      memory_record
+      org_tp
+      pry
+      tapp
+
+GEM
+  specs:
+    actionview (5.1.4)
+      activesupport (= 5.1.4)
+      builder (~> 3.1)
+      erubi (~> 1.4)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    activemodel (5.1.4)
+      activesupport (= 5.1.4)
+    activesupport (5.1.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (~> 0.7)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    builder (3.2.3)
+    coderay (1.1.2)
+    concurrent-ruby (1.0.5)
+    crass (1.0.3)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
+    erubi (1.7.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    i18n (0.9.1)
+      concurrent-ruby (~> 1.0)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.5.9)
+    mechanize (2.7.5)
+      domain_name (~> 0.5, >= 0.5.1)
+      http-cookie (~> 1.0)
+      mime-types (>= 1.17.2)
+      net-http-digest_auth (~> 1.1, >= 1.1.1)
+      net-http-persistent (~> 2.5, >= 2.5.2)
+      nokogiri (~> 1.6)
+      ntlm-http (~> 0.1, >= 0.1.1)
+      webrobots (>= 0.0.9, < 0.2)
+    memory_record (0.0.7)
+      activemodel
+      activesupport
+    method_source (0.9.0)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    mini_portile2 (2.3.0)
+    minitest (5.10.3)
+    net-http-digest_auth (1.4.1)
+    net-http-persistent (2.9.4)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
+    ntlm-http (0.1.1)
+    org_tp (0.0.12)
+      activesupport
+    pry (0.11.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.0.3)
+      loofah (~> 2.0)
+    tapp (1.5.1)
+      thor
+    thor (0.20.0)
+    thread_safe (0.3.6)
+    tzinfo (1.2.4)
+      thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
+    webrobots (0.1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bushido!
+  mechanize
+
+BUNDLED WITH
+   1.16.0.pre.3
