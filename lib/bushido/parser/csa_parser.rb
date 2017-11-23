@@ -26,7 +26,7 @@ module Bushido
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(/^(V\d+|PI|P\d)/) || source.match?(/^V\d+/)
+          source.match?(/^(V\d+|PI|P\d)/) || source.match?(/^V\d+/) || source.match?(/^[+-]\d{4}[A-Z]{2}/) || source.match?(/^N[+-]/)
         end
       end
 
@@ -52,7 +52,7 @@ module Bushido
         @board_source = s.scan(/^P\d.*\n/).join.presence
 
         # 棋譜
-        s.scan(/^[+-](\d+\w+)\n(?:T(\d+))?/) do |value, time|
+        s.scan(/^[+-](\d+\w+)\n(?:[TL](\d+))?/) do |value, time|
           @move_infos << {input: value}
         end
       end
