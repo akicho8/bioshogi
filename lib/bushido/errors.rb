@@ -9,13 +9,6 @@ module Bushido
   end
 
   class MovableSoldierNotFound < BushidoError
-    def initialize(runner)
-      @runner = runner
-    end
-
-    def message
-      "#{@runner.player.location.name}番で #{@runner.point.name.inspect} の地点に移動できる #{@runner.piece.name.inspect} がありません。入力した #{@runner.source.inspect} がまちがっている可能性があります\n#{@runner.player.mediator}"
-    end
   end
 
   class AmbiguousFormatError < BushidoError

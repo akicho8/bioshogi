@@ -94,9 +94,9 @@ module Bushido
 
       def to_debug_hash
         {
+          to_s: to_s,
           origin_point: @hand_log.origin_point,
           point: @hand_log.point,
-          to_s: to_s,
           candidate: candidate.collect(&:name),
           koreru_c: koreru_c,
           _migi_idou: _migi_idou?,
@@ -222,7 +222,14 @@ module Bushido
           case
           when yoko_idou? && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
             "寄"
-
+          when yoko_idou? && yoreru_c >= 2 # P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」
+            if _hidari_idou?
+              _i("右") + "寄"
+            elsif _migi_idou?
+              _i("左") + "寄"
+            else
+              raise MustNotHappen
+            end
           when tate_idou? && (_ty + 1) == _oy # P3B
             _w("直", "引")
           when tate_idou? && (_ty - 1) == _oy # P3B
@@ -241,6 +248,8 @@ module Bushido
             _i("左") + "上"
           when _migi_idou? && _hidari_kara_c >= 2 && _shita_idou? # P3B, P3C
             _i("左") + "引"
+          else
+            raise MustNotHappen
           end
         when agareru_c >= 2 && shita_y == _oy && tate_idou? # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
           "直"
