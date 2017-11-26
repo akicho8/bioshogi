@@ -6,8 +6,29 @@ module Bushido
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
         # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
-        file = Pathname(__FILE__).dirname.join("../files/sample1.kif").expand_path
-        @info = Parser::KifParser.parse(file.read)
+        # file = Pathname(__FILE__).dirname.join("../files/sample1.kif").expand_path
+        @info = Parser::KifParser.parse(<<~EOT)
+# ----  Kifu for Windows V6.22 棋譜ファイル  ----
+開始日時：2000/01/01 00:00:00
+終了日時：2000/01/01 01:00:00
+棋戦：(棋戦)
+持ち時間：(持ち時間)
+手合割：平手　　
+先手：(先手)
+後手：(後手)
+手数----指手---------消費時間--
+*対局前コメント
+   1 ７六歩(77)   ( 0:10/00:00:10)
+*コメント1
+   2 ３四歩(33)   ( 0:10/00:00:20)
+   3 ６六歩(67)   ( 0:10/00:00:30)
+   4 ８四歩(83)   ( 0:10/00:00:40)
+*コメント2
+   5 投了         ( 0:10/00:00:50)
+まで4手で後手の勝ち
+変化：1手
+   1 ２六歩(25)   ( 0:10/00:00:10)
+EOT
       end
 
       it "ヘッダー部" do
@@ -23,8 +44,12 @@ module Bushido
       end
 
       it "棋譜の羅列" do
-        @info.move_infos.first.should == {turn_number: "1", location: Location[:black], input: "７六歩(77)", mov: "▲７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
-        @info.move_infos.last.should  == {turn_number: "5", location: Location[:black], input: "投了", mov: "▲投了", spent_time: "0:10/00:00:50"}
+        @info.move_infos.first[:input].should == "７六歩(77)"
+      end
+
+      it "最後の情報" do
+        @info.last_status_info[:last_behaviour].should == "投了"
+        @info.last_status_info[:used_seconds].should == 10
       end
 
       it "対局前コメント" do
@@ -83,18 +108,18 @@ EOT
       end
 
       it do
-        @info.to_csa.should == <<~EOT
+        @info.to_csa(strip: true).should == <<~EOT
 V2.2
 $SITE:(site)
 P1 *  *  *  *  *  *  *  * -OU
-P2 *  *  *  *  *  *  *  *  * 
-P3 *  *  *  *  *  *  *  *  * 
-P4 *  *  *  *  *  *  *  *  * 
-P5 *  *  *  *  *  *  *  *  * 
-P6 *  *  *  *  *  *  *  *  * 
-P7 *  *  *  *  *  *  *  *  * 
-P8 *  *  *  *  *  *  *  *  * 
-P9 *  *  *  *  *  *  *  *  * 
+P2 *  *  *  *  *  *  *  *  *
+P3 *  *  *  *  *  *  *  *  *
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7 *  *  *  *  *  *  *  *  *
+P8 *  *  *  *  *  *  *  *  *
+P9 *  *  *  *  *  *  *  *  *
 +
 +0064KA
 -0053KA

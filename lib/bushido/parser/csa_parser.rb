@@ -62,7 +62,7 @@ module Bushido
         end
 
         if md = s.match(/^%(?<last_behaviour>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)
-          @csa_last_status_info = md.named_captures.symbolize_keys
+          @last_status_info = md.named_captures.symbolize_keys
         end
       end
     end

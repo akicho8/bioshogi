@@ -31,8 +31,8 @@ module Bushido
       # | 変化：1手
       # |    1 ２六歩(25)   ( 0:00/00:00:00)
       #
-      #   @result.move_infos.first.should == {turn_number: "1", input: "７六歩(77)", spent_time: "0:10/00:00:10", comments: ["コメント1"]}
-      #   @result.move_infos.last.should  == {turn_number: "5", input: "投了", spent_time: "0:10/00:00:50"}
+      #   @result.move_infos.first.should == {turn_number: "1", input: "７六歩(77)", clock_part: "0:10/00:00:10", comments: ["コメント1"]}
+      #   @result.move_infos.last.should  == {turn_number: "5", input: "投了", clock_part: "0:10/00:00:50"}
       #
       def parse
         header_read
@@ -57,7 +57,7 @@ module Bushido
           else
             if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_behaviour>\投了)(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
               used_seconds = min_sec_str_to_seconds(md[:clock_part])
-              @csa_last_status_info = {last_behaviour: md[:last_behaviour], used_seconds: used_seconds}
+              @last_status_info = {last_behaviour: md[:last_behaviour], used_seconds: used_seconds}
             end
           end
         end

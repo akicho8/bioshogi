@@ -28,7 +28,7 @@ module Bushido
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments
+      attr_reader :header, :move_infos, :first_comments, :last_status_info
 
       def initialize(source, **options)
         @source = source
@@ -38,6 +38,7 @@ module Bushido
         @move_infos = []
         @first_comments = []
         @board_source = nil
+        @last_status_info = nil
       end
 
       def default_options
@@ -139,6 +140,7 @@ module Bushido
         def to_csa(**options)
           options = {
             board_expansion: false,
+            strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
           }.merge(options)
 
           out = ""
@@ -175,7 +177,7 @@ module Bushido
             end
           }.join
 
-          if e = @csa_last_status_info
+          if e = @last_status_info
             toryo_info = ToryoInfo.fetch(e[:last_behaviour])
             s = "%#{toryo_info.csa_key}"
             if v = e[:used_seconds].presence
@@ -184,6 +186,11 @@ module Bushido
             out << "#{s}\n"
           else
             out << "%TORYO" + "\n"
+          end
+
+          # テスト用
+          if options[:strip]
+            out = out.gsub(/\s+\n/, "\n")
           end
 
           out
@@ -207,8 +214,8 @@ module Bushido
           }.join
 
           toryo_info = ToryoInfo[:TORYO]
-          if @csa_last_status_info
-            if v = ToryoInfo[@csa_last_status_info[:last_behaviour]]
+          if @last_status_info
+            if v = ToryoInfo[@last_status_info[:last_behaviour]]
               toryo_info = v
             end
           end
@@ -216,8 +223,8 @@ module Bushido
           left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(toryo_info.kif_diarect, options[:length])]
           right_part = ""
 
-          if @csa_last_status_info
-            if used_seconds = @csa_last_status_info[:used_seconds].presence
+          if @last_status_info
+            if used_seconds = @last_status_info[:used_seconds].presence
               chess_clock.add(used_seconds)
               right_part << " #{chess_clock}"
             end
@@ -346,7 +353,7 @@ module Bushido
         end
 
         def clock_exist?
-          @clock_exist ||= @move_infos.any? {|e| e[:used_seconds].present? }
+          @clock_exist ||= @move_infos.any? {|e| e[:used_seconds] && e[:used_seconds].to_i >= 1 }
         end
 
         def used_seconds_at(index)
