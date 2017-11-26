@@ -49,10 +49,24 @@ module Bushido
           end
 
           comment_read(line)
-          if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{Runner.input_regexp}|投了)(\p{blank}+\(\p{blank}*(?<spent_time>.*)\))?/o)
-            location = Location[md[:turn_number]]
+          if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{Runner.input_regexp})(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
             input = md[:input].remove(/\p{blank}/)
-            @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", spent_time: md[:spent_time]}
+            location = Location[md[:turn_number]]
+            used_seconds = min_sec_str_to_seconds(md[:clock_part])
+            @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", clock_part: md[:clock_part], used_seconds: used_seconds}
+          else
+            if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_behaviour>\投了)(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
+              used_seconds = min_sec_str_to_seconds(md[:clock_part])
+              @csa_last_status_info = {last_behaviour: md[:last_behaviour], used_seconds: used_seconds}
+            end
+          end
+        end
+      end
+
+      def min_sec_str_to_seconds(s)
+        if s.present?
+          if v = s.match(/(?<m>\d+):(?<s>\d+)/)
+            v[:m].to_i.minutes + v[:s].to_i.seconds
           end
         end
       end
@@ -63,7 +77,7 @@ module Bushido
         out << @header.collect { |key, value| "#{key}：#{value}\n" }.join
         out << "手数----指手---------消費時間--\n"
         @move_infos.each do |e|
-          out << "%s %s (%s)\n" % [e[:turn_number], e[:input], e[:spent_time]]
+          out << "%s %s (%s)\n" % [e[:turn_number], e[:input], e[:clock_part]]
         end
 
         # 最後が「投了」でない場合に kif フォーマットと見なされない場合がある(将棋山脈など)

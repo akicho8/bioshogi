@@ -176,7 +176,8 @@ module Bushido
           }.join
 
           if e = @csa_last_status_info
-            s = "%#{e[:last_behaviour]}"
+            toryo_info = ToryoInfo.fetch(e[:last_behaviour])
+            s = "%#{toryo_info.csa_key}"
             if v = e[:used_seconds].presence
               s += ",T#{v}"
             end

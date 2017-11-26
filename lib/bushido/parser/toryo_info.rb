@@ -29,7 +29,7 @@ module Bushido
         private
 
         def invert_table
-          @invert_table ||= inject({}) {|a, e| a.merge(e.replace_key => e) }
+          @invert_table ||= inject({}) {|a, e| a.merge(e.kif_diarect => e) }
         end
       end
     end
