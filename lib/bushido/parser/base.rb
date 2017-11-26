@@ -1,4 +1,5 @@
 # -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
+# -*- frozen-string-literal: true -*-
 
 require "time"                  # for Time.parse
 require "kconv"                 # for toeuc

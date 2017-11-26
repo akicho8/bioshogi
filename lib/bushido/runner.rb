@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 #
 # Player#execute 実体
 #

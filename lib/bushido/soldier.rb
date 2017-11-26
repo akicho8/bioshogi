@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 module Bushido
   #
   # 盤上の駒

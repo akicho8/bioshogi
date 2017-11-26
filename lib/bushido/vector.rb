@@ -1,4 +1,5 @@
 # -*- compile-command: "bundle exec rspec ../../spec/vector_spec.rb" -*-
+# -*- frozen-string-literal: true -*-
 #
 # 駒の移動ベクトル定義用
 #

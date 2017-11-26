@@ -1,4 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
+# -*- frozen-string-literal: true -*-
 
 module Bushido
   module Parser

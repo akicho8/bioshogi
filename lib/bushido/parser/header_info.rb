@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 module Bushido
   module Parser
     # CSA標準棋譜ファイル形式

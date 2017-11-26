@@ -1,3 +1,5 @@
+# -*- frozen-string-literal: true -*-
+#
 # 盤面
 #   board = Board.new
 #   board["５五"] # => nil

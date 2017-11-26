@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 module Bushido
   class TeaiInfo
     include MemoryRecord

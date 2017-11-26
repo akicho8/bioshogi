@@ -1,4 +1,5 @@
 # -*- compile-command: "ruby base.rb piece_list" -*-
+# -*- frozen-string-literal: true -*-
 
 module Bushido
   module Cli

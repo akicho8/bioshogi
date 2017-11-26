@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 #
 # 全体管理
 #

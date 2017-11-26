@@ -1,3 +1,4 @@
+# -*- frozen-string-literal: true -*-
 #
 # 棋譜の一手分の保存用
 #

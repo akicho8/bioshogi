@@ -1,4 +1,5 @@
 # -*- compile-command: "ruby base.rb kif_normalizer" -*-
+# -*- frozen-string-literal: true -*-
 
 module Bushido
   module Cli
