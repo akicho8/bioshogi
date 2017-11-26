@@ -94,7 +94,7 @@ module Bushido
 
     # 反対を返す
     def reverse
-      self.class.fetch(index.next.modulo(self.class.count))
+      @reverse ||= self.class.fetch(index.next.modulo(self.class.count))
     end
 
     # # オブジェクトIDが異なってもキーが同じなら一致(Marshal関連で復活させたとき不一致になるため追加)
