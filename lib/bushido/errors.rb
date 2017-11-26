@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: true -*-
+# -*- frozen-string-literal: false -*-
 
 module Bushido
   class BushidoError < StandardError

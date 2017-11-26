@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
-# -*- frozen-string-literal: true -*-
+# -*- frozen-string-literal: false -*-
 
 module Bushido
   class HandInfo < Hash

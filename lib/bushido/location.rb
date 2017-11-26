@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: true -*-
+# -*- frozen-string-literal: false -*-
 #
 # 先手・後手
 #

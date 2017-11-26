@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: true -*-
+# -*- frozen-string-literal: false -*-
 #
 # 動けるか確認
 #   どのクラスでも使うので
