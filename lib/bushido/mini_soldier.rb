@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/shash_spec.rb" -*-
-# -*- frozen-string-literal: true -*-
+# frozen-string-literal: true
 #
 #  クラス      名前               有効な属性
 #  MiniSoldier 盤上の駒の状態     point piece promoted

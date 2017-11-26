@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/piece_spec.rb" -*-
-# -*- frozen-string-literal: true -*-
+# frozen-string-literal: true
 #
 # 駒
 #   Piece["歩"].name  # => "歩"
