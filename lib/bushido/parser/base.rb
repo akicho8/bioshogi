@@ -4,8 +4,10 @@ require "time"                  # for Time.parse
 require "kconv"                 # for toeuc
 
 require "active_support/core_ext/array/grouping" # for in_groups_of
+require "active_support/core_ext/numeric"        # for 1.minute
 
 require_relative "header_info"
+require_relative "toryo_info"
 
 module Bushido
   module Parser
@@ -165,11 +167,23 @@ module Bushido
           # 手番
           out << Location[:black].csa_sign + "\n"
 
-          out << mediator.hand_logs.collect { |e|
-            e.to_s_csa + "\n"
+          out << mediator.hand_logs.collect.with_index { |e, i|
+            if clock_exist?
+              "#{e.to_s_csa},T#{used_seconds_at(i)}\n"
+            else
+              e.to_s_csa + "\n"
+            end
           }.join
 
-          out << "%TORYO" + "\n"
+          if e = @csa_last_status_info
+            s = "%#{e[:last_behaviour]}"
+            if v = e[:used_seconds].presence
+              s += ",T#{v}"
+            end
+            out << "#{s}\n"
+          else
+            out << "%TORYO" + "\n"
+          end
 
           out
         end
@@ -184,10 +198,31 @@ module Bushido
           out = ""
           out << header_as_string unless options[:header_skip]
           out << "手数----指手---------消費時間--\n"
-          out << mediator.hand_logs.collect.with_index(1).collect {|e, i|
-            "%*d %s (00:00/00:00:00)\n" % [options[:number_width], i, mb_ljust(e.to_s_kif, options[:length])]
+
+          chess_clock = ChessClock.new
+          out << mediator.hand_logs.collect.with_index.collect {|e, i|
+            chess_clock.add(used_seconds_at(i))
+            "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
           }.join
-          out << "%*d %s\n" % [options[:number_width], mediator.hand_logs.size.next, "投了"]
+
+          toryo_info = ToryoInfo[:TORYO]
+          if @csa_last_status_info
+            if v = ToryoInfo[@csa_last_status_info[:last_behaviour]]
+              toryo_info = v
+            end
+          end
+
+          left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(toryo_info.kif_diarect, options[:length])]
+          right_part = ""
+
+          if @csa_last_status_info
+            if used_seconds = @csa_last_status_info[:used_seconds].presence
+              chess_clock.add(used_seconds)
+              right_part << " #{chess_clock}"
+            end
+          end
+
+          out << "#{left_part}#{right_part}".rstrip + "\n"
           out
         end
 
@@ -307,6 +342,53 @@ module Bushido
             n = 0
           end
           s + " " * n
+        end
+
+        def clock_exist?
+          @clock_exist ||= @move_infos.any? {|e| e[:used_seconds].present? }
+        end
+
+        def used_seconds_at(index)
+          @move_infos.dig(index, :used_seconds).to_i
+        end
+
+        class ChessClock
+          def initialize
+            @single_clocks = Location.inject({}) {|a, e| a.merge(e => SingleClock.new) }
+            @counter = 0
+          end
+
+          def add(v)
+            @single_clocks[Location[@counter]].add(v)
+            @counter += 1
+          end
+
+          def latest_clock_format
+            @single_clocks[Location[@counter.pred]].to_s
+          end
+
+          def to_s
+            latest_clock_format
+          end
+
+          class SingleClock
+            def initialize
+              @total = 0
+              @used = 0
+            end
+
+            def add(v)
+              v = v.to_i
+              @total += v
+              @used = v
+            end
+
+            def to_s
+              h, r = @total.divmod(1.hour)
+              m, s = r.divmod(1.minute)
+              "(%02d:%02d/%02d:%02d:%02d)" % [*@used.divmod(1.minute), h, m, s]
+            end
+          end
         end
       end
     end

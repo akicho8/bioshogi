@@ -10,6 +10,7 @@ module Bushido
     ]
 
     alias index code
+    alias position code
 
     class << self
       # 引数に対応する先手または後手の情報を返す

@@ -26,7 +26,12 @@ module Bushido
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(/^(V\d+|PI|P\d)/) || source.match?(/^V\d+/) || source.match?(/^[+-]\d{4}[A-Z]{2}/) || source.match?(/^N[+-]/)
+          false ||
+            source.match?(/^V\d+\.\d+/)         ||
+            source.match?(/^(PI|P\d)/)          ||
+            source.match?(/^[+-]\d{4}[A-Z]{2}/) ||
+            source.match?(/^N[+-]/)             ||
+            false
         end
       end
 
@@ -52,8 +57,12 @@ module Bushido
         @board_source = s.scan(/^P\d.*\n/).join.presence
 
         # 棋譜
-        s.scan(/^[+-](\d+\w+)\n(?:[TL](\d+))?/) do |value, time|
-          @move_infos << {input: value}
+        @move_infos += s.scan(/^[+-](\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
+          {input: input, used_seconds: used_seconds&.to_i}
+        end
+
+        if md = s.match(/^%(?<last_behaviour>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)
+          @csa_last_status_info = md.named_captures.symbolize_keys
         end
       end
     end

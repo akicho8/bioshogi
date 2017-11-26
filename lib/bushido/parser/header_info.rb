@@ -23,6 +23,7 @@ module Bushido
         {key: "$START_TIME:", replace_key: "開始日時", },
         {key: "$END_TIME:",   replace_key: "終了日時", },
         {key: "$OPENING:",    replace_key: "戦型",     },
+        {key: "$TIME_LIMIT:", replace_key: "持ち時間", },
       ]
 
       alias csa_key key
