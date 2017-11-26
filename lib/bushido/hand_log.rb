@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 棋譜の一手分の保存用
 #
@@ -63,7 +63,7 @@ module Bushido
     end
 
     def to_s_csa(**options)
-      s = ""
+      s = []
       s << @player.location.csa_sign
       if @origin_point
         s << @origin_point.number_format
@@ -72,7 +72,7 @@ module Bushido
       end
       s << @point.number_format
       s << @piece.csa_some_name(@promoted || @promote_trigger)
-      s
+      s.join
     end
 
     def to_h
@@ -120,7 +120,7 @@ module Bushido
       end
 
       def to_s
-        s = ""
+        s = []
 
         if @hand_log.point_same_p
           s << "同" + @options[:same_suffix]
@@ -165,6 +165,8 @@ module Bushido
             end
           end
         end
+
+        s = s.join
 
         # 3文字以上なら空白を詰める
         if @options[:compact]

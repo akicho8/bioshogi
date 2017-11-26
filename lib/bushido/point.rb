@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 座標
 #

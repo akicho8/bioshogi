@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 全体管理
 #
@@ -160,7 +160,7 @@ module Bushido
       end
 
       def to_s
-        s = ""
+        s = []
         s << white_player.hold_pieces_snap + "\n"
         s << @board.to_s
         s << black_player.hold_pieces_snap + "\n"
@@ -175,7 +175,7 @@ module Bushido
           s << "\n"
           s << "後手番\n"
         end
-        s
+        s.join
       end
 
       def inspect
@@ -183,12 +183,12 @@ module Bushido
       end
 
       def to_hand
-        s = ""
+        s = []
         s << @board.to_s
         s << @players.collect { |player|
           "#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"
         }.join("\n") + "\n"
-        s
+        s.join
       end
 
       def judgment_message

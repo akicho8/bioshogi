@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 一次元座標管理
 #

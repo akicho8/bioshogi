@@ -1,4 +1,4 @@
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 
 module Bushido
   # P1-KY-KE-GI-KI-OU-KI-GI-KE-KY

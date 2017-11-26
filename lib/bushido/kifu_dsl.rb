@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/kif_dsl_spec.rb" -*-
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 棋譜ビルダー
 #   テキストをがんばってパースするぐらいならDSLにする方がいい、という考えから生まれているので、

@@ -1,5 +1,5 @@
 # -*- compile-command: "ruby base.rb" -*-
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 
 require_relative "../../bushido"
 

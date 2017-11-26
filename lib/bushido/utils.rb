@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/utils_spec.rb" -*-
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 #
 # 汎用の便利メソッド集
 #
@@ -121,12 +121,12 @@ module Bushido
     #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "}
     def triangle_hold_pieces_str_to_hash(str)
       hash = {}
-      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each{|mark, pieces_str|
+      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each do |mark, pieces_str|
         location = Location[mark]
-        hash[location] ||= ""
+        hash[location] ||= []
         hash[location] << pieces_str
-      }
-      hash
+      end
+      hash.transform_values(&:join)
     end
 
     # 先手後手に分離した持駒情報を文字列化

@@ -1,5 +1,5 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 
 module Bushido
   class Player
@@ -142,10 +142,10 @@ module Bushido
 
     # 盤面と持駒(表示用)
     def board_with_pieces
-      s = ""
+      s = []
       s << board.to_s
       s << "#{hold_pieces_snap}\n"
-      s
+      s.join
     end
 
     # 持駒関連

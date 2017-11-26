@@ -1,5 +1,5 @@
 # -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
-# -*- frozen-string-literal: false -*-
+# -*- frozen-string-literal: true -*-
 
 require "time"                  # for Time.parse
 require "kconv"                 # for toeuc
@@ -144,7 +144,7 @@ module Bushido
             strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
           }.merge(options)
 
-          out = ""
+          out = []
           out << "V2.2\n"
 
           out << HeaderInfo.collect { |e|
@@ -189,6 +189,8 @@ module Bushido
             out << "%TORYO" + "\n"
           end
 
+          out = out.join
+
           # テスト用
           if options[:strip]
             out = out.gsub(/\s+\n/, "\n")
@@ -204,7 +206,7 @@ module Bushido
             header_skip: false,
           }.merge(options)
 
-          out = ""
+          out = []
           out << header_as_string unless options[:header_skip]
           out << "手数----指手---------消費時間--\n"
 
@@ -222,17 +224,18 @@ module Bushido
           end
 
           left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(toryo_info.kif_diarect, options[:length])]
-          right_part = ""
+          right_part = nil
 
           if @last_status_info
             if used_seconds = @last_status_info[:used_seconds].presence
               chess_clock.add(used_seconds)
-              right_part << " #{chess_clock}"
+              right_part = chess_clock.to_s
             end
           end
 
-          out << "#{left_part}#{right_part}".rstrip + "\n"
-          out
+          out << "#{left_part} #{right_part}".rstrip + "\n"
+
+          out.join
         end
 
         def to_ki2(**options)
@@ -243,7 +246,7 @@ module Bushido
             header_skip: false,
           }.merge(options)
 
-          out = ""
+          out = []
           if header.present? && !options[:header_skip]
             out << header_as_string
             out << "\n"
@@ -275,7 +278,8 @@ module Bushido
           end
 
           out << mediator.judgment_message + "\n"
-          out
+
+          out.join
         end
 
         def mediator
@@ -318,7 +322,7 @@ module Bushido
         private
 
         def __header_as_string
-          out = ""
+          out = []
 
           obj = Mediator.new
           obj.board_reset(@board_source || header["手合割"])
@@ -333,7 +337,7 @@ module Bushido
             out << raw_header_as_string.gsub(/(後手の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
-          out
+          out.join
         end
 
         def raw_header_as_string
