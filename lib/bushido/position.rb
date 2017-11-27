@@ -28,7 +28,8 @@ module Bushido
             v = arg
           end
 
-          new(v)
+          @instance ||= {}
+          @instance[v] ||= new(v)
         end
 
         # 幅
