@@ -8,32 +8,37 @@ def assert_equal(a, b)
   end
 end
 
-files = Pathname.glob("../resources/竜王戦_ki2/*.ki2")
-files.each do |file|
-  puts file
+seconds = Benchmark.realtime do
+  files = Pathname.glob("../resources/竜王戦_ki2/*.ki2")
+  files.each do |file|
+    puts file
 
-  info = Parser.parse_file(file)
-  kif_str = info.to_kif
-  ki2_str = info.to_ki2
-  csa_str = info.to_csa
+    info = Parser.parse_file(file)
+    kif_str = info.to_kif
+    ki2_str = info.to_ki2
+    csa_str = info.to_csa
 
-  v = Parser.parse(kif_str)
-  assert_equal(v.to_kif, kif_str)
-  assert_equal(v.to_ki2, ki2_str)
-  assert_equal(v.to_csa, csa_str)
+    v = Parser.parse(kif_str)
+    assert_equal(v.to_kif, kif_str)
+    assert_equal(v.to_ki2, ki2_str)
+    assert_equal(v.to_csa, csa_str)
 
-  v = Parser.parse(ki2_str)
-  assert_equal(v.to_kif, kif_str)
-  assert_equal(v.to_ki2, ki2_str)
-  assert_equal(v.to_csa, csa_str)
+    v = Parser.parse(ki2_str)
+    assert_equal(v.to_kif, kif_str)
+    assert_equal(v.to_ki2, ki2_str)
+    assert_equal(v.to_csa, csa_str)
 
-  v = Parser.parse(csa_str)
-  assert_equal(v.to_kif(header_skip: true), info.to_kif(header_skip: true))
-  assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
-  assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
+    v = Parser.parse(csa_str)
+    assert_equal(v.to_kif(header_skip: true), info.to_kif(header_skip: true))
+    assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
+    assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
+  end
 end
+p seconds
+
 # >> ../resources/竜王戦_ki2/九段戦1950-01 大山板谷-2.ki2
 # >> V2.2
+
 # >> N+大山康晴八段
 # >> N-板谷四郎八段
 # >> $EVENT:第01期九段戦

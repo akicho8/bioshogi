@@ -68,15 +68,9 @@ module Bushido
     end
 
     describe "5x5の盤面" do
-      before do
-        @save_size = [Position::Hpos.size, Position::Vpos.size]
-        Position::Hpos.size, Position::Vpos.size = [5, 5]
-      end
-      after do
-        Position::Hpos.size, Position::Vpos.size = @save_size
-      end
       it do
-        player_test.board.to_s.should == <<~EOT
+        Board.size_change([5, 5]) do
+          player_test.board.to_s.should == <<~EOT
   ５ ４ ３ ２ １
 +---------------+
 | ・ ・ ・ ・ ・|一
@@ -86,6 +80,7 @@ module Bushido
 | ・ ・ ・ ・ ・|五
 +---------------+
 EOT
+        end
       end
     end
   end

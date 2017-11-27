@@ -188,8 +188,7 @@ module Bushido
     end
 
     concerning :VectorMethods do
-      # ベクトル取得の唯一の外部インタフェース
-      def select_vectors(promoted = false)
+      def select_vectors(promoted)
         assert_promotable(promoted)
 
         if promoted
@@ -199,7 +198,24 @@ module Bushido
         end
       end
 
+      def select_vectors2(promoted:, location:)
+        @select_vectors2 ||= {}
+        @select_vectors2[[promoted, location]] ||=
+          begin
+            vectors = select_vectors(promoted)
+            normalized_vectors(location, vectors)
+          end
+      end
+
       private
+
+      def normalized_vectors(location, vectors)
+        if location.white?
+          vectors.collect(&:reverse_sign)
+        else
+          vectors
+        end
+      end
 
       # 通常の合成ベクトル
       def basic_vectors
@@ -212,7 +228,15 @@ module Bushido
       end
 
       def build_vectors(ov, rv)
-        (ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]}).to_set
+        v = ov.compact + rv.compact
+        if v.size != v.uniq.size
+          raise MustNotHappen
+        end
+
+        [
+          *ov.compact.collect { |v| OnceVector[*v]   },
+          *rv.compact.collect { |v| RepeatVector[*v] },
+        ].to_set
       end
 
       def basic_once_vectors

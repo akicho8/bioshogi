@@ -9,48 +9,7 @@ module Bushido
     attr_reader :surface
 
     class << self
-      # 一時的に盤面のサイズを変更する(テスト用)
-      #
-      #   before do
-      #     @size_save = Board.size_change([3, 5])
-      #   end
-      #   after do
-      #     Board.size_change(@size_save)
-      #   end
-      #
-      def size_change(size, &block)
-        size_save = [Position::Hpos.size, Position::Vpos.size]
-        Position::Hpos.size, Position::Vpos.size = size
-        if block_given?
-          begin
-            yield
-          ensure
-            Position::Hpos.size, Position::Vpos.size = size_save
-          end
-        end
-        size_save
-      end
-
-      # サイズ毎のクラスがいるかも
-      # かなりやっつけの仮
-      def size_type
-        key = [Position::Hpos.size, Position::Vpos.size]
-        {
-          [5, 5] => :x55,
-          [9, 9] => :x99,
-        }[key]
-      end
-
-      # 一時的に成れない状況にする
-      def disable_promotable
-        begin
-          _promotable_size = Position::Vpos._promotable_size
-          Position::Vpos._promotable_size = nil
-          yield
-        ensure
-          Position::Vpos._promotable_size = _promotable_size
-        end
-      end
+      delegate :size_change, :size_type, :disable_promotable, :to => "Bushido::Position"
     end
 
     def initialize
@@ -111,7 +70,7 @@ module Bushido
 
       # X列の駒たち
       def vertical_pieces(x)
-        Position::Vpos.size.times.collect { |y|
+        Position::Vpos.board_size.times.collect { |y|
           lookup(Point[[x, y]])
         }.compact
       end

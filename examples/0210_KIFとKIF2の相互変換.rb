@@ -1,13 +1,11 @@
 require "./example_helper"
 
-csa_body = Pathname("katomomo.csa").read.strip
-
 a = Parser.parse_file("katomomo.kif")
 b = Parser.parse_file("katomomo.ki2")
 c = Parser.parse_file("katomomo.csa")
-a.to_kif == b.to_kif            # => true
+a.to_kif == b.to_kif            # => false
 a.to_ki2 == b.to_ki2            # => true
-a.to_csa == b.to_csa            # => true
+a.to_csa == b.to_csa            # => false
 
 info = Parser.parse_file("katomomo.kif")
 puts "-" * 80
@@ -179,7 +177,7 @@ puts info.to_csa
 # >>  111 ６四歩(65)   (00:00/00:00:00)
 # >>  112 ６六角成(48) (00:00/00:00:00)
 # >>  113 ７三金打     (00:00/00:00:00)
-# >>  114 投了
+# >>  114 投了         (00:00/00:00:00)
 # >> --------------------------------------------------------------------------------
 # >> V2.2
 # >> N+加藤桃子 女王
@@ -304,7 +302,7 @@ puts info.to_csa
 # >> +6564FU
 # >> -4866UM
 # >> +0073KI
-# >> %TORYO
+# >> %TORYO,T0
 # >> --------------------------------------------------------------------------------
 # >> 開始日時：2017/11/11 10:00:00
 # >> 終了日時：2017/11/11 17:22:00

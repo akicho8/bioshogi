@@ -1,9 +1,12 @@
+*.dump
+*.gem
+
+/.*
+/Gemfile.lock
 /README.html
 /README.tex
-/Gemfile.lock
-/*.gem
-/.*
-/pkg
+/_*
 /doc/yardoc
 /examples/_*
-/_*
+/examples/flamegraph
+/pkg
