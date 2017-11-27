@@ -5,7 +5,6 @@
 #
 
 module Bushido
-  # 歩などは一歩進んで終わりなのでこちらで定義
   class Vector < Array
     def reverse_sign
       x, y = self
@@ -13,13 +12,14 @@ module Bushido
     end
   end
 
+  # 銀桂などの1回進むだけの移動ベクトル用
   class OnceVector < Vector
     def inspect
       "OV#{super}"
     end
   end
 
-  # 香などは繰り返して進むのでこちらで定義
+  # 香や角などの連続して進める駒の移動ベクトル用
   class RepeatVector < Vector
     def inspect
       "RV#{super}"
