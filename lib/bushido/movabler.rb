@@ -32,7 +32,7 @@ module Bushido
     #
     def movable_infos(player, mini_soldier, options = {})
       vecs = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
-      infos = normalized_vectors(player, vecs).each.with_object([]) do |vec, infos|
+      infos = normalized_vectors(player.location, vecs).each.with_object([]) do |vec, infos|
         pt = mini_soldier[:point]
         loop do
           pt = pt.vector_add(vec) # １三香 → １二香
@@ -66,29 +66,20 @@ module Bushido
       infos.uniq{|e|e.to_s} # FIXME: 高速化の余地あり
     end
 
-    # player の mini_soldier が vecs の方向(複数)へ移動したときの手を取得
+    # player の mini_soldier が vecs の方向(複数)へ移動できるか？
     #  ・とてもシンプル
     #  ・相手の盤上の駒を考慮しない
     #  ・自分の盤上の駒も考慮しない
     #  ・さらに成れるかどうか考慮しない
     #  ・桂を1の行にジャンプしたときにそれ以上移動できないので「１一桂」はダメという場合に使う
-    def simple_movable_infos(player, mini_soldier, options = {})
-      vecs = mini_soldier[:piece].select_vectors(mini_soldier[:promoted]) # TODO: 要リファクタリング
-      infos = normalized_vectors(player, vecs).each.with_object([]) do |vec, infos|
-        pt = mini_soldier[:point]
-        loop do
-          pt = pt.vector_add(vec)
-          if pt.valid?
-            infos << mini_soldier.merge(point: pt)
-          else
-            break
-          end
-          if vec.kind_of?(OnceVector)
-            break
-          end
-        end
+    #  ・だから OnceVector か RepeatVector か見る必要はない
+    #  ・行ける方向に一歩でも行ける可能性があればよい
+    def alive_piece?(mini_soldier)
+      raise MustNotHappen unless mini_soldier[:location]
+      vectors = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
+      normalized_vectors(mini_soldier[:location], vectors).any? do |v|
+        mini_soldier[:point].vector_add(v).valid?
       end
-      infos.uniq{|e|e.to_s}
     end
 
     private
@@ -100,21 +91,21 @@ module Bushido
     def piece_store(infos, player, mini_soldier, pt)
       # それ以上動けるなら置く
       m = mini_soldier.merge(point: pt)
-      unless simple_movable_infos(player, m).empty?
+      if alive_piece?(m)
         infos << SoldierMove[m.merge(origin_soldier: mini_soldier)]
       end
       # 成れるなら成ってみて
       if m.more_promote?(player.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
-        unless simple_movable_infos(player, m).empty?
+        if alive_piece?(m)
           infos << SoldierMove[m.merge(origin_soldier: mini_soldier, promoted_trigger: true)]
         end
       end
     end
 
-    def normalized_vectors(player, vecs)
-      if player.location.white?
+    def normalized_vectors(location, vecs)
+      if location.white?
         vecs.collect(&:reverse_sign)
       else
         vecs

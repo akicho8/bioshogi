@@ -136,6 +136,11 @@ module Bushido
       @x.valid? && @y.valid?
     end
 
+    # 盤面外か？
+    def invalid?
+      !valid?
+    end
+
     # 比較
     #   Point["５五"] == Point["55"] # => true
     def ==(other)

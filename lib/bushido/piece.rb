@@ -189,7 +189,7 @@ module Bushido
 
     concerning :VectorMethods do
       # ベクトル取得の唯一の外部インタフェース
-      def select_vectors(promoted = false)
+      def select_vectors(promoted)
         assert_promotable(promoted)
 
         if promoted
@@ -198,6 +198,16 @@ module Bushido
           basic_vectors
         end
       end
+
+      # def select_vectors2(promoted:, location:)
+      #   assert_promotable(promoted)
+      # 
+      #   if promoted
+      #     promoted_vectors
+      #   else
+      #     basic_vectors
+      #   end
+      # end
 
       private
 

@@ -30,8 +30,8 @@ module Bushido
       piece.names.should                == ["飛", "龍", "竜"]
       piece.key.should             == :rook
       piece.promotable?.should          == true
-      piece.select_vectors.should       == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
-      piece.select_vectors(true).should == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.select_vectors(false).should == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.select_vectors(true).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
     end
 
     it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do

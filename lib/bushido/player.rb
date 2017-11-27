@@ -362,7 +362,7 @@ module Bushido
 
     # 死に駒
     def dead_piece?(mini_soldier)
-      Movabler.simple_movable_infos(self, mini_soldier).empty?
+      !Movabler.alive_piece?(mini_soldier)
     end
 
     # 二歩？

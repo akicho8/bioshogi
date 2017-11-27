@@ -146,14 +146,14 @@ module Bushido
     end
 
     def __pieces_hands
-      @player.board.blank_points.collect do |point|
+      @player.board.blank_points.collect { |point|
         @player.pieces.collect do |piece|
-          m = MiniSoldier[point: point, piece: piece]
+          m = MiniSoldier[point: point, piece: piece, location: @player.location, promoted: false]
           if @player.rule_valid?(m)
             PieceStake[m]
           end
         end
-      end.flatten.compact
+      }.flatten.compact
     end
   end
 end
