@@ -137,7 +137,7 @@ module Bushido
     end
 
     def __soldiers_hands
-      @player.soldiers.collect{|soldier|soldier.movable_infos}.flatten
+      @player.soldiers.collect{|soldier|soldier.movable_infos.to_a}.flatten
     end
 
     # 持駒の全打筋

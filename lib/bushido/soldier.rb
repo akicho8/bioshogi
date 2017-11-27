@@ -50,8 +50,8 @@ module Bushido
     # end
 
     # 移動可能な座標を取得
-    def movable_infos(options = {})
-      Movabler.movable_infos(@player, to_mini_soldier, options)
+    def movable_infos
+      Movabler.movable_infos(@player, to_mini_soldier)
     end
 
     # def self.from_attrs(attrs)

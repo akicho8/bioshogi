@@ -379,8 +379,8 @@ module Bushido
       end
     end
 
-    def movable_infos(mini_soldier, **options)
-      Movabler.movable_infos(self, mini_soldier, options)
+    def movable_infos(mini_soldier)
+      Movabler.movable_infos(self, mini_soldier)
     end
 
     # def side_soldiers_put_on(table)

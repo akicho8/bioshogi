@@ -114,16 +114,15 @@ module Bushido
 
       @strike_trigger = @md[:motion2].to_s.match?(/[打合]/)
 
-      # FIXME: 高速化
-      # kif → ki2 変換するときのために @candidate は必要
       # 指定の場所に来れる盤上の駒に絞る
-      @soldiers = @player.soldiers
-      @soldiers = @soldiers.find_all { |e| e.piece.key == @piece.key }                    # 同じ種類に絞る
-      @soldiers = @soldiers.find_all { |e| !!e.promoted == !!@promoted }                  # 成っているかどうかで絞る
-      @soldiers = @soldiers.find_all { |e| e.movable_infos.any?{|e|e[:point] == @point} } # その場所に凝れる
+      # kif → ki2 変換するときのために @candidate を常に作っとかんといけない
+      @soldiers = @player.soldiers.find_all { |e|
+        !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
+        e.piece.key == @piece.key &&                        # 同じ種類に絞る
+        e.movable_infos.any? { |e| e[:point] == @point } && # 目的地に来れる
+        true
+      }
       @candidate = @soldiers.collect(&:clone)
-      # p @promoted
-      # p @candidate.collect(&:name)
 
       if @strike_trigger
         if @promoted
