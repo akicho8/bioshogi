@@ -38,12 +38,12 @@ module Bushido
         y = nil
 
         case value
-        when Point
-          a, b = value.to_xy
-          x = Position::Hpos.parse(a)
-          y = Position::Vpos.parse(b)
         when Array
           a, b = value
+          x = Position::Hpos.parse(a)
+          y = Position::Vpos.parse(b)
+        when Point
+          a, b = value.to_xy
           x = Position::Hpos.parse(a)
           y = Position::Vpos.parse(b)
         when String

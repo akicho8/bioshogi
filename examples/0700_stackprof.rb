@@ -2,8 +2,8 @@ require "./example_helper"
 
 require "stackprof"
 
-StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
-  100.times do
+StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
+  10.times do
     ["csa", "ki2", "kif"].each do |e|
       info = Parser.parse_file("katomomo.#{e}")
       info.to_ki2
@@ -14,72 +14,131 @@ StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
 end
 
 system "stackprof stackprof.dump"
-system "stackprof stackprof.dump --method Bushido::Position::Base.parse"
+system "stackprof stackprof.dump --method Bushido::Point.parse"
+system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
 # >> ==================================
-# >>   Mode: wall(1000)
-# >>   Samples: 16243 (0.00% miss rate)
-# >>   GC: 3109 (19.14%)
+# >>   Mode: cpu(1000)
+# >>   Samples: 401 (0.00% miss rate)
+# >>   GC: 96 (23.94%)
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
-# >>       1573   (9.7%)        1365   (8.4%)     Bushido::Position::Base.parse
-# >>       1041   (6.4%)        1041   (6.4%)     block (4 levels) in memory_record
-# >>       3161  (19.5%)         775   (4.8%)     Bushido::Point.parse
-# >>       1514   (9.3%)         596   (3.7%)     Bushido::Board::ReaderMethods#lookup
-# >>       1966  (12.1%)         541   (3.3%)     Bushido::Movabler#piece_store
-# >>      12056  (74.2%)         396   (2.4%)     Bushido::Runner#execute
-# >>        382   (2.4%)         382   (2.4%)     #<Module:0x007f939c327260>.kconv
-# >>        375   (2.3%)         375   (2.3%)     Bushido::Point#to_xy
-# >>        309   (1.9%)         309   (1.9%)     Bushido::Position::Base.value_range
-# >>        300   (1.8%)         300   (1.8%)     Bushido::Point#initialize
-# >>        549   (3.4%)         279   (1.7%)     Bushido::HandLog#initialize
-# >>       2365  (14.6%)         257   (1.6%)     Set#each
-# >>        525   (3.2%)         242   (1.5%)     Hash#transform_keys
-# >>       1043   (6.4%)         232   (1.4%)     Bushido::Position::Hpos.parse
-# >>        765   (4.7%)         210   (1.3%)     Bushido::Parser::Base::ConverterMethods#clock_exist?
-# >>        210   (1.3%)         210   (1.3%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
-# >>        207   (1.3%)         207   (1.3%)     ActiveSupport::Duration#initialize
-# >>        203   (1.2%)         203   (1.2%)     Bushido::Soldier#to_mini_soldier
-# >>        203   (1.2%)         203   (1.2%)     Bushido::Vector#reverse_sign
-# >>        290   (1.8%)         198   (1.2%)     ActiveSupport::Duration::Scalar#-
-# >>      10698  (65.9%)         184   (1.1%)     Bushido::Movabler#movable_infos
-# >>        180   (1.1%)         180   (1.1%)     ActiveSupport::Duration#to_i
-# >>        296   (1.8%)         169   (1.0%)     Bushido::Parser#source_normalize
-# >>        466   (2.9%)         157   (1.0%)     Bushido::Position::Base#valid?
-# >>        186   (1.1%)         155   (1.0%)     Bushido::Position::Hpos#number_format
-# >>        278   (1.7%)         149   (0.9%)     Bushido::Piece::NameMethods#basic_names
-# >>        966   (5.9%)         148   (0.9%)     Bushido::Position::Vpos.parse
-# >>        197   (1.2%)         145   (0.9%)     Bushido::Position::Vpos#number_format
-# >>        284   (1.7%)         143   (0.9%)     Hash#assert_valid_keys
-# >>        140   (0.9%)         140   (0.9%)     Bushido::HandLog::OfficialFormatter#initialize
-# >> Bushido::Position::Base.parse (/Users/ikeda/src/bushido/lib/bushido/position.rb:69)
-# >>   samples:  1365 self (8.4%)  /   1573 total (9.7%)
+# >>         39   (9.7%)          37   (9.2%)     Bushido::Position::Base.parse
+# >>         32   (8.0%)          19   (4.7%)     Bushido::Parser#parse_file
+# >>         20   (5.0%)          16   (4.0%)     ActiveSupport::Duration::Scalar#-
+# >>         16   (4.0%)          16   (4.0%)     block (4 levels) in memory_record
+# >>         15   (3.7%)          14   (3.5%)     Bushido::Position::Hpos#number_format
+# >>         62  (15.5%)          13   (3.2%)     Bushido::Point.parse
+# >>         30   (7.5%)          13   (3.2%)     Bushido::Movabler#piece_store
+# >>         11   (2.7%)          11   (2.7%)     Bushido::Position::Vpos#number_format
+# >>         39   (9.7%)          10   (2.5%)     Bushido::Player#put_on_with_valid
+# >>         10   (2.5%)          10   (2.5%)     #<Module:0x007fc139ade8d0>.kconv
+# >>         24   (6.0%)          10   (2.5%)     Bushido::Board::ReaderMethods#lookup
+# >>          7   (1.7%)           7   (1.7%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
+# >>          5   (1.2%)           5   (1.2%)     Bushido::Point#to_xy
+# >>          5   (1.2%)           5   (1.2%)     ActiveSupport::Duration#initialize
+# >>        171  (42.6%)           5   (1.2%)     Bushido::Movabler#movable_infos
+# >>          5   (1.2%)           5   (1.2%)     Bushido::HandLog::OfficialFormatter#initialize
+# >>          9   (2.2%)           5   (1.2%)     Bushido::Position::Base#valid?
+# >>         11   (2.7%)           5   (1.2%)     Bushido::Parser#source_normalize
+# >>          5   (1.2%)           5   (1.2%)     Bushido::Soldier#to_mini_soldier
+# >>          4   (1.0%)           4   (1.0%)     ActiveSupport::Duration#to_i
+# >>         39   (9.7%)           4   (1.0%)     Set#each
+# >>          4   (1.0%)           4   (1.0%)     ActiveSupport::Duration.===
+# >>          4   (1.0%)           4   (1.0%)     Bushido::Position::Base.value_range
+# >>          9   (2.2%)           4   (1.0%)     Bushido::Runner#point_same?
+# >>          8   (2.0%)           4   (1.0%)     Bushido::HandLog#initialize
+# >>         24   (6.0%)           4   (1.0%)     Bushido::Position::Hpos.parse
+# >>          8   (2.0%)           4   (1.0%)     Bushido::Board::UpdateMethods#put_on
+# >>         38   (9.5%)           3   (0.7%)     Bushido::BoardParser::CsaBoardParser#parse
+# >>          3   (0.7%)           3   (0.7%)     Bushido::Player#board
+# >>         22   (5.5%)           3   (0.7%)     Bushido::Position::Vpos.parse
+# >> Bushido::Point.parse (/Users/ikeda/src/bushido/lib/bushido/point.rb:36)
+# >>   samples:    13 self (3.2%)  /     62 total (15.5%)
 # >>   callers:
-# >>      811  (   51.6%)  Bushido::Position::Hpos.parse
-# >>      762  (   48.4%)  Bushido::Position::Vpos.parse
-# >>   callees (208 total):
-# >>      134  (   64.4%)  Numeric#blank?
-# >>       45  (   21.6%)  String#blank?
-# >>       29  (   13.9%)  Bushido::Position::Base.units_set
+# >>       25  (   40.3%)  Bushido::Point.[]
+# >>       14  (   22.6%)  Bushido::Point#vector_add
+# >>       13  (   21.0%)  Bushido::Runner#execute
+# >>        9  (   14.5%)  Bushido::Runner#read_point
+# >>        1  (    1.6%)  Bushido::Soldier#initialize
+# >>   callees (49 total):
+# >>       24  (   49.0%)  Bushido::Position::Hpos.parse
+# >>       22  (   44.9%)  Bushido::Position::Vpos.parse
+# >>        2  (    4.1%)  Bushido::Point#initialize
+# >>        1  (    2.0%)  Bushido::Point#to_xy
 # >>   code:
-# >>                                   |    69  |         def parse(arg)
-# >>   764    (4.7%) /   764   (4.7%)  |    70  |           if arg.kind_of?(Base)
-# >>    37    (0.2%) /    37   (0.2%)  |    71  |             return arg
-# >>                                   |    72  |           end
-# >>                                   |    73  | 
-# >>   184    (1.1%) /     5   (0.0%)  |    74  |           if arg.blank?
-# >>                                   |    75  |             raise PositionSyntaxError, "引数がありません"
-# >>                                   |    76  |           end
-# >>                                   |    77  | 
-# >>   116    (0.7%) /   116   (0.7%)  |    78  |           if arg.kind_of?(String)
-# >>    29    (0.2%)                   |    79  |             v = units_set[arg]
-# >>    16    (0.1%) /    16   (0.1%)  |    80  |             v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
-# >>                                   |    81  |           else
-# >>                                   |    82  |             v = arg
-# >>                                   |    83  |           end
-# >>                                   |    84  | 
-# >>   189    (1.2%) /   189   (1.2%)  |    85  |           @instance ||= {}
-# >>   238    (1.5%) /   238   (1.5%)  |    86  |           @instance[v] ||= new(v)
-# >>                                   |    87  |         end
+# >>                                   |    36  |       def parse(value)
+# >>                                   |    37  |         x = nil
+# >>                                   |    38  |         y = nil
+# >>                                   |    39  | 
+# >>                                   |    40  |         case value
+# >>    10    (2.5%) /    10   (2.5%)  |    41  |         when Array
+# >>                                   |    42  |           a, b = value
+# >>     7    (1.7%)                   |    43  |           x = Position::Hpos.parse(a)
+# >>     5    (1.2%)                   |    44  |           y = Position::Vpos.parse(b)
+# >>                                   |    45  |         when Point
+# >>     1    (0.2%)                   |    46  |           a, b = value.to_xy
+# >>     8    (2.0%)                   |    47  |           x = Position::Hpos.parse(a)
+# >>     3    (0.7%)                   |    48  |           y = Position::Vpos.parse(b)
+# >>                                   |    49  |         when String
+# >>     2    (0.5%) /     2   (0.5%)  |    50  |           if md = value.match(/\A(?<x>.)(?<y>.)\z/)
+# >>     9    (2.2%)                   |    51  |             x = Position::Hpos.parse(md[:x])
+# >>    14    (3.5%)                   |    52  |             y = Position::Vpos.parse(md[:y])
+# >>                                   |    53  |           else
+# >>                                   |    54  |             raise PointSyntaxError, "座標を2文字で表記していません : #{value.inspect}"
+# >>                                   |    55  |           end
+# >>                                   |    56  |         else
+# >>                                   |    57  |           raise MustNotHappen, "引数が異常です : #{value.inspect}"
+# >>                                   |    58  |         end
+# >>                                   |    59  | 
+# >>     3    (0.7%) /     1   (0.2%)  |    60  |         new(x, y)
+# >>                                   |    61  |       end
+# >> Bushido::Movabler#movable_infos (/Users/ikeda/src/bushido/lib/bushido/movabler.rb:33)
+# >>   samples:     5 self (1.2%)  /    171 total (42.6%)
+# >>   callers:
+# >>       83  (   48.5%)  Bushido::Movabler#movable_infos
+# >>       57  (   33.3%)  Bushido::Runner#execute
+# >>       27  (   15.8%)  Set#each
+# >>        4  (    2.3%)  Bushido::Soldier#movable_infos
+# >>   callees (166 total):
+# >>       83  (   50.0%)  Bushido::Movabler#movable_infos
+# >>       30  (   18.1%)  Bushido::Movabler#piece_store
+# >>       28  (   16.9%)  Set#each
+# >>        9  (    5.4%)  Bushido::Board::ReaderMethods#lookup
+# >>        9  (    5.4%)  Bushido::Point#vector_add
+# >>        3  (    1.8%)  Bushido::Point#invalid?
+# >>        3  (    1.8%)  Bushido::Player#board
+# >>        1  (    0.6%)  Bushido::Piece::VectorMethods#select_vectors
+# >>   code:
+# >>                                   |    33  |     def movable_infos(player, mini_soldier)
+# >>     4    (1.0%) /     4   (1.0%)  |    34  |       Enumerator.new do |yielder|
+# >>     1    (0.2%)                   |    35  |         vecs = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
+# >>    56   (14.0%)                   |    36  |         normalized_vectors(mini_soldier[:location], vecs).each do |vec|
+# >>                                   |    37  |           pt = mini_soldier[:point]
+# >>    55   (13.7%)                   |    38  |           loop do
+# >>     9    (2.2%)                   |    39  |             pt = pt.vector_add(vec)
+# >>                                   |    40  | 
+# >>                                   |    41  |             # 盤外に出てしまったら終わり
+# >>     3    (0.7%)                   |    42  |             if pt.invalid?
+# >>                                   |    43  |               break
+# >>                                   |    44  |             end
+# >>                                   |    45  | 
+# >>    12    (3.0%)                   |    46  |             target = player.board.lookup(pt)
+# >>                                   |    47  | 
+# >>                                   |    48  |             if target && !target.kind_of?(Soldier)
+# >>                                   |    49  |               raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
+# >>                                   |    50  |             end
+# >>                                   |    51  | 
+# >>                                   |    52  |             # 自分の駒に衝突したら終わり
+# >>                                   |    53  |             if target && target.player == player
+# >>                                   |    54  |               break
+# >>                                   |    55  |             end
+# >>                                   |    56  | 
+# >>                                   |    57  |             # 自分の駒以外(相手駒 or 空)なので行ける
+# >>    30    (7.5%)                   |    58  |             piece_store(player, mini_soldier, pt, yielder)
+# >>                                   |    59  | 
+# >>                                   |    60  |             # 相手駒があるのでこれ以上は進めない
+# >>     1    (0.2%) /     1   (0.2%)  |    61  |             if target
+# >>                                   |    62  |               break

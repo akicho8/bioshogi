@@ -32,8 +32,8 @@ module Bushido
     #
     def movable_infos(player, mini_soldier)
       Enumerator.new do |yielder|
-        vecs = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
-        normalized_vectors(mini_soldier[:location], vecs).each do |vec|
+        vecs = mini_soldier[:piece].select_vectors2(mini_soldier.slice(:promoted, :location))
+        vecs.each do |vec|
           pt = mini_soldier[:point]
           loop do
             pt = pt.vector_add(vec)
@@ -81,8 +81,8 @@ module Bushido
     #  ・行ける方向に一歩でも行ける可能性があればよい
     def alive_piece?(mini_soldier)
       raise MustNotHappen unless mini_soldier[:location]
-      vectors = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
-      normalized_vectors(mini_soldier[:location], vectors).any? do |v|
+      vectors = mini_soldier[:piece].select_vectors2(mini_soldier.slice(:promoted, :location))
+      vectors.any? do |v|
         mini_soldier[:point].vector_add(v).valid?
       end
     end
@@ -109,12 +109,5 @@ module Bushido
       end
     end
 
-    def normalized_vectors(location, vecs)
-      if location.white?
-        vecs.collect(&:reverse_sign)
-      else
-        vecs
-      end
-    end
   end
 end
