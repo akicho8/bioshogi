@@ -16,16 +16,19 @@ module Bushido
         # @example
         #   Position::Hpos.parse("１").name # => "1"
         def parse(arg)
+          if arg.kind_of?(Base)
+            return arg
+          end
+
           case arg
           when String, NilClass
             v = units.find_index { |e| e == arg }
             v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
-          when Base
-            v = arg.value
           else
             v = arg
           end
-          new(v) # TODO: 毎回 new するのではなく固定インスタンスを返すと速くなるかもしれない
+
+          new(v)
         end
 
         # 幅
