@@ -20,66 +20,66 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.parse"
 
 # >> ==================================
 # >>   Mode: wall(1000)
-# >>   Samples: 15992 (0.00% miss rate)
-# >>   GC: 3028 (18.93%)
+# >>   Samples: 16243 (0.00% miss rate)
+# >>   GC: 3109 (19.14%)
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
-# >>       1590   (9.9%)        1356   (8.5%)     Bushido::Position::Base.parse
-# >>        989   (6.2%)         989   (6.2%)     block (4 levels) in memory_record
-# >>       3144  (19.7%)         773   (4.8%)     Bushido::Point.parse
-# >>       1400   (8.8%)         548   (3.4%)     Bushido::Board::ReaderMethods#lookup
-# >>       1978  (12.4%)         533   (3.3%)     Bushido::Movabler#piece_store
-# >>      11839  (74.0%)         406   (2.5%)     Bushido::Runner#execute
-# >>        393   (2.5%)         393   (2.5%)     Bushido::Point#to_xy
-# >>        351   (2.2%)         351   (2.2%)     #<Module:0x007fcd5e8485b8>.kconv
-# >>        312   (2.0%)         312   (2.0%)     Bushido::Position::Base.value_range
-# >>       2340  (14.6%)         281   (1.8%)     Set#each
-# >>        273   (1.7%)         273   (1.7%)     Bushido::Point#initialize
-# >>        502   (3.1%)         254   (1.6%)     Bushido::HandLog#initialize
-# >>        493   (3.1%)         239   (1.5%)     Hash#transform_keys
-# >>       1099   (6.9%)         230   (1.4%)     Bushido::Position::Hpos.parse
-# >>        230   (1.4%)         230   (1.4%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
-# >>        229   (1.4%)         229   (1.4%)     Bushido::Soldier#to_mini_soldier
-# >>        217   (1.4%)         217   (1.4%)     ActiveSupport::Duration#initialize
-# >>      10360  (64.8%)         184   (1.2%)     Bushido::Movabler#movable_infos
-# >>        230   (1.4%)         180   (1.1%)     Bushido::Position::Vpos#number_format
-# >>        301   (1.9%)         179   (1.1%)     Bushido::Parser#source_normalize
-# >>        657   (4.1%)         177   (1.1%)     Bushido::Parser::Base::ConverterMethods#clock_exist?
-# >>        204   (1.3%)         174   (1.1%)     Bushido::Position::Hpos#number_format
-# >>        174   (1.1%)         174   (1.1%)     Bushido::Vector#reverse_sign
-# >>        242   (1.5%)         171   (1.1%)     ActiveSupport::Duration::Scalar#-
-# >>        166   (1.0%)         166   (1.0%)     ActiveSupport::Duration#to_i
-# >>        478   (3.0%)         166   (1.0%)     Bushido::Position::Base#valid?
-# >>        261   (1.6%)         156   (1.0%)     Bushido::Piece::NameMethods#basic_names
-# >>        920   (5.8%)         147   (0.9%)     Bushido::Position::Vpos.parse
-# >>        134   (0.8%)         134   (0.8%)     Numeric#blank?
-# >>        206   (1.3%)         126   (0.8%)     ActiveSupport::Duration.===
+# >>       1573   (9.7%)        1365   (8.4%)     Bushido::Position::Base.parse
+# >>       1041   (6.4%)        1041   (6.4%)     block (4 levels) in memory_record
+# >>       3161  (19.5%)         775   (4.8%)     Bushido::Point.parse
+# >>       1514   (9.3%)         596   (3.7%)     Bushido::Board::ReaderMethods#lookup
+# >>       1966  (12.1%)         541   (3.3%)     Bushido::Movabler#piece_store
+# >>      12056  (74.2%)         396   (2.4%)     Bushido::Runner#execute
+# >>        382   (2.4%)         382   (2.4%)     #<Module:0x007f939c327260>.kconv
+# >>        375   (2.3%)         375   (2.3%)     Bushido::Point#to_xy
+# >>        309   (1.9%)         309   (1.9%)     Bushido::Position::Base.value_range
+# >>        300   (1.8%)         300   (1.8%)     Bushido::Point#initialize
+# >>        549   (3.4%)         279   (1.7%)     Bushido::HandLog#initialize
+# >>       2365  (14.6%)         257   (1.6%)     Set#each
+# >>        525   (3.2%)         242   (1.5%)     Hash#transform_keys
+# >>       1043   (6.4%)         232   (1.4%)     Bushido::Position::Hpos.parse
+# >>        765   (4.7%)         210   (1.3%)     Bushido::Parser::Base::ConverterMethods#clock_exist?
+# >>        210   (1.3%)         210   (1.3%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
+# >>        207   (1.3%)         207   (1.3%)     ActiveSupport::Duration#initialize
+# >>        203   (1.2%)         203   (1.2%)     Bushido::Soldier#to_mini_soldier
+# >>        203   (1.2%)         203   (1.2%)     Bushido::Vector#reverse_sign
+# >>        290   (1.8%)         198   (1.2%)     ActiveSupport::Duration::Scalar#-
+# >>      10698  (65.9%)         184   (1.1%)     Bushido::Movabler#movable_infos
+# >>        180   (1.1%)         180   (1.1%)     ActiveSupport::Duration#to_i
+# >>        296   (1.8%)         169   (1.0%)     Bushido::Parser#source_normalize
+# >>        466   (2.9%)         157   (1.0%)     Bushido::Position::Base#valid?
+# >>        186   (1.1%)         155   (1.0%)     Bushido::Position::Hpos#number_format
+# >>        278   (1.7%)         149   (0.9%)     Bushido::Piece::NameMethods#basic_names
+# >>        966   (5.9%)         148   (0.9%)     Bushido::Position::Vpos.parse
+# >>        197   (1.2%)         145   (0.9%)     Bushido::Position::Vpos#number_format
+# >>        284   (1.7%)         143   (0.9%)     Hash#assert_valid_keys
+# >>        140   (0.9%)         140   (0.9%)     Bushido::HandLog::OfficialFormatter#initialize
 # >> Bushido::Position::Base.parse (/Users/ikeda/src/bushido/lib/bushido/position.rb:69)
-# >>   samples:  1356 self (8.5%)  /   1590 total (9.9%)
+# >>   samples:  1365 self (8.4%)  /   1573 total (9.7%)
 # >>   callers:
-# >>      869  (   54.7%)  Bushido::Position::Hpos.parse
-# >>      721  (   45.3%)  Bushido::Position::Vpos.parse
-# >>   callees (234 total):
-# >>      134  (   57.3%)  Numeric#blank?
-# >>       56  (   23.9%)  String#blank?
-# >>       44  (   18.8%)  Bushido::Position::Base.units_set
+# >>      811  (   51.6%)  Bushido::Position::Hpos.parse
+# >>      762  (   48.4%)  Bushido::Position::Vpos.parse
+# >>   callees (208 total):
+# >>      134  (   64.4%)  Numeric#blank?
+# >>       45  (   21.6%)  String#blank?
+# >>       29  (   13.9%)  Bushido::Position::Base.units_set
 # >>   code:
 # >>                                   |    69  |         def parse(arg)
-# >>   769    (4.8%) /   769   (4.8%)  |    70  |           if arg.kind_of?(Base)
-# >>    40    (0.3%) /    40   (0.3%)  |    71  |             return arg
+# >>   764    (4.7%) /   764   (4.7%)  |    70  |           if arg.kind_of?(Base)
+# >>    37    (0.2%) /    37   (0.2%)  |    71  |             return arg
 # >>                                   |    72  |           end
 # >>                                   |    73  | 
-# >>   198    (1.2%) /     8   (0.1%)  |    74  |           if arg.blank?
+# >>   184    (1.1%) /     5   (0.0%)  |    74  |           if arg.blank?
 # >>                                   |    75  |             raise PositionSyntaxError, "引数がありません"
 # >>                                   |    76  |           end
 # >>                                   |    77  | 
-# >>   109    (0.7%) /   109   (0.7%)  |    78  |           if arg.kind_of?(String)
-# >>    44    (0.3%)                   |    79  |             v = units_set[arg]
-# >>    23    (0.1%) /    23   (0.1%)  |    80  |             v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
+# >>   116    (0.7%) /   116   (0.7%)  |    78  |           if arg.kind_of?(String)
+# >>    29    (0.2%)                   |    79  |             v = units_set[arg]
+# >>    16    (0.1%) /    16   (0.1%)  |    80  |             v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
 # >>                                   |    81  |           else
 # >>                                   |    82  |             v = arg
 # >>                                   |    83  |           end
 # >>                                   |    84  | 
-# >>   169    (1.1%) /   169   (1.1%)  |    85  |           @instance ||= {}
+# >>   189    (1.2%) /   189   (1.2%)  |    85  |           @instance ||= {}
 # >>   238    (1.5%) /   238   (1.5%)  |    86  |           @instance[v] ||= new(v)
 # >>                                   |    87  |         end

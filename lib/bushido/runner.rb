@@ -42,12 +42,15 @@ module Bushido
     def execute(str)
       @source = str
 
-      @point = nil
-      @piece = nil
-      @origin_point = nil
-      @strike_trigger = nil
+      # hand_log を作るための変数たち
+      @point           = nil
+      @piece           = nil
+      @promoted        = nil
       @promote_trigger = nil
-      @candidate = nil
+      @strike_trigger  = nil
+      @origin_point    = nil
+      @candidate       = nil
+
       @done = false
 
       @md = @source.match(self.class.input_regexp)
