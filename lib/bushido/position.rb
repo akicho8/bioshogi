@@ -2,11 +2,62 @@
 #
 # 一次元座標管理
 #
+
+require "active_support/core_ext/array/access" # for seconds
+
 module Bushido
   module Position
+    class << self
+      # 一時的に盤面のサイズを変更する(テスト用)
+      #
+      #   before do
+      #     @size_save = Board.size_change([3, 5])
+      #   end
+      #   after do
+      #     Board.size_change(@size_save)
+      #   end
+      #
+      def size_change(wsize, &block)
+        save_value = [Hpos.board_size, Vpos.board_size]
+        Hpos.board_size_reset(wsize.first)
+        Vpos.board_size_reset(wsize.second)
+        if block_given?
+          begin
+            yield
+          ensure
+            Hpos.board_size_reset(save_value.first)
+            Vpos.board_size_reset(save_value.second)
+          end
+        else
+          save_value
+        end
+      end
+
+      # サイズ毎のクラスがいるかも
+      # かなりやっつけの仮
+      def size_type
+        key = [Hpos.board_size, Vpos.board_size]
+        {
+          [5, 5] => :x55,
+          [9, 9] => :x99,
+        }[key]
+      end
+
+      # 一時的に成れない状況にする
+      def disable_promotable
+        begin
+          _promotable_size = Vpos._promotable_size
+          Vpos._promotable_size = nil
+          yield
+        ensure
+          Vpos._promotable_size = _promotable_size
+        end
+      end
+    end
+
     class Base
-      class_attribute :size
-      self.size = 9
+      class_attribute :board_size
+      self.board_size = 9
 
       attr_reader :value
       private_class_method :new
@@ -20,9 +71,12 @@ module Bushido
             return arg
           end
 
-          case arg
-          when String, NilClass
-            v = units.find_index { |e| e == arg }
+          if arg.blank?
+            raise PositionSyntaxError, "引数がありません"
+          end
+
+          if arg.kind_of?(String)
+            v = units_set[arg]
             v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
           else
             v = arg
@@ -32,15 +86,27 @@ module Bushido
           @instance[v] ||= new(v)
         end
 
-        # 幅
-        def value_range
-          (0...units.size)
+        def board_size_reset(v)
+          self.board_size = v
+
+          @instance = nil
+          @units = nil
+          @units_set = nil
+          @value_range = nil
         end
 
         # 全角の文字配列
         def units
-          @units ||= {}
-          @units[size] ||= _units.chars.to_a.send(_arrow, size)
+          @units ||= _units.chars.to_a.send(_arrow, board_size)
+        end
+
+        def units_set
+          @units_set ||= units.each.with_index.inject({}) {|a, (e, i)| a.merge(e => i) }
+        end
+
+        # 幅
+        def value_range
+          @value_range ||= 0...units.size
         end
       end
 

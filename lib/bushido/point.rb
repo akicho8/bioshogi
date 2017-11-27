@@ -18,8 +18,8 @@ module Bushido
       # すべての座標を返す  ← これいる？？？
       #   Point.collect{|point|...}
       def each(&block)
-        Position::Vpos.size.times.collect{|y|
-          Position::Hpos.size.times.collect{|x|
+        Position::Vpos.board_size.times.collect{|y|
+          Position::Hpos.board_size.times.collect{|x|
             Point[[x, y]]
           }
         }.flatten.each(&block)

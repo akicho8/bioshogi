@@ -30,12 +30,12 @@ module Bushido
     end
 
     def line
-      "+" + "---" * Position::Hpos.size + "+"
+      "+" + "---" * Position::Hpos.board_size + "+"
     end
 
     def rows
-      Position::Vpos.size.times.collect do |y|
-        fields = Position::Hpos.size.times.collect do |x|
+      Position::Vpos.board_size.times.collect do |y|
+        fields = Position::Hpos.board_size.times.collect do |x|
           object_to_s(@board.surface[[x, y]])
         end
         "|#{fields.join}|" + Position::Vpos.parse(y).name

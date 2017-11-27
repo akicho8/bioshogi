@@ -201,7 +201,7 @@ module Bushido
 
       # def select_vectors2(promoted:, location:)
       #   assert_promotable(promoted)
-      # 
+      #
       #   if promoted
       #     promoted_vectors
       #   else
@@ -222,7 +222,15 @@ module Bushido
       end
 
       def build_vectors(ov, rv)
-        (ov.compact.collect{|v|OnceVector[*v]} + rv.compact.collect{|v|RepeatVector[*v]}).to_set
+        v = ov.compact + rv.compact
+        if v.size != v.uniq.size
+          raise MustNotHappen
+        end
+
+        [
+          *ov.compact.collect { |v| OnceVector[*v]   },
+          *rv.compact.collect { |v| RepeatVector[*v] },
+        ].to_set
       end
 
       def basic_once_vectors

@@ -22,8 +22,8 @@ module Bushido
     private
 
     def rows
-      Position::Vpos.size.times.collect do |y|
-        "P#{y.next}" + Position::Hpos.size.times.collect { |x|
+      Position::Vpos.board_size.times.collect do |y|
+        "P#{y.next}" + Position::Hpos.board_size.times.collect { |x|
           object_to_s(@board.surface[[x, y]])
         }.join + "\n"
       end
