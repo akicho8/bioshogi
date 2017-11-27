@@ -140,9 +140,6 @@ module Bushido
       # 棋譜入力
       def execute(str)
         Array.wrap(str).each do |str|
-          if str == "投了"
-            break
-          end
           current_player.execute(str)
           @counter += 1
         end
