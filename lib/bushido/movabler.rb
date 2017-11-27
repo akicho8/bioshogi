@@ -114,11 +114,10 @@ module Bushido
     end
 
     def normalized_vectors(player, vecs)
-      vecs.collect do |v|
-        if player.location.white?
-          v = v.reverse_sign
-        end
-        v
+      if player.location.white?
+        vecs.collect(&:reverse_sign)
+      else
+        vecs
       end
     end
   end
