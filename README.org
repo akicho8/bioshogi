@@ -490,6 +490,7 @@ end
     | PromotedPiecePutOnError         | 成った状態で打とうとした           | ５五龍打                           |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした | ５五龍を５六飛                     |
     | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した     | 初手 "８八飛(28)"                  |
+    | AitenoKomaUgokashitaError       | 相手の駒を動かそうとした           | ▲の手番で初手 "３四歩"            |
 
 *** 表示座標系
 

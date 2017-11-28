@@ -93,7 +93,7 @@ module Bushido
     concerning :BoardMethods do
       included do
         attr_reader :board
-        attr_reader :teban
+        attr_accessor :teban
       end
 
       class_methods do
@@ -140,7 +140,8 @@ module Bushido
         raise MustNotHappen unless BoardParser.accept?(value)
         v = BoardParser.parse(value).both_board_info
         board_reset5(v)
-        @teban = Teban.new("平手")
+        # このあと自分で手合割を決めること。次のようにする
+        # mediator.teban = Teban.new(mediator.board.teai_name)
       end
 
       def board_reset_for_hash(v)

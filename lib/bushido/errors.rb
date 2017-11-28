@@ -95,4 +95,7 @@ module Bushido
 
   class SamePlayerSoldierOverwrideError < RuleError
   end
+
+  class AitenoKomaUgokashitaError < RuleError
+  end
 end

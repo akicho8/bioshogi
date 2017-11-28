@@ -6,8 +6,8 @@ module Bushido
     attr_accessor :teai_key
     # attr_accessor :teai_info
 
-    def initialize(teai_key = "平手")
-      @teai_key = teai_key
+    def initialize(teai_key = nil)
+      @teai_key = teai_key.presence || "平手"
       @counter = 0
     end
 

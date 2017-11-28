@@ -168,13 +168,18 @@ module Bushido
             end
           }.join
 
+          teai_name = nil
           if true
             obj = Mediator.new
             obj.board_reset_old(@board_source || header["手合割"])
+            teai_name = obj.board.teai_name
+            if teai_name
+              out << "\" 手合割:#{teai_name}\n"
+            end
             if options[:board_expansion]
               out << obj.board.to_csa
             else
-              if obj.board.teai_name == "平手"
+              if teai_name == "平手"
                 out << "PI\n"
               else
                 out << obj.board.to_csa
@@ -182,8 +187,10 @@ module Bushido
             end
           end
 
-          # 手番
-          out << Location[:black].csa_sign + "\n"
+          # 2通りある
+          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (teban = Teban.new(teai_name))
+          # 2. mediator.teban を利用する
+          out << mediator.teban.base_location.csa_sign + "\n"
 
           out << mediator.hand_logs.collect.with_index { |e, i|
             if clock_exist?
@@ -326,6 +333,7 @@ module Bushido
 
             if @board_source
               mediator.board_reset_for_text(@board_source)
+              mediator.teban = Teban.new(mediator.board.teai_name)
             else
               mediator.board_reset(header["手合割"] || "平手")
             end
@@ -346,11 +354,9 @@ module Bushido
           out = []
 
           obj = Mediator.new
-          obj.board_reset(@board_source || header["手合割"])
+          obj.board_reset_old(@board_source || header["手合割"])
           if v = obj.board.teai_name
-            unless v == "平手"
-              header["手合割"] = v
-            end
+            header["手合割"] = "平手"
             out << raw_header_as_string
           else
             header["後手の持駒"] ||= ""

@@ -116,7 +116,7 @@ module Bushido
         from_soldier.promoted = true
       end
 
-      raise MustNotHappen unless location == from_soldier.location
+      raise AitenoKomaUgokashitaError, "手番が間違っている可能性があります。location (#{location}) と from_soldier.location (#{from_soldier.location}) が異なります\n#{board_with_pieces}" unless location == from_soldier.location
       from_soldier.point = to
       put_on_with_valid(from_soldier)
     end

@@ -12,7 +12,13 @@ def assert_equal(a, b)
   STDOUT.flush
 end
 
-files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
+@check_file = Pathname("check_file.txt")
+if @check_file.exist?
+  files = @check_file.readlines.collect {|e| Pathname(e.strip) }
+else
+  files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
+end
+
 files = files.take((ARGV.first || 1000_0000).to_i)
 seconds = Benchmark.realtime do
   files.each do |file|
