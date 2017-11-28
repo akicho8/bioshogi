@@ -335,10 +335,10 @@ module Bushido
       if options[:validate]
         mini_soldier = soldier.to_mini_soldier
         if s = find_collisione_pawn(mini_soldier)
-          raise DoublePawn, "二歩 (#{s.mark_with_formal_name}があるため#{soldier}が打てません)"
+          raise DoublePawn, "二歩 (#{s.mark_with_formal_name}があるため#{soldier}が打てません)\n#{board_with_pieces}"
         end
         if dead_piece?(mini_soldier)
-          raise DeadPieceRuleError, "#{mini_soldier.to_s.inspect} は死に駒です。「#{mini_soldier}成」の間違いの可能性があります。\n#{@board}"
+          raise DeadPieceRuleError, "#{mini_soldier.to_s.inspect} は死に駒です。「#{mini_soldier}成」の間違いの可能性があります。\n#{board_with_pieces}"
         end
       end
 
