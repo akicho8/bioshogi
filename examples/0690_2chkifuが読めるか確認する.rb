@@ -12,8 +12,9 @@ def assert_equal(a, b)
   STDOUT.flush
 end
 
+files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
+files = files.take((ARGV.first || 1000_0000).to_i)
 seconds = Benchmark.realtime do
-  files = Pathname.glob("../../2chkifu/00001/*").take((ARGV.first || 1000_0000).to_i)
   files.each do |file|
     begin
       info = Parser.parse_file(file)
@@ -36,6 +37,7 @@ seconds = Benchmark.realtime do
       assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
       assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
     rescue => error
+      print "E"
       @error_file.open("a") do |e|
         e.puts "-" * 80
         e.puts file.expand_path
@@ -43,7 +45,6 @@ seconds = Benchmark.realtime do
         e.puts error.message
         e.puts error.backtrace
       end
-      break
     end
   end
 end
