@@ -1,13 +1,20 @@
 # frozen-string-literal: true
 #
-# 先手・後手
+# 上下を表わす
+#
+# - 先手後手というのは平手の場合だけの名称
+# - 駒落ちなら、まず名称が上手下手に代わり、もともと後手と呼ばれていた上側が先に指す
+# - 先手というのが「先に指す」という意味で使われるなら「先手」は位置を特定できない。駒落ちなら△で、平手なら▲になる。
+# - だから上下の位置を表わすのに先手後手の名前を使うのはまちがい
+# - 上下は△▲だけに対応する
 #
 module Bushido
   class Location
     include MemoryRecord
     memory_record [
-      {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["上手", "☗", "b"], varrow: " ", angle: 0,   csa_sign: "+"},
-      {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["下手", "☖", "w"], varrow: "v", angle: 180, csa_sign: "-"},
+      # FIXME: name を「先手」でなく mark が name とする。平手なら「後手」をつかい、駒落ちなら komaochi_name を使う。
+      {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["上手", "☗", "b"], varrow: " ", angle: 0,   csa_sign: "+", komaochi_name: "下手"},
+      {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["下手", "☖", "w"], varrow: "v", angle: 180, csa_sign: "-", komaochi_name: "上手"},
     ]
 
     alias index code
