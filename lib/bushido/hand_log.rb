@@ -95,7 +95,6 @@ module Bushido
 
       def to_debug_hash
         {
-          to_s: to_s,
           origin_point: @hand_log.origin_point,
           point: @hand_log.point,
           candidate: candidate.collect(&:name),
@@ -222,6 +221,29 @@ module Bushido
       def basic_motion
         case
         when koreru_c >= 3
+          # |----------------+--------------------------------------|
+          # |   origin_point | ５一                                 |
+          # |          point | ４二                                 |
+          # |      candidate | ["△５一金", "△３一金", "△５二金"] |
+          # |       koreru_c | 3                                    |
+          # |     _migi_idou | true                                 |
+          # |   _hidari_idou | false                                |
+          # |       _ue_idou | false                                |
+          # |    _shita_idou | true                                 |
+          # | _hidari_kara_c | 2                                    |
+          # |   _migi_kara_c | 1                                    |
+          # |       yoreru_c | 1                                    |
+          # |      agareru_c | 2                                    |
+          # |     sagareru_c | 0                                    |
+          # |        shita_y | 0                                    |
+          # |            _tx | 5                                    |
+          # |            _ty | 1                                    |
+          # |            _ox | 4                                    |
+          # |            _oy | 0                                    |
+          # |            _xr | 4..6                                 |
+          # |            _yr | 0..1                                 |
+          # |----------------+--------------------------------------|
+
           case
           when yoko_idou? && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
             "寄"
@@ -248,9 +270,9 @@ module Bushido
           when _migi_idou? && _hidari_kara_c == 1
             _i("左")
           when _migi_idou? && _hidari_kara_c >= 2 && _ue_idou? # P3B
-            _i("左") + "上"
+            _i("左") + _i("上")
           when _migi_idou? && _hidari_kara_c >= 2 && _shita_idou? # P3B, P3C
-            _i("左") + "引"
+            _i("左") + _i("引")
           else
             raise MustNotHappen
           end
