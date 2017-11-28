@@ -122,18 +122,19 @@ module Bushido
 
         name = name.presence || "平手"
 
-        @teban = Teban.new(name)
+        # @teban = Teban.new(name)
 
         # "角落ち" なら {"▲" => "角落ち", "△" => "平手"}
-        if name.include?("落")
+        v = {black: "平手", white: "平手"}
+        if name != "平手"
           # 駒落ちの場合△の方が駒を落とす
           # 呼び方も△が「上手」になる。先に指すことになるので「後手」と呼んでいると意味が通じなくなる
-          v = {black: "平手", white: name}
-        else
-          v = {black: name, white: "平手"}
+          v[:white] = name
         end
 
         board_reset_for_hash(v)
+
+        @teban = Teban.new(board.teai_name)
       end
 
       def board_reset_for_text(value)
@@ -142,6 +143,8 @@ module Bushido
         board_reset5(v)
         # このあと自分で手合割を決めること。次のようにする
         # mediator.teban = Teban.new(mediator.board.teai_name)
+
+        @teban = Teban.new(board.teai_name)
       end
 
       def board_reset_for_hash(v)

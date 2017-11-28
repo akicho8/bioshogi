@@ -306,23 +306,6 @@ module Bushido
 
         def mediator
           @mediator ||= Mediator.new.tap do |mediator|
-
-            # 手合割：平手　　
-            # 後手の持駒：飛二　角　銀二　桂四　香四　歩九　
-            #   ９ ８ ７ ６ ５ ４ ３ ２ １
-            # +---------------------------+
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
-            # | ・ ・ ・ ・ ・v玉 ・ ・ ・|二
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
-            # | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-            # +---------------------------+
-            # 先手の持駒：角　金四　銀二　歩九　
-
             Location.each do |e|
               e.hirate_and_komaochi_name.each do |e|
                 if v = @header["#{e}の持駒"]
@@ -331,11 +314,16 @@ module Bushido
               end
             end
 
+            # p header
+            # p header["手合割"]
+            # exit
+
             if @board_source
               mediator.board_reset_for_text(@board_source)
-              mediator.teban = Teban.new(mediator.board.teai_name)
             else
+              # p mediator.teban
               mediator.board_reset(header["手合割"] || "平手")
+              # p mediator.teban
             end
 
             move_infos.each do |info|
@@ -356,7 +344,7 @@ module Bushido
           obj = Mediator.new
           obj.board_reset_old(@board_source || header["手合割"])
           if v = obj.board.teai_name
-            header["手合割"] = "平手"
+            header["手合割"] = v
             out << raw_header_as_string
           else
             header["後手の持駒"] ||= ""
@@ -434,3 +422,15 @@ module Bushido
     end
   end
 end
+# ~> /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:3:in `<module:NumberHelper>': uninitialized constant ActiveSupport::Autoload (NameError)
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:2:in `<module:ActiveSupport>'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:1:in `<top (required)>'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/core_ext/numeric/conversions.rb:2:in `<top (required)>'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/core_ext/numeric.rb:4:in `<top (required)>'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
+# ~>    from -:8:in `<main>'
