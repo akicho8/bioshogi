@@ -15,7 +15,7 @@ module Bushido
           (?<same>同)?
           \p{blank}*
           (?<piece>#{Piece.all_names.join("|")})
-          (?<motion1>[左右直]?[寄引上]?)
+          (?<motion1>[左右直]?[寄引上行]?)
           (?<motion2>不?成|打|合|生)?
           (\((?<origin_point>\d{2})\))?
         /ox
@@ -104,6 +104,19 @@ module Bushido
         @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
+      end
+
+      if true
+        # ▼将棋のルール「棋譜について」｜品川将棋倶楽部
+        # https://ameblo.jp/written-by-m/entry-10365417107.html
+        # > どちらの飛車も１三の地点に移動できます。よって、それぞれの駒が１三の地点に移動する場合は、
+        # > 上の駒は▲１三飛引成（成らない場合は▲１三飛引不成）。下の駒は▲１三飛上成（あがるなり）と表記します。
+        # > 飛車や角に限り「行」を用いて▲１三飛行成（いくなり）と表記することもあります。
+        if @piece.brave?
+          if @md[:motion1]
+            @md[:motion1] = @md[:motion1].gsub(/行/, "上")
+          end
+        end
       end
 
       begin
