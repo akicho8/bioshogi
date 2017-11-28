@@ -53,7 +53,7 @@ module Bushido
     #   player.soldiers_create(["５五飛", "３三飛"], from_stand: false)
     #   player.soldiers_create("#{point}馬")
     #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
-    def soldiers_create(mini_soldier_or_str, options = {})
+    def soldiers_create(mini_soldier_or_str, **options)
       options = {
         from_stand: true, # 持駒から取り出して配置する？
       }.merge(options)

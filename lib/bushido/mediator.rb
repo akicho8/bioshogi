@@ -85,7 +85,7 @@ module Bushido
       # end
     end
 
-    concerning :Boardable do
+    concerning :BoardMethods do
       included do
         attr_reader :board
       end
@@ -111,7 +111,7 @@ module Bushido
       #   soldiers_create("▲３三歩 △１一歩")
       # @example 持駒から配置しない場合(無限に駒が置ける)
       #   soldiers_create("▲３三歩 △１一歩", from_stand: false)
-      def soldiers_create(str, options = {})
+      def soldiers_create(str, **options)
         Utils.initial_soldiers_split(str).each do |info|
           player_at(info[:location]).soldiers_create(info[:input], options)
         end
