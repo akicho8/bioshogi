@@ -41,7 +41,7 @@ module Bushido
     # end
 
     def current_location_vname
-      current_location.public_send(call_name_key)
+      current_location.call_name(komaochi?)
     end
 
     # def name1

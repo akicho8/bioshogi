@@ -120,6 +120,10 @@ module Bushido
       def board_reset(name = nil)
         raise MustNotHappen if BoardParser.accept?(name)
 
+        # if name == "その他"
+        #   name = nil
+        # end
+
         name = name.presence || "平手"
 
         # @teban = Teban.new(name)
@@ -144,7 +148,19 @@ module Bushido
         # このあと自分で手合割を決めること。次のようにする
         # mediator.teban = Teban.new(mediator.board.teai_name)
 
-        @teban = Teban.new(board.teai_name)
+        # if board.teai_name
+        #   @teban = Teban.new(board.teai_name)
+        # else
+        #   # 手合いが不明なものは何か落ち
+        #   # @teban = Teban.new("落")
+        # end
+      end
+
+      # 盤面から手合割を判断する
+      def board_reset_for_text2
+        if board.teai_name
+          @teban = Teban.new(board.teai_name)
+        end
       end
 
       def board_reset_for_hash(v)

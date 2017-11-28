@@ -29,7 +29,7 @@ module Bushido
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments, :last_status_info
+      attr_reader :header, :move_infos, :first_comments, :last_status_info, :board_source
 
       def initialize(source, **options)
         @source = source
@@ -85,10 +85,14 @@ module Bushido
           Location.each do |e|
             e.hirate_and_komaochi_name.each do |e|
               key = "#{e}の持駒"
-              if v = header[key]
+              if v = header[key].presence
                 v = Utils.hold_pieces_s_to_a(v)
                 v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
-                header[key] = v
+                if v
+                  header[key] = v
+                else
+                  header.delete(key)
+                end
               end
             end
           end
@@ -97,8 +101,8 @@ module Bushido
 
       def board_read
         # FIXME: 間にある前提ではなく、どこに書いていても拾えるようにしたい
-        if md = normalized_source.match(/^後手の持駒#{header_sep}.*?\n(?<board>.*)^先手の持駒#{header_sep}/om)
-          @board_source = md[:board]
+        if md = normalized_source.match(/^(?:後手|上手)の持駒#{header_sep}.*?\n(?<board>.*)^(?:先手|下手)の持駒#{header_sep}/om)
+          @board_source = md[:board].presence
           # header[:board] = BoardParser.parse(md[:board]) # TODO: 使ってない
         end
       end
@@ -320,6 +324,11 @@ module Bushido
 
             if @board_source
               mediator.board_reset_for_text(@board_source)
+              if header["手合割"].blank? || header["手合割"] == "その他"
+                mediator.teban = Teban.new("落")
+              else
+                mediator.board_reset_for_text2
+              end
             else
               # p mediator.teban
               mediator.board_reset(header["手合割"] || "平手")
@@ -342,14 +351,46 @@ module Bushido
           out = []
 
           obj = Mediator.new
-          obj.board_reset_old(@board_source || header["手合割"])
+          if @board_source
+            obj.board_reset_for_text(@board_source)
+            if header["手合割"].blank? || header["手合割"] == "その他"
+              obj.teban = Teban.new("落")
+            else
+              obj.board_reset_for_text2
+            end
+          else
+            obj.board_reset(header["手合割"] || "平手")
+          end
+
           if v = obj.board.teai_name
             header["手合割"] = v
+
+            # 手合割がわかるとき持駒が空なら消す
+            Location.each do |e|
+              e.hirate_and_komaochi_name.each do |e|
+                key = "#{e}の持駒"
+                if v = @header[key]
+                  if v.blank?
+                    @header.delete(key)
+                  end
+                end
+              end
+            end
+
             out << raw_header_as_string
           else
-            header["後手の持駒"] ||= ""
-            header["先手の持駒"] ||= ""
-            out << raw_header_as_string.gsub(/(後手の持駒：.*\n)/, '\1' + obj.board.to_s)
+            # 手合がわからないので図を出す場合
+
+            header["手合割"] ||= "その他"
+
+            Location.each do |location|
+              key = "#{location.call_name(obj.teban.komaochi?)}の持駒"
+              v = header[key]
+              if v.blank?
+                header[key] = "なし"
+              end
+            end
+            out << raw_header_as_string.gsub(/(#{Location[:white].call_name(obj.teban.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
           out.join
@@ -357,8 +398,10 @@ module Bushido
 
         def raw_header_as_string
           header.collect { |key, value|
-            "#{key}：#{value}\n"
-          }.join
+            if value
+              "#{key}：#{value}\n"
+            end
+          }.compact.join
         end
 
         # mb_ljust("あ", 3)               # => "あ "

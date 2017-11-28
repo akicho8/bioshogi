@@ -269,14 +269,14 @@ $START_TIME:1938/03/01
 $OPENING:その他の戦型
 $TIME_LIMIT:6時間
 " 手合割:香落ち
-P1-KY-KE-GI-KI-OU-KI-GI-KE * 
-P2 * -HI *  *  *  *  * -KA * 
+P1-KY-KE-GI-KI-OU-KI-GI-KE *
+P2 * -HI *  *  *  *  * -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-P4 *  *  *  *  *  *  *  *  * 
-P5 *  *  *  *  *  *  *  *  * 
-P6 *  *  *  *  *  *  *  *  * 
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
 P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-P8 * +KA *  *  *  *  * +HI * 
+P8 * +KA *  *  *  *  * +HI *
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 -
 -3334FU
@@ -285,21 +285,21 @@ EOT
       end
 
       it "to_csa (本当は P 表記だけにしたい)" do
-        @info.to_csa.should == <<~EOT
+        @info.to_csa(strip: true).should == <<~EOT
 V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01
 $OPENING:その他の戦型
 $TIME_LIMIT:6時間
 " 手合割:香落ち
-P1-KY-KE-GI-KI-OU-KI-GI-KE * 
-P2 * -HI *  *  *  *  * -KA * 
+P1-KY-KE-GI-KI-OU-KI-GI-KE *
+P2 * -HI *  *  *  *  * -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-P4 *  *  *  *  *  *  *  *  * 
-P5 *  *  *  *  *  *  *  *  * 
-P6 *  *  *  *  *  *  *  *  * 
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
 P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-P8 * +KA *  *  *  *  * +HI * 
+P8 * +KA *  *  *  *  * +HI *
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 -
 -3334FU
@@ -319,6 +319,152 @@ EOT
    1 ３四歩(33)   (00:00/00:00:00)
    2 ７六歩(77)   (00:00/00:00:00)
    3 投了
+EOT
+      end
+    end
+
+    describe "「上手の持駒：なし」があって手合割がわかっているときは「上手の持駒」の部分は消しとく" do
+      before do
+        @info = Parser.parse(<<~EOT)
+手合割：三枚落ち
+上手：伊藤宗印
+上手の持駒：なし
+下手の持駒：
+下手：天満屋
+手数----指手---------消費時間--
+   1 ６二銀(71)   (00:00/00:00:00)
+EOT
+      end
+
+      it "to_kif" do
+        @info.to_kif.should == <<~EOT
+手合割：三枚落ち
+上手：伊藤宗印
+下手：天満屋
+手数----指手---------消費時間--
+   1 ６二銀(71)   (00:00/00:00:00)
+   2 投了
+EOT
+      end
+    end
+
+    describe "手合割が「三枚落ち」で図が指定されている場合" do
+      before do
+        @info = Parser.parse(<<~EOT)
+手合割：三枚落ち
+上手：伊藤宗印
+上手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂 ・|一
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：なし
+下手：天満屋
+
+△６二銀
+        EOT
+      end
+
+      it "to_csa" do
+        @info.to_csa(strip: true).should == <<~EOT
+V2.2
+" 手合割:三枚落ち
+P1-KY-KE-GI-KI-OU-KI-GI-KE *
+P2 *  *  *  *  *  *  *  *  *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+-
+-7162GI
+%TORYO
+EOT
+      end
+
+      it "to_kif" do
+        @info.to_kif.should == <<~EOT
+手合割：三枚落ち
+上手：伊藤宗印
+下手：天満屋
+手数----指手---------消費時間--
+   1 ６二銀(71)   (00:00/00:00:00)
+   2 投了
+EOT
+      end
+    end
+
+    describe "手合割が「その他」で図が指定されている場合は一応駒落ちになる" do
+      before do
+        @info = Parser.parse(<<~EOT)
+手合割：その他
+上手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金 ・v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：なし
+
+△８四歩
+        EOT
+      end
+
+      it "to_kif" do
+        @info.to_kif.should == <<~EOT
+手合割：その他
+上手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金 ・v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：なし
+手数----指手---------消費時間--
+   1 ８四歩(83)   (00:00/00:00:00)
+   2 投了
+EOT
+      end
+
+      it "to_csa" do
+        @info.to_csa(strip: true).should == <<~EOT
+V2.2
+P1-KY-KE-GI-KI-OU-KI * -KE-KY
+P2 * -HI *  *  *  *  * -KA *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+-
+-8384FU
+%TORYO
 EOT
       end
     end
