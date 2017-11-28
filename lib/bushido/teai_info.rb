@@ -135,6 +135,7 @@ EOT
         # 「飛車落ち」と「飛落ち」を同一判定したいため
         key = key.to_s
         key = key.gsub(/飛落/, "飛車落")
+        key = key.gsub(/飛香/, "飛車香")
         key = key.gsub(/香車/, "香")
         super
       end
