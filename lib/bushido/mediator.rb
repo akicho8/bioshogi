@@ -14,16 +14,14 @@ module Bushido
         end
       end
 
-      attr_accessor :players, :counter
-
-      alias turn_max counter
+      attr_accessor :players
 
       def initialize
         super
         @players = Location.collect do |e|
           Player.new(self, location: e)
         end
-        @counter = 0
+        # @teban = 0
       end
 
       # def player_join(player)
@@ -54,15 +52,11 @@ module Bushido
 
       # 手番のプレイヤー
       def current_player(diff = 0)
-        players[current_index(diff)]
+        players[teban.current_location(diff).code]
       end
 
       def next_player
         current_player(1)
-      end
-
-      def current_index(diff = 0)
-        (@counter + diff).modulo(@players.size)
       end
 
       # プレイヤーたちの持駒から平手用の盤面の準備
@@ -83,11 +77,23 @@ module Bushido
       # def counter_human_name
       #   @counter.next
       # end
+
+      private
     end
+
+    # concerning :TebanMethods do
+    #   included do
+    #   end
+    #
+    #   def initialize
+    #     super
+    #   end
+    # end
 
     concerning :BoardMethods do
       included do
         attr_reader :board
+        attr_reader :teban
       end
 
       class_methods do
@@ -96,13 +102,64 @@ module Bushido
       def initialize
         super
         @board = Board.new
+        @teban = Teban.new("平手")
+      end
+
+      # DEPRECATION
+      def board_reset_old(v)
+        case
+        when BoardParser.accept?(v)
+          board_reset_for_text(v)
+        when v.kind_of?(Hash)
+          board_reset_for_hash(v)
+        else
+          board_reset(v)
+        end
       end
 
       def board_reset(name = nil)
-        Utils.board_reset_args(name).each do |location, v|
+        raise MustNotHappen if BoardParser.accept?(name)
+
+        name = name.presence || "平手"
+
+        @teban = Teban.new(name)
+
+        # "角落ち" なら {"▲" => "角落ち", "△" => "平手"}
+        if name.include?("落")
+          # 駒落ちの場合△の方が駒を落とす
+          # 呼び方も△が「上手」になる。先に指すことになるので「後手」と呼んでいると意味が通じなくなる
+          v = {black: "平手", white: name}
+        else
+          v = {black: name, white: "平手"}
+        end
+
+        board_reset_for_hash(v)
+      end
+
+      def board_reset_for_text(value)
+        raise MustNotHappen unless BoardParser.accept?(value)
+        v = BoardParser.parse(value).both_board_info
+        board_reset5(v)
+        @teban = Teban.new("平手")
+      end
+
+      def board_reset_for_hash(v)
+        v = v.inject({}) {|a, (k, v)|
+          a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
+        }
+        board_reset5(v)
+      end
+
+      def board_reset5(v)
+        v.each do |location, v|
           player_at(location).soldiers_create(v, from_stand: false)
         end
       end
+
+      def turn_max
+        teban.counter
+      end
+
     end
 
     concerning :Other do
@@ -129,7 +186,7 @@ module Bushido
 
     concerning :Executer do
       included do
-        attr_reader :counter, :hand_logs
+        attr_reader :hand_logs
       end
 
       def initialize(*)
@@ -141,7 +198,7 @@ module Bushido
       def execute(str)
         Array.wrap(str).each do |str|
           current_player.execute(str)
-          @counter += 1
+          teban.counter += 1
         end
       end
 
@@ -167,11 +224,16 @@ module Bushido
           last = hand_log.to_s_kif(with_mark: true)
         end
 
-        s << "手数＝#{@counter} #{last} まで".squish + "\n"
-        if current_player.location.key == :white
-          s << "\n"
-          s << "後手番\n"
+        s << "手数＝#{teban.counter} #{last} まで".squish + "\n"
+
+        # これいる？
+        if true
+          if current_player.location.key == :white
+            s << "\n"
+            s << "#{current_player.call_name}番\n"
+          end
         end
+
         s.join
       end
 
@@ -189,7 +251,7 @@ module Bushido
       end
 
       def judgment_message
-        "まで#{@counter}手で#{reverse_player.location.name}の勝ち"
+        "まで#{teban.counter}手で#{reverse_player.call_name}の勝ち"
       end
     end
 
@@ -205,14 +267,14 @@ module Bushido
       # TODO: Player の marshal_dump が使われてない件について調べる
       def marshal_dump
         {
-          counter: @counter,
+          teban: teban,
           players: @players,
           hand_logs: @hand_logs,
         }
       end
 
       def marshal_load(attrs)
-        @counter  = attrs[:counter]
+        @teban  = attrs[:teban]
         @players  = attrs[:players]
         @hand_logs = attrs[:hand_logs]
         @board = Board.new
@@ -222,7 +284,7 @@ module Bushido
 
       # deep_dup しておくこと
       def replace(object)
-        @counter = object.counter
+        @teban = object.teban
         @players = object.players
         @hand_logs = object.hand_logs
         @board = Board.new

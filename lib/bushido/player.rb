@@ -128,9 +128,9 @@ module Bushido
 
     # 棋譜の入力
     def execute(str)
-      if str == "投了"
-        return
-      end
+      # if str == "投了"
+      #   return
+      # end
       @runner = Runner.new(self).execute(str)
       defense_form_store
       @mediator.log_stock(self)
@@ -210,7 +210,11 @@ module Bushido
       end
 
       def hold_pieces_snap
-        "#{location.name}の持駒：#{to_s_pieces.presence || "なし"}"
+        "#{call_name}の持駒：#{to_s_pieces.presence || "なし"}"
+      end
+
+      def call_name
+        location.call_name(mediator.teban.komaochi?)
       end
     end
 

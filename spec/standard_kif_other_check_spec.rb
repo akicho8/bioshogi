@@ -4,7 +4,7 @@ module Bushido
   describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
       mediator = Bushido::Mediator.new
-      mediator.board_reset(<<~EOT)
+      mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 | 玉 ・ 銀 龍v銀v玉 銀 銀 ・|
 | ・ ・ ・ 金 ・ ・ 香 と ・|

@@ -20,7 +20,7 @@ module Bushido
 | ・ ・ ・ ・ ・ ・ ・ 桂 ・|九
 +---------------------------+
 BOARD
-          pieces "先手" => "歩"
+          pieces "▲" => "歩"
           auto_flushing {
             mov "▲２三歩"
             mov "△同歩"

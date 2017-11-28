@@ -5,7 +5,7 @@ module Bushido
     describe "P1 到達地点に複数の同じ駒が動ける場合「上」または「寄」または「引」で記入" do
       def test1(str)
         mediator = Mediator.new
-        mediator.board_reset(<<~EOT)
+        mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ 金 ・ ・|
 | ・ ○ 金 ・ ・ ・ ○ ・ ・|
@@ -46,7 +46,7 @@ EOT
     describe "P2 到達地点に2枚の同じ駒が動ける場合、動作でどの駒が動いたかわからない時は、「左」「右」で記入" do
       def test1(str)
         mediator = Mediator.new
-        mediator.board_reset(<<~EOT)
+        mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 | ・ ○ ・ ・ ・ ・ ・ ・ ・|
 | 金 ・ 金 ・ ・ ・ 金 ○ 金|
@@ -87,7 +87,7 @@ EOT
     describe "P3 到達地点に3枚以上の同じ駒が動ける場合、動作でどの駒が動いたかわからない時" do
       def test1(str)
         mediator = Mediator.new
-        mediator.board_reset(<<~EOT)
+        mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ○ ・ ・ ・ ・|
@@ -126,7 +126,7 @@ EOT
     describe "P4 竜が2枚の場合はやはり動作を優先します。ただし、「直」は使わずに「左」「右」で記入" do
       def test1(str)
         mediator = Mediator.new
-        mediator.board_reset(@board)
+        mediator.board_reset_for_text(@board)
         mediator.execute(str)
         mediator.hand_logs.last.to_kif_ki2_csa
       end
@@ -240,7 +240,7 @@ EOT
     describe "P5 馬が2枚の場合もやはり動作を優先します。竜と同様、「直」は使わずに「左」「右」で記入" do
       def test1(str)
         mediator = Mediator.new
-        mediator.board_reset(@board)
+        mediator.board_reset_for_text(@board)
         mediator.execute(str)
         mediator.hand_logs.last.to_kif_ki2_csa
       end

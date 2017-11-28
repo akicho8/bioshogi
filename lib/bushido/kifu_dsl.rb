@@ -108,7 +108,7 @@ module Bushido
       end
 
       def evaluate(context)
-        context.board_reset(@value)
+        context.board_reset_old(@value)
       end
     end
 

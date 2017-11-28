@@ -24,6 +24,7 @@ require_relative "bushido/errors"
 require_relative "bushido/position"
 require_relative "bushido/point"
 require_relative "bushido/location"
+require_relative "bushido/teban"
 require_relative "bushido/piece"
 require_relative "bushido/hand_log"
 

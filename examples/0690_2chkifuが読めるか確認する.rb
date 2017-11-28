@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-@error_file = Pathname("__error.txt")
+@error_file = Pathname("__error.log")
 @error_file.unlink rescue nil
 @result = Hash.new(0)
 

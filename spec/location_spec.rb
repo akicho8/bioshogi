@@ -12,10 +12,16 @@ module Bushido
       Location["▼"].key.should    == :black
       Location["☗"].key.should    == :black
       Location["b"].key.should     == :black
+    end
+
+    it "これは微妙だけどないと困るので引けるようにする" do
       Location["先手"].key.should  == :black
-      Location["上手"].key.should  == :black
-      Location["1手目"].key.should == :black
-      Location["3"].key.should     == :black
+      Location["上手"].key.should  == :white
+    end
+
+    it "手番と位置は異なる。先に指すからといって一方が特定できるわけではない(重要)" do
+      expect { Location.fetch("1手目") }.to raise_error(LocationNotFound)
+      expect { Location.fetch("3")     }.to raise_error(LocationNotFound)
     end
 
     it "盤面読み取り用" do

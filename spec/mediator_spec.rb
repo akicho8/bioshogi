@@ -6,7 +6,7 @@ module Bushido
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute(["７六歩", "３四歩"])
-      mediator.counter.should == 2
+      mediator.teban.counter.should == 2
       mediator.turn_max.should == 2
       mediator.judgment_message == "まで2手で後手の勝ち"
       mediator.to_s.should == <<-EOT
@@ -90,7 +90,7 @@ EOT
     it "状態の復元" do
       mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
-      mediator.counter.should            == dup.counter
+      mediator.teban.counter.should            == dup.teban.counter
       mediator.kif_hand_logs.should    == dup.kif_hand_logs
       mediator.ki2_hand_logs.should     == dup.ki2_hand_logs
       mediator.to_s.should               == dup.to_s
@@ -140,7 +140,7 @@ EOT
 
     #     it "debug" do
     #       mediator = Mediator.start
-    #       mediator.board_reset(<<~BOARD)
+    #       mediator.board_reset_for_text(<<~BOARD)
     # +------+
     # | 金 ・|
     # | ・ 金|
@@ -159,7 +159,7 @@ EOT
     #   end
     #   puts board_reset_test("角落ち")
     #   # board_reset_test("平手").should == "▲１七歩 ▲１九香 ▲２七歩 ▲２九桂 ▲２八飛 ▲３七歩 ▲３九銀 ▲４七歩 ▲４九金 ▲５七歩 ▲５九玉 ▲６七歩 ▲６九金 ▲７七歩 ▲７九銀 ▲８七歩 ▲８九桂 ▲８八角 ▲９七歩 ▲９九香 △１一香 △１三歩 △２一桂 △２三歩 △２二角 △３一銀 △３三歩 △４一金 △４三歩 △５一玉 △５三歩 △６一金 △６三歩 △７一銀 △７三歩 △８一桂 △８三歩 △８二飛 △９一香 △９三歩"
-    #   # board_reset_test("先手" => "角落ち")
+    #   # board_reset_test("▲" => "角落ち")
     # end
 
     # it "XtraPattern" do

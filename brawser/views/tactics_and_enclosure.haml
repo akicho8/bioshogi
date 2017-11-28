@@ -5,7 +5,7 @@
 .text-center
   - Bushido::StaticBoardInfo.each do |stock|
     - mediator = Bushido::Mediator.new
-    - mediator.board_reset("先手" => stock[:key], "後手" => stock[:key])
+    - mediator.board_reset("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
       %a{href: Bushido::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]

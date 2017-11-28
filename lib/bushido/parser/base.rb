@@ -67,18 +67,29 @@ module Bushido
       def header_normalize
         # 正規化。別にしなくてもいい
         if true
+          # 日時を整える
           ["開始日時", "終了日時"].each do |e|
             if v = header[e].presence
-              header[e] = Time.parse(v).strftime("%Y/%m/%d %H:%M:%S") rescue nil
+              if v = (Time.parse(v) rescue nil)
+                if [v.hour, v.min, v.sec].all?(&:zero?)
+                  format = "%Y/%m/%d"
+                else
+                  format = "%Y/%m/%d %H:%M:%S"
+                end
+                header[e] = v.strftime(format)
+              end
             end
           end
 
+          # 並びを綺麗にする
           Location.each do |e|
-            key = "#{e.name}の持駒"
-            if v = header[key]
-              v = Utils.hold_pieces_s_to_a(v)
-              v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
-              header[key] = v
+            e.hirate_and_komaochi_name.each do |e|
+              key = "#{e}の持駒"
+              if v = header[key]
+                v = Utils.hold_pieces_s_to_a(v)
+                v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
+                header[key] = v
+              end
             end
           end
         end
@@ -111,6 +122,10 @@ module Bushido
         @move_infos.last[:comments] ||= []
         @move_infos.last[:comments] << comment
       end
+
+      # def teban_insance
+      #   @teban ||= Teban.new(header["手合割"])
+      # end
 
       concerning :ConverterMethods do
         # CSA標準棋譜ファイル形式
@@ -155,7 +170,7 @@ module Bushido
 
           if true
             obj = Mediator.new
-            obj.board_reset(@board_source || header["手合割"])
+            obj.board_reset_old(@board_source || header["手合割"])
             if options[:board_expansion]
               out << obj.board.to_csa
             else
@@ -302,12 +317,18 @@ module Bushido
             # 先手の持駒：角　金四　銀二　歩九　
 
             Location.each do |e|
-              if v = @header["#{e.name}の持駒"]
-                mediator.player_at(e).pieces_set(v)
+              e.hirate_and_komaochi_name.each do |e|
+                if v = @header["#{e}の持駒"]
+                  mediator.player_at(e).pieces_set(v)
+                end
               end
             end
 
-            mediator.board_reset(@board_source || header["手合割"])
+            if @board_source
+              mediator.board_reset_for_text(@board_source)
+            else
+              mediator.board_reset(header["手合割"] || "平手")
+            end
 
             move_infos.each do |info|
               mediator.execute(info[:input])

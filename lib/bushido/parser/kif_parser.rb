@@ -52,9 +52,8 @@ module Bushido
           comment_read(line)
           if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{Runner.input_regexp})(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
             input = md[:input].remove(/\p{blank}/)
-            location = Location[md[:turn_number]]
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
-            @move_infos << {turn_number: md[:turn_number], location: location, input: input, mov: "#{location.mark}#{input}", clock_part: md[:clock_part], used_seconds: used_seconds}
+            @move_infos << {turn_number: md[:turn_number], input: input, clock_part: md[:clock_part], used_seconds: used_seconds}
           else
             if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_behaviour>\投了)(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
               used_seconds = min_sec_str_to_seconds(md[:clock_part])

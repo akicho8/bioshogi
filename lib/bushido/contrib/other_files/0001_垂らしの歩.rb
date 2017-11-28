@@ -20,7 +20,7 @@ module Bushido
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
 BOARD
-          pieces "先手" => "歩1"
+          pieces "▲" => "歩1"
           auto_flushing {
             push {
               comment "成功するパターン"

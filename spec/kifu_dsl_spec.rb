@@ -46,7 +46,7 @@ module Bushido
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
 BOARD
-            pieces "先手" => "歩4"
+            pieces "▲" => "歩4"
             mov "▲１五歩"
             mov "△同歩"
             push {

@@ -55,27 +55,22 @@ module Bushido
     # @example
     #   board_reset_args("+-----")                              # そのまま棋譜が入ってれいばそのままパース
     #   board_reset_args("角落ち")                              # 先手だけが角落ち(下と同じ)
-    #   board_reset_args("先手" => "角落ち", "後手" => "平手")  # 先手だけが角落ち
     #
     #   => {
-    #       "先手" => [<MiniSoldier>, ...],
-    #       "後手" => [<MiniSoldier>, ...],
+    #       "▲" => [<MiniSoldier>, ...],
+    #       "△" => [<MiniSoldier>, ...],
     #     }
     #
     def board_reset_args(value = nil)
-      case
-      when BoardParser.accept?(value)
-        BoardParser.parse(value).both_board_info
-      when value.kind_of?(Hash)
-        # {"先手" => "角落ち", "後手" => "香落ち"} の場合(主にDSL用)
-        value.inject({}) {|a, (k, v)|
-          a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
-        }
-      else
-        # "角落ち" なら {"先手" => "角落ち", "後手" => "平手"}
-        board_reset_args(black: (value || "平手"), white: "平手")
-      end
+      raise
     end
+
+    # # {"▲" => "角落ち", "△" => "香落ち"} の場合(主にDSL用)
+    # def board_reset_args_hash(hash)
+    #   value.inject({}) {|a, (k, v)|
+    #     a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
+    #   }
+    # end
 
     # 持駒表記変換 (コード → 人間表記)
     # @example

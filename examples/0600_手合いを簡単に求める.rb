@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset(<<~EOT)
+mediator.board_reset_for_text(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -19,7 +19,7 @@ puts mediator
 mediator.board.teai_name        # => "香落ち"
 
 mediator = Mediator.new
-mediator.board_reset(<<~EOT)
+mediator.board_reset_for_text(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

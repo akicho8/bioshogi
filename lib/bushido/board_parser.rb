@@ -121,7 +121,9 @@ module Bushido
           # 1文字 + (全角1文字 or 半角2文字)
           s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each_with_index do |(location_char, piece), x|
             if Piece.all_names.include?(piece)
-              raise SyntaxDefact unless x_units[x] && y_units[y]
+              unless x_units[x] && y_units[y]
+                raise SyntaxDefact, "盤面の情報が読み取れません。#{piece.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
+              end
               point = Point[[x_units[x], y_units[y]].join]
               location = Location.fetch(location_char)
               mini_soldiers << Piece.promoted_fetch(piece).merge(point: point, location: location)

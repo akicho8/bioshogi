@@ -76,38 +76,38 @@ module Bushido
         Utils.location_mini_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
       end
 
-      describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
-        it "先手→十九枚落ち 後手→平手" do
-          r = Utils.board_reset_args("十九枚落ち")
-          r[Location[:black]].should == @black_king
-          r[Location[:white]].should be_a Array # 平手
-        end
-
-        it "先手→十九枚落ち 後手→十九枚落ち(DSL用)" do
-          r = Utils.board_reset_args("先手" => "十九枚落ち", "後手" => "十九枚落ち")
-          r[Location[:black]].should == @black_king
-          r[Location[:white]].should == @white_king
-        end
-
-        it "盤面指定" do
-          r = Utils.board_reset_args(<<~EOT)
-  ９ ８ ７ ６ ５ ４ ３ ２ １
-+---------------------------+
-| ・ ・ ・ ・v玉 ・ ・ ・ ・|一
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|二
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|三
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-| ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
-+---------------------------+
-EOT
-          r[Location[:black]].should == @black_king
-          r[Location[:white]].should == @white_king
-        end
-      end
+      #       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do
+      #         it "先手→十九枚落ち 後手→平手" do
+      #           r = Utils.board_reset_args("十九枚落ち")
+      #           r[Location[:black]].should == @black_king
+      #           r[Location[:white]].should be_a Array # 平手
+      #         end
+      #
+      #         it "先手→十九枚落ち 後手→十九枚落ち(DSL用)" do
+      #           r = Utils.board_reset_args_hash("▲" => "十九枚落ち", "△" => "十九枚落ち")
+      #           r[Location[:black]].should == @black_king
+      #           r[Location[:white]].should == @white_king
+      #         end
+      #
+      #         it "盤面指定" do
+      #           r = Utils.board_reset_args(<<~EOT)
+      #   ９ ８ ７ ６ ５ ４ ３ ２ １
+      # +---------------------------+
+      # | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|三
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+      # | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+      # | ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
+      # +---------------------------+
+      # EOT
+      #           r[Location[:black]].should == @black_king
+      #           r[Location[:white]].should == @white_king
+      #         end
+      #       end
     end
   end
 end

@@ -20,7 +20,7 @@ module Bushido
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
 BOARD
-          pieces "先手" => "歩2"
+          pieces "▲" => "歩2"
           auto_flushing {
             comment "銀なら真っ直ぐ、金なら斜めに誘き出す"
             mov "▲３四歩"

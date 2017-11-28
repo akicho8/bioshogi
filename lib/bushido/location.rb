@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 #
-# 上下を表わす
+# 上下のみを表わす
 #
 # - 先手後手というのは平手の場合だけの名称
 # - 駒落ちなら、まず名称が上手下手に代わり、もともと後手と呼ばれていた上側が先に指す
@@ -13,8 +13,11 @@ module Bushido
     include MemoryRecord
     memory_record [
       # FIXME: name を「先手」でなく mark が name とする。平手なら「後手」をつかい、駒落ちなら komaochi_name を使う。
-      {key: :black, name: "先手", mark: "▲", reverse_mark: "▼", other_marks: ["上手", "☗", "b"], varrow: " ", angle: 0,   csa_sign: "+", komaochi_name: "下手"},
-      {key: :white, name: "後手", mark: "△", reverse_mark: "▽", other_marks: ["下手", "☖", "w"], varrow: "v", angle: 180, csa_sign: "-", komaochi_name: "上手"},
+
+      # mark: "▲",
+      # mark: "△",
+      {key: :black, name: "▲", reverse_mark: "▼", other_marks: ["☗", "b"], varrow: " ", angle: 0,   csa_sign: "+", hirate_name: "先手", komaochi_name: "下手"},
+      {key: :white, name: "△", reverse_mark: "▽", other_marks: ["☖", "w"], varrow: "v", angle: 180, csa_sign: "-", hirate_name: "後手", komaochi_name: "上手"},
     ]
 
     alias index code
@@ -45,18 +48,18 @@ module Bushido
           end
         end
 
-        # "先手" など
+        # "▲" など
         unless v
           v = find { |e| e.match_target_values_set.include?(value) }
         end
 
-        # "2手目" など
-        unless v
-          if value.kind_of?(String) && md = value.match(/(?<turn_number>\d+)/)
-            index = md[:turn_number].to_i.pred
-            v = lookup(index.modulo(count))
-          end
-        end
+        # # "2手目" など
+        # unless v
+        #   if value.kind_of?(String) && md = value.match(/(?<turn_number>\d+)/)
+        #     index = md[:turn_number].to_i.pred
+        #     v = lookup(index.modulo(count))
+        #   end
+        # end
 
         v
       end
@@ -79,10 +82,26 @@ module Bushido
       end
     end
 
+    def call_name_key(komaochi)
+      if komaochi
+        :komaochi_name
+      else
+        :hirate_name
+      end
+    end
+
+    def call_name(komaochi)
+      send(call_name_key(komaochi))
+    end
+
     # 「▲先手」みたいなのを返す
     #   mark_with_name # => "▲先手"
     def mark_with_name
       "#{mark}#{name}"
+    end
+
+    def mark
+      name
     end
 
     # 先手か？
@@ -132,7 +151,13 @@ module Bushido
         index,
         varrow,
         csa_sign,
+        hirate_name,
+        komaochi_name,
       ].flatten.to_set
+    end
+
+    def hirate_and_komaochi_name
+      [hirate_name, komaochi_name]
     end
   end
 

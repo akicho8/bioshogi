@@ -107,10 +107,10 @@ module Bushido
     end
 
     concerning :TeaiMethods do
-      # 後手が平手であることが条件
+      # ▲が平手であることが条件
       def teai_name
-        if teai_name_by_location(:white) == "平手"
-          teai_name_by_location(:black)
+        if teai_name_by_location(:black) == "平手"
+          teai_name_by_location(:white)
         end
       end
 
