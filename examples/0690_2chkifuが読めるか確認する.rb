@@ -43,12 +43,18 @@ seconds = Benchmark.realtime do
       assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
       assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
     rescue => error
+      if error.kind_of?(Bushido::DoublePawn)
+        print "_"
+        next
+      end
+
       print "E"
       @error_file.open("a") do |e|
         e.puts "-" * 80
         e.puts file.expand_path
         e.puts error.class.name
         e.puts error.message
+        e.puts Time.now
         e.puts error.backtrace
       end
     end

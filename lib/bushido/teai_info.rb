@@ -120,6 +120,16 @@ EOT
       },
     ]
 
+    class << self
+      def lookup(key)
+        # 「飛車落ち」と「飛落ち」を同一判定したいため
+        key = key.to_s
+        key = key.gsub(/飛[^車]/, '\1車')
+        key = key.gsub("香車", "香")
+        super
+      end
+    end
+
     def board_parser
       @board_parser ||= BoardParser.parse(board_body)
     end
