@@ -61,7 +61,7 @@ module Bushido
 
       # プレイヤーたちの持駒から平手用の盤面の準備
       def piece_plot
-        @players.collect(&:piece_plot)
+        @players.each(&:piece_plot)
       end
 
       # プレイヤーたちの持駒を捨てる
