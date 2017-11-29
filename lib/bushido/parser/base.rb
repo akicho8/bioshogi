@@ -61,7 +61,7 @@ module Bushido
 
       def header_read
         s = normalized_source
-        s = s.gsub(/^#.*/, "")
+        s = s.gsub(/^[#*].*/, "") # "*" 以降を外さないと二歩のときに埋め込んだ盤面の下にある持駒情報を取り込んでしまう
         s.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
           header[key] = value
         end
