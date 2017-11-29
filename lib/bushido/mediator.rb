@@ -225,7 +225,7 @@ module Bushido
               if key = md[:sankaku] || md[:plus_or_minus]
                 location = Location.fetch(key)
                 unless current_player.location == Location.fetch(key)
-                  raise TebanchigauError, "#{current_player.call_name}番で#{reverse_player.call_name}が着手しました : #{str}"
+                  raise DifferentTurnError, "#{current_player.call_name}番で#{reverse_player.call_name}が着手しました : #{str}"
                 end
               end
             end

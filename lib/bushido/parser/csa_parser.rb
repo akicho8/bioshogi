@@ -49,10 +49,10 @@ module Bushido
 
         # ヘッダーっぽいのもを収集
         s.scan(/^(N[+-]|\$\w+:)(.*)\n/) do |key, value|
-          if e = HeaderInfo[key]
-            key = e.replace_key
+          if e = CsaHeaderInfo[key]
+            key = e.kif_side_key
           end
-          # ヘッダーの情報を重複した場合は最初に出てきたものを有効にしている
+          # ヘッダー情報が重複した場合は最初に出てきたものを優先
           header[key] ||= value
         end
 
@@ -64,7 +64,7 @@ module Bushido
           {input: input, used_seconds: used_seconds&.to_i}
         end
 
-        if md = s.match(/^%(?<last_behaviour>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)
+        if md = s.match(/^%(?<last_action>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)
           @last_status_info = md.named_captures.symbolize_keys
         end
       end

@@ -106,9 +106,11 @@ module Bushido
 
   # 例外を抑制できる系の反則
 
+  # 二歩
   class DoublePawn < TypicalError
   end
 
-  class TebanchigauError < TypicalError
+  # 手番が異なる
+  class DifferentTurnError < TypicalError
   end
 end

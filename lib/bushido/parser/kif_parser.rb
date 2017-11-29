@@ -55,9 +55,9 @@ module Bushido
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
             @move_infos << {turn_number: md[:turn_number], input: input, clock_part: md[:clock_part], used_seconds: used_seconds}
           else
-            if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_behaviour>\投了)(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
+            if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_action>\投了)(\p{blank}+\(\p{blank}*(?<clock_part>.*)\))?/o)
               used_seconds = min_sec_str_to_seconds(md[:clock_part])
-              @last_status_info = {last_behaviour: md[:last_behaviour], used_seconds: used_seconds}
+              @last_status_info = {last_action: md[:last_action], used_seconds: used_seconds}
             end
           end
         end

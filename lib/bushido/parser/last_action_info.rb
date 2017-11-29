@@ -2,7 +2,7 @@
 
 module Bushido
   module Parser
-    class ToryoInfo
+    class LastActionInfo
       include MemoryRecord
       memory_record [
         {key: "TORYO",           kif_diarect: "投了",                                             },

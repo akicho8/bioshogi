@@ -35,7 +35,7 @@ seconds = Benchmark.realtime do
     @current = file
 
     begin
-      info = Parser.file_parse(file, double_pawn_case: :skip)
+      info = Parser.file_parse(file, typical_error_case: :skip)
       kif_str = info.to_kif
       ki2_str = info.to_ki2
       csa_str = info.to_csa

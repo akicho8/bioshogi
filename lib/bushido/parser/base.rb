@@ -7,8 +7,8 @@ require "kconv"                 # for toeuc
 require "active_support/core_ext/array/grouping" # for in_groups_of
 require "active_support/core_ext/numeric"        # for 1.minute
 
-require_relative "header_info"
-require_relative "toryo_info"
+require_relative "csa_header_info"
+require_relative "last_action_info"
 
 module Bushido
   module Parser
@@ -31,9 +31,9 @@ module Bushido
 
       attr_reader :header, :move_infos, :first_comments, :last_status_info, :board_source, :error_message
 
-      def initialize(source, **options2)
+      def initialize(source, **config)
         @source = source
-        @options2 = default_options2.merge(options2)
+        @config = default_config.merge(config)
 
         @header = {}
         @move_infos = []
@@ -43,9 +43,12 @@ module Bushido
         @error_message = nil
       end
 
-      def default_options2
+      def default_config
         {
-          double_pawn_case: false, # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す, skip: 棋譜には記さない
+          # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
+          #  skip: 棋譜には記さない
+          # false: 例外を出す(デフォルト)
+          typical_error_case: false,
         }
       end
 
@@ -169,8 +172,8 @@ module Bushido
           out = []
           out << "V2.2\n"
 
-          out << HeaderInfo.collect { |e|
-            if v = header[e.replace_key].presence
+          out << CsaHeaderInfo.collect { |e|
+            if v = header[e.kif_side_key].presence
               "#{e.csa_key}#{v}\n"
             end
           }.join
@@ -208,8 +211,8 @@ module Bushido
           }.join
 
           if e = @last_status_info
-            toryo_info = ToryoInfo.fetch(e[:last_behaviour])
-            s = "%#{toryo_info.csa_key}"
+            last_action_info = LastActionInfo.fetch(e[:last_action])
+            s = "%#{last_action_info.csa_key}"
             if v = e[:used_seconds].presence
               s += ",T#{v}"
             end
@@ -249,14 +252,14 @@ module Bushido
             "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
           }.join
 
-          toryo_info = ToryoInfo[:TORYO]
+          last_action_info = LastActionInfo[:TORYO]
           if @last_status_info
-            if v = ToryoInfo[@last_status_info[:last_behaviour]]
-              toryo_info = v
+            if v = LastActionInfo[@last_status_info[:last_action]]
+              last_action_info = v
             end
           end
 
-          left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(toryo_info.kif_diarect, options[:length])]
+          left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(last_action_info.kif_diarect, options[:length])]
           right_part = nil
 
           if @last_status_info
@@ -333,10 +336,6 @@ module Bushido
               end
             end
 
-            # p header
-            # p header["手合割"]
-            # exit
-
             if @board_source
               mediator.board_reset_for_text(@board_source)
               if header["手合割"].blank? || header["手合割"] == "その他"
@@ -345,9 +344,7 @@ module Bushido
                 mediator.board_reset_for_text2
               end
             else
-              # p mediator.teban
               mediator.board_reset(header["手合割"] || "平手")
-              # p mediator.teban
             end
 
             begin
@@ -355,7 +352,7 @@ module Bushido
                 mediator.execute(info[:input])
               end
             rescue TypicalError => error
-              if v = @options2[:double_pawn_case]
+              if v = @config[:typical_error_case]
                 case v
                 when :embed
                   @error_message = error.message

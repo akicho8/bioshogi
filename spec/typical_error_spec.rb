@@ -16,14 +16,14 @@ module Bushido
       end
 
       it "オプションをつければ例外がでない" do
-        info = Parser.file_parse(@file, double_pawn_case: :skip)
+        info = Parser.file_parse(@file, typical_error_case: :skip)
         assert info.to_kif
         assert info.to_ki2
         assert !info.to_csa.match?(/【反則】/)
       end
 
       it "エラー情報を棋譜に埋め込む" do
-        info = Parser.file_parse(@file, double_pawn_case: :embed)
+        info = Parser.file_parse(@file, typical_error_case: :embed)
         assert info.to_kif
         assert info.to_ki2
         assert info.to_csa.match?(/【反則】/)
@@ -36,18 +36,18 @@ module Bushido
       end
 
       it "変換するときに例外が出る" do
-        expect { Parser.parse(@body).to_kif }.to raise_error(TebanchigauError)
+        expect { Parser.parse(@body).to_kif }.to raise_error(DifferentTurnError)
       end
 
       it "オプションをつければ例外がでない" do
-        info = Parser.parse(@body, double_pawn_case: :skip)
+        info = Parser.parse(@body, typical_error_case: :skip)
         assert info.to_kif
         assert info.to_ki2
         assert !info.to_csa.match?(/【反則】/)
       end
 
       it "エラー情報を棋譜に埋め込む" do
-        info = Parser.parse(@body, double_pawn_case: :embed)
+        info = Parser.parse(@body, typical_error_case: :embed)
         assert info.to_kif
         assert info.to_ki2
         assert info.to_csa.match?(/【反則】/)

@@ -1,6 +1,6 @@
 require "./example_helper"
 
-info = Parser.parse(<<~EOT, double_pawn_case: :embed)
+info = Parser.parse(<<~EOT, typical_error_case: :embed)
 開始日時：2007/07/17 10:00
 終了日時：2007/07/17 10:00
 棋戦：順位戦
