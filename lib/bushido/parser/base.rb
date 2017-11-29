@@ -354,7 +354,7 @@ module Bushido
               move_infos.each do |info|
                 mediator.execute(info[:input])
               end
-            rescue RuleError2 => error
+            rescue TypicalError => error
               if v = @options2[:double_pawn_case]
                 case v
                 when :embed

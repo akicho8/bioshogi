@@ -51,7 +51,7 @@ module Bushido
   end
 
   # パース時にオプションで例外を抑制できる系の反則
-  class RuleError2 < RuleError
+  class TypicalError < RuleError
   end
 
   class HistroyStackEmpty < SyntaxDefact
@@ -106,9 +106,9 @@ module Bushido
 
   # 例外を抑制できる系の反則
 
-  class DoublePawn < RuleError2
+  class DoublePawn < TypicalError
   end
 
-  class TebanchauyoError < RuleError2
+  class TebanchigauError < TypicalError
   end
 end

@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 
 module Bushido
-  describe RuleError2 do
+  describe TypicalError do
     describe "二歩の反則負け" do
       before do
         @file = "#{__dir__}/double_pawn.ki2"
@@ -36,7 +36,7 @@ module Bushido
       end
 
       it "変換するときに例外が出る" do
-        expect { Parser.parse(@body).to_kif }.to raise_error(TebanchauyoError)
+        expect { Parser.parse(@body).to_kif }.to raise_error(TebanchigauError)
       end
 
       it "オプションをつければ例外がでない" do
