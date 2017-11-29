@@ -10,14 +10,15 @@ module Bushido
       end
 
       def human_input_regexp
+        point = /(?<point>#{Point.regexp})/o
+        same = /(?<same>同)\p{blank}*/
+
         /
-          (?<point>#{Point.regexp})?
-          (?<same>同)?
-          \p{blank}*
+          (#{point}#{same}|#{same}#{point}|#{point}|#{same}) # 12同 or 同12 or 12 or 同 に対応
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右直]?[寄引上行]?)
           (?<motion2>不?成|打|合|生)?
-          (?<origin_point>\(\d{2}\))?
+          (?<origin_point>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように "()" も含めて取る
         /ox
       end
 

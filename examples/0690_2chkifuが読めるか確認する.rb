@@ -15,7 +15,9 @@ def assert_equal(a, b)
     @error_file.open("a") do |e|
       e.puts "-" * 80
       e.puts @current.expand_path
-      e.puts caller.to_t
+      e.puts caller
+      e.puts a
+      e.puts b
     end
   end
 end
@@ -33,7 +35,7 @@ seconds = Benchmark.realtime do
     @current = file
 
     begin
-      info = Parser.file_parse(file, double_pawn_rescue: true)
+      info = Parser.file_parse(file, double_pawn_case: :skip)
       kif_str = info.to_kif
       ki2_str = info.to_ki2
       csa_str = info.to_csa

@@ -45,7 +45,7 @@ module Bushido
 
       def default_options2
         {
-          double_pawn_rescue: false, # 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記すか？
+          double_pawn_case: false, # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す, skip: 棋譜には記さない
         }
       end
 
@@ -355,8 +355,13 @@ module Bushido
                 mediator.execute(info[:input])
               end
             rescue DoublePawn => error
-              if @options2[:double_pawn_rescue]
-                @error_message = error.message
+              if v = @options2[:double_pawn_case]
+                case v
+                when :embed
+                  @error_message = error.message
+                when :skip
+                else
+                end
               else
                 raise error
               end

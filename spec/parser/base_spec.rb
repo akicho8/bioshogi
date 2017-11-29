@@ -483,7 +483,7 @@ EOT
       end
 
       it "オプションをつければ例外がでない" do
-        info = Parser.file_parse(@file, double_pawn_rescue: true)
+        info = Parser.file_parse(@file, double_pawn_case: :skip)
         assert info.to_kif
         assert info.to_ki2
         assert info.to_csa
