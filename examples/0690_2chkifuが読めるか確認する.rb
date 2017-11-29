@@ -10,6 +10,14 @@ def assert_equal(a, b)
   @result[r] += 1
   print r ? "." : "x"
   STDOUT.flush
+
+  unless r
+    @error_file.open("a") do |e|
+      e.puts "-" * 80
+      e.puts @current.expand_path
+      e.puts caller.to_t
+    end
+  end
 end
 
 @check_file = Pathname("check_file.txt")
@@ -22,6 +30,8 @@ end
 files = files.take((ARGV.first || 1000_0000).to_i)
 seconds = Benchmark.realtime do
   files.each do |file|
+    @current = file
+
     begin
       info = Parser.parse_file(file)
       kif_str = info.to_kif
@@ -43,10 +53,12 @@ seconds = Benchmark.realtime do
       assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
       assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
     rescue => error
-      if error.kind_of?(Bushido::DoublePawn)
-        print "_"
-        next
-      end
+      @result[error.class.name] += 1
+
+      # if error.kind_of?(Bushido::DoublePawn)
+      #   print "_"
+      #   next
+      # end
 
       print "E"
       @error_file.open("a") do |e|

@@ -87,14 +87,21 @@ module Bushido
       from = Point.parse(from)
       to = Point.parse(to)
 
-      if promote_trigger
-        if !from.promotable?(location) && !to.promotable?(location)
-          raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
+      # 破壊的な処理をする前の段階でエラーチェックを行う
+      if true
+        if promote_trigger
+          if !from.promotable?(location) && !to.promotable?(location)
+            raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
+          end
+
+          soldier = board.lookup(from)
+          if soldier.promoted?
+            raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
+          end
         end
 
-        soldier = board.lookup(from)
-        if soldier.promoted?
-          raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
+        if (soldier = board.lookup(from)) && location != soldier.location
+          raise AitenoKomaUgokashitaError, "【反則】相手の駒を動かそうとしています。#{location}の手番で#{soldier.point}にある#{soldier.location}の#{soldier.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
         end
       end
 
@@ -116,7 +123,6 @@ module Bushido
         from_soldier.promoted = true
       end
 
-      raise AitenoKomaUgokashitaError, "手番が間違っている可能性があります。location (#{location}) と from_soldier.location (#{from_soldier.location}) が異なります\n#{board_with_pieces}" unless location == from_soldier.location
       from_soldier.point = to
       put_on_with_valid(from_soldier)
     end

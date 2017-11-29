@@ -17,7 +17,7 @@ module Bushido
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右直]?[寄引上行]?)
           (?<motion2>不?成|打|合|生)?
-          (\((?<origin_point>\d{2})\))?
+          (?<origin_point>\(\d{2}\))?
         /ox
       end
 
@@ -51,6 +51,7 @@ module Bushido
       @origin_point    = nil
       @candidate       = nil
 
+      @mini_soldier = nil
       @done = false
 
       @md = @source.match(self.class.input_regexp)
@@ -95,16 +96,21 @@ module Bushido
         end
       end
 
+      if @md[:origin_point]
+        @md[:origin_point] = @md[:origin_point].slice(/\d+/)
+      end
+
+      begin
+        @mini_soldier = Piece.promoted_fetch(@md[:piece])
+        @piece, @promoted = @mini_soldier.values_at(:piece, :promoted)
+      rescue => error
+        raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
+      end
+
       # # @md が MatchData のままだと Marshal.dump できない病で死にます
       # @md = @md.names.inject({}){|h, k|h.merge(k.to_sym => @md[k])} # to_h とかあるはず(？)
 
       read_point
-
-      begin
-        @piece, @promoted = Piece.promoted_fetch(@md[:piece]).values_at(:piece, :promoted)
-      rescue => error
-        raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
-      end
 
       if true
         # ▼将棋のルール「棋譜について」｜品川将棋倶楽部
@@ -246,7 +252,7 @@ module Bushido
           @player.soldiers << soldier
           @done = true
         else
-          raise MovableSoldierNotFound, "#{@player.location.name}番で #{@point.name.inspect} の地点に移動できる #{@piece.name.inspect} (または#{@piece.promoted_name.inspect}) がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
+          raise MovableSoldierNotFound, "#{@player.location.name}の手番で #{@point.name.inspect} の地点に移動できる #{@mini_soldier.piece_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
         end
       end
 

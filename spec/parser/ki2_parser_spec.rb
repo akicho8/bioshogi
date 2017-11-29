@@ -3,23 +3,9 @@ require_relative "../spec_helper"
 module Bushido
   describe Parser::Ki2Parser do
     it "棋譜部分のパース" do
-      def parse_test(s)
-        Parser::Ki2Parser.parse(s).move_infos.collect{|e|e[:mov]}.join(" ")
-      end
-
-      # ▲は見ていない
-      parse_test("７六歩").should           == "▲７六歩"
-      parse_test("▲７六歩").should         == "▲７六歩"
-      parse_test("▲１一歩△２二歩").should == "▲１一歩 △２二歩"
-      parse_test("△１一歩▲２二歩").should == "▲１一歩 △２二歩"
-    end
-
-    it "ヘッダーがなく、いきなり棋譜入力しているデータも読み取れる" do
-      info = Parser::Ki2Parser.parse("▲７六歩")
-      info.move_infos.should == [
-        {location: Location[:black], input: "７六歩", mov: "▲７六歩"},
-      ]
-      info.header.should == {}
+      Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input].should == "７六歩(77)"
+      Parser::Ki2Parser.parse("７六歩").move_infos.first[:input].should == "７六歩"
+      Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input].should == "７六歩"
     end
 
     it "激指定跡道場4のクリップボード書き出し結果が読める" do
@@ -93,10 +79,10 @@ EOT
 
       it "棋譜の羅列" do
         @result.move_infos.should == [
-          {location: Location[:black], input: "７六歩", mov: "▲７六歩"},
-          {location: Location[:white], input: "３四歩", mov: "△３四歩", comments: ["コメント1"]},
-          {location: Location[:black], input: "６六歩", mov: "▲６六歩"},
-          {location: Location[:white], input: "８四歩", mov: "△８四歩", comments: ["コメント2"]},
+          {input: "７六歩"},
+          {input: "３四歩", comments: ["コメント1"]},
+          {input: "６六歩"},
+          {input: "８四歩", comments: ["コメント2"]},
         ]
       end
 

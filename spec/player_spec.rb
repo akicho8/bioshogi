@@ -8,6 +8,10 @@ module Bushido
       player_test2(init: "５５歩", exec: "５４歩").should == ["▲５四歩"]
     end
 
+    it "移動元明示" do
+      player_test2(init: "５五歩", exec: "５四歩(55)").should == ["▲５四歩"]
+    end
+
     it "持駒を参照する" do
       player_test.piece_lookup(Piece["歩"]).name.should == "歩"
     end
