@@ -468,5 +468,26 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
       end
     end
+
+    describe "二歩の反則負け" do
+      before do
+        @file = "#{__dir__}/double_pawn.ki2"
+      end
+
+      it "読み込むことはできる" do
+        Parser.file_parse(@file)
+      end
+
+      it "変換するときに例外が出る" do
+        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawn)
+      end
+
+      it "オプションをつければ例外がでない" do
+        info = Parser.file_parse(@file, double_pawn_rescue: true)
+        assert info.to_kif
+        assert info.to_ki2
+        assert info.to_csa
+      end
+    end
   end
 end

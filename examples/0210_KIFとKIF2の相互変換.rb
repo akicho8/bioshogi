@@ -1,13 +1,13 @@
 require "./example_helper"
 
-a = Parser.parse_file("katomomo.kif")
-b = Parser.parse_file("katomomo.ki2")
-c = Parser.parse_file("katomomo.csa")
+a = Parser.file_parse("katomomo.kif")
+b = Parser.file_parse("katomomo.ki2")
+c = Parser.file_parse("katomomo.csa")
 a.to_kif == b.to_kif            # => false
 a.to_ki2 == b.to_ki2            # => true
 a.to_csa == b.to_csa            # => false
 
-info = Parser.parse_file("katomomo.kif")
+info = Parser.file_parse("katomomo.kif")
 puts "-" * 80
 puts info.to_ki2
 puts "-" * 80
@@ -15,7 +15,7 @@ puts info.to_kif
 puts "-" * 80
 puts info.to_csa
 
-info = Parser.parse_file("katomomo.ki2")
+info = Parser.file_parse("katomomo.ki2")
 puts "-" * 80
 puts info.to_ki2
 puts "-" * 80
@@ -23,7 +23,7 @@ puts info.to_kif
 puts "-" * 80
 puts info.to_csa
 
-info = Parser.parse_file("katomomo.csa")
+info = Parser.file_parse("katomomo.csa")
 puts "-" * 80
 puts info.to_ki2
 puts "-" * 80

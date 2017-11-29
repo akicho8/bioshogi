@@ -8,7 +8,7 @@ module Bushido
 
       def execute
         @args.each do |file|
-          puts Parser.parse_file(file).to_kif
+          puts Parser.file_parse(file).to_kif
         end
       end
     end

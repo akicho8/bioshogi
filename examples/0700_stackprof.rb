@@ -5,7 +5,7 @@ require "stackprof"
 StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
   10.times do
     ["csa", "ki2", "kif"].each do |e|
-      info = Parser.parse_file("katomomo.#{e}")
+      info = Parser.file_parse("katomomo.#{e}")
       info.to_ki2
       info.to_kif
       info.to_csa
@@ -26,7 +26,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
 # >>         39   (9.7%)          37   (9.2%)     Bushido::Position::Base.parse
-# >>         32   (8.0%)          19   (4.7%)     Bushido::Parser#parse_file
+# >>         32   (8.0%)          19   (4.7%)     Bushido::Parser#file_parse
 # >>         20   (5.0%)          16   (4.0%)     ActiveSupport::Duration::Scalar#-
 # >>         16   (4.0%)          16   (4.0%)     block (4 levels) in memory_record
 # >>         15   (3.7%)          14   (3.5%)     Bushido::Position::Hpos#number_format

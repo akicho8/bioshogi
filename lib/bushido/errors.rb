@@ -31,9 +31,6 @@ module Bushido
   class AlredyPromoted < BushidoError
   end
 
-  class DeadPieceRuleError < BushidoError
-  end
-
   class BeforePointNotFound < BushidoError
   end
 
@@ -48,6 +45,9 @@ module Bushido
   end
 
   class RuleError < SyntaxDefact
+    def initialize(message)
+      super "【反則】#{message}"
+    end
   end
 
   class HistroyStackEmpty < SyntaxDefact
@@ -76,6 +76,9 @@ module Bushido
 
   # 別に問題ないけど将棋のルール上エラーとするもの
   class DoublePawn < RuleError
+  end
+
+  class DeadPieceRuleError < RuleError
   end
 
   class NoPromotablePiece < RuleError

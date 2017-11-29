@@ -20,7 +20,7 @@ module Bushido
           new(source, options).tap(&:parse)
         end
 
-        def parse_file(file, **options)
+        def file_parse(file, **options)
           parse(Pathname(file).expand_path.read, options)
         end
 
@@ -29,21 +29,24 @@ module Bushido
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments, :last_status_info, :board_source
+      attr_reader :header, :move_infos, :first_comments, :last_status_info, :board_source, :error_message
 
-      def initialize(source, **options)
+      def initialize(source, **options2)
         @source = source
-        @options = default_options.merge(options)
+        @options2 = default_options2.merge(options2)
 
         @header = {}
         @move_infos = []
         @first_comments = []
         @board_source = nil
         @last_status_info = nil
+        @error_message = nil
       end
 
-      def default_options
-        {}
+      def default_options2
+        {
+          double_pawn_rescue: false, # 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記すか？
+        }
       end
 
       def parse
@@ -215,6 +218,10 @@ module Bushido
             out << "%TORYO" + "\n"
           end
 
+          if @error_message
+            out << error_message_part('"')
+          end
+
           out = out.join
 
           # テスト用
@@ -261,6 +268,10 @@ module Bushido
 
           out << "#{left_part} #{right_part}".rstrip + "\n"
 
+          if @error_message
+            out << error_message_part
+          end
+
           out.join
         end
 
@@ -303,6 +314,10 @@ module Bushido
             out << list2.collect { |e| e.join(" ").strip + "\n" }.join
           end
 
+          if @error_message
+            out << error_message_part
+          end
+
           out << mediator.judgment_message + "\n"
 
           out.join
@@ -335,8 +350,16 @@ module Bushido
               # p mediator.teban
             end
 
-            move_infos.each do |info|
-              mediator.execute(info[:input])
+            begin
+              move_infos.each do |info|
+                mediator.execute(info[:input])
+              end
+            rescue DoublePawn => error
+              if @options2[:double_pawn_rescue]
+                @error_message = error.message
+              else
+                raise error
+              end
             end
           end
         end
@@ -423,6 +446,14 @@ module Bushido
           @move_infos.dig(index, :used_seconds).to_i
         end
 
+        def error_message_part(prefix = "*")
+          if @error_message
+            lines = @error_message.to_s.lines
+            s = "-" * 76 + "\n"
+            [s, *lines, s].collect {|e| "#{prefix} #{e}" }.join
+          end
+        end
+
         class ChessClock
           def initialize
             @single_clocks = Location.inject({}) {|a, e| a.merge(e => SingleClock.new) }
@@ -465,15 +496,3 @@ module Bushido
     end
   end
 end
-# ~> /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:3:in `<module:NumberHelper>': uninitialized constant ActiveSupport::Autoload (NameError)
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:2:in `<module:ActiveSupport>'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/number_helper.rb:1:in `<top (required)>'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/core_ext/numeric/conversions.rb:2:in `<top (required)>'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/core_ext/numeric.rb:4:in `<top (required)>'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:68:in `require'
-# ~>    from -:8:in `<main>'

@@ -9,7 +9,7 @@ module Bushido
     end
 
     it "激指定跡道場4のクリップボード書き出し結果が読める" do
-      info = Parser::Ki2Parser.parse_file("#{__dir__}/../files/激指定跡道場4のクリップボード書き出し結果.ki2")
+      info = Parser::Ki2Parser.file_parse("#{__dir__}/../files/激指定跡道場4のクリップボード書き出し結果.ki2")
       # puts info.to_ki2
       info.to_ki2.should == <<~EOT
 手合割：平手

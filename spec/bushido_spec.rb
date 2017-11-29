@@ -4,11 +4,11 @@ module Bushido
   describe Bushido do
     describe "棋譜ファイルの読み込み" do
       it "できる" do
-        Parser.parse_file(Pathname(__FILE__).dirname.join("files/sample1.kif"))
-        Parser.parse_file(Pathname(__FILE__).dirname.join("files/sample1.ki2"))
+        Parser.file_parse(Pathname(__FILE__).dirname.join("files/sample1.kif"))
+        Parser.file_parse(Pathname(__FILE__).dirname.join("files/sample1.ki2"))
       end
       it "できない" do
-        expect { Parser.parse_file(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(Errno::ENOENT)
+        expect { Parser.file_parse(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(Errno::ENOENT)
       end
     end
 

@@ -13,7 +13,7 @@ seconds = Benchmark.realtime do
   files.each do |file|
     puts file
 
-    info = Parser.parse_file(file)
+    info = Parser.file_parse(file)
     kif_str = info.to_kif
     ki2_str = info.to_ki2
     csa_str = info.to_csa

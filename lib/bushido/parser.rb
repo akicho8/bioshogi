@@ -14,7 +14,7 @@ module Bushido
     end
 
     # 棋譜ファイル自体を読み込む
-    def parse_file(file, **options)
+    def file_parse(file, **options)
       parse(Pathname(file).expand_path.read, options)
     end
 
