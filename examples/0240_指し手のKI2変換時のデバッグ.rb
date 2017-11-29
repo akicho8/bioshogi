@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
+mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 | ・v銀v銀 ・ ・ ・vとvとvと|
 | ・ ○ ・ ・ ・ ・ ・ ○vと|
@@ -19,7 +19,7 @@ official_formatter = mediator.hand_logs.last.official_formatter
 tp official_formatter.to_debug_hash
 tp official_formatter.options
 # >> |----------------+--------------------------------------------------|
-# >> |   origin_point | ７三                                             |
+# >> |   point_from | ７三                                             |
 # >> |          point | ８二                                             |
 # >> |           to_s | ８二銀左引                                       |
 # >> |      candidate | ["△８一銀", "△７一銀", "△９三銀", "△７三銀"] |

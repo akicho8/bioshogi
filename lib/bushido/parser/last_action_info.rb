@@ -3,7 +3,7 @@
 module Bushido
   module Parser
     class LastActionInfo
-      include MemoryRecord
+      include ApplicationMemoryRecord
       memory_record [
         {key: "TORYO",           kif_diarect: "投了",                                             },
         {key: "CHUDAN",          kif_diarect: "中断",                                             },

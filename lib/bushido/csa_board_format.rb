@@ -16,22 +16,18 @@ module Bushido
     end
 
     def to_s
-      rows.join
+      Position::Vpos.board_size.times.collect { |y|
+        "P#{y.next}" + Position::Hpos.board_size.times.collect { |x|
+          soldier_to_str(@board.surface[[x, y]])
+        }.join + "\n"
+      }.join
     end
 
     private
 
-    def rows
-      Position::Vpos.board_size.times.collect do |y|
-        "P#{y.next}" + Position::Hpos.board_size.times.collect { |x|
-          object_to_s(@board.surface[[x, y]])
-        }.join + "\n"
-      end
-    end
-
-    def object_to_s(object)
-      if object
-        object.to_csa
+    def soldier_to_str(soldier)
+      if soldier
+        soldier.to_csa
       else
         " * "
       end

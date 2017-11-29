@@ -8,7 +8,7 @@ soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "�
 mediator.players.each do |player|
   _soldiers = soldiers.collect do |s|
     s = MiniSoldier.from_str(s)
-    s.merge(point: s[:point].reverse_if_white_location(player.location))
+    s.merge(point: s[:point].as_black_side(player.location))
   end
   player.soldiers_create(_soldiers)
 end

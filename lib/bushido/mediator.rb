@@ -21,7 +21,7 @@ module Bushido
         @players = Location.collect do |e|
           Player.new(self, location: e)
         end
-        # @teban = 0
+        # @turn_info = 0
       end
 
       # def player_join(player)
@@ -52,7 +52,7 @@ module Bushido
 
       # 手番のプレイヤー
       def current_player(diff = 0)
-        players[teban.current_location(diff).code]
+        players[turn_info.current_location(diff).code]
       end
 
       def next_player
@@ -93,7 +93,7 @@ module Bushido
     concerning :BoardMethods do
       included do
         attr_reader :board
-        attr_accessor :teban
+        attr_accessor :turn_info
       end
 
       class_methods do
@@ -102,14 +102,14 @@ module Bushido
       def initialize
         super
         @board = Board.new
-        @teban = Teban.new("平手")
+        @turn_info = TurnInfo.new("平手")
       end
 
       # DEPRECATION
       def board_reset_old(v)
         case
         when BoardParser.accept?(v)
-          board_reset_for_text(v)
+          board_reset_by_shape(v)
         when v.kind_of?(Hash)
           board_reset_for_hash(v)
         else
@@ -126,7 +126,7 @@ module Bushido
 
         name = name.presence || "平手"
 
-        # @teban = Teban.new(name)
+        # @turn_info = TurnInfo.new(name)
 
         # "角落ち" なら {"▲" => "角落ち", "△" => "平手"}
         v = {black: "平手", white: "平手"}
@@ -138,28 +138,28 @@ module Bushido
 
         board_reset_for_hash(v)
 
-        @teban = Teban.new(board.teai_name)
+        @turn_info = TurnInfo.new(board.teaiwari_name)
       end
 
-      def board_reset_for_text(value)
+      def board_reset_by_shape(value)
         raise MustNotHappen unless BoardParser.accept?(value)
         v = BoardParser.parse(value).both_board_info
         board_reset5(v)
         # このあと自分で手合割を決めること。次のようにする
-        # mediator.teban = Teban.new(mediator.board.teai_name)
+        # mediator.turn_info = TurnInfo.new(mediator.board.teaiwari_name)
 
-        # if board.teai_name
-        #   @teban = Teban.new(board.teai_name)
+        # if board.teaiwari_name
+        #   @turn_info = TurnInfo.new(board.teaiwari_name)
         # else
         #   # 手合いが不明なものは何か落ち
-        #   # @teban = Teban.new("落")
+        #   # @turn_info = TurnInfo.new("落")
         # end
       end
 
       # 盤面から手合割を判断する
-      def board_reset_for_text2
-        if board.teai_name
-          @teban = Teban.new(board.teai_name)
+      def board_reset_by_shape2
+        if board.teaiwari_name
+          @turn_info = TurnInfo.new(board.teaiwari_name)
         end
       end
 
@@ -177,7 +177,7 @@ module Bushido
       end
 
       def turn_max
-        teban.counter
+        turn_info.counter
       end
 
     end
@@ -232,12 +232,12 @@ module Bushido
           end
 
           current_player.execute(str)
-          teban.counter += 1
+          turn_info.counter += 1
         end
       end
 
       # player.execute の直後に呼んで保存する
-      def log_stock(player)
+      def hand_log_push(player)
         @hand_logs << player.runner.hand_log
       end
 
@@ -247,6 +247,7 @@ module Bushido
         def ki2_hand_logs; hand_logs.collect { |e| e.to_s_ki2(with_mark: true) }; end
       end
 
+      # TODO: bod フォーマットとする
       def to_s
         s = []
         s << white_player.hold_pieces_snap + "\n"
@@ -258,11 +259,11 @@ module Bushido
           last = hand_log.to_s_kif(with_mark: true)
         end
 
-        s << "手数＝#{teban.counter} #{last} まで".squish + "\n"
+        s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
 
-        # これいる？
+        # これいる？ → いる
         if true
-          if current_player.location.key == :white
+          if current_player.location.key == :white # ← 判定が違う気がす
             s << "\n"
             s << "#{current_player.call_name}番\n"
           end
@@ -279,13 +280,13 @@ module Bushido
         s = []
         s << @board.to_s
         s << @players.collect { |player|
-          "#{player.location.mark_with_name}の持駒:#{player.to_s_pieces}"
+          "#{player.call_name}の持駒:#{player.to_s_pieces}"
         }.join("\n") + "\n"
         s.join
       end
 
       def judgment_message
-        "まで#{teban.counter}手で#{reverse_player.call_name}の勝ち"
+        "まで#{turn_info.counter}手で#{reverse_player.call_name}の勝ち"
       end
     end
 
@@ -301,14 +302,14 @@ module Bushido
       # TODO: Player の marshal_dump が使われてない件について調べる
       def marshal_dump
         {
-          teban: teban,
+          turn_info: turn_info,
           players: @players,
           hand_logs: @hand_logs,
         }
       end
 
       def marshal_load(attrs)
-        @teban  = attrs[:teban]
+        @turn_info  = attrs[:turn_info]
         @players  = attrs[:players]
         @hand_logs = attrs[:hand_logs]
         @board = Board.new
@@ -318,7 +319,7 @@ module Bushido
 
       # deep_dup しておくこと
       def replace(object)
-        @teban = object.teban
+        @turn_info = object.turn_info
         @players = object.players
         @hand_logs = object.hand_logs
         @board = Board.new
@@ -552,7 +553,7 @@ module Bushido
     end
   end
 
-  class HybridSequencer
+  module HybridSequencer
     def self.execute(pattern)
       if pattern[:dsl]
         mediator = Sequencer.new

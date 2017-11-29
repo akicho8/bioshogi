@@ -4,7 +4,7 @@ module Bushido
   describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
       mediator = Bushido::Mediator.new
-      mediator.board_reset_for_text(@board)
+      mediator.board_reset_by_shape(@board)
       mediator.next_player.execute(str)
       mediator.hand_logs.last.to_kif_ki2_csa
     end

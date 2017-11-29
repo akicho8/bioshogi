@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
+mediator.board_reset_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -16,10 +16,10 @@ mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.teai_name        # => "香落ち"
+mediator.board.teaiwari_name        # => "香落ち"
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
+mediator.board_reset_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -34,7 +34,7 @@ mediator.board_reset_for_text(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.teai_name        # => nil
+mediator.board.teaiwari_name        # => nil
 # >> 1手目: ▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

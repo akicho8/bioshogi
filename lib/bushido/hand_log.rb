@@ -6,7 +6,7 @@
 
 module Bushido
   class HandLog
-    attr_reader :point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p
+    attr_reader :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :point_from, :player, :candidate, :point_same_p
 
     def initialize(attrs)
       # FIXME: こんなんやるんなら ActiveModel でいいんじゃね？
@@ -39,7 +39,7 @@ module Bushido
       if options[:with_mark]
         s << @player.location.mark
       end
-      s << @point.name
+      s << @point_to.name
       s << @piece.some_name(@promoted)
       if @promote_trigger
         s << "成"
@@ -47,8 +47,8 @@ module Bushido
       if @strike_trigger
         s << "打"
       end
-      if @origin_point
-        s << "(#{@origin_point.number_format})"
+      if @point_from
+        s << "(#{@point_from.number_format})"
       end
       s.join
     end
@@ -65,18 +65,18 @@ module Bushido
     def to_s_csa(**options)
       s = []
       s << @player.location.csa_sign
-      if @origin_point
-        s << @origin_point.number_format
+      if @point_from
+        s << @point_from.number_format
       else
         s << "00"               # 駒台
       end
-      s << @point.number_format
+      s << @point_to.number_format
       s << @piece.csa_some_name(@promoted || @promote_trigger)
       s.join
     end
 
     def to_h
-      [:point, :piece, :promoted, :promote_trigger, :strike_trigger, :origin_point, :player, :candidate, :point_same_p].inject({}) {|a, key| a.merge(key => send(key)) }
+      [:point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :point_from, :player, :candidate, :point_same_p].inject({}) {|a, key| a.merge(key => send(key)) }
     end
 
     class OfficialFormatter
@@ -95,8 +95,8 @@ module Bushido
 
       def to_debug_hash
         {
-          origin_point: @hand_log.origin_point,
-          point: @hand_log.point,
+          point_from: @hand_log.point_from,
+          point_to: @hand_log.point_to,
           candidate: candidate.collect(&:name),
           koreru_c: koreru_c,
           _migi_idou: _migi_idou?,
@@ -124,7 +124,7 @@ module Bushido
         if @hand_log.point_same_p
           s << "同" + @options[:same_suffix]
         else
-          s << @hand_log.point.name
+          s << @hand_log.point_to.name
         end
 
         s << @hand_log.piece.some_name(@hand_log.promoted)
@@ -152,9 +152,9 @@ module Bushido
           if @hand_log.promote_trigger
             s << "成"
           else
-            if @hand_log.origin_point && @hand_log.point         # 移動した and
-              if @hand_log.origin_point.promotable?(location) || # 移動元が相手の相手陣地 or
-                  @hand_log.point.promotable?(location)          # 移動元が相手の相手陣地
+            if @hand_log.point_from && @hand_log.point_to         # 移動した and
+              if @hand_log.point_from.promotable?(location) || # 移動元が相手の相手陣地 or
+                  @hand_log.point_to.promotable?(location)          # 移動元が相手の相手陣地
                 unless @hand_log.promoted                        # 成ってない and
                   if @hand_log.piece.promotable?                 # 成駒になれる
                     s << "不成" # or "生"
@@ -222,8 +222,8 @@ module Bushido
         case
         when koreru_c >= 3
           # |----------------+--------------------------------------|
-          # |   origin_point | ５一                                 |
-          # |          point | ４二                                 |
+          # |   point_from | ５一                                 |
+          # |          point_to | ４二                                 |
           # |      candidate | ["△５一金", "△３一金", "△５二金"] |
           # |       koreru_c | 3                                    |
           # |     _migi_idou | true                                 |
@@ -379,12 +379,12 @@ module Bushido
 
       # 移動先X
       def _tx
-        @_tx ||= @hand_log.point.x.value
+        @_tx ||= @hand_log.point_to.x.value
       end
 
       # 移動元Y
       def _ty
-        @_ty ||= @hand_log.point.y.value
+        @_ty ||= @hand_log.point_to.y.value
       end
 
       # プレイヤーの視点から見た移動先の一つ下
@@ -399,12 +399,12 @@ module Bushido
 
       # 移動元X
       def _ox
-        @_ox ||= @hand_log.origin_point.x.value
+        @_ox ||= @hand_log.point_from.x.value
       end
 
       # 移動先Y
       def _oy
-        @_oy ||= @hand_log.origin_point.y.value
+        @_oy ||= @hand_log.point_from.y.value
       end
 
       # 候補手の座標範囲

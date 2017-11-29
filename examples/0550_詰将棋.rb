@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
+mediator.board_reset_by_shape(<<~EOT)
 +---+
 |v玉|
 | ・|

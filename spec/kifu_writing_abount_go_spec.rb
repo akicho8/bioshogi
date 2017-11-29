@@ -4,7 +4,7 @@ module Bushido
   describe "古い棋譜にある「行」について" do
     def test1(str)
       mediator = Bushido::Mediator.new
-      mediator.board_reset_for_text(<<~EOT)
+      mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・v角|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|

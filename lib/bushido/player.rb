@@ -139,7 +139,7 @@ module Bushido
       # end
       @runner = Runner.new(self).execute(str)
       defense_form_store
-      @mediator.log_stock(self)
+      @mediator.hand_log_push(self)
     end
 
     def inspect
@@ -220,7 +220,7 @@ module Bushido
       end
 
       def call_name
-        location.call_name(mediator.teban.komaochi?)
+        location.call_name(mediator.turn_info.komaochi?)
       end
     end
 
@@ -287,12 +287,12 @@ module Bushido
         end
 
         # # ここがかなり重い
-        # StaticBoardInfo.collect do |static_board_info|
-        #   placements = Utils.board_point_realize(location: location, both_board_info: static_board_info.both_board_info)
+        # DefenseInfo.collect do |defense_info|
+        #   placements = Utils.board_point_realize(location: location, both_board_info: defense_info.both_board_info)
         #   a = placements.values.flatten.collect(&:to_s)
         #   b = board.surface.values.collect(&:to_mini_soldier).collect(&:to_s)
         #   match_p = (a - b).empty?
-        #   {key: static_board_info.key, placements: placements, match: match_p}
+        #   {key: defense_info.key, placements: placements, match: match_p}
         # end
 
         []

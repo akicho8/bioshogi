@@ -14,7 +14,7 @@ module Bushido
     #   $OPENING:相振飛車
     #
     class CsaHeaderInfo
-      include MemoryRecord
+      include ApplicationMemoryRecord
       memory_record [
         # CSA側               KIF/KI2 形式
         {key: "N+",           kif_side_key: "先手",     },

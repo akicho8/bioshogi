@@ -108,6 +108,5 @@ module Bushido
         end
       end
     end
-
   end
 end

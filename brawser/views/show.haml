@@ -1,28 +1,28 @@
 %div
   .text-center
     .btn-group
-      %a{href:"/?random_put=true", class: "btn"} ランダム
-      %a{href:"/?think_put_lv=0", class: "btn"} 読深0
-      %a{href:"/?think_put_lv=1", class: "btn"} 読深1
-      %a{href:"/?think_put_lv=2", class: "btn"} 読深2
+      %a{href:"/?random_put=true", "class": "btn"} ランダム
+      %a{href:"/?think_put_lv=0", "class": "btn"} 読深0
+      %a{href:"/?think_put_lv=1", "class": "btn"} 読深1
+      %a{href:"/?think_put_lv=2", "class": "btn"} 読深2
 
 - if @score_bars
   .text-center{:style => "margin-top:0.5em"}
     .progress
       - @score_bars.each do |sb|
-        %div{class:"bar #{sb[:style]}", style:"width:#{sb[:rate]}%"}= "#{sb[:location].mark}#{sb[:score]}"
+        %div{"class":"bar #{sb[:style]}", style:"width:#{sb[:rate]}%"}= "#{sb[:location].mark}#{sb[:score]}"
 
 .text-center
-  = "#{@mediator.counter_human_name}手目 #{@mediator.current_player.location.mark_with_name}番"
+  = "#{@mediator.counter_human_name}手目 #{@mediator.current_player.call_name}番"
 
 .text-center
-  %form{action: "/", method: "post", class: "form-inline kif-input-form"}
+  %form{action: "/", method: "post", "class": "form-inline kif-input-form"}
     .control-group
       .controls
-        %label{class: "control-label"}= Bushido::Location[:white].mark_with_name
+        %label{"class": "control-label"}= @mediator.player_at(:white).call_name
         %input{name: "location", type: "hidden", value: "white"}
-        %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.white?}
-        %input{type: "submit", value: "打", class: "btn btn-primary"}
+        %input{type: "text", name: "hand", value: "", "class":"input-mini", autofocus: @mediator.current_player.location.white?}
+        %input{type: "submit", value: "打", "class": "btn btn-primary"}
 
   %div
     - if @mediator.player_at(:white).pieces.present?
@@ -31,13 +31,13 @@
     - if @mediator.player_at(:black).pieces.present?
       .pieces= @mediator.player_at(:black).to_s_pieces
 
-  %form{action: "/", method: "post", class: "form-inline kif-input-form"}
+  %form{action: "/", method: "post", "class": "form-inline kif-input-form"}
     .control-group
       .controls
-        %label{class: "control-label"}= Bushido::Location[:black].mark_with_name
+        %label{"class": "control-label"}= @mediator.player_at(:black).call_name
         %input{name: "location", type: "hidden", value: "black"}
-        %input{type: "text", name: "hand", value: "", class:"input-mini", autofocus: @mediator.current_player.location.black?}
-        %input{type: "submit", value: "打", class: "btn btn-primary"}
+        %input{type: "text", name: "hand", value: "", "class":"input-mini", autofocus: @mediator.current_player.location.black?}
+        %input{type: "submit", value: "打", "class": "btn btn-primary"}
 
 - if @mediator.ki2_hand_logs.present?
   %p
@@ -46,7 +46,7 @@
         %option{selected: @mediator.ki2_hand_logs.last == hand_log}= "#{index.next} #{hand_log}"
 
 %p
-  %a{href:"/?reset=true", class: "btn"} リセット
+  %a{href:"/?reset=true", "class": "btn"} リセット
 
 - if @think_result
   %p= @think_result[:reading_hands].join(" ")

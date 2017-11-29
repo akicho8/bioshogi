@@ -41,26 +41,28 @@ seconds = Benchmark.realtime do
       csa_str = info.to_csa
 
       v = Parser.parse(kif_str)
-      assert_equal(v.to_kif, kif_str)
-      assert_equal(v.to_ki2, ki2_str)
-      assert_equal(v.to_csa, csa_str)
+      assert_equal v.to_kif, kif_str
+      assert_equal v.to_ki2, ki2_str
+      assert_equal v.to_csa, csa_str
 
       v = Parser.parse(ki2_str)
-      assert_equal(v.to_kif, kif_str)
-      assert_equal(v.to_ki2, ki2_str)
-      assert_equal(v.to_csa, csa_str)
+      assert_equal v.to_kif, kif_str
+      assert_equal v.to_ki2, ki2_str
+      assert_equal v.to_csa, csa_str
 
       v = Parser.parse(csa_str)
-      assert_equal(v.to_kif(header_skip: true), info.to_kif(header_skip: true))
-      assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
-      assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
+      assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
+      assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
+      assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
     rescue => error
       @result[error.class.name] += 1
 
-      # if error.kind_of?(Bushido::DoublePawn)
-      #   print "_"
-      #   next
-      # end
+      if false
+        if error.kind_of?(Bushido::DoublePawn)
+          print "_"
+          next
+        end
+      end
 
       print "E"
       @error_file.open("a") do |e|

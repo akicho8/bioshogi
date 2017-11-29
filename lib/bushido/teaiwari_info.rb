@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 module Bushido
-  class TeaiInfo
-    include MemoryRecord
+  class TeaiwariInfo
+    include ApplicationMemoryRecord
     memory_record [
       {
         key: "平手",
@@ -158,16 +158,23 @@ EOT
       end
     end
 
-    def board_parser
-      @board_parser ||= BoardParser.parse(board_body)
-    end
+    concerning :BasicMethods do
+      # 基本これを使う
+      def board_parser
+        @board_parser ||= BoardParser.parse(board_body)
+      end
 
-    def both_board_info
-      @both_board_info ||= board_parser.both_board_info
-    end
+      def both_board_info
+        @both_board_info ||= board_parser.both_board_info
+      end
 
-    def black_mini_soldiers
-      @black_mini_soldiers ||= both_board_info[Location[:black]].sort
+      def sorted_black_side_mini_soldiers
+        @sorted_black_side_mini_soldiers ||= black_side_mini_soldiers.sort
+      end
+
+      def black_side_mini_soldiers
+        @black_side_mini_soldiers ||= both_board_info[Location[:black]]
+      end
     end
 
     def name

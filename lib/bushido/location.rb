@@ -10,14 +10,10 @@
 #
 module Bushido
   class Location
-    include MemoryRecord
+    include ApplicationMemoryRecord
     memory_record [
-      # FIXME: name を「先手」でなく mark が name とする。平手なら「後手」をつかい、駒落ちなら komaochi_name を使う。
-
-      # mark: "▲",
-      # mark: "△",
-      {key: :black, name: "▲", reverse_mark: "▼", other_marks: ["☗", "b"], varrow: " ", angle: 0,   csa_sign: "+", hirate_name: "先手", komaochi_name: "下手"},
-      {key: :white, name: "△", reverse_mark: "▽", other_marks: ["☖", "w"], varrow: "v", angle: 180, csa_sign: "-", hirate_name: "後手", komaochi_name: "上手"},
+      {key: :black, name: "▲", hirate_name: "先手", komaochi_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗", "b"], },
+      {key: :white, name: "△", hirate_name: "後手", komaochi_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖", "w"], },
     ]
 
     alias index code
@@ -48,18 +44,10 @@ module Bushido
           end
         end
 
-        # "▲" など
+        # "☗" など
         unless v
           v = find { |e| e.match_target_values_set.include?(value) }
         end
-
-        # # "2手目" など
-        # unless v
-        #   if value.kind_of?(String) && md = value.match(/(?<turn_number>\d+)/)
-        #     index = md[:turn_number].to_i.pred
-        #     v = lookup(index.modulo(count))
-        #   end
-        # end
 
         v
       end
@@ -82,34 +70,32 @@ module Bushido
       end
     end
 
-    def call_name_key(komaochi)
-      if komaochi
-        :komaochi_name
-      else
-        :hirate_name
-      end
+    # 平手と駒落ちの呼名両方
+    def call_names
+      [hirate_name, komaochi_name]
     end
 
     def call_name(komaochi)
       send(call_name_key(komaochi))
     end
 
-    # 「▲先手」みたいなのを返す
-    #   mark_with_name # => "▲先手"
-    def mark_with_name
-      "#{mark}#{name}"
-    end
+    # # 「▲先手」みたいなのを返す
+    # #   mark_with_name # => "▲先手"
+    # def mark_with_name
+    #   name
+    #   # "#{mark}#{name}"
+    # end
 
     def mark
       name
     end
 
-    # 先手か？
+    # ▲？
     def black?
       key == :black
     end
 
-    # 後手か？
+    # △？
     def white?
       key == :white
     end
@@ -131,13 +117,6 @@ module Bushido
 
     alias next_location reverse
 
-    # HTMLにするとき楽なように後手なら transform: rotate(180deg) を返す
-    def style_transform
-      if angle.nonzero?
-        "transform: rotate(#{angle}deg)"
-      end
-    end
-
     # lookup で引ける値のセットを返す
     # 自分のクラスメソッド内で使っているだけなので protected にしたいけど ruby はできない
     def match_target_values_set
@@ -145,7 +124,7 @@ module Bushido
         key,
         mark,
         reverse_mark,
-        other_marks,
+        other_match_chars,
         name,
         name.chars.first,
         index,
@@ -156,8 +135,21 @@ module Bushido
       ].flatten.to_set
     end
 
-    def hirate_and_komaochi_name
-      [hirate_name, komaochi_name]
+    # HTMLにするとき楽なように後手なら transform: rotate(180deg) を返す
+    def style_transform
+      if angle.nonzero?
+        "transform: rotate(#{angle}deg)"
+      end
+    end
+
+    private
+
+    def call_name_key(komaochi)
+      if komaochi
+        :komaochi_name
+      else
+        :hirate_name
+      end
     end
   end
 

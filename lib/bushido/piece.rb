@@ -20,66 +20,67 @@
 
 module Bushido
   class Piece
-    include MemoryRecord
+    include ApplicationMemoryRecord
     memory_record [
       # 並び順はどこにも依存していない
-      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,          basic_weight: 9999, promoted_weight: 0,    mochigoma_weight: 9999},
+      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 9999, promoted_weight: 0,    mochigoma_weight: 9999},
       {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_basic_name: "HI", csa_promoted_name: "RY", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus, basic_weight: 2000, promoted_weight: 2200, mochigoma_weight: 2100},
       {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_basic_name: "KA", csa_promoted_name: "UM", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x,    basic_weight: 1800, promoted_weight: 2000, mochigoma_weight: 1890},
-      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,            promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,          basic_weight: 1200, promoted_weight: 0,    mochigoma_weight: 1260},
-      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,          basic_weight: 1000, promoted_weight: 1200, mochigoma_weight: 1050},
-      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,          basic_weight:  700, promoted_weight: 1200, mochigoma_weight:  735},
+      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 1200, promoted_weight: 0,    mochigoma_weight: 1260},
+      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight: 1000, promoted_weight: 1200, mochigoma_weight: 1050},
+      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  700, promoted_weight: 1200, mochigoma_weight:  735},
       {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_basic_name: "KY", csa_promoted_name: "NY", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  600, promoted_weight: 1200, mochigoma_weight:  630},
-      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,            promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,          basic_weight:  100, promoted_weight: 1200, mochigoma_weight:  105},
+      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  100, promoted_weight: 1200, mochigoma_weight:  105},
     ]
 
     class << self
       prepend Module.new {
         # 駒オブジェクトを得る
-        #   Piece.get(nil)       # => nil
-        #   Piece.get("歩").name # => "歩"
-        #   Piece.get("と").name # => "歩"
-        #   「と」も「歩」も区別しない。区別したい場合は promoted_fetch を使うこと
+        #   Piece.lookup(nil)       # => nil
+        #   Piece.lookup("歩").name # => "歩"
+        #   Piece.lookup("と").name # => "歩"
+        #   「と」も「歩」も区別しない。区別したい場合は new_with_promoted を使うこと
         #   エラーにしたいときは fetch を使う
         def lookup(arg)
-          super || basic_get(arg) || promoted_get(arg)
+          super || basic_lookup(arg) || promoted_lookup(arg)
         end
 
-        alias [] lookup
-
-        alias get lookup
+        # alias [] lookup
+        # alias get lookup
 
         # Piece.fetch("歩").name # => "歩"
         # Piece.fetch("卍")      # => PieceNotFound
         def fetch(arg)
-          lookup(arg) or raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+          super
+        rescue => error
+          raise PieceNotFound, "#{arg.inspect} に対応する駒がありません\n#{error.message}"
         end
 
         # 「歩」や「と」を駒オブジェクトと成フラグに分離
-        #   Piece.promoted_fetch("歩") # => <MiniSoldier piece:"歩">
-        #   Piece.promoted_fetch("と") # => <MiniSoldier piece:"歩", promoted: true>
-        def promoted_fetch(arg)
-          case
-          when piece = basic_get(arg)
-            MiniSoldier[piece: piece, promoted: false]
-          when piece = promoted_get(arg)
-            MiniSoldier[piece: piece, promoted: true]
-          else
-            raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
-          end
-        end
+        #   MiniSoldier.new_with_promoted("歩") # => <MiniSoldier piece:"歩">
+        #   MiniSoldier.new_with_promoted("と") # => <MiniSoldier piece:"歩", promoted: true>
+        # def new_with_promoted(arg)
+        #   case
+        #   when piece = basic_lookup(arg)
+        #     MiniSoldier[piece: piece, promoted: false]
+        #   when piece = promoted_lookup(arg)
+        #     MiniSoldier[piece: piece, promoted: true]
+        #   else
+        #     raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+        #   end
+        # end
 
-        # FIXME: 速くする
-        def csa_promoted_fetch(arg)
-          case
-          when piece = find{|e|e.csa_basic_name == arg}
-            MiniSoldier[piece: piece, promoted: false]
-          when piece = find{|e|e.csa_promoted_name == arg}
-            MiniSoldier[piece: piece, promoted: true]
-          else
-            raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
-          end
-        end
+        # # FIXME: 速くする
+        # def csa_new_with_promoted(arg)
+        #   case
+        #   when piece = find{|e|e.csa_basic_name == arg}
+        #     MiniSoldier[piece: piece, promoted: false]
+        #   when piece = find{|e|e.csa_promoted_name == arg}
+        #     MiniSoldier[piece: piece, promoted: true]
+        #   else
+        #     raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
+        #   end
+        # end
 
         # 台上の持駒文字列をハッシュ配列化
         #   hold_pieces_s_to_a("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
@@ -87,18 +88,12 @@ module Bushido
           Utils.hold_pieces_s_to_a(*args)
         end
 
-        private
-
-        def basic_get(arg)
-          find do |piece|
-            piece.basic_names.include?(arg.to_s)
-          end
+        def basic_lookup(arg)
+          find { |piece| piece.basic_names.include?(arg.to_s) }
         end
 
-        def promoted_get(arg)
-          find do |piece|
-            piece.promoted_names.include?(arg.to_s)
-          end
+        def promoted_lookup(arg)
+          find { |piece| piece.promoted_names.include?(arg.to_s) }
         end
       }
     end

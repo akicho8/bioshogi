@@ -9,7 +9,7 @@ mediator.board_reset_for_hash("▲" => "八枚落ち", "△" => "十九枚落ち
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~BOARD)
+mediator.board_reset_by_shape(<<~BOARD)
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
 | ・v飛 ・ ・ ・ ・ ・v角 ・|

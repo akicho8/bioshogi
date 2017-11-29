@@ -1,19 +1,19 @@
 require "./example_helper"
 
-TeaiInfo.each do |teai_info|
+TeaiwariInfo.each do |teaiwari_info|
   mediator = Mediator.new
-  mediator.board_reset(teai_info.key)
+  mediator.board_reset(teaiwari_info.key)
   puts mediator.board
 
   Location.each do |location|
     mini_soldiers = mediator.board.surface.values.find_all {|e| e.player.location == location }
-    mini_soldiers = mini_soldiers.collect {|e| e.to_mini_soldier.merge(point: e.point.reverse_if_white_location(location)) }
+    mini_soldiers = mini_soldiers.collect {|e| e.to_mini_soldier.merge(point: e.point.as_black_side(location)) }
     mini_soldiers = mini_soldiers.collect {|e| e.merge(location: Location[:black]) }
     mini_soldiers = mini_soldiers.sort
 
-    # p TeaiInfo.first.both_board_info[Location[:black]].sort.collect(&:name)
+    # p TeaiwariInfo.first.both_board_info[Location[:black]].sort.collect(&:name)
     # p mini_soldiers.collect(&:name)
-    e = TeaiInfo.find do |e|
+    e = TeaiwariInfo.find do |e|
       e.both_board_info[Location[:black]].sort == mini_soldiers
     end
     tp e.key # => :平手, :平手, :香落ち, :平手, :角落ち, :平手, :飛車落ち, :平手, :飛車香落ち, :平手, :二枚落ち, :平手, :四枚落ち, :平手, :六枚落ち, :平手, :八枚落ち, :平手, :十枚落ち, :平手, :十九枚落ち, :平手, :二十枚落ち, :平手

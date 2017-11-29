@@ -89,7 +89,7 @@ module Bushido
 
           # 並びを綺麗にする
           Location.each do |e|
-            e.hirate_and_komaochi_name.each do |e|
+            e.call_names.each do |e|
               key = "#{e}の持駒"
               if v = header[key].presence
                 v = Utils.hold_pieces_s_to_a(v)
@@ -134,7 +134,7 @@ module Bushido
       end
 
       # def teban_insance
-      #   @teban ||= Teban.new(header["手合割"])
+      #   @turn_info ||= TurnInfo.new(header["手合割"])
       # end
 
       concerning :ConverterMethods do
@@ -178,18 +178,18 @@ module Bushido
             end
           }.join
 
-          teai_name = nil
+          teaiwari_name = nil
           if true
             obj = Mediator.new
             obj.board_reset_old(@board_source || header["手合割"])
-            teai_name = obj.board.teai_name
-            if teai_name
-              out << "#{Parser::CsaParser.comment_char} 手合割:#{teai_name}\n"
+            teaiwari_name = obj.board.teaiwari_name
+            if teaiwari_name
+              out << "#{Parser::CsaParser.comment_char} 手合割:#{teaiwari_name}\n"
             end
             if options[:board_expansion]
               out << obj.board.to_csa
             else
-              if teai_name == "平手"
+              if teaiwari_name == "平手"
                 out << "PI\n"
               else
                 out << obj.board.to_csa
@@ -198,9 +198,9 @@ module Bushido
           end
 
           # 2通りある
-          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (teban = Teban.new(teai_name))
-          # 2. mediator.teban を利用する
-          out << mediator.teban.base_location.csa_sign + "\n"
+          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(teaiwari_name))
+          # 2. mediator.turn_info を利用する
+          out << mediator.turn_info.base_location.csa_sign + "\n"
 
           out << mediator.hand_logs.collect.with_index { |e, i|
             if clock_exist?
@@ -329,7 +329,7 @@ module Bushido
         def mediator
           @mediator ||= Mediator.new.tap do |mediator|
             Location.each do |e|
-              e.hirate_and_komaochi_name.each do |e|
+              e.call_names.each do |e|
                 if v = @header["#{e}の持駒"]
                   mediator.player_at(e).pieces_set(v)
                 end
@@ -337,11 +337,11 @@ module Bushido
             end
 
             if @board_source
-              mediator.board_reset_for_text(@board_source)
+              mediator.board_reset_by_shape(@board_source)
               if header["手合割"].blank? || header["手合割"] == "その他"
-                mediator.teban = Teban.new("落")
+                mediator.turn_info = TurnInfo.new("落")
               else
-                mediator.board_reset_for_text2
+                mediator.board_reset_by_shape2
               end
             else
               mediator.board_reset(header["手合割"] || "平手")
@@ -378,22 +378,22 @@ module Bushido
 
           obj = Mediator.new
           if @board_source
-            obj.board_reset_for_text(@board_source)
+            obj.board_reset_by_shape(@board_source)
             if header["手合割"].blank? || header["手合割"] == "その他"
-              obj.teban = Teban.new("落")
+              obj.turn_info = TurnInfo.new("落")
             else
-              obj.board_reset_for_text2
+              obj.board_reset_by_shape2
             end
           else
             obj.board_reset(header["手合割"] || "平手")
           end
 
-          if v = obj.board.teai_name
+          if v = obj.board.teaiwari_name
             header["手合割"] = v
 
             # 手合割がわかるとき持駒が空なら消す
             Location.each do |e|
-              e.hirate_and_komaochi_name.each do |e|
+              e.call_names.each do |e|
                 key = "#{e}の持駒"
                 if v = @header[key]
                   if v.blank?
@@ -410,13 +410,13 @@ module Bushido
             header["手合割"] ||= "その他"
 
             Location.each do |location|
-              key = "#{location.call_name(obj.teban.komaochi?)}の持駒"
+              key = "#{location.call_name(obj.turn_info.komaochi?)}の持駒"
               v = header[key]
               if v.blank?
                 header[key] = "なし"
               end
             end
-            out << raw_header_as_string.gsub(/(#{Location[:white].call_name(obj.teban.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
+            out << raw_header_as_string.gsub(/(#{Location[:white].call_name(obj.turn_info.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
           out.join

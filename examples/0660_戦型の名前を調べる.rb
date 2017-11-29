@@ -21,7 +21,7 @@ info[Location[:black]].collect(&:name) # =>
 info[Location[:white]].collect(&:name) # => 
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
+mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 | ・ ・v銀v金v玉 ・v銀 ・ ・|
 | ・ ・ ・ ・ ・ ・v金v角 ・|

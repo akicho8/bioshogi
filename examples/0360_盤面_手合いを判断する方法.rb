@@ -14,7 +14,4 @@ info1 = BoardParser.parse(<<~EOT)
 +---------------------------+
 EOT
 
-info2 = TeaiInfo["香落ち"].both_board_info
-info1[Location[:black]] == info2[Location[:black]]        # => true
-
-TeaiInfo.find {|e| e.both_board_info[Location[:black]] == info1[Location[:black]] }.name # => "香落ち"
+info1.both_board_info[Location[:black]].sort == TeaiwariInfo["香落ち"].both_board_info[Location[:black]].sort # => true

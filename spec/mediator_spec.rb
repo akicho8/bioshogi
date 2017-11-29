@@ -6,7 +6,7 @@ module Bushido
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute(["７六歩", "３四歩"])
-      mediator.teban.counter.should == 2
+      mediator.turn_info.counter.should == 2
       mediator.turn_max.should == 2
       mediator.judgment_message == "まで2手で後手の勝ち"
       mediator.to_s.should == <<-EOT
@@ -90,7 +90,7 @@ EOT
     it "状態の復元" do
       mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
-      mediator.teban.counter.should            == dup.teban.counter
+      mediator.turn_info.counter.should            == dup.turn_info.counter
       mediator.kif_hand_logs.should    == dup.kif_hand_logs
       mediator.ki2_hand_logs.should     == dup.ki2_hand_logs
       mediator.to_s.should               == dup.to_s
@@ -140,7 +140,7 @@ EOT
 
     #     it "debug" do
     #       mediator = Mediator.start
-    #       mediator.board_reset_for_text(<<~BOARD)
+    #       mediator.board_reset_by_shape(<<~BOARD)
     # +------+
     # | 金 ・|
     # | ・ 金|

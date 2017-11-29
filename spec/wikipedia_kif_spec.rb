@@ -4,7 +4,7 @@ module Bushido
   describe "ウィキペディアにある表記通りの解釈ができる" do
     def test1(str)
       mediator = Bushido::Mediator.new
-      mediator.board_reset_for_text(<<~EOT)
+      mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ と ・ ・ ・|
 | ・ 銀 ・ ・ と と ・ 龍 ・|

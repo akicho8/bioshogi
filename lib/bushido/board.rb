@@ -54,7 +54,7 @@ module Bushido
       # 盤面の指定座標の取得
       #   board.lookup["５五"] # => nil
       def lookup(point)
-        @surface[Point[point].to_xy]
+        @surface[Point[point].to_xy] # FIXME: to_xy をリアルな配列ではなくシンボルになるようにすれば速度改善できるか……？
       end
 
       # lookupのエイリアス
@@ -106,37 +106,34 @@ module Bushido
       end
     end
 
-    concerning :TeaiMethods do
+    concerning :TeaiwariMethods do
       # ▲が平手であることが条件
-      def teai_name
-        if teai_name_by_location(:black) == "平手"
-          teai_name_by_location(:white)
+      def teaiwari_name
+        if teaiwari_name_by_location(:black) == "平手"
+          teaiwari_name_by_location(:white)
         end
       end
 
       private
 
       # location 側の手合割を文字列で得る
-      def teai_name_by_location(location)
-        teai_info_by_location(location)&.name
+      def teaiwari_name_by_location(location)
+        teaiwari_info_by_location(location)&.name
       end
 
-      # location 側の手合割を得る
-      def teai_info_by_location(location)
+      # location 側の手合割情報を得る
+      def teaiwari_info_by_location(location)
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        mini_soldiers = @surface.values.collect { |e|
-          if e.player.location.key == location.key
-            e.to_mini_soldier.merge(point: e.point.reverse_if_white_location(location), location: Location[:black])
+        sorted_black_side_mini_soldiers = @surface.values.collect { |e|
+          if e.location == location
+            e.to_mini_soldier.as_black_side
           end
         }.compact.sort
 
-        # p mini_soldiers.first
-        # p TeaiInfo.first.black_mini_soldiers.first
-
-        TeaiInfo.find do |e|
-          e.black_mini_soldiers == mini_soldiers
+        TeaiwariInfo.find do |e|
+          e.sorted_black_side_mini_soldiers == sorted_black_side_mini_soldiers
         end
       end
     end

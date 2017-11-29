@@ -9,7 +9,9 @@ module Bushido
 
       def parse(source, **options)
         parser = parser_class_for(source)
-        parser or raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
+        unless parser
+          raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
+        end
         parser.parse(source, options)
       end
 
@@ -40,32 +42,34 @@ module Bushido
         @options = options
       end
 
+      # Location ごちゃまぜの MiniSoldier の配列
       def mini_soldiers
         @mini_soldiers ||= []
       end
 
+      # {Location[:black] => [<MiniSoldier>], Location[:white] => [...]}
       def both_board_info
         @both_board_info ||= __both_board_info
       end
 
-      def side_board_info_by(location)
-        both_board_info[location] || []
-      end
+      # def side_board_info_by(location)
+      #   both_board_info[location] || []
+      # end
 
-      def black_side_mini_soldiers
-        both_board_info[Location[:black]] || []
-      end
+      # def black_side_mini_soldiers
+      #   both_board_info[Location[:black]] || []
+      # end
 
       private
 
       def __both_board_info
         v = mini_soldiers.group_by { |e| e[:location] }
-        Location.each { |e| v[e] ||= [] }
+        Location.each { |e| v[e] ||= [] } # FIXME: これはダサい
         v
       end
 
-      def lines
-        @lines ||= Parser.source_normalize(@source).strip.lines.to_a
+      def shape_lines
+        @shape_lines ||= Parser.source_normalize(@source).strip.lines.to_a
       end
     end
 
@@ -100,9 +104,33 @@ module Bushido
       end
 
       def parse
-        cell_width = 3
+        x_units = x_units_parse
 
-        s = lines.first
+        mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
+        y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
+        inlines = mds.collect { |v| v[:inline] }
+
+        inlines.each.with_index do |s, y|
+          # 1文字 + (全角1文字 or 半角2文字)
+          # p s
+
+          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(location_char, piece), x|
+            if Piece.all_names.include?(piece)
+              unless x_units[x] && y_units[y]
+                raise SyntaxDefact, "盤面の情報が読み取れません。#{piece.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
+              end
+              point = Point[[x_units[x], y_units[y]].join]
+              location = Location.fetch(location_char)
+              mini_soldiers << MiniSoldier.new_with_promoted(piece).merge(point: point, location: location)
+            end
+          end
+        end
+      end
+
+      private
+
+      def x_units_parse
+        s = shape_lines.first
         if s.include?("-")
           if s.count("-").modulo(cell_width).nonzero?
             raise SyntaxDefact, "横幅が#{cell_width}桁毎になっていません"
@@ -112,24 +140,11 @@ module Bushido
         else
           x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
         end
+        x_units
+      end
 
-        mds = lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
-        inlines = mds.collect { |v| v[:inline] }
-
-        inlines.each.with_index do |s, y|
-          # 1文字 + (全角1文字 or 半角2文字)
-          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each_with_index do |(location_char, piece), x|
-            if Piece.all_names.include?(piece)
-              unless x_units[x] && y_units[y]
-                raise SyntaxDefact, "盤面の情報が読み取れません。#{piece.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
-              end
-              point = Point[[x_units[x], y_units[y]].join]
-              location = Location.fetch(location_char)
-              mini_soldiers << Piece.promoted_fetch(piece).merge(point: point, location: location)
-            end
-          end
-        end
+      def cell_width
+        3
       end
     end
 
@@ -148,16 +163,16 @@ module Bushido
       end
 
       def parse
-        lines.each do |line|
+        shape_lines.each do |line|
           if md = line.match(/P(?<y>\d+)(?<cells>.*)/)
             y = md[:y]
-            # 空白または * の文字を 1..3 とすることで行末のスペースが消えても問題なくなる
+            # 空白または * の文字を 1..3 とすることで行末スペースの有無に依存しなくなる
             cells = md[:cells].scan(/\S{3}|[\s\*]{1,3}/)
             cells.reverse_each.with_index(1) do |e, x|
-              if md = e.match(/(?<mark>\S)(?<piece>\S{2})/)
-                location = Location[md[:mark]]
+              if md = e.match(/(?<csa_sign>\S)(?<piece>\S{2})/)
+                location = Location[md[:csa_sign]]
                 point = Point["#{x}#{y}"]
-                mini_soldiers << Piece.csa_promoted_fetch(md[:piece]).merge(point: point, location: location)
+                mini_soldiers << MiniSoldier.csa_new_with_promoted(md[:piece]).merge(point: point, location: location)
               end
             end
           end

@@ -26,10 +26,10 @@ class MediatorDecorator < SimpleDelegator
           cell = soldier.piece_current_name
         end
         if hand_log = hand_logs.last
-          if hand_log.point == Bushido::Point[[x, y]]
+          if hand_log.point_to == Bushido::Point[[x, y]]
             tag_class << "last_point"
           end
-          if hand_log.origin_point == Bushido::Point[[x, y]]
+          if hand_log.point_from == Bushido::Point[[x, y]]
             tag_class << "last_point2"
           end
         end

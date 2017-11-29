@@ -11,16 +11,16 @@ module Bushido
 
       def human_input_regexp
         sankaku = /(?<sankaku>[#{Location.triangles_str}])/o
-        point = /(?<point>#{Point.regexp})/o
+        point_to = /(?<point_to>#{Point.regexp})/o
         same = /(?<same>同)\p{blank}*/
 
         /
           #{sankaku}?
-          (#{point}#{same}|#{same}#{point}|#{point}|#{same}) # 12同 or 同12 or 12 or 同 に対応
+          (#{point_to}#{same}|#{same}#{point_to}|#{point_to}|#{same}) # 12同 or 同12 or 12 or 同 に対応
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右直]?[寄引上行]?)
           (?<motion2>不?成|打|合|生)?
-          (?<origin_point>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように "()" も含めて取る
+          (?<point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように "()" も含めて取る
         /ox
       end
 
@@ -37,7 +37,7 @@ module Bushido
       end
     end
 
-    attr_reader :point, :origin_point, :piece, :source, :player
+    attr_reader :point_to, :point_from, :piece, :source, :player
 
     def initialize(player)
       @player = player
@@ -47,12 +47,12 @@ module Bushido
       @source = str
 
       # hand_log を作るための変数たち
-      @point           = nil
+      @point_to           = nil
       @piece           = nil
       @promoted        = nil
       @promote_trigger = nil
       @strike_trigger  = nil
-      @origin_point    = nil
+      @point_from    = nil
       @candidate       = nil
 
       @mini_soldier = nil
@@ -74,10 +74,10 @@ module Bushido
         end
 
         if @md[:csa_from]
-          @md[:origin_point] = @md[:csa_from]
+          @md[:point_from] = @md[:csa_from]
         end
 
-        @md[:point] = @md[:csa_to]
+        @md[:point_to] = @md[:csa_to]
 
         if @md[:csa_basic_name]
           # 普通の駒
@@ -90,7 +90,7 @@ module Bushido
           # だから移動元の駒の情報で判断するしかない
           _piece = Piece.find{|e|e.csa_promoted_name == @md[:csa_promoted_name]}
 
-          v = @player.board[@md[:origin_point]] or raise MustNotHappen
+          v = @player.board[@md[:point_from]] or raise MustNotHappen
           if v.promoted?
             @md[:piece] = v.piece.promoted_name
           else
@@ -100,12 +100,12 @@ module Bushido
         end
       end
 
-      if @md[:origin_point]
-        @md[:origin_point] = @md[:origin_point].slice(/\d+/)
+      if @md[:point_from]
+        @md[:point_from] = @md[:point_from].slice(/\d+/)
       end
 
       begin
-        @mini_soldier = Piece.promoted_fetch(@md[:piece])
+        @mini_soldier = MiniSoldier.new_with_promoted(@md[:piece])
         @piece, @promoted = @mini_soldier.values_at(:piece, :promoted)
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
@@ -145,7 +145,7 @@ module Bushido
       @soldiers = @player.soldiers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
-        e.movable_infos.any? { |e| e[:point] == @point } && # 目的地に来れる
+        e.movable_infos.any? { |e| e[:point] == @point_to } && # 目的地に来れる
         true
       }
       @candidate = @soldiers.collect(&:clone)
@@ -156,23 +156,23 @@ module Bushido
         end
         soldier_put
       else
-        if @md[:origin_point]
-          @origin_point = Point.parse(@md[:origin_point])
+        if @md[:point_from]
+          @point_from = Point.parse(@md[:point_from])
         end
 
-        unless @origin_point
+        unless @point_from
           find_origin_point     # KI2の場合
         end
 
         unless @done
-          @source_soldier = @player.board.lookup(@origin_point)
+          @source_soldier = @player.board.lookup(@point_from)
 
           unless @promote_trigger
             if @source_soldier.promoted? && !@promoted
               # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
               if @player.piece_lookup(@piece)
                 @strike_trigger = true
-                @origin_point = nil
+                @point_from = nil
                 soldier_put
               else
                 raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
@@ -180,7 +180,7 @@ module Bushido
             end
           end
           unless @done
-            @player.move_to(@origin_point, @point, @promote_trigger)
+            @player.move_to(@point_from, @point_to, @promote_trigger)
           end
         end
       end
@@ -192,12 +192,12 @@ module Bushido
 
     def hand_log
       HandLog.new({
-          point: @point,
+          point_to: @point_to,
           piece: @piece,
           promoted: @promoted,
           promote_trigger: @promote_trigger,
           strike_trigger: @strike_trigger,
-          origin_point: @origin_point,
+          point_from: @point_from,
           player: @player,
           candidate: @candidate,
           point_same_p: point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
@@ -207,25 +207,25 @@ module Bushido
     private
 
     def read_point
-      @point = nil
+      @point_to = nil
       case
       when @md[:same] == "同"
         if @player.mediator && hand_log = @player.mediator.hand_logs.last
-          @point = hand_log.point
+          @point_to = hand_log.point_to
         end
-        unless @point
+        unless @point_to
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
 
         # 記事などで改ページしたとき、明示的に "同２四歩" と書く場合もあるとのこと
-        if @md[:point]
-          prefix_pt = Point.parse(@md[:point])
-          if Point.parse(@md[:point]) != @point
-            raise SamePointDiff, "同は#{@point}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
+        if @md[:point_to]
+          prefix_pt = Point.parse(@md[:point_to])
+          if Point.parse(@md[:point_to]) != @point_to
+            raise SamePointDiff, "同は#{@point_to}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
           end
         end
-      when @md[:point]
-        @point = Point.parse(@md[:point])
+      when @md[:point_to]
+        @point_to = Point.parse(@md[:point_to])
       else
         raise PointSyntaxError, "移動先の座標が不明です : #{@source.inspect}"
       end
@@ -236,7 +236,7 @@ module Bushido
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
       # # 指定の場所に来れる盤上の駒に絞る
-      # @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point} }
+      # @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point_to} }
       # @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
       # @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
       # @candidate = @soldiers.collect{|s|s.clone}
@@ -251,12 +251,12 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
-          soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), point: @point, promoted: @promoted)
+          soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), point: @point_to, promoted: @promoted)
           @player.put_on_with_valid(soldier)
           @player.soldiers << soldier
           @done = true
         else
-          raise MovableSoldierNotFound, "#{@player.location.name}の手番で #{@point.name.inspect} の地点に移動できる #{@mini_soldier.piece_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
+          raise MovableSoldierNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@mini_soldier.piece_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
         end
       end
 
@@ -270,12 +270,12 @@ module Bushido
             find_soldiers
           end
           if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
           end
         end
 
         # Point[@player.board.surface.invert[@soldiers.first]] として引くことも可能だけど遅い
-        @origin_point = @soldiers.first.point
+        @point_from = @soldiers.first.point
       end
     end
 
@@ -290,33 +290,33 @@ module Bushido
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else
           m = _method([:>, :<], cond)
-          @soldiers = @soldiers.find_all{|soldier|@point.x.value.send(m, soldier.point.x.value)}
+          @soldiers = @soldiers.find_all{|soldier|@point_to.x.value.send(m, soldier.point.x.value)}
         end
       end
       cond = "上引"
       if @md[:motion1].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
-        @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
+        @soldiers = @soldiers.find_all{|soldier|@point_to.y.value.send(m, soldier.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
       if true
         if @md[:motion1].include?("寄")
           # TODO: 厳密には左右1個分だけチェックする
-          @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
+          @soldiers = @soldiers.find_all { |e| e.point.y == @point_to.y }
         end
 
         # 真下にあるもの
         if @md[:motion1].include?("直")
           @soldiers = @soldiers.find_all { |e|
-            e.point.x == @point.x &&
-            e.point.y.value == @point.y.value + @player.location.which_val(1, -1)
+            e.point.x == @point_to.x &&
+            e.point.y.value == @point_to.y.value + @player.location.which_val(1, -1)
           }
         end
       end
 
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -336,7 +336,7 @@ module Bushido
     end
 
     def soldier_put
-      soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point)
+      soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point_to)
       @player.put_on_with_valid(soldier)
       @player.soldiers << soldier
       @done = true
@@ -347,7 +347,7 @@ module Bushido
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
         if hand_log = hand_logs.reverse.find { |e| e.player.location != @player.location }
-          hand_log.point == @point
+          hand_log.point_to == @point_to
         end
       end
     end

@@ -1,11 +1,11 @@
 .well
-  - Bushido::StaticBoardInfo.each do |stock|
+  - Bushido::DefenseInfo.each do |stock|
     %a{href:"/tactics_and_enclosure##{stock[:key]}"}= "【#{stock[:key]}】"
 
 .text-center
-  - Bushido::StaticBoardInfo.each do |stock|
+  - Bushido::DefenseInfo.each do |stock|
     - mediator = Bushido::Mediator.new
-    - mediator.board_reset("▲" => stock[:key], "△" => stock[:key])
+    - mediator.board_reset_for_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
       %a{href: Bushido::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]

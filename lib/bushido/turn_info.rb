@@ -1,18 +1,18 @@
 # frozen-string-literal: true
 
 module Bushido
-  class Teban
+  class TurnInfo
     attr_accessor :counter
-    attr_accessor :teai_key
-    # attr_accessor :teai_info
+    attr_accessor :teaiwari_key
+    # attr_accessor :teaiwari_info
 
-    def initialize(teai_key = nil)
-      @teai_key = teai_key.presence || "平手"
+    def initialize(teaiwari_key = nil)
+      @teaiwari_key = teaiwari_key.presence || "平手"
       @counter = 0
     end
 
     def komaochi?
-      @teai_key.to_s.include?("落")
+      @teaiwari_key.to_s.include?("落")
     end
 
     def base_location

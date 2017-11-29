@@ -1,33 +1,77 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset_for_text(<<~EOT)
-  ９ ８ ７ ６ ５ ４ ３ ２ １
+mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
-|v香v桂v銀v金v玉v金v銀v桂v香|一
-| ・v飛 ・ ・ ・ ・ ・v角 ・|二
-|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-| ・ ・ 歩 歩 歩 ・ ・ ・ ・|六
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-| ・ 角 金 銀 金 ・ ・ ・ ・|八
-| ・ ・ ・ 玉 ・ ・ ・ ・ ・|九
+|v香 ・ ・ ・ ・v銀 ・ ・ ・|
+| ・ ・ ・v金v金v玉 ・ ・ ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| ・ ・ 歩 歩 歩 ・ ・ ・ ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| ・ ・ 金 銀 金 ・ ・ ・ ・|
+| 香 ・ ・ 玉 ・ ・ ・ ・ ・|
 +---------------------------+
   EOT
 
 location = Location[:black]
 
-static_board_info = StaticBoardInfo["カニ囲い"]
-mini_soldiers = static_board_info.board_parser.mini_soldiers.collect do |e|
-  e.merge(point: e[:point].reverse_if_white_location(location), location: location)
-end
+soldiers = mediator.board.surface.values.find_all {|e|e.location == location }
+tp soldiers.collect(&:name)
+sorted_black_side_mini_soldiers = soldiers.collect{|e|e.to_mini_soldier.as_black_side}.sort
+tp sorted_black_side_mini_soldiers
 
-# location 駒に絞って調べる
-flag = mini_soldiers.all? do |e|
-  if soldier = mediator.board[e[:point]]
-    e == soldier.to_mini_soldier
+defense_info = DefenseInfo.find do |e|
+  p e.name
+
+  # 含まれる？
+  e.black_side_mini_soldiers.all? do |e|
+    if soldier = mediator.board[e[:point]]
+      if soldier.location == location
+        soldier.to_mini_soldier.as_black_side == e
+      end
+    end
   end
-end
 
-flag                            # => true
+  # # 完全一致
+  # e.sorted_black_side_mini_soldiers == sorted_black_side_mini_soldiers
+end
+p defense_info&.name
+# >> "v香 ・ ・ ・ ・v銀 ・ ・ ・"
+# >> " ・ ・ ・v金v金v玉 ・ ・ ・"
+# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
+# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
+# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
+# >> " ・ ・ 歩 歩 歩 ・ ・ ・ ・"
+# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
+# >> " ・ ・ 金 銀 金 ・ ・ ・ ・"
+# >> " 香 ・ ・ 玉 ・ ・ ・ ・ ・"
+# >> |----------|
+# >> | ▲７六歩 |
+# >> | ▲６六歩 |
+# >> | ▲５六歩 |
+# >> | ▲７八金 |
+# >> | ▲６八銀 |
+# >> | ▲５八金 |
+# >> | ▲９九香 |
+# >> | ▲６九玉 |
+# >> |----------|
+# >> |-------+----------+-------+----------|
+# >> | piece | promoted | point | location |
+# >> |-------+----------+-------+----------|
+# >> | 香    | false    | ９九  | ▲       |
+# >> | 歩    | false    | ７六  | ▲       |
+# >> | 金    | false    | ７八  | ▲       |
+# >> | 歩    | false    | ６六  | ▲       |
+# >> | 銀    | false    | ６八  | ▲       |
+# >> | 玉    | false    | ６九  | ▲       |
+# >> | 歩    | false    | ５六  | ▲       |
+# >> | 金    | false    | ５八  | ▲       |
+# >> |-------+----------+-------+----------|
+# >> "カニ囲い"
+# >> " ・ ・ 歩 歩 歩 ・ ・ ・ ・"
+# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
+# >> " ・ ・ 金 銀 金 ・ ・ ・ ・"
+# >> " ・ ・ ・ 玉 ・ ・ ・ ・ ・"
+# >> "カニ囲い"
