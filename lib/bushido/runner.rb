@@ -10,10 +10,12 @@ module Bushido
       end
 
       def human_input_regexp
+        sankaku = /(?<sankaku>[#{Location.triangles_str}])/o
         point = /(?<point>#{Point.regexp})/o
         same = /(?<same>同)\p{blank}*/
 
         /
+          #{sankaku}?
           (#{point}#{same}|#{same}#{point}|#{point}|#{same}) # 12同 or 同12 or 12 or 同 に対応
           (?<piece>#{Piece.all_names.join("|")})
           (?<motion1>[左右直]?[寄引上行]?)
@@ -27,6 +29,7 @@ module Bushido
         csa_promoted_names = Piece.collect(&:csa_promoted_name).compact.join("|")
 
         /
+          (?<plus_or_minus>[+-])?
           (?<csa_from>[0-9]{2}) # 00 = 駒台
           (?<csa_to>[1-9]{2})
           ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))

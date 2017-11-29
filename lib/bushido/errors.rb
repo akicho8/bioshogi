@@ -50,6 +50,10 @@ module Bushido
     end
   end
 
+  # パース時にオプションで例外を抑制できる系の反則
+  class RuleError2 < RuleError
+  end
+
   class HistroyStackEmpty < SyntaxDefact
   end
 
@@ -75,8 +79,6 @@ module Bushido
   end
 
   # 別に問題ないけど将棋のルール上エラーとするもの
-  class DoublePawn < RuleError
-  end
 
   class DeadPieceRuleError < RuleError
   end
@@ -100,5 +102,13 @@ module Bushido
   end
 
   class AitenoKomaUgokashitaError < RuleError
+  end
+
+  # 例外を抑制できる系の反則
+
+  class DoublePawn < RuleError2
+  end
+
+  class TebanchauyoError < RuleError2
   end
 end

@@ -217,6 +217,20 @@ module Bushido
       # 棋譜入力
       def execute(str)
         Array.wrap(str).each do |str|
+
+          # ▲△があれば見て手番と一致しているか確認する
+          # なければチェックしなくていい
+          if true
+            if md = str.match(Runner.input_regexp)
+              if key = md[:sankaku] || md[:plus_or_minus]
+                location = Location.fetch(key)
+                unless current_player.location == Location.fetch(key)
+                  raise TebanchauyoError, "#{current_player.call_name}番で#{reverse_player.call_name}が着手しました : #{str}"
+                end
+              end
+            end
+          end
+
           current_player.execute(str)
           teban.counter += 1
         end

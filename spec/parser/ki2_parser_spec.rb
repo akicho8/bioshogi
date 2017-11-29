@@ -5,7 +5,7 @@ module Bushido
     it "棋譜部分のパース" do
       Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input].should == "７六歩(77)"
       Parser::Ki2Parser.parse("７六歩").move_infos.first[:input].should == "７六歩"
-      Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input].should == "７六歩"
+      Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input].should == "△７六歩"
     end
 
     it "激指定跡道場4のクリップボード書き出し結果が読める" do
@@ -79,10 +79,10 @@ EOT
 
       it "棋譜の羅列" do
         @result.move_infos.should == [
-          {input: "７六歩"},
-          {input: "３四歩", comments: ["コメント1"]},
-          {input: "６六歩"},
-          {input: "８四歩", comments: ["コメント2"]},
+          {input: "▲７六歩"},
+          {input: "△３四歩", comments: ["コメント1"]},
+          {input: "▲６六歩"},
+          {input: "△８四歩", comments: ["コメント2"]},
         ]
       end
 

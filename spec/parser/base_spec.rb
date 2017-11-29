@@ -51,7 +51,7 @@ V2.2
 N+(先手)
 N-(後手)
 $SITE:(場所)
-" 手合割:平手
+' 手合割:平手
 PI
 +
 +7776FU
@@ -74,7 +74,7 @@ V2.2
 N+(先手)
 N-(後手)
 $SITE:(場所)
-" 手合割:平手
+' 手合割:平手
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -115,7 +115,7 @@ EOT
         it "to_csa" do
           @info.to_csa.should == <<~EOT
 V2.2
-" 手合割:平手
+' 手合割:平手
 PI
 +
 +7968GI,T30
@@ -153,7 +153,7 @@ EOT
         it "to_csa" do
           @info.to_csa.should == <<~EOT
 V2.2
-" 手合割:平手
+' 手合割:平手
 PI
 +
 +7968GI,T30
@@ -195,7 +195,7 @@ EOT
         it "to_csa" do
           @info.to_csa.should == <<~EOT
 V2.2
-" 手合割:平手
+' 手合割:平手
 PI
 +
 +7968GI,T30
@@ -235,7 +235,7 @@ EOT
         it "to_csa" do
           @info.to_csa.should == <<~EOT
 V2.2
-" 手合割:平手
+' 手合割:平手
 PI
 +
 +7968GI,T30
@@ -268,7 +268,7 @@ $EVENT:その他の棋戦
 $START_TIME:1938/03/01
 $OPENING:その他の戦型
 $TIME_LIMIT:6時間
-" 手合割:香落ち
+' 手合割:香落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
 P2 * -HI *  *  *  *  * -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -291,7 +291,7 @@ $EVENT:その他の棋戦
 $START_TIME:1938/03/01
 $OPENING:その他の戦型
 $TIME_LIMIT:6時間
-" 手合割:香落ち
+' 手合割:香落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
 P2 * -HI *  *  *  *  * -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -376,7 +376,7 @@ EOT
       it "to_csa" do
         @info.to_csa(strip: true).should == <<~EOT
 V2.2
-" 手合割:三枚落ち
+' 手合割:三枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
 P2 *  *  *  *  *  *  *  *  *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -466,27 +466,6 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 -8384FU
 %TORYO
 EOT
-      end
-    end
-
-    describe "二歩の反則負け" do
-      before do
-        @file = "#{__dir__}/double_pawn.ki2"
-      end
-
-      it "読み込むことはできる" do
-        Parser.file_parse(@file)
-      end
-
-      it "変換するときに例外が出る" do
-        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawn)
-      end
-
-      it "オプションをつければ例外がでない" do
-        info = Parser.file_parse(@file, double_pawn_case: :skip)
-        assert info.to_kif
-        assert info.to_ki2
-        assert info.to_csa
       end
     end
   end

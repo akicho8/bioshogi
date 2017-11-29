@@ -17,8 +17,10 @@ module Bushido
 
         normalized_source.lines.each do |line|
           comment_read(line)
-          if line.match?(/^\p{blank}*[#{Location.triangles}]?\p{blank}*#{Runner.input_regexp}/o)
-            line.scan(Runner.input_regexp).each do |parts|
+          s = /\p{blank}*/
+          i = Runner.input_regexp
+          if line.match?(/^#{s}#{i}/o)
+            line.scan(i) do |parts|
               @move_infos << {input: parts.join}
             end
           end

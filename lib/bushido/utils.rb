@@ -116,7 +116,7 @@ module Bushido
     #   Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金") # => {Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "}
     def triangle_hold_pieces_str_to_hash(str)
       hash = {}
-      Array.wrap(str).join(" ").scan(/([#{Location.triangles}])([^#{Location.triangles}]+)/).each do |mark, pieces_str|
+      Array.wrap(str).join(" ").scan(/([#{Location.triangles_str}])([^#{Location.triangles_str}]+)/).each do |mark, pieces_str|
         location = Location[mark]
         hash[location] ||= []
         hash[location] << pieces_str
@@ -136,10 +136,10 @@ module Bushido
     #   ki2_parse("▲４二銀△４二銀") # => [{location: :black, input: "４二銀"}, {location: :white, input: "４二銀"}]
     def ki2_parse(str)
       str = str.to_s
-      str = str.gsub(/([#{Location.triangles}])/, ' \1')
+      str = str.gsub(/([#{Location.triangles_str}])/, ' \1')
       str = str.squish
       str.split(/\s+/).collect{|s|
-        if s.match?(/\A[#{Location.triangles}]/)
+        if s.match?(/\A[#{Location.triangles_str}]/)
           movs_split(s)
         else
           s
@@ -148,7 +148,7 @@ module Bushido
     end
 
     def movs_split(str)
-      regexp = /([#{Location.triangles}])([^#{Location.triangles}\s]+)/
+      regexp = /([#{Location.triangles_str}])([^#{Location.triangles_str}\s]+)/
       Array.wrap(str).join(" ").scan(regexp).collect{|mark, input|
         {location: Location[mark], input: input}
       }
@@ -159,7 +159,7 @@ module Bushido
     end
 
     def mov_split_one(str)
-      md = str.match(/(?<mark>[#{Location.triangles}])(?<input>.*)/)
+      md = str.match(/(?<mark>[#{Location.triangles_str}])(?<input>.*)/)
       # md or raise(ArgumentError)
       {location: Location[md[:mark]], input: md[:input]}
     end

@@ -24,6 +24,8 @@ module Bushido
     # %TORYO,T16
 
     class CsaParser < Base
+      cattr_accessor(:comment_char) { "'" }
+
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
@@ -40,7 +42,7 @@ module Bushido
         s = normalized_source
 
         # コメント行の削除
-        s = s.gsub(/^'.*/, "")
+        s = s.gsub(/^#{comment_char}.*/o, "")
 
         # カンマは改行と見なす
         s = s.gsub(/,/, "\n")
@@ -58,7 +60,7 @@ module Bushido
         @board_source = s.scan(/^P\d.*\n/).join.presence
 
         # 棋譜
-        @move_infos += s.scan(/^[+-](\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
+        @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
           {input: input, used_seconds: used_seconds&.to_i}
         end
 

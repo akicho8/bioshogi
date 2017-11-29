@@ -77,8 +77,8 @@ module Bushido
       def w; self[:white]; end
 
       # "▲▼△△" を返す
-      def triangles
-        @triangles ||= collect { |e| [e.mark, e.reverse_mark] }.join
+      def triangles_str
+        @triangles_str ||= collect { |e| [e.mark, e.reverse_mark] }.join
       end
     end
 

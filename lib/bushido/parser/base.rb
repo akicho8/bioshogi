@@ -181,7 +181,7 @@ module Bushido
             obj.board_reset_old(@board_source || header["手合割"])
             teai_name = obj.board.teai_name
             if teai_name
-              out << "\" 手合割:#{teai_name}\n"
+              out << "#{Parser::CsaParser.comment_char} 手合割:#{teai_name}\n"
             end
             if options[:board_expansion]
               out << obj.board.to_csa
@@ -219,7 +219,7 @@ module Bushido
           end
 
           if @error_message
-            out << error_message_part('"')
+            out << error_message_part(Parser::CsaParser.comment_char)
           end
 
           out = out.join
@@ -354,13 +354,14 @@ module Bushido
               move_infos.each do |info|
                 mediator.execute(info[:input])
               end
-            rescue DoublePawn => error
+            rescue RuleError2 => error
               if v = @options2[:double_pawn_case]
                 case v
                 when :embed
                   @error_message = error.message
                 when :skip
                 else
+                  raise MustNotHappen
                 end
               else
                 raise error
@@ -453,9 +454,9 @@ module Bushido
 
         def error_message_part(prefix = "*")
           if @error_message
-            lines = @error_message.to_s.lines
+            v = @error_message.strip + "\n"
             s = "-" * 76 + "\n"
-            [s, *lines, s].collect {|e| "#{prefix} #{e}" }.join
+            [s, *v.lines, s].collect {|e| "#{prefix} #{e}" }.join
           end
         end
 
