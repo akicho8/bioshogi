@@ -6,10 +6,14 @@ module Bushido
       include MemoryRecord
     end
 
-    def fetch(*)
-      super
-    rescue => error
-      raise BushidoError, error.message
+    class_methods do
+      def fetch(*)
+        super
+      rescue KeyError => error
+        raise BushidoError, error.message
+      end
+    end
+
     def name
       key.to_s
     end
