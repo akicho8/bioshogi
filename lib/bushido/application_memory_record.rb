@@ -10,6 +10,8 @@ module Bushido
       super
     rescue => error
       raise BushidoError, error.message
+    def name
+      key.to_s
     end
   end
 end
