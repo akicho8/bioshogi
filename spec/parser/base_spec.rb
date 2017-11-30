@@ -103,7 +103,7 @@ EOT
     describe "消費時間があるCSAからの変換" do
       describe "投了の部分まで時間が指定されている場合" do
         before do
-          @info = Parser.parse(<<~EOT)
+          @info = Parser.parse(<<~EOT, defense_form_check_skip: true)
 +7968GI,,T30
 -3334FU,T1
 +2726FU
@@ -141,7 +141,7 @@ EOT
 
       describe "投了の部分まで時間が指定がない場合" do
         before do
-          @info = Parser.parse(<<~EOT)
+          @info = Parser.parse(<<~EOT, defense_form_check_skip: true)
 +7968GI,T30
 -3334FU,T1
 +2726FU
@@ -262,7 +262,7 @@ EOT
 
     describe "駒落ちCSA棋譜からの変換" do
       before do
-        @info = Parser.parse(<<~EOT)
+        @info = Parser.parse(<<~EOT, defense_form_check_skip: true)
 V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01

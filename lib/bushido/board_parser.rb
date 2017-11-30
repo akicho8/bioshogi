@@ -32,7 +32,7 @@ module Bushido
           raise NotImplementedError, "#{__method__} is not implemented"
         end
 
-        def parse(source, options)
+        def parse(source, **options)
           new(source, options).tap(&:parse)
         end
       end
@@ -104,47 +104,71 @@ module Bushido
       end
 
       def parse
-        x_units = x_units_parse
-
-        mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
-        inlines = mds.collect { |v| v[:inline] }
-
-        inlines.each.with_index do |s, y|
-          # 1文字 + (全角1文字 or 半角2文字)
-          # p s
-
-          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(location_char, piece), x|
-            if Piece.all_names.include?(piece)
-              unless x_units[x] && y_units[y]
-                raise SyntaxDefact, "盤面の情報が読み取れません。#{piece.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
-              end
-              point = Point[[x_units[x], y_units[y]].join]
-              location = Location.fetch(location_char)
-              mini_soldiers << MiniSoldier.new_with_promoted(piece).merge(point: point, location: location)
-            end
+        cell_walker do |point, location, something|
+          if Piece.all_names.include?(something)
+            mini_soldiers << MiniSoldier.new_with_promoted(something).merge(point: point, location: location)
+          else
+            betsunomonoga_mitsukatta(point, location, something)
           end
         end
       end
 
       private
 
-      def x_units_parse
+      def cell_width
+        3
+      end
+
+      def x_units_read
         s = shape_lines.first
         if s.include?("-")
           if s.count("-").modulo(cell_width).nonzero?
             raise SyntaxDefact, "横幅が#{cell_width}桁毎になっていません"
           end
           count = s.gsub("---", "-").count("-")
-          x_units = Position::Hpos.units.last(count)
+          @x_units = Position::Hpos.units.last(count)
         else
-          x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
+          @x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
         end
-        x_units
       end
 
-      def cell_width
-        3
+      def xy_validation(x, y, something)
+        unless @x_units[x] && @y_units[y]
+          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
+        end
+      end
+
+      def betsunomonoga_mitsukatta(*)
+      end
+
+      def cell_walker
+        x_units_read
+
+        mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
+        @y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
+        inlines = mds.collect { |v| v[:inline] }
+
+        inlines.each.with_index do |s, y|
+          # 1文字 + (全角1文字 or 半角2文字)
+          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(location_mark, something), x|
+            xy_validation(x, y, something)
+            point = Point[[@x_units[x], @y_units[y]].join]
+            location = Location.fetch(location_mark)
+            yield point, location, something
+          end
+        end
+      end
+    end
+
+    class KifBoardParser2 < KifBoardParser
+      def other_objects
+        @other_objects ||= []
+      end
+
+      def betsunomonoga_mitsukatta(point, location, something)
+        unless something == "・"
+          other_objects << {point: point, location: location, something: something}
+        end
       end
     end
 

@@ -23,9 +23,9 @@ sorted_black_side_mini_soldiers = soldiers.collect{|e|e.to_mini_soldier.as_black
 tp sorted_black_side_mini_soldiers
 
 defense_info = DefenseInfo.find do |e|
-  p e.name
+  # p e.name
 
-  # 含まれる？
+  # 盤上の状態に含まれる？
   e.black_side_mini_soldiers.all? do |e|
     if soldier = mediator.board[e[:point]]
       if soldier.location == location
@@ -34,19 +34,10 @@ defense_info = DefenseInfo.find do |e|
     end
   end
 
-  # # 完全一致
+  # # 盤上と完全一致
   # e.sorted_black_side_mini_soldiers == sorted_black_side_mini_soldiers
 end
 p defense_info&.name
-# >> "v香 ・ ・ ・ ・v銀 ・ ・ ・"
-# >> " ・ ・ ・v金v金v玉 ・ ・ ・"
-# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
-# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
-# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
-# >> " ・ ・ 歩 歩 歩 ・ ・ ・ ・"
-# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
-# >> " ・ ・ 金 銀 金 ・ ・ ・ ・"
-# >> " 香 ・ ・ 玉 ・ ・ ・ ・ ・"
 # >> |----------|
 # >> | ▲７六歩 |
 # >> | ▲６六歩 |
@@ -69,9 +60,4 @@ p defense_info&.name
 # >> | 歩    | false    | ５六  | ▲       |
 # >> | 金    | false    | ５八  | ▲       |
 # >> |-------+----------+-------+----------|
-# >> "カニ囲い"
-# >> " ・ ・ 歩 歩 歩 ・ ・ ・ ・"
-# >> " ・ ・ ・ ・ ・ ・ ・ ・ ・"
-# >> " ・ ・ 金 銀 金 ・ ・ ・ ・"
-# >> " ・ ・ ・ 玉 ・ ・ ・ ・ ・"
 # >> "カニ囲い"

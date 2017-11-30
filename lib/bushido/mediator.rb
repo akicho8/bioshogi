@@ -4,6 +4,16 @@
 #
 module Bushido
   class Mediator
+    concerning :ConfigMethods do
+      attr_accessor :config
+
+      def config
+        @config ||= {
+          defense_form_check_skip: false,
+        }
+      end
+    end
+
     concerning :PlayerSelector do
       class_methods do
         # 先手後手が座った状態で開始

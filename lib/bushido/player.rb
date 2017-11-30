@@ -3,7 +3,7 @@
 
 module Bushido
   class Player
-    attr_accessor :name
+    # attr_accessor :name
     attr_accessor :location
     attr_accessor :mediator
     attr_accessor :runner
@@ -138,7 +138,14 @@ module Bushido
       #   return
       # end
       @runner = Runner.new(self).execute(str)
-      defense_form_store
+      if Bushido.config[:defense_form_check]
+        if Position.size_type == :board_size_9x9
+          if mediator.config[:defense_form_check_skip]
+          else
+            defense_form_store
+          end
+        end
+      end
       @mediator.hand_log_push(self)
     end
 
@@ -227,15 +234,13 @@ module Bushido
     # 盤上の駒関連
     concerning :SoldierMethods do
       included do
-        attr_accessor :soldiers, :complete_defense_names
+        attr_accessor :soldiers
       end
 
       def initialize(*)
         super
         # インスタンス変数は何もしなければ自動的に Marshal の対象になる
         @soldiers = []
-        @complete_defense_names = []
-        @defense_name_append = false
       end
 
       def soldiers_create_from_mini_soldier(mini_soldier)
@@ -262,40 +267,38 @@ module Bushido
           put_on_with_valid(soldier)
         end
       end
+    end
+
+    concerning :DefenseCheckMethods do
+      attr_accessor :defense_infos
+
+      def initialize(*)
+        super
+        @defense_infos = []
+      end
 
       def defense_form_store
-        @defense_name_append = false
-        defense_form_keys.each do |key|
-          unless @complete_defense_names.include?(key)
-            @complete_defense_names << key
-            @defense_name_append = true
+        soldiers = board.surface.values.find_all { |e| e.location == location }
+        sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.as_black_side }.sort
+
+        defense_info = DefenseInfo.find do |e|
+          if @defense_infos.include?(e)
+            next
+          end
+
+          # 盤上の状態に含まれる？
+          e.black_side_mini_soldiers.all? do |e|
+            if soldier = mediator.board[e[:point]]
+              if soldier.location == location
+                soldier.to_mini_soldier.as_black_side == e
+              end
+            end
           end
         end
-      end
 
-      def defense_name_append?
-        !!@defense_name_append
-      end
-
-      def defense_form_keys
-        defense_form_infos.find_all{|e|e[:match]}.collect{|e|e[:key]}
-      end
-
-      def defense_form_infos
-        unless Bushido.config[:defense_form_check]
-          return []
+        if defense_info
+          @defense_infos << defense_info
         end
-
-        # # ここがかなり重い
-        # DefenseInfo.collect do |defense_info|
-        #   placements = Utils.board_point_realize(location: location, both_board_info: defense_info.both_board_info)
-        #   a = placements.values.flatten.collect(&:to_s)
-        #   b = board.surface.values.collect(&:to_mini_soldier).collect(&:to_s)
-        #   match_p = (a - b).empty?
-        #   {key: defense_info.key, placements: placements, match: match_p}
-        # end
-
-        []
       end
     end
 

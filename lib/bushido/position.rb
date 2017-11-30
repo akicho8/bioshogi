@@ -39,7 +39,7 @@ module Bushido
         key = [Hpos.board_size, Vpos.board_size]
         {
           [5, 5] => :x55,
-          [9, 9] => :x99,
+          [9, 9] => :board_size_9x9,
         }[key]
       end
 

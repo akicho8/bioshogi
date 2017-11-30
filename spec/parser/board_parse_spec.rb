@@ -74,5 +74,17 @@ BOARD
 BOARD
       end
     end
+
+    describe BoardParser::KifBoardParser2 do
+      it "他の駒以外のものも拾える" do
+        info = BoardParser::KifBoardParser2.parse(<<~EOT)
++------+
+|v○v歩|
+| ・ 歩|
++------+
+          EOT
+        info.other_objects == [{point: Point["21"], location: Location[:white], something: "○"}]
+      end
+    end
   end
 end

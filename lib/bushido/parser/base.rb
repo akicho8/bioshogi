@@ -49,8 +49,16 @@ module Bushido
           #  skip: 棋譜には記さない
           # false: 例外を出す(デフォルト)
           typical_error_case: false,
+          # run_and_build_skip: false,
+          defense_form_check_skip: false,
         }
       end
+
+      # def parse
+      #   unless @config[:run_and_build_skip]
+      #     mediator_run
+      #   end
+      # end
 
       def parse
         raise NotImplementedError, "#{__method__} is not implemented"
@@ -326,11 +334,17 @@ module Bushido
           out.join
         end
 
+        def mediator_run
+          mediator
+        end
+
         def mediator
           @mediator ||= Mediator.new.tap do |mediator|
+            mediator.config[:defense_form_check_skip] = @config[:defense_form_check_skip]
+
             Location.each do |e|
               e.call_names.each do |e|
-                if v = @header["#{e}の持駒"]
+                if v = header["#{e}の持駒"]
                   mediator.player_at(e).pieces_set(v)
                 end
               end
@@ -362,6 +376,13 @@ module Bushido
                 end
               else
                 raise error
+              end
+            end
+
+            if @config[:defense_form_check_skip]
+            else
+              mediator.players.each do |player|
+                header["#{player.call_name}の囲い"] = player.defense_infos.join("→")
               end
             end
           end
@@ -416,7 +437,8 @@ module Bushido
                 header[key] = "なし"
               end
             end
-            out << raw_header_as_string.gsub(/(#{Location[:white].call_name(obj.turn_info.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
+            s = raw_header_as_string
+            out << s.gsub(/(#{Location[:white].call_name(obj.turn_info.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
           out.join
@@ -455,6 +477,10 @@ module Bushido
             s = "-" * 76 + "\n"
             [s, *v.lines, s].collect {|e| "#{prefix} #{e}" }.join
           end
+        end
+
+        def error_message_part2
+          mediator.defense_infos.to_t
         end
 
         class ChessClock

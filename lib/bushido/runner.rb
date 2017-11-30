@@ -165,20 +165,22 @@ module Bushido
         end
 
         unless @done
-          @source_soldier = @player.board.lookup(@point_from)
-
-          unless @promote_trigger
-            if @source_soldier.promoted? && !@promoted
-              # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
-              if @player.piece_lookup(@piece)
-                @strike_trigger = true
-                @point_from = nil
-                soldier_put
-              else
-                raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{@source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+          if true
+            source_soldier = @player.board.lookup(@point_from)
+            if !@promote_trigger
+              if source_soldier && source_soldier.promoted? && !@promoted
+                # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
+                if @player.piece_lookup(@piece)
+                  @strike_trigger = true
+                  @point_from = nil
+                  soldier_put
+                else
+                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+                end
               end
             end
           end
+
           unless @done
             @player.move_to(@point_from, @point_to, @promote_trigger)
           end
