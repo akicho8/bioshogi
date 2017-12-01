@@ -1,14 +1,14 @@
 require "./example_helper"
 
 info = Parser.file_parse("yagura.kif")
-tp info.mediator.players.collect {|e| {player: e.call_name, defense_infos: e.defense_infos.collect(&:name)} }
+tp info.mediator.players.collect {|e| {player: e.call_name, defense_infos: e.defense_infos.collect(&:name), attack_infos: e.attack_infos.collect(&:name)} }
 puts info.to_ki2
-# >> |--------+--------------------------------|
-# >> | player | defense_infos                  |
-# >> |--------+--------------------------------|
-# >> | 先手   | ["金矢倉", "総矢倉", "菱矢倉"] |
-# >> | 後手   | []                             |
-# >> |--------+--------------------------------|
+# >> |--------+--------------------------------+--------------|
+# >> | player | defense_infos                  | attack_infos |
+# >> |--------+--------------------------------+--------------|
+# >> | 先手   | ["金矢倉", "総矢倉", "菱矢倉"] | []           |
+# >> | 後手   | ["雁木囲い"]                   | []           |
+# >> |--------+--------------------------------+--------------|
 # >> 開始日時：1981/05/15 09:00:00
 # >> 棋戦：名将戦
 # >> 場所：東京「将棋会館」
@@ -17,7 +17,7 @@ puts info.to_ki2
 # >> 後手：原田泰夫
 # >> 戦型：矢倉
 # >> 先手の囲い：金矢倉→総矢倉→菱矢倉
-# >> 後手の囲い：
+# >> 後手の囲い：雁木囲い
 # >> 先手の戦型：
 # >> 後手の戦型：
 # >> 

@@ -8,9 +8,9 @@ info[:point].name # => "７六"
 
 pp info
 tp info
-# >> {:piece=><Bushido::Piece:70344936773280 歩 pawn>,
+# >> {:piece=><Bushido::Piece:70195378438040 歩 pawn>,
 # >>  :promoted=>true,
-# >>  :point=>#<Bushido::Point:70344935228180 "７六">}
+# >>  :point=>#<Bushido::Point:70195379829320 "７六">}
 # >> |----------+------|
 # >> |    piece | 歩   |
 # >> | promoted | true |

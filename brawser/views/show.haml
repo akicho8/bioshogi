@@ -13,7 +13,7 @@
         %div{"class":"bar #{sb[:style]}", style:"width:#{sb[:rate]}%"}= "#{sb[:location].mark}#{sb[:score]}"
 
 .text-center
-  = "#{@mediator.counter_human_name}手目 #{@mediator.current_player.call_name}番"
+  = "#{@mediator.turn_info.counter_human_name}手目 #{@mediator.current_player.call_name}番"
 
 .text-center
   %form{action: "/", method: "post", "class": "form-inline kif-input-form"}

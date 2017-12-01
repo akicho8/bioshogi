@@ -4,7 +4,7 @@ module Bushido
   class AttackInfo
     include ApplicationMemoryRecord
     memory_record [
-      {key: "新米長玉", wars_code: "2015", turn_limit: nil, my_side_only: false, compare_condition: :equal, turn_eq: 2, only_location_key: nil},
+      {key: "新米長玉", hukumareru: nil, wars_code: "2015", turn_limit: nil, my_side_only: false, compare_condition: :equal, turn_eq: 2, only_location_key: nil},
 
 #       {
 #         key: "角換わり",
@@ -75,6 +75,10 @@ module Bushido
 # EOT
 #       },
     ]
+
+    def hukumareru
+      Array(super)
+    end
 
     include TeaiwariInfo::DelegateToShapeInfoMethods
   end

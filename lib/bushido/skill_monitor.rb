@@ -16,10 +16,15 @@ module Bushido
       skip = Object.new
       skill_models.each do |check_item|
         infos = player.send(check_item[:var_key])
+        info_keys = infos.collect(&:key)
         check_item[:model].each do |e|
           hit_flag = nil
           catch skip do
             if infos.include?(e)
+              throw skip
+            end
+
+            if e.hukumareru.any? {|e| info_keys.include?(e) }
               throw skip
             end
 

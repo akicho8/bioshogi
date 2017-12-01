@@ -6,7 +6,7 @@ list = ["7776FU","8384FU","7978GI","3334FU","7877GI","8485FU","2726FU","3142GI",
 list.each do |e|
   p e
   mediator.execute(e)
-  p mediator.counter
+  p mediator.turn_info.counter
   pp [e, mediator.hand_logs.last.to_s_kif]
 end
 # ~> /Users/ikeda/src/bushido/lib/bushido.rb:39:in `require_relative': /Users/ikeda/src/bushido/lib/bushido/player.rb:352: syntax error, unexpected ',', expecting keyword_end (SyntaxError)

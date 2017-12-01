@@ -44,7 +44,7 @@ module Bushido
 
     def object_to_s(object)
       if object
-        object.to_s_kakiki
+        object.to_kif
       else
         " " + "・"
       end

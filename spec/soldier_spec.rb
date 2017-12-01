@@ -9,6 +9,12 @@ module Bushido
     it "#to_s" do
       Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false].to_s.should == "５一玉"
     end
+
+    it "Point の #eql?, hash の定義で [1] - [1] = [] ができるようになる" do
+      a = Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false, location: Location[:white]]
+      b = Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false, location: Location[:white]]
+      ([a] - [b]).should == []
+    end
   end
 
   describe BattlerMove do

@@ -83,8 +83,12 @@ module Bushido
         @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
       end
 
-      def to_s_kakiki
+      def to_kif
         KakikiFormat.new(self).to_s
+      end
+
+      def to_ki2
+        to_kif
       end
 
       def to_csa
@@ -92,7 +96,7 @@ module Bushido
       end
 
       def to_s
-        to_s_kakiki
+        to_kif
       end
     end
 

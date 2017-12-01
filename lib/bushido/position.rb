@@ -83,7 +83,7 @@ module Bushido
           end
 
           @instance ||= {}
-          @instance[v] ||= new(v)
+          @instance[v] ||= new(v).freeze
         end
 
         def board_size_reset(v)
@@ -123,7 +123,7 @@ module Bushido
       # @example
       #   Position::Vpos.parse("一").name # => "一"
       def name
-        @name ||= self.class.units[@value]
+        self.class.units[@value]
       end
 
       # 数字表記
@@ -137,12 +137,16 @@ module Bushido
       # @example
       #   Position::Hpos.parse("1").reverse.name # => "9"
       def reverse
-        @reverse ||= self.class.parse(self.class.units.size - 1 - @value)
+        self.class.parse(self.class.units.size - 1 - @value)
       end
 
       # インスタンスが異なっても同じ座標なら同じ
       def ==(other)
         self.class == other.class && @value == other.value
+      end
+
+      def <=>(other)
+        @value <=> other.value
       end
 
       def inspect

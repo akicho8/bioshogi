@@ -8,17 +8,15 @@ player.battlers.first.movable_infos.each do |v|
   player.battlers_create("#{v[:point]}馬", from_stand: false)
 end
 puts mediator.board
-# ~> /Users/ikeda/src/bushido/lib/bushido/point.rb:131:in `+': Bushido::OnceVector can't be coerced into Integer (TypeError)
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/point.rb:131:in `vector_add'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/movabler.rb:80:in `block in alive_piece?'
-# ~> 	from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/set.rb:324:in `each_key'
-# ~> 	from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/set.rb:324:in `each'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/movabler.rb:79:in `any?'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/movabler.rb:79:in `alive_piece?'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:365:in `dead_piece?'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:336:in `put_on_with_valid'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:233:in `battlers_create_from_soldier'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:73:in `block in battlers_create'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:61:in `each'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:61:in `battlers_create'
-# ~> 	from -:6:in `<main>'
+# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
+# >> +---------------------------+
+# >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|一
+# >> | ・ 馬 ・ ・ ・ ・ ・ 馬 ・|二
+# >> | ・ ・ 馬 ・ ・ ・ 馬 ・ ・|三
+# >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|四
+# >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|五
+# >> | ・ ・ ・ 馬 馬 馬 ・ ・ ・|六
+# >> | ・ ・ 馬 ・ ・ ・ 馬 ・ ・|七
+# >> | ・ 馬 ・ ・ ・ ・ ・ 馬 ・|八
+# >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|九
+# >> +---------------------------+

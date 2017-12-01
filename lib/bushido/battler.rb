@@ -115,7 +115,7 @@ module Bushido
       end
 
       # 柿木盤面用
-      def to_s_kakiki
+      def to_kif
         "#{@player.location.varrow}#{piece_current_name}"
       end
     end
