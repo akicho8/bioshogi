@@ -102,6 +102,13 @@ module Bushido
       self[:point] <=> other[:point]
     end
 
+    # def eql?(other)
+    #   object_id == other.object_id ||
+    #     (self[:point] == other[:point] &&
+    #     self[:promoted] == other[:promoted] &&
+    #     self[:location] == other[:location])
+    # end
+
     # # ▲側から見た状態に変換したインスタンスを返す
     # def reverse_if_white
     #   merge(point: self[:point].reverse_if_white(self[:location]), location: Location[:black])

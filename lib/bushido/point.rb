@@ -152,6 +152,17 @@ module Bushido
       to_xy <=> other.to_xy
     end
 
+    if true
+      # Soldier で [1, 2, 3] - [1, 2] => [3] のようにできるようにするため
+      def eql?(other)
+        to_xy == other.to_xy
+      end
+
+      def hash
+        to_xy.hash
+      end
+    end
+
     # 相手陣地に入っているか？
     #   Point.parse("１三").promotable?(:black) # => true
     #   Point.parse("１四").promotable?(:black) # => false

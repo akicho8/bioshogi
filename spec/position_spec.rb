@@ -67,6 +67,10 @@ module Bushido
       Position::Vpos.parse("1").should == Position::Vpos.parse("一")
     end
 
+    it "ソート" do
+      [Position::Hpos.parse("1"), Position::Hpos.parse("2")].sort.collect(&:name).should == ["２", "１"]
+    end
+
     describe "5x5の盤面" do
       it do
         Board.size_change([5, 5]) do
@@ -85,3 +89,5 @@ EOT
     end
   end
 end
+# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:1:in `<main>'
