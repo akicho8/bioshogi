@@ -1,7 +1,7 @@
 # -*- compile-command: "bundle exec rspec ../../spec/vector_spec.rb" -*-
 # frozen-string-literal: true
 #
-# 駒の移動ベクトル定義用
+# 駒の移動情報定義用
 #
 
 module Bushido
@@ -12,14 +12,14 @@ module Bushido
     end
   end
 
-  # 銀桂などの1回進むだけの移動ベクトル用
+  # 銀桂などの1回進む駒用
   class OnceVector < Vector
     def inspect
       "OV#{super}"
     end
   end
 
-  # 香や角などの連続して進める駒の移動ベクトル用
+  # 飛香などの連続して進む駒用
   class RepeatVector < Vector
     def inspect
       "RV#{super}"

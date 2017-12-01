@@ -1,17 +1,15 @@
 # frozen-string-literal: true
 
-require_relative "shape_info"
-
 module Bushido
   class AttackInfo
     include ApplicationMemoryRecord
     memory_record [
-      {key: "新米長玉", shogi_wars_code: "2015", tesuu_limit_ika: nil, jibungawadake: false, jouken_dousuru: "equal", nantemeka: 2, only_location_key: nil},
+      {key: "新米長玉", wars_code: "2015", turn_limit: nil, my_side_only: false, compare_condition: "equal", turn_eq: 2, only_location_key: nil},
 
 #       {
 #         key: "角換わり",
-#         shogi_wars_code: "2000",
-#         form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-200.html",
+#         wars_code: "2000",
+#         uragoya_url: "http://mijinko83.blog110.fc2.com/blog-entry-200.html",
 #         attack_p: true,
 #         board_body: <<~EOT,
 # +---------------------------+
@@ -25,8 +23,8 @@ module Bushido
 
 #       {
 #         key: "３七銀戦法",
-#         shogi_wars_code: "2000",
-#         form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
+#         wars_code: "2000",
+#         uragoya_url: "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
 #         attack_p: true,
 #         board_body: <<~EOT,
 # +---------------------------+
@@ -38,8 +36,8 @@ module Bushido
 #       },
 #       {
 #         key: "森下システム",
-#         shogi_wars_code: "2003",
-#         form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-150.html",
+#         wars_code: "2003",
+#         uragoya_url: "http://mijinko83.blog110.fc2.com/blog-entry-150.html",
 #         attack_p: true,
 #         board_body: <<~EOT,
 # +---------------------------+
@@ -51,8 +49,8 @@ module Bushido
 #       },
 #       {
 #         key: "雀刺し",
-#         shogi_wars_code: "2004",
-#         form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-149.html",
+#         wars_code: "2004",
+#         uragoya_url: "http://mijinko83.blog110.fc2.com/blog-entry-149.html",
 #         attack_p: true,
 #         board_body: <<~EOT,
 # +---------------------------+
@@ -64,8 +62,8 @@ module Bushido
 #       },
 #       {
 #         key: "米長流急戦矢倉",
-#         shogi_wars_code: "2005",
-#         form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-147.html",
+#         wars_code: "2005",
+#         uragoya_url: "http://mijinko83.blog110.fc2.com/blog-entry-147.html",
 #         attack_p: true,
 #         board_body: <<~EOT,
 # +---------------------------+

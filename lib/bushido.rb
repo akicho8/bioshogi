@@ -38,13 +38,17 @@ require_relative "bushido/utils"
 
 require_relative "bushido/xtra_pattern"
 require_relative "bushido/soldier"
+require_relative "bushido/skill_monitor"
 require_relative "bushido/player"
 require_relative "bushido/runner"
 require_relative "bushido/movabler"
 require_relative "bushido/kifu_dsl"
 require_relative "bushido/mediator"
 
+require_relative "bushido/shape_info"
 require_relative "bushido/teaiwari_info"
+require_relative "bushido/sect_info"
+require_relative "bushido/defense_group_info"
 require_relative "bushido/defense_info"
 require_relative "bushido/attack_info"
 

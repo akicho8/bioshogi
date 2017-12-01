@@ -142,7 +142,7 @@ module Bushido
         if Position.size_type == :board_size_9x9
           if mediator.config[:defense_form_check_skip]
           else
-            defense_form_store
+            skill_monitor.execute
           end
         end
       end
@@ -269,7 +269,9 @@ module Bushido
       end
     end
 
-    concerning :DefenseCheckMethods do
+    # これどうなん？
+    # SkillMonitor 側にもっていけばいいんじゃね？
+    concerning :SkillMonitorMethods do
       attr_accessor :defense_infos
       attr_accessor :attack_infos
 
@@ -279,110 +281,25 @@ module Bushido
         @attack_infos = []
       end
 
-      def defense_form_store
-        if true
-          # soldiers = board.surface.values.find_all { |e| e.location == location }
-          # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
-
-          defense_info = DefenseInfo.find do |e|
-            if @defense_infos.include?(e)
-              next
-            end
-
-            # 盤上の状態に含まれる？
-            e.black_side_mini_soldiers.all? do |e|
-              if soldier = mediator.board[e[:point]]
-                if soldier.location == location
-                  soldier.to_mini_soldier.reverse_if_white == e
-                end
-              end
-            end
-          end
-
-          if defense_info
-            @defense_infos << defense_info
-          end
-        end
-
-        if true
-          # soldiers = board.surface.values.find_all { |e| e.location == location }
-          # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
-
-          attack_info = AttackInfo.find do |e|
-            if @attack_infos.include?(e)
-              next
-            end
-
-            if e.nantemeka
-              if e.nantemeka == mediator.turn_info.counter.next
-              else
-                next
-              end
-            end
-
-            if e.only_location_key
-              if e.only_location_key == player.location.key
-              else
-                next
-              end
-            end
-
-            if e.tesuu_limit_ika
-              if e.tesuu_limit_ika <= mediator.turn_info.counter.next
-              else
-                next
-              end
-            end
-
-            # if e.nantemeka
-
-            if e.jouken_dousuru == "equal"
-              if e.jibungawadake
-                # 自分側だけで完全一致の場合
-                soldiers = board.surface.values
-                soldiers = soldiers.find_all { |e| e.location == location }
-                sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
-                sorted_black_side_mini_soldiers == e.sorted_black_side_mini_soldiers
-              else
-                # 相手側も見る場合
-                soldiers = board.surface.values
-                mini_soldiers = soldiers.collect { |e| e.to_mini_soldier }
-                if location.key == :white
-                  mini_soldiers = mini_soldiers.collect(&:reverse)
-                end
-                sorted_mini_soldiers = mini_soldiers.sort
-                sorted_mini_soldiers == e.shape_info.sorted_mini_soldiers
-              end
-            elsif e.jouken_dousuru == "include"
-              # 盤上の状態に含まれる？
-              e.black_side_mini_soldiers.all? do |e|
-                if soldier = mediator.board[e[:point]]
-                  if soldier.location == location
-                    soldier.to_mini_soldier.reverse_if_white == e
-                  end
-                end
-              end
-            else
-              raise MustNotHappen
-            end
-          end
-
-          if attack_info
-            @attack_infos << attack_info
-          end
-        end
-
+      def skill_monitor
+        SkillMonitor.new(self)
       end
     end
 
-    def evaluator
-      Evaluator.new(self)
+    concerning :EvaluatorMethods do
+      def evaluator
+        Evaluator.new(self)
+      end
     end
 
-    delegate :evaluate, :score_percentage, to: :evaluator
+    concerning :BrainMethods do
+      included do
+        delegate :evaluate, :score_percentage, to: :evaluator
+      end
 
-    def brain
-      Brain.new(self)
+      def brain
+        Brain.new(self)
+      end
     end
 
     # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)

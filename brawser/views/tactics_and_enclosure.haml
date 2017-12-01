@@ -9,7 +9,7 @@
     %a{name:"#{stock[:key]}"}
     %p
       %a{href: Bushido::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]
-      - if stock[:form_check_url]
-        %a{href: stock[:form_check_url]}= "将ウォーズ"
+      - if stock[:uragoya_url]
+        %a{href: stock[:uragoya_url]}= "将ウォーズ"
     = MediatorDecorator.new(mediator).to_html_board(:small)
     %hr

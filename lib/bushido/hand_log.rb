@@ -221,29 +221,6 @@ module Bushido
       def basic_motion
         case
         when koreru_c >= 3
-          # |----------------+--------------------------------------|
-          # |   point_from | ５一                                 |
-          # |          point_to | ４二                                 |
-          # |      candidate | ["△５一金", "△３一金", "△５二金"] |
-          # |       koreru_c | 3                                    |
-          # |     _migi_idou | true                                 |
-          # |   _hidari_idou | false                                |
-          # |       _ue_idou | false                                |
-          # |    _shita_idou | true                                 |
-          # | _hidari_kara_c | 2                                    |
-          # |   _migi_kara_c | 1                                    |
-          # |       yoreru_c | 1                                    |
-          # |      agareru_c | 2                                    |
-          # |     sagareru_c | 0                                    |
-          # |        shita_y | 0                                    |
-          # |            _tx | 5                                    |
-          # |            _ty | 1                                    |
-          # |            _ox | 4                                    |
-          # |            _oy | 0                                    |
-          # |            _xr | 4..6                                 |
-          # |            _yr | 0..1                                 |
-          # |----------------+--------------------------------------|
-
           case
           when yoko_idou? && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
             "寄"

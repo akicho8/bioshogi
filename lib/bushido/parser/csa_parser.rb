@@ -61,7 +61,10 @@ module Bushido
 
         # 棋譜
         @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
-          {input: input, used_seconds: used_seconds&.to_i}
+          if used_seconds
+            used_seconds = used_seconds.to_i
+          end
+          {input: input, used_seconds: used_seconds}
         end
 
         if md = s.match(/^%(?<last_action>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)

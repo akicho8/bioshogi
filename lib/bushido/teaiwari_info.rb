@@ -30,7 +30,7 @@ module Bushido
 
     concerning :DelegateToShapeInfoMethods do
       included do
-        delegate :board_parser, :both_board_info, :sorted_black_side_mini_soldiers, :black_side_mini_soldiers, to: :shape_info
+        delegate :board_parser, :both_board_info, :sorted_black_side_mini_soldiers, :black_side_mini_soldiers, :sorted_mini_soldiers, to: :shape_info
       end
 
       def shape_info

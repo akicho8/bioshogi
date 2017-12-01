@@ -47,6 +47,10 @@ module Bushido
         @mini_soldiers ||= []
       end
 
+      def sorted_mini_soldiers
+        @sorted_mini_soldiers ||= mini_soldiers.sort
+      end
+
       # {Location[:black] => [<MiniSoldier>], Location[:white] => [...]}
       def both_board_info
         @both_board_info ||= __both_board_info

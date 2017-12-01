@@ -118,7 +118,9 @@ module Bushido
 
       # location 側の手合割を文字列で得る
       def teaiwari_name_by_location(location)
-        teaiwari_info_by_location(location)&.name
+        if v = teaiwari_info_by_location(location)
+          v.name
+        end
       end
 
       # location 側の手合割情報を得る
