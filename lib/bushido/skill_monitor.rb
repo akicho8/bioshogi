@@ -14,11 +14,12 @@ module Bushido
       # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
 
       skip = Object.new
-      check_items.each do |check_item|
-        defense_infos = player.send(check_item[:varname])
-        record = check_item[:model].find do |e|
+      skill_models.each do |check_item|
+        infos = player.send(check_item[:var_key])
+        check_item[:model].each do |e|
+          hit_flag = nil
           catch skip do
-            if defense_infos.include?(e)
+            if infos.include?(e)
               throw skip
             end
 
@@ -60,13 +61,13 @@ module Bushido
               mini_soldiers = mini_soldiers.collect(&:reverse)
             end
 
-            if e.compare_condition == "equal"
+            if e.compare_condition == :equal
               # if e.my_side_only
               #   # 自分側だけで完全一致の場合
               #   # soldiers = player.board.surface.values
               #   # soldiers = soldiers.find_all { |e| e.location == player.location }
               #   # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
-              mini_soldiers.sort == e.sorted_mini_soldiers
+              hit_flag = mini_soldiers.sort == e.sorted_mini_soldiers
               # else
               # 相手側も見る場合
 
@@ -88,7 +89,7 @@ module Bushido
               #   end
               # end
 
-              e.board_parser.mini_soldiers.all? { |e| mini_soldiers.include?(e) }
+              hit_flag = e.board_parser.mini_soldiers.all? { |e| mini_soldiers.include?(e) }
 
               # e.mini_soldiers.all? do |e|
               #   if soldier = player.board[e[:point]]
@@ -100,17 +101,17 @@ module Bushido
             else
               raise MustNotHappen
             end
-          end
-        end
 
-        if record
-          defense_infos << record
+            if hit_flag
+              infos << e
+            end
+          end
         end
       end
 
       # defense_info = DefenseInfo.find do |e|
       #   catch skip do
-      #     if player.defense_infos.include?(e)
+      #     if player.infos.include?(e)
       #       next
       #     end
       #
@@ -126,7 +127,7 @@ module Bushido
       # end
 
       # if defense_info
-      #   player.defense_infos << defense_info
+      #   player.infos << defense_info
       # end
 
       # if true
@@ -148,10 +149,10 @@ module Bushido
 
     private
 
-    def check_items
+    def skill_models
       [
-        {model: DefenseInfo, varname: :defense_infos, },
-        {model: AttackInfo,  varname: :attack_infos,  },
+        {model: DefenseInfo, var_key: :defense_infos, },
+        {model: AttackInfo,  var_key: :attack_infos,  },
       ]
     end
   end
