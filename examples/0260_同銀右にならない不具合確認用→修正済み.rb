@@ -60,7 +60,7 @@ tp mediator.hand_logs.last.to_s_ki2
 # >> |  strike_trigger | false                                                                                                                                                                                                |
 # >> |    point_from | ６七                                                                                                                                                                                                 |
 # >> |          player | #<Bushido::Player:0x007fc922e8e958>                                                                                                                                                                  |
-# >> |       candidate | [<Bushido::Soldier:70250925847060 @player=#<Bushido::Player:0x007fc922e8e958> @piece=銀 ▲７七銀>, <Bushido::Soldier:70250925847040 @player=#<Bushido::Player:0x007fc922e8e958> @piece=銀 ▲６七銀>] |
+# >> |       candidate | [<Bushido::Battler:70250925847060 @player=#<Bushido::Player:0x007fc922e8e958> @piece=銀 ▲７七銀>, <Bushido::Battler:70250925847040 @player=#<Bushido::Player:0x007fc922e8e958> @piece=銀 ▲６七銀>] |
 # >> |    point_same_p | true                                                                                                                                                                                                 |
 # >> |-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |--------|

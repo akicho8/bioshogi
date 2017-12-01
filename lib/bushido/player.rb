@@ -41,43 +41,43 @@ module Bushido
 
     # 平手の初期配置
     def piece_plot
-      mini_soldiers = Utils.location_mini_soldiers(location: location, key: "平手")
-      mini_soldiers.each do |mini_soldier|
-        piece_pick_out(mini_soldier[:piece])
-        soldiers_create_from_mini_soldier(mini_soldier)
+      soldiers = Utils.location_soldiers(location: location, key: "平手")
+      soldiers.each do |soldier|
+        piece_pick_out(soldier[:piece])
+        battlers_create_from_soldier(soldier)
       end
     end
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
-    #   player.soldiers_create(["５五飛", "３三飛"], from_stand: false)
-    #   player.soldiers_create("#{point}馬")
-    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
-    def soldiers_create(mini_soldier_or_str, **options)
+    #   player.battlers_create(["５五飛", "３三飛"], from_stand: false)
+    #   player.battlers_create("#{point}馬")
+    #   player.battlers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
+    def battlers_create(soldier_or_str, **options)
       options = {
         from_stand: true, # 持駒から取り出して配置する？
       }.merge(options)
 
-      Array.wrap(mini_soldier_or_str).each do |mini_soldier_or_str|
-        if mini_soldier_or_str.kind_of?(String)
-          if mini_soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
+      Array.wrap(soldier_or_str).each do |soldier_or_str|
+        if soldier_or_str.kind_of?(String)
+          if soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end
-          mini_soldier = MiniSoldier.from_str(mini_soldier_or_str)
+          soldier = Soldier.from_str(soldier_or_str)
         else
-          mini_soldier = mini_soldier_or_str
+          soldier = soldier_or_str
         end
         if options[:from_stand]
-          piece_pick_out(mini_soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          piece_pick_out(soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        soldiers_create_from_mini_soldier(mini_soldier)
+        battlers_create_from_soldier(soldier)
       end
     end
 
     # # 盤上の自分の駒
-    # def soldiers
-    #   @soldiers
-    #   # @ board.surface.values.find_all{|soldier|soldier.player == self}
+    # def battlers
+    #   @battlers
+    #   # @ board.surface.values.find_all{|battler|battler.player == self}
     # end
 
     # 盤上の駒を from から to に移動する。成るなら promote_trigger を有効に。
@@ -94,37 +94,37 @@ module Bushido
             raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
           end
 
-          soldier = board.lookup(from)
-          if soldier.promoted?
-            raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
+          battler = board.lookup(from)
+          if battler.promoted?
+            raise AlredyPromoted, "成りを入力しましたが #{battler.point.name} の #{battler.piece.name} はすでに成っています"
           end
         end
 
-        if (soldier = board.lookup(from)) && location != soldier.location
-          raise AitenoKomaUgokashitaError, "相手の駒を動かそうとしています。#{location}の手番で#{soldier.point}にある#{soldier.location}の#{soldier.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
+        if (battler = board.lookup(from)) && location != battler.location
+          raise AitenoKomaUgokashitaError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
         end
       end
 
-      from_soldier = board.pick_up!(from)
+      from_battler = board.pick_up!(from)
 
       # 移動先に相手の駒があれば取って駒台に移動する
-      to_soldier = board.lookup(to)
-      if to_soldier
-        if to_soldier.player == self
-          raise SamePlayerSoldierOverwrideError, "移動先の #{to.name} には自分の駒 #{to_soldier.mark_with_formal_name.inspect} があります"
+      to_battler = board.lookup(to)
+      if to_battler
+        if to_battler.player == self
+          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.mark_with_formal_name.inspect} があります"
         end
         board.pick_up!(to)
-        @pieces << to_soldier.piece
-        @last_piece_taken_from_opponent = to_soldier.piece
-        to_soldier.player.soldiers.delete(to_soldier)
+        @pieces << to_battler.piece
+        @last_piece_taken_from_opponent = to_battler.piece
+        to_battler.player.battlers.delete(to_battler)
       end
 
       if promote_trigger
-        from_soldier.promoted = true
+        from_battler.promoted = true
       end
 
-      from_soldier.point = to
-      put_on_with_valid(from_soldier)
+      from_battler.point = to
+      put_on_with_valid(from_battler)
     end
 
     # # # 前の位置(同に使う)
@@ -232,39 +232,39 @@ module Bushido
     end
 
     # 盤上の駒関連
-    concerning :SoldierMethods do
+    concerning :BattlerMethods do
       included do
-        attr_accessor :soldiers
+        attr_accessor :battlers
       end
 
       def initialize(*)
         super
         # インスタンス変数は何もしなければ自動的に Marshal の対象になる
-        @soldiers = []
+        @battlers = []
       end
 
-      def soldiers_create_from_mini_soldier(mini_soldier)
-        soldier = Soldier.new(mini_soldier.merge(player: self))
-        put_on_with_valid(soldier)
-        @soldiers << soldier
+      def battlers_create_from_soldier(soldier)
+        battler = Battler.new(soldier.merge(player: self))
+        put_on_with_valid(battler)
+        @battlers << battler
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
-      #   soldier_names # => ["△５五飛↓"]
-      def soldier_names
-        @soldiers.collect(&:mark_with_formal_name).sort
+      #   battler_names # => ["△５五飛↓"]
+      def battler_names
+        @battlers.collect(&:mark_with_formal_name).sort
       end
 
       # 盤上の駒の名前一覧(保存用)
-      #   to_s_soldiers # => ["５五飛"]
-      def to_s_soldiers
-        @soldiers.collect(&:formal_name).sort.join(" ")
+      #   to_s_battlers # => ["５五飛"]
+      def to_s_battlers
+        @battlers.collect(&:formal_name).sort.join(" ")
       end
 
       # boardに描画する
-      def render_soldiers
-        @soldiers.each do |soldier|
-          put_on_with_valid(soldier)
+      def render_battlers
+        @battlers.each do |battler|
+          put_on_with_valid(battler)
         end
       end
     end
@@ -310,49 +310,49 @@ module Bushido
         yield self
       end
       marshal_load(_save)
-      # shash = MiniSoldier.from_str(arg)
-      # _soldier = Soldier.new(shash.merge(player: self))
+      # shash = Soldier.from_str(arg)
+      # _battler = Battler.new(shash.merge(player: self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
-      #   @soldiers << _soldier
-      #   put_on_with_valid(shash[:point], soldier)
+      #   @battlers << _battler
+      #   put_on_with_valid(shash[:point], battler)
       #   if block
-      #     yield soldier
+      #     yield battler
       #   end
       # ensure
-      #   soldier = board.pick_up!(shash[:point])
-      #   @pieces << _soldier.piece
-      #   @soldiers.pop
+      #   battler = board.pick_up!(shash[:point])
+      #   @pieces << _battler.piece
+      #   @battlers.pop
       # end
     end
 
-    def put_on_with_valid(soldier, **options)
+    def put_on_with_valid(battler, **options)
       options = {
         validate: true,
       }.merge(options)
 
       if options[:validate]
-        mini_soldier = soldier.to_mini_soldier
-        if s = find_collisione_pawn(mini_soldier)
-          raise DoublePawn, "二歩です。すでに#{s.mark_with_formal_name}があるため#{soldier}が打てません\n#{board_with_pieces}"
+        soldier = battler.to_soldier
+        if s = find_collisione_pawn(soldier)
+          raise DoublePawn, "二歩です。すでに#{s.mark_with_formal_name}があるため#{battler}が打てません\n#{board_with_pieces}"
         end
-        if dead_piece?(mini_soldier)
-          raise DeadPieceRuleError, "#{mini_soldier.to_s.inspect} は死に駒です。「#{mini_soldier}成」の間違いの可能性があります\n#{board_with_pieces}"
+        if dead_piece?(soldier)
+          raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"
         end
       end
 
-      board.put_on(soldier.point, soldier)
+      board.put_on(battler.point, battler)
     end
 
     # 二歩でも行き止まりでもない？
-    def rule_valid?(mini_soldier)
-      !find_collisione_pawn(mini_soldier) && !dead_piece?(mini_soldier)
+    def rule_valid?(soldier)
+      !find_collisione_pawn(soldier) && !dead_piece?(soldier)
     end
 
     # # モジュール化
     # begin
     #   def create_memento
-    #     # board → soldier → player の結び付きで戻ってくる(？) 要確認
+    #     # board → battler → player の結び付きで戻ってくる(？) 要確認
     #     Marshal.dump([@location, @pieces, board])
     #   end
     #
@@ -364,14 +364,14 @@ module Bushido
     private
 
     # 死に駒
-    def dead_piece?(mini_soldier)
-      !Movabler.alive_piece?(mini_soldier)
+    def dead_piece?(soldier)
+      !Movabler.alive_piece?(soldier)
     end
 
     # 二歩？
-    def find_collisione_pawn(mini_soldier)
-      if mini_soldier[:piece].key == :pawn && !mini_soldier[:promoted]
-        pawns_on_board(mini_soldier[:point]).first
+    def find_collisione_pawn(soldier)
+      if soldier[:piece].key == :pawn && !soldier[:promoted]
+        pawns_on_board(soldier[:point]).first
       end
     end
 
@@ -382,12 +382,12 @@ module Bushido
       end
     end
 
-    def movable_infos(mini_soldier)
-      Movabler.movable_infos(self, mini_soldier)
+    def movable_infos(soldier)
+      Movabler.movable_infos(self, soldier)
     end
 
-    # def side_soldiers_put_on(table)
-    #   table.each{|info|soldiers_create(info)}
+    # def side_battlers_put_on(table)
+    #   table.each{|info|battlers_create(info)}
     # end
   end
 end

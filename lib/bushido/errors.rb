@@ -10,13 +10,13 @@ module Bushido
   class UnconfirmedObject < BushidoError
   end
 
-  class MovableSoldierNotFound < BushidoError
+  class MovableBattlerNotFound < BushidoError
   end
 
   class AmbiguousFormatError < BushidoError
   end
 
-  class SoldierEmpty < BushidoError
+  class BattlerEmpty < BushidoError
   end
 
   class PieceNotFound < BushidoError
@@ -101,7 +101,7 @@ module Bushido
   class PromotedPieceToNormalPiece < RuleError
   end
 
-  class SamePlayerSoldierOverwrideError < RuleError
+  class SamePlayerBattlerOverwrideError < RuleError
   end
 
   class AitenoKomaUgokashitaError < RuleError

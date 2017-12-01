@@ -1,123 +1,144 @@
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/shash_spec.rb" -*-
 # frozen-string-literal: true
+#
+#  クラス      名前               有効な属性
+#  Soldier 盤上の駒の状態     point piece promoted
+#  PieceStake  駒を打った情報     point piece promoted
+#  BattlerMove 駒が動かした情報   point piece promoted origin_battler promoted_trigger
+#
 module Bushido
+  #  文字列なら「５二竜」となる情報をこのままだと扱いにくいので
+  #  point, piece, promoted の3つの情報にわける
+  #  しかし分るとバラバラで扱いにくいので Soldier として保持する
+  #  promoted は「打」とは関係ない。
+  #  盤上の駒の状態を表す
   #
-  # 盤上の駒
-  #   player を直接もつのではなく :white, :black を持てばいいような気もしている
-  #   引数もバラバラではなく文字列だけで入力してインスタンスを生成
+  #  Soldier.from_str("４二竜") # => {point: Point["４二"], piece: Piece["竜"], promoted: true}
   #
-  class Soldier
-    attr_accessor :player, :piece, :promoted, :point, :location
+  class Soldier < Hash
+    class << self
+      # 人間が入力する *初期配置* の "４二竜" などをハッシュに分割する
+      #   Soldier.from_str("４二竜") # => {point: Point["４二"], piece: Piece["竜"], promoted: true}
+      def from_str(str)
+        if str.kind_of?(self)
+          return str
+        end
+        md = str.match(/\A(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/) # FIXME: 他のところと同様に厳密にチェックする
+        md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
+        Soldier.new_with_promoted(md[:piece]).merge(point: Point.parse(md[:point]))
+      end
 
-    def initialize(attrs)
-      attrs.assert_valid_keys(:player, :piece, :promoted, :point, :location)
-
-      if attrs[:location]
-        if attrs[:location] != attrs[:player].location
-          raise MustNotHappen
+      # 「歩」や「と」を駒オブジェクトと成フラグに分離
+      #   Soldier.new_with_promoted("歩") # => <Soldier piece:"歩">
+      #   Soldier.new_with_promoted("と") # => <Soldier piece:"歩", promoted: true>
+      def new_with_promoted(value)
+        case
+        when piece = Piece.basic_lookup(value)
+          self[piece: piece, promoted: false]
+        when piece = Piece.promoted_lookup(value)
+          self[piece: piece, promoted: true]
+        else
+          raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
         end
       end
 
-      @player = attrs[:player]
-      @piece = attrs[:piece]
-      @location = @player.location
-
-      self.promoted = attrs[:promoted]
-
-      if attrs[:point]
-        @point = Point.parse(attrs[:point])
-      end
-
-      unless @player && @piece
-        raise MustNotHappen, attrs.inspect
+      def csa_new_with_promoted(value)
+        case
+        when piece = Piece.find { |e| e.csa_basic_name == value }
+          self[piece: piece, promoted: false]
+        when piece = Piece.find { |e| e.csa_promoted_name == value }
+          self[piece: piece, promoted: true]
+        else
+          raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
+        end
       end
     end
 
-    # 成り/不成状態の設定
-    def promoted=(v)
-      @piece.assert_promotable(v)
-      @promoted = !!v
+    # 「１一香成」ではなく「１一杏」を返す
+    # 指し手を返すには to_hand を使うこと
+    def to_s
+      formal_name
     end
 
-    def promoted?
-      !!@promoted
+    def name
+      formal_name
     end
 
-    # # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
-    # def read_point
-    #   if xy = @player.board.surface.invert[self]
-    #     Point.parse(xy)
-    #   end
+    def formal_name
+      [self[:point].name, piece_name].join
+    end
+
+    def piece_name
+      self[:piece].some_name(self[:promoted])
+    end
+
+    def location_piece_name
+      [self[:location].name, formal_name].join
+    end
+
+    def point
+      self[:point]
+    end
+
+    # つかってない
+    # def csa_piece_name
+    #   self[:piece].csa_some_name(self[:promoted])
     # end
 
-    # 移動可能な座標を取得
-    def movable_infos
-      Movabler.movable_infos(@player, to_mini_soldier)
+    # 現状の状態から成れるか？
+    # 相手陣地から出たときのことは考慮しなくてよい
+    # そもそも移動元をこのインスタンスは知らない
+    def more_promote?(location)
+      true &&
+        self[:piece].promotable? &&           # 成ることができる駒の種類かつ
+        !self[:promoted] &&                   # まだ成っていないかつ
+        self[:point].promotable?(location) && # 現在地点は相手の陣地内か？
+        true
     end
 
-    # def self.from_attrs(attrs)
-    #   new(attrs)
+    # soldiers.sort できるようにする
+    # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい
+    def <=>(other)
+      self[:point] <=> other[:point]
+    end
+
+    # # ▲側から見た状態に変換したインスタンスを返す
+    # def reverse_if_white
+    #   merge(point: self[:point].reverse_if_white(self[:location]), location: Location[:black])
     # end
-    #
-    # # シリアライズ用
-    # def to_attrs
-    #   {player: (@player ? @player.location.key : nil) point: @point.name, piece: @piece.key, promoted: @promoted}
-    # end
 
-    # 盤面情報と比較するならこれを使う
-    def to_mini_soldier
-      MiniSoldier[piece: @piece, promoted: @promoted, point: @point, location: @player.location]
+    # 反転
+    def reverse
+      merge(point: self[:point].reverse, location: self[:location].reverse)
     end
 
-    def to_h
-      to_mini_soldier.to_h
+    # △なら反転 (これって reverse_if_white と同じじゃ？)
+    def reverse_if_white
+      if self[:location].key == :white
+        reverse
+      else
+        self
+      end
     end
+  end
 
-    # この盤上の駒を消す
-    def abone
-      @player.board.abone_on(@point)
-      @player.soldiers.delete(self)
-      @point = nil
-      self
+  # Soldier にどこからどこへ成るかどうかの情報を含めたもの
+  # origin_battler と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
+  class BattlerMove < Soldier
+    def to_hand
+      [
+        self[:point].name,
+        self[:origin_battler].piece_name,
+        (self[:promoted_trigger] ? "成" : ""),
+        "(", self[:origin_battler].point.number_format, ")",
+      ].join
     end
+  end
 
-    concerning :NameMethods do
-      def name
-        mark_with_formal_name
-      end
-
-      def to_s
-        mark_with_formal_name
-      end
-
-      def to_csa
-        "#{@player.location.csa_sign}#{@piece.csa_some_name(@promoted)}"
-      end
-
-      def inspect
-        "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
-      end
-
-      # 駒の名前
-      def piece_current_name
-        @piece.some_name(@promoted)
-      end
-
-      # 正式な棋譜の表記で返す
-      #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲５五と"
-      def mark_with_formal_name
-        "#{@player.location.mark}#{formal_name}"
-      end
-
-      # 正式な棋譜の表記で返す
-      #  Player.basic_test(init: "５五と").board["５五"].formal_name # => "５五と"
-      def formal_name
-        "#{point ? point.name : '(どこにも置いてない)'}#{piece_current_name}"
-      end
-
-      # 柿木盤面用
-      def to_s_kakiki
-        "#{@player.location.varrow}#{piece_current_name}"
-      end
+  # 「打」専用
+  class PieceStake < Soldier
+    def to_hand
+      [self[:point].name, self[:piece].name, "打"].join
     end
   end
 end

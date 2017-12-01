@@ -19,32 +19,32 @@ module Bushido
     # 破壊的
     concerning :UpdateMethods do
       # 指定座標に駒を置く
-      #   board.put_on("５五", soldier)
-      def put_on(point, soldier)
+      #   board.put_on("５五", battler)
+      def put_on(point, battler)
         assert_board_cell_is_blank(point)
-        raise MustNotHappen if soldier.point != point
-        # soldier.point = point
-        # set(point, soldier)
-        @surface[Point[point].to_xy] = soldier # TODO: Point オブジェクトのままセットすることはできないか？
+        raise MustNotHappen if battler.point != point
+        # battler.point = point
+        # set(point, battler)
+        @surface[Point[point].to_xy] = battler # TODO: Point オブジェクトのままセットすることはできないか？
       end
 
       # 指定座標にある駒をを広い上げる
       def pick_up!(point)
-        soldier = @surface.delete(point.to_xy)
-        unless soldier
+        battler = @surface.delete(point.to_xy)
+        unless battler
           raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
         end
-        soldier.point = nil
-        soldier
+        battler.point = nil
+        battler
       end
 
       # 駒をすべて削除する
       def abone_all
-        @surface.values.find_all { |e| e.kind_of?(Soldier) }.each(&:abone)
+        @surface.values.find_all { |e| e.kind_of?(Battler) }.each(&:abone)
       end
 
       # 指定のセルを削除する
-      # プレイヤー側の soldiers からは削除しないので注意
+      # プレイヤー側の battlers からは削除しないので注意
       def abone_on(point)
         @surface.delete(point.to_xy)
       end
@@ -75,11 +75,11 @@ module Bushido
         }.compact
       end
 
-      def to_s_soldiers
+      def to_s_battlers
         @surface.values.collect(&:formal_name).sort.join(" ")
       end
 
-      def to_s_soldiers2
+      def to_s_battlers2
         @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
       end
 
@@ -100,9 +100,9 @@ module Bushido
 
     # 盤上の指定座標に駒があるならエラーとする
     def assert_board_cell_is_blank(point)
-      soldier = lookup(point)
-      if soldier
-        raise PieceAlredyExist, "#{point.name}にはすでに#{soldier}があります\n#{self}"
+      battler = lookup(point)
+      if battler
+        raise PieceAlredyExist, "#{point.name}にはすでに#{battler}があります\n#{self}"
       end
     end
 
@@ -128,14 +128,14 @@ module Bushido
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        sorted_black_side_mini_soldiers = @surface.values.collect { |e|
+        sorted_black_side_soldiers = @surface.values.collect { |e|
           if e.location == location
-            e.to_mini_soldier.reverse_if_white
+            e.to_soldier.reverse_if_white
           end
         }.compact.sort
 
         TeaiwariInfo.find do |e|
-          e.sorted_black_side_mini_soldiers == sorted_black_side_mini_soldiers
+          e.sorted_black_side_soldiers == sorted_black_side_soldiers
         end
       end
     end

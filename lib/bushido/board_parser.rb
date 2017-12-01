@@ -42,16 +42,16 @@ module Bushido
         @options = options
       end
 
-      # Location ごちゃまぜの MiniSoldier の配列
-      def mini_soldiers
-        @mini_soldiers ||= []
+      # Location ごちゃまぜの Soldier の配列
+      def soldiers
+        @soldiers ||= []
       end
 
-      def sorted_mini_soldiers
-        @sorted_mini_soldiers ||= mini_soldiers.sort
+      def sorted_soldiers
+        @sorted_soldiers ||= soldiers.sort
       end
 
-      # {Location[:black] => [<MiniSoldier>], Location[:white] => [...]}
+      # {Location[:black] => [<Soldier>], Location[:white] => [...]}
       def both_board_info
         @both_board_info ||= __both_board_info
       end
@@ -60,14 +60,14 @@ module Bushido
       #   both_board_info[location] || []
       # end
 
-      # def black_side_mini_soldiers
+      # def black_side_soldiers
       #   both_board_info[Location[:black]] || []
       # end
 
       private
 
       def __both_board_info
-        v = mini_soldiers.group_by { |e| e[:location] }
+        v = soldiers.group_by { |e| e[:location] }
         Location.each { |e| v[e] ||= [] } # FIXME: これはダサすぎないか？
         v
       end
@@ -96,7 +96,7 @@ module Bushido
     #   "
     #
     #   Bushido::BoardParser.parse(str) # => {white: ["４二玉"], black: []}
-    #   Bushido::BoardParser.parse(str) # => {white: [<MiniSoldier ...>], black: []}
+    #   Bushido::BoardParser.parse(str) # => {white: [<Soldier ...>], black: []}
     #
     class KifBoardParser < Base
       class << self
@@ -108,7 +108,7 @@ module Bushido
       def parse
         cell_walker do |point, location, something|
           if Piece.all_names.include?(something)
-            mini_soldiers_create(something, point, location)
+            soldiers_create(something, point, location)
           end
         end
       end
@@ -156,8 +156,8 @@ module Bushido
         end
       end
 
-      def mini_soldiers_create(piece, point, location)
-        mini_soldiers << MiniSoldier.new_with_promoted(piece).merge(point: point, location: location)
+      def soldiers_create(piece, point, location)
+        soldiers << Soldier.new_with_promoted(piece).merge(point: point, location: location)
       end
     end
 
@@ -166,7 +166,7 @@ module Bushido
         cell_walker do |point, location, something|
           case
           when Piece.all_names.include?(something)
-            mini_soldiers_create(something, point, location)
+            soldiers_create(something, point, location)
           when something != "・"
             other_objects << {point: point, location: location, something: something}
           end
@@ -202,7 +202,7 @@ module Bushido
               if md = e.match(/(?<csa_sign>\S)(?<piece>\S{2})/)
                 location = Location[md[:csa_sign]]
                 point = Point["#{x}#{y}"]
-                mini_soldiers << MiniSoldier.csa_new_with_promoted(md[:piece]).merge(point: point, location: location)
+                soldiers << Soldier.csa_new_with_promoted(md[:piece]).merge(point: point, location: location)
               end
             end
           end

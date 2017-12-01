@@ -74,7 +74,7 @@ EOT
         # it "foo" do
         #   player = player_test
         #   # puts player.mediator
-        #   player.soldiers_create("７七歩")
+        #   player.battlers_create("７七歩")
         #   puts player.mediator
         #   player.execute("７六歩")
         #   puts player.mediator
@@ -128,7 +128,7 @@ EOT
           expect { player_test2(init: ["６九金", "４九金"], exec: "５九金") }.to raise_error(AmbiguousFormatError)
         end
         it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので)" do
-          expect { player_test2(init: "５五龍", exec: "５六飛") }.to raise_error(MovableSoldierNotFound)
+          expect { player_test2(init: "５五龍", exec: "５六飛") }.to raise_error(MovableBattlerNotFound)
         end
         it "ルール上、成っている状態から成らない状態に戻れないので(移動元を明記しても同様。ただ例外の種類が異なる)" do
           expect { player_test2(init: "５五龍", exec: "５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
@@ -158,7 +158,7 @@ EOT
             expect { player_test2(init: "５五飛", exec: "５六飛成") }.to raise_error(NotPromotable)
           end
           it "飛がないので" do
-            expect { player_test2(init: "５五龍", exec: "５一飛成") }.to raise_error(MovableSoldierNotFound)
+            expect { player_test2(init: "５五龍", exec: "５一飛成") }.to raise_error(MovableBattlerNotFound)
           end
         end
       end
@@ -197,9 +197,9 @@ EOT
             mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
             mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
-            mediator.reverse_player.to_s_soldiers.should == "１一玉 １三歩"
+            mediator.reverse_player.to_s_battlers.should == "１一玉 １三歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二"
-            mediator.current_player.to_s_soldiers.should == "１五玉"
+            mediator.current_player.to_s_battlers.should == "１五玉"
           end
           it "同歩で取る" do
             mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
@@ -207,9 +207,9 @@ EOT
 
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
             mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
-            mediator.reverse_player.to_s_soldiers.should == "２四歩"
+            mediator.reverse_player.to_s_battlers.should == "２四歩"
             mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-            mediator.current_player.to_s_soldiers.should == ""
+            mediator.current_player.to_s_battlers.should == ""
           end
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
             mediator = Mediator.test(init: "▲２五歩 △２三歩", exec: ["２四歩", "２四同歩"])
@@ -227,7 +227,7 @@ EOT
           end
           # FIXME: nplayers のことを考慮すると面倒なことになるんでこのテストと nplayers を除去する
           # it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
-          #   expect { Mediator.test(nplayers: 1, init: "▲１九香 ▲１八香", exec: ["１五香", "同香"]) }.to raise_error(MovableSoldierNotFound)
+          #   expect { Mediator.test(nplayers: 1, init: "▲１九香 ▲１八香", exec: ["１五香", "同香"]) }.to raise_error(MovableBattlerNotFound)
           # end
         end
       end
@@ -347,13 +347,13 @@ EOT
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
     #     player = player_test(init: "２二歩", pinit: "歩")
-    #     p player.to_s_soldiers
+    #     p player.to_s_battlers
     #     p player.to_s_pieces
     #     player.safe_put_on("１二歩打") do
-    #       p player.to_s_soldiers
+    #       p player.to_s_battlers
     #       p player.to_s_pieces
     #     end
-    #     p player.to_s_soldiers
+    #     p player.to_s_battlers
     #     p player.to_s_pieces
     #
     #     # player = player_test
@@ -368,43 +368,43 @@ EOT
     #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
     #     # player = player_test(init: "２二歩", pinit: "歩")
-    #     # p player.to_s_soldiers
+    #     # p player.to_s_battlers
     #     # p player.to_s_pieces
     #     # player.safe_put_on("１二歩打") do
-    #     #   p player.to_s_soldiers
+    #     #   p player.to_s_battlers
     #     #   p player.to_s_pieces
     #     # end
-    #     # p player.to_s_soldiers
+    #     # p player.to_s_battlers
     #     # p player.to_s_pieces
     #   end
     # end
 
     # it "復元するのは持駒と盤上の駒のみ(boardはmediator経由)" do # FIXME: なんのテストなのかよくわからない
     #   player1 = player_test(init: "５九玉", exec: "５八玉")
-    #   player1.soldier_names.should == ["▲５八玉"]
+    #   player1.battler_names.should == ["▲５八玉"]
     #   player1.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #
     #   player2 = Marshal.load(Marshal.dump(player1))
-    #   player2.soldier_names.should == ["▲５八玉"]
+    #   player2.battler_names.should == ["▲５八玉"]
     #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #   # player2.board.present?.should == true # @mediator が nil になっている
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
-    #   mediator.player_b.to_s_soldiers.should == "１二歩"
+    #   mediator.player_b.to_s_battlers.should == "１二歩"
     #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_b.board.to_s_soldiers.should == "１二歩"
+    #   # mediator.player_b.board.to_s_battlers.should == "１二歩"
     #
     #   # puts mediator.board
     #   mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
     #   # puts mediator.board
     #
-    #   mediator.player_b.to_s_soldiers.should == "１二歩"
+    #   mediator.player_b.to_s_battlers.should == "１二歩"
     #
     #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_b.board.present?.should == true
-    #   # mediator.player_b.board.to_s_soldiers.should == "１二歩" # ← こうなるのが問題
+    #   # mediator.player_b.board.to_s_battlers.should == "１二歩" # ← こうなるのが問題
     # end
 
   end

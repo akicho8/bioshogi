@@ -12,9 +12,9 @@ module Bushido
 
     # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
     # @example
-    #   Utils.location_mini_soldiers(location: location, key: "平手")
-    #   Utils.location_mini_soldiers(location: location, key: "+---...")
-    def location_mini_soldiers(params)
+    #   Utils.location_soldiers(location: location, key: "平手")
+    #   Utils.location_soldiers(location: location, key: "+---...")
+    def location_soldiers(params)
       params = {
         location: nil,
         key: nil,
@@ -28,15 +28,15 @@ module Bushido
         board_parser = TeaiwariInfo.fetch(params[:key]).board_parser
       end
 
-      board_parser.mini_soldiers.collect do |e|
+      board_parser.soldiers.collect do |e|
         e.merge(point: e[:point].reverse_if_white(location), location: location)
       end
     end
 
     # # 指定プレイヤー側の初期配置(盤面のみ対応)
     # # @example
-    # #   Utils.location_mini_soldiers(:black, "+----+\n|...") # => [...]
-    # def __valid_both_soldiers_from_char_board(params = {})
+    # #   Utils.location_soldiers(:black, "+----+\n|...") # => [...]
+    # def __valid_both_battlers_from_char_board(params = {})
     #   params = {
     #     validate: true,
     #   }.merge(params)
@@ -57,8 +57,8 @@ module Bushido
     #   board_reset_args("角落ち")                              # 先手だけが角落ち(下と同じ)
     #
     #   => {
-    #       "▲" => [<MiniSoldier>, ...],
-    #       "△" => [<MiniSoldier>, ...],
+    #       "▲" => [<Soldier>, ...],
+    #       "△" => [<Soldier>, ...],
     #     }
     #
     def board_reset_args(value = nil)
@@ -68,7 +68,7 @@ module Bushido
     # # {"▲" => "角落ち", "△" => "香落ち"} の場合(主にDSL用)
     # def board_reset_args_hash(hash)
     #   value.inject({}) {|a, (k, v)|
-    #     a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
+    #     a.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
     #   }
     # end
 
@@ -154,7 +154,7 @@ module Bushido
       }
     end
 
-    def initial_soldiers_split(str)
+    def initial_battlers_split(str)
       movs_split(str.gsub(/_+/, " "))
     end
 
@@ -180,9 +180,9 @@ module Bushido
     #   end
     # end
 
-    # mini_soldiers を location 側の配置に変更したのを返す
-    def board_point_realize2(mini_soldiers, location)
-      mini_soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
+    # soldiers を location 側の配置に変更したのを返す
+    def board_point_realize2(soldiers, location)
+      soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
     end
 
     private

@@ -175,14 +175,14 @@ module Bushido
 
       def board_reset_for_hash(v)
         v = v.inject({}) {|a, (k, v)|
-          a.merge(Location[k] => Utils.location_mini_soldiers(location: k, key: v))
+          a.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
         }
         board_reset5(v)
       end
 
       def board_reset5(v)
         v.each do |location, v|
-          player_at(location).soldiers_create(v, from_stand: false)
+          player_at(location).battlers_create(v, from_stand: false)
         end
       end
 
@@ -195,12 +195,12 @@ module Bushido
     concerning :Other do
       # 両者の駒の配置を決める
       # @example 持駒から配置する場合(持駒がなければエラーになる)
-      #   soldiers_create("▲３三歩 △１一歩")
+      #   battlers_create("▲３三歩 △１一歩")
       # @example 持駒から配置しない場合(無限に駒が置ける)
-      #   soldiers_create("▲３三歩 △１一歩", from_stand: false)
-      def soldiers_create(str, **options)
-        Utils.initial_soldiers_split(str).each do |info|
-          player_at(info[:location]).soldiers_create(info[:input], options)
+      #   battlers_create("▲３三歩 △１一歩", from_stand: false)
+      def battlers_create(str, **options)
+        Utils.initial_battlers_split(str).each do |info|
+          player_at(info[:location]).battlers_create(info[:input], options)
         end
       end
 
@@ -324,7 +324,7 @@ module Bushido
         @hand_logs = attrs[:hand_logs]
         @board = Board.new
         @players.each { |player| player.mediator = self }
-        @players.collect { |player| player.render_soldiers }
+        @players.collect { |player| player.render_battlers }
       end
 
       # deep_dup しておくこと
@@ -334,7 +334,7 @@ module Bushido
         @hand_logs = object.hand_logs
         @board = Board.new
         @players.each { |player| player.mediator = self }
-        @players.collect { |player| player.render_soldiers }
+        @players.collect { |player| player.render_battlers }
         self
       end
 
@@ -436,10 +436,10 @@ module Bushido
         mediator = start
         mediator.players = mediator.players.first(params[:nplayers])
         if params[:init]
-          mediator.soldiers_create(params[:init])
+          mediator.battlers_create(params[:init])
         end
         if params[:init2]
-          mediator.soldiers_create(params[:init2], from_stand: false)
+          mediator.battlers_create(params[:init2], from_stand: false)
         end
         if params[:pinit]
           mediator.pieces_set(params[:pinit])
@@ -459,7 +459,7 @@ module Bushido
         params = {
         }.merge(params)
         new.tap do |o|
-          o.soldiers_create(params[:init], from_stand: false)
+          o.battlers_create(params[:init], from_stand: false)
           o.pieces_set(params[:pinit])
         end
       end

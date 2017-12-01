@@ -18,16 +18,16 @@ module Bushido
     def to_s
       Position::Vpos.board_size.times.collect { |y|
         "P#{y.next}" + Position::Hpos.board_size.times.collect { |x|
-          soldier_to_str(@board.surface[[x, y]])
+          battler_to_str(@board.surface[[x, y]])
         }.join + "\n"
       }.join
     end
 
     private
 
-    def soldier_to_str(soldier)
-      if soldier
-        soldier.to_csa
+    def battler_to_str(battler)
+      if battler
+        battler.to_csa
       else
         " * "
       end

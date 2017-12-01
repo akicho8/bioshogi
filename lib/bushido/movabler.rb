@@ -9,7 +9,7 @@ module Bushido
   module Movabler
     extend self
 
-    # player の mini_soldier が移動可能な手をすべて取得する
+    # player の soldier が移動可能な手をすべて取得する
     #
     # アルゴリズム
     #
@@ -30,11 +30,11 @@ module Bushido
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def movable_infos(player, mini_soldier)
+    def movable_infos(player, soldier)
       Enumerator.new do |yielder|
-        vecs = mini_soldier[:piece].select_vectors2(mini_soldier.slice(:promoted, :location))
+        vecs = soldier[:piece].select_vectors2(soldier.slice(:promoted, :location))
         vecs.each do |vec|
-          pt = mini_soldier[:point]
+          pt = soldier[:point]
           loop do
             pt = pt.vector_add(vec)
 
@@ -45,7 +45,7 @@ module Bushido
 
             target = player.board.lookup(pt)
 
-            if target && !target.kind_of?(Soldier)
+            if target && !target.kind_of?(Battler)
               raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
             end
 
@@ -55,7 +55,7 @@ module Bushido
             end
 
             # 自分の駒以外(相手駒 or 空)なので行ける
-            piece_store(player, mini_soldier, pt, yielder)
+            piece_store(player, soldier, pt, yielder)
 
             # 相手駒があるのでこれ以上は進めない
             if target
@@ -71,7 +71,7 @@ module Bushido
       end
     end
 
-    # player の mini_soldier が vecs の方向(複数)へ移動できるか？
+    # player の soldier が vecs の方向(複数)へ移動できるか？
     #  ・とてもシンプル
     #  ・相手の盤上の駒を考慮しない
     #  ・自分の盤上の駒も考慮しない
@@ -79,32 +79,32 @@ module Bushido
     #  ・桂を1の行にジャンプしたときにそれ以上移動できないので「１一桂」はダメという場合に使う
     #  ・だから OnceVector か RepeatVector か見る必要はない
     #  ・行ける方向に一歩でも行ける可能性があればよい
-    def alive_piece?(mini_soldier)
-      raise MustNotHappen unless mini_soldier[:location]
-      vectors = mini_soldier[:piece].select_vectors2(mini_soldier.slice(:promoted, :location))
+    def alive_piece?(soldier)
+      raise MustNotHappen unless soldier[:location]
+      vectors = soldier[:piece].select_vectors2(soldier.slice(:promoted, :location))
       vectors.any? do |v|
-        mini_soldier[:point].vector_add(v).valid?
+        soldier[:point].vector_add(v).valid?
       end
     end
 
     private
 
-    # pt の場所は空なので player の mini_soldier を pt に置けそうだ
+    # pt の場所は空なので player の soldier を pt に置けそうだ
     # でも pt に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(player, mini_soldier, pt, yielder)
+    def piece_store(player, soldier, pt, yielder)
       # それ以上動けるなら置く
-      m = mini_soldier.merge(point: pt)
+      m = soldier.merge(point: pt)
       if alive_piece?(m)
-        yielder << SoldierMove[m.merge(origin_soldier: mini_soldier)]
+        yielder << BattlerMove[m.merge(origin_battler: soldier)]
       end
       # 成れるなら成ってみて
       if m.more_promote?(player.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)
-          yielder << SoldierMove[m.merge(origin_soldier: mini_soldier, promoted_trigger: true)]
+          yielder << BattlerMove[m.merge(origin_battler: soldier, promoted_trigger: true)]
         end
       end
     end

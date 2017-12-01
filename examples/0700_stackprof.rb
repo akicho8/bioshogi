@@ -43,7 +43,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>          5   (1.2%)           5   (1.2%)     Bushido::HandLog::OfficialFormatter#initialize
 # >>          9   (2.2%)           5   (1.2%)     Bushido::Position::Base#valid?
 # >>         11   (2.7%)           5   (1.2%)     Bushido::Parser#source_normalize
-# >>          5   (1.2%)           5   (1.2%)     Bushido::Soldier#to_mini_soldier
+# >>          5   (1.2%)           5   (1.2%)     Bushido::Battler#to_soldier
 # >>          4   (1.0%)           4   (1.0%)     ActiveSupport::Duration#to_i
 # >>         39   (9.7%)           4   (1.0%)     Set#each
 # >>          4   (1.0%)           4   (1.0%)     ActiveSupport::Duration.===
@@ -62,7 +62,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>       14  (   22.6%)  Bushido::Point#vector_add
 # >>       13  (   21.0%)  Bushido::Runner#execute
 # >>        9  (   14.5%)  Bushido::Runner#read_point
-# >>        1  (    1.6%)  Bushido::Soldier#initialize
+# >>        1  (    1.6%)  Bushido::Battler#initialize
 # >>   callees (49 total):
 # >>       24  (   49.0%)  Bushido::Position::Hpos.parse
 # >>       22  (   44.9%)  Bushido::Position::Vpos.parse
@@ -101,7 +101,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>       83  (   48.5%)  Bushido::Movabler#movable_infos
 # >>       57  (   33.3%)  Bushido::Runner#execute
 # >>       27  (   15.8%)  Set#each
-# >>        4  (    2.3%)  Bushido::Soldier#movable_infos
+# >>        4  (    2.3%)  Bushido::Battler#movable_infos
 # >>   callees (166 total):
 # >>       83  (   50.0%)  Bushido::Movabler#movable_infos
 # >>       30  (   18.1%)  Bushido::Movabler#piece_store
@@ -112,11 +112,11 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>        3  (    1.8%)  Bushido::Player#board
 # >>        1  (    0.6%)  Bushido::Piece::VectorMethods#select_vectors
 # >>   code:
-# >>                                   |    33  |     def movable_infos(player, mini_soldier)
+# >>                                   |    33  |     def movable_infos(player, soldier)
 # >>     4    (1.0%) /     4   (1.0%)  |    34  |       Enumerator.new do |yielder|
-# >>     1    (0.2%)                   |    35  |         vecs = mini_soldier[:piece].select_vectors(mini_soldier[:promoted])
-# >>    56   (14.0%)                   |    36  |         normalized_vectors(mini_soldier[:location], vecs).each do |vec|
-# >>                                   |    37  |           pt = mini_soldier[:point]
+# >>     1    (0.2%)                   |    35  |         vecs = soldier[:piece].select_vectors(soldier[:promoted])
+# >>    56   (14.0%)                   |    36  |         normalized_vectors(soldier[:location], vecs).each do |vec|
+# >>                                   |    37  |           pt = soldier[:point]
 # >>    55   (13.7%)                   |    38  |           loop do
 # >>     9    (2.2%)                   |    39  |             pt = pt.vector_add(vec)
 # >>                                   |    40  | 
@@ -127,7 +127,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>                                   |    45  | 
 # >>    12    (3.0%)                   |    46  |             target = player.board.lookup(pt)
 # >>                                   |    47  | 
-# >>                                   |    48  |             if target && !target.kind_of?(Soldier)
+# >>                                   |    48  |             if target && !target.kind_of?(Battler)
 # >>                                   |    49  |               raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
 # >>                                   |    50  |             end
 # >>                                   |    51  | 
@@ -137,7 +137,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>                                   |    55  |             end
 # >>                                   |    56  | 
 # >>                                   |    57  |             # 自分の駒以外(相手駒 or 空)なので行ける
-# >>    30    (7.5%)                   |    58  |             piece_store(player, mini_soldier, pt, yielder)
+# >>    30    (7.5%)                   |    58  |             piece_store(player, soldier, pt, yielder)
 # >>                                   |    59  | 
 # >>                                   |    60  |             # 相手駒があるのでこれ以上は進めない
 # >>     1    (0.2%) /     1   (0.2%)  |    61  |             if target

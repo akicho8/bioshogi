@@ -10,8 +10,8 @@ module Bushido
 
     def execute
 
-      # soldiers = board.surface.values.find_all { |e| e.location == location }
-      # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
+      # battlers = board.surface.values.find_all { |e| e.location == location }
+      # sorted_black_side_soldiers = battlers.collect { |e| e.to_soldier.reverse_if_white }.sort
 
       skip = Object.new
       skill_models.each do |check_item|
@@ -50,51 +50,51 @@ module Bushido
               end
             end
 
-            soldiers = player.board.surface.values
-            mini_soldiers = soldiers.collect { |e| e.to_mini_soldier }
+            battlers = player.board.surface.values
+            soldiers = battlers.collect { |e| e.to_soldier }
 
             if e.my_side_only
-              mini_soldiers = mini_soldiers.find_all {|e| e[:location] == player.location }
+              soldiers = soldiers.find_all {|e| e[:location] == player.location }
             end
 
             if player.location.key == :white
-              mini_soldiers = mini_soldiers.collect(&:reverse)
+              soldiers = soldiers.collect(&:reverse)
             end
 
             if e.compare_condition == :equal
               # if e.my_side_only
               #   # 自分側だけで完全一致の場合
-              #   # soldiers = player.board.surface.values
-              #   # soldiers = soldiers.find_all { |e| e.location == player.location }
-              #   # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
-              hit_flag = mini_soldiers.sort == e.sorted_mini_soldiers
+              #   # battlers = player.board.surface.values
+              #   # battlers = battlers.find_all { |e| e.location == player.location }
+              #   # sorted_black_side_soldiers = battlers.collect { |e| e.to_soldier.reverse_if_white }.sort
+              hit_flag = soldiers.sort == e.sorted_soldiers
               # else
               # 相手側も見る場合
 
-              # soldiers = player.board.surface.values
-              # mini_soldiers = soldiers.collect { |e| e.to_mini_soldier }
+              # battlers = player.board.surface.values
+              # soldiers = battlers.collect { |e| e.to_soldier }
               # if player.location.key == :white
-              #   mini_soldiers = mini_soldiers.collect(&:reverse)
+              #   soldiers = soldiers.collect(&:reverse)
               # end
-              # sorted_mini_soldiers = mini_soldiers.sort
-              # sorted_mini_soldiers == e.shape_info.sorted_mini_soldiers
+              # sorted_soldiers = soldiers.sort
+              # sorted_soldiers == e.shape_info.sorted_soldiers
               # end
             elsif e.compare_condition == :include
               # 自分側だけで盤上の状態に含まれる？
-              # e.black_side_mini_soldiers.all? do |e|
-              #   if soldier = player.board[e[:point]]
-              #     if soldier.location == player.location
-              #       soldier.to_mini_soldier.reverse_if_white == e
+              # e.black_side_soldiers.all? do |e|
+              #   if battler = player.board[e[:point]]
+              #     if battler.location == player.location
+              #       battler.to_soldier.reverse_if_white == e
               #     end
               #   end
               # end
 
-              hit_flag = e.board_parser.mini_soldiers.all? { |e| mini_soldiers.include?(e) }
+              hit_flag = e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
 
-              # e.mini_soldiers.all? do |e|
-              #   if soldier = player.board[e[:point]]
-              #     if soldier.location == player.location
-              #       soldier.to_mini_soldier.reverse_if_white == e
+              # e.soldiers.all? do |e|
+              #   if battler = player.board[e[:point]]
+              #     if battler.location == player.location
+              #       battler.to_soldier.reverse_if_white == e
               #     end
               #   end
               # end
@@ -116,10 +116,10 @@ module Bushido
       #     end
       #
       #     # 盤上の状態に含まれる？
-      #     e.black_side_mini_soldiers.all? do |e|
-      #       if soldier = player.mediator.board[e[:point]]
-      #         if soldier.location == player.location
-      #           soldier.to_mini_soldier.reverse_if_white == e
+      #     e.black_side_soldiers.all? do |e|
+      #       if battler = player.mediator.board[e[:point]]
+      #         if battler.location == player.location
+      #           battler.to_soldier.reverse_if_white == e
       #         end
       #       end
       #     end
@@ -131,8 +131,8 @@ module Bushido
       # end
 
       # if true
-      #   # soldiers = board.surface.values.find_all { |e| e.location == player.location }
-      #   # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
+      #   # battlers = board.surface.values.find_all { |e| e.location == player.location }
+      #   # sorted_black_side_soldiers = battlers.collect { |e| e.to_soldier.reverse_if_white }.sort
       #
       #   attack_info = AttackInfo.find do |e|
       #     if player.attack_infos.include?(e)

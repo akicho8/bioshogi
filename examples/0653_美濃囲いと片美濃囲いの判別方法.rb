@@ -4,7 +4,7 @@ require "./example_helper"
 # puts info.to_ki2
 
 DefenseInfo.each do |e|
-  tp e.sorted_mini_soldiers.collect(&:name)
+  tp e.sorted_soldiers.collect(&:name)
 end
 # >> |--------|
 # >> | ８八玉 |

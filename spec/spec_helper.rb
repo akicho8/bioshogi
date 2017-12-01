@@ -38,7 +38,7 @@ RSpec.configure do |config|
 
       player.pieces_add(params[:append_pieces])
 
-      player.soldiers_create(params[:init])
+      player.battlers_create(params[:init])
 
       if params[:run_piece_plot]
         player.piece_plot
@@ -54,7 +54,7 @@ RSpec.configure do |config|
     end
 
     def player_test2(*args)
-      player_test(*args).soldier_names.sort
+      player_test(*args).battler_names.sort
     end
 
     def read_spec(*args)

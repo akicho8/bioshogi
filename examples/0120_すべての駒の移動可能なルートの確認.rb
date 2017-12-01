@@ -4,21 +4,21 @@ require "./example_helper"
 mediator = Mediator.new
 player = mediator.player_at(:black)
 Piece.each do |piece|
-  player.soldiers_create("５五#{piece.name}", from_stand: false)
+  player.battlers_create("５五#{piece.name}", from_stand: false)
   player.board["５五"].movable_infos.each do |v|
-    soldier = player.board[v[:point]]
+    battler = player.board[v[:point]]
     draw = false
     if false
-      draw = !soldier
+      draw = !battler
     else
-      if soldier
-        soldier.abone
+      if battler
+        battler.abone
       end
       draw = true
     end
     if draw
       # 歩だと二歩になるので
-      player.soldiers_create("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_stand: false)
+      player.battlers_create("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_stand: false)
     end
   end
   puts mediator.board

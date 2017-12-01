@@ -2,8 +2,8 @@ require_relative "spec_helper"
 
 module Bushido
   describe TeaiwariInfo do
-    it "black_side_mini_soldiers" do
-      TeaiwariInfo["平手"].sorted_black_side_mini_soldiers.collect(&:name).should == ["９七歩", "９九香", "８七歩", "８八角", "８九桂", "７七歩", "７九銀", "６七歩", "６九金", "５七歩", "５九玉", "４七歩", "４九金", "３七歩", "３九銀", "２七歩", "２八飛", "２九桂", "１七歩", "１九香"]
+    it "black_side_soldiers" do
+      TeaiwariInfo["平手"].sorted_black_side_soldiers.collect(&:name).should == ["９七歩", "９九香", "８七歩", "８八角", "８九桂", "７七歩", "７九銀", "６七歩", "６九金", "５七歩", "５九玉", "４七歩", "４九金", "３七歩", "３九銀", "２七歩", "２八飛", "２九桂", "１七歩", "１九香"]
     end
 
     it "ある" do

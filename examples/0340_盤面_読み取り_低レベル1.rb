@@ -1,19 +1,19 @@
 require "./example_helper"
 
-tp BoardParser.parse(<<~EOT).mini_soldiers
+tp BoardParser.parse(<<~EOT).soldiers
 +---+
 | 歩|
 +---+
 EOT
 
-tp BoardParser.parse(<<~EOT).mini_soldiers
+tp BoardParser.parse(<<~EOT).soldiers
 +------+
 |v桂v香|
 | ・ ・|
 +------+
 EOT
 
-tp BoardParser.parse(<<~EOT).mini_soldiers
+tp BoardParser.parse(<<~EOT).soldiers
 +---------------------------+
 | ・v桂 ・ ・ 馬 ・ ・v桂v香|
 |v飛 ・ ・ ・ ・ と ・ ・ ・|

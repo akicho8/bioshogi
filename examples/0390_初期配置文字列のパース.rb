@@ -1,7 +1,7 @@
 # 初期配置文字列のパース
 require "./example_helper"
 
-info = MiniSoldier.from_str("７六と")
+info = Soldier.from_str("７六と")
 info[:piece].name # => "歩"
 info[:promoted]   # => true
 info[:point].name # => "７六"

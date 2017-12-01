@@ -46,7 +46,7 @@ module Bushido
       score = 0
 
       # 盤上の駒
-      score += player.soldiers.collect { |e|
+      score += player.battlers.collect { |e|
         if e.promoted?
           e.piece.promoted_weight
         else

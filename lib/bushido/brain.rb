@@ -98,7 +98,7 @@ module Bushido
     end
 
     def all_hands
-      soldiers_hands + pieces_hands
+      battlers_hands + pieces_hands
     end
 
     def best_hand
@@ -132,12 +132,12 @@ module Bushido
     end
 
     # 盤上の駒の全手筋
-    def soldiers_hands
-      __soldiers_hands.collect(&:to_hand)
+    def battlers_hands
+      __battlers_hands.collect(&:to_hand)
     end
 
-    def __soldiers_hands
-      @player.soldiers.collect{|soldier|soldier.movable_infos.to_a}.flatten
+    def __battlers_hands
+      @player.battlers.collect{|battler|battler.movable_infos.to_a}.flatten
     end
 
     # 持駒の全打筋
@@ -148,7 +148,7 @@ module Bushido
     def __pieces_hands
       @player.board.blank_points.collect { |point|
         @player.pieces.collect do |piece|
-          m = MiniSoldier[point: point, piece: piece, location: @player.location, promoted: false]
+          m = Soldier[point: point, piece: piece, location: @player.location, promoted: false]
           if @player.rule_valid?(m)
             PieceStake[m]
           end

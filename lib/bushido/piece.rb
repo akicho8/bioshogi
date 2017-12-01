@@ -57,14 +57,14 @@ module Bushido
         end
 
         # 「歩」や「と」を駒オブジェクトと成フラグに分離
-        #   MiniSoldier.new_with_promoted("歩") # => <MiniSoldier piece:"歩">
-        #   MiniSoldier.new_with_promoted("と") # => <MiniSoldier piece:"歩", promoted: true>
+        #   Soldier.new_with_promoted("歩") # => <Soldier piece:"歩">
+        #   Soldier.new_with_promoted("と") # => <Soldier piece:"歩", promoted: true>
         # def new_with_promoted(arg)
         #   case
         #   when piece = basic_lookup(arg)
-        #     MiniSoldier[piece: piece, promoted: false]
+        #     Soldier[piece: piece, promoted: false]
         #   when piece = promoted_lookup(arg)
-        #     MiniSoldier[piece: piece, promoted: true]
+        #     Soldier[piece: piece, promoted: true]
         #   else
         #     raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         #   end
@@ -74,9 +74,9 @@ module Bushido
         # def csa_new_with_promoted(arg)
         #   case
         #   when piece = find{|e|e.csa_basic_name == arg}
-        #     MiniSoldier[piece: piece, promoted: false]
+        #     Soldier[piece: piece, promoted: false]
         #   when piece = find{|e|e.csa_promoted_name == arg}
-        #     MiniSoldier[piece: piece, promoted: true]
+        #     Soldier[piece: piece, promoted: true]
         #   else
         #     raise PieceNotFound, "#{arg.inspect} に対応する駒がありません"
         #   end

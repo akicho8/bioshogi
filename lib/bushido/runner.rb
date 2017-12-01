@@ -55,7 +55,7 @@ module Bushido
       @point_from    = nil
       @candidate       = nil
 
-      @mini_soldier = nil
+      @soldier = nil
       @done = false
 
       @md = @source.match(self.class.input_regexp)
@@ -105,8 +105,8 @@ module Bushido
       end
 
       begin
-        @mini_soldier = MiniSoldier.new_with_promoted(@md[:piece])
-        @piece, @promoted = @mini_soldier.values_at(:piece, :promoted)
+        @soldier = Soldier.new_with_promoted(@md[:piece])
+        @piece, @promoted = @soldier.values_at(:piece, :promoted)
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
       end
@@ -142,19 +142,19 @@ module Bushido
 
       # 指定の場所に来れる盤上の駒に絞る
       # kif → ki2 変換するときのために @candidate を常に作っとかんといけない
-      @soldiers = @player.soldiers.find_all { |e|
+      @battlers = @player.battlers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
         e.movable_infos.any? { |e| e[:point] == @point_to } && # 目的地に来れる
         true
       }
-      @candidate = @soldiers.collect(&:clone)
+      @candidate = @battlers.collect(&:clone)
 
       if @strike_trigger
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        soldier_put
+        battler_put
       else
         if @md[:point_from]
           @point_from = Point.parse(@md[:point_from])
@@ -166,16 +166,16 @@ module Bushido
 
         unless @done
           if true
-            source_soldier = @player.board.lookup(@point_from)
+            source_battler = @player.board.lookup(@point_from)
             if !@promote_trigger
-              if source_soldier && source_soldier.promoted? && !@promoted
+              if source_battler && source_battler.promoted? && !@promoted
                 # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
                 if @player.piece_lookup(@piece)
                   @strike_trigger = true
                   @point_from = nil
-                  soldier_put
+                  battler_put
                 else
-                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_soldier.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_battler.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
                 end
               end
             end
@@ -238,12 +238,12 @@ module Bushido
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
       # # 指定の場所に来れる盤上の駒に絞る
-      # @soldiers = @player.soldiers.find_all { |soldier| soldier.movable_infos.any?{|e|e[:point] == @point_to} }
-      # @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
-      # @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
-      # @candidate = @soldiers.collect{|s|s.clone}
+      # @battlers = @player.battlers.find_all { |battler| battler.movable_infos.any?{|e|e[:point] == @point_to} }
+      # @battlers = @battlers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
+      # @battlers = @battlers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
+      # @candidate = @battlers.collect{|s|s.clone}
 
-      if @soldiers.empty?
+      if @battlers.empty?
         # 「打」を省略している場合、持駒から探す
         if @player.piece_lookup(@piece)
           if @promote_trigger
@@ -253,72 +253,72 @@ module Bushido
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
-          soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), point: @point_to, promoted: @promoted)
-          @player.put_on_with_valid(soldier)
-          @player.soldiers << soldier
+          battler = Battler.new(player: @player, piece: @player.piece_pick_out(@piece), point: @point_to, promoted: @promoted)
+          @player.put_on_with_valid(battler)
+          @player.battlers << battler
           @done = true
         else
-          raise MovableSoldierNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@mini_soldier.piece_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
+          raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@soldier.piece_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
         end
       end
 
       unless @done
-        if @soldiers.size > 1
+        if @battlers.size > 1
           if @md[:motion1]
             # TODO: 入力の正規表現を改めたのでこのチェックは不要かもしれない
             assert_valid_format("直上")
             assert_valid_format("左右直")
             assert_valid_format("寄引上")
-            find_soldiers
+            find_battlers
           end
-          if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+          if @battlers.size > 1
+            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@battlers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
           end
         end
 
-        # Point[@player.board.surface.invert[@soldiers.first]] として引くことも可能だけど遅い
-        @point_from = @soldiers.first.point
+        # Point[@player.board.surface.invert[@battlers.first]] として引くことも可能だけど遅い
+        @point_from = @battlers.first.point
       end
     end
 
-    def find_soldiers
-      __saved_soldiers = @soldiers
+    def find_battlers
+      __saved_battlers = @battlers
 
       # 上下左右は後手なら反転する
       cond = "左右"
       if @md[:motion1].match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
-          @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
+          @battlers = @battlers.sort_by{|battler|battler.point.x.value}.send(m, 1)
         else
           m = _method([:>, :<], cond)
-          @soldiers = @soldiers.find_all{|soldier|@point_to.x.value.send(m, soldier.point.x.value)}
+          @battlers = @battlers.find_all{|battler|@point_to.x.value.send(m, battler.point.x.value)}
         end
       end
       cond = "上引"
       if @md[:motion1].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
-        @soldiers = @soldiers.find_all{|soldier|@point_to.y.value.send(m, soldier.point.y.value)}
+        @battlers = @battlers.find_all{|battler|@point_to.y.value.send(m, battler.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
       if true
         if @md[:motion1].include?("寄")
           # TODO: 厳密には左右1個分だけチェックする
-          @soldiers = @soldiers.find_all { |e| e.point.y == @point_to.y }
+          @battlers = @battlers.find_all { |e| e.point.y == @point_to.y }
         end
 
         # 真下にあるもの
         if @md[:motion1].include?("直")
-          @soldiers = @soldiers.find_all { |e|
+          @battlers = @battlers.find_all { |e|
             e.point.x == @point_to.x &&
             e.point.y.value == @point_to.y.value + @player.location.which_val(1, -1)
           }
         end
       end
 
-      if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+      if @battlers.empty?
+        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_battlers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -337,10 +337,10 @@ module Bushido
       end
     end
 
-    def soldier_put
-      soldier = Soldier.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point_to)
-      @player.put_on_with_valid(soldier)
-      @player.soldiers << soldier
+    def battler_put
+      battler = Battler.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point_to)
+      @player.put_on_with_valid(battler)
+      @player.battlers << battler
       @done = true
     end
 

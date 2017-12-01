@@ -3,12 +3,12 @@ require_relative "spec_helper"
 module Bushido
   describe Utils do
     it "初期配置情報の塊を分離" do
-      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
+      Utils.initial_battlers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
     end
 
     it "座標と駒の分解" do
-      MiniSoldier.from_str("４二銀").should == {point: Point["４二"], piece: Piece["銀"], promoted: false}
-      MiniSoldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["飛"], promoted: true}
+      Soldier.from_str("４二銀").should == {point: Point["４二"], piece: Piece["銀"], promoted: false}
+      Soldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["飛"], promoted: true}
     end
 
     it "棋譜入力の分離(ゴミは保持)" do
@@ -66,14 +66,14 @@ module Bushido
 
     describe "初期配置" do
       before do
-        @white_king = [MiniSoldier[piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white]]]
-        @black_king = [MiniSoldier[piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black]]]
-        @black_rook = [MiniSoldier[piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black]]]
+        @white_king = [Soldier[piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white]]]
+        @black_king = [Soldier[piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black]]]
+        @black_rook = [Soldier[piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black]]]
       end
 
       it "先手か後手の一方用" do
-        Utils.location_mini_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
-        Utils.location_mini_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
+        Utils.location_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
+        Utils.location_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
       end
 
       #       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do

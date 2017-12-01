@@ -14,7 +14,7 @@ info = BoardParser.parse(<<~EOT)
 +---------------------------+
 EOT
 
-tp info.mini_soldiers.collect(&:location_piece_name)
+tp info.soldiers.collect(&:location_piece_name)
 # >> |----------|
 # >> | △８一桂 |
 # >> | ▲５一馬 |

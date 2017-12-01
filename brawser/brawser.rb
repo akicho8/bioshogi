@@ -21,9 +21,9 @@ class MediatorDecorator < SimpleDelegator
       tds = Bushido::Position::Hpos.board_size.times.collect do |x|
         tag_class = []
         cell = ""
-        if soldier = board.surface[[x, y]]
-          tag_class << soldier.player.location.key
-          cell = soldier.piece_current_name
+        if battler = board.surface[[x, y]]
+          tag_class << battler.player.location.key
+          cell = battler.piece_current_name
         end
         if hand_log = hand_logs.last
           if hand_log.point_to == Bushido::Point[[x, y]]

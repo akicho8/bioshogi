@@ -49,7 +49,7 @@ pp mediator.kif_hand_logs
 *** 初期配置文字列のパース
 
 #+BEGIN_SRC ruby
-info = MiniSoldier.from_str("７六と")
+info = Soldier.from_str("７六と")
 info[:point].name # => "７六"
 info[:promoted]   # => true
 info[:piece].name # => "歩"
@@ -206,9 +206,9 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 #+BEGIN_SRC ruby
 mediator = Mediator.start
 player = mediator.player_at(:black)
-player.soldiers_create("５五馬")
-player.soldiers.first.movable_infos.each{|point|
-  player.soldiers_create("#{point}馬", from_stand: false)
+player.battlers_create("５五馬")
+player.battlers.first.movable_infos.each{|point|
+  player.battlers_create("#{point}馬", from_stand: false)
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -323,13 +323,13 @@ mediator.board["５九"].name # => "▲５九玉"
 #+BEGIN_SRC ruby
 Board.size_change([5, 5])
 mediator = Mediator.start
-soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
+battlers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 mediator.players.each do |player|
-  _soldiers = soldiers.collect{|s|
-    s = MiniSoldier.from_str(s)
+  _battlers = battlers.collect{|s|
+    s = Soldier.from_str(s)
     s.merge(point: s[:point].reverse_if_white(player.location))
   }
-  player.soldiers_create(_soldiers)
+  player.battlers_create(_battlers)
 end
 mediator.pieces_clear
 p mediator
@@ -376,7 +376,7 @@ p mediator
 Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do
   mediator = Mediator.new
-  mediator.soldiers_create("▲３三歩 △１一歩", from_stand: false)
+  mediator.battlers_create("▲３三歩 △１一歩", from_stand: false)
   puts mediator
   pp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
 end
@@ -461,7 +461,7 @@ end
     |------------------------+----------------------------------------------+-----------------------------------------------------------------------------------------|
     | BushidoError           | すべての例外の親                             |                                                                                         |
     | MustNotHappen          | ありえない処理が走る                         | 基本、起きない                                                                          |
-    | MovableSoldierNotFound | 指定座標に移動できる駒が一つもない           | 平手で初手 "３四歩"                                                                     |
+    | MovableBattlerNotFound | 指定座標に移動できる駒が一つもない           | 平手で初手 "３四歩"                                                                     |
     | AmbiguousFormatError   | 指定座標に移動できる駒が多くて特定できません | 初手 "５八金"                                                                           |
     | SyntaxDefact           | とりあえず表記が違う                         | 駒の配置時に "４二銀成" とした                                                          |
     | PointSyntaxError       | 座標の表記が違う                             | "４二" のつもりで "４" と書いた                                                         |
@@ -472,7 +472,7 @@ end
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置             | 配置時に2連続で "９七歩"                                                                |
     | AlredyPromoted         | すでに成っている                             | "５五" の龍を "５一飛成"                                                                |
     | BeforePointNotFound    | 同に対する座標が不明                         | 初手 "同歩"                                                                             |
-    | SoldierEmpty           | オプションで絞ったら移動できる駒がなくなった |                                                                                         |
+    | BattlerEmpty           | オプションで絞ったら移動できる駒がなくなった |                                                                                         |
     | RuleError              | 反則系例外の親                               | 二歩など                                                                                |
     | TypicalError           | 黙認できる例外の親                           | いまのところ二歩と手番間違いの2つだけ                                                   |
     | SamePointDiff          | 座標と「同」を同時に指定したが一致しない     | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
@@ -494,7 +494,7 @@ end
     | DeadPieceRuleError              | 死に駒(行きどころのない駒)を作った | ▲１一桂                           |
     | PromotedPiecePutOnError         | 成った状態で打とうとした           | ５五龍打                           |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした | ５五龍を５六飛                     |
-    | SamePlayerSoldierOverwrideError | 自分の駒の上に自分の駒を指した     | 初手 "８八飛(28)"                  |
+    | SamePlayerBattlerOverwrideError | 自分の駒の上に自分の駒を指した     | 初手 "８八飛(28)"                  |
     | AitenoKomaUgokashitaError       | 相手の駒を動かそうとした           | ▲の手番で初手 "３四歩"            |
 
     一部の例外を抑制できる系の反則
@@ -648,7 +648,7 @@ Web Page：(Web Page)
    - COM同士の対戦スクリプト作成(インタフェースを改善する)
    - CLI
 
-   - soldiers_ways のテスト
+   - battlers_ways のテスト
    - push {} のところで深さを出す。で、コメントのところで A-B-C A-B-A とかラベルをつけれるようにする
    - 人間用の難しい棋譜パース部分を別モジュール化してコアをシンプルにする
    - 囲い一覧をWEBブラウザで確認できるようにする

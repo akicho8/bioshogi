@@ -95,11 +95,11 @@ EOT
       mediator.ki2_hand_logs.should     == dup.ki2_hand_logs
       mediator.to_s.should               == dup.to_s
 
-      mediator.board.to_s_soldiers       == dup.board.to_s_soldiers
+      mediator.board.to_s_battlers       == dup.board.to_s_battlers
 
       mediator.reverse_player.location      == dup.reverse_player.location
       mediator.reverse_player.to_s_pieces   == dup.reverse_player.to_s_pieces
-      mediator.reverse_player.to_s_soldiers == dup.reverse_player.to_s_soldiers
+      mediator.reverse_player.to_s_battlers == dup.reverse_player.to_s_battlers
       mediator.reverse_player.last_piece_taken_from_opponent    == dup.reverse_player.last_piece_taken_from_opponent
     end
 
@@ -126,11 +126,11 @@ EOT
 
     it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.test(init: "▲１二歩")
-      mediator.player_b.to_s_soldiers.should == "１二歩"
-      mediator.player_b.board.to_s_soldiers.should == "１二歩"
+      mediator.player_b.to_s_battlers.should == "１二歩"
+      mediator.player_b.board.to_s_battlers.should == "１二歩"
       mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
-      mediator.player_b.to_s_soldiers.should == "１二歩"
-      mediator.player_b.board.to_s_soldiers.should == "１二歩"
+      mediator.player_b.to_s_battlers.should == "１二歩"
+      mediator.player_b.board.to_s_battlers.should == "１二歩"
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
