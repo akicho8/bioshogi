@@ -24,6 +24,7 @@ module Bushido
         key = key.to_s
         key = key.gsub(/飛([^車])/, '飛車\1')
         key = key.gsub(/香車/, "香")
+        key = key.gsub(/裸玉/, "十九枚落ち")
         super
       end
     end
