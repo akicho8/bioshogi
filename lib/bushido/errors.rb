@@ -37,6 +37,9 @@ module Bushido
   class FileFormatError < BushidoError
   end
 
+  class KeyNotFound < BushidoError
+  end
+
   # 構文エラー
   class SyntaxDefact < BushidoError
   end

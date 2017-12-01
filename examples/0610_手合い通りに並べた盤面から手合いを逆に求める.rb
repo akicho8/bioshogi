@@ -7,7 +7,7 @@ TeaiwariInfo.each do |teaiwari_info|
 
   Location.each do |location|
     mini_soldiers = mediator.board.surface.values.find_all {|e| e.player.location == location }
-    mini_soldiers = mini_soldiers.collect {|e| e.to_mini_soldier.merge(point: e.point.as_black_side(location)) }
+    mini_soldiers = mini_soldiers.collect {|e| e.to_mini_soldier.merge(point: e.point.reverse_if_white(location)) }
     mini_soldiers = mini_soldiers.collect {|e| e.merge(location: Location[:black]) }
     mini_soldiers = mini_soldiers.sort
 

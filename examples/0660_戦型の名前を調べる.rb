@@ -1,51 +1,38 @@
 require "./example_helper"
 
-location = Location[:white]
+# ▲７六歩 △８四歩 ▲２六歩 △３二金 ▲７八金 △８五歩 ▲７七角 △３四歩 ▲８八銀 △７七角成
 
-both_board_info = BoardParser.parse(<<~EOT)
-+---------------------------+
-| ・ ・ ・ ・ ・ ・v銀 ・ ・|
-| ・ ・ ・ ・ ・ ・v金v角 ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ 飛 ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ 角 金 ・ ・ ・ ・ ・ ・|
-| ・ ・ 銀 ・ 玉 金 銀 ・ ・|
-+---------------------------+
-EOT
-info = Utils.board_point_realize2(location: location, both_board_info: both_board_info)
-
-info[Location[:black]].collect(&:name) # => 
-info[Location[:white]].collect(&:name) # => 
-
-mediator = Mediator.new
-mediator.board_reset_by_shape(<<~EOT)
-+---------------------------+
-| ・ ・v銀v金v玉 ・v銀 ・ ・|
-| ・ ・ ・ ・ ・ ・v金v角 ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・v飛 ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ 角 金 ・ ・ ・ ・ ・ ・|
-| ・ ・ 銀 ・ ・ ・ ・ ・ ・|
-+---------------------------+
+info = Parser.parse(<<~EOT)
+▲７六歩 △６二玉
 EOT
 
-flag = info.all? do |location, mini_soldiers|
-  mini_soldiers.all? do |e|
-    if soldier = mediator.board[e[:point]]
-      if soldier.player.location == location
-        p e == soldier.to_mini_soldier
-      end
-    end
-  end
-end
-
-flag                            # => 
-# ~> /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:55:in `require': cannot load such file -- ./example_helper (LoadError)
-# ~> 	from /usr/local/var/rbenv/versions/2.4.1/lib/ruby/2.4.0/rubygems/core_ext/kernel_require.rb:55:in `require'
-# ~> 	from -:1:in `<main>'
+puts info.mediator
+tp info.mediator.players.first.attack_infos
+tp info.mediator.players.last.attack_infos
+puts info.to_ki2
+# >> 後手の持駒：なし
+# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
+# >> +---------------------------+
+# >> |v香v桂v銀v金 ・v金v銀v桂v香|一
+# >> | ・v飛 ・v玉 ・ ・ ・v角 ・|二
+# >> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+# >> | ・ ・ 歩 ・ ・ ・ ・ ・ ・|六
+# >> | 歩 歩 ・ 歩 歩 歩 歩 歩 歩|七
+# >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+# >> | 香 桂 銀 金 玉 金 銀 桂 香|九
+# >> +---------------------------+
+# >> 先手の持駒：なし
+# >> 手数＝2 △６二玉(51) まで
+# >> |----------|
+# >> | 新米長玉 |
+# >> |----------|
+# >> 先手の囲い：
+# >> 後手の囲い：
+# >> 先手の戦型：
+# >> 後手の戦型：新米長玉
+# >> 手合割：平手
+# >> 
+# >> ▲７六歩 △６二玉
+# >> まで2手で後手の勝ち

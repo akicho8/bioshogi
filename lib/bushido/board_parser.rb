@@ -64,7 +64,7 @@ module Bushido
 
       def __both_board_info
         v = mini_soldiers.group_by { |e| e[:location] }
-        Location.each { |e| v[e] ||= [] } # FIXME: これはダサい
+        Location.each { |e| v[e] ||= [] } # FIXME: これはダサすぎないか？
         v
       end
 
@@ -96,8 +96,6 @@ module Bushido
     #
     class KifBoardParser < Base
       class << self
-        # 盤面テキストか？
-        # private にしていないのは他のクラスでも直接使っているため
         def accept?(source)
           Parser.source_normalize(source).match?(/^\p{blank}*[\+\|]/)
         end
@@ -106,9 +104,7 @@ module Bushido
       def parse
         cell_walker do |point, location, something|
           if Piece.all_names.include?(something)
-            mini_soldiers << MiniSoldier.new_with_promoted(something).merge(point: point, location: location)
-          else
-            betsunomonoga_mitsukatta(point, location, something)
+            mini_soldiers_create(something, point, location)
           end
         end
       end
@@ -119,56 +115,62 @@ module Bushido
         3
       end
 
-      def x_units_read
+      def h_units_read
         s = shape_lines.first
         if s.include?("-")
           if s.count("-").modulo(cell_width).nonzero?
-            raise SyntaxDefact, "横幅が#{cell_width}桁毎になっていません"
+            raise SyntaxDefact, "最初の行の横幅が#{cell_width}桁毎になっていません\n#{@source}"
           end
           count = s.gsub("---", "-").count("-")
-          @x_units = Position::Hpos.units.last(count)
+          @h_units = Position::Hpos.units.last(count)
         else
-          @x_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得
+          @h_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得。全角数字の羅列から推測する。「一 二」なら横幅2と判定できる
         end
       end
 
-      def xy_validation(x, y, something)
-        unless @x_units[x] && @y_units[y]
+      def point_validate(x, y, something)
+        unless @h_units[x] && @v_units[y]
           raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
         end
       end
 
-      def betsunomonoga_mitsukatta(*)
-      end
-
       def cell_walker
-        x_units_read
+        h_units_read
 
         mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        @y_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
+        @v_units = mds.collect.with_index { |v, i| v[:y] || Position::Vpos.units[i] }
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|
           # 1文字 + (全角1文字 or 半角2文字)
           s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(location_mark, something), x|
-            xy_validation(x, y, something)
-            point = Point[[@x_units[x], @y_units[y]].join]
+            point_validate(x, y, something)
+            point = Point[[@h_units[x], @v_units[y]].join]
             location = Location.fetch(location_mark)
             yield point, location, something
           end
         end
       end
+
+      def mini_soldiers_create(piece, point, location)
+        mini_soldiers << MiniSoldier.new_with_promoted(piece).merge(point: point, location: location)
+      end
     end
 
     class KifBoardParser2 < KifBoardParser
-      def other_objects
-        @other_objects ||= []
+      def parse
+        cell_walker do |point, location, something|
+          case
+          when Piece.all_names.include?(something)
+            mini_soldiers_create(something, point, location)
+          when something != "・"
+            other_objects << {point: point, location: location, something: something}
+          end
+        end
       end
 
-      def betsunomonoga_mitsukatta(point, location, something)
-        unless something == "・"
-          other_objects << {point: point, location: location, something: something}
-        end
+      def other_objects
+        @other_objects ||= []
       end
     end
 

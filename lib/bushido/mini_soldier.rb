@@ -102,9 +102,23 @@ module Bushido
       self[:point] <=> other[:point]
     end
 
-    # ▲側から見た状態に変換したインスタンスを返す
-    def as_black_side
-      merge(point: self[:point].as_black_side(self[:location]), location: Location[:black])
+    # # ▲側から見た状態に変換したインスタンスを返す
+    # def reverse_if_white
+    #   merge(point: self[:point].reverse_if_white(self[:location]), location: Location[:black])
+    # end
+
+    # 反転
+    def reverse
+      merge(point: self[:point].reverse, location: self[:location].reverse)
+    end
+
+    # △なら反転 (これって reverse_if_white と同じじゃ？)
+    def reverse_if_white
+      if self[:location].key == :white
+        reverse
+      else
+        self
+      end
     end
   end
 

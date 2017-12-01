@@ -4,13 +4,11 @@ module Bushido
   concern :ApplicationMemoryRecord do
     included do
       include MemoryRecord
-    end
 
-    class_methods do
-      def fetch(*)
+      def self.fetch(*)
         super
       rescue KeyError => error
-        raise BushidoError, error.message
+        raise KeyNotFound, error.message
       end
     end
 

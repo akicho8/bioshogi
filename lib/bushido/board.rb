@@ -128,7 +128,7 @@ module Bushido
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
         sorted_black_side_mini_soldiers = @surface.values.collect { |e|
           if e.location == location
-            e.to_mini_soldier.as_black_side
+            e.to_mini_soldier.reverse_if_white
           end
         }.compact.sort
 

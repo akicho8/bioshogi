@@ -177,6 +177,8 @@ module Bushido
             strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
           }.merge(options)
 
+          mediator_run
+
           out = []
           out << "V2.2\n"
 
@@ -250,8 +252,10 @@ module Bushido
             header_skip: false,
           }.merge(options)
 
+          mediator_run
+
           out = []
-          out << header_as_string unless options[:header_skip]
+          out << header_part_string unless options[:header_skip]
           out << "手数----指手---------消費時間--\n"
 
           chess_clock = ChessClock.new
@@ -294,9 +298,11 @@ module Bushido
             header_skip: false,
           }.merge(options)
 
+          mediator_run
+
           out = []
           if header.present? && !options[:header_skip]
-            out << header_as_string
+            out << header_part_string
             out << "\n"
           end
 
@@ -381,21 +387,28 @@ module Bushido
 
             if @config[:defense_form_check_skip]
             else
-              mediator.players.each do |player|
-                header["#{player.call_name}の囲い"] = player.defense_infos.join("→")
+              [
+                {key: "囲い", method_is: :defense_infos, },
+                {key: "戦型", method_is: :attack_infos,  },
+              ].each do |e|
+                mediator.players.each do |player|
+                  header["#{player.call_name}の#{e[:key]}"] = player.public_send(e[:method_is]).collect(&:name).join("→")
+                end
               end
             end
           end
         end
 
-        def header_as_string
-          @header_as_string ||= __header_as_string
+        def header_part_string
+          @header_part_string ||= __header_part_string
         end
 
         private
 
-        def __header_as_string
+        def __header_part_string
           out = []
+
+          mediator_run
 
           obj = Mediator.new
           if @board_source
@@ -424,7 +437,7 @@ module Bushido
               end
             end
 
-            out << raw_header_as_string
+            out << raw_header_part_string
           else
             # 手合がわからないので図を出す場合
 
@@ -437,14 +450,14 @@ module Bushido
                 header[key] = "なし"
               end
             end
-            s = raw_header_as_string
+            s = raw_header_part_string
             out << s.gsub(/(#{Location[:white].call_name(obj.turn_info.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
           out.join
         end
 
-        def raw_header_as_string
+        def raw_header_part_string
           header.collect { |key, value|
             if value
               "#{key}：#{value}\n"

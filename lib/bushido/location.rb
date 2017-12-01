@@ -151,6 +151,12 @@ module Bushido
         :hirate_name
       end
     end
+
+    # each do |e|
+    #   e.match_target_values_set
+    #   e.reverse
+    #   e.freeze
+    # end
   end
 
   L = Location

@@ -6,7 +6,7 @@ module Bushido
       it "囲いチェック", :if => Bushido.config.defense_form_check do
         info = Parser.file_parse("#{__dir__}/yagura.kif")
         info.mediator_run
-        info.header_as_string.should == <<~EOT
+        info.header_part_string.should == <<~EOT
 開始日時：1981/05/15 09:00:00
 棋戦：名将戦
 場所：東京「将棋会館」
@@ -16,6 +16,8 @@ module Bushido
 戦型：矢倉
 先手の囲い：金矢倉
 後手の囲い：
+先手の戦型：
+後手の戦型：
         EOT
       end
     end

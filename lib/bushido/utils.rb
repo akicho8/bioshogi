@@ -29,7 +29,7 @@ module Bushido
       end
 
       board_parser.mini_soldiers.collect do |e|
-        e.merge(point: e[:point].as_black_side(location), location: location)
+        e.merge(point: e[:point].reverse_if_white(location), location: location)
       end
     end
 
@@ -176,13 +176,13 @@ module Bushido
     # # 後手のみ先手用になっている初期駒配置を反転させる
     # def board_point_realize(params)
     #   params[:both_board_info].inject({}) do |a, (key, value)|
-    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].as_black_side(params[:location])) })
+    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].reverse_if_white(params[:location])) })
     #   end
     # end
 
     # mini_soldiers を location 側の配置に変更したのを返す
     def board_point_realize2(mini_soldiers, location)
-      mini_soldiers.collect { |e| e.merge(point: e[:point].as_black_side(location)) }
+      mini_soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
     end
 
     private

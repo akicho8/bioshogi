@@ -271,34 +271,107 @@ module Bushido
 
     concerning :DefenseCheckMethods do
       attr_accessor :defense_infos
+      attr_accessor :attack_infos
 
       def initialize(*)
         super
         @defense_infos = []
+        @attack_infos = []
       end
 
       def defense_form_store
-        soldiers = board.surface.values.find_all { |e| e.location == location }
-        sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.as_black_side }.sort
+        if true
+          # soldiers = board.surface.values.find_all { |e| e.location == location }
+          # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
 
-        defense_info = DefenseInfo.find do |e|
-          if @defense_infos.include?(e)
-            next
-          end
+          defense_info = DefenseInfo.find do |e|
+            if @defense_infos.include?(e)
+              next
+            end
 
-          # 盤上の状態に含まれる？
-          e.black_side_mini_soldiers.all? do |e|
-            if soldier = mediator.board[e[:point]]
-              if soldier.location == location
-                soldier.to_mini_soldier.as_black_side == e
+            # 盤上の状態に含まれる？
+            e.black_side_mini_soldiers.all? do |e|
+              if soldier = mediator.board[e[:point]]
+                if soldier.location == location
+                  soldier.to_mini_soldier.reverse_if_white == e
+                end
               end
             end
           end
+
+          if defense_info
+            @defense_infos << defense_info
+          end
         end
 
-        if defense_info
-          @defense_infos << defense_info
+        if true
+          # soldiers = board.surface.values.find_all { |e| e.location == location }
+          # sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
+
+          attack_info = AttackInfo.find do |e|
+            if @attack_infos.include?(e)
+              next
+            end
+
+            if e.nantemeka
+              if e.nantemeka == mediator.turn_info.counter.next
+              else
+                next
+              end
+            end
+
+            if e.only_location_key
+              if e.only_location_key == player.location.key
+              else
+                next
+              end
+            end
+
+            if e.tesuu_limit_ika
+              if e.tesuu_limit_ika <= mediator.turn_info.counter.next
+              else
+                next
+              end
+            end
+
+            # if e.nantemeka
+
+            if e.jouken_dousuru == "equal"
+              if e.jibungawadake
+                # 自分側だけで完全一致の場合
+                soldiers = board.surface.values
+                soldiers = soldiers.find_all { |e| e.location == location }
+                sorted_black_side_mini_soldiers = soldiers.collect { |e| e.to_mini_soldier.reverse_if_white }.sort
+                sorted_black_side_mini_soldiers == e.sorted_black_side_mini_soldiers
+              else
+                # 相手側も見る場合
+                soldiers = board.surface.values
+                mini_soldiers = soldiers.collect { |e| e.to_mini_soldier }
+                if location.key == :white
+                  mini_soldiers = mini_soldiers.collect(&:reverse)
+                end
+                sorted_mini_soldiers = mini_soldiers.sort
+                sorted_mini_soldiers == e.shape_info.sorted_mini_soldiers
+              end
+            elsif e.jouken_dousuru == "include"
+              # 盤上の状態に含まれる？
+              e.black_side_mini_soldiers.all? do |e|
+                if soldier = mediator.board[e[:point]]
+                  if soldier.location == location
+                    soldier.to_mini_soldier.reverse_if_white == e
+                  end
+                end
+              end
+            else
+              raise MustNotHappen
+            end
+          end
+
+          if attack_info
+            @attack_infos << attack_info
+          end
         end
+
       end
     end
 

@@ -94,7 +94,7 @@ module Bushido
 
     # 後手なら反転する
     # 先手から見た状態に統一したい場合に使う
-    def as_black_side(location)
+    def reverse_if_white(location)
       if Location[location].key == :white
         reverse
       else

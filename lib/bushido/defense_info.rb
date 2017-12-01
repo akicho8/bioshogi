@@ -4,6 +4,7 @@ module Bushido
   class DefenseInfo
     include ApplicationMemoryRecord
     memory_record [
+      {key: "金矢倉", shogi_wars_code: "001", form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-89.html",},
 #       {
 #         key: "カニ囲い",
 #         shogi_wars_code: "000",
@@ -19,20 +20,6 @@ module Bushido
 # +---------------------------+
 # EOT
 #       },
-
-      {
-        key: "金矢倉",
-        shogi_wars_code: "001",
-        form_check_url: "http://mijinko83.blog110.fc2.com/blog-entry-89.html",
-        defense_p: true,
-        board_body: <<~EOT,
-+---------------------------+
-| ・ ・ 銀 金 ・ ・ ・ ・ ・|七
-| ・ 玉 金 ・ ・ ・ ・ ・ ・|八
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-+---------------------------+
-EOT
-      },
 
 #       {
 #         key: "銀矢倉",
@@ -497,10 +484,6 @@ EOT
 #       },
     ]
 
-    include TeaiwariInfo::BasicMethods
-
-    def board_parser
-      @board_parser ||= BoardParser::KifBoardParser2.parse(board_body)
-    end
+    include TeaiwariInfo::DelegateToShapeInfoMethods
   end
 end

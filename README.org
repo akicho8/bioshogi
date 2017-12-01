@@ -327,7 +327,7 @@ soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "�
 mediator.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = MiniSoldier.from_str(s)
-    s.merge(point: s[:point].as_black_side(player.location))
+    s.merge(point: s[:point].reverse_if_white(player.location))
   }
   player.soldiers_create(_soldiers)
 end
@@ -474,10 +474,13 @@ end
     | BeforePointNotFound    | 同に対する座標が不明                         | 初手 "同歩"                                                                             |
     | SoldierEmpty           | オプションで絞ったら移動できる駒がなくなった |                                                                                         |
     | RuleError              | 反則系例外の親                               | 二歩など                                                                                |
-    | TypicalError             | 黙認できる例外の親                           | いまのところ二歩と手番間違いの2つだけ                                                   |
+    | TypicalError           | 黙認できる例外の親                           | いまのところ二歩と手番間違いの2つだけ                                                   |
     | SamePointDiff          | 座標と「同」を同時に指定したが一致しない     | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
     | BoardKeyNotFound       | 手合割の名前が違う                           | "角落ち" と間違えて "玉落ち" と書いた                                                   |
     | BoardIsBlackOnly       | 先手のみの盤面のはずが後手も含まれている     |                                                                                         |
+    | FileFormatError        | ファイルのフォーマットが形式外だった         |                                                                                         |
+    | KeyNotFound            | 手合割などのあるはずのデータがない           |                                                                                         |
+
 
     反則系 (RuleError のサブクラス)
 
