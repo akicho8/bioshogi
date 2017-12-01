@@ -358,10 +358,12 @@ module Bushido
 
             if @board_source
               mediator.board_reset_by_shape(@board_source)
-              if header["手合割"].blank? || header["手合割"] == "その他"
-                mediator.turn_info = TurnInfo.new("落")
-              else
-                mediator.board_reset_by_shape2
+              mediator.turn_info_auto_set
+
+              if mediator.board.teaiwari_name != "平手"
+                if header["手合割"].blank? || header["手合割"] == "その他"
+                  mediator.turn_info = TurnInfo.new("落")
+                end
               end
             else
               mediator.board_reset(header["手合割"] || "平手")
@@ -416,7 +418,7 @@ module Bushido
             if header["手合割"].blank? || header["手合割"] == "その他"
               obj.turn_info = TurnInfo.new("落")
             else
-              obj.board_reset_by_shape2
+              obj.turn_info_auto_set
             end
           else
             obj.board_reset(header["手合割"] || "平手")

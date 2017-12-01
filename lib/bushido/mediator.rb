@@ -167,7 +167,7 @@ module Bushido
       end
 
       # 盤面から手合割を判断する
-      def board_reset_by_shape2
+      def turn_info_auto_set
         if board.teaiwari_name
           @turn_info = TurnInfo.new(board.teaiwari_name)
         end
