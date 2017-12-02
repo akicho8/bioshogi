@@ -61,6 +61,18 @@ module Bushido
               end
             end
 
+            if e.fuganai
+              if player.pieces.include?(Piece[:pawn])
+                throw skip
+              end
+            end
+
+            if v = e.mochigoma_eq.presence
+              if player.pieces.sort != v.sort
+                throw skip
+              end
+            end
+
             if v = e.triggers.presence
               current_soldier = player.runner.current_soldier
               if player.location.key == :white

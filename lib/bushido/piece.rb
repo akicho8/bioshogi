@@ -120,6 +120,10 @@ module Bushido
       end
     end
 
+    def <=>(other)
+      code <=> other.code
+    end
+
     concerning :NameMethods do
       class_methods do
         def all_names

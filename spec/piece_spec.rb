@@ -39,6 +39,10 @@ module Bushido
       (Piece.lookup("歩").clone == Piece.lookup("歩")).should == false
     end
 
+    it "sort" do
+      [Piece[:pawn], Piece[:king]].sort.should == [Piece[:king], Piece[:pawn]]
+    end
+
     # it "シリアライズ" do
     #   p Piece.lookup("歩")
     #   s = Marshal.load(Marshal.dump(Piece.instance))
