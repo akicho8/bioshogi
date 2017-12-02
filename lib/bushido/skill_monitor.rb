@@ -24,7 +24,7 @@ module Bushido
               throw skip
             end
 
-            if e.hukumareru.any? {|e| info_keys.include?(e) }
+            if e.evolution_keys.any? {|e| info_keys.include?(e) }
               throw skip
             end
 
@@ -58,7 +58,7 @@ module Bushido
             battlers = player.board.surface.values
             soldiers = battlers.collect { |e| e.to_soldier }
 
-            if e.my_side_only
+            if e.compare_my_side_only
               soldiers = soldiers.find_all {|e| e[:location] == player.location }
             end
 
@@ -67,7 +67,7 @@ module Bushido
             end
 
             if e.compare_condition == :equal
-              # if e.my_side_only
+              # if e.compare_my_side_only
               #   # 自分側だけで完全一致の場合
               #   # battlers = player.board.surface.values
               #   # battlers = battlers.find_all { |e| e.location == player.location }
