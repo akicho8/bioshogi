@@ -2,30 +2,37 @@ require_relative "spec_helper"
 
 module Bushido
   describe Soldier do
-    it ".from_str" do
-      Soldier.from_str("５一玉").to_s.should == "５一玉"
+    it "基本形" do
+      attrs = {point: Point["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}
+      soldier = Soldier[attrs]
+      soldier.name.should == "▲６八銀"
+      soldier.should == attrs
     end
 
-    it "#to_s" do
-      Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false].to_s.should == "５一玉"
+    it "文字列から簡単に作る" do
+      Soldier.from_str("６八銀").name.should == "？６八銀"
+      Soldier.from_str("▲６八銀").name.should == "▲６八銀"
     end
 
-    it "Point の #eql?, hash の定義で [1] - [1] = [] ができるようになる" do
-      a = Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false, location: Location[:white]]
-      b = Soldier[point: Point["５一"], piece: Piece["玉"], promoted: false, location: Location[:white]]
+    it "Point の #eql? と #hash の定義で、異なる object_id でも内容で判断して [obj1] - [obj2] = [] ができるようになる" do
+      a = Soldier.from_str("▲６八銀")
+      b = Soldier.from_str("▲６八銀")
+      (a.object_id != b.object_id).should == true
       ([a] - [b]).should == []
     end
   end
 
-  describe BattlerMove do
-    it "#to_hand" do
-      BattlerMove[point: Point["１三"], piece: Piece["銀"], origin_battler: Soldier.from_str("１四銀"), promoted_trigger: true].to_hand.should == "１三銀成(14)"
+  describe "Brainの指し手チェック用" do
+    describe BattlerMove do
+      it "#to_hand" do
+        BattlerMove[point: Point["６八"], piece: Piece["銀"], location: Location[:black], origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true].to_hand.should == "▲６八銀成(79)"
+      end
     end
-  end
 
-  describe PieceStake do
-    it "#to_hand" do
-      PieceStake[point: Point["１三"], piece: Piece["銀"]].to_hand.should == "１三銀打"
+    describe PieceStake do
+      it "#to_hand" do
+        PieceStake[point: Point["６八"], piece: Piece["銀"], location: Location[:black]].to_hand.should == "▲６八銀打"
+      end
     end
   end
 end

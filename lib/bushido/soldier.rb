@@ -4,7 +4,7 @@
 #  クラス      名前               有効な属性
 #  Soldier 盤上の駒の状態     point piece promoted
 #  PieceStake  駒を打った情報     point piece promoted
-#  BattlerMove 駒が動かした情報   point piece promoted origin_battler promoted_trigger
+#  BattlerMove 駒が動かした情報   point piece promoted origin_soldier promoted_trigger
 #
 module Bushido
   #  文字列なら「５二竜」となる情報をこのままだと扱いにくいので
@@ -23,9 +23,14 @@ module Bushido
         if str.kind_of?(self)
           return str
         end
-        md = str.match(/\A(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/) # FIXME: 他のところと同様に厳密にチェックする
-        md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
-        Soldier.new_with_promoted(md[:piece]).merge(point: Point.parse(md[:point]))
+
+        md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/) # FIXME: 他のところと同様に厳密にチェックする
+
+        unless md
+          raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
+        end
+
+        new_with_promoted(md[:piece]).merge(point: Point.parse(md[:point]), location: Location[md[:location]])
       end
 
       # 「歩」や「と」を駒オブジェクトと成フラグに分離
@@ -57,27 +62,28 @@ module Bushido
     # 「１一香成」ではなく「１一杏」を返す
     # 指し手を返すには to_hand を使うこと
     def to_s
-      formal_name
+      name
     end
 
     def name
-      formal_name
+      "#{location ? location.name : '？'}#{point.name}#{any_name}"
     end
 
     def formal_name
-      [self[:point].name, piece_name].join
+      raise
+      "#{point.name}#{any_name}"
     end
 
-    def piece_name
-      self[:piece].some_name(self[:promoted])
-    end
-
-    def location_piece_name
-      [self[:location].name, formal_name].join
+    def any_name
+      self[:piece].any_name(self[:promoted])
     end
 
     def point
       self[:point]
+    end
+
+    def location
+      self[:location]
     end
 
     # つかってない
@@ -130,14 +136,15 @@ module Bushido
   end
 
   # Soldier にどこからどこへ成るかどうかの情報を含めたもの
-  # origin_battler と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
+  # origin_soldier と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
   class BattlerMove < Soldier
     def to_hand
       [
+        self[:location].name,
         self[:point].name,
-        self[:origin_battler].piece_name,
+        self[:origin_soldier].any_name,
         (self[:promoted_trigger] ? "成" : ""),
-        "(", self[:origin_battler].point.number_format, ")",
+        "(", self[:origin_soldier].point.number_format, ")",
       ].join
     end
   end
@@ -145,7 +152,7 @@ module Bushido
   # 「打」専用
   class PieceStake < Soldier
     def to_hand
-      [self[:point].name, self[:piece].name, "打"].join
+      "#{name}打"
     end
   end
 end
