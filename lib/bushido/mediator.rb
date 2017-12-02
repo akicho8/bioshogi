@@ -217,11 +217,13 @@ module Bushido
     concerning :Executer do
       included do
         attr_reader :hand_logs
+        attr_reader :koma_coukan_count
       end
 
       def initialize(*)
         super
         @hand_logs = []
+        @koma_coukan_count = 0
       end
 
       # 棋譜入力

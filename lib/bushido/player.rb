@@ -115,6 +115,7 @@ module Bushido
         end
         board.pick_up!(to)
         @pieces << to_battler.piece
+        @mediator.koma_coukan_count += 1
         @last_piece_taken_from_opponent = to_battler.piece
         to_battler.player.battlers.delete(to_battler)
       end

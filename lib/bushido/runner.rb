@@ -194,6 +194,9 @@ module Bushido
 
     def hand_log
       HandLog.new({
+          current_soldier: current_soldier,
+          before_soldier: before_soldier,
+
           point_to: @point_to,
           piece: @piece,
           promoted: @promoted,
@@ -204,6 +207,16 @@ module Bushido
           candidate: @candidate,
           point_same_p: point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
         })
+    end
+
+    def current_soldier
+      Soldier[piece: @piece, promoted: @promoted, point: @point_to, location: @player.location]
+    end
+
+    def before_soldier
+      if @point_from
+        Soldier[piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location]
+      end
     end
 
     private

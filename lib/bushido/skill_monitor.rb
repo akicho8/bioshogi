@@ -55,6 +55,24 @@ module Bushido
               end
             end
 
+            if e.kaisenmae
+              if player.mediator.koma_coukan_count >= 1
+                throw skip
+              end
+            end
+
+            if v = e.triggers.presence
+              current_soldier = player.runner.current_soldier
+              if player.location.key == :white
+                current_soldier = current_soldier.reverse
+              end
+              v.each do |soldier|
+                if current_soldier != soldier
+                  throw skip
+                end
+              end
+            end
+
             battlers = player.board.surface.values
             soldiers = battlers.collect { |e| e.to_soldier }
 
