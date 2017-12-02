@@ -217,13 +217,13 @@ module Bushido
     concerning :Executer do
       included do
         attr_reader :hand_logs
-        attr_reader :koma_coukan_count
+        attr_accessor :kill_counter
       end
 
       def initialize(*)
         super
         @hand_logs = []
-        @koma_coukan_count = 0
+        @kill_counter = 0
       end
 
       # 棋譜入力
@@ -317,6 +317,7 @@ module Bushido
           turn_info: turn_info,
           players: @players,
           hand_logs: @hand_logs,
+          kill_counter: @kill_counter,
         }
       end
 
@@ -324,6 +325,7 @@ module Bushido
         @turn_info  = attrs[:turn_info]
         @players  = attrs[:players]
         @hand_logs = attrs[:hand_logs]
+        @kill_counter = attrs[:kill_counter]
         @board = Board.new
         @players.each { |player| player.mediator = self }
         @players.collect { |player| player.render_battlers }
@@ -334,6 +336,7 @@ module Bushido
         @turn_info = object.turn_info
         @players = object.players
         @hand_logs = object.hand_logs
+        @kill_counter = object.kill_counter
         @board = Board.new
         @players.each { |player| player.mediator = self }
         @players.collect { |player| player.render_battlers }

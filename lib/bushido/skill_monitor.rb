@@ -56,7 +56,7 @@ module Bushido
             end
 
             if e.kaisenmae
-              if player.mediator.koma_coukan_count >= 1
+              if player.mediator.kill_counter >= 1
                 throw skip
               end
             end
