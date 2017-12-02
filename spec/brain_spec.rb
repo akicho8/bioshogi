@@ -32,15 +32,15 @@ module Bushido
       end
       it "全手筋" do
         player = player_test(run_piece_plot: true)
-        player.brain.all_hands.should == ["９六歩(97)", "８六歩(87)", "７六歩(77)", "６六歩(67)", "５六歩(57)", "４六歩(47)", "３六歩(37)", "２六歩(27)", "１六歩(17)", "３八飛(28)", "４八飛(28)", "５八飛(28)", "６八飛(28)", "７八飛(28)", "１八飛(28)", "９八香(99)", "７八銀(79)", "６八銀(79)", "７八金(69)", "６八金(69)", "５八金(69)", "６八玉(59)", "５八玉(59)", "４八玉(59)", "５八金(49)", "４八金(49)", "３八金(49)", "４八銀(39)", "３八銀(39)", "１八香(19)"]
+        player.brain.all_hands.should == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"]
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
         mediator = Mediator.test(init: "▲１五香")
-        mediator.player_b.brain.__battlers_hands.collect(&:to_hand).should == ["１四香(15)", "１三香(15)", "１三香成(15)", "１二香(15)", "１二香成(15)", "１一香成(15)"] # 入力文字列
-        mediator.player_b.brain.__battlers_hands.collect(&:to_s).should == ["１四香", "１三香", "１三杏", "１二香", "１二杏", "１一杏"]             # 指した後の駒の状態
+        mediator.player_b.brain.__battlers_hands.collect(&:to_hand).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
+        mediator.player_b.brain.__battlers_hands.collect(&:name).should    == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]             # 指した後の駒の状態
       end
     end
 
@@ -57,15 +57,15 @@ module Bushido
       #
       Board.size_change([3, 3]) do
         player = player_test(init: "２二歩", pinit: "歩")
-        player.brain.__pieces_hands.collect(&:to_hand).should == ["３二歩打", "１二歩打", "３三歩打", "１三歩打"]
-        player.brain.__pieces_hands.collect(&:to_s).should == ["３二歩", "１二歩", "３三歩", "１三歩"]
+        player.brain.__pieces_hands.collect(&:to_hand).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
+        player.brain.__pieces_hands.collect(&:name).should    == ["▲３二歩", "▲１二歩", "▲３三歩", "▲１三歩"]
       end
     end
 
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
         mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
-        mediator.player_b.brain.eval_list.should == [{hand: "１一歩成(12)", score: 1305}, {hand: "２二歩打", score: 200}]
+        mediator.player_b.brain.eval_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end
 

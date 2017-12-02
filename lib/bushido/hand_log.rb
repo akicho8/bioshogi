@@ -40,7 +40,7 @@ module Bushido
         s << @player.location.mark
       end
       s << @point_to.name
-      s << @piece.some_name(@promoted)
+      s << @piece.any_name(@promoted)
       if @promote_trigger
         s << "成"
       end
@@ -127,7 +127,7 @@ module Bushido
           s << @hand_log.point_to.name
         end
 
-        s << @hand_log.piece.some_name(@hand_log.promoted)
+        s << @hand_log.piece.any_name(@hand_log.promoted)
 
         if @hand_log.strike_trigger
           # 日本将棋連盟 棋譜の表記方法

@@ -131,7 +131,7 @@ module Bushido
         end
       end
 
-      def some_name(promoted)
+      def any_name(promoted)
         if promoted
           promoted_name
         else

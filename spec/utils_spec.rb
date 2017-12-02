@@ -6,11 +6,6 @@ module Bushido
       Utils.initial_battlers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
     end
 
-    it "座標と駒の分解" do
-      Soldier.from_str("４二銀").should == {point: Point["４二"], piece: Piece["銀"], promoted: false}
-      Soldier.from_str("４二竜").should == {point: Point["４二"], piece: Piece["飛"], promoted: true}
-    end
-
     it "棋譜入力の分離(ゴミは保持)" do
       Utils.ki2_parse("▲５五歩△４四歩 push ▲３三歩 pop").should == [{location: Location[:black], input: "５五歩"}, {location: Location[:white], input: "４四歩"}, "push", {location: Location[:black], input: "３三歩"}, "pop"]
     end

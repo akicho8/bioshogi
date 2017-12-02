@@ -40,7 +40,7 @@ module Bushido
       ary = all_hands.each.with_object([]).with_index{|(hand, ary), index|
         mediator.sandbox_for do |_mediator|
           _player = _mediator.player_at(player.location)
-          mhand = "#{_player.location.mark}#{hand}"
+          mhand = "#{hand}"
           log_puts locals, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
           _player.execute(hand)
           # ログに盤面を入れる場合

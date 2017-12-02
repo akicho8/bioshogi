@@ -64,11 +64,5 @@ RSpec.configure do |config|
     def read_spec2(*args)
       player_test(*args).runner.hand_log.to_kif_ki2_csa
     end
-
-    def board_parse_test(source)
-      Bushido::BoardParser.parse(source).both_board_info.inject({}) do |a, (key, value)|
-        a.merge(key => value.collect(&:to_s))
-      end
-    end
   }
 end

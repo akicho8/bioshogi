@@ -97,14 +97,14 @@ module Bushido
       # それ以上動けるなら置く
       m = soldier.merge(point: pt)
       if alive_piece?(m)
-        yielder << BattlerMove[m.merge(origin_battler: soldier)]
+        yielder << BattlerMove[m.merge(origin_soldier: soldier)]
       end
       # 成れるなら成ってみて
       if m.more_promote?(player.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)
-          yielder << BattlerMove[m.merge(origin_battler: soldier, promoted_trigger: true)]
+          yielder << BattlerMove[m.merge(origin_soldier: soldier, promoted_trigger: true)]
         end
       end
     end

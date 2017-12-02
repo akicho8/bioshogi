@@ -99,7 +99,7 @@ module Bushido
 
       # 駒の名前
       def piece_current_name
-        @piece.some_name(@promoted)
+        @piece.any_name(@promoted)
       end
 
       # 正式な棋譜の表記で返す
