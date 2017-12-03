@@ -189,7 +189,7 @@ module Bushido
               soldiers << soldier
             end
           when something != "・"
-            other_objects << {point: point, location: location, something: something}
+            other_objects << {point: point, prefix_char: prefix_char, something: something}
           end
         end
       end

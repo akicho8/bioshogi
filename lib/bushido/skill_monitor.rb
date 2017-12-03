@@ -24,8 +24,10 @@ module Bushido
               throw skip
             end
 
-            if e.evolution_keys.any? {|e| info_keys.include?(e) }
-              throw skip
+            if v = e.evolution_keys
+              if v.any? {|e| info_keys.include?(e) }
+                throw skip
+              end
             end
 
             if e.turn_limit
