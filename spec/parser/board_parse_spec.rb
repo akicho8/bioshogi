@@ -27,6 +27,14 @@ EOT
       end
     end
 
+    it "コメント" do
+      test1(<<-EOT).should == ["▲１一歩"]
++---+
+| 歩| # コメント
++---+
+EOT
+      end
+    
     it "成駒を認識" do
       test1(<<-EOT).should == ["△１一龍"]
 +---+
@@ -63,7 +71,7 @@ EOT
 EOT
       end
 
-      it "foo" do
+      it "はみ出ている" do
         expect { test1(<<-EOT) }.to raise_error(SyntaxDefact, /はみ出ている/)
 +---+
 |v歩v歩|
