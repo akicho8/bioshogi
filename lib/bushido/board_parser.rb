@@ -176,9 +176,14 @@ module Bushido
             #   trigger_soldiers << soldier
             # end
 
-            if prefix_char == "!"
+            case prefix_char
+            when "!"
               soldier = soldiers_create(point, something, :black)
               trigger_soldiers << soldier
+            when "@"
+              soldier = soldiers_create(point, something, :black)
+              trigger_soldiers << soldier
+              soldiers << soldier # 盤面の駒とする
             else
               soldier = soldiers_create(point, something, prefix_char)
               soldiers << soldier

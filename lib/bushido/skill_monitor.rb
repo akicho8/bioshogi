@@ -97,6 +97,12 @@ module Bushido
               end
             end
 
+            if v = e.mochigoma_not_in
+              if v.any? {|x| player.pieces.include?(x) }
+                throw skip
+              end
+            end
+
             if v = e.triggers
               current_soldier = player.runner.current_soldier
               if player.location.key == :white
