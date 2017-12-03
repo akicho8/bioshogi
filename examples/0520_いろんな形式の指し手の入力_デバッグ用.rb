@@ -10,7 +10,7 @@ list.each do |e|
   pp [e, mediator.hand_logs.last.to_s_kif]
 end
 # ~> /Users/ikeda/src/bushido/lib/bushido.rb:39:in `require_relative': /Users/ikeda/src/bushido/lib/bushido/player.rb:352: syntax error, unexpected ',', expecting keyword_end (SyntaxError)
-# ~>         errors << DoublePawn, "二歩 (#{s.mark_with_formal
+# ~>         errors << DoublePawnError, "二歩 (#{s.mark_with_formal
 # ~>                              ^
 # ~> 	from /Users/ikeda/src/bushido/lib/bushido.rb:39:in `<top (required)>'
 # ~> 	from /Users/ikeda/src/bushido/examples/example_helper.rb:2:in `require'

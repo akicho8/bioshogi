@@ -72,9 +72,9 @@ EOT
       end
     end
 
-    describe BoardParser::KifBoardParser2 do
+    describe BoardParser::FireBoardParser do
       it "他の駒以外のものも拾える" do
-        info = BoardParser::KifBoardParser2.parse(<<~EOT)
+        info = BoardParser::FireBoardParser.parse(<<~EOT)
 +------+
 |v○v歩|
 | ・ 歩|

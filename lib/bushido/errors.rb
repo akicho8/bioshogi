@@ -60,13 +60,10 @@ module Bushido
   class HistroyStackEmpty < SyntaxDefact
   end
 
-  class SamePointDiff < SyntaxDefact
+  class SamePointDifferent < SyntaxDefact
   end
 
   # 盤面定義のエラー
-  class BoardKeyNotFound < SyntaxDefact
-  end
-
   class BoardIsBlackOnly < SyntaxDefact
   end
 
@@ -110,7 +107,7 @@ module Bushido
   # 例外を抑制できる系の反則
 
   # 二歩
-  class DoublePawn < TypicalError
+  class DoublePawnError < TypicalError
   end
 
   # 手番が異なる

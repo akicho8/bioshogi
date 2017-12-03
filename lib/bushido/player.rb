@@ -335,7 +335,7 @@ module Bushido
       if options[:validate]
         soldier = battler.to_soldier
         if s = find_collisione_pawn(soldier)
-          raise DoublePawn, "二歩です。すでに#{s.mark_with_formal_name}があるため#{battler}が打てません\n#{board_with_pieces}"
+          raise DoublePawnError, "二歩です。すでに#{s.mark_with_formal_name}があるため#{battler}が打てません\n#{board_with_pieces}"
         end
         if dead_piece?(soldier)
           raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"

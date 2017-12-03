@@ -236,7 +236,7 @@ module Bushido
         if @md[:point_to]
           prefix_pt = Point.parse(@md[:point_to])
           if Point.parse(@md[:point_to]) != @point_to
-            raise SamePointDiff, "同は#{@point_to}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
+            raise SamePointDifferent, "同は#{@point_to}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
           end
         end
       when @md[:point_to]

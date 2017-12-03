@@ -280,7 +280,7 @@ EOT
           expect { player_test2(exec: "１一歩打") }.to raise_error(DeadPieceRuleError)
         end
         it "二歩なので" do
-          expect { player_test2(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawn)
+          expect { player_test2(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawnError)
         end
       end
 

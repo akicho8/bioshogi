@@ -42,7 +42,7 @@ module Bushido
         @options = options
       end
 
-      # Location ごちゃまぜの Soldier の配列
+      # Location ごちゃまぜの Soldier の配列 (FIXME: 全部、ハッシュの配列しておいてあとで分解するほうがよいか？)
       def soldiers
         @soldiers ||= []
       end
@@ -106,9 +106,9 @@ module Bushido
       end
 
       def parse
-        cell_walker do |point, location, something|
+        cell_walker do |point, prefix_char, something|
           if Piece.all_names.include?(something)
-            soldiers_create(something, point, location)
+            soldiers << soldiers_create(point, something, prefix_char)
           end
         end
       end
@@ -147,26 +147,34 @@ module Bushido
 
         inlines.each.with_index do |s, y|
           # 1文字 + (全角1文字 or 半角2文字)
-          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(location_mark, something), x|
+          s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(prefix_char, something), x|
             point_validate(x, y, something)
             point = Point[[@h_units[x], @v_units[y]].join]
-            location = Location.fetch(location_mark)
-            yield point, location, something
+            yield point, prefix_char, something
           end
         end
       end
 
-      def soldiers_create(piece, point, location)
-        soldiers << Soldier.new_with_promoted(piece).merge(point: point, location: location)
+      def soldiers_create(point, piece, prefix_char)
+        Soldier.new_with_promoted(piece).merge(point: point, location: Location.fetch(prefix_char))
       end
     end
 
-    class KifBoardParser2 < KifBoardParser
+    class FireBoardParser < KifBoardParser
       def parse
-        cell_walker do |point, location, something|
+        cell_walker do |point, prefix_char, something|
           case
           when Piece.all_names.include?(something)
-            soldiers_create(something, point, location)
+            if prefix_char == "!"
+              location = " "
+            else
+              location = prefix_char
+            end
+            soldier = soldiers_create(point, something, location)
+            soldiers << soldier
+            if prefix_char == "!"
+              trigger_soldiers << soldier
+            end
           when something != "・"
             other_objects << {point: point, location: location, something: something}
           end
@@ -175,6 +183,10 @@ module Bushido
 
       def other_objects
         @other_objects ||= []
+      end
+
+      def trigger_soldiers
+        @trigger_soldiers ||= []
       end
     end
 

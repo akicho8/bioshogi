@@ -12,7 +12,7 @@ module Bushido
       end
 
       it "変換するときに例外が出る" do
-        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawn)
+        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawnError)
       end
 
       it "オプションをつければ例外がでない" do

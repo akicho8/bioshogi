@@ -58,7 +58,7 @@ seconds = Benchmark.realtime do
       @result[error.class.name] += 1
 
       if false
-        if error.kind_of?(Bushido::DoublePawn)
+        if error.kind_of?(Bushido::DoublePawnError)
           print "_"
           next
         end

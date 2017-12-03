@@ -46,9 +46,9 @@ module Bushido
               end
             end
 
-            e.board_parser.other_objects.each do |oo|
-              if oo[:something] == "○"
-                pt = oo[:point].reverse_if_white(player.location)
+            e.board_parser.other_objects.each do |obj|
+              if obj[:something] == "○"
+                pt = obj[:point].reverse_if_white(player.location)
                 if player.board[pt]
                   throw skip
                 end
@@ -73,7 +73,35 @@ module Bushido
               end
             end
 
+            if v = e.mochigoma_in.presence
+              unless v.all? {|x| player.pieces.include?(x) }
+                throw skip
+              end
+            end
+
             if v = e.triggers.presence
+              current_soldier = player.runner.current_soldier
+              if player.location.key == :white
+                current_soldier = current_soldier.reverse
+              end
+              v.each do |soldier|
+                if current_soldier != soldier
+                  throw skip
+                end
+              end
+            end
+
+            e.board_parser.trigger_soldiers.each do |obj|
+              if obj[:something] == "○"
+                pt = obj[:point].reverse_if_white(player.location)
+                if player.board[pt]
+                  throw skip
+                end
+              end
+            end
+
+            # ここは位置のハッシュを作っておくのがいいかもしれん
+            if v = e.board_parser.trigger_soldiers.presence
               current_soldier = player.runner.current_soldier
               if player.location.key == :white
                 current_soldier = current_soldier.reverse
