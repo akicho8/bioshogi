@@ -165,15 +165,23 @@ module Bushido
         cell_walker do |point, prefix_char, something|
           case
           when Piece.all_names.include?(something)
+            # if prefix_char == "!"
+            #   location = " "
+            # else
+            #   location = prefix_char
+            # end
+            # soldier = soldiers_create(point, something, location)
+            # soldiers << soldier
+            # if prefix_char == "!"
+            #   trigger_soldiers << soldier
+            # end
+
             if prefix_char == "!"
-              location = " "
-            else
-              location = prefix_char
-            end
-            soldier = soldiers_create(point, something, location)
-            soldiers << soldier
-            if prefix_char == "!"
+              soldier = soldiers_create(point, something, :black)
               trigger_soldiers << soldier
+            else
+              soldier = soldiers_create(point, something, prefix_char)
+              soldiers << soldier
             end
           when something != "・"
             other_objects << {point: point, location: location, something: something}
