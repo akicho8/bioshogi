@@ -73,7 +73,7 @@ module Bushido
       end
 
       def shape_lines
-        @shape_lines ||= Parser.source_normalize(@source).strip.lines.to_a
+        @shape_lines ||= Parser.source_normalize(@source).remove(/\s*#\s*/).strip.lines.to_a
       end
     end
 

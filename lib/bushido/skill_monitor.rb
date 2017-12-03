@@ -49,22 +49,43 @@ module Bushido
             end
 
             e.board_parser.other_objects.each do |obj|
+              # 何もない
               if obj[:something] == "○"
                 pt = obj[:point].reverse_if_white(player.location)
                 if player.board[pt]
                   throw skip
                 end
               end
+
+              # 何かある
               if obj[:something] == "●"
                 pt = obj[:point].reverse_if_white(player.location)
                 if !player.board[pt]
                   throw skip
                 end
               end
+
+              # 移動元
+              if obj[:something] == "★"
+                pt = obj[:point].reverse_if_white(player.location)
+                if (before_soldier = player.runner.before_soldier) && pt == before_soldier.point
+                else
+                  throw skip
+                end
+              end
+
+              # 移動元ではない
+              if obj[:something] == "☆"
+                pt = obj[:point].reverse_if_white(player.location)
+                if (before_soldier = player.runner.before_soldier) && pt == before_soldier.point
+                  throw skip
+                else
+                end
+              end
             end
 
             if e.kaisenmae
-              if player.mediator.kill_counter >= 1
+              if player.mediator.kill_counter.positive?
                 throw skip
               end
             end
@@ -118,15 +139,6 @@ module Bushido
               end
               v.each do |soldier|
                 if current_soldier != soldier
-                  throw skip
-                end
-              end
-            end
-
-            e.board_parser.trigger_soldiers.each do |obj|
-              if obj[:something] == "○"
-                pt = obj[:point].reverse_if_white(player.location)
-                if player.board[pt]
                   throw skip
                 end
               end
