@@ -394,7 +394,7 @@ module Bushido
                 {key: "戦型", method_is: :attack_infos,  },
               ].each do |e|
                 mediator.players.each do |player|
-                  header["#{player.call_name}の#{e[:key]}"] = player.public_send(e[:method_is]).collect(&:name).join("→")
+                  header["#{player.call_name}の#{e[:key]}"] = player.public_send(e[:method_is]).collect(&:name).join(", ")
                 end
               end
             end

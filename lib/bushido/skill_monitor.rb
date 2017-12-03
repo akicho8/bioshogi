@@ -36,9 +36,20 @@ module Bushido
               end
             end
 
-            if e.only_location_key
-              if e.only_location_key != player.location.key
-                throw skip
+            # リファクタリング
+            # black なら「先に指す側」の意味なので
+            if e.junban_eq
+              if e.junban_eq == :senteban
+                if player.mediator.turn_info.counter.next.odd?
+                else
+                  throw skip
+                end
+              end
+              if e.junban_eq == :goteban
+                if player.mediator.turn_info.counter.next.even?
+                else
+                  throw skip
+                end
               end
             end
 
