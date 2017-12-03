@@ -53,6 +53,12 @@ module Bushido
                   throw skip
                 end
               end
+              if obj[:something] == "●"
+                pt = obj[:point].reverse_if_white(player.location)
+                if !player.board[pt]
+                  throw skip
+                end
+              end
             end
 
             if e.kaisenmae
