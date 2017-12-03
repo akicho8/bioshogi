@@ -67,6 +67,12 @@ module Bushido
               end
             end
 
+            if e.tottatokidake
+              unless player.runner.tottakoma
+                throw skip
+              end
+            end
+
             if e.fuganai
               if player.pieces.include?(Piece[:pawn])
                 throw skip
