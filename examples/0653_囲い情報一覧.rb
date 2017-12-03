@@ -21,7 +21,7 @@ tp DefenseInfo.collect { |e|
   {
     "名前"                 => e.name,
     "形状を含む発展系"     => list.collect(&:name).join(" "),
-    "あればスキップ"       => e.evolution_keys.join(" "),
+    "あればスキップ"       => e.evolution_keys ? e.evolution_keys.join(" ") : "",
     "指定駒数"             => [e.sorted_soldiers.count, *list.collect{|e|e.sorted_soldiers.count}],
     "配置"                 => e.board_parser.sorted_soldiers.collect(&:name).join(" "),
     "空升指定"             => e.board_parser.other_objects.find_all{|e|e[:something] == "○"}.collect{|e|e[:point].name}.join(" "),

@@ -61,25 +61,37 @@ module Bushido
               end
             end
 
+            if e.uttatokidake
+              if player.runner.before_soldier
+                throw skip
+              end
+            end
+
             if e.fuganai
               if player.pieces.include?(Piece[:pawn])
                 throw skip
               end
             end
 
-            if v = e.mochigoma_eq.presence
+            if v = e.mochigoma_count_eq
+              if player.pieces.size != v
+                throw skip
+              end
+            end
+
+            if v = e.mochigoma_eq
               if player.pieces.sort != v.sort
                 throw skip
               end
             end
 
-            if v = e.mochigoma_in.presence
+            if v = e.mochigoma_in
               unless v.all? {|x| player.pieces.include?(x) }
                 throw skip
               end
             end
 
-            if v = e.triggers.presence
+            if v = e.triggers
               current_soldier = player.runner.current_soldier
               if player.location.key == :white
                 current_soldier = current_soldier.reverse
