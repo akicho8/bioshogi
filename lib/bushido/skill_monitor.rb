@@ -175,7 +175,7 @@ module Bushido
 
             # どれかが盤上に含まれる (後手の飛車の位置などはこれでしか指定できない→「?」を使う)
             if v = e.gentei_match_any
-              if v.any? {|o| e.soldiers.include?(o) }
+              if v.any? {|o| soldiers.include?(o) }
               else
                 throw skip
               end
@@ -183,13 +183,11 @@ module Bushido
 
             # どれかが盤上に含まれる
             if v = e.board_parser.any_exist_soldiers.presence
-              if v.any? {|o| e.soldiers.include?(o) }
+              if v.any? {|o| soldiers.include?(o) }
               else
                 throw skip
               end
             end
-
-            any_exist_soldiers
 
             if e.compare_condition == :equal
               # if e.compare_my_side_only
