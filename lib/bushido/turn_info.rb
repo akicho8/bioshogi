@@ -24,6 +24,18 @@ module Bushido
       Location[key]
     end
 
+    def senteban?
+      counter.even?
+    end
+
+    def goteban?
+      counter.odd?
+    end
+
+    def senteban_or_goteban
+      senteban? ? :senteban : :goteban
+    end
+
     # def next!
     #   @counter += 1
     # end

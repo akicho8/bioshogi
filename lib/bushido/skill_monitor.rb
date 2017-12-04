@@ -36,20 +36,10 @@ module Bushido
               end
             end
 
-            # リファクタリング
-            # black なら「先に指す側」の意味なので
             if e.junban_eq
-              if e.junban_eq == :senteban
-                if player.mediator.turn_info.counter.next.odd?
-                else
-                  throw skip
-                end
-              end
-              if e.junban_eq == :goteban
-                if player.mediator.turn_info.counter.next.even?
-                else
-                  throw skip
-                end
+              if e.junban_eq == player.mediator.turn_info.senteban_or_goteban
+              else
+                throw skip
               end
             end
 
@@ -177,6 +167,13 @@ module Bushido
 
             if player.location.key == :white
               soldiers = soldiers.collect(&:reverse)
+            end
+
+            if v = e.gentei_match_any
+              if v.any? {|o| e.soldiers.include?(o) }
+              else
+                throw skip
+              end
             end
 
             if e.compare_condition == :equal
