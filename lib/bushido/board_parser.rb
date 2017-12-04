@@ -178,12 +178,22 @@ module Bushido
 
             case prefix_char
             when "!"
+              # 一つだけのトリガーは盤面情報には含めない
               soldier = soldiers_create(point, something, :black)
               trigger_soldiers << soldier
             when "@"
+              # 複数あるはずのトリガーは盤面情報に含める
               soldier = soldiers_create(point, something, :black)
               trigger_soldiers << soldier
               soldiers << soldier # 盤面の駒とする
+            when "?"
+              # △でどれかがここに含まれる
+              soldier = soldiers_create(point, something, :white)
+              any_exist_soldiers << soldier
+            when "*"
+              # ▲でどれかがここに含まれる
+              soldier = soldiers_create(point, something, :black)
+              any_exist_soldiers << soldier
             else
               soldier = soldiers_create(point, something, prefix_char)
               soldiers << soldier
@@ -200,6 +210,10 @@ module Bushido
 
       def trigger_soldiers
         @trigger_soldiers ||= []
+      end
+
+      def any_exist_soldiers
+        @any_exist_soldiers ||= []
       end
     end
 
