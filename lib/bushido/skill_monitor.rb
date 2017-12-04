@@ -66,15 +66,6 @@ module Bushido
                 end
               end
 
-              # 移動元
-              if obj[:something] == "★"
-                pt = obj[:point].reverse_if_white(player.location)
-                if (before_soldier = player.runner.before_soldier) && pt == before_soldier.point
-                else
-                  throw skip
-                end
-              end
-
               # 移動元ではない
               if obj[:something] == "☆"
                 pt = obj[:point].reverse_if_white(player.location)
@@ -82,6 +73,19 @@ module Bushido
                   throw skip
                 else
                 end
+              end
+            end
+
+            # 移動元(any条件)
+            if v = e.board_parser.other_objects.find_all{|e|e[:something] == "★"}.presence
+              if v.any? {|e|
+                  pt = e[:point].reverse_if_white(player.location)
+                  if before_soldier = player.runner.before_soldier
+                    pt == before_soldier.point
+                  end
+                }
+              else
+                throw skip
               end
             end
 
