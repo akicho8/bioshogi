@@ -2,6 +2,12 @@ require_relative "../spec_helper"
 
 module Bushido
   describe Parser::KifParser do
+    it "残り時間の変換" do
+      info = Parser.parse("持ち時間：1時間01分")
+      info.to_kif.include?("持ち時間：1時間01分")
+      info.to_csa.include?("01:00+00")
+    end
+
     describe "kif読み込み" do
       before do
         # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
@@ -36,7 +42,7 @@ EOT
           "開始日時" => "2000/01/01",
           "終了日時" => "2000/01/01 01:00:00",
           "棋戦"     => "(棋戦)",
-          "持ち時間" => "(持ち時間)",
+          "持ち時間" => {min: 0},
           "手合割"   => "平手",
           "先手"     => "(先手)",
           "後手"     => "(後手)",

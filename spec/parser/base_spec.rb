@@ -310,7 +310,7 @@ V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01
 $OPENING:その他の戦型
-$TIME_LIMIT:6時間
+$TIME_LIMIT:06:00+00
 ' 手合割:香落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
 P2 * -HI *  *  *  *  * -KA *

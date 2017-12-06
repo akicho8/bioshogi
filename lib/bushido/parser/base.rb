@@ -110,6 +110,17 @@ module Bushido
               end
             end
           end
+
+          key = "持ち時間"
+          if v = header[key]
+            # 01:03+00 → {min: 63, countdown: 0}
+            if md = v.match(/(?<hour>\d+):(?<min>\d+)(\+(?<countdown>\d+))?/)
+              header[key] = {min: md[:hour].to_i * 60 + md[:min].to_i, countdown: md[:countdown].to_i}
+            elsif md = v.match(/((?<hour>\d+)時間)?((?<min>\d+)分)?/)
+              header[key] = {min: md[:hour].to_i * 60 + md[:min].to_i}
+            end
+          end
+
         end
       end
 
@@ -184,6 +195,9 @@ module Bushido
 
           out << CsaHeaderInfo.collect { |e|
             if v = header[e.kif_side_key].presence
+              if e.as_csa
+                v = e.as_csa[v]
+              end
               "#{e.csa_key}#{v}\n"
             end
           }.join
@@ -462,6 +476,11 @@ module Bushido
         def raw_header_part_string
           header.collect { |key, value|
             if value
+              if e = CsaHeaderInfo[key]
+                if e.as_kif
+                  value = e.as_kif[value]
+                end
+              end
               "#{key}：#{value}\n"
             end
           }.compact.join

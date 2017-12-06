@@ -52,9 +52,11 @@ module Bushido
           if e = CsaHeaderInfo[key]
             key = e.kif_side_key
           end
+
           # ヘッダー情報が重複した場合は最初に出てきたものを優先
           header[key] ||= value
         end
+        header_normalize
 
         # 盤面
         @board_source = s.scan(/^P\d.*\n/).join.presence

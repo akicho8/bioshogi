@@ -3,7 +3,7 @@ require "./example_helper"
 # AttackInfo["新米長玉"].self_check # => 
 # AttackInfo["横歩取り"].self_check # => 
 
-DefenseInfo["端玉銀冠"].self_check # => ["舟囲い", "天守閣美濃", "端玉銀冠"]
+DefenseInfo["端玉銀冠"].self_check # => ["舟囲い", "天守閣美濃", "端玉銀冠", "パックマン戦法", "四間飛車"]
 
 info = Parser.parse(<<~EOT)
 EOT

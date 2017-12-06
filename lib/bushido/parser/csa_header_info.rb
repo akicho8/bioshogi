@@ -24,10 +24,48 @@ module Bushido
         {key: "$START_TIME:", kif_side_key: "開始日時", },
         {key: "$END_TIME:",   kif_side_key: "終了日時", },
         {key: "$OPENING:",    kif_side_key: "戦型",     },
-        {key: "$TIME_LIMIT:", kif_side_key: "持ち時間", },
+        {
+          key: "$TIME_LIMIT:",
+          kif_side_key: "持ち時間",
+          as_csa: -> v {
+            "%02d:%02d+%02d" % [*v[:min].to_i.divmod(60), v[:countdown].to_i]
+          },
+          as_kif: -> v {
+            min = v[:min].to_i
+            h, m = min.to_i.divmod(60)
+            countdown = v[:countdown].to_i
+
+            s = []
+            if h.nonzero?
+              s << "#{h}時間"
+            end
+
+            if m.nonzero? || countdown.nonzero?
+              s << "#{m}分"
+            end
+
+            if countdown.nonzero?
+              s << " (1手#{countdown}秒)"
+            end
+
+            s.join.squish
+          },
+        },
       ]
 
       alias csa_key key
+
+      class << self
+        def lookup(v)
+          super || invert_table[v]
+        end
+
+        private
+
+        def invert_table
+          @invert_table ||= inject({}) {|a, e| a.merge(e.kif_side_key => e) }
+        end
+      end
     end
   end
 end
