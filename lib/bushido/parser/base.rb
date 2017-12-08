@@ -408,8 +408,8 @@ module Bushido
             if @config[:defense_form_check_skip]
             else
               [
-                {key: "戦型", method_is: :attack_infos,  },
                 {key: "囲い", method_is: :defense_infos, },
+                {key: "戦型", method_is: :attack_infos,  },
               ].each do |e|
                 mediator.players.each do |player|
                   header["#{player.call_name}の#{e[:key]}"] = player.public_send(e[:method_is]).collect(&:name).join(", ")
