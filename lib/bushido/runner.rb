@@ -38,6 +38,7 @@ module Bushido
     end
 
     attr_reader :point_to, :point_from, :piece, :source, :player, :tottakoma
+    attr_reader :defense_infos, :attack_infos
 
     def initialize(player)
       @player = player
@@ -55,6 +56,9 @@ module Bushido
       @point_from    = nil
       @candidate       = nil
       @tottakoma = nil
+
+      @defense_infos = []
+      @attack_infos = []
 
       @soldier = nil
       @done = false
@@ -211,6 +215,9 @@ module Bushido
           player: @player,
           candidate: @candidate,
           point_same_p: point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
+
+          defense_infos: @defense_infos,
+          attack_infos: @attack_infos,
         })
     end
 

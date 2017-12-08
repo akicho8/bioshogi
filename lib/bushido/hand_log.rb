@@ -7,6 +7,7 @@
 module Bushido
   class HandLog
     attr_reader :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :point_from, :player, :candidate, :point_same_p
+    attr_reader :defense_infos, :attack_infos
 
     def initialize(attrs)
       # FIXME: こんなんやるんなら ActiveModel でいいんじゃね？
@@ -51,6 +52,17 @@ module Bushido
         s << "(#{@point_from.number_format})"
       end
       s.join
+    end
+
+    def to_kakoi(**options)
+      s = []
+      if @defense_infos.present?
+        s << "*#{player.location.name}囲い：#{@defense_infos.collect(&:name).join(", ")}\n"
+      end
+      if @attack_infos.present?
+        s << "*#{player.location.name}戦型：#{@attack_infos.collect(&:name).join(", ")}\n"
+      end
+      s.join.presence
     end
 
     # "58金右" のような人間向けの表記を返す
@@ -225,9 +237,10 @@ module Bushido
           when yoko_idou? && yoreru_c == 1 # 3B 寄る(ことができる)駒が1枚しかないので「寄」のみ
             "寄"
           when yoko_idou? && yoreru_c >= 2 # P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」
-            if _hidari_idou?
+            case
+            when _hidari_idou?
               _i("右") + "寄"
-            elsif _migi_idou?
+            when _migi_idou?
               _i("左") + "寄"
             else
               raise MustNotHappen
@@ -256,25 +269,28 @@ module Bushido
         when agareru_c >= 2 && shita_y == _oy && tate_idou? # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
           "直"
         when agareru_c == 2 # P2A 上がる駒が2枚ある場合「上」を省略して「左」「右」
-          if _hidari_idou?
+          case
+          when _hidari_idou?
             _i("右")
-          elsif _migi_idou?
+          when _migi_idou?
             _i("左")
           else
             raise MustNotHappen
           end
         when yoreru_c == 2 # P2B 寄る駒が2枚ある場合「寄」を省略して「左」「右」
-          if _hidari_idou?
+          case
+          when _hidari_idou?
             _i("右")
-          elsif _migi_idou?
+          when _migi_idou?
             _i("左")
           else
             raise MustNotHappen
           end
         when sagareru_c == 2 # P2C 引く駒が2枚ある場合「引」を省略して「左」「右」
-          if _hidari_idou?
+          case
+          when _hidari_idou?
             _i("右")
-          elsif _migi_idou?
+          when _migi_idou?
             _i("左")
           else
             raise MustNotHappen

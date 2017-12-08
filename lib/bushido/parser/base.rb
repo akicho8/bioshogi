@@ -275,7 +275,11 @@ module Bushido
           chess_clock = ChessClock.new
           out << mediator.hand_logs.collect.with_index.collect {|e, i|
             chess_clock.add(used_seconds_at(i))
-            "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
+            s = "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
+            if v = e.to_kakoi
+              s += v
+            end
+            s
           }.join
 
           last_action_info = LastActionInfo[:TORYO]
@@ -490,7 +494,7 @@ module Bushido
         # mb_ljust("1", 3)                # => "1  "
         # mb_ljust("123", 3)              # => "123"
         def mb_ljust(s, w)
-          n = w - s.toeuc.bytesize
+          n = w - s.encode("EUC-JP").bytesize
           if n < 0
             n = 0
           end

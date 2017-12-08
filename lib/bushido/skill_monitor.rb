@@ -232,7 +232,7 @@ module Bushido
 
             if hit_flag
               infos << e
-              # player.mediator.
+              player.runner.public_send(check_item[:var_key]) << e
             end
           end
         end
