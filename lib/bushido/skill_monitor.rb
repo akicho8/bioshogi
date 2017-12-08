@@ -2,7 +2,7 @@
 
 module Bushido
   class SkillMonitor
-    attr_accessor :player
+    attr_reader :player
 
     def initialize(player)
       @player = player
@@ -113,25 +113,25 @@ module Bushido
               end
             end
 
-            if v = e.mochigoma_count_eq
+            if v = e.hold_piece_count_eq
               if player.pieces.size != v
                 throw skip
               end
             end
 
-            if v = e.mochigoma_eq
+            if v = e.hold_piece_eq
               if player.pieces.sort != v.sort
                 throw skip
               end
             end
 
-            if v = e.mochigoma_in
+            if v = e.hold_piece_in
               unless v.all? {|x| player.pieces.include?(x) }
                 throw skip
               end
             end
 
-            if v = e.mochigoma_not_in
+            if v = e.hold_piece_not_in
               if v.any? {|x| player.pieces.include?(x) }
                 throw skip
               end
@@ -232,6 +232,7 @@ module Bushido
 
             if hit_flag
               infos << e
+              # player.mediator.
             end
           end
         end

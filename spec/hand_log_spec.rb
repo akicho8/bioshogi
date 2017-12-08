@@ -7,7 +7,7 @@ module Bushido
       @mediator = Mediator.test
 
       # 初手７六歩
-      @hand_log = HandLog.new(point_to: Point["７六"], piece: Piece["歩"], point_from: Point["７七"], player: @mediator.black_player)
+      @hand_log = HandLog.new(point_to: Point["７六"], piece: Piece["歩"], point_from: Point["７七"], player: @mediator.player_at(:black))
     end
 
     it "CPU向けの表記を返す" do

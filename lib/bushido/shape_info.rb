@@ -2000,18 +2000,6 @@ EOT
       @board_parser ||= BoardParser::FireBoardParser.parse(body)
     end
 
-    def both_board_info
-      @both_board_info ||= board_parser.both_board_info
-    end
-
-    def sorted_black_side_soldiers
-      @sorted_black_side_soldiers ||= black_side_soldiers.sort
-    end
-
-    def black_side_soldiers
-      @black_side_soldiers ||= both_board_info[Location[:black]]
-    end
-
-    delegate :sorted_soldiers, to: :board_parser
+    delegate :sorted_soldiers, :both_board_info, :sorted_black_side_soldiers, :black_side_soldiers, to: :board_parser
   end
 end

@@ -44,17 +44,6 @@ module Bushido
         @players[Location[location].index]
       end
 
-      def black_player
-        player_at(:black)
-      end
-
-      def white_player
-        player_at(:white)
-      end
-
-      alias player_b black_player
-      alias player_w white_player
-
       # 相手プレイヤーを返す
       def reverse_player
         current_player(+1)
@@ -262,9 +251,9 @@ module Bushido
       # TODO: bod フォーマットとする
       def to_s
         s = []
-        s << white_player.hold_pieces_snap + "\n"
+        s << player_at(:white).hold_pieces_snap + "\n"
         s << @board.to_s
-        s << black_player.hold_pieces_snap + "\n"
+        s << player_at(:black).hold_pieces_snap + "\n"
 
         last = ""
         if hand_log = hand_logs.last

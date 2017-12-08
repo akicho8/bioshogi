@@ -47,22 +47,32 @@ module Bushido
         @soldiers ||= []
       end
 
-      def sorted_soldiers
-        @sorted_soldiers ||= soldiers.sort
+      concerning :SomeAccessors do
+        def sorted_soldiers
+          @sorted_soldiers ||= soldiers.sort
+        end
+
+        # {Location[:black] => [<Soldier>], Location[:white] => [...]}
+        def both_board_info
+          @both_board_info ||= __both_board_info
+        end
+
+        def black_side_soldiers
+          @black_side_soldiers ||= both_board_info[Location[:black]]
+        end
+
+        def sorted_black_side_soldiers
+          @sorted_black_side_soldiers ||= black_side_soldiers.sort
+        end
+
+        # def side_board_info_by(location)
+        #   both_board_info[location] || []
+        # end
+
+        # def black_side_soldiers
+        #   both_board_info[Location[:black]] || []
+        # end
       end
-
-      # {Location[:black] => [<Soldier>], Location[:white] => [...]}
-      def both_board_info
-        @both_board_info ||= __both_board_info
-      end
-
-      # def side_board_info_by(location)
-      #   both_board_info[location] || []
-      # end
-
-      # def black_side_soldiers
-      #   both_board_info[Location[:black]] || []
-      # end
 
       private
 

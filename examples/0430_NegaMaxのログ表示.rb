@@ -7,7 +7,7 @@ Board.size_change([3, 3]) do
   mediator = Mediator.new
   mediator.battlers_create("▲３三歩 △１一歩", from_stand: false)
   puts mediator
-  tp NegaMaxRunner.run(player: mediator.player_b, depth: 1)
+  tp NegaMaxRunner.run(player: mediator.player_at(:black), depth: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １

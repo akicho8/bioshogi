@@ -126,11 +126,11 @@ EOT
 
     it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.test(init: "▲１二歩")
-      mediator.player_b.to_s_battlers.should == "１二歩"
-      mediator.player_b.board.to_s_battlers.should == "１二歩"
-      mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
-      mediator.player_b.to_s_battlers.should == "１二歩"
-      mediator.player_b.board.to_s_battlers.should == "１二歩"
+      mediator.player_at(:black).to_s_battlers.should == "１二歩"
+      mediator.player_at(:black).board.to_s_battlers.should == "１二歩"
+      mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
+      mediator.player_at(:black).to_s_battlers.should == "１二歩"
+      mediator.player_at(:black).board.to_s_battlers.should == "１二歩"
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do

@@ -15,7 +15,7 @@
 #   # +---+
 #   Board.size_change([1, 3]) do
 #     mediator = Mediator.new
-#     mediator.player_b.battlers_create("１三香", from_stand: false)
+#     mediator.player_at(:black).battlers_create("１三香", from_stand: false)
 #     # puts mediator
 #     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["１二香", "１一杏"]
 #     # mediator.board.abone_all
@@ -31,7 +31,7 @@
 #   # +---+
 #   Board.size_change([1, 3]) do
 #     mediator = Mediator.new
-#     mediator.player_b.battlers_create("１三杏", from_stand: false)
+#     mediator.player_at(:black).battlers_create("１三杏", from_stand: false)
 #     # puts mediator
 #     mediator.board["１三"].movable_infos(with_promoted: true).collect(&:to_s).should == ["１二杏"]
 #     # mediator.board.abone_all

@@ -306,7 +306,7 @@ EOT
     end
 
     it "piece_plot" do
-      player = Bushido::Mediator.new.black_player
+      player = Bushido::Mediator.new.player_at(:black)
       player.pieces_add
       player.piece_plot
     end
@@ -317,7 +317,7 @@ EOT
       mediator.execute("７六歩")
       mediator.execute("３四歩")
       mediator.execute("２二角成")
-      mediator.player_b.to_s_pieces.should == "角"
+      mediator.player_at(:black).to_s_pieces.should == "角"
       mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -392,19 +392,19 @@ EOT
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
-    #   mediator.player_b.to_s_battlers.should == "１二歩"
-    #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_b.board.to_s_battlers.should == "１二歩"
+    #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
+    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩"
     #
     #   # puts mediator.board
-    #   mediator.sandbox_for { mediator.player_b.execute("２二歩打") }
+    #   mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
     #   # puts mediator.board
     #
-    #   mediator.player_b.to_s_battlers.should == "１二歩"
+    #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
     #
-    #   # mediator.player_b.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
-    #   # mediator.player_b.board.present?.should == true
-    #   # mediator.player_b.board.to_s_battlers.should == "１二歩" # ← こうなるのが問題
+    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).board.present?.should == true
+    #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩" # ← こうなるのが問題
     # end
 
   end
