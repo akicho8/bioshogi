@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/akicho8/tree_support.git
+  revision: 3145c34d32a6c97fe3ae4a67dd4a0daafdc812ea
+  specs:
+    tree_support (0.0.28)
+      activesupport
+
 PATH
   remote: ..
   specs:
@@ -8,6 +15,7 @@ PATH
       org_tp
       pry
       tapp
+      tree_support
 
 GEM
   specs:
@@ -72,7 +80,7 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    stackprof (0.2.10)
+    stackprof (0.2.11)
     tapp (1.5.1)
       thor
     test-unit (3.2.6)
@@ -94,6 +102,7 @@ DEPENDENCIES
   mechanize
   stackprof
   test-unit
+  tree_support!
 
 BUNDLED WITH
    1.16.0.pre.3

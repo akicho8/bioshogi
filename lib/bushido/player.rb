@@ -273,13 +273,12 @@ module Bushido
     # これどうなん？
     # SkillMonitor 側にもっていけばいいんじゃね？
     concerning :SkillMonitorMethods do
-      attr_accessor :defense_infos
-      attr_accessor :attack_infos
+      attr_accessor :skill_set
 
-      def initialize(*)
-        super
-        @defense_infos = []
-        @attack_infos = []
+      delegate :attack_infos, :defense_infos, to: :skill_set
+
+      def skill_set
+        @skill_set ||= SkillSet.new
       end
 
       def skill_monitor

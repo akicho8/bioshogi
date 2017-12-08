@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "actionview"
   spec.add_dependency "org_tp"
   spec.add_dependency "memory_record"
+  spec.add_dependency "tree_support"
   spec.add_dependency "tapp"
   spec.add_dependency "pry"
   #pec s.add_dependency "pry-debugger"

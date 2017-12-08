@@ -7,7 +7,7 @@
 module Bushido
   class HandLog
     attr_reader :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :point_from, :player, :candidate, :point_same_p
-    attr_reader :defense_infos, :attack_infos
+    attr_reader :skill_set
 
     def initialize(attrs)
       # FIXME: こんなんやるんなら ActiveModel でいいんじゃね？
@@ -55,14 +55,7 @@ module Bushido
     end
 
     def to_kakoi(**options)
-      s = []
-      if @defense_infos.present?
-        s << "*#{player.location.name}囲い：#{@defense_infos.collect(&:name).join(", ")}\n"
-      end
-      if @attack_infos.present?
-        s << "*#{player.location.name}戦型：#{@attack_infos.collect(&:name).join(", ")}\n"
-      end
-      s.join.presence
+      skill_set.kif_comment(player.location)
     end
 
     # "58金右" のような人間向けの表記を返す

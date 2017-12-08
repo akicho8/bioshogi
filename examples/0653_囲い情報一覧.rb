@@ -1,30 +1,18 @@
 require "./example_helper"
 
-tp DefenseInfo.collect { |e|
-  list = DefenseInfo.to_a - [e]
+tp AttackInfo.collect { |e|
+  list = AttackInfo.to_a - [e]
   list = list.find_all { |o|
     soldiers = o.sorted_soldiers
-    # if true
-    #   blank_points = e.board_parser.other_objects.collect{|e|e[:point]}
-    #   if blank_points.present?
-    #     if e.name == "坊主美濃"
-    #       if o.name == "ちょんまげ美濃"
-    #         p soldiers.collect(&:name)
-    #         soldiers = soldiers.reject{|o|blank_points.include?(o[:point])}
-    #         p soldiers.collect(&:name)
-    #       end
-    #     end
-    #   end
-    # end
     (o.sorted_soldiers& e.sorted_soldiers) == e.sorted_soldiers
   }
   {
     "名前"                 => e.name,
     "形状を含む発展系"     => list.collect(&:name).join(" "),
-    "あればスキップ"       => e.evolution_keys ? e.evolution_keys.join(" ") : "",
-    "指定駒数"             => [e.sorted_soldiers.count, *list.collect{|e|e.sorted_soldiers.count}],
-    "配置"                 => e.board_parser.sorted_soldiers.collect(&:name).join(" "),
-    "空升指定"             => e.board_parser.other_objects.find_all{|e|e[:something] == "○"}.collect{|e|e[:point].name}.join(" "),
+    # "あればスキップ"       => e.children ? e.children.join(" ") : "",
+    # "指定駒数"             => [e.sorted_soldiers.count, *list.collect{|e|e.sorted_soldiers.count}],
+    # "配置"                 => e.board_parser.sorted_soldiers.collect(&:name).join(" "),
+    # "空升指定"             => e.board_parser.other_objects.find_all{|e|e[:something] == "○"}.collect{|e|e[:point].name}.join(" "),
   }
 }
 # >> |------------------+---------------------+---------------------+-----------+-------------------------------------------------------------------------+----------------|
