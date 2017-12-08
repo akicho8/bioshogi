@@ -31,7 +31,7 @@ module Bushido
             end
 
             if e.turn_limit
-              if e.turn_limit > player.mediator.turn_info.counter.next
+              if player.mediator.turn_info.counter.next > e.turn_limit
                 throw skip
               end
             end
