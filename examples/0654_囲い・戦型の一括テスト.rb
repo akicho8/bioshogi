@@ -3,9 +3,16 @@ require "./example_helper"
 hash = Hash.new(0)
 SkillGroupInfo.each do |group|
   group.model.each do |e|
-    files = Pathname.glob("#{group.name}/#{e.key}_*.*")
+    if true
+      kif = Pathname("#{group.name}/#{e.key}.kif")
+      unless kif.exist?
+        kif.write("")
+      end
+    end
+
+    files = Pathname.glob("#{group.name}/#{e.key}.*")
     mark = nil
-    if files.empty?
+    if files.empty? || files.all?{|e|e.read.blank?}
       mark = "SKIP"
     else
       flag = files.all? do |file|
