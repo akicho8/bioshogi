@@ -1,5 +1,4 @@
 source "https://rubygems.org"
-gem 'tree_support', github: "akicho8/tree_support"
 gemspec
 
 # web i/f 用なんだけどここには書きたくなかった

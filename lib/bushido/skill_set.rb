@@ -25,7 +25,7 @@ module Bushido
     def normalize_list(list)
       # ダイヤモンド美濃から見た美濃囲いや片美濃囲い
       # p [list.collect(&:key), list.flat_map { |e| e.ancestors.drop(1) }.collect(&:key)]
-      list - list.flat_map { |e| e.ancestors.drop(1) }
+      list - list.flat_map { |e| e.ancestors }
     end
 
     def to_h

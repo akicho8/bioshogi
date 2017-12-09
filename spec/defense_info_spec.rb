@@ -12,7 +12,7 @@ module Bushido
 
     describe "木構造" do
       it "先祖" do
-        DefenseInfo["ダイヤモンド美濃"].ancestors.collect(&:name).should == ["ダイヤモンド美濃", "美濃囲い", "片美濃囲い"]
+        DefenseInfo["ダイヤモンド美濃"].ancestors.collect(&:name).should == ["美濃囲い", "片美濃囲い"]
       end
 
       it "親" do
