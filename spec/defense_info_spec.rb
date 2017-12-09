@@ -20,11 +20,11 @@ module Bushido
       end
 
       it "子供" do
-        DefenseInfo["片美濃囲い"].children.collect(&:name).should == ["美濃囲い", "高美濃囲い", "銀美濃"]
+        DefenseInfo["片美濃囲い"].children.collect(&:name).should == ["美濃囲い", "銀美濃"]
       end
 
       it "子孫" do
-        DefenseInfo["片美濃囲い"].descendants.collect(&:name).should == ["美濃囲い", "ダイヤモンド美濃", "高美濃囲い", "銀美濃"]
+        DefenseInfo["片美濃囲い"].descendants.collect(&:name).should == ["美濃囲い", "高美濃囲い", "ダイヤモンド美濃", "銀美濃"]
       end
     end
 
@@ -43,7 +43,7 @@ module Bushido
 先手の囲い：総矢倉, 菱矢倉
 後手の囲い：雁木囲い
 先手の戦型：四手角
-後手の戦型：四手角, 鬼殺し
+後手の戦型：四手角
          EOT
       end
     end

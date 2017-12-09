@@ -21,11 +21,14 @@ module Bushido
       @normalized_defense_infos ||= normalize_list(defense_infos)
     end
 
-    # ダイヤモンド美濃を持っていれば美濃囲いを消す
+    # 重複しているように感じる囲いなどを整理する
     def normalize_list(list)
-      # ダイヤモンド美濃から見た美濃囲いや片美濃囲い
-      # p [list.collect(&:key), list.flat_map { |e| e.ancestors.drop(1) }.collect(&:key)]
-      list - list.flat_map { |e| e.ancestors }
+      # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
+      list -= list.flat_map { |e| e.ancestors }
+      # さらに「ダイヤモンド美濃」に含まれる「銀美濃」を消す
+      # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが other_parents にある
+      list -= list.flat_map { |e| e.other_parents.flat_map {|e| e.self_and_ancestors } }
+      list
     end
 
     def to_h

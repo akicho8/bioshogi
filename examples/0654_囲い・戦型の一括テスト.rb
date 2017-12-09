@@ -10,23 +10,31 @@ SkillGroupInfo.each do |group|
       end
     end
 
+    # if e.key != :"ダイヤモンド美濃"
+    #   next
+    # end
+
     files = Pathname.glob("#{group.name}/#{e.key}.*")
+    # puts files
+
     mark = nil
     if files.empty? || files.all?{|e|e.read.blank?}
       mark = "SKIP"
     else
-      flag = files.all? do |file|
-        info = Parser.parse(file.read)
-        info.mediator_run
-        list = info.mediator.players.collect {|e| e.skill_set.to_h.values }.flatten
-        list.include?(e.key)
+      files.each do |file|
+        str = file.read
+        if str.present?
+          info = Parser.parse(str)
+          info.mediator_run
+          list = info.mediator.players.collect {|e| e.skill_set.to_h.values }.flatten
+          if list.include?(e.key)
+            mark = "OK"
+          else
+            mark = "ERROR"
+          end
+          puts "#{mark}: #{e.key} #{list.inspect}"
+        end
       end
-      if flag
-        mark = "OK"
-      else
-        mark = "ERROR"
-      end
-      puts "#{mark}: #{e.key}"
     end
     hash[mark] += 1
   end
