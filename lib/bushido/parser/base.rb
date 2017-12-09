@@ -29,7 +29,7 @@ module Bushido
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments, :last_status_info, :board_source, :error_message
+      attr_reader :header, :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
       def initialize(source, **config)
         @source = source
@@ -39,7 +39,7 @@ module Bushido
         @move_infos = []
         @first_comments = []
         @board_source = nil
-        @last_status_info = nil
+        @last_status_params = nil
         @error_message = nil
       end
 
@@ -234,10 +234,10 @@ module Bushido
             end
           }.join
 
-          if e = @last_status_info
-            last_action_info = LastActionInfo.fetch(e[:last_action])
+          if e = @last_status_params
+            last_action_info = LastActionInfo.fetch(e[:last_action_key])
             s = "%#{last_action_info.csa_key}"
-            if v = e[:used_seconds].presence
+            if v = e[:used_seconds]
               s += ",T#{v}"
             end
             out << "#{s}\n"
@@ -259,53 +259,52 @@ module Bushido
           out
         end
 
-        def to_kif(**options)
-          options = {
-            length: 12,
-            number_width: 4,
-            header_skip: false,
-          }.merge(options)
+        concerning :ToKifMethods do
+          def to_kif(**options)
+            options = {
+              length: 12,
+              number_width: 4,
+              header_skip: false,
+            }.merge(options)
 
-          mediator_run
+            mediator_run
 
-          out = []
-          out << header_part_string unless options[:header_skip]
-          out << "手数----指手---------消費時間--\n"
-
-          chess_clock = ChessClock.new
-          out << mediator.hand_logs.collect.with_index.collect {|e, i|
-            chess_clock.add(used_seconds_at(i))
-            s = "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
-            if v = e.to_kakoi
-              s += v
+            out = []
+            unless options[:header_skip]
+              out << header_part_string
             end
-            s
-          }.join
+            out << "手数----指手---------消費時間--\n"
 
-          last_action_info = LastActionInfo[:TORYO]
-          if @last_status_info
-            if v = LastActionInfo[@last_status_info[:last_action]]
-              last_action_info = v
+            chess_clock = ChessClock.new
+            out << mediator.hand_logs.collect.with_index.collect { |e, i|
+              chess_clock.add(used_seconds_at(i))
+              s = "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
+              if v = e.to_kakoi
+                s += v
+              end
+              s
+            }.join
+
+            ################################################################################
+
+            left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(last_action_info.kif_word, options[:length])]
+            right_part = nil
+
+            if true
+              if @last_status_params
+                if used_seconds = @last_status_params[:used_seconds]
+                  chess_clock.add(used_seconds)
+                  right_part = chess_clock.to_s
+                end
+              end
             end
-          end
 
-          left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(last_action_info.kif_diarect, options[:length])]
-          right_part = nil
-
-          if @last_status_info
-            if used_seconds = @last_status_info[:used_seconds].presence
-              chess_clock.add(used_seconds)
-              right_part = chess_clock.to_s
-            end
-          end
-
-          out << "#{left_part} #{right_part}".rstrip + "\n"
-
-          if @error_message
+            out << "#{left_part} #{right_part}".rstrip + "\n"
+            out << judgment_message + "\n"
             out << error_message_part
-          end
 
-          out.join
+            out.join
+          end
         end
 
         def to_ki2(**options)
@@ -349,11 +348,8 @@ module Bushido
             out << list2.collect { |e| e.join(" ").strip + "\n" }.join
           end
 
-          if @error_message
-            out << error_message_part
-          end
-
-          out << mediator.judgment_message + "\n"
+          out << judgment_message + "\n"
+          out << error_message_part
 
           out.join
         end
@@ -418,6 +414,11 @@ module Bushido
 
         def header_part_string
           @header_part_string ||= __header_part_string
+        end
+
+        def judgment_message
+          mediator_run
+          last_action_info.judgment_message(mediator)
         end
 
         private
@@ -506,16 +507,30 @@ module Bushido
           @move_infos.dig(index, :used_seconds).to_i
         end
 
-        def error_message_part(prefix = "*")
+        def error_message_part(comment_mark = "*")
           if @error_message
             v = @error_message.strip + "\n"
             s = "-" * 76 + "\n"
-            [s, *v.lines, s].collect {|e| "#{prefix} #{e}" }.join
+            [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
           end
         end
 
-        def error_message_part2
-          mediator.defense_infos.to_t
+        def last_action_info
+          # 棋譜の実行結果から見た判断を初期値として
+          key = :TORYO
+          if @error_message
+            key = :ILLEGAL_MOVE
+          end
+          last_action_info = LastActionInfo[key]
+
+          # 元の棋譜の記載を優先
+          if @last_status_params
+            if v = LastActionInfo[@last_status_params[:last_action_key]]
+              last_action_info = v
+            end
+          end
+
+          last_action_info
         end
 
         class ChessClock

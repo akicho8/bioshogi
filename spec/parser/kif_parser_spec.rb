@@ -54,8 +54,8 @@ EOT
       end
 
       it "最後の情報" do
-        @info.last_status_info[:last_action].should == "投了"
-        @info.last_status_info[:used_seconds].should == 10
+        @info.last_status_params[:last_action_key].should == "投了"
+        @info.last_status_params[:used_seconds].should == 10
       end
 
       it "対局前コメント" do

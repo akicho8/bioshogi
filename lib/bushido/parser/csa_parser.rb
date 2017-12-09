@@ -69,8 +69,8 @@ module Bushido
           {input: input, used_seconds: used_seconds}
         end
 
-        if md = s.match(/^%(?<last_action>\S+)\R+[A-Z](?<used_seconds>(\d+))?/)
-          @last_status_info = md.named_captures.symbolize_keys
+        if md = s.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
+          @last_status_params = md.named_captures.symbolize_keys
         end
       end
     end
