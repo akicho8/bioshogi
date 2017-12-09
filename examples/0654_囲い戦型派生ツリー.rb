@@ -4,7 +4,13 @@ SkillGroupInfo.each do |e|
   puts "-" * 80 + " " + e.model.name
   e.model.each do |e|
     if e.root?
-      puts e.to_s_tree
+      puts e.to_s_tree { |e|
+        if e.other_parents.present?
+          "#{e.name} (別親: #{e.other_parents.collect(&:key).join(', ')})"
+        else
+          e.name
+        end
+      }
     end
   end
 end
@@ -24,8 +30,8 @@ end
 # >> 木村美濃
 # >> 片美濃囲い
 # >> ├─美濃囲い
-# >> │   └─ダイヤモンド美濃
-# >> ├─高美濃囲い
+# >> │   ├─高美濃囲い
+# >> │   └─ダイヤモンド美濃 (別親: 銀美濃)
 # >> └─銀美濃
 # >> ちょんまげ美濃
 # >> 坊主美濃
@@ -36,7 +42,7 @@ end
 # >> 串カツ囲い
 # >> 舟囲い
 # >> 居飛車穴熊
-# >> 松尾流穴熊
+# >> └─松尾流穴熊
 # >> 銀冠穴熊
 # >> ビッグ４
 # >> 箱入り娘

@@ -108,7 +108,13 @@ module Bushido
             end
 
             if e.fuganai
-              if player.pieces.include?(Piece[:pawn])
+              if player.pieces.include?(Piece.fetch[:pawn])
+                throw skip
+              end
+            end
+
+            if e.fu_igai_mottetara_dame
+              unless (player.pieces - [Piece.fetch(:pawn)]).empty?
                 throw skip
               end
             end
