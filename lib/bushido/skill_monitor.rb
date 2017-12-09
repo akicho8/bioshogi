@@ -108,7 +108,7 @@ module Bushido
             end
 
             if e.fuganai
-              if player.pieces.include?(Piece.fetch[:pawn])
+              if player.pieces.include?(Piece.fetch(:pawn))
                 throw skip
               end
             end
