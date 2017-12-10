@@ -87,9 +87,9 @@ module Bushido
               # 移動元ではない
               if obj[:something] == "☆"
                 pt = obj[:point].reverse_if_white(player.location)
-                if (before_soldier = player.runner.before_soldier) && pt == before_soldier.point
+                before_soldier = player.runner.before_soldier
+                if before_soldier && pt == before_soldier.point
                   throw skip
-                else
                 end
               end
             end
