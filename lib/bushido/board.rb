@@ -48,6 +48,16 @@ module Bushido
       def abone_on(point)
         @surface.delete(point.to_xy)
       end
+
+      private
+
+      # 盤上の指定座標に駒があるならエラーとする
+      def assert_board_cell_is_blank(point)
+        battler = lookup(point)
+        if battler
+          raise PieceAlredyExist, "#{point.name}にはすでに#{battler}があります\n#{self}"
+        end
+      end
     end
 
     concerning :ReaderMethods do
@@ -98,15 +108,19 @@ module Bushido
       def to_s
         to_kif
       end
-    end
 
-    private
-
-    # 盤上の指定座標に駒があるならエラーとする
-    def assert_board_cell_is_blank(point)
-      battler = lookup(point)
-      if battler
-        raise PieceAlredyExist, "#{point.name}にはすでに#{battler}があります\n#{self}"
+      def to_sfen
+        Position::Vpos.board_size.times.collect { |y|
+          Position::Hpos.board_size.times.collect { |x|
+            @surface[[x, y]]
+          }.chunk(&:class).flat_map { |klass, e|
+            if klass == NilClass
+              e.count
+            else
+              e.collect(&:to_sfen)
+            end
+          }.join
+        }.join("/")
       end
     end
 

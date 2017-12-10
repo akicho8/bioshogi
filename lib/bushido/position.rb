@@ -133,6 +133,11 @@ module Bushido
         name
       end
 
+      # SFEN表記
+      def to_sfen
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
       # 座標反転
       # @example
       #   Position::Hpos.parse("1").reverse.name # => "9"
@@ -184,6 +189,10 @@ module Bushido
       def number_format
         name.tr("１-９", "1-9")
       end
+
+      def to_sfen
+        (self.class.units.size - @value).to_s
+      end
     end
 
     class Vpos < Base
@@ -202,6 +211,10 @@ module Bushido
       def number_format
         # "一-九" は文字コード順ではないので指定できない
         super.tr(_units, "1-9")
+      end
+
+      def to_sfen
+        ("a".ord + value).chr
       end
     end
   end

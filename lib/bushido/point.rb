@@ -106,7 +106,7 @@ module Bushido
     #   Point["55"] # => "５五"
     def name
       if valid?
-        [@x, @y].collect(&:name).join
+        to_a.collect(&:name).join
       else
         "盤外"
       end
@@ -121,7 +121,15 @@ module Bushido
     # kif形式用の二桁の数座標を返す
     #   Point["２四"].number_format # => "24"
     def number_format
-      [@x, @y].collect(&:number_format).join
+      to_a.collect(&:number_format).join
+    end
+
+    def to_sfen
+      to_a.collect(&:to_sfen).join
+    end
+
+    def to_a
+      [@x, @y]
     end
 
     # ベクトルを加算して新しい座標オブジェクトを返す

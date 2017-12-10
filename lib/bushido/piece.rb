@@ -23,14 +23,14 @@ module Bushido
     include ApplicationMemoryRecord
     memory_record [
       # 並び順はどこにも依存していない
-      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 9999, promoted_weight: 0,    mochigoma_weight: 9999},
-      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_basic_name: "HI", csa_promoted_name: "RY", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus, basic_weight: 2000, promoted_weight: 2200, mochigoma_weight: 2100},
-      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_basic_name: "KA", csa_promoted_name: "UM", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x,    basic_weight: 1800, promoted_weight: 2000, mochigoma_weight: 1890},
-      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 1200, promoted_weight: 0,    mochigoma_weight: 1260},
-      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight: 1000, promoted_weight: 1200, mochigoma_weight: 1050},
-      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  700, promoted_weight: 1200, mochigoma_weight:  735},
-      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_basic_name: "KY", csa_promoted_name: "NY", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  600, promoted_weight: 1200, mochigoma_weight:  630},
-      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  100, promoted_weight: 1200, mochigoma_weight:  105},
+      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  sfen_char: "K", basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 9999, promoted_weight: 0,    mochigoma_weight: 9999},
+      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_basic_name: "HI", csa_promoted_name: "RY", sfen_char: "R", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promotable: true,  promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus, basic_weight: 2000, promoted_weight: 2200, mochigoma_weight: 2100},
+      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_basic_name: "KA", csa_promoted_name: "UM", sfen_char: "B", basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promotable: true,  promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x,    basic_weight: 1800, promoted_weight: 2000, mochigoma_weight: 1890},
+      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  sfen_char: "G", basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,           promotable: false, promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           basic_weight: 1200, promoted_weight: 0,    mochigoma_weight: 1260},
+      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", sfen_char: "S", basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight: 1000, promoted_weight: 1200, mochigoma_weight: 1050},
+      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", sfen_char: "N", basic_once_vectors: [[-1, -2], [1, -2]], basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  700, promoted_weight: 1200, mochigoma_weight:  735},
+      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_basic_name: "KY", csa_promoted_name: "NY", sfen_char: "L", basic_once_vectors: nil,                 basic_repeat_vectors: [[0, -1]],     promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  600, promoted_weight: 1200, mochigoma_weight:  630},
+      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", sfen_char: "P", basic_once_vectors: [[0, -1]],           basic_repeat_vectors: nil,           promotable: true,  promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           basic_weight:  100, promoted_weight: 1200, mochigoma_weight:  105},
     ]
 
     class << self
@@ -149,6 +149,15 @@ module Bushido
         else
           csa_basic_name
         end
+      end
+
+      def to_sfen(promoted: false, location: Location[:black])
+        s = []
+        if promoted
+          s << "+"
+        end
+        s << sfen_char.public_send(location.key == :black ? :upcase : :downcase)
+        s.join
       end
 
       # 名前すべて

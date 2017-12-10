@@ -230,6 +230,15 @@ module Bushido
       def call_name
         location.call_name(mediator.turn_info.komaochi?)
       end
+
+      def to_sfen
+        @pieces.group_by(&:itself).each_with_object([]) { |(k, v), a|
+          if v.count >= 2
+            a << v.count
+          end
+          a << k.to_sfen(location: location)
+        }
+      end
     end
 
     # 盤上の駒関連

@@ -6,7 +6,7 @@
 
 module Bushido
   class HandLog
-    attr_reader :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :point_from, :player, :candidate, :point_same_p
+    attr_reader :point_from, :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :player, :candidate, :point_same_p
     attr_reader :skill_set
 
     def initialize(attrs)
@@ -54,7 +54,7 @@ module Bushido
       s.join
     end
 
-    def to_kakoi(**options)
+    def to_skill_set_kif_comment(**options)
       skill_set.kif_comment(player.location)
     end
 
@@ -77,6 +77,26 @@ module Bushido
       end
       s << @point_to.number_format
       s << @piece.csa_some_name(@promoted || @promote_trigger)
+      s.join
+    end
+
+    # http://www.geocities.jp/shogidokoro/usi.html
+    # ７六歩(77) -> 7g7f
+    # ７六歩成   -> 7g7f+
+    # ７六歩打   -> P*7g
+    def to_sfen
+      s = []
+      if @strike_trigger
+        s << @piece.to_sfen      # P (歩) 先後に関係なく打つ駒は大文字
+        s << "*"                 # 打
+        s << @point_to.to_sfen   # 7g (76)
+      else
+        s << @point_from.to_sfen # 7g (77)
+        s << @point_to.to_sfen   # 7f (76)
+        if @promote_trigger
+          s << "+"               # 成
+        end
+      end
       s.join
     end
 

@@ -86,6 +86,10 @@ module Bushido
       self[:location]
     end
 
+    def to_sfen
+      self[:piece].to_sfen(promoted: self[:promoted], location: self[:location])
+    end
+
     # つかってない
     # def csa_piece_name
     #   self[:piece].csa_some_name(self[:promoted])

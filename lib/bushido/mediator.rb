@@ -92,6 +92,7 @@ module Bushido
     concerning :BoardMethods do
       included do
         attr_reader :board
+        attr_reader :first_state_board_sfen
         attr_accessor :turn_info
       end
 
@@ -102,6 +103,7 @@ module Bushido
         super
         @board = Board.new
         @turn_info = TurnInfo.new("平手")
+        @first_state_board_sfen = to_sfen
       end
 
       # DEPRECATION
@@ -173,6 +175,7 @@ module Bushido
         v.each do |location, v|
           player_at(location).battlers_create(v, from_stand: false)
         end
+        @first_state_board_sfen = to_sfen
       end
 
       def turn_max
@@ -291,6 +294,37 @@ module Bushido
       end
     end
 
+    concerning :UsiMethods do
+      def to_sfen
+        s = []
+        s << board.to_sfen
+        s << turn_info.current_location.to_sfen
+        if players.all? { |e| e.pieces.empty? }
+          s << "-"
+        else
+          s << players.collect(&:to_sfen).join
+        end
+        s << 1
+        s.join(" ")
+      end
+
+      def to_usi_position(force_sfen: true)
+        s = []
+        s << "position"
+        if turn_info.komaochi? || force_sfen
+          s << "sfen"
+          s << @first_state_board_sfen
+        else
+          s << "startpos"
+        end
+        if hand_logs.present?
+          s << "moves"
+          s += hand_logs.collect(&:to_sfen)
+        end
+        s.join(" ")
+      end
+    end
+
     concerning :Serialization do
       class_methods do
         def from_dump(object)
@@ -307,6 +341,7 @@ module Bushido
           players: @players,
           hand_logs: @hand_logs,
           kill_counter: @kill_counter,
+          first_state_board_sfen: @first_state_board_sfen,
         }
       end
 
@@ -315,6 +350,7 @@ module Bushido
         @players  = attrs[:players]
         @hand_logs = attrs[:hand_logs]
         @kill_counter = attrs[:kill_counter]
+        @first_state_board_sfen = attrs[:first_state_board_sfen],
         @board = Board.new
         @players.each { |player| player.mediator = self }
         @players.collect { |player| player.render_battlers }

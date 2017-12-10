@@ -81,6 +81,10 @@ module Bushido
     end
 
     concerning :NameMethods do
+      included do
+        delegate :to_sfen, to: :to_soldier
+      end
+
       def name
         mark_with_formal_name
       end

@@ -279,7 +279,7 @@ module Bushido
             out << mediator.hand_logs.collect.with_index.collect { |e, i|
               chess_clock.add(used_seconds_at(i))
               s = "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
-              if v = e.to_kakoi
+              if v = e.to_skill_set_kif_comment
                 s += v
               end
               s

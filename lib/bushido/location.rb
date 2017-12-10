@@ -12,8 +12,8 @@ module Bushido
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      {key: :black, name: "▲", hirate_name: "先手", komaochi_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗", "b"], },
-      {key: :white, name: "△", hirate_name: "後手", komaochi_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖", "w"], },
+      {key: :black, name: "▲", hirate_name: "先手", komaochi_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b"},
+      {key: :white, name: "△", hirate_name: "後手", komaochi_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w"},
     ]
 
     alias index code
@@ -125,6 +125,7 @@ module Bushido
         mark,
         reverse_mark,
         other_match_chars,
+        to_sfen,
         name,
         name.chars.first,
         index,
