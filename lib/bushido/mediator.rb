@@ -102,8 +102,7 @@ module Bushido
       def initialize
         super
         @board = Board.new
-        @turn_info = TurnInfo.new("平手")
-        @first_state_board_sfen = to_sfen
+        @turn_info = TurnInfo.new
       end
 
       # DEPRECATION
@@ -127,8 +126,6 @@ module Bushido
 
         name = name.presence || "平手"
 
-        # @turn_info = TurnInfo.new(name)
-
         # "角落ち" なら {"▲" => "角落ち", "△" => "平手"}
         v = {black: "平手", white: "平手"}
         if name != "平手"
@@ -138,29 +135,19 @@ module Bushido
         end
 
         board_reset_for_hash(v)
-
-        @turn_info = TurnInfo.new(board.teaiwari_name)
+        @turn_info.komaochi = (board.teaiwari_name != "平手")
       end
 
       def board_reset_by_shape(value)
         raise MustNotHappen unless BoardParser.accept?(value)
         v = BoardParser.parse(value).both_board_info
         board_reset5(v)
-        # このあと自分で手合割を決めること。次のようにする
-        # mediator.turn_info = TurnInfo.new(mediator.board.teaiwari_name)
-
-        # if board.teaiwari_name
-        #   @turn_info = TurnInfo.new(board.teaiwari_name)
-        # else
-        #   # 手合いが不明なものは何か落ち
-        #   # @turn_info = TurnInfo.new("落")
-        # end
       end
 
       # 盤面から手合割を判断する
       def turn_info_auto_set
         if board.teaiwari_name
-          @turn_info = TurnInfo.new(board.teaiwari_name)
+          @turn_info.komaochi = (board.teaiwari_name != "平手")
         end
       end
 
@@ -175,7 +162,7 @@ module Bushido
         v.each do |location, v|
           player_at(location).battlers_create(v, from_stand: false)
         end
-        @first_state_board_sfen = to_sfen
+        play_standby
       end
 
       def turn_max
@@ -295,6 +282,15 @@ module Bushido
     end
 
     concerning :UsiMethods do
+      def initialize(*)
+        super
+        play_standby
+      end
+
+      def play_standby
+        @first_state_board_sfen = to_sfen
+      end
+
       def to_sfen
         s = []
         s << board.to_sfen
@@ -304,7 +300,7 @@ module Bushido
         else
           s << players.collect(&:to_sfen).join
         end
-        s << 1
+        s << turn_info.counter.next
         s.join(" ")
       end
 

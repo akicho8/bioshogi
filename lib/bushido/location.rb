@@ -68,6 +68,16 @@ module Bushido
       def triangles_str
         @triangles_str ||= collect { |e| [e.mark, e.reverse_mark] }.join
       end
+
+      # b w とかではなく sfen の駒の文字の大文字小文字で判断する
+      # だから v をキーにしたテーブルにするのはやめたほうがいい
+      def fetch_by_sfen_char(ch)
+        if ch.match?(/[[:upper:]]/)
+          self[:black]
+        else
+          self[:white]
+        end
+      end
     end
 
     # 平手と駒落ちの呼名両方

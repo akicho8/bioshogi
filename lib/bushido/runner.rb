@@ -6,7 +6,7 @@ module Bushido
   class Runner
     class << self
       def input_regexp
-        @input_regexp ||= Regexp.union(human_input_regexp, csa_input_regexp)
+        @input_regexp ||= Regexp.union(human_input_regexp, csa_input_regexp, usi_input_regexp)
       end
 
       def human_input_regexp
@@ -34,6 +34,16 @@ module Bushido
           (?<csa_to>[1-9]{2})
           ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))
         /ox
+      end
+
+      def usi_input_regexp
+        chars = Piece.collect(&:sfen_char).compact.join
+        point = /[1-9][[:lower:]]/
+
+        part1 = /(?<usi_piece>[#{chars}])\*(?<usi_to>#{point})/o
+        part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_nari>\+)?/o
+
+        /((#{part1})|(#{part2}))/o
       end
     end
 
@@ -101,6 +111,25 @@ module Bushido
             @md[:piece] = v.piece.name
             @md[:motion2] = "成"
           end
+        end
+      end
+
+      if @md[:usi_to]
+        henkan = -> s { s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 } }
+
+        if @md[:usi_piece]
+          _piece = Piece.find { |e| e.sfen_char == @md[:usi_piece] } or raise
+          @md[:piece] = _piece.name
+          @md[:motion2] = "打"
+          @md[:point_to] = henkan.call(@md[:usi_to])
+        else
+          @md[:point_from] = henkan.call(@md[:usi_from])
+          @md[:point_to] = henkan.call(@md[:usi_to])
+          if @md[:usi_nari] == "+"
+            @md[:motion2] = "成"
+          end
+          v = @player.board[@md[:point_from]] or raise MustNotHappen
+          @md[:piece] = v.piece_current_name
         end
       end
 

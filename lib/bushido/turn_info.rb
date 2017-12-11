@@ -3,20 +3,19 @@
 module Bushido
   class TurnInfo
     attr_accessor :counter
-    attr_accessor :teaiwari_key
-    # attr_accessor :teaiwari_info
+    attr_accessor :komaochi
 
-    def initialize(teaiwari_key = nil)
-      @teaiwari_key = teaiwari_key.presence || "平手"
-      @counter = 0
+    def initialize(komaochi: false, counter: 0)
+      @komaochi = komaochi
+      @counter = counter || 0
     end
 
     def komaochi?
-      @teaiwari_key.to_s.include?("落")
+      @komaochi
     end
 
     def base_location
-      if komaochi?
+      if @komaochi
         key = :white
       else
         key = :black

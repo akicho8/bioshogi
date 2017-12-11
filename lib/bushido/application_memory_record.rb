@@ -15,5 +15,9 @@ module Bushido
     def name
       key.to_s
     end
+
+    def <=>(other)
+      code <=> other.code
+    end
   end
 end

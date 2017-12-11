@@ -152,10 +152,6 @@ module Bushido
         @move_infos.last[:comments] << comment
       end
 
-      # def teban_insance
-      #   @turn_info ||= TurnInfo.new(header["手合割"])
-      # end
-
       concerning :ConverterMethods do
         # CSA標準棋譜ファイル形式
         # http://www.computer-shogi.org/protocol/record_v22.html
@@ -376,7 +372,7 @@ module Bushido
 
               if mediator.board.teaiwari_name != "平手"
                 if header["手合割"].blank? || header["手合割"] == "その他"
-                  mediator.turn_info = TurnInfo.new("落")
+                  mediator.turn_info.komaochi = true
                 end
               end
             else
@@ -432,7 +428,7 @@ module Bushido
           if @board_source
             obj.board_reset_by_shape(@board_source)
             if header["手合割"].blank? || header["手合割"] == "その他"
-              obj.turn_info = TurnInfo.new("落")
+              obj.turn_info.komaochi = true
             else
               obj.turn_info_auto_set
             end
