@@ -454,10 +454,10 @@ module Bushido
         end
 
         def invertable_hash
-          @invertable_hash ||= inertable_one_side_hash.merge(inertable_one_side_hash.invert)
+          @invertable_hash ||= invertable_one_side_hash.merge(invertable_one_side_hash.invert)
         end
 
-        def inertable_one_side_hash
+        def invertable_one_side_hash
           {
             1 => -1,
             "右" => "左",
