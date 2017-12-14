@@ -168,7 +168,6 @@ module Bushido
       def turn_max
         turn_info.counter
       end
-
     end
 
     concerning :Other do
@@ -288,11 +287,26 @@ module Bushido
       end
 
       def play_standby
-        @first_state_board_sfen = to_sfen
+        @first_state_board_sfen = to_current_sfen # これはイケてない
       end
 
-      def to_sfen
+      # 平手で開始する直前の状態か？
+      def startpos?
+        board.teaiwari_name == "平手" && players.all? { |e| e.pieces.empty? }
+      end
+
+      # 現在の局面
+      def to_current_sfen
+        if !startpos?
+          to_long_sfen
+        else
+          "startpos"
+        end
+      end
+
+      def to_long_sfen
         s = []
+        s << "sfen"
         s << board.to_sfen
         s << turn_info.current_location.to_sfen
         if players.all? { |e| e.pieces.empty? }
@@ -304,18 +318,14 @@ module Bushido
         s.join(" ")
       end
 
-      def to_usi_position(force_sfen: true)
+      # 最初から現在までの局面
+      def to_sfen(**options)
         s = []
         s << "position"
-        if turn_info.komaochi? || force_sfen
-          s << "sfen"
-          s << @first_state_board_sfen
-        else
-          s << "startpos"
-        end
+        s << @first_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
         if hand_logs.present?
           s << "moves"
-          s += hand_logs.collect(&:to_sfen)
+          s.concat(hand_logs.collect(&:to_sfen))
         end
         s.join(" ")
       end

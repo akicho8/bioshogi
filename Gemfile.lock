@@ -63,7 +63,7 @@ GEM
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    memory_record (0.0.7)
+    memory_record (0.0.8)
       activemodel
       activesupport
     method_source (0.9.0)

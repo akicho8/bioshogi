@@ -144,15 +144,6 @@ module Bushido
         end
       end
 
-      def to_sfen(promoted: false, location: Location[:black])
-        s = []
-        if promoted
-          s << "+"
-        end
-        s << sfen_char.public_send(location.key == :black ? :upcase : :downcase)
-        s.join
-      end
-
       # 名前すべて
       def names
         basic_names + promoted_names

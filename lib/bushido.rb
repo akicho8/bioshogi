@@ -62,5 +62,6 @@ require_relative "bushido/parser/base"
 require_relative "bushido/parser/csa_parser"
 require_relative "bushido/parser/kif_parser"
 require_relative "bushido/parser/ki2_parser"
+require_relative "bushido/parser/sfen_parser"
 
 require_relative "bushido/usi"

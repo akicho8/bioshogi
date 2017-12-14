@@ -339,59 +339,79 @@ module Bushido
           out.join
         end
 
+        concerning :ToSfenMethods do
+          def to_sfen(**options)
+            options = {
+            }.merge(options)
+
+            mediator.to_sfen(options)
+          end
+        end
+
         def mediator_run
           mediator
         end
 
-        def mediator
-          @mediator ||= Mediator.new.tap do |mediator|
+        def mediator_new
+          Mediator.new.tap do |mediator|
             mediator.config[:defense_form_check_skip] = @config[:defense_form_check_skip]
+          end
+        end
 
-            Location.each do |e|
-              e.call_names.each do |e|
-                if v = header["#{e}の持駒"]
-                  mediator.player_at(e).pieces_set(v)
-                end
+        def mediator
+          @mediator ||= mediator_new.tap do |mediator|
+            mediator_board_setup(mediator)
+            mediator_run_all(mediator)
+          end
+        end
+
+        def mediator_board_setup(mediator)
+          Location.each do |e|
+            e.call_names.each do |e|
+              if v = header["#{e}の持駒"]
+                mediator.player_at(e).pieces_set(v)
               end
             end
+          end
 
-            if @board_source
-              mediator.board_reset_by_shape(@board_source)
-              mediator.turn_info_auto_set
+          if @board_source
+            mediator.board_reset_by_shape(@board_source)
+            mediator.turn_info_auto_set
 
-              if mediator.board.teaiwari_name != "平手"
-                if header["手合割"].blank? || header["手合割"] == "その他"
-                  mediator.turn_info.komaochi = true
-                end
+            if mediator.board.teaiwari_name != "平手"
+              if header["手合割"].blank? || header["手合割"] == "その他"
+                mediator.turn_info.komaochi = true
               end
-            else
-              mediator.board_reset(header["手合割"] || "平手")
             end
+          else
+            mediator.board_reset(header["手合割"] || "平手")
+          end
+        end
 
-            begin
-              move_infos.each do |info|
-                mediator.execute(info[:input])
-              end
-            rescue TypicalError => error
-              if v = @config[:typical_error_case]
-                case v
-                when :embed
-                  @error_message = error.message
-                when :skip
-                else
-                  raise MustNotHappen
-                end
+        def mediator_run_all(mediator)
+          begin
+            move_infos.each do |info|
+              mediator.execute(info[:input])
+            end
+          rescue TypicalError => error
+            if v = @config[:typical_error_case]
+              case v
+              when :embed
+                @error_message = error.message
+              when :skip
               else
-                raise error
+                raise MustNotHappen
               end
-            end
-
-            if @config[:defense_form_check_skip]
             else
-              SkillGroupInfo.each do |e|
-                mediator.players.each do |player|
-                  header["#{player.call_name}の#{e.name}"] = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).join(", ")
-                end
+              raise error
+            end
+          end
+
+          if @config[:defense_form_check_skip]
+          else
+            SkillGroupInfo.each do |e|
+              mediator.players.each do |player|
+                header["#{player.call_name}の#{e.name}"] = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).join(", ")
               end
             end
           end
