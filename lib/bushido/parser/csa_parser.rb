@@ -49,6 +49,7 @@ module Bushido
 
         # ヘッダーっぽいのもを収集
         s.scan(/^(N[+-]|\$\w+:)(.*)\n/) do |key, value|
+          # キーをKIF側に統一
           if e = CsaHeaderInfo[key]
             key = e.kif_side_key
           end

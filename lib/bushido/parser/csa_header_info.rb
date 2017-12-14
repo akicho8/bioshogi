@@ -28,9 +28,12 @@ module Bushido
           key: "$TIME_LIMIT:",
           kif_side_key: "持ち時間",
           as_csa: -> v {
+            v = human_or_csa_time_format_to_hash(v)
             "%02d:%02d+%02d" % [*v[:min].to_i.divmod(60), v[:countdown].to_i]
           },
           as_kif: -> v {
+            v = human_or_csa_time_format_to_hash(v)
+
             min = v[:min].to_i
             h, m = min.to_i.divmod(60)
             countdown = v[:countdown].to_i
@@ -64,6 +67,18 @@ module Bushido
 
         def invert_table
           @invert_table ||= inject({}) {|a, e| a.merge(e.kif_side_key => e) }
+        end
+      end
+
+      def human_or_csa_time_format_to_hash(str)
+        # チェックする順番重要
+        case
+        when md = str.match(/(?<hour>\d+):(?<min>\d+)(\+(?<countdown>\d+))?/) # 01:03+00 → {min: 63, countdown: 0}
+          {min: md[:hour].to_i * 60 + md[:min].to_i, countdown: md[:countdown].to_i}
+        when md = str.match(/((?<hour>\d+)時間)?((?<min>\d+)分)?/)            # 1時間3分 or 1時間 or 3分
+          {min: md[:hour].to_i * 60 + md[:min].to_i}
+        else
+          str
         end
       end
     end
