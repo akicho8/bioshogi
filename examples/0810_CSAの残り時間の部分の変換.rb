@@ -5,6 +5,7 @@ puts info.to_kif
 puts info.to_csa
 
 info = Parser.parse("V2.2\n$TIME_LIMIT: 01:02+03")
+info.raw_header_part_hash       # => {"持ち時間"=>"1時間2分 (1手3秒)"}
 puts info.to_kif
 puts info.to_csa
 # >> 持ち時間：1時間1分

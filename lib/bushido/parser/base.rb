@@ -406,6 +406,19 @@ module Bushido
           last_action_info.judgment_message(mediator)
         end
 
+        def raw_header_part_hash
+          header.collect { |key, value|
+            if value
+              if e = CsaHeaderInfo[key]
+                if e.as_kif
+                  value = e.instance_exec(value, &e.as_kif)
+                end
+              end
+              [key, value]
+            end
+          }.compact.to_h
+        end
+
         private
 
         def __header_part_string
@@ -432,9 +445,9 @@ module Bushido
             Location.each do |e|
               e.call_names.each do |e|
                 key = "#{e}の持駒"
-                if v = @header[key]
+                if v = header[key]
                   if v.blank?
-                    @header.delete(key)
+                    header.delete(key)
                   end
                 end
               end
@@ -462,16 +475,7 @@ module Bushido
         end
 
         def raw_header_part_string
-          header.collect { |key, value|
-            if value
-              if e = CsaHeaderInfo[key]
-                if e.as_kif
-                  value = e.instance_exec(value, &e.as_kif)
-                end
-              end
-              "#{key}：#{value}\n"
-            end
-          }.compact.join
+          raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
         end
 
         # mb_ljust("あ", 3)               # => "あ "
