@@ -50,7 +50,7 @@ module Bushido
           # false: 例外を出す(デフォルト)
           typical_error_case: false,
           # run_and_build_skip: false,
-          defense_form_check_skip: false,
+          skill_set_flag: true,
         }
       end
 
@@ -354,7 +354,7 @@ module Bushido
 
         def mediator_new
           Mediator.new.tap do |mediator|
-            mediator.config[:defense_form_check_skip] = @config[:defense_form_check_skip]
+            mediator.config[:skill_set_flag] = @config[:skill_set_flag]
           end
         end
 
@@ -407,8 +407,7 @@ module Bushido
             end
           end
 
-          if @config[:defense_form_check_skip]
-          else
+          if @config[:skill_set_flag]
             SkillGroupInfo.each do |e|
               mediator.players.each do |player|
                 header["#{player.call_name}の#{e.name}"] = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).join(", ")

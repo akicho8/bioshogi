@@ -15,7 +15,7 @@ require "memory_record"
 
 module Bushido
   include ActiveSupport::Configurable
-  config_accessor(:defense_form_check) { true }
+  config_accessor(:skill_set_flag) { true }
 end
 
 require_relative "bushido/logger"

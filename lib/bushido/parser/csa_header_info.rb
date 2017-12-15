@@ -72,6 +72,7 @@ module Bushido
 
       def human_or_csa_time_format_to_hash(str)
         # チェックする順番重要
+        str = str.tr("０-９", "0-9")
         case
         when md = str.match(/(?<hour>\d+):(?<min>\d+)(\+(?<countdown>\d+))?/) # 01:03+00 → {min: 63, countdown: 0}
           {min: md[:hour].to_i * 60 + md[:min].to_i, countdown: md[:countdown].to_i}

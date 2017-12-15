@@ -162,16 +162,7 @@ module Bushido
               end
             end
 
-            battlers = player.board.surface.values
-            soldiers = battlers.collect { |e| e.to_soldier }
-
-            if e.compare_my_side_only
-              soldiers = soldiers.find_all { |e| e[:location] == player.location }
-            end
-
-            if player.location.key == :white
-              soldiers = soldiers.collect(&:reverse)
-            end
+            soldiers = cached_soldiers(e)
 
             # どれかが盤上に含まれる (後手の飛車の位置などはこれでしか指定できない→「?」を使う)
             if v = e.gentei_match_any
@@ -204,6 +195,23 @@ module Bushido
           end
         end
       end
+    end
+
+    def cached_soldiers(e)
+      @cached_soldiers ||= {}
+      @cached_soldiers[{compare_my_side_only: e.compare_my_side_only}] ||= -> {
+        soldiers = player.board.surface.values.collect(&:to_soldier)
+
+        if e.compare_my_side_only
+          soldiers = soldiers.find_all { |e| e[:location] == player.location }
+        end
+
+        if player.location.key == :white
+          soldiers = soldiers.collect(&:reverse)
+        end
+
+        soldiers
+      }.call
     end
   end
 end

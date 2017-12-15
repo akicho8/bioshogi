@@ -9,7 +9,7 @@ module Bushido
 
       def config
         @config ||= {
-          defense_form_check_skip: false,
+          # skill_set_flag: true,
         }
       end
     end

@@ -25,10 +25,6 @@ module Bushido
         }.each(&block)
       end
 
-      def [](value)
-        lookup(value)
-      end
-
       def fetch(value)
         lookup(value) or raise PointSyntaxError, "座標が読み取れません : #{value.inspect}"
       end
@@ -56,6 +52,10 @@ module Bushido
         if x && y
           new(x, y)
         end
+      end
+
+      def [](value)
+        lookup(value)
       end
 
       def regexp
