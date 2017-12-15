@@ -10,6 +10,10 @@ module Bushido
       DefenseInfo["アヒル囲い"].should == DefenseInfo["金開き"]
     end
 
+    it "skill_group_info" do
+      DefenseInfo.first.skill_group_info.key.should == :defense
+    end
+
     describe "木構造" do
       it "先祖" do
         DefenseInfo["ダイヤモンド美濃"].ancestors.collect(&:name).should == ["美濃囲い", "片美濃囲い"]

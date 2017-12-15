@@ -7,5 +7,9 @@ module Bushido
       info.header_part_string.include?("後手の戦型：新米長玉").should == true
       info.mediator.player_at(:white).attack_infos.collect(&:name).should == ["新米長玉"]
     end
+
+    it "skill_group_info" do
+      AttackInfo.first.skill_group_info.key.should == :attack
+    end
   end
 end

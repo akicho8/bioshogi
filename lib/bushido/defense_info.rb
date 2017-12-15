@@ -143,6 +143,14 @@ module Bushido
       #     end
       #   end
       # end
+
+      def skill_group_info
+        SkillGroupInfo.fetch(skill_group_key)
+      end
+    end
+
+    def skill_group_key
+      :defense
     end
   end
 end
