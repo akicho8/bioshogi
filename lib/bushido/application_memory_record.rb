@@ -19,9 +19,5 @@ module Bushido
     def <=>(other)
       [other.class, code] <=> [other.class, other.code]
     end
-
-    def eql?(other)
-      self.class == other.class && key == other.key
-    end
   end
 end

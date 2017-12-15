@@ -69,11 +69,6 @@ module Bushido
       "#{location ? location.name : '？'}#{point.name}#{any_name}"
     end
 
-    def formal_name
-      raise
-      "#{point.name}#{any_name}"
-    end
-
     def any_name
       self[:piece].any_name(self[:promoted])
     end
