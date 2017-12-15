@@ -7,18 +7,18 @@ module Bushido
     end
 
     it ".parse は、適当な文字列を内部座標に変換する" do
-      Point.parse("４三").name.should == "４三"
-      Point.parse("四三").name.should == "４三"
-      Point.parse("43").name.should   == "４三"
-      Point.parse([0, 0]).name.should == "９一"
+      Point.fetch("４三").name.should == "４三"
+      Point.fetch("四三").name.should == "４三"
+      Point.fetch("43").name.should   == "４三"
+      Point.fetch([0, 0]).name.should == "９一"
 
-      expect { Point.parse("卍三") }.to raise_error(PositionSyntaxError)
-      expect { Point.parse(nil)    }.to raise_error(MustNotHappen)
-      expect { Point.parse("")     }.to raise_error(PointSyntaxError)
-      expect { Point.parse("0")    }.to raise_error(PointSyntaxError)
+      expect { Point.fetch("卍三") }.to raise_error(PositionSyntaxError)
+      expect { Point.fetch(nil)    }.to raise_error(MustNotHappen)
+      expect { Point.fetch("")     }.to raise_error(PointSyntaxError)
+      expect { Point.fetch("0")    }.to raise_error(PointSyntaxError)
 
-      expect { Board.size_change([2, 2]){ Point.parse("33")  } }.to raise_error(SyntaxDefact)
-      expect { Board.size_change([2, 2]){ Point.parse("３三") } }.to raise_error(SyntaxDefact)
+      expect { Board.size_change([2, 2]){ Point.fetch("33")  } }.to raise_error(SyntaxDefact)
+      expect { Board.size_change([2, 2]){ Point.fetch("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it ".[] は .parse の alias" do
@@ -26,34 +26,34 @@ module Bushido
     end
 
     it "#valid?" do
-      Point.parse("４三").valid?.should    == true
-      Point.parse([-1, -1]).valid?.should == false
+      Point.fetch("４三").valid?.should    == true
+      Point.fetch([-1, -1]).valid?.should == false
     end
 
     it "#name は、座標を表す" do
-      Point.parse("４三").name.should    == "４三"
-      Point.parse([-1, -1]).name.should == "盤外"
+      Point.fetch("４三").name.should    == "４三"
+      Point.fetch([-1, -1]).name.should == "盤外"
     end
 
     it "to_s は name の alias" do
-      Point.parse("４三").to_s.should == "４三"
+      Point.fetch("４三").to_s.should == "４三"
     end
 
     it "#number_format は ７六歩(77) の 77 の部分を作るときに使う" do
-      Point.parse("４三").number_format.should == "43"
+      Point.fetch("４三").number_format.should == "43"
     end
 
     it "相手陣地に入っているか？" do
-      Point.parse("１二").promotable?(Location[:black]).should == true
-      Point.parse("１三").promotable?(Location[:black]).should == true
-      Point.parse("１四").promotable?(Location[:black]).should == false
-      Point.parse("１六").promotable?(Location[:white]).should == false
-      Point.parse("１七").promotable?(Location[:white]).should == true
-      Point.parse("１八").promotable?(Location[:white]).should == true
+      Point.fetch("１二").promotable?(Location[:black]).should == true
+      Point.fetch("１三").promotable?(Location[:black]).should == true
+      Point.fetch("１四").promotable?(Location[:black]).should == false
+      Point.fetch("１六").promotable?(Location[:white]).should == false
+      Point.fetch("１七").promotable?(Location[:white]).should == true
+      Point.fetch("１八").promotable?(Location[:white]).should == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do
-      Point.parse("５五").vector_add([1, 2]).name.should == "４七"
+      Point.fetch("５五").vector_add([1, 2]).name.should == "４七"
     end
 
     it "内部座標を返す" do

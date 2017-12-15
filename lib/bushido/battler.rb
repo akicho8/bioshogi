@@ -24,7 +24,7 @@ module Bushido
       self.promoted = attrs[:promoted]
 
       if attrs[:point]
-        @point = Point.parse(attrs[:point])
+        @point = Point.fetch(attrs[:point])
       end
 
       unless @player && @piece
@@ -45,7 +45,7 @@ module Bushido
     # # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
     # def read_point
     #   if xy = @player.board.surface.invert[self]
-    #     Point.parse(xy)
+    #     Point.fetch(xy)
     #   end
     # end
 

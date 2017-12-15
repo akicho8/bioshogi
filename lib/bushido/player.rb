@@ -84,8 +84,8 @@ module Bushido
     def move_to(from, to, promote_trigger = false)
       @last_piece_taken_from_opponent = nil # 最後に取った駒 FIXME:名前がだめ
 
-      from = Point.parse(from)
-      to = Point.parse(to)
+      from = Point.fetch(from)
+      to = Point.fetch(to)
 
       # 破壊的な処理をする前の段階でエラーチェックを行う
       if true

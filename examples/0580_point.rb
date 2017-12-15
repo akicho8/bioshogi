@@ -12,5 +12,5 @@ b = Point["２一"]
 Point["１一"].object_id         # => 70357212616140
 Point["11"].object_id           # => 70357212614920
 
-# Position::Hpos.parse(1).object_id # => 70357212614280
-# Position::Hpos.parse(1).object_id # => 70357212614280
+# Position::Hpos.fetch(1).object_id # => 70357212614280
+# Position::Hpos.fetch(1).object_id # => 70357212614280

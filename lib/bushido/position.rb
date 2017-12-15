@@ -65,8 +65,8 @@ module Bushido
       class << self
         # 座標をパースする
         # @example
-        #   Position::Hpos.parse("１").name # => "1"
-        def parse(arg)
+        #   Position::Hpos.fetch("１").name # => "1"
+        def fetch(arg)
           if arg.kind_of?(Base)
             return arg
           end
@@ -121,14 +121,14 @@ module Bushido
 
       # 名前
       # @example
-      #   Position::Vpos.parse("一").name # => "一"
+      #   Position::Vpos.fetch("一").name # => "一"
       def name
         self.class.units[@value]
       end
 
       # 数字表記
       # @example
-      #   Position::Vpos.parse("一").number_format # => "1"
+      #   Position::Vpos.fetch("一").number_format # => "1"
       def number_format
         name
       end
@@ -140,9 +140,9 @@ module Bushido
 
       # 座標反転
       # @example
-      #   Position::Hpos.parse("1").reverse.name # => "9"
+      #   Position::Hpos.fetch("1").reverse.name # => "9"
       def reverse
-        self.class.parse(self.class.units.size - 1 - @value)
+        self.class.fetch(self.class.units.size - 1 - @value)
       end
 
       # インスタンスが異なっても同じ座標なら同じ
@@ -160,8 +160,8 @@ module Bushido
 
       # 成れるか？
       # @example
-      #   Point.parse("１三").promotable?(:black) # => true
-      #   Point.parse("１四").promotable?(:black) # => false
+      #   Point.fetch("１三").promotable?(:black) # => true
+      #   Point.fetch("１四").promotable?(:black) # => false
       def promotable?(location)
         v = self
         if location.white?
@@ -178,7 +178,7 @@ module Bushido
       cattr_accessor(:_arrow)           { :last } # ←左方向に増加
       cattr_accessor(:_promotable_size) { nil }
 
-      def self.parse(arg)
+      def self.fetch(arg)
         if arg.kind_of?(String)
           arg = arg.tr("1-9", "１-９")
           arg = arg.tr("一二三四五六七八九", "１-９")
@@ -201,7 +201,7 @@ module Bushido
       cattr_accessor(:_promotable_size) { 3 }      # 相手の陣地の成れる縦幅
 
       # "(52)" の "2" に対応するため
-      def self.parse(arg)
+      def self.fetch(arg)
         if arg.kind_of?(String)
           arg = arg.tr("1-9１-９", "#{_units}#{_units}")
         end

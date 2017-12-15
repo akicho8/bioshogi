@@ -28,7 +28,7 @@ if md = usi_position.match(/position\s+(sfen\s+(?<sfen>\S+)\s+(?<b_or_w>\S+)\s+(
       x = 0
       row.scan(/(\+?)(.)/) do |promoted, ch|
         xy = [x, y]
-        point = Point.parse(xy)
+        point = Point.fetch(xy)
 
         if ch.match?(/\d+/)
           x += ch.to_i

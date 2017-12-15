@@ -190,7 +190,7 @@ module Bushido
         battler_put
       else
         if @md[:point_from]
-          @point_from = Point.parse(@md[:point_from])
+          @point_from = Point.fetch(@md[:point_from])
         end
 
         unless @point_from
@@ -273,13 +273,13 @@ module Bushido
 
         # 記事などで改ページしたとき、明示的に "同２四歩" と書く場合もあるとのこと
         if @md[:point_to]
-          prefix_pt = Point.parse(@md[:point_to])
-          if Point.parse(@md[:point_to]) != @point_to
+          prefix_pt = Point.fetch(@md[:point_to])
+          if Point.fetch(@md[:point_to]) != @point_to
             raise SamePointDifferent, "同は#{@point_to}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
           end
         end
       when @md[:point_to]
-        @point_to = Point.parse(@md[:point_to])
+        @point_to = Point.fetch(@md[:point_to])
       else
         raise PointSyntaxError, "移動先の座標が不明です : #{@source.inspect}"
       end

@@ -30,7 +30,7 @@ module Bushido
           raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
         end
 
-        new_with_promoted(md[:piece]).merge(point: Point.parse(md[:point]), location: Location[md[:location]])
+        new_with_promoted(md[:piece]).merge(point: Point.fetch(md[:point]), location: Location[md[:location]])
       end
 
       # 「歩」や「と」を駒オブジェクトと成フラグに分離

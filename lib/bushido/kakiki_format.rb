@@ -38,7 +38,7 @@ module Bushido
         fields = Position::Hpos.board_size.times.collect do |x|
           object_to_s(@board.surface[[x, y]])
         end
-        "|#{fields.join}|" + Position::Vpos.parse(y).name
+        "|#{fields.join}|" + Position::Vpos.fetch(y).name
       end
     end
 

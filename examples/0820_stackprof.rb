@@ -14,7 +14,7 @@ StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
 end
 
 system "stackprof stackprof.dump"
-system "stackprof stackprof.dump --method Bushido::Point.parse"
+system "stackprof stackprof.dump --method Bushido::Point.fetch"
 system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
@@ -30,15 +30,15 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>       3321 (213.6%)          96   (6.2%)     Bushido::SkillMonitor#execute
 # >>         46   (3.0%)          44   (2.8%)     Bushido::Position::Base.parse
 # >>         35   (2.3%)          35   (2.3%)     Bushido::Position::Base#reverse
-# >>        113   (7.3%)          31   (2.0%)     Bushido::Point.parse
+# >>        113   (7.3%)          31   (2.0%)     Bushido::Point.fetch
 # >>         23   (1.5%)          23   (1.5%)     Bushido::Point#to_xy
 # >>         20   (1.3%)          20   (1.3%)     block (4 levels) in memory_record
 # >>         17   (1.1%)          17   (1.1%)     Bushido::Point#initialize
 # >>         33   (2.1%)          12   (0.8%)     Bushido::Movabler#piece_store
 # >>         17   (1.1%)          11   (0.7%)     Bushido::Parser#file_parse
 # >>         11   (0.7%)          11   (0.7%)     Bushido::Location#reverse
-# >>         29   (1.9%)          10   (0.6%)     Bushido::Position::Vpos.parse
-# >>         35   (2.3%)           8   (0.5%)     Bushido::Position::Hpos.parse
+# >>         29   (1.9%)          10   (0.6%)     Bushido::Position::Vpos.fetch
+# >>         35   (2.3%)           8   (0.5%)     Bushido::Position::Hpos.fetch
 # >>          7   (0.5%)           7   (0.5%)     Bushido::Piece::VectorMethods#select_vectors2
 # >>        169  (10.9%)           7   (0.5%)     Bushido::Runner#execute
 # >>         26   (1.7%)           6   (0.4%)     Bushido::Point#==
@@ -55,7 +55,7 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>          4   (0.3%)           4   (0.3%)     Bushido::Position::Hpos#number_format
 # >>          4   (0.3%)           4   (0.3%)     #<Module:0x007fb7ebb897c8>.kconv
 # >>          5   (0.3%)           4   (0.3%)     ActiveSupport::Duration.===
-# >> Bushido::Point.parse (/Users/ikeda/src/bushido/lib/bushido/point.rb:36)
+# >> Bushido::Point.fetch (/Users/ikeda/src/bushido/lib/bushido/point.rb:36)
 # >>   samples:    31 self (2.0%)  /    113 total (7.3%)
 # >>   callers:
 # >>       62  (   54.9%)  Bushido::Point#reverse
@@ -65,8 +65,8 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>        2  (    1.8%)  Bushido::Player#move_to
 # >>        2  (    1.8%)  Bushido::Runner#execute
 # >>   callees (82 total):
-# >>       35  (   42.7%)  Bushido::Position::Hpos.parse
-# >>       29  (   35.4%)  Bushido::Position::Vpos.parse
+# >>       35  (   42.7%)  Bushido::Position::Hpos.fetch
+# >>       29  (   35.4%)  Bushido::Position::Vpos.fetch
 # >>       17  (   20.7%)  Bushido::Point#initialize
 # >>        1  (    1.2%)  Bushido::Point#to_xy
 # >>   code:
@@ -77,16 +77,16 @@ system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
 # >>                                   |    40  |         case value
 # >>    17    (1.1%) /    17   (1.1%)  |    41  |         when Array
 # >>                                   |    42  |           a, b = value
-# >>    24    (1.5%)                   |    43  |           x = Position::Hpos.parse(a)
-# >>    19    (1.2%)                   |    44  |           y = Position::Vpos.parse(b)
+# >>    24    (1.5%)                   |    43  |           x = Position::Hpos.fetch(a)
+# >>    19    (1.2%)                   |    44  |           y = Position::Vpos.fetch(b)
 # >>                                   |    45  |         when Point
 # >>     1    (0.1%)                   |    46  |           a, b = value.to_xy
-# >>     3    (0.2%)                   |    47  |           x = Position::Hpos.parse(a)
-# >>     3    (0.2%)                   |    48  |           y = Position::Vpos.parse(b)
+# >>     3    (0.2%)                   |    47  |           x = Position::Hpos.fetch(a)
+# >>     3    (0.2%)                   |    48  |           y = Position::Vpos.fetch(b)
 # >>                                   |    49  |         when String
 # >>    11    (0.7%) /    11   (0.7%)  |    50  |           if md = value.match(/\A(?<x>.)(?<y>.)\z/)
-# >>     8    (0.5%)                   |    51  |             x = Position::Hpos.parse(md[:x])
-# >>     7    (0.5%)                   |    52  |             y = Position::Vpos.parse(md[:y])
+# >>     8    (0.5%)                   |    51  |             x = Position::Hpos.fetch(md[:x])
+# >>     7    (0.5%)                   |    52  |             y = Position::Vpos.fetch(md[:y])
 # >>                                   |    53  |           else
 # >>                                   |    54  |             raise PointSyntaxError, "座標を2文字で表記していません : #{value.inspect}"
 # >>                                   |    55  |           end

@@ -79,7 +79,7 @@ module Bushido
       def parse
         md = @source.match(/position\s+(sfen\s+(?<sfen>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)|(?<startpos>startpos))(\s+moves\s+(?<moves>.*))?/)
         unless md
-          raise SyntaxDefact, @source
+          raise SyntaxDefact, "構文が不正です : #{@source.inspect}"
         end
         @attributes = md.named_captures.symbolize_keys
       end
@@ -89,7 +89,7 @@ module Bushido
           attributes[:sfen].split("/").each.with_index do |row, y|
             x = 0
             row.scan(/(\+?)(.)/) do |promoted, ch|
-              point = Point.parse([x, y])
+              point = Point.fetch([x, y])
               if ch.match?(/\d+/)
                 x += ch.to_i
               else

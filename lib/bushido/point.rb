@@ -15,41 +15,41 @@ module Bushido
 
       include Enumerable
 
-      # すべての座標を返す  ← これいる？？？
-      #   Point.collect{|point|...}
+      # すべての座標を返す
+      #   Point.collect { |point| ... }
       def each(&block)
-        Position::Vpos.board_size.times.collect{|y|
-          Position::Hpos.board_size.times.collect{|x|
+        Position::Vpos.board_size.times.flat_map { |y|
+          Position::Hpos.board_size.times.collect { |x|
             Point[[x, y]]
           }
-        }.flatten.each(&block)
+        }.each(&block)
       end
 
-      # parseのalias
+      # fetchのalias
       #   Point["４三"].name # => "４三"
       def [](value)
-        parse(value)
+        fetch(value)
       end
 
       # 座標のパース
-      #   Point.parse["４三"].name # => "４三"
-      def parse(value)
+      #   Point.fetch["４三"].name # => "４三"
+      def fetch(value)
         x = nil
         y = nil
 
         case value
         when Array
           a, b = value
-          x = Position::Hpos.parse(a)
-          y = Position::Vpos.parse(b)
+          x = Position::Hpos.fetch(a)
+          y = Position::Vpos.fetch(b)
         when Point
           a, b = value.to_xy
-          x = Position::Hpos.parse(a)
-          y = Position::Vpos.parse(b)
+          x = Position::Hpos.fetch(a)
+          y = Position::Vpos.fetch(b)
         when String
           if md = value.match(/\A(?<x>.)(?<y>.)\z/)
-            x = Position::Hpos.parse(md[:x])
-            y = Position::Vpos.parse(md[:y])
+            x = Position::Hpos.fetch(md[:x])
+            y = Position::Vpos.fetch(md[:y])
           else
             raise PointSyntaxError, "座標を2文字で表記していません : #{value.inspect}"
           end
@@ -58,6 +58,31 @@ module Bushido
         end
 
         new(x, y)
+      end
+
+      def lookup(value)
+        x = nil
+        y = nil
+
+        case value
+        when Array
+          a, b = value
+          x = Position::Hpos.fetch(a)
+          y = Position::Vpos.fetch(b)
+        when Point
+          a, b = value.to_xy
+          x = Position::Hpos.fetch(a)
+          y = Position::Vpos.fetch(b)
+        when String
+          if md = value.match(/\A(?<x>.)(?<y>.)\z/)
+            x = Position::Hpos.fetch(md[:x])
+            y = Position::Vpos.fetch(md[:y])
+          end
+        end
+
+        if x && y
+          new(x, y)
+        end
       end
 
       def regexp
@@ -89,7 +114,7 @@ module Bushido
 
     # 座標を反転させて新しいPointオブジェクトを返す
     def reverse
-      self.class.parse([@x.reverse, @y.reverse])
+      self.class.fetch([@x.reverse, @y.reverse])
     end
 
     # 後手なら反転する
@@ -133,10 +158,10 @@ module Bushido
     end
 
     # ベクトルを加算して新しい座標オブジェクトを返す
-    #   Point.parse("５五").vector_add([1, 2]).name # => "４七"
+    #   Point.fetch("５五").vector_add([1, 2]).name # => "４七"
     def vector_add(vector)
       x, y = vector
-      self.class.parse([@x.value + x, @y.value + y])
+      self.class.fetch([@x.value + x, @y.value + y])
     end
 
     # 盤面内か？
@@ -172,8 +197,8 @@ module Bushido
     end
 
     # 相手陣地に入っているか？
-    #   Point.parse("１三").promotable?(:black) # => true
-    #   Point.parse("１四").promotable?(:black) # => false
+    #   Point.fetch("１三").promotable?(:black) # => true
+    #   Point.fetch("１四").promotable?(:black) # => false
     def promotable?(location)
       @y.promotable?(location)
     end
