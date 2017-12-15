@@ -66,24 +66,21 @@ module Bushido
         # 座標をパースする
         # @example
         #   Position::Hpos.fetch("１").name # => "1"
-        def fetch(arg)
-          if arg.kind_of?(Base)
-            return arg
-          end
+        def fetch(value)
+          lookup(value) or raise PositionSyntaxError, "座標が読み取れません : #{value.inspect}"
+        end
 
-          if arg.blank?
-            raise PositionSyntaxError, "引数がありません"
+        def lookup(value)
+          if value.kind_of?(Base)
+            return value
           end
-
-          if arg.kind_of?(String)
-            v = units_set[arg]
-            v or raise PositionSyntaxError, "#{arg.inspect} が #{units} の中にありません"
-          else
-            v = arg
+          if value.kind_of?(String)
+            value = units_set[value]
           end
-
-          @instance ||= {}
-          @instance[v] ||= new(v).freeze
+          if value
+            @instance ||= {}
+            @instance[value] ||= new(value).freeze
+          end
         end
 
         def board_size_reset(v)
@@ -178,10 +175,10 @@ module Bushido
       cattr_accessor(:_arrow)           { :last } # ←左方向に増加
       cattr_accessor(:_promotable_size) { nil }
 
-      def self.fetch(arg)
-        if arg.kind_of?(String)
-          arg = arg.tr("1-9", "１-９")
-          arg = arg.tr("一二三四五六七八九", "１-９")
+      def self.lookup(value)
+        if value.kind_of?(String)
+          value = value.tr("1-9", "１-９")
+          value = value.tr("一二三四五六七八九", "１-９")
         end
         super
       end
@@ -201,9 +198,9 @@ module Bushido
       cattr_accessor(:_promotable_size) { 3 }      # 相手の陣地の成れる縦幅
 
       # "(52)" の "2" に対応するため
-      def self.fetch(arg)
-        if arg.kind_of?(String)
-          arg = arg.tr("1-9１-９", "#{_units}#{_units}")
+      def self.lookup(value)
+        if value.kind_of?(String)
+          value = value.tr("1-9１-９", "#{_units}#{_units}")
         end
         super
       end

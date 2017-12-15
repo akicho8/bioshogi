@@ -25,39 +25,12 @@ module Bushido
         }.each(&block)
       end
 
-      # fetchのalias
-      #   Point["４三"].name # => "４三"
       def [](value)
-        fetch(value)
+        lookup(value)
       end
 
-      # 座標のパース
-      #   Point.fetch["４三"].name # => "４三"
       def fetch(value)
-        x = nil
-        y = nil
-
-        case value
-        when Array
-          a, b = value
-          x = Position::Hpos.fetch(a)
-          y = Position::Vpos.fetch(b)
-        when Point
-          a, b = value.to_xy
-          x = Position::Hpos.fetch(a)
-          y = Position::Vpos.fetch(b)
-        when String
-          if md = value.match(/\A(?<x>.)(?<y>.)\z/)
-            x = Position::Hpos.fetch(md[:x])
-            y = Position::Vpos.fetch(md[:y])
-          else
-            raise PointSyntaxError, "座標を2文字で表記していません : #{value.inspect}"
-          end
-        else
-          raise MustNotHappen, "引数が異常です : #{value.inspect}"
-        end
-
-        new(x, y)
+        lookup(value) or raise PointSyntaxError, "座標が読み取れません : #{value.inspect}"
       end
 
       def lookup(value)
@@ -67,16 +40,16 @@ module Bushido
         case value
         when Array
           a, b = value
-          x = Position::Hpos.fetch(a)
-          y = Position::Vpos.fetch(b)
+          x = Position::Hpos.lookup(a)
+          y = Position::Vpos.lookup(b)
         when Point
           a, b = value.to_xy
-          x = Position::Hpos.fetch(a)
-          y = Position::Vpos.fetch(b)
+          x = Position::Hpos.lookup(a)
+          y = Position::Vpos.lookup(b)
         when String
           if md = value.match(/\A(?<x>.)(?<y>.)\z/)
-            x = Position::Hpos.fetch(md[:x])
-            y = Position::Vpos.fetch(md[:y])
+            x = Position::Hpos.lookup(md[:x])
+            y = Position::Vpos.lookup(md[:y])
           end
         end
 
@@ -174,10 +147,10 @@ module Bushido
       !valid?
     end
 
-    # 比較
     #   Point["５五"] == Point["55"] # => true
     def ==(other)
-      to_xy == other.to_xy
+      # to_xy == other.to_xy
+      eql?(other)
     end
 
     # ソート用
@@ -188,7 +161,7 @@ module Bushido
     if true
       # Soldier で [1, 2, 3] - [1, 2] => [3] のようにできるようにするため
       def eql?(other)
-        to_xy == other.to_xy
+        self.class == other.class && to_xy == other.to_xy
       end
 
       def hash

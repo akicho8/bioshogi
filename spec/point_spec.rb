@@ -6,23 +6,29 @@ module Bushido
       Point.each.present?.should == true
     end
 
-    it ".parse は、適当な文字列を内部座標に変換する" do
+    it "lookup" do
+      Point.lookup("68").name.should == "６八"
+      Point.lookup(nil).should == nil
+    end
+
+    it "[]" do
+      Point["68"].name.should == "６八"
+      Point[nil].should == nil
+    end
+
+    it "適当な文字列を内部座標に変換する" do
       Point.fetch("４三").name.should == "４三"
       Point.fetch("四三").name.should == "４三"
       Point.fetch("43").name.should   == "４三"
       Point.fetch([0, 0]).name.should == "９一"
 
-      expect { Point.fetch("卍三") }.to raise_error(PositionSyntaxError)
-      expect { Point.fetch(nil)    }.to raise_error(MustNotHappen)
+      expect { Point.fetch("卍三") }.to raise_error(PointSyntaxError)
+      expect { Point.fetch(nil)    }.to raise_error(PointSyntaxError)
       expect { Point.fetch("")     }.to raise_error(PointSyntaxError)
       expect { Point.fetch("0")    }.to raise_error(PointSyntaxError)
 
-      expect { Board.size_change([2, 2]){ Point.fetch("33")  } }.to raise_error(SyntaxDefact)
-      expect { Board.size_change([2, 2]){ Point.fetch("３三") } }.to raise_error(SyntaxDefact)
-    end
-
-    it ".[] は .parse の alias" do
-      Point["４三"].name.should == "４三"
+      expect { Board.size_change([2, 2]) { Point.fetch("33")   } }.to raise_error(SyntaxDefact)
+      expect { Board.size_change([2, 2]) { Point.fetch("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it "#valid?" do
