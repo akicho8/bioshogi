@@ -32,6 +32,8 @@ GEM
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.7.0)
+    faraday (0.13.1)
+      multipart-post (>= 1.2, < 3)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.9.1)
@@ -57,6 +59,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    multipart-post (2.0.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
     nokogiri (1.8.1)
@@ -94,9 +97,10 @@ PLATFORMS
 
 DEPENDENCIES
   bushido!
+  faraday
   mechanize
   stackprof
   test-unit
 
 BUNDLED WITH
-   1.16.0.pre.3
+   1.16.0
