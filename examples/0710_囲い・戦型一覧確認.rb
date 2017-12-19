@@ -23,7 +23,7 @@ tp rows
 # >> | Bushido::DefenseInfo | 片矢倉               |            |                            |        4 |
 # >> | Bushido::DefenseInfo | 総矢倉               | 金矢倉     |                            |        5 |
 # >> | Bushido::DefenseInfo | 矢倉穴熊             |            |                            |        5 |
-# >> | Bushido::DefenseInfo | 菊水穴熊             |            |                            |        5 |
+# >> | Bushido::DefenseInfo | 菊水矢倉             |            |                            |        5 |
 # >> | Bushido::DefenseInfo | 銀立ち矢倉           |            |                            |        4 |
 # >> | Bushido::DefenseInfo | 菱矢倉               | 金矢倉     |                            |        5 |
 # >> | Bushido::DefenseInfo | 雁木囲い             |            |                            |        5 |
