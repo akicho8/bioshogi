@@ -67,25 +67,29 @@ module Bushido
               end
             end
 
-            e.board_parser.other_objects.each do |obj|
-              # 何もない
-              if obj[:something] == "○"
+            # 何もない
+            if ary = e.board_parser.other_objects_hash_ary["○"]
+              ary.each do |obj|
                 pt = obj[:point].reverse_if_white(player.location)
                 if player.board[pt]
                   throw skip
                 end
               end
+            end
 
-              # 何かある
-              if obj[:something] == "●"
+            # 何かある
+            if ary = e.board_parser.other_objects_hash_ary["●"]
+              ary.each do |obj|
                 pt = obj[:point].reverse_if_white(player.location)
                 if !player.board[pt]
                   throw skip
                 end
               end
+            end
 
-              # 移動元ではない
-              if obj[:something] == "☆"
+            # 移動元ではない
+            if ary = e.board_parser.other_objects_hash_ary["☆"]
+              ary.each do |obj|
                 pt = obj[:point].reverse_if_white(player.location)
                 before_soldier = player.runner.before_soldier
                 if before_soldier && pt == before_soldier.point
@@ -94,13 +98,44 @@ module Bushido
               end
             end
 
+            # e.board_parser.other_objects.each do |obj|
+            #   # 何もない
+            #   if obj[:something] == "○"
+            #     pt = obj[:point].reverse_if_white(player.location)
+            #     if player.board[pt]
+            #       throw skip
+            #     end
+            #   end
+            #
+            #   # 何かある
+            #   if obj[:something] == "●"
+            #     pt = obj[:point].reverse_if_white(player.location)
+            #     if !player.board[pt]
+            #       throw skip
+            #     end
+            #   end
+            #
+            #   # 移動元ではない
+            #   if obj[:something] == "☆"
+            #     pt = obj[:point].reverse_if_white(player.location)
+            #     before_soldier = player.runner.before_soldier
+            #     if before_soldier && pt == before_soldier.point
+            #       throw skip
+            #     end
+            #   end
+            # end
+
             # 移動元(any条件)
-            if v = e.board_parser.other_objects.find_all { |e| e[:something] == "★" }.presence
-              if v.any? {|e|
+            ary = e.board_parser.other_objects_hash_ary["★"]
+            if ary.present?
+              before_soldier = player.runner.before_soldier
+              if !before_soldier
+                # 移動元がないということは、もう何も該当しないので skip
+                throw skip
+              end
+              if ary.any? { |e|
                   pt = e[:point].reverse_if_white(player.location)
-                  if before_soldier = player.runner.before_soldier
-                    pt == before_soldier.point
-                  end
+                  pt == before_soldier.point
                 }
               else
                 throw skip

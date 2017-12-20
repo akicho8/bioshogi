@@ -72,6 +72,10 @@ module Bushido
         # def black_side_soldiers
         #   both_board_info[Location[:black]] || []
         # end
+
+        def soldiers_hash
+          @soldiers_hash ||= soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
+        end
       end
 
       private
@@ -224,6 +228,20 @@ module Bushido
 
       def any_exist_soldiers
         @any_exist_soldiers ||= []
+      end
+
+      # 高速に比較するためにメモ化したアクセサシリーズ
+
+      def other_objects_hash_ary
+        @other_objects_hash_ary ||= other_objects.group_by { |e| e[:something] }
+      end
+
+      def other_objects_hash
+        @other_objects_hash ||= other_objects_hash_ary.transform_values { |v| v.inject({}) { |a, e| a.merge(e[:point] => e) } }
+      end
+
+      def trigger_soldiers_hash
+        @trigger_soldiers_hash ||= trigger_soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
       end
     end
 
