@@ -57,6 +57,8 @@ module Bushido
       end
 
       class_methods do
+        # ["ポンポン桂"].name # => "ポンポン桂"
+        # ["富沢キック"].name # => "ポンポン桂"
         def lookup(v)
           super || other_table[v]
         end
