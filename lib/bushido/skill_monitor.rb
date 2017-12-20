@@ -197,7 +197,7 @@ module Bushido
               end
             end
 
-            soldiers = cached_soldiers(e)
+            soldiers = cached_board_soldiers(e)
 
             # どれかが盤上に含まれる (後手の飛車の位置などはこれでしか指定できない→「?」を使う)
             if v = e.gentei_match_any
@@ -215,14 +215,7 @@ module Bushido
               end
             end
 
-            if e.compare_condition == :equal
-              hit_flag = (soldiers.sort == e.sorted_soldiers)
-            elsif e.compare_condition == :include
-              hit_flag = e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
-            else
-              raise MustNotHappen
-            end
-
+            hit_flag = e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
             if hit_flag
               list << e
               player.runner.skill_set.public_send(group.var_key) << e
@@ -232,19 +225,12 @@ module Bushido
       end
     end
 
-    def cached_soldiers(e)
-      @cached_soldiers ||= {}
-      @cached_soldiers[{compare_my_side_only: e.compare_my_side_only}] ||= -> {
+    def cached_board_soldiers(e)
+      @cached_board_soldiers ||= -> {
         soldiers = player.board.surface.values.collect(&:to_soldier)
-
-        if e.compare_my_side_only
-          soldiers = soldiers.find_all { |e| e[:location] == player.location }
-        end
-
         if player.location.key == :white
           soldiers = soldiers.collect(&:reverse)
         end
-
         soldiers
       }.call
     end
