@@ -25,12 +25,13 @@ module Bushido
         raise MustNotHappen if battler.point != point
         # battler.point = point
         # set(point, battler)
-        @surface[Point[point].to_xy] = battler # TODO: Point オブジェクトのままセットすることはできないか？
+        point = Point.fetch(point)
+        @surface[point] = battler # TODO: Point オブジェクトのままセットすることはできないか？
       end
 
       # 指定座標にある駒をを広い上げる
       def pick_up!(point)
-        battler = @surface.delete(point.to_xy)
+        battler = @surface.delete(point)
         unless battler
           raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
         end
@@ -46,7 +47,7 @@ module Bushido
       # 指定のセルを削除する
       # プレイヤー側の battlers からは削除しないので注意
       def abone_on(point)
-        @surface.delete(point.to_xy)
+        @surface.delete(point)
       end
 
       private
@@ -64,8 +65,8 @@ module Bushido
       # 盤面の指定座標の取得
       #   board.lookup["５五"] # => nil
       def lookup(point)
-        @surface[Point[point].to_xy] # FIXME: to_xy をリアルな配列ではなくシンボルになるようにすれば速度改善できるか……？
-        # @surface[Point[point]]
+        point = Point.fetch(point)
+        @surface[point]
       end
 
       # lookupのエイリアス
@@ -82,7 +83,7 @@ module Bushido
       # X列の駒たち
       def vertical_pieces(x)
         Position::Vpos.board_size.times.collect { |y|
-          lookup(Point[[x, y]])
+          lookup([x, y])
         }.compact
       end
 
@@ -113,7 +114,8 @@ module Bushido
       def to_sfen
         Position::Vpos.board_size.times.collect { |y|
           Position::Hpos.board_size.times.collect { |x|
-            @surface[[x, y]]
+            point = Point.fetch([x, y])
+            @surface[point]
           }.chunk(&:class).flat_map { |klass, e|
             if klass == NilClass
               e.count

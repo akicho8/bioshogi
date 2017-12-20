@@ -18,7 +18,8 @@ module Bushido
     def to_s
       Position::Vpos.board_size.times.collect { |y|
         "P#{y.next}" + Position::Hpos.board_size.times.collect { |x|
-          battler_to_str(@board.surface[[x, y]])
+          point = Point.fetch([x, y])
+          battler_to_str(@board[point])
         }.join + "\n"
       }.join
     end

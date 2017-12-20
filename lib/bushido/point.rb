@@ -51,7 +51,7 @@ module Bushido
 
         # if x && y
         #   @memo ||= {}
-        #   @memo[[x, y]] ||= new(x, y)
+        #   @memo[[x, y]] ||= new(x, y).freeze
         # end
         if x && y
           new(x, y).freeze
@@ -169,7 +169,7 @@ module Bushido
       end
 
       def hash
-        to_xy.hash
+        to_a.hash
       end
     end
 
