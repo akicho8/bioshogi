@@ -98,33 +98,6 @@ module Bushido
               end
             end
 
-            # e.board_parser.other_objects.each do |obj|
-            #   # 何もない
-            #   if obj[:something] == "○"
-            #     pt = obj[:point].reverse_if_white(player.location)
-            #     if player.board[pt]
-            #       throw skip
-            #     end
-            #   end
-            #
-            #   # 何かある
-            #   if obj[:something] == "●"
-            #     pt = obj[:point].reverse_if_white(player.location)
-            #     if !player.board[pt]
-            #       throw skip
-            #     end
-            #   end
-            #
-            #   # 移動元ではない
-            #   if obj[:something] == "☆"
-            #     pt = obj[:point].reverse_if_white(player.location)
-            #     before_soldier = player.runner.before_soldier
-            #     if before_soldier && pt == before_soldier.point
-            #       throw skip
-            #     end
-            #   end
-            # end
-
             # 移動元(any条件)
             ary = e.board_parser.other_objects_hash_ary["★"]
             if ary.present?
@@ -215,8 +188,7 @@ module Bushido
               end
             end
 
-            hit_flag = e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
-            if hit_flag
+            if e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
               list << e
               player.runner.skill_set.public_send(group.var_key) << e
             end
