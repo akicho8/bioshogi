@@ -49,8 +49,12 @@ module Bushido
           end
         end
 
+        # if x && y
+        #   @memo ||= {}
+        #   @memo[[x, y]] ||= new(x, y)
+        # end
         if x && y
-          new(x, y)
+          new(x, y).freeze
         end
       end
 

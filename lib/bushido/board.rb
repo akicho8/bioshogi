@@ -65,6 +65,7 @@ module Bushido
       #   board.lookup["５五"] # => nil
       def lookup(point)
         @surface[Point[point].to_xy] # FIXME: to_xy をリアルな配列ではなくシンボルになるようにすれば速度改善できるか……？
+        # @surface[Point[point]]
       end
 
       # lookupのエイリアス
