@@ -10,7 +10,7 @@ module Bushido
 
     def execute
       # 戦法リストをeachするのではなく移動先に配置がある戦法だけを取得
-      elements = TacticInfo.all_soldier_points_hash[black_side_normalized_current_soldier[:point]] || []
+      elements = TacticInfo.all_soldier_points_hash[current_soldier[:point]] || []
 
       elements.each do |e|
         list = player.skill_set.public_send(e.tactic_info.var_key)
@@ -147,17 +147,21 @@ module Bushido
 
           if v = e.triggers
             v.each do |soldier|
-              if black_side_normalized_current_soldier != soldier
+              if current_soldier != soldier
                 throw :skip
               end
             end
           end
 
-          if v = e.board_parser.trigger_soldiers.presence
-            v.each do |soldier|
-              if black_side_normalized_current_soldier != soldier
-                throw :skip
-              end
+          if v = e.board_parser.trigger_soldiers_hash.presence
+            # トリガー駒が用意されているのに、その座標に移動先が含まれていなかったら即座に skip
+            soldier = v[current_soldier[:point]]
+            unless soldier
+              throw :skip
+            end
+            # 駒や状態まで判定する
+            if soldier != current_soldier
+              throw :skip
             end
           end
 
@@ -187,8 +191,9 @@ module Bushido
       end
     end
 
-    def black_side_normalized_current_soldier
-      @black_side_normalized_current_soldier ||= player.runner.current_soldier.reverse_if_white
+    # 後手側の場合は先手側の座標に切り替え済み
+    def current_soldier
+      @current_soldier ||= player.runner.current_soldier.reverse_if_white
     end
 
     def cached_board_soldiers(e)
