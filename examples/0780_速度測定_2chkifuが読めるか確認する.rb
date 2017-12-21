@@ -1,6 +1,8 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
+# Bushido.config[:skill_set_flag] = false
+
 @error_file = Pathname("__error.log")
 @error_file.unlink rescue nil
 @result = Hash.new(0)
