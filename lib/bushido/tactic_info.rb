@@ -19,82 +19,10 @@ module Bushido
         @all_elements ||= flat_map { |e| e.model.to_a }
       end
 
-      # def trigger_soldier_points_hash
-      #   @trigger_soldier_points_hash ||= -> {
-      #     all_elements.each_with_object({}) do |e, m|
-      #       e.board_parser.trigger_soldiers.each do |s|
-      #         point = s[:point]
-      #         m[point] ||= []
-      #         m[point] << e
-      #       end
-      #     end
-      #   }.call
-      # end
-
-      # # トリガーなしグループ
-      # def trigger_soldier_points_hash2
-      #   @trigger_soldier_points_hash2 ||= -> {
-      #     all_elements.each_with_object({}) do |e, m|
-      #       v = e.board_parser.trigger_soldiers
-      #       if v.present?
-      #       else
-      #         point = s[:point]
-      #         m[point] ||= []
-      #         m[point] << e
-      #       end
-      #     end
-      #   }.call
-      # end
-
-      # def soldier_points_hash
-      #   @soldier_points_hash ||= -> {
-      #     all_elements.each_with_object({}) do |e, m|
-      #       e.board_parser.soldiers.each do |s|
-      #         point = s[:point]
-      #         m[point] ||= []
-      #         m[point] << e
-      #       end
-      #     end
-      #   }.call
-      # end
-
-      # def all_soldier_points_hash
-      #   @all_soldier_points_hash ||= all_elements.each_with_object({}) do |e, m|
-      #     (e.board_parser.soldiers + e.board_parser.trigger_soldiers).each do |s|
-      #       # soldier 自体をキーにすればほどよく分散できる
-      #       m[s] ||= []
-      #       m[s] << e
-      #     end
-      #   end
-      # end
-      # 
-      # def all_soldier_points_hash1
-      #   @all_soldier_points_hash1 ||= all_elements.each_with_object({}) do |e, m|
-      #     e.board_parser.trigger_soldiers.each do |s|
-      #       # soldier 自体をキーにすればほどよく分散できる
-      #       m[s] ||= []
-      #       m[s] << e
-      #     end
-      #   end
-      # end
-      # 
-      # def all_soldier_points_hash2
-      #   @all_soldier_points_hash2 ||= all_elements.each_with_object({}) do |e, m|
-      #     if e.board_parser.trigger_soldiers.present?
-      #     else
-      #       e.board_parser.soldiers.each do |s|
-      #         # soldier 自体をキーにすればほどよく分散できる
-      #         m[s] ||= []
-      #         m[s] << e
-      #       end
-      #     end
-      #   end
-      # end
-
       # トリガーがある場合はそれだけ登録すればよくて
       # 登録がないものはすべてをトリガーキーと見なす
-      def all_soldier_points_hash3
-        @all_soldier_points_hash3 ||= all_elements.each_with_object({}) do |e, m|
+      def soldier_hash_table
+        @soldier_hash_table ||= all_elements.each_with_object({}) do |e, m|
           e.board_parser.primary_soldiers.each do |s|
             # soldier 自体をキーにすればほどよく分散できる
             m[s] ||= []

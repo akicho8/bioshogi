@@ -2,7 +2,7 @@ require "./example_helper"
 
 # tp TacticInfo.all_soldier_points_hash1.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 # tp TacticInfo.all_soldier_points_hash2.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
-tp TacticInfo.all_soldier_points_hash3.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
+tp TacticInfo.primary_soldiers.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 
 tp TacticInfo.all_soldier_points_hash.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 
