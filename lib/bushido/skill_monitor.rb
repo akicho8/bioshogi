@@ -145,14 +145,6 @@ module Bushido
             end
           end
 
-          if v = e.triggers
-            v.each do |soldier|
-              if current_soldier != soldier
-                throw :skip
-              end
-            end
-          end
-
           if v = e.board_parser.trigger_soldiers_hash.presence
             # トリガー駒が用意されているのに、その座標に移動先が含まれていなかったら即座に skip
             soldier = v[current_soldier[:point]]
