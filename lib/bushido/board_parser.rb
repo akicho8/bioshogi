@@ -243,6 +243,13 @@ module Bushido
       def trigger_soldiers_hash
         @trigger_soldiers_hash ||= trigger_soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
       end
+
+      # テーブルのキーとする駒すべて
+      # プライマリー駒があると絞れるのでなるべく付けたい
+      # プライマリー駒がないと、他すべてをプライマリー駒と見なす
+      def primary_soldiers
+        @primary_soldiers ||= Array(trigger_soldiers.presence || soldiers.presence)
+      end
     end
 
     # P1-KY-KE-GI-KI-OU-KI-GI-KE-KY

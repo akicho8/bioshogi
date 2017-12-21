@@ -9,28 +9,37 @@ module Bushido
     end
 
     def execute
-      # すべての戦法と比べるのではなく移動先に駒を持つ戦法だけに絞る
-      elements = TacticInfo.all_soldier_points_hash[current_soldier]
-      unless elements
-        return
-      end
+      # # すべての戦法と比べるのではなく移動先に駒を持つ戦法だけに絞る
+      # elements = TacticInfo.all_soldier_points_hash1[current_soldier] || []
+      # # unless elements
+      # #   return
+      # # end
+      # elements.each { |e| execute_one(e) }
+      #
+      # # すべての戦法と比べるのではなく移動先に駒を持つ戦法だけに絞る
+      # elements = TacticInfo.all_soldier_points_hash2[current_soldier] || []
+      # # unless elements
+      # #   return
+      # # end
+      # elements.each { |e| execute_one(e) }
 
+      elements = TacticInfo.all_soldier_points_hash3[current_soldier] || []
       elements.each { |e| execute_one(e) }
     end
 
     def execute_one(e)
       catch :skip do
-        if v = e.board_parser.trigger_soldiers_hash.presence
-          # トリガー駒が用意されているのに、その座標に移動先が含まれていなかったら即座に skip
-          soldier = v[current_soldier[:point]]
-          unless soldier
-            throw :skip
-          end
-          # 駒や状態まで判定する
-          if soldier != current_soldier
-            throw :skip
-          end
-        end
+        # if v = e.board_parser.trigger_soldiers_hash.presence
+        #   # トリガー駒が用意されているのに、その座標に移動先が含まれていなかったら即座に skip
+        #   soldier = v[current_soldier[:point]]
+        #   unless soldier
+        #     throw :skip
+        #   end
+        #   # 駒や状態まで判定する
+        #   if soldier != current_soldier
+        #     throw :skip
+        #   end
+        # end
 
         # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
         list = player.skill_set.public_send(e.tactic_info.var_key)
