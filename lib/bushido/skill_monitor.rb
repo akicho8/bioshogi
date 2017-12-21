@@ -10,18 +10,15 @@ module Bushido
 
     def execute
       # すべての戦法と比べるのではなく移動先に駒を持つ戦法だけに絞る
-      elements = TacticInfo.all_soldier_points_hash[current_soldier[:point]]
+      elements = TacticInfo.all_soldier_points_hash[current_soldier]
       unless elements
         return
       end
 
-      elements.each do |e|
-        execute_one(e)
-      end
+      elements.each { |e| execute_one(e) }
     end
 
     def execute_one(e)
-      list = player.skill_set.public_send(e.tactic_info.var_key)
       catch :skip do
         if v = e.board_parser.trigger_soldiers_hash.presence
           # トリガー駒が用意されているのに、その座標に移動先が含まれていなかったら即座に skip
@@ -36,6 +33,7 @@ module Bushido
         end
 
         # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
+        list = player.skill_set.public_send(e.tactic_info.var_key)
         if list.include?(e)
           throw :skip
         end
@@ -165,7 +163,7 @@ module Bushido
           end
         end
 
-        soldiers = cached_board_soldiers(e)
+        soldiers = on_board_soldiers(e)
 
         # どれかが盤上に含まれる
         if v = e.board_parser.any_exist_soldiers.presence
@@ -187,8 +185,8 @@ module Bushido
       @current_soldier ||= player.runner.current_soldier.reverse_if_white
     end
 
-    def cached_board_soldiers(e)
-      @cached_board_soldiers ||= -> {
+    def on_board_soldiers(e)
+      @on_board_soldiers ||= -> {
         soldiers = player.board.surface.values.collect(&:to_soldier)
         # 後手ならまるごと反転する
         if player.location.key == :white

@@ -19,17 +19,17 @@ module Bushido
         @all_elements ||= flat_map { |e| e.model.to_a }
       end
 
-      def trigger_soldier_points_hash
-        @trigger_soldier_points_hash ||= -> {
-          all_elements.each_with_object({}) do |e, m|
-            e.board_parser.trigger_soldiers.each do |s|
-              point = s[:point]
-              m[point] ||= []
-              m[point] << e
-            end
-          end
-        }.call
-      end
+      # def trigger_soldier_points_hash
+      #   @trigger_soldier_points_hash ||= -> {
+      #     all_elements.each_with_object({}) do |e, m|
+      #       e.board_parser.trigger_soldiers.each do |s|
+      #         point = s[:point]
+      #         m[point] ||= []
+      #         m[point] << e
+      #       end
+      #     end
+      #   }.call
+      # end
 
       # # トリガーなしグループ
       # def trigger_soldier_points_hash2
@@ -46,25 +46,25 @@ module Bushido
       #   }.call
       # end
 
-      def soldier_points_hash
-        @soldier_points_hash ||= -> {
-          all_elements.each_with_object({}) do |e, m|
-            e.board_parser.soldiers.each do |s|
-              point = s[:point]
-              m[point] ||= []
-              m[point] << e
-            end
-          end
-        }.call
-      end
+      # def soldier_points_hash
+      #   @soldier_points_hash ||= -> {
+      #     all_elements.each_with_object({}) do |e, m|
+      #       e.board_parser.soldiers.each do |s|
+      #         point = s[:point]
+      #         m[point] ||= []
+      #         m[point] << e
+      #       end
+      #     end
+      #   }.call
+      # end
 
       def all_soldier_points_hash
         @all_soldier_points_hash ||= -> {
           all_elements.each_with_object({}) do |e, m|
             (e.board_parser.soldiers + e.board_parser.trigger_soldiers).each do |s|
-              point = s[:point]
-              m[point] ||= []
-              m[point] << e
+              # soldier 自体をキーにすればほどよく分散できる
+              m[s] ||= []
+              m[s] << e
             end
           end
         }.call
