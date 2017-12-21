@@ -24,11 +24,11 @@ module Bushido
       end
 
       it "子供" do
-        DefenseInfo["片美濃囲い"].children.collect(&:name).should == ["美濃囲い", "銀美濃"]
+        DefenseInfo["片美濃囲い"].children.collect(&:name).should == ["美濃囲い", "銀美濃", "ちょんまげ美濃"]
       end
 
       it "子孫" do
-        DefenseInfo["片美濃囲い"].descendants.collect(&:name).should == ["美濃囲い", "高美濃囲い", "ダイヤモンド美濃", "銀美濃"]
+        DefenseInfo["片美濃囲い"].descendants.collect(&:name).should == ["美濃囲い", "高美濃囲い", "ダイヤモンド美濃", "銀美濃", "ちょんまげ美濃", "坊主美濃"]
       end
     end
 
