@@ -159,14 +159,6 @@ module Bushido
 
           soldiers = cached_board_soldiers(e)
 
-          # どれかが盤上に含まれる (後手の飛車の位置などはこれでしか指定できない→「?」を使う)
-          if v = e.gentei_match_any
-            if v.any? {|o| soldiers.include?(o) }
-            else
-              throw :skip
-            end
-          end
-
           # どれかが盤上に含まれる
           if v = e.board_parser.any_exist_soldiers.presence
             if v.any? {|o| soldiers.include?(o) }

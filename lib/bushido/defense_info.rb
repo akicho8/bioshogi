@@ -6,7 +6,7 @@ require "tree_support"
 module Bushido
   class DefenseInfo
     include ApplicationMemoryRecord
-    memory_record attr_reader: [:wars_code, :parent, :other_parents, :alias_names, :turn_limit, :turn_eq, :teban_eq, :fuganai, :kill_only, :stroke_only, :gentei_match_any, :fu_igai_mottetara_dame, :kaisenmae, :hold_piece_not_in, :hold_piece_in, :hold_piece_count_eq, :hold_piece_eq, :sect_key, :defense_group_info, :siratama_url, :wikipedia_url] do
+    memory_record attr_reader: [:wars_code, :parent, :other_parents, :alias_names, :turn_limit, :turn_eq, :teban_eq, :fuganai, :kill_only, :stroke_only, :fu_igai_mottetara_dame, :kaisenmae, :hold_piece_not_in, :hold_piece_in, :hold_piece_count_eq, :hold_piece_eq, :sect_key, :defense_group_info, :siratama_url, :wikipedia_url] do
       [
         {wars_code: "000",  key: "カニ囲い",         parent: nil,              other_parents: nil,      alias_names: nil,        turn_limit: nil, turn_eq: nil,  teban_eq: nil, fuganai: nil, kaisenmae: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_count_eq: nil, hold_piece_eq: nil,   sect_key: "居飛車",   defense_group_info: "矢倉変化系",         sankou_url: "http://mijinko83.blog110.fc2.com/blog-entry-88.html",  siratama_url: "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/kanigakoi.html",            wikipedia_url: "https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%8B%E5%9B%B2%E3%81%84"},
         {wars_code: "001",  key: "金矢倉",           parent: nil,              other_parents: nil,      alias_names: "矢倉囲い", turn_limit: nil, turn_eq: nil,  teban_eq: nil, fuganai: nil, kaisenmae: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_count_eq: nil, hold_piece_eq: nil,   sect_key: "居飛車",   defense_group_info: "基本的な囲い",       sankou_url: "http://mijinko83.blog110.fc2.com/blog-entry-89.html",  siratama_url: "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/kinyagura.html",            wikipedia_url: "https://ja.wikipedia.org/wiki/%E7%9F%A2%E5%80%89%E5%9B%B2%E3%81%84"},
@@ -117,14 +117,6 @@ module Bushido
       def hold_piece_not_in
         if v = super
           @hold_piece_not_in ||= Utils.hold_pieces_s_to_a(v)
-        end
-      end
-
-      def gentei_match_any
-        if super
-          Array(super).collect do |e|
-            Soldier.from_str(e)
-          end
         end
       end
 
