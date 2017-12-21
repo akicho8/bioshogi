@@ -32,13 +32,13 @@ module Bushido
     end
 
     def to_h
-      SkillGroupInfo.inject({}) { |a, e|
+      TacticInfo.inject({}) { |a, e|
         a.merge(e.key => public_send("normalized_#{e.var_key}").collect(&:key))
       }
     end
 
     def kif_comment(location)
-      SkillGroupInfo.collect { |e|
+      TacticInfo.collect { |e|
         if v = public_send("normalized_#{e.var_key}").presence
           [location.name, e.name, "：", v.collect(&:name).join(', '), "\n"].sum("*")
         end

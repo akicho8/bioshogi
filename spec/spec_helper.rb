@@ -19,6 +19,8 @@ RSpec.configure do |config|
   end
   config.expect_with :minitest
 
+  # config.order = :random
+
   config.before(:each) do
   end
 

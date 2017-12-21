@@ -1,7 +1,7 @@
 require "./example_helper"
 
 hash = Hash.new(0)
-SkillGroupInfo.each do |group|
+TacticInfo.each do |group|
   group.model.each do |e|
     if true
       kif = Pathname("#{group.name}/#{e.key}.kif")

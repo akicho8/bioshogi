@@ -98,7 +98,7 @@ module Bushido
     include TeaiwariInfo::DelegateToShapeInfoMethods
     include DefenseInfo::AttackInfoSharedMethods
 
-    def skill_group_key
+    def tactic_key
       :attack
     end
 

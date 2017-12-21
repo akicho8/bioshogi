@@ -169,7 +169,8 @@ module Bushido
       end
 
       def hash
-        to_a.hash
+        # to_a.hash
+        to_xy.hash
       end
     end
 

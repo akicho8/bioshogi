@@ -408,7 +408,7 @@ module Bushido
           end
 
           if @config[:skill_set_flag]
-            SkillGroupInfo.each do |e|
+            TacticInfo.each do |e|
               mediator.players.each do |player|
                 header["#{player.call_name}の#{e.name}"] = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).join(", ")
               end

@@ -8,8 +8,13 @@ module Bushido
       info.mediator.player_at(:white).attack_infos.collect(&:name).should == ["新米長玉"]
     end
 
-    it "skill_group_info" do
-      AttackInfo.first.skill_group_info.key.should == :attack
+    it "嬉野流" do
+      info = Parser.parse("▲６八銀")
+      info.header_part_string.include?("嬉野流").should == true
+    end
+
+    it "tactic_info" do
+      AttackInfo.first.tactic_info.key.should == :attack
     end
   end
 end

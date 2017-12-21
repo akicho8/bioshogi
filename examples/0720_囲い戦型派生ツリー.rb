@@ -1,6 +1,6 @@
 require "./example_helper"
 
-SkillGroupInfo.each do |e|
+TacticInfo.each do |e|
   puts "-" * 80 + " " + e.model.name
   e.model.each do |e|
     if e.root?

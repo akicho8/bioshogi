@@ -10,8 +10,8 @@ module Bushido
       DefenseInfo["アヒル囲い"].should == DefenseInfo["金開き"]
     end
 
-    it "skill_group_info" do
-      DefenseInfo.first.skill_group_info.key.should == :defense
+    it "tactic_info" do
+      DefenseInfo.first.tactic_info.key.should == :defense
     end
 
     describe "木構造" do

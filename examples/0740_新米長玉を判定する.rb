@@ -1,7 +1,5 @@
 require "./example_helper"
 
-# ▲７六歩 △８四歩 ▲２六歩 △３二金 ▲７八金 △８五歩 ▲７七角 △３四歩 ▲８八銀 △７七角成
-
 info = Parser.parse(<<~EOT)
 ▲７六歩 △６二玉
 EOT

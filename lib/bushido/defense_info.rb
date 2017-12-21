@@ -146,12 +146,12 @@ module Bushido
       #   end
       # end
 
-      def skill_group_info
-        SkillGroupInfo.fetch(skill_group_key)
+      def tactic_info
+        TacticInfo.fetch(tactic_key)
       end
     end
 
-    def skill_group_key
+    def tactic_key
       :defense
     end
   end

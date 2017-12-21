@@ -1,7 +1,7 @@
 require "./example_helper"
 
-rows = SkillGroupInfo.flat_map do |skill_group_info|
-  skill_group_info.model.collect do |e|
+rows = TacticInfo.flat_map do |tactic_info|
+  tactic_info.model.collect do |e|
     {
       "モデル"         => e.class.name,
       "名前"           => e.name,
