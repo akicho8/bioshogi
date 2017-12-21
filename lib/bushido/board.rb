@@ -146,6 +146,12 @@ module Bushido
 
       # location 側の手合割情報を得る
       def teaiwari_info_by_location(location)
+        # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
+        # これがないと、board_spec.rb だけを実行したとき落ちる
+        if Position.size_type != :board_size_9x9
+          return
+        end
+
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
