@@ -117,31 +117,34 @@ module Bushido
         end
 
         if e.fuganai
-          if player.pieces.include?(Piece.fetch(:pawn))
+          if player_pieces_sort_hash.has_key?(Piece.fetch(:pawn))
             throw :skip
           end
         end
 
         if e.fu_igai_mottetara_dame
-          unless (player.pieces - [Piece.fetch(:pawn)]).empty?
+          unless (player_pieces_sort - [Piece.fetch(:pawn)]).empty?
             throw :skip
           end
         end
 
         if v = e.hold_piece_eq
-          if player.pieces.sort != v.sort
+          if player_pieces_sort != v
             throw :skip
           end
         end
 
+        # 指定の駒をすべて持っているならOK
         if v = e.hold_piece_in
-          unless v.all? {|x| player.pieces.include?(x) }
+          if v.all? {|x| player_pieces_sort_hash.has_key?(x) }
+          else
             throw :skip
           end
         end
 
+        # 指定の駒をどれか持っていたらskip
         if v = e.hold_piece_not_in
-          if v.any? {|x| player.pieces.include?(x) }
+          if v.any? {|x| player_pieces_sort_hash.has_key?(x) }
             throw :skip
           end
         end
@@ -150,13 +153,13 @@ module Bushido
 
         # どれかが盤上に含まれる
         if v = e.board_parser.any_exist_soldiers.presence
-          if v.any? {|o| soldiers.include?(o) }
+          if v.any? {|o| soldiers.include?(o) } # FIXME: hashにする
           else
             throw :skip
           end
         end
 
-        if e.board_parser.soldiers.all? { |e| soldiers.include?(e) }
+        if e.board_parser.soldiers.all? { |e| soldiers.include?(e) } # FIXME: hashにする
           list << e
           player.runner.skill_set.public_send(e.tactic_info.var_key) << e
         end
@@ -177,6 +180,16 @@ module Bushido
         end
         soldiers
       }.call
+    end
+
+    # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
+    def player_pieces_sort
+      @player_pieces_sort ||= player.pieces.sort
+    end
+
+    # ["歩", "歩", "歩"] => {"歩" => 3}
+    def player_pieces_sort_hash
+      @player_pieces_sort_hash ||= player_pieces_sort.group_by(&:itself).transform_values(&:size)
     end
   end
 end

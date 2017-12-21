@@ -108,7 +108,7 @@ module Bushido
       else
         infos = str
       end
-      pieces_parse2(infos)
+      piece_with_count_to_pieces(infos)
     end
 
     # 適当な持駒文字列を先手後手に分離
@@ -187,7 +187,7 @@ module Bushido
 
     private
 
-    def pieces_parse2(list)
+    def piece_with_count_to_pieces(list)
       Array.wrap(list).collect { |info|
         (info[:count] || 1).times.collect { Piece.fetch(info[:piece]) }
       }.flatten

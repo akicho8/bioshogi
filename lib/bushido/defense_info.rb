@@ -104,19 +104,19 @@ module Bushido
 
       def hold_piece_eq
         if v = super
-          @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v)
+          @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v).sort
         end
       end
 
       def hold_piece_in
         if v = super
-          @hold_piece_in ||= Utils.hold_pieces_s_to_a(v)
+          @hold_piece_in ||= Utils.hold_pieces_s_to_a(v).sort
         end
       end
 
       def hold_piece_not_in
         if v = super
-          @hold_piece_not_in ||= Utils.hold_pieces_s_to_a(v)
+          @hold_piece_not_in ||= Utils.hold_pieces_s_to_a(v).sort
         end
       end
 
