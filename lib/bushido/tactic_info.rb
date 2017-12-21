@@ -31,6 +31,21 @@ module Bushido
         }.call
       end
 
+      # # トリガーなしグループ
+      # def trigger_soldier_points_hash2
+      #   @trigger_soldier_points_hash2 ||= -> {
+      #     all_elements.each_with_object({}) do |e, m|
+      #       v = e.board_parser.trigger_soldiers
+      #       if v.present?
+      #       else
+      #         point = s[:point]
+      #         m[point] ||= []
+      #         m[point] << e
+      #       end
+      #     end
+      #   }.call
+      # end
+
       def soldier_points_hash
         @soldier_points_hash ||= -> {
           all_elements.each_with_object({}) do |e, m|
