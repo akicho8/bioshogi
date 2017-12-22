@@ -72,7 +72,7 @@ module Bushido
           # 何もない
           if ary = e.board_parser.other_objects_hash2[player.location.key]["○"]
             ary.each do |v|
-              if player.board.surface[v]
+              if surface[v]
                 throw :skip
               end
             end
@@ -80,7 +80,7 @@ module Bushido
           # 何かある
           if ary = e.board_parser.other_objects_hash2[player.location.key]["●"]
             ary.each do |e|
-              if !player.board.surface[e[:point]]
+              if !surface[e[:point]]
                 throw :skip
               end
             end
@@ -217,7 +217,8 @@ module Bushido
 
         if true
           ary = e.board_parser.soldiers_hash2[player.location.key]
-          if ary.all? { |e| on_board_soldiers2.include?(e) }
+          # if ary.all? { |e| on_board_soldiers2.include?(e) }
+          if ary.all? { |e| on_board_soldiers3(e) }
           else
             throw :skip
           end
@@ -242,7 +243,7 @@ module Bushido
 
     def on_board_soldiers(e)
       @on_board_soldiers ||= -> {
-        soldiers = player.board.surface.values.collect(&:to_soldier)
+        soldiers = surface.values.collect(&:to_soldier)
         # 後手ならまるごと反転する
         if player.location.key == :white
           soldiers = soldiers.collect(&:reverse)
@@ -252,7 +253,15 @@ module Bushido
     end
 
     def on_board_soldiers2
-      @on_board_soldiers2 ||= player.board.surface.values.collect(&:to_soldier)
+      @on_board_soldiers2 ||= surface.values.collect(&:to_soldier)
+    end
+
+    def on_board_soldiers3(s)
+      if v = surface[s[:point]]
+        v.piece == s[:piece] &&
+          v.promoted == s[:promoted] &&
+          v.location == s[:location]
+      end
     end
 
     # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
@@ -267,6 +276,10 @@ module Bushido
 
     def before_soldier
       @before_soldier ||= player.runner.before_soldier
+    end
+
+    def surface
+      @surface ||= player.board.surface
     end
   end
 end
