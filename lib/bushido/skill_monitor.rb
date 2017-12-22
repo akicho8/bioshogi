@@ -198,7 +198,7 @@ module Bushido
         if true
           # どれかが盤上に含まれる(駒の一致も確認)
           if ary = e.board_parser.other_objects_hash4[player.location.key].presence
-            if ary.any? { |e| on_board_soldiers2.include?(e) }
+            if ary.any? { |e| on_board_soldiers3(e) }
             else
               throw :skip
             end
@@ -241,27 +241,24 @@ module Bushido
       @current_soldier ||= player.runner.current_soldier.reverse_if_white
     end
 
-    def on_board_soldiers(e)
-      @on_board_soldiers ||= -> {
-        soldiers = surface.values.collect(&:to_soldier)
-        # 後手ならまるごと反転する
-        if player.location.key == :white
-          soldiers = soldiers.collect(&:reverse)
-        end
-        soldiers
-      }.call
-    end
+    # def on_board_soldiers(e)
+    #   @on_board_soldiers ||= -> {
+    #     soldiers = surface.values.collect(&:to_soldier)
+    #     # 後手ならまるごと反転する
+    #     if player.location.key == :white
+    #       soldiers = soldiers.collect(&:reverse)
+    #     end
+    #     soldiers
+    #   }.call
+    # end
 
-    def on_board_soldiers2
-      @on_board_soldiers2 ||= surface.values.collect(&:to_soldier)
-    end
+    # def on_board_soldiers2
+    #   @on_board_soldiers2 ||= surface.values.collect(&:to_soldier)
+    # end
 
+    # 比較順序超重要
     def on_board_soldiers3(s)
-      if v = surface[s[:point]]
-        v.piece == s[:piece] &&
-          v.promoted == s[:promoted] &&
-          v.location == s[:location]
-      end
+      (v = surface[s[:point]]) && v.piece == s[:piece] && v.promoted == s[:promoted] && v.location == s[:location]
     end
 
     # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
