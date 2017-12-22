@@ -111,7 +111,6 @@ module Bushido
               throw :skip
             end
           end
-
         else
           # 何もない
           if ary = e.board_parser.other_objects_hash_ary["○"]
@@ -196,19 +195,42 @@ module Bushido
           end
         end
 
-        soldiers = on_board_soldiers(e)
+        if true
+          # どれかが盤上に含まれる(駒の一致も確認)
+          if ary = e.board_parser.other_objects_hash4[player.location.key].presence
+            if ary.any? { |e| on_board_soldiers2.include?(e) }
+            else
+              throw :skip
+            end
+          end
 
-        # どれかが盤上に含まれる
-        if v = e.board_parser.any_exist_soldiers.presence
-          if v.any? {|o| soldiers.include?(o) } # FIXME: hashにする
-          else
-            throw :skip
+        else
+          # どれかが盤上に含まれる
+          soldiers = on_board_soldiers(e)
+          if v = e.board_parser.any_exist_soldiers.presence
+            if v.any? {|o| soldiers.include?(o) } # FIXME: hashにする
+            else
+              throw :skip
+            end
           end
         end
 
-        if e.board_parser.soldiers.all? { |e| soldiers.include?(e) } # FIXME: hashにする
+        if true
+          ary = e.board_parser.soldiers_hash2[player.location.key]
+          if ary.all? { |e| on_board_soldiers2.include?(e) }
+          else
+            throw :skip
+          end
+
           list << e
           player.runner.skill_set.public_send(e.tactic_info.var_key) << e
+
+        else
+          soldiers = on_board_soldiers(e)
+          if e.board_parser.soldiers.all? { |e| soldiers.include?(e) } # FIXME: hashにする
+            list << e
+            player.runner.skill_set.public_send(e.tactic_info.var_key) << e
+          end
         end
       end
     end
@@ -227,6 +249,10 @@ module Bushido
         end
         soldiers
       }.call
+    end
+
+    def on_board_soldiers2
+      @on_board_soldiers2 ||= player.board.surface.values.collect(&:to_soldier)
     end
 
     # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]

@@ -76,6 +76,12 @@ module Bushido
         def soldiers_hash
           @soldiers_hash ||= soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
         end
+
+        def soldiers_hash2
+          @soldiers_hash2 ||= Location.inject({}) do |a, l|
+            a.merge(l.key => soldiers.collect { |e| e.public_send(l.normalize_key) })
+          end
+        end
       end
 
       private
@@ -276,6 +282,12 @@ module Bushido
             }
           end
           a.merge(l.key => points_hash)
+        end
+      end
+
+      def other_objects_hash4
+        @other_objects_hash4 ||= Location.inject({}) do |a, l|
+          a.merge(l.key => any_exist_soldiers.collect { |e| e.public_send(l.normalize_key) })
         end
       end
 
