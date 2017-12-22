@@ -1,6 +1,6 @@
 require "./example_helper"
 
-tp AttackInfo["相横歩取り"].board_parser.other_objects_hash2
+tp AttackInfo["相横歩取り"].board_parser.other_objects_loc_ary
 
 # tp TacticInfo.all_soldier_points_hash1.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 # tp TacticInfo.all_soldier_points_hash2.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }

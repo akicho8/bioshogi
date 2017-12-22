@@ -77,8 +77,8 @@ module Bushido
           @soldiers_hash ||= soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
         end
 
-        def soldiers_hash2
-          @soldiers_hash2 ||= Location.inject({}) do |a, l|
+        def soldiers_hash_loc
+          @soldiers_hash_loc ||= Location.inject({}) do |a, l|
             a.merge(l.key => soldiers.collect { |e| e.public_send(l.normalize_key) })
           end
         end
@@ -248,45 +248,33 @@ module Bushido
         @other_objects_hash ||= other_objects_hash_ary.transform_values { |v| v.inject({}) { |a, e| a.merge(e[:point] => e) } }
       end
 
-      # something のグループ化 + point 毎のハッシュ + black, white で分けたもの
-      #
-      # tp AttackInfo["相横歩取り"].board_parser.other_objects_hash2
-      # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-      # >> | black | {"○"=>[{:point=>#<Bushido::Point:70159022026820 "３三">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021974720 "７七">, :prefix_char=>" ", :something=>"○"}]} |
-      # >> | white | {"○"=>[{:point=>#<Bushido::Point:70159021925280 "７七">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021925140 "３三">, :prefix_char=>" ", :something=>"○"}]} |
-      # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-      def other_objects_hash2
-        @other_objects_hash2 ||= Location.inject({}) do |a, l|
-          sw = l.which_val(:itself, :reverse)
-          # ○ => [a, b] を  {:black => {○ => [a, b]}, :white => {○ = [a', b']}} 形式に変換
-          hash = other_objects_hash_ary.transform_values do |v|
-
-            # v.inject({}) { |a, e|
-            #   e = e.merge(:point => e[:point].public_send(sw))
-            #   a.merge(e[:point] => e) # キーが重要なのであって値としてはいまのところ利用していない
-            # }
-
-            v.collect { |e| e.merge(point: e[:point].public_send(sw)) }
-          end
+      # other_objects_hash_ary + 末尾配列
+      def other_objects_loc_ary
+        @other_objects_loc_ary ||= Location.inject({}) do |a, l|
+          hash = other_objects_hash_ary.transform_values { |v|
+            v.collect { |e| e.merge(point: e[:point].public_send(l.normalize_key)) }
+          }
           a.merge(l.key => hash)
         end
       end
-      def other_objects_hash3
-        @other_objects_hash3 ||= Location.inject({}) do |a, l|
+
+      # other_objects_hash_ary + 末尾 point のハッシュ
+      def other_objects_loc_points_hash
+        @other_objects_loc_points_hash ||= Location.inject({}) do |a, l|
           sw = l.which_val(:itself, :reverse)
-          # ○ => [a, b] を  {:black => {○ => [a, b]}, :white => {○ = [a', b']}} 形式に変換
           points_hash = other_objects_hash_ary.transform_values do |v|
             v.inject({}) { |a, e|
               e = e.merge(:point => e[:point].public_send(sw))
-              a.merge(e[:point] => e) # キーが重要なのであって値としてはいまのところ利用していない
+              a.merge(e[:point] => e)
             }
           end
           a.merge(l.key => points_hash)
         end
       end
 
-      def other_objects_hash4
-        @other_objects_hash4 ||= Location.inject({}) do |a, l|
+      # any_exist_soldiers + 末尾配列
+      def any_exist_soldiers_loc
+        @any_exist_soldiers_loc ||= Location.inject({}) do |a, l|
           a.merge(l.key => any_exist_soldiers.collect { |e| e.public_send(l.normalize_key) })
         end
       end

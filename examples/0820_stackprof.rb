@@ -77,9 +77,9 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>       10  (   21.3%)  Bushido::SkillMonitor#on_board_soldiers3
 # >>        7  (   14.9%)  block (4 levels) in memory_record
 # >>        6  (   12.8%)  Bushido::DefenseInfo#board_parser
-# >>        5  (   10.6%)  Bushido::BoardParser::FireBoardParser#other_objects_hash2
+# >>        5  (   10.6%)  Bushido::BoardParser::FireBoardParser#other_objects_loc_ary
 # >>        5  (   10.6%)  Bushido::AttackInfo#board_parser
-# >>        3  (    6.4%)  Bushido::BoardParser::FireBoardParser#other_objects_hash3
+# >>        3  (    6.4%)  Bushido::BoardParser::FireBoardParser#other_objects_loc_points_hash
 # >>        2  (    4.3%)  Bushido::TacticInfo#var_key
 # >>        2  (    4.3%)  Bushido::Player::SkillMonitorMethods#skill_set
 # >>        2  (    4.3%)  Bushido::Point#hash
@@ -87,7 +87,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>        1  (    2.1%)  Bushido::TurnInfo#order_key
 # >>        1  (    2.1%)  Bushido::Soldier#point
 # >>        1  (    2.1%)  Bushido::DefenseInfo::AttackInfoSharedMethods#tactic_info
-# >>        1  (    2.1%)  Bushido::BoardParser::FireBoardParser#other_objects_hash4
+# >>        1  (    2.1%)  Bushido::BoardParser::FireBoardParser#any_exist_soldiers_loc
 # >>   code:
 # >>                                   |    16  |     def execute_one(e)
 # >>    55    (6.2%) /     1   (0.1%)  |    17  |       catch :skip do
@@ -146,7 +146,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    70  | 
 # >>                                   |    71  |         if true
 # >>                                   |    72  |           # 何もない
-# >>    10    (1.1%) /     1   (0.1%)  |    73  |           if ary = e.board_parser.other_objects_hash2[player.location.key]["○"]
+# >>    10    (1.1%) /     1   (0.1%)  |    73  |           if ary = e.board_parser.other_objects_loc_ary[player.location.key]["○"]
 # >>     5    (0.6%)                   |    74  |             ary.each do |v|
 # >>     5    (0.6%) /     4   (0.5%)  |    75  |               if surface[v]
 # >>                                   |    76  |                 throw :skip
@@ -154,7 +154,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    78  |             end
 # >>                                   |    79  |           end
 # >>                                   |    80  |           # 何かある
-# >>     3    (0.3%)                   |    81  |           if ary = e.board_parser.other_objects_hash2[player.location.key]["●"]
+# >>     3    (0.3%)                   |    81  |           if ary = e.board_parser.other_objects_loc_ary[player.location.key]["●"]
 # >>                                   |    82  |             ary.each do |e|
 # >>                                   |    83  |               if !surface[e[:point]]
 # >>                                   |    84  |                 throw :skip
@@ -163,7 +163,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    87  |           end
 # >>                                   |    88  | 
 # >>                                   |    89  |           # 移動元ではない
-# >>     4    (0.5%)                   |    90  |           if ary = e.board_parser.other_objects_hash2[player.location.key]["☆"]
+# >>     4    (0.5%)                   |    90  |           if ary = e.board_parser.other_objects_loc_ary[player.location.key]["☆"]
 # >>                                   |    91  |             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
 # >>                                   |    92  |             unless before_soldier
 # >>                                   |    93  |               throw :skip
@@ -176,7 +176,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   100  |           end
 # >>                                   |   101  | 
 # >>                                   |   102  |           # 移動元(any条件)
-# >>     4    (0.5%)                   |   103  |           if points_hash = e.board_parser.other_objects_hash3[player.location.key]["★"]
+# >>     4    (0.5%)                   |   103  |           if points_hash = e.board_parser.other_objects_loc_points_hash[player.location.key]["★"]
 # >>                                   |   104  |             # 移動元がないということは、もう何も該当しないので skip
 # >>                                   |   105  |             unless before_soldier
 # >>                                   |   106  |               throw :skip
@@ -273,7 +273,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   197  | 
 # >>                                   |   198  |         if true
 # >>                                   |   199  |           # どれかが盤上に含まれる(駒の一致も確認)
-# >>     2    (0.2%)                   |   200  |           if ary = e.board_parser.other_objects_hash4[player.location.key].presence
+# >>     2    (0.2%)                   |   200  |           if ary = e.board_parser.any_exist_soldiers_loc[player.location.key].presence
 # >>                                   |   201  |             if ary.any? { |e| on_board_soldiers3(e) }
 # >>                                   |   202  |             else
 # >>                                   |   203  |               throw :skip
@@ -292,7 +292,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   216  |         end
 # >>                                   |   217  | 
 # >>                                   |   218  |         if true
-# >>     2    (0.2%)                   |   219  |           ary = e.board_parser.soldiers_hash2[player.location.key]
+# >>     2    (0.2%)                   |   219  |           ary = e.board_parser.soldiers_hash_loc[player.location.key]
 # >>                                   |   220  |           # if ary.all? { |e| on_board_soldiers2.include?(e) }
 # >>    20    (2.3%)                   |   221  |           if ary.all? { |e| on_board_soldiers3(e) }
 # >>                                   |   222  |           else

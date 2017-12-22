@@ -9,9 +9,12 @@ module Bushido
     end
 
     def execute
-      elements = TacticInfo.soldier_hash_table[current_soldier] || []
-      elements.each { |e| execute_one(e) }
+      if e = TacticInfo.soldier_hash_table[current_soldier]
+        e.each { |e| execute_one(e) }
+      end
     end
+
+    private
 
     def execute_one(e)
       catch :skip do
@@ -26,42 +29,49 @@ module Bushido
           throw :skip
         end
 
+        # 手数制限。制限を超えていたらskip
         if e.turn_limit
           if e.turn_limit < player.mediator.turn_info.counter.next
             throw :skip
           end
         end
 
+        # 手数限定。手数が異なっていたらskip
         if e.turn_eq
           if e.turn_eq != player.mediator.turn_info.counter.next
             throw :skip
           end
         end
 
+        # 手番限定。手番が異なればskip
         if e.order_key
           if e.order_key != player.mediator.turn_info.order_key
             throw :skip
           end
         end
 
+        # 開戦済みならskip
         if e.cold_war
           if player.mediator.kill_counter.positive?
             throw :skip
           end
         end
 
+        # 「打」時制限。移動元駒があればskip
         if e.stroke_only
           if before_soldier
             throw :skip
           end
         end
 
+        # 駒を取ったとき制限。取ってないならskip
         if e.kill_only
           unless player.runner.killed_piece
             throw :skip
           end
         end
 
+        # 所持駒数一致制限。異なっていたらskip
         if v = e.hold_piece_count_eq
           if player.pieces.size != v
             throw :skip
@@ -69,25 +79,28 @@ module Bushido
         end
 
         if true
-          # 何もない
-          if ary = e.board_parser.other_objects_hash2[player.location.key]["○"]
-            ary.each do |v|
-              if surface[v]
+          # 何もない制限。何かあればskip
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["○"]
+            ary.each do |e|
+              if surface[e[:point]]
                 throw :skip
               end
             end
           end
-          # 何かある
-          if ary = e.board_parser.other_objects_hash2[player.location.key]["●"]
+
+          # 何かある制限。何もなければskip
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["●"]
             ary.each do |e|
               if !surface[e[:point]]
                 throw :skip
               end
             end
           end
+        end
 
-          # 移動元ではない
-          if ary = e.board_parser.other_objects_hash2[player.location.key]["☆"]
+        if true
+          # 移動元ではない制限。移動元だったらskip
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
             unless before_soldier
               throw :skip
@@ -99,8 +112,8 @@ module Bushido
             end
           end
 
-          # 移動元(any条件)
-          if points_hash = e.board_parser.other_objects_hash3[player.location.key]["★"]
+          # 移動元である(any条件)。どの移動元にも該当しなかったらskip
+          if points_hash = e.board_parser.other_objects_loc_points_hash[location.key]["★"]
             # 移動元がないということは、もう何も該当しないので skip
             unless before_soldier
               throw :skip
@@ -111,128 +124,61 @@ module Bushido
               throw :skip
             end
           end
-        else
-          # 何もない
-          if ary = e.board_parser.other_objects_hash_ary["○"]
-            ary.each do |obj|
-              pt = obj[:point].reverse_if_white(player.location)
-              if player.board[pt]
-                throw :skip
-              end
-            end
-          end
-
-          # 何かある
-          if ary = e.board_parser.other_objects_hash_ary["●"]
-            ary.each do |obj|
-              pt = obj[:point].reverse_if_white(player.location)
-              if !player.board[pt]
-                throw :skip
-              end
-            end
-          end
-
-          # 移動元ではない
-          if ary = e.board_parser.other_objects_hash_ary["☆"]
-            ary.each do |obj|
-              pt = obj[:point].reverse_if_white(player.location)
-              before_soldier = player.runner.before_soldier
-              if before_soldier && pt == before_soldier.point
-                throw :skip
-              end
-            end
-          end
-
-          # 移動元(any条件)
-          ary = e.board_parser.other_objects_hash_ary["★"]
-          if ary.present?
-            before_soldier = player.runner.before_soldier
-            if !before_soldier
-              # 移動元がないということは、もう何も該当しないので skip
-              throw :skip
-            end
-            if ary.any? { |e|
-                pt = e[:point].reverse_if_white(player.location)
-                pt == before_soldier.point
-              }
-            else
-              throw :skip
-            end
-          end
-
         end
 
+        # 歩を持っていたらskip
         if e.not_have_pawn
-          if player_pieces_sort_hash.has_key?(:pawn)
+          if pieces_hash.has_key?(:pawn)
             throw :skip
           end
         end
 
+        # 歩を除いて何か持っていたらskip
         if e.not_have_anything_except_pawn
-          if player_pieces_sort_hash.except(:pawn).empty?
+          if !pieces_hash.except(:pawn).empty?
             throw :skip
           end
         end
 
+        # 駒が一致していなければskip
         if v = e.hold_piece_eq
-          if player_pieces_sort_hash != v
+          if pieces_hash != v
             throw :skip
           end
         end
 
-        # 指定の駒をすべて持っているならOK
+        # 指定の駒をすべて含んでいるならOK
         if v = e.hold_piece_in
-          if v.all? {|e| player_pieces_sort_hash.has_key?(e) }
+          if v.all? {|e| pieces_hash.has_key?(e) }
           else
             throw :skip
           end
         end
 
-        # 指定の駒をどれか持っていたらskip
+        # 指定の駒をどれか含んでいるならskip
         if v = e.hold_piece_not_in
-          if v.any? {|e| player_pieces_sort_hash.has_key?(e) }
+          if v.any? {|e| pieces_hash.has_key?(e) }
             throw :skip
           end
         end
 
-        if true
-          # どれかが盤上に含まれる(駒の一致も確認)
-          if ary = e.board_parser.other_objects_hash4[player.location.key].presence
-            if ary.any? { |e| on_board_soldiers3(e) }
-            else
-              throw :skip
-            end
-          end
-
-        else
-          # どれかが盤上に含まれる
-          soldiers = on_board_soldiers(e)
-          if v = e.board_parser.any_exist_soldiers.presence
-            if v.any? {|o| soldiers.include?(o) } # FIXME: hashにする
-            else
-              throw :skip
-            end
-          end
-        end
-
-        if true
-          ary = e.board_parser.soldiers_hash2[player.location.key]
-          # if ary.all? { |e| on_board_soldiers2.include?(e) }
-          if ary.all? { |e| on_board_soldiers3(e) }
+        # どれかが盤上に正確に含まれるならOK
+        if ary = e.board_parser.any_exist_soldiers_loc[location.key].presence
+          if ary.any? { |e| battler_exist?(e) }
           else
             throw :skip
           end
-
-          list << e
-          player.runner.skill_set.public_send(e.tactic_info.var_key) << e
-
-        else
-          soldiers = on_board_soldiers(e)
-          if e.board_parser.soldiers.all? { |e| soldiers.include?(e) } # FIXME: hashにする
-            list << e
-            player.runner.skill_set.public_send(e.tactic_info.var_key) << e
-          end
         end
+
+        # 指定の配置が盤上に含まれるならOK
+        ary = e.board_parser.soldiers_hash_loc[location.key]
+        if ary.all? { |e| battler_exist?(e) }
+        else
+          throw :skip
+        end
+
+        list << e
+        player.runner.skill_set.public_send(e.tactic_info.var_key) << e
       end
     end
 
@@ -241,42 +187,29 @@ module Bushido
       @current_soldier ||= player.runner.current_soldier.reverse_if_white
     end
 
-    # def on_board_soldiers(e)
-    #   @on_board_soldiers ||= -> {
-    #     soldiers = surface.values.collect(&:to_soldier)
-    #     # 後手ならまるごと反転する
-    #     if player.location.key == :white
-    #       soldiers = soldiers.collect(&:reverse)
-    #     end
-    #     soldiers
-    #   }.call
-    # end
-
-    # def on_board_soldiers2
-    #   @on_board_soldiers2 ||= surface.values.collect(&:to_soldier)
-    # end
-
-    # 比較順序超重要
-    def on_board_soldiers3(s)
+    # 比較順序超重要。不一致しやすいものから比較する
+    def battler_exist?(s)
       (v = surface[s[:point]]) && v.piece == s[:piece] && v.promoted == s[:promoted] && v.location == s[:location]
     end
 
-    # # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
-    # def player_pieces_sort
-    #   @player_pieces_sort ||= player.pieces.sort
-    # end
-
-    # ["歩", "歩", "歩"] => {:pawn => 3}
-    def player_pieces_sort_hash
-      @player_pieces_sort_hash ||= player.pieces.group_by(&:key).transform_values(&:size)
+    # 持駒を {:pawn => 3} 形式にする
+    def pieces_hash
+      @pieces_hash ||= player.pieces.group_by(&:key).transform_values(&:size)
     end
 
+    # 移動元情報
     def before_soldier
       @before_soldier ||= player.runner.before_soldier
     end
 
+    # 盤面
     def surface
       @surface ||= player.board.surface
+    end
+
+    # プレイヤーの向き
+    def location
+      @location ||= player.location
     end
   end
 end
