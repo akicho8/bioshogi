@@ -101,14 +101,18 @@ module Bushido
     #   Utils.hold_pieces_s_to_a("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
     def hold_pieces_s_to_a(str)
       if str.kind_of?(String)
-        str = str.tr("〇一二三四五六七八九", "0-9")
-        infos = str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect do |piece, count|
-          {piece: piece, count: (count || 1).to_i}
-        end
+        infos = __hold_pieces_s_to_a(str)
       else
         infos = str
       end
       piece_with_count_to_pieces(infos)
+    end
+
+    def __hold_pieces_s_to_a(str)
+      str = str.tr("〇一二三四五六七八九", "0-9")
+      str.scan(/(?<piece>#{Piece.all_basic_names.join("|")})(?<count>\d+)?/).collect do |piece, count|
+        {piece: Piece.fetch(piece), count: (count || 1).to_i}
+      end
     end
 
     # 適当な持駒文字列を先手後手に分離

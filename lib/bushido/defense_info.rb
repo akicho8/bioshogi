@@ -104,19 +104,19 @@ module Bushido
 
       def hold_piece_eq
         if v = super
-          @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v).sort
+          @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v).group_by(&:key).transform_values(&:size)
         end
       end
 
       def hold_piece_in
         if v = super
-          @hold_piece_in ||= Utils.hold_pieces_s_to_a(v).sort
+          @hold_piece_in ||= hold_piece_counts_hash(v)
         end
       end
 
       def hold_piece_not_in
         if v = super
-          @hold_piece_not_in ||= Utils.hold_pieces_s_to_a(v).sort
+          @hold_piece_not_in ||= hold_piece_counts_hash(v)
         end
       end
 
@@ -134,6 +134,12 @@ module Bushido
 
       def tactic_info
         TacticInfo.fetch(tactic_key)
+      end
+
+      private
+
+      def hold_piece_counts_hash(v)
+        Utils.hold_pieces_s_to_a(v).collect(&:key).uniq
       end
     end
 

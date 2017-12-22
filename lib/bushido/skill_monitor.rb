@@ -163,26 +163,26 @@ module Bushido
         end
 
         if e.not_have_pawn
-          if player_pieces_sort_hash.has_key?(Piece.fetch(:pawn))
+          if player_pieces_sort_hash.has_key?(:pawn)
             throw :skip
           end
         end
 
         if e.not_have_anything_except_pawn
-          unless (player_pieces_sort - [Piece.fetch(:pawn)]).empty?
+          if player_pieces_sort_hash.except(:pawn).empty?
             throw :skip
           end
         end
 
         if v = e.hold_piece_eq
-          if player_pieces_sort != v
+          if player_pieces_sort_hash != v
             throw :skip
           end
         end
 
         # 指定の駒をすべて持っているならOK
         if v = e.hold_piece_in
-          if v.all? {|x| player_pieces_sort_hash.has_key?(x) }
+          if v.all? {|e| player_pieces_sort_hash.has_key?(e) }
           else
             throw :skip
           end
@@ -190,7 +190,7 @@ module Bushido
 
         # 指定の駒をどれか持っていたらskip
         if v = e.hold_piece_not_in
-          if v.any? {|x| player_pieces_sort_hash.has_key?(x) }
+          if v.any? {|e| player_pieces_sort_hash.has_key?(e) }
             throw :skip
           end
         end
@@ -261,14 +261,14 @@ module Bushido
       (v = surface[s[:point]]) && v.piece == s[:piece] && v.promoted == s[:promoted] && v.location == s[:location]
     end
 
-    # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
-    def player_pieces_sort
-      @player_pieces_sort ||= player.pieces.sort
-    end
+    # # ["歩", "飛", "歩"] => ["飛", "歩", "歩"]
+    # def player_pieces_sort
+    #   @player_pieces_sort ||= player.pieces.sort
+    # end
 
-    # ["歩", "歩", "歩"] => {"歩" => 3}
+    # ["歩", "歩", "歩"] => {:pawn => 3}
     def player_pieces_sort_hash
-      @player_pieces_sort_hash ||= player_pieces_sort.group_by(&:itself).transform_values(&:size)
+      @player_pieces_sort_hash ||= player.pieces.group_by(&:key).transform_values(&:size)
     end
 
     def before_soldier
