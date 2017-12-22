@@ -30,16 +30,16 @@ module Bushido
       end
 
       def lookup(value)
+        if value.kind_of?(self)
+          return value
+        end
+
         x = nil
         y = nil
 
         case value
         when Array
           a, b = value
-          x = Position::Hpos.lookup(a)
-          y = Position::Vpos.lookup(b)
-        when Point
-          a, b = value.to_xy
           x = Position::Hpos.lookup(a)
           y = Position::Vpos.lookup(b)
         when String
