@@ -232,12 +232,38 @@ module Bushido
 
       # 高速に比較するためにメモ化したアクセサシリーズ
 
+      # something のグループ化
       def other_objects_hash_ary
         @other_objects_hash_ary ||= other_objects.group_by { |e| e[:something] }
       end
 
+      # something のグループ化 + point 毎のハッシュ
       def other_objects_hash
         @other_objects_hash ||= other_objects_hash_ary.transform_values { |v| v.inject({}) { |a, e| a.merge(e[:point] => e) } }
+      end
+
+      # something のグループ化 + point 毎のハッシュ + black, white で分けたもの
+      #
+      # tp AttackInfo["相横歩取り"].board_parser.other_objects_hash2
+      # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+      # >> | black | {"○"=>[{:point=>#<Bushido::Point:70159022026820 "３三">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021974720 "７七">, :prefix_char=>" ", :something=>"○"}]} |
+      # >> | white | {"○"=>[{:point=>#<Bushido::Point:70159021925280 "７七">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021925140 "３三">, :prefix_char=>" ", :something=>"○"}]} |
+      # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+      def other_objects_hash2
+        @other_objects_hash2 ||= Location.inject({}) do |a, l|
+          sw = l.which_val(:itself, :reverse)
+          # ○ => [a, b] を  {:black => {○ => [a, b]}, :white => {○ = [a', b']}} 形式に変換
+          hash = other_objects_hash_ary.transform_values do |v|
+
+            # v.inject({}) { |a, e|
+            #   e = e.merge(:point => e[:point].public_send(sw))
+            #   a.merge(e[:point] => e) # キーが重要なのであって値としてはいまのところ利用していない
+            # }
+
+            v.collect { |e| e.merge(point: e[:point].public_send(sw)) }
+          end
+          a.merge(l.key => hash)
+        end
       end
 
       def trigger_soldiers_hash

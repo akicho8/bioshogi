@@ -68,12 +68,23 @@ module Bushido
           end
         end
 
-        # 何もない
-        if ary = e.board_parser.other_objects_hash_ary["○"]
-          ary.each do |obj|
-            pt = obj[:point].reverse_if_white(player.location)
-            if player.board[pt]
-              throw :skip
+        if true
+          # 何もない
+          if ary = e.board_parser.other_objects_hash2[player.location.key]["○"]
+            ary.each do |v|
+              if player.board.surface[v]
+                throw :skip
+              end
+            end
+          end
+        else
+          # 何もない
+          if ary = e.board_parser.other_objects_hash_ary["○"]
+            ary.each do |obj|
+              pt = obj[:point].reverse_if_white(player.location)
+              if player.board[pt]
+                throw :skip
+              end
             end
           end
         end
