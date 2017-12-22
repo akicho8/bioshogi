@@ -200,7 +200,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   122  |           end
 # >>                                   |   123  |         end
 # >>                                   |   124  | 
-# >>                                   |   125  |         if e.fu_igai_mottetara_dame
+# >>                                   |   125  |         if e.not_have_anything_except_pawn
 # >>                                   |   126  |           unless (player.pieces - [Piece.fetch(:pawn)]).empty?
 # >>                                   |   127  |             throw :skip
 # >>                                   |   128  |           end

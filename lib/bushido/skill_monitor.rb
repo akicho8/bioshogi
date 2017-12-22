@@ -122,7 +122,7 @@ module Bushido
           end
         end
 
-        if e.fu_igai_mottetara_dame
+        if e.not_have_anything_except_pawn
           unless (player_pieces_sort - [Piece.fetch(:pawn)]).empty?
             throw :skip
           end
