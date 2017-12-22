@@ -57,7 +57,7 @@ module Bushido
         end
 
         if e.kill_only
-          unless player.runner.tottakoma
+          unless player.runner.killed_piece
             throw :skip
           end
         end

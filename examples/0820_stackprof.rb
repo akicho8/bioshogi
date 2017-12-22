@@ -135,7 +135,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    57  |         end
 # >>                                   |    58  | 
 # >>     2    (0.2%)                   |    59  |         if e.kill_only
-# >>                                   |    60  |           unless player.runner.tottakoma
+# >>                                   |    60  |           unless player.runner.killed_piece
 # >>                                   |    61  |             throw :skip
 # >>                                   |    62  |           end
 # >>                                   |    63  |         end

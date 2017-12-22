@@ -47,7 +47,7 @@ module Bushido
       end
     end
 
-    attr_reader :point_to, :point_from, :piece, :source, :player, :tottakoma
+    attr_reader :point_to, :point_from, :piece, :source, :player, :killed_piece
     attr_reader :skill_set
 
     def initialize(player)
@@ -65,7 +65,7 @@ module Bushido
       @strike_trigger  = nil
       @point_from    = nil
       @candidate       = nil
-      @tottakoma = nil
+      @killed_piece = nil
 
       @skill_set = SkillSet.new
 
@@ -216,7 +216,7 @@ module Bushido
 
           unless @done
             if battler = @player.board.lookup(@point_to)
-              @tottakoma = battler.piece
+              @killed_piece = battler.piece
             end
             @player.move_to(@point_from, @point_to, @promote_trigger)
           end
@@ -232,7 +232,7 @@ module Bushido
       HandLog.new({
           current_soldier: current_soldier,
           before_soldier: before_soldier,
-          tottakoma: @tottakoma,
+          killed_piece: @killed_piece,
 
           point_to: @point_to,
           piece: @piece,
