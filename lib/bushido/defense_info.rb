@@ -102,44 +102,50 @@ module Bushido
         SectInfo.fetch(sect_key)
       end
 
-      def hold_piece_eq
-        if v = super
-          @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v).group_by(&:key).transform_values(&:size)
+      # いったん最も扱いやすい形にしておく
+      if true
+        def hold_piece_eq
+          if v = super
+            @hold_piece_eq ||= Utils.hold_pieces_s_to_a(v)
+          end
+        end
+
+        def hold_piece_in
+          if v = super
+            @hold_piece_in ||= Utils.hold_pieces_s_to_a(v)
+          end
+        end
+
+        def hold_piece_not_in
+          if v = super
+            @hold_piece_not_in ||= Utils.hold_pieces_s_to_a(v)
+          end
         end
       end
 
-      def hold_piece_in
-        if v = super
-          @hold_piece_in ||= hold_piece_counts_hash(v)
+      # 最速で比較できるようにするためのメソッドたち
+      if true
+        def hold_piece_eq2
+          if v = hold_piece_eq
+            @hold_piece_eq2 ||= v.group_by(&:key).transform_values(&:size)
+          end
+        end
+
+        def hold_piece_in2
+          if v = hold_piece_in
+            @hold_piece_in2 ||= v.collect(&:key).uniq
+          end
+        end
+
+        def hold_piece_not_in2
+          if v = hold_piece_not_in
+            @hold_piece_not_in2 ||= v.collect(&:key).uniq
+          end
         end
       end
-
-      def hold_piece_not_in
-        if v = super
-          @hold_piece_not_in ||= hold_piece_counts_hash(v)
-        end
-      end
-
-      # def self_check
-      #   if process_ki2
-      #     info = Parser.parse(process_ki2)
-      #     names = info.mediator.players.flat_map do |e|
-      #       (e.defense_infos + e.attack_infos).collect(&:name)
-      #     end
-      #     if names.include?(name)
-      #       names
-      #     end
-      #   end
-      # end
 
       def tactic_info
         TacticInfo.fetch(tactic_key)
-      end
-
-      private
-
-      def hold_piece_counts_hash(v)
-        Utils.hold_pieces_s_to_a(v).collect(&:key).uniq
       end
     end
 

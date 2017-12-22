@@ -140,25 +140,27 @@ module Bushido
           end
         end
 
-        # 駒が一致していなければskip
-        if v = e.hold_piece_eq
-          if pieces_hash != v
-            throw :skip
+        if true
+          # 駒が一致していなければskip
+          if v = e.hold_piece_eq2
+            if pieces_hash != v
+              throw :skip
+            end
           end
-        end
 
-        # 指定の駒をすべて含んでいるならOK
-        if v = e.hold_piece_in
-          if v.all? {|e| pieces_hash.has_key?(e) }
-          else
-            throw :skip
+          # 指定の駒をすべて含んでいるならOK
+          if v = e.hold_piece_in2
+            if v.all? {|e| pieces_hash.has_key?(e) }
+            else
+              throw :skip
+            end
           end
-        end
 
-        # 指定の駒をどれか含んでいるならskip
-        if v = e.hold_piece_not_in
-          if v.any? {|e| pieces_hash.has_key?(e) }
-            throw :skip
+          # 指定の駒をどれか含んでいるならskip
+          if v = e.hold_piece_not_in2
+            if v.any? {|e| pieces_hash.has_key?(e) }
+              throw :skip
+            end
           end
         end
 
