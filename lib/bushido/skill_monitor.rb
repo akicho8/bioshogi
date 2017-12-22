@@ -38,13 +38,13 @@ module Bushido
           end
         end
 
-        if e.teban_eq
-          if e.teban_eq != player.mediator.turn_info.senteban_or_goteban
+        if e.order_key
+          if e.order_key != player.mediator.turn_info.order_key
             throw :skip
           end
         end
 
-        if e.kaisenmae
+        if e.cold_war
           if player.mediator.kill_counter.positive?
             throw :skip
           end

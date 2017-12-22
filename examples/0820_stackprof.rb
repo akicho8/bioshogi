@@ -116,13 +116,13 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    38  |           end
 # >>                                   |    39  |         end
 # >>                                   |    40  | 
-# >>                                   |    41  |         if e.teban_eq
-# >>                                   |    42  |           if e.teban_eq != player.mediator.turn_info.senteban_or_goteban
+# >>                                   |    41  |         if e.order_key
+# >>                                   |    42  |           if e.order_key != player.mediator.turn_info.order_info
 # >>                                   |    43  |             throw :skip
 # >>                                   |    44  |           end
 # >>                                   |    45  |         end
 # >>                                   |    46  | 
-# >>                                   |    47  |         if e.kaisenmae
+# >>                                   |    47  |         if e.cold_war
 # >>                                   |    48  |           if player.mediator.kill_counter.positive?
 # >>                                   |    49  |             throw :skip
 # >>                                   |    50  |           end

@@ -23,16 +23,16 @@ module Bushido
       Location[key]
     end
 
-    def senteban?
-      counter.even?
+    def order_info
+      OrderInfo.fetch(order_key)
     end
 
-    def goteban?
-      counter.odd?
-    end
-
-    def senteban_or_goteban
-      senteban? ? :senteban : :goteban
+    def order_key
+      if counter.even?
+        :sente
+      else
+        :gote
+      end
     end
 
     # def next!
@@ -93,6 +93,14 @@ module Bushido
     # end
 
     private
+
+    # def sente?
+    #   counter.even?
+    # end
+    #
+    # def gote?
+    #   counter.odd?
+    # end
 
     def current_location_index(diff)
       base_location.code + @counter + diff
