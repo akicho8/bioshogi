@@ -51,7 +51,7 @@ module Bushido
         end
 
         if e.stroke_only
-          if player.runner.before_soldier
+          if before_soldier
             throw :skip
           end
         end
@@ -77,6 +77,41 @@ module Bushido
               end
             end
           end
+          # 何かある
+          if ary = e.board_parser.other_objects_hash2[player.location.key]["●"]
+            ary.each do |e|
+              if !player.board.surface[e[:point]]
+                throw :skip
+              end
+            end
+          end
+
+          # 移動元ではない
+          if ary = e.board_parser.other_objects_hash2[player.location.key]["☆"]
+            # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
+            unless before_soldier
+              throw :skip
+            end
+            ary.each do |e|
+              if e[:point] == before_soldier.point
+                throw :skip
+              end
+            end
+          end
+
+          # 移動元(any条件)
+          if points_hash = e.board_parser.other_objects_hash3[player.location.key]["★"]
+            # 移動元がないということは、もう何も該当しないので skip
+            unless before_soldier
+              throw :skip
+            end
+            if points_hash[before_soldier.point]
+              # 移動元があったのでOK
+            else
+              throw :skip
+            end
+          end
+
         else
           # 何もない
           if ary = e.board_parser.other_objects_hash_ary["○"]
@@ -87,44 +122,45 @@ module Bushido
               end
             end
           end
-        end
 
-        # 何かある
-        if ary = e.board_parser.other_objects_hash_ary["●"]
-          ary.each do |obj|
-            pt = obj[:point].reverse_if_white(player.location)
-            if !player.board[pt]
-              throw :skip
+          # 何かある
+          if ary = e.board_parser.other_objects_hash_ary["●"]
+            ary.each do |obj|
+              pt = obj[:point].reverse_if_white(player.location)
+              if !player.board[pt]
+                throw :skip
+              end
             end
           end
-        end
 
-        # 移動元ではない
-        if ary = e.board_parser.other_objects_hash_ary["☆"]
-          ary.each do |obj|
-            pt = obj[:point].reverse_if_white(player.location)
+          # 移動元ではない
+          if ary = e.board_parser.other_objects_hash_ary["☆"]
+            ary.each do |obj|
+              pt = obj[:point].reverse_if_white(player.location)
+              before_soldier = player.runner.before_soldier
+              if before_soldier && pt == before_soldier.point
+                throw :skip
+              end
+            end
+          end
+
+          # 移動元(any条件)
+          ary = e.board_parser.other_objects_hash_ary["★"]
+          if ary.present?
             before_soldier = player.runner.before_soldier
-            if before_soldier && pt == before_soldier.point
+            if !before_soldier
+              # 移動元がないということは、もう何も該当しないので skip
+              throw :skip
+            end
+            if ary.any? { |e|
+                pt = e[:point].reverse_if_white(player.location)
+                pt == before_soldier.point
+              }
+            else
               throw :skip
             end
           end
-        end
 
-        # 移動元(any条件)
-        ary = e.board_parser.other_objects_hash_ary["★"]
-        if ary.present?
-          before_soldier = player.runner.before_soldier
-          if !before_soldier
-            # 移動元がないということは、もう何も該当しないので skip
-            throw :skip
-          end
-          if ary.any? { |e|
-              pt = e[:point].reverse_if_white(player.location)
-              pt == before_soldier.point
-            }
-          else
-            throw :skip
-          end
         end
 
         if e.not_have_pawn
@@ -201,6 +237,10 @@ module Bushido
     # ["歩", "歩", "歩"] => {"歩" => 3}
     def player_pieces_sort_hash
       @player_pieces_sort_hash ||= player_pieces_sort.group_by(&:itself).transform_values(&:size)
+    end
+
+    def before_soldier
+      @before_soldier ||= player.runner.before_soldier
     end
   end
 end

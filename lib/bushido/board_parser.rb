@@ -265,6 +265,19 @@ module Bushido
           a.merge(l.key => hash)
         end
       end
+      def other_objects_hash3
+        @other_objects_hash3 ||= Location.inject({}) do |a, l|
+          sw = l.which_val(:itself, :reverse)
+          # ○ => [a, b] を  {:black => {○ => [a, b]}, :white => {○ = [a', b']}} 形式に変換
+          points_hash = other_objects_hash_ary.transform_values do |v|
+            v.inject({}) { |a, e|
+              e = e.merge(:point => e[:point].public_send(sw))
+              a.merge(e[:point] => e) # キーが重要なのであって値としてはいまのところ利用していない
+            }
+          end
+          a.merge(l.key => points_hash)
+        end
+      end
 
       def trigger_soldiers_hash
         @trigger_soldiers_hash ||= trigger_soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
