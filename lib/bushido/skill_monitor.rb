@@ -116,7 +116,7 @@ module Bushido
           end
         end
 
-        if e.fuganai
+        if e.not_have_pawn
           if player_pieces_sort_hash.has_key?(Piece.fetch(:pawn))
             throw :skip
           end

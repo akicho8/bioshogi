@@ -194,7 +194,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   116  |           end
 # >>                                   |   117  |         end
 # >>                                   |   118  | 
-# >>                                   |   119  |         if e.fuganai
+# >>                                   |   119  |         if e.not_have_pawn
 # >>                                   |   120  |           if player.pieces.include?(Piece.fetch(:pawn))
 # >>                                   |   121  |             throw :skip
 # >>                                   |   122  |           end
