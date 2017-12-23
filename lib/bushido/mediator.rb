@@ -276,7 +276,15 @@ module Bushido
       end
 
       def judgment_message
-        "まで#{turn_info.counter}手で#{reverse_player.call_name}の勝ち"
+        "まで#{turn_info.counter}手で#{win_player.call_name}の勝ち"
+      end
+
+      def win_player
+        reverse_player
+      end
+
+      def lose_player
+        current_player
       end
     end
 

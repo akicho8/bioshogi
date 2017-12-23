@@ -64,7 +64,7 @@ EOT
       end
 
       it "対局前コメント" do
-        @info.first_comments.should == ["対局前コメント"]
+        @info.first_comments.should == ["放映日：2003/09/7", "棋戦詳細：第53回ＮＨＫ杯戦2回戦第05局", "「(先 手)七段」vs「(後手)九段」", "対局前コメント"]
       end
     end
 

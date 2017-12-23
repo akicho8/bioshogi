@@ -104,7 +104,8 @@ module Bushido
 
           # *「畠山成幸七段」vs「郷田真隆九段」
           # があったら先手と後手の部分を書き換える
-          if md = s2.match(/\*「(.*)」vs「(.*)」/)
+          # また "」" がないデータに対応する
+          if md = s2.match(/\*「(.*?)」?vs「(.*?)」?$/)
             raw_header["vs"] = md.captures
             md.captures.each do |name|
               catch :skip do
@@ -174,15 +175,15 @@ module Bushido
       def comment_read(line)
         if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
           if @move_infos.empty?
-            # かなりハードコーディングなやり方だけどコメント内ヘッダーを決め打ちで除外する
-            if true
-              if md[:comment].include?(header_sep)
-                return
-              end
-              if md[:comment].match?(/^「.*」vs「.*」$/)
-                return
-              end
-            end
+            # # かなりハードコーディングなやり方だけどコメント内ヘッダーを決め打ちで除外する
+            # if true
+            #   if md[:comment].include?(header_sep)
+            #     return
+            #   end
+            #   if md[:comment].match?(/\A「.*」vs「.*」?\z/)
+            #     return
+            #   end
+            # end
             first_comments_add(md[:comment])
           else
             note_add(md[:comment])
@@ -497,6 +498,24 @@ module Bushido
           }.compact.to_h
         end
 
+        def last_action_info
+          # 棋譜の実行結果から見た判断を初期値として
+          key = :TORYO
+          if @error_message
+            key = :ILLEGAL_MOVE
+          end
+          last_action_info = LastActionInfo[key]
+
+          # 元の棋譜の記載を優先
+          if @last_status_params
+            if v = LastActionInfo[@last_status_params[:last_action_key]]
+              last_action_info = v
+            end
+          end
+
+          last_action_info
+        end
+
         private
 
         def __header_part_string
@@ -581,24 +600,6 @@ module Bushido
             s = "-" * 76 + "\n"
             [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
           end
-        end
-
-        def last_action_info
-          # 棋譜の実行結果から見た判断を初期値として
-          key = :TORYO
-          if @error_message
-            key = :ILLEGAL_MOVE
-          end
-          last_action_info = LastActionInfo[key]
-
-          # 元の棋譜の記載を優先
-          if @last_status_params
-            if v = LastActionInfo[@last_status_params[:last_action_key]]
-              last_action_info = v
-            end
-          end
-
-          last_action_info
         end
 
         class ChessClock
