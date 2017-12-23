@@ -127,15 +127,17 @@ module Bushido
         # 正規化。別にしなくてもいい
         if true
           # 日時を整える
-          ["開始日時", "終了日時"].each do |e|
-            if v = header[e].presence
-              if v = (Time.parse(v) rescue nil)
-                if [v.hour, v.min, v.sec].all?(&:zero?)
-                  format = "%Y/%m/%d"
-                else
-                  format = "%Y/%m/%d %H:%M:%S"
+          header.each do |key, value|
+            if key.match(/日時?\z/)
+              if v = value.presence
+                if v = (Time.parse(v) rescue nil) # TODO: 日本語で書かれていても正しくパースしたい
+                  if [v.hour, v.min, v.sec].all?(&:zero?)
+                    format = "%Y/%m/%d"
+                  else
+                    format = "%Y/%m/%d %H:%M:%S"
+                  end
+                  header[key] = v.strftime(format)
                 end
-                header[e] = v.strftime(format)
               end
             end
           end
