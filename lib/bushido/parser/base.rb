@@ -106,15 +106,18 @@ module Bushido
           # があったら先手と後手の部分を書き換える
           if md = s2.match(/\*「(.*)」vs「(.*)」/)
             raw_header["vs"] = md.captures
-
             md.captures.each do |name|
-              name2 = name.remove(/\p{blank}/).strip
-              ["先手", "後手", "上手", "下手"].each do |e|
-                if str = header[e].presence
-                  str = str.remove(/\p{blank}/).strip
-                  if name.include?(str)
-                    header[e] = name
-                    next
+              catch :skip do
+                name2 = name.remove(/\p{blank}/).strip
+                Location.each do |e|
+                  e.call_names.each do |e|
+                    if str = header[e].presence
+                      str = str.remove(/\p{blank}/).strip
+                      if name2.include?(str)
+                        header[e] = name
+                        throw :skip
+                      end
+                    end
                   end
                 end
               end
