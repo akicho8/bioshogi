@@ -29,13 +29,14 @@ module Bushido
         end
       end
 
-      attr_reader :header, :move_infos, :first_comments, :last_status_params, :board_source, :error_message
+      attr_reader :header, :raw_header, :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
       def initialize(source, **config)
         @source = source
         @config = default_config.merge(config)
 
         @header = {}
+        @raw_header = {}
         @move_infos = []
         @first_comments = []
         @board_source = nil
@@ -72,9 +73,53 @@ module Bushido
 
       def header_read
         s = normalized_source
-        s = s.gsub(/^[#*].*/, "") # "*" 以降を外さないと二歩のときに埋め込んだ盤面の下にある持駒情報を取り込んでしまう
-        s.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
-          header[key] = value
+
+        # s2 = s.gsub(/^[#*].*/, "") # "*" 以降を外さないと二歩のときに埋め込んだ盤面の下にある持駒情報を取り込んでしまう
+        # s2.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
+        #   header[key] = value
+        # end
+
+        if true
+          # *放映日：2003/09/07
+          # *棋戦詳細：第53回ＮＨＫ杯戦2回戦第05局
+          # *「畠山成幸七段」vs「郷田真隆九段」
+
+          # 最初の棋譜または「まで」までを取得(最後の方がゴミがあるかもしれないので)
+          if md = s.match(/(.*?)^([▲△]|まで)/m)
+            s2 = md.captures.first
+          else
+            # ヘッダーしかないものもあるので
+            s2 = s
+          end
+
+          s2.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
+            if key.start_with?("#")
+              next
+            end
+            key = key.remove(/^\*/)
+            header[key] = value
+          end
+
+          @raw_header = header.dup
+
+          # *「畠山成幸七段」vs「郷田真隆九段」
+          # があったら先手と後手の部分を書き換える
+          if md = s2.match(/\*「(.*)」vs「(.*)」/)
+            raw_header["vs"] = md.captures
+
+            md.captures.each do |name|
+              name2 = name.remove(/\p{blank}/).strip
+              ["先手", "後手", "上手", "下手"].each do |e|
+                if str = header[e].presence
+                  str = str.remove(/\p{blank}/).strip
+                  if name.include?(str)
+                    header[e] = name
+                    next
+                  end
+                end
+              end
+            end
+          end
         end
       end
 
@@ -124,6 +169,15 @@ module Bushido
       def comment_read(line)
         if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
           if @move_infos.empty?
+            # かなりハードコーディングなやり方だけどコメント内ヘッダーを決め打ちで除外する
+            if true
+              if md[:comment].include?(header_sep)
+                return
+              end
+              if md[:comment].match?(/^「.*」vs「.*」$/)
+                return
+              end
+            end
             first_comments_add(md[:comment])
           else
             note_add(md[:comment])
