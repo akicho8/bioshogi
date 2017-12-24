@@ -7,10 +7,7 @@ module Bushido
         info = Parser.parse("position startpos moves 7i6h")
         info.to_sfen.should == "position startpos moves 7i6h"
         info.to_kif.should == <<~EOT
-先手の囲い：
-後手の囲い：
 先手の戦型：嬉野流
-後手の戦型：
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:00/00:00:00)
@@ -24,10 +21,7 @@ EOT
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h")
         info.to_sfen.should == "position startpos moves 7i6h"
         info.to_kif.should == <<~EOT
-先手の囲い：
-後手の囲い：
 先手の戦型：嬉野流
-後手の戦型：
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:00/00:00:00)
@@ -43,10 +37,7 @@ EOT
         info.to_kif.should == <<~EOT
 先手の持駒：銀
 後手の持駒：銀二
-先手の囲い：
-後手の囲い：
 先手の戦型：嬉野流
-後手の戦型：
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:00/00:00:00)

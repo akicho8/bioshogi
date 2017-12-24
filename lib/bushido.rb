@@ -8,7 +8,12 @@ require "active_support/core_ext/class/attribute_accessors"
 require "active_support/core_ext/module/attribute_accessors"
 require "active_support/core_ext/string"
 
-# require "pry-debugger" # これを有効にすると pry + rcodetools の環境でバックトレースがでまくる
+require "active_support/dependencies/autoload"
+require "active_support/core_ext/array/grouping" # for in_groups_of
+require "active_support/core_ext/numeric"        # for 1.minute
+
+require "time"                  # for Time.parse
+require "kconv"                 # for toeuc
 
 require "org_tp"
 require "memory_record"

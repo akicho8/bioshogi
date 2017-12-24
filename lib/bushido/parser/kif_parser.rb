@@ -5,6 +5,7 @@ module Bushido
   module Parser
     class KifParser < Base
       cattr_accessor(:henka_reject) { true }
+      cattr_accessor(:kif_separator) { /手数-+指手-+消費時間-+/ }
 
       class << self
         # KIFフォーマットかどうかの判定
@@ -19,7 +20,7 @@ module Bushido
         #   1 ７六歩(77)   ( 00:01/00:00:01)
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(/^手数-+指手-+消費時間-+$/)
+          source.match?(kif_separator)
         end
       end
 
@@ -101,7 +102,7 @@ module Bushido
 
         # もしあれば削除
         if henka_reject
-          header.delete("変化")
+          header.object.delete("変化")
         end
       end
     end

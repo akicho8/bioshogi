@@ -1,12 +1,8 @@
 # -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
 # frozen-string-literal: true
 
-require "time"                  # for Time.parse
-require "kconv"                 # for toeuc
-
-require "active_support/core_ext/array/grouping" # for in_groups_of
-require "active_support/core_ext/numeric"        # for 1.minute
-
+require_relative "header"
+require_relative "chess_clock"
 require_relative "csa_header_info"
 require_relative "last_action_info"
 
@@ -29,14 +25,12 @@ module Bushido
         end
       end
 
-      attr_reader :header, :raw_header, :move_infos, :first_comments, :last_status_params, :board_source, :error_message
+      attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
       def initialize(source, **config)
         @source = source
         @config = default_config.merge(config)
 
-        @header = {}
-        @raw_header = {}
         @move_infos = []
         @first_comments = []
         @board_source = nil
@@ -69,99 +63,18 @@ module Bushido
         @normalized_source ||= Parser.source_normalize(@source)
       end
 
+      def header
+        @header ||= Header.new
+      end
+
       private
 
       def header_read
-        s = normalized_source
-
-        # s2 = s.gsub(/^[#*].*/, "") # "*" 以降を外さないと二歩のときに埋め込んだ盤面の下にある持駒情報を取り込んでしまう
-        # s2.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
-        #   header[key] = value
-        # end
-
-        if true
-          # *放映日：2003/09/07
-          # *棋戦詳細：第53回ＮＨＫ杯戦2回戦第05局
-          # *「畠山成幸七段」vs「郷田真隆九段」
-
-          # 最初の棋譜または「まで」までを取得(最後の方がゴミがあるかもしれないので)
-          if md = s.match(/(.*?)^([▲△]|まで)/m)
-            s2 = md.captures.first
-          else
-            # ヘッダーしかないものもあるので
-            s2 = s
-          end
-
-          s2.scan(/^(\S.*)#{header_sep}(.*)$/o).each do |key, value|
-            if key.start_with?("#")
-              next
-            end
-            key = key.remove(/^\*/)
-            header[key] = value
-          end
-
-          @raw_header = header.dup
-
-          # *「畠山成幸七段」vs「郷田真隆九段」
-          # があったら先手と後手の部分を書き換える
-          # また "」" がないデータに対応する
-          if md = s2.match(/\*「(.*?)」?vs「(.*?)」?$/)
-            raw_header["vs"] = md.captures
-            md.captures.each do |name|
-              catch :skip do
-                name2 = name.remove(/\p{blank}/).strip
-                Location.each do |e|
-                  e.call_names.each do |e|
-                    if str = header[e].presence
-                      str = str.remove(/\p{blank}/).strip
-                      if name2.include?(str)
-                        header[e] = name
-                        throw :skip
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
+        header.ki2_parse(normalized_source)
       end
 
       def header_normalize
-        # 正規化。別にしなくてもいい
-        if true
-          # 日時を整える
-          header.each do |key, value|
-            if key.match(/日時?\z/)
-              if v = value.presence
-                if v = (Time.parse(v) rescue nil) # TODO: 日本語で書かれていても正しくパースしたい
-                  if [v.hour, v.min, v.sec].all?(&:zero?)
-                    format = "%Y/%m/%d"
-                  else
-                    format = "%Y/%m/%d %H:%M:%S"
-                  end
-                  header[key] = v.strftime(format)
-                end
-              end
-            end
-          end
-
-          # 並びを綺麗にする
-          Location.each do |e|
-            e.call_names.each do |e|
-              key = "#{e}の持駒"
-              if v = header[key].presence
-                v = Utils.hold_pieces_s_to_a(v)
-                v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
-                if v
-                  header[key] = v
-                else
-                  header.delete(key)
-                end
-              end
-            end
-          end
-        end
+        header.normalize
       end
 
       def board_read
@@ -486,7 +399,7 @@ module Bushido
         end
 
         def raw_header_part_hash
-          header.collect { |key, value|
+          header.object.collect { |key, value|
             if value
               if e = CsaHeaderInfo[key]
                 if e.as_kif
@@ -544,7 +457,7 @@ module Bushido
                 key = "#{e}の持駒"
                 if v = header[key]
                   if v.blank?
-                    header.delete(key)
+                    header.object.delete(key)
                   end
                 end
               end
@@ -599,45 +512,6 @@ module Bushido
             v = @error_message.strip + "\n"
             s = "-" * 76 + "\n"
             [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
-          end
-        end
-
-        class ChessClock
-          def initialize
-            @single_clocks = Location.inject({}) {|a, e| a.merge(e => SingleClock.new) }
-            @counter = 0
-          end
-
-          def add(v)
-            @single_clocks[Location[@counter]].add(v)
-            @counter += 1
-          end
-
-          def latest_clock_format
-            @single_clocks[Location[@counter.pred]].to_s
-          end
-
-          def to_s
-            latest_clock_format
-          end
-
-          class SingleClock
-            def initialize
-              @total = 0
-              @used = 0
-            end
-
-            def add(v)
-              v = v.to_i
-              @total += v
-              @used = v
-            end
-
-            def to_s
-              h, r = @total.divmod(1.hour)
-              m, s = r.divmod(1.minute)
-              "(%02d:%02d/%02d:%02d:%02d)" % [*@used.divmod(1.minute), h, m, s]
-            end
           end
         end
       end
