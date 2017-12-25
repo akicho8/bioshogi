@@ -50,8 +50,9 @@ module Bushido
         if md = source.match(/\*「(.*?)」?vs「(.*?)」?$/)
           sente_gote.each.with_index do |e, i|
             key = "#{e}詳細"
-            self[key] = normalize_name(md.captures[i])
-            meta_info[key] = normalize_name(md.captures[i])
+            v = normalize_name(md.captures[i])
+            self[key] = v
+            meta_info[key] = v
           end
         end
       end
@@ -128,7 +129,12 @@ module Bushido
 
         # s = s.tr("ａ-ｚＡ-Ｚ０-９()", "a-zA-Z0-9（）")
         s = s.tr("ａ-ｚＡ-Ｚ０-９", "a-zA-Z0-9")
-        s = s.gsub(/\d+/) { |s| s.to_i } # "01回" => "1回"
+
+        # 「01:02」はそのままで「第001回」は「第1回」に置換する
+        s = s.gsub(/(?<number>\d+)(?<kanji>\p{^ASCII})/) { |s|
+          md = Regexp.last_match
+          "#{md[:number].to_i}#{md[:kanji]}"
+        }
       end
 
       def sente_gote
