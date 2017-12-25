@@ -161,6 +161,16 @@ module Bushido
       s.join
     end
 
+    concerning :HelperMethods do
+      def judge_key
+        if mediator.win_player == self
+          :win
+        else
+          :lose
+        end
+      end
+    end
+
     # 持駒関連
     # ここは駒台クラスとして一段下げる方法もある
     concerning :Pieceable do
