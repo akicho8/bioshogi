@@ -25,6 +25,16 @@ module Bushido
             end
           end
         end
+
+        # *引き分け
+        # まで59手で千日手
+
+        # *二歩の反則
+        # まで88手で先手の反則勝ち
+
+        if normalized_source.match?(/^まで\d+手で千日手/)
+          @last_status_params = {last_action_key: "SENNICHITE"}
+        end
       end
     end
   end
