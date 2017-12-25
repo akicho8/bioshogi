@@ -49,7 +49,9 @@ module Bushido
         # 「a」vs「b」を取り込む
         if md = source.match(/\*「(.*?)」?vs「(.*?)」?$/)
           sente_gote.each.with_index do |e, i|
-            meta_info["#{e}詳細"] = normalize_name(md.captures[i])
+            key = "#{e}詳細"
+            self[key] = normalize_name(md.captures[i])
+            meta_info[key] = normalize_name(md.captures[i])
           end
         end
       end
@@ -105,6 +107,7 @@ module Bushido
       def to_meta_h
         [
           object,
+          to_simple_names_h,
           to_names_h,
           to_kisen_h,
         ].compact.inject(&:merge)
