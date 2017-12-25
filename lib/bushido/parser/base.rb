@@ -383,10 +383,17 @@ module Bushido
           if @config[:skill_set_flag]
             TacticInfo.each do |e|
               mediator.players.each do |player|
-                header["#{player.call_name}の#{e.name}"] = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).join(", ")
+                if v = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).presence
+                  skill_set_hash["#{player.call_name}の#{e.name}"] = v
+                end
               end
             end
+            header.object.update(skill_set_hash.transform_values{|e|e.join(", ")})
           end
+        end
+
+        def skill_set_hash
+          @skill_set_hash ||= {}
         end
 
         def header_part_string
