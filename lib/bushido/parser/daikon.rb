@@ -51,6 +51,7 @@ module Bushido
           "NHK杯",
           "新人王",
           "倉敷藤花",
+          "朝日",
         ]
       end
     end
