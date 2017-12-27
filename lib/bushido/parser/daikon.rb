@@ -6,19 +6,21 @@ module Bushido
       mattr_accessor(:sep) { "," }
 
       def split(s)
-        s = s.tr("ａ-ｚＡ-Ｚ０-９（）", "a-zA-Z0-9()")
-        s = s.gsub(/[＆()・、『』。※「」]+/, sep)
+        s = NKF.nkf("-w -Z", s)
+        s = s.gsub(/\s+/, "")
+        s = s.gsub(/[&()・、『』。※「」]+/, sep)
         s = s.gsub(regexp) { |s| "#{sep}#{s}#{sep}" }
-        a = s.split(/#{sep}+/)
-        a.collect { |e|
-          e = e.remove(/\p{blank}/, /\A(\*\d)\z/).presence
-        }.compact
+        s.split(/#{sep}+/).collect(&:presence).compact
+        # a.collect { |e|
+        #   e = e.remove(/\p{blank}/, /\A(\*\d)\z/).presence
+        # }.compact
       end
 
       private
 
       def regexp
         @regexp ||= Regexp.union([
+            /[元前](?=#{kisen_list.join("|")})/,
             /(#{kisen_list.join("|")})戦?/,
             /#{keyword.join("|")}/,
             /[一二三四五六七八九十]+[世冠]/,
@@ -34,7 +36,11 @@ module Bushido
       end
 
       def keyword
-        @keyword ||= Pathname("#{__dir__}/keyword.txt").read.scan(/\S+/).sort_by { |e| -e.length }
+        @keyword ||= -> {
+          list = Pathname("#{__dir__}/keyword.txt").read.scan(/\S+/)
+          # list += nichan_names_hash.keys
+          list.sort_by { |e| -e.length }
+        }.call
       end
 
       def kisen_list
@@ -52,8 +58,24 @@ module Bushido
           "新人王",
           "倉敷藤花",
           "朝日",
+          "赤旗",
         ]
+      end
+
+      def nichan_names_hash
+        @nichan_names_hash ||= Pathname("#{__dir__}/2ch棋譜_名前.txt").readlines.each_with_object({}) {|e, m|
+          e = e.strip
+          next if e.empty?
+          next if e.start_with?("#")
+          yomi, kanji = e.split
+          m.merge(kanji => yomi)
+        }
       end
     end
   end
 end
+# ~> -:6:in `<module:Daikon>': undefined method `mattr_accessor' for Bushido::Parser::Daikon:Module (NoMethodError)
+# ~> Did you mean?  attr_accessor
+# ~> 	from -:3:in `<module:Parser>'
+# ~> 	from -:2:in `<module:Bushido>'
+# ~> 	from -:1:in `<main>'

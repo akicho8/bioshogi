@@ -86,7 +86,7 @@ module Bushido
       #         name = name.remove(/\s+/)         # タグ検索をシンプルにするため空白を持たない名前にする
       #         {name: name, suffix: suffix}
       #         # [name, suffix: suffix}
-      # 
+      #
       #       }
       #       m[e] = vv
       #     end
@@ -129,12 +129,19 @@ module Bushido
 
         # s = s.tr("ａ-ｚＡ-Ｚ０-９()", "a-zA-Z0-9（）")
         s = s.tr("ａ-ｚＡ-Ｚ０-９", "a-zA-Z0-9")
+        # s = NKF.nkf('-w -Z', s) # => "a-zA-Z0-9()"
 
         # 「01:02」はそのままで「第001回」は「第1回」に置換する
-        s = s.gsub(/(?<number>\d+)(?<kanji>\p{^ASCII})/) { |s|
-          md = Regexp.last_match
-          "#{md[:number].to_i}#{md[:kanji]}"
-        }
+        if s.match?(/\A[▲△\p{ASCII}]+\z/)
+          # 「▲001△001」の場合は飛ばす
+        else
+          s = s.gsub(/(?<number>\d+)(?<kanji>\p{^ASCII})/) { |s| # 「01回」->「1回」
+            md = Regexp.last_match
+            "#{md[:number].to_i}#{md[:kanji]}"
+          }
+        end
+
+        s
       end
 
       def sente_gote
@@ -199,3 +206,5 @@ module Bushido
     end
   end
 end
+# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:1:in `<main>'

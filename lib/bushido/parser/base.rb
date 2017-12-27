@@ -388,7 +388,7 @@ module Bushido
                 end
               end
             end
-            header.object.update(skill_set_hash.transform_values{|e|e.join(", ")})
+            header.object.update(skill_set_hash.transform_values { |e| e.join(", ") })
           end
         end
 
