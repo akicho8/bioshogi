@@ -74,7 +74,7 @@ module Bushido
       end
 
       def header_normalize
-        header.normalize
+        header.normalize_all
       end
 
       def board_read

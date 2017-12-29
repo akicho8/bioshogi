@@ -6,7 +6,7 @@ module Bushido
       end
 
       def []=(key, value)
-        v = normalize_name(value)
+        v = normalize_value(value)
         if v.present?
           object[key] = v
         end
@@ -14,6 +14,11 @@ module Bushido
 
       def [](key)
         object[key]
+      end
+
+      def normalize_all
+        time_format_normalize
+        piece_order_normalize
       end
 
       def object
@@ -48,67 +53,34 @@ module Bushido
         if md = source.match(/\*「(.*?)」?vs「(.*?)」?$/)
           sente_gote.each.with_index do |e, i|
             key = "#{e}詳細"
-            v = normalize_name(md.captures[i])
+            v = normalize_value(md.captures[i])
             self[key] = v
             # meta_info[key] = v
           end
         end
       end
 
-      def to_meta_h
+      def sente_gote
+        Location.collect { |e| e.public_send(hirate_or_komochi) }
+      end
+
+      # 消す予定
+
+      def __to_meta_h
         [
           object,
-          to_simple_names_h,
+          __to_simple_names_h,
         ].compact.inject(&:merge)
       end
 
       # ["中倉宏美", "伊藤康晴"]
-      def to_simple_names_h
+      def __to_simple_names_h
         sente_gote.inject({}) { |a, e|
           a.merge(e => pair_split(object[e]))
         }
       end
 
-      def normalize_name(s)
-        s = s.gsub(/\p{blank}/, " ")
-
-        # ここでスペースととると ", " が "," になるのはいやかも
-        # unless s.match?(/\A\p{ASCII}*\z/)
-        #   s = s.remove(/\s+/)
-        # end
-
-        # s = s.tr("ａ-ｚＡ-Ｚ０-９()", "a-zA-Z0-9（）")
-        s = s.tr("ａ-ｚＡ-Ｚ０-９", "a-zA-Z0-9")
-        # s = NKF.nkf('-w -Z', s) # => "a-zA-Z0-9()"
-
-        # 「01:02」はそのままで「第001回」は「第1回」に置換する
-        if s.match?(/\A[▲△\p{ASCII}]+\z/)
-          # 「▲001△001」の場合は飛ばす
-        else
-          s = s.gsub(/(?<number>\d+)(?<kanji>\p{^ASCII})/) { |s| # 「01回」->「1回」
-            md = Regexp.last_match
-            "#{md[:number].to_i}#{md[:kanji]}"
-          }
-        end
-
-        s
-      end
-
-      def sente_gote
-        Location.collect { |e| e.public_send(hira_or_koma) }
-      end
-
-      # 「上手」「下手」の文字がなければ「平手」と見なしている
-      # 棋譜を見ずにヘッダーだけで推測している点に注意
-      def hira_or_koma
-        @hira_or_koma ||= -> {
-          if Location.none? { |e| object[e.komaochi_name] }
-            :hirate_name
-          else
-            :komaochi_name
-          end
-        }.call
-      end
+      private
 
       # "清水市代・フレデリックポティエ"    => ["清水市代", "フレデリックポティエ"]
       # "清水市代＆フレデリック・ポティエ"  => ["清水市代", "フレデリックポティエ"]
@@ -120,11 +92,6 @@ module Bushido
             s.split("・")
           end
         end
-      end
-
-      def normalize
-        time_format_normalize
-        piece_order_normalize
       end
 
       def time_format_normalize
@@ -152,6 +119,43 @@ module Bushido
             object[e] = v
           end
         end
+      end
+
+      def normalize_value(s)
+        s = s.gsub(/\p{blank}/, " ")
+
+        # ここでスペースととると ", " が "," になるのはいやかも
+        # unless s.match?(/\A\p{ASCII}*\z/)
+        #   s = s.remove(/\s+/)
+        # end
+
+        # s = s.tr("ａ-ｚＡ-Ｚ０-９()", "a-zA-Z0-9（）")
+        s = s.tr("ａ-ｚＡ-Ｚ０-９", "a-zA-Z0-9")
+        # s = NKF.nkf('-w -Z', s) # => "a-zA-Z0-9()"
+
+        # 「01:02」はそのままで「第001回」は「第1回」に置換する
+        if s.match?(/\A[▲△\p{ASCII}]+\z/)
+          # 「▲001△001」の場合は飛ばす
+        else
+          s = s.gsub(/(?<number>\d+)(?<kanji>\p{^ASCII})/) { |s| # 「01回」->「1回」
+            md = Regexp.last_match
+            "#{md[:number].to_i}#{md[:kanji]}"
+          }
+        end
+
+        s
+      end
+
+      # 「上手」「下手」の文字がなければ「平手」と見なしている
+      # 棋譜を見ずにヘッダーだけで推測している点に注意
+      def hirate_or_komochi
+        @hirate_or_komochi ||= -> {
+          if Location.none? { |e| object[e.komaochi_name] }
+            :hirate_name
+          else
+            :komaochi_name
+          end
+        }.call
       end
     end
   end
