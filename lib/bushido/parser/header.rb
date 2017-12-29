@@ -52,71 +52,49 @@ module Bushido
             key = "#{e}詳細"
             v = normalize_name(md.captures[i])
             self[key] = v
-            meta_info[key] = v
+            # meta_info[key] = v
           end
         end
       end
 
       def tags
-        to_names_h.values.flatten
-      end
-
-      def to_names_h
-        sente_gote.each_with_object({}) do |e, m|
-          if v = meta_info["#{e}詳細"]
-            m["#{e}詳細"] = Daikon.split(v)
-          end
-        end
+        # to_names_h.values.flatten
       end
 
       # def to_names_h
       #   sente_gote.each_with_object({}) do |e, m|
-      #     v0 = pair_split(self[e])
-      #     v1 = meta_info["#{e}詳細"]
-      #     if v1
-      #       if v0.size >= 2
-      #         v1 = pair_split(v1)
-      #       else
-      #         v1 = [v1]
-      #       end
-      #       vv = v1.collect.with_index { |e, i|
-      #         name = v0[i]
-      #         suffix = e.remove(name)
-      #         suffix = suffix_normalize(suffix) # "ミステリマガジン編集長（自称四段）" => ["ミステリマガジン編集長", "自称四段"]
-      #         name = name.remove(/\s+/)         # タグ検索をシンプルにするため空白を持たない名前にする
-      #         {name: name, suffix: suffix}
-      #         # [name, suffix: suffix}
-      #
-      #       }
-      #       m[e] = vv
+      #     if v = meta_info["#{e}詳細"]
+      #       m["#{e}詳細"] = Daikon.split(v)
       #     end
       #   end
       # end
 
-      def to_kisen_a
-        if v = object["棋戦詳細"]
-          Daikon.split(v)
-        end
-      end
+      # def to_kisen_a
+      #   if v = object["棋戦詳細"]
+      #     Daikon.split(v)
+      #   end
+      # end
 
-      def to_kisen_h
-        if v = to_kisen_a
-          {"棋戦詳細" => v}
-        end
-      end
+      # def to_kisen_h
+      #   if v = to_kisen_a
+      #     {"棋戦詳細" => v}
+      #   end
+      # end
 
       def to_meta_h
         [
           object,
           to_simple_names_h,
-          to_names_h,
-          to_kisen_h,
+          # to_names_h,
+          # to_kisen_h,
         ].compact.inject(&:merge)
       end
 
       # ["中倉宏美", "伊藤康晴"]
       def to_simple_names_h
-        sente_gote.inject({}) { |a, e| a.merge(e => pair_split(object[e])) }
+        sente_gote.inject({}) { |a, e|
+          a.merge(e => pair_split(object[e]))
+        }
       end
 
       def normalize_name(s)
@@ -206,5 +184,3 @@ module Bushido
     end
   end
 end
-# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
-# ~> 	from -:1:in `<main>'

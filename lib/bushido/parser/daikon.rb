@@ -74,8 +74,3 @@ module Bushido
     end
   end
 end
-# ~> -:6:in `<module:Daikon>': undefined method `mattr_accessor' for Bushido::Parser::Daikon:Module (NoMethodError)
-# ~> Did you mean?  attr_accessor
-# ~> 	from -:3:in `<module:Parser>'
-# ~> 	from -:2:in `<module:Bushido>'
-# ~> 	from -:1:in `<main>'
