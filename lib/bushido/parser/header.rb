@@ -1,5 +1,3 @@
-require_relative "daikon"
-
 module Bushido
   module Parser
     class Header
@@ -57,36 +55,10 @@ module Bushido
         end
       end
 
-      def tags
-        # to_names_h.values.flatten
-      end
-
-      # def to_names_h
-      #   sente_gote.each_with_object({}) do |e, m|
-      #     if v = meta_info["#{e}詳細"]
-      #       m["#{e}詳細"] = Daikon.split(v)
-      #     end
-      #   end
-      # end
-
-      # def to_kisen_a
-      #   if v = object["棋戦詳細"]
-      #     Daikon.split(v)
-      #   end
-      # end
-
-      # def to_kisen_h
-      #   if v = to_kisen_a
-      #     {"棋戦詳細" => v}
-      #   end
-      # end
-
       def to_meta_h
         [
           object,
           to_simple_names_h,
-          # to_names_h,
-          # to_kisen_h,
         ].compact.inject(&:merge)
       end
 
