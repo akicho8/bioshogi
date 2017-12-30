@@ -37,7 +37,7 @@ module Bushido
 
         # 一行になっている「*解説：佐藤康光名人　聞き手：矢内理絵子女流三段」を整形する
         source = source.gsub(/\p{blank}/, " ")
-        source = source.gsub(/\s*(?:解説|聞き手)：\S+/) { |s| "*#{s.strip}\n" }
+        source = source.gsub(/[\*\s]+(解説|聞き手)：\S+/) { |s| "\n#{s.strip}\n" }
 
         source.scan(/^(\S.*)#{Base.header_sep}(.*)$/o).each do |key, value|
           if key.start_with?("#")
