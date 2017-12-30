@@ -3,6 +3,7 @@
   - [[https://travis-ci.org/akicho8/bushido][Travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
   - [[https://gemnasium.com/akicho8/bushido/][Gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
   - [[https://codeclimate.com/github/akicho8/bushido][Code Climate]]: [[https://codeclimate.com/github/akicho8/bushido.png]]
+  - [[https://bettercodehub.com/edge/badge/akicho8/bushido?branch%3Dmaster][https://bettercodehub.com/edge/badge/akicho8/bushido?branch=master]]
 
   デモ: http://fast-plateau-7460.herokuapp.com/
 
