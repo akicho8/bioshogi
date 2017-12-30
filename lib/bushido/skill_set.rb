@@ -32,9 +32,9 @@ module Bushido
     end
 
     def to_h
-      TacticInfo.inject({}) { |a, e|
-        a.merge(e.key => public_send("normalized_#{e.var_key}").collect(&:key))
-      }
+      TacticInfo.inject({}) do |a, e|
+        a.merge(e.key => normalize_list(public_send(e.var_key)).collect(&:key))
+      end
     end
 
     def kif_comment(location)
