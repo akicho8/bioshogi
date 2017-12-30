@@ -51,12 +51,12 @@ module Bushido
         self[piece: piece, promoted: promoted, **attributes].freeze
       end
 
-      def csa_new_with_promoted(value)
+      def csa_new_with_promoted(value, **attributes)
         case
         when piece = Piece.find { |e| e.csa_basic_name == value }
-          promoted = true
-        when piece = Piece.find { |e| e.csa_promoted_name == value }
           promoted = false
+        when piece = Piece.find { |e| e.csa_promoted_name == value }
+          promoted = true
         else
           raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
         end
