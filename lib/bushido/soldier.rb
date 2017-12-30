@@ -1,11 +1,14 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/shash_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/soldier_spec.rb" -*-
 # frozen-string-literal: true
 #
-#  クラス      名前               有効な属性
-#  Soldier 盤上の駒の状態     point piece promoted
-#  PieceStake  駒を打った情報     point piece promoted
-#  BattlerMove 駒が動かした情報   point piece promoted origin_soldier promoted_trigger
-#
+# |-------------+------------------+---------------------------------------------------------------|
+# | クラス      | 名前             | 有効な属性                                                    |
+# |-------------+------------------+---------------------------------------------------------------|
+# | BattlerMove | 盤上の駒         | 専用クラス。player 属性を持つ                                 |
+# | Soldier     | 盤上の駒の仮状態 | point piece promoted location                                 |
+# | PieceStake  | 打った駒情報     | point piece promoted location                                 |
+# | BattlerMove | 動かした駒情報   | point piece promoted location origin_soldier promoted_trigger |
+# |-------------+------------------+---------------------------------------------------------------|
 module Bushido
   #  文字列なら「５二竜」となる情報をこのままだと扱いにくいので
   #  point, piece, promoted の3つの情報にわける
@@ -24,7 +27,7 @@ module Bushido
           return str
         end
 
-        md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/) # FIXME: 他のところと同様に厳密にチェックする
+        md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
 
         unless md
           raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
