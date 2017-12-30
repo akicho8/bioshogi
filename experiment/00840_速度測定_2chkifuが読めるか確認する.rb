@@ -9,6 +9,10 @@ require 'active_support/core_ext/benchmark'
 
 def assert_equal(a, b)
   r = a == b
+  unless r
+    diff(a, b)
+  end
+
   @result[r] += 1
   print r ? "." : "x"
   STDOUT.flush
@@ -24,6 +28,19 @@ def assert_equal(a, b)
   end
 end
 
+def diff(str1, str2)
+  require "diff/lcs"
+  diff = Diff::LCS.sdiff(*[str1, str2].collect { |e| e.lines.collect(&:rstrip) }).each_with_object("") do |e, m|
+    if e.old_element != e.new_element
+      m << "- #{e.old_element}\n" if e.old_element
+      m << "+ #{e.new_element}\n" if e.new_element
+    end
+  end
+  puts "--------------------------------------------------------------------------------"
+  puts diff
+  puts "--------------------------------------------------------------------------------"
+end
+
 @check_file = Pathname("check_file.txt")
 if @check_file.exist?
   files = @check_file.readlines.collect {|e| Pathname(e.strip) }
@@ -31,10 +48,12 @@ else
   files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
 end
 
-files = files.take((ARGV.first || 1000_0000).to_i)
+# files = "~/src/2chkifu/00001/00002.KI2"
+
+files = Array(files).take((ARGV.first || 1000_0000).to_i)
 seconds = Benchmark.realtime do
   files.each do |file|
-    @current = file
+    @current = Pathname(file).expand_path
 
     begin
       info = Parser.file_parse(file, typical_error_case: :skip)
