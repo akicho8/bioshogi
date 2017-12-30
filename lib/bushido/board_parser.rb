@@ -315,7 +315,7 @@ module Bushido
               if md = e.match(/(?<csa_sign>\S)(?<piece>\S{2})/)
                 location = Location[md[:csa_sign]]
                 point = Point["#{x}#{y}"]
-                soldiers << Soldier.csa_new_with_promoted(md[:piece]).merge(point: point, location: location)
+                soldiers << Soldier.csa_new_with_promoted(md[:piece], point: point, location: location)
               end
             end
           end

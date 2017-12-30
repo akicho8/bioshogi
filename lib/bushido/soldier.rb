@@ -33,32 +33,34 @@ module Bushido
           raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
         end
 
-        new_with_promoted(md[:piece]).merge(point: Point.fetch(md[:point]), location: Location[md[:location]])
+        new_with_promoted(md[:piece], point: Point.fetch(md[:point]), location: Location[md[:location]])
       end
 
       # 「歩」や「と」を駒オブジェクトと成フラグに分離
       #   Soldier.new_with_promoted("歩") # => <Soldier piece:"歩">
       #   Soldier.new_with_promoted("と") # => <Soldier piece:"歩", promoted: true>
-      def new_with_promoted(value)
+      def new_with_promoted(value, **attributes)
         case
         when piece = Piece.basic_lookup(value)
-          self[piece: piece, promoted: false]
+          promoted = false
         when piece = Piece.promoted_lookup(value)
-          self[piece: piece, promoted: true]
+          promoted = true
         else
           raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
         end
+        self[piece: piece, promoted: promoted, **attributes].freeze
       end
 
       def csa_new_with_promoted(value)
         case
         when piece = Piece.find { |e| e.csa_basic_name == value }
-          self[piece: piece, promoted: false]
+          promoted = true
         when piece = Piece.find { |e| e.csa_promoted_name == value }
-          self[piece: piece, promoted: true]
+          promoted = false
         else
           raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
         end
+        self[piece: piece, promoted: promoted, **attributes].freeze
       end
     end
 
