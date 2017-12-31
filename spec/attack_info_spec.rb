@@ -18,12 +18,7 @@ module Bushido
     end
 
     it "UFO銀" do
-      
-      pp AttackInfo["UFO銀"]
-      
       AttackInfo["UFO銀"].name.should == "UFO銀"
-
-      
     end
   end
 end
