@@ -16,5 +16,14 @@ module Bushido
     it "tactic_info" do
       AttackInfo.first.tactic_info.key.should == :attack
     end
+
+    it "UFO銀" do
+      
+      pp AttackInfo["UFO銀"]
+      
+      AttackInfo["UFO銀"].name.should == "UFO銀"
+
+      
+    end
   end
 end

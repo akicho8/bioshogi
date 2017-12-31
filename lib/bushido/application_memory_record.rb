@@ -10,10 +10,10 @@ module Bushido
       rescue KeyError => error
         raise KeyNotFound, error.message
       end
-    end
 
-    def name
-      key.to_s
+      def name
+        key.to_s
+      end
     end
 
     def <=>(other)
