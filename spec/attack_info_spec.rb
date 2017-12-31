@@ -20,5 +20,9 @@ module Bushido
     it "UFO銀" do
       AttackInfo["UFO銀"].name.should == "UFO銀"
     end
+
+    it "urls" do
+      assert AttackInfo["UFO銀"].urls
+    end
   end
 end
