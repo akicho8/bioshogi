@@ -16,7 +16,7 @@ mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.teaiwari_name        # => "香落ち"
+mediator.board.handicap_name        # => "香落ち"
 
 mediator = Mediator.new
 mediator.board_reset_by_shape(<<~EOT)
@@ -34,7 +34,7 @@ mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.teaiwari_name        # => nil
+mediator.board.handicap_name        # => nil
 # >> 1手目: ▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

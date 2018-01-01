@@ -14,4 +14,4 @@ info1 = BoardParser.parse(<<~EOT)
 +---------------------------+
 EOT
 
-info1.both_board_info[Location[:black]].sort == TeaiwariInfo["香落ち"].both_board_info[Location[:black]].sort # => true
+info1.both_board_info[Location[:black]].sort == HandicapInfo["香落ち"].both_board_info[Location[:black]].sort # => true

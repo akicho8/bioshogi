@@ -135,7 +135,7 @@ module Bushido
         end
 
         board_reset_for_hash(v)
-        @turn_info.komaochi = (board.teaiwari_name != "平手")
+        @turn_info.komaochi = (board.handicap_name != "平手")
       end
 
       def board_reset_by_shape(value)
@@ -146,8 +146,8 @@ module Bushido
 
       # 盤面から手合割を判断する
       def turn_info_auto_set
-        if board.teaiwari_name
-          @turn_info.komaochi = (board.teaiwari_name != "平手")
+        if board.handicap_name
+          @turn_info.komaochi = (board.handicap_name != "平手")
         end
       end
 
@@ -300,7 +300,7 @@ module Bushido
 
       # 平手で開始する直前の状態か？
       def startpos?
-        board.teaiwari_name == "平手" && players.all? { |e| e.pieces.empty? }
+        board.handicap_name == "平手" && players.all? { |e| e.pieces.empty? }
       end
 
       # 現在の局面

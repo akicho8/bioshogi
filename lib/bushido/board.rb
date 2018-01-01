@@ -127,25 +127,25 @@ module Bushido
       end
     end
 
-    concerning :TeaiwariMethods do
+    concerning :HandicapMethods do
       # ▲が平手であることが条件
-      def teaiwari_name
-        if teaiwari_name_by_location(:black) == "平手"
-          teaiwari_name_by_location(:white)
+      def handicap_name
+        if handicap_name_by_location(:black) == "平手"
+          handicap_name_by_location(:white)
         end
       end
 
       private
 
       # location 側の手合割を文字列で得る
-      def teaiwari_name_by_location(location)
-        if v = teaiwari_info_by_location(location)
+      def handicap_name_by_location(location)
+        if v = handicap_info_by_location(location)
           v.name
         end
       end
 
       # location 側の手合割情報を得る
-      def teaiwari_info_by_location(location)
+      def handicap_info_by_location(location)
         # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
         # これがないと、board_spec.rb だけを実行したとき落ちる
         if Position.size_type != :board_size_9x9
@@ -161,7 +161,7 @@ module Bushido
           end
         }.compact.sort
 
-        TeaiwariInfo.find do |e|
+        HandicapInfo.find do |e|
           e.sorted_black_side_soldiers == sorted_black_side_soldiers
         end
       end

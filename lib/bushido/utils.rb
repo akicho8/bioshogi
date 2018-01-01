@@ -25,7 +25,7 @@ module Bushido
       if BoardParser.accept?(params[:key])
         board_parser = BoardParser.parse(params[:key])
       else
-        board_parser = TeaiwariInfo.fetch(params[:key]).board_parser
+        board_parser = HandicapInfo.fetch(params[:key]).board_parser
       end
 
       board_parser.soldiers.collect do |e|
