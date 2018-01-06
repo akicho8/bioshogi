@@ -154,7 +154,13 @@ module Bushido
 
       def point_validate(x, y, something)
         unless @h_units[x] && @v_units[y]
-          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{-y}) の地点です\n#{@source}"
+          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
+        end
+      end
+
+      def prefix_char_validate(x, y, prefix_char)
+        unless prefix_char.match?(/[[:ascii:]]/)
+          raise SyntaxDefact, "盤面がずれている可能性があります。prefix_char=#{prefix_char.inspect}。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
         end
       end
 
@@ -168,6 +174,7 @@ module Bushido
         inlines.each.with_index do |s, y|
           # 1文字 + (全角1文字 or 半角2文字)
           s.scan(/(.)([[:^ascii:]]|[[:ascii:]]{2})/).each.with_index do |(prefix_char, something), x|
+            prefix_char_validate(x, y, prefix_char)
             point_validate(x, y, something)
             point = Point[[@h_units[x], @v_units[y]].join]
             yield point, prefix_char, something
