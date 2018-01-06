@@ -1045,15 +1045,15 @@ EOT
         key: "木村定跡",
         body: <<~EOT,
 +---------------------------+
-| ・ ・ ・ ・ ・ ・?玉 ・ ・|
-| ・v飛 ・ ・v金 ・v金?玉 ・|
-| ・ ・v桂・  ・ ・v銀 ・ ・|
-| ・ ・v歩 ・v銀 ・ ・ ・ ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| ・v飛 ・ ・v金 ・v金v玉 ・|
+| ・ ・v桂 ・ ・ ・v銀 ・ ・|
+| ・ ・ ・ ・v銀 ・ ・ ・ ・|
 | ・v歩 ・ ・ ・!歩 ・ 歩 ・|
-| ・ ・ ・ ・ 銀 ・ 歩 ・ ・|
+| ・ ・ ・ ・ 銀 ・ ・ ・ ・|
 | ・ ・ 銀 ・ ・ ・ 桂 ・ ・|
-| ・*玉 金 ・ 金 ・ ・ 飛 ・|
-| ・ ・*玉 ・ ・ ・ ・ ・ ・|
+| ・ 玉 金 ・ 金 ・ ・ 飛 ・|
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|
 +---------------------------+
 EOT
       },
@@ -2410,3 +2410,6 @@ EOT
     delegate :sorted_soldiers, :both_board_info, :sorted_black_side_soldiers, :black_side_soldiers, to: :board_parser
   end
 end
+# ~> -:23:in `<class:ShapeInfo>': uninitialized constant Bushido::ShapeInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:22:in `<module:Bushido>'
+# ~> 	from -:21:in `<main>'
