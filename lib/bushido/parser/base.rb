@@ -362,8 +362,18 @@ module Bushido
         end
 
         def mediator_run_all(mediator)
+          # FIXME: ここらへんは mediator のなかで実行する
           begin
             move_infos.each do |info|
+              if @config[:debug]
+                p mediator
+              end
+              if @config[:callback]
+                @config[:callback].call(mediator)
+              end
+              if @config[:turn_limit] && mediator.turn_max > @config[:turn_limit]
+                break
+              end
               mediator.execute(info[:input])
             end
           rescue TypicalError => error
