@@ -305,10 +305,10 @@ module Bushido
 
       # 現在の局面
       def to_current_sfen
-        if !startpos?
-          to_long_sfen
-        else
+        if startpos?
           "startpos"
+        else
+          to_long_sfen
         end
       end
 
