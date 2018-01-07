@@ -8,7 +8,7 @@ module Bushido
         info = Parser.file_parse(file)
         info.mediator_run
         matches = info.mediator.players.collect { |player|
-          player.skill_set.public_send("normalized_#{e.tactic_info.key}_infos").collect(&:key)
+          player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
         }.flatten
         assert matches.include?(e.key), e.key
       end

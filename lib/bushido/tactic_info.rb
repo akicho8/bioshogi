@@ -10,7 +10,7 @@ module Bushido
       "bushido/#{key}_info".classify.constantize
     end
 
-    def var_key
+    def list_key
       "#{key}_infos"
     end
 

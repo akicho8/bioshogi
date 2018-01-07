@@ -89,7 +89,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |    19  |     def execute_one(e)
 # >>    34    (3.4%)                   |    20  |       catch :skip do
 # >>                                   |    21  |         # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
-# >>     5    (0.5%)                   |    22  |         list = player.skill_set.public_send(e.tactic_info.var_key)
+# >>     5    (0.5%)                   |    22  |         list = player.skill_set.public_send(e.tactic_info.list_key)
 # >>                                   |    23  |         if list.include?(e)
 # >>                                   |    24  |           throw :skip
 # >>                                   |    25  |         end
@@ -250,7 +250,7 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   180  |         end
 # >>                                   |   181  | 
 # >>                                   |   182  |         list << e
-# >>                                   |   183  |         player.runner.skill_set.public_send(e.tactic_info.var_key) << e
+# >>                                   |   183  |         player.runner.skill_set.public_send(e.tactic_info.list_key) << e
 # >>                                   |   184  |       end
 # >>     2    (0.2%) /     2   (0.2%)  |   185  |     end
 # >>                                   |   186  | 

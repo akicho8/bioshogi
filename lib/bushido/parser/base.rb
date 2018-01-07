@@ -393,7 +393,7 @@ module Bushido
           if @config[:skill_set_flag]
             TacticInfo.each do |e|
               mediator.players.each do |player|
-                if v = player.skill_set.public_send("normalized_#{e.var_key}").collect(&:name).presence
+                if v = player.skill_set.public_send(e.list_key).normalize.collect(&:name).presence
                   skill_set_hash["#{player.call_name}の#{e.name}"] = v
                 end
               end

@@ -19,7 +19,7 @@ module Bushido
     def execute_one(e)
       catch :skip do
         # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
-        list = player.skill_set.public_send(e.tactic_info.var_key)
+        list = player.skill_set.public_send(e.tactic_info.list_key)
         if list.include?(e)
           throw :skip
         end
@@ -180,7 +180,7 @@ module Bushido
         end
 
         list << e
-        player.runner.skill_set.public_send(e.tactic_info.var_key) << e
+        player.runner.skill_set.public_send(e.tactic_info.list_key) << e
       end
     end
 
