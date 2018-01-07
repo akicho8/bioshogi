@@ -13,5 +13,11 @@ module Bushido
         assert matches.include?(e.key), e.key
       end
     end
+
+    it "すべての戦法に参考URLがある" do
+      TacticInfo.all_elements.each do |e|
+        assert e.urls, e.key
+      end
+    end
   end
 end

@@ -946,6 +946,13 @@ module Bushido
         ],
       },
       {
+        :key => "新丸山ワクチン",
+        :urls => [
+          "http://mijinko83.blog110.fc2.com/blog-entry-183.html",
+          "https://ja.wikipedia.org/wiki/%E3%82%B4%E3%82%AD%E3%82%B2%E3%83%B3%E4%B8%AD%E9%A3%9B%E8%BB%8A#.E4.B8.B8.E5.B1.B1.E3.83.AF.E3.82.AF.E3.83.81.E3.83.B3",
+        ],
+      },
+      {
         :key => "４六銀左急戦",
         :urls => [
           "http://mijinko83.blog110.fc2.com/blog-entry-175.html",
