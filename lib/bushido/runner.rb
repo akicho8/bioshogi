@@ -249,7 +249,7 @@ module Bushido
     end
 
     def current_soldier
-      @current_soldier ||= Soldier[piece: @piece, promoted: @promoted, point: @point_to, location: @player.location]
+      @current_soldier ||= Soldier[piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location]
     end
 
     def before_soldier
