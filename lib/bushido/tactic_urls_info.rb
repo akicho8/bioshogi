@@ -1036,6 +1036,7 @@ module Bushido
       {
         :key => "高田流左玉",
         :urls => [
+          "http://masarusumeragi.hatenablog.com/archive/category/%E9%AB%98%E7%94%B0%E6%B5%81%E5%B7%A6%E7%8E%89%E5%AE%9A%E8%B7%A1",
         ],
       },
       {
@@ -1058,12 +1059,16 @@ module Bushido
       },
       {
         :key => "穴角戦法",
-        :urls => [],
+        :urls => [
+          "https://games.yahoo.co.jp/qa/detail?qid=1071733295",
+        ],
       },
       {
         :key => "穴角向かい飛車",
-        :urls => [],
-      }
+        :urls => [
+          "https://www.youtube.com/watch?v=RN2ilK7WFwo",
+        ],
+      },
     ]
   end
 end
