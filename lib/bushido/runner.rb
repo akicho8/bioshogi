@@ -324,7 +324,7 @@ module Bushido
             find_battlers
           end
           if @battlers.size > 1
-            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が多すぎます。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@battlers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@battlers.collect(&:mark_with_formal_name).join(' ')})\n#{@player.board_with_pieces}"
           end
         end
 

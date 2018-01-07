@@ -22,8 +22,8 @@ module Bushido
     end
 
     it "エラー" do
-      expect { test1("１七飛成") }.to raise_error(AmbiguousFormatError, /移動できる駒が多すぎます/)
-      expect { test1("３三角") }.to raise_error(AmbiguousFormatError, /移動できる駒が多すぎます/)
+      expect { test1("１七飛成") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
+      expect { test1("３三角") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
     end
 
     it "「上」は「行」と書ける" do
@@ -36,7 +36,7 @@ module Bushido
 
     it "ただし大駒以外には使えない" do
       test1("８八金右上").should == ["８八金(97)", "８八金右上", "-9788KI"]
-      expect { test1("８八金右行") }.to raise_error(AmbiguousFormatError, /移動できる駒が多すぎます/)
+      expect { test1("８八金右行") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
     end
   end
 end
