@@ -125,7 +125,7 @@ tp rows
 # >> | Bushido::AttackInfo  | 升田式石田流         | 早石田         |                                                |        3 |
 # >> | Bushido::AttackInfo  | 鬼殺し               |                |                                                |        2 |
 # >> | Bushido::AttackInfo  | △３ニ飛戦法         |                |                                                |        0 |
-# >> | Bushido::AttackInfo  | 中田功ＸＰ           |                |                                                |        5 |
+# >> | Bushido::AttackInfo  | 中田功XP           |                |                                                |        5 |
 # >> | Bushido::AttackInfo  | 真部流               |                |                                                |        6 |
 # >> | Bushido::AttackInfo  | ▲７八飛戦法         |                |                                                |        1 |
 # >> | Bushido::AttackInfo  | ４→３戦法           |                |                                                |        0 |

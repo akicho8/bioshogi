@@ -769,7 +769,7 @@ module Bushido
         ],
       },
       {
-        :key => "中田功ＸＰ",
+        :key => "中田功XP",
         :urls => [
           "http://mijinko83.blog110.fc2.com/blog-entry-163.html",
           "https://ja.wikipedia.org/wiki/%E4%B8%AD%E7%94%B0%E5%8A%9FXP",
