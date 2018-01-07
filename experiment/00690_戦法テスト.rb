@@ -7,7 +7,9 @@ rows = TacticInfo.all_elements.collect do |e|
     str = file.read
     info = Parser.parse(str)
     info.mediator_run
-    row[:matches] = info.mediator.players.collect {|player| player.skill_set.public_send("normalized_#{e.tactic_info.key}_infos").collect(&:key) }.flatten
+    row[:matches] = info.mediator.players.collect { |player|
+      player.skill_set.public_send("normalized_#{e.tactic_info.key}_infos").collect(&:key)
+    }.flatten
     row[:status] = row[:matches].include?(e.key)
   end
   row
@@ -106,7 +108,7 @@ tp rows
 # >> | ツノ銀中飛車         | 戦型/ツノ銀中飛車.kif         | [:英ちゃん流中飛車, :ツノ銀中飛車, :４五歩早仕掛け, :加藤流袖飛車, :袖飛車]        | true   |
 # >> | 平目                 | 戦型/平目.kif                 | [:ゴキゲン中飛車, :平目, :対振り持久戦]                                            | true   |
 # >> | 風車                 | 戦型/風車.kif                 | [:右玉, :風車]                                                                     | true   |
-# >> | 新風車               |                               |                                                                                    |        |
+# >> | 新風車               | 戦型/新風車.kif               | [:右玉]                                                                            | false  |
 # >> | 英ちゃん流中飛車     | 戦型/英ちゃん流中飛車.kif     | [:英ちゃん流中飛車]                                                                | true   |
 # >> | 原始中飛車           | 戦型/原始中飛車.kif           | [:相振り飛車, :矢倉中飛車, :原始中飛車, :ゴキゲン中飛車, :矢倉中飛車, :相振り飛車] | true   |
 # >> | 加藤流袖飛車         | 戦型/加藤流袖飛車.kif         | [:英ちゃん流中飛車, :加藤流袖飛車, :袖飛車, :棒銀]                                 | true   |

@@ -17,6 +17,10 @@ module Bushido
       @normalized_attack_infos ||= normalize_list(attack_infos)
     end
 
+    def normalized_attack_infos
+      @normalized_attack_infos ||= normalize_list(attack_infos)
+    end
+
     def normalized_defense_infos
       @normalized_defense_infos ||= normalize_list(defense_infos)
     end
