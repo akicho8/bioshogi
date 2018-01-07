@@ -2,7 +2,7 @@ require "./example_helper"
 
 mediator = Mediator.new
 mediator.board_reset("裸玉")
-mediator.board.handicap_name    # => "十九枚落ち"
+mediator.board.preset_name    # => "十九枚落ち"
 puts mediator.board.to_ki2
 puts mediator.board.to_kif
 puts mediator.board.to_csa

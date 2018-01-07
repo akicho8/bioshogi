@@ -127,25 +127,25 @@ module Bushido
       end
     end
 
-    concerning :HandicapMethods do
+    concerning :PresetMethods do
       # ▲が平手であることが条件
-      def handicap_name
-        if handicap_name_by_location(:black) == "平手"
-          handicap_name_by_location(:white)
+      def preset_name
+        if preset_name_by_location(:black) == "平手"
+          preset_name_by_location(:white)
         end
       end
 
       private
 
       # location 側の手合割を文字列で得る
-      def handicap_name_by_location(location)
-        if v = handicap_info_by_location(location)
+      def preset_name_by_location(location)
+        if v = preset_info_by_location(location)
           v.name
         end
       end
 
       # location 側の手合割情報を得る
-      def handicap_info_by_location(location)
+      def preset_info_by_location(location)
         # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
         # これがないと、board_spec.rb だけを実行したとき落ちる
         if Position.size_type != :board_size_9x9
@@ -161,7 +161,7 @@ module Bushido
           end
         }.compact.sort
 
-        HandicapInfo.find do |e|
+        PresetInfo.find do |e|
           e.sorted_black_side_soldiers == sorted_black_side_soldiers
         end
       end

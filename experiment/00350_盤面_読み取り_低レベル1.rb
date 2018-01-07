@@ -27,7 +27,7 @@ tp BoardParser.parse(<<~EOT).soldiers
 +---------------------------+
 EOT
 
-tp HandicapInfo["平手"].both_board_info[Location[:black]]
+tp PresetInfo["平手"].both_board_info[Location[:black]]
 # >> |-------+----------+-------+----------|
 # >> | piece | promoted | point | location |
 # >> |-------+----------+-------+----------|

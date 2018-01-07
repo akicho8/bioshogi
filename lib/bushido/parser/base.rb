@@ -160,18 +160,18 @@ module Bushido
             end
           }.join
 
-          handicap_name = nil
+          preset_name = nil
           if true
             obj = Mediator.new
             obj.board_reset_old(@board_source || header["手合割"])
-            handicap_name = obj.board.handicap_name
-            if handicap_name
-              out << "#{Parser::CsaParser.comment_char} 手合割:#{handicap_name}\n"
+            preset_name = obj.board.preset_name
+            if preset_name
+              out << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}\n"
             end
             if options[:board_expansion]
               out << obj.board.to_csa
             else
-              if handicap_name == "平手"
+              if preset_name == "平手"
                 out << "PI\n"
               else
                 out << obj.board.to_csa
@@ -180,7 +180,7 @@ module Bushido
           end
 
           # 2通りある
-          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(handicap_name))
+          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_name))
           # 2. mediator.turn_info を利用する
           out << mediator.turn_info.base_location.csa_sign + "\n"
 
@@ -351,7 +351,7 @@ module Bushido
             mediator.board_reset_by_shape(@board_source)
             mediator.turn_info_auto_set
 
-            if mediator.board.handicap_name != "平手"
+            if mediator.board.preset_name != "平手"
               if header["手合割"].blank? || header["手合割"] == "その他"
                 mediator.turn_info.komaochi = true
               end
@@ -465,7 +465,7 @@ module Bushido
             obj.board_reset(header["手合割"] || "平手")
           end
 
-          if v = obj.board.handicap_name
+          if v = obj.board.preset_name
             header["手合割"] = v
 
             # 手合割がわかるとき持駒が空なら消す

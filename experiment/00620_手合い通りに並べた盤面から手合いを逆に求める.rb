@@ -1,8 +1,8 @@
 require "./example_helper"
 
-HandicapInfo.each do |handicap_info|
+PresetInfo.each do |preset_info|
   mediator = Mediator.new
-  mediator.board_reset(handicap_info.key)
+  mediator.board_reset(preset_info.key)
   puts mediator.board
 
   Location.each do |location|
@@ -11,9 +11,9 @@ HandicapInfo.each do |handicap_info|
     soldiers = soldiers.collect {|e| e.merge(location: Location[:black]) }
     soldiers = soldiers.sort
 
-    # p HandicapInfo.first.both_board_info[Location[:black]].sort.collect(&:name)
+    # p PresetInfo.first.both_board_info[Location[:black]].sort.collect(&:name)
     # p soldiers.collect(&:name)
-    e = HandicapInfo.find do |e|
+    e = PresetInfo.find do |e|
       e.both_board_info[Location[:black]].sort == soldiers
     end
     tp e.key # => :平手, :平手, :香落ち, :平手, :角落ち, :平手, :飛車落ち, :平手, :飛車香落ち, :平手, :二枚落ち, :平手, :四枚落ち, :平手, :六枚落ち, :平手, :八枚落ち, :平手, :十枚落ち, :平手, :十九枚落ち, :平手, :二十枚落ち, :平手

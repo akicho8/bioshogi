@@ -57,7 +57,7 @@ require_relative "bushido/kifu_dsl"
 require_relative "bushido/mediator"
 
 require_relative "bushido/shape_info"
-require_relative "bushido/handicap_info"
+require_relative "bushido/preset_info"
 require_relative "bushido/sect_info"
 require_relative "bushido/defense_group_info"
 

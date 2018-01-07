@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
-require_relative "handicap_info"
+require_relative "preset_info"
 require "tree_support"
 
 module Bushido
@@ -58,7 +58,7 @@ module Bushido
       ]
     end
 
-    include HandicapInfo::DelegateToShapeInfoMethods
+    include PresetInfo::DelegateToShapeInfoMethods
 
     concerning :AttackInfoSharedMethods do
       included do

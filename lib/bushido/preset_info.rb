@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 module Bushido
-  class HandicapInfo
+  class PresetInfo
     include ApplicationMemoryRecord
     memory_record [
       {key: "平手",       },

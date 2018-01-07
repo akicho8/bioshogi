@@ -129,7 +129,7 @@ module Bushido
       {wars_code: nil,         key: "穴角向かい飛車",       parent: "穴角戦法",         other_parents: nil, alias_names: nil,                          turn_limit: nil,  turn_eq: nil, order_key: nil,    not_have_pawn: nil,  kill_only: nil,  stroke_only: nil,  not_have_anything_except_pawn: nil,  cold_war: true, hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_count_eq: nil, hold_piece_eq: nil,  },
     ]
 
-    include HandicapInfo::DelegateToShapeInfoMethods
+    include PresetInfo::DelegateToShapeInfoMethods
     include DefenseInfo::AttackInfoSharedMethods
 
     def tactic_key
