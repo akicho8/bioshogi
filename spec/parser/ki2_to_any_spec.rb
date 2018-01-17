@@ -103,5 +103,19 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
       end
     end
+
+    describe "駒落ちのKI2からSFEN変換の際に後手番から開始する" do
+      before do
+        @info = Parser.parse(<<~EOT)
+手合割：香落ち
+下手：中井捨吉
+上手：寺田梅吉
+△３四歩
+        EOT
+      end
+      it "to_sfen" do
+        @info.to_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d"
+      end
+    end
   end
 end

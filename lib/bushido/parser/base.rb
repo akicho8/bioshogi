@@ -349,8 +349,6 @@ module Bushido
 
           if @board_source
             mediator.board_reset_by_shape(@board_source)
-            mediator.turn_info_auto_set
-
             if mediator.board.preset_name != "平手"
               if header["手合割"].blank? || header["手合割"] == "その他"
                 mediator.turn_info.komaochi = true
@@ -359,6 +357,8 @@ module Bushido
           else
             mediator.board_reset(header["手合割"] || "平手")
           end
+
+          mediator.play_standby
         end
 
         def mediator_run_all(mediator)

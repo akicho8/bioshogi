@@ -118,15 +118,9 @@ module Bushido
       end
 
       def board_reset(name = nil)
-        raise MustNotHappen if BoardParser.accept?(name)
-
-        # if name == "その他"
-        #   name = nil
-        # end
+        raise MustNotHappen, "BODは指定できません" if BoardParser.accept?(name)
 
         name = name.presence || "平手"
-
-        # "角落ち" なら {"▲" => "角落ち", "△" => "平手"}
         v = {black: "平手", white: "平手"}
         if name != "平手"
           # 駒落ちの場合△の方が駒を落とす
@@ -135,19 +129,19 @@ module Bushido
         end
 
         board_reset_for_hash(v)
-        @turn_info.komaochi = (board.preset_name != "平手")
       end
 
       def board_reset_by_shape(value)
-        raise MustNotHappen unless BoardParser.accept?(value)
+        raise MustNotHappen, "BOD以外が指定されています : #{value}" unless BoardParser.accept?(value)
+
         v = BoardParser.parse(value).both_board_info
         board_reset5(v)
       end
 
       # 盤面から手合割を判断する
       def turn_info_auto_set
-        if board.preset_name
-          @turn_info.komaochi = (board.preset_name != "平手")
+        if v = board.preset_name
+          @turn_info.komaochi = (v != "平手")
         end
       end
 
@@ -295,6 +289,7 @@ module Bushido
       end
 
       def play_standby
+        turn_info_auto_set
         @first_state_board_sfen = to_current_sfen # これはイケてない
       end
 
@@ -316,6 +311,7 @@ module Bushido
         s = []
         s << "sfen"
         s << board.to_sfen
+        # p turn_info
         s << turn_info.current_location.to_sfen
         if players.all? { |e| e.pieces.empty? }
           s << "-"
