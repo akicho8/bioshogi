@@ -141,7 +141,7 @@ module Bushido
       @runner = Runner.new(self).execute(str)
       if Bushido.config[:skill_set_flag]
         if Position.size_type == :board_size_9x9
-          if mediator.config[:skill_set_flag]
+          if mediator.mediator_options[:skill_set_flag]
             skill_monitor.execute
           end
         end

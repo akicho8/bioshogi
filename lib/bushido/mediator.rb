@@ -5,10 +5,8 @@
 module Bushido
   class Mediator
     concerning :ConfigMethods do
-      attr_accessor :config
-
-      def config
-        @config ||= {
+      def mediator_options
+        @mediator_options ||= {
           # skill_set_flag: true,
         }
       end

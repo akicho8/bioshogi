@@ -29,7 +29,7 @@ module Bushido
         @meta_info ||= {}
       end
 
-      def ki2_parse(source)
+      def parse_from_kif_format_header(source)
         # 厳密ではないけど上部に絞る
         if md = source.match(/(?<header_dirty_part>.*?)^(#{KifParser.kif_separator}|[▲△]|まで)/mo)
           source = md[:header_dirty_part]

@@ -1,4 +1,4 @@
-# -*- compile-command: "bundle exec rspec ../../../spec/parser/ki2_parser_spec.rb" -*-
+# -*- compile-command: "bundle exec rspec ../../../spec/parser/parse_from_kif_format_headerr_spec.rb" -*-
 # frozen-string-literal: true
 
 module Bushido

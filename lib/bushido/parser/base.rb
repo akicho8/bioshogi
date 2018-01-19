@@ -2,9 +2,13 @@
 # frozen-string-literal: true
 
 require_relative "header"
-require_relative "chess_clock"
 require_relative "csa_header_info"
 require_relative "last_action_info"
+
+require_relative "kif_serializer"
+require_relative "ki2_serializer"
+require_relative "csa_serializer"
+require_relative "usi_serializer"
 
 module Bushido
   module Parser
@@ -27,9 +31,9 @@ module Bushido
 
       attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
-      def initialize(source, **config)
+      def initialize(source, **parser_options)
         @source = source
-        @config = default_config.merge(config)
+        @parser_options = default_parser_options.merge(parser_options)
 
         @move_infos = []
         @first_comments = []
@@ -38,7 +42,7 @@ module Bushido
         @error_message = nil
       end
 
-      def default_config
+      def default_parser_options
         {
           # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
           #  skip: 棋譜には記さない
@@ -50,7 +54,7 @@ module Bushido
       end
 
       # def parse
-      #   unless @config[:run_and_build_skip]
+      #   unless @parser_options[:run_and_build_skip]
       #     mediator_run
       #   end
       # end
@@ -70,7 +74,7 @@ module Bushido
       private
 
       def header_read
-        header.ki2_parse(normalized_source)
+        header.parse_from_kif_format_header(normalized_source)
       end
 
       def header_normalize
@@ -88,15 +92,6 @@ module Bushido
       def comment_read(line)
         if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
           if @move_infos.empty?
-            # # かなりハードコーディングなやり方だけどコメント内ヘッダーを決め打ちで除外する
-            # if true
-            #   if md[:comment].include?(header_sep)
-            #     return
-            #   end
-            #   if md[:comment].match?(/\A「.*」vs「.*」?\z/)
-            #     return
-            #   end
-            # end
             first_comments_add(md[:comment])
           else
             note_add(md[:comment])
@@ -115,226 +110,25 @@ module Bushido
       end
 
       concerning :ConverterMethods do
-        # CSA標準棋譜ファイル形式
-        # http://www.computer-shogi.org/protocol/record_v22.html
-        #
-        #   V2.2
-        #   N+久保利明 王将
-        #   N-都成竜馬 四段
-        #   $EVENT:王位戦
-        #   $SITE:関西将棋会館
-        #   $START_TIME:2017/11/16 10:00:00
-        #   $END_TIME:2017/11/16 19:04:00
-        #   $OPENING:相振飛車
-        #   P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-        #   P2 * -HI *  *  *  *  * -KA *
-        #   P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-        #   P4 *  *  *  *  *  *  *  *  *
-        #   P5 *  *  *  *  *  *  *  *  *
-        #   P6 *  *  *  *  *  *  *  *  *
-        #   P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-        #   P8 * +KA *  *  *  *  * +HI *
-        #   P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-        #   +
-        #   +7776FU
-        #   -3334FU
-        #   %TORYO
-        #
-        def to_csa(**options)
-          options = {
-            board_expansion: false,
-            strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
-          }.merge(options)
-
-          mediator_run
-
-          out = []
-          out << "V2.2\n"
-
-          out << CsaHeaderInfo.collect { |e|
-            if v = header[e.kif_side_key].presence
-              if e.as_csa
-                v = e.instance_exec(v, &e.as_csa)
-              end
-              "#{e.csa_key}#{v}\n"
-            end
-          }.join
-
-          preset_name = nil
-          if true
-            obj = Mediator.new
-            obj.board_reset_old(@board_source || header["手合割"])
-            preset_name = obj.board.preset_name
-            if preset_name
-              out << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}\n"
-            end
-            if options[:board_expansion]
-              out << obj.board.to_csa
-            else
-              if preset_name == "平手"
-                out << "PI\n"
-              else
-                out << obj.board.to_csa
-              end
-            end
-          end
-
-          # 2通りある
-          # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_name))
-          # 2. mediator.turn_info を利用する
-          out << mediator.turn_info.base_location.csa_sign + "\n"
-
-          out << mediator.hand_logs.collect.with_index { |e, i|
-            if clock_exist?
-              "#{e.to_s_csa},T#{used_seconds_at(i)}\n"
-            else
-              e.to_s_csa + "\n"
-            end
-          }.join
-
-          if e = @last_status_params
-            last_action_info = LastActionInfo.fetch(e[:last_action_key])
-            s = "%#{last_action_info.csa_key}"
-            if v = e[:used_seconds]
-              s += ",T#{v}"
-            end
-            out << "#{s}\n"
-          else
-            out << "%TORYO" + "\n"
-          end
-
-          if @error_message
-            out << error_message_part(Parser::CsaParser.comment_char)
-          end
-
-          out = out.join
-
-          # テスト用
-          if options[:strip]
-            out = out.gsub(/\s+\n/, "\n")
-          end
-
-          out
-        end
-
-        concerning :ToKifMethods do
-          def to_kif(**options)
-            options = {
-              length: 12,
-              number_width: 4,
-              header_skip: false,
-            }.merge(options)
-
-            mediator_run
-
-            out = []
-            unless options[:header_skip]
-              out << header_part_string
-            end
-            out << "手数----指手---------消費時間--\n"
-
-            chess_clock = ChessClock.new
-            out << mediator.hand_logs.collect.with_index.collect { |e, i|
-              chess_clock.add(used_seconds_at(i))
-              s = "%*d %s %s\n" % [options[:number_width], i.next, mb_ljust(e.to_s_kif, options[:length]), chess_clock]
-              if v = e.to_skill_set_kif_comment
-                s += v
-              end
-              s
-            }.join
-
-            ################################################################################
-
-            left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(last_action_info.kif_word, options[:length])]
-            right_part = nil
-
-            if true
-              if @last_status_params
-                if used_seconds = @last_status_params[:used_seconds]
-                  chess_clock.add(used_seconds)
-                  right_part = chess_clock.to_s
-                end
-              end
-            end
-
-            out << "#{left_part} #{right_part}".rstrip + "\n"
-            out << judgment_message + "\n"
-            out << error_message_part
-
-            out.join
-          end
-        end
-
-        def to_ki2(**options)
-          options = {
-            cols: 10,
-            # length: 11,
-            same_suffix: "　",
-            header_skip: false,
-          }.merge(options)
-
-          mediator_run
-
-          out = []
-          if header.present? && !options[:header_skip]
-            out << header_part_string
-            out << "\n"
-          end
-
-          if false
-            out << mediator.hand_logs.group_by.with_index{|_, i| i / options[:cols] }.values.collect { |v|
-              v.collect { |e|
-                s = e.to_s_ki2(with_mark: true, same_suffix: options[:same_suffix])
-                mb_ljust(s, options[:length])
-              }.join.strip + "\n"
-            }.join
-          else
-            list = mediator.hand_logs.collect do |e|
-              e.to_s_ki2(with_mark: true, same_suffix: options[:same_suffix])
-            end
-
-            list2 = list.in_groups_of(options[:cols])
-            column_widths = list2.transpose.collect do |e|
-              e.collect { |e| e.to_s.toeuc.bytesize }.max
-            end
-
-            list2 = list2.collect do |a|
-              a.collect.with_index do |e, i|
-                mb_ljust(e.to_s, column_widths[i])
-              end
-            end
-            out << list2.collect { |e| e.join(" ").strip + "\n" }.join
-          end
-
-          out << judgment_message + "\n"
-          out << error_message_part
-
-          out.join
-        end
-
-        concerning :ToSfenMethods do
-          def to_sfen(**options)
-            options = {
-            }.merge(options)
-
-            mediator.to_sfen(options)
-          end
-        end
+        include KifSerializer
+        include Ki2Serializer
+        include CsaSerializer
+        include UsiSerializer
 
         def mediator_run
           mediator
         end
 
         def mediator_new
-          Mediator.new.tap do |mediator|
-            mediator.config[:skill_set_flag] = @config[:skill_set_flag]
+          Mediator.new.tap do |e|
+            e.mediator_options[:skill_set_flag] = @parser_options[:skill_set_flag]
           end
         end
 
         def mediator
-          @mediator ||= mediator_new.tap do |mediator|
-            mediator_board_setup(mediator)
-            mediator_run_all(mediator)
+          @mediator ||= mediator_new.tap do |e|
+            mediator_board_setup(e)
+            mediator_run_all(e)
           end
         end
 
@@ -365,19 +159,19 @@ module Bushido
           # FIXME: ここらへんは mediator のなかで実行する
           begin
             move_infos.each do |info|
-              if @config[:debug]
+              if @parser_options[:debug]
                 p mediator
               end
-              if @config[:callback]
-                @config[:callback].call(mediator)
+              if @parser_options[:callback]
+                @parser_options[:callback].call(mediator)
               end
-              if @config[:turn_limit] && mediator.turn_max > @config[:turn_limit]
+              if @parser_options[:turn_limit] && mediator.turn_max > @parser_options[:turn_limit]
                 break
               end
               mediator.execute(info[:input])
             end
           rescue TypicalError => error
-            if v = @config[:typical_error_case]
+            if v = @parser_options[:typical_error_case]
               case v
               when :embed
                 @error_message = error.message
@@ -390,7 +184,7 @@ module Bushido
             end
           end
 
-          if @config[:skill_set_flag]
+          if @parser_options[:skill_set_flag]
             TacticInfo.each do |e|
               mediator.players.each do |player|
                 if v = player.skill_set.public_send(e.list_key).normalize.collect(&:name).presence
