@@ -9,6 +9,7 @@ require_relative "kif_serializer"
 require_relative "ki2_serializer"
 require_relative "csa_serializer"
 require_relative "usi_serializer"
+require_relative "bod_serializer"
 
 module Bushido
   module Parser
@@ -82,10 +83,8 @@ module Bushido
       end
 
       def board_read
-        # FIXME: 間にある前提ではなく、どこに書いていても拾えるようにしたい
-        if md = normalized_source.match(/^(?:後手|上手)の持駒#{header_sep}.*?\n(?<board>.*)^(?:先手|下手)の持駒#{header_sep}/om)
-          @board_source = md[:board].presence
-          # header[:board] = BoardParser.parse(md[:board]) # TODO: 使ってない
+        if md = normalized_source.match(/(?<board>^\+\-.*\-\+$)/m)
+          @board_source = md[:board]
         end
       end
 
@@ -114,6 +113,7 @@ module Bushido
         include Ki2Serializer
         include CsaSerializer
         include UsiSerializer
+        include BodSerializer
 
         def mediator_run
           mediator
@@ -143,16 +143,32 @@ module Bushido
 
           if @board_source
             mediator.board_reset_by_shape(@board_source)
-            if mediator.board.preset_name != "平手"
-              if header["手合割"].blank? || header["手合割"] == "その他"
-                mediator.turn_info.komaochi = true
-              end
-            end
           else
             mediator.board_reset(header["手合割"] || "平手")
           end
 
+          mediator.turn_info.komaochi = komaochi?
+          if header.turn_counter
+            mediator.turn_info.counter = header.turn_counter
+          end
           mediator.play_standby
+        end
+
+        def komaochi?
+          v = header.komaochi_hantei
+          if !v.nil?
+            return v
+          end
+
+          if @board_source
+            mediator = Mediator.new
+            mediator.board_reset_by_shape(@board_source)
+            if mediator.board.preset_name != "平手"
+              return true
+            end
+          end
+
+          false
         end
 
         def mediator_run_all(mediator)
@@ -270,7 +286,7 @@ module Bushido
             # 手合がわからないので図を出す場合
             # 2つヘッダー行に挟む形になっている仕様が特殊でデータの扱いが難しい
 
-            header["手合割"] ||= "その他"
+            # header["手合割"] ||= "その他"
 
             Location.each do |location|
               key = "#{location.call_name(obj.turn_info.komaochi?)}の持駒"

@@ -1,19 +1,14 @@
 module Bushido
   module Parser
     class Header
-      def to_h
-        object
-      end
+      delegate :[], :to_h, to: :object
+      attr_reader :turn_counter
 
       def []=(key, value)
         v = normalize_value(value)
         if v.present?
           object[key] = v
         end
-      end
-
-      def [](key)
-        object[key]
       end
 
       def normalize_all
@@ -58,10 +53,15 @@ module Bushido
             # meta_info[key] = v
           end
         end
+
+        # BOD風の指定があれば取り込む
+        if md = source.match(/^手数＝(?<turn_counter>\d+)/)
+          @turn_counter = md[:turn_counter].to_i
+        end
       end
 
       def sente_gote
-        Location.collect { |e| e.public_send(hirate_or_komochi) }
+        Location.collect { |e| e.public_send(hirate_or_komaochi) }
       end
 
       # 消す予定
@@ -78,6 +78,31 @@ module Bushido
         sente_gote.inject({}) { |a, e|
           a.merge(e => pair_split(object[e]))
         }
+      end
+
+      # ヘッダー情報からのみで駒落ちかどうかを判定する
+      # 駒落ち判定順序
+      # 1. 手合割があれば正規化して平手以外であれば
+      # 2. 下手・上手の言葉が使われていれば
+      def komaochi_hantei
+        preset_info = PresetInfo[object["手合割"]]
+        if preset_info
+          if preset_info.name != "平手"
+            return true
+          else
+            return false
+          end
+        end
+
+        if Location.any? {|e| object.has_key?(e.komaochi_name) || object.has_key?("#{e.komaochi_name}の持駒") }
+          return true
+        end
+
+        if Location.any? {|e| object.has_key?(e.hirate_name) || object.has_key?("#{e.hirate_name}の持駒") }
+          return false
+        end
+
+        nil
       end
 
       private
@@ -148,14 +173,12 @@ module Bushido
 
       # 「上手」「下手」の文字がなければ「平手」と見なしている
       # 棋譜を見ずにヘッダーだけで推測している点に注意
-      def hirate_or_komochi
-        @hirate_or_komochi ||= -> {
-          if Location.none? { |e| object[e.komaochi_name] }
-            :hirate_name
-          else
-            :komaochi_name
-          end
-        }.call
+      def hirate_or_komaochi
+        if komaochi_hantei == true
+          :komaochi_name
+        else
+          :hirate_name
+        end
       end
     end
   end

@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 module Bushido
   module Parser
     class SfenParser < Base

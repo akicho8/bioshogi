@@ -1,5 +1,12 @@
 # frozen-string-literal: true
 
+require_relative "parser/base"
+require_relative "parser/sfen_parser"
+require_relative "parser/bod_parser"
+require_relative "parser/kif_parser"
+require_relative "parser/csa_parser"
+require_relative "parser/ki2_parser"
+
 module Bushido
   module Parser
     extend self
@@ -31,7 +38,7 @@ module Bushido
     private
 
     def support_parsers
-      [SfenParser, KifParser, CsaParser, Ki2Parser]
+      [SfenParser, KifParser, CsaParser, Ki2Parser, BodParser]
     end
   end
 end

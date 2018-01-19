@@ -136,12 +136,12 @@ module Bushido
         board_reset5(v)
       end
 
-      # 盤面から手合割を判断する
-      def turn_info_auto_set
-        if v = board.preset_name
-          @turn_info.komaochi = (v != "平手")
-        end
-      end
+      # # 盤面から手合割を判断する
+      # def turn_info_auto_set
+      #   if v = board.preset_name
+      #     @turn_info.komaochi = (v != "平手")
+      #   end
+      # end
 
       def board_reset_for_hash(v)
         v = v.inject({}) {|a, (k, v)|
@@ -254,6 +254,10 @@ module Bushido
         s.join
       end
 
+      def to_bod(**options)
+        to_s
+      end
+
       def inspect
         to_s
       end
@@ -287,7 +291,7 @@ module Bushido
       end
 
       def play_standby
-        turn_info_auto_set
+        # turn_info_auto_set
         @first_state_board_sfen = to_current_sfen # これはイケてない
       end
 
