@@ -318,7 +318,10 @@ module Bushido
         end
 
         def clock_exist?
-          @clock_exist ||= @move_infos.any? {|e| e[:used_seconds] && e[:used_seconds].to_i >= 1 }
+          if @clock_exist.nil?
+            @clock_exist = @move_infos.any? {|e| e[:used_seconds] && e[:used_seconds].to_i >= 1 }
+          end
+          @clock_exist
         end
 
         def used_seconds_at(index)
