@@ -30,6 +30,7 @@ module Bushido
         options = {
           board_expansion: false,
           strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
+          compact: false,
         }.merge(options)
 
         mediator_run
@@ -49,10 +50,12 @@ module Bushido
         preset_name = nil
         if true
           obj = Mediator.new
-          obj.board_reset_old(@board_source || header["手合割"])
+          mediator_board_setup(obj)
           preset_name = obj.board.preset_name
           if preset_name
-            out << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}\n"
+            if ENV["BUSHIDO_ENV"] == "test"
+              out << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}\n"
+            end
           end
           if options[:board_expansion]
             out << obj.board.to_csa
@@ -65,18 +68,26 @@ module Bushido
           end
         end
 
+        if options[:compact]
+          sep = ","
+        else
+          sep = "\n"
+        end
+
         # 2通りある
         # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_name))
         # 2. mediator.turn_info を利用する
-        out << mediator.turn_info.base_location.csa_sign + "\n"
+        out << mediator.turn_info.base_location.csa_sign + sep
 
-        out << mediator.hand_logs.collect.with_index { |e, i|
+        list = mediator.hand_logs.collect.with_index do |e, i|
           if clock_exist?
-            "#{e.to_s_csa},T#{used_seconds_at(i)}\n"
+            [e.to_s_csa, "T#{used_seconds_at(i)}"].join(",")
           else
-            e.to_s_csa + "\n"
+            e.to_s_csa
           end
-        }.join
+        end
+
+        out << list.join(sep) + sep
 
         if e = @last_status_params
           last_action_info = LastActionInfo.fetch(e[:last_action_key])
@@ -84,7 +95,7 @@ module Bushido
           if v = e[:used_seconds]
             s += ",T#{v}"
           end
-          out << "#{s}\n"
+          out << s + sep
         else
           out << "%TORYO" + "\n"
         end

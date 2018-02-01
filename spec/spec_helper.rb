@@ -5,6 +5,8 @@ require "bundler/setup"
 require "tapp"
 require "bushido"
 
+ENV["BUSHIDO_ENV"] = "test"
+
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)
 Bushido.logger = ActiveSupport::Logger.new(log_file)
