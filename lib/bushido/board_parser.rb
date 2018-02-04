@@ -65,14 +65,6 @@ module Bushido
           @sorted_black_side_soldiers ||= black_side_soldiers.sort
         end
 
-        # def side_board_info_by(location)
-        #   both_board_info[location] || []
-        # end
-
-        # def black_side_soldiers
-        #   both_board_info[Location[:black]] || []
-        # end
-
         def soldiers_hash
           @soldiers_hash ||= soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
         end
@@ -87,9 +79,7 @@ module Bushido
       private
 
       def __both_board_info
-        v = soldiers.group_by { |e| e[:location] }
-        Location.each { |e| v[e] ||= [] } # FIXME: これはダサすぎないか？
-        v
+        Location.inject({}) { |a, e| a.merge(e => []) }.merge(soldiers.group_by { |e| e[:location] })
       end
 
       def shape_lines

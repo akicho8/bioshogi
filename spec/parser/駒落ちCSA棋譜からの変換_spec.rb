@@ -64,4 +64,36 @@ EOT
 EOT
     end
   end
+
+  describe "PI82HI22KA 形式" do
+    it "落とす駒が明記されているケース" do
+      info = Parser.parse(<<~EOT)
+V2.2
+PI82HI22KA
+-
+-3334FU
+%TORYO
+EOT
+      info.to_csa(strip: true).should == <<~EOT
+V2.2
+' 手合割:二枚落ち
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 *  *  *  *  *  *  *  *  *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+-
+-3334FU
+%TORYO
+EOT
+    end
+
+    it "表記が間違っている" do
+      expect { Parser.parse("V2.2,PI82HI22OU").to_csa }.to raise_error(SyntaxDefact, '２二の玉を落とす指定がありましたがそこにある駒は角です : "82HI22OU"')
+    end
+  end
 end

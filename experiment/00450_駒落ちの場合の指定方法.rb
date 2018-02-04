@@ -5,7 +5,7 @@ mediator.board_reset("角落ち")
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset_for_hash("▲" => "八枚落ち", "△" => "十九枚落ち")
+mediator.board_reset_by_hash("▲" => "八枚落ち", "△" => "十九枚落ち")
 puts mediator
 
 mediator = Mediator.new

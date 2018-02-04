@@ -5,7 +5,7 @@
 .text-center
   - Bushido::DefenseInfo.each do |stock|
     - mediator = Bushido::Mediator.new
-    - mediator.board_reset_for_hash("▲" => stock[:key], "△" => stock[:key])
+    - mediator.board_reset_by_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
       %a{href: Bushido::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]

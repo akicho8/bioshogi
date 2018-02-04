@@ -2428,6 +2428,3 @@ EOT
     delegate :sorted_soldiers, :both_board_info, :sorted_black_side_soldiers, :black_side_soldiers, to: :board_parser
   end
 end
-# ~> -:23:in `<class:ShapeInfo>': uninitialized constant Bushido::ShapeInfo::ApplicationMemoryRecord (NameError)
-# ~> 	from -:22:in `<module:Bushido>'
-# ~> 	from -:21:in `<main>'

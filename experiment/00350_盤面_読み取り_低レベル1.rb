@@ -13,7 +13,7 @@ tp BoardParser.parse(<<~EOT).soldiers
 +------+
 EOT
 
-tp BoardParser.parse(<<~EOT).soldiers
+soldiers = BoardParser.parse(<<~EOT).soldiers
 +---------------------------+
 | ・v桂 ・ ・ 馬 ・ ・v桂v香|
 |v飛 ・ ・ ・ ・ と ・ ・ ・|
@@ -26,6 +26,11 @@ tp BoardParser.parse(<<~EOT).soldiers
 | 香 桂 ・ ・ ・ ・ 飛 ・ ・|
 +---------------------------+
 EOT
+tp soldiers
+
+mediator = Mediator.new
+mediator.board_reset_by_soldiers(soldiers)
+puts mediator.board.to_s
 
 tp PresetInfo["平手"].both_board_info[Location[:black]]
 # >> |-------+----------+-------+----------|
@@ -73,6 +78,18 @@ tp PresetInfo["平手"].both_board_info[Location[:black]]
 # >> | 桂    | false    | ８九  | ▲       |
 # >> | 飛    | false    | ３九  | ▲       |
 # >> |-------+----------+-------+----------|
+# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
+# >> +---------------------------+
+# >> | ・v桂 ・ ・ 馬 ・ ・v桂v香|一
+# >> |v飛 ・ ・ ・ ・ と ・ ・ ・|二
+# >> | ・ ・ ・ 全v歩 ・v玉 ・ ・|三
+# >> | ・ ・ ・ ・ ・ ・v桂 ・v金|四
+# >> | ・v歩 ・ ・ ・ 銀v歩v歩v歩|五
+# >> |v歩 ・ 歩v角 ・ ・ ・ ・ ・|六
+# >> | ・ 歩 銀v歩vと ・ ・ ・ ・|七
+# >> | 歩 ・ 玉 香 ・ ・ ・ ・ 香|八
+# >> | 香 桂 ・ ・ ・ ・ 飛 ・ ・|九
+# >> +---------------------------+
 # >> |-------+----------+-------+----------|
 # >> | piece | promoted | point | location |
 # >> |-------+----------+-------+----------|

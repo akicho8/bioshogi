@@ -461,18 +461,18 @@ end
     | 例外                   | 意味                                           | どんなときに起きる？                                                                    |
     |------------------------+------------------------------------------------+-----------------------------------------------------------------------------------------|
     | BushidoError           | すべての例外の親                               |                                                                                         |
-    | MustNotHappen          | ありえない処理が走る                           | ブログラムがバグっている                                                                |
+    | MustNotHappen          | ありえない処理                                 | ブログラムがバグっている                                                                |
     | MovableBattlerNotFound | 指定座標に移動できる駒が一つもない             | 平手で初手 "▲３四歩"                                                                   |
-    | AmbiguousFormatError   | 指定座標に移動できる駒が多くて特定できません   | 初手 "▲５八金"                                                                         |
+    | AmbiguousFormatError   | 指定座標に移動できる駒が多すぎる               | 初手 "▲５八金"                                                                         |
     | SyntaxDefact           | とりあえず表記が違う                           | 駒の配置時に "４二銀成" とした                                                          |
     | PointSyntaxError       | 座標の表記が違う                               | "４二" のつもりで "４" と書いた                                                         |
-    | PositionSyntaxError    | 座標の桁の指定が違う                           | "４二" のつもりで "四２" と書いた                                                       |
+    | PositionSyntaxError    | 座標が読み取れない                             |                                                                                         |
     | LocationNotFound       | 手番の表記が違う                               | 先手を千手とかいた                                                                      |
-    | PieceNotFound          | そんな名前の駒は存在しない                     | 龍のつもりで蛇と書いた                                                                  |
-    | HoldPieceNotFound      | 持駒にそんな名前の駒は存在しない               | 歩を持っていないのに歩を打とうとした                                                    |
+    | PieceNotFound          | 指定の名前の駒が存在しない                     | 龍のつもりで蛇と書いた                                                                  |
+    | HoldPieceNotFound      | 持駒が無い                                     | 歩を持っていないのに歩を打とうとした                                                    |
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置               | 配置時に2連続で "９七歩"                                                                |
     | AlredyPromoted         | すでに成っている                               | "５五" の龍を "５一飛成"                                                                |
-    | BeforePointNotFound    | 同に対する座標が不明                           | 初手 "同歩"                                                                             |
+    | BeforePointNotFound    | 「同」に対する座標が不明                       | 初手 "同歩"                                                                             |
     | BattlerEmpty           | オプションで絞ったら移動できる駒がなくなった   |                                                                                         |
     | RuleError              | 反則系例外の親                                 | 二歩など                                                                                |
     | TypicalError           | 黙認できる例外の親                             | いまのところ二歩と手番間違いの2つだけ                                                   |

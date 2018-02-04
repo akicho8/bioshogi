@@ -29,31 +29,22 @@ module Bushido
         @players = Location.collect do |e|
           Player.new(self, location: e)
         end
-        # @turn_info = 0
       end
-
-      # def player_join(player)
-      #   @players << player
-      #   player.mediator = self
-      #   player.board = @board
-      # end
 
       def player_at(location)
         @players[Location[location].index]
       end
 
-      # 相手プレイヤーを返す
-      def reverse_player
-        current_player(+1)
-      end
-
-      # 手番のプレイヤー
       def current_player(diff = 0)
         players[turn_info.current_location(diff).code]
       end
 
-      def next_player
+      def reverse_player
         current_player(1)
+      end
+
+      def next_player
+        reverse_player
       end
 
       # プレイヤーたちの持駒から平手用の盤面の準備
@@ -65,27 +56,7 @@ module Bushido
       def pieces_clear
         @players.collect(&:pieces_clear)
       end
-
-      # def pieces_add
-      #   @players.each(&:pieces_add)
-      # end
-
-      # N手目のN
-      # def counter_human_name
-      #   @counter.next
-      # end
-
-      private
     end
-
-    # concerning :TebanMethods do
-    #   included do
-    #   end
-    #
-    #   def initialize
-    #     super
-    #   end
-    # end
 
     concerning :BoardMethods do
       included do
@@ -109,7 +80,7 @@ module Bushido
         when BoardParser.accept?(v)
           board_reset_by_shape(v)
         when v.kind_of?(Hash)
-          board_reset_for_hash(v)
+          board_reset_by_hash(v)
         else
           board_reset(v)
         end
@@ -126,14 +97,14 @@ module Bushido
           v[:white] = name
         end
 
-        board_reset_for_hash(v)
+        board_reset_by_hash(v)
       end
 
       def board_reset_by_shape(value)
         raise MustNotHappen, "BOD以外が指定されています : #{value}" unless BoardParser.accept?(value)
 
-        v = BoardParser.parse(value).both_board_info
-        board_reset5(v)
+        v = BoardParser.parse(value).soldiers
+        board_reset_by_soldiers(v)
       end
 
       # # 盤面から手合割を判断する
@@ -143,16 +114,16 @@ module Bushido
       #   end
       # end
 
-      def board_reset_for_hash(v)
-        v = v.inject({}) {|a, (k, v)|
-          a.merge(Location[k] => Utils.location_soldiers(location: k, key: v))
-        }
-        board_reset5(v)
+      def board_reset_by_hash(hash)
+        soldiers = hash.flat_map do |location, any|
+          Utils.location_soldiers(location: location, key: any)
+        end
+        board_reset_by_soldiers(soldiers)
       end
 
-      def board_reset5(v)
-        v.each do |location, v|
-          player_at(location).battlers_create(v, from_stand: false)
+      def board_reset_by_soldiers(soldiers)
+        soldiers.each do |soldier|
+          player_at(soldier[:location]).battlers_create(soldier, from_stand: false)
         end
         play_standby
       end

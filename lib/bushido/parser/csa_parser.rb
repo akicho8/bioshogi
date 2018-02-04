@@ -65,13 +65,20 @@ module Bushido
         # P1 形式でなければ PI82HI22KA 形式として読み取り
         unless @board_source
           if md = s.match(/^PI(?<komaochi_piece_list>.*)/)
-            p md
+            mediator = Mediator.new
+            mediator.board_reset("平手")
             if v = md[:komaochi_piece_list]
-              v.scan(/(\d+)(\D+)/i) do |xy, key|
+              v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
                 point = Point.fetch(xy)
-                p point
+                piece = Piece.fetch(piece_key)
+                battler = mediator.board.surface.fetch(point)
+                if battler.piece != piece
+                  raise SyntaxDefact, "#{point.name}の#{piece.name}を落とす指定がありましたがそこにある駒は#{battler.piece.name}です : #{v.inspect}"
+                end
+                battler.abone
               end
             end
+            @board_source = mediator.board.to_s
           end
         end
 
