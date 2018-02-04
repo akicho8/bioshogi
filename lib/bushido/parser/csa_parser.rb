@@ -59,8 +59,21 @@ module Bushido
         end
         header_normalize
 
-        # 盤面
+        # P1 形式の盤面の読み取り
         @board_source = s.scan(/^P\d.*\n/).join.presence
+
+        # P1 形式でなければ PI82HI22KA 形式として読み取り
+        unless @board_source
+          if md = s.match(/^PI(?<komaochi_piece_list>.*)/)
+            p md
+            if v = md[:komaochi_piece_list]
+              v.scan(/(\d+)(\D+)/i) do |xy, key|
+                point = Point.fetch(xy)
+                p point
+              end
+            end
+          end
+        end
 
         # 棋譜
         @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|

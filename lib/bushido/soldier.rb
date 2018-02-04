@@ -41,21 +41,9 @@ module Bushido
       #   Soldier.new_with_promoted("と") # => <Soldier piece:"歩", promoted: true>
       def new_with_promoted(value, **attributes)
         case
-        when piece = Piece.basic_lookup(value)
+        when piece = Piece::BasicGoup[value]
           promoted = false
-        when piece = Piece.promoted_lookup(value)
-          promoted = true
-        else
-          raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
-        end
-        self[piece: piece, promoted: promoted, **attributes].freeze
-      end
-
-      def csa_new_with_promoted(value, **attributes)
-        case
-        when piece = Piece.find { |e| e.csa_basic_name == value }
-          promoted = false
-        when piece = Piece.find { |e| e.csa_promoted_name == value }
+        when piece = Piece::PromotedGroup[value]
           promoted = true
         else
           raise PieceNotFound, "#{value.inspect} に対応する駒がありません"

@@ -79,9 +79,6 @@ module Bushido
       @md = @md.named_captures.symbolize_keys
 
       if @md[:csa_basic_name] || @md[:csa_promoted_name]
-        # p @source
-        # p self.class.csa_input_regexp
-        # p @source.match(self.class.csa_input_regexp)
         if @md[:csa_from] == "00"
           @md[:csa_from] = nil
           @md[:motion2] = "打"
@@ -95,14 +92,13 @@ module Bushido
 
         if @md[:csa_basic_name]
           # 普通の駒
-          v = Piece.find{|e|e.csa_basic_name == @md[:csa_basic_name]}
-          @md[:piece] = v.name
+          @md[:piece] = Piece::BasicGoup.fetch(@md[:csa_basic_name]).name
         end
 
         if @md[:csa_promoted_name]
           # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
           # だから移動元の駒の情報で判断するしかない
-          _piece = Piece.find{|e|e.csa_promoted_name == @md[:csa_promoted_name]}
+          _piece = Piece::PromotedGroup.fetch(@md[:csa_promoted_name])
 
           v = @player.board[@md[:point_from]] or raise MustNotHappen
           if v.promoted?
