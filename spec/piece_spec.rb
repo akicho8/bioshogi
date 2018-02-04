@@ -23,15 +23,15 @@ module Bushido
 
     it "駒の情報" do
       piece = Piece.lookup("飛")
-      piece.name.should                 == "飛"
-      piece.promoted_name.should        == "龍"
-      piece.basic_names.should          == ["飛", "HI", "R"]
-      piece.promoted_names.should       == ["龍", "竜", "RY"]
-      piece.names.should                == ["飛", "HI", "R", "龍", "竜", "RY"]
-      piece.key.should             == :rook
-      piece.promotable?.should          == true
-      piece.select_vectors(false).should == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
-      piece.select_vectors(true).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.name.should           == "飛"
+      piece.promoted_name.should  == "龍"
+      piece.basic_names.should    == ["飛", "HI", "R"]
+      piece.promoted_names.should == ["龍", "竜", "RY"]
+      piece.names.should          == ["飛", "HI", "R", "龍", "竜", "RY"]
+      piece.key.should            == :rook
+      piece.promotable?.should    == true
+      piece.select_vectors2(promoted: false, location: Location[:black]).should == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.select_vectors2(promoted: true, location: Location[:black]).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
     end
 
     it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do

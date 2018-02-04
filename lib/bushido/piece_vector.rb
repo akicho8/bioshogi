@@ -1,9 +1,7 @@
-# 意味
-#   basic_once_vectors      通常の1ベクトル
-#   basic_repeat_vectors    通常の繰り返しベクトル
-#   promoted_once_vectors   成ったときの1ベクトル
-#   promoted_repeat_vectors 成ったときの繰り返しベクトル
-#
+# basic_once_vectors      通常の1ベクトル
+# basic_repeat_vectors    通常の繰り返しベクトル
+# promoted_once_vectors   成ったときの1ベクトル
+# promoted_repeat_vectors 成ったときの繰り返しベクトル
 
 module Bushido
   class PieceVector
@@ -51,10 +49,9 @@ module Bushido
 
     def normalized_vectors(location, vectors)
       if location.white?
-        vectors.collect(&:reverse_sign)
-      else
-        vectors
+        vectors = vectors.collect(&:reverse_sign)
       end
+      vectors
     end
 
     def basic_vectors
