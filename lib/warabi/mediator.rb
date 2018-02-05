@@ -110,7 +110,7 @@ module Warabi
       # # 盤面から手合割を判断する
       # def turn_info_auto_set
       #   if v = board.preset_name
-      #     @turn_info.komaochi = (v != "平手")
+      #     @turn_info.handicap = (v != "平手")
       #   end
       # end
 

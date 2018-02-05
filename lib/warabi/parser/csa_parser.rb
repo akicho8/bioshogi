@@ -66,10 +66,10 @@ module Warabi
         # > 例:二枚落ちPI82HI22KA
 
         unless @board_source
-          if md = s.match(/^PI(?<komaochi_piece_list>.*)/)
+          if md = s.match(/^PI(?<handicap_piece_list>.*)/)
             mediator = Mediator.new
             mediator.board_reset("平手")
-            if v = md[:komaochi_piece_list]
+            if v = md[:handicap_piece_list]
               v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
                 point = Point.fetch(xy)
                 piece = Piece.fetch(piece_key)
@@ -161,7 +161,7 @@ module Warabi
       end
 
       # "-" だけの行があれば上手からの開始とする
-      def komaochi?
+      def handicap?
         normalized_source.match?(/^\-$/)
       end
 

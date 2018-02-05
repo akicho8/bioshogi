@@ -46,7 +46,7 @@ if md = usi_position.match(/position\s+(sfen\s+(?<sfen>\S+)\s+(?<b_or_w>\S+)\s+(
     end
 
     if params[:turn_counter_next].to_i.odd? && params[:b_or_w] == "w" # "1" (奇数) のとき "w" なら駒落ちと判断
-      mediator.turn_info.komaochi = true
+      mediator.turn_info.handicap = true
     end
     mediator.turn_info.counter = params[:turn_counter_next].to_i.pred
 

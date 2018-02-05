@@ -12,8 +12,8 @@ module Warabi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      {key: :black, name: "▲", hirate_name: "先手", komaochi_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself,  },
-      {key: :white, name: "△", hirate_name: "後手", komaochi_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :reverse, },
+      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself,  },
+      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :reverse, },
     ]
 
     alias index code
@@ -82,11 +82,11 @@ module Warabi
 
     # 平手と駒落ちの呼名両方
     def call_names
-      [hirate_name, komaochi_name]
+      [equality_name, handicap_name]
     end
 
-    def call_name(komaochi)
-      send(call_name_key(komaochi))
+    def call_name(handicap)
+      send(call_name_key(handicap))
     end
 
     # # 「▲先手」みたいなのを返す
@@ -141,8 +141,8 @@ module Warabi
         index,
         varrow,
         csa_sign,
-        hirate_name,
-        komaochi_name,
+        equality_name,
+        handicap_name,
       ].flatten.to_set
     end
 
@@ -155,11 +155,11 @@ module Warabi
 
     private
 
-    def call_name_key(komaochi)
-      if komaochi
-        :komaochi_name
+    def call_name_key(handicap)
+      if handicap
+        :handicap_name
       else
-        :hirate_name
+        :equality_name
       end
     end
 

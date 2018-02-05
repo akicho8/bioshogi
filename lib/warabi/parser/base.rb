@@ -147,15 +147,15 @@ module Warabi
             mediator.board_reset(header["手合割"] || "平手")
           end
 
-          mediator.turn_info.komaochi = komaochi?
+          mediator.turn_info.handicap = handicap?
           if header.turn_counter
             mediator.turn_info.counter = header.turn_counter
           end
           mediator.play_standby
         end
 
-        def komaochi?
-          v = header.komaochi_hantei
+        def handicap?
+          v = header.handicap_hantei
           if !v.nil?
             return v
           end
@@ -289,14 +289,14 @@ module Warabi
             # header["手合割"] ||= "その他"
 
             Location.each do |location|
-              key = "#{location.call_name(obj.turn_info.komaochi?)}の持駒"
+              key = "#{location.call_name(obj.turn_info.handicap?)}の持駒"
               v = header[key]
               if v.blank?
                 header[key] = "なし"
               end
             end
             s = raw_header_part_string
-            out << s.gsub(/(#{Location[:white].call_name(obj.turn_info.komaochi?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
+            out << s.gsub(/(#{Location[:white].call_name(obj.turn_info.handicap?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
           end
 
           out.join

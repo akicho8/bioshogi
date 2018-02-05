@@ -61,7 +61,7 @@ module Warabi
       end
 
       def sente_gote
-        Location.collect { |e| e.public_send(hirate_or_komaochi) }
+        Location.collect { |e| e.public_send(equality_or_handicap) }
       end
 
       # 消す予定
@@ -84,7 +84,7 @@ module Warabi
       # 駒落ち判定順序
       # 1. 手合割があれば正規化して平手以外であれば
       # 2. 下手・上手の言葉が使われていれば
-      def komaochi_hantei
+      def handicap_hantei
         preset_info = PresetInfo[object["手合割"]]
         if preset_info
           if preset_info.name != "平手"
@@ -94,11 +94,11 @@ module Warabi
           end
         end
 
-        if Location.any? {|e| object.has_key?(e.komaochi_name) || object.has_key?("#{e.komaochi_name}の持駒") }
+        if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }
           return true
         end
 
-        if Location.any? {|e| object.has_key?(e.hirate_name) || object.has_key?("#{e.hirate_name}の持駒") }
+        if Location.any? {|e| object.has_key?(e.equality_name) || object.has_key?("#{e.equality_name}の持駒") }
           return false
         end
 
@@ -173,11 +173,11 @@ module Warabi
 
       # 「上手」「下手」の文字がなければ「平手」と見なしている
       # 棋譜を見ずにヘッダーだけで推測している点に注意
-      def hirate_or_komaochi
-        if komaochi_hantei == true
-          :komaochi_name
+      def equality_or_handicap
+        if handicap_hantei == true
+          :handicap_name
         else
-          :hirate_name
+          :equality_name
         end
       end
     end

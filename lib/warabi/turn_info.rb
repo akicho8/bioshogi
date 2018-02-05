@@ -3,19 +3,19 @@
 module Warabi
   class TurnInfo
     attr_accessor :counter
-    attr_accessor :komaochi
+    attr_accessor :handicap
 
-    def initialize(komaochi: false, counter: 0)
-      @komaochi = komaochi
+    def initialize(handicap: false, counter: 0)
+      @handicap = handicap
       @counter = counter || 0
     end
 
-    def komaochi?
-      @komaochi
+    def handicap?
+      @handicap
     end
 
     def base_location
-      if @komaochi
+      if @handicap
         key = :white
       else
         key = :black
@@ -52,7 +52,7 @@ module Warabi
     # end
 
     def current_location_vname
-      current_location.call_name(komaochi?)
+      current_location.call_name(handicap?)
     end
 
     # def name1
@@ -72,10 +72,10 @@ module Warabi
     # end
 
     # def call_name_key
-    #   if komaochi?
-    #     :komaochi_name
+    #   if handicap?
+    #     :handicap_name
     #   else
-    #     :hirate_name
+    #     :equality_name
     #   end
     # end
 

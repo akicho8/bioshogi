@@ -32,7 +32,7 @@ module Warabi
             player = mediator.player_at(soldier[:location])
             player.battlers_create_from_soldier(soldier)
           end
-          mediator.turn_info.komaochi = sfen.komaochi?
+          mediator.turn_info.handicap = sfen.handicap?
           mediator.turn_info.counter = sfen.turn_counter
           sfen.hold_pieces.each do |location, pieces|
             player = mediator.player_at(location)
@@ -131,7 +131,7 @@ module Warabi
       end
 
       # 手番の最初 (手番が偶数) が "w" なら駒落ちと判断
-      def komaochi?
+      def handicap?
         turn_counter.even? && location.key == :white
       end
 

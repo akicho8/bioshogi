@@ -237,7 +237,7 @@ module Warabi
       end
 
       def call_name
-        location.call_name(mediator.turn_info.komaochi?)
+        location.call_name(mediator.turn_info.handicap?)
       end
 
       def to_sfen
