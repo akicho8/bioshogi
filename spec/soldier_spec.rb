@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Soldier do
     it "基本形" do
       attrs = {point: Point["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}

@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Battler do
     describe "文字列表現" do
       before do

@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Bushido
+module Warabi
   describe Parser::Base do
     describe "「上手の持駒：なし」があって手合割がわかっているときは「上手の持駒」の部分は消しとく" do
       before do

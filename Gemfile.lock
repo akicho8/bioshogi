@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bushido (0.0.1)
+    warabi (0.0.1)
       actionview
       activesupport
       memory_record
@@ -135,7 +135,7 @@ PLATFORMS
 DEPENDENCIES
   builder
   bundler
-  bushido!
+  warabi!
   coffee-script
   compass
   execjs

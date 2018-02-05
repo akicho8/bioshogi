@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe DefenseInfo do
     it "ある" do
       assert DefenseInfo["アヒル囲い"]
@@ -33,7 +33,7 @@ module Bushido
     end
 
     describe "囲い" do
-      it "囲いチェック", :if => Bushido.config.skill_set_flag do
+      it "囲いチェック", :if => Warabi.config.skill_set_flag do
         info = Parser.file_parse("#{__dir__}/yagura.kif")
         info.mediator_run
         info.header_part_string.should == <<~EOT

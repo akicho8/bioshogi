@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Runner do
     describe "指し手の正規表現" do
       def test1(s)

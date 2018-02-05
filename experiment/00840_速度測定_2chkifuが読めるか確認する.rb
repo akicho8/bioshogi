@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-# Bushido.config[:skill_set_flag] = false
+# Warabi.config[:skill_set_flag] = false
 
 @error_file = Pathname("__error.log")
 @error_file.unlink rescue nil
@@ -79,7 +79,7 @@ seconds = Benchmark.realtime do
       @result[error.class.name] += 1
 
       if false
-        if error.kind_of?(Bushido::DoublePawnError)
+        if error.kind_of?(Warabi::DoublePawnError)
           print "_"
           next
         end

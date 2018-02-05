@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Brain do
     describe "評価" do
       it "先手だけが歩を置いた状態" do

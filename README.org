@@ -1,13 +1,13 @@
 * 将棋のAI
 
-  - [[https://travis-ci.org/akicho8/bushido][Travis]]: [[https://travis-ci.org/akicho8/bushido.png]]
-  - [[https://gemnasium.com/akicho8/bushido/][Gemnasium]]: [[https://gemnasium.com/akicho8/bushido.png]]
-  - [[https://codeclimate.com/github/akicho8/bushido][Code Climate]]: [[https://codeclimate.com/github/akicho8/bushido.png]]
-  - [[https://bettercodehub.com/edge/badge/akicho8/bushido?branch%3Dmaster][https://bettercodehub.com/edge/badge/akicho8/bushido?branch=master]]
+  - [[https://travis-ci.org/akicho8/warabi][Travis]]: [[https://travis-ci.org/akicho8/warabi.png]]
+  - [[https://gemnasium.com/akicho8/warabi/][Gemnasium]]: [[https://gemnasium.com/akicho8/warabi.png]]
+  - [[https://codeclimate.com/github/akicho8/warabi][Code Climate]]: [[https://codeclimate.com/github/akicho8/warabi.png]]
+  - [[https://bettercodehub.com/edge/badge/akicho8/warabi?branch%3Dmaster][https://bettercodehub.com/edge/badge/akicho8/warabi?branch=master]]
 
   デモ: http://fast-plateau-7460.herokuapp.com/
 
-  [[https://raw.github.com/akicho8/bushido/master/brawser/demo2.png]]
+  [[https://raw.github.com/akicho8/warabi/master/brawser/demo2.png]]
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
@@ -106,7 +106,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
     KIFファイルを読み込み
 
 #+BEGIN_SRC ruby
-info = Bushido::Parser.parse(Pathname("ryuou20101214.kif"))
+info = Warabi::Parser.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 # >> {"対局ID"=>"333",
 # >>  "開始日時"=>"2010/12/14 9:00",
@@ -460,7 +460,7 @@ end
 
     | 例外                   | 意味                                           | どんなときに起きる？                                                                    |
     |------------------------+------------------------------------------------+-----------------------------------------------------------------------------------------|
-    | BushidoError           | すべての例外の親                               |                                                                                         |
+    | WarabiError           | すべての例外の親                               |                                                                                         |
     | MustNotHappen          | ありえない処理                                 | ブログラムがバグっている                                                                |
     | MovableBattlerNotFound | 指定座標に移動できる駒が一つもない             | 平手で初手 "▲３四歩"                                                                   |
     | AmbiguousFormatError   | 指定座標に移動できる駒が多すぎる               | 初手 "▲５八金"                                                                         |

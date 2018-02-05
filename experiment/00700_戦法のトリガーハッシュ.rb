@@ -8,8 +8,8 @@ tp TacticInfo.primary_soldiers.inject({}) {|a, (k, v)| a.merge(k.name => v.count
 
 tp TacticInfo.all_soldier_points_hash.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 
-# ~> -:7:in `<main>': undefined method `primary_soldiers' for Bushido::TacticInfo:Class (NoMethodError)
+# ~> -:7:in `<main>': undefined method `primary_soldiers' for Warabi::TacticInfo:Class (NoMethodError)
 # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | black | {"○"=>[{:point=>#<Bushido::Point:70159022026820 "３三">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021974720 "７七">, :prefix_char=>" ", :something=>"○"}]} |
-# >> | white | {"○"=>[{:point=>#<Bushido::Point:70159021925280 "７七">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Bushido::Point:70159021925140 "３三">, :prefix_char=>" ", :something=>"○"}]} |
+# >> | black | {"○"=>[{:point=>#<Warabi::Point:70159022026820 "３三">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Warabi::Point:70159021974720 "７七">, :prefix_char=>" ", :something=>"○"}]} |
+# >> | white | {"○"=>[{:point=>#<Warabi::Point:70159021925280 "７七">, :prefix_char=>" ", :something=>"○"}, {:point=>#<Warabi::Point:70159021925140 "３三">, :prefix_char=>" ", :something=>"○"}]} |
 # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

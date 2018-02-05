@@ -51,7 +51,7 @@
               %small= row[:description]
             - when "name_with_description"
               .pull-left{:style => "padding-right:8px"}
-                %a{href: Bushido::Utils.guguru_url([row[:name], "将棋", "Wikipedia"])}
+                %a{href: Warabi::Utils.guguru_url([row[:name], "将棋", "Wikipedia"])}
                   %img{:src => row[:xs_image_url], :width => 64}
               %span.nowrap
                 %a{href: row[:game_url]}= row[:name]

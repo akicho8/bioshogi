@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Player do
     it "座標を漢字・全角数字・半角数字のみでも指定できる" do
       player_test2(init: "五五歩", exec: "五四歩").should == ["▲５四歩"]
@@ -306,7 +306,7 @@ EOT
     end
 
     it "piece_plot" do
-      player = Bushido::Mediator.new.player_at(:black)
+      player = Warabi::Mediator.new.player_at(:black)
       player.pieces_add
       player.piece_plot
     end

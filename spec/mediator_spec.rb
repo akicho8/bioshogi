@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Mediator do
     it "交互に打ちながら戦況表示" do
       mediator = Mediator.start
@@ -72,7 +72,7 @@ EOT
         mediator.piece_plot
         loop do
           think_result = mediator.current_player.brain.think_by_minmax(depth: 0, random: true)
-          hand = Bushido::Utils.mov_split_one(think_result[:hand])[:input]
+          hand = Warabi::Utils.mov_split_one(think_result[:hand])[:input]
           # hand = mediator.current_player.brain.all_hands.sample
           p hand
           mediator.execute(hand)

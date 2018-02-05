@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Bushido
+module Warabi
   describe Parser::Base do
     describe "sfen から変換" do
       it "startpos の状態から" do

@@ -11,4 +11,4 @@ f "76歩"                        # => "７六歩(77)"
 f "7776FU"                      # => "７六歩(77)"
 f "７六歩"                      # => "７六歩(77)"
 f "76歩"                        # => "７六歩(77)"
-f "0076FU" rescue $!            # => #<Bushido::HoldPieceNotFound: 持駒に "歩" がありません
+f "0076FU" rescue $!            # => #<Warabi::HoldPieceNotFound: 持駒に "歩" がありません

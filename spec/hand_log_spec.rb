@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 
 # standard_kif_spec でいろんなパターンをテストしているのでここでテストするのは基本のメソッドだけでOK
-module Bushido
+module Warabi
   describe HandLog do
     before do
       @mediator = Mediator.test

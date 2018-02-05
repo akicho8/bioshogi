@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    bushido (0.0.1)
+    warabi (0.0.1)
       actionview
       activesupport
       memory_record
@@ -97,7 +97,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bushido!
+  warabi!
   diff-lcs
   faraday
   mechanize

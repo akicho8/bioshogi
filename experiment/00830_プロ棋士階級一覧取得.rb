@@ -1,5 +1,5 @@
 require "./example_helper"
-# Bushido.config[:skill_set_flag] = false
+# Warabi.config[:skill_set_flag] = false
 
 tags = []
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort

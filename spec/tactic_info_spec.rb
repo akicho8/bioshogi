@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe TacticInfo do
     it "すべての戦法の判定" do
       TacticInfo.all_elements.each do |e|

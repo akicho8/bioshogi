@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Location do
     it "変換可能" do
       Location[-1].key.should      == :white

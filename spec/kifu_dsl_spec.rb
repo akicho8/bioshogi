@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe KifuDsl do
     it "試行錯誤用" do
       builder = KifuDsl.define do

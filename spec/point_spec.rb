@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Point do
     it "コレクション" do
       Point.each.present?.should == true

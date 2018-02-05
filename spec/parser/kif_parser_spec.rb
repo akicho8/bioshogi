@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Bushido
+module Warabi
   describe Parser::KifParser do
     it "残り時間の変換" do
       info = Parser.parse("持ち時間：1時間01分")

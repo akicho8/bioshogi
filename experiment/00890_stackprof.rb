@@ -1,6 +1,6 @@
 require "./example_helper"
 
-# Bushido.config[:skill_set_flag] = false
+# Warabi.config[:skill_set_flag] = false
 
 require "stackprof"
 
@@ -22,11 +22,11 @@ end
 puts "%.1f ms" % ms
 
 system "stackprof stackprof.dump"
-system "stackprof stackprof.dump --method Bushido::SkillMonitor#execute"
-system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
+system "stackprof stackprof.dump --method Warabi::SkillMonitor#execute"
+system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 
-# system "stackprof stackprof.dump --method Bushido::Point.fetch"
-# system "stackprof stackprof.dump --method Bushido::Movabler#movable_infos"
+# system "stackprof stackprof.dump --method Warabi::Point.fetch"
+# system "stackprof stackprof.dump --method Warabi::Movabler#movable_infos"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
@@ -38,53 +38,53 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
 # >>        269  (27.3%)         269  (27.3%)     (garbage collection)
-# >>         79   (8.0%)          77   (7.8%)     Bushido::Position::Base.lookup
+# >>         79   (8.0%)          77   (7.8%)     Warabi::Position::Base.lookup
 # >>         47   (4.8%)          47   (4.8%)     block (4 levels) in memory_record
-# >>         39   (4.0%)          39   (4.0%)     Bushido::Point#to_xy
-# >>        134  (13.6%)          36   (3.6%)     Bushido::Point.lookup
-# >>         41   (4.2%)          28   (2.8%)     Bushido::Parser#file_parse
-# >>         26   (2.6%)          26   (2.6%)     Bushido::Battler#to_soldier
-# >>        287  (29.1%)          21   (2.1%)     Bushido::Runner#execute
+# >>         39   (4.0%)          39   (4.0%)     Warabi::Point#to_xy
+# >>        134  (13.6%)          36   (3.6%)     Warabi::Point.lookup
+# >>         41   (4.2%)          28   (2.8%)     Warabi::Parser#file_parse
+# >>         26   (2.6%)          26   (2.6%)     Warabi::Battler#to_soldier
+# >>        287  (29.1%)          21   (2.1%)     Warabi::Runner#execute
 # >>         18   (1.8%)          18   (1.8%)     Hash#slice
-# >>         69   (7.0%)          17   (1.7%)     Bushido::Movabler#alive_piece?
-# >>         17   (1.7%)          16   (1.6%)     Bushido::Piece::VectorMethods#select_vectors2
-# >>         27   (2.7%)          15   (1.5%)     Bushido::Point#hash
-# >>         53   (5.4%)          13   (1.3%)     Bushido::Position::Hpos.lookup
+# >>         69   (7.0%)          17   (1.7%)     Warabi::Movabler#alive_piece?
+# >>         17   (1.7%)          16   (1.6%)     Warabi::Piece::VectorMethods#select_vectors2
+# >>         27   (2.7%)          15   (1.5%)     Warabi::Point#hash
+# >>         53   (5.4%)          13   (1.3%)     Warabi::Position::Hpos.lookup
 # >>         12   (1.2%)          12   (1.2%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
 # >>         14   (1.4%)          12   (1.2%)     Hash#transform_keys
 # >>         11   (1.1%)          11   (1.1%)     ActiveSupport::Duration#initialize
-# >>         11   (1.1%)          11   (1.1%)     Bushido::Position::Hpos#number_format
-# >>         17   (1.7%)          11   (1.1%)     Bushido::Piece::NameMethods#basic_names
-# >>         10   (1.0%)          10   (1.0%)     Bushido::HandLog#initialize
-# >>         10   (1.0%)          10   (1.0%)     Bushido::Parser::Base::ConverterMethods#mb_ljust
-# >>         10   (1.0%)          10   (1.0%)     Bushido::Position::Base.value_range
+# >>         11   (1.1%)          11   (1.1%)     Warabi::Position::Hpos#number_format
+# >>         17   (1.7%)          11   (1.1%)     Warabi::Piece::NameMethods#basic_names
+# >>         10   (1.0%)          10   (1.0%)     Warabi::HandLog#initialize
+# >>         10   (1.0%)          10   (1.0%)     Warabi::Parser::Base::ConverterMethods#mb_ljust
+# >>         10   (1.0%)          10   (1.0%)     Warabi::Position::Base.value_range
 # >>         65   (6.6%)          10   (1.0%)     Set#each
-# >>          9   (0.9%)           9   (0.9%)     Bushido::HandLog::OfficialFormatter#initialize
-# >>        428  (43.4%)           8   (0.8%)     Bushido::Mediator::Executer#execute
-# >>         17   (1.7%)           7   (0.7%)     Bushido::Position::Base#valid?
-# >>         28   (2.8%)           6   (0.6%)     Bushido::Point#eql?
+# >>          9   (0.9%)           9   (0.9%)     Warabi::HandLog::OfficialFormatter#initialize
+# >>        428  (43.4%)           8   (0.8%)     Warabi::Mediator::Executer#execute
+# >>         17   (1.7%)           7   (0.7%)     Warabi::Position::Base#valid?
+# >>         28   (2.8%)           6   (0.6%)     Warabi::Point#eql?
 # >>         18   (1.8%)           6   (0.6%)     <top (required)>
 # >>          6   (0.6%)           6   (0.6%)     Hash#assert_valid_keys
-# >>          8   (0.8%)           6   (0.6%)     Bushido::Position::Vpos#number_format
-# >>          5   (0.5%)           5   (0.5%)     Bushido::Position::Vpos._units
-# >> Bushido::SkillMonitor#execute_one (/Users/ikeda/src/bushido/lib/bushido/skill_monitor.rb:19)
+# >>          8   (0.8%)           6   (0.6%)     Warabi::Position::Vpos#number_format
+# >>          5   (0.5%)           5   (0.5%)     Warabi::Position::Vpos._units
+# >> Warabi::SkillMonitor#execute_one (/Users/ikeda/src/warabi/lib/warabi/skill_monitor.rb:19)
 # >>   samples:     5 self (0.5%)  /     36 total (3.6%)
 # >>   callers:
-# >>       37  (  102.8%)  Bushido::SkillMonitor#execute_one
-# >>       36  (  100.0%)  Bushido::SkillMonitor#execute
+# >>       37  (  102.8%)  Warabi::SkillMonitor#execute_one
+# >>       36  (  100.0%)  Warabi::SkillMonitor#execute
 # >>   callees (31 total):
-# >>       37  (  119.4%)  Bushido::SkillMonitor#execute_one
-# >>        8  (   25.8%)  Bushido::DefenseInfo#board_parser
-# >>        6  (   19.4%)  Bushido::AttackInfo#board_parser
+# >>       37  (  119.4%)  Warabi::SkillMonitor#execute_one
+# >>        8  (   25.8%)  Warabi::DefenseInfo#board_parser
+# >>        6  (   19.4%)  Warabi::AttackInfo#board_parser
 # >>        5  (   16.1%)  block (4 levels) in memory_record
-# >>        3  (    9.7%)  Bushido::SkillMonitor#battler_exist?
-# >>        2  (    6.5%)  Bushido::DefenseInfo::AttackInfoSharedMethods#tactic_info
-# >>        2  (    6.5%)  Bushido::DefenseInfo::AttackInfoSharedMethods#tactic_info
-# >>        1  (    3.2%)  Bushido::SkillSet#attack_infos
+# >>        3  (    9.7%)  Warabi::SkillMonitor#battler_exist?
+# >>        2  (    6.5%)  Warabi::DefenseInfo::AttackInfoSharedMethods#tactic_info
+# >>        2  (    6.5%)  Warabi::DefenseInfo::AttackInfoSharedMethods#tactic_info
+# >>        1  (    3.2%)  Warabi::SkillSet#attack_infos
 # >>        1  (    3.2%)  Object#presence
-# >>        1  (    3.2%)  Bushido::SkillMonitor#location
-# >>        1  (    3.2%)  Bushido::DefenseInfo::AttackInfoSharedMethods#hold_piece_eq2
-# >>        1  (    3.2%)  Bushido::DefenseInfo::AttackInfoSharedMethods#cached_descendants
+# >>        1  (    3.2%)  Warabi::SkillMonitor#location
+# >>        1  (    3.2%)  Warabi::DefenseInfo::AttackInfoSharedMethods#hold_piece_eq2
+# >>        1  (    3.2%)  Warabi::DefenseInfo::AttackInfoSharedMethods#cached_descendants
 # >>   code:
 # >>                                   |    19  |     def execute_one(e)
 # >>    34    (3.4%)                   |    20  |       catch :skip do
@@ -254,29 +254,29 @@ system "stackprof stackprof.dump --method Bushido::Position::Base.lookup"
 # >>                                   |   184  |       end
 # >>     2    (0.2%) /     2   (0.2%)  |   185  |     end
 # >>                                   |   186  | 
-# >> Bushido::SkillMonitor#execute (/Users/ikeda/src/bushido/lib/bushido/skill_monitor.rb:11)
+# >> Warabi::SkillMonitor#execute (/Users/ikeda/src/warabi/lib/warabi/skill_monitor.rb:11)
 # >>   samples:     1 self (0.1%)  /    102 total (10.3%)
 # >>   callers:
-# >>      102  (  100.0%)  Bushido::Player#execute
-# >>       36  (   35.3%)  Bushido::SkillMonitor#execute
+# >>      102  (  100.0%)  Warabi::Player#execute
+# >>       36  (   35.3%)  Warabi::SkillMonitor#execute
 # >>   callees (101 total):
-# >>       57  (   56.4%)  Bushido::TacticInfo.soldier_hash_table
-# >>       36  (   35.6%)  Bushido::SkillMonitor#execute_one
-# >>       36  (   35.6%)  Bushido::SkillMonitor#execute
-# >>        7  (    6.9%)  Bushido::SkillMonitor#current_soldier
-# >>        1  (    1.0%)  Bushido::Point#hash
+# >>       57  (   56.4%)  Warabi::TacticInfo.soldier_hash_table
+# >>       36  (   35.6%)  Warabi::SkillMonitor#execute_one
+# >>       36  (   35.6%)  Warabi::SkillMonitor#execute
+# >>        7  (    6.9%)  Warabi::SkillMonitor#current_soldier
+# >>        1  (    1.0%)  Warabi::Point#hash
 # >>   code:
 # >>                                   |    11  |     def execute
 # >>    66    (6.7%) /     1   (0.1%)  |    12  |       if e = TacticInfo.soldier_hash_table[current_soldier]
 # >>    72    (7.3%)                   |    13  |         e.each { |e| execute_one(e) }
 # >>                                   |    14  |       end
-# >> Bushido::Position::Base.lookup (/Users/ikeda/src/bushido/lib/bushido/position.rb:73)
+# >> Warabi::Position::Base.lookup (/Users/ikeda/src/warabi/lib/warabi/position.rb:73)
 # >>   samples:    77 self (7.8%)  /     79 total (8.0%)
 # >>   callers:
-# >>       40  (   50.6%)  Bushido::Position::Hpos.lookup
-# >>       39  (   49.4%)  Bushido::Position::Vpos.lookup
+# >>       40  (   50.6%)  Warabi::Position::Hpos.lookup
+# >>       39  (   49.4%)  Warabi::Position::Vpos.lookup
 # >>   callees (2 total):
-# >>        2  (  100.0%)  Bushido::Position::Base.units_set
+# >>        2  (  100.0%)  Warabi::Position::Base.units_set
 # >>   code:
 # >>                                   |    73  |         def lookup(value)
 # >>    68    (6.9%) /    68   (6.9%)  |    74  |           if value.kind_of?(Base)

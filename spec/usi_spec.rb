@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe "usi" do
     it "usi (sfen) 形式で出力" do
       mediator = Mediator.new

@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe "ウィキペディアにある表記通りの解釈ができる" do
     def test1(str)
-      mediator = Bushido::Mediator.new
+      mediator = Warabi::Mediator.new
       mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ と ・ ・ ・|

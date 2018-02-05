@@ -5,20 +5,20 @@ Bundler.require(:default, :brawser_env)
 
 require "active_support/core_ext/array/conversions"
 
-Bushido::XtraPattern.reload_all
+Warabi::XtraPattern.reload_all
 
 # for /swars_skills
 # require 'active_support'
 # require 'active_support/core_ext/object/to_json'
-require "bushido/contrib/other_files/swars_skills"
+require "warabi/contrib/other_files/swars_skills"
 
 require "sinatra/json"
 require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
-    rows = Bushido::Position::Vpos.board_size.times.collect do |y|
-      tds = Bushido::Position::Hpos.board_size.times.collect do |x|
+    rows = Warabi::Position::Vpos.board_size.times.collect do |y|
+      tds = Warabi::Position::Hpos.board_size.times.collect do |x|
         tag_class = []
         cell = ""
         if battler = board.surface[[x, y]]
@@ -26,10 +26,10 @@ class MediatorDecorator < SimpleDelegator
           cell = battler.piece_current_name
         end
         if hand_log = hand_logs.last
-          if hand_log.point_to == Bushido::Point[[x, y]]
+          if hand_log.point_to == Warabi::Point[[x, y]]
             tag_class << "last_point"
           end
-          if hand_log.point_from == Bushido::Point[[x, y]]
+          if hand_log.point_from == Warabi::Point[[x, y]]
             tag_class << "last_point2"
           end
         end
@@ -79,13 +79,13 @@ class Brawser < Sinatra::Base
     @session_id = env["rack.session"]["session_id"]
 
     if !params[:reset].nil? || REDIS.get(@session_id).nil?
-      mediator = Bushido::Mediator.start
+      mediator = Warabi::Mediator.start
       mediator.piece_plot
       REDIS.set(@session_id, Marshal.dump(mediator))
     end
 
     dump = Marshal.load(REDIS.get(@session_id))
-    @mediator = Bushido::Mediator.from_dump(dump)
+    @mediator = Warabi::Mediator.from_dump(dump)
     # @mediator = dump
 
     if params[:location].nil? || @mediator.current_player.location.key.to_s == params[:location]
@@ -102,7 +102,7 @@ class Brawser < Sinatra::Base
         @runtime = Time.now
         @think_result = @mediator.current_player.brain.think_by_minmax(:depth => params[:think_put_lv].to_i)
         @runtime = Time.now - @runtime
-        input = Bushido::Utils.mov_split_one(@think_result[:hand])[:input]
+        input = Warabi::Utils.mov_split_one(@think_result[:hand])[:input]
         @mediator.execute(input)
       end
       if params[:random_put].present?
@@ -129,13 +129,13 @@ class Brawser < Sinatra::Base
 
   get "/tactics" do
     if Sinatra::Base.environment == :development
-      Bushido::XtraPattern.reload_all
+      Warabi::XtraPattern.reload_all
     end
 
     if params[:id]
-      @pattern = Bushido::XtraPattern.list[params[:id].to_i]
+      @pattern = Warabi::XtraPattern.list[params[:id].to_i]
       if @pattern
-        @frames = Bushido::HybridSequencer.execute(@pattern)
+        @frames = Warabi::HybridSequencer.execute(@pattern)
       end
     end
     haml :tactics
@@ -174,11 +174,11 @@ auto_flushing {
   }
 })
     if params[:kif_title].present?
-      @pattern = Bushido::XtraPattern.new({
+      @pattern = Warabi::XtraPattern.new({
           title: params[:kif_title],
-          dsl: Bushido::KifuDsl.define(params){|params|eval(params[:kif_body])},
+          dsl: Warabi::KifuDsl.define(params){|params|eval(params[:kif_body])},
         })
-      @frames = Bushido::HybridSequencer.execute(@pattern)
+      @frames = Warabi::HybridSequencer.execute(@pattern)
     else
       params[:kif_title] ||= "垂らしの歩"
       params[:kif_body] ||= @pattern_body_default
@@ -192,15 +192,15 @@ auto_flushing {
 
   get "/simple_kifu_form" do
     if params[:body].present?
-      @pattern = Bushido::XtraPattern.new({
+      @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Bushido::KifuDsl.define(params){|params|
+          dsl: Warabi::KifuDsl.define(params){|params|
             board "平手"
             auto_flushing
             mov params[:body]
           },
         })
-      @frames = Bushido::HybridSequencer.execute(@pattern)
+      @frames = Warabi::HybridSequencer.execute(@pattern)
     else
       if Sinatra::Base.environment == :development
         params[:body] ||= "▲７六歩 △３四歩 ▲２六歩"
@@ -230,10 +230,10 @@ auto_flushing {
       params[:body] = URI(params[:url]).read.to_s.toutf8
     end
     if params[:body].present?
-      @kif_info = Bushido::Parser.parse(params[:body])
-      @pattern = Bushido::XtraPattern.new({
+      @kif_info = Warabi::Parser.parse(params[:body])
+      @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Bushido::KifuDsl.define(@kif_info){|kif_info|
+          dsl: Warabi::KifuDsl.define(@kif_info){|kif_info|
             board "平手"
             auto_flushing
             kif_info.move_infos.each{|move_info|
@@ -242,7 +242,7 @@ auto_flushing {
             }
           },
         })
-      @frames = Bushido::HybridSequencer.execute(@pattern)
+      @frames = Warabi::HybridSequencer.execute(@pattern)
     end
   end
 

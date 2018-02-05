@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe AttackInfo do
     it "新米長玉" do
       info = Parser.parse("▲７六歩 △６二玉")

@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Mediator do
     def board_reset_test(value)
       mediator = Mediator.new

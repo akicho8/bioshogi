@@ -9,7 +9,7 @@ list.each do |e|
   p mediator.turn_info.counter
   pp [e, mediator.hand_logs.last.to_s_kif]
 end
-# ~> /Users/ikeda/src/bushido/lib/bushido/player.rb:358:in `put_on_with_valid': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Bushido::DeadPieceRuleError)
+# ~> /Users/ikeda/src/warabi/lib/warabi/player.rb:358:in `put_on_with_valid': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Warabi::DeadPieceRuleError)
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
 # ~> |v香v桂v角 ・ ・ ・ ・ ・ ・|一
@@ -23,12 +23,12 @@ end
 # ~> | 香 ・ ・ ・ ・ ・ ・ ・ 香|九
 # ~> +---------------------------+
 # ~> 先手の持駒：歩 香
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:128:in `move_to'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/runner.rb:221:in `execute'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/player.rb:141:in `execute'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/mediator.rb:224:in `block in execute'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/mediator.rb:209:in `each'
-# ~> 	from /Users/ikeda/src/bushido/lib/bushido/mediator.rb:209:in `execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:128:in `move_to'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/runner.rb:221:in `execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:141:in `execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:224:in `block in execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:209:in `each'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:209:in `execute'
 # ~> 	from -:8:in `block in <main>'
 # ~> 	from -:6:in `each'
 # ~> 	from -:6:in `<main>'

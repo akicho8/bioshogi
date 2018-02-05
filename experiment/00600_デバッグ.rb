@@ -15,8 +15,8 @@ preset_info.sort.collect(&:name)     # => ["９七歩", "９九香", "８七歩"
 
 soldiers.sort == preset_info.sort # => false
 
-soldiers.sort.first        # => {:piece=><Bushido::Piece:70168203774880 歩 pawn>, :promoted=>false, :point=>#<Bushido::Point:70168202530940 "９七">}
-preset_info.sort.first            # => {:piece=><Bushido::Piece:70168203774880 歩 pawn>, :promoted=>false, :point=>#<Bushido::Point:70168202530940 "９七">, :location=>#<Bushido::Location:0x007fa29dbcb758 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :reverse_mark=>"▼", :other_match_chars=>["上手", "☗", "b"], :varrow=>" ", :angle=>0, :csa_sign=>"+", :code=>0}, @match_target_values_set=#<Set: {:black, "▲", "▼", "上手", "☗", "b", "先手", "先", 0, " ", "+"}>>}
+soldiers.sort.first        # => {:piece=><Warabi::Piece:70168203774880 歩 pawn>, :promoted=>false, :point=>#<Warabi::Point:70168202530940 "９七">}
+preset_info.sort.first            # => {:piece=><Warabi::Piece:70168203774880 歩 pawn>, :promoted=>false, :point=>#<Warabi::Point:70168202530940 "９七">, :location=>#<Warabi::Location:0x007fa29dbcb758 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :reverse_mark=>"▼", :other_match_chars=>["上手", "☗", "b"], :varrow=>" ", :angle=>0, :csa_sign=>"+", :code=>0}, @match_target_values_set=#<Set: {:black, "▲", "▼", "上手", "☗", "b", "先手", "先", 0, " ", "+"}>>}
 
 #         # ここがかなり重い
 #         DefenseInfo.collect do |defense_info|

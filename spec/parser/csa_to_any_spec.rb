@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Bushido
+module Warabi
   describe Parser::Base do
     describe "消費時間があるCSAからの変換" do
       describe "投了の部分まで時間が指定されている場合" do

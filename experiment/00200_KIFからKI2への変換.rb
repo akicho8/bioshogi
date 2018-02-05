@@ -1,6 +1,6 @@
 require "./example_helper"
 
-info = Bushido::Parser.parse(Pathname("katomomo.kif"))
+info = Warabi::Parser.parse(Pathname("katomomo.kif"))
 
 out = ""
 out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join

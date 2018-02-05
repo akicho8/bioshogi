@@ -1,17 +1,17 @@
 # $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-# require 'bushido'
+# require 'warabi'
 
 require "bundler/setup"
 require "tapp"
-require "bushido"
+require "warabi"
 
 ENV["BUSHIDO_ENV"] = "test"
 
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)
-Bushido.logger = ActiveSupport::Logger.new(log_file)
+Warabi.logger = ActiveSupport::Logger.new(log_file)
 
-module Bushido
+module Warabi
   Mediator.send(:include, MediatorTestHelper)
 end
 
@@ -33,7 +33,7 @@ RSpec.configure do |config|
         initial_deal: true,
       }.merge(params)
 
-      mediator = Bushido::Mediator.new
+      mediator = Warabi::Mediator.new
       player = mediator.player_at(params[:player])
 
       if params[:initial_deal]

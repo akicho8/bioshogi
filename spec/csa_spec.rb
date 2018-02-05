@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe do
     it "5341NK だけでは判断が難しい例" do
       mediator = Mediator.new

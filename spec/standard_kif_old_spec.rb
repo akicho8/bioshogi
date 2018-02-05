@@ -7,7 +7,7 @@
 
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe "将棋連盟が定めている人間向け棋譜入力" do
     before do
       @params = {append_pieces: "飛 角"}

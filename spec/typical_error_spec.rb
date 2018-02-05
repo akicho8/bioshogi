@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe TypicalError do
     describe "二歩の反則負け" do
       before do

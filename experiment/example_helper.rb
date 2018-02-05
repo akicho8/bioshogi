@@ -1,6 +1,6 @@
 require "bundler/setup"
-require "bushido"
-include Bushido
+require "warabi"
+include Warabi
 
 require "pp"
 require "active_support/core_ext/benchmark"

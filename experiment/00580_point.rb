@@ -5,9 +5,9 @@ Point["１一"] == Point["１一"]  # => true
 
 a = Point["１一"]
 b = Point["２一"]
-[a, b]                          # => [#<Bushido::Point:70130724172720 "１一">, #<Bushido::Point:70130724171840 "２一">]
-[a, b].sort rescue $!           # => [#<Bushido::Point:70130724171840 "２一">, #<Bushido::Point:70130724172720 "１一">]
-[a, b].sort_by(&:to_xy)         # => [#<Bushido::Point:70130724171840 "２一">, #<Bushido::Point:70130724172720 "１一">]
+[a, b]                          # => [#<Warabi::Point:70130724172720 "１一">, #<Warabi::Point:70130724171840 "２一">]
+[a, b].sort rescue $!           # => [#<Warabi::Point:70130724171840 "２一">, #<Warabi::Point:70130724172720 "１一">]
+[a, b].sort_by(&:to_xy)         # => [#<Warabi::Point:70130724171840 "２一">, #<Warabi::Point:70130724172720 "１一">]
 
 Point["１一"].object_id         # => 70130724140620
 Point["11"].object_id           # => 70130724138640

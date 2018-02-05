@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Bushido
+module Warabi
   describe Piece do
     it "コレクション" do
       Piece.each.present?.should == true

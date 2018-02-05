@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Bushido
+module Warabi
   describe "盤面の読み取り" do
     def test1(source)
       BoardParser.parse(source).soldiers.collect(&:name).sort

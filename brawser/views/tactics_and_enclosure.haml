@@ -1,14 +1,14 @@
 .well
-  - Bushido::DefenseInfo.each do |stock|
+  - Warabi::DefenseInfo.each do |stock|
     %a{href:"/tactics_and_enclosure##{stock[:key]}"}= "【#{stock[:key]}】"
 
 .text-center
-  - Bushido::DefenseInfo.each do |stock|
-    - mediator = Bushido::Mediator.new
+  - Warabi::DefenseInfo.each do |stock|
+    - mediator = Warabi::Mediator.new
     - mediator.board_reset_by_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
-      %a{href: Bushido::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]
+      %a{href: Warabi::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]
       - if stock[:sankou_url]
         %a{href: stock[:sankou_url]}= "将ウォーズ"
     = MediatorDecorator.new(mediator).to_html_board(:small)
