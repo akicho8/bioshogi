@@ -255,6 +255,31 @@ module Warabi
       end
     end
 
+    concerning :CsaMethods do
+      def to_csa(**options)
+        s = []
+        preset_name = board.preset_name
+        if preset_name
+          unless options[:oneline]
+            s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}" + "\n"
+          end
+        end
+        if options[:board_expansion]
+          s << board.to_csa
+        else
+          if preset_name == "平手"
+            s << "PI" + "\n"
+          else
+            s << board.to_csa
+          end
+        end
+        players.each do |player|
+          s << player.to_csa + "\n"
+        end
+        s.join
+      end
+    end
+
     concerning :UsiMethods do
       def initialize(*)
         super

@@ -30,22 +30,23 @@ module Warabi
         def accept?(source)
           source = Parser.source_normalize(source)
           false ||
-            source.match?(/^V\d+\.\d+/)         ||
-            source.match?(/^(PI|P\d)/)          ||
-            source.match?(/^[+-]\d{4}[A-Z]{2}/) ||
-            source.match?(/^N[+-]/)             ||
+            source.match?(/\b(V\d+\.\d+)\b/)      ||
+            source.match?(/\b(PI|P\d|P[\+\-])\b/) ||
+            source.match?(/[+-]\d{4}[A-Z]{2}/)    ||
+            source.match?(/\b(N[+-])\b/)          ||
             false
+        end
+      end
+
+      def normalized_source
+        @normalized_source ||= Parser.source_normalize(@source).yield_self do |s|
+          s = s.gsub(/^#{comment_char}.*/o, "")  # コメント行の削除
+          s = s.gsub(/,/, "\n")                  # カンマは改行と見なす
         end
       end
 
       def parse
         s = normalized_source
-
-        # コメント行の削除
-        s = s.gsub(/^#{comment_char}.*/o, "")
-
-        # カンマは改行と見なす
-        s = s.gsub(/,/, "\n")
 
         # ヘッダーっぽいのもを収集
         s.scan(/^(N[+-]|\$\w+:)(.*)\n/) do |key, value|
@@ -59,10 +60,11 @@ module Warabi
         end
         header_normalize
 
-        # P1 形式の盤面の読み取り
-        @board_source = s.scan(/^P\d.*\n/).join.presence
+        ################################################################################ (1)
+        # > (1) 平手初期配置と駒落ち
+        # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
+        # > 例:二枚落ちPI82HI22KA
 
-        # P1 形式でなければ PI82HI22KA 形式として読み取り
         unless @board_source
           if md = s.match(/^PI(?<komaochi_piece_list>.*)/)
             mediator = Mediator.new
@@ -82,7 +84,70 @@ module Warabi
           end
         end
 
-        # 棋譜
+        ################################################################################ (2)
+        # > (2) 一括表現
+        # > 1行の駒を以下のように示す。行番号に続き、先後の区別と駒の種類を記述する。
+        # > 先後の区別が"+""-"以外のとき、駒がないとする。
+        # > 1枡3文字で9枡分記述しないといけない。
+        # > 例:
+        # > P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+        # > P2 * -HI *  *  *  *  * -KA *
+
+        # P1 形式の盤面の読み取り
+        unless @board_source
+          @board_source = s.scan(/^P\d.*\n/).join.presence
+        end
+
+        ################################################################################ (3)
+        # > (3) 駒別単独表現
+        # > 一つ一つの駒を示すときは、先後の区別に続き、位置と駒の種類を記述する。持駒に限り、駒の種類として"AL"が使用でき、残りの駒すべてを表す。駒台は"00"である。
+        # > 玉は、駒台へはいかない。
+
+        # P-51OU        …… 後手 ５一玉          を配置
+        # P+53KI00GI    …… 先手 ５三金 駒台に銀 を配置
+        # P-00AL        …… 後手 残りすべての駒を駒台に配置
+        if s.match?(/^P[\+\-]/)
+          sub_mediator = Mediator.new
+
+          # 駒箱
+          piece_box = PieceBox.new
+
+          # 両者の駒台
+          hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+
+          s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
+            location = Location.fetch(location_key)
+            piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_key|
+              if piece_key == "AL"
+                raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません" if xy != "00"
+                # 残りすべてを駒台に置く
+                hold_pieces[location] += piece_box.pick_out_without_king
+              else
+                # 駒箱から取り出す
+                piece = piece_box.pick_out(piece_key)
+                if xy == "00"
+                  # 駒台に置く
+                  raise SyntaxDefact, "#{piece.name} は駒台に置けません" if piece.key == :king
+                  hold_pieces[location] << piece
+                else
+                  # 盤に置く
+                  point = Point.fetch(xy)
+                  soldier = Soldier.new_with_promoted(piece.key, location: location, point: point)
+                  sub_mediator.player_at(soldier[:location]).battlers_create(soldier, from_stand: false)
+                end
+              end
+            end
+          end
+          hold_pieces.each do |location, pieces|
+            player = sub_mediator.player_at(location)
+            header["#{player.call_name}の持駒"] = Utils.hold_pieces_a_to_s(pieces)
+          end
+          @board_source = sub_mediator.board.to_s
+        end
+
+        # 手番は見ていない
+
+        # 指し手
         @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
           if used_seconds
             used_seconds = used_seconds.to_i
@@ -92,6 +157,38 @@ module Warabi
 
         if md = s.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
           @last_status_params = md.named_captures.symbolize_keys
+        end
+      end
+
+      # "-" だけの行があれば上手からの開始とする
+      def komaochi?
+        normalized_source.match?(/^\-$/)
+      end
+
+      # 駒箱
+      class PieceBox
+        attr_accessor :pieces
+
+        def initialize
+          @pieces = Utils.hold_pieces_s_to_a("歩9角飛香2桂2銀2金2玉") * 2
+        end
+
+        # 駒箱から取り出す
+        def pick_out(piece)
+          piece = Piece.fetch(piece)
+          if index = pieces.find_index { |e| e == piece }
+            pieces.slice!(index)
+          else
+            raise SyntaxDefact, "駒箱には#{piece.name}がもうありません"
+          end
+          piece
+        end
+
+        # 玉以外のすべての駒を取り出す
+        def pick_out_without_king
+          pieces.find_all { |e| e.key != :king }.collect do |e|
+            pick_out(e)
+          end
         end
       end
     end

@@ -54,7 +54,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa(strip: true).should == <<~EOT
+        @info.to_csa.should == <<~EOT
 V2.2
 ' 手合割:三枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
@@ -133,7 +133,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa(strip: true).should == <<~EOT
+        @info.to_csa.should == <<~EOT
 V2.2
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -KA *

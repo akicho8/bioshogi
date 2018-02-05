@@ -196,7 +196,7 @@ module Warabi
       # 持駒を取り出す
       def piece_pick_out(piece)
         index = @pieces.find_index { |e| e.key == piece.key }
-        index or raise HoldPieceNotFound, "持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
+        index or raise HoldPieceNotFound, "#{location.name}の手番で持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
         @pieces.slice!(index)
       end
 
@@ -241,12 +241,20 @@ module Warabi
       end
 
       def to_sfen
-        @pieces.group_by(&:itself).each_with_object([]) { |(k, v), a|
+        @pieces.group_by(&:itself).each_with_object([]) do |(k, v), m|
           if v.count >= 2
-            a << v.count
+            m << v.count
           end
-          a << k.to_sfen(location: location)
-        }
+          m << k.to_sfen(location: location)
+        end
+      end
+
+      def to_csa
+        if @pieces.empty?
+          ""
+        else
+          ["P", location.csa_sign, @pieces.sort.flat_map { |e| ["00", e.csa_basic_name] }].join
+        end
       end
     end
 

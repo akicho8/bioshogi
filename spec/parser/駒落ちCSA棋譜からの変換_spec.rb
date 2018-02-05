@@ -26,7 +26,7 @@ EOT
     end
 
     it "to_csa (本当は P 表記だけにしたい)" do
-        @info.to_csa(strip: true).should == <<~EOT
+        @info.to_csa.should == <<~EOT
 V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01
@@ -65,7 +65,7 @@ EOT
     end
   end
 
-  describe "PI82HI22KA 形式" do
+  describe "(1) 平手初期配置と駒落ち" do
     it "落とす駒が明記されているケース" do
       info = Parser.parse(<<~EOT)
 V2.2
@@ -74,7 +74,7 @@ PI82HI22KA
 -3334FU
 %TORYO
 EOT
-      info.to_csa(strip: true).should == <<~EOT
+      info.to_csa.should == <<~EOT
 V2.2
 ' 手合割:二枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
@@ -94,6 +94,29 @@ EOT
 
     it "表記が間違っている" do
       expect { Parser.parse("V2.2,PI82HI22OU").to_csa }.to raise_error(SyntaxDefact, '２二の玉を落とす指定がありましたがそこにある駒は角です : "82HI22OU"')
+    end
+  end
+
+  describe "(3) 駒別単独表現" do
+    it do
+      Parser.parse("V2.2,P-51OU,P+53KI00GI,P-00AL,-,-5141OU,+0052GI").to_csa == <<~EOT
+V2.2
+P1 *  *  *  * -OU *  *  *  *
+P2 *  *  *  *  *  *  *  *  *
+P3 *  *  *  * +KI *  *  *  *
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7 *  *  *  *  *  *  *  *  *
+P8 *  *  *  *  *  *  *  *  *
+P9 *  *  *  *  *  *  *  *  *
+P+00GI
+P-00HI00HI00KA00KA00KI00KI00KI00GI00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU00FU
+-
+-5141OU
++0052GI
+%TORYO
+EOT
     end
   end
 end

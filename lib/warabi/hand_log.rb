@@ -2,22 +2,30 @@
 #
 # 棋譜の一手分の保存用
 #
-# FIXME: 後手から見るには point 関連をすべて反転させて調べる方法もありそう
 
 module Warabi
   class HandLog
-    attr_reader :point_from, :point_to, :piece, :promoted, :promote_trigger, :strike_trigger, :player, :candidate, :point_same_p
-    attr_reader :skill_set
+    include ActiveModel::Model
 
-    def initialize(attrs)
-      # FIXME: こんなんやるんなら ActiveModel でいいんじゃね？
-      attrs.each do |k, v|
-        instance_variable_set("@#{k}", v)
-      end
+    attr_accessor :point_from
+    attr_accessor :point_to
+    attr_accessor :piece
+    attr_accessor :promoted
+    attr_accessor :promote_trigger
+    attr_accessor :strike_trigger
+    attr_accessor :player
+    attr_accessor :candidate
+    attr_accessor :point_same_p
+    attr_accessor :skill_set
+    attr_accessor :current_soldier
+    attr_accessor :before_soldier
+    attr_accessor :killed_piece
 
-      raise MustNotHappen, "成駒を打った" if @strike_trigger && @promoted
-      raise MustNotHappen, "打つと同時に成った" if @strike_trigger && @promote_trigger
-      raise MustNotHappen, "成駒をさらに成った" if @promoted && @promote_trigger
+    def initialize(*)
+      super
+      raise MustNotHappen, "成駒を打った" if strike_trigger && promoted
+      raise MustNotHappen, "打つと同時に成った" if strike_trigger && promote_trigger
+      raise MustNotHappen, "成駒をさらに成った" if promoted && promote_trigger
     end
 
     # 両方返す

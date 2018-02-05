@@ -100,7 +100,7 @@ module Warabi
 
       # 成ってないときの名前たち
       def basic_names
-        [name, basic_alias, csa_basic_name, sfen_char].flatten.compact
+        [name, basic_alias, csa_basic_name, sfen_char, key].flatten.compact
       end
 
       # 成ったときの名前たち

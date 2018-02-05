@@ -121,7 +121,7 @@ EOT
       end
 
       it do
-        @info.to_csa(strip: true).should == <<~EOT
+        @info.to_csa.should == <<~EOT
 V2.2
 $SITE:(site)
 P1 *  *  *  *  *  *  *  * -OU
@@ -133,6 +133,8 @@ P6 *  *  *  *  *  *  *  *  *
 P7 *  *  *  *  *  *  *  *  *
 P8 *  *  *  *  *  *  *  *  *
 P9 *  *  *  *  *  *  *  *  *
+P+00KA00KI00KI00KI00KI00GI00GI00FU00FU00FU00FU00FU00FU00FU00FU00FU
+P-00HI00HI00KA00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00FU00FU00FU00FU00FU00FU00FU00FU
 +
 +0064KA
 -0053KA

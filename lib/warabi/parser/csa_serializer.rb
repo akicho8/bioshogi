@@ -28,9 +28,9 @@ module Warabi
       #
       def to_csa(**options)
         options = {
-          board_expansion: false,
-          strip: false, # テストですぐに差分が出てしまって転けるので右側のスペースを取る
-          compact: false,
+          board_expansion: false, # 平手であっても P1 形式で表示
+          compact: false,         # 指し手の部分だけ一行にする
+          oneline: false,         # 一行にする。改行もなし
         }.merge(options)
 
         mediator_run
@@ -47,26 +47,9 @@ module Warabi
           end
         }.join
 
-        preset_name = nil
-        if true
-          obj = Mediator.new
-          mediator_board_setup(obj)
-          preset_name = obj.board.preset_name
-          if preset_name
-            if ENV["BUSHIDO_ENV"] == "test"
-              out << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}\n"
-            end
-          end
-          if options[:board_expansion]
-            out << obj.board.to_csa
-          else
-            if preset_name == "平手"
-              out << "PI\n"
-            else
-              out << obj.board.to_csa
-            end
-          end
-        end
+        obj = Mediator.new
+        mediator_board_setup(obj)
+        out << obj.to_csa(options)
 
         if options[:compact]
           sep = ","
@@ -77,7 +60,7 @@ module Warabi
         # 2通りある
         # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_name))
         # 2. mediator.turn_info を利用する
-        out << mediator.turn_info.base_location.csa_sign + sep
+        out << mediator.turn_info.base_location.csa_sign + "\n"
 
         list = mediator.hand_logs.collect.with_index do |e, i|
           if clock_exist?
@@ -87,7 +70,7 @@ module Warabi
           end
         end
 
-        out << list.join(sep) + sep
+        out << list.join(sep) + "\n"
 
         if e = @last_status_params
           last_action_info = LastActionInfo.fetch(e[:last_action_key])
@@ -95,9 +78,9 @@ module Warabi
           if v = e[:used_seconds]
             s += ",T#{v}"
           end
-          out << s + sep
+          out << s
         else
-          out << "%TORYO" + "\n"
+          out << "%TORYO"
         end
 
         if @error_message
@@ -106,9 +89,14 @@ module Warabi
 
         out = out.join
 
-        # テスト用
-        if options[:strip]
-          out = out.gsub(/\s+\n/, "\n")
+        if options[:oneline]
+          out = out.gsub(/\n/, ",")
+        else
+          out += "\n"
+
+          if ENV["BUSHIDO_ENV"] == "test"
+            out = out.gsub(/\s+\n/, "\n")
+          end
         end
 
         out
