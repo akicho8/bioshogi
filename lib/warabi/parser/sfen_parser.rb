@@ -16,7 +16,7 @@ module Warabi
 
         @sfen.hold_pieces.each do |location, pieces|
           name = location.call_name(@sfen.handicap?)
-          header["#{name}の持駒"] = Utils.hold_pieces_a_to_s(pieces)
+          header["#{name}の持駒"] = Piece.a_to_s(pieces)
         end
       end
 

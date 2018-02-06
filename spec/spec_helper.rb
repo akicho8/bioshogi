@@ -37,10 +37,12 @@ RSpec.configure do |config|
       player = mediator.player_at(params[:player])
 
       if params[:initial_deal]
-        player.pieces_add
+        player.pieces_add("歩9角飛香2桂2銀2金2玉")
       end
 
-      player.pieces_add(params[:append_pieces])
+      if v = params[:append_pieces]
+        player.pieces_add(v)
+      end
 
       player.battlers_create(params[:init])
 
@@ -48,9 +50,9 @@ RSpec.configure do |config|
         player.piece_plot
       end
 
-      Array.wrap(params[:exec]).each{|v|player.execute(v)}
+      Array.wrap(params[:exec]).each { |v| player.execute(v) }
 
-      if v = params[:pinit]
+      if v = params[:pieces_set]
         player.pieces_set(v)
       end
 

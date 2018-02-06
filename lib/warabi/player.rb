@@ -41,7 +41,7 @@ module Warabi
 
     # 平手の初期配置
     def piece_plot
-      soldiers = Utils.location_soldiers(location: location, key: "平手")
+      soldiers = Soldier.location_soldiers(location: location, key: "平手")
       soldiers.each do |soldier|
         piece_pick_out(soldier[:piece])
         battlers_create_from_soldier(soldier)
@@ -217,19 +217,19 @@ module Warabi
       #   player.to_s_pieces # => "飛 歩二"
       #
       def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
-        @pieces += Utils.hold_pieces_s_to_a(str)
+        @pieces += Piece.s_to_a(str)
       end
 
       # 持駒表記変換 (コード → 人間表記)
       #   pieces_set("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
       def pieces_set(str)
-        @pieces = Utils.hold_pieces_s_to_a(str)
+        @pieces = Piece.s_to_a(str)
       end
 
       # 持駒の文字列化
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
-        Utils.hold_pieces_a_to_s(@pieces)
+        Piece.a_to_s(@pieces)
       end
 
       def hold_pieces_snap

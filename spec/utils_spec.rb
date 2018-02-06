@@ -23,42 +23,6 @@ module Warabi
       end
     end
 
-    describe "持駒表記変換" do
-      before do
-        @pieces = [Piece["歩"], Piece["歩"], Piece["飛"]]
-      end
-
-      describe "プレイヤーのスコープ" do
-        it "人間表記 → コード" do
-          Utils.hold_pieces_s_to_a("歩2 飛").should           == @pieces
-          Utils.hold_pieces_s_to_a("歩歩 飛").should          == @pieces
-          Utils.hold_pieces_s_to_a("歩2 飛1").should          == @pieces
-          Utils.hold_pieces_s_to_a("歩2 飛 角0").should       == @pieces
-          Utils.hold_pieces_s_to_a("歩二 飛").should          == @pieces
-          Utils.hold_pieces_s_to_a("歩二飛角〇").should       == @pieces
-          Utils.hold_pieces_s_to_a("　歩二　\n　飛　").should == @pieces
-          Utils.hold_pieces_s_to_a(" 歩二 飛 ").should        == @pieces
-          Utils.hold_pieces_s_to_a(" 歩 二飛 ").should_not    == @pieces
-        end
-
-        it "コード → 人間表記" do
-          Utils.hold_pieces_a_to_s(@pieces).should                == "歩二 飛"
-          Utils.hold_pieces_a_to_s(@pieces, ordered: true).should == "飛 歩二"
-          Utils.hold_pieces_a_to_s(@pieces, separator: "").should == "歩二飛"
-        end
-      end
-
-      describe "全体スコープ" do
-        before { @hash = {Location[:black] => "歩2 飛 金", Location[:white] => "歩二飛 "} }
-        it "人間表記 → コード" do
-          Utils.triangle_hold_pieces_str_to_hash("▲歩2 飛 △歩二飛 ▲金").should == @hash
-        end
-        it "コード → 表記" do
-          Utils.triangle_hold_pieces_hash_to_str(@hash).should == "▲歩2 飛 金 △歩二飛 "
-        end
-      end
-    end
-
     describe "初期配置" do
       before do
         @white_king = [Soldier[piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white]]]
@@ -67,8 +31,8 @@ module Warabi
       end
 
       it "先手か後手の一方用" do
-        Utils.location_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
-        Utils.location_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
+        Soldier.location_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
+        Soldier.location_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
       end
 
       #       describe "board_reset の3通りの引数を先手・後手をキーしたハッシュにする" do

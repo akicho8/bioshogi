@@ -346,7 +346,7 @@ EOT
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
-    #     player = player_test(init: "２二歩", pinit: "歩")
+    #     player = player_test(init: "２二歩", pieces_set: "歩")
     #     p player.to_s_battlers
     #     p player.to_s_pieces
     #     player.safe_put_on("１二歩打") do
@@ -367,7 +367,7 @@ EOT
     #     # end
     #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
-    #     # player = player_test(init: "２二歩", pinit: "歩")
+    #     # player = player_test(init: "２二歩", pieces_set: "歩")
     #     # p player.to_s_battlers
     #     # p player.to_s_pieces
     #     # player.safe_put_on("１二歩打") do

@@ -139,8 +139,8 @@ module Warabi
         sente_gote.each do |e|
           e = "#{e}の持駒"
           if v = object[e].presence
-            v = Utils.hold_pieces_s_to_a(v)
-            v = Utils.hold_pieces_a_to_s(v, ordered: true, separator: " ")
+            v = Piece.s_to_a(v)
+            v = Piece.a_to_s(v, ordered: true, separator: " ")
             object[e] = v
           end
         end

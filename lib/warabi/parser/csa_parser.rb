@@ -140,7 +140,7 @@ module Warabi
           end
           hold_pieces.each do |location, pieces|
             player = sub_mediator.player_at(location)
-            header["#{player.call_name}の持駒"] = Utils.hold_pieces_a_to_s(pieces)
+            header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
           end
           @board_source = sub_mediator.board.to_s
         end
@@ -170,7 +170,7 @@ module Warabi
         attr_accessor :pieces
 
         def initialize
-          @pieces = Utils.hold_pieces_s_to_a("歩9角飛香2桂2銀2金2玉") * 2
+          @pieces = Piece.s_to_a("歩9角飛香2桂2銀2金2玉") * 2
         end
 
         # 駒箱から取り出す

@@ -92,13 +92,13 @@ module Warabi
 
         if @md[:csa_basic_name]
           # 普通の駒
-          @md[:piece] = Piece::BasicGoup.fetch(@md[:csa_basic_name]).name
+          @md[:piece] = Piece.basic_group.fetch(@md[:csa_basic_name]).name
         end
 
         if @md[:csa_promoted_name]
           # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
           # だから移動元の駒の情報で判断するしかない
-          _piece = Piece::PromotedGroup.fetch(@md[:csa_promoted_name])
+          _piece = Piece.promoted_group.fetch(@md[:csa_promoted_name])
 
           v = @player.board[@md[:point_from]] or raise MustNotHappen
           if v.promoted?

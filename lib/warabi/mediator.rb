@@ -116,7 +116,7 @@ module Warabi
 
       def board_reset_by_hash(hash)
         soldiers = hash.flat_map do |location, any|
-          Utils.location_soldiers(location: location, key: any)
+          Soldier.location_soldiers(location: location, key: any)
         end
         board_reset_by_soldiers(soldiers)
       end
@@ -149,8 +149,8 @@ module Warabi
       # @example
       #   mediator.pieces_set("▲歩2 飛 △歩二飛 ▲金")
       def pieces_set(str)
-        Utils.triangle_hold_pieces_str_to_hash(str).each do |location, pieces_str|
-          player_at(location).pieces_set(pieces_str)
+        Piece.s_to_a2(str).each do |location_key, pieces|
+          player_at(location_key).pieces = pieces
         end
       end
     end
@@ -479,8 +479,8 @@ module Warabi
         if params[:init2]
           mediator.battlers_create(params[:init2], from_stand: false)
         end
-        if params[:pinit]
-          mediator.pieces_set(params[:pinit])
+        if params[:pieces_set]
+          mediator.pieces_set(params[:pieces_set])
         end
         if params[:pieces_clear]
           mediator.pieces_clear
@@ -489,16 +489,17 @@ module Warabi
         mediator
       end
 
-      # mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
+      # mediator = Mediator.simple_test(init: "▲１二歩", pieces_set: "▲歩")
       # mediator = Mediator.simple_test(init: "▲３三歩 △１一歩")
       # mediator = Mediator.simple_test(init: "▲１三飛 △１一香 △１二歩")
       # mediator = Mediator.simple_test(init: "▲１六香 ▲１七飛 △１二飛 △１三香 △１四歩")
       def simple_test(params = {})
         params = {
         }.merge(params)
+
         new.tap do |o|
           o.battlers_create(params[:init], from_stand: false)
-          o.pieces_set(params[:pinit])
+          o.pieces_set(params[:pieces_set].to_s)
         end
       end
 

@@ -41,14 +41,36 @@ module Warabi
       #   Soldier.new_with_promoted("と") # => <Soldier piece:"歩", promoted: true>
       def new_with_promoted(value, **attributes)
         case
-        when piece = Piece::BasicGoup[value]
+        when piece = Piece.basic_group[value]
           promoted = false
-        when piece = Piece::PromotedGroup[value]
+        when piece = Piece.promoted_group[value]
           promoted = true
         else
           raise PieceNotFound, "#{value.inspect} に対応する駒がありません"
         end
         self[piece: piece, promoted: promoted, **attributes].freeze
+      end
+
+      # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
+      # @example
+      #   Soldier.location_soldiers(location: :black, key: "平手")
+      #   Soldier.location_soldiers(location: :black, key: "+---...")
+      def location_soldiers(params)
+        params = {
+          location: nil,
+          key: nil,
+        }.merge(params)
+
+        if BoardParser.accept?(params[:key])
+          board_parser = BoardParser.parse(params[:key])
+        else
+          board_parser = PresetInfo.fetch(params[:key]).board_parser
+        end
+
+        location = Location[params[:location]]
+        board_parser.soldiers.collect do |e|
+          e.merge(point: e[:point].reverse_if_white(location), location: location)
+        end
       end
     end
 

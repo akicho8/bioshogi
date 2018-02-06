@@ -14,6 +14,66 @@
 
 module Warabi
   class Piece
+    concerning :UtilityMethods do
+      class_methods do
+        # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
+        def s_to_a(str)
+          s_to_h(str).yield_self { |v| h_to_a(v) }
+        end
+
+        # Piece.s_to_h("飛0 角 竜1 馬2 龍2") # => {:rook=>3, :bishop=>3}
+        def s_to_h(str)
+          str = str.tr("〇一二三四五六七八九", "0-9")
+          str = str.remove(/\p{blank}/)
+          str.scan(/(#{Piece.all_names.join("|")})(\d+)?/o).inject({}) do |a, (piece, count)|
+            piece = Piece.fetch(piece)
+            a.merge(piece.key => (count || 1).to_i) {|_, v1, v2| v1 + v2 }
+          end
+        end
+
+        # Piece.h_to_a(rook: 3, "角" => 3, "飛" => 1).collect(&:name) # => ["飛", "飛", "飛", "角", "角", "角", "飛"]
+        def h_to_a(hash)
+          hash.flat_map do |piece_key, count|
+            count.times.collect { Piece.fetch(piece_key) }
+          end
+        end
+
+        # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
+        def a_to_s(pieces, **options)
+          options = {
+            ordered: false,         # 価値のある駒順に並べる
+            separator: " ",
+          }.merge(options)
+
+          pieces = pieces.map { |e| Piece.fetch(e) }
+
+          if options[:ordered]
+            pieces = pieces.sort_by { |e| -e.basic_weight }
+          end
+
+          pieces.group_by(&:key).collect { |key, pieces|
+            count = pieces.size
+            if count > 1
+              count = count.to_s.tr("0-9", "〇一二三四五六七八九")
+            else
+              count = ""
+            end
+            "#{pieces.first.name}#{count}"
+          }.join(options[:separator])
+        end
+
+        # Piece.s_to_a2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>"歩2飛金", :white=>"歩二飛"}
+        def s_to_a2(str)
+          hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
+          str.scan(/([#{Location.triangles_str}])([^#{Location.triangles_str}]+)/) do |triangle, str|
+            location = Location[triangle]
+            hash[location.key] << str
+          end
+          hash.transform_values { |e| s_to_a(e.join) }
+        end
+      end
+    end
+
     include ApplicationMemoryRecord
     memory_record [
       {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  sfen_char: "K", promotable: false, basic_weight: 9999, promoted_weight: 0,    mochigoma_weight: 9999},
@@ -28,19 +88,21 @@ module Warabi
 
     class << self
       def lookup(value)
-        BasicGoup[value] || PromotedGroup[value] || super
+        basic_group[value] || promoted_group[value] || super
       end
 
       def fetch(value)
         super
       rescue => error
-        raise PieceNotFound, "#{value.inspect} に対応する駒がありません\n#{error.message}"
+        raise PieceNotFound, "#{value.inspect} に対応する駒がありません\n#{error.message}\nkeys: #{basic_group.keys.inspect}\nkeys: #{promoted_group.keys.inspect}"
       end
 
-      # 台上の持駒文字列をハッシュ配列化
-      #   hold_pieces_s_to_a("飛 香二") # => [{piece: Piece["飛"], count: 1}, {piece: Piece["香"], count: 2}]
-      def hold_pieces_s_to_a(*args)
-        Utils.hold_pieces_s_to_a(*args)
+      def basic_group
+        @basic_group ||= inject({}) { |a, e| a.merge(e.basic_names.collect { |key| [key, e] }.to_h) }
+      end
+
+      def promoted_group
+        @promoted_group ||= inject({}) { |a, e| a.merge(e.promoted_names.collect { |key| [key, e] }.to_h) }
       end
     end
 
@@ -128,29 +190,25 @@ module Warabi
     end
 
     concerning :OtherMethods do
-      # 成れる駒か？
       def promotable?
         !!promotable
       end
 
-      def assert_promotable(v)
-        if !promotable? && v
-          raise NotPromotable, "成れない駒で成ろうとしています : #{piece.inspect}"
+      def assert_promotable(promoted)
+        if !promotable? && promoted
+          raise NotPromotable, "#{name}は成れない駒なのに成ろうとしています"
         end
       end
     end
 
     concerning :VectorMethods do
       included do
-        delegate :brave?, :select_vectors, :select_vectors2, :to => :piece_vector
+        delegate :brave?, :select_vectors, :select_vectors2, to: :piece_vector
       end
-      
+
       def piece_vector
         PieceVector.fetch(key)
       end
     end
-    
-    BasicGoup = Piece.inject({}) { |a, e| a.merge(e.basic_names.collect { |key| [key, e] }.to_h) }
-    PromotedGroup = Piece.inject({}) { |a, e| a.merge(e.promoted_names.collect { |key| [key, e] }.to_h) }
   end
 end

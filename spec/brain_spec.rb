@@ -56,7 +56,7 @@ module Warabi
       # +---------+      +---------+
       #
       Board.size_change([3, 3]) do
-        player = player_test(init: "２二歩", pinit: "歩")
+        player = player_test(init: "２二歩", pieces_set: "歩")
         player.brain.__pieces_hands.collect(&:to_hand).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
         player.brain.__pieces_hands.collect(&:name).should    == ["▲３二歩", "▲１二歩", "▲３三歩", "▲１三歩"]
       end
@@ -64,7 +64,7 @@ module Warabi
 
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
-        mediator = Mediator.simple_test(init: "▲１二歩", pinit: "▲歩")
+        mediator = Mediator.simple_test(init: "▲１二歩", pieces_set: "▲歩")
         mediator.player_at(:black).brain.eval_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end
@@ -172,7 +172,7 @@ EOT
 
     # describe "一時的に置いてみた状態にする" do
     #   it "safe_put_on" do
-    #     player = player_test(init: "２二歩", pinit: "歩")
+    #     player = player_test(init: "２二歩", pieces_set: "歩")
     #     p player.to_s_battlers
     #     p player.to_s_pieces
     #     player.safe_put_on("１二歩打") do
@@ -193,7 +193,7 @@ EOT
     #     # end
     #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
-    #     # player = player_test(init: "２二歩", pinit: "歩")
+    #     # player = player_test(init: "２二歩", pieces_set: "歩")
     #     # p player.to_s_battlers
     #     # p player.to_s_pieces
     #     # player.safe_put_on("１二歩打") do
