@@ -23,7 +23,7 @@ Array(files).each do |file|
   end
 
   begin
-    tags += info.header.to_names_h.values.flatten
+    tags += info.header.__to_simple_names_h.values.flatten
   rescue => error
     puts file
     raise error

@@ -15,7 +15,7 @@ info = Parser.parse(<<~EOT)
 EOT
 
 tp info.header.to_h
-tp info.header.to_names_h
+tp info.header.__to_simple_names_h
 tp info.header.__to_simple_names_h
 tp info.header.meta_info
 tp info.header.__to_meta_h
