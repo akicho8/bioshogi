@@ -1069,6 +1069,12 @@ module Warabi
           "https://www.youtube.com/watch?v=RN2ilK7WFwo",
         ],
       },
+      {
+        :key => "うっかり三間飛車",
+        :urls => [
+          "http://shogi98.hatenablog.com/entry/2017/07/18/235824",
+        ],
+      },
     ]
   end
 end
