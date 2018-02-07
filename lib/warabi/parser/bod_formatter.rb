@@ -2,7 +2,7 @@
 
 module Warabi
   module Parser
-    concern :BodSerializer do
+    concern :BodFormatter do
       def to_bod(**options)
         mediator.to_bod(options)
       end

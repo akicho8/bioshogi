@@ -1,6 +1,6 @@
 module Warabi
   module Parser
-    concern :Ki2Serializer do
+    concern :Ki2Formatter do
       def to_ki2(**options)
         options = {
           cols: 10,

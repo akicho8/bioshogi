@@ -2,7 +2,7 @@ require_relative "chess_clock"
 
 module Warabi
   module Parser
-    concern :KifSerializer do
+    concern :KifFormatter do
       def to_kif(**options)
         options = {
           length: 12,

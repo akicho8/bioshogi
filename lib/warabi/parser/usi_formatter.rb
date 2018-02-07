@@ -1,6 +1,6 @@
 module Warabi
   module Parser
-    concern :UsiSerializer do
+    concern :UsiFormatter do
       def to_sfen(**options)
         mediator.to_sfen(options)
       end

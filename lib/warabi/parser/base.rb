@@ -5,11 +5,11 @@ require_relative "header"
 require_relative "csa_header_info"
 require_relative "last_action_info"
 
-require_relative "kif_serializer"
-require_relative "ki2_serializer"
-require_relative "csa_serializer"
-require_relative "usi_serializer"
-require_relative "bod_serializer"
+require_relative "kif_formatter"
+require_relative "ki2_formatter"
+require_relative "csa_formatter"
+require_relative "usi_formatter"
+require_relative "bod_formatter"
 
 module Warabi
   module Parser
@@ -109,11 +109,11 @@ module Warabi
       end
 
       concerning :ConverterMethods do
-        include KifSerializer
-        include Ki2Serializer
-        include CsaSerializer
-        include UsiSerializer
-        include BodSerializer
+        include KifFormatter
+        include Ki2Formatter
+        include CsaFormatter
+        include UsiFormatter
+        include BodFormatter
 
         def mediator_run
           mediator

@@ -1,6 +1,6 @@
 module Warabi
   module Parser
-    concern :CsaSerializer do
+    concern :CsaFormatter do
       # CSA標準棋譜ファイル形式
       # http://www.computer-shogi.org/protocol/record_v22.html
       #
