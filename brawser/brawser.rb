@@ -17,8 +17,8 @@ require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
-    rows = Warabi::Position::Vpos.board_size.times.collect do |y|
-      tds = Warabi::Position::Hpos.board_size.times.collect do |x|
+    rows = Warabi::Position::Vpos.dimension.times.collect do |y|
+      tds = Warabi::Position::Hpos.dimension.times.collect do |x|
         tag_class = []
         cell = ""
         if battler = board.surface[[x, y]]

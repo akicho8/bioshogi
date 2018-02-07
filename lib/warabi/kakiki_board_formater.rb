@@ -30,12 +30,12 @@ module Warabi
     end
 
     def line
-      "+" + "---" * Position::Hpos.board_size + "+"
+      "+" + "---" * Position::Hpos.dimension + "+"
     end
 
     def rows
-      Position::Vpos.board_size.times.collect do |y|
-        fields = Position::Hpos.board_size.times.collect do |x|
+      Position::Vpos.dimension.times.collect do |y|
+        fields = Position::Hpos.dimension.times.collect do |x|
           point = Point.fetch([x, y])
           object_to_s(@board[point])
         end

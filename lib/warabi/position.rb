@@ -18,7 +18,7 @@ module Warabi
       #   end
       #
       def size_change(wsize, &block)
-        save_value = [Hpos.board_size, Vpos.board_size]
+        save_value = [Hpos.dimension, Vpos.dimension]
         Hpos.board_size_reset(wsize.first)
         Vpos.board_size_reset(wsize.second)
         if block_given?
@@ -36,7 +36,7 @@ module Warabi
       # サイズ毎のクラスがいるかも
       # かなりやっつけの仮
       def size_type
-        key = [Hpos.board_size, Vpos.board_size]
+        key = [Hpos.dimension, Vpos.dimension]
         {
           [5, 5] => :x55,
           [9, 9] => :board_size_9x9,
@@ -56,8 +56,8 @@ module Warabi
     end
 
     class Base
-      class_attribute :board_size
-      self.board_size = 9
+      class_attribute :dimension
+      self.dimension = 9
 
       attr_reader :value
       private_class_method :new
@@ -84,7 +84,7 @@ module Warabi
         end
 
         def board_size_reset(v)
-          self.board_size = v
+          self.dimension = v
 
           @instance = nil
           @units = nil
@@ -94,7 +94,7 @@ module Warabi
 
         # 全角の文字配列
         def units
-          @units ||= _units.chars.to_a.send(_arrow, board_size)
+          @units ||= _units.chars.to_a.send(_arrow, dimension)
         end
 
         def units_set

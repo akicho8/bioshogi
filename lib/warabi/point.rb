@@ -18,8 +18,8 @@ module Warabi
       # すべての座標を返す
       #   Point.collect { |point| ... }
       def each(&block)
-        Position::Vpos.board_size.times.flat_map { |y|
-          Position::Hpos.board_size.times.collect { |x|
+        Position::Vpos.dimension.times.flat_map { |y|
+          Position::Hpos.dimension.times.collect { |x|
             Point[[x, y]]
           }
         }.each(&block)

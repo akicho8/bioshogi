@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+
 module Warabi
   class PieceBox
     attr_accessor :counts

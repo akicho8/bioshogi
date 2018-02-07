@@ -82,7 +82,7 @@ module Warabi
 
       # X列の駒たち
       def vertical_pieces(x)
-        Position::Vpos.board_size.times.collect { |y|
+        Position::Vpos.dimension.times.collect { |y|
           lookup([x, y])
         }.compact
       end
@@ -112,8 +112,8 @@ module Warabi
       end
 
       def to_sfen
-        Position::Vpos.board_size.times.collect { |y|
-          Position::Hpos.board_size.times.collect { |x|
+        Position::Vpos.dimension.times.collect { |y|
+          Position::Hpos.dimension.times.collect { |x|
             point = Point.fetch([x, y])
             @surface[point]
           }.chunk(&:class).flat_map { |klass, e|
