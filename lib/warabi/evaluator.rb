@@ -56,7 +56,7 @@ module Warabi
 
       # 持駒
       score += player.pieces.collect { |e|
-        e.mochigoma_weight
+        e.hold_weight
       }.sum
 
       score

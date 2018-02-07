@@ -215,7 +215,7 @@ module Warabi
 
     concerning :ScoreMethods do
       included do
-        delegate :basic_weight, :promoted_weight, :mochigoma_weight, to: :piece_score
+        delegate :basic_weight, :promoted_weight, :hold_weight, to: :piece_score
       end
 
       def piece_score
