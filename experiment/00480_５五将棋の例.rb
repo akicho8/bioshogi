@@ -12,7 +12,7 @@ mediator.players.each do |player|
   end
   player.battlers_create(_battlers)
 end
-mediator.pieces_clear
+mediator.piece_box_clear
 p mediator
 mediator.execute("２四銀")
 mediator.execute("４二銀")
@@ -45,7 +45,7 @@ p mediator
 # >> | 歩 ・ ・ ・ ・|四
 # >> | 玉 金 ・ ・ 飛|五
 # >> +---------------+
-# >> 先手の持駒：歩 金
+# >> 先手の持駒：金 歩
 # >> 手数＝9 ▲１二角(34) まで
 # >> 
 # >> 後手番

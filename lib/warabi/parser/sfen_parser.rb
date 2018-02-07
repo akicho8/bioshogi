@@ -11,12 +11,13 @@ module Warabi
       end
 
       def parse
-        @sfen = Usi::Sfen.parse(normalized_source)
+        @sfen = Sfen.parse(normalized_source)
         @move_infos = @sfen.move_infos
 
-        @sfen.hold_pieces.each do |location, pieces|
+        @sfen.piece_counts.each do |location_key, counts|
+          location = Location.fetch(location_key)
           name = location.call_name(@sfen.handicap?)
-          header["#{name}の持駒"] = Piece.a_to_s(pieces)
+          header["#{name}の持駒"] = Piece.h_to_s(counts)
         end
       end
 

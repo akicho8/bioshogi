@@ -124,7 +124,7 @@ BOARD
       end
 
       it "pieces" do
-        dsl_block{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.should == "歩 桂二"
+        dsl_block{ pieces "▲" => "歩1 桂2" }.player_at("▲").to_s_pieces.should == "桂二 歩"
       end
 
       describe "stack" do

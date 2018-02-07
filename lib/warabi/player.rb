@@ -114,7 +114,7 @@ module Warabi
           raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.mark_with_formal_name.inspect} があります"
         end
         board.pick_up!(to)
-        @pieces << to_battler.piece
+        piece_box.add(to_battler.piece.key => 1)
         @mediator.kill_counter += 1
         @last_piece_taken_from_opponent = to_battler.piece
         to_battler.player.battlers.delete(to_battler)
@@ -171,43 +171,33 @@ module Warabi
       end
     end
 
-    # 持駒関連
-    # ここは駒台クラスとして一段下げる方法もある
     concerning :Pieceable do
       included do
-        attr_accessor :pieces
+        attr_accessor :piece_box
       end
 
       def initialize(*)
         super
-        @pieces = []
+        @piece_box = PieceBox.new
       end
 
-      # # 必ず存在する持駒を参照する
-      # def piece_fetch(piece)
-      #   piece_lookup(piece) or raise PieceNotFound, "持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
-      # end
+      delegate :pieces, to: :piece_box
 
-      # 持駒を参照する
-      def piece_lookup(piece)
-        @pieces.find { |e| e.key == piece.key }
-      end
-
-      # 持駒を取り出す
       def piece_pick_out(piece)
-        index = @pieces.find_index { |e| e.key == piece.key }
-        index or raise HoldPieceNotFound, "#{location.name}の手番で持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
-        @pieces.slice!(index)
+        piece_box.pick_out(piece)
+        # index = @pieces.find_index { |e| e.key == piece.key }
+        # index or raise HoldPieceNotFound, "#{location.name}の手番で持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
+        # @pieces.slice!(index)
       end
 
       # 持駒の名前一覧(表示・デバッグ用)
       def piece_names
-        @pieces.collect(&:name).sort
+        piece_box.pieces.collect(&:name).sort
       end
 
       # 持駒を捨てる
-      def pieces_clear
-        @pieces.clear
+      def piece_box_clear
+        piece_box.clear
       end
 
       # 配布して持駒にする
@@ -217,19 +207,19 @@ module Warabi
       #   player.to_s_pieces # => "飛 歩二"
       #
       def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
-        @pieces += Piece.s_to_a(str)
+        piece_box.add(Piece.s_to_h(str))
       end
 
       # 持駒表記変換 (コード → 人間表記)
       #   pieces_set("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
       def pieces_set(str)
-        @pieces = Piece.s_to_a(str)
+        piece_box.set(Piece.s_to_h(str))
       end
 
       # 持駒の文字列化
       #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
       def to_s_pieces
-        Piece.a_to_s(@pieces)
+        piece_box.to_s
       end
 
       def hold_pieces_snap
@@ -241,20 +231,11 @@ module Warabi
       end
 
       def to_sfen
-        @pieces.group_by(&:itself).each_with_object([]) do |(k, v), m|
-          if v.count >= 2
-            m << v.count
-          end
-          m << k.to_sfen(location: location)
-        end
+        piece_box.to_sfen(location)
       end
 
       def to_csa
-        if @pieces.empty?
-          ""
-        else
-          ["P", location.csa_sign, @pieces.sort.flat_map { |e| ["00", e.csa_basic_name] }].join
-        end
+        piece_box.to_csa(location)
       end
     end
 
@@ -417,3 +398,6 @@ module Warabi
     # end
   end
 end
+# ~> -:164:in `<class:Player>': undefined method `concerning' for Warabi::Player:Class (NoMethodError)
+# ~> 	from -:5:in `<module:Warabi>'
+# ~> 	from -:4:in `<main>'

@@ -17,7 +17,7 @@ module Warabi
       str = str.to_s
       str = str.gsub(/([#{Location.triangles_str}])/, ' \1')
       str = str.squish
-      str.split(/\s+/).collect{|s|
+      str.split.collect { |s|
         if s.match?(/\A[#{Location.triangles_str}]/)
           movs_split(s)
         else

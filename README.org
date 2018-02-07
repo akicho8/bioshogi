@@ -332,7 +332,7 @@ mediator.players.each do |player|
   }
   player.battlers_create(_battlers)
 end
-mediator.pieces_clear
+mediator.piece_box_clear
 p mediator
 # >> 1手目: ▲先手番
 # >>   ５ ４ ３ ２ １

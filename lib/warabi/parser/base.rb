@@ -136,7 +136,7 @@ module Warabi
           Location.each do |e|
             e.call_names.each do |e|
               if v = header["#{e}の持駒"]
-                mediator.player_at(e).pieces_set(v)
+                mediator.player_at(e).piece_box.set(Piece.s_to_h(v))
               end
             end
           end

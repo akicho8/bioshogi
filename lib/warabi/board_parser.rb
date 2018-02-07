@@ -138,7 +138,7 @@ module Warabi
           count = s.gsub("---", "-").count("-")
           @h_units = Position::Hpos.units.last(count)
         else
-          @h_units = s.strip.split(/\s+/) # 一行目のX座標の単位取得。全角数字の羅列から推測する。「一 二」なら横幅2と判定できる
+          @h_units = s.strip.split # 一行目のX座標の単位取得。全角数字の羅列から推測する。「一 二」なら横幅2と判定できる
         end
       end
 

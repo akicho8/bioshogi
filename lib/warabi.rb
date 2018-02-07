@@ -36,6 +36,8 @@ require_relative "warabi/turn_info"
 require_relative "warabi/order_info"
 require_relative "warabi/piece"
 require_relative "warabi/piece_vector"
+require_relative "warabi/piece_score"
+require_relative "warabi/piece_box"
 require_relative "warabi/hand_log"
 
 require_relative "warabi/soldier"
@@ -69,4 +71,5 @@ require_relative "warabi/evaluator"
 
 require_relative "warabi/parser"
 
+require_relative "warabi/sfen"
 require_relative "warabi/usi"

@@ -53,8 +53,8 @@ module Warabi
       end
 
       # プレイヤーたちの持駒を捨てる
-      def pieces_clear
-        @players.collect(&:pieces_clear)
+      def piece_box_clear
+        @players.collect { |e| e.piece_box.clear }
       end
     end
 
@@ -149,8 +149,8 @@ module Warabi
       # @example
       #   mediator.pieces_set("▲歩2 飛 △歩二飛 ▲金")
       def pieces_set(str)
-        Piece.s_to_a2(str).each do |location_key, pieces|
-          player_at(location_key).pieces = pieces
+        Piece.s_to_h2(str).each do |location_key, counts|
+          player_at(location_key).piece_box.set(counts)
         end
       end
     end
@@ -482,8 +482,8 @@ module Warabi
         if params[:pieces_set]
           mediator.pieces_set(params[:pieces_set])
         end
-        if params[:pieces_clear]
-          mediator.pieces_clear
+        if params[:piece_box_clear]
+          mediator.piece_box_clear
         end
         mediator.execute(params[:exec])
         mediator

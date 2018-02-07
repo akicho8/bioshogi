@@ -12,13 +12,13 @@ module Warabi
       player_test2(init: "５五歩", exec: "５四歩(55)").should == ["▲５四歩"]
     end
 
-    it "持駒を参照する" do
-      player_test.piece_lookup(Piece["歩"]).name.should == "歩"
+    it "持駒がある？" do
+      player_test.piece_box.exist?(Piece["歩"]).should == true
     end
 
     describe "駒を配る" do
       it "平手のデフォルト" do
-        player_test.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+        player_test.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
       end
       it "任意" do
         player_test(initial_deal: false, append_pieces: "飛 歩二").to_s_pieces.should == "飛 歩二"
@@ -196,9 +196,9 @@ EOT
           it "座標指定で" do
             mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
-            mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+            mediator.reverse_player.to_s_pieces.should == "飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_battlers.should == "１一玉 １三歩"
-            mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二"
+            mediator.current_player.to_s_pieces.should == "飛 角 金二 銀二 桂二 香二 歩八"
             mediator.current_player.to_s_battlers.should == "１五玉"
           end
           it "同歩で取る" do
@@ -206,9 +206,9 @@ EOT
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
-            mediator.reverse_player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+            mediator.reverse_player.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_battlers.should == "２四歩"
-            mediator.current_player.to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+            mediator.current_player.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩八"
             mediator.current_player.to_s_battlers.should == ""
           end
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
@@ -302,7 +302,7 @@ EOT
     end
 
     it "持駒の確認" do
-      player_test.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+      player_test.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
     end
 
     it "piece_plot" do

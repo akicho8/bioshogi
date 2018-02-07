@@ -199,7 +199,7 @@ module Warabi
             if !@promote_trigger
               if source_battler && source_battler.promoted? && !@promoted
                 # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
-                if @player.piece_lookup(@piece)
+                if @player.piece_box.exist?(@piece)
                   @strike_trigger = true
                   @point_from = nil
                   battler_put
@@ -293,7 +293,7 @@ module Warabi
 
       if @battlers.empty?
         # 「打」を省略している場合、持駒から探す
-        if @player.piece_lookup(@piece)
+        if @player.piece_box.exist?(@piece)
           if @promote_trigger
             raise IllegibleFormat, "「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている系のエラーです : '#{@source.inspect}'"
           end

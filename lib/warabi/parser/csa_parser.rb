@@ -110,7 +110,7 @@ module Warabi
           sub_mediator = Mediator.new
 
           # 駒箱
-          piece_box = PieceBox.new
+          piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
 
           # 両者の駒台
           hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
@@ -165,32 +165,6 @@ module Warabi
         normalized_source.match?(/^\-$/)
       end
 
-      # 駒箱
-      class PieceBox
-        attr_accessor :pieces
-
-        def initialize
-          @pieces = Piece.s_to_a("歩9角飛香2桂2銀2金2玉") * 2
-        end
-
-        # 駒箱から取り出す
-        def pick_out(piece)
-          piece = Piece.fetch(piece)
-          if index = pieces.find_index { |e| e == piece }
-            pieces.slice!(index)
-          else
-            raise SyntaxDefact, "駒箱には#{piece.name}がもうありません"
-          end
-          piece
-        end
-
-        # 玉以外のすべての駒を取り出す
-        def pick_out_without_king
-          pieces.find_all { |e| e.key != :king }.collect do |e|
-            pick_out(e)
-          end
-        end
-      end
     end
   end
 end
