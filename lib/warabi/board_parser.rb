@@ -22,7 +22,11 @@ module Warabi
       end
 
       def support_parsers
-        [KifBoardParser, CsaBoardParser]
+        [
+          KifBoardParser,
+          CsaBoardParser,
+          SfenBoardParser,
+        ]
       end
     end
 
@@ -111,7 +115,7 @@ module Warabi
     class KifBoardParser < Base
       class << self
         def accept?(source)
-          Parser.source_normalize(source).match?(/^\p{blank}*[\+\|]/)
+          source && source.match?(/^\p{blank}*[\+\|]/)
         end
       end
 
@@ -299,7 +303,7 @@ module Warabi
     # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
     class CsaBoardParser < Base
       def self.accept?(source)
-        Parser.source_normalize(source).match?(/^P\d+/)
+        source && source.match?(/\b(P\d+)\b/)
       end
 
       def parse
@@ -314,6 +318,30 @@ module Warabi
                 point = Point["#{x}#{y}"]
                 soldiers << Soldier.new_with_promoted(md[:piece], point: point, location: location)
               end
+            end
+          end
+        end
+      end
+    end
+
+    class SfenBoardParser < Base
+      def self.accept?(source)
+        source && source.include?("/")
+      end
+
+      def parse
+        @source.split("/").each.with_index do |row, y|
+          x = 0
+          row.scan(/(\+?)(.)/) do |promoted, ch|
+            point = Point.fetch([x, y])
+            if ch.match?(/\d+/)
+              x += ch.to_i
+            else
+              location = Location.fetch_by_sfen_char(ch)
+              promoted = (promoted == "+")
+              piece = Piece.fetch_by_sfen_char(ch)
+              soldiers << Soldier[piece: piece, point: point, location: location, promoted: promoted]
+              x += 1
             end
           end
         end

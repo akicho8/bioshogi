@@ -25,23 +25,7 @@ module Warabi
     end
 
     def soldiers
-      [].tap do |soldiers|
-        attributes[:board].split("/").each.with_index do |row, y|
-          x = 0
-          row.scan(/(\+?)(.)/) do |promoted, ch|
-            point = Point.fetch([x, y])
-            if ch.match?(/\d+/)
-              x += ch.to_i
-            else
-              location = Location.fetch_by_sfen_char(ch)
-              promoted = (promoted == "+")
-              piece = Piece.fetch_by_sfen_char(ch)
-              soldiers << Soldier[piece: piece, point: point, location: location, promoted: promoted]
-              x += 1
-            end
-          end
-        end
-      end
+      BoardParser::SfenBoardParser.parse(attributes[:board]).soldiers
     end
 
     def location

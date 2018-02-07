@@ -43,7 +43,7 @@ require_relative "warabi/hand_log"
 require_relative "warabi/soldier"
 require_relative "warabi/board_parser"
 require_relative "warabi/kakiki_board_formater"
-require_relative "warabi/csa_board_format"
+require_relative "warabi/csa_board_formater"
 require_relative "warabi/board"
 require_relative "warabi/utils"
 

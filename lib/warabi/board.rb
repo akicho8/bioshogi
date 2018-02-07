@@ -104,7 +104,7 @@ module Warabi
       end
 
       def to_csa
-        CsaBoardFormat.new(self).to_s
+        CsaBoardFormater.new(self).to_s
       end
 
       def to_s
