@@ -8,7 +8,6 @@
     - mediator.board_reset_by_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
-      %a{href: Warabi::Utils.guguru_url([stock[:key], "将棋"])}= stock[:key]
       - if stock[:sankou_url]
         %a{href: stock[:sankou_url]}= "将ウォーズ"
     = MediatorDecorator.new(mediator).to_html_board(:small)

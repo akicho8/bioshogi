@@ -9,7 +9,7 @@ module Warabi
     attr_reader :surface
 
     class << self
-      delegate :size_change, :size_type, :disable_promotable, :to => "Warabi::Position"
+      delegate :size_change, :size_type, :disable_promotable, to: "Warabi::Position"
     end
 
     def initialize
@@ -96,7 +96,7 @@ module Warabi
       end
 
       def to_kif
-        KakikiFormat.new(self).to_s
+        KakikiBoardFormater.new(self).to_s
       end
 
       def to_ki2

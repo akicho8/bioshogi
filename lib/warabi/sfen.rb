@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 module Warabi
   class Sfen
     STARTPOS = "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
@@ -16,7 +17,7 @@ module Warabi
 
     def parse
       s = source.sub(/startpos/, STARTPOS)
-      md = s.match(/position\s+sfen\s+(?<sfen>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/)
+      md = s.match(/position\s+sfen\s+(?<board>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/)
       unless md
         raise SyntaxDefact, "構文が不正です : #{source.inspect}"
       end
@@ -25,7 +26,7 @@ module Warabi
 
     def soldiers
       [].tap do |soldiers|
-        attributes[:sfen].split("/").each.with_index do |row, y|
+        attributes[:board].split("/").each.with_index do |row, y|
           x = 0
           row.scan(/(\+?)(.)/) do |promoted, ch|
             point = Point.fetch([x, y])

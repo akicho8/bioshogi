@@ -43,15 +43,6 @@ module Warabi
       {location: Location[md[:mark]], input: md[:input]}
     end
 
-    # Google検索用URL
-    # @example
-    #   guguru_url("UFO銀")
-    #   guguru_url(["UFO銀", "急戦"])
-    def guguru_url(keywords)
-      str = Array.wrap(keywords).compact.uniq.join(" ")
-      "https://www.google.co.jp/search?source=ig&hl=ja&lr=lang_ja&#{{q: str.tosjis}.to_query}"
-    end
-
     # # 後手のみ先手用になっている初期駒配置を反転させる
     # def board_point_realize(params)
     #   params[:both_board_info].inject({}) do |a, (key, value)|
