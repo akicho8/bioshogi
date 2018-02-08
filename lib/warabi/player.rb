@@ -63,7 +63,7 @@ module Warabi
           if soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             next
           end
-          soldier = Soldier.from_str(soldier_or_str)
+          soldier = Soldier.from_str(soldier_or_str, location: location)
         else
           soldier = soldier_or_str
         end
@@ -246,7 +246,7 @@ module Warabi
       end
 
       def battlers_create_from_soldier(soldier)
-        battler = Battler.new(soldier.attributes.merge(player: self))
+        battler = Battler.create(soldier.attributes.merge(player: self))
         put_on_with_valid(battler)
         @battlers << battler
       end
@@ -378,7 +378,7 @@ module Warabi
 
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
-      board.vertical_pieces(point.x).find_all do |e|
+      board.vertical_pieces(point.x).find_all do |e| # FIXME: find でいい
         e.player == self && e.piece.key == :pawn && !e.promoted
       end
     end

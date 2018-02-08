@@ -172,6 +172,7 @@ module Warabi
 
       # 指定の場所に来れる盤上の駒に絞る
       # kif → ki2 変換するときのために @candidate を常に作っとかんといけない
+
       @battlers = @player.battlers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
@@ -302,7 +303,7 @@ module Warabi
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
-          battler = Battler.new(player: @player, piece: @player.piece_pick_out(@piece), point: @point_to, promoted: @promoted)
+          battler = Battler.create(player: @player, piece: @player.piece_pick_out(@piece), point: @point_to, promoted: @promoted, location: @player.location)
           @player.put_on_with_valid(battler)
           @player.battlers << battler
           @done = true
@@ -387,7 +388,7 @@ module Warabi
     end
 
     def battler_put
-      battler = Battler.new(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point_to)
+      battler = Battler.create(player: @player, piece: @player.piece_pick_out(@piece), promoted: @promoted, point: @point_to, location: @player.location)
       @player.put_on_with_valid(battler)
       @player.battlers << battler
       @done = true

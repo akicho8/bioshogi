@@ -5,41 +5,23 @@ module Warabi
   #   player を直接もつのではなく :white, :black を持てばいいような気もしている
   #   引数もバラバラではなく文字列だけで入力してインスタンスを生成
   #
-  class Battler
-    attr_accessor :player, :piece, :promoted, :point, :location
+  class Battler < Soldier
+    attr_accessor :player
 
-    def initialize(attrs)
-      attrs.assert_valid_keys(:player, :piece, :promoted, :point, :location)
-
-      if attrs[:location]
-        if attrs[:location] != attrs[:player].location
-          raise MustNotHappen
-        end
-      end
-
-      @player = attrs[:player]
-      @piece = attrs[:piece]
-      @location = player.location
-
-      self.promoted = attrs[:promoted]
-
-      if attrs[:point]
-        @point = Point.fetch(attrs[:point])
-      end
-
-      unless player && piece
-        raise MustNotHappen, attrs.inspect
-      end
+    def self.create(*args)
+      new(*args)
     end
 
-    # 成り/不成状態の設定
-    def promoted=(v)
-      piece.assert_promotable(v)
-      @promoted = !!v
+    def attributes
+      super.merge(player: player)
     end
 
     def promoted?
-      !!promoted
+      promoted
+    end
+
+    def promoted
+      !!@promoted
     end
 
     # 移動可能な座標を取得
@@ -49,7 +31,7 @@ module Warabi
 
     # 盤面情報と比較するならこれを使う
     def to_soldier
-      Soldier.create(piece: piece, promoted: promoted, point: @point, location: player.location)
+      Soldier.create(piece: piece, promoted: promoted, point: point, location: location)
     end
 
     def to_h
@@ -58,7 +40,7 @@ module Warabi
 
     # この盤上の駒を消す
     def abone
-      player.board.abone_on(@point)
+      player.board.abone_on(point)
       player.battlers.delete(self)
       @point = nil
       self

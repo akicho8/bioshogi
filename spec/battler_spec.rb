@@ -16,18 +16,18 @@ module Warabi
       it "駒のみ" do
         @battler.piece_current_name.should == "と"
       end
-      it "盤上に置いてない場合" do
-        @battler.point = nil
-        @battler.mark_with_formal_name.should == "▲(どこにも置いてない)と"
-      end
+      # it "盤上に置いてない場合" do
+      #   @battler.point = nil
+      #   @battler.mark_with_formal_name.should == "▲(どこにも置いてない)と"
+      # end
     end
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.size_change([3, 3]) do
-        player = player_test(init: "１一飛")
+        player = player_test(init: "▲１一飛")
         battler = player.board["１一"].abone
         player.board["１一"].should == nil # 盤面から消えている
-        battler.point.should == nil        # 盤上から削除した駒の座標は nil になっている
+        # battler.point.should == nil        # 盤上から削除した駒の座標は nil になっている
         player.battlers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない
       end
     end

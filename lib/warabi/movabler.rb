@@ -45,9 +45,9 @@ module Warabi
 
             target = player.board.lookup(pt)
 
-            if target && !target.kind_of?(Battler)
-              raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
-            end
+            # if target && !target.kind_of?(Battler)
+            #   raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
+            # end
 
             # 自分の駒に衝突したら終わり
             if target && target.player == player

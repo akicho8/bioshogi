@@ -4,13 +4,13 @@
 module Warabi
   class Soldier
     class << self
-      def from_str(str)
+      def from_str(str, **attributes)
         if str.kind_of?(self)
           return str
         end
         md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
         md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
-        new_with_promoted(md[:piece], point: Point.fetch(md[:point]), location: Location[md[:location]])
+        new_with_promoted(md[:piece], {point: Point.fetch(md[:point]), location: Location[md[:location]]}.merge(attributes))
       end
 
       def new_with_promoted(object, **attributes)
@@ -54,6 +54,10 @@ module Warabi
     attr_accessor :location
 
     private_class_method :new
+
+    # def initialize(attributes)
+    #   super({location: Location[:black]}.merge(attributes))
+    # end
 
     def attributes
       raise MustNotHappen if promoted.nil?
