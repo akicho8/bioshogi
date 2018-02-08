@@ -26,8 +26,8 @@ module Warabi
 
     ################################################################################ ▲△に分割
 
-    def both_board_info
-      @both_board_info ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key })
+    def location_split
+      @location_split ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key })
     end
   end
 end

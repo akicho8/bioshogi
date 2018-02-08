@@ -1,6 +1,6 @@
 require "./example_helper"
 
-preset_info = PresetInfo["平手"].both_board_info[Location[:black]]
+preset_info = PresetInfo["平手"].location_split[Location[:black]]
 
 mediator = Mediator.start
 mediator.board_reset
@@ -20,7 +20,7 @@ preset_info.sort.first            # => {:piece=><Warabi::Piece:70168203774880 �
 
 #         # ここがかなり重い
 #         DefenseInfo.collect do |defense_info|
-#           placements = Utils.board_point_realize(location: location, both_board_info: defense_info.both_board_info)
+#           placements = Utils.board_point_realize(location: location, location_split: defense_info.location_split)
 #           a = placements.values.flatten.collect(&:to_s)
 #           b = board.surface.values.collect(&:to_h).collect(&:to_s)
 #           match_p = (a - b).empty?

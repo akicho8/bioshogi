@@ -11,10 +11,10 @@ PresetInfo.each do |preset_info|
     soldiers = soldiers.collect {|e| e.merge(location: Location[:black]) }
     soldiers = soldiers.sort
 
-    # p PresetInfo.first.both_board_info[Location[:black]].sort.collect(&:name)
+    # p PresetInfo.first.location_split[Location[:black]].sort.collect(&:name)
     # p soldiers.collect(&:name)
     e = PresetInfo.find do |e|
-      e.both_board_info[Location[:black]].sort == soldiers
+      e.location_split[Location[:black]].sort == soldiers
     end
     tp e.key # => :平手, :平手, :香落ち, :平手, :角落ち, :平手, :飛車落ち, :平手, :飛車香落ち, :平手, :二枚落ち, :平手, :四枚落ち, :平手, :六枚落ち, :平手, :八枚落ち, :平手, :十枚落ち, :平手, :十九枚落ち, :平手, :二十枚落ち, :平手
   end

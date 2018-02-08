@@ -32,7 +32,7 @@ mediator = Mediator.new
 mediator.board_reset_by_soldiers(soldiers)
 puts mediator.board.to_s
 
-tp PresetInfo["平手"].both_board_info[Location[:black]]
+tp PresetInfo["平手"].location_split[Location[:black]]
 # >> |-------+----------+-------+----------|
 # >> | piece | promoted | point | location |
 # >> |-------+----------+-------+----------|

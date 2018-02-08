@@ -162,7 +162,7 @@ module Warabi
         }.compact.sort
 
         PresetInfo.find do |e|
-          e.both_board_info[:black] == black_only_soldiers
+          e.location_split[:black] == black_only_soldiers
         end
       end
     end
