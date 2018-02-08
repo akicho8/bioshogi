@@ -96,14 +96,14 @@ module Warabi
       # それ以上動けるなら置く
       m = soldier.merge(point: pt)
       if alive_piece?(m)
-        yielder << Moved.new(m.attributes.merge(origin_soldier: soldier))
+        yielder << Moved.create(m.attributes.merge(origin_soldier: soldier))
       end
       # 成れるなら成ってみて
       if m.more_promote?(player.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)
-          yielder << Moved.new(m.attributes.merge(origin_soldier: soldier, promoted_trigger: true))
+          yielder << Moved.create(m.attributes.merge(origin_soldier: soldier, promoted_trigger: true))
         end
       end
     end

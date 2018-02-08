@@ -149,9 +149,9 @@ module Warabi
     def __pieces_hands
       @player.board.blank_points.collect { |point|
         @player.pieces.collect do |piece|
-          soldier = Soldier.new(point: point, piece: piece, location: @player.location, promoted: false)
+          soldier = Soldier.create(point: point, piece: piece, location: @player.location, promoted: false)
           if @player.rule_valid?(soldier)
-            Direct.new(soldier.attributes)
+            Direct.create(soldier.attributes)
           end
         end
       }.flatten.compact

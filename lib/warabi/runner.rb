@@ -246,12 +246,12 @@ module Warabi
     end
 
     def current_soldier
-      @current_soldier ||= Soldier.new(piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location)
+      @current_soldier ||= Soldier.create(piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location)
     end
 
     def before_soldier
       if @point_from
-        @before_soldier ||= Soldier.new(piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location)
+        @before_soldier ||= Soldier.create(piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location)
       end
     end
 

@@ -314,7 +314,7 @@ module Warabi
               location = Location.fetch_by_sfen_char(ch)
               promoted = (promoted == "+")
               piece = Piece.fetch_by_sfen_char(ch)
-              soldiers << Soldier.new(piece: piece, point: point, location: location, promoted: promoted)
+              soldiers << Soldier.create(piece: piece, point: point, location: location, promoted: promoted)
               x += 1
             end
           end

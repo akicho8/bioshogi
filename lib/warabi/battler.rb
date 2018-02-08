@@ -49,7 +49,7 @@ module Warabi
 
     # 盤面情報と比較するならこれを使う
     def to_soldier
-      Soldier.new(piece: piece, promoted: promoted, point: @point, location: player.location)
+      Soldier.create(piece: piece, promoted: promoted, point: @point, location: player.location)
     end
 
     def to_h
@@ -78,7 +78,7 @@ module Warabi
       end
 
       def to_csa
-        "#{player.location.csa_sign}#{piece.csa_some_name(promoted)}"
+        player.location.csa_sign + piece.csa_some_name(promoted)
       end
 
       def inspect

@@ -22,13 +22,17 @@ module Warabi
         else
           raise PieceNotFound, "#{object.inspect} に対応する駒がありません"
         end
-        new({piece: piece, promoted: promoted}.merge(attributes)).freeze
+        create({piece: piece, promoted: promoted}.merge(attributes))
       end
 
       # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
       def preset_soldiers(key:, location: :black)
         location = Location[location]
         PresetInfo.fetch(key).board_parser.location_adjust[location.key]
+      end
+
+      def create(*args)
+        new(*args).freeze
       end
     end
 
@@ -38,6 +42,8 @@ module Warabi
     attr_accessor :promoted
     attr_accessor :point
     attr_accessor :location
+
+    private_class_method :new
 
     def attributes
       raise MustNotHappen if promoted.nil?
@@ -80,7 +86,7 @@ module Warabi
     end
 
     def reverse
-      self.class.new(piece: piece, promoted: promoted, point: point.reverse, location: location.reverse)
+      self.class.create(piece: piece, promoted: promoted, point: point.reverse, location: location.reverse)
     end
 
     def reverse_if_white
@@ -96,7 +102,7 @@ module Warabi
     end
 
     def merge(attributes)
-      self.class.new(self.attributes.merge(attributes))
+      self.class.create(self.attributes.merge(attributes))
     end
 
     def eql?(other)

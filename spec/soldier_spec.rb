@@ -7,7 +7,7 @@ module Warabi
     end
 
     it "基本形" do
-      soldier = Soldier.new(@attributes)
+      soldier = Soldier.create(@attributes)
       soldier.name.should == "▲６八銀"
     end
 
@@ -33,13 +33,13 @@ module Warabi
     describe "Brainの指し手チェック用" do
       describe Moved do
         it "#to_hand" do
-          Moved.new(@attributes.merge(origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true)).to_hand.should == "▲６八銀成(79)"
+          Moved.create(@attributes.merge(origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true)).to_hand.should == "▲６八銀成(79)"
         end
       end
 
       describe Direct do
         it "#to_hand" do
-          Direct.new(@attributes).to_hand.should == "▲６八銀打"
+          Direct.create(@attributes).to_hand.should == "▲６八銀打"
         end
       end
     end
