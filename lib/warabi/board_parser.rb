@@ -46,45 +46,21 @@ module Warabi
         @options = options
       end
 
-      # Location ごちゃまぜの Soldier の配列 (FIXME: 全部、ハッシュの配列しておいてあとで分解するほうがよいか？)
+      delegate *[
+        :sorted_soldiers,
+        :both_board_info,
+        :black_side_soldiers,
+        :sorted_black_side_soldiers,
+        :point_as_key_table,
+        :location_adjust,
+        :location_adjust,
+      ], to: :soldiers
+
       def soldiers
-        @soldiers ||= []
-      end
-
-      concerning :SomeAccessors do
-        def sorted_soldiers
-          @sorted_soldiers ||= soldiers.sort
-        end
-
-        # {Location[:black] => [<Soldier>], Location[:white] => [...]}
-        def both_board_info
-          @both_board_info ||= __both_board_info
-        end
-
-        def black_side_soldiers
-          @black_side_soldiers ||= both_board_info[Location[:black]]
-        end
-
-        def sorted_black_side_soldiers
-          @sorted_black_side_soldiers ||= black_side_soldiers.sort
-        end
-
-        def soldiers_hash
-          @soldiers_hash ||= soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
-        end
-
-        def soldiers_hash_loc
-          @soldiers_hash_loc ||= Location.inject({}) do |a, l|
-            a.merge(l.key => soldiers.collect { |e| e.public_send(l.normalize_key) })
-          end
-        end
+        @soldiers ||= SoldierBox.new
       end
 
       private
-
-      def __both_board_info
-        Location.inject({}) { |a, e| a.merge(e => []) }.merge(soldiers.group_by(&:location))
-      end
 
       def shape_lines
         @shape_lines ||= Parser.source_normalize(@source).remove(/\s*#.*/).strip.lines.to_a

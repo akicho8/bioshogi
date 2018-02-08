@@ -26,27 +26,9 @@ module Warabi
       end
 
       # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
-      # @example
-      #   Soldier.location_soldiers(location: :black, key: "平手")
-      #   Soldier.location_soldiers(location: :black, key: "+---...")
-      def location_soldiers(params)
-        params = {
-          location: nil,
-          key: nil,
-        }.merge(params)
-
-        if BoardParser.accept?(params[:key])
-          board_parser = BoardParser.parse(params[:key])
-        else
-          board_parser = PresetInfo.fetch(params[:key]).board_parser
-        end
-
-        soldiers = board_parser.soldiers
-        location = Location[params[:location]]
-        if location.key == :white
-          soldiers = soldiers.collect(&:reverse)
-        end
-        soldiers
+      def preset_soldiers(key:, location: :black)
+        location = Location[location]
+        PresetInfo.fetch(key).board_parser.location_adjust[location.key]
       end
     end
 

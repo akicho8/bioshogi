@@ -173,7 +173,7 @@ module Warabi
         end
 
         # 指定の配置が盤上に含まれるならOK
-        ary = e.board_parser.soldiers_hash_loc[location.key]
+        ary = e.board_parser.location_adjust[location.key]
         if ary.all? { |e| battler_exist?(e) }
         else
           throw :skip

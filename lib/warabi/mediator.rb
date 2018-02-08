@@ -116,7 +116,7 @@ module Warabi
 
       def board_reset_by_hash(hash)
         soldiers = hash.flat_map do |location, any|
-          Soldier.location_soldiers(location: location, key: any)
+          Soldier.preset_soldiers(location: location, key: any)
         end
         board_reset_by_soldiers(soldiers)
       end

@@ -243,7 +243,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   173  |         end
 # >>                                   |   174  | 
 # >>                                   |   175  |         # 指定の配置が盤上に含まれるならOK
-# >>     2    (0.2%)                   |   176  |         ary = e.board_parser.soldiers_hash_loc[location.key]
+# >>     2    (0.2%)                   |   176  |         ary = e.board_parser.location_adjust[location.key]
 # >>     6    (0.6%)                   |   177  |         if ary.all? { |e| battler_exist?(e) }
 # >>                                   |   178  |         else
 # >>                                   |   179  |           throw :skip

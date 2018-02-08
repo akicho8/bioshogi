@@ -31,8 +31,8 @@ module Warabi
       end
 
       it "先手か後手の一方用" do
-        Soldier.location_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
-        Soldier.location_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
+        Soldier.preset_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
+        Soldier.preset_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
       end
     end
   end

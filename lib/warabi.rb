@@ -41,6 +41,7 @@ require_relative "warabi/piece_box"
 require_relative "warabi/hand_log"
 
 require_relative "warabi/soldier"
+require_relative "warabi/soldier_box"
 require_relative "warabi/board_parser"
 require_relative "warabi/kakiki_board_formater"
 require_relative "warabi/csa_board_formater"

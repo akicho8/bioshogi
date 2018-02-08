@@ -66,10 +66,6 @@ module Warabi
       Point["１一"].to_xy.should == [8, 0]
     end
 
-    it "自分自身を返す" do
-      (object = Point["１一"]).to_point.object_id.should == object.object_id
-    end
-
     it "盤面内か？" do
       Point["１一"].vector_add([0, 0]).valid?.should  == true
       Point["１一"].vector_add([1, 0]).valid?.should  == false

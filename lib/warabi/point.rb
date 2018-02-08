@@ -78,11 +78,6 @@ module Warabi
       "#<#{self.class.name}:#{object_id} #{name.inspect}>"
     end
 
-    # 自分自身を返す
-    def to_point
-      self
-    end
-
     # 内部座標を返す
     #   Point["１一"].to_xy # => [8, 0]
     def to_xy
