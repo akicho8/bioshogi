@@ -155,14 +155,14 @@ module Warabi
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        sorted_black_side_soldiers = @surface.values.collect { |e|
+        black_only_soldiers = @surface.values.collect { |e|
           if e.location == location
             e.to_soldier.reverse_if_white
           end
         }.compact.sort
 
         PresetInfo.find do |e|
-          e.sorted_black_side_soldiers == sorted_black_side_soldiers
+          e.both_board_info[:black] == black_only_soldiers
         end
       end
     end

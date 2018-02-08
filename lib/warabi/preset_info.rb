@@ -31,7 +31,7 @@ module Warabi
 
     concerning :DelegateToShapeInfoMethods do
       included do
-        delegate :board_parser, :both_board_info, :sorted_black_side_soldiers, :black_side_soldiers, :sorted_soldiers, to: :shape_info
+        delegate :board_parser, :both_board_info, :sorted_soldiers, to: :shape_info
       end
 
       def shape_info

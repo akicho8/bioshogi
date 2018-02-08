@@ -2442,6 +2442,6 @@ EOT
       @board_parser ||= BoardParser::FireBoardParser.parse(body)
     end
 
-    delegate :sorted_soldiers, :both_board_info, :sorted_black_side_soldiers, :black_side_soldiers, to: :board_parser
+    delegate :sorted_soldiers, :both_board_info, to: :board_parser
   end
 end

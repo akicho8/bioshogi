@@ -29,13 +29,5 @@ module Warabi
     def both_board_info
       @both_board_info ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key })
     end
-
-    def black_side_soldiers
-      @black_side_soldiers ||= both_board_info[:black]
-    end
-
-    def sorted_black_side_soldiers
-      @sorted_black_side_soldiers ||= black_side_soldiers.sort
-    end
   end
 end

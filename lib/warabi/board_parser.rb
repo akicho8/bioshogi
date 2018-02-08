@@ -49,8 +49,6 @@ module Warabi
       delegate *[
         :sorted_soldiers,
         :both_board_info,
-        :black_side_soldiers,
-        :sorted_black_side_soldiers,
         :point_as_key_table,
         :location_adjust,
         :location_adjust,

@@ -38,6 +38,11 @@ defense_info = DefenseInfo.find do |e|
   # e.sorted_black_side_soldiers == sorted_black_side_soldiers
 end
 tp defense_info
+# ~> -:29:in `block in <main>': undefined method `black_side_soldiers' for #<Warabi::DefenseInfo:0x00007f82a51bec00> (NoMethodError)
+# ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/memory_record-0.0.9/lib/memory_record/memory_record.rb:147:in `each'
+# ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/memory_record-0.0.9/lib/memory_record/memory_record.rb:147:in `each'
+# ~> 	from -:25:in `find'
+# ~> 	from -:25:in `<main>'
 # >> |----------|
 # >> | ▲７六歩 |
 # >> | ▲５六歩 |
@@ -48,18 +53,13 @@ tp defense_info
 # >> | ▲９九香 |
 # >> | ▲６九玉 |
 # >> |----------|
-# >> |-------+----------+-------+----------|
-# >> | piece | promoted | point | location |
-# >> |-------+----------+-------+----------|
-# >> | 香    | false    | ９九  | ▲       |
-# >> | 歩    | false    | ７六  | ▲       |
-# >> | 金    | false    | ７八  | ▲       |
-# >> | 歩    | false    | ６七  | ▲       |
-# >> | 銀    | false    | ６八  | ▲       |
-# >> | 玉    | false    | ６九  | ▲       |
-# >> | 歩    | false    | ５六  | ▲       |
-# >> | 金    | false    | ５八  | ▲       |
-# >> |-------+----------+-------+----------|
 # >> |----------|
-# >> | カニ囲い |
+# >> | ▲９九香 |
+# >> | ▲７六歩 |
+# >> | ▲７八金 |
+# >> | ▲６七歩 |
+# >> | ▲６八銀 |
+# >> | ▲６九玉 |
+# >> | ▲５六歩 |
+# >> | ▲５八金 |
 # >> |----------|
