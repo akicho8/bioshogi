@@ -123,7 +123,7 @@ module Warabi
 
       def board_reset_by_soldiers(soldiers)
         soldiers.each do |soldier|
-          player_at(soldier[:location]).battlers_create(soldier, from_stand: false)
+          player_at(soldier.location).battlers_create(soldier, from_stand: false)
         end
         play_standby
       end
@@ -237,7 +237,7 @@ module Warabi
         s = []
         s << @board.to_s
         s << @players.collect { |player|
-          "#{player.call_name}の持駒:#{player.to_s_pieces}"
+          "#{player.call_name}の持駒:#{player.piece_box.to_s}"
         }.join("\n") + "\n"
         s.join
       end
@@ -274,7 +274,9 @@ module Warabi
           end
         end
         players.each do |player|
-          s << player.to_csa + "\n"
+          if v = player.to_csa.presence
+            s << v + "\n"
+          end
         end
         s.join
       end

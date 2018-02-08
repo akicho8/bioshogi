@@ -18,10 +18,10 @@ module Warabi
 
     describe "駒を配る" do
       it "平手のデフォルト" do
-        player_test.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
+        player_test.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
       end
       it "任意" do
-        player_test(initial_deal: false, append_pieces: "飛 歩二").to_s_pieces.should == "飛 歩二"
+        player_test(initial_deal: false, append_pieces: "飛 歩二").piece_box.to_s.should == "飛 歩二"
       end
     end
 
@@ -196,9 +196,9 @@ EOT
           it "座標指定で" do
             mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
-            mediator.reverse_player.to_s_pieces.should == "飛 角 金二 銀二 桂二 香二 歩九"
+            mediator.reverse_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_battlers.should == "１一玉 １三歩"
-            mediator.current_player.to_s_pieces.should == "飛 角 金二 銀二 桂二 香二 歩八"
+            mediator.current_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩八"
             mediator.current_player.to_s_battlers.should == "１五玉"
           end
           it "同歩で取る" do
@@ -206,9 +206,9 @@ EOT
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
             mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
-            mediator.reverse_player.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
+            mediator.reverse_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_battlers.should == "２四歩"
-            mediator.current_player.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩八"
+            mediator.current_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩八"
             mediator.current_player.to_s_battlers.should == ""
           end
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
@@ -302,7 +302,7 @@ EOT
     end
 
     it "持駒の確認" do
-      player_test.to_s_pieces.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
+      player_test.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
     end
 
     it "piece_plot" do
@@ -317,7 +317,7 @@ EOT
       mediator.execute("７六歩")
       mediator.execute("３四歩")
       mediator.execute("２二角成")
-      mediator.player_at(:black).to_s_pieces.should == "角"
+      mediator.player_at(:black).piece_box.to_s.should == "角"
       mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -348,52 +348,52 @@ EOT
     #   it "safe_put_on" do
     #     player = player_test(init: "２二歩", pieces_set: "歩")
     #     p player.to_s_battlers
-    #     p player.to_s_pieces
+    #     p player.piece_box.to_s
     #     player.safe_put_on("１二歩打") do
     #       p player.to_s_battlers
-    #       p player.to_s_pieces
+    #       p player.piece_box.to_s
     #     end
     #     p player.to_s_battlers
-    #     p player.to_s_pieces
+    #     p player.piece_box.to_s
     #
     #     # player = player_test
-    #     # player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    #     # player.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     #     # player.safe_put_on("５五飛") do
-    #     #   player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
+    #     #   player.piece_box.to_s.should == "歩九 角 香二 桂二 銀二 金二 玉"
     #     #   player.safe_put_on("４五角") do
-    #     #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
+    #     #     player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉"
     #     #   end
-    #     #   player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #     #   player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉 角"
     #     # end
-    #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #     # player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
     #     # player = player_test(init: "２二歩", pieces_set: "歩")
     #     # p player.to_s_battlers
-    #     # p player.to_s_pieces
+    #     # p player.piece_box.to_s
     #     # player.safe_put_on("１二歩打") do
     #     #   p player.to_s_battlers
-    #     #   p player.to_s_pieces
+    #     #   p player.piece_box.to_s
     #     # end
     #     # p player.to_s_battlers
-    #     # p player.to_s_pieces
+    #     # p player.piece_box.to_s
     #   end
     # end
 
     # it "復元するのは持駒と盤上の駒のみ(boardはmediator経由)" do # FIXME: なんのテストなのかよくわからない
     #   player1 = player_test(init: "５九玉", exec: "５八玉")
     #   player1.battler_names.should == ["▲５八玉"]
-    #   player1.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    #   player1.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #
     #   player2 = Marshal.load(Marshal.dump(player1))
     #   player2.battler_names.should == ["▲５八玉"]
-    #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    #   player2.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #   # player2.board.present?.should == true # @mediator が nil になっている
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
     #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).piece_box.to_s.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩"
     #
     #   # puts mediator.board
@@ -402,7 +402,7 @@ EOT
     #
     #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
     #
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).piece_box.to_s.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_at(:black).board.present?.should == true
     #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩" # ← こうなるのが問題
     # end

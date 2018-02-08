@@ -83,7 +83,7 @@ module Warabi
       private
 
       def __both_board_info
-        Location.inject({}) { |a, e| a.merge(e => []) }.merge(soldiers.group_by { |e| e[:location] })
+        Location.inject({}) { |a, e| a.merge(e => []) }.merge(soldiers.group_by(&:location))
       end
 
       def shape_lines
@@ -176,8 +176,8 @@ module Warabi
         end
       end
 
-      def soldiers_create(point, piece, prefix_char)
-        Soldier.new_with_promoted(piece).merge(point: point, location: Location.fetch(prefix_char))
+      def soldiers_create(point, piece, location_key)
+        Soldier.new_with_promoted(piece, point: point, location: Location.fetch(location_key))
       end
     end
 
@@ -340,7 +340,7 @@ module Warabi
               location = Location.fetch_by_sfen_char(ch)
               promoted = (promoted == "+")
               piece = Piece.fetch_by_sfen_char(ch)
-              soldiers << Soldier[piece: piece, point: point, location: location, promoted: promoted]
+              soldiers << Soldier.new(piece: piece, point: point, location: location, promoted: promoted)
               x += 1
             end
           end

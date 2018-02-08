@@ -133,7 +133,7 @@ module Warabi
                   # 盤に置く
                   point = Point.fetch(xy)
                   soldier = Soldier.new_with_promoted(piece.key, location: location, point: point)
-                  sub_mediator.player_at(soldier[:location]).battlers_create(soldier, from_stand: false)
+                  sub_mediator.player_at(soldier.location).battlers_create(soldier, from_stand: false)
                 end
               end
             end

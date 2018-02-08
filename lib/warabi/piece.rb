@@ -117,17 +117,17 @@ module Warabi
     # FIXME: 削除する
     def to_h
       [
+        :key,
         :name,
         :promoted_name,
         :basic_names,
         :promoted_names,
         :names,
-        :key,
         :promotable,
-        :basic_once_vectors,
-        :basic_repeat_vectors,
-        :promoted_once_vectors,
-        :promoted_repeat_vectors,
+        # :basic_once_vectors,
+        # :basic_repeat_vectors,
+        # :promoted_once_vectors,
+        # :promoted_repeat_vectors,
       ].inject({}) do |a, e|
         a.merge(e => send(e))
       end
@@ -205,7 +205,7 @@ module Warabi
 
     concerning :VectorMethods do
       included do
-        delegate :brave?, :select_vectors, :select_vectors2, to: :piece_vector
+        delegate :brave?, :cached_vectors, to: :piece_vector
       end
 
       def piece_vector

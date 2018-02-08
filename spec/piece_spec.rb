@@ -60,8 +60,8 @@ module Warabi
       piece.names.should          == ["飛", "HI", "R", :rook, "龍", "竜", "RY"]
       piece.key.should            == :rook
       piece.promotable?.should    == true
-      piece.select_vectors2(promoted: false, location: Location[:black]).should == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
-      piece.select_vectors2(promoted: true, location: Location[:black]).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.cached_vectors(promoted: false, location: Location[:black]).should == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
+      piece.cached_vectors(promoted: true, location: Location[:black]).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
     end
 
     it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do

@@ -43,7 +43,7 @@ module Warabi
     def piece_plot
       soldiers = Soldier.location_soldiers(location: location, key: "平手")
       soldiers.each do |soldier|
-        piece_pick_out(soldier[:piece])
+        piece_pick_out(soldier.piece)
         battlers_create_from_soldier(soldier)
       end
     end
@@ -68,7 +68,7 @@ module Warabi
           soldier = soldier_or_str
         end
         if options[:from_stand]
-          piece_pick_out(soldier[:piece]) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          piece_pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
         battlers_create_from_soldier(soldier)
       end
@@ -204,7 +204,7 @@ module Warabi
       #
       #   player = Player.new
       #   player.pieces_add("飛 歩二")
-      #   player.to_s_pieces # => "飛 歩二"
+      #   player.piece_box.to_s # => "飛 歩二"
       #
       def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
         piece_box.add(Piece.s_to_h(str))
@@ -216,14 +216,8 @@ module Warabi
         piece_box.set(Piece.s_to_h(str))
       end
 
-      # 持駒の文字列化
-      #   Player.basic_test.to_s_pieces # => "歩九 角 飛 香二 桂二 銀二 金二 玉"
-      def to_s_pieces
-        piece_box.to_s
-      end
-
       def hold_pieces_snap
-        "#{call_name}の持駒：#{to_s_pieces.presence || "なし"}"
+        "#{call_name}の持駒：#{piece_box.to_s.presence || "なし"}"
       end
 
       def call_name
@@ -252,7 +246,7 @@ module Warabi
       end
 
       def battlers_create_from_soldier(soldier)
-        battler = Battler.new(soldier.merge(player: self))
+        battler = Battler.new(soldier.attributes.merge(player: self))
         put_on_with_valid(battler)
         @battlers << battler
       end
@@ -377,8 +371,8 @@ module Warabi
 
     # 二歩？
     def find_collisione_pawn(soldier)
-      if soldier[:piece].key == :pawn && !soldier[:promoted]
-        pawns_on_board(soldier[:point]).first
+      if soldier.piece.key == :pawn && !soldier.promoted
+        pawns_on_board(soldier.point).first
       end
     end
 
@@ -392,12 +386,5 @@ module Warabi
     def movable_infos(soldier)
       Movabler.movable_infos(self, soldier)
     end
-
-    # def side_battlers_put_on(table)
-    #   table.each{|info|battlers_create(info)}
-    # end
   end
 end
-# ~> -:164:in `<class:Player>': undefined method `concerning' for Warabi::Player:Class (NoMethodError)
-# ~> 	from -:5:in `<module:Warabi>'
-# ~> 	from -:4:in `<main>'

@@ -6,7 +6,7 @@ player = mediator.player_at(:black)
 Piece.each do |piece|
   player.battlers_create("５五#{piece.name}", from_stand: false)
   player.board["５五"].movable_infos.each do |v|
-    battler = player.board[v[:point]]
+    battler = player.board[v.point]
     draw = false
     if false
       draw = !battler
@@ -18,11 +18,11 @@ Piece.each do |piece|
     end
     if draw
       # 歩だと二歩になるので
-      player.battlers_create("#{v[:point]}#{v[:promoted] ? '成' : ''}銀", from_stand: false)
+      player.battlers_create("#{v.point}#{v.promoted ? '成' : ''}銀", from_stand: false)
     end
   end
   puts mediator.board
-  player.board.abone_all
+  mediator.board.abone_all
 end
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

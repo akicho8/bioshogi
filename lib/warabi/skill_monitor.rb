@@ -191,7 +191,7 @@ module Warabi
 
     # 比較順序超重要。不一致しやすいものから比較する
     def battler_exist?(s)
-      (v = surface[s[:point]]) && v.piece == s[:piece] && v.promoted == s[:promoted] && v.location == s[:location]
+      (v = surface[s.point]) && v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
     end
 
     # 持駒を {:pawn => 3} 形式にする

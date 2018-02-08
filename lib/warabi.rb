@@ -1,4 +1,4 @@
-require_relative "warabi/version"
+require_relative "warabi/gem_version"
 
 require "active_support/logger"
 require "active_support/configurable"

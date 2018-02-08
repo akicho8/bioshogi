@@ -32,9 +32,9 @@ module Warabi
     #
     def movable_infos(player, soldier)
       Enumerator.new do |yielder|
-        vecs = soldier[:piece].select_vectors2(soldier.slice(:promoted, :location))
+        vecs = soldier.cached_vectors
         vecs.each do |vec|
-          pt = soldier[:point]
+          pt = soldier.point
           loop do
             pt = pt.vector_add(vec)
 
@@ -80,10 +80,9 @@ module Warabi
     #  ・だから OnceVector か RepeatVector か見る必要はない
     #  ・行ける方向に一歩でも行ける可能性があればよい
     def alive_piece?(soldier)
-      raise MustNotHappen unless soldier[:location]
-      vectors = soldier[:piece].select_vectors2(soldier.slice(:promoted, :location))
-      vectors.any? do |v|
-        soldier[:point].vector_add(v).valid?
+      raise MustNotHappen unless soldier.location
+      soldier.cached_vectors.any? do |v|
+        soldier.point.vector_add(v).valid?
       end
     end
 
@@ -97,14 +96,14 @@ module Warabi
       # それ以上動けるなら置く
       m = soldier.merge(point: pt)
       if alive_piece?(m)
-        yielder << BattlerMove[m.merge(origin_soldier: soldier)]
+        yielder << BattlerMove.new(m.attributes.merge(origin_soldier: soldier))
       end
       # 成れるなら成ってみて
       if m.more_promote?(player.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)
-          yielder << BattlerMove[m.merge(origin_soldier: soldier, promoted_trigger: true)]
+          yielder << BattlerMove.new(m.attributes.merge(origin_soldier: soldier, promoted_trigger: true))
         end
       end
     end

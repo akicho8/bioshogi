@@ -19,9 +19,8 @@ official_formatter = mediator.hand_logs.last.official_formatter
 tp official_formatter.to_debug_hash
 tp official_formatter.options
 # >> |----------------+--------------------------------------------------|
-# >> |   point_from | ７三                                             |
-# >> |          point | ８二                                             |
-# >> |           to_s | ８二銀左引                                       |
+# >> |     point_from | ７三                                             |
+# >> |       point_to | ８二                                             |
 # >> |      candidate | ["△８一銀", "△７一銀", "△９三銀", "△７三銀"] |
 # >> |       koreru_c | 4                                                |
 # >> |     _migi_idou | false                                            |

@@ -25,7 +25,7 @@ module Warabi
       # mediator 側に sfen を受け取るメソッドを入れる方法も検討
       def board_setup(mediator)
         sfen.soldiers.each do |soldier|
-          player = mediator.player_at(soldier[:location])
+          player = mediator.player_at(soldier.location)
           player.battlers_create_from_soldier(soldier)
         end
         mediator.turn_info.handicap = sfen.handicap?

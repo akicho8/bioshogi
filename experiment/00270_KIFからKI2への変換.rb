@@ -3,7 +3,7 @@ require "./example_helper"
 info = Warabi::Parser.parse(Pathname("katomomo.kif"))
 
 out = ""
-out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join
+out << info.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
 out << "\n"
 # puts info
 

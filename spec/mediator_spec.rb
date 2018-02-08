@@ -98,7 +98,7 @@ EOT
       mediator.board.to_s_battlers       == dup.board.to_s_battlers
 
       mediator.reverse_player.location      == dup.reverse_player.location
-      mediator.reverse_player.to_s_pieces   == dup.reverse_player.to_s_pieces
+      mediator.reverse_player.piece_box.to_s   == dup.reverse_player.piece_box.to_s
       mediator.reverse_player.to_s_battlers == dup.reverse_player.to_s_battlers
       mediator.reverse_player.last_piece_taken_from_opponent    == dup.reverse_player.last_piece_taken_from_opponent
     end

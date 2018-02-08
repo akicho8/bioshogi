@@ -47,7 +47,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>        287  (29.1%)          21   (2.1%)     Warabi::Runner#execute
 # >>         18   (1.8%)          18   (1.8%)     Hash#slice
 # >>         69   (7.0%)          17   (1.7%)     Warabi::Movabler#alive_piece?
-# >>         17   (1.7%)          16   (1.6%)     Warabi::Piece::VectorMethods#select_vectors2
+# >>         17   (1.7%)          16   (1.6%)     Warabi::Piece::VectorMethods#cached_vectors
 # >>         27   (2.7%)          15   (1.5%)     Warabi::Point#hash
 # >>         53   (5.4%)          13   (1.3%)     Warabi::Position::Hpos.lookup
 # >>         12   (1.2%)          12   (1.2%)     MemoryRecord::SingletonMethods::ClassMethods#lookup

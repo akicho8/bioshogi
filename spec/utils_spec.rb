@@ -25,9 +25,9 @@ module Warabi
 
     describe "初期配置" do
       before do
-        @white_king = [Soldier[piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white]]]
-        @black_king = [Soldier[piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black]]]
-        @black_rook = [Soldier[piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black]]]
+        @white_king = [Soldier.new(piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white])]
+        @black_king = [Soldier.new(piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black])]
+        @black_rook = [Soldier.new(piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black])]
       end
 
       it "先手か後手の一方用" do

@@ -19,7 +19,7 @@ module Warabi
 
       @player = attrs[:player]
       @piece = attrs[:piece]
-      @location = @player.location
+      @location = player.location
 
       self.promoted = attrs[:promoted]
 
@@ -27,45 +27,29 @@ module Warabi
         @point = Point.fetch(attrs[:point])
       end
 
-      unless @player && @piece
+      unless player && piece
         raise MustNotHappen, attrs.inspect
       end
     end
 
     # 成り/不成状態の設定
     def promoted=(v)
-      @piece.assert_promotable(v)
+      piece.assert_promotable(v)
       @promoted = !!v
     end
 
     def promoted?
-      !!@promoted
+      !!promoted
     end
-
-    # # 自分が保持している座標ではなく盤面から自分を探す (デバッグ用)
-    # def read_point
-    #   if xy = @player.board.surface.invert[self]
-    #     Point.fetch(xy)
-    #   end
-    # end
 
     # 移動可能な座標を取得
     def movable_infos
-      Movabler.movable_infos(@player, to_soldier)
+      Movabler.movable_infos(player, to_soldier)
     end
-
-    # def self.from_attrs(attrs)
-    #   new(attrs)
-    # end
-    #
-    # # シリアライズ用
-    # def to_attrs
-    #   {player: (@player ? @player.location.key : nil) point: @point.name, piece: @piece.key, promoted: @promoted}
-    # end
 
     # 盤面情報と比較するならこれを使う
     def to_soldier
-      Soldier[piece: @piece, promoted: @promoted, point: @point, location: @player.location]
+      Soldier.new(piece: piece, promoted: promoted, point: @point, location: player.location)
     end
 
     def to_h
@@ -74,8 +58,8 @@ module Warabi
 
     # この盤上の駒を消す
     def abone
-      @player.board.abone_on(@point)
-      @player.battlers.delete(self)
+      player.board.abone_on(@point)
+      player.battlers.delete(self)
       @point = nil
       self
     end
@@ -94,22 +78,22 @@ module Warabi
       end
 
       def to_csa
-        "#{@player.location.csa_sign}#{@piece.csa_some_name(@promoted)}"
+        "#{player.location.csa_sign}#{piece.csa_some_name(promoted)}"
       end
 
       def inspect
-        "<#{self.class.name}:#{object_id} @player=#{@player} @piece=#{@piece} #{mark_with_formal_name}>"
+        "<#{self.class.name}:#{object_id} player=#{player} piece=#{piece} #{mark_with_formal_name}>"
       end
 
       # 駒の名前
       def piece_current_name
-        @piece.any_name(@promoted)
+        piece.any_name(promoted)
       end
 
       # 正式な棋譜の表記で返す
       #  Player.basic_test(init: "５五と").board["５五"].mark_with_formal_name # => "▲５五と"
       def mark_with_formal_name
-        "#{@player.location.mark}#{formal_name}"
+        "#{player.location.mark}#{formal_name}"
       end
 
       # 正式な棋譜の表記で返す
@@ -120,7 +104,7 @@ module Warabi
 
       # 柿木盤面用
       def to_kif
-        "#{@player.location.varrow}#{piece_current_name}"
+        "#{player.location.varrow}#{piece_current_name}"
       end
     end
   end

@@ -174,52 +174,52 @@ EOT
     #   it "safe_put_on" do
     #     player = player_test(init: "２二歩", pieces_set: "歩")
     #     p player.to_s_battlers
-    #     p player.to_s_pieces
+    #     p player.piece_box.to_s
     #     player.safe_put_on("１二歩打") do
     #       p player.to_s_battlers
-    #       p player.to_s_pieces
+    #       p player.piece_box.to_s
     #     end
     #     p player.to_s_battlers
-    #     p player.to_s_pieces
+    #     p player.piece_box.to_s
     #
     #     # player = player_test
-    #     # player.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
+    #     # player.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二 玉"
     #     # player.safe_put_on("５五飛") do
-    #     #   player.to_s_pieces.should == "歩九 角 香二 桂二 銀二 金二 玉"
+    #     #   player.piece_box.to_s.should == "歩九 角 香二 桂二 銀二 金二 玉"
     #     #   player.safe_put_on("４五角") do
-    #     #     player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉"
+    #     #     player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉"
     #     #   end
-    #     #   player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角"
+    #     #   player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉 角"
     #     # end
-    #     # player.to_s_pieces.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
+    #     # player.piece_box.to_s.should == "歩九 香二 桂二 銀二 金二 玉 角 飛"
     #
     #     # player = player_test(init: "２二歩", pieces_set: "歩")
     #     # p player.to_s_battlers
-    #     # p player.to_s_pieces
+    #     # p player.piece_box.to_s
     #     # player.safe_put_on("１二歩打") do
     #     #   p player.to_s_battlers
-    #     #   p player.to_s_pieces
+    #     #   p player.piece_box.to_s
     #     # end
     #     # p player.to_s_battlers
-    #     # p player.to_s_pieces
+    #     # p player.piece_box.to_s
     #   end
     # end
 
     # it "復元するのは持駒と盤上の駒のみ(boardはmediator経由)" do # FIXME: なんのテストなのかよくわからない
     #   player1 = player_test(init: "５九玉", exec: "５八玉")
     #   player1.battler_names.should == ["▲５八玉"]
-    #   player1.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    #   player1.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #
     #   player2 = Marshal.load(Marshal.dump(player1))
     #   player2.battler_names.should == ["▲５八玉"]
-    #   player2.to_s_pieces.should == "歩九 角 飛 香二 桂二 銀二 金二"
+    #   player2.piece_box.to_s.should == "歩九 角 飛 香二 桂二 銀二 金二"
     #   # player2.board.present?.should == true # @mediator が nil になっている
     # end
 
     # it "フレームのサンドボックス実行(FIXME:もっと小さなテストにする)" do
     #   mediator = Mediator.test(init: ["１二歩"])
     #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).piece_box.to_s.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩"
     #
     #   # puts mediator.board
@@ -228,7 +228,7 @@ EOT
     #
     #   mediator.player_at(:black).to_s_battlers.should == "１二歩"
     #
-    #   # mediator.player_at(:black).to_s_pieces.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
+    #   # mediator.player_at(:black).piece_box.to_s.should == "歩八 角 飛 香二 桂二 銀二 金二 玉"
     #   # mediator.player_at(:black).board.present?.should == true
     #   # mediator.player_at(:black).board.to_s_battlers.should == "１二歩" # ← こうなるのが問題
     # end

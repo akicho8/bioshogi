@@ -19,8 +19,8 @@
         -# %p= mediator.ki2_hand_logs.join(" ")
         %p= mediator.ki2_hand_logs.last
       - if mediator.player_at(:white).pieces.present?
-        .pieces= mediator.player_at(:white).to_s_pieces
+        .pieces= mediator.player_at(:white).piece_box.to_s
       = MediatorDecorator.new(mediator).to_html_board(:small)
       - if mediator.player_at(:black).pieces.present?
-        .pieces= mediator.player_at(:black).to_s_pieces
+        .pieces= mediator.player_at(:black).piece_box.to_s
       %hr

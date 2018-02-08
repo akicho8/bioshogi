@@ -135,7 +135,8 @@ module Warabi
 
       begin
         @soldier = Soldier.new_with_promoted(@md[:piece])
-        @piece, @promoted = @soldier.values_at(:piece, :promoted)
+        @piece = @soldier.piece
+        @promoted = @soldier.promoted
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
       end
@@ -174,7 +175,7 @@ module Warabi
       @battlers = @player.battlers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
-        e.movable_infos.any? { |e| e[:point] == @point_to } && # 目的地に来れる
+        e.movable_infos.any? { |e| e.point == @point_to } && # 目的地に来れる
         true
       }
       @candidate = @battlers.collect(&:clone)
@@ -245,12 +246,12 @@ module Warabi
     end
 
     def current_soldier
-      @current_soldier ||= Soldier[piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location]
+      @current_soldier ||= Soldier.new(piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location)
     end
 
     def before_soldier
       if @point_from
-        @before_soldier ||= Soldier[piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location]
+        @before_soldier ||= Soldier.new(piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location)
       end
     end
 

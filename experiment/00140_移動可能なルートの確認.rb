@@ -5,7 +5,7 @@ mediator = Mediator.new
 player = mediator.player_at(:black)
 player.battlers_create("５五馬", from_stand: false)
 player.battlers.first.movable_infos.each do |v|
-  player.battlers_create("#{v[:point]}馬", from_stand: false)
+  player.battlers_create("#{v.point}馬", from_stand: false)
 end
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

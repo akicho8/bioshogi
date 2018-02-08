@@ -1,8 +1,10 @@
+# frozen-string-literal: true
+#
 # basic_once_vectors      通常の1ベクトル
 # basic_repeat_vectors    通常の繰り返しベクトル
 # promoted_once_vectors   成ったときの1ベクトル
 # promoted_repeat_vectors 成ったときの繰り返しベクトル
-
+#
 module Warabi
   class PieceVector
     include ApplicationMemoryRecord
@@ -21,8 +23,18 @@ module Warabi
       attributes[:promoted_repeat_vectors]
     end
 
-    def select_vectors(promoted)
-      assert_promotable(promoted)
+    def cached_vectors(promoted:, location:)
+      @cached_vectors ||= {}
+      @cached_vectors[[promoted, location.key]] ||= -> {
+        vectors = __select_vectors(promoted)
+        normalized_vectors(location, vectors)
+      }.call
+    end
+
+    private
+
+    def __select_vectors(promoted)
+      piece.assert_promotable(promoted)
 
       if promoted
         promoted_vectors
@@ -30,18 +42,6 @@ module Warabi
         basic_vectors
       end
     end
-
-    def select_vectors2(promoted:, location:)
-      @select_vectors2 ||= {}
-      @select_vectors2[[promoted, location]] ||= -> {
-        vectors = select_vectors(promoted)
-        normalized_vectors(location, vectors)
-      }.call
-    end
-
-    private
-
-    delegate :assert_promotable, to: :piece
 
     def piece
       Piece.fetch(key)

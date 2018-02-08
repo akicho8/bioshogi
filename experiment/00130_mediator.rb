@@ -1,12 +1,12 @@
 # 棋譜の入力
 require "./example_helper"
 
-mediator = Mediator.start
-mediator.piece_plot
+mediator = Mediator.new
+mediator.board_reset
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("２二角成")
-mediator.player_at(:black).to_s_pieces # => "角"
+mediator.player_at(:black).piece_box.to_s # => "角"
 puts mediator
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

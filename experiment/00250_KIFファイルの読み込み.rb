@@ -2,7 +2,7 @@
 require "./example_helper"
 
 info = Parser.parse(Pathname("ryuou20101214.kif"))
-tp info.header
+tp info.header.to_h
 
 mediator = Mediator.start
 mediator.piece_plot
@@ -26,9 +26,9 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 # >> |     場所 | 岐阜・ホテルアソシア高山リゾート |
 # >> |   手合割 | 平手                             |
 # >> |     先手 | 羽生善治                         |
-# >> |     後手 | 渡辺　明                         |
+# >> |     後手 | 渡辺 明                          |
 # >> |----------+----------------------------------|
-# >> 後手の持駒：金二 歩三 銀
+# >> 後手の持駒：金二 銀 歩三
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・v桂 ・ ・ 馬 ・ ・v桂v香|一
@@ -41,7 +41,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 # >> | 歩 ・ 玉 香 ・ ・ ・ ・ 香|八
 # >> | 香 桂 ・ ・ ・ ・ 飛 ・ ・|九
 # >> +---------------------------+
-# >> 先手の持駒：歩三 金
+# >> 先手の持駒：金 歩三
 # >> 手数＝146 △３三玉(23) まで
 # >> |--------------|
 # >> | ７六歩(77)   |
