@@ -95,7 +95,7 @@ module Warabi
           end
 
           battler = board.lookup(from)
-          if battler.promoted?
+          if battler.promoted
             raise AlredyPromoted, "成りを入力しましたが #{battler.point.name} の #{battler.piece.name} はすでに成っています"
           end
         end

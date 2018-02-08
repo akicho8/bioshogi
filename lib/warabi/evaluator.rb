@@ -47,7 +47,7 @@ module Warabi
 
       # 盤上の駒
       score += player.battlers.collect { |e|
-        if e.promoted?
+        if e.promoted
           e.piece.promoted_weight
         else
           e.piece.basic_weight

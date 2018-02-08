@@ -16,14 +16,6 @@ module Warabi
       super.merge(player: player)
     end
 
-    def promoted?
-      promoted
-    end
-
-    def promoted
-      !!@promoted
-    end
-
     # 移動可能な座標を取得
     def movable_infos
       Movabler.movable_infos(player, to_soldier)

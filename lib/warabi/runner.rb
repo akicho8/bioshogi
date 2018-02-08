@@ -101,7 +101,7 @@ module Warabi
           _piece = Piece.promoted_group.fetch(@md[:csa_promoted_name])
 
           v = @player.board[@md[:point_from]] or raise MustNotHappen
-          if v.promoted?
+          if v.promoted
             @md[:piece] = v.piece.promoted_name
           else
             @md[:piece] = v.piece.name
@@ -199,7 +199,7 @@ module Warabi
           if true
             source_battler = @player.board.lookup(@point_from)
             if !@promote_trigger
-              if source_battler && source_battler.promoted? && !@promoted
+              if source_battler && source_battler.promoted && !@promoted
                 # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
                 if @player.piece_box.exist?(@piece)
                   @strike_trigger = true
