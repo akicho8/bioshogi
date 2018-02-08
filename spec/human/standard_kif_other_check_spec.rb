@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require_relative "../spec_helper"
 
 module Warabi
   describe "バグが再発しないように確認するためのテスト" do

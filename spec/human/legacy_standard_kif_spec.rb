@@ -5,7 +5,7 @@
 # ・だが内容はあっている
 #
 
-require_relative "spec_helper"
+require_relative "../spec_helper"
 
 module Warabi
   describe "将棋連盟が定めている人間向け棋譜入力" do
