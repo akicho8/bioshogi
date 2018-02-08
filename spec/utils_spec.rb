@@ -22,18 +22,5 @@ module Warabi
         Utils.movs_split("５五歩").should == []
       end
     end
-
-    describe "初期配置" do
-      before do
-        @white_king = [Soldier.create(piece: Piece["玉"], promoted: false, point: Point["５一"], location: Location[:white])]
-        @black_king = [Soldier.create(piece: Piece["玉"], promoted: false, point: Point["５九"], location: Location[:black])]
-        @black_rook = [Soldier.create(piece: Piece["飛"], promoted: false, point: Point["１一"], location: Location[:black])]
-      end
-
-      it "先手か後手の一方用" do
-        Soldier.preset_soldiers(location: Location[:white], key: "十九枚落ち").should == @white_king
-        Soldier.preset_soldiers(location: Location[:black], key: "十九枚落ち").should == @black_king
-      end
-    end
   end
 end

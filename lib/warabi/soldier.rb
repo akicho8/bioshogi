@@ -25,10 +25,20 @@ module Warabi
         create({piece: piece, promoted: promoted}.merge(attributes))
       end
 
-      # 指定プレイヤー側の初期配置(「角落ち」などを指定可)
-      def preset_soldiers(key:, location: :black)
+      def preset_one_side_soldiers(preset_key, location: :black)
         location = Location[location]
-        PresetInfo.fetch(key).board_parser.location_adjust[location.key]
+        PresetInfo.fetch(preset_key).board_parser.location_adjust[location.key]
+      end
+
+      def preset_soldiers(**params)
+        params = {
+          black: "平手",
+          white: "平手",
+        }.merge(params)
+
+        Location.flat_map do |location|
+          PresetInfo.fetch(params[location.key]).board_parser.location_adjust[location.key]
+        end
       end
 
       def create(*args)

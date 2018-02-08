@@ -51,11 +51,14 @@ module Warabi
         :location_split,
         :point_as_key_table,
         :location_adjust,
-        :location_adjust,
       ], to: :soldiers
 
       def soldiers
-        @soldiers ||= SoldierBox.new
+        soldier_box
+      end
+
+      def soldier_box
+        @soldier_box ||= SoldierBox.new
       end
 
       private

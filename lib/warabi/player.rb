@@ -41,7 +41,7 @@ module Warabi
 
     # 平手の初期配置
     def piece_plot
-      soldiers = Soldier.preset_soldiers(location: location, key: "平手")
+      soldiers = PresetInfo.fetch("平手").board_parser.location_adjust[location.key]
       soldiers.each do |soldier|
         piece_pick_out(soldier.piece)
         battlers_create_from_soldier(soldier)

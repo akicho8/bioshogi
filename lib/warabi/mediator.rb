@@ -74,8 +74,7 @@ module Warabi
         @turn_info = TurnInfo.new
       end
 
-      # DEPRECATION
-      def board_reset_old(v)
+      def board_reset_any(v)
         case
         when BoardParser.accept?(v)
           board_reset_by_shape(v)
@@ -86,39 +85,16 @@ module Warabi
         end
       end
 
-      def board_reset(name = nil)
-        raise MustNotHappen, "BODは指定できません" if BoardParser.accept?(name)
-
-        name = name.presence || "平手"
-        v = {black: "平手", white: "平手"}
-        if name != "平手"
-          # 駒落ちの場合△の方が駒を落とす
-          # 呼び方も△が「上手」になる。先に指すことになるので「後手」と呼んでいると意味が通じなくなる
-          v[:white] = name
-        end
-
-        board_reset_by_hash(v)
+      def board_reset(value = nil)
+        board_reset_by_hash(white: value || "平手")
       end
 
-      def board_reset_by_shape(value)
-        raise MustNotHappen, "BOD以外が指定されています : #{value}" unless BoardParser.accept?(value)
-
-        v = BoardParser.parse(value).soldiers
-        board_reset_by_soldiers(v)
+      def board_reset_by_shape(str)
+        board_reset_by_soldiers(BoardParser.parse(str).soldier_box)
       end
-
-      # # 盤面から手合割を判断する
-      # def turn_info_auto_set
-      #   if v = board.preset_name
-      #     @turn_info.handicap = (v != "平手")
-      #   end
-      # end
 
       def board_reset_by_hash(hash)
-        soldiers = hash.flat_map do |location, any|
-          Soldier.preset_soldiers(location: location, key: any)
-        end
-        board_reset_by_soldiers(soldiers)
+        board_reset_by_soldiers(Soldier.preset_soldiers(hash))
       end
 
       def board_reset_by_soldiers(soldiers)

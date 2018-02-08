@@ -108,7 +108,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.board_reset_old(@value)
+        context.board_reset_any(@value)
       end
     end
 

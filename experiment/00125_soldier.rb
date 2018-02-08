@@ -1,7 +1,8 @@
 require "./example_helper"
 
-Soldier.preset_soldiers(location: :black, key: "裸玉").collect(&:name) # => ["▲５九玉"]
-Soldier.preset_soldiers(location: :white, key: "裸玉").collect(&:name) # => ["△５一玉"]
+Soldier.preset_one_side_soldiers("裸玉", location: :black).collect(&:name) # => ["▲５九玉"]
+Soldier.preset_one_side_soldiers("裸玉", location: :white).collect(&:name) # => ["△５一玉"]
+Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name)      # => ["▲５九玉", "△５一玉"]
 
 Soldier.from_str("６八銀").name rescue $! # => "？６八銀"
 

@@ -72,7 +72,7 @@ flamegraph([
 ,{"x":41,"y":10,"width":1,"frame_id":70133678674620,"frame":"ActiveSupport::Duration#*","file":"/usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/activesupport-5.1.4/lib/active_support/duration.rb"}
 ,{"x":42,"y":10,"width":1,"frame_id":70133672201980,"frame":"MemoryRecord::SingletonMethods::ClassMethods#lookup","file":"/usr/local/var/rbenv/versions/2.4.1/lib/ruby/gems/2.4.0/gems/memory_record-0.0.7/lib/memory_record/memory_record.rb"}
 ,{"x":43,"y":10,"width":1,"frame_id":70133676126640,"frame":"Warabi::Player#put_on_with_valid","file":"/Users/ikeda/src/warabi/lib/warabi/player.rb"}
-,{"x":2,"y":11,"width":1,"frame_id":70133672053940,"frame":"Warabi::Soldier.preset_soldiers","file":"/Users/ikeda/src/warabi/lib/warabi/utils.rb"}
+,{"x":2,"y":11,"width":1,"frame_id":70133672053940,"frame":"Warabi::Soldier.preset_one_side_soldiers","file":"/Users/ikeda/src/warabi/lib/warabi/utils.rb"}
 ,{"x":4,"y":11,"width":1,"frame_id":70133671896000,"frame":"Warabi::Player::BattlerMethods#battlers_create_from_soldier","file":"/Users/ikeda/src/warabi/lib/warabi/player.rb"}
 ,{"x":5,"y":11,"width":1,"frame_id":70133672285680,"frame":"Warabi::Point#<=>","file":"/Users/ikeda/src/warabi/lib/warabi/point.rb"}
 ,{"x":6,"y":11,"width":1,"frame_id":70133671896000,"frame":"Warabi::Player::BattlerMethods#battlers_create_from_soldier","file":"/Users/ikeda/src/warabi/lib/warabi/player.rb"}
