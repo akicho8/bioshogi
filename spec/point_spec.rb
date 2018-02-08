@@ -22,10 +22,10 @@ module Warabi
       Point.fetch("43").name.should   == "４三"
       Point.fetch([0, 0]).name.should == "９一"
 
-      expect { Point.fetch("卍三") }.to raise_error(PointSyntaxError)
-      expect { Point.fetch(nil)    }.to raise_error(PointSyntaxError)
-      expect { Point.fetch("")     }.to raise_error(PointSyntaxError)
-      expect { Point.fetch("0")    }.to raise_error(PointSyntaxError)
+      expect { Point.fetch("卍三") }.to raise_error(SyntaxDefact)
+      expect { Point.fetch(nil)    }.to raise_error(SyntaxDefact)
+      expect { Point.fetch("")     }.to raise_error(SyntaxDefact)
+      expect { Point.fetch("0")    }.to raise_error(SyntaxDefact)
 
       expect { Board.size_change([2, 2]) { Point.fetch("33")   } }.to raise_error(SyntaxDefact)
       expect { Board.size_change([2, 2]) { Point.fetch("３三") } }.to raise_error(SyntaxDefact)

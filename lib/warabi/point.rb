@@ -26,7 +26,7 @@ module Warabi
       end
 
       def fetch(value)
-        lookup(value) or raise PointSyntaxError, "座標が読み取れません : #{value.inspect}"
+        lookup(value) or raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
       end
 
       def lookup(value)

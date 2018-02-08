@@ -4,14 +4,14 @@ module Warabi
   describe Position do
     describe "座標パース" do
       it "引数が根本的にダメなのでエラー" do
-        expect { Position::Hpos.fetch("")  }.to raise_error(PositionSyntaxError)
-        expect { Position::Hpos.fetch(nil) }.to raise_error(PositionSyntaxError)
+        expect { Position::Hpos.fetch("")  }.to raise_error(SyntaxDefact)
+        expect { Position::Hpos.fetch(nil) }.to raise_error(SyntaxDefact)
       end
       it "横の範囲外" do
-        expect { Board.size_change([2, 2]) { Position::Hpos.fetch("３") } }.to raise_error(PositionSyntaxError)
+        expect { Board.size_change([2, 2]) { Position::Hpos.fetch("３") } }.to raise_error(SyntaxDefact)
       end
       it "縦の範囲外" do
-        expect { Board.size_change([2, 2]) { Position::Vpos.fetch("三")  } }.to raise_error(PositionSyntaxError)
+        expect { Board.size_change([2, 2]) { Position::Vpos.fetch("三")  } }.to raise_error(SyntaxDefact)
       end
 
       describe "正常" do

@@ -67,7 +67,7 @@ module Warabi
         # @example
         #   Position::Hpos.fetch("１").name # => "1"
         def fetch(value)
-          lookup(value) or raise PositionSyntaxError, "座標が読み取れません : #{value.inspect}"
+          lookup(value) or raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
         end
 
         def lookup(value)

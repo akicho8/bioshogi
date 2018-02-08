@@ -28,44 +28,6 @@ module Warabi
 EOT
     end
 
-    it "ファイル読み込み" do
-      file = "../resources/竜王戦_ki2/*.ki2"
-      file = "../resources/iphone_shogi_vs/kakinoki_vs_Bonanza.kif"
-      file = "../resources/詰将棋/*.kif"
-      file = "../resources/**/*.{kif,ki2}"
-      file = "../resources/竜王戦_ki2/龍王戦2010-23 渡辺羽生-6.ki2"
-      Pathname.glob(Pathname(__FILE__).dirname.join(file)).each{|file|
-        # p file
-        begin
-          kif_info = Parser.parse(file)
-        rescue FileFormatError => error
-          # p error
-          next
-        end
-        mediator = Mediator.start
-        mediator.piece_plot
-        kif_info.move_infos.each{|move_info|
-          mediator.execute(move_info[:input])
-          break
-        }
-        # puts mediator.inspect
-        # puts mediator.ki2_hand_logs.join(" ")
-      }
-    end
-
-    # it "kif→ki2" do
-    #   @result = KifParser::Parser.parse(Pathname(__FILE__).dirname.join("sample1.kif"))
-    #   mediator = Mediator.start
-    #   mediator.piece_plot
-    #   @result.move_infos.each{|move_info|
-    #     # p move_info[:input]
-    #     mediator.execute(move_info[:input])
-    #     # puts mediator.inspect
-    #   }
-    #   # puts mediator.inspect
-    #   puts mediator.kif_hand_logs.join(" ")
-    # end
-
     if false
       it "CPU同士で対局" do
         mediator = Mediator.start
@@ -90,17 +52,17 @@ EOT
     it "状態の復元" do
       mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
-      mediator.turn_info.counter.should            == dup.turn_info.counter
-      mediator.kif_hand_logs.should    == dup.kif_hand_logs
+      mediator.turn_info.counter.should == dup.turn_info.counter
+      mediator.kif_hand_logs.should     == dup.kif_hand_logs
       mediator.ki2_hand_logs.should     == dup.ki2_hand_logs
-      mediator.to_s.should               == dup.to_s
+      mediator.to_s.should              == dup.to_s
 
-      mediator.board.to_s_battlers       == dup.board.to_s_battlers
+      mediator.board.to_s_battlers == dup.board.to_s_battlers
 
-      mediator.reverse_player.location      == dup.reverse_player.location
-      mediator.reverse_player.piece_box.to_s   == dup.reverse_player.piece_box.to_s
-      mediator.reverse_player.to_s_battlers == dup.reverse_player.to_s_battlers
-      mediator.reverse_player.last_piece_taken_from_opponent    == dup.reverse_player.last_piece_taken_from_opponent
+      mediator.reverse_player.location                       == dup.reverse_player.location
+      mediator.reverse_player.piece_box.to_s                 == dup.reverse_player.piece_box.to_s
+      mediator.reverse_player.to_s_battlers                  == dup.reverse_player.to_s_battlers
+      mediator.reverse_player.last_piece_taken_from_opponent == dup.reverse_player.last_piece_taken_from_opponent
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
@@ -137,61 +99,6 @@ EOT
       mediator = Mediator.test(exec: "１二歩打")
       mediator.deep_dup
     end
-
-    #     it "debug" do
-    #       mediator = Mediator.start
-    #       mediator.board_reset_by_shape(<<~BOARD)
-    # +------+
-    # | 金 ・|
-    # | ・ 金|
-    # +------+
-    # BOARD
-    #       puts mediator.board.to_s
-    #       mediator.execute("２二金直上")
-    #       puts mediator.board.to_s
-    #     end
-
-    # it "盤面初期設定" do
-    #   def board_reset_test(value)
-    #     mediator = Mediator.new
-    #     mediator.board_reset(value)
-    #     mediator.board.to_s
-    #   end
-    #   puts board_reset_test("角落ち")
-    #   # board_reset_test("平手").should == "▲１七歩 ▲１九香 ▲２七歩 ▲２九桂 ▲２八飛 ▲３七歩 ▲３九銀 ▲４七歩 ▲４九金 ▲５七歩 ▲５九玉 ▲６七歩 ▲６九金 ▲７七歩 ▲７九銀 ▲８七歩 ▲８九桂 ▲８八角 ▲９七歩 ▲９九香 △１一香 △１三歩 △２一桂 △２三歩 △２二角 △３一銀 △３三歩 △４一金 △４三歩 △５一玉 △５三歩 △６一金 △６三歩 △７一銀 △７三歩 △８一桂 △８三歩 △８二飛 △９一香 △９三歩"
-    #   # board_reset_test("▲" => "角落ち")
-    # end
-
-    # it "XtraPattern" do
-    #   XtraPattern.reload_all
-    #   XtraPattern.each{|v|
-    #     p v
-    #     mediator = SimulatorFrame.new(v)
-    #     puts mediator.board
-    #     mediator.build_frames
-    #   }
-    # end
-
-    # it "歩を打つとエラー？？？ → かんけいなし" do
-    #   value = {
-    #     pieces: {black: "歩"},
-    #     execute: "▲５五歩",
-    #     board: "全落ち",
-    #   }
-    #   mediator = SimulatorFrame.new(value)
-    #   p mediator
-    #   # puts mediator.board
-    #   mediator.build_frames{|f|p f}
-    # end
-
-    # if true
-    #   it "これがおかしい。▲９七歩打 で Marshal.dump に失敗する。MatchData を誰がもっているのか。" do
-    #     mediator = SimulatorFrame.new(value)
-    #     # puts mediator.board
-    #     mediator.build_frames{|f|}
-    #     # mediator.build_frames
-    #   end
-    # end
 
     if false
       it "XtraPattern", p: true do

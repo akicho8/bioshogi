@@ -151,7 +151,7 @@ module Warabi
         @player.pieces.collect do |piece|
           soldier = Soldier.new(point: point, piece: piece, location: @player.location, promoted: false)
           if @player.rule_valid?(soldier)
-            PieceStake.new(soldier.attributes)
+            Direct.new(soldier.attributes)
           end
         end
       }.flatten.compact

@@ -31,15 +31,15 @@ module Warabi
     end
 
     describe "Brainの指し手チェック用" do
-      describe BattlerMove do
+      describe Moved do
         it "#to_hand" do
-          BattlerMove.new(@attributes.merge(origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true)).to_hand.should == "▲６八銀成(79)"
+          Moved.new(@attributes.merge(origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true)).to_hand.should == "▲６八銀成(79)"
         end
       end
 
-      describe PieceStake do
+      describe Direct do
         it "#to_hand" do
-          PieceStake.new(@attributes).to_hand.should == "▲６八銀打"
+          Direct.new(@attributes).to_hand.should == "▲６八銀打"
         end
       end
     end

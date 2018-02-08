@@ -225,10 +225,6 @@ EOT
           it "初手に同歩" do
             expect { Mediator.test(exec: "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明/)
           end
-          # FIXME: nplayers のことを考慮すると面倒なことになるんでこのテストと nplayers を除去する
-          # it "一人で同を使った場合、その座標は自分の駒があるため、その上に移動することはできず、そこに移動できる駒がないエラーになる" do
-          #   expect { Mediator.test(nplayers: 1, init: "▲１九香 ▲１八香", exec: ["１五香", "同香"]) }.to raise_error(MovableBattlerNotFound)
-          # end
         end
       end
     end

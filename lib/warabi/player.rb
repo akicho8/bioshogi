@@ -101,7 +101,7 @@ module Warabi
         end
 
         if (battler = board.lookup(from)) && location != battler.location
-          raise AitenoKomaUgokashitaError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
+          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
         end
       end
 

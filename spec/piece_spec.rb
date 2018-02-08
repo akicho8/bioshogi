@@ -72,12 +72,5 @@ module Warabi
     it "sort" do
       [Piece[:pawn], Piece[:king]].sort.should == [Piece[:king], Piece[:pawn]]
     end
-
-    # it "シリアライズ" do
-    #   p Piece.lookup("歩")
-    #   s = Marshal.load(Marshal.dump(Piece.instance))
-    #   p s
-    #   p Piece.lookup("歩")
-    # end
   end
 end

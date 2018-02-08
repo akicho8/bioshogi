@@ -278,7 +278,7 @@ module Warabi
       when @md[:point_to]
         @point_to = Point.fetch(@md[:point_to])
       else
-        raise PointSyntaxError, "移動先の座標が不明です : #{@source.inspect}"
+        raise SyntaxDefact, "移動先の座標が不明です : #{@source.inspect}"
       end
     end
 

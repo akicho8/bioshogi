@@ -56,7 +56,7 @@ module Warabi
         begin
           super
         rescue
-          raise LocationNotFound, value.inspect
+          raise SyntaxDefact, value.inspect
         end
       end
 

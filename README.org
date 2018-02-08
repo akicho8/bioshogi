@@ -460,24 +460,19 @@ end
 
     | 例外                   | 意味                                           | どんなときに起きる？                                                                    |
     |------------------------+------------------------------------------------+-----------------------------------------------------------------------------------------|
-    | WarabiError           | すべての例外の親                               |                                                                                         |
+    | WarabiError            | すべての例外の親                               |                                                                                         |
     | MustNotHappen          | ありえない処理                                 | ブログラムがバグっている                                                                |
     | MovableBattlerNotFound | 指定座標に移動できる駒が一つもない             | 平手で初手 "▲３四歩"                                                                   |
     | AmbiguousFormatError   | 指定座標に移動できる駒が多すぎる               | 初手 "▲５八金"                                                                         |
     | SyntaxDefact           | とりあえず表記が違う                           | 駒の配置時に "４二銀成" とした                                                          |
-    | PointSyntaxError       | 座標の表記が違う                               | "４二" のつもりで "４" と書いた                                                         |
-    | PositionSyntaxError    | 座標が読み取れない                             |                                                                                         |
-    | LocationNotFound       | 手番の表記が違う                               | 先手を千手とかいた                                                                      |
     | PieceNotFound          | 指定の名前の駒が存在しない                     | 龍のつもりで蛇と書いた                                                                  |
     | HoldPieceNotFound      | 持駒が無い                                     | 歩を持っていないのに歩を打とうとした                                                    |
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置               | 配置時に2連続で "９七歩"                                                                |
     | AlredyPromoted         | すでに成っている                               | "５五" の龍を "５一飛成"                                                                |
     | BeforePointNotFound    | 「同」に対する座標が不明                       | 初手 "同歩"                                                                             |
-    | BattlerEmpty           | オプションで絞ったら移動できる駒がなくなった   |                                                                                         |
     | RuleError              | 反則系例外の親                                 | 二歩など                                                                                |
     | TypicalError           | 黙認できる例外の親                             | いまのところ二歩と手番間違いの2つだけ                                                   |
     | SamePointDifferent     | 座標と「同」を同時に指定したが一致しない       | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
-    | BoardIsBlackOnly       | 先手のみの盤面のはずが後手も含まれている       |                                                                                         |
     | FileFormatError        | ファイルのフォーマットがおかしい               | KIFファイルとして画像ファイルを読ませた                                                 |
     | KeyNotFound            | 手合割・囲い・戦型などのあるはずのデータがない | 手合割で「二枚落ち」と書くところを「飛車角落ち」と書いた                                |
 
@@ -495,7 +490,7 @@ end
     | PromotedPiecePutOnError         | 成った状態で打とうとした           | ５五龍打                           |
     | PromotedPieceToNormalPiece      | 成駒を成ってない状態に戻そうとした | ５五龍を５六飛                     |
     | SamePlayerBattlerOverwrideError | 自分の駒の上に自分の駒を指した     | 初手 "８八飛(28)"                  |
-    | AitenoKomaUgokashitaError       | 相手の駒を動かそうとした           | ▲の手番で初手 "３四歩"            |
+    | ReversePlayerPieceMoveError       | 相手の駒を動かそうとした           | ▲の手番で初手 "３四歩"            |
 
     一部の例外を抑制できる系の反則
 

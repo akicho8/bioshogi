@@ -4,6 +4,7 @@
 require "bundler/setup"
 require "tapp"
 require "warabi"
+require "warabi/mediator_test_helper"
 
 ENV["BUSHIDO_ENV"] = "test"
 
@@ -12,7 +13,7 @@ FileUtils.makedirs(log_file.dirname)
 Warabi.logger = ActiveSupport::Logger.new(log_file)
 
 module Warabi
-  Mediator.send(:include, MediatorTestHelper)
+  Mediator.include(MediatorTestHelper)
 end
 
 RSpec.configure do |config|

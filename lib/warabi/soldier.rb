@@ -57,12 +57,6 @@ module Warabi
     attr_accessor :point
     attr_accessor :location
 
-    # def initialize(*)
-    #   super
-    #
-    #   raise MustNotHappen, "location is blank" unless location
-    # end
-
     def attributes
       raise MustNotHappen if promoted.nil?
       {piece: piece, promoted: promoted, point: point, location: location}
@@ -124,6 +118,7 @@ module Warabi
     end
 
     def eql?(other)
+      raise MustNotHappen if self.class != other.class
       attributes == other.attributes
     end
 
@@ -138,7 +133,7 @@ module Warabi
 
   # Soldier にどこからどこへ成るかどうかの情報を含めたもの
   # origin_soldier と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
-  class BattlerMove < Soldier
+  class Moved < Soldier
     attr_accessor :origin_soldier
     attr_accessor :promoted_trigger
 
@@ -158,7 +153,7 @@ module Warabi
   end
 
   # 「打」専用
-  class PieceStake < Soldier
+  class Direct < Soldier
     def to_hand
       "#{name}打"
     end
