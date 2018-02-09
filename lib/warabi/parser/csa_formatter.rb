@@ -94,7 +94,7 @@ module Warabi
         else
           out += "\n"
 
-          if ENV["BUSHIDO_ENV"] == "test"
+          if ENV["WARABI_ENV"] == "test"
             out = out.gsub(/\s+\n/, "\n")
           end
         end

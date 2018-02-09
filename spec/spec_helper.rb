@@ -6,7 +6,7 @@ require "tapp"
 require "warabi"
 require "warabi/mediator_test_helper"
 
-ENV["BUSHIDO_ENV"] = "test"
+ENV["WARABI_ENV"] = "test"
 
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)

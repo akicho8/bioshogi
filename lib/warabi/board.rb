@@ -148,7 +148,7 @@ module Warabi
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
         black_only_soldiers = @surface.values.collect { |e|
           if e.location == location
-            e.to_soldier.reverse_if_white
+            e.reverse_if_white
           end
         }.compact.sort
 

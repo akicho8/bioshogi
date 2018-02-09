@@ -105,21 +105,18 @@ module Warabi
         end
       end
 
-      from_soldier = board.pick_up!(from)
-
       # 移動先に相手の駒があれば取って駒台に移動する
-      to_soldier = board.lookup(to)
-      if to_soldier
-        if to_soldier.location == location
-          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_soldier.name.inspect} があります"
+      if target = board.lookup(to)
+        if target.location == location
+          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{target.name.inspect} があります"
         end
         board.pick_up!(to)
-        piece_box.add(to_soldier.piece.key => 1)
+        piece_box.add(target.piece.key => 1)
         @mediator.kill_counter += 1
-        @last_piece_taken_from_opponent = to_soldier.piece
-        # to_soldier.player.soldiers.delete(to_soldier)
+        @last_piece_taken_from_opponent = target.piece
       end
 
+      from_soldier = board.pick_up!(from)
       attributes = from_soldier.attributes
       if promote_trigger
         attributes[:promoted] = true
@@ -128,16 +125,9 @@ module Warabi
       put_on_with_valid(Soldier.create(attributes))
     end
 
-    # # # 前の位置(同に使う)
-    # def point_logs
-    #   @mediator.point_logs
-    # end
 
     # 棋譜の入力
     def execute(str)
-      # if str == "投了"
-      #   return
-      # end
       @runner = Runner.new(self).execute(str)
       if Warabi.config[:skill_set_flag]
         if Position.size_type == :board_size_9x9
@@ -284,7 +274,6 @@ module Warabi
       }.merge(options)
 
       if options[:validate]
-        soldier = soldier.to_soldier
         if s = find_collisione_pawn(soldier)
           raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{soldier}が打てません\n#{board_with_pieces}"
         end

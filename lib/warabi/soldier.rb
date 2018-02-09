@@ -62,24 +62,14 @@ module Warabi
     def initialize(*)
       super
 
+      raise WarabiError, "piece is nil" if piece.nil?
+      raise WarabiError, "promoted is nil" if promoted.nil?
       raise WarabiError, "location missing" unless location
       raise WarabiError, "point missing" unless point
     end
 
     def attributes
-      raise MustNotHappen if promoted.nil?
       {piece: piece, promoted: promoted, point: point, location: location}
-    end
-
-    # 現状の状態から成れるか？
-    # 相手陣地から出たときのことは考慮しなくてよい
-    # そもそも移動元をこのインスタンスは知らない
-    def more_promote?(location)
-      true &&
-        piece.promotable? &&           # 成ることができる駒の種類かつ
-        !promoted &&                   # まだ成っていないかつ
-        point.promotable?(location) && # 現在地点は相手の陣地内か？
-        true
     end
 
     # soldiers.sort できるようにする
@@ -121,14 +111,20 @@ module Warabi
       eql?(other)
     end
 
-    # 盤面情報と比較するならこれを使う
-    def to_soldier
-      Soldier.create(piece: piece, promoted: promoted, point: point, location: location)
-    end
-
     # 移動可能な座標を取得
     def moved_list(board)
-      Movabler.moved_list(board, to_soldier)
+      Movabler.moved_list(board, self)
+    end
+
+    # 現状の状態から成れるか？
+    # 相手陣地から出たときのことは考慮しなくてよい
+    # そもそも移動元をこのインスタンスは知らない
+    def more_promote?(location)
+      true &&
+        piece.promotable? &&           # 成ることができる駒の種類かつ
+        !promoted &&                   # まだ成っていないかつ
+        point.promotable?(location) && # 現在地点は相手の陣地内か？
+        true
     end
 
     ################################################################################ Reader
