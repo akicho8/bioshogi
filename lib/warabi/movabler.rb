@@ -50,12 +50,12 @@ module Warabi
             # end
 
             # 自分の駒に衝突したら終わり
-            if target && target.player == player
+            if target && target.player.location == player.location
               break
             end
 
             # 自分の駒以外(相手駒 or 空)なので行ける
-            piece_store(player, soldier, pt, yielder)
+            piece_store(player.location, soldier, pt, yielder)
 
             # 相手駒があるのでこれ以上は進めない
             if target
@@ -80,7 +80,6 @@ module Warabi
     #  ・だから OnceVector か RepeatVector か見る必要はない
     #  ・行ける方向に一歩でも行ける可能性があればよい
     def alive_piece?(soldier)
-      raise MustNotHappen unless soldier.location
       soldier.cached_vectors.any? do |v|
         soldier.point.vector_add(v).valid?
       end
@@ -92,14 +91,14 @@ module Warabi
     # でも pt に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(player, soldier, pt, yielder)
+    def piece_store(location, soldier, pt, yielder)
       # それ以上動けるなら置く
       m = soldier.merge(point: pt)
       if alive_piece?(m)
         yielder << Moved.create(m.attributes.merge(origin_soldier: soldier))
       end
       # 成れるなら成ってみて
-      if m.more_promote?(player.location)
+      if m.more_promote?(location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)

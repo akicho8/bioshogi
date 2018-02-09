@@ -79,11 +79,11 @@ module Warabi
       end
 
       def to_s_battlers
-        @surface.values.collect(&:formal_name).sort.join(" ")
+        @surface.values.collect(&:name_without_location).sort.join(" ")
       end
 
       def to_s_battlers2
-        @surface.values.collect(&:mark_with_formal_name).sort.join(" ")
+        @surface.values.collect(&:name).sort.join(" ")
       end
 
       def to_kif

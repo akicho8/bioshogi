@@ -13,7 +13,7 @@ module Warabi
         new_with_promoted(md[:piece], {point: Point.fetch(md[:point]), location: Location[md[:location]]}.merge(attributes))
       end
 
-      def new_with_promoted(object, **attributes)
+      def new_with_promoted_attributes(object)
         case
         when piece = Piece.basic_group[object]
           promoted = false
@@ -22,7 +22,11 @@ module Warabi
         else
           raise PieceNotFound, "#{object.inspect} に対応する駒がありません"
         end
-        create({piece: piece, promoted: promoted}.merge(attributes))
+        {piece: piece, promoted: promoted}
+      end
+
+      def new_with_promoted(object, **attributes)
+        create(new_with_promoted_attributes(object).merge(attributes))
       end
 
       def preset_one_side_soldiers(preset_key, location: :black)
@@ -55,31 +59,16 @@ module Warabi
 
     private_class_method :new
 
-    # def initialize(attributes)
-    #   super({location: Location[:black]}.merge(attributes))
-    # end
+    def initialize(*)
+      super
+
+      raise WarabiError, "location missing" unless location
+      raise WarabiError, "point missing" unless point
+    end
 
     def attributes
       raise MustNotHappen if promoted.nil?
       {piece: piece, promoted: promoted, point: point, location: location}
-    end
-
-    # 「１一香成」ではなく「１一杏」を返す
-    # 指し手を返すには to_hand を使うこと
-    def to_s
-      name
-    end
-
-    def name
-      "#{location ? location.name : '？'}#{point.name}#{any_name}"
-    end
-
-    def any_name
-      piece.any_name(promoted)
-    end
-
-    def to_sfen
-      piece.to_sfen(promoted: promoted, location: location)
     end
 
     # 現状の状態から成れるか？
@@ -130,6 +119,43 @@ module Warabi
 
     def ==(other)
       eql?(other)
+    end
+
+    ################################################################################ Reader
+
+    # 「１一香成」ではなく「１一杏」を返す
+    # 指し手を返すには to_hand を使うこと
+    def to_s
+      name
+    end
+
+    def name
+      "#{location.name}#{point.name}#{any_name}"
+    end
+
+    def name_without_location
+      "#{point.name}#{any_name}"
+    end
+
+    def any_name
+      piece.any_name(promoted)
+    end
+
+    # 柿木盤面用
+    def to_kif
+      "#{location.varrow}#{any_name}"
+    end
+
+    def to_sfen
+      piece.to_sfen(promoted: promoted, location: location)
+    end
+
+    def to_csa
+      location.csa_sign + piece.csa_some_name(promoted)
+    end
+
+    def inspect
+      "<#{self.class.name}:#{object_id} #{name}>"
     end
   end
 

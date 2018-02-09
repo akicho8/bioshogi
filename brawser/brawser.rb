@@ -23,7 +23,7 @@ class MediatorDecorator < SimpleDelegator
         cell = ""
         if battler = board.surface[[x, y]]
           tag_class << battler.player.location.key
-          cell = battler.piece_current_name
+          cell = battler.any_name
         end
         if hand_log = hand_logs.last
           if hand_log.point_to == Warabi::Point[[x, y]]

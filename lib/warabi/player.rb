@@ -101,7 +101,7 @@ module Warabi
         end
 
         if (battler = board.lookup(from)) && location != battler.location
-          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.piece_current_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
+          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.any_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
         end
       end
 
@@ -111,7 +111,7 @@ module Warabi
       to_battler = board.lookup(to)
       if to_battler
         if to_battler.player == self
-          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.mark_with_formal_name.inspect} があります"
+          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.name.inspect} があります"
         end
         board.pick_up!(to)
         piece_box.add(to_battler.piece.key => 1)
@@ -257,13 +257,13 @@ module Warabi
       # 盤上の駒の名前一覧(表示・デバッグ用)
       #   battler_names # => ["△５五飛↓"]
       def battler_names
-        battlers.collect(&:mark_with_formal_name).sort
+        battlers.collect(&:name).sort
       end
 
       # 盤上の駒の名前一覧(保存用)
       #   to_s_battlers # => ["５五飛"]
       def to_s_battlers
-        battlers.collect(&:formal_name).sort.join(" ")
+        battlers.collect(&:name_without_location).sort.join(" ")
       end
 
       # boardに描画する
@@ -338,7 +338,7 @@ module Warabi
       if options[:validate]
         soldier = battler.to_soldier
         if s = find_collisione_pawn(soldier)
-          raise DoublePawnError, "二歩です。すでに#{s.mark_with_formal_name}があるため#{battler}が打てません\n#{board_with_pieces}"
+          raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{battler}が打てません\n#{board_with_pieces}"
         end
         if dead_piece?(soldier)
           raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"

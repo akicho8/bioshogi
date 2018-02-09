@@ -69,7 +69,6 @@ module Warabi
 
       @skill_set = SkillSet.new
 
-      @soldier = nil
       @done = false
 
       @md = @source.match(self.class.input_regexp)
@@ -125,7 +124,7 @@ module Warabi
             @md[:motion2] = "成"
           end
           v = @player.board[@md[:point_from]] or raise MustNotHappen
-          @md[:piece] = v.piece_current_name
+          @md[:piece] = v.any_name
         end
       end
 
@@ -134,9 +133,9 @@ module Warabi
       end
 
       begin
-        @soldier = Soldier.new_with_promoted(@md[:piece])
-        @piece = @soldier.piece
-        @promoted = @soldier.promoted
+        attrs = Soldier.new_with_promoted_attributes(@md[:piece])
+        @piece = attrs[:piece]
+        @promoted = attrs[:promoted]
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
       end
@@ -206,7 +205,7 @@ module Warabi
                   @point_from = nil
                   battler_put
                 else
-                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_battler.piece_current_name}と書いてください\n#{@player.board_with_pieces}"
+                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_battler.any_name}と書いてください\n#{@player.board_with_pieces}"
                 end
               end
             end
@@ -308,7 +307,7 @@ module Warabi
           @player.battlers << battler
           @done = true
         else
-          raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@soldier.any_name.inspect} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
+          raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@piece.any_name(@promoted)} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
         end
       end
 
@@ -322,7 +321,7 @@ module Warabi
             find_battlers
           end
           if @battlers.size > 1
-            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@battlers.collect(&:mark_with_formal_name).join(' ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@battlers.collect(&:name).join(' ')})\n#{@player.board_with_pieces}"
           end
         end
 
@@ -368,7 +367,7 @@ module Warabi
       end
 
       if @battlers.empty?
-        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_battlers.collect(&:mark_with_formal_name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_battlers.collect(&:name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 

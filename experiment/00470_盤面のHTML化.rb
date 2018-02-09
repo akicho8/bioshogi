@@ -18,7 +18,7 @@ class MediatorDecorator < SimpleDelegator
             cell = ""
             if battler = board.surface[[x, y]]
               style = battler.player.location.style_transform
-              cell = battler.piece_current_name
+              cell = battler.any_name
             end
             tag.td(cell, style: style)
           }.join.html_safe

@@ -7,18 +7,18 @@ module Warabi
         @battler = player_test(init: "５五と").battlers.first
       end
       it "先手後手のマーク付き" do
-        @battler.mark_with_formal_name.should == "▲５五と"
+        @battler.name.should == "▲５五と"
         @battler.name.should == "▲５五と"
       end
       it "先手後手のマークなし" do
-        @battler.formal_name.should == "５五と"
+        @battler.name_without_location.should == "５五と"
       end
       it "駒のみ" do
-        @battler.piece_current_name.should == "と"
+        @battler.any_name.should == "と"
       end
       # it "盤上に置いてない場合" do
       #   @battler.point = nil
-      #   @battler.mark_with_formal_name.should == "▲(どこにも置いてない)と"
+      #   @battler.name.should == "▲(どこにも置いてない)と"
       # end
     end
 

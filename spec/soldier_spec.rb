@@ -12,7 +12,9 @@ module Warabi
     end
 
     it "文字列から簡単に作る" do
-      Soldier.from_str("６八銀").name.should == "？６八銀"
+      expect { Soldier.from_str("６八銀") }.to raise_error(WarabiError)
+      Soldier.from_str("６八銀", location: Location[:white]).name.should == "△６八銀"
+      Soldier.from_str("６八銀", location: Location[:black]).name.should == "▲６八銀"
       Soldier.from_str("▲６八銀").name.should == "▲６八銀"
     end
 
