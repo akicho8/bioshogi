@@ -127,8 +127,8 @@ module Warabi
     end
 
     # 移動可能な座標を取得
-    def movable_infos(board)
-      Movabler.movable_infos(board, to_soldier)
+    def moved_list(board)
+      Movabler.moved_list(board, to_soldier)
     end
 
     ################################################################################ Reader

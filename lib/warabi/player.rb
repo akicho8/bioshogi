@@ -386,8 +386,8 @@ module Warabi
       end
     end
 
-    def movable_infos(soldier)
-      Movabler.movable_infos(board, soldier)
+    def moved_list(soldier)
+      Movabler.moved_list(board, soldier)
     end
   end
 end

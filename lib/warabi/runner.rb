@@ -175,7 +175,7 @@ module Warabi
       @battlers = @player.battlers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
-        e.movable_infos(@player.board).any? { |e| e.point == @point_to } && # 目的地に来れる
+        e.moved_list(@player.board).any? { |e| e.point == @point_to } && # 目的地に来れる
         true
       }
       @candidate = @battlers.collect(&:clone)
@@ -287,7 +287,7 @@ module Warabi
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
       # # 指定の場所に来れる盤上の駒に絞る
-      # @battlers = @player.battlers.find_all { |battler| battler.movable_infos.any?{|e|e[:point] == @point_to} }
+      # @battlers = @player.battlers.find_all { |battler| battler.moved_list.any?{|e|e[:point] == @point_to} }
       # @battlers = @battlers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
       # @battlers = @battlers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
       # @candidate = @battlers.collect{|s|s.clone}

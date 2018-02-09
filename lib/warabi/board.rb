@@ -78,8 +78,8 @@ module Warabi
         }.compact
       end
 
-      def movable_infos(soldier)
-        Movabler.movable_infos(self, soldier)
+      def moved_list(soldier)
+        Movabler.moved_list(self, soldier)
       end
 
       def to_s_battlers

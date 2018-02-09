@@ -26,7 +26,7 @@ system "stackprof stackprof.dump --method Warabi::SkillMonitor#execute"
 system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 
 # system "stackprof stackprof.dump --method Warabi::Point.fetch"
-# system "stackprof stackprof.dump --method Warabi::Movabler#movable_infos"
+# system "stackprof stackprof.dump --method Warabi::Movabler#moved_list"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 

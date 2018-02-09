@@ -32,12 +32,12 @@ module Warabi
       end
     end
 
-    describe "#movable_infos" do
+    describe "#moved_list" do
       it "移動可能な筋の取得(超重要なテスト)" do
         Board.size_change([1, 5]) do
           test = -> s {
             soldier = Soldier.from_str(s)
-            soldier.movable_infos(Board.new).collect(&:name)
+            soldier.moved_list(Board.new).collect(&:name)
           }
           test["▲１五香"].should == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]
           test["▲１五杏"].should == ["▲１四杏"]
@@ -47,7 +47,7 @@ module Warabi
       it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
         Board.size_change([1, 5]) do
           mediator = Mediator.test(init: "▲１五香 △１三歩")
-          mediator.board["１五"].movable_infos(mediator.board).collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏"]
+          mediator.board["１五"].moved_list(mediator.board).collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏"]
         end
       end
 
@@ -55,7 +55,7 @@ module Warabi
         player = player_test(run_piece_plot: true)
         test = -> point {
           battler = player.board[point]
-          battler.movable_infos(player.board).collect(&:name)
+          battler.moved_list(player.board).collect(&:name)
         }
         test["７七"].should == ["▲７六歩"]                                                             # 歩
         test["９九"].should == ["▲９八香"]                                                             # 香

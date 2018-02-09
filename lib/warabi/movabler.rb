@@ -24,7 +24,7 @@ module Warabi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def movable_infos(board, soldier)
+    def moved_list(board, soldier)
       Enumerator.new do |yielder|
         vecs = soldier.cached_vectors
         vecs.each do |vec|

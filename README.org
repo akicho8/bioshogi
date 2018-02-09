@@ -208,7 +208,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 mediator = Mediator.start
 player = mediator.player_at(:black)
 player.battlers_create("５五馬")
-player.battlers.first.movable_infos.each{|point|
+player.battlers.first.moved_list.each{|point|
   player.battlers_create("#{point}馬", from_stand: false)
 }
 puts mediator.board
