@@ -252,7 +252,6 @@ module Warabi
       def battlers_create_from_soldier(soldier)
         battler = Battler.create(soldier.attributes.merge(player: self))
         put_on_with_valid(battler)
-        # battlers << battler
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
@@ -346,7 +345,7 @@ module Warabi
         end
       end
 
-      board.put_on(battler.point, battler)
+      board.put_on(battler)
     end
 
     # 二歩でも行き止まりでもない？

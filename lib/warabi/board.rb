@@ -16,17 +16,10 @@ module Warabi
       @surface = {}
     end
 
-    # 破壊的
     concerning :UpdateMethods do
-      # 指定座標に駒を置く
-      #   board.put_on("５五", battler)
-      def put_on(point, battler)
-        assert_board_cell_is_blank(point)
-        raise MustNotHappen if battler.point != point
-        # battler.point = point
-        # set(point, battler)
-        point = Point.fetch(point)
-        @surface[point] = battler # TODO: Point オブジェクトのままセットすることはできないか？
+      def put_on(battler)
+        assert_board_cell_is_blank(battler.point)
+        @surface[battler.point] = battler
       end
 
       # 指定座標にある駒をを広い上げる
@@ -40,11 +33,10 @@ module Warabi
 
       # 駒をすべて削除する
       def abone_all
-        @surface.values.find_all { |e| e.kind_of?(Battler) }.each(&:abone)
+        @surface.values.each(&:abone)
       end
 
       # 指定のセルを削除する
-      # プレイヤー側の battlers からは削除しないので注意
       def abone_on(point)
         @surface.delete(point)
       end
