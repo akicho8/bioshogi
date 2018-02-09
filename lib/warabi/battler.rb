@@ -26,12 +26,6 @@ module Warabi
       to_soldier.to_h
     end
 
-    # この盤上の駒を消す
-    def abone
-      player.board.abone_on(point)
-      self
-    end
-
     concerning :NameMethods do
       included do
         delegate :to_sfen, to: :to_soldier

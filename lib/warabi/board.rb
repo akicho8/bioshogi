@@ -33,7 +33,7 @@ module Warabi
 
       # 駒をすべて削除する
       def abone_all
-        @surface.values.each(&:abone)
+        @surface.clear
       end
 
       # 指定のセルを削除する

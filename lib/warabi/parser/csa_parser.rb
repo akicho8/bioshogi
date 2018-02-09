@@ -77,7 +77,7 @@ module Warabi
                 if battler.piece != piece
                   raise SyntaxDefact, "#{point.name}の#{piece.name}を落とす指定がありましたがそこにある駒は#{battler.piece.name}です : #{v.inspect}"
                 end
-                battler.abone
+                mediator.board.abone_on(battler.point)
               end
             end
             @board_source = mediator.board.to_s

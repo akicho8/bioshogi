@@ -25,7 +25,7 @@ module Warabi
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.size_change([3, 3]) do
         player = player_test(init: "▲１一飛")
-        battler = player.board["１一"].abone
+        battler = player.board.abone_on(Point["１一"])
         player.board["１一"].should == nil # 盤面から消えている
         # battler.point.should == nil        # 盤上から削除した駒の座標は nil になっている
         player.battlers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない
