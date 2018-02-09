@@ -76,7 +76,7 @@ module Warabi
 
     # # 盤上の自分の駒
     # def battlers
-    #   @battlers
+    #   battlers
     #   # @ board.surface.values.find_all{|battler|battler.player == self}
     # end
 
@@ -117,15 +117,15 @@ module Warabi
         piece_box.add(to_battler.piece.key => 1)
         @mediator.kill_counter += 1
         @last_piece_taken_from_opponent = to_battler.piece
-        to_battler.player.battlers.delete(to_battler)
+        # to_battler.player.battlers.delete(to_battler)
       end
 
+      attributes = from_battler.attributes
       if promote_trigger
-        from_battler.promoted = true
+        attributes[:promoted] = true
       end
-
-      from_battler.point = to
-      put_on_with_valid(from_battler)
+      attributes[:point] = to
+      put_on_with_valid(Battler.create(attributes))
     end
 
     # # # 前の位置(同に使う)
@@ -236,36 +236,40 @@ module Warabi
     # 盤上の駒関連
     concerning :BattlerMethods do
       included do
-        attr_accessor :battlers
+        # attr_accessor :battlers
       end
 
       def initialize(*)
         super
         # インスタンス変数は何もしなければ自動的に Marshal の対象になる
-        @battlers = []
+        # battlers = []
+      end
+
+      def battlers
+        board.surface.values.find_all { |e| e.location == location }
       end
 
       def battlers_create_from_soldier(soldier)
         battler = Battler.create(soldier.attributes.merge(player: self))
         put_on_with_valid(battler)
-        @battlers << battler
+        # battlers << battler
       end
 
       # 盤上の駒の名前一覧(表示・デバッグ用)
       #   battler_names # => ["△５五飛↓"]
       def battler_names
-        @battlers.collect(&:mark_with_formal_name).sort
+        battlers.collect(&:mark_with_formal_name).sort
       end
 
       # 盤上の駒の名前一覧(保存用)
       #   to_s_battlers # => ["５五飛"]
       def to_s_battlers
-        @battlers.collect(&:formal_name).sort.join(" ")
+        battlers.collect(&:formal_name).sort.join(" ")
       end
 
       # boardに描画する
       def render_battlers
-        @battlers.each do |battler|
+        battlers.each do |battler|
           put_on_with_valid(battler)
         end
       end
@@ -315,7 +319,7 @@ module Warabi
       # _battler = Battler.new(shash.merge(player: self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
-      #   @battlers << _battler
+      #   battlers << _battler
       #   put_on_with_valid(shash[:point], battler)
       #   if block
       #     yield battler
@@ -323,7 +327,7 @@ module Warabi
       # ensure
       #   battler = board.pick_up!(shash[:point])
       #   @pieces << _battler.piece
-      #   @battlers.pop
+      #   battlers.pop
       # end
     end
 

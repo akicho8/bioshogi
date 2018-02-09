@@ -328,6 +328,7 @@ module Warabi
           hand_logs: @hand_logs,
           kill_counter: @kill_counter,
           first_state_board_sfen: @first_state_board_sfen,
+          board: @board,
         }
       end
 
@@ -336,10 +337,11 @@ module Warabi
         @players  = attrs[:players]
         @hand_logs = attrs[:hand_logs]
         @kill_counter = attrs[:kill_counter]
-        @first_state_board_sfen = attrs[:first_state_board_sfen],
-        @board = Board.new
+        @first_state_board_sfen = attrs[:first_state_board_sfen]
+        @board = attrs[:board]
+        # @board = Board.new
         @players.each { |player| player.mediator = self }
-        @players.collect { |player| player.render_battlers }
+        # @players.collect { |player| player.render_battlers }
       end
 
       # deep_dup しておくこと
@@ -348,9 +350,9 @@ module Warabi
         @players = object.players
         @hand_logs = object.hand_logs
         @kill_counter = object.kill_counter
-        @board = Board.new
+        @board = object.board
         @players.each { |player| player.mediator = self }
-        @players.collect { |player| player.render_battlers }
+        # @players.collect { |player| player.render_battlers }
         self
       end
 

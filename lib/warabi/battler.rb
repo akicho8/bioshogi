@@ -8,10 +8,6 @@ module Warabi
   class Battler < Soldier
     attr_accessor :player
 
-    def self.create(*args)
-      new(*args)
-    end
-
     def attributes
       super.merge(player: player)
     end
@@ -33,8 +29,6 @@ module Warabi
     # この盤上の駒を消す
     def abone
       player.board.abone_on(point)
-      player.battlers.delete(self)
-      @point = nil
       self
     end
 

@@ -3,15 +3,16 @@ require "./example_helper"
 
 mediator = Mediator.test(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", exec: ["２六歩", "２四歩(23)"])
 mediator.ki2_hand_logs          # => ["▲２六歩", "△２四歩"]
-# >> "２七歩"
-# >> ["/Users/ikeda/src/warabi/lib/warabi/player.rb:68", :battlers_create, "２七歩", :black]
-# >> "２八飛"
-# >> ["/Users/ikeda/src/warabi/lib/warabi/player.rb:68", :battlers_create, "２八飛", :black]
-# >> "２三歩"
-# >> ["/Users/ikeda/src/warabi/lib/warabi/player.rb:68", :battlers_create, "２三歩", :white]
-# >> "２二飛"
-# >> ["/Users/ikeda/src/warabi/lib/warabi/player.rb:68", :battlers_create, "２二飛", :white]
-# >> ["/Users/ikeda/src/warabi/lib/warabi/runner.rb:176", :execute, "歩", #<Warabi::Point:70174783865580 "２六">, ["▲２七歩", "▲２八飛"]]
-# >> ["/Users/ikeda/src/warabi/lib/warabi/runner.rb:184", :execute, "歩", ["▲２七歩"]]
-# >> ["/Users/ikeda/src/warabi/lib/warabi/runner.rb:176", :execute, "歩", #<Warabi::Point:70174787423320 "２四">, ["△２三歩", "△２二飛"]]
-# >> ["/Users/ikeda/src/warabi/lib/warabi/runner.rb:184", :execute, "歩", ["△２三歩"]]
+
+Mediator.simple_test(init: "▲９七歩").players.collect{|e|e.evaluate} # => [100, -100]
+  # .should == [100, -100]
+
+
+Board.size_change([2, 2]) do
+  mediator = Mediator.simple_test(init: "▲１二歩", pieces_set: "▲歩")
+  mediator.player_at(:black).brain.all_hands # => ["▲１一歩成(12)", "▲２二歩打"]
+
+  # puts mediator.to_s
+  mediator.player_at(:black).brain.eval_list # => [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
+  # puts mediator.to_s
+end

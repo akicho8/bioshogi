@@ -35,7 +35,6 @@ module Warabi
         unless battler
           raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
         end
-        battler.point = nil
         battler
       end
 

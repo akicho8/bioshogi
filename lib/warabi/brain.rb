@@ -121,14 +121,15 @@ module Warabi
     # end
 
     def eval_list
-      score_info = all_hands.each.with_object([]){|hand, ary|
+      list = []
+      all_hands.each { |hand|
         @player.mediator.sandbox_for do |_mediator|
           _player = _mediator.player_at(@player.location)
           _player.execute(hand)
-          ary << {hand: hand, score: _player.evaluate}
+          list << {hand: hand, score: _player.evaluate}
         end
       }
-      score_info.sort_by{|e|-e[:score]}
+      list.sort_by { |e| -e[:score] }
     end
 
     # 盤上の駒の全手筋
