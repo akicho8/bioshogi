@@ -19,16 +19,16 @@ module Warabi
       Position::Vpos.dimension.times.collect { |y|
         "P#{y.next}" + Position::Hpos.dimension.times.collect { |x|
           point = Point.fetch([x, y])
-          battler_to_str(@board[point])
+          soldier_to_str(@board[point])
         }.join + "\n"
       }.join
     end
 
     private
 
-    def battler_to_str(battler)
-      if battler
-        battler.to_csa
+    def soldier_to_str(soldier)
+      if soldier
+        soldier.to_csa
       else
         " * "
       end

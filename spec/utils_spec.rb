@@ -3,7 +3,7 @@ require_relative "spec_helper"
 module Warabi
   describe Utils do
     it "初期配置情報の塊を分離" do
-      Utils.initial_battlers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
+      Utils.initial_soldiers_split("▲４二銀 △４二銀").should == [{location: Location[:black], input: "４二銀"}, {location: Location[:white], input: "４二銀"}]
     end
 
     it "棋譜入力の分離(ゴミは保持)" do

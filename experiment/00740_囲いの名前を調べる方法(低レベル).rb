@@ -27,9 +27,9 @@ defense_info = DefenseInfo.find do |e|
 
   # 盤上の状態に含まれる？
   e.black_side_soldiers.all? do |e|
-    if battler = mediator.board[e[:point]]
-      if battler.location == location
-        battler.to_soldier.reverse_if_white == e
+    if soldier = mediator.board[e[:point]]
+      if soldier.location == location
+        soldier.to_soldier.reverse_if_white == e
       end
     end
   end

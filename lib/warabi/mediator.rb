@@ -99,7 +99,7 @@ module Warabi
 
       def board_reset_by_soldiers(soldiers)
         soldiers.each do |soldier|
-          player_at(soldier.location).battlers_create(soldier, from_stand: false)
+          player_at(soldier.location).soldiers_create(soldier, from_stand: false)
         end
         play_standby
       end
@@ -112,12 +112,12 @@ module Warabi
     concerning :Other do
       # 両者の駒の配置を決める
       # @example 持駒から配置する場合(持駒がなければエラーになる)
-      #   battlers_create("▲３三歩 △１一歩")
+      #   soldiers_create("▲３三歩 △１一歩")
       # @example 持駒から配置しない場合(無限に駒が置ける)
-      #   battlers_create("▲３三歩 △１一歩", from_stand: false)
-      def battlers_create(str, **options)
-        Utils.initial_battlers_split(str).each do |info|
-          player_at(info[:location]).battlers_create(info[:input], options)
+      #   soldiers_create("▲３三歩 △１一歩", from_stand: false)
+      def soldiers_create(str, **options)
+        Utils.initial_soldiers_split(str).each do |info|
+          player_at(info[:location]).soldiers_create(info[:input], options)
         end
       end
 

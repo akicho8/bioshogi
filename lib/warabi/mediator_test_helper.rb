@@ -7,10 +7,10 @@ module Warabi
 
         mediator = start
         if params[:init]
-          mediator.battlers_create(params[:init])
+          mediator.soldiers_create(params[:init])
         end
         if params[:init2]
-          mediator.battlers_create(params[:init2], from_stand: false)
+          mediator.soldiers_create(params[:init2], from_stand: false)
         end
         if params[:pieces_set]
           mediator.pieces_set(params[:pieces_set])
@@ -31,7 +31,7 @@ module Warabi
         }.merge(params)
 
         new.tap do |o|
-          o.battlers_create(params[:init], from_stand: false)
+          o.soldiers_create(params[:init], from_stand: false)
           o.pieces_set(params[:pieces_set].to_s)
         end
       end

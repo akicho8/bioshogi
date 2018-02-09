@@ -50,10 +50,10 @@ module Warabi
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
-    #   player.battlers_create(["５五飛", "３三飛"], from_stand: false)
-    #   player.battlers_create("#{point}馬")
-    #   player.battlers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
-    def battlers_create(soldier_or_str, **options)
+    #   player.soldiers_create(["５五飛", "３三飛"], from_stand: false)
+    #   player.soldiers_create("#{point}馬")
+    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
+    def soldiers_create(soldier_or_str, **options)
       options = {
         from_stand: true, # 持駒から取り出して配置する？
       }.merge(options)
@@ -77,7 +77,7 @@ module Warabi
     # # 盤上の自分の駒
     # def soldiers
     #   soldiers
-    #   # @ board.surface.values.find_all{|battler|battler.player == self}
+    #   # @ board.surface.values.find_all{|soldier|soldier.player == self}
     # end
 
     # 盤上の駒を from から to に移動する。成るなら promote_trigger を有効に。
@@ -94,33 +94,33 @@ module Warabi
             raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
           end
 
-          battler = board.lookup(from)
-          if battler.promoted
-            raise AlredyPromoted, "成りを入力しましたが #{battler.point.name} の #{battler.piece.name} はすでに成っています"
+          soldier = board.lookup(from)
+          if soldier.promoted
+            raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
           end
         end
 
-        if (battler = board.lookup(from)) && location != battler.location
-          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{battler.point}にある#{battler.location}の#{battler.any_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
+        if (soldier = board.lookup(from)) && location != soldier.location
+          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{soldier.point}にある#{soldier.location}の#{soldier.any_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
         end
       end
 
-      from_battler = board.pick_up!(from)
+      from_soldier = board.pick_up!(from)
 
       # 移動先に相手の駒があれば取って駒台に移動する
-      to_battler = board.lookup(to)
-      if to_battler
-        if to_battler.location == location
-          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.name.inspect} があります"
+      to_soldier = board.lookup(to)
+      if to_soldier
+        if to_soldier.location == location
+          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_soldier.name.inspect} があります"
         end
         board.pick_up!(to)
-        piece_box.add(to_battler.piece.key => 1)
+        piece_box.add(to_soldier.piece.key => 1)
         @mediator.kill_counter += 1
-        @last_piece_taken_from_opponent = to_battler.piece
-        # to_battler.player.soldiers.delete(to_battler)
+        @last_piece_taken_from_opponent = to_soldier.piece
+        # to_soldier.player.soldiers.delete(to_soldier)
       end
 
-      attributes = from_battler.attributes
+      attributes = from_soldier.attributes
       if promote_trigger
         attributes[:promoted] = true
       end
@@ -221,7 +221,7 @@ module Warabi
         board.surface.values.find_all { |e| e.location == location }
       end
 
-      def to_s_battlers
+      def to_s_soldiers
         soldiers.collect(&:name_without_location).sort.join(" ")
       end
     end
@@ -263,37 +263,37 @@ module Warabi
       end
       marshal_load(_save)
       # shash = Soldier.from_str(arg)
-      # _battler = Battler.new(shash.merge(player: self))
+      # _soldier = Battler.new(shash.merge(player: self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
-      #   soldiers << _battler
-      #   put_on_with_valid(shash[:point], battler)
+      #   soldiers << _soldier
+      #   put_on_with_valid(shash[:point], soldier)
       #   if block
-      #     yield battler
+      #     yield soldier
       #   end
       # ensure
-      #   battler = board.pick_up!(shash[:point])
-      #   @pieces << _battler.piece
+      #   soldier = board.pick_up!(shash[:point])
+      #   @pieces << _soldier.piece
       #   soldiers.pop
       # end
     end
 
-    def put_on_with_valid(battler, **options)
+    def put_on_with_valid(soldier, **options)
       options = {
         validate: true,
       }.merge(options)
 
       if options[:validate]
-        soldier = battler.to_soldier
+        soldier = soldier.to_soldier
         if s = find_collisione_pawn(soldier)
-          raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{battler}が打てません\n#{board_with_pieces}"
+          raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{soldier}が打てません\n#{board_with_pieces}"
         end
         if dead_piece?(soldier)
           raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"
         end
       end
 
-      board.put_on(battler)
+      board.put_on(soldier)
     end
 
     # 二歩でも行き止まりでもない？
@@ -304,7 +304,7 @@ module Warabi
     # # モジュール化
     # begin
     #   def create_memento
-    #     # board → battler → player の結び付きで戻ってくる(？) 要確認
+    #     # board → soldier → player の結び付きで戻ってくる(？) 要確認
     #     Marshal.dump([@location, @pieces, board])
     #   end
     #

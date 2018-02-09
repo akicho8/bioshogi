@@ -98,7 +98,7 @@ module Warabi
     end
 
     def all_hands
-      battlers_hands + pieces_hands
+      soldiers_hands + pieces_hands
     end
 
     def best_hand
@@ -133,13 +133,13 @@ module Warabi
     end
 
     # 盤上の駒の全手筋
-    def battlers_hands
-      __battlers_hands.collect(&:to_hand)
+    def soldiers_hands
+      __soldiers_hands.collect(&:to_hand)
     end
 
-    def __battlers_hands
-      @player.soldiers.flat_map do |battler|
-        battler.moved_list(@player.board).to_a
+    def __soldiers_hands
+      @player.soldiers.flat_map do |soldier|
+        soldier.moved_list(@player.board).to_a
       end
     end
 

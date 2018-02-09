@@ -45,7 +45,7 @@ RSpec.configure do |config|
         player.pieces_add(v)
       end
 
-      player.battlers_create(params[:init])
+      player.soldiers_create(params[:init])
 
       if params[:run_piece_plot]
         player.piece_plot

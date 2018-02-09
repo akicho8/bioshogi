@@ -33,7 +33,7 @@ module Warabi
       }
     end
 
-    def initial_battlers_split(str)
+    def initial_soldiers_split(str)
       movs_split(str.gsub(/_+/, " "))
     end
 

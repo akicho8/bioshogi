@@ -21,9 +21,9 @@ class MediatorDecorator < SimpleDelegator
       tds = Warabi::Position::Hpos.dimension.times.collect do |x|
         tag_class = []
         cell = ""
-        if battler = board.surface[[x, y]]
-          tag_class << battler.player.location.key
-          cell = battler.any_name
+        if soldier = board.surface[[x, y]]
+          tag_class << soldier.player.location.key
+          cell = soldier.any_name
         end
         if hand_log = hand_logs.last
           if hand_log.point_to == Warabi::Point[[x, y]]

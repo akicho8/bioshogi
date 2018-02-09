@@ -73,11 +73,11 @@ module Warabi
               v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
                 point = Point.fetch(xy)
                 piece = Piece.fetch(piece_key)
-                battler = mediator.board.surface.fetch(point)
-                if battler.piece != piece
-                  raise SyntaxDefact, "#{point.name}の#{piece.name}を落とす指定がありましたがそこにある駒は#{battler.piece.name}です : #{v.inspect}"
+                soldier = mediator.board.surface.fetch(point)
+                if soldier.piece != piece
+                  raise SyntaxDefact, "#{point.name}の#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.piece.name}です : #{v.inspect}"
                 end
-                mediator.board.abone_on(battler.point)
+                mediator.board.abone_on(soldier.point)
               end
             end
             @board_source = mediator.board.to_s
@@ -133,7 +133,7 @@ module Warabi
                   # 盤に置く
                   point = Point.fetch(xy)
                   soldier = Soldier.new_with_promoted(piece.key, location: location, point: point)
-                  sub_mediator.player_at(soldier.location).battlers_create(soldier, from_stand: false)
+                  sub_mediator.player_at(soldier.location).soldiers_create(soldier, from_stand: false)
                 end
               end
             end

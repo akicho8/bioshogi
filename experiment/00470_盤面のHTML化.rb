@@ -16,9 +16,9 @@ class MediatorDecorator < SimpleDelegator
           Position::Hpos.dimension.times.collect { |x|
             style = nil
             cell = ""
-            if battler = board.surface[[x, y]]
-              style = battler.player.location.style_transform
-              cell = battler.any_name
+            if soldier = board.surface[[x, y]]
+              style = soldier.player.location.style_transform
+              cell = soldier.any_name
             end
             tag.td(cell, style: style)
           }.join.html_safe

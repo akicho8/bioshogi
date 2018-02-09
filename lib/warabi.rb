@@ -49,7 +49,7 @@ require_relative "warabi/board"
 require_relative "warabi/utils"
 
 require_relative "warabi/xtra_pattern"
-require_relative "warabi/battler"
+require_relative "warabi/soldier"
 require_relative "warabi/defense_info"
 require_relative "warabi/attack_info"
 require_relative "warabi/skill_set"

@@ -17,18 +17,18 @@ module Warabi
     end
 
     concerning :UpdateMethods do
-      def put_on(battler)
-        assert_board_cell_is_blank(battler.point)
-        @surface[battler.point] = battler
+      def put_on(soldier)
+        assert_board_cell_is_blank(soldier.point)
+        @surface[soldier.point] = soldier
       end
 
       # 指定座標にある駒をを広い上げる
       def pick_up!(point)
-        battler = @surface.delete(point)
-        unless battler
+        soldier = @surface.delete(point)
+        unless soldier
           raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
         end
-        battler
+        soldier
       end
 
       # 駒をすべて削除する
@@ -45,9 +45,9 @@ module Warabi
 
       # 盤上の指定座標に駒があるならエラーとする
       def assert_board_cell_is_blank(point)
-        battler = lookup(point)
-        if battler
-          raise PieceAlredyExist, "#{point.name}にはすでに#{battler}があります\n#{self}"
+        soldier = lookup(point)
+        if soldier
+          raise PieceAlredyExist, "#{point.name}にはすでに#{soldier}があります\n#{self}"
         end
       end
     end
@@ -82,7 +82,7 @@ module Warabi
         Movabler.moved_list(self, soldier)
       end
 
-      def to_s_battlers
+      def to_s_soldiers
         @surface.values.collect(&:name_without_location).sort.join(" ")
       end
 

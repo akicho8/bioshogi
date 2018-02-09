@@ -77,7 +77,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>        8  (   25.8%)  Warabi::DefenseInfo#board_parser
 # >>        6  (   19.4%)  Warabi::AttackInfo#board_parser
 # >>        5  (   16.1%)  block (4 levels) in memory_record
-# >>        3  (    9.7%)  Warabi::SkillMonitor#battler_exist?
+# >>        3  (    9.7%)  Warabi::SkillMonitor#soldier_exist?
 # >>        2  (    6.5%)  Warabi::DefenseInfo::AttackInfoSharedMethods#tactic_info
 # >>        2  (    6.5%)  Warabi::DefenseInfo::AttackInfoSharedMethods#tactic_info
 # >>        1  (    3.2%)  Warabi::SkillSet#attack_infos
@@ -236,7 +236,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   166  | 
 # >>                                   |   167  |         # どれかが盤上に正確に含まれるならOK
 # >>     5    (0.5%)                   |   168  |         if ary = e.board_parser.any_exist_soldiers_loc[location.key].presence
-# >>                                   |   169  |           if ary.any? { |e| battler_exist?(e) }
+# >>                                   |   169  |           if ary.any? { |e| soldier_exist?(e) }
 # >>                                   |   170  |           else
 # >>                                   |   171  |             throw :skip
 # >>                                   |   172  |           end
@@ -244,7 +244,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   174  | 
 # >>                                   |   175  |         # 指定の配置が盤上に含まれるならOK
 # >>     2    (0.2%)                   |   176  |         ary = e.board_parser.location_adjust[location.key]
-# >>     6    (0.6%)                   |   177  |         if ary.all? { |e| battler_exist?(e) }
+# >>     6    (0.6%)                   |   177  |         if ary.all? { |e| soldier_exist?(e) }
 # >>                                   |   178  |         else
 # >>                                   |   179  |           throw :skip
 # >>                                   |   180  |         end

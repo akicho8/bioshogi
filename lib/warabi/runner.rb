@@ -184,7 +184,7 @@ module Warabi
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
-        battler_put
+        soldier_put
       else
         if @md[:point_from]
           @point_from = Point.fetch(@md[:point_from])
@@ -196,24 +196,24 @@ module Warabi
 
         unless @done
           if true
-            source_battler = @player.board.lookup(@point_from)
+            source_soldier = @player.board.lookup(@point_from)
             if !@promote_trigger
-              if source_battler && source_battler.promoted && !@promoted
+              if source_soldier && source_soldier.promoted && !@promoted
                 # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
                 if @player.piece_box.exist?(@piece)
                   @strike_trigger = true
                   @point_from = nil
-                  battler_put
+                  soldier_put
                 else
-                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_battler.any_name}と書いてください\n#{@player.board_with_pieces}"
+                  raise PromotedPieceToNormalPiece, "成駒を成ってないときの駒の表記で記述しています。#{@source.inspect}の駒は#{source_soldier.any_name}と書いてください\n#{@player.board_with_pieces}"
                 end
               end
             end
           end
 
           unless @done
-            if battler = @player.board.lookup(@point_to)
-              @killed_piece = battler.piece
+            if soldier = @player.board.lookup(@point_to)
+              @killed_piece = soldier.piece
             end
             @player.move_to(@point_from, @point_to, @promote_trigger)
           end
@@ -287,7 +287,7 @@ module Warabi
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
     def find_origin_point
       # # 指定の場所に来れる盤上の駒に絞る
-      # @soldiers = @player.soldiers.find_all { |battler| battler.moved_list.any?{|e|e[:point] == @point_to} }
+      # @soldiers = @player.soldiers.find_all { |soldier| soldier.moved_list.any?{|e|e[:point] == @point_to} }
       # @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
       # @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
       # @candidate = @soldiers.collect{|s|s.clone}
@@ -302,8 +302,8 @@ module Warabi
           if @promoted
             raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
           end
-          battler = Soldier.create(piece: @player.piece_box.pick_out(@piece), point: @point_to, promoted: @promoted, location: @player.location)
-          @player.put_on_with_valid(battler)
+          soldier = Soldier.create(piece: @player.piece_box.pick_out(@piece), point: @point_to, promoted: @promoted, location: @player.location)
+          @player.put_on_with_valid(soldier)
           @done = true
         else
           raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@piece.any_name(@promoted)} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
@@ -317,7 +317,7 @@ module Warabi
             assert_valid_format("直上")
             assert_valid_format("左右直")
             assert_valid_format("寄引上")
-            find_battlers
+            find_soldiers
           end
           if @soldiers.size > 1
             raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:name).join(' ')})\n#{@player.board_with_pieces}"
@@ -329,24 +329,24 @@ module Warabi
       end
     end
 
-    def find_battlers
-      __saved_battlers = @soldiers
+    def find_soldiers
+      __saved_soldiers = @soldiers
 
       # 上下左右は後手なら反転する
       cond = "左右"
       if @md[:motion1].match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
-          @soldiers = @soldiers.sort_by{|battler|battler.point.x.value}.send(m, 1)
+          @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else
           m = _method([:>, :<], cond)
-          @soldiers = @soldiers.find_all{|battler|@point_to.x.value.send(m, battler.point.x.value)}
+          @soldiers = @soldiers.find_all{|soldier|@point_to.x.value.send(m, soldier.point.x.value)}
         end
       end
       cond = "上引"
       if @md[:motion1].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
-        @soldiers = @soldiers.find_all{|battler|@point_to.y.value.send(m, battler.point.y.value)}
+        @soldiers = @soldiers.find_all{|soldier|@point_to.y.value.send(m, soldier.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
@@ -366,7 +366,7 @@ module Warabi
       end
 
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_battlers.collect(&:name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -385,9 +385,9 @@ module Warabi
       end
     end
 
-    def battler_put
-      battler = Soldier.create(piece: @player.piece_box.pick_out(@piece), promoted: @promoted, point: @point_to, location: @player.location)
-      @player.put_on_with_valid(battler)
+    def soldier_put
+      soldier = Soldier.create(piece: @player.piece_box.pick_out(@piece), promoted: @promoted, point: @point_to, location: @player.location)
+      @player.put_on_with_valid(soldier)
       @done = true
     end
 

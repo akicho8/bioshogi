@@ -6,11 +6,11 @@ Board.size_change([5, 5])
 mediator = Mediator.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 mediator.players.each do |player|
-  _battlers = soldiers.collect do |s|
+  _soldiers = soldiers.collect do |s|
     s = Soldier.from_str(s)
     s.merge(point: s[:point].reverse_if_white(player.location))
   end
-  player.battlers_create(_battlers)
+  player.soldiers_create(_soldiers)
 end
 mediator.piece_box_clear
 p mediator

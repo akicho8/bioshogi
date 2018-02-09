@@ -166,7 +166,7 @@ module Warabi
 
         # どれかが盤上に正確に含まれるならOK
         if ary = e.board_parser.any_exist_soldiers_loc[location.key].presence
-          if ary.any? { |e| battler_exist?(e) }
+          if ary.any? { |e| soldier_exist?(e) }
           else
             throw :skip
           end
@@ -174,7 +174,7 @@ module Warabi
 
         # 指定の配置が盤上に含まれるならOK
         ary = e.board_parser.location_adjust[location.key]
-        if ary.all? { |e| battler_exist?(e) }
+        if ary.all? { |e| soldier_exist?(e) }
         else
           throw :skip
         end
@@ -190,7 +190,7 @@ module Warabi
     end
 
     # 比較順序超重要。不一致しやすいものから比較する
-    def battler_exist?(s)
+    def soldier_exist?(s)
       (v = surface[s.point]) && v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
     end
 

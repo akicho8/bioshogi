@@ -39,8 +39,8 @@ module Warabi
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
         mediator = Mediator.test(init: "▲１五香")
-        mediator.player_at(:black).brain.__battlers_hands.collect(&:to_hand).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
-        mediator.player_at(:black).brain.__battlers_hands.collect(&:name).should    == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]             # 指した後の駒の状態
+        mediator.player_at(:black).brain.__soldiers_hands.collect(&:to_hand).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
+        mediator.player_at(:black).brain.__soldiers_hands.collect(&:name).should    == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]             # 指した後の駒の状態
       end
     end
 
