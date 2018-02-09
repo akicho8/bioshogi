@@ -43,8 +43,8 @@ module Warabi
     def piece_plot
       soldiers = PresetInfo.fetch("平手").board_parser.location_adjust[location.key]
       soldiers.each do |soldier|
-        piece_pick_out(soldier.piece)
-        battlers_create_from_soldier(soldier)
+        piece_box.pick_out(soldier.piece)
+        put_on_with_valid(soldier)
       end
     end
 
@@ -68,15 +68,15 @@ module Warabi
           soldier = soldier_or_str
         end
         if options[:from_stand]
-          piece_pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          piece_box.pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        battlers_create_from_soldier(soldier)
+        put_on_with_valid(soldier)
       end
     end
 
     # # 盤上の自分の駒
-    # def battlers
-    #   battlers
+    # def soldiers
+    #   soldiers
     #   # @ board.surface.values.find_all{|battler|battler.player == self}
     # end
 
@@ -117,7 +117,7 @@ module Warabi
         piece_box.add(to_battler.piece.key => 1)
         @mediator.kill_counter += 1
         @last_piece_taken_from_opponent = to_battler.piece
-        # to_battler.player.battlers.delete(to_battler)
+        # to_battler.player.soldiers.delete(to_battler)
       end
 
       attributes = from_battler.attributes
@@ -125,7 +125,7 @@ module Warabi
         attributes[:promoted] = true
       end
       attributes[:point] = to
-      put_on_with_valid(Battler.create(attributes))
+      put_on_with_valid(Soldier.create(attributes))
     end
 
     # # # 前の位置(同に使う)
@@ -172,32 +172,15 @@ module Warabi
     end
 
     concerning :Pieceable do
-      included do
-        attr_accessor :piece_box
-      end
-
-      def initialize(*)
-        super
-        @piece_box = PieceBox.new
+      def piece_box
+        @piece_box ||= PieceBox.new
       end
 
       delegate :pieces, to: :piece_box
 
-      def piece_pick_out(piece)
-        piece_box.pick_out(piece)
-        # index = @pieces.find_index { |e| e.key == piece.key }
-        # index or raise HoldPieceNotFound, "#{location.name}の手番で持駒に #{piece.name.inspect} がありません\n#{board_with_pieces}"
-        # @pieces.slice!(index)
-      end
-
       # 持駒の名前一覧(表示・デバッグ用)
       def piece_names
         piece_box.pieces.collect(&:name).sort
-      end
-
-      # 持駒を捨てる
-      def piece_box_clear
-        piece_box.clear
       end
 
       # 配布して持駒にする
@@ -233,57 +216,22 @@ module Warabi
       end
     end
 
-    # 盤上の駒関連
     concerning :BattlerMethods do
-      included do
-        # attr_accessor :battlers
-      end
-
-      def initialize(*)
-        super
-        # インスタンス変数は何もしなければ自動的に Marshal の対象になる
-        # battlers = []
-      end
-
-      def battlers
+      def soldiers
         board.surface.values.find_all { |e| e.location == location }
       end
 
-      def battlers_create_from_soldier(soldier)
-        battler = Battler.create(soldier.attributes)
-        put_on_with_valid(battler)
-      end
-
-      # 盤上の駒の名前一覧(表示・デバッグ用)
-      #   battler_names # => ["△５五飛↓"]
-      def battler_names
-        battlers.collect(&:name).sort
-      end
-
-      # 盤上の駒の名前一覧(保存用)
-      #   to_s_battlers # => ["５五飛"]
       def to_s_battlers
-        battlers.collect(&:name_without_location).sort.join(" ")
-      end
-
-      # boardに描画する
-      def render_battlers
-        battlers.each do |battler|
-          put_on_with_valid(battler)
-        end
+        soldiers.collect(&:name_without_location).sort.join(" ")
       end
     end
 
-    # これどうなん？
-    # SkillMonitor 側にもっていけばいいんじゃね？
     concerning :SkillMonitorMethods do
-      attr_accessor :skill_set
-
-      delegate :attack_infos, :defense_infos, to: :skill_set
-
       def skill_set
         @skill_set ||= SkillSet.new
       end
+
+      delegate :attack_infos, :defense_infos, to: :skill_set
 
       def skill_monitor
         SkillMonitor.new(self)
@@ -318,7 +266,7 @@ module Warabi
       # _battler = Battler.new(shash.merge(player: self))
       # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
       # begin
-      #   battlers << _battler
+      #   soldiers << _battler
       #   put_on_with_valid(shash[:point], battler)
       #   if block
       #     yield battler
@@ -326,7 +274,7 @@ module Warabi
       # ensure
       #   battler = board.pick_up!(shash[:point])
       #   @pieces << _battler.piece
-      #   battlers.pop
+      #   soldiers.pop
       # end
     end
 

@@ -208,7 +208,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 mediator = Mediator.start
 player = mediator.player_at(:black)
 player.battlers_create("５五馬")
-player.battlers.first.moved_list.each{|point|
+player.soldiers.first.moved_list.each{|point|
   player.battlers_create("#{point}馬", from_stand: false)
 }
 puts mediator.board
@@ -324,9 +324,9 @@ mediator.board["５九"].name # => "▲５九玉"
 #+BEGIN_SRC ruby
 Board.size_change([5, 5])
 mediator = Mediator.start
-battlers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
+soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 mediator.players.each do |player|
-  _battlers = battlers.collect{|s|
+  _battlers = soldiers.collect{|s|
     s = Soldier.from_str(s)
     s.merge(point: s[:point].reverse_if_white(player.location))
   }

@@ -46,7 +46,7 @@ module Warabi
       score = 0
 
       # 盤上の駒
-      score += player.battlers.collect { |e|
+      score += player.soldiers.collect { |e|
         if e.promoted
           e.piece.promoted_weight
         else

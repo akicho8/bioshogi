@@ -1,34 +1,34 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe Battler do
+  describe Soldier do
     describe "文字列表現" do
       before do
-        @battler = player_test(init: "５五と").battlers.first
+        @soldier = player_test(init: "５五と").soldiers.first
       end
       it "先手後手のマーク付き" do
-        @battler.name.should == "▲５五と"
-        @battler.name.should == "▲５五と"
+        @soldier.name.should == "▲５五と"
+        @soldier.name.should == "▲５五と"
       end
       it "先手後手のマークなし" do
-        @battler.name_without_location.should == "５五と"
+        @soldier.name_without_location.should == "５五と"
       end
       it "駒のみ" do
-        @battler.any_name.should == "と"
+        @soldier.any_name.should == "と"
       end
       # it "盤上に置いてない場合" do
-      #   @battler.point = nil
-      #   @battler.name.should == "▲(どこにも置いてない)と"
+      #   @soldier.point = nil
+      #   @soldier.name.should == "▲(どこにも置いてない)と"
       # end
     end
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.size_change([3, 3]) do
         player = player_test(init: "▲１一飛")
-        battler = player.board.abone_on(Point["１一"])
+        soldier = player.board.abone_on(Point["１一"])
         player.board["１一"].should == nil # 盤面から消えている
-        # battler.point.should == nil        # 盤上から削除した駒の座標は nil になっている
-        player.battlers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない
+        # soldier.point.should == nil        # 盤上から削除した駒の座標は nil になっている
+        player.soldiers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない
       end
     end
 
@@ -54,8 +54,8 @@ module Warabi
       it "初期配置での移動可能な座標" do
         player = player_test(run_piece_plot: true)
         test = -> point {
-          battler = player.board[point]
-          battler.moved_list(player.board).collect(&:name)
+          soldier = player.board[point]
+          soldier.moved_list(player.board).collect(&:name)
         }
         test["７七"].should == ["▲７六歩"]                                                             # 歩
         test["９九"].should == ["▲９八香"]                                                             # 香

@@ -4,7 +4,7 @@ require "./example_helper"
 mediator = Mediator.new
 player = mediator.player_at(:black)
 player.battlers_create("５五馬", from_stand: false)
-player.battlers.each do |battler|
+player.soldiers.each do |battler|
   battler.moved_list(mediator.board).each do |v|
     player.battlers_create("#{v.point}馬", from_stand: false)
   end

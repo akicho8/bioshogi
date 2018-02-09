@@ -61,7 +61,7 @@ RSpec.configure do |config|
     end
 
     def player_test2(*args)
-      player_test(*args).battler_names.sort
+      player_test(*args).soldiers.collect(&:name).sort
     end
 
     def read_spec(*args)

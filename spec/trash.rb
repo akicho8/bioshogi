@@ -1,6 +1,6 @@
 # it "復元できるかテスト" do
 #   player = player_test(init: "５五歩")
-#   battler = player.battlers.first
+#   battler = player.soldiers.first
 #   battler.name.should == "▲５五歩"
 #   battler = Marshal.load(Marshal.dump(battler))
 #   battler.name.should == "▲５五歩"

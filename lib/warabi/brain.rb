@@ -138,7 +138,7 @@ module Warabi
     end
 
     def __battlers_hands
-      @player.battlers.flat_map do |battler|
+      @player.soldiers.flat_map do |battler|
         battler.moved_list(@player.board).to_a
       end
     end

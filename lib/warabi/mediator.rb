@@ -339,9 +339,7 @@ module Warabi
         @kill_counter = attrs[:kill_counter]
         @first_state_board_sfen = attrs[:first_state_board_sfen]
         @board = attrs[:board]
-        # @board = Board.new
         @players.each { |player| player.mediator = self }
-        # @players.collect { |player| player.render_battlers }
       end
 
       # deep_dup しておくこと
@@ -352,7 +350,6 @@ module Warabi
         @kill_counter = object.kill_counter
         @board = object.board
         @players.each { |player| player.mediator = self }
-        # @players.collect { |player| player.render_battlers }
         self
       end
 

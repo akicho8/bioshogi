@@ -17,9 +17,9 @@ mediator.board_reset_by_shape(<<~EOT)
 
 location = Location[:black]
 
-battlers = mediator.board.surface.values.find_all {|e|e.location == location }
-tp battlers.collect(&:name)
-sorted_black_side_soldiers = battlers.collect{|e|e.to_soldier.reverse_if_white}.sort
+soldiers = mediator.board.surface.values.find_all {|e|e.location == location }
+tp soldiers.collect(&:name)
+sorted_black_side_soldiers = soldiers.collect{|e|e.to_soldier.reverse_if_white}.sort
 tp sorted_black_side_soldiers
 
 defense_info = DefenseInfo.find do |e|
