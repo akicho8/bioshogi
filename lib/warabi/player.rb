@@ -110,7 +110,7 @@ module Warabi
       # 移動先に相手の駒があれば取って駒台に移動する
       to_battler = board.lookup(to)
       if to_battler
-        if to_battler.player == self
+        if to_battler.location == location
           raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{to_battler.name.inspect} があります"
         end
         board.pick_up!(to)
@@ -250,7 +250,7 @@ module Warabi
       end
 
       def battlers_create_from_soldier(soldier)
-        battler = Battler.create(soldier.attributes.merge(player: self))
+        battler = Battler.create(soldier.attributes)
         put_on_with_valid(battler)
       end
 
@@ -375,19 +375,19 @@ module Warabi
     # 二歩？
     def find_collisione_pawn(soldier)
       if soldier.piece.key == :pawn && !soldier.promoted
-        pawns_on_board(soldier.point).first
+        pawns_on_board(soldier.point)
       end
     end
 
     # 縦列の自分の歩たちを取得
     def pawns_on_board(point)
-      board.vertical_pieces(point.x).find_all do |e| # FIXME: find でいい
-        e.player == self && e.piece.key == :pawn && !e.promoted
+      board.vertical_pieces(point.x).find do |e|
+        e.location == location && e.piece.key == :pawn && !e.promoted
       end
     end
 
     def movable_infos(soldier)
-      Movabler.movable_infos(self, soldier)
+      Movabler.movable_infos(board, soldier)
     end
   end
 end

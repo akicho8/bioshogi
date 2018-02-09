@@ -1,15 +1,9 @@
 # frozen-string-literal: true
-#
-# 動けるか確認
-#   どのクラスでも使うので
-#   どのクラスに入れたらいいのかわからん
-#   ので別のモジュールにしてみる
-#
 module Warabi
   module Movabler
     extend self
 
-    # player の soldier が移動可能な手をすべて取得する
+    # soldier が移動可能な手をすべて取得する
     #
     # アルゴリズム
     #
@@ -30,32 +24,28 @@ module Warabi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def movable_infos(player, soldier)
+    def movable_infos(board, soldier)
       Enumerator.new do |yielder|
         vecs = soldier.cached_vectors
         vecs.each do |vec|
-          pt = soldier.point
+          point = soldier.point
           loop do
-            pt = pt.vector_add(vec)
+            point = point.vector_add(vec)
 
             # 盤外に出てしまったら終わり
-            if pt.invalid?
+            if point.invalid?
               break
             end
 
-            target = player.board.lookup(pt)
-
-            # if target && !target.kind_of?(Battler)
-            #   raise UnconfirmedObject, "盤上に得体の知れないものがいます : #{target.inspect}"
-            # end
+            target = board.lookup(point)
 
             # 自分の駒に衝突したら終わり
-            if target && target.player.location == player.location
+            if target && target.location == soldier.location
               break
             end
 
             # 自分の駒以外(相手駒 or 空)なので行ける
-            piece_store(player.location, soldier, pt, yielder)
+            piece_store(soldier, point, yielder)
 
             # 相手駒があるのでこれ以上は進めない
             if target
@@ -80,25 +70,25 @@ module Warabi
     #  ・だから OnceVector か RepeatVector か見る必要はない
     #  ・行ける方向に一歩でも行ける可能性があればよい
     def alive_piece?(soldier)
-      soldier.cached_vectors.any? do |v|
-        soldier.point.vector_add(v).valid?
+      soldier.cached_vectors.any? do |vector|
+        soldier.point.vector_add(vector).valid?
       end
     end
 
     private
 
-    # pt の場所は空なので player の soldier を pt に置けそうだ
-    # でも pt に置いてそれ以上動けなかったら反則になるので
+    # point の場所は空なので player の soldier を point に置けそうだ
+    # でも point に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(location, soldier, pt, yielder)
+    def piece_store(soldier, point, yielder)
       # それ以上動けるなら置く
-      m = soldier.merge(point: pt)
+      m = soldier.merge(point: point)
       if alive_piece?(m)
         yielder << Moved.create(m.attributes.merge(origin_soldier: soldier))
       end
       # 成れるなら成ってみて
-      if m.more_promote?(location)
+      if m.more_promote?(soldier.location)
         m = m.merge(promoted: true)
         # それ以上動けるなら置く
         if alive_piece?(m)

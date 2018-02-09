@@ -78,12 +78,12 @@ module Warabi
         }.compact
       end
 
-      def to_s_battlers
-        @surface.values.collect(&:name_without_location).sort.join(" ")
+      def movable_infos(soldier)
+        Movabler.movable_infos(self, soldier)
       end
 
-      def to_s_battlers2
-        @surface.values.collect(&:name).sort.join(" ")
+      def to_s_battlers
+        @surface.values.collect(&:name_without_location).sort.join(" ")
       end
 
       def to_kif

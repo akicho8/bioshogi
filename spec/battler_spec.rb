@@ -35,27 +35,36 @@ module Warabi
     describe "#movable_infos" do
       it "移動可能な筋の取得(超重要なテスト)" do
         Board.size_change([1, 5]) do
-          Mediator.test(init: "▲１五香").board["１五"].movable_infos.collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]
-          Mediator.test(init: "▲１五杏").board["１五"].movable_infos.collect(&:name).should == ["▲１四杏"]
+          test = -> s {
+            soldier = Soldier.from_str(s)
+            soldier.movable_infos(Board.new).collect(&:name)
+          }
+          test["▲１五香"].should == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]
+          test["▲１五杏"].should == ["▲１四杏"]
         end
       end
 
       it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
         Board.size_change([1, 5]) do
-          Mediator.test(init: "▲１五香 △１三歩").board["１五"].movable_infos.collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏"]
+          mediator = Mediator.test(init: "▲１五香 △１三歩")
+          mediator.board["１五"].movable_infos(mediator.board).collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏"]
         end
       end
 
       it "初期配置での移動可能な座標" do
         player = player_test(run_piece_plot: true)
-        player.board["７七"].movable_infos.collect(&:name).should == ["▲７六歩"]                                                             # 歩
-        player.board["９九"].movable_infos.collect(&:name).should == ["▲９八香"]                                                             # 香
-        player.board["８九"].movable_infos.collect(&:name).should == []                                                                       # 桂
-        player.board["７九"].movable_infos.collect(&:name).should == ["▲７八銀", "▲６八銀"]                                                 # 銀
-        player.board["６九"].movable_infos.collect(&:name).should == ["▲７八金", "▲６八金", "▲５八金"]                                     # 金
-        player.board["５九"].movable_infos.collect(&:name).should == ["▲６八玉", "▲５八玉", "▲４八玉"]                                     # 玉
-        player.board["８八"].movable_infos.collect(&:name).should == []                                                                       # 角
-        player.board["２八"].movable_infos.collect(&:name).should == ["▲３八飛", "▲４八飛", "▲５八飛", "▲６八飛", "▲７八飛", "▲１八飛"] # 飛
+        test = -> point {
+          battler = player.board[point]
+          battler.movable_infos(player.board).collect(&:name)
+        }
+        test["７七"].should == ["▲７六歩"]                                                             # 歩
+        test["９九"].should == ["▲９八香"]                                                             # 香
+        test["８九"].should == []                                                                       # 桂
+        test["７九"].should == ["▲７八銀", "▲６八銀"]                                                 # 銀
+        test["６九"].should == ["▲７八金", "▲６八金", "▲５八金"]                                     # 金
+        test["５九"].should == ["▲６八玉", "▲５八玉", "▲４八玉"]                                     # 玉
+        test["８八"].should == []                                                                       # 角
+        test["２八"].should == ["▲３八飛", "▲４八飛", "▲５八飛", "▲６八飛", "▲７八飛", "▲１八飛"] # 飛
       end
     end
   end

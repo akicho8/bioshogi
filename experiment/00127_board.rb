@@ -6,7 +6,7 @@ mediator.piece_plot
 puts mediator.board
 
 mediator.board["５五"]      # => nil
-mediator.board["８八"]      # => <Warabi::Battler:70120313522740 @player=#<Warabi::Player:0x00007f8c50a256a0> @piece=角 ▲８八角>
+mediator.board["８八"]      # => <Warabi::Battler "▲８八角">
 mediator.board["８八"].name # => "▲８八角"
 mediator.board["２八"].name # => "▲２八飛"
 mediator.board["５九"].name # => "▲５九玉"

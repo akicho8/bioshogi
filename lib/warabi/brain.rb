@@ -138,7 +138,9 @@ module Warabi
     end
 
     def __battlers_hands
-      @player.battlers.collect{|battler|battler.movable_infos.to_a}.flatten
+      @player.battlers.flat_map do |battler|
+        battler.movable_infos(@player.board).to_a
+      end
     end
 
     # 持駒の全打筋

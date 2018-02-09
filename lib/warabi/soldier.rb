@@ -121,6 +121,16 @@ module Warabi
       eql?(other)
     end
 
+    # 盤面情報と比較するならこれを使う
+    def to_soldier
+      Soldier.create(piece: piece, promoted: promoted, point: point, location: location)
+    end
+
+    # 移動可能な座標を取得
+    def movable_infos(board)
+      Movabler.movable_infos(board, to_soldier)
+    end
+
     ################################################################################ Reader
 
     # 「１一香成」ではなく「１一杏」を返す
@@ -155,7 +165,7 @@ module Warabi
     end
 
     def inspect
-      "<#{self.class.name}:#{object_id} #{name}>"
+      "<#{self.class.name} #{name.inspect}>"
     end
   end
 
