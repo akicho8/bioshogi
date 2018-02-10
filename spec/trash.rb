@@ -1,5 +1,5 @@
 # it "復元できるかテスト" do
-#   player = player_test(init: "５五歩")
+#   player = Mediator.player_test(init: "５五歩")
 #   soldier = player.soldiers.first
 #   soldier.name.should == "▲５五歩"
 #   soldier = Marshal.load(Marshal.dump(soldier))

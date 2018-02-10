@@ -4,7 +4,7 @@ require_relative "spec_helper"
 module Warabi
   describe HandLog do
     before do
-      @mediator = Mediator.test
+      @mediator = Mediator.test1
 
       # 初手７六歩
       @hand_log = HandLog.new(point_to: Point["７六"], piece: Piece["歩"], point_from: Point["７七"], player: @mediator.player_at(:black))

@@ -4,7 +4,7 @@ module Warabi
   describe Soldier do
     describe "文字列表現" do
       before do
-        @soldier = player_test(init: "５五と").soldiers.first
+        @soldier = Mediator.player_test(init: "５五と").soldiers.first
       end
       it "先手後手のマーク付き" do
         @soldier.name.should == "▲５五と"
@@ -24,7 +24,7 @@ module Warabi
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.size_change([3, 3]) do
-        player = player_test(init: "▲１一飛")
+        player = Mediator.player_test(init: "▲１一飛")
         soldier = player.board.abone_on(Point["１一"])
         player.board["１一"].should == nil # 盤面から消えている
         # soldier.point.should == nil        # 盤上から削除した駒の座標は nil になっている
@@ -46,13 +46,13 @@ module Warabi
 
       it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
         Board.size_change([1, 5]) do
-          mediator = Mediator.test(init: "▲１五香 △１三歩")
+          mediator = Mediator.test1(init: "▲１五香 △１三歩")
           mediator.board["１五"].moved_list(mediator.board).collect(&:name).should == ["▲１四香", "▲１三香", "▲１三杏"]
         end
       end
 
       it "初期配置での移動可能な座標" do
-        player = player_test(run_piece_plot: true)
+        player = Mediator.player_test(piece_plot: true)
         test = -> point {
           soldier = player.board[point]
           soldier.moved_list(player.board).collect(&:name)

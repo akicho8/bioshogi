@@ -8,9 +8,19 @@ module Warabi
         if str.kind_of?(self)
           return str
         end
+
         md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<point>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
         md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
-        new_with_promoted(md[:piece], {point: Point.fetch(md[:point]), location: Location[md[:location]]}.merge(attributes))
+
+        location = nil
+        if v = md[:location]
+          location = Location[v]
+        end
+        if v = attributes[:location]
+          location = Location[v]
+        end
+        attrs = {point: Point.fetch(md[:point]), location: location}
+        new_with_promoted(md[:piece], attrs)
       end
 
       def new_with_promoted_attributes(object)

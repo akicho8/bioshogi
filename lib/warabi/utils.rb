@@ -43,17 +43,9 @@ module Warabi
       {location: Location[md[:mark]], input: md[:input]}
     end
 
-    # # 後手のみ先手用になっている初期駒配置を反転させる
-    # def board_point_realize(params)
-    #   params[:location_split].inject({}) do |a, (key, value)|
-    #     a.merge(key => value.collect { |s| s.merge(point: s[:point].reverse_if_white(params[:location])) })
-    #   end
-    # end
-
     # soldiers を location 側の配置に変更したのを返す
     def board_point_realize2(soldiers, location)
       soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
     end
-
   end
 end

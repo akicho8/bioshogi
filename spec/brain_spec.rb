@@ -4,41 +4,41 @@ module Warabi
   describe Brain do
     describe "評価" do
       it "先手だけが歩を置いた状態" do
-        Mediator.simple_test(init: "▲９七歩").players.collect{|e|e.evaluate}.should == [100, -100]
+        Mediator.test3(init: "▲９七歩").players.collect{|e|e.evaluate}.should == [100, -100]
       end
 
       it "後手も歩を置いた状態" do
-        Mediator.simple_test(init: "▲９七歩 △１三歩").players.collect{|e|e.evaluate}.should == [0, 0]
+        Mediator.test3(init: "▲９七歩 △１三歩").players.collect{|e|e.evaluate}.should == [0, 0]
       end
 
       it "評価バー" do
-        Mediator.simple_test(init: "▲９七歩").players.collect{|e|e.score_percentage(500)}.should == [60.0, 40.0]
+        Mediator.test3(init: "▲９七歩").players.collect{|e|e.score_percentage(500)}.should == [60.0, 40.0]
       end
 
       describe "わかりにくい古いテスト" do
         it "先手だけが駒を持っている状態" do
-          player_test.evaluate.should == 22284
+          Mediator.player_test.evaluate.should == 22284
         end
         it "先手だけ駒を置いているとき" do
-          player_test(run_piece_plot: true).evaluate.should == 21699
+          Mediator.player_test(piece_plot: true).evaluate.should == 21699
         end
       end
     end
 
     describe "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
-        player = player_test(run_piece_plot: true)
+        player = Mediator.player_test(piece_plot: true)
         player.brain.all_hands.sample.present?.should == true
       end
       it "全手筋" do
-        player = player_test(run_piece_plot: true)
+        player = Mediator.player_test(piece_plot: true)
         player.brain.all_hands.sort.should == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
-        mediator = Mediator.test(init: "▲１五香")
+        mediator = Mediator.test1(init: "▲１五香")
         mediator.player_at(:black).brain.__soldiers_hands.collect(&:to_hand).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
         mediator.player_at(:black).brain.__soldiers_hands.collect(&:name).should    == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]             # 指した後の駒の状態
       end
@@ -56,7 +56,7 @@ module Warabi
       # +---------+      +---------+
       #
       Board.size_change([3, 3]) do
-        player = player_test(init: "２二歩", pieces_set: "歩")
+        player = Mediator.player_test(init: "２二歩", pieces_set: "歩")
         player.brain.__pieces_hands.collect(&:to_hand).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
         player.brain.__pieces_hands.collect(&:name).should    == ["▲３二歩", "▲１二歩", "▲３三歩", "▲１三歩"]
       end
@@ -64,7 +64,7 @@ module Warabi
 
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
-        mediator = Mediator.simple_test(init: "▲１二歩", pieces_set: "▲歩")
+        mediator = Mediator.test3(init: "▲１二歩", pieces_set: "▲歩")
         mediator.player_at(:black).brain.score_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end
@@ -73,7 +73,7 @@ module Warabi
       describe "自分の駒だけではなく相手の駒の状態も含めて戦況評価していることを確認するテスト(重要)" do
         it do
           Board.size_change([3, 3]) do
-            mediator = Mediator.simple_test(init: "▲３三歩 △１一歩")
+            mediator = Mediator.test3(init: "▲３三歩 △１一歩")
             # puts mediator.to_s.rstrip
             # 1手目: ▲先手番
             #   ３ ２ １
@@ -93,7 +93,7 @@ module Warabi
       describe "戦況1" do
         def example1
           Board.size_change([2, 3]) do
-            mediator = Mediator.simple_test(init: "▲１三飛 △１一香 △１二歩")
+            mediator = Mediator.test3(init: "▲１三飛 △１一香 △１二歩")
             yield mediator
           end
         end
@@ -127,7 +127,7 @@ EOT
         def example2
           Board.disable_promotable do
             Board.size_change([2, 4]) do
-              mediator = Mediator.simple_test(init: "△１一飛 △１二歩 ▲１三飛 ▲１四香")
+              mediator = Mediator.test3(init: "△１一飛 △１二歩 ▲１三飛 ▲１四香")
               yield mediator
             end
           end

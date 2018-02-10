@@ -8,5 +8,6 @@ module Warabi
     include MediatorSerializers
     include MediatorExecuter
     include MediatorVariables
+    include MediatorTest
   end
 end

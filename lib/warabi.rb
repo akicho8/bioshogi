@@ -60,6 +60,7 @@ require_relative "warabi/runner"
 require_relative "warabi/movabler"
 
 require_relative "warabi/mediator_base"
+require_relative "warabi/mediator_test"
 require_relative "warabi/mediator_variables"
 require_relative "warabi/mediator_executer"
 require_relative "warabi/mediator_serializers"

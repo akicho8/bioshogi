@@ -74,7 +74,7 @@ module Warabi
     describe "5x5の盤面" do
       it do
         Board.size_change([5, 5]) do
-          player_test.board.to_s.should == <<~EOT
+          Mediator.player_test.board.to_s.should == <<~EOT
   ５ ４ ３ ２ １
 +---------------+
 | ・ ・ ・ ・ ・|一

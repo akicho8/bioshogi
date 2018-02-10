@@ -50,7 +50,7 @@ EOT
     end
 
     it "状態の復元" do
-      mediator = Mediator.test(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
+      mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup
       mediator.turn_info.counter.should == dup.turn_info.counter
       mediator.kif_hand_logs.should     == dup.kif_hand_logs
@@ -66,7 +66,7 @@ EOT
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      mediator = Mediator.test(init: "▲１五歩 △１三歩", exec: "１四歩")
+      mediator = Mediator.test1(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
       mediator.reverse_player.runner.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
@@ -86,7 +86,7 @@ EOT
     end
 
     it "フレームのサンドボックス実行(重要)" do
-      mediator = Mediator.test(init: "▲１二歩")
+      mediator = Mediator.test1(init: "▲１二歩")
       mediator.player_at(:black).to_s_soldiers.should == "１二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "１二歩"
       mediator.context_new { |e| e.player_at(:black).execute("２二歩打") }
@@ -95,7 +95,7 @@ EOT
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
-      mediator = Mediator.test(exec: "１二歩打")
+      mediator = Mediator.test1(exec: "１二歩打")
       mediator.deep_dup
     end
 
