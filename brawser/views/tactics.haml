@@ -13,7 +13,7 @@
     %p
       = @pattern[:comment]
   %hr
-  - @frames.each do |mediator|
+  - @snapshots.each do |mediator|
     - if v = mediator.variables[:comment]
       .alert
         = v

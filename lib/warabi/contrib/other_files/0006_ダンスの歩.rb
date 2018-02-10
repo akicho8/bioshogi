@@ -6,7 +6,7 @@ module Warabi
       {
         title: Pathname(__FILE__).basename(".*"),
         dsl: lambda do
-          board <<-BOARD
+          board <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・v桂v香|一
@@ -19,7 +19,7 @@ module Warabi
 | ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
-BOARD
+EOT
           pieces "▲" => "歩3"
           auto_flushing {
             mov "▲４四歩"

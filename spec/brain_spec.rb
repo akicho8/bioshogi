@@ -65,7 +65,7 @@ module Warabi
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
         mediator = Mediator.simple_test(init: "▲１二歩", pieces_set: "▲歩")
-        mediator.player_at(:black).brain.eval_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
+        mediator.player_at(:black).brain.score_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end
 

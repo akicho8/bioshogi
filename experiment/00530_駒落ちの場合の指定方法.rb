@@ -9,7 +9,7 @@ mediator.board_reset_by_hash("▲" => "八枚落ち", "△" => "十九枚落ち"
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset_by_shape(<<~BOARD)
+mediator.board_reset_by_shape(<<~EOT)
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
 | ・v飛 ・ ・ ・ ・ ・v角 ・|
@@ -21,7 +21,7 @@ mediator.board_reset_by_shape(<<~BOARD)
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 | 香 桂 銀 金 玉 金 銀 桂 香|
 +---------------------------+
-BOARD
+EOT
 puts mediator
 
 # >> 上手の持駒：なし

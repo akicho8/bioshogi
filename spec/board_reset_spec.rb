@@ -9,7 +9,7 @@ module Warabi
     end
 
     it do
-      board_reset_test("平手").should == <<-BOARD
+      board_reset_test("平手").should == <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -22,11 +22,11 @@ module Warabi
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-BOARD
+EOT
     end
 
     it do
-      board_reset_test("香落ち").should == <<-BOARD
+      board_reset_test("香落ち").should == <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -39,11 +39,11 @@ BOARD
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-BOARD
+EOT
     end
 
     #     it do
-    #       board_reset_test("▲" => "角落ち", "△" => "香落ち").should == <<-BOARD
+    #       board_reset_test("▲" => "角落ち", "△" => "香落ち").should == <<-EOT
     #   ９ ８ ７ ６ ５ ４ ３ ２ １
     # +---------------------------+
     # |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -56,21 +56,21 @@ BOARD
     # | ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
     # | 香 桂 銀 金 玉 金 銀 桂 香|九
     # +---------------------------+
-    #  BOARD
+    #  EOT
     #     end
 
     #     it "先手と後手でそれぞれ先手用の盤面を設定できる" do
-    #       b_board = <<-BOARD
+    #       b_board = <<-EOT
     # +---+
     # | 香|九
     # +---+
-    # BOARD
-    #       w_board = <<-BOARD
+    # EOT
+    #       w_board = <<-EOT
     # +---+
     # | 玉|九
     # +---+
-    # BOARD
-    #       board_reset_test("▲" => b_board, "△" => w_board).should == <<-BOARD
+    # EOT
+    #       board_reset_test("▲" => b_board, "△" => w_board).should == <<-EOT
     #   ９ ８ ７ ６ ５ ４ ３ ２ １
     # +---------------------------+
     # |v玉 ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -83,7 +83,7 @@ BOARD
     # | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
     # | ・ ・ ・ ・ ・ ・ ・ ・ 香|九
     # +---------------------------+
-    # BOARD
+    # EOT
     #     end
   end
 end

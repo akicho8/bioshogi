@@ -93,8 +93,8 @@ class Brawser < Sinatra::Base
         @mediator.execute(params[:hand])
       end
       # if params[:think_put].present?
-      #   eval_list = @mediator.current_player.brain.eval_list
-      #   if info = eval_list.first
+      #   score_list = @mediator.current_player.brain.score_list
+      #   if info = score_list.first
       #     @mediator.execute(info[:hand])
       #   end
       # end
@@ -135,7 +135,7 @@ class Brawser < Sinatra::Base
     if params[:id]
       @pattern = Warabi::XtraPattern.list[params[:id].to_i]
       if @pattern
-        @frames = Warabi::HybridSequencer.execute(@pattern)
+        @snapshots = Warabi::HybridSequencer.execute(@pattern)
       end
     end
     haml :tactics
@@ -143,7 +143,7 @@ class Brawser < Sinatra::Base
 
   get "/dsl_form" do
     @pattern_body_default = %(
-board <<-BOARD
+board <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・v桂v香|一
@@ -156,7 +156,7 @@ board <<-BOARD
 | ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
-BOARD
+EOT
 pieces "▲" => "歩1"
 auto_flushing {
   push {
@@ -176,9 +176,9 @@ auto_flushing {
     if params[:kif_title].present?
       @pattern = Warabi::XtraPattern.new({
           title: params[:kif_title],
-          dsl: Warabi::KifuDsl.define(params){|params|eval(params[:kif_body])},
+          dsl: Warabi::Dsl.define(params){|params|eval(params[:kif_body])},
         })
-      @frames = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Warabi::HybridSequencer.execute(@pattern)
     else
       params[:kif_title] ||= "垂らしの歩"
       params[:kif_body] ||= @pattern_body_default
@@ -194,13 +194,13 @@ auto_flushing {
     if params[:body].present?
       @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Warabi::KifuDsl.define(params){|params|
+          dsl: Warabi::Dsl.define(params){|params|
             board "平手"
             auto_flushing
             mov params[:body]
           },
         })
-      @frames = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Warabi::HybridSequencer.execute(@pattern)
     else
       if Sinatra::Base.environment == :development
         params[:body] ||= "▲７六歩 △３四歩 ▲２六歩"
@@ -233,7 +233,7 @@ auto_flushing {
       @kif_info = Warabi::Parser.parse(params[:body])
       @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Warabi::KifuDsl.define(@kif_info){|kif_info|
+          dsl: Warabi::Dsl.define(@kif_info){|kif_info|
             board "平手"
             auto_flushing
             kif_info.move_infos.each{|move_info|
@@ -242,7 +242,7 @@ auto_flushing {
             }
           },
         })
-      @frames = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Warabi::HybridSequencer.execute(@pattern)
     end
   end
 

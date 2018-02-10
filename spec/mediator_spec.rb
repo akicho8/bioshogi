@@ -79,18 +79,18 @@ EOT
     end
 
     it "Sequencer" do
-      data = KifuDsl.define{}
+      data = Dsl.define{}
       sequencer = Sequencer.new
       sequencer.pattern = data
       sequencer.evaluate
-      sequencer.frames
+      sequencer.snapshots
     end
 
     it "フレームのサンドボックス実行(重要)" do
       mediator = Mediator.test(init: "▲１二歩")
       mediator.player_at(:black).to_s_soldiers.should == "１二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "１二歩"
-      mediator.sandbox_for { mediator.player_at(:black).execute("２二歩打") }
+      mediator.context_new { |e| e.player_at(:black).execute("２二歩打") }
       mediator.player_at(:black).to_s_soldiers.should == "１二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "１二歩"
     end
@@ -108,7 +108,7 @@ EOT
             mediator = Sequencer.new
             mediator.pattern = pattern[:dsl]
             mediator.evaluate
-            # p mediator.frames
+            # p mediator.snapshots
           else
             mediator = SimulatorFrame.new(pattern)
             mediator.build_frames

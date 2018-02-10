@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe KifuDsl do
+  describe Dsl do
     it "試行錯誤用" do
-      builder = KifuDsl.define do
+      builder = Dsl.define do
         title "(title)"
         comment "(comment)"
         board "平手"
@@ -16,23 +16,20 @@ module Warabi
       # sequencer = Sequencer.new
       # sequencer.pattern = builder
       #
-      # sequencer.eval_step
+      # sequencer.step_evaluate
       # p sequencer.board
       # p sequencer.variables
       #
-      # sequencer.eval_step
+      # sequencer.step_evaluate
       # p sequencer.board
       # p sequencer.variables
     end
 
     it "試行錯誤用2" do
-      table = [
-        {
-          title: "付き捨て+タタキ+合わせ",
-          dsl: proc do
-            # title "(title)"
-            # comment "(comment)"
-            board <<-BOARD
+      dsl = Dsl.define do
+        # title "(title)"
+        # comment "(comment)"
+        board <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・v桂v香|一
@@ -45,43 +42,41 @@ module Warabi
 | ・ ・ ・ ・ ・ ・ ・ 飛 ・|八
 | ・ ・ ・ ・ ・ ・ ・ 桂 香|九
 +---------------------------+
-BOARD
-            pieces "▲" => "歩4"
-            mov "▲１五歩"
-            mov "△同歩"
-            push {
-              mov "▲１二歩"
-              mov "△同香"
-              mov "▲１三歩"
-              mov "△同香"
-              mov "▲１四歩"
-              mov "△同香"
-              mov "▲２四歩"
-              mov "△同歩"
-              mov "▲同飛"
-              mov "△２三歩"
-              mov "▲１四飛"
-              snapshot "香車ゲット"
-            }
-            mov "▲１三歩"
-            mov "△同桂"
-            mov "▲１二歩"
-            mov "△同香"
-            mov "▲１四歩"
-            mov "▲１五香"
-            mov "▲１三歩成"
-            mov "△１三香"
-            mov "▲１三香成"
-            snapshot "桂馬と香車とゲット"
-          end
+          EOT
+        pieces "▲" => "歩4"
+        mov "▲１五歩"
+        mov "△同歩"
+        push {
+          mov "▲１二歩"
+          mov "△同香"
+          mov "▲１三歩"
+          mov "△同香"
+          mov "▲１四歩"
+          mov "△同香"
+          mov "▲２四歩"
+          mov "△同歩"
+          mov "▲同飛"
+          mov "△２三歩"
+          mov "▲１四飛"
+          snapshot "香車ゲット"
         }
-      ]
+        mov "▲１三歩"
+        mov "△同桂"
+        mov "▲１二歩"
+        mov "△同香"
+        mov "▲１四歩"
+        mov "▲１五香"
+        mov "▲１三歩成"
+        mov "△１三香"
+        mov "▲１三香成"
+        snapshot "桂馬と香車とゲット"
+      end
 
       sequencer = Sequencer.new
-      sequencer.pattern = table.first[:dsl]
+      sequencer.pattern = dsl
 
       loop do
-        r = sequencer.eval_step
+        r = sequencer.step_evaluate
         if r.nil?
           break
         end
@@ -93,38 +88,38 @@ BOARD
 
     describe "各コマンド" do
       def dsl_block(&block)
-        builder = KifuDsl.define(&block)
+        builder = Dsl.define(&block)
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
         @sequencer.evaluate
-        @sequencer
+        @sequencer.mediator_memento.mediator
       end
 
       it "title" do
-        dsl_block{ title "(title)" }.variables[:title].should   == "(title)"
+        dsl_block { title "(title)" }.variables[:title].should   == "(title)"
       end
 
       it "comment" do
-        dsl_block{ comment "(comment)" }.variables[:comment].should == "(comment)"
+        dsl_block { comment "(comment)" }.variables[:comment].should == "(comment)"
       end
 
       describe "board" do
-        it { dsl_block{ board "平手" }.board }
-        it { dsl_block{ board }.board }
-        it { dsl_block{ board <<-BOARD }.board }
+        it { dsl_block { board "平手" }.board }
+        it { dsl_block { board }.board }
+        it { dsl_block { board <<-EOT }.board }
 +---+
 |v香|一
 | 香|九
 +---+
-BOARD
+EOT
       end
 
       it "mov" do
-        dsl_block{ board; mov "▲７六歩" }
+        dsl_block { board; mov "▲７六歩" }
       end
 
       it "pieces" do
-        dsl_block{ pieces "▲" => "歩1 桂2" }.player_at("▲").piece_box.to_s.should == "桂二 歩"
+        dsl_block { pieces "▲" => "歩1 桂2" }.player_at("▲").piece_box.to_s.should == "桂二 歩"
       end
 
       describe "stack" do

@@ -38,8 +38,8 @@ module Warabi
       mediator = player.mediator
       all_hands = player.brain.all_hands
       ary = all_hands.each.with_object([]).with_index{|(hand, ary), index|
-        mediator.sandbox_for do |_mediator|
-          _player = _mediator.player_at(player.location)
+        mediator.deep_dup.tap do |mediator|
+          _player = mediator.player_at(player.location)
           mhand = "#{hand}"
           log_puts locals, "試打 #{mhand} (%d/%d)" % [index.next, all_hands.size]
           _player.execute(hand)
@@ -102,7 +102,7 @@ module Warabi
     end
 
     def best_hand
-      eval_list.first[:hand]
+      score_list.first[:hand]
     end
 
     # def doredore(depth = 0)
@@ -120,14 +120,13 @@ module Warabi
     #   end
     # end
 
-    def eval_list
+    def score_list
       list = []
       all_hands.each { |hand|
-        @player.mediator.sandbox_for do |_mediator|
-          _player = _mediator.player_at(@player.location)
-          _player.execute(hand)
-          list << {hand: hand, score: _player.evaluate}
-        end
+        m = @player.mediator.deep_dup
+        _player = m.player_at(@player.location)
+        _player.execute(hand)
+        list << {hand: hand, score: _player.evaluate}
       }
       list.sort_by { |e| -e[:score] }
     end
