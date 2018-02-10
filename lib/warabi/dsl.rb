@@ -44,7 +44,7 @@ module Warabi
       end
     end
 
-    class Set < Expression
+    class VarSet < Expression
       def initialize(key, value)
         @key = key
         @value = value
@@ -52,26 +52,6 @@ module Warabi
 
       def evaluate(context)
         context.mediator_memento.mediator.variables[@key] = @value
-      end
-    end
-
-    class Title < Expression
-      def initialize(value)
-        @value = value
-      end
-
-      def evaluate(context)
-        context.mediator_memento.mediator.variables[:title] = @value
-      end
-    end
-
-    class Comment < Expression
-      def initialize(value)
-        @value = value
-      end
-
-      def evaluate(context)
-        context.mediator_memento.mediator.variables[:comment] = @value
       end
     end
 
@@ -168,37 +148,16 @@ module Warabi
       @sequence << Pop.new
     end
 
-    def auto_flushing(value = true, &block)
-      local_vars(auto_flushing: value, &block)
-    end
-
-    def local_vars(attrs, &block)
-      if block_given?
-        attrs.each do |var, value|
-          @sequence << VarPush.new(var)
-          set(var, value)
-        end
-        instance_eval(&block)
-        attrs.reverse_each do |var, value|
-          @sequence << VarPop.new(var)
-        end
-      else
-        attrs.each do |var, value|
-          set(var, value)
-        end
-      end
-    end
-
     def set(*args)
-      @sequence << Set.new(*args)
+      @sequence << VarSet.new(*args)
     end
 
     def title(*args)
-      @sequence << Title.new(*args)
+      @sequence << VarSet.new(:title, *args)
     end
 
     def comment(*args)
-      @sequence << Comment.new(*args)
+      @sequence << VarSet.new(:comment, *args)
     end
 
     def pieces(*args)
@@ -211,6 +170,27 @@ module Warabi
 
     def snapshot(*args)
       @sequence << Snapshot.new(*args)
+    end
+
+    def auto_flushing(value = true, &block)
+      local_vars(auto_flushing: value, &block)
+    end
+
+    def local_vars(attrs, &block)
+      if block_given?
+        attrs.each do |key, value|
+          @sequence << VarPush.new(key)
+          set(key, value)
+        end
+        instance_eval(&block)
+        attrs.reverse_each do |key, value|
+          @sequence << VarPop.new(key)
+        end
+      else
+        attrs.each do |key, value|
+          set(key, value)
+        end
+      end
     end
   end
 end

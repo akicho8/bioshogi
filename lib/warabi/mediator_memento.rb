@@ -9,26 +9,24 @@ module Warabi
       @mediator = mediator
     end
 
-    def create
+    def context_new(&block)
+      stack_push
+      begin
+        yield self
+      ensure
+        stack_pop
+      end
+    end
+
+    def stack_push
       @stack.push(@mediator.deep_dup)
     end
-    alias stack_push create
 
-    def restore
+    def stack_pop
       if @stack.empty?
         raise HistroyStackEmpty
       end
       @mediator = @stack.pop
-    end
-    alias stack_pop restore
-
-    def context_new(&block)
-      create
-      begin
-        yield self
-      ensure
-        restore
-      end
     end
   end
 end
