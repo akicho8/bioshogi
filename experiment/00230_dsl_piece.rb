@@ -1,14 +1,13 @@
 require "./example_helper"
 
-sequencer = Sequencer.new
-sequencer.pattern = Dsl.define do
-  title "(title)"
+mediator = Sequencer.new
+mediator.pattern = Dsl.define do
+  pieces black: "歩"
 end
-sequencer.evaluate
-puts sequencer.mediator_memento.mediator.to_text
-# >> ----------------------------------------
-# >> 棋譜: 
-# >> 変数: {:title=>"(title)"}
+mediator.evaluate
+puts mediator.mediator_memento.mediator.to_text
+# >> ---------------------------------------- {}
+# >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -21,5 +20,5 @@ puts sequencer.mediator_memento.mediator.to_text
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 # >> +---------------------------+
-# >> 先手の持駒:
+# >> 先手の持駒:歩
 # >> 後手の持駒:
