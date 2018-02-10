@@ -50,18 +50,21 @@ module Warabi
 
     # 持駒の配置
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
-    #   player.soldiers_create(["５五飛", "３三飛"], from_stand: false)
-    #   player.soldiers_create("#{point}馬")
-    #   player.soldiers_create({point: point, piece: Piece["角"], promoted: true}, from_stand: false)
-    def soldiers_create(soldier_or_str, **options)
-      options = {
-        from_stand: true, # 持駒から取り出して配置する？
-      }.merge(options)
+    #   player.soldier_create(["５五飛", "３三飛"], from_stand: false)
+    #   player.soldier_create("#{point}馬")
+    def soldier_create(soldier_or_str, **options)
+      if soldier_or_str.kind_of? Array
+        soldier_or_str.each do |e|
+          soldier_create(e)
+        end
+      else
+        options = {
+          from_stand: true, # 持駒から取り出して配置する？
+        }.merge(options)
 
-      Array.wrap(soldier_or_str).each do |soldier_or_str|
         if soldier_or_str.kind_of?(String)
           if soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
-            next
+            return
           end
           soldier = Soldier.from_str(soldier_or_str, location: location)
         else
@@ -124,7 +127,6 @@ module Warabi
       attributes[:point] = to
       put_on_with_valid(Soldier.create(attributes))
     end
-
 
     # 棋譜の入力
     def execute(str)

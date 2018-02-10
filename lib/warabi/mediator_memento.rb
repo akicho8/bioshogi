@@ -19,7 +19,8 @@ module Warabi
     end
 
     def stack_push
-      @stack.push(@mediator.deep_dup)
+      @stack.push(@mediator)
+      @mediator = @mediator.deep_dup
     end
 
     def stack_pop

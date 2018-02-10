@@ -11,6 +11,7 @@
 #
 module Warabi
   class SoldierBox < Array
+
     ################################################################################ 全体
 
     def soldiers

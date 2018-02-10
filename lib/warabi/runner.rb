@@ -4,49 +4,6 @@
 #
 module Warabi
   class Runner
-    class << self
-      def input_regexp
-        @input_regexp ||= Regexp.union(human_input_regexp, csa_input_regexp, usi_input_regexp)
-      end
-
-      def human_input_regexp
-        sankaku = /(?<sankaku>[#{Location.triangles_str}])/o
-        point_to = /(?<point_to>#{Point.regexp})/o
-        same = /(?<same>同)\p{blank}*/
-
-        /
-          #{sankaku}?
-          (#{point_to}#{same}|#{same}#{point_to}|#{point_to}|#{same}) # 12同 or 同12 or 12 or 同 に対応
-          (?<piece>#{Piece.all_names.join("|")})
-          (?<motion1>[左右直]?[寄引上行]?)
-          (?<motion2>不?成|打|合|生)?
-          (?<point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように "()" も含めて取る
-        /ox
-      end
-
-      def csa_input_regexp
-        csa_basic_names = Piece.collect(&:csa_basic_name).compact.join("|")
-        csa_promoted_names = Piece.collect(&:csa_promoted_name).compact.join("|")
-
-        /
-          (?<plus_or_minus>[+-])?
-          (?<csa_from>[0-9]{2}) # 00 = 駒台
-          (?<csa_to>[1-9]{2})
-          ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))
-        /ox
-      end
-
-      def usi_input_regexp
-        chars = Piece.collect(&:sfen_char).compact.join
-        point = /[1-9][[:lower:]]/
-
-        part1 = /(?<usi_piece>[#{chars}])\*(?<usi_to>#{point})/o
-        part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_nari>\+)?/o
-
-        /((#{part1})|(#{part2}))/o
-      end
-    end
-
     attr_reader :point_to, :point_from, :piece, :source, :player, :killed_piece
     attr_reader :skill_set
 
@@ -58,23 +15,20 @@ module Warabi
       @source = str
 
       # hand_log を作るための変数たち
-      @point_to           = nil
+      @point_to        = nil
       @piece           = nil
       @promoted        = nil
       @promote_trigger = nil
       @strike_trigger  = nil
-      @point_from    = nil
+      @point_from      = nil
       @candidate       = nil
-      @killed_piece = nil
+      @killed_piece    = nil
 
       @skill_set = SkillSet.new
 
       @done = false
 
-      @md = @source.match(self.class.input_regexp)
-      unless @md
-        raise SyntaxDefact, "表記が間違っています : #{@source.inspect} (#{self.class.input_regexp.inspect} にマッチしません)"
-      end
+      @md = InputParser.match!(@source)
       @md = @md.named_captures.symbolize_keys
 
       if @md[:csa_basic_name] || @md[:csa_promoted_name]
@@ -110,17 +64,17 @@ module Warabi
       end
 
       if @md[:usi_to]
-        henkan = -> s { s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 } }
+        convert = -> s { s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 } }
 
         if @md[:usi_piece]
           _piece = Piece.find { |e| e.sfen_char == @md[:usi_piece] } or raise
           @md[:piece] = _piece.name
           @md[:motion2] = "打"
-          @md[:point_to] = henkan.call(@md[:usi_to])
+          @md[:point_to] = convert.call(@md[:usi_to])
         else
-          @md[:point_from] = henkan.call(@md[:usi_from])
-          @md[:point_to] = henkan.call(@md[:usi_to])
-          if @md[:usi_nari] == "+"
+          @md[:point_from] = convert.call(@md[:usi_from])
+          @md[:point_to] = convert.call(@md[:usi_to])
+          if @md[:usi_promoted_trigger] == "+"
             @md[:motion2] = "成"
           end
           v = @player.board[@md[:point_from]] or raise MustNotHappen
@@ -139,9 +93,6 @@ module Warabi
       rescue => error
         raise MustNotHappen, {error: error, md: @md, source: @source}.inspect
       end
-
-      # # @md が MatchData のままだと Marshal.dump できない病で死にます
-      # @md = @md.names.inject({}){|h, k|h.merge(k.to_sym => @md[k])} # to_h とかあるはず(？)
 
       read_point
 

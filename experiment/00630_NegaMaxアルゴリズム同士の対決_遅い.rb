@@ -6,7 +6,7 @@ mediator = Mediator.start
 mediator.piece_plot
 loop do
   think_result = mediator.current_player.brain.think_by_minmax(depth: 1, random: true)
-  hand = Utils.mov_split_one(think_result[:hand])[:input]
+  hand = InputParser.slice_one(think_result[:hand])
   p hand
   mediator.execute(hand)
   p mediator

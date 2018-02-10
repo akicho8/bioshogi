@@ -1,7 +1,6 @@
 # WEBインタフェース
 
-require "bundler"
-Bundler.require(:default, :brawser_env)
+require "bundler/setup"
 
 require "active_support/core_ext/array/conversions"
 
@@ -102,7 +101,7 @@ class Brawser < Sinatra::Base
         @runtime = Time.now
         @think_result = @mediator.current_player.brain.think_by_minmax(:depth => params[:think_put_lv].to_i)
         @runtime = Time.now - @runtime
-        input = Warabi::Utils.mov_split_one(@think_result[:hand])[:input]
+        input = Warabi::InputParser.slice_one(@think_result[:hand])[:input]
         @mediator.execute(input)
       end
       if params[:random_put].present?

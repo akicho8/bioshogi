@@ -99,7 +99,7 @@ module Warabi
       def parse
         cell_walker do |point, prefix_char, something|
           if Piece.all_names.include?(something)
-            soldiers << soldiers_create(point, something, prefix_char)
+            soldiers << soldier_create(point, something, prefix_char)
           end
         end
       end
@@ -153,7 +153,7 @@ module Warabi
         end
       end
 
-      def soldiers_create(point, piece, location_key)
+      def soldier_create(point, piece, location_key)
         Soldier.new_with_promoted(piece, point: point, location: Location.fetch(location_key))
       end
     end
@@ -168,7 +168,7 @@ module Warabi
             # else
             #   location = prefix_char
             # end
-            # soldier = soldiers_create(point, something, location)
+            # soldier = soldier_create(point, something, location)
             # soldiers << soldier
             # if prefix_char == "!"
             #   trigger_soldiers << soldier
@@ -177,23 +177,23 @@ module Warabi
             case prefix_char
             when "!"
               # トリガーとする。盤面には含めない(含める必要がないため)
-              soldier = soldiers_create(point, something, :black)
+              soldier = soldier_create(point, something, :black)
               trigger_soldiers << soldier
             when "@"
               # ! と同じだけど、盤面情報に含める(複数トリガーを書くとき用)
-              soldier = soldiers_create(point, something, :black)
+              soldier = soldier_create(point, something, :black)
               trigger_soldiers << soldier
               soldiers << soldier # 盤面の駒とする
             when "?"
               # △側でどれかがここに含まれる
-              soldier = soldiers_create(point, something, :white)
+              soldier = soldier_create(point, something, :white)
               any_exist_soldiers << soldier
             when "*"
               # ▲でどれかがここに含まれる
-              soldier = soldiers_create(point, something, :black)
+              soldier = soldier_create(point, something, :black)
               any_exist_soldiers << soldier
             else
-              soldier = soldiers_create(point, something, prefix_char)
+              soldier = soldier_create(point, something, prefix_char)
               soldiers << soldier
             end
           when something != "・"

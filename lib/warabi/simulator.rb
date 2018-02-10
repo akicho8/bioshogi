@@ -31,11 +31,8 @@ module Warabi
       if block
         yield snapshots.last
       end
-      Utils.ki2_parse(attributes[:execute]).each do |op|
-        if op.kind_of?(String)
-          raise SyntaxDefact, op
-        end
-        mediator.player_at(op[:location]).execute(op[:input])
+      Soldier.ki2_parse(attributes[:execute]).each do |str|
+        mediator.execute(str)
         snapshots << mediator.deep_dup
         if block
           yield snapshots.last

@@ -51,7 +51,7 @@ module Warabi
           end
 
           comment_read(line)
-          if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}*(?<input>#{Runner.input_regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o)
+          if md = line.match(/^\p{blank}*(?<turn_number>\d+)\p{blank}*(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o)
             input = md[:input].remove(/\p{blank}/)
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
             @move_infos << {turn_number: md[:turn_number], input: input, clock_part: md[:clock_part], used_seconds: used_seconds}

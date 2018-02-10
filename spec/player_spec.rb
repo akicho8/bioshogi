@@ -74,7 +74,7 @@ EOT
         # it "foo" do
         #   player = Mediator.player_test
         #   # puts player.mediator
-        #   player.soldiers_create("７七歩")
+        #   player.soldier_create("７七歩")
         #   puts player.mediator
         #   player.execute("７六歩")
         #   puts player.mediator

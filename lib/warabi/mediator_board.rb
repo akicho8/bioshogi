@@ -40,7 +40,7 @@ module Warabi
 
     def board_reset_by_soldiers(soldiers)
       soldiers.each do |soldier|
-        player_at(soldier.location).soldiers_create(soldier, from_stand: false)
+        player_at(soldier.location).soldier_create(soldier, from_stand: false)
       end
       play_standby
     end

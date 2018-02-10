@@ -12,8 +12,8 @@ module Warabi
       end
     end
 
-    def <=>(other)
-      [other.class, code] <=> [other.class, other.code]
+    def inspect
+      "<#{key}>"
     end
   end
 end

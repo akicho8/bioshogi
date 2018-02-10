@@ -64,9 +64,9 @@ module Warabi
       piece.cached_vectors(promoted: true, location: Location[:black]).should  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]]
     end
 
-    it "同じ種類の駒ならオブジェクトは同じだけどcloneすると変わる" do
+    it "同じ種類の駒はcloneしても一致する" do
       (Piece.lookup("歩") == Piece.lookup("歩")).should == true
-      (Piece.lookup("歩").clone == Piece.lookup("歩")).should == false
+      (Piece.lookup("歩").clone == Piece.lookup("歩")).should == true
     end
 
     it "sort" do

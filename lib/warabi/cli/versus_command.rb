@@ -13,7 +13,7 @@ module Warabi
           puts mediator
 
           think_result = mediator.current_player.brain.think_by_minmax(depth: 0, random: true)
-          hand = Utils.mov_split_one(think_result[:hand])[:input]
+          hand = InputParser.slice_one(think_result[:hand])
           puts "指し手: #{hand}"
           mediator.execute(hand)
 

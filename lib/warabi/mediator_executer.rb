@@ -21,10 +21,10 @@ module Warabi
         # ▲△があれば見て手番と一致しているか確認する
         # なければチェックしなくていい
         if true
-          if md = str.match(Runner.input_regexp)
-            if key = md[:sankaku] || md[:plus_or_minus]
+          if md = InputParser.match!(str)
+            if key = md[:triangle] || md[:sign]
               location = Location.fetch(key)
-              unless current_player.location == Location.fetch(key)
+              if current_player.location != location
                 raise DifferentTurnError, "#{current_player.call_name}番で#{reverse_player.call_name}が着手しました : #{str}"
               end
             end

@@ -5,7 +5,7 @@ require "./example_helper"
 Board.logger = ActiveSupport::Logger.new(STDOUT)
 Board.size_change([3, 3]) do
   mediator = Mediator.new
-  mediator.soldiers_create("▲３三歩 △１一歩", from_stand: false)
+  mediator.soldier_create("▲３三歩 △１一歩", from_stand: false)
   puts mediator
   tp NegaMaxRunner.run(player: mediator.player_at(:black), depth: 1)
 end

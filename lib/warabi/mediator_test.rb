@@ -8,11 +8,11 @@ module Warabi
         mediator = start
 
         if params[:init]
-          mediator.soldiers_create(params[:init])
+          mediator.soldier_create(params[:init])
         end
 
         if params[:init2]
-          mediator.soldiers_create(params[:init2], from_stand: false)
+          mediator.soldier_create(params[:init2], from_stand: false)
         end
 
         if params[:pieces_set]
@@ -29,7 +29,7 @@ module Warabi
 
       def test2(params = {})
         start.tap do |o|
-          Utils.ki2_parse(params[:exec]).each do |op|
+          Soldier.ki2_parse(params[:exec]).each do |op|
             player = o.player_at(op[:location])
             player.execute(op[:input])
           end
@@ -42,7 +42,7 @@ module Warabi
       # mediator = Mediator.test3(init: "▲１六香 ▲１七飛 △１二飛 △１三香 △１四歩")
       def test3(params = {})
         new.tap do |o|
-          o.soldiers_create(params[:init], from_stand: false)
+          o.soldier_create(params[:init], from_stand: false)
           o.pieces_set(params[:pieces_set].to_s)
         end
       end
@@ -65,7 +65,7 @@ module Warabi
         end
 
         if v = params[:init]
-          player.soldiers_create(v)
+          player.soldier_create(v)
         end
 
         if params[:piece_plot]

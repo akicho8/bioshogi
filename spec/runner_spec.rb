@@ -4,15 +4,15 @@ module Warabi
   describe Runner do
     describe "指し手の正規表現" do
       def test1(s)
-        s.match(Runner.input_regexp).named_captures.compact
+        s.match(InputParser.regexp).named_captures.compact
       end
 
       it "拾わない" do
-        assert_nil "歩".match(Runner.input_regexp)
-        assert_nil "99".match(Runner.input_regexp)
-        assert_nil "同".match(Runner.input_regexp)
-        assert_nil "99同".match(Runner.input_regexp)
-        assert_nil "同99".match(Runner.input_regexp)
+        assert_nil "歩".match(InputParser.regexp)
+        assert_nil "99".match(InputParser.regexp)
+        assert_nil "同".match(InputParser.regexp)
+        assert_nil "99同".match(InputParser.regexp)
+        assert_nil "同99".match(InputParser.regexp)
       end
 
       it "拾う" do

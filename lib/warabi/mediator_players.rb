@@ -57,12 +57,13 @@ module Warabi
     concerning :Other do
       # 両者の駒の配置を決める
       # @example 持駒から配置する場合(持駒がなければエラーになる)
-      #   soldiers_create("▲３三歩 △１一歩")
+      #   soldier_create("▲３三歩 △１一歩")
       # @example 持駒から配置しない場合(無限に駒が置ける)
-      #   soldiers_create("▲３三歩 △１一歩", from_stand: false)
-      def soldiers_create(str, **options)
-        Utils.initial_soldiers_split(str).each do |info|
-          player_at(info[:location]).soldiers_create(info[:input], options)
+      #   soldier_create("▲３三歩 △１一歩", from_stand: false)
+      def soldier_create(str, **options)
+        Soldier.movs_split(str).each do |str|
+          soldier = Soldier.from_str(str)
+          player_at(soldier.location).soldier_create(soldier, options)
         end
       end
 

@@ -18,11 +18,9 @@ module Warabi
         normalized_source.lines.each do |line|
           comment_read(line)
           s = /\p{blank}*/
-          i = Runner.input_regexp
+          i = InputParser.regexp
           if line.match?(/^#{s}#{i}/o)
-            line.scan(i) do |parts|
-              @move_infos << {input: parts.join}
-            end
+            @move_infos += InputParser.scan(line).collect { |e| {input: e} }
           end
         end
 

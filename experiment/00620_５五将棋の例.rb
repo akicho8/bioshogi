@@ -9,7 +9,7 @@ mediator.players.each do |player|
   else
     s = soldiers
   end
-  player.soldiers_create(s, from_stand: false)
+  player.soldier_create(s, from_stand: false)
 end
 mediator.piece_box_clear
 p mediator

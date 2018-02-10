@@ -28,27 +28,6 @@ module Warabi
 EOT
     end
 
-    if false
-      it "CPU同士で対局" do
-        mediator = Mediator.start
-        mediator.piece_plot
-        loop do
-          think_result = mediator.current_player.brain.think_by_minmax(depth: 0, random: true)
-          hand = Warabi::Utils.mov_split_one(think_result[:hand])[:input]
-          # hand = mediator.current_player.brain.all_hands.sample
-          p hand
-          mediator.execute(hand)
-          p mediator
-          last_piece_taken_from_opponent = mediator.reverse_player.last_piece_taken_from_opponent
-          break
-          if last_piece_taken_from_opponent && last_piece_taken_from_opponent.key == :king
-            break
-          end
-        end
-        p mediator.kif_hand_logs.join(" ")
-      end
-    end
-
     it "状態の復元" do
       mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
       dup = mediator.deep_dup

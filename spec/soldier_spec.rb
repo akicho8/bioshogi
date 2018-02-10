@@ -32,6 +32,11 @@ module Warabi
       ([a] - [b]).should == []
     end
 
+    it "cloneしても同じ" do
+      soldier = Soldier.from_str("▲６八銀")
+      (Marshal.load(Marshal.dump(soldier)) == soldier).should == true
+    end
+
     describe "Brainの指し手チェック用" do
       describe Moved do
         it "#to_hand" do

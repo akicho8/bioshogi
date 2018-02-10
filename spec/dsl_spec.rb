@@ -48,27 +48,10 @@ module Warabi
         mov "△同歩"
         push {
           mov "▲１二歩"
-          mov "△同香"
-          mov "▲１三歩"
-          mov "△同香"
-          mov "▲１四歩"
-          mov "△同香"
-          mov "▲２四歩"
-          mov "△同歩"
-          mov "▲同飛"
-          mov "△２三歩"
-          mov "▲１四飛"
           snapshot "香車ゲット"
         }
-        mov "▲１三歩"
-        mov "△同桂"
         mov "▲１二歩"
         mov "△同香"
-        mov "▲１四歩"
-        mov "▲１五香"
-        mov "▲１三歩成"
-        mov "△１三香"
-        mov "▲１三香成"
         snapshot "桂馬と香車とゲット"
       end
 

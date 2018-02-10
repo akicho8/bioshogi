@@ -55,9 +55,26 @@ module Warabi
         end
       end
 
+      # ki2形式に近い棋譜の羅列のパース
+      # @example
+      #   ki2_parse("▲４二銀△４二銀") # => [{location: :black, input: "４二銀"}, {location: :white, input: "４二銀"}]
+      def ki2_parse(str)
+        InputParser.scan(str)
+      end
+
+      def movs_split(str)
+        InputParser.scan(str)
+      end
+
+      # soldiers を location 側の配置に変更したのを返す
+      def board_point_realize2(soldiers, location)
+        soldiers.collect { |e| e.merge(point: e[:point].reverse_if_white(location)) }
+      end
+
       def create(*args)
         new(*args).freeze
       end
+
     end
 
     include ActiveModel::Model

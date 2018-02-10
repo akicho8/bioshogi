@@ -83,9 +83,8 @@ module Warabi
       end
 
       def evaluate(context)
-        Utils.movs_split(@value).each do |hash|
-          player = context.mediator_memento.mediator.player_at(hash[:location])
-          player.execute(hash[:input])
+        Soldier.movs_split(@value).each do |str|
+          context.mediator_memento.mediator.execute(str)
           if context.mediator_memento.mediator.variables[:auto_flushing]
             context.snapshots << context.mediator_memento.mediator.deep_dup
             context.mediator_memento.mediator.set(:comment, nil)
