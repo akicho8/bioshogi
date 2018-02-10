@@ -73,9 +73,8 @@ EOT
     end
 
     it "同歩からの同飛になること" do
-      mediator = SimulatorFrame.new({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
-      mediator.build_frames
-      mediator.ki2_hand_logs.should == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"]
+      object = Simulator.run({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
+      object.mediator.ki2_hand_logs.should == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"]
     end
 
     it "Sequencer" do
@@ -110,9 +109,9 @@ EOT
             mediator.evaluate
             # p mediator.snapshots
           else
-            mediator = SimulatorFrame.new(pattern)
-            mediator.build_frames
-            # mediator.build_frames{|e|p e}
+            mediator = Simulator.new(pattern)
+            mediator.execute
+            # mediator.execute{|e|p e}
           end
         end
       end

@@ -9,9 +9,7 @@ module Warabi
         mediator.evaluate
         mediator.snapshots
       else
-        mediator = SimulatorFrame.new(pattern)
-        # mediator.build_frames{|e|p e}
-        mediator.build_frames
+        Simulator.run(pattern)
       end
     end
   end

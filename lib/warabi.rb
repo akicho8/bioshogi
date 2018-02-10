@@ -71,7 +71,7 @@ require_relative "warabi/mediator"
 require_relative "warabi/dsl"
 require_relative "warabi/hybrid_sequencer"
 require_relative "warabi/sequencer"
-require_relative "warabi/simulator_frame"
+require_relative "warabi/simulator"
 
 require_relative "warabi/shape_info"
 require_relative "warabi/preset_info"

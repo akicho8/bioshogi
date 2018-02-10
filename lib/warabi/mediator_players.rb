@@ -3,11 +3,10 @@
 module Warabi
   concern :MediatorPlayers do
     class_methods do
-      # 先手後手が座った状態で開始
       def start
-        mediator = new
-        mediator.players.each(&:pieces_add)
-        mediator
+        new.tap do |e|
+          e.players.each(&:pieces_add)
+        end
       end
     end
 
@@ -37,6 +36,14 @@ module Warabi
       reverse_player
     end
 
+    def win_player
+      reverse_player
+    end
+
+    def lose_player
+      current_player
+    end
+
     # プレイヤーたちの持駒から平手用の盤面の準備
     def piece_plot
       @players.each(&:piece_plot)
@@ -45,14 +52,6 @@ module Warabi
     # プレイヤーたちの持駒を捨てる
     def piece_box_clear
       @players.collect { |e| e.piece_box.clear }
-    end
-
-    def win_player
-      reverse_player
-    end
-
-    def lose_player
-      current_player
     end
 
     concerning :Other do
