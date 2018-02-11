@@ -44,7 +44,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>         47   (4.5%)          47   (4.5%)     block (4 levels) in memory_record
 # >>        150  (14.3%)          34   (3.3%)     ActiveModel::AttributeAssignment#assign_attributes
 # >>        142  (13.6%)          34   (3.3%)     Warabi::Point.lookup
-# >>         31   (3.0%)          29   (2.8%)     Warabi::PieceVector#cached_vectors
+# >>         31   (3.0%)          29   (2.8%)     Warabi::PieceVector#all_vectors
 # >>         26   (2.5%)          26   (2.5%)     Warabi::Parser::Base::ConverterMethods#clock_exist?
 # >>         41   (3.9%)          26   (2.5%)     Warabi::Parser#file_parse
 # >>         24   (2.3%)          24   (2.3%)     Warabi::Point#to_xy
@@ -134,7 +134,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |    59  | 
 # >>                                   |    60  |         # 「打」時制限。移動元駒があればskip
 # >>     1    (0.1%)                   |    61  |         if e.stroke_only
-# >>                                   |    62  |           if before_soldier
+# >>                                   |    62  |           if origin_soldier
 # >>                                   |    63  |             throw :skip
 # >>                                   |    64  |           end
 # >>                                   |    65  |         end
@@ -177,11 +177,11 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   102  |           # 移動元ではない制限。移動元だったらskip
 # >>     2    (0.2%)                   |   103  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
 # >>                                   |   104  |             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
-# >>                                   |   105  |             unless before_soldier
+# >>                                   |   105  |             unless origin_soldier
 # >>                                   |   106  |               throw :skip
 # >>                                   |   107  |             end
 # >>                                   |   108  |             ary.each do |e|
-# >>                                   |   109  |               if e[:point] == before_soldier.point
+# >>                                   |   109  |               if e[:point] == origin_soldier.point
 # >>                                   |   110  |                 throw :skip
 # >>                                   |   111  |               end
 # >>                                   |   112  |             end
@@ -190,10 +190,10 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   115  |           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
 # >>     2    (0.2%)                   |   116  |           if points_hash = e.board_parser.other_objects_loc_points_hash[location.key]["★"]
 # >>                                   |   117  |             # 移動元がないということは、もう何も該当しないので skip
-# >>                                   |   118  |             unless before_soldier
+# >>                                   |   118  |             unless origin_soldier
 # >>                                   |   119  |               throw :skip
 # >>                                   |   120  |             end
-# >>                                   |   121  |             if points_hash[before_soldier.point]
+# >>                                   |   121  |             if points_hash[origin_soldier.point]
 # >>                                   |   122  |               # 移動元があったのでOK
 # >>                                   |   123  |             else
 # >>                                   |   124  |               throw :skip

@@ -26,13 +26,13 @@ module Warabi
     #
     def moved_list(board, soldier)
       Enumerator.new do |yielder|
-        vecs = soldier.cached_vectors
-        vecs.each do |vec|
+        vectors = soldier.all_vectors
+        vectors.each do |vector|
           point = soldier.point
           loop do
-            point = point.vector_add(vec)
+            point = point.vector_add(vector)
 
-            # 盤外に出てしまったら終わり
+            # 盤外に出たら終わり
             if point.invalid?
               break
             end
@@ -44,7 +44,7 @@ module Warabi
               break
             end
 
-            # 自分の駒以外(相手駒 or 空)なので行ける
+            # 空または相手駒の升には行ける
             piece_store(soldier, point, yielder)
 
             # 相手駒があるのでこれ以上は進めない
@@ -53,25 +53,11 @@ module Warabi
             end
 
             # 一歩だけベクトルならそれで終わり
-            if vec.kind_of?(OnceVector)
+            if vector.kind_of?(OnceVector)
               break
             end
           end
         end
-      end
-    end
-
-    # player の soldier が vecs の方向(複数)へ移動できるか？
-    #  ・とてもシンプル
-    #  ・相手の盤上の駒を考慮しない
-    #  ・自分の盤上の駒も考慮しない
-    #  ・さらに成れるかどうか考慮しない
-    #  ・桂を1の行にジャンプしたときにそれ以上移動できないので「１一桂」はダメという場合に使う
-    #  ・だから OnceVector か RepeatVector か見る必要はない
-    #  ・行ける方向に一歩でも行ける可能性があればよい
-    def alive_piece?(soldier)
-      soldier.cached_vectors.any? do |vector|
-        soldier.point.vector_add(vector).valid?
       end
     end
 
@@ -81,19 +67,20 @@ module Warabi
     # でも point に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(soldier, point, yielder)
-      # それ以上動けるなら置く
-      m = soldier.merge(point: point)
-      if alive_piece?(m)
-        yielder << Moved.create(m.attributes.merge(origin_soldier: soldier))
+    def piece_store(origin_soldier, point, yielder)
+      # 死に駒にならないのであれば有効
+      soldier = origin_soldier.merge(point: point)
+      store_if_alive(soldier, origin_soldier, yielder)
+
+      # また成れるなら成ってみて死に駒にならないなら有効
+      if soldier.next_promotable?
+        store_if_alive(soldier.merge(promoted: true), origin_soldier, yielder) # FIXME: 若干の高速化の余地あり。成ったときに死に駒になることはないので alive? のチェックを取れる
       end
-      # 成れるなら成ってみて
-      if m.more_promote?(soldier.location)
-        m = m.merge(promoted: true)
-        # それ以上動けるなら置く
-        if alive_piece?(m)
-          yielder << Moved.create(m.attributes.merge(promoted: true, origin_soldier: soldier, promoted_trigger: true))
-        end
+    end
+
+    def store_if_alive(soldier, origin_soldier, yielder)
+      if soldier.alive?
+        yielder << Moved.create(soldier: soldier, origin_soldier: origin_soldier)
       end
     end
   end

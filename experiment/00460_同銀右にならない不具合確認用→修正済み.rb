@@ -14,7 +14,7 @@ info.move_infos.each do |info|
   mediator.execute(info[:input])
 end
 tp mediator.hand_logs.last.to_h
-tp mediator.hand_logs.last.to_s_ki2
+tp mediator.hand_logs.last.to_ki2
 # >> ▲７六歩
 # >> △８四歩
 # >> ▲７八銀
@@ -57,7 +57,7 @@ tp mediator.hand_logs.last.to_s_ki2
 # >> |           piece | 銀                                                                                                                                                                                                   |
 # >> |        promoted | false                                                                                                                                                                                                |
 # >> | promote_trigger | false                                                                                                                                                                                                |
-# >> |  strike_trigger | false                                                                                                                                                                                                |
+# >> |  direct_trigger | false                                                                                                                                                                                                |
 # >> |    point_from | ６七                                                                                                                                                                                                 |
 # >> |          player | #<Warabi::Player:0x007fc922e8e958>                                                                                                                                                                  |
 # >> |       candidate | [<Warabi::Battler:70250925847060 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲７七銀>, <Warabi::Battler:70250925847040 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲６七銀>] |

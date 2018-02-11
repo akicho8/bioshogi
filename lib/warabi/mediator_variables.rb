@@ -32,7 +32,7 @@ module Warabi
       out = []
       out << "-" * 40 + " " + variables.inspect + "\n"
       out << "指し手: #{ki2_hand_logs.join(" ")}\n"
-      out << to_hand
+      out << to_kif
       out.join.strip
     end
   end

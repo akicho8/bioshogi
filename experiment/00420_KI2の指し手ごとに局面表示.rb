@@ -20,7 +20,7 @@ mediator.board_reset
 info.move_infos.each do |info|
   mediator.execute(info[:input])
   puts mediator
-  puts mediator.hand_logs.last.to_s_ki2
+  puts mediator.hand_logs.last.to_ki2
 end
 
 # >> 後手の持駒：なし

@@ -2,6 +2,63 @@
 # frozen-string-literal: true
 
 module Warabi
+  class Brain
+    def initialize(player)
+      @player = player
+    end
+
+    def think_by_minmax(params = {})
+      NegaMaxRunner.run({player: @player}.merge(params))
+    end
+
+    def all_hands
+      soldiers_hands + pieces_hands
+    end
+
+    def best_hand
+      score_list.first[:hand]
+    end
+
+    def score_list
+      list = []
+      all_hands.each do |hand|
+        m = @player.mediator.deep_dup
+        _player = m.player_at(@player.location)
+        _player.execute(hand)
+        list << {hand: hand, score: _player.evaluate}
+      end
+      list.sort_by { |e| -e[:score] }
+    end
+
+    # 盤上の駒の全手筋
+    def soldiers_hands
+      __soldiers_hands.collect(&:to_kif)
+    end
+
+    def __soldiers_hands
+      @player.soldiers.flat_map do |soldier|
+        soldier.moved_list(@player.board).to_a
+      end
+    end
+
+    # 持駒の全打筋
+    def pieces_hands
+      __pieces_hands.collect(&:to_kif)
+    end
+
+    # FIXME: @player.pieces だと重複が多すぎる
+    def __pieces_hands
+      @player.board.blank_points.collect { |point|
+        @player.pieces.collect do |piece|
+          soldier = Soldier.create(piece: piece, promoted: false, point: point, location: @player.location)
+          if @player.rule_valid?(soldier)
+            Direct.create(soldier: soldier)
+          end
+        end
+      }.flatten.compact
+    end
+  end
+  
   class HandInfo < Hash
     def to_s
       "%s %+5d" % [self[:hand], self[:score]]
@@ -87,76 +144,4 @@ module Warabi
     end
   end
 
-  class Brain
-    def initialize(player)
-      @player = player
-    end
-
-    # {hand: "▲１八飛(17)", score: -3230, level: 0, reading_hands: ["▲１八飛(17)", "△１五歩(14)", "▲１五香(16)", "△１五香(13)"]}
-    def think_by_minmax(params = {})
-      NegaMaxRunner.run({player: @player}.merge(params))
-    end
-
-    def all_hands
-      soldiers_hands + pieces_hands
-    end
-
-    def best_hand
-      score_list.first[:hand]
-    end
-
-    # def doredore(depth = 0)
-    #   if depth == 0
-    #     mediator = @player.mediator
-    #     score_info = all_hands.each.with_object([]){|hand, ary|
-    #       mediator.sandbox_for do |_mediator|
-    #         _player = _mediator.player_at(@player.location)
-    #         _player.execute(hand)
-    #         ary << {hand: hand, score: _player.evaluate}
-    #       end
-    #     }
-    #     score_info.sort_by{|e|-e[:score]}
-    #     ary << {hand: hand, score: _player.evaluate}
-    #   end
-    # end
-
-    def score_list
-      list = []
-      all_hands.each { |hand|
-        m = @player.mediator.deep_dup
-        _player = m.player_at(@player.location)
-        _player.execute(hand)
-        list << {hand: hand, score: _player.evaluate}
-      }
-      list.sort_by { |e| -e[:score] }
-    end
-
-    # 盤上の駒の全手筋
-    def soldiers_hands
-      __soldiers_hands.collect(&:to_hand)
-    end
-
-    def __soldiers_hands
-      @player.soldiers.flat_map do |soldier|
-        soldier.moved_list(@player.board).to_a
-      end
-    end
-
-    # 持駒の全打筋
-    def pieces_hands
-      __pieces_hands.collect(&:to_hand)
-    end
-
-    # FIXME: @player.pieces だと重複が多すぎる
-    def __pieces_hands
-      @player.board.blank_points.collect { |point|
-        @player.pieces.collect do |piece|
-          soldier = Soldier.create(point: point, piece: piece, location: @player.location, promoted: false)
-          if @player.rule_valid?(soldier)
-            Direct.create(soldier.attributes)
-          end
-        end
-      }.flatten.compact
-    end
-  end
 end

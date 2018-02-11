@@ -28,12 +28,12 @@ module Warabi
 
     def kif_or_ki2_regexp
       triangle = /(?<triangle>[#{Location.triangles_str}])/o
-      point_to = /(?<point_to>#{Point.regexp})/o
+      point = /(?<point>#{Point.regexp})/o
       same = /(?<same>同)\p{blank}*/
 
       /
         #{triangle}?
-        (#{point_to}#{same}|#{same}#{point_to}|#{point_to}|#{same}) # 12同 or 同12 or 12 or 同 に対応
+        (#{point}#{same}|#{same}#{point}|#{point}|#{same}) # 12同 or 同12 or 12 or 同 に対応
         (?<piece>#{Piece.all_names.join("|")})
         (?<motion1>[左右直]?[寄引上行]?)
         (?<motion2>不?成|打|合|生)?
@@ -58,7 +58,7 @@ module Warabi
       point = /[1-9][[:lower:]]/
 
       part1 = /(?<usi_piece>[#{chars}])(?<_usi_stroke>\*)(?<usi_to>#{point})/o
-      part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_promoted_trigger>\+)?/o
+      part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_promote_trigger>\+)?/o
 
       /((#{part1})|(#{part2}))/o
     end

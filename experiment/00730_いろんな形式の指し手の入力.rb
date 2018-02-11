@@ -4,7 +4,7 @@ def f(v)
   mediator = Mediator.new
   mediator.board_reset
   mediator.execute(v)
-  mediator.hand_logs.collect(&:to_s_kif).join(" ")
+  mediator.hand_logs.collect(&:to_kif).join(" ")
 end
 
 f "76歩"                        # => "７六歩(77)"

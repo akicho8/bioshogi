@@ -18,8 +18,8 @@ module Warabi
 
     def to_debug_hash
       {
-        :point_from     => base.point_from,
-        :point_to       => base.point_to,
+        :point_from     => point_from,
+        :point_to       => point_to,
         :candidate      => candidate.collect(&:name),
         :koreru_c       => koreru_c,
         :_migi_idou     => _migi_idou?,
@@ -47,12 +47,12 @@ module Warabi
       if base.point_same
         s << "同" + @options[:same_suffix]
       else
-        s << base.point_to.name
+        s << point_to.name
       end
 
-      s << base.piece.any_name(base.promoted)
+      if direct_trigger?
+        s << piece.name
 
-      if base.strike_trigger
         # 日本将棋連盟 棋譜の表記方法
         # https://www.shogi.or.jp/faq/kihuhyouki.html
         #
@@ -64,22 +64,18 @@ module Warabi
           s << "打"
         end
       else
-        if koreru_c >= 2
-          if base.piece.brave?
-            s << brave_motion
-          else
-            s << basic_motion
-          end
-        end
-
-        if base.promote_trigger
+        if promote_trigger?
+          s << piece.name
+          s << motion
           s << "成"
         else
-          if base.point_from && base.point_to           # 移動した and
-            if base.point_from.promotable?(location) || # 移動元が相手の相手陣地 or
-                base.point_to.promotable?(location)     # 移動元が相手の相手陣地
-              unless base.promoted                      # 成ってない and
-                if base.piece.promotable?               # 成駒になれる
+          s << soldier.any_name
+          s << motion
+          if point_from && point_to           # 移動した and
+            if point_from.promotable?(location) || # 移動元が相手の相手陣地 or
+                point_to.promotable?(location)     # 移動元が相手の相手陣地
+              unless promoted                           # 成ってない and
+                if piece.promotable?               # 成駒になれる
                   s << "不成" # or "生"
                 end
               end
@@ -105,6 +101,16 @@ module Warabi
     end
 
     private
+
+    def motion
+      if koreru_c >= 2
+        if piece.brave?
+          brave_motion
+        else
+          basic_motion
+        end
+      end
+    end
 
     def brave_motion
       # 連盟の複雑そうなルールをコードに落とし込むには次の方法でよさそう
@@ -283,12 +289,12 @@ module Warabi
 
     # 移動先X
     def _tx
-      @_tx ||= base.point_to.x.value
+      @_tx ||= point_to.x.value
     end
 
     # 移動元Y
     def _ty
-      @_ty ||= base.point_to.y.value
+      @_ty ||= point_to.y.value
     end
 
     # プレイヤーの視点から見た移動先の一つ下
@@ -303,12 +309,12 @@ module Warabi
 
     # 移動元X
     def _ox
-      @_ox ||= base.point_from.x.value
+      @_ox ||= point_from.x.value
     end
 
     # 移動先Y
     def _oy
-      @_oy ||= base.point_from.y.value
+      @_oy ||= point_from.y.value
     end
 
     # 候補手の座標範囲
@@ -336,8 +342,31 @@ module Warabi
       base.candidate || []
     end
 
-    def location
-      base.player.location
+    delegate :current_direct, :current_moved, :current_hand, to: :base
+    delegate :point, :piece, :location, :promoted, to: :soldier
+
+    def soldier
+      current_hand.soldier
+    end
+
+    def direct_trigger?
+      current_direct
+    end
+
+    def promote_trigger?
+      if current_moved
+        current_moved.promote_trigger
+      end
+    end
+
+    def point_from
+      if current_moved
+        current_moved.origin_soldier.point
+      end
+    end
+
+    def point_to
+      point
     end
 
     concerning :InvertMethods do

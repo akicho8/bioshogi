@@ -7,7 +7,7 @@ list.each do |e|
   p e
   mediator.execute(e)
   p mediator.turn_info.counter
-  pp [e, mediator.hand_logs.last.to_s_kif]
+  pp [e, mediator.hand_logs.last.to_kif]
 end
 # ~> /Users/ikeda/src/warabi/lib/warabi/player.rb:358:in `put_on_with_valid': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Warabi::DeadPieceRuleError)
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １

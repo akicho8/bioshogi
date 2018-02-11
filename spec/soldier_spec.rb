@@ -21,7 +21,7 @@ module Warabi
     it "== 同じ内容なら同じオブジェクトとする" do
       a = Soldier.from_str("▲６八銀")
       b = Soldier.from_str("▲６八銀")
-      a.should== b
+      (a == b).should == true
       {a => true}[b].should == true
     end
 
@@ -37,18 +37,11 @@ module Warabi
       (Marshal.load(Marshal.dump(soldier)) == soldier).should == true
     end
 
-    describe "Brainの指し手チェック用" do
-      describe Moved do
-        it "#to_hand" do
-          Moved.create(@attributes.merge(origin_soldier: Soldier.from_str("▲７九銀"), promoted_trigger: true)).to_hand.should == "▲６八銀成(79)"
-        end
-      end
-
-      describe Direct do
-        it "#to_hand" do
-          Direct.create(@attributes).to_hand.should == "▲６八銀打"
-        end
-      end
+    it "指し手" do
+      soldier = Soldier.from_str("▲６八全")
+      origin_soldier = Soldier.from_str("▲７九銀")
+      Moved.create(soldier: soldier, origin_soldier: origin_soldier).to_kif.should == "▲６八銀成(79)"
+      Direct.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
     end
   end
 end

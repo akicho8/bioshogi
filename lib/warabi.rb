@@ -57,6 +57,7 @@ require_relative "warabi/tactic_urls_info"
 require_relative "warabi/skill_monitor"
 require_relative "warabi/player"
 require_relative "warabi/input_parser"
+require_relative "warabi/runner_ki2_methods"
 require_relative "warabi/runner"
 require_relative "warabi/movabler"
 

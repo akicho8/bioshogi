@@ -4,8 +4,16 @@
 #
 module Warabi
   class Runner
-    attr_reader :point_to, :point_from, :piece, :source, :player, :killed_piece
+    attr_reader :point
+    attr_reader :point_from
+    attr_reader :piece
+    attr_reader :source
+    attr_reader :player
+    attr_reader :killed_piece
     attr_reader :skill_set
+    attr_reader :origin_soldier
+
+    include RunnerKi2Methods
 
     def initialize(player)
       @player = player
@@ -14,15 +22,15 @@ module Warabi
     def execute(str)
       @source = str
 
-      # hand_log を作るための変数たち
-      @point_to        = nil
       @piece           = nil
       @promoted        = nil
+      @point           = nil
       @promote_trigger = nil
-      @strike_trigger  = nil
+      @direct_trigger  = nil
       @point_from      = nil
       @candidate       = nil
       @killed_piece    = nil
+      @origin_soldier  = nil
 
       @skill_set = SkillSet.new
 
@@ -31,56 +39,8 @@ module Warabi
       @md = InputParser.match!(@source)
       @md = @md.named_captures.symbolize_keys
 
-      if @md[:csa_basic_name] || @md[:csa_promoted_name]
-        if @md[:csa_from] == "00"
-          @md[:csa_from] = nil
-          @md[:motion2] = "打"
-        end
-
-        if @md[:csa_from]
-          @md[:point_from] = @md[:csa_from]
-        end
-
-        @md[:point_to] = @md[:csa_to]
-
-        if @md[:csa_basic_name]
-          # 普通の駒
-          @md[:piece] = Piece.basic_group.fetch(@md[:csa_basic_name]).name
-        end
-
-        if @md[:csa_promoted_name]
-          # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
-          # だから移動元の駒の情報で判断するしかない
-          _piece = Piece.promoted_group.fetch(@md[:csa_promoted_name])
-
-          v = @player.board[@md[:point_from]] or raise MustNotHappen
-          if v.promoted
-            @md[:piece] = v.piece.promoted_name
-          else
-            @md[:piece] = v.piece.name
-            @md[:motion2] = "成"
-          end
-        end
-      end
-
-      if @md[:usi_to]
-        convert = -> s { s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 } }
-
-        if @md[:usi_piece]
-          _piece = Piece.find { |e| e.sfen_char == @md[:usi_piece] } or raise
-          @md[:piece] = _piece.name
-          @md[:motion2] = "打"
-          @md[:point_to] = convert.call(@md[:usi_to])
-        else
-          @md[:point_from] = convert.call(@md[:usi_from])
-          @md[:point_to] = convert.call(@md[:usi_to])
-          if @md[:usi_promoted_trigger] == "+"
-            @md[:motion2] = "成"
-          end
-          v = @player.board[@md[:point_from]] or raise MustNotHappen
-          @md[:piece] = v.any_name
-        end
-      end
+      pre_transform_for_csa
+      pre_transform_for_usi
 
       if @md[:point_from]
         @md[:point_from] = @md[:point_from].slice(/\d+/)
@@ -118,7 +78,7 @@ module Warabi
         @promote_trigger = (@md[:motion2] == "成")
       end
 
-      @strike_trigger = @md[:motion2].to_s.match?(/[打合]/)
+      @direct_trigger = @md[:motion2].to_s.match?(/[打合]/)
 
       # 指定の場所に来れる盤上の駒に絞る
       # kif → ki2 変換するときのために @candidate を常に作っとかんといけない
@@ -126,12 +86,12 @@ module Warabi
       @soldiers = @player.soldiers.find_all { |e|
         !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
         e.piece.key == @piece.key &&                        # 同じ種類に絞る
-        e.moved_list(@player.board).any? { |e| e.point == @point_to } && # 目的地に来れる
+        e.moved_list(@player.board).any? { |e| e.soldier.point == @point } && # 目的地に来れる
         true
       }
       @candidate = @soldiers.collect(&:clone)
 
-      if @strike_trigger
+      if @direct_trigger
         if @promoted
           raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません : #{@source.inspect}"
         end
@@ -142,7 +102,7 @@ module Warabi
         end
 
         unless @point_from
-          find_origin_point     # KI2の場合
+          point_from_find     # KI2の場合
         end
 
         unless @done
@@ -152,7 +112,7 @@ module Warabi
               if source_soldier && source_soldier.promoted && !@promoted
                 # 成駒を成ってない状態にして移動しようとした場合は、いったん持駒を確認する
                 if @player.piece_box.exist?(@piece)
-                  @strike_trigger = true
+                  @direct_trigger = true
                   @point_from = nil
                   soldier_put
                 else
@@ -163,71 +123,65 @@ module Warabi
           end
 
           unless @done
-            if soldier = @player.board.lookup(@point_to)
+            if soldier = @player.board.lookup(@point)
               @killed_piece = soldier.piece
             end
-            @player.move_to(@point_from, @point_to, @promote_trigger)
+            @origin_soldier = @player.board.surface[@point_from]
+            @player.move_to(@point_from, @point, @promote_trigger)
           end
         end
       end
-
-      @md = nil # MatchData を保持していると Marshal.dump できないため。(これやるまえにraiseで飛んでるんだろうか)
-
-      self
     end
 
     def hand_log
       HandLog.new({
-          :current_soldier => current_soldier,
-          :before_soldier  => before_soldier,
-          :killed_piece    => @killed_piece,
-
-          :point_to        => @point_to,
-          :piece           => @piece,
-          :promoted        => @promoted,
-          :promote_trigger => @promote_trigger,
-          :strike_trigger  => @strike_trigger,
-          :point_from      => @point_from,
-          :player          => @player,
-          :candidate       => @candidate,
-          :point_same    => point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
-
-          :skill_set       => @skill_set,
-        })
+          :current_direct => current_direct,
+          :current_moved  => current_moved,
+          :killed_piece   => @killed_piece,
+          :candidate      => @candidate,
+          :point_same     => point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
+          :skill_set      => @skill_set,
+        }).freeze
     end
 
     def current_soldier
-      @current_soldier ||= Soldier.create(piece: @piece, promoted: (@promoted || @promote_trigger), point: @point_to, location: @player.location)
+      @current_soldier ||= Soldier.create(piece: @piece, promoted: @promoted || @promote_trigger, point: @point, location: @player.location)
     end
 
-    def before_soldier
-      if @point_from
-        @before_soldier ||= Soldier.create(piece: @piece, promoted: !@promote_trigger, point: @point_from, location: @player.location)
+    def current_moved
+      if origin_soldier
+        @current_moved ||= Moved.create(soldier: current_soldier, origin_soldier: origin_soldier)
+      end
+    end
+
+    def current_direct
+      unless origin_soldier
+        @current_direct ||= Direct.create(soldier: current_soldier)
       end
     end
 
     private
 
     def read_point
-      @point_to = nil
+      @point = nil
       case
       when @md[:same] == "同"
         if @player.mediator && hand_log = @player.mediator.hand_logs.last
-          @point_to = hand_log.point_to
+          @point = hand_log.current_soldier.point
         end
-        unless @point_to
+        unless @point
           raise BeforePointNotFound, "同に対する座標が不明です : #{@source.inspect}"
         end
 
         # 記事などで改ページしたとき、明示的に "同２四歩" と書く場合もあるとのこと
-        if @md[:point_to]
-          prefix_pt = Point.fetch(@md[:point_to])
-          if Point.fetch(@md[:point_to]) != @point_to
-            raise SamePointDifferent, "同は#{@point_to}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
+        if @md[:point]
+          prefix_pt = Point.fetch(@md[:point])
+          if Point.fetch(@md[:point]) != @point
+            raise SamePointDifferent, "同は#{@point}を意味しますが明示的に指定した移動先は #{prefix_pt} です : #{@source.inspect}"
           end
         end
-      when @md[:point_to]
-        @point_to = Point.fetch(@md[:point_to])
+      when @md[:point]
+        @point = Point.fetch(@md[:point])
       else
         raise SyntaxDefact, "移動先の座標が不明です : #{@source.inspect}"
       end
@@ -236,42 +190,37 @@ module Warabi
     # 「７六歩」とした場合「７六歩打」なのか「７六歩(nn)」なのか判断できないので
     # 「７六」に来ることができる歩があれば「７六歩(nn)」と判断する
     # で、「７六」に来ることができる歩 の元の位置を探すのがこのメソッド
-    def find_origin_point
-      # # 指定の場所に来れる盤上の駒に絞る
-      # @soldiers = @player.soldiers.find_all { |soldier| soldier.moved_list.any?{|e|e[:point] == @point_to} }
-      # @soldiers = @soldiers.find_all{|e|e.piece.key == @piece.key} # 同じ駒に絞る
-      # @soldiers = @soldiers.find_all{|e|!!e.promoted == !!@promoted} # 成っているかどうかで絞る
-      # @candidate = @soldiers.collect{|s|s.clone}
-
+    def point_from_find
       if @soldiers.empty?
         # 「打」を省略している場合、持駒から探す
-        if @player.piece_box.exist?(@piece)
-          if @promote_trigger
-            raise IllegibleFormat, "「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている系のエラーです : '#{@source.inspect}'"
-          end
-          @strike_trigger = true
-          if @promoted
-            raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
-          end
-          soldier = Soldier.create(piece: @player.piece_box.pick_out(@piece), point: @point_to, promoted: @promoted, location: @player.location)
-          @player.put_on_with_valid(soldier)
-          @done = true
-        else
-          raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point_to.name.inspect} の地点に移動できる #{@piece.any_name(@promoted)} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
+        unless @player.piece_box.exist?(@piece)
+          raise MovableBattlerNotFound, "#{@player.location.name}の手番で #{@point.name.inspect} の地点に移動できる #{@piece.any_name(@promoted)} がありません。入力した #{@source.inspect} がまちがっている可能性があります\n#{@player.mediator}"
         end
+
+        if @promote_trigger
+          raise IllegibleFormat, "「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている系のエラーです : '#{@source.inspect}'"
+        end
+
+        @direct_trigger = true
+        if @promoted
+          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません: '#{@source.inspect}'"
+        end
+
+        soldier_put
       end
 
       unless @done
         if @soldiers.size > 1
           if @md[:motion1]
-            # TODO: 入力の正規表現を改めたのでこのチェックは不要かもしれない
-            assert_valid_format("直上")
-            assert_valid_format("左右直")
-            assert_valid_format("寄引上")
+            if ENV["WARABI_ENV"] == "test"
+              assert_valid_format("直上")
+              assert_valid_format("左右直")
+              assert_valid_format("寄引上")
+            end
             find_soldiers
           end
           if @soldiers.size > 1
-            raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:name).join(' ')})\n#{@player.board_with_pieces}"
+            raise AmbiguousFormatError, "#{@point.name}に移動できる駒が複数あります。#{@source.inspect} の表記を明確にしてください。(移動元候補: #{@soldiers.collect(&:name).join(' ')})\n#{@player.board_with_pieces}"
           end
         end
 
@@ -291,33 +240,33 @@ module Warabi
           @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
         else
           m = _method([:>, :<], cond)
-          @soldiers = @soldiers.find_all{|soldier|@point_to.x.value.send(m, soldier.point.x.value)}
+          @soldiers = @soldiers.find_all{|soldier|@point.x.value.send(m, soldier.point.x.value)}
         end
       end
       cond = "上引"
       if @md[:motion1].match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
-        @soldiers = @soldiers.find_all{|soldier|@point_to.y.value.send(m, soldier.point.y.value)}
+        @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
       if true
         if @md[:motion1].include?("寄")
           # TODO: 厳密には左右1個分だけチェックする
-          @soldiers = @soldiers.find_all { |e| e.point.y == @point_to.y }
+          @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
         end
 
         # 真下にあるもの
         if @md[:motion1].include?("直")
           @soldiers = @soldiers.find_all { |e|
-            e.point.x == @point_to.x &&
-            e.point.y.value == @point_to.y.value + @player.location.which_val(1, -1)
+            e.point.x == @point.x &&
+            e.point.y.value == @point.y.value + @player.location.which_val(1, -1)
           }
         end
       end
 
       if @soldiers.empty?
-        raise AmbiguousFormatError, "#{@point_to.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})\n#{@player.board_with_pieces}"
+        raise AmbiguousFormatError, "#{@point.name}に移動できる駒がなくなりまりました。#{@source.inspect} の表記を明確にしてください。(移動元候補だったがなくなってしまった駒: #{__saved_soldiers.collect(&:name).join(', ')})\n#{@player.board_with_pieces}"
       end
     end
 
@@ -337,7 +286,7 @@ module Warabi
     end
 
     def soldier_put
-      soldier = Soldier.create(piece: @player.piece_box.pick_out(@piece), promoted: @promoted, point: @point_to, location: @player.location)
+      soldier = Soldier.create(piece: @player.piece_box.pick_out(@piece), promoted: @promoted, point: @point, location: @player.location)
       @player.put_on_with_valid(soldier)
       @done = true
     end
@@ -346,8 +295,63 @@ module Warabi
       if @player.mediator && hand_logs = @player.mediator.hand_logs
         # 自分の手と同じところを見て「同」とやっても結局、自分の駒の上に駒を置くことになってエラーになるのでここは相手を探した方がいい
         # ずっと遡っていくとまた嵌りそうな気がするけどやってみる
-        if hand_log = hand_logs.reverse.find { |e| e.player.location != @player.location }
-          hand_log.point_to == @point_to
+        if hand_log = hand_logs.reverse.find { |e| e.current_soldier.location != @player.location }
+          hand_log.current_soldier.point == @point
+        end
+      end
+    end
+
+    def pre_transform_for_csa
+      if @md[:csa_basic_name] || @md[:csa_promoted_name]
+        if @md[:csa_from] == "00"
+          @md[:csa_from] = nil
+          @md[:motion2] = "打"
+        end
+
+        if @md[:csa_from]
+          @md[:point_from] = @md[:csa_from]
+        end
+
+        @md[:point] = @md[:csa_to]
+
+        if @md[:csa_basic_name]
+          # 普通の駒
+          @md[:piece] = Piece.basic_group.fetch(@md[:csa_basic_name]).name
+        end
+
+        if @md[:csa_promoted_name]
+          # このタイミングで成るのかすでに成っていたのかCSA形式だとわからない
+          # だから移動元の駒の情報で判断するしかない
+          _piece = Piece.promoted_group.fetch(@md[:csa_promoted_name])
+
+          v = @player.board[@md[:point_from]] or raise MustNotHappen
+          if v.promoted
+            @md[:piece] = v.piece.promoted_name
+          else
+            @md[:piece] = v.piece.name
+            @md[:motion2] = "成"
+          end
+        end
+      end
+    end
+
+    def pre_transform_for_usi
+      if @md[:usi_to]
+        convert = -> s { s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 } }
+
+        if @md[:usi_piece]
+          _piece = Piece.find { |e| e.sfen_char == @md[:usi_piece] } or raise
+          @md[:piece] = _piece.name
+          @md[:motion2] = "打"
+          @md[:point] = convert.call(@md[:usi_to])
+        else
+          @md[:point_from] = convert.call(@md[:usi_from])
+          @md[:point] = convert.call(@md[:usi_to])
+          if @md[:usi_promote_trigger] == "+"
+            @md[:motion2] = "成"
+          end
+          v = @player.board[@md[:point_from]] or raise MustNotHappen
+          @md[:piece] = v.any_name
         end
       end
     end

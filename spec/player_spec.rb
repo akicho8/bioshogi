@@ -195,7 +195,7 @@ EOT
         describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-            mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
+            mediator.reverse_player.last_captured_piece.name.should == "歩"
             mediator.reverse_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_soldiers.should == "１一玉 １三歩"
             mediator.current_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩八"
@@ -205,7 +205,7 @@ EOT
             mediator = Mediator.test1(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
-            mediator.reverse_player.last_piece_taken_from_opponent.name.should == "歩"
+            mediator.reverse_player.last_captured_piece.name.should == "歩"
             mediator.reverse_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
             mediator.reverse_player.to_s_soldiers.should == "２四歩"
             mediator.current_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩八"
@@ -240,7 +240,7 @@ EOT
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         it "打は曖昧なときだけ付く (このテストはログの変換のテストで入力のテストにはなっていない)" do
           Mediator.player_test_soldier_names(exec: "５五歩").should == ["▲５五歩"]
-          Mediator.player_test(exec: "５五歩").runner.hand_log.to_s_kif.should == "５五歩打"
+          Mediator.player_test(exec: "５五歩").runner.hand_log.to_kif.should == "５五歩打"
         end
 
         it "２二角成としたけど盤上に何もないので持駒の角を打った(打てていたけど、成と書いて打てるのはおかしいのでエラーとする)" do
@@ -248,7 +248,7 @@ EOT
         end
 
         it "盤上に竜があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れそうなケース。実際は竜なので来れない)" do
-          Mediator.player_test(pieces_add: "飛", init: "１一龍", exec: "２一飛").runner.hand_log.to_s_kif.should == "２一飛打"
+          Mediator.player_test(pieces_add: "飛", init: "１一龍", exec: "２一飛").runner.hand_log.to_kif.should == "２一飛打"
         end
 
         it "と金は二歩にならないので" do
@@ -292,9 +292,9 @@ EOT
     end
 
     it "指したあと前回の手を確認できる" do
-      Mediator.player_test(init: "５五飛", exec: "５一飛成").runner.hand_log.to_s_kif.should == "５一飛成(55)"
-      Mediator.player_test(init: "５一龍", exec: "１一龍").runner.hand_log.to_s_kif.should   == "１一龍(51)"
-      Mediator.player_test(exec: "５五飛打").runner.hand_log.to_s_kif.should                    == "５五飛打"
+      Mediator.player_test(init: "５五飛", exec: "５一飛成").runner.hand_log.to_kif.should == "５一飛成(55)"
+      Mediator.player_test(init: "５一龍", exec: "１一龍").runner.hand_log.to_kif.should   == "１一龍(51)"
+      Mediator.player_test(exec: "５五飛打").runner.hand_log.to_kif.should                    == "５五飛打"
     end
 
     it "持駒の確認" do
@@ -337,7 +337,7 @@ EOT
       mediator = Mediator.start
       mediator.piece_plot
       mediator.execute("５八金(49)")
-      mediator.hand_logs.first.to_s_ki2.should == "５八金右"
+      mediator.hand_logs.first.to_ki2.should == "５八金右"
     end
 
     # describe "一時的に置いてみた状態にする" do

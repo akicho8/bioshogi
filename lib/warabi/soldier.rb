@@ -82,6 +82,10 @@ module Warabi
       {piece: piece, promoted: promoted, point: point, location: location}
     end
 
+    # def to_soldier
+    #   Soldier.create(soldier_attributes)
+    # end
+
     # soldiers.sort できるようにする
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい
     def <=>(other)
@@ -100,8 +104,12 @@ module Warabi
       end
     end
 
-    def cached_vectors
-      piece.cached_vectors(promoted: promoted, location: location)
+    def all_vectors
+      piece.all_vectors(promoted: promoted, location: location)
+    end
+
+    def alive?
+      all_vectors.any? { |e| point.vector_add(e).valid? }
     end
 
     def merge(attributes)
@@ -129,7 +137,7 @@ module Warabi
     # 現状の状態から成れるか？
     # 相手陣地から出たときのことは考慮しなくてよい
     # そもそも移動元をこのインスタンスは知らない
-    def more_promote?(location)
+    def next_promotable?
       true &&
         piece.promotable? &&           # 成ることができる駒の種類かつ
         !promoted &&                   # まだ成っていないかつ
@@ -139,35 +147,36 @@ module Warabi
 
     ################################################################################ Reader
 
-    # 「１一香成」ではなく「１一杏」を返す
-    # 指し手を返すには to_hand を使うこと
     def to_s
       name
     end
 
     def name
-      "#{location.name}#{point.name}#{any_name}"
+      location.name + point.name + any_name
     end
 
     def name_without_location
-      "#{point.name}#{any_name}"
+      point.name + any_name
     end
 
     def any_name
       piece.any_name(promoted)
     end
 
-    # 柿木盤面用
-    def to_kif
-      "#{location.varrow}#{any_name}"
+    def to_bod
+      location.varrow + any_name
     end
 
     def to_sfen
       piece.to_sfen(promoted: promoted, location: location)
     end
 
+    def to_csa_bod
+      location.csa_sign + to_csa
+    end
+
     def to_csa
-      location.csa_sign + piece.csa_some_name(promoted)
+      piece.csa_some_name(promoted)
     end
 
     def inspect
@@ -175,31 +184,101 @@ module Warabi
     end
   end
 
-  # Soldier にどこからどこへ成るかどうかの情報を含めたもの
-  # origin_soldier と promoted_trigger が必要。どちらか一方だけで to_hand は作れる。
-  class Moved < Soldier
-    attr_accessor :origin_soldier
-    attr_accessor :promoted_trigger
+  class Direct
+    concerning :Shared do
+      included do
+        include ActiveModel::Model
+        attr_accessor :soldier
 
-    def attributes
-      super.merge(origin_soldier: origin_soldier, promoted_trigger: promoted_trigger)
+        private_class_method :new
+      end
+
+      class_methods do
+        def create(*args)
+          new(*args).freeze
+        end
+      end
+
+      def to_kif(*)
+        raise NotImplementedError, "#{__method__} is not implemented"
+      end
     end
 
-    def to_hand
+    def initialize(*)
+      super
+
+      raise MustNotHappen, "打つと同時に成った" if soldier.promoted
+    end
+
+    def to_kif(**options)
+      options = {
+        with_mark: true,
+      }.merge(options)
+
+      if options[:with_mark]
+        s = soldier.name
+      else
+        s = soldier.name_without_location
+      end
+      s + "打"
+    end
+
+    def to_csa(**options)
       [
-        location.name,
-        point.name,
-        origin_soldier.any_name,
-        promoted_trigger ? "成" : "",
-        "(", origin_soldier.point.number_format, ")",
+        soldier.location.csa_sign,
+        "00",
+        soldier.point.number_format,
+        soldier.to_csa,
+      ].join
+    end
+
+    def to_sfen(**options)
+      [
+        soldier.piece.to_sfen,
+        "*",
+        soldier.point.to_sfen,
       ].join
     end
   end
 
-  # 「打」専用
-  class Direct < Soldier
-    def to_hand
-      "#{name}打"
+  class Moved
+    include Direct::Shared
+
+    attr_accessor :origin_soldier
+
+    def promote_trigger
+      !origin_soldier.promoted && soldier.promoted
+    end
+
+    def to_kif(**options)
+      options = {
+        with_mark: true,
+      }.merge(options)
+
+      [
+        options[:with_mark] ? soldier.location.name : nil,
+        soldier.point.name,
+        origin_soldier.any_name,
+        promote_trigger ? "成" : "",
+        "(", origin_soldier.point.number_format, ")",
+      ].join
+    end
+
+    def to_csa(**options)
+      [
+        soldier.location.csa_sign,
+        origin_soldier.point.number_format,
+        soldier.point.number_format,
+        soldier.to_csa,
+      ].join
+    end
+
+    def to_sfen(**options)
+      [
+        origin_soldier.point.to_sfen,
+        soldier.point.to_sfen,
+        promote_trigger ? "+" : nil,
+      ].join
     end
   end
 end

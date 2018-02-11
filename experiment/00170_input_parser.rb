@@ -24,7 +24,7 @@ tp list.collect { |e| {source: e}.merge(InputParser.match!(e).named_captures) }
 InputParser.scan(list.join) == list # => true
 InputParser.scan(list.join) # => ["６八銀左", "△６八全", "△６八銀成", "△６八銀打", "△同銀", "△同銀成", "７六歩(77)", "7677FU", "-7677FU", "+0077RY", "8c8d", "P*2f", "4e5c+"]
 # >> |------------+----------+----------+------+-------+---------+---------+------------+------+----------+--------+----------------+-------------------+-----------+-------------+--------+----------+----------------------|
-# >> | source     | triangle | point_to | same | piece | motion1 | motion2 | point_from | sign | csa_from | csa_to | csa_basic_name | csa_promoted_name | usi_piece | _usi_stroke | usi_to | usi_from | usi_promoted_trigger |
+# >> | source     | triangle | point_to | same | piece | motion1 | motion2 | point_from | sign | csa_from | csa_to | csa_basic_name | csa_promoted_name | usi_piece | _usi_stroke | usi_to | usi_from | usi_promote_trigger |
 # >> |------------+----------+----------+------+-------+---------+---------+------------+------+----------+--------+----------------+-------------------+-----------+-------------+--------+----------+----------------------|
 # >> | ６八銀左   |          | ６八     |      | 銀    | 左      |         |            |      |          |        |                |                   |           |             |        |          |                      |
 # >> | △６八全   | △       | ６八     |      | 全    |         |         |            |      |          |        |                |                   |           |             |        |          |                      |

@@ -23,9 +23,9 @@ module Warabi
       attributes[:promoted_repeat_vectors]
     end
 
-    def cached_vectors(promoted:, location:)
-      @cached_vectors ||= {}
-      @cached_vectors[[promoted, location.key]] ||= -> {
+    def all_vectors(promoted:, location:)
+      @all_vectors ||= {}
+      @all_vectors[[promoted, location.key]] ||= -> {
         vectors = __select_vectors(promoted)
         normalized_vectors(location, vectors)
       }.call

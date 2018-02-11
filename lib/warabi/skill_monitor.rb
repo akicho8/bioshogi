@@ -59,7 +59,7 @@ module Warabi
 
         # 「打」時制限。移動元駒があればskip
         if e.stroke_only
-          if before_soldier
+          if origin_soldier
             throw :skip
           end
         end
@@ -102,11 +102,11 @@ module Warabi
           # 移動元ではない制限。移動元だったらskip
           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
-            unless before_soldier
+            unless origin_soldier
               throw :skip
             end
             ary.each do |e|
-              if e[:point] == before_soldier.point
+              if e[:point] == origin_soldier.point
                 throw :skip
               end
             end
@@ -115,10 +115,10 @@ module Warabi
           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
           if points_hash = e.board_parser.other_objects_loc_points_hash[location.key]["★"]
             # 移動元がないということは、もう何も該当しないので skip
-            unless before_soldier
+            unless origin_soldier
               throw :skip
             end
-            if points_hash[before_soldier.point]
+            if points_hash[origin_soldier.point]
               # 移動元があったのでOK
             else
               throw :skip
@@ -200,8 +200,8 @@ module Warabi
     end
 
     # 移動元情報
-    def before_soldier
-      @before_soldier ||= player.runner.before_soldier
+    def origin_soldier
+      @origin_soldier ||= player.runner.origin_soldier
     end
 
     # 盤面

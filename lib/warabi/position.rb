@@ -1,9 +1,4 @@
 # frozen-string-literal: true
-#
-# 一次元座標管理
-#
-
-require "active_support/core_ext/array/access" # for seconds
 
 module Warabi
   module Position
@@ -19,14 +14,16 @@ module Warabi
       #
       def size_change(wsize, &block)
         save_value = [Hpos.dimension, Vpos.dimension]
-        Hpos.board_size_reset(wsize.first)
-        Vpos.board_size_reset(wsize.second)
+        h, v = wsize
+        Hpos.board_size_reset(h)
+        Vpos.board_size_reset(v)
         if block_given?
           begin
             yield
           ensure
-            Hpos.board_size_reset(save_value.first)
-            Vpos.board_size_reset(save_value.second)
+            h, v = save_value
+            Hpos.board_size_reset(h)
+            Vpos.board_size_reset(v)
           end
         else
           save_value

@@ -1,5 +1,5 @@
 # frozen-string-literal: true
-
+#
 #    ９ ８ ７ ６ ５ ４ ３ ２ １
 #  +---------------------------+
 #  | ・v桂v銀v金v玉v金v銀v桂v香|一
@@ -12,7 +12,7 @@
 #  | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 #  | 香 桂 銀 金 玉 金 銀 桂 香|九
 #  +---------------------------+
-
+#
 module Warabi
   class KakikiBoardFormater
     def initialize(board)
@@ -37,15 +37,15 @@ module Warabi
       Position::Vpos.dimension.times.collect do |y|
         fields = Position::Hpos.dimension.times.collect do |x|
           point = Point.fetch([x, y])
-          object_to_s(@board[point])
+          soldier_to_str(@board.surface[point])
         end
         "|" + fields.join + "|" + Position::Vpos.fetch(y).name
       end
     end
 
-    def object_to_s(object)
+    def soldier_to_str(object)
       if object
-        object.to_kif
+        object.to_bod
       else
         " " + "・"
       end

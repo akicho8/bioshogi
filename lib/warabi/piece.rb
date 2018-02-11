@@ -205,7 +205,7 @@ module Warabi
 
     concerning :VectorMethods do
       included do
-        delegate :brave?, :cached_vectors, to: :piece_vector
+        delegate :brave?, :all_vectors, to: :piece_vector
       end
 
       def piece_vector

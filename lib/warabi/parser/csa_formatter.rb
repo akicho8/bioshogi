@@ -64,9 +64,9 @@ module Warabi
 
         list = mediator.hand_logs.collect.with_index do |e, i|
           if clock_exist?
-            [e.to_s_csa, "T#{used_seconds_at(i)}"].join(",")
+            [e.to_csa, "T#{used_seconds_at(i)}"].join(",")
           else
-            e.to_s_csa
+            e.to_csa
           end
         end
 

@@ -17,8 +17,8 @@ module Warabi
           puts "指し手: #{hand}"
           mediator.execute(hand)
 
-          last_piece_taken_from_opponent = mediator.reverse_player.last_piece_taken_from_opponent
-          if last_piece_taken_from_opponent && last_piece_taken_from_opponent.key == :king
+          last_captured_piece = mediator.reverse_player.last_captured_piece
+          if last_captured_piece && last_captured_piece.key == :king
             break
           end
         end

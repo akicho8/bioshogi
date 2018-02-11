@@ -63,7 +63,7 @@ module Warabi
         if r.nil?
           break
         end
-        # p sequencer.hand_logs.last.to_s_ki2
+        # p sequencer.hand_logs.last.to_ki2
         # p sequencer
         # p sequencer.variables
       end

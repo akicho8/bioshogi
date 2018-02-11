@@ -20,13 +20,13 @@ module Warabi
         if false
           out << mediator.hand_logs.group_by.with_index{|_, i| i / options[:cols] }.values.collect { |v|
             v.collect { |e|
-              s = e.to_s_ki2(with_mark: true, same_suffix: options[:same_suffix])
+              s = e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
               mb_ljust(s, options[:length])
             }.join.strip + "\n"
           }.join
         else
           list = mediator.hand_logs.collect do |e|
-            e.to_s_ki2(with_mark: true, same_suffix: options[:same_suffix])
+            e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
           end
 
           list2 = list.in_groups_of(options[:cols])

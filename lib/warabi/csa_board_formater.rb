@@ -19,7 +19,7 @@ module Warabi
       Position::Vpos.dimension.times.collect { |y|
         "P#{y.next}" + Position::Hpos.dimension.times.collect { |x|
           point = Point.fetch([x, y])
-          soldier_to_str(@board[point])
+          soldier_to_str(@board.surface[point])
         }.join + "\n"
       }.join
     end
@@ -28,7 +28,7 @@ module Warabi
 
     def soldier_to_str(soldier)
       if soldier
-        soldier.to_csa
+        soldier.to_csa_bod
       else
         " * "
       end

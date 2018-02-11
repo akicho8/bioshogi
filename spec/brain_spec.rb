@@ -39,8 +39,7 @@ module Warabi
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
         mediator = Mediator.test1(init: "▲１五香")
-        mediator.player_at(:black).brain.__soldiers_hands.collect(&:to_hand).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
-        mediator.player_at(:black).brain.__soldiers_hands.collect(&:name).should    == ["▲１四香", "▲１三香", "▲１三杏", "▲１二香", "▲１二杏", "▲１一杏"]             # 指した後の駒の状態
+        mediator.player_at(:black).brain.__soldiers_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
       end
     end
 
@@ -57,8 +56,7 @@ module Warabi
       #
       Board.size_change([3, 3]) do
         player = Mediator.player_test(init: "２二歩", pieces_set: "歩")
-        player.brain.__pieces_hands.collect(&:to_hand).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
-        player.brain.__pieces_hands.collect(&:name).should    == ["▲３二歩", "▲１二歩", "▲３三歩", "▲１三歩"]
+        player.brain.__pieces_hands.collect(&:to_kif).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
       end
     end
 

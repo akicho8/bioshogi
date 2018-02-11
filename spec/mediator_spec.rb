@@ -41,7 +41,7 @@ EOT
       mediator.reverse_player.location                       == dup.reverse_player.location
       mediator.reverse_player.piece_box.to_s                 == dup.reverse_player.piece_box.to_s
       mediator.reverse_player.to_s_soldiers                  == dup.reverse_player.to_s_soldiers
-      mediator.reverse_player.last_piece_taken_from_opponent == dup.reverse_player.last_piece_taken_from_opponent
+      mediator.reverse_player.last_captured_piece == dup.reverse_player.last_captured_piece
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do

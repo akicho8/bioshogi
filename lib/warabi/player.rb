@@ -3,12 +3,11 @@
 
 module Warabi
   class Player
-    # attr_accessor :name
     attr_accessor :location
     attr_accessor :mediator
     attr_accessor :runner
 
-    attr_accessor :last_piece_taken_from_opponent
+    attr_accessor :last_captured_piece
 
     def initialize(mediator, **params)
       super() if defined? super
@@ -85,7 +84,7 @@ module Warabi
 
     # 盤上の駒を from から to に移動する。成るなら promote_trigger を有効に。
     def move_to(from, to, promote_trigger = false)
-      @last_piece_taken_from_opponent = nil # 最後に取った駒 FIXME:名前がだめ
+      @last_captured_piece = nil # 最後に取った駒 FIXME:名前がだめ
 
       from = Point.fetch(from)
       to = Point.fetch(to)
@@ -116,7 +115,7 @@ module Warabi
         board.pick_up!(to)
         piece_box.add(target.piece.key => 1)
         @mediator.kill_counter += 1
-        @last_piece_taken_from_opponent = target.piece
+        @last_captured_piece = target.piece
       end
 
       from_soldier = board.pick_up!(from)
@@ -130,7 +129,9 @@ module Warabi
 
     # 棋譜の入力
     def execute(str)
-      @runner = Runner.new(self).execute(str)
+      @runner = Runner.new(self)
+      @runner.execute(str)
+
       if Warabi.config[:skill_set_flag]
         if Position.size_type == :board_size_9x9
           if mediator.mediator_options[:skill_set_flag]
@@ -138,6 +139,7 @@ module Warabi
           end
         end
       end
+
       @mediator.hand_log_push(self)
     end
 
@@ -279,7 +281,7 @@ module Warabi
         if s = find_collisione_pawn(soldier)
           raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{soldier}が打てません\n#{board_with_pieces}"
         end
-        if dead_piece?(soldier)
+        unless soldier.alive?
           raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"
         end
       end
@@ -287,29 +289,12 @@ module Warabi
       board.put_on(soldier)
     end
 
-    # 二歩でも行き止まりでもない？
+    # 二歩でも死に駒でもない？
     def rule_valid?(soldier)
-      !find_collisione_pawn(soldier) && !dead_piece?(soldier)
+      !find_collisione_pawn(soldier) && soldier.alive?
     end
-
-    # # モジュール化
-    # begin
-    #   def create_memento
-    #     # board → soldier → player の結び付きで戻ってくる(？) 要確認
-    #     Marshal.dump([@location, @pieces, board])
-    #   end
-    #
-    #   def restore_memento(memento)
-    #     @location, @pieces, board = Marshal.load(memento)
-    #   end
-    # end
 
     private
-
-    # 死に駒
-    def dead_piece?(soldier)
-      !Movabler.alive_piece?(soldier)
-    end
 
     # 二歩？
     def find_collisione_pawn(soldier)

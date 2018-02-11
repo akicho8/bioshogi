@@ -43,8 +43,8 @@ module Warabi
 
     # 互換性用
     if true
-      def kif_hand_logs; hand_logs.collect { |e| e.to_s_kif(with_mark: false) }; end
-      def ki2_hand_logs; hand_logs.collect { |e| e.to_s_ki2(with_mark: true) }; end
+      def kif_hand_logs; hand_logs.collect { |e| e.to_kif(with_mark: false) }; end
+      def ki2_hand_logs; hand_logs.collect { |e| e.to_ki2(with_mark: true) }; end
     end
 
     def to_bod(**options)
@@ -55,7 +55,7 @@ module Warabi
 
       last = ""
       if hand_log = hand_logs.last
-        last = hand_log.to_s_kif(with_mark: true)
+        last = hand_log.to_kif(with_mark: true)
       end
 
       s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
@@ -75,7 +75,7 @@ module Warabi
       to_bod(*args)
     end
 
-    def to_hand
+    def to_kif
       s = []
       s << @board.to_s
       s << @players.collect { |player|
