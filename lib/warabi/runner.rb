@@ -83,13 +83,13 @@ module Warabi
       # 指定の場所に来れる盤上の駒に絞る
       # kif → ki2 変換するときのために @candidate を常に作っとかんといけない
 
-      @soldiers = @player.soldiers.find_all { |e|
-        !!e.promoted == !!@promoted &&                      # 成っているかどうかで絞る
-        e.piece.key == @piece.key &&                        # 同じ種類に絞る
-        e.moved_list(@player.board).any? { |e| e.soldier.point == @point } && # 目的地に来れる
-        true
-      }
-      @candidate = @soldiers.collect(&:clone)
+      @soldiers = @player.soldiers.find_all do |e|
+        e.promoted == @promoted &&                      # 成っているかどうかで絞る
+          e.piece.key == @piece.key &&                        # 同じ種類に絞る
+          e.moved_list(@player.board).any? { |e| e.soldier.point == @point } && # 目的地に来れる
+          true
+      end
+      @candidate = @soldiers.freeze
 
       if @direct_trigger
         if @promoted
@@ -237,7 +237,7 @@ module Warabi
       if @md[:motion1].match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
-          @soldiers = @soldiers.sort_by{|soldier|soldier.point.x.value}.send(m, 1)
+          @soldiers = @soldiers.sort_by { |soldier| soldier.point.x.value }.send(m, 1)
         else
           m = _method([:>, :<], cond)
           @soldiers = @soldiers.find_all{|soldier|@point.x.value.send(m, soldier.point.x.value)}
