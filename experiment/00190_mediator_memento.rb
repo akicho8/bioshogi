@@ -1,4 +1,3 @@
-# 棋譜の入力
 require "./example_helper"
 
 s = MediatorMemento.new

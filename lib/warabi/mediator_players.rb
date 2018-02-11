@@ -61,7 +61,7 @@ module Warabi
       # @example 持駒から配置しない場合(無限に駒が置ける)
       #   soldier_create("▲３三歩 △１一歩", from_stand: false)
       def soldier_create(str, **options)
-        Soldier.movs_split(str).each do |str|
+        InputParser.scan(str).each do |str|
           soldier = Soldier.from_str(str)
           player_at(soldier.location).soldier_create(soldier, options)
         end

@@ -45,7 +45,7 @@ module Warabi
   end
 
   # スタックが空
-  class HistroyStackEmpty < WarabiError
+  class MementoStackEmpty < WarabiError
   end
 
   ################################################################################ 構文系 (SyntaxDefact)

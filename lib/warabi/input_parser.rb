@@ -17,47 +17,47 @@ module Warabi
     end
 
     def slice_one(str)
-      scan(str).first
+      scan(str.to_s).first
     end
 
     def regexp
-      @regexp ||= Regexp.union(human_input_regexp, csa_input_regexp, usi_input_regexp)
+      @regexp ||= Regexp.union(kif_or_ki2_regexp, csa_regexp, usi_regexp)
     end
 
     private
 
-    def human_input_regexp
+    def kif_or_ki2_regexp
       triangle = /(?<triangle>[#{Location.triangles_str}])/o
       point_to = /(?<point_to>#{Point.regexp})/o
       same = /(?<same>同)\p{blank}*/
 
       /
-          #{triangle}?
-          (#{point_to}#{same}|#{same}#{point_to}|#{point_to}|#{same}) # 12同 or 同12 or 12 or 同 に対応
-          (?<piece>#{Piece.all_names.join("|")})
-          (?<motion1>[左右直]?[寄引上行]?)
-          (?<motion2>不?成|打|合|生)?
-          (?<point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように "()" も含めて取る
-        /ox
+        #{triangle}?
+        (#{point_to}#{same}|#{same}#{point_to}|#{point_to}|#{same}) # 12同 or 同12 or 12 or 同 に対応
+        (?<piece>#{Piece.all_names.join("|")})
+        (?<motion1>[左右直]?[寄引上行]?)
+        (?<motion2>不?成|打|合|生)?
+        (?<point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
+      /ox
     end
 
-    def csa_input_regexp
+    def csa_regexp
       csa_basic_names = Piece.collect(&:csa_basic_name).compact.join("|")
       csa_promoted_names = Piece.collect(&:csa_promoted_name).compact.join("|")
 
       /
-          (?<sign>[+-])?
-          (?<csa_from>[0-9]{2}) # 00 = 駒台
-          (?<csa_to>[1-9]{2})
-          ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))
-        /ox
+        (?<sign>[+-])?
+        (?<csa_from>[0-9]{2}) # 00 = 駒台
+        (?<csa_to>[1-9]{2})
+        ((?<csa_basic_name>#{csa_basic_names})|(?<csa_promoted_name>#{csa_promoted_names}))
+      /ox
     end
 
-    def usi_input_regexp
+    def usi_regexp
       chars = Piece.collect(&:sfen_char).compact.join
       point = /[1-9][[:lower:]]/
 
-      part1 = /(?<usi_piece>[#{chars}])(?<usi_stroke_mark>\*)(?<usi_to>#{point})/o
+      part1 = /(?<usi_piece>[#{chars}])(?<_usi_stroke>\*)(?<usi_to>#{point})/o
       part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_promoted_trigger>\+)?/o
 
       /((#{part1})|(#{part2}))/o

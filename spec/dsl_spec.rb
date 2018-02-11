@@ -116,7 +116,7 @@ EOT
           dsl_block { board; push;  mov "▲７六歩"      }.hand_logs.count.should == 1
         end
         it "スタックが空のときにpopできない" do
-          expect { dsl_block { pop } }.to raise_error(HistroyStackEmpty)
+          expect { dsl_block { pop } }.to raise_error(MementoStackEmpty)
         end
       end
     end

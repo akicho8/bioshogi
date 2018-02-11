@@ -29,7 +29,7 @@ module Warabi
 
       def test2(params = {})
         start.tap do |o|
-          Soldier.ki2_parse(params[:exec]).each do |op|
+          InputParser.scan(params[:exec]).each do |op|
             player = o.player_at(op[:location])
             player.execute(op[:input])
           end

@@ -61,7 +61,7 @@ tp mediator.hand_logs.last.to_s_ki2
 # >> |    point_from | ６七                                                                                                                                                                                                 |
 # >> |          player | #<Warabi::Player:0x007fc922e8e958>                                                                                                                                                                  |
 # >> |       candidate | [<Warabi::Battler:70250925847060 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲７七銀>, <Warabi::Battler:70250925847040 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲６七銀>] |
-# >> |    point_same_p | true                                                                                                                                                                                                 |
+# >> |    point_same | true                                                                                                                                                                                                 |
 # >> |-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |--------|
 # >> | 同銀右 |

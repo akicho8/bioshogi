@@ -31,7 +31,7 @@ module Warabi
       if block
         yield snapshots.last
       end
-      Soldier.ki2_parse(attributes[:execute]).each do |str|
+      InputParser.scan(attributes[:execute]).each do |str|
         mediator.execute(str)
         snapshots << mediator.deep_dup
         if block

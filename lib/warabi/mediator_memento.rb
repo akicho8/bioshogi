@@ -25,7 +25,7 @@ module Warabi
 
     def stack_pop
       if @stack.empty?
-        raise HistroyStackEmpty
+        raise MementoStackEmpty
       end
       @mediator = @stack.pop
     end

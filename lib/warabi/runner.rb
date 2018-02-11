@@ -178,21 +178,21 @@ module Warabi
 
     def hand_log
       HandLog.new({
-          current_soldier: current_soldier,
-          before_soldier: before_soldier,
-          killed_piece: @killed_piece,
+          :current_soldier => current_soldier,
+          :before_soldier  => before_soldier,
+          :killed_piece    => @killed_piece,
 
-          point_to: @point_to,
-          piece: @piece,
-          promoted: @promoted,
-          promote_trigger: @promote_trigger,
-          strike_trigger: @strike_trigger,
-          point_from: @point_from,
-          player: @player,
-          candidate: @candidate,
-          point_same_p: point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
+          :point_to        => @point_to,
+          :piece           => @piece,
+          :promoted        => @promoted,
+          :promote_trigger => @promote_trigger,
+          :strike_trigger  => @strike_trigger,
+          :point_from      => @point_from,
+          :player          => @player,
+          :candidate       => @candidate,
+          :point_same    => point_same?, # 前の手と同じかどうかは状況によって変わってしまうためこの時点でさっさと生成しておく
 
-          skill_set: @skill_set,
+          :skill_set       => @skill_set,
         })
     end
 

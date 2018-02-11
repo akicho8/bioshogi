@@ -83,7 +83,7 @@ module Warabi
       end
 
       def evaluate(context)
-        Soldier.movs_split(@value).each do |str|
+        InputParser.scan(@value).each do |str|
           context.mediator_memento.mediator.execute(str)
           if context.mediator_memento.mediator.variables[:auto_flushing]
             context.snapshots << context.mediator_memento.mediator.deep_dup

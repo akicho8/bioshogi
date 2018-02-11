@@ -38,6 +38,7 @@ require_relative "warabi/piece"
 require_relative "warabi/piece_vector"
 require_relative "warabi/piece_score"
 require_relative "warabi/piece_box"
+require_relative "warabi/official_formatter"
 require_relative "warabi/hand_log"
 
 require_relative "warabi/soldier"
