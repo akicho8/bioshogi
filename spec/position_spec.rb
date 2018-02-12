@@ -43,7 +43,7 @@ module Warabi
     end
 
     it "座標反転" do
-      Position::Hpos.fetch("１").reverse.name.should == "９"
+      Position::Hpos.fetch("１").flip.name.should == "９"
     end
 
     it "数字表記" do

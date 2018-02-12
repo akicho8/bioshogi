@@ -134,8 +134,8 @@ module Warabi
 
       # 座標反転
       # @example
-      #   Position::Hpos.fetch("1").reverse.name # => "9"
-      def reverse
+      #   Position::Hpos.fetch("1").flip.name # => "9"
+      def flip
         self.class.fetch(self.class.units.size - 1 - @value)
       end
 
@@ -159,7 +159,7 @@ module Warabi
       def promotable?(location)
         v = self
         if location.white?
-          v = v.reverse
+          v = v.flip
         end
         if _promotable_size
           v.value < _promotable_size

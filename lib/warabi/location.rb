@@ -12,8 +12,8 @@ module Warabi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", reverse_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself,  },
-      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", reverse_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :reverse, },
+      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself,  },
+      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip, },
     ]
 
     alias index code
@@ -46,12 +46,9 @@ module Warabi
         end
       end
 
-      def b; self[:black]; end
-      def w; self[:white]; end
-
       # "▲▼△△"
       def triangles_str
-        @triangles_str ||= collect { |e| [e.mark, e.reverse_mark] }.join
+        @triangles_str ||= flat_map { |e| [e.mark, e.flip_mark] }.join
       end
 
       # b w とかではなく sfen の駒の文字の大文字小文字で判断する
@@ -89,11 +86,11 @@ module Warabi
       black? ? a : b
     end
 
-    def reverse
-      @reverse ||= self.class.fetch(index.next.modulo(self.class.count))
+    def flip
+      @flip ||= self.class.fetch(index.next.modulo(self.class.count))
     end
 
-    alias next_location reverse
+    alias next_location flip
 
     # lookup で引ける値のセットを返す
     # 自分のクラスメソッド内で使っているだけなので protected にしたいけど ruby はできない
@@ -101,7 +98,7 @@ module Warabi
       @match_target_values_set ||= [
         key,
         mark,
-        reverse_mark,
+        flip_mark,
         other_match_chars,
         to_sfen,
         name,

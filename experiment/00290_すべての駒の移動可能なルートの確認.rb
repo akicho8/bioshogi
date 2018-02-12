@@ -6,7 +6,7 @@ Piece.each do |piece|
   player = mediator.player_at(:black)
   soldier = Soldier.from_str("▲５五#{piece.name}")
   soldier.moved_list(player.board).each do |v|
-    player.board.abone_on(v.point)
+    player.board.delete_on(v.point)
     s = "#{v.point}竜"
     player.soldier_create(s, from_stand: false)
   end

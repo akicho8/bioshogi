@@ -80,7 +80,7 @@ module Warabi
 
     def store_if_alive(soldier, origin_soldier, yielder)
       if soldier.alive?
-        yielder << Moved.create(soldier: soldier, origin_soldier: origin_soldier)
+        yielder << MoveHand.create(soldier: soldier, origin_soldier: origin_soldier)
       end
     end
   end

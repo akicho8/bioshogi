@@ -28,16 +28,16 @@ module Warabi
       players[turn_info.current_location(diff).code]
     end
 
-    def reverse_player
+    def flip_player
       current_player(1)
     end
 
     def next_player
-      reverse_player
+      flip_player
     end
 
     def win_player
-      reverse_player
+      flip_player
     end
 
     def lose_player

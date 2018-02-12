@@ -25,7 +25,7 @@ module Warabi
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.size_change([3, 3]) do
         player = Mediator.player_test(init: "▲１一飛")
-        soldier = player.board.abone_on(Point["１一"])
+        soldier = player.board.delete_on(Point["１一"])
         player.board["１一"].should == nil # 盤面から消えている
         # soldier.point.should == nil        # 盤上から削除した駒の座標は nil になっている
         player.soldiers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない

@@ -18,7 +18,7 @@ Board.size_change([2, 4]) do
   puts Board.new
   Point["22"].to_xy         # => [0, 1]
   Point["22"].name          # => "２二"
-  Point["22"].reverse.name  # => "１三"
+  Point["22"].flip.name  # => "１三"
   Position::Hpos.fetch("2") # => #<Warabi::Position::Hpos:70093707690420 "２" 0>
 end
 
@@ -28,7 +28,7 @@ Board.size_change([1, 1]) do
   puts Board.new
   Point["11"].to_xy             # => [0, 0]
   Point["11"].name              # => "１一"
-  Point["11"].reverse.name  # => "１一"
+  Point["11"].flip.name  # => "１一"
   Position::Hpos.fetch("1") # => #<Warabi::Position::Hpos:70093712152580 "１" 0>
 end
 

@@ -64,7 +64,7 @@ mediator.piece_plot
 loop do
   hand = mediator.current_player.brain.all_hands.sample
   mediator.execute(hand)
-  last_captured_piece = mediator.reverse_player.last_captured_piece
+  last_captured_piece = mediator.flip_player.last_captured_piece
   if last_captured_piece && last_captured_piece.key == :king
     break
   end
@@ -328,7 +328,7 @@ soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "�
 mediator.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = Soldier.from_str(s)
-    s.merge(point: s[:point].reverse_if_white(player.location))
+    s.merge(point: s[:point].flip_if_white(player.location))
   }
   player.soldier_create(_soldiers)
 end

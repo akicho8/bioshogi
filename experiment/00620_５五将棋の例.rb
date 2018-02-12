@@ -5,7 +5,7 @@ mediator = Mediator.new
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"].collect { |e| Soldier.from_str(e, location: :black) }
 mediator.players.each do |player|
   if player.location.key == :white
-    s = soldiers.collect(&:reverse)
+    s = soldiers.collect(&:flip)
   else
     s = soldiers
   end

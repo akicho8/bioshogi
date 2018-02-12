@@ -85,15 +85,15 @@ module Warabi
     end
 
     # 座標を反転させて新しいPointオブジェクトを返す
-    def reverse
-      self.class.fetch([@x.reverse, @y.reverse])
+    def flip
+      self.class.fetch([@x.flip, @y.flip])
     end
 
     # 後手なら反転する
     # 先手から見た状態に統一したい場合に使う
-    def reverse_if_white(location)
+    def flip_if_white(location)
       if Location[location].key == :white
-        reverse
+        flip
       else
         self
       end

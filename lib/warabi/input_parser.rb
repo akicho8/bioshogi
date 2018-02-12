@@ -57,7 +57,7 @@ module Warabi
       chars = Piece.collect(&:sfen_char).compact.join
       point = /[1-9][[:lower:]]/
 
-      part1 = /(?<usi_piece>[#{chars}])(?<_usi_stroke>\*)(?<usi_to>#{point})/o
+      part1 = /(?<usi_piece>[#{chars}])(?<_usi_direct>\*)(?<usi_to>#{point})/o
       part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_promote_trigger>\+)?/o
 
       /((#{part1})|(#{part2}))/o

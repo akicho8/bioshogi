@@ -1,16 +1,11 @@
-# 昔作ったテスト
-#
-# ・内容がわかりにくい
-# ・テストが不完全
-# ・だが内容はあっている
-#
+# 昔作ったテストでコンパクトにしたぶん何をテストしているのか判然としなくなっているもの
 
 require_relative "../spec_helper"
 
 module Warabi
   describe "将棋連盟が定めている人間向け棋譜入力" do
     before do
-      @params = {pieces_add: "飛 角"}
+      @params = {pieces_add: "飛 角 銀"}
     end
 
     describe "http://www.shogi.or.jp/faq/kihuhyouki.html" do
@@ -184,7 +179,7 @@ module Warabi
               "______", "______", "______",
               "６六銀", "５六銀", "______",
             ]})
-        Mediator.read_spec(@params.merge(pieces_add: "銀", exec: "５五銀打")).should == ["５五銀打", "５五銀打"]
+        Mediator.read_spec(@params.merge(exec: "５五銀打")).should == ["５五銀打", "５五銀打"]
       end
     end
 
@@ -192,17 +187,12 @@ module Warabi
       Mediator.read_spec(init: ["３四銀", "２四銀"], exec: "２三銀直不成").should == ["２三銀(24)", "２三銀直不成"]
     end
 
-    it "２三銀引成できる？" do
+    it "２三銀引成できる" do
       Mediator.read_spec(init: ["３二銀", "３四銀"], exec: "２三銀引成").should == ["２三銀成(32)", "２三銀引成"]
     end
 
     it "「直上」ではなく「直」になる" do
       Mediator.read_spec(init: ["２九金", "１九金"], exec: "２八金直").should == ["２八金(29)", "２八金直"]
-    end
-
-    # FIXME: このテスト関係ない
-    it "同" do
-      Mediator.test1(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"]).reverse_player.runner.hand_log.to_kif_ki2.should == ["２四歩(23)", "同歩"]
     end
   end
 end

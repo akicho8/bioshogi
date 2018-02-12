@@ -75,9 +75,9 @@ module Warabi
                 piece = Piece.fetch(piece_key)
                 soldier = mediator.board.surface.fetch(point)
                 if soldier.piece != piece
-                  raise SyntaxDefact, "#{point.name}の#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.piece.name}です : #{v.inspect}"
+                  raise SyntaxDefact, "#{v}として#{point}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
                 end
-                mediator.board.abone_on(soldier.point)
+                mediator.board.delete_on(soldier.point)
               end
             end
             @board_source = mediator.board.to_s

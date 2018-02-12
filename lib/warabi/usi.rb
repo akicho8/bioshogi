@@ -26,7 +26,7 @@ module Warabi
       def board_setup(mediator)
         sfen.soldiers.each do |soldier|
           player = mediator.player_at(soldier.location)
-          player.put_on_with_valid(soldier)
+          player.board.put_on(soldier, validate: true)
         end
         mediator.turn_info.handicap = sfen.handicap?
         mediator.turn_info.counter = sfen.turn_counter

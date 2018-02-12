@@ -9,26 +9,15 @@ list.each do |e|
   p mediator.turn_info.counter
   pp [e, mediator.hand_logs.last.to_kif]
 end
-# ~> /Users/ikeda/src/warabi/lib/warabi/player.rb:358:in `put_on_with_valid': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Warabi::DeadPieceRuleError)
-# ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# ~> +---------------------------+
-# ~> |v香v桂v角 ・ ・ ・ ・ ・ ・|一
-# ~> |v飛 ・ ・ ・ ・ ・ ・ ・ ・|二
-# ~> | ・ 歩 ・ ・ ・v金v金 ・ ・|三
-# ~> |v歩 ・ 銀v歩v歩v歩v歩 ・v玉|四
-# ~> | ・ 銀 ・ ・ ・ 歩 ・v桂v歩|五
-# ~> | 歩 ・ 歩 歩 銀 ・ 歩 飛 ・|六
-# ~> | ・ 玉 ・ 銀 ・ 金 ・ ・ ・|七
-# ~> | ・ ・ ・ 角 ・ ・ ・ ・ ・|八
-# ~> | 香 ・ ・ ・ ・ ・ ・ ・ 香|九
-# ~> +---------------------------+
-# ~> 先手の持駒：歩 香
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:128:in `move_to'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/runner.rb:221:in `execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:141:in `execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:224:in `block in execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:209:in `each'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:209:in `execute'
+# ~> /Users/ikeda/src/warabi/lib/warabi/board.rb:67:in `rule_validate': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Warabi::DeadPieceRuleError)
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/board.rb:26:in `put_on'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:280:in `board.put_on_with_valid'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:127:in `move_to'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player_executor.rb:129:in `execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:133:in `execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:34:in `block in execute'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:19:in `each'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:19:in `execute'
 # ~> 	from -:8:in `block in <main>'
 # ~> 	from -:6:in `each'
 # ~> 	from -:6:in `<main>'

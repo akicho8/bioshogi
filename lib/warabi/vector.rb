@@ -6,7 +6,7 @@
 
 module Warabi
   class Vector < Array
-    def reverse_sign
+    def flip_sign
       x, y = self
       self.class[-x, -y]
     end

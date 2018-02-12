@@ -62,7 +62,7 @@ module Warabi
         s << "まで#{mediator.turn_info.counter}手で"
         s << reason
         unless draw
-          s << mediator.reverse_player.call_name
+          s << mediator.flip_player.call_name
           s << "の"
           s << "勝ち"
         end

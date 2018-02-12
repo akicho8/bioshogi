@@ -6,7 +6,7 @@ mediator.piece_plot
 loop do
   hand = mediator.current_player.brain.all_hands.sample
   mediator.execute(hand)
-  last_captured_piece = mediator.reverse_player.last_captured_piece
+  last_captured_piece = mediator.flip_player.last_captured_piece
   if last_captured_piece && last_captured_piece.key == :king
     break
   end

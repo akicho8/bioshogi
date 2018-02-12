@@ -4,20 +4,20 @@ module Warabi
   class HandLog
     include ActiveModel::Model
 
-    attr_accessor :current_direct
-    attr_accessor :current_moved
+    attr_accessor :direct_hand
+    attr_accessor :moved_hand
 
     attr_accessor :candidate
     attr_accessor :point_same
     attr_accessor :skill_set
-    attr_accessor :killed_piece
+    attr_accessor :killed_soldier
 
     def to_kif(**options)
       options = {
         with_mark: false,
       }.merge(options)
 
-      current_hand.to_kif(options)
+      hand.to_kif(options)
     end
 
     def to_ki2(**options)
@@ -25,11 +25,11 @@ module Warabi
     end
 
     def to_csa(**options)
-      current_hand.to_csa(options)
+      hand.to_csa(options)
     end
 
     def to_sfen(**options)
-      current_hand.to_sfen(options)
+      hand.to_sfen(options)
     end
 
     def to_kif_ki2
@@ -41,28 +41,19 @@ module Warabi
     end
 
     def to_skill_set_kif_comment(**options)
-      skill_set.kif_comment(current_soldier.location)
+      skill_set.kif_comment(soldier.location)
     end
 
-    def current_soldier
-      current_hand.soldier
+    def soldier
+      hand.soldier
     end
 
-    def current_hand
-      current_moved || current_direct
+    def hand
+      moved_hand || direct_hand
     end
 
     def official_formatter(**options)
       OfficialFormatter.new(self, options)
-    end
-
-    def attributes
-      [
-        :current_soldier,
-        :candidate,
-        :point_same,
-      ].inject({}) {|a,
-        key| a.merge(key => send(key)) }
     end
   end
 end

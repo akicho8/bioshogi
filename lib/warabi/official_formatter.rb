@@ -8,7 +8,7 @@ module Warabi
     def initialize(base, **options)
       @options = {
         with_mark: false,    # 先手後手のマークを入れる？
-        strike_force: false, # 「打」を省略できるときでも「打」を明示する？
+        direct_force: false, # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",     # 「同」の後に入れる文字列
         compact: true,       # 3文字を超えたらとき空白が含まれていれば詰める？
       }.merge(options)
@@ -60,7 +60,7 @@ module Warabi
         # > 盤上の駒が動いた場合は通常の表記と同じ
         # > 持駒を打った場合は「打」と記入
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
-        if @options[:strike_force] || candidate.present?
+        if @options[:direct_force] || !candidate.empty?
           s << "打"
         end
       else
@@ -338,30 +338,22 @@ module Warabi
       !_yr.cover?(_ty)
     end
 
-    def candidate
-      base.candidate || []
-    end
-
-    delegate :current_direct, :current_moved, :current_hand, to: :base
+    delegate :direct_hand, :moved_hand, :soldier, :hand, :candidate, to: :base
     delegate :point, :piece, :location, :promoted, to: :soldier
 
-    def soldier
-      current_hand.soldier
-    end
-
     def direct_trigger?
-      current_direct
+      direct_hand
     end
 
     def promote_trigger?
-      if current_moved
-        current_moved.promote_trigger
+      if moved_hand
+        moved_hand.promote_trigger?
       end
     end
 
     def point_from
-      if current_moved
-        current_moved.origin_soldier.point
+      if moved_hand
+        moved_hand.origin_soldier.point
       end
     end
 

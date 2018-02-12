@@ -45,7 +45,7 @@ module Warabi
     end
 
     it "次の手番を返す" do
-      Location[:white].reverse.key.should == :black
+      Location[:white].flip.key.should == :black
       Location[:white].next_location.key.should == :black
     end
 

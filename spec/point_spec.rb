@@ -81,11 +81,11 @@ module Warabi
     end
 
     it "反転" do
-      Point["７六"].reverse.should == Point["３四"]
+      Point["７六"].flip.should == Point["３四"]
     end
 
     it "後手なら反転" do
-      Point["７六"].reverse_if_white(:white).should == Point["３四"]
+      Point["７六"].flip_if_white(:white).should == Point["３四"]
     end
 
     it "シリアライズからの復元" do

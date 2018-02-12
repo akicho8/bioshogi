@@ -6,7 +6,7 @@ module Warabi
     include MediatorPlayers
     include MediatorBoard
     include MediatorSerializers
-    include MediatorExecuter
+    include MediatorExecutor
     include MediatorVariables
     include MediatorTest
   end

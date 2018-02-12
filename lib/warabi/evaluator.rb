@@ -12,7 +12,7 @@ module Warabi
 
     # 自分の駒が良い状態なのは自分がプラスになり、相手の形勢が良いときは自分にとってマイナスになる
     def evaluate
-      player_score_for(@player) - player_score_for(@player.reverse_player)
+      player_score_for(@player) - player_score_for(@player.flip_player)
     end
 
     #       |----------| ← この部分の幅をパーセンテージで返す
@@ -29,7 +29,7 @@ module Warabi
     private
 
     # def evaluate_pair
-    #   [evaluate_self, evaluate_reverse]
+    #   [evaluate_self, evaluate_flip]
     # end
     #
     # # 自分側の状態だけを考慮して取得
@@ -38,8 +38,8 @@ module Warabi
     # end
     #
     # # 相手側の状態だけを考慮して取得
-    # def evaluate_reverse
-    #   player_score_for(@player.reverse_player)
+    # def evaluate_flip
+    #   player_score_for(@player.flip_player)
     # end
 
     def player_score_for(player)
@@ -55,8 +55,8 @@ module Warabi
       }.sum
 
       # 持駒
-      score += player.pieces.collect { |e|
-        e.hold_weight
+      score += player.piece_box.collect { |piece_key, count|
+        Piece[piece_key].hold_weight * count
       }.sum
 
       score

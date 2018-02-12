@@ -9,7 +9,7 @@ module Warabi
     end
 
     def execute
-      if e = TacticInfo.soldier_hash_table[current_soldier]
+      if e = TacticInfo.soldier_hash_table[soldier]
         e.each { |e| execute_one(e) }
       end
     end
@@ -58,7 +58,7 @@ module Warabi
         end
 
         # 「打」時制限。移動元駒があればskip
-        if e.stroke_only
+        if e.direct_only
           if origin_soldier
             throw :skip
           end
@@ -66,14 +66,14 @@ module Warabi
 
         # 駒を取ったとき制限。取ってないならskip
         if e.kill_only
-          unless player.runner.killed_piece
+          unless player.executor.killed_soldier
             throw :skip
           end
         end
 
         # 所持駒数一致制限。異なっていたらskip
-        if v = e.hold_piece_count_eq
-          if player.pieces.size != v
+        if v = e.hold_piece_empty
+          if !player.piece_box.empty?
             throw :skip
           end
         end
@@ -128,37 +128,37 @@ module Warabi
 
         # 歩を持っていたらskip
         if e.not_have_pawn
-          if pieces_hash.has_key?(:pawn)
+          if piece_box.has_key?(:pawn)
             throw :skip
           end
         end
 
         # 歩を除いて何か持っていたらskip
         if e.not_have_anything_except_pawn
-          if !pieces_hash.except(:pawn).empty?
+          if !piece_box.except(:pawn).empty?
             throw :skip
           end
         end
 
         if true
           # 駒が一致していなければskip
-          if v = e.hold_piece_eq2
-            if pieces_hash != v
+          if v = e.hold_piece_eq
+            if piece_box != v
               throw :skip
             end
           end
 
           # 指定の駒をすべて含んでいるならOK
-          if v = e.hold_piece_in2
-            if v.all? {|e| pieces_hash.has_key?(e) }
+          if v = e.hold_piece_in
+            if v.all? { |piece_key, _| piece_box.has_key?(piece_key) }
             else
               throw :skip
             end
           end
 
           # 指定の駒をどれか含んでいるならskip
-          if v = e.hold_piece_not_in2
-            if v.any? {|e| pieces_hash.has_key?(e) }
+          if v = e.hold_piece_not_in
+            if v.any? { |piece_key, _| piece_box.has_key?(piece_key) }
               throw :skip
             end
           end
@@ -180,13 +180,13 @@ module Warabi
         end
 
         list << e
-        player.runner.skill_set.public_send(e.tactic_info.list_key) << e
+        player.executor.skill_set.public_send(e.tactic_info.list_key) << e
       end
     end
 
     # 後手側の場合は先手側の座標に切り替え済み
-    def current_soldier
-      @current_soldier ||= player.runner.current_soldier.reverse_if_white
+    def soldier
+      @soldier ||= player.executor.soldier.flip_if_white
     end
 
     # 比較順序超重要。不一致しやすいものから比較する
@@ -194,14 +194,14 @@ module Warabi
       (v = surface[s.point]) && v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
     end
 
-    # 持駒を {:pawn => 3} 形式にする
-    def pieces_hash
-      @pieces_hash ||= player.pieces.group_by(&:key).transform_values(&:size)
+    # 持駒
+    def piece_box
+      @piece_box ||= player.piece_box
     end
 
     # 移動元情報
     def origin_soldier
-      @origin_soldier ||= player.runner.origin_soldier
+      @origin_soldier ||= player.executor.origin_soldier
     end
 
     # 盤面

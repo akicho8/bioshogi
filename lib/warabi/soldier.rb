@@ -79,26 +79,33 @@ module Warabi
     end
 
     def attributes
-      {piece: piece, promoted: promoted, point: point, location: location}
+      [:piece, :promoted, :point, :location].inject({}) { |a, e| a.merge(e => public_send(e)) }
     end
 
-    # def to_soldier
-    #   Soldier.create(soldier_attributes)
-    # end
-
-    # soldiers.sort できるようにする
-    # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい
+    # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい。point は基本ユニークなのでこれで並べる
     def <=>(other)
       point <=> other.point
     end
 
-    def reverse
-      self.class.create(piece: piece, promoted: promoted, point: point.reverse, location: location.reverse)
+    def ==(other)
+      eql?(other)
     end
 
-    def reverse_if_white
+    def eql?(other)
+      self.class == other.class && attributes == other.attributes
+    end
+
+    def hash
+      attributes.hash
+    end
+
+    def flip
+      self.class.create(piece: piece, promoted: promoted, point: point.flip, location: location.flip)
+    end
+
+    def flip_if_white
       if location.key == :white
-        reverse
+        flip
       else
         self
       end
@@ -116,23 +123,7 @@ module Warabi
       self.class.create(self.attributes.merge(attributes))
     end
 
-    def eql?(other)
-      raise MustNotHappen if self.class != other.class
-      attributes == other.attributes
-    end
-
-    def hash
-      attributes.hash
-    end
-
-    def ==(other)
-      eql?(other)
-    end
-
-    # 移動可能な座標を取得
-    def moved_list(board)
-      Movabler.moved_list(board, self)
-    end
+    ################################################################################ Utility
 
     # 現状の状態から成れるか？
     # 相手陣地から出たときのことは考慮しなくてよい
@@ -145,7 +136,26 @@ module Warabi
         true
     end
 
-    ################################################################################ Reader
+    # 移動可能な座標を取得
+    def moved_list(board)
+      Movabler.moved_list(board, self)
+    end
+
+    # 二歩？
+    def collision_pawn(board)
+      if piece.key == :pawn && !promoted
+        board.vertical_pieces(point.x).find do |e|
+          e.piece.key == :pawn && !e.promoted && e.location == location
+        end
+      end
+    end
+
+    # この駒の状態で board に置いても「二歩」いも「死に駒」にもならない？
+    def rule_valid?(board)
+      !collision_pawn(board) && alive?
+    end
+
+    ################################################################################ Formatter
 
     def to_s
       name
@@ -184,7 +194,7 @@ module Warabi
     end
   end
 
-  class Direct
+  class DirectHand
     concerning :Shared do
       included do
         include ActiveModel::Model
@@ -241,12 +251,12 @@ module Warabi
     end
   end
 
-  class Moved
-    include Direct::Shared
+  class MoveHand
+    include DirectHand::Shared
 
     attr_accessor :origin_soldier
 
-    def promote_trigger
+    def promote_trigger?
       !origin_soldier.promoted && soldier.promoted
     end
 
@@ -259,7 +269,7 @@ module Warabi
         options[:with_mark] ? soldier.location.name : nil,
         soldier.point.name,
         origin_soldier.any_name,
-        promote_trigger ? "成" : "",
+        promote_trigger? ? "成" : "",
         "(", origin_soldier.point.number_format, ")",
       ].join
     end
@@ -277,7 +287,7 @@ module Warabi
       [
         origin_soldier.point.to_sfen,
         soldier.point.to_sfen,
-        promote_trigger ? "+" : nil,
+        promote_trigger? ? "+" : nil,
       ].join
     end
   end

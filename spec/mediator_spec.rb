@@ -30,25 +30,25 @@ EOT
 
     it "状態の復元" do
       mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-      dup = mediator.deep_dup
-      mediator.turn_info.counter.should == dup.turn_info.counter
-      mediator.kif_hand_logs.should     == dup.kif_hand_logs
-      mediator.ki2_hand_logs.should     == dup.ki2_hand_logs
-      mediator.to_s.should              == dup.to_s
+      m2 = mediator.deep_dup
+      mediator.turn_info.counter.should == m2.turn_info.counter
+      mediator.kif_hand_logs.should     == m2.kif_hand_logs
+      mediator.ki2_hand_logs.should     == m2.ki2_hand_logs
+      mediator.to_s.should              == m2.to_s
 
-      mediator.board.to_s_soldiers == dup.board.to_s_soldiers
+      mediator.board.to_s_soldiers == m2.board.to_s_soldiers
 
-      mediator.reverse_player.location                       == dup.reverse_player.location
-      mediator.reverse_player.piece_box.to_s                 == dup.reverse_player.piece_box.to_s
-      mediator.reverse_player.to_s_soldiers                  == dup.reverse_player.to_s_soldiers
-      mediator.reverse_player.last_captured_piece == dup.reverse_player.last_captured_piece
+      mediator.flip_player.location                       == m2.flip_player.location
+      mediator.flip_player.piece_box.to_s                 == m2.flip_player.piece_box.to_s
+      mediator.flip_player.to_s_soldiers                  == m2.flip_player.to_s_soldiers
+      mediator.flip_player.last_captured_piece == m2.flip_player.last_captured_piece
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
       mediator = Mediator.test1(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.reverse_player.runner.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
+      mediator.flip_player.executor.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do

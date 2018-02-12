@@ -49,7 +49,7 @@ module Warabi
 
     def normalized_vectors(location, vectors)
       if location.white?
-        vectors = vectors.collect(&:reverse_sign)
+        vectors = vectors.collect(&:flip_sign)
       end
       vectors
     end

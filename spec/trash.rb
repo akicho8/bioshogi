@@ -18,7 +18,7 @@
 #     mediator.player_at(:black).soldier_create("１三香", from_stand: false)
 #     # puts mediator
 #     mediator.board["１三"].moved_list(with_promoted: true).collect(&:to_s).should == ["１二香", "１一杏"]
-#     # mediator.board.abone_all
+#     # mediator.board.all_clear
 #   end
 # end
 #
@@ -34,6 +34,6 @@
 #     mediator.player_at(:black).soldier_create("１三杏", from_stand: false)
 #     # puts mediator
 #     mediator.board["１三"].moved_list(with_promoted: true).collect(&:to_s).should == ["１二杏"]
-#     # mediator.board.abone_all
+#     # mediator.board.all_clear
 #   end
 # end

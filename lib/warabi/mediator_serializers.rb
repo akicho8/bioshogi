@@ -1,14 +1,57 @@
 module Warabi
   concern :MediatorSerializers do
+    def judgment_message
+      "まで#{turn_info.counter}手で#{win_player.call_name}の勝ち"
+    end
+
+    def to_s(*args)
+      to_bod(*args)
+    end
+
+    concerning :KifMethods do
+      def to_bod(**options)
+        s = []
+        s << player_at(:white).hold_pieces_snap + "\n"
+        s << @board.to_s
+        s << player_at(:black).hold_pieces_snap + "\n"
+
+        last = ""
+        if hand_log = hand_logs.last
+          last = hand_log.to_kif(with_mark: true)
+        end
+
+        s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
+
+        if current_player.location.key == :white
+          s << "\n"
+          s << "#{current_player.call_name}番\n"
+        end
+
+        s.join
+      end
+
+      def to_kif
+        s = []
+        s << @board.to_s
+        s << @players.collect { |player|
+          "#{player.call_name}の持駒:#{player.piece_box.to_s}"
+        }.join("\n") + "\n"
+        s.join
+      end
+    end
+
     concerning :CsaMethods do
       def to_csa(**options)
         s = []
+
         preset_name = board.preset_name
+
         if preset_name
           unless options[:oneline]
             s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}" + "\n"
           end
         end
+
         if options[:board_expansion]
           s << board.to_csa
         else
@@ -18,11 +61,13 @@ module Warabi
             s << board.to_csa
           end
         end
+
         players.each do |player|
           if v = player.to_csa.presence
             s << v + "\n"
           end
         end
+
         s.join
       end
     end
@@ -40,7 +85,7 @@ module Warabi
 
       # 平手で開始する直前の状態か？
       def startpos?
-        board.preset_name == "平手" && players.all? { |e| e.pieces.empty? }
+        board.preset_name == "平手" && players.all? { |e| e.piece_box.empty? }
       end
 
       # 現在の局面
@@ -56,9 +101,8 @@ module Warabi
         s = []
         s << "sfen"
         s << board.to_sfen
-        # p turn_info
         s << turn_info.current_location.to_sfen
-        if players.all? { |e| e.pieces.empty? }
+        if players.all? { |e| e.piece_box.empty? }
           s << "-"
         else
           s << players.collect(&:to_sfen).join

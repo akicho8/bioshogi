@@ -30,7 +30,11 @@ module Warabi
 
         ################################################################################
 
-        left_part = "%*d %s" % [options[:number_width], mediator.hand_logs.size.next, mb_ljust(last_action_info.kif_word, options[:length])]
+        left_part = "%*d %s" % [
+          options[:number_width],
+          mediator.hand_logs.size.next,
+          mb_ljust(last_action_info.kif_word, options[:length]),
+        ]
         right_part = nil
 
         if true

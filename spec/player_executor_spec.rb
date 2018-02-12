@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe Runner do
+  describe PlayerExecutor do
     describe "指し手の正規表現" do
       def test1(s)
         s.match(InputParser.regexp).named_captures.compact

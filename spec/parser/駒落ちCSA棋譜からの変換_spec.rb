@@ -93,7 +93,7 @@ EOT
     end
 
     it "表記が間違っている" do
-      expect { Parser.parse("V2.2,PI82HI22OU").to_csa }.to raise_error(SyntaxDefact, '２二の玉を落とす指定がありましたがそこにある駒は角です : "82HI22OU"')
+      expect { Parser.parse("V2.2,PI82HI22OU").to_csa }.to raise_error(SyntaxDefact)
     end
   end
 

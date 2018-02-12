@@ -85,8 +85,13 @@ module Warabi
         player_test(*args).soldiers.collect(&:name).sort
       end
 
-      def read_spec(*args)
-        player_test(*args).runner.hand_log.to_kif_ki2
+      def read_spec(params)
+        mediator = new
+        player = mediator.player_at(:black)
+        player.pieces_add("歩9角飛香2桂2銀2金2玉")
+        player.soldier_create(params[:init] || [], from_stand: false)
+        Array.wrap(params[:exec]).each { |v| player.execute(v) }
+        mediator.hand_logs.last.to_kif_ki2
       end
     end
   end

@@ -5,7 +5,7 @@ module Warabi
   class Player
     attr_accessor :location
     attr_accessor :mediator
-    attr_accessor :runner
+    attr_accessor :executor
 
     attr_accessor :last_captured_piece
 
@@ -27,8 +27,8 @@ module Warabi
       @mediator.board
     end
 
-    def reverse_player
-      @mediator.player_at(location.reverse)
+    def flip_player
+      @mediator.player_at(location.flip)
     end
 
     # 先手後手を設定は適当でいい
@@ -43,7 +43,7 @@ module Warabi
       soldiers = PresetInfo.fetch("平手").board_parser.location_adjust[location.key]
       soldiers.each do |soldier|
         piece_box.pick_out(soldier.piece)
-        put_on_with_valid(soldier)
+        board.put_on(soldier, validate: true)
       end
     end
 
@@ -54,7 +54,7 @@ module Warabi
     def soldier_create(soldier_or_str, **options)
       if soldier_or_str.kind_of? Array
         soldier_or_str.each do |e|
-          soldier_create(e)
+          soldier_create(e, options)
         end
       else
         options = {
@@ -72,19 +72,12 @@ module Warabi
         if options[:from_stand]
           piece_box.pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
         end
-        put_on_with_valid(soldier)
+        board.put_on(soldier, validate: true)
       end
     end
 
-    # # 盤上の自分の駒
-    # def soldiers
-    #   soldiers
-    #   # @ board.surface.values.find_all{|soldier|soldier.player == self}
-    # end
-
-    # 盤上の駒を from から to に移動する。成るなら promote_trigger を有効に。
     def move_to(from, to, promote_trigger = false)
-      @last_captured_piece = nil # 最後に取った駒 FIXME:名前がだめ
+      @last_captured_piece = nil
 
       from = Point.fetch(from)
       to = Point.fetch(to)
@@ -93,29 +86,29 @@ module Warabi
       if true
         if promote_trigger
           if !from.promotable?(location) && !to.promotable?(location)
-            raise NotPromotable, "成りを入力しましたが #{from.name} から #{to.name} への移動では成れません"
+            raise NotPromotable, "成りを入力しましたが#{from}から#{to}への移動では成れません"
           end
 
           soldier = board.lookup(from)
           if soldier.promoted
-            raise AlredyPromoted, "成りを入力しましたが #{soldier.point.name} の #{soldier.piece.name} はすでに成っています"
+            raise AlredyPromoted, "成りを明示しましたが#{soldier.point}の#{soldier.piece.name}はすでに成っています"
           end
         end
 
         if (soldier = board.lookup(from)) && location != soldier.location
-          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{soldier.point}にある#{soldier.location}の#{soldier.any_name}を#{to}に動かそうとしています\n#{board_with_pieces}"
+          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{soldier}を#{to}に動かそうとしています\n#{mediator.to_bod}"
         end
       end
 
       # 移動先に相手の駒があれば取って駒台に移動する
-      if target = board.lookup(to)
-        if target.location == location
-          raise SamePlayerBattlerOverwrideError, "移動先の #{to.name} には自分の駒 #{target.name.inspect} があります"
+      if target_soldier = board.lookup(to)
+        if target_soldier.location == location
+          raise SamePlayerBattlerOverwrideError, "移動先の#{to}には自分の駒(#{target_soldier})があります"
         end
         board.pick_up!(to)
-        piece_box.add(target.piece.key => 1)
+        piece_box.add(target_soldier.piece.key => 1)
         @mediator.kill_counter += 1
-        @last_captured_piece = target.piece
+        @last_captured_piece = target_soldier.piece
       end
 
       from_soldier = board.pick_up!(from)
@@ -124,13 +117,13 @@ module Warabi
         attributes[:promoted] = true
       end
       attributes[:point] = to
-      put_on_with_valid(Soldier.create(attributes))
+      board.put_on(Soldier.create(attributes), validate: true)
     end
 
     # 棋譜の入力
     def execute(str)
-      @runner = Runner.new(self)
-      @runner.execute(str)
+      @executor = PlayerExecutor.new(self)
+      @executor.execute(str)
 
       if Warabi.config[:skill_set_flag]
         if Position.size_type == :board_size_9x9
@@ -140,19 +133,7 @@ module Warabi
         end
       end
 
-      @mediator.hand_log_push(self)
-    end
-
-    def inspect
-      [("-" * 40), super, board_with_pieces, ("-" * 40)].join("\n")
-    end
-
-    # 盤面と持駒(表示用)
-    def board_with_pieces
-      s = []
-      s << board.to_s
-      s << "#{hold_pieces_snap}\n"
-      s.join
+      @mediator.hand_logs << @executor.hand_log
     end
 
     concerning :HelperMethods do
@@ -170,25 +151,10 @@ module Warabi
         @piece_box ||= PieceBox.new
       end
 
-      delegate :pieces, to: :piece_box
-
-      # 持駒の名前一覧(表示・デバッグ用)
-      def piece_names
-        piece_box.pieces.collect(&:name).sort
-      end
-
-      # 配布して持駒にする
-      #
-      #   player = Player.new
-      #   player.pieces_add("飛 歩二")
-      #   player.piece_box.to_s # => "飛 歩二"
-      #
       def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
         piece_box.add(Piece.s_to_h(str))
       end
 
-      # 持駒表記変換 (コード → 人間表記)
-      #   pieces_set("歩2 飛") # => [Piece["歩"], Piece["歩"], Piece["飛"]]
       def pieces_set(str)
         piece_box.set(Piece.s_to_h(str))
       end
@@ -248,67 +214,7 @@ module Warabi
       end
     end
 
-    # # 持駒を配置してみた状態にする(FIXME: これは不要になったのでテストも不要かも)
-    def safe_put_on(arg, &block)
-      _save = marshal_dump
-      execute(arg)
-      if block
-        yield self
-      end
-      marshal_load(_save)
-      # shash = Soldier.from_str(arg)
-      # _soldier = Battler.new(shash.merge(player: self))
-      # get_errors(shash[:point], shash[:piece], shash[:promoted]).each{|error|raise error}
-      # begin
-      #   soldiers << _soldier
-      #   put_on_with_valid(shash[:point], soldier)
-      #   if block
-      #     yield soldier
-      #   end
-      # ensure
-      #   soldier = board.pick_up!(shash[:point])
-      #   @pieces << _soldier.piece
-      #   soldiers.pop
-      # end
-    end
-
-    def put_on_with_valid(soldier, **options)
-      options = {
-        validate: true,
-      }.merge(options)
-
-      if options[:validate]
-        if s = find_collisione_pawn(soldier)
-          raise DoublePawnError, "二歩です。すでに#{s.name}があるため#{soldier}が打てません\n#{board_with_pieces}"
-        end
-        unless soldier.alive?
-          raise DeadPieceRuleError, "#{soldier.to_s.inspect} は死に駒です。「#{soldier}成」の間違いの可能性があります\n#{board_with_pieces}"
-        end
-      end
-
-      board.put_on(soldier)
-    end
-
-    # 二歩でも死に駒でもない？
-    def rule_valid?(soldier)
-      !find_collisione_pawn(soldier) && soldier.alive?
-    end
-
     private
-
-    # 二歩？
-    def find_collisione_pawn(soldier)
-      if soldier.piece.key == :pawn && !soldier.promoted
-        pawns_on_board(soldier.point)
-      end
-    end
-
-    # 縦列の自分の歩たちを取得
-    def pawns_on_board(point)
-      board.vertical_pieces(point.x).find do |e|
-        e.location == location && e.piece.key == :pawn && !e.promoted
-      end
-    end
 
     def moved_list(soldier)
       Movabler.moved_list(board, soldier)

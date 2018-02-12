@@ -300,7 +300,7 @@
     <input class="nav button forward" type="button">
     <input class="nav button last" type="button">
     <select id="moveBox"></select>
-    <img id="reverse_button">
+    <img id="flip_button">
   </div>
   <form id="send-message">
     <input type="text" id="messageBox" />
@@ -421,9 +421,9 @@
           setNavigation();
       }
       // avatarsを見て画像を表示する
-      function displayAvatar(reverse){
-          var img_sente = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?1:0]+'-r.png').addClass("avatar");
-          var img_gote = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[reverse?0:1]+'-l.png').addClass("avatar");
+      function displayAvatar(flip){
+          var img_sente = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[flip?1:0]+'-r.png').addClass("avatar");
+          var img_gote = $("<img>").attr("src", "//shogiwars.heroz.jp/images/avatar/"+avatars[flip?0:1]+'-l.png').addClass("avatar");
           $("#avatar-sente").empty().append(img_sente);
           $("#avatar-gote").empty().append(img_gote);
       }
@@ -459,9 +459,9 @@
         $("#send-message").remove();
         receiveMove("+7968GI,L179	-3334FU,L180	+5756FU,L178	-4132KI,L177	+6857GI,L177	-1314FU,L176	+1716FU,L175	-8384FU,L175	+8879KA,L174	-8485FU,L174	+6978KI,L173	-3142GI,L173	+3948GI,L171	-4233GI,L172	+2726FU,L170	-5152OU,L171	+2625FU,L169	-2231KA,L170	+5969OU,L168	-3142KA,L170	+3736FU,L167	-7162GI,L169	+5746GI,L166	-6172KI,L166	+3635FU,L162	-3435FU,L164	+4635GI,L161	-0034FU,L163	+2524FU,L160	-2324FU,L162	+3524GI,L159	-3324GI,L162	+7924KA,L158	-4224KA,L161	+2824HI,L156	-0023FU,L155	+2428HI,L154	-8586FU,L149	+8786FU,L153	-8286HI,L147	+0087FU,L147	-8656HI,L146	+0057GI,L145	-5636HI,L141	+0037FU,L142	-3635HI,L139	+5746GI,L132	-3585HI,L135	+3736FU,L128	-0033GI,L130	+0068KA,L124	-5354FU,L125	+3635FU,L121	-3435FU,L124	+4635GI,L121	-0034FU,L120	+0024FU,L119	-2324FU,L117	+3524GI,L118	-3324GI,L116	+6824KA,L117	-0023FU,L113	+2468KA,L114	-0033GI,L109	+4958KI,L113	-9394FU,L107	+9796FU,L111	-6253GI,L100	+6979OU,L108	-5344GI,L99	+4857GI,L104	-4435GI,L97	+5746GI,L102	-3546GI,L95	+6846KA,L101	-0039KA,L93	+2818HI,L92	-3975UM,L83	+0076GI,L89	-7576UM,L81	+7776FU,L89	-0055GI,L78	+4668KA,L86	-8582HI,L72	+7988OU,L82	-0027GI,L70	+1848HI,L80	-2736NG,L66	+0037FU,L78	-3627NG,L64	+4849HI,L77	-2738NG,L61	+4979HI,L75	-5556GI,L57	+0057FU,L73	-5645GI,L56	+0077GI,L67	-3435FU,L54	+6766FU,L66	-3536FU,L53	+3736FU,L64	-4536GI,L52	+0037FU,L62	-3627NG,L50	+5756FU,L61	-2728NG,L48	+5867KI,L60	-3829NG,L47	+3736FU,L59	-2919NG,L46	+6846KA,L59	-0044KY,L42	+4628KA,L57	-1918NG,L40	+2839KA,L53	-4447NY,L38	+7949HI,L47	-4737NY,L35	+0048GI,L44	-3738NY,L34	+4959HI,L40	-3839NY,L33	+4839GI,L39	-0037KA,L31	+5979HI,L37	-3726UM,L29	+7768GI,L34	-1817NG,L28	+3938GI,L32	-2636UM,L27	+3849GI,L31	-0037FU,L25	+0048KY,L28	-1727NG,L24	+0047KA,L26	-3635UM,L22	+4758KA,L25	-3738TO,L20	+4847KY,L24	-3849TO,L18	+5849KA,L23	-2737NG,L18	+4958KA,L22	-0038FU,L17	+5869KA,L21	-3839TO,L16	+6857GI,L20	-3536UM,L13	+5746GI,L19	-3747NG,L12	+4657GI,L18	-3949TO,L9	+5768GI,L16	-4948TO,L7	+6877GI,L14	-0046KE,L6	+6947KA,L13	-3647UM,L5	+7919HI,L12	-4858TO,L4	+0079GI,L10	-5857TO,L3	+8898OU,L9	-5767TO,L2	+7867KI,L8	-4658NK,L1	+7788GI,L7	SENTE_WIN_TIMEOUT");
 
-        $("#reverse_button").on("click", function(){manager.reverse()});
+        $("#flip_button").on("click", function(){manager.flip()});
         
-        $("#reverse_button").attr("src", Localize.getImgURL("reverse.png"));
+        $("#flip_button").attr("src", Localize.getImgURL("flip.png"));
         $("#chatsubmit").attr("value", Localize.t("chat"));
     });
     </script>

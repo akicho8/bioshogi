@@ -17,8 +17,22 @@ module Warabi
     end
 
     concerning :UpdateMethods do
-      def put_on(soldier)
-        assert_board_cell_is_blank(soldier.point)
+      def put_on(soldier, **options)
+        options = {
+          validate_collision_pawn: false,
+          validate_alive: false,
+          validate: false,
+        }.merge(options)
+
+        if options[:validate] || options[:validate_alive]
+          assert_alive(soldier)
+        end
+
+        if options[:validate] || options[:validate_collision_pawn]
+          assert_not_collision_pawn(soldier)
+        end
+
+        assert_cell_blank(soldier.point)
         @surface[soldier.point] = soldier
       end
 
@@ -26,28 +40,38 @@ module Warabi
       def pick_up!(point)
         soldier = @surface.delete(point)
         unless soldier
-          raise NotFoundOnBoard, "#{point.name.inspect} の位置には何もありません"
+          raise NotFoundOnBoard, "#{point}の位置には何もありません"
         end
         soldier
       end
 
       # 駒をすべて削除する
-      def abone_all
+      def all_clear
         @surface.clear
       end
 
       # 指定のセルを削除する
-      def abone_on(point)
+      def delete_on(point)
         @surface.delete(point)
       end
 
       private
 
-      # 盤上の指定座標に駒があるならエラーとする
-      def assert_board_cell_is_blank(point)
-        soldier = lookup(point)
-        if soldier
-          raise PieceAlredyExist, "#{point.name}にはすでに#{soldier}があります\n#{self}"
+      def assert_cell_blank(point)
+        if soldier = lookup(point)
+          raise PieceAlredyExist, "盤上にすでに#{soldier}があります\n#{self}"
+        end
+      end
+
+      def assert_not_collision_pawn(soldier)
+        if collision_soldier = soldier.collision_pawn(self)
+          raise DoublePawnError, "二歩です。すでに#{collision_soldier}があるため#{soldier}が打てません\n#{self}"
+        end
+      end
+
+      def assert_alive(soldier)
+        if !soldier.alive?
+          raise DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いの可能性があります"
         end
       end
     end
@@ -68,14 +92,24 @@ module Warabi
 
       # 空いている場所のリスト
       def blank_points
-        Point.find_all { |point| !lookup(point) }
+        Enumerator.new do |y|
+          Point.each do |point|
+            if !lookup(point)
+              y << point
+            end
+          end
+        end
       end
 
       # X列の駒たち
       def vertical_pieces(x)
-        Position::Vpos.dimension.times.collect { |y|
-          lookup([x, y])
-        }.compact
+        Enumerator.new do |yielder|
+          Position::Vpos.dimension.times do |y|
+            if soldier = lookup([x, y])
+              yielder << soldier
+            end
+          end
+        end
       end
 
       def moved_list(soldier)
@@ -148,7 +182,7 @@ module Warabi
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
         black_only_soldiers = @surface.values.collect { |e|
           if e.location == location
-            e.reverse_if_white
+            e.flip_if_white
           end
         }.compact.sort
 

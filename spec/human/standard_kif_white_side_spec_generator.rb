@@ -7,20 +7,20 @@ list = [
 n = list.join
 s = s.gsub(/[#{n}]{2}/) do |s|
   list.each do |e|
-    s = s.tr(e, e.reverse)
+    s = s.tr(e, e.flip)
   end
   s
 end
 
 s = s.gsub(/\|.*\|/) do |s|
-  s = s.chars.reverse.join
+  s = s.chars.flip.join
   s = s.gsub(/ \|/, "|")
   s = s.gsub(/^\|/, "| ")
   s = s.gsub(/ /, "v")
   s = s.gsub(/v・/, " ・")
   s = s.gsub(/v○/, " ○")
 end
-s = s.gsub(/^\+.*?EOT/m) {|s| s.lines.reverse.drop(1).join + "EOT\n" }
+s = s.gsub(/^\+.*?EOT/m) {|s| s.lines.flip.drop(1).join + "EOT\n" }
 
 s = s.gsub(/\+(\d\d)/, '-\1')
 s = s.gsub(/mediator\.execute/, "mediator.next_player.execute")

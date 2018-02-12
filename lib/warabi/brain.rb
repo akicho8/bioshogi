@@ -46,19 +46,20 @@ module Warabi
       __pieces_hands.collect(&:to_kif)
     end
 
-    # FIXME: @player.pieces だと重複が多すぎる
     def __pieces_hands
-      @player.board.blank_points.collect { |point|
-        @player.pieces.collect do |piece|
-          soldier = Soldier.create(piece: piece, promoted: false, point: point, location: @player.location)
-          if @player.rule_valid?(soldier)
-            Direct.create(soldier: soldier)
+      Enumerator.new do |y|
+        @player.board.blank_points.each do |point|
+          @player.piece_box.each_key do |piece_key|
+            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: @player.location)
+            if soldier.rule_valid?(@player.board)
+              y << DirectHand.create(soldier: soldier)
+            end
           end
         end
-      }.flatten.compact
+      end
     end
   end
-  
+
   class HandInfo < Hash
     def to_s
       "%s %+5d" % [self[:hand], self[:score]]
@@ -105,7 +106,7 @@ module Warabi
           child_max_hand_info = nil
           if locals[:level] < locals[:depth]
             # 木の途中
-            child_max_hand_info = nega_max(locals.merge(player: _player.reverse_player, level: locals[:level].next))
+            child_max_hand_info = nega_max(locals.merge(player: _player.flip_player, level: locals[:level].next))
             score = -child_max_hand_info[:score]
             hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand] + child_max_hand_info[:reading_hands]]
           else

@@ -48,7 +48,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>         26   (2.5%)          26   (2.5%)     Warabi::Parser::Base::ConverterMethods#clock_exist?
 # >>         41   (3.9%)          26   (2.5%)     Warabi::Parser#file_parse
 # >>         24   (2.3%)          24   (2.3%)     Warabi::Point#to_xy
-# >>        373  (35.7%)          22   (2.1%)     Warabi::Runner#execute
+# >>        373  (35.7%)          22   (2.1%)     Warabi::PlayerExecutor#execute
 # >>         18   (1.7%)          18   (1.7%)     Warabi::Soldier#attributes
 # >>         29   (2.8%)          18   (1.7%)     Warabi::Point#hash
 # >>         14   (1.3%)          14   (1.3%)     ActiveSupport::Duration#initialize
@@ -64,7 +64,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>        117  (11.2%)           9   (0.9%)     Set#each
 # >>          8   (0.8%)           8   (0.8%)     Warabi::Point#initialize
 # >>         19   (1.8%)           8   (0.8%)     Warabi::Point#eql?
-# >>        586  (56.0%)           7   (0.7%)     Warabi::Mediator::Executer#execute
+# >>        586  (56.0%)           7   (0.7%)     Warabi::Mediator::Executor#execute
 # >>          7   (0.7%)           7   (0.7%)     Warabi::HandLog::OfficialFormatter#initialize
 # >>         54   (5.2%)           6   (0.6%)     Warabi::Position::Vpos.lookup
 # >> Warabi::SkillMonitor#execute_one (/Users/ikeda/src/warabi/lib/warabi/skill_monitor.rb:19)
@@ -133,7 +133,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |    58  |         end
 # >>                                   |    59  | 
 # >>                                   |    60  |         # 「打」時制限。移動元駒があればskip
-# >>     1    (0.1%)                   |    61  |         if e.stroke_only
+# >>     1    (0.1%)                   |    61  |         if e.direct_only
 # >>                                   |    62  |           if origin_soldier
 # >>                                   |    63  |             throw :skip
 # >>                                   |    64  |           end
@@ -141,13 +141,13 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |    66  | 
 # >>                                   |    67  |         # 駒を取ったとき制限。取ってないならskip
 # >>     2    (0.2%) /     1   (0.1%)  |    68  |         if e.kill_only
-# >>                                   |    69  |           unless player.runner.killed_piece
+# >>                                   |    69  |           unless player.executor.killed_soldier
 # >>                                   |    70  |             throw :skip
 # >>                                   |    71  |           end
 # >>                                   |    72  |         end
 # >>                                   |    73  | 
 # >>                                   |    74  |         # 所持駒数一致制限。異なっていたらskip
-# >>                                   |    75  |         if v = e.hold_piece_count_eq
+# >>                                   |    75  |         if v = e.hold_piece_empty
 # >>                                   |    76  |           if player.pieces.size != v
 # >>                                   |    77  |             throw :skip
 # >>                                   |    78  |           end
@@ -255,7 +255,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>                                   |   180  |         end
 # >>                                   |   181  | 
 # >>                                   |   182  |         list << e
-# >>                                   |   183  |         player.runner.skill_set.public_send(e.tactic_info.list_key) << e
+# >>                                   |   183  |         player.executor.skill_set.public_send(e.tactic_info.list_key) << e
 # >>                                   |   184  |       end
 # >>     2    (0.2%) /     2   (0.2%)  |   185  |     end
 # >>                                   |   186  | 
@@ -268,12 +268,12 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>       63  (   43.8%)  Warabi::TacticInfo.soldier_hash_table
 # >>       55  (   38.2%)  Warabi::SkillMonitor#execute_one
 # >>       55  (   38.2%)  Warabi::SkillMonitor#execute
-# >>       20  (   13.9%)  Warabi::SkillMonitor#current_soldier
+# >>       20  (   13.9%)  Warabi::SkillMonitor#soldier
 # >>        5  (    3.5%)  Warabi::Soldier#hash
 # >>        1  (    0.7%)  Warabi::Soldier#eql?
 # >>   code:
 # >>                                   |    11  |     def execute
-# >>    89    (8.5%)                   |    12  |       if e = TacticInfo.soldier_hash_table[current_soldier]
+# >>    89    (8.5%)                   |    12  |       if e = TacticInfo.soldier_hash_table[soldier]
 # >>   110   (10.5%)                   |    13  |         e.each { |e| execute_one(e) }
 # >>                                   |    14  |       end
 # >> Warabi::Position::Base.lookup (/Users/ikeda/src/warabi/lib/warabi/position.rb:73)

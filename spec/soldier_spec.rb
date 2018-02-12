@@ -40,8 +40,8 @@ module Warabi
     it "指し手" do
       soldier = Soldier.from_str("▲６八全")
       origin_soldier = Soldier.from_str("▲７九銀")
-      Moved.create(soldier: soldier, origin_soldier: origin_soldier).to_kif.should == "▲６八銀成(79)"
-      Direct.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
+      MoveHand.create(soldier: soldier, origin_soldier: origin_soldier).to_kif.should == "▲６八銀成(79)"
+      DirectHand.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
     end
   end
 end

@@ -124,10 +124,6 @@ module Warabi
         :promoted_names,
         :names,
         :promotable,
-        # :basic_once_vectors,
-        # :basic_repeat_vectors,
-        # :promoted_once_vectors,
-        # :promoted_repeat_vectors,
       ].inject({}) do |a, e|
         a.merge(e => send(e))
       end
@@ -181,19 +177,16 @@ module Warabi
       end
 
       def to_sfen(promoted: false, location: :black)
-        location = Location[location]
-        s = []
-        if promoted
-          s << "+"
-        end
-        s << sfen_char.public_send(location.key == :black ? :upcase : :downcase)
-        s.join
+        [
+          promoted ? "+" : nil,
+          sfen_char.public_send(Location[location].key == :black ? :upcase : :downcase),
+        ].join
       end
     end
 
     concerning :OtherMethods do
       def promotable?
-        !!promotable
+        promotable
       end
 
       def assert_promotable(promoted)
