@@ -16,7 +16,7 @@ info = Parser.parse(<<~EOT)
 EOT
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 info.move_infos.each do |info|
   mediator.execute(info[:input])
   puts mediator

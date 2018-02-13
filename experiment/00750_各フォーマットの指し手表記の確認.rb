@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
 EOT
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 info.move_infos.each do |e|
   mediator.execute(e[:input])
   p [mediator.turn_info.counter, e[:input], mediator.hand_logs.last.to_kif_ki2_csa]

@@ -163,17 +163,6 @@ module Warabi
         cell_walker do |point, prefix_char, something|
           case
           when Piece.all_names.include?(something)
-            # if prefix_char == "!"
-            #   location = " "
-            # else
-            #   location = prefix_char
-            # end
-            # soldier = soldier_create(point, something, location)
-            # soldiers << soldier
-            # if prefix_char == "!"
-            #   trigger_soldiers << soldier
-            # end
-
             case prefix_char
             when "!"
               # トリガーとする。盤面には含めない(含める必要がないため)
@@ -239,10 +228,9 @@ module Warabi
       # other_objects_hash_ary + 末尾 point のハッシュ
       def other_objects_loc_points_hash
         @other_objects_loc_points_hash ||= Location.inject({}) do |a, l|
-          sw = l.which_val(:itself, :flip)
           points_hash = other_objects_hash_ary.transform_values do |v|
             v.inject({}) { |a, e|
-              e = e.merge(:point => e[:point].public_send(sw))
+              e = e.merge(:point => e[:point].public_send(l.normalize_key))
               a.merge(e[:point] => e)
             }
           end

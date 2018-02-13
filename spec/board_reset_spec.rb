@@ -2,14 +2,14 @@ require_relative "spec_helper"
 
 module Warabi
   describe Mediator do
-    def board_reset_test(value)
+    def board_set_test(value)
       mediator = Mediator.new
-      mediator.board_reset(value)
+      mediator.board.set_from_preset_key(value)
       mediator.board.to_s
     end
 
     it do
-      board_reset_test("平手").should == <<-EOT
+      board_set_test("平手").should == <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -26,7 +26,7 @@ EOT
     end
 
     it do
-      board_reset_test("香落ち").should == <<-EOT
+      board_set_test("香落ち").should == <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -43,7 +43,7 @@ EOT
     end
 
     #     it do
-    #       board_reset_test("▲" => "角落ち", "△" => "香落ち").should == <<-EOT
+    #       board_set_test("▲" => "角落ち", "△" => "香落ち").should == <<-EOT
     #   ９ ８ ７ ６ ５ ４ ３ ２ １
     # +---------------------------+
     # |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -70,7 +70,7 @@ EOT
     # | 玉|九
     # +---+
     # EOT
-    #       board_reset_test("▲" => b_board, "△" => w_board).should == <<-EOT
+    #       board_set_test("▲" => b_board, "△" => w_board).should == <<-EOT
     #   ９ ８ ７ ６ ５ ４ ３ ２ １
     # +---------------------------+
     # |v玉 ・ ・ ・ ・ ・ ・ ・ ・|一

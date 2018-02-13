@@ -73,7 +73,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.mediator_memento.mediator.board_reset_any(@value)
+        context.mediator_memento.mediator.board.board_set_any(@value)
       end
     end
 

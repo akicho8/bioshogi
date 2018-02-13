@@ -5,7 +5,7 @@ mediator = Mediator.new
 player = mediator.player_at(:black)
 player.soldier_create("５五馬", from_stand: false)
 player.soldiers.each do |soldier|
-  soldier.moved_list(mediator.board).each do |v|
+  soldier.move_list(mediator.board).each do |v|
     player.soldier_create("#{v.point}馬", from_stand: false)
   end
 end
@@ -14,7 +14,7 @@ puts mediator.board
 mediator = Mediator.new
 player = mediator.player_at(:black)
 soldier = Soldier.from_str("▲５五馬")
-soldier.moved_list(mediator.board).each do |soldier|
+soldier.move_list(mediator.board).each do |soldier|
   player.soldier_create("#{soldier.point}馬", from_stand: false)
 end
 puts mediator.board

@@ -53,7 +53,6 @@ module Warabi
 
     it "初期配置" do
       mediator = Mediator.start
-      mediator.piece_plot
       mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -191,9 +190,9 @@ EOT
           it "座標指定で" do
             mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
             mediator.flip_player.last_captured_piece.name.should == "歩"
-            mediator.flip_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩九"
+            mediator.flip_player.piece_box.to_s.should == "歩"
             mediator.flip_player.to_s_soldiers.should == "１一玉 １三歩"
-            mediator.current_player.piece_box.to_s.should == "飛 角 金二 銀二 桂二 香二 歩八"
+            mediator.current_player.piece_box.to_s.should == ""
             mediator.current_player.to_s_soldiers.should == "１五玉"
           end
 
@@ -202,9 +201,9 @@ EOT
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
             mediator.flip_player.last_captured_piece.name.should == "歩"
-            mediator.flip_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
+            mediator.flip_player.piece_box.to_s.should == "歩"
             mediator.flip_player.to_s_soldiers.should == "２四歩"
-            mediator.current_player.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩八"
+            mediator.current_player.piece_box.to_s.should == ""
             mediator.current_player.to_s_soldiers.should == ""
           end
 
@@ -264,7 +263,7 @@ EOT
         end
 
         it "相手の駒の上に" do
-          expect { Mediator.test1(exec: ["５五飛打", "５五角打"]) }.to raise_error(PieceAlredyExist)
+          expect { Mediator.test1(exec: ["５五飛打", "５五角打"], pieces_set: "▼飛△角") }.to raise_error(PieceAlredyExist)
         end
 
         it "卍という駒がないので" do
@@ -305,15 +304,9 @@ EOT
       Mediator.player_test.piece_box.to_s.should == "玉 飛 角 金二 銀二 桂二 香二 歩九"
     end
 
-    it "piece_plot" do
-      player = Warabi::Mediator.new.player_at(:black)
-      player.pieces_add
-      player.piece_plot
-    end
-
     it "全体確認" do
-      mediator = Mediator.start
-      mediator.piece_plot
+      mediator = Mediator.new
+      mediator.board.set_from_preset_key
       mediator.execute("７六歩")
       mediator.execute("３四歩")
       mediator.execute("２二角成")
@@ -341,9 +334,8 @@ EOT
     it "「５八金(49)」を入力した結果からKI2変換したとき「58金右」となる" do
       # これはいままで ki2 入力でしか試していなかったため不具合を発見できなかった
       # 移動元が明確な kif で入力し、ki2 変換してみると candidate が nil だったので「右」がつかなかった
-      # 「将棋DB2」にも同様の不具合がある
+      # 将棋DB2にも同様の不具合がある
       mediator = Mediator.start
-      mediator.piece_plot
       mediator.execute("５八金(49)")
       mediator.hand_logs.first.to_ki2.should == "５八金右"
     end

@@ -10,12 +10,16 @@ module Warabi
       @counter = counter || 0
     end
 
+    def turn_max
+      counter
+    end
+
     def handicap?
       @handicap
     end
 
     def base_location
-      if @handicap
+      if handicap?
         key = :white
       else
         key = :black
@@ -39,12 +43,12 @@ module Warabi
       Location[current_location_index(diff)]
     end
 
-    def current_location_vname
+    def location_call_name
       current_location.call_name(handicap?)
     end
 
     def inspect
-      "<#{self.class.name}:#{object_id} 手数:#{counter} 駒落ち:#{handicap?} 次の手番:#{current_location.name}>"
+      "#<#{counter}:#{current_location.name}#{location_call_name}>"
     end
 
     private

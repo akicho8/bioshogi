@@ -1,15 +1,15 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset("角落ち")
+mediator.board.set_from_preset_key("角落ち")
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset_by_hash("▲" => "八枚落ち", "△" => "十九枚落ち")
+mediator.board.set_from_hash("▲" => "八枚落ち", "△" => "十九枚落ち")
 puts mediator
 
 mediator = Mediator.new
-mediator.board_reset_by_shape(<<~EOT)
+mediator.board.set_from_shape(<<~EOT)
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
 | ・v飛 ・ ・ ・ ・ ・v角 ・|

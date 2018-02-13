@@ -2,7 +2,7 @@ require "./example_helper"
 
 def f(v)
   mediator = Mediator.new
-  mediator.board_reset
+  mediator.board.set_from_preset_key
   mediator.execute(v)
   mediator.hand_logs.collect(&:to_kif).join(" ")
 end

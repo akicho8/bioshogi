@@ -2,7 +2,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("２二角成")

@@ -48,7 +48,7 @@ module Warabi
         }.join
 
         obj = Mediator.new
-        mediator_board_setup(obj)
+        board_setup(obj)
         out << obj.to_csa(options)
 
         if options[:compact]
@@ -58,7 +58,7 @@ module Warabi
         end
 
         # 2通りある
-        # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_name))
+        # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_key))
         # 2. mediator.turn_info を利用する
         out << mediator.turn_info.base_location.csa_sign + "\n"
 

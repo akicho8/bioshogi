@@ -32,12 +32,12 @@ module Warabi
       end
     end
 
-    describe "#moved_list" do
+    describe "#move_list" do
       it "移動可能な筋の取得(超重要なテスト)" do
         Board.size_change([1, 5]) do
           test = -> s {
             soldier = Soldier.from_str(s)
-            soldier.moved_list(Board.new).collect(&:to_kif)
+            soldier.move_list(Board.new).collect(&:to_kif)
           }
           test["▲１五香"].should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"]
           test["▲１五杏"].should == ["▲１四杏(15)"]
@@ -47,16 +47,13 @@ module Warabi
       it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
         Board.size_change([1, 5]) do
           mediator = Mediator.test1(init: "▲１五香 △１三歩")
-          mediator.board["１五"].moved_list(mediator.board).collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)"]
+          mediator.board["１五"].move_list(mediator.board).collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)"]
         end
       end
 
       it "初期配置での移動可能な座標" do
-        player = Mediator.player_test(piece_plot: true)
-        test = -> point {
-          soldier = player.board[point]
-          soldier.moved_list(player.board).collect(&:to_kif)
-        }
+        mediator = Mediator.start
+        test = -> point { mediator.board[point].move_list(mediator.board).collect(&:to_kif) }
         test["７七"].should == ["▲７六歩(77)"]                                                                                 # 歩
         test["９九"].should == ["▲９八香(99)"]                                                                                 # 香
         test["８九"].should == []                                                                                               # 桂

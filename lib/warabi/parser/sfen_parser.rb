@@ -21,7 +21,7 @@ module Warabi
         end
       end
 
-      def mediator_board_setup(mediator)
+      def board_setup(mediator)
         usi = Usi::Class1.new
         usi.sfen = @sfen
         usi.board_setup(mediator)

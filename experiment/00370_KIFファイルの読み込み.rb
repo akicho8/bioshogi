@@ -5,7 +5,6 @@ info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.header.to_h
 
 mediator = Mediator.start
-mediator.piece_plot
 info.move_infos.each{|info|
   mediator.execute(info[:input])
 }

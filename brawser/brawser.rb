@@ -79,7 +79,6 @@ class Brawser < Sinatra::Base
 
     if !params[:reset].nil? || REDIS.get(@session_id).nil?
       mediator = Warabi::Mediator.start
-      mediator.piece_plot
       REDIS.set(@session_id, Marshal.dump(mediator))
     end
 

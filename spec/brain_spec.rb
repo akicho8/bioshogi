@@ -4,42 +4,33 @@ module Warabi
   describe Brain do
     describe "評価" do
       it "先手だけが歩を置いた状態" do
-        Mediator.test3(init: "▲９七歩").players.collect{|e|e.evaluate}.should == [100, -100]
+        Mediator.test3(init: "▲９七歩").players.collect{|e|e.evaluator.score}.should == [100, -100]
       end
 
       it "後手も歩を置いた状態" do
-        Mediator.test3(init: "▲９七歩 △１三歩").players.collect{|e|e.evaluate}.should == [0, 0]
+        Mediator.test3(init: "▲９七歩 △１三歩").players.collect{|e|e.evaluator.score}.should == [0, 0]
       end
 
       it "評価バー" do
-        Mediator.test3(init: "▲９七歩").players.collect{|e|e.score_percentage(500)}.should == [60.0, 40.0]
-      end
-
-      describe "わかりにくい古いテスト" do
-        it "先手だけが駒を持っている状態" do
-          Mediator.player_test.evaluate.should == 22284
-        end
-        it "先手だけ駒を置いているとき" do
-          Mediator.player_test(piece_plot: true).evaluate.should == 21699
-        end
+        Mediator.test3(init: "▲９七歩").players.collect{|e|e.evaluator.score_percentage(500)}.should == [60.0, 40.0]
       end
     end
 
     describe "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
-        player = Mediator.player_test(piece_plot: true)
-        player.brain.all_hands.sample.present?.should == true
+        mediator = Mediator.start
+        assert mediator.player_at(:black).brain.all_hands.sample
       end
       it "全手筋" do
-        player = Mediator.player_test(piece_plot: true)
-        player.brain.all_hands.sort.should == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort
+        mediator = Mediator.start
+        mediator.player_at(:black).brain.all_hands.collect(&:to_kif).sort.should == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.size_change([1, 5]) do
         mediator = Mediator.test1(init: "▲１五香")
-        mediator.player_at(:black).brain.__soldiers_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
+        mediator.player_at(:black).brain.move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
       end
     end
 
@@ -56,14 +47,14 @@ module Warabi
       #
       Board.size_change([3, 3]) do
         player = Mediator.player_test(init: "２二歩", pieces_set: "歩")
-        player.brain.__pieces_hands.collect(&:to_kif).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
+        player.brain.direct_hands.collect(&:to_kif).should == ["▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
       end
     end
 
     it "一番得するように打つ" do
       Board.size_change([2, 2]) do
         mediator = Mediator.test3(init: "▲１二歩", pieces_set: "▲歩")
-        mediator.player_at(:black).brain.score_list.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
+        mediator.player_at(:black).brain.score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} }.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end
 

@@ -30,7 +30,7 @@ module Warabi
     def point_from_guess
       unless @done
         if @soldiers.size > 1
-          if @input[:motion1]
+          if @input2.motion_part
             if ENV["WARABI_ENV"] == "test"
               assert_valid_format("直上")
               assert_valid_format("左右直")
@@ -53,7 +53,7 @@ module Warabi
 
       # 上下左右は後手なら反転する
       cond = "左右"
-      if @input[:motion1].match?(/[#{cond}]/)
+      if @input2.motion_part.match?(/[#{cond}]/)
         if @piece.brave?
           m = _method([:first, :last], cond)
           @soldiers = @soldiers.sort_by { |soldier| soldier.point.x.value }.send(m, 1)
@@ -63,20 +63,20 @@ module Warabi
         end
       end
       cond = "上引"
-      if @input[:motion1].match?(/[#{cond}]/)
+      if @input2.motion_part.match?(/[#{cond}]/)
         m = _method([:<, :>], cond)
         @soldiers = @soldiers.find_all{|soldier|@point.y.value.send(m, soldier.point.y.value)}
       end
 
       # 寄 と 直 は先手後手関係ないので反転する必要なし
       if true
-        if @input[:motion1].include?("寄")
+        if @input2.motion_part.include?("寄")
           # TODO: 厳密には左右1個分だけチェックする
           @soldiers = @soldiers.find_all { |e| e.point.y == @point.y }
         end
 
         # 真下にあるもの
-        if @input[:motion1].include?("直")
+        if @input2.motion_part.include?("直")
           @soldiers = @soldiers.find_all { |e|
             e.point.x == @point.x &&
             e.point.y.value == @point.y.value + @player.location.which_val(1, -1)
@@ -91,14 +91,14 @@ module Warabi
 
     def _method(method_a_or_b, str_a_or_b)
       str_a_or_b = str_a_or_b.chars.to_a
-      if @input[:motion1].match?(/#{str_a_or_b.last}/)
+      if @input2.motion_part.match?(/#{str_a_or_b.last}/)
         method_a_or_b = method_a_or_b.reverse
       end
       @player.location.which_val(*method_a_or_b)
     end
 
     def assert_valid_format(valid_list)
-      _chars = valid_list.chars.to_a.find_all { |v| @input[:motion1].include?(v) }
+      _chars = valid_list.chars.to_a.find_all { |v| @input2.motion_part.include?(v) }
       if _chars.size > 1
         raise SyntaxDefact, "#{_chars.join('と')}は同時に指定できません。【#{@source}】を見直してください。\n#{@player.mediator.to_bod}"
       end

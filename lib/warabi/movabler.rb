@@ -24,7 +24,7 @@ module Warabi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def moved_list(board, soldier)
+    def move_list(board, soldier)
       Enumerator.new do |yielder|
         vectors = soldier.all_vectors
         vectors.each do |vector|

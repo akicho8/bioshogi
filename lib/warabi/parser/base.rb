@@ -127,12 +127,12 @@ module Warabi
 
         def mediator
           @mediator ||= mediator_new.tap do |e|
-            mediator_board_setup(e)
+            board_setup(e)
             mediator_run_all(e)
           end
         end
 
-        def mediator_board_setup(mediator)
+        def board_setup(mediator)
           Location.each do |e|
             e.call_names.each do |e|
               if v = header["#{e}の持駒"]
@@ -142,9 +142,9 @@ module Warabi
           end
 
           if @board_source
-            mediator.board_reset_by_shape(@board_source)
+            mediator.board.set_from_shape(@board_source)
           else
-            mediator.board_reset(header["手合割"] || "平手")
+            mediator.board.set_from_preset_key(header["手合割"] || "平手")
           end
 
           mediator.turn_info.handicap = handicap?
@@ -162,8 +162,8 @@ module Warabi
 
           if @board_source
             mediator = Mediator.new
-            mediator.board_reset_by_shape(@board_source)
-            if mediator.board.preset_name != "平手"
+            mediator.board.set_from_shape(@board_source)
+            if mediator.board.preset_key != :"平手"
               return true
             end
           end
@@ -181,7 +181,7 @@ module Warabi
               if @parser_options[:callback]
                 @parser_options[:callback].call(mediator)
               end
-              if @parser_options[:turn_limit] && mediator.turn_max > @parser_options[:turn_limit]
+              if @parser_options[:turn_limit] && mediator.turn_info.turn_max > @parser_options[:turn_limit]
                 break
               end
               mediator.execute(info[:input])
@@ -264,10 +264,10 @@ module Warabi
           mediator_run
 
           obj = Mediator.new
-          mediator_board_setup(obj)
+          board_setup(obj)
 
-          if v = obj.board.preset_name
-            header["手合割"] = v
+          if v = obj.board.preset_key
+            header["手合割"] = v.to_s
 
             # 手合割がわかるとき持駒が空なら消す
             Location.each do |e|

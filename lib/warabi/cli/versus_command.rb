@@ -7,7 +7,6 @@ module Warabi
 
       def execute
         mediator = Mediator.start
-        mediator.piece_plot
         loop do
           puts "-" * 80
           puts mediator

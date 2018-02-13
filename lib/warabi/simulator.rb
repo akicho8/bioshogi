@@ -17,7 +17,7 @@ module Warabi
     end
 
     def run(&block)
-      mediator.board_reset_any(attributes[:board])
+      mediator.board.board_set_any(attributes[:board])
 
       if v = attributes[:pieces]
         Location.each do |e|

@@ -2,69 +2,80 @@
 
 module Warabi
   class PieceBox < SimpleDelegator
-    def initialize(**counts)
-      @counts = counts
-      super(@counts)
+    def initialize(**)
+      super
     end
 
     def pick_out(piece)
       piece = Piece.fetch(piece)
-      if (@counts[piece.key] || 0) <= 0
+      if (object[piece.key] || 0) <= 0
         raise HoldPieceNotFound, "#{piece.name}がありません : #{to_h}"
       end
-      @counts[piece.key] -= 1
-      if @counts[piece.key] <= 0
-        @counts.delete(piece.key)
+      object[piece.key] -= 1
+      if object[piece.key] <= 0
+        object.delete(piece.key)
       end
       piece
     end
 
     def pick_out_without_king
-      Piece.h_to_a(@counts.except(:king))
+      Piece.h_to_a(object.except(:king))
     end
 
     def pieces
-      Piece.h_to_a(@counts)
+      Piece.h_to_a(object)
     end
 
     def exist?(piece)
       piece = Piece.fetch(piece)
-      @counts.has_key?(piece.key)
+      object.has_key?(piece.key)
     end
 
     def add(hash)
-      @counts.update(hash) { |_, *c| c.sum }
+      object.update(hash) { |_, *c| c.sum }
     end
 
     def set(hash)
-      @counts.replace(hash)
+      object.replace(hash)
     end
 
-    def normalize
-      @counts.reject! { |_, c| c <= 0 }
+    def normalize!
+      object.reject! { |_, c| c <= 0 }
+    end
+
+    def score
+      object.collect { |piece_key, count|
+        Piece[piece_key].hold_weight * count
+      }.sum
     end
 
     ################################################################################ formatter
 
     def to_s(**options)
-      Piece.h_to_s(@counts, options)
+      Piece.h_to_s(object, options)
     end
 
     def to_sfen(location)
       location = Location[location]
-      @counts.flat_map { |key, count|
+      object.flat_map { |key, count|
         [(count >= 2 ? count : nil), Piece.fetch(key).to_sfen(location: location)]
       }.join
     end
 
     def to_csa(location)
-      if @counts.empty?
+      if object.empty?
         return ""
       end
       location = Location[location]
-      c = @counts.transform_keys { |e| Piece.fetch(e) }
+      c = object.transform_keys { |e| Piece.fetch(e) }
       c = c.sort_by { |piece, _| -piece.basic_weight }
       ["P", location.csa_sign, c.flat_map { |piece, count| ["00", piece.csa_basic_name] * count }].join
+    end
+
+    private
+
+    def object
+      __getobj__
     end
   end
 end

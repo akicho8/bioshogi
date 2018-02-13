@@ -11,9 +11,6 @@
 #
 module Warabi
   class SoldierBox < Array
-
-    ################################################################################ 全体
-
     def soldiers
       self
     end
@@ -26,16 +23,14 @@ module Warabi
       @point_as_key_table ||= soldiers.inject({}) { |a, e| a.merge(e.point => e) }
     end
 
-    ################################################################################ ▲または△から見た状態に補正した全体のデータ
-
+    # ▲または△から見た状態に補正した全体のデータ
     def location_adjust
       @location_adjust ||= Location.inject({}) do |a, location|
         a.merge(location.key => sorted_soldiers.collect { |e| e.public_send(location.normalize_key) })
       end
     end
 
-    ################################################################################ ▲△に分割
-
+    # ▲△に分割
     def location_split
       @location_split ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key })
     end

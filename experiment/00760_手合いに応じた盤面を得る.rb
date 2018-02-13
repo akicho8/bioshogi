@@ -1,8 +1,8 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset("裸玉")
-mediator.board.preset_name    # => "十九枚落ち"
+mediator.board.set_from_preset_key("裸玉")
+mediator.board.preset_key    # => :十九枚落ち
 puts mediator.board.to_ki2
 puts mediator.board.to_kif
 puts mediator.board.to_csa

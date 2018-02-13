@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 mediator.execute("７六歩")
 puts mediator
 # >> 後手の持駒：なし

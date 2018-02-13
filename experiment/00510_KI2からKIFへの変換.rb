@@ -6,7 +6,7 @@ out = ""
 out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
 mediator = Mediator.new
-mediator.board_reset(info.header["手合割"])
+mediator.board.set_from_preset_key(info.header["手合割"])
 info.move_infos.each do |info|
   mediator.execute(info[:input])
   # puts "-------------------------------------------"

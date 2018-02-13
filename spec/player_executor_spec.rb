@@ -16,17 +16,17 @@ module Warabi
       end
 
       it "拾う" do
-        test1("24歩").should   == {"point" => "24", "piece" => "歩", "motion1" => ""}
-        test1("同歩").should   == {"same" => "同", "piece" => "歩", "motion1" => ""}
+        test1("24歩").should   == {"point" => "24", "piece" => "歩", "motion_part" => ""}
+        test1("同歩").should   == {"same" => "同", "piece" => "歩", "motion_part" => ""}
       end
 
       it "紙面の改ページのあと同の前に座標を書く場合があるため「24同歩」に対応する。ついでに「同24歩」にも対応" do
-        test1("24同歩").should == {"point" => "24", "same" => "同", "piece" => "歩", "motion1" => ""}
-        test1("同24歩").should == {"point" => "24", "same" => "同", "piece" => "歩", "motion1" => ""}
+        test1("24同歩").should == {"point" => "24", "same" => "同", "piece" => "歩", "motion_part" => ""}
+        test1("同24歩").should == {"point" => "24", "same" => "同", "piece" => "歩", "motion_part" => ""}
       end
 
       it "元座標あり" do
-        test1("74歩(77)").should == {"point" => "74", "piece" => "歩", "motion1" => "", "point_from" => "(77)"}
+        test1("74歩(77)").should == {"point" => "74", "piece" => "歩", "motion_part" => "", "point_from" => "(77)"}
       end
     end
   end

@@ -2,10 +2,7 @@ module Warabi
   concern :MediatorTest do
     class_methods do
       def test1(params = {})
-        params = {
-        }.merge(params)
-
-        mediator = start
+        mediator = new
 
         if params[:init]
           mediator.soldier_create(params[:init])
@@ -17,10 +14,6 @@ module Warabi
 
         if params[:pieces_set]
           mediator.pieces_set(params[:pieces_set])
-        end
-
-        if params[:piece_box_clear]
-          mediator.piece_box_clear
         end
 
         mediator.execute(params[:exec])
@@ -68,9 +61,9 @@ module Warabi
           player.soldier_create(v)
         end
 
-        if params[:piece_plot]
-          player.piece_plot
-        end
+        # if params[:piece_plot]
+        #   player.piece_plot
+        # end
 
         Array.wrap(params[:exec]).each { |v| player.execute(v) }
 

@@ -29,7 +29,6 @@ class MediatorDecorator < SimpleDelegator
 end
 
 mediator = Mediator.start
-mediator.piece_plot
 decorator = MediatorDecorator.new(mediator)
 puts decorator.to_html
 Pathname("_frame.html").write(decorator.to_html)

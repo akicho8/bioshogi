@@ -11,7 +11,6 @@
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
-mediator.piece_plot
 [
   "７六歩", "８四歩", "７八金", "３二金",
   "２六歩", "８五歩", "７七角", "３四歩",
@@ -60,7 +59,6 @@ info[:piece].name # => "歩"
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
-mediator.piece_plot
 loop do
   hand = mediator.current_player.brain.all_hands.sample
   mediator.execute(hand)
@@ -125,7 +123,6 @@ pp info.header
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
-mediator.piece_plot
 info.move_infos.each{|info|
   mediator.execute(info[:input])
 }
@@ -208,7 +205,7 @@ puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
 mediator = Mediator.start
 player = mediator.player_at(:black)
 player.soldier_create("５五馬")
-player.soldiers.first.moved_list.each{|point|
+player.soldiers.first.move_list.each{|point|
   player.soldier_create("#{point}馬", from_stand: false)
 }
 puts mediator.board

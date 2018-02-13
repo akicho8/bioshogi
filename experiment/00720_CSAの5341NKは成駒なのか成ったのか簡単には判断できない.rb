@@ -3,7 +3,7 @@ require "./example_helper"
 # 5341NK だけでは判断が難しい例
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("７七桂")

@@ -35,8 +35,8 @@ module Warabi
         #{triangle}?
         (#{point}#{same}|#{same}#{point}|#{point}|#{same}) # 12同 or 同12 or 12 or 同 に対応
         (?<piece>#{Piece.all_names.join("|")})
-        (?<motion1>[左右直]?[寄引上行]?)
-        (?<motion2>不?成|打|合|生)?
+        (?<motion_part>[左右直]?[寄引上行]?)
+        (?<trigger_part>不?成|打|合|生)?
         (?<point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
       /ox
     end
@@ -57,7 +57,7 @@ module Warabi
       chars = Piece.collect(&:sfen_char).compact.join
       point = /[1-9][[:lower:]]/
 
-      part1 = /(?<usi_piece>[#{chars}])(?<_usi_direct>\*)(?<usi_to>#{point})/o
+      part1 = /(?<usi_direct_piece>[#{chars}])(?<usi_direct>\*)(?<usi_to>#{point})/o
       part2 = /(?<usi_from>#{point})(?<usi_to>#{point})(?<usi_promote_trigger>\+)?/o
 
       /((#{part1})|(#{part2}))/o

@@ -23,7 +23,7 @@ module Warabi
         new_with_promoted(md[:piece], attrs)
       end
 
-      def new_with_promoted_attributes(object)
+      def piece_and_promoted(object)
         case
         when piece = Piece.basic_group[object]
           promoted = false
@@ -36,7 +36,7 @@ module Warabi
       end
 
       def new_with_promoted(object, **attributes)
-        create(new_with_promoted_attributes(object).merge(attributes))
+        create(piece_and_promoted(object).merge(attributes))
       end
 
       def preset_one_side_soldiers(preset_key, location: :black)
@@ -45,13 +45,8 @@ module Warabi
       end
 
       def preset_soldiers(**params)
-        params = {
-          black: "平手",
-          white: "平手",
-        }.merge(params)
-
         Location.flat_map do |location|
-          PresetInfo.fetch(params[location.key]).board_parser.location_adjust[location.key]
+          PresetInfo.fetch(params[location.key] || :"平手").board_parser.location_adjust[location.key]
         end
       end
 
@@ -137,8 +132,8 @@ module Warabi
     end
 
     # 移動可能な座標を取得
-    def moved_list(board)
-      Movabler.moved_list(board, self)
+    def move_list(board)
+      Movabler.move_list(board, self)
     end
 
     # 二歩？
@@ -211,6 +206,14 @@ module Warabi
 
       def to_kif(*)
         raise NotImplementedError, "#{__method__} is not implemented"
+      end
+
+      def inspect
+        "#<#{self}>"
+      end
+
+      def to_s(**options)
+        to_kif(options)
       end
     end
 

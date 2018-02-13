@@ -3,48 +3,21 @@
 
 module Warabi
   class Player
-    attr_accessor :location
-    attr_accessor :mediator
-    attr_accessor :executor
+    attr_reader :location
+    attr_reader :mediator
+    attr_reader :executor
 
     attr_accessor :last_captured_piece
 
-    def initialize(mediator, **params)
-      super() if defined? super
+    delegate :board, to: :mediator
 
+    def initialize(mediator:, location:)
       @mediator = mediator
-
-      if v = params[:location]
-        self.location = v
-      end
-
-      if params[:pieces_add]
-        pieces_add
-      end
-    end
-
-    def board
-      @mediator.board
+      @location = location
     end
 
     def flip_player
       @mediator.player_at(location.flip)
-    end
-
-    # 先手後手を設定は適当でいい
-    #   player.location = :white
-    #   player.location = "後手"
-    def location=(key)
-      @location = Location[key]
-    end
-
-    # 平手の初期配置
-    def piece_plot
-      soldiers = PresetInfo.fetch("平手").board_parser.location_adjust[location.key]
-      soldiers.each do |soldier|
-        piece_box.pick_out(soldier.piece)
-        board.put_on(soldier, validate: true)
-      end
     end
 
     # 持駒の配置
@@ -103,7 +76,7 @@ module Warabi
       # 移動先に相手の駒があれば取って駒台に移動する
       if target_soldier = board.lookup(to)
         if target_soldier.location == location
-          raise SamePlayerBattlerOverwrideError, "移動先の#{to}には自分の駒(#{target_soldier})があります"
+          raise SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています。移動元:#{from} 対象の駒:#{target_soldier}\n#{mediator.to_bod}"
         end
         board.pick_up!(to)
         piece_box.add(target_soldier.piece.key => 1)
@@ -120,7 +93,6 @@ module Warabi
       board.put_on(Soldier.create(attributes), validate: true)
     end
 
-    # 棋譜の入力
     def execute(str)
       @executor = PlayerExecutor.new(self)
       @executor.execute(str)
@@ -144,9 +116,13 @@ module Warabi
           :lose
         end
       end
+
+      def call_name
+        location.call_name(mediator.turn_info.handicap?)
+      end
     end
 
-    concerning :Pieceable do
+    concerning :PieceBoxMethods do
       def piece_box
         @piece_box ||= PieceBox.new
       end
@@ -159,12 +135,8 @@ module Warabi
         piece_box.set(Piece.s_to_h(str))
       end
 
-      def hold_pieces_snap
+      def piece_box_as_header
         "#{call_name}の持駒：#{piece_box.to_s.presence || "なし"}"
-      end
-
-      def call_name
-        location.call_name(mediator.turn_info.handicap?)
       end
 
       def to_sfen
@@ -176,7 +148,7 @@ module Warabi
       end
     end
 
-    concerning :BattlerMethods do
+    concerning :SoldierMethods do
       def soldiers
         board.surface.values.find_all { |e| e.location == location }
       end
@@ -187,26 +159,19 @@ module Warabi
     end
 
     concerning :SkillMonitorMethods do
+      delegate :attack_infos, :defense_infos, to: :skill_set
       def skill_set
         @skill_set ||= SkillSet.new
       end
-
-      delegate :attack_infos, :defense_infos, to: :skill_set
 
       def skill_monitor
         SkillMonitor.new(self)
       end
     end
 
-    concerning :EvaluatorMethods do
+    concerning :BrainMethods do
       def evaluator
         Evaluator.new(self)
-      end
-    end
-
-    concerning :BrainMethods do
-      included do
-        delegate :evaluate, :score_percentage, to: :evaluator
       end
 
       def brain
@@ -216,8 +181,8 @@ module Warabi
 
     private
 
-    def moved_list(soldier)
-      Movabler.moved_list(board, soldier)
+    def move_list(soldier)
+      Movabler.move_list(board, soldier)
     end
   end
 end

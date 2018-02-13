@@ -4,7 +4,7 @@ module Warabi
   describe "古い棋譜にある「行」について" do
     def test1(str)
       mediator = Warabi::Mediator.new
-      mediator.board_reset_by_shape(<<~EOT)
+      mediator.board.set_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・v角|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|

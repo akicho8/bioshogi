@@ -26,7 +26,7 @@ system "stackprof stackprof.dump --method Warabi::SkillMonitor#execute"
 system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 
 # system "stackprof stackprof.dump --method Warabi::Point.fetch"
-# system "stackprof stackprof.dump --method Warabi::Movabler#moved_list"
+# system "stackprof stackprof.dump --method Warabi::Movabler#move_list"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
@@ -60,7 +60,7 @@ system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"
 # >>         10   (1.0%)          10   (1.0%)     #<Module:0x00007fe729148ad0>.kconv
 # >>          9   (0.9%)           9   (0.9%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
 # >>         50   (4.8%)           9   (0.9%)     Warabi::Position::Hpos.lookup
-# >>        241  (23.0%)           9   (0.9%)     Warabi::Movabler#moved_list
+# >>        241  (23.0%)           9   (0.9%)     Warabi::Movabler#move_list
 # >>        117  (11.2%)           9   (0.9%)     Set#each
 # >>          8   (0.8%)           8   (0.8%)     Warabi::Point#initialize
 # >>         19   (1.8%)           8   (0.8%)     Warabi::Point#eql?

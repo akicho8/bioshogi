@@ -68,7 +68,7 @@ module Warabi
         unless @board_source
           if md = s.match(/^PI(?<handicap_piece_list>.*)/)
             mediator = Mediator.new
-            mediator.board_reset("平手")
+            mediator.board.set_from_preset_key("平手")
             if v = md[:handicap_piece_list]
               v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
                 point = Point.fetch(xy)

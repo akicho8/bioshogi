@@ -11,9 +11,9 @@ module Warabi
     concerning :KifMethods do
       def to_bod(**options)
         s = []
-        s << player_at(:white).hold_pieces_snap + "\n"
+        s << player_at(:white).piece_box_as_header + "\n"
         s << @board.to_s
-        s << player_at(:black).hold_pieces_snap + "\n"
+        s << player_at(:black).piece_box_as_header + "\n"
 
         last = ""
         if hand_log = hand_logs.last
@@ -44,18 +44,18 @@ module Warabi
       def to_csa(**options)
         s = []
 
-        preset_name = board.preset_name
+        preset_key = board.preset_key
 
-        if preset_name
+        if preset_key
           unless options[:oneline]
-            s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_name}" + "\n"
+            s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_key}" + "\n"
           end
         end
 
         if options[:board_expansion]
           s << board.to_csa
         else
-          if preset_name == "平手"
+          if preset_key == :"平手"
             s << "PI" + "\n"
           else
             s << board.to_csa
@@ -73,9 +73,11 @@ module Warabi
     end
 
     concerning :UsiMethods do
+      attr_reader :first_state_board_sfen
+
       def initialize(*)
         super
-        play_standby
+        play_standby            # FIXME
       end
 
       def play_standby
@@ -85,7 +87,7 @@ module Warabi
 
       # 平手で開始する直前の状態か？
       def startpos?
-        board.preset_name == "平手" && players.all? { |e| e.piece_box.empty? }
+        board.preset_key == :"平手" && players.all? { |e| e.piece_box.empty? }
       end
 
       # 現在の局面

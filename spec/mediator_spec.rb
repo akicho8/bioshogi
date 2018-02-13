@@ -3,11 +3,11 @@ require_relative "spec_helper"
 module Warabi
   describe Mediator do
     it "交互に打ちながら戦況表示" do
-      mediator = Mediator.start
-      mediator.piece_plot
+      mediator = Mediator.new
+      mediator.board.set_from_preset_key
       mediator.execute(["７六歩", "３四歩"])
       mediator.turn_info.counter.should == 2
-      mediator.turn_max.should == 2
+      mediator.turn_info.turn_max.should == 2
       mediator.judgment_message == "まで2手で後手の勝ち"
       mediator.to_s.should == <<-EOT
 後手の持駒：なし
@@ -65,7 +65,7 @@ EOT
     end
 
     it "フレームのサンドボックス実行(重要)" do
-      mediator = Mediator.test1(init: "▲１二歩")
+      mediator = Mediator.test1(init: "▲１二歩", pieces_set: "▼歩")
       mediator.player_at(:black).to_s_soldiers.should == "１二歩"
       mediator.player_at(:black).board.to_s_soldiers.should == "１二歩"
       mediator.context_new { |e| e.player_at(:black).execute("２二歩打") }
@@ -74,7 +74,7 @@ EOT
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
-      mediator = Mediator.test1(exec: "１二歩打")
+      mediator = Mediator.test1(exec: "１二歩打", pieces_set: "▼歩")
       mediator.deep_dup
     end
 

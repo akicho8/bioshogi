@@ -2,7 +2,7 @@ require "./example_helper"
 
 PresetInfo.each do |preset_info|
   mediator = Mediator.new
-  mediator.board_reset(preset_info.key)
+  mediator.board.set_from_preset_key(preset_info.key)
   puts mediator.board
 
   Location.each do |location|

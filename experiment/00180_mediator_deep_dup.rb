@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset("十枚落ち")
+mediator.board.set_from_preset_key("十枚落ち")
 mediator.pieces_set("▲歩 △飛")
 mediator.execute("▲６八銀")
 puts mediator

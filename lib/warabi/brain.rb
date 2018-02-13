@@ -3,16 +3,18 @@
 
 module Warabi
   class Brain
+    attr_accessor :player
+
     def initialize(player)
       @player = player
     end
 
     def think_by_minmax(params = {})
-      NegaMaxRunner.run({player: @player}.merge(params))
+      NegaMaxRunner.run({player: player}.merge(params))
     end
 
     def all_hands
-      soldiers_hands + pieces_hands
+      [*move_hands, *direct_hands]
     end
 
     def best_hand
@@ -22,36 +24,32 @@ module Warabi
     def score_list
       list = []
       all_hands.each do |hand|
-        m = @player.mediator.deep_dup
-        _player = m.player_at(@player.location)
-        _player.execute(hand)
-        list << {hand: hand, score: _player.evaluate}
+        m = player.mediator.deep_dup
+        _player = m.player_at(player.location)
+        _player.execute(hand.to_kif)
+        list << {hand: hand, score: _player.evaluator.score}
       end
       list.sort_by { |e| -e[:score] }
     end
 
     # 盤上の駒の全手筋
-    def soldiers_hands
-      __soldiers_hands.collect(&:to_kif)
-    end
-
-    def __soldiers_hands
-      @player.soldiers.flat_map do |soldier|
-        soldier.moved_list(@player.board).to_a
+    def move_hands
+      Enumerator.new do |y|
+        player.soldiers.each do |soldier|
+          soldier.move_list(player.board).each do |move_hand|
+            y << move_hand
+          end
+        end
       end
     end
 
     # 持駒の全打筋
-    def pieces_hands
-      __pieces_hands.collect(&:to_kif)
-    end
-
-    def __pieces_hands
+    def direct_hands
       Enumerator.new do |y|
-        @player.board.blank_points.each do |point|
-          @player.piece_box.each_key do |piece_key|
-            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: @player.location)
-            if soldier.rule_valid?(@player.board)
+        player.board.blank_points.each do |point|
+          player.piece_box.each_key do |piece_key|
+            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: player.location)
+            if soldier.rule_valid?(player.board)
               y << DirectHand.create(soldier: soldier)
             end
           end
@@ -111,7 +109,7 @@ module Warabi
             hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand] + child_max_hand_info[:reading_hands]]
           else
             # 木の末端
-            score = _player.evaluate
+            score = _player.evaluator.score
             @eval_count += 1
             # p [:@@eval_count, @eval_count]
             hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand]]
@@ -144,5 +142,4 @@ module Warabi
       Warabi.logger.info "%s %d %s %s" % [(locals[:level] < locals[:depth] ? "  " : "葉"), locals[:level], " " * 4 * locals[:level], str]
     end
   end
-
 end

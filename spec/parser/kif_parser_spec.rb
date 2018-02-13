@@ -72,7 +72,6 @@ EOT
 
     it "盤面表示" do
       mediator = Mediator.start
-      mediator.piece_plot
       mediator.board.to_s.should == <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

@@ -1,19 +1,13 @@
 # frozen-string-literal: true
-#
-# 盤面
-#   board = Board.new
-#   board["５五"] # => nil
-#
+
 module Warabi
   class Board
-    attr_reader :surface
-
     class << self
       delegate :size_change, :size_type, :disable_promotable, to: "Warabi::Position"
     end
 
-    def initialize
-      @surface = {}
+    def surface
+      @surface ||= {}
     end
 
     concerning :UpdateMethods do
@@ -33,26 +27,50 @@ module Warabi
         end
 
         assert_cell_blank(soldier.point)
-        @surface[soldier.point] = soldier
+        surface[soldier.point] = soldier
       end
 
-      # 指定座標にある駒をを広い上げる
       def pick_up!(point)
-        soldier = @surface.delete(point)
+        soldier = surface.delete(point)
         unless soldier
           raise NotFoundOnBoard, "#{point}の位置には何もありません"
         end
         soldier
       end
 
-      # 駒をすべて削除する
       def all_clear
-        @surface.clear
+        surface.clear
       end
 
-      # 指定のセルを削除する
       def delete_on(point)
-        @surface.delete(point)
+        surface.delete(point)
+      end
+
+      def board_set_any(v)
+        case
+        when BoardParser.accept?(v)
+          set_from_shape(v)
+        when v.kind_of?(Hash)
+          set_from_hash(v)
+        else
+          set_from_preset_key(v)
+        end
+      end
+
+      def set_from_preset_key(value = nil)
+        set_from_hash(white: value || "平手")
+      end
+
+      def set_from_shape(str)
+        set_from_soldiers(BoardParser.parse(str).soldier_box)
+      end
+
+      def set_from_hash(hash)
+        set_from_soldiers(Soldier.preset_soldiers(hash))
+      end
+
+      def set_from_soldiers(soldiers)
+        soldiers.each { |soldier| put_on(soldier) }
       end
 
       private
@@ -77,20 +95,15 @@ module Warabi
     end
 
     concerning :ReaderMethods do
-      # 盤面の指定座標の取得
-      #   board.lookup["５五"] # => nil
       def lookup(point)
         point = Point.fetch(point)
-        @surface[point]
+        surface[point]
       end
 
-      # lookupのエイリアス
-      #   board["５五"] # => nil
       def [](point)
         lookup(point)
       end
 
-      # 空いている場所のリスト
       def blank_points
         Enumerator.new do |y|
           Point.each do |point|
@@ -101,7 +114,6 @@ module Warabi
         end
       end
 
-      # X列の駒たち
       def vertical_pieces(x)
         Enumerator.new do |yielder|
           Position::Vpos.dimension.times do |y|
@@ -112,12 +124,12 @@ module Warabi
         end
       end
 
-      def moved_list(soldier)
-        Movabler.moved_list(self, soldier)
+      def move_list(soldier)
+        Movabler.move_list(self, soldier)
       end
 
       def to_s_soldiers
-        @surface.values.collect(&:name_without_location).sort.join(" ")
+        surface.values.collect(&:name_without_location).sort.join(" ")
       end
 
       def to_kif
@@ -140,7 +152,7 @@ module Warabi
         Position::Vpos.dimension.times.collect { |y|
           Position::Hpos.dimension.times.collect { |x|
             point = Point.fetch([x, y])
-            @surface[point]
+            surface[point]
           }.chunk(&:class).flat_map { |klass, e|
             if klass == NilClass
               e.count
@@ -154,18 +166,18 @@ module Warabi
 
     concerning :PresetMethods do
       # ▲が平手であることが条件
-      def preset_name
-        if preset_name_by_location(:black) == "平手"
-          preset_name_by_location(:white)
+      def preset_key
+        if preset_key_by_location(:black) == :"平手"
+          preset_key_by_location(:white)
         end
       end
 
       private
 
       # location 側の手合割を文字列で得る
-      def preset_name_by_location(location)
-        if v = preset_info_by_location(location)
-          v.name
+      def preset_key_by_location(location)
+        if e = preset_info_by_location(location)
+          e.key
         end
       end
 
@@ -180,7 +192,7 @@ module Warabi
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        black_only_soldiers = @surface.values.collect { |e|
+        black_only_soldiers = surface.values.collect { |e|
           if e.location == location
             e.flip_if_white
           end

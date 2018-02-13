@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset_by_shape(<<~EOT)
+mediator.board.set_from_shape(<<~EOT)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *    -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU

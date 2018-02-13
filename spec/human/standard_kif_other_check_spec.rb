@@ -4,7 +4,7 @@ module Warabi
   describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
       mediator = Warabi::Mediator.new
-      mediator.board_reset_by_shape(@board)
+      mediator.board.set_from_shape(@board)
       mediator.next_player.execute(str)
       mediator.hand_logs.last.to_kif_ki2_csa
     end

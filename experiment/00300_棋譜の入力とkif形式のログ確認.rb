@@ -2,7 +2,6 @@
 require "./example_helper"
 
 mediator = Mediator.start
-mediator.piece_plot
 [
   "７六歩", "８四歩", "７八金", "３二金",
 ].each{|input|

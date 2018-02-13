@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board_reset
+mediator.board.set_from_preset_key
 mediator.to_sfen                # => "position startpos"
 mediator.pieces_set("▲銀△銀銀")
 puts mediator

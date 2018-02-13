@@ -16,7 +16,7 @@ module Warabi
 
     it "▲が平手で△が香落ちなので「香落ち」だと判断できる" do
       mediator = Mediator.new
-      mediator.board_reset_by_shape(<<~EOT)
+      mediator.board.set_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -30,12 +30,12 @@ module Warabi
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_name.should == "香落ち"
+      mediator.board.preset_key.should == :"香落ち"
     end
 
     it "▲は平手状態だけど△は不明" do
       mediator = Mediator.new
-mediator.board_reset_by_shape(<<~EOT)
+mediator.board.set_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀 ・ ・|一
@@ -49,12 +49,12 @@ mediator.board_reset_by_shape(<<~EOT)
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_name.should == nil
+      mediator.board.preset_key.should == nil
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
       mediator = Mediator.new
-      mediator.board_reset_by_shape(<<~EOT)
+      mediator.board.set_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -68,7 +68,7 @@ EOT
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_name.should == nil
+      mediator.board.preset_key.should == nil
     end
   end
 end

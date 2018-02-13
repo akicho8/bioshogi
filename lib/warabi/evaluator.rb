@@ -11,7 +11,7 @@ module Warabi
     end
 
     # 自分の駒が良い状態なのは自分がプラスになり、相手の形勢が良いときは自分にとってマイナスになる
-    def evaluate
+    def score
       player_score_for(@player) - player_score_for(@player.flip_player)
     end
 
@@ -21,26 +21,12 @@ module Warabi
     # +1500 [======][==] -1500
     # +3000 [========][] -3000
     def score_percentage(max = Maximum)
-      half = 100.0 / @player.mediator.players.size
-      v = half + (evaluate.to_f / max * half)
+      half = 100.0 / Location.count
+      v = half + (score.to_f / max * half)
       [0, [100.0, v.round].min].max
     end
 
     private
-
-    # def evaluate_pair
-    #   [evaluate_self, evaluate_flip]
-    # end
-    #
-    # # 自分側の状態だけを考慮して取得
-    # def evaluate_self
-    #   player_score_for(@player)
-    # end
-    #
-    # # 相手側の状態だけを考慮して取得
-    # def evaluate_flip
-    #   player_score_for(@player.flip_player)
-    # end
 
     def player_score_for(player)
       score = 0
@@ -54,10 +40,7 @@ module Warabi
         end
       }.sum
 
-      # 持駒
-      score += player.piece_box.collect { |piece_key, count|
-        Piece[piece_key].hold_weight * count
-      }.sum
+      score += player.piece_box.score
 
       score
     end
