@@ -60,21 +60,31 @@ seconds = Benchmark.realtime do
       kif_str = info.to_kif
       ki2_str = info.to_ki2
       csa_str = info.to_csa
+      sfen_str = info.to_sfen
 
       v = Parser.parse(kif_str)
       assert_equal v.to_kif, kif_str
       assert_equal v.to_ki2, ki2_str
       assert_equal v.to_csa, csa_str
+      assert_equal v.to_sfen, sfen_str
 
       v = Parser.parse(ki2_str)
       assert_equal v.to_kif, kif_str
       assert_equal v.to_ki2, ki2_str
       assert_equal v.to_csa, csa_str
+      assert_equal v.to_sfen, sfen_str
 
       v = Parser.parse(csa_str)
       assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
       assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
       assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+      assert_equal v.to_sfen(header_skip: true), info.to_sfen(header_skip: true)
+
+      v = Parser.parse(sfen_str)
+      assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
+      assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
+      assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+      assert_equal v.to_sfen(header_skip: true), info.to_sfen(header_skip: true)
     rescue => error
       @result[error.class.name] += 1
 

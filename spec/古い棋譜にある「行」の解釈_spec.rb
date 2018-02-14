@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe "古い棋譜にある「行」について" do
+  describe do
     def test1(str)
       mediator = Warabi::Mediator.new
       mediator.board.set_from_shape(<<~EOT)
@@ -22,8 +22,8 @@ module Warabi
     end
 
     it "エラー" do
-      expect { test1("１七飛成") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
-      expect { test1("３三角") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
+      expect { test1("１七飛成") }.to raise_error(AmbiguousFormatError)
+      expect { test1("３三角") }.to raise_error(AmbiguousFormatError)
     end
 
     it "「上」は「行」と書ける" do
@@ -36,7 +36,7 @@ module Warabi
 
     it "ただし大駒以外には使えない" do
       test1("８八金右上").should == ["８八金(97)", "８八金右上", "-9788KI"]
-      expect { test1("８八金右行") }.to raise_error(AmbiguousFormatError, /移動できる駒が複数あります/)
+      expect { test1("８八金右行") }.to raise_error(AmbiguousFormatError)
     end
   end
 end

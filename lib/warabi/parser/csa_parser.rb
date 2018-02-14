@@ -73,7 +73,7 @@ module Warabi
               v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
                 point = Point.fetch(xy)
                 piece = Piece.fetch(piece_key)
-                soldier = mediator.board.surface.fetch(point)
+                soldier = mediator.board.fetch(point)
                 if soldier.piece != piece
                   raise SyntaxDefact, "#{v}として#{point}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
                 end

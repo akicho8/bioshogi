@@ -18,21 +18,7 @@ module Warabi
 
     # 棋譜入力
     def execute(str)
-      Array.wrap(str).each do |str|
-
-        # ▲△があれば見て手番と一致しているか確認する
-        # なければチェックしなくていい
-        if true
-          if md = InputParser.match!(str)
-            if key = md[:triangle] || md[:sign]
-              location = Location.fetch(key)
-              if current_player.location != location
-                raise DifferentTurnError, "#{current_player.call_name}番で#{flip_player.call_name}が着手しました : #{str}"
-              end
-            end
-          end
-        end
-
+      InputParser.scan(str).each do |str|
         current_player.execute(str)
         turn_info.counter += 1
       end

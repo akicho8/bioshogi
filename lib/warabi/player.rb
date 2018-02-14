@@ -16,6 +16,21 @@ module Warabi
       @location = location
     end
 
+    def execute(str)
+      @executor = PlayerExecutor.new(self, str)
+      @executor.execute
+
+      if Warabi.config[:skill_set_flag]
+        if Position.size_type == :board_size_9x9
+          if mediator.mediator_options[:skill_set_flag]
+            skill_monitor.execute
+          end
+        end
+      end
+
+      @mediator.hand_logs << @executor.hand_log
+    end
+
     def flip_player
       @mediator.player_at(location.flip)
     end
@@ -59,7 +74,7 @@ module Warabi
       if true
         if promote_trigger
           if !from.promotable?(location) && !to.promotable?(location)
-            raise NotPromotable, "成りを入力しましたが#{from}から#{to}への移動では成れません"
+            raise NotPromotable, "#{from}から#{to}への移動では成れません"
           end
 
           soldier = board.lookup(from)
@@ -91,21 +106,6 @@ module Warabi
       end
       attributes[:point] = to
       board.put_on(Soldier.create(attributes), validate: true)
-    end
-
-    def execute(str)
-      @executor = PlayerExecutor.new(self)
-      @executor.execute(str)
-
-      if Warabi.config[:skill_set_flag]
-        if Position.size_type == :board_size_9x9
-          if mediator.mediator_options[:skill_set_flag]
-            skill_monitor.execute
-          end
-        end
-      end
-
-      @mediator.hand_logs << @executor.hand_log
     end
 
     concerning :HelperMethods do

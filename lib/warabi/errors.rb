@@ -32,6 +32,10 @@ module Warabi
   class PieceAlredyExist < WarabiError
   end
 
+  # 盤面に指定した駒がない
+  class PieceNotFoundOnBoard < WarabiError
+  end
+
   # すでに成っている
   class AlredyPromoted < WarabiError
   end

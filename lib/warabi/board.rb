@@ -104,10 +104,14 @@ module Warabi
         lookup(point)
       end
 
+      def fetch(point)
+        lookup(point) or raise PieceNotFoundOnBoard, "#{point}に何もありません\n#{self}"
+      end
+
       def blank_points
         Enumerator.new do |y|
           Point.each do |point|
-            if !lookup(point)
+            if !surface[point]
               y << point
             end
           end

@@ -4,7 +4,7 @@ module Warabi
       def to_ki2(**options)
         options = {
           cols: 10,
-          # length: 11,
+          fixed_width: nil,
           same_suffix: "　",
           header_skip: false,
         }.merge(options)
@@ -17,14 +17,16 @@ module Warabi
           out << "\n"
         end
 
-        if false
-          out << mediator.hand_logs.group_by.with_index{|_, i| i / options[:cols] }.values.collect { |v|
+        if options[:fixed_width]
+          # 固定幅で整列(値が小さいと揃わない場合がある)
+          out << mediator.hand_logs.group_by.with_index {|_, i| i / options[:cols] }.values.collect { |v|
             v.collect { |e|
               s = e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
-              mb_ljust(s, options[:length])
+              mb_ljust(s, options[:fixed_width])
             }.join.strip + "\n"
           }.join
         else
+          # 自動整列(かならず揃う)
           list = mediator.hand_logs.collect do |e|
             e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
           end

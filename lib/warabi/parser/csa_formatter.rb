@@ -31,6 +31,7 @@ module Warabi
           board_expansion: false, # 平手であっても P1 形式で表示
           compact: false,         # 指し手の部分だけ一行にする
           oneline: false,         # 一行にする。改行もなし
+          header_skip: false,
         }.merge(options)
 
         mediator_run
@@ -38,14 +39,16 @@ module Warabi
         out = []
         out << "V2.2\n"
 
-        out << CsaHeaderInfo.collect { |e|
-          if v = header[e.kif_side_key].presence
-            if e.as_csa
-              v = e.instance_exec(v, &e.as_csa)
+        unless options[:header_skip]
+          out << CsaHeaderInfo.collect { |e|
+            if v = header[e.kif_side_key].presence
+              if e.as_csa
+                v = e.instance_exec(v, &e.as_csa)
+              end
+              "#{e.csa_key}#{v}\n"
             end
-            "#{e.csa_key}#{v}\n"
-          end
-        }.join
+          }.join
+        end
 
         obj = Mediator.new
         board_setup(obj)
