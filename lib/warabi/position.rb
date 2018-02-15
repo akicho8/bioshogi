@@ -148,6 +148,14 @@ module Warabi
         @value <=> other.value
       end
 
+      def eql?(other)
+        self.class == other.class && value == other.value
+      end
+
+      def hash
+        self.class.hash ^ value.hash
+      end
+
       def inspect
         "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
       end
@@ -174,8 +182,7 @@ module Warabi
 
       def self.lookup(value)
         if value.kind_of?(String)
-          value = value.tr("1-9", "１-９")
-          value = value.tr("一二三四五六七八九", "１-９")
+          value = value.tr("1-9一二三四五六七八九", "１-９１-９")
         end
         super
       end

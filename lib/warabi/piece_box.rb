@@ -67,7 +67,7 @@ module Warabi
         return ""
       end
       location = Location[location]
-      c = object.transform_keys { |e| Piece.fetch(e) }
+      c = object.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
       c = c.sort_by { |piece, _| -piece.basic_weight }
       ["P", location.csa_sign, c.flat_map { |piece, count| ["00", piece.csa_basic_name] * count }].join
     end

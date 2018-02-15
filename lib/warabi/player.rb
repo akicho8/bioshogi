@@ -108,6 +108,17 @@ module Warabi
       board.put_on(Soldier.create(attributes), validate: true)
     end
 
+    def candidate_soldiers(piece:, promoted:, point:)
+      piece_key = piece.key
+      soldiers.find_all do |e|
+        true &&
+          e.promoted == promoted &&                                   # 成っているかどうかで絞る
+          e.piece.key == piece_key &&                                 # 同じ種類に絞る
+          e.move_list(board).any? { |e| e.soldier.point == point } && # 目的地に来れる
+          true
+      end
+    end
+
     concerning :HelperMethods do
       def judge_key
         if mediator.win_player == self

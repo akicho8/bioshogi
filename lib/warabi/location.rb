@@ -38,14 +38,6 @@ module Warabi
         v
       end
 
-      def fetch(value)
-        begin
-          super
-        rescue
-          raise SyntaxDefact, value.inspect
-        end
-      end
-
       # "▲▼△△"
       def triangles_str
         @triangles_str ||= flat_map { |e| [e.mark, e.flip_mark] }.join

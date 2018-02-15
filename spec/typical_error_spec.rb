@@ -1,7 +1,7 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe TypicalError do
+  describe CommonError do
     describe "二歩の反則負け" do
       before do
         @file = "#{__dir__}/double_pawn.ki2"
@@ -12,7 +12,7 @@ module Warabi
       end
 
       it "変換するときに例外が出る" do
-        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawnError)
+        expect { Parser.file_parse(@file).to_kif }.to raise_error(DoublePawnCommonError)
       end
 
       it "オプションをつければ例外がでない" do
@@ -36,7 +36,7 @@ module Warabi
       end
 
       it "変換するときに例外が出る" do
-        expect { Parser.parse(@body).to_kif }.to raise_error(DifferentTurnError)
+        expect { Parser.parse(@body).to_kif }.to raise_error(DifferentTurnCommonError)
       end
 
       it "オプションをつければ例外がでない" do

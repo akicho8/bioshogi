@@ -279,7 +279,7 @@ EOT
         end
 
         it "二歩なので" do
-          expect { Mediator.player_test_soldier_names(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawnError)
+          expect { Mediator.player_test_soldier_names(init: "５五歩", exec: "５九歩打") }.to raise_error(DoublePawnCommonError)
         end
       end
 

@@ -186,7 +186,7 @@ module Warabi
               end
               mediator.execute(info[:input])
             end
-          rescue TypicalError => error
+          rescue CommonError => error
             if v = @parser_options[:typical_error_case]
               case v
               when :embed

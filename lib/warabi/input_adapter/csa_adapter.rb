@@ -3,6 +3,9 @@
 module Warabi
   module InputAdapter
     class CsaAdapter < AbstractAdapter
+      include LocationValidation
+      include OriginSoldierMethods
+
       def piece
         piece_and_promoted[:piece]
       end
@@ -14,12 +17,6 @@ module Warabi
       def point_from
         unless direct_trigger
           Point.fetch(input[:csa_from])
-        end
-      end
-
-      def origin_soldier
-        if v = point_from
-          board.fetch(v)
         end
       end
 
@@ -37,6 +34,10 @@ module Warabi
       end
 
       private
+
+      def location_key
+        :csa_sign
+      end
 
       def piece_and_promoted
         @piece_and_promoted ||= Soldier.piece_and_promoted(input[:csa_piece])

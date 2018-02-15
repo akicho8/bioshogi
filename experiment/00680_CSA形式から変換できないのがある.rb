@@ -193,7 +193,7 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
 
 puts info.to_kif
-# ~> /Users/ikeda/src/warabi/lib/warabi/mediator.rb:212:in `block in execute': 【反則】先手番で後手が着手しました : -8384FU (Warabi::DifferentTurnError)
+# ~> /Users/ikeda/src/warabi/lib/warabi/mediator.rb:212:in `block in execute': 【反則】先手番で後手が着手しました : -8384FU (Warabi::DifferentTurnCommonError)
 # ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:203:in `each'
 # ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator.rb:203:in `execute'
 # ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:377:in `block in mediator_run_all'

@@ -74,7 +74,7 @@ module Warabi
     end
 
     def attributes
-      [:piece, :promoted, :point, :location].inject({}) { |a, e| a.merge(e => public_send(e)) }
+      {piece: piece, promoted: promoted, point: point, location: location}
     end
 
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい。point は基本ユニークなのでこれで並べる

@@ -89,7 +89,7 @@ seconds = Benchmark.realtime do
       @result[error.class.name] += 1
 
       if false
-        if error.kind_of?(Warabi::DoublePawnError)
+        if error.kind_of?(Warabi::DoublePawnCommonError)
           print "_"
           next
         end

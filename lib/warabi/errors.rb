@@ -112,17 +112,17 @@ module Warabi
   class ReversePlayerPieceMoveError < RuleError
   end
 
-  ################################################################################ 棋譜にも残る場合がある反則 (TypicalError)
+  ################################################################################ 棋譜にも残る場合がある反則 (CommonError)
 
   # パース時にオプションで例外を抑制できる反則
-  class TypicalError < RuleError
+  class CommonError < RuleError
   end
 
   # 二歩
-  class DoublePawnError < TypicalError
+  class DoublePawnCommonError < CommonError
   end
 
   # 手番が異なる
-  class DifferentTurnError < TypicalError
+  class DifferentTurnCommonError < CommonError
   end
 end

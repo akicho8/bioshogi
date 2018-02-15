@@ -3,6 +3,8 @@
 module Warabi
   module InputAdapter
     class UsiAdapter < AbstractAdapter
+      include OriginSoldierMethods
+
       def piece
         if direct_trigger
           Piece.fetch(input[:usi_direct_piece])
@@ -26,14 +28,7 @@ module Warabi
       end
 
       def point
-        v = input[:usi_to]
-        Point.fetch(alpha_to_digit(v))
-      end
-
-      def origin_soldier
-        if point_from
-          board.fetch(point_from)
-        end
+        Point.fetch(alpha_to_digit(input[:usi_to]))
       end
 
       def direct_trigger

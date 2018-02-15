@@ -25,17 +25,20 @@ module Warabi
         def run(*args)
           new(*args).tap do |e|
             e.pre_parse
+            e.perform_completion
             e.perform_validations
           end
         end
       end
 
+      attr_reader :base
       attr_reader :player
       attr_reader :input
 
       delegate :board, to: :player
 
-      def initialize(player, input)
+      def initialize(base, player, input)
+        @base = base
         @player = player
         @input = input
       end
@@ -43,20 +46,40 @@ module Warabi
       def pre_parse
       end
 
+      def perform_completion
+      end
+
       def perform_validations
-        if promoted && direct_trigger
-          raise PromotedPiecePutOnError, "成った状態の駒を打つことはできません"
+      end
+
+      def candidate_soldiers
+        @candidate_soldiers ||= player.candidate_soldiers(piece: piece, promoted: !promote_trigger && promoted, point: point)
+      end
+
+      def soldier
+        @soldier ||= Soldier.create(piece: piece, promoted: promoted, point: point, location: player.location)
+      end
+
+      def moved_hand
+        if origin_soldier
+          @moved_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier)
+        end
+      end
+
+      def direct_hand
+        unless origin_soldier
+          @direct_hand ||= DirectHand.create(soldier: soldier)
         end
       end
 
       def to_h
         {
-          point_from: point_from,
-          point: point,
-          piece: piece,
-          promoted: promoted,
-          promote_trigger: promote_trigger,
-          direct_trigger: direct_trigger,
+          :point_from      => point_from,
+          :point           => point,
+          :piece           => piece,
+          :promoted        => promoted,
+          :promote_trigger => promote_trigger,
+          :direct_trigger  => direct_trigger,
         }
       end
     end

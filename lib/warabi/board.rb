@@ -83,7 +83,7 @@ module Warabi
 
       def assert_not_collision_pawn(soldier)
         if collision_soldier = soldier.collision_pawn(self)
-          raise DoublePawnError, "二歩です。すでに#{collision_soldier}があるため#{soldier}が打てません\n#{self}"
+          raise DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{soldier}が打てません\n#{self}"
         end
       end
 

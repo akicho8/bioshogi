@@ -43,7 +43,7 @@ module Warabi
             separator: " ",
           }.merge(options)
 
-          hash = hash.transform_keys { |e| Piece.fetch(e) }
+          hash = hash.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
 
           if options[:ordered]
             hash = hash.sort_by { |piece, _| -piece.basic_weight }
