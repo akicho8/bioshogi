@@ -338,7 +338,7 @@ module Warabi
       !_yr.cover?(_ty)
     end
 
-    delegate :direct_hand, :moved_hand, :soldier, :hand, :candidate, to: :base
+    delegate :direct_hand, :move_hand, :soldier, :hand, :candidate, to: :base
     delegate :point, :piece, :location, :promoted, to: :soldier
 
     def direct_trigger?
@@ -346,14 +346,14 @@ module Warabi
     end
 
     def promote_trigger?
-      if moved_hand
-        moved_hand.promote_trigger?
+      if move_hand
+        move_hand.promote_trigger?
       end
     end
 
     def point_from
-      if moved_hand
-        moved_hand.origin_soldier.point
+      if move_hand
+        move_hand.origin_soldier.point
       end
     end
 

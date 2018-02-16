@@ -8,7 +8,7 @@ module Warabi
 
         if location
           if player.location != location
-            raise DifferentTurnCommonError, "#{player.call_name}の手番で#{player.flip_player.call_name}が着手しました"
+            errors_add DifferentTurnCommonError, "#{player.call_name}の手番で#{player.flip_player.call_name}が着手しました"
           end
         end
       end

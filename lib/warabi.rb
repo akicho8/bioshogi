@@ -59,7 +59,6 @@ require_relative "warabi/player"
 require_relative "warabi/input_parser"
 require_relative "warabi/input"
 require_relative "warabi/input_adapter"
-require_relative "warabi/player_executor_human"
 require_relative "warabi/player_executor"
 require_relative "warabi/movabler"
 

@@ -10,9 +10,9 @@ loop do
   p hand
   mediator.execute(hand)
   p mediator
-  last_captured_piece = mediator.flip_player.last_captured_piece
+  executor.last_captured_piece = mediator.flip_player.executor.last_captured_piece
   # break
-  if last_captured_piece && last_captured_piece.key == :king
+  if executor.last_captured_piece && executor.last_captured_piece.key == :king
     break
   end
 end

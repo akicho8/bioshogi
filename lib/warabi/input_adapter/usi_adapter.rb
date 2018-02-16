@@ -4,6 +4,7 @@ module Warabi
   module InputAdapter
     class UsiAdapter < AbstractAdapter
       include OriginSoldierMethods
+      include SharedValidation
 
       def piece
         if direct_trigger

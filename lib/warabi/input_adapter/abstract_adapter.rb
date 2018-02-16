@@ -21,35 +21,25 @@
 module Warabi
   module InputAdapter
     class AbstractAdapter
-      class << self
-        def run(*args)
-          new(*args).tap do |e|
-            e.pre_parse
-            e.perform_completion
-            e.perform_validations
-          end
-        end
-      end
-
-      attr_reader :base
       attr_reader :player
       attr_reader :input
 
       delegate :board, to: :player
 
-      def initialize(base, player, input)
-        @base = base
+      def initialize(player, input)
         @player = player
         @input = input
       end
 
-      def pre_parse
-      end
-
-      def perform_completion
-      end
-
       def perform_validations
+      end
+
+      def errors
+        @errors ||= []
+      end
+
+      def errors_add(klass, message)
+        errors << {klass: klass, message: message}
       end
 
       def candidate_soldiers
@@ -60,9 +50,9 @@ module Warabi
         @soldier ||= Soldier.create(piece: piece, promoted: promoted, point: point, location: player.location)
       end
 
-      def moved_hand
+      def move_hand
         if origin_soldier
-          @moved_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier)
+          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier)
         end
       end
 
@@ -80,6 +70,7 @@ module Warabi
           :promoted        => promoted,
           :promote_trigger => promote_trigger,
           :direct_trigger  => direct_trigger,
+          :errors          => errors,
         }
       end
     end

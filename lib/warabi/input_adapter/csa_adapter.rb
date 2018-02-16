@@ -5,6 +5,7 @@ module Warabi
     class CsaAdapter < AbstractAdapter
       include LocationValidation
       include OriginSoldierMethods
+      include SharedValidation
 
       def piece
         piece_and_promoted[:piece]

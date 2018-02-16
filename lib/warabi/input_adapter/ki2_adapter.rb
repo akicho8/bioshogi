@@ -3,16 +3,18 @@
 module Warabi
   module InputAdapter
     class Ki2Adapter < KifAdapter
-      def self.inversus_table
-        @inversus_table ||= -> {
+      def self.flip_table
+        @flip_table ||= -> {
           table = {:first => :last, :> => :<}
           table.merge(table.invert)
         }.call
       end
 
+      include Ki2MotionWrapper
+
       # 移動元候補がない場合は打が省略されている
       def direct_trigger
-        super || candidate_soldiers.empty?
+        super || direct_abbreviation?
       end
 
       def point_from
@@ -26,27 +28,28 @@ module Warabi
       def perform_validations
         super
 
-        if ki2_motion_part
-          assert_valid_format("直上")
-          assert_valid_format("左右直")
-          assert_valid_format("寄引上")
-        end
-
-        if candidate_soldiers.size >= 2 && !ki2_motion_part
-          raise AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
+        if !direct_trigger && candidate_soldiers.size >= 2 && motion_str.empty?
+          errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
         if !direct_trigger && candidate_soldiers.count >= 2 && !point_from
-          raise AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますが#{ki2_motion_part}からは特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
+          errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますが#{motion_str}からは特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
-        if candidate_soldiers.empty? && !player.piece_box.exist?(piece)
-          raise MovableBattlerNotFound, "#{player.call_name}の手番で#{point}に移動できる駒がありません。打を省略したと考えても持駒に見つかりません"
+        if force_direct_trigger && !player.piece_box.exist?(piece)
+          errors_add HoldPieceNotFound, "打を明示しましたが持駒に#{piece}がありません"
         end
 
-        # 飛を持っている状態で▲５５飛成
+        if direct_abbreviation? && !player.piece_box.exist?(piece)
+          errors_add HoldPieceNotFound2, "移動できる駒がなく打の省略形と思われる指し手ですが#{piece}を持っていません"
+        end
+
+        if !direct_trigger && candidate_soldiers.empty?
+          errors_add MovableBattlerNotFound, "#{player.call_name}の手番で#{point}に移動できる駒がありません"
+        end
+
         if direct_trigger && promoted
-          raise IllegibleFormat, "成・不成と打が干渉しています"
+          errors_add IllegibleFormat, "成・不成と打が干渉しています"
         end
       end
 
@@ -68,41 +71,47 @@ module Warabi
           list = candidate_soldiers
 
           if list.size >= 2
-            if md = motion.match(/[左右]/)
-              if piece.brave?
-                m = {"左" => :first, "右" => :last}.fetch(md.to_s)
-                m = reverse_if_white(m)
-                list = list.sort_by { |e| e.point.x.value }.send(m, 1)
-              else
-                m = {"左" => :>, "右" => :<}.fetch(md.to_s)
-                m = reverse_if_white(m)
-                list = list.find_all do |e|
-                  point.x.value.send(m, e.point.x.value)
+            if v = left_right
+              if md = v.match(/[左右]/)
+                if piece.brave?
+                  m = {"左" => :first, "右" => :last}.fetch(md.to_s)
+                  m = flip_if_white(m)
+                  list = list.sort_by { |e| e.point.x.value }.send(m, 1)
+                else
+                  m = {"左" => :>, "右" => :<}.fetch(md.to_s)
+                  m = flip_if_white(m)
+                  list = list.find_all do |e|
+                    point.x.value.send(m, e.point.x.value)
+                  end
                 end
               end
             end
           end
 
           if list.size >= 2
-            if md = motion.match(/[上引]/)
-              m = {"上" => :<, "引" => :>}.fetch(md.to_s)
-              m = reverse_if_white(m)
-              list = list.find_all do |e|
-                point.y.value.send(m, e.point.y.value)
+            if v = up_down
+              if md = v.match(/[上引]/)
+                m = {"上" => :<, "引" => :>}.fetch(md.to_s)
+                m = flip_if_white(m)
+                list = list.find_all do |e|
+                  point.y.value.send(m, e.point.y.value)
+                end
               end
             end
           end
 
           # 竜が1つだけで１５の竜が５５に来たときも「１五竜寄」なので左右1マスの限定のチェックは入れてはいけない
           if list.size >= 2
-            if motion.include?("寄")
-              list = list.find_all { |e| e.point.y == point.y }
+            if v = up_down
+              if v.include?("寄")
+                list = list.find_all { |e| e.point.y == point.y }
+              end
             end
           end
 
           # 真下にあるもの
           if list.size >= 2
-            if motion.include?("直")
+            if one_up?
               y = point.y.value + player.location.which_val(1, -1)
               list = list.find_all { |e|
                 e.point.x == point.x && e.point.y.value == y
@@ -114,14 +123,19 @@ module Warabi
         }.call
       end
 
+      # 「打」の省略形か？
+      def direct_abbreviation?
+        !suffix_exist? && candidate_soldiers.empty?
+      end
+
       # ▼将棋のルール「棋譜について」｜品川将棋倶楽部
       # https://ameblo.jp/written-by-m/entry-10365417107.html
       # > どちらの飛車も１三の地点に移動できます。よって、それぞれの駒が１三の地点に移動する場合は、
       # > 上の駒は▲１三飛引成（成らない場合は▲１三飛引不成）。下の駒は▲１三飛上成（あがるなり）と表記します。
       # > 飛車や角に限り「行」を用いて▲１三飛行成（いくなり）と表記することもあります。
-      def ki2_motion_part
-        @ki2_motion_part ||= -> {
-          if s = input[:ki2_motion_part]
+      def up_down
+        @up_down ||= -> {
+          if s = input[:ki2_up_down]
             if piece.brave?
               s = s.tr("行", "上")
             end
@@ -130,23 +144,11 @@ module Warabi
         }.call
       end
 
-      def motion
-        @motion ||= ki2_motion_part.to_s
-      end
-
-      def reverse_if_white(key)
-        if player.location.key == :black
-          key
-        else
-          self.class.inversus_table[key]
+      def flip_if_white(key)
+        if player.location.key == :white
+          key = self.class.flip_table[key]
         end
-      end
-
-      def assert_valid_format(str)
-        chars = str.chars.find_all { |v| ki2_motion_part.include?(v) }
-        if chars.size >= 2
-          raise SyntaxDefact, "同時に指定できません : #{chars}"
-        end
+        key
       end
     end
   end

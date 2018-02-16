@@ -6,6 +6,7 @@ module Warabi
       include Ki2PointMethods
       include LocationValidation
       include OriginSoldierMethods
+      include SharedValidation
 
       def piece
         piece_with_promoted[:piece]
@@ -31,17 +32,17 @@ module Warabi
         super
 
         if promoted && force_direct_trigger
-          raise PromotedPiecePutOnError, "成った状態の駒は打てません"
+          errors_add PromotedPiecePutOnError, "成った状態の駒は打てません"
         end
 
         # "１三金不成" と入力した場合。"１三金" の解釈になるのでスルーしてもよいが厳しくチェックする
         if have_promote_or_not_promote_force_instruction? && !piece.promotable?
-          raise NoPromotablePiece, "#{piece}は裏がないので「成・不成・生」は指定できません"
+          errors_add NoPromotablePiece, "#{piece}は裏がないので「成・不成・生」は指定できません"
         end
 
         if !promote_trigger && origin_soldier
           if origin_soldier.promoted && !promoted
-            raise PromotedPieceToNormalPiece, "成った状態から成らない状態に戻れません"
+            errors_add PromotedPieceToNormalPiece, "成った状態から成らない状態に戻れません"
           end
         end
       end
@@ -58,7 +59,7 @@ module Warabi
 
       # 成や不成の指示があるか？
       def have_promote_or_not_promote_force_instruction?
-        !!(input[:ki2_as_it_is] || input[:ki2_promote_trigger])
+        input[:ki2_as_it_is] || input[:ki2_promote_trigger]
       end
 
       def piece_with_promoted

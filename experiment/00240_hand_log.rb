@@ -1,7 +1,7 @@
 require "./example_helper"
 
-moved_hand = MoveHand.create(soldier: Soldier.from_str("▲６八銀"), origin_soldier: Soldier.from_str("▲７九銀"))
-object = HandLog.new(moved_hand: moved_hand, candidate: [])
+move_hand = MoveHand.create(soldier: Soldier.from_str("▲６八銀"), origin_soldier: Soldier.from_str("▲７九銀"))
+object = HandLog.new(move_hand: move_hand, candidate: [])
 object.to_kif  # => "６八銀(79)"
 object.to_ki2  # => "６八銀"
 object.to_csa  # => "+7968GI"

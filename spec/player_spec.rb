@@ -111,8 +111,8 @@ EOT
           expect { Mediator.player_test_soldier_names(init: ["６九金", "４九金"], exec: "５九金") }.to raise_error(AmbiguousFormatError)
         end
 
-        it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので)" do
-          expect { Mediator.player_test_soldier_names(init: "５五龍", exec: "５六飛") }.to raise_error(MovableBattlerNotFound)
+        it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので打とみなすが飛を持っていない)" do
+          expect { Mediator.player_test_soldier_names(init: "５五龍", exec: "５六飛") }.to raise_error(HoldPieceNotFound2)
         end
 
         it "ルール上、成っている状態から成らない状態に戻れないので(移動元を明記しても同様。ただ例外の種類が異なる)" do
@@ -189,7 +189,7 @@ EOT
         describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-            mediator.flip_player.last_captured_piece.name.should == "歩"
+            mediator.flip_player.executor.last_captured_piece.name.should == "歩"
             mediator.flip_player.piece_box.to_s.should == "歩"
             mediator.flip_player.to_s_soldiers.should == "１一玉 １三歩"
             mediator.current_player.piece_box.to_s.should == ""
@@ -200,7 +200,7 @@ EOT
             mediator = Mediator.test1(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
-            mediator.flip_player.last_captured_piece.name.should == "歩"
+            mediator.flip_player.executor.last_captured_piece.name.should == "歩"
             mediator.flip_player.piece_box.to_s.should == "歩"
             mediator.flip_player.to_s_soldiers.should == "２四歩"
             mediator.current_player.piece_box.to_s.should == ""
@@ -240,8 +240,8 @@ EOT
           Mediator.player_test(exec: "５五歩").mediator.hand_logs.last.to_kif.should == "５五歩打"
         end
 
-        it "２二角成としたけど盤上に何もないので持駒の角を打った(打てていたけど、成と書いて打てるのはおかしいのでエラーとする)" do
-          expect { Mediator.player_test(exec: ["２二角成"]) }.to raise_error(IllegibleFormat)
+        it "２二角成としたけど盤上に何もないのそこに移動できる駒がひとつもないエラー" do
+          expect { Mediator.player_test(exec: ["２二角成"]) }.to raise_error(MovableBattlerNotFound)
         end
 
         it "盤上に竜があってその横に飛を「打」をつけずに打った(打つときに他の駒もそこに来れそうなケース。実際は竜なので来れない)" do

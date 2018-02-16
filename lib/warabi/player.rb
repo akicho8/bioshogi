@@ -7,8 +7,6 @@ module Warabi
     attr_reader :mediator
     attr_reader :executor
 
-    attr_accessor :last_captured_piece
-
     delegate :board, to: :mediator
 
     def initialize(mediator:, location:)
@@ -62,50 +60,6 @@ module Warabi
         end
         board.put_on(soldier, validate: true)
       end
-    end
-
-    def move_to(from, to, promote_trigger = false)
-      @last_captured_piece = nil
-
-      from = Point.fetch(from)
-      to = Point.fetch(to)
-
-      # 破壊的な処理をする前の段階でエラーチェックを行う
-      if true
-        if promote_trigger
-          if !from.promotable?(location) && !to.promotable?(location)
-            raise NotPromotable, "#{from}から#{to}への移動では成れません"
-          end
-
-          soldier = board.lookup(from)
-          if soldier.promoted
-            raise AlredyPromoted, "成りを明示しましたが#{soldier.point}の#{soldier.piece.name}はすでに成っています"
-          end
-        end
-
-        if (soldier = board.lookup(from)) && location != soldier.location
-          raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{location}の手番で#{soldier}を#{to}に動かそうとしています\n#{mediator.to_bod}"
-        end
-      end
-
-      # 移動先に相手の駒があれば取って駒台に移動する
-      if target_soldier = board.lookup(to)
-        if target_soldier.location == location
-          raise SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています。移動元:#{from} 対象の駒:#{target_soldier}\n#{mediator.to_bod}"
-        end
-        board.pick_up!(to)
-        piece_box.add(target_soldier.piece.key => 1)
-        @mediator.kill_counter += 1
-        @last_captured_piece = target_soldier.piece
-      end
-
-      from_soldier = board.pick_up!(from)
-      attributes = from_soldier.attributes
-      if promote_trigger
-        attributes[:promoted] = true
-      end
-      attributes[:point] = to
-      board.put_on(Soldier.create(attributes), validate: true)
     end
 
     def candidate_soldiers(piece:, promoted:, point:)

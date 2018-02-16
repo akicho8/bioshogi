@@ -28,6 +28,10 @@ module Warabi
   class HoldPieceNotFound < WarabiError
   end
 
+  # 指定の持駒が無い(打を省略からの)
+  class HoldPieceNotFound2 < WarabiError
+  end
+
   # 自分の駒の上に自分の駒を初期配置
   class PieceAlredyExist < WarabiError
   end

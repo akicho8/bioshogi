@@ -3,7 +3,7 @@ require "./example_helper"
 mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
 puts mediator
 
-# mediator.flip_player.last_captured_piece.name # => "歩"
+# mediator.flip_player.executor.last_captured_piece.name # => "歩"
 # mediator.flip_player.piece_box.to_s           # => "玉 飛 角 金二 銀二 桂二 香二 歩一〇"
 # mediator.flip_player.to_s_soldiers            # => "１一玉 １三歩"
 # mediator.current_player.piece_box.to_s        # => "玉 飛 角 金二 銀二 桂二 香二 歩九"

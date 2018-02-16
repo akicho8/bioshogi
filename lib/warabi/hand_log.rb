@@ -5,7 +5,7 @@ module Warabi
     include ActiveModel::Model
 
     attr_accessor :direct_hand
-    attr_accessor :moved_hand
+    attr_accessor :move_hand
 
     attr_accessor :candidate
     attr_accessor :point_same
@@ -49,7 +49,7 @@ module Warabi
     end
 
     def hand
-      moved_hand || direct_hand
+      move_hand || direct_hand
     end
 
     def official_formatter(**options)

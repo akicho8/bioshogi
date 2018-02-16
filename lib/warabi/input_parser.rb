@@ -35,11 +35,15 @@ module Warabi
       ki2_promote_trigger = /(?<ki2_promote_trigger>成)/
       kif_direct_trigger = /(?<kif_direct_trigger>[打合])/
 
+      ki2_one_up = /(?<ki2_one_up>直)/
+      ki2_left_right = /(?<ki2_left_right>[左右])/
+      ki2_up_down = /(?<ki2_up_down>[上行引寄])/ # 行は上のalias
+
       /
         #{ki2_location}?
         (#{kif_point}#{ki2_same}|#{ki2_same}#{kif_point}|#{kif_point}|#{ki2_same}) # 12同 or 同12 or 12 or 同 に対応
         (?<kif_piece>#{Piece.all_names.join("|")})
-        (?<ki2_motion_part>[左右直]?[寄引上行]?)
+        (#{ki2_one_up}|#{ki2_left_right}?#{ki2_up_down}?)?
         (#{ki2_as_it_is}|#{ki2_promote_trigger}|#{kif_direct_trigger})?
         (?<kif_point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
       /ox
