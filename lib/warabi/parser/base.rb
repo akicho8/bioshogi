@@ -318,10 +318,9 @@ module Warabi
         end
 
         def clock_exist?
-          if @clock_exist.nil?
-            @clock_exist = @move_infos.any? {|e| e[:used_seconds] && e[:used_seconds].to_i >= 1 }
+          if e = @move_infos.last
+            e[:used_seconds].to_i >= 1
           end
-          @clock_exist
         end
 
         def used_seconds_at(index)
