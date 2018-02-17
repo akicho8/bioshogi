@@ -1,7 +1,7 @@
 require "./example_helper"
 
 sequencer = Sequencer.new
-sequencer.pattern = Dsl.define do
+sequencer.pattern = NotationDsl.define do
   title "(title)"
 end
 sequencer.evaluate

@@ -7,7 +7,7 @@ module Warabi
         absolute_point || same_point
       end
 
-      def perform_validations
+      def hard_validations
         super
 
         # 初手に同歩の場合

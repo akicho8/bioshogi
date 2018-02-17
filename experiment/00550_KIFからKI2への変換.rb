@@ -8,7 +8,7 @@ out << "\n"
 # puts info
 
 mediator = Mediator.new
-mediator.board.set_from_preset_key(info.header["手合割"])
+mediator.board.placement_from_preset(info.header["手合割"])
 info.move_infos.each do |info|
   mediator.execute(info[:input])
 end

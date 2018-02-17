@@ -4,7 +4,7 @@ module Warabi
   describe Mediator do
     it "交互に打ちながら戦況表示" do
       mediator = Mediator.new
-      mediator.board.set_from_preset_key
+      mediator.board.placement_from_preset
       mediator.execute(["７六歩", "３四歩"])
       mediator.turn_info.counter.should == 2
       mediator.turn_info.turn_max.should == 2
@@ -38,17 +38,17 @@ EOT
 
       mediator.board.to_s_soldiers == m2.board.to_s_soldiers
 
-      mediator.flip_player.location                       == m2.flip_player.location
-      mediator.flip_player.piece_box.to_s                 == m2.flip_player.piece_box.to_s
-      mediator.flip_player.to_s_soldiers                  == m2.flip_player.to_s_soldiers
-      mediator.flip_player.executor.last_captured_piece == m2.flip_player.executor.last_captured_piece
+      mediator.opponent_player.location                == m2.opponent_player.location
+      mediator.opponent_player.piece_box.to_s          == m2.opponent_player.piece_box.to_s
+      mediator.opponent_player.to_s_soldiers           == m2.opponent_player.to_s_soldiers
+      mediator.opponent_player.executor.killed_soldier == m2.opponent_player.executor.killed_soldier
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
       mediator = Mediator.test1(init: "▲１五歩 △１三歩", exec: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
-      mediator.flip_player.executor.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
+      mediator.opponent_player.executor.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
     end
 
     it "同歩からの同飛になること" do
@@ -57,7 +57,7 @@ EOT
     end
 
     it "Sequencer" do
-      data = Dsl.define{}
+      data = NotationDsl.define{}
       sequencer = Sequencer.new
       sequencer.pattern = data
       sequencer.evaluate
@@ -82,9 +82,9 @@ EOT
       it "XtraPattern", p: true do
         XtraPattern.reload_all
         XtraPattern.each do |pattern|
-          if pattern[:dsl]
+          if pattern[:notation_dsl]
             mediator = Sequencer.new
-            mediator.pattern = pattern[:dsl]
+            mediator.pattern = pattern[:notation_dsl]
             mediator.evaluate
             # p mediator.snapshots
           else

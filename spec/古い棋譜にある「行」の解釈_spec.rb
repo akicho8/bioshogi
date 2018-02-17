@@ -4,7 +4,7 @@ module Warabi
   describe do
     def test1(str)
       mediator = Warabi::Mediator.new
-      mediator.board.set_from_shape(<<~EOT)
+      mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・v角|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|

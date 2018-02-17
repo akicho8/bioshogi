@@ -5,7 +5,7 @@
 .text-center
   - Warabi::DefenseInfo.each do |stock|
     - mediator = Warabi::Mediator.new
-    - mediator.board.set_from_hash("▲" => stock[:key], "△" => stock[:key])
+    - mediator.board.placement_from_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p
       - if stock[:sankou_url]

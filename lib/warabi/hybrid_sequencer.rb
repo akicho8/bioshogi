@@ -3,9 +3,9 @@
 module Warabi
   module HybridSequencer
     def self.execute(pattern)
-      if pattern[:dsl]
+      if pattern[:notation_dsl]
         mediator = Sequencer.new
-        mediator.pattern = pattern[:dsl]
+        mediator.pattern = pattern[:notation_dsl]
         mediator.evaluate
         mediator.snapshots
       else

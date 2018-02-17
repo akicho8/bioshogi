@@ -174,7 +174,7 @@ auto_flushing {
     if params[:kif_title].present?
       @pattern = Warabi::XtraPattern.new({
           title: params[:kif_title],
-          dsl: Warabi::Dsl.define(params){|params|eval(params[:kif_body])},
+          notation_dsl: Warabi::NotationDsl.define(params){|params|eval(params[:kif_body])},
         })
       @snapshots = Warabi::HybridSequencer.execute(@pattern)
     else
@@ -192,7 +192,7 @@ auto_flushing {
     if params[:body].present?
       @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Warabi::Dsl.define(params){|params|
+          notation_dsl: Warabi::NotationDsl.define(params){|params|
             board "平手"
             auto_flushing
             mov params[:body]
@@ -231,7 +231,7 @@ auto_flushing {
       @kif_info = Warabi::Parser.parse(params[:body])
       @pattern = Warabi::XtraPattern.new({
           title: params[:title],
-          dsl: Warabi::Dsl.define(@kif_info){|kif_info|
+          notation_dsl: Warabi::NotationDsl.define(@kif_info){|kif_info|
             board "平手"
             auto_flushing
             kif_info.move_infos.each{|move_info|

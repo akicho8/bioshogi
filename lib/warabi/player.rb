@@ -29,7 +29,7 @@ module Warabi
       @mediator.hand_logs << @executor.hand_log
     end
 
-    def flip_player
+    def opponent_player
       @mediator.player_at(location.flip)
     end
 

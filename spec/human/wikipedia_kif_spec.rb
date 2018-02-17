@@ -4,7 +4,7 @@ module Warabi
   describe "ウィキペディアにある表記通りの解釈ができる" do
     def test1(str)
       mediator = Warabi::Mediator.new
-      mediator.board.set_from_shape(<<~EOT)
+      mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ と ・ ・ ・|
 | ・ 銀 ・ ・ と と ・ 龍 ・|

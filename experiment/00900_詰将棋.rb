@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board.set_from_shape(<<~EOT)
+mediator.board.placement_from_shape(<<~EOT)
 +---+
 |v玉|
 | ・|

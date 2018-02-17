@@ -34,7 +34,7 @@ module Warabi
     private
 
     def __select_vectors(promoted)
-      piece.assert_promotable(promoted)
+      raise MustNotHappen if !piece.promotable? && promoted
 
       if promoted
         promoted_vectors

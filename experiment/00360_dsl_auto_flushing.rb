@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Sequencer.new
-mediator.pattern = Dsl.define do
+mediator.pattern = NotationDsl.define do
   board <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
   +---------------------------+

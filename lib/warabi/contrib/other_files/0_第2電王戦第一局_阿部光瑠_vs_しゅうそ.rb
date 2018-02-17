@@ -5,7 +5,7 @@ module Warabi
     [
       {
         title: Pathname(__FILE__).basename(".*"),
-        dsl: lambda do
+        notation_dsl: lambda do
           board "平手"
           auto_flushing {
             set :hide_ki2_hand_logs, true

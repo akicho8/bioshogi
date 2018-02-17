@@ -4,7 +4,7 @@ module Warabi
   describe Mediator do
     def board_set_test(value)
       mediator = Mediator.new
-      mediator.board.set_from_preset_key(value)
+      mediator.board.placement_from_preset(value)
       mediator.board.to_s
     end
 

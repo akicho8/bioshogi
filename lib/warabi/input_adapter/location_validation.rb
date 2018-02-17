@@ -3,12 +3,12 @@
 module Warabi
   module InputAdapter
     concern :LocationValidation do
-      def perform_validations
+      def hard_validations
         super
 
         if location
           if player.location != location
-            errors_add DifferentTurnCommonError, "#{player.call_name}の手番で#{player.flip_player.call_name}が着手しました"
+            errors_add DifferentTurnCommonError, "#{player.call_name}の手番で#{player.opponent_player.call_name}が着手しました"
           end
         end
       end

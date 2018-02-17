@@ -142,9 +142,9 @@ module Warabi
           end
 
           if @board_source
-            mediator.board.set_from_shape(@board_source)
+            mediator.board.placement_from_shape(@board_source)
           else
-            mediator.board.set_from_preset_key(header["手合割"] || "平手")
+            mediator.board.placement_from_preset(header["手合割"] || "平手")
           end
 
           mediator.turn_info.handicap = handicap?
@@ -162,7 +162,7 @@ module Warabi
 
           if @board_source
             mediator = Mediator.new
-            mediator.board.set_from_shape(@board_source)
+            mediator.board.placement_from_shape(@board_source)
             if mediator.board.preset_key != :"平手"
               return true
             end
@@ -276,7 +276,7 @@ module Warabi
                 if v = header[key]
                   if v.blank?
                     header.object.delete(key)
-                  end
+            pp      end
                 end
               end
             end

@@ -181,7 +181,7 @@ module Warabi
     end
 
     def to_csa
-      piece.csa_some_name(promoted)
+      piece.csa.any_name(promoted)
     end
 
     def inspect

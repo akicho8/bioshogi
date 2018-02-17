@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Warabi
-  class Dsl
+  class NotationDsl
     class Expression
       def evaluate(context)
         raise NotImplementedError, "#{__method__} is not implemented"

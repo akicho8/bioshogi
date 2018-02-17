@@ -6,10 +6,10 @@ module Warabi
       @board ||= Board.new
     end
 
-    delegate :board_set_any, :set_from_preset_key, :set_from_hash, :set_from_hash, to: :board
+    delegate :board_set_any, :placement_from_preset, :placement_from_hash, :placement_from_hash, to: :board
 
-    def set_from_soldiers(soldiers)
-      board.set_from_soldiers(soldiers)
+    def placement_from_soldiers(soldiers)
+      board.placement_from_soldiers(soldiers)
       play_standby
     end
   end

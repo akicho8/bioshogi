@@ -50,7 +50,7 @@ module Warabi
     end
 
     def csa_regexp
-      csa_piece = Piece.flat_map { |e| [e.csa_basic_name, e.csa_promoted_name] }.compact.join("|")
+      csa_piece = Piece.flat_map { |e| [e.csa.basic_name, e.csa.promoted_name] }.compact.join("|")
 
       /
         (?<csa_sign>[+-])?

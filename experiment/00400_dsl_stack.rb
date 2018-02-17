@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Sequencer.new
-mediator.pattern = Dsl.define do
+mediator.pattern = NotationDsl.define do
   board "平手"
   mov "▲７六歩"
   snapshot "様子を伺う"

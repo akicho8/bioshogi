@@ -25,7 +25,7 @@ module Warabi
         }.call
       end
 
-      def perform_validations
+      def hard_validations
         super
 
         if !direct_trigger && candidate_soldiers.size >= 2 && motion_str.empty?

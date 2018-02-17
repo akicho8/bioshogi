@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Sequencer.new
-mediator.pattern = Dsl.define do
+mediator.pattern = NotationDsl.define do
   pieces black: "歩"
 end
 mediator.evaluate

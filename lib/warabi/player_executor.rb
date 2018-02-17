@@ -14,8 +14,6 @@ module Warabi
     attr_reader :direct_hand
     attr_reader :move_hand
 
-    attr_reader :last_captured_piece
-
     delegate :board, :piece_box, :mediator, to: :player
 
     def initialize(player, source)
@@ -48,7 +46,13 @@ module Warabi
         board.put_on(@soldier, validate: true)
       else
         @killed_soldier = board.lookup(@soldier.point)
-        move_to(@origin_soldier.point, @soldier.point, input.promote_trigger)
+        if @killed_soldier
+          board.pick_up(@soldier.point)
+          piece_box.add(@killed_soldier.piece.key => 1)
+          mediator.kill_counter += 1
+        end
+        board.pick_up(@move_hand.origin_soldier.point)
+        board.put_on(@move_hand.soldier, validate: true)
       end
     end
 
@@ -69,51 +73,6 @@ module Warabi
 
     private
 
-    def move_to(from, to, promote_trigger = false)
-      @last_captured_piece = nil
-
-      from = Point.fetch(from)
-      to = Point.fetch(to)
-
-      # 破壊的な処理をする前の段階でエラーチェックを行う
-      # if true
-      #   if promote_trigger
-      #     if !from.promotable?(player.location) && !to.promotable?(player.location)
-      #       raise NotPromotable, "#{from}から#{to}への移動では成れません"
-      #     end
-      #
-      #     soldier = board.lookup(from)
-      #     if soldier.promoted
-      #       raise AlredyPromoted, "成りを明示しましたが#{soldier.point}の#{soldier.piece.name}はすでに成っています"
-      #     end
-      #   end
-      #
-      #   if (soldier = board.lookup(from)) && player.location != soldier.location
-      #     raise ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{player.location}の手番で#{soldier}を#{to}に動かそうとしています\n#{mediator.to_bod}"
-      #   end
-      # end
-
-      # 移動先に相手の駒があれば取って駒台に移動する
-      if target_soldier = board.lookup(to)
-        # if target_soldier.location == player.location
-        #   raise SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています。移動元:#{from} 対象の駒:#{target_soldier}\n#{mediator.to_bod}"
-        # end
-        board.pick_up!(to)
-        piece_box.add(target_soldier.piece.key => 1)
-        mediator.kill_counter += 1
-        @last_captured_piece = target_soldier.piece
-      end
-
-      from_soldier = board.pick_up!(from)
-      attributes = from_soldier.attributes
-      if promote_trigger
-        attributes[:promoted] = true
-      end
-      attributes[:point] = to
-      board.put_on(Soldier.create(attributes), validate: true)
-      # end
-    end
-
     def point_same?
       if hand_log = mediator.hand_logs.last
         hand_log.soldier.point == @soldier.point
@@ -127,12 +86,12 @@ module Warabi
         "棋譜"   => mediator.hand_logs.collect { |e| e.to_kif(with_mark: true) }.join(" "),
       }
 
-      message = [error[:message]]
-      message.concat(attributes.collect { |*e| e.join(": ") })
-      message << mediator.to_bod
-      message = message.join("\n")
+      str = [error[:message]]
+      str.concat(attributes.collect { |*e| e.join(": ") })
+      str << mediator.to_bod
+      str = str.join("\n")
 
-      raise error[:klass].new(message)
+      raise error[:error_class].new(str)
     end
 
     def input_adapter_class(md)

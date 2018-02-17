@@ -16,7 +16,7 @@ module Warabi
 
     it "▲が平手で△が香落ちなので「香落ち」だと判断できる" do
       mediator = Mediator.new
-      mediator.board.set_from_shape(<<~EOT)
+      mediator.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -35,7 +35,7 @@ EOT
 
     it "▲は平手状態だけど△は不明" do
       mediator = Mediator.new
-mediator.board.set_from_shape(<<~EOT)
+mediator.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀 ・ ・|一
@@ -54,7 +54,7 @@ EOT
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
       mediator = Mediator.new
-      mediator.board.set_from_shape(<<~EOT)
+      mediator.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一

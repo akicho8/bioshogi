@@ -5,7 +5,7 @@ module Warabi
     [
       {
         title: Pathname(__FILE__).basename(".*"),
-        dsl: lambda do
+        notation_dsl: lambda do
           board <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

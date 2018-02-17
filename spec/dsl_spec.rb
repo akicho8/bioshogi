@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
 module Warabi
-  describe Dsl do
+  describe NotationDsl do
     it "試行錯誤用" do
-      builder = Dsl.define do
+      builder = NotationDsl.define do
         title "(title)"
         comment "(comment)"
         board "平手"
@@ -26,7 +26,7 @@ module Warabi
     end
 
     it "試行錯誤用2" do
-      dsl = Dsl.define do
+      notation_dsl = NotationDsl.define do
         # title "(title)"
         # comment "(comment)"
         board <<~EOT
@@ -56,7 +56,7 @@ module Warabi
       end
 
       sequencer = Sequencer.new
-      sequencer.pattern = dsl
+      sequencer.pattern = notation_dsl
 
       loop do
         r = sequencer.step_evaluate
@@ -71,7 +71,7 @@ module Warabi
 
     describe "各コマンド" do
       def dsl_block(&block)
-        builder = Dsl.define(&block)
+        builder = NotationDsl.define(&block)
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
         @sequencer.evaluate

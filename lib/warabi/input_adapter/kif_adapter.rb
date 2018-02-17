@@ -28,7 +28,7 @@ module Warabi
         force_direct_trigger
       end
 
-      def perform_validations
+      def hard_validations
         super
 
         if promoted && force_direct_trigger

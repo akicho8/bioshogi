@@ -18,7 +18,7 @@ module Warabi
 
     # def pattern=(block)
     #   if block.kind_of? Proc
-    #     @pattern = Dsl.define(&block)
+    #     @pattern = NotationDsl.define(&block)
     #   else
     #     @pattern = block
     #   end
@@ -37,7 +37,7 @@ module Warabi
         end
         @instruction_pointer += 1
         expr.evaluate(self)
-        if expr.kind_of?(Dsl::Mov)
+        if expr.kind_of?(NotationDsl::Mov)
           break
         end
       end

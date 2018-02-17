@@ -13,83 +13,63 @@ module Warabi
     concerning :UpdateMethods do
       def put_on(soldier, **options)
         options = {
-          validate_collision_pawn: false,
-          validate_alive: false,
           validate: false,
         }.merge(options)
 
-        if options[:validate] || options[:validate_alive]
-          assert_alive(soldier)
+        if options[:validate]
+          assert_cell_blank(soldier.point)
         end
-
-        if options[:validate] || options[:validate_collision_pawn]
-          assert_not_collision_pawn(soldier)
-        end
-
-        assert_cell_blank(soldier.point)
         surface[soldier.point] = soldier
       end
 
-      def pick_up!(point)
-        soldier = surface.delete(point)
+      def pick_up(point)
+        soldier = safe_delete_on(point)
         unless soldier
           raise NotFoundOnBoard, "#{point}の位置には何もありません"
         end
         soldier
       end
 
-      def all_clear
-        surface.clear
+      def safe_delete_on(point)
+        surface.delete(point)
       end
 
-      def delete_on(point)
-        surface.delete(point)
+      def all_clear
+        surface.clear
       end
 
       def board_set_any(v)
         case
         when BoardParser.accept?(v)
-          set_from_shape(v)
+          placement_from_shape(v)
         when v.kind_of?(Hash)
-          set_from_hash(v)
+          placement_from_hash(v)
         else
-          set_from_preset_key(v)
+          placement_from_preset(v)
         end
       end
 
-      def set_from_preset_key(value = nil)
-        set_from_hash(white: value || "平手")
+      def placement_from_preset(value = nil)
+        placement_from_hash(white: value || "平手")
       end
 
-      def set_from_shape(str)
-        set_from_soldiers(BoardParser.parse(str).soldier_box)
+      def placement_from_shape(str)
+        placement_from_soldiers(BoardParser.parse(str).soldier_box)
       end
 
-      def set_from_hash(hash)
-        set_from_soldiers(Soldier.preset_soldiers(hash))
+      def placement_from_hash(hash)
+        placement_from_soldiers(Soldier.preset_soldiers(hash))
       end
 
-      def set_from_soldiers(soldiers)
+      def placement_from_soldiers(soldiers)
         soldiers.each { |soldier| put_on(soldier) }
       end
 
       private
 
       def assert_cell_blank(point)
-        if soldier = lookup(point)
-          raise PieceAlredyExist, "盤上にすでに#{soldier}があります\n#{self}"
-        end
-      end
-
-      def assert_not_collision_pawn(soldier)
-        if collision_soldier = soldier.collision_pawn(self)
-          raise DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{soldier}が打てません\n#{self}"
-        end
-      end
-
-      def assert_alive(soldier)
-        if !soldier.alive?
-          raise DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いの可能性があります"
+        if surface.has_key?(point)
+          raise PieceAlredyExist, "空のはずの#{point}に駒があります\n#{self}"
         end
       end
     end

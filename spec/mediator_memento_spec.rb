@@ -4,7 +4,7 @@ module Warabi
   describe MediatorMemento do
     it do
       object = MediatorMemento.new
-      object.mediator.board.set_from_preset_key
+      object.mediator.board.placement_from_preset
       object.mediator.execute("▲７六歩")
       object.stack_push
       object.mediator.execute("△３四歩")

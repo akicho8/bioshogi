@@ -4,7 +4,7 @@ module Warabi
   describe "usi" do
     it "usi (sfen) 形式で出力" do
       mediator = Mediator.new
-      mediator.board.set_from_preset_key
+      mediator.board.placement_from_preset
       mediator.play_standby
       mediator.to_sfen.should == "position startpos"
       mediator.to_long_sfen.should == "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"

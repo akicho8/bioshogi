@@ -10,7 +10,7 @@ mediator.board["２八"].name # => "▲２八飛"
 mediator.board["５九"].name # => "▲５九玉"
 
 mediator.board.all_clear
-mediator.board.set_from_preset_key("裸玉")
+mediator.board.placement_from_preset("裸玉")
 mediator.board.preset_key    # => :十九枚落ち
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

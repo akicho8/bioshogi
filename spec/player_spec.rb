@@ -189,9 +189,9 @@ EOT
         describe "取れる" do
           it "座標指定で" do
             mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
-            mediator.flip_player.executor.last_captured_piece.name.should == "歩"
-            mediator.flip_player.piece_box.to_s.should == "歩"
-            mediator.flip_player.to_s_soldiers.should == "１一玉 １三歩"
+            mediator.opponent_player.executor.killed_soldier.piece.name.should == "歩"
+            mediator.opponent_player.piece_box.to_s.should == "歩"
+            mediator.opponent_player.to_s_soldiers.should == "１一玉 １三歩"
             mediator.current_player.piece_box.to_s.should == ""
             mediator.current_player.to_s_soldiers.should == "１五玉"
           end
@@ -200,9 +200,9 @@ EOT
             mediator = Mediator.test1(init: "▲２五歩 △２三歩", exec: ["２四歩", "同歩"])
             mediator.hand_logs.last.to_kif_ki2.should == ["２四歩(23)", "同歩"]
 
-            mediator.flip_player.executor.last_captured_piece.name.should == "歩"
-            mediator.flip_player.piece_box.to_s.should == "歩"
-            mediator.flip_player.to_s_soldiers.should == "２四歩"
+            mediator.opponent_player.executor.killed_soldier.piece.name.should == "歩"
+            mediator.opponent_player.piece_box.to_s.should == "歩"
+            mediator.opponent_player.to_s_soldiers.should == "２四歩"
             mediator.current_player.piece_box.to_s.should == ""
             mediator.current_player.to_s_soldiers.should == ""
           end
@@ -306,7 +306,7 @@ EOT
 
     it "全体確認" do
       mediator = Mediator.new
-      mediator.board.set_from_preset_key
+      mediator.board.placement_from_preset
       mediator.execute("７六歩")
       mediator.execute("３四歩")
       mediator.execute("２二角成")

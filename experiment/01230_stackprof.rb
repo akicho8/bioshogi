@@ -5,9 +5,9 @@ require "./example_helper"
 require "stackprof"
 
 ms = Benchmark.ms do
-  # StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
-  StackProf.run(mode: :object, out: "stackprof.dump", raw: true) do
-    1.times do
+  StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
+  # StackProf.run(mode: :object, out: "stackprof.dump", raw: true) do
+    10.times do
       ["csa", "ki2", "kif", "sfen"].each do |e|
         info = Parser.file_parse("katomomo.#{e}")
         info.to_ki2
@@ -36,75 +36,74 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
-# >> 9428.5 ms
+# >> 3266.3 ms
 # >> ==================================
-# >>   Mode: object(1)
-# >>   Samples: 730763 (0.00% miss rate)
-# >>   GC: 0 (0.00%)
+# >>   Mode: cpu(1000)
+# >>   Samples: 799 (0.00% miss rate)
+# >>   GC: 159 (19.90%)
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
-# >>     162873  (22.3%)       67814   (9.3%)     Warabi::Point.lookup
-# >>     227986  (31.2%)       65744   (9.0%)     Warabi::BoardParser::KifBoardParser#cell_walker
-# >>      54305   (7.4%)       54248   (7.4%)     Warabi::Position::Hpos.lookup
-# >>      45024   (6.2%)       45024   (6.2%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>      40702   (5.6%)       40702   (5.6%)     Hash#transform_keys
-# >>      40753   (5.6%)       40686   (5.6%)     Warabi::Position::Vpos.lookup
-# >>      26689   (3.7%)       26689   (3.7%)     Warabi::Point#to_xy
-# >>     166690  (22.8%)       21218   (2.9%)     Warabi::Player#candidate_soldiers
-# >>      82404  (11.3%)       20604   (2.8%)     Warabi::PlayerExecutor#input
-# >>      17068   (2.3%)       16910   (2.3%)     Warabi::InputParser#scan
-# >>      90053  (12.3%)       16884   (2.3%)     Warabi::Soldier.create
-# >>      29150   (4.0%)       14340   (2.0%)     Warabi::Soldier#all_vectors
-# >>      11776   (1.6%)       11776   (1.6%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>      62695   (8.6%)       10605   (1.5%)     Warabi::Movabler#store_if_alive
-# >>      14810   (2.0%)        9561   (1.3%)     Warabi::Piece#all_vectors
-# >>       9513   (1.3%)        9513   (1.3%)     ActiveSupport::Duration::Scalar#-
-# >>      67203   (9.2%)        9120   (1.2%)     Set#each
-# >>     143663  (19.7%)        9066   (1.2%)     Warabi::Movabler#move_list
-# >>       9656   (1.3%)        8204   (1.1%)     Warabi::Location.lookup
-# >>      51040   (7.0%)        7656   (1.0%)     Warabi::Soldier#merge
-# >>      35282   (4.8%)        7512   (1.0%)     Warabi::SkillMonitor#execute_one
-# >>       8120   (1.1%)        7105   (1.0%)     Warabi::InputAdapter::UsiAdapter#alpha_to_digit
-# >>       7020   (1.0%)        7020   (1.0%)     Warabi::Soldier#attributes
-# >>       6805   (0.9%)        6532   (0.9%)     Warabi::SkillSet::List#normalize
-# >>       6550   (0.9%)        6520   (0.9%)     Warabi::Point#vector_add
-# >>      30354   (4.2%)        5438   (0.7%)     Warabi::Parser::ChessClock::SingleClock#to_s
-# >>       6795   (0.9%)        5436   (0.7%)     ActiveSupport::Duration#*
-# >>       5424   (0.7%)        5424   (0.7%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>      28326   (3.9%)        4970   (0.7%)     Warabi::BoardParser::KifBoardParser#soldier_create
-# >>       5231   (0.7%)        4831   (0.7%)     Warabi::PieceVector#all_vectors
-# >> Warabi::Point.lookup (/Users/ikeda/src/warabi/lib/warabi/point.rb:32)
-# >>   samples:  67814 self (9.3%)  /   162873 total (22.3%)
+# >>        159  (19.9%)         159  (19.9%)     (garbage collection)
+# >>         88  (11.0%)          86  (10.8%)     Warabi::Position::Base.lookup
+# >>         42   (5.3%)          41   (5.1%)     Hash#transform_keys
+# >>         35   (4.4%)          35   (4.4%)     block (4 levels) in memory_record
+# >>         47   (5.9%)          31   (3.9%)     Warabi::Parser#file_parse
+# >>         30   (3.8%)          30   (3.8%)     Warabi::Parser::Base::ConverterMethods#clock_exist?
+# >>         29   (3.6%)          29   (3.6%)     Warabi::Position::Base#hash
+# >>         30   (3.8%)          27   (3.4%)     Warabi::PieceVector#all_vectors
+# >>         23   (2.9%)          23   (2.9%)     Warabi::Soldier#attributes
+# >>         17   (2.1%)          17   (2.1%)     ActiveModel::AttributeAssignment#_assign_attribute
+# >>         50   (6.3%)          16   (2.0%)     ActiveModel::AttributeAssignment#assign_attributes
+# >>        132  (16.5%)          15   (1.9%)     Warabi::Point.lookup
+# >>         16   (2.0%)          15   (1.9%)     Warabi::InputParser#scan
+# >>         29   (3.6%)          12   (1.5%)     ActiveModel::AttributeAssignment#assign_attributes
+# >>         17   (2.1%)          12   (1.5%)     Warabi::Point#hash
+# >>        202  (25.3%)          11   (1.4%)     Warabi::Player#candidate_soldiers
+# >>         11   (1.4%)          11   (1.4%)     Warabi::Point#to_xy
+# >>          9   (1.1%)           9   (1.1%)     #<Module:0x00007fea642efd78>.kconv
+# >>          9   (1.1%)           9   (1.1%)     ActiveModel::AttributeAssignment#_assign_attribute
+# >>          8   (1.0%)           8   (1.0%)     Warabi::Parser::Base::ConverterMethods#mb_ljust
+# >>          7   (0.9%)           7   (0.9%)     Warabi::MediatorBoard#board
+# >>          7   (0.9%)           7   (0.9%)     Warabi::Position::Vpos#number_format
+# >>          6   (0.8%)           6   (0.8%)     Warabi::Position::Base.units
+# >>          5   (0.6%)           5   (0.6%)     Warabi::Piece::VectorMethods#piece_vector
+# >>         75   (9.4%)           5   (0.6%)     Set#each
+# >>          5   (0.6%)           5   (0.6%)     ActiveModel::AttributeAssignment#_assign_attribute
+# >>          4   (0.5%)           4   (0.5%)     ActiveSupport::Duration#initialize
+# >>        172  (21.5%)           4   (0.5%)     Warabi::Movabler#move_list
+# >>          4   (0.5%)           4   (0.5%)     Warabi::OfficialFormatter#initialize
+# >>         13   (1.6%)           4   (0.5%)     Warabi::MoveHand#to_kif
+# >> Warabi::Point.lookup (/Users/ikeda/src/warabi/lib/warabi/point.rb:30)
+# >>   samples:    15 self (1.9%)  /    132 total (16.5%)
 # >>   callers:
-# >>     128591  (   79.0%)  Warabi::Point.[]
-# >>     34282  (   21.0%)  Warabi::Point.fetch
-# >>   callees (95059 total):
-# >>     54305  (   57.1%)  Warabi::Position::Hpos.lookup
-# >>     40753  (   42.9%)  Warabi::Position::Vpos.lookup
-# >>        1  (    0.0%)  Warabi::Position::Base#hash
+# >>       76  (   57.6%)  Warabi::Point.fetch
+# >>       56  (   42.4%)  Warabi::Point.[]
+# >>   callees (117 total):
+# >>       45  (   38.5%)  Warabi::Position::Hpos.lookup
+# >>       43  (   36.8%)  Warabi::Position::Vpos.lookup
+# >>       29  (   24.8%)  Warabi::Position::Base#hash
 # >>   code:
-# >>                                   |    32  |       def lookup(value)
-# >>                                   |    33  |         if value.kind_of?(self)
-# >>                                   |    34  |           return value
-# >>                                   |    35  |         end
-# >>                                   |    36  | 
-# >>                                   |    37  |         x = nil
-# >>                                   |    38  |         y = nil
-# >>                                   |    39  | 
-# >>                                   |    40  |         case value
-# >>                                   |    41  |         when Array
-# >>                                   |    42  |           a, b = value
-# >>     2    (0.0%)                   |    43  |           x = Position::Hpos.lookup(a)
-# >>     8    (0.0%)                   |    44  |           y = Position::Vpos.lookup(b)
-# >>                                   |    45  |         when String
-# >>  40572    (5.6%) /  40572   (5.6%)  |    46  |           if md = value.match(/\A(?<x>.)(?<y>.)\z/)
-# >>  67865    (9.3%) /  13562   (1.9%)  |    47  |             x = Position::Hpos.lookup(md[:x])
-# >>  54307    (7.4%) /  13562   (1.9%)  |    48  |             y = Position::Vpos.lookup(md[:y])
-# >>                                   |    49  |           end
-# >>                                   |    50  |         end
-# >>                                   |    51  | 
-# >>                                   |    52  |         if x && y
-# >>     1    (0.0%) /     1   (0.0%)  |    53  |           @memo ||= {}
-# >>    13    (0.0%) /    12   (0.0%)  |    54  |           @memo[x] ||= {}
-# >>   105    (0.0%) /   105   (0.0%)  |    55  |           @memo[x][y] ||= new(x, y).freeze
-# >>                                   |    56  |         end
+# >>                                   |    30  |       def lookup(value)
+# >>     4    (0.5%) /     4   (0.5%)  |    31  |         if value.kind_of?(self)
+# >>     1    (0.1%) /     1   (0.1%)  |    32  |           return value
+# >>                                   |    33  |         end
+# >>                                   |    34  | 
+# >>                                   |    35  |         x = nil
+# >>                                   |    36  |         y = nil
+# >>                                   |    37  | 
+# >>                                   |    38  |         case value
+# >>     1    (0.1%) /     1   (0.1%)  |    39  |         when Array
+# >>                                   |    40  |           a, b = value
+# >>     5    (0.6%)                   |    41  |           x = Position::Hpos.lookup(a)
+# >>     3    (0.4%)                   |    42  |           y = Position::Vpos.lookup(b)
+# >>     1    (0.1%) /     1   (0.1%)  |    43  |         when String
+# >>                                   |    44  |           a, b = value.chars
+# >>    40    (5.0%)                   |    45  |           x = Position::Hpos.lookup(a)
+# >>    40    (5.0%)                   |    46  |           y = Position::Vpos.lookup(b)
+# >>                                   |    47  |         end
+# >>                                   |    48  | 
+# >>                                   |    49  |         if x && y
+# >>     3    (0.4%) /     3   (0.4%)  |    50  |           @memo ||= {}
+# >>    14    (1.8%) /     3   (0.4%)  |    51  |           @memo[x] ||= {}
+# >>    20    (2.5%) /     2   (0.3%)  |    52  |           @memo[x][y] ||= new(x, y).freeze
+# >>                                   |    53  |         end

@@ -10,9 +10,6 @@ module Warabi
 
     describe "kif読み込み" do
       before do
-        # file = Pathname(__FILE__).dirname.join("../resources/中飛車実戦61(対穴熊).kif").expand_path
-        # file = Pathname(__FILE__).dirname.join("../resources/gekisasi-gps.kif").expand_path
-        # file = Pathname(__FILE__).dirname.join("../files/sample1.kif").expand_path
         @info = Parser::KifParser.parse(<<~EOT)
 # ----  Kifu for Windows V6.22 棋譜ファイル  ----
 開始日時：2000/01/01 00:00:00

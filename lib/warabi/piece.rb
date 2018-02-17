@@ -1,18 +1,15 @@
 # -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/piece_spec.rb" -*-
 # frozen-string-literal: true
-#
-# 駒
-#   Piece["歩"].key  # => :pawn
-#
-# 注意点
-#   == を定義すると面倒なことになる
-#   持駒の歩を取り出すため `player.pieces.delete(Piece["歩"])' としたとき歩が全部消えてしまう
-#   同じ種類の駒、同じ種類の別の駒を分けて判別するためには == を定義しない方がいい
-#
 
 module Warabi
   class Piece
     concerning :UtilityMethods do
+      # Piece.s_to_h("飛0 角 竜1 馬2 龍2")                    # => {:rook=>3, :bishop=>3}
+      # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
+      # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
+      # Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
+      # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
+      # Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
       class_methods do
         # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
         def s_to_a(str)
@@ -80,14 +77,14 @@ module Warabi
 
     include ApplicationMemoryRecord
     memory_record [
-      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "OU", csa_promoted_name: nil,  sfen_char: "K", promotable: false, },
-      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   csa_basic_name: "HI", csa_promoted_name: "RY", sfen_char: "R", promotable: true,  },
-      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    csa_basic_name: "KA", csa_promoted_name: "UM", sfen_char: "B", promotable: true,  },
-      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    csa_basic_name: "KI", csa_promoted_name: nil,  sfen_char: "G", promotable: false, },
-      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", csa_basic_name: "GI", csa_promoted_name: "NG", sfen_char: "S", promotable: true,  },
-      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", csa_basic_name: "KE", csa_promoted_name: "NK", sfen_char: "N", promotable: true,  },
-      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", csa_basic_name: "KY", csa_promoted_name: "NY", sfen_char: "L", promotable: true,  },
-      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    csa_basic_name: "FU", csa_promoted_name: "TO", sfen_char: "P", promotable: true,  },
+      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    sfen_char: "K", promotable: false, },
+      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   sfen_char: "R", promotable: true,  },
+      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    sfen_char: "B", promotable: true,  },
+      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    sfen_char: "G", promotable: false, },
+      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", sfen_char: "S", promotable: true,  },
+      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", sfen_char: "N", promotable: true,  },
+      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", sfen_char: "L", promotable: true,  },
+      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    sfen_char: "P", promotable: true,  },
     ]
 
     class << self
@@ -114,19 +111,8 @@ module Warabi
       "<#{self.class.name}:#{object_id} #{name} #{key}>"
     end
 
-    # FIXME: 削除する
     def to_h
-      [
-        :key,
-        :name,
-        :promoted_name,
-        :basic_names,
-        :promoted_names,
-        :names,
-        :promotable,
-      ].inject({}) do |a, e|
-        a.merge(e => send(e))
-      end
+      attributes
     end
 
     concerning :NameMethods do
@@ -148,24 +134,16 @@ module Warabi
         end
       end
 
-      def csa_some_name(promoted)
-        if promoted
-          csa_promoted_name
-        else
-          csa_basic_name
-        end
-      end
-
       def names
         basic_names + promoted_names
       end
 
       def basic_names
-        [name, basic_alias, csa_basic_name, sfen_char, key].flatten.compact
+        [name, basic_alias, csa.basic_name, sfen_char, key].flatten.compact
       end
 
       def promoted_names
-        [promoted_name, promoted_alias, csa_promoted_name].flatten.compact
+        [promoted_name, promoted_alias, csa.promoted_name].flatten.compact
       end
     end
 
@@ -184,15 +162,15 @@ module Warabi
       end
     end
 
+    concerning :CsaMethods do
+      def csa
+        @csa ||= PieceCsa[key]
+      end
+    end
+
     concerning :OtherMethods do
       def promotable?
         promotable
-      end
-
-      def assert_promotable(promoted)
-        if !promotable? && promoted
-          raise NotPromotable, "#{name}は成れない駒なのに成ろうとしています"
-        end
       end
     end
 

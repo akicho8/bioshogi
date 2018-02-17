@@ -138,7 +138,7 @@ EOT
         title: "早石田戦法",
         comment: "飛車先からの攻めを受けずに王手飛車(途中に説明入れたい)",
         # board: "平手",
-        dsl: lambda do
+        notation_dsl: lambda do
           board "平手"
           auto_flushing {
             mov "▲７六歩 △３四歩 ▲７五歩 △８四歩 ▲７八飛"
@@ -151,7 +151,7 @@ EOT
       },
       {
         title: "付き捨て+タタキ+合わせ",
-        dsl: lambda do
+        notation_dsl: lambda do
           board <<-EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -197,7 +197,7 @@ EOT
       },
       {
         title: "相掛かり棒銀",
-        dsl: lambda do
+        notation_dsl: lambda do
           board "平手"
           auto_flushing(false) {
             mov "▲２六歩"

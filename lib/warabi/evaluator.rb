@@ -12,7 +12,7 @@ module Warabi
 
     # 自分の駒が良い状態なのは自分がプラスになり、相手の形勢が良いときは自分にとってマイナスになる
     def score
-      player_score_for(@player) - player_score_for(@player.flip_player)
+      player_score_for(@player) - player_score_for(@player.opponent_player)
     end
 
     #       |----------| ← この部分の幅をパーセンテージで返す

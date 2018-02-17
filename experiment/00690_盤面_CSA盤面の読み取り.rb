@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board.set_from_shape(<<~EOT)
+mediator.board.placement_from_shape(<<~EOT)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *    -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU

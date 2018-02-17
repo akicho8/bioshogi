@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 #
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
-# >> | source     | triangle | absolute_point | same | piece | ki2_motion_part | kif_trigger_part | point_from | csa_sign | csa_from | csa_to | csa_basic_name | csa_promoted_name | usi_direct_piece | usi_direct_trigger | usi_to | usi_from | usi_promote_trigger |
+# >> | source     | triangle | absolute_point | same | piece | ki2_motion_part | kif_trigger_part | point_from | csa_sign | csa_from | csa_to | csa.basic_name | csa.promoted_name | usi_direct_piece | usi_direct_trigger | usi_to | usi_from | usi_promote_trigger |
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
 # >> | ６八銀左   |          | ６八  |      | 銀    | 左          |              |            |          |          |        |                |                   |                  |            |        |          |                     |
 # >> | △６八全   | △       | ６八  |      | 全    |             |              |            |          |          |        |                |                   |                  |            |        |          |                     |
@@ -32,14 +32,18 @@ module Warabi
       end
 
       def perform_validations
+        hard_validations
+        if errors.empty?
+          soft_validations
+        end
       end
 
       def errors
         @errors ||= []
       end
 
-      def errors_add(klass, message)
-        errors << {klass: klass, message: message}
+      def errors_add(error_class, message)
+        errors << {error_class: error_class, message: message}
       end
 
       def candidate_soldiers
@@ -72,6 +76,14 @@ module Warabi
           :direct_trigger  => direct_trigger,
           :errors          => errors,
         }
+      end
+
+      private
+
+      def hard_validations
+      end
+
+      def soft_validations
       end
     end
   end

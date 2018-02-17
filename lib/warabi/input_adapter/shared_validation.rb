@@ -3,7 +3,7 @@
 module Warabi
   module InputAdapter
     concern :SharedValidation do
-      def perform_validations
+      def hard_validations
         super
 
         if move_hand
@@ -28,6 +28,20 @@ module Warabi
               errors_add SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています"
             end
           end
+        end
+      end
+
+      def soft_validations
+        super
+
+        if direct_hand
+          if collision_soldier = soldier.collision_pawn(board)
+            errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{direct_hand}ができません"
+          end
+        end
+
+        if !soldier.alive?
+          errors_add DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いの可能性があります"
         end
       end
     end

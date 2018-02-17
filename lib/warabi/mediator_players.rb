@@ -5,7 +5,7 @@ module Warabi
     class_methods do
       def start
         new.tap do |e|
-          e.board.set_from_preset_key
+          e.board.placement_from_preset
         end
       end
     end
@@ -24,16 +24,16 @@ module Warabi
       players[turn_info.current_location(diff).code]
     end
 
-    def flip_player
+    def opponent_player
       current_player(1)
     end
 
     def next_player
-      flip_player
+      opponent_player
     end
 
     def win_player
-      flip_player
+      opponent_player
     end
 
     def lose_player

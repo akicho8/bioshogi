@@ -104,7 +104,7 @@ module Warabi
           child_max_hand_info = nil
           if locals[:level] < locals[:depth]
             # 木の途中
-            child_max_hand_info = nega_max(locals.merge(player: _player.flip_player, level: locals[:level].next))
+            child_max_hand_info = nega_max(locals.merge(player: _player.opponent_player, level: locals[:level].next))
             score = -child_max_hand_info[:score]
             hand_info = HandInfo[hand: mhand, score: score, level: locals[:level], reading_hands: [mhand] + child_max_hand_info[:reading_hands]]
           else
