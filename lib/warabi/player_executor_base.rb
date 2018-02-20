@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Warabi
-  class PlayerExecutor
+  class PlayerExecutorBase
     attr_reader :player
     attr_reader :source
     attr_reader :params
@@ -52,45 +52,33 @@ module Warabi
         if @killed_soldier
           board.pick_up(@soldier.point)
           piece_box.add(@killed_soldier.piece.key => 1)
-          mediator.kill_counter += 1
+          kill_counter_inc
         end
         board.pick_up(@move_hand.origin_soldier.point)
         board.put_on(@move_hand.soldier, validate: true)
       end
 
-      if Warabi.config[:skill_monitor_enable]
-        if Position.size_type == :board_size_9x9
-          if mediator.params[:skill_monitor_enable]
-            SkillMonitor.new(self).execute
-          end
-        end
-      end
+      perform_skill_monitor
 
-      mediator.hand_logs << hand_log
+      hand_push
+      mediator.turn_info.counter += 1
+
+      after_execute
     end
 
-    def hand_log
-      @hand_log ||= HandLog.new({
-          :direct_hand    => @direct_hand,
-          :move_hand      => @move_hand,
-          :candidate      => @candidate_soldiers,
-          :point_same     => point_same?,
-          :skill_set      => skill_set,
-          :killed_soldier => @killed_soldier,
-        }).freeze
+    def kill_counter_inc
     end
 
-    def skill_set
-      @skill_set ||= SkillSet.new
+    def hand_push
+    end
+
+    def perform_skill_monitor
+    end
+
+    def after_execute
     end
 
     private
-
-    def point_same?
-      if hand_log = mediator.hand_logs.last
-        hand_log.soldier.point == @soldier.point
-      end
-    end
 
     def raise_error(error)
       attributes = {

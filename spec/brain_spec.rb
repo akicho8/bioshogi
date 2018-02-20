@@ -4,7 +4,7 @@ module Warabi
   describe Brain do
     it do
       Board.dimensiton_change([3, 3]) do
-        mediator = Mediator.new
+        mediator = MediatorSimple.new
         mediator.pieces_set("▲歩")
         mediator.board.placement_from_shape <<~EOT
 +---------+
@@ -28,7 +28,7 @@ EOT
     it do
       Board.promotable_disable do
         Board.dimensiton_change([2, 5]) do
-          mediator = Mediator.new
+          mediator = MediatorSimple.new
           mediator.board.placement_from_shape <<~EOT
           +------+
           | ・v香|
@@ -49,25 +49,25 @@ EOT
 
     describe "自動的に打つ" do
       it "ランダムに盤上の駒を動かす" do
-        mediator = Mediator.start
+        mediator = MediatorSimple.start
         assert mediator.player_at(:black).brain.all_hands.sample
       end
       it "全手筋" do
-        mediator = Mediator.start
+        mediator = MediatorSimple.start
         mediator.player_at(:black).brain.all_hands.collect(&:to_kif).sort.should == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.dimensiton_change([1, 5]) do
-        mediator = Mediator.test1(init: "▲１五香")
+        mediator = MediatorSimple.test1(init: "▲１五香")
         mediator.player_at(:black).brain.move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
       end
     end
 
     it "一番得するように打つ" do
       Board.dimensiton_change([2, 2]) do
-        mediator = Mediator.test1(init: "▲１二歩", pieces_set: "▲歩")
+        mediator = MediatorSimple.test1(init: "▲１二歩", pieces_set: "▲歩")
         mediator.player_at(:black).brain.score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} }.should == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}]
       end
     end

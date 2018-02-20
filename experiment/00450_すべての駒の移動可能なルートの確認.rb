@@ -8,7 +8,7 @@ Piece.each do |piece|
   soldier.move_list(player.board).each do |v|
     player.board.safe_delete_on(v.point)
     s = "#{v.point}竜"
-    player.soldier_create(s, from_stand: false)
+    player.soldier_create(s)
   end
   puts mediator.board
 end

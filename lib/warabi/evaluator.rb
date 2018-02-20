@@ -4,13 +4,30 @@
 module Warabi
   class Evaluator
     attr_reader :player
+    attr_reader :params
 
-    def initialize(player)
+    def initialize(player, **params)
       @player = player
+      @params = params
     end
 
     def score
-      player_score_for(player) - player_score_for(player.opponent_player)
+      score = 0
+      score += player_score_for(player)
+      score -= player_score_for(player.opponent_player)
+      score
+    end
+
+    def score2
+      score = 0
+      score += player_score_for(player)
+      score -= player_score_for(player.opponent_player)
+
+      count = player.mediator.position_map[player.mediator.position_hash]
+      if count >= 1
+        score -= 9999 * count
+      end
+      score
     end
 
     private

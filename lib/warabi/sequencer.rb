@@ -5,7 +5,7 @@ module Warabi
     attr_accessor :snapshots
     attr_accessor :pattern
     attr_accessor :instruction_pointer
-    attr_accessor :mediator_memento
+    attr_accessor :mediator_stack
 
     def initialize(pattern = nil)
       super()
@@ -13,7 +13,7 @@ module Warabi
       @pattern = pattern
       @snapshots = []
       @instruction_pointer = 0
-      @mediator_memento = MediatorMemento.new
+      @mediator_stack = MediatorStack.new
     end
 
     # def pattern=(block)

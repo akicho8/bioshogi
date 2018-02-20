@@ -5,6 +5,7 @@ module Warabi
   class Player
     attr_reader :location
     attr_reader :mediator
+
     attr_reader :executor
 
     delegate :board, to: :mediator
@@ -15,7 +16,7 @@ module Warabi
     end
 
     def execute(str, **options)
-      @executor = PlayerExecutor.new(self, str, options)
+      @executor = (options[:executor_class] || PlayerExecutorHuman).new(self, str, options)
       @executor.execute
     end
 
@@ -23,33 +24,27 @@ module Warabi
       @mediator.player_at(location.flip)
     end
 
-    # 持駒の配置
-    #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
-    #   player.soldier_create(["５五飛", "３三飛"], from_stand: false)
-    #   player.soldier_create("#{point}馬")
     def soldier_create(object, **options)
       if object.kind_of?(Array)
         object.each do |e|
           soldier_create(e, options)
         end
       else
-        options = {
-          from_stand: true, # 持駒から取り出して配置する？
-        }.merge(options)
-
         if object.kind_of?(String)
-          if object.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
-            return
-          end
           soldier = Soldier.from_str(object, location: location)
         else
           soldier = object
         end
         if options[:from_stand]
-          piece_box.pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
+          piece_box.pick_out(soldier.piece)
         end
         board.put_on(soldier, validate: true)
       end
+    end
+
+    def placement_from_human(str)
+      soldiers = InputParser.scan(str).collect { |s| Soldier.from_str(s, location: location) }
+      board.placement_from_soldiers(soldiers)
     end
 
     def candidate_soldiers(piece:, promoted:, point:)
@@ -78,6 +73,8 @@ module Warabi
     end
 
     concerning :PieceBoxMethods do
+      attr_writer :piece_box
+
       def piece_box
         @piece_box ||= PieceBox.new
       end
@@ -121,8 +118,8 @@ module Warabi
     end
 
     concerning :BrainMethods do
-      def evaluator
-        Evaluator.new(self)
+      def evaluator(**options)
+        (options[:evaluator_class] || Evaluator).new(self, options)
       end
 
       def brain

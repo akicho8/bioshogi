@@ -43,7 +43,7 @@ module Warabi
     it "指定の座標だけを消す微妙なテスト" do
       Board.dimensiton_change([1, 3]) do
         mediator = Mediator.new
-        mediator.player_at(:black).soldier_create("１三香", from_stand: false)
+        mediator.player_at(:black).soldier_create("１三香")
         mediator.board.safe_delete_on(Point["１三"])
         mediator.board["１三"].should == nil
       end

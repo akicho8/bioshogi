@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
 module Warabi
-  concern :MediatorBoard do
+  concern :MediatorParams do
   end
 end

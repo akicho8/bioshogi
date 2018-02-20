@@ -15,19 +15,24 @@ module Warabi
     end
 
     desc "versus", "CPU同士の対戦"
-    option :depth_max, type: :numeric, default: 1, :aliases => "-d"
-    option :random, type: :boolean
+    option :depth_max, type: :numeric, default: 1, aliases: "-d"
+    option :logging, type: :boolean, aliases: "-l"
+    option :log_file, type: :string, default: "brain.log"
     def versus
-      p options
+      if options[:logging]
+        Warabi.logger = ActiveSupport::Logger.new(options[:log_file])
+      end
+
       mediator = Mediator.start
       loop do
         puts "-" * 80
         puts mediator
 
-        think_result = mediator.current_player.brain.nega_max_run(options)
-        hand = InputParser.slice_one(think_result[:hand])
+        info = mediator.current_player.brain.nega_max_run(options.to_options)
+        p info
+        hand = info[:hand]
         puts "指し手: #{hand}"
-        mediator.execute(hand)
+        mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 
         killed_soldier = mediator.opponent_player.executor.killed_soldier
         if killed_soldier && killed_soldier.piece.key == :king

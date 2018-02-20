@@ -110,8 +110,9 @@ module Warabi
       piece.all_vectors(promoted: promoted, location: location)
     end
 
+    # 成り(=絶対に死に駒ならない)の状態を先にチェックすることで高速化
     def alive?
-      all_vectors.any? { |e| point.vector_add(e).valid? }
+      promoted || all_vectors.any? { |e| point.vector_add(e).valid? }
     end
 
     def merge(attributes)

@@ -14,13 +14,13 @@ module Warabi
 
     class Push < Expression
       def evaluate(context)
-        context.mediator_memento.stack_push
+        context.mediator_stack.stack_push
       end
     end
 
     class Pop < Expression
       def evaluate(context)
-        context.mediator_memento.stack_pop
+        context.mediator_stack.stack_pop
       end
     end
 
@@ -30,7 +30,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.mediator_memento.mediator.var_push(@key)
+        context.mediator_stack.mediator.var_push(@key)
       end
     end
 
@@ -40,7 +40,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.mediator_memento.mediator.var_pop(@key)
+        context.mediator_stack.mediator.var_pop(@key)
       end
     end
 
@@ -51,7 +51,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.mediator_memento.mediator.variables[@key] = @value
+        context.mediator_stack.mediator.variables[@key] = @value
       end
     end
 
@@ -62,7 +62,7 @@ module Warabi
 
       def evaluate(context)
         @value.each do |k, v|
-          context.mediator_memento.mediator.player_at(k).pieces_add(v)
+          context.mediator_stack.mediator.player_at(k).pieces_add(v)
         end
       end
     end
@@ -73,7 +73,7 @@ module Warabi
       end
 
       def evaluate(context)
-        context.mediator_memento.mediator.board.board_set_any(@value)
+        context.mediator_stack.mediator.board.board_set_any(@value)
       end
     end
 
@@ -84,10 +84,10 @@ module Warabi
 
       def evaluate(context)
         InputParser.scan(@value).each do |str|
-          context.mediator_memento.mediator.execute(str)
-          if context.mediator_memento.mediator.variables[:auto_flushing]
-            context.snapshots << context.mediator_memento.mediator.deep_dup
-            context.mediator_memento.mediator.set(:comment, nil)
+          context.mediator_stack.mediator.execute(str)
+          if context.mediator_stack.mediator.variables[:auto_flushing]
+            context.snapshots << context.mediator_stack.mediator.deep_dup
+            context.mediator_stack.mediator.set(:comment, nil)
           end
         end
       end
@@ -100,10 +100,10 @@ module Warabi
 
       def evaluate(context)
         if @value
-          context.mediator_memento.mediator.set(:comment, @value)
+          context.mediator_stack.mediator.set(:comment, @value)
         end
-        context.snapshots << context.mediator_memento.mediator.deep_dup
-        context.mediator_memento.mediator.set(:comment, nil)
+        context.snapshots << context.mediator_stack.mediator.deep_dup
+        context.mediator_stack.mediator.set(:comment, nil)
       end
     end
 

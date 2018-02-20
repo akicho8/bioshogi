@@ -34,7 +34,7 @@ module Warabi
         end
 
         if v = params[:init]
-          player.soldier_create(v)
+          player.soldier_create(v, from_stand: true)
         end
 
         Array.wrap(params[:execute]).each { |v| player.execute(v) }
@@ -54,7 +54,7 @@ module Warabi
         mediator = new
         player = mediator.player_at(:black)
         player.pieces_add("歩9角飛香2桂2銀2金2玉")
-        player.soldier_create(params[:init] || [], from_stand: false)
+        player.placement_from_human(Array(params[:init]).join.gsub(/_/, ""))
         Array.wrap(params[:execute]).each { |v| player.execute(v) }
         mediator.hand_logs.last.to_kif_ki2
       end

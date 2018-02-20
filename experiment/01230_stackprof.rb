@@ -7,6 +7,7 @@ require "stackprof"
 ms = Benchmark.ms do
   StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
   # StackProf.run(mode: :object, out: "stackprof.dump", raw: true) do
+    # StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
     10.times do
       ["csa", "ki2", "kif", "sfen"].each do |e|
         info = Parser.file_parse("katomomo.#{e}")
@@ -24,7 +25,7 @@ puts "%.1f ms" % ms
 system "stackprof stackprof.dump"
 system "stackprof stackprof.dump --method Warabi::Point.lookup"
 
-# system "stackprof stackprof.dump --method Warabi::PlayerExecutor#hand_log"
+# system "stackprof stackprof.dump --method Warabi::PlayerExecutorHuman#hand_log"
 # system "stackprof stackprof.dump --method Warabi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
 # system "stackprof stackprof.dump --method Warabi::SkillMonitor#execute"
 # system "stackprof stackprof.dump --method Warabi::Position::Base.lookup"

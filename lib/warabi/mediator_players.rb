@@ -10,6 +10,8 @@ module Warabi
       end
     end
 
+    attr_writer :players
+
     def players
       @players ||= Location.collect do |e|
         Player.new(mediator: self, location: e)
@@ -17,7 +19,7 @@ module Warabi
     end
 
     def player_at(location)
-      @players[Location.fetch(location).index]
+      players[Location.fetch(location).index]
     end
 
     def current_player(diff = 0)
@@ -40,12 +42,8 @@ module Warabi
       current_player
     end
 
-    # def piece_plot
-    #   @players.each(&:piece_plot)
-    # end
-
     def piece_box_clear
-      @players.collect { |e| e.piece_box.clear }
+      players.collect { |e| e.piece_box.clear }
     end
 
     concerning :Other do
@@ -57,6 +55,8 @@ module Warabi
     end
 
     concerning :TurnMethods do
+      attr_writer :turn_info
+
       def turn_info
         @turn_info ||= TurnInfo.new
       end

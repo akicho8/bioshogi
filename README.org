@@ -206,7 +206,7 @@ mediator = Mediator.start
 player = mediator.player_at(:black)
 player.soldier_create("５五馬")
 player.soldiers.first.move_list.each{|point|
-  player.soldier_create("#{point}馬", from_stand: false)
+  player.soldier_create("#{point}馬")
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -374,7 +374,7 @@ p mediator
 Warabi.logger = ActiveSupport::Logger.new(STDOUT)
 Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
-  mediator.board.placement_from_human("▲３三歩 △１一歩", from_stand: false)
+  mediator.board.placement_from_human("▲３三歩 △１一歩")
   puts mediator
   pp NegaMaxRunner.run(player: mediator.player_at(:black), depth_max: 1)
 end
@@ -387,17 +387,17 @@ end
 # >> +---------+
 # >> ▲先手の持駒:
 # >> ▽後手の持駒:
-# >>    0  試打 ▲３二歩(33) (1/2)
-# >> 葉 1      試打 ▽１二歩(11) (1/2)
+# >>    0  試指 ▲３二歩(33) (1/2)
+# >> 葉 1      試指 ▽１二歩(11) (1/2)
 # >> 葉 1      評価 ▽１二歩(11)    +0
-# >> 葉 1      試打 ▽１二歩成(11) (2/2)
+# >> 葉 1      試指 ▽１二歩成(11) (2/2)
 # >> 葉 1      評価 ▽１二歩成(11) +1100
 # >> 葉 1      確定 ▽１二歩成(11) +1100 候補:[▽１二歩成(11)(1100) ▽１二歩(11)(0)]
 # >>    0  評価 ▲３二歩(33) -1100
-# >>    0  試打 ▲３二歩成(33) (2/2)
-# >> 葉 1      試打 ▽１二歩(11) (1/2)
+# >>    0  試指 ▲３二歩成(33) (2/2)
+# >> 葉 1      試指 ▽１二歩(11) (1/2)
 # >> 葉 1      評価 ▽１二歩(11) -1100
-# >> 葉 1      試打 ▽１二歩成(11) (2/2)
+# >> 葉 1      試指 ▽１二歩成(11) (2/2)
 # >> 葉 1      評価 ▽１二歩成(11)    +0
 # >> 葉 1      確定 ▽１二歩成(11)    +0 候補:[▽１二歩成(11)(0) ▽１二歩(11)(-1100)]
 # >>    0  評価 ▲３二歩成(33)    +0

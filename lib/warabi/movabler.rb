@@ -74,7 +74,7 @@ module Warabi
 
       # また成れるなら成ってみて死に駒にならないなら有効
       if soldier.next_promotable?
-        store_if_alive(soldier.merge(promoted: true), origin_soldier, yielder) # FIXME: 若干の高速化の余地あり。成ったときに死に駒になることはないので alive? のチェックを取れる
+        store_if_alive(soldier.merge(promoted: true), origin_soldier, yielder)
       end
     end
 

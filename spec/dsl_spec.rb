@@ -75,7 +75,7 @@ module Warabi
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
         @sequencer.evaluate
-        @sequencer.mediator_memento.mediator
+        @sequencer.mediator_stack.mediator
       end
 
       it "title" do

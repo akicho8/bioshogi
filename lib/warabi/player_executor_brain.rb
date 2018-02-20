@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
 module Warabi
-  concern :MediatorBoard do
+  class PlayerExecutorBrain < PlayerExecutorBase
   end
 end

@@ -12,12 +12,14 @@ module Warabi
       def to_bod(**options)
         s = []
         s << player_at(:white).piece_box_as_header + "\n"
-        s << @board.to_s
+        s << board.to_s
         s << player_at(:black).piece_box_as_header + "\n"
 
         last = ""
-        if hand_log = hand_logs.last
-          last = hand_log.to_kif(with_location: true)
+        if respond_to?(:hand_logs)
+          if hand_log = hand_logs.last
+            last = hand_log.to_kif(with_location: true)
+          end
         end
 
         s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
@@ -32,8 +34,8 @@ module Warabi
 
       def to_kif
         s = []
-        s << @board.to_s
-        s << @players.collect { |player|
+        s << board.to_s
+        s << players.collect { |player|
           "#{player.call_name}の持駒:#{player.piece_box.to_s}"
         }.join("\n") + "\n"
         s.join
@@ -100,6 +102,10 @@ module Warabi
       end
 
       def to_long_sfen
+        (to_long_sfen_without_turn + [turn_info.turn_max.next]).join(" ")
+      end
+
+      def to_long_sfen_without_turn
         s = []
         s << "sfen"
         s << board.to_sfen
@@ -109,8 +115,7 @@ module Warabi
         else
           s << players.collect(&:to_sfen).join
         end
-        s << turn_info.counter.next
-        s.join(" ")
+        s
       end
 
       # 最初から現在までの局面

@@ -19,7 +19,7 @@ sequencer.pattern = NotationDsl.define do
 end
 
 sequencer.evaluate
-puts sequencer.mediator_memento.mediator.to_text
+puts sequencer.mediator_stack.mediator.to_text
 # >> ---------------------------------------- {}
 # >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

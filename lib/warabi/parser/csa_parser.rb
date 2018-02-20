@@ -117,23 +117,23 @@ module Warabi
 
           s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
             location = Location.fetch(location_key)
-            piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_key|
-              if piece_key == "AL"
+            piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
+              if piece_ch == "AL"
                 raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません" if xy != "00"
                 # 残りすべてを駒台に置く
                 hold_pieces[location] += piece_box.pick_out_without_king
               else
+                attrs = Soldier.piece_and_promoted(piece_ch)
                 # 駒箱から取り出す
-                piece = piece_box.pick_out(piece_key)
+                piece = piece_box.pick_out(attrs[:piece])
                 if xy == "00"
                   # 駒台に置く
                   raise SyntaxDefact, "#{piece.name} は駒台に置けません" if piece.key == :king
                   hold_pieces[location] << piece
                 else
                   # 盤に置く
-                  point = Point.fetch(xy)
-                  soldier = Soldier.new_with_promoted(piece.key, location: location, point: point)
-                  sub_mediator.player_at(soldier.location).soldier_create(soldier, from_stand: false)
+                  soldier = Soldier.create(attrs.merge(location: location, point: Point.fetch(xy)))
+                  sub_mediator.board.put_on(soldier)
                 end
               end
             end

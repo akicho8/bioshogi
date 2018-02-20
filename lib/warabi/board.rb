@@ -6,6 +6,8 @@ module Warabi
       delegate :dimensiton_change, :size_type, :promotable_disable, to: "Warabi::Position"
     end
 
+    delegate :hash, to: :surface
+
     def surface
       @surface ||= {}
     end

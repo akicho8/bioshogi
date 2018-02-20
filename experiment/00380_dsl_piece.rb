@@ -5,7 +5,7 @@ mediator.pattern = NotationDsl.define do
   pieces black: "歩"
 end
 mediator.evaluate
-puts mediator.mediator_memento.mediator.to_text
+puts mediator.mediator_stack.mediator.to_text
 # >> ---------------------------------------- {}
 # >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

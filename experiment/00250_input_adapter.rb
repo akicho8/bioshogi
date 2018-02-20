@@ -25,7 +25,7 @@ rows = [
   "▲１二飛成(11)", "▲１二飛引成", "1112RY", "1a1b+",
   "▲１二銀打",     "▲１二銀",     "0012GI", "S*1b",
 ].collect { |e|
-  player_executor = PlayerExecutor.new(player, e)
+  player_executor = PlayerExecutorHuman.new(player, e)
   input = player_executor.input
   input.perform_validations
   {klass: input.class.name.demodulize, source: e}.merge(input.to_h)

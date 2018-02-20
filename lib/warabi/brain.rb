@@ -9,7 +9,7 @@ module Warabi
       @player = player
     end
 
-    def nega_max_run(params = {})
+    def nega_max_run(**params)
       nega_max_runner = NegaMaxRunner.new(params)
       nega_max_runner.nega_max(player: player)
     end
@@ -25,14 +25,19 @@ module Warabi
     end
 
     def score_list
-      list = []
+      hands = []
       all_hands.each do |hand|
-        m = player.mediator.deep_dup
-        _player = m.player_at(player.location)
-        _player.execute(hand.to_sfen)
-        list << {hand: hand, score: _player.evaluator.score}
+        # m = player.mediator.deep_dup
+        # _player = m.player_at(player.location)
+        # _player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
+        # hands << {hand: hand, score: _player.evaluator.score}
+
+        memento = player.mediator.create_memento
+        player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
+        hands << {hand: hand, score: player.evaluator.score}
+        player.mediator.restore_memento(memento)
       end
-      list.sort_by { |e| -e[:score] }
+      hands.sort_by { |e| -e[:score] }
     end
 
     # 盤上の駒の全手筋
@@ -63,11 +68,7 @@ module Warabi
 
   class HandInfo < Hash
     def to_s
-      "%s %+5d" % [self[:hand], self[:score]]
-    end
-
-    def to_s_short
-      "#{self[:hand]}(#{self[:score]})"
+      "%s => %d" % [self[:hand], self[:score]]
     end
   end
 
@@ -97,44 +98,45 @@ module Warabi
 
       all_hands = player.brain.all_hands
 
-      ary = []
-      all_hands.each.with_index do |hand, i|
-        m = mediator.deep_dup
-        _player = m.player_at(player.location)
-        log_puts locals, "試打 #{hand} (%d/%d)" % [i.next, all_hands.size] if logger
-        _player.execute(hand.to_sfen)
+      hands = []
 
+      all_hands.each.with_index do |hand, i|
+        memento = mediator.create_memento
+        # m = mediator.deep_dup
+        # _player = m.player_at(player.location)
+        player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
+        count = player.mediator.position_map[player.mediator.position_hash] # 同一局面数
         # ログに盤面を入れる場合
         # log_puts locals, _player.board
-        if locals[:depth] < params[:depth_max]
-          # 木の途中
-          child_max_hand_info = nega_max(locals.merge(player: _player.opponent_player, depth: locals[:depth].next))
-          score = -child_max_hand_info[:score]
-          hand_info = HandInfo[hand: hand, score: score, depth: locals[:depth], reading_hands: [hand, *child_max_hand_info[:reading_hands]]]
+        if count == 0 && locals[:depth] < params[:depth_max]
+          log_puts locals, "試指 #{hand} (%d/%d)" % [i.next, all_hands.size] if logger
+
+          # 相手が良くなればなるほど自分にとってはマイナス
+          info = nega_max(locals.merge(player: player.opponent_player, depth: locals[:depth].next))
+          score = -info[:score]
+          info = HandInfo[hand: hand, score: score, depth: locals[:depth], hands: [hand, *info[:hands]]]
+
+          log_puts locals, "評価 #{info}" if logger
         else
           # 木の末端
-          score = _player.evaluator.score
+          score = player.evaluator.score2
           @eval_count += 1
-          hand_info = HandInfo[hand: hand, score: score, depth: locals[:depth], reading_hands: [hand]]
+          info = HandInfo[hand: hand, score: score, depth: locals[:depth], hands: [hand]]
+          log_puts locals, "試指 #{hand} => #{score}" if logger
         end
-        log_puts locals, "評価 #{hand_info}" if logger
-        ary << hand_info
+        mediator.restore_memento(memento)
+        hands << info
       end
 
-      sorted_ary = ary.sort_by { |e| -e[:score] }
-      _score, top_same_score_ary = ary.group_by { |e| e[:score] }.sort_by { |score, ary| -score }.first
-      if params[:random]
-        hand_info = top_same_score_ary.sample
-      else
-        hand_info = top_same_score_ary.first
-      end
+      sorted_hands = hands.sort_by { |e| -e[:score] }
+      info = sorted_hands.first
 
       if logger
-        _candidate = sorted_ary.collect { |e| e.to_s_short }.join(" ")
-        log_puts locals, "確定 #{hand_info} 候補:[#{_candidate}]"
+        # _candidate = sorted_hands.collect(&:to_s2).join(" ")
+        log_puts locals, "★確 #{info} 読み数:#{eval_count}"
       end
 
-      hand_info
+      info
     end
 
     def log_puts(locals, str)
@@ -144,7 +146,12 @@ module Warabi
       if str.match?(/\n/)
         str = "\n" + str
       end
-      Warabi.logger.info "%s %d %s %s" % [(locals[:depth] < params[:depth_max] ? "  " : "葉"), locals[:depth], " " * 4 * locals[:depth], str]
+      Warabi.logger.info "%d %s %s %s" % [
+        locals[:depth],
+        locals[:player].location,
+        " " * 4 * locals[:depth],
+        str,
+      ]
     end
 
     def logger

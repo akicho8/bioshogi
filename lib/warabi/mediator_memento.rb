@@ -1,33 +1,14 @@
-# frozen-string-literal: true
-
 module Warabi
-  class MediatorMemento
-    attr_reader :mediator
-
-    def initialize(mediator = Mediator.new)
-      @stack = []
-      @mediator = mediator
+  concern :MediatorMemento do
+    def create_memento
+      Marshal.load(Marshal.dump([board, players.collect(&:piece_box), turn_info]))
     end
 
-    def context_new(&block)
-      stack_push
-      begin
-        yield self
-      ensure
-        stack_pop
+    def restore_memento(memento)
+      @board, piece_boxs, @turn_info = memento
+      players.each.with_index do |player, i|
+        player.piece_box = piece_boxs[i]
       end
-    end
-
-    def stack_push
-      @stack.push(@mediator)
-      @mediator = @mediator.deep_dup
-    end
-
-    def stack_pop
-      if @stack.empty?
-        raise MementoStackEmpty
-      end
-      @mediator = @stack.pop
     end
   end
 end
