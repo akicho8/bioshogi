@@ -3,9 +3,9 @@
 module Warabi
   module InputAdapter
     concern :Ki2MotionWrapper do
-      # 成・不成・左右などの指定があるか？
+      # 「同」「成・不成」「左右」などの指定があるか？
       def suffix_exist?
-        !motion_str.empty? || have_promote_or_not_promote_force_instruction?
+        same? || !motion_str.empty? || have_promote_or_not_promote_force_instruction?
       end
 
       def motion_str

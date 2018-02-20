@@ -10,7 +10,7 @@ module Warabi
     describe "消費時間があるCSAからの変換" do
       describe "投了の部分まで時間が指定されている場合" do
         before do
-          @info = Parser.parse(<<~EOT, skill_set_flag: false)
+          @info = Parser.parse(<<~EOT, skill_monitor_enable: false)
 +7968GI,,T30
 -3334FU,T1
 +2726FU
@@ -49,7 +49,7 @@ EOT
 
       describe "投了の部分まで時間が指定がない場合" do
         before do
-          @info = Parser.parse(<<~EOT, skill_set_flag: false)
+          @info = Parser.parse(<<~EOT, skill_monitor_enable: false)
 +7968GI,T30
 -3334FU,T1
 +2726FU

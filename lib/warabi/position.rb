@@ -6,13 +6,13 @@ module Warabi
       # 一時的に盤面のサイズを変更する(テスト用)
       #
       #   before do
-      #     @size_save = Board.size_change([3, 5])
+      #     @size_save = Board.dimensiton_change([3, 5])
       #   end
       #   after do
-      #     Board.size_change(@size_save)
+      #     Board.dimensiton_change(@size_save)
       #   end
       #
-      def size_change(wsize, &block)
+      def dimensiton_change(wsize, &block)
         save_value = [Hpos.dimension, Vpos.dimension]
         h, v = wsize
         Hpos.board_size_reset(h)
@@ -41,13 +41,17 @@ module Warabi
       end
 
       # 一時的に成れない状況にする
-      def disable_promotable
-        begin
-          _promotable_size = Vpos._promotable_size
-          Vpos._promotable_size = nil
-          yield
-        ensure
-          Vpos._promotable_size = _promotable_size
+      def promotable_disable
+        _promotable_size = Vpos._promotable_size
+        Vpos._promotable_size = nil
+        if block_given?
+          begin
+            yield
+          ensure
+            Vpos._promotable_size = _promotable_size
+          end
+        else
+          _promotable_size
         end
       end
     end

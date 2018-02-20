@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-# Warabi.config[:skill_set_flag] = false
+# Warabi.config[:skill_monitor_enable] = false
 
 @error_file = Pathname("__error.log")
 @error_file.unlink rescue nil

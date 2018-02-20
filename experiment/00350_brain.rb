@@ -1,29 +1,15 @@
 require "./example_helper"
 
+Board.dimensiton_change([3, 3])
 mediator = Mediator.new
+mediator.pieces_set("▲歩")
 mediator.board.placement_from_shape <<~EOT
 +---------+
 | ・ ・ ・|
+| ・ 歩 ・|
 | ・ ・ ・|
-| ・ ・ 歩|
 +---------+
 EOT
-puts mediator
-mediator.player_at(:black).brain.all_hands.collect(&:to_kif)                               # => ["▲１二歩(13)", "▲１二歩成(13)"]
-mediator.player_at(:black).brain.score_list.collect { |e| e.merge(hand: e[:hand].to_kif) } # => [{:hand=>"▲１二歩成(13)", :score=>1200}, {:hand=>"▲１二歩(13)", :score=>100}]
-
-# >> 後手の持駒：なし
-# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# >> +---------------------------+
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ 歩|三
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|七
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|八
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
-# >> +---------------------------+
-# >> 先手の持駒：なし
-# >> 手数＝0 まで
+brain = mediator.player_at(:black).brain
+brain.all_hands.collect(&:to_kif)                               # => ["▲２一歩成(22)", "▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
+brain.score_list.collect { |e| e.merge(hand: e[:hand].to_kif) } # => [{:hand=>"▲２一歩成(22)", :score=>1305}, {:hand=>"▲３二歩打", :score=>200}, {:hand=>"▲１二歩打", :score=>200}, {:hand=>"▲３三歩打", :score=>200}, {:hand=>"▲１三歩打", :score=>200}]

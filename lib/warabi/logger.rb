@@ -1,5 +1,5 @@
 # frozen-string-literal: true
 
 module Warabi
-  mattr_accessor(:logger) { ActiveSupport::Logger.new("/dev/null") }
+  mattr_accessor(:logger) { nil }
 end

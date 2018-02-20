@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/piece_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/piece_spec.rb" -*-
 # frozen-string-literal: true
 
 module Warabi

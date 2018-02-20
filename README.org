@@ -19,7 +19,7 @@ mediator = Mediator.start
   mediator.execute(input)
 }
 puts mediator.board
-pp mediator.kif_hand_logs
+pp mediator.to_kif_a
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一
@@ -85,7 +85,7 @@ p mediator
 # >> ▲先手の持駒:歩 玉
 # >> ▽後手の持駒:歩
 
-puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲３八金(39) ▽４六歩打 ▲１二歩打 ▽３六歩(35) ▲５三桂成(65)
 # >> ▲４八玉 ▽５二金 ▲５六歩 ▽６二飛 ▲１六歩 ▽７二飛 ▲５九玉 ▽６二玉
 # >> ▲２六歩 ▽４二金 ▲４八飛 ▽５四歩 ▲７八銀 ▽５一金 ▲７六歩 ▽５五歩
@@ -152,7 +152,7 @@ puts mediator.inspect
     KIF形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.kif_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲７六歩(77) ▽８四歩(83) ▲７八金(69) ▽３二金(41) ▲２六歩(27) ▽８五歩(84) ▲７七角(88) ▽３四歩(33)
 # >> ▲８八銀(79) ▽７七角成(22) ▲７七銀(88) ▽４二銀(31) ▲３八銀(39) ▽７二銀(71) ▲９六歩(97) ▽９四歩(93)
 # >> ▲４六歩(47) ▽６四歩(63) ▲４七銀(38) ▽６三銀(72) ▲６八玉(59) ▽３三銀(42) ▲５八金(49) ▽５四銀(63)
@@ -177,7 +177,7 @@ puts mediator.kif_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v
     KI2形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲７六歩 ▽８四歩 ▲７八金 ▽３二金 ▲２六歩 ▽８五歩 ▲７七角 ▽３四歩
 # >> ▲８八銀 ▽７七角成 ▲同銀 ▽４二銀 ▲３八銀 ▽７二銀 ▲９六歩 ▽９四歩
 # >> ▲４六歩 ▽６四歩 ▲４七銀 ▽６三銀 ▲６八玉 ▽３三銀 ▲５八金 ▽５四銀
@@ -319,7 +319,7 @@ mediator.board["５九"].name # => "▲５九玉"
 *** ５五将棋の例
 
 #+BEGIN_SRC ruby
-Board.size_change([5, 5])
+Board.dimensiton_change([5, 5])
 mediator = Mediator.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 mediator.players.each do |player|
@@ -371,12 +371,12 @@ p mediator
     3x3の盤面で対角線上に歩がある場合の駆け引き
 
 #+BEGIN_SRC ruby
-Board.logger = ActiveSupport::Logger.new(STDOUT)
-Board.size_change([3, 3]) do
+Warabi.logger = ActiveSupport::Logger.new(STDOUT)
+Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
-  mediator.soldier_create("▲３三歩 △１一歩", from_stand: false)
+  mediator.board.placement_from_human("▲３三歩 △１一歩", from_stand: false)
   puts mediator
-  pp NegaMaxRunner.run(player: mediator.player_at(:black), depth: 1)
+  pp NegaMaxRunner.run(player: mediator.player_at(:black), depth_max: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １

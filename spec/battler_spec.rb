@@ -23,7 +23,7 @@ module Warabi
     end
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
-      Board.size_change([3, 3]) do
+      Board.dimensiton_change([3, 3]) do
         player = Mediator.player_test(init: "▲１一飛")
         soldier = player.board.safe_delete_on(Point["１一"])
         player.board["１一"].should == nil # 盤面から消えている
@@ -34,7 +34,7 @@ module Warabi
 
     describe "#move_list" do
       it "移動可能な筋の取得(超重要なテスト)" do
-        Board.size_change([1, 5]) do
+        Board.dimensiton_change([1, 5]) do
           test = -> s {
             soldier = Soldier.from_str(s)
             soldier.move_list(Board.new).collect(&:to_kif)
@@ -45,7 +45,7 @@ module Warabi
       end
 
       it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
-        Board.size_change([1, 5]) do
+        Board.dimensiton_change([1, 5]) do
           mediator = Mediator.test1(init: "▲１五香 △１三歩")
           mediator.board["１五"].move_list(mediator.board).collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)"]
         end

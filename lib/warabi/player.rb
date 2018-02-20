@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/player_spec.rb" -*-
 # frozen-string-literal: true
 
 module Warabi
@@ -14,19 +14,9 @@ module Warabi
       @location = location
     end
 
-    def execute(str)
-      @executor = PlayerExecutor.new(self, str)
+    def execute(str, **options)
+      @executor = PlayerExecutor.new(self, str, options)
       @executor.execute
-
-      if Warabi.config[:skill_set_flag]
-        if Position.size_type == :board_size_9x9
-          if mediator.mediator_options[:skill_set_flag]
-            skill_monitor.execute
-          end
-        end
-      end
-
-      @mediator.hand_logs << @executor.hand_log
     end
 
     def opponent_player
@@ -37,9 +27,9 @@ module Warabi
     #   持駒は無限にあると考えて自由に初期配置を作りたい場合は from_stand:false にすると楽ちん
     #   player.soldier_create(["５五飛", "３三飛"], from_stand: false)
     #   player.soldier_create("#{point}馬")
-    def soldier_create(soldier_or_str, **options)
-      if soldier_or_str.kind_of? Array
-        soldier_or_str.each do |e|
+    def soldier_create(object, **options)
+      if object.kind_of?(Array)
+        object.each do |e|
           soldier_create(e, options)
         end
       else
@@ -47,13 +37,13 @@ module Warabi
           from_stand: true, # 持駒から取り出して配置する？
         }.merge(options)
 
-        if soldier_or_str.kind_of?(String)
-          if soldier_or_str.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
+        if object.kind_of?(String)
+          if object.to_s.gsub(/_/, "").empty? # テストを書きやすくするため
             return
           end
-          soldier = Soldier.from_str(soldier_or_str, location: location)
+          soldier = Soldier.from_str(object, location: location)
         else
-          soldier = soldier_or_str
+          soldier = object
         end
         if options[:from_stand]
           piece_box.pick_out(soldier.piece) # 持駒から引くだけでそのオブジェクトを打つ必要はない
@@ -127,10 +117,6 @@ module Warabi
       delegate :attack_infos, :defense_infos, to: :skill_set
       def skill_set
         @skill_set ||= SkillSet.new
-      end
-
-      def skill_monitor
-        SkillMonitor.new(self)
       end
     end
 

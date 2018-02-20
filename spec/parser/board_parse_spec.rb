@@ -44,7 +44,7 @@ EOT
     end
 
     it "盤面サイズを変更していてもパースできる" do
-      Board.size_change([2, 2]) do
+      Board.dimensiton_change([2, 2]) do
         test1(<<-EOT).should == ["▲２一歩"]
 +------+
 | 歩 ・|

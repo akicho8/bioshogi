@@ -2,10 +2,10 @@
 
 module Warabi
   class SkillMonitor
-    attr_reader :player
+    attr_reader :executor
 
-    def initialize(player)
-      @player = player
+    def initialize(executor)
+      @executor = executor
     end
 
     def execute
@@ -66,7 +66,7 @@ module Warabi
 
         # 駒を取ったとき制限。取ってないならskip
         if e.kill_only
-          unless player.executor.killed_soldier
+          unless executor.killed_soldier
             throw :skip
           end
         end
@@ -180,18 +180,20 @@ module Warabi
         end
 
         list << e
-        player.executor.skill_set.public_send(e.tactic_info.list_key) << e
+        executor.skill_set.public_send(e.tactic_info.list_key) << e
       end
     end
 
     # 後手側の場合は先手側の座標に切り替え済み
     def soldier
-      @soldier ||= player.executor.soldier.flip_if_white
+      @soldier ||= executor.soldier.flip_if_white
     end
 
     # 比較順序超重要。不一致しやすいものから比較する
     def soldier_exist?(s)
-      (v = surface[s.point]) && v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
+      if v = surface[s.point]
+        v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
+      end
     end
 
     # 持駒
@@ -201,7 +203,7 @@ module Warabi
 
     # 移動元情報
     def origin_soldier
-      @origin_soldier ||= player.executor.origin_soldier
+      @origin_soldier ||= executor.origin_soldier
     end
 
     # 盤面
@@ -212,6 +214,10 @@ module Warabi
     # プレイヤーの向き
     def location
       @location ||= player.location
+    end
+
+    def player
+      @player ||= executor.player
     end
   end
 end

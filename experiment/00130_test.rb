@@ -1,6 +1,6 @@
 require "./example_helper"
 
-mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
+mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
 puts mediator
 
 # mediator.opponent_player.executor.killed_soldier.name # => "歩"

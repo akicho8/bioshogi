@@ -22,7 +22,7 @@ require "memory_record"
 
 module Warabi
   include ActiveSupport::Configurable
-  config_accessor(:skill_set_flag) { true }
+  config_accessor(:skill_monitor_enable) { true }
 end
 
 require_relative "warabi/logger"
@@ -37,6 +37,7 @@ require_relative "warabi/order_info"
 require_relative "warabi/piece_box"
 require_relative "warabi/official_formatter"
 require_relative "warabi/hand_log"
+require_relative "warabi/hand_logs"
 
 require_relative "warabi/piece"
 require_relative "warabi/piece_csa"

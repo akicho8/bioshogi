@@ -49,13 +49,6 @@ module Warabi
     end
 
     concerning :Other do
-      def soldier_create(str, **options)
-        InputParser.scan(str).each do |str|
-          soldier = Soldier.from_str(str)
-          board.put_on(soldier)
-        end
-      end
-
       def pieces_set(str)
         Piece.s_to_h2(str).each do |location_key, counts|
           player_at(location_key).piece_box.set(counts)

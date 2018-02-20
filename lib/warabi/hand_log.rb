@@ -14,7 +14,7 @@ module Warabi
 
     def to_kif(**options)
       options = {
-        with_mark: false,
+        with_location: false,
       }.merge(options)
 
       hand.to_kif(options)

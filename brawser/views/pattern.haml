@@ -14,10 +14,10 @@
       - if v = mediator.variables[:comment]
         .alert.alert-info
           = Array.wrap(v).join("<br/>")
-      - if mediator.variables[:hide_ki2_hand_logs]
+      - if mediator.variables[:hide_to_ki2_a]
       - else
-        -# %p= mediator.ki2_hand_logs.join(" ")
-        %p= mediator.ki2_hand_logs.last
+        -# %p= mediator.to_ki2_a.join(" ")
+        %p= mediator.to_ki2_a.last
       - if mediator.player_at(:white).pieces.present?
         .pieces= mediator.player_at(:white).piece_box.to_s
       = MediatorDecorator.new(mediator).to_html_board(:small)

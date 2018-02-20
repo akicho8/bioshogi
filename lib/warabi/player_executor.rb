@@ -2,11 +2,13 @@
 
 module Warabi
   class PlayerExecutor
+    attr_reader :player
+    attr_reader :source
+    attr_reader :params
+
     attr_reader :point
     attr_reader :piece
     attr_reader :point_from
-    attr_reader :source
-    attr_reader :player
     attr_reader :killed_soldier
     attr_reader :origin_soldier
 
@@ -16,9 +18,10 @@ module Warabi
 
     delegate :board, :piece_box, :mediator, to: :player
 
-    def initialize(player, source)
+    def initialize(player, source, **params)
       @player = player
       @source = source
+      @params = {}.merge(params)
     end
 
     def input
@@ -43,7 +46,7 @@ module Warabi
 
       if input.direct_trigger
         piece_box.pick_out(@soldier.piece)
-        board.put_on(@soldier, validate: true)
+        board.put_on(@soldier)
       else
         @killed_soldier = board.lookup(@soldier.point)
         if @killed_soldier
@@ -54,6 +57,16 @@ module Warabi
         board.pick_up(@move_hand.origin_soldier.point)
         board.put_on(@move_hand.soldier, validate: true)
       end
+
+      if Warabi.config[:skill_monitor_enable]
+        if Position.size_type == :board_size_9x9
+          if mediator.params[:skill_monitor_enable]
+            SkillMonitor.new(self).execute
+          end
+        end
+      end
+
+      mediator.hand_logs << hand_log
     end
 
     def hand_log
@@ -83,7 +96,7 @@ module Warabi
       attributes = {
         "手番"   => player.call_name,
         "指し手" => input.input.values.join,
-        "棋譜"   => mediator.hand_logs.collect { |e| e.to_kif(with_mark: true) }.join(" "),
+        "棋譜"   => mediator.hand_logs.to_kif_a.join(" "),
       }
 
       str = [error[:message]]

@@ -9,11 +9,11 @@ info.move_infos.each{|info|
   mediator.execute(info[:input])
 }
 puts mediator
-tp mediator.kif_hand_logs
-tp mediator.ki2_hand_logs
+tp mediator.to_kif_a
+tp mediator.to_ki2_a
 
-puts mediator.kif_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts mediator.ki2_hand_logs.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> |----------+----------------------------------|
 # >> |   対局ID | 333                              |
 # >> | 開始日時 | 2010/12/14 09:00:00              |

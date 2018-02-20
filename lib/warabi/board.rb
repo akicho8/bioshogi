@@ -3,7 +3,7 @@
 module Warabi
   class Board
     class << self
-      delegate :size_change, :size_type, :disable_promotable, to: "Warabi::Position"
+      delegate :dimensiton_change, :size_type, :promotable_disable, to: "Warabi::Position"
     end
 
     def surface
@@ -44,6 +44,8 @@ module Warabi
           placement_from_shape(v)
         when v.kind_of?(Hash)
           placement_from_hash(v)
+        when v.kind_of?(String) && !InputParser.scan(v).empty?
+          placement_from_human(v)
         else
           placement_from_preset(v)
         end
@@ -59,6 +61,11 @@ module Warabi
 
       def placement_from_hash(hash)
         placement_from_soldiers(Soldier.preset_soldiers(hash))
+      end
+
+      def placement_from_human(str)
+        soldiers = InputParser.scan(str).collect { |s| Soldier.from_str(s) }
+        placement_from_soldiers(soldiers)
       end
 
       def placement_from_soldiers(soldiers)

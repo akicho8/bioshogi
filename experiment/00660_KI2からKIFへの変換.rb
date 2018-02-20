@@ -14,8 +14,8 @@ info.move_infos.each do |info|
   # puts mediator
 end
 out << "手数----指手---------消費時間--\n"
-out << mediator.kif_hand_logs.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
-out << "#{mediator.kif_hand_logs.size.next} 投了\n"
+out << mediator.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
+out << "#{mediator.to_kif_a.size.next} 投了\n"
 puts out
 # >> 開始日時：2017/11/11 10:00:00
 # >> 終了日時：2017/11/11 17:22:00

@@ -3,7 +3,7 @@ require_relative "../spec_helper"
 module Warabi
   describe "駒落ちCSA棋譜からの変換" do
     before do
-      @info = Parser.parse(<<~EOT, skill_set_flag: false)
+      @info = Parser.parse(<<~EOT, skill_monitor_enable: false)
 V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01

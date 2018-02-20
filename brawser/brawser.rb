@@ -98,7 +98,7 @@ class Brawser < Sinatra::Base
       # end
       if params[:think_put_lv].present?
         @runtime = Time.now
-        @think_result = @mediator.current_player.brain.think_by_minmax(:depth => params[:think_put_lv].to_i)
+        @think_result = @mediator.current_player.brain.nega_max_run(:depth_max => params[:think_put_lv].to_i)
         @runtime = Time.now - @runtime
         input = Warabi::InputParser.slice_one(@think_result[:hand])[:input]
         @mediator.execute(input)

@@ -124,6 +124,7 @@ module Warabi
       end
 
       # 「打」の省略形か？
+      # 「同」も「左右や打」も移動候補もないとき「打」の省略系
       def direct_abbreviation?
         !suffix_exist? && candidate_soldiers.empty?
       end

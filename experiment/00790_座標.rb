@@ -11,7 +11,7 @@ Position::Vpos.fetch("9")  # => #<Warabi::Position::Vpos:70093707713700 "九" 8>
 Position::Vpos.fetch("９") # => #<Warabi::Position::Vpos:70093707713700 "九" 8>
 Position::Vpos.fetch("九") # => #<Warabi::Position::Vpos:70093707713700 "九" 8>
 
-Board.size_change([2, 4]) do
+Board.dimensiton_change([2, 4]) do
   Position::Hpos.units # => ["２", "１"]
   Position::Hpos.units_set # => {"２"=>0, "１"=>1}
   Position::Hpos.units_set  # => {"２"=>0, "１"=>1}
@@ -22,7 +22,7 @@ Board.size_change([2, 4]) do
   Position::Hpos.fetch("2") # => #<Warabi::Position::Hpos:70093707690420 "２" 0>
 end
 
-Board.size_change([1, 1]) do
+Board.dimensiton_change([1, 1]) do
   Position::Hpos.units # => ["１"]
   Position::Hpos.units_set # => {"１"=>0}
   puts Board.new

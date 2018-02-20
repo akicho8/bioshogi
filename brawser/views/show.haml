@@ -39,11 +39,11 @@
         %input{type: "text", name: "hand", value: "", "class":"input-mini", autofocus: @mediator.current_player.location.black?}
         %input{type: "submit", value: "打", "class": "btn btn-primary"}
 
-- if @mediator.ki2_hand_logs.present?
+- if @mediator.to_ki2_a.present?
   %p
     %select
-      - @mediator.ki2_hand_logs.each.with_index do |hand_log, index|
-        %option{selected: @mediator.ki2_hand_logs.last == hand_log}= "#{index.next} #{hand_log}"
+      - @mediator.to_ki2_a.each.with_index do |hand_log, index|
+        %option{selected: @mediator.to_ki2_a.last == hand_log}= "#{index.next} #{hand_log}"
 
 %p
   %a{href:"/?reset=true", "class": "btn"} リセット

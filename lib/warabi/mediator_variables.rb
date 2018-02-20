@@ -31,7 +31,7 @@ module Warabi
     def to_text
       out = []
       out << "-" * 40 + " " + variables.inspect + "\n"
-      out << "指し手: #{ki2_hand_logs.join(" ")}\n"
+      out << "指し手: #{to_ki2_a.join(" ")}\n"
       out << to_kif
       out.join.strip
     end

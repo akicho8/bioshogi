@@ -8,10 +8,10 @@ module Warabi
         expect { Position::Hpos.fetch(nil) }.to raise_error(SyntaxDefact)
       end
       it "横の範囲外" do
-        expect { Board.size_change([2, 2]) { Position::Hpos.fetch("３") } }.to raise_error(SyntaxDefact)
+        expect { Board.dimensiton_change([2, 2]) { Position::Hpos.fetch("３") } }.to raise_error(SyntaxDefact)
       end
       it "縦の範囲外" do
-        expect { Board.size_change([2, 2]) { Position::Vpos.fetch("三")  } }.to raise_error(SyntaxDefact)
+        expect { Board.dimensiton_change([2, 2]) { Position::Vpos.fetch("三")  } }.to raise_error(SyntaxDefact)
       end
 
       describe "正常" do
@@ -73,7 +73,7 @@ module Warabi
 
     describe "5x5の盤面" do
       it do
-        Board.size_change([5, 5]) do
+        Board.dimensiton_change([5, 5]) do
           Mediator.player_test.board.to_s.should == <<~EOT
   ５ ４ ３ ２ １
 +---------------+

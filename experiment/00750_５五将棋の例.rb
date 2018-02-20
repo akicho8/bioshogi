@@ -1,6 +1,6 @@
 require "./example_helper"
 
-Board.size_change([5, 5])
+Board.dimensiton_change([5, 5])
 mediator = Mediator.new
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"].collect { |e| Soldier.from_str(e, location: :black) }
 mediator.players.each do |player|

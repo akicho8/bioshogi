@@ -8,7 +8,7 @@ mediator = Mediator.start
   mediator.execute(input)
 }
 puts mediator.board
-pp mediator.kif_hand_logs
+pp mediator.to_kif_a
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一

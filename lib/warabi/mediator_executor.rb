@@ -2,32 +2,23 @@
 
 module Warabi
   concern :MediatorExecutor do
-    included do
-      attr_accessor :kill_counter
-    end
+    attr_writer :kill_counter
 
-    def initialize(*)
-      super
+    delegate :to_kif_a, :to_ki2_a, to: :hand_logs
 
-      @kill_counter = 0
+    def kill_counter
+      @kill_counter ||= 0
     end
 
     def hand_logs
-      @hand_logs ||= []
+      @hand_logs ||= HandLogs.new([])
     end
 
-    # 棋譜入力
-    def execute(str)
+    def execute(str, **options)
       InputParser.scan(str).each do |str|
-        current_player.execute(str)
+        current_player.execute(str, options)
         turn_info.counter += 1
       end
-    end
-
-    # 互換性用
-    if true
-      def kif_hand_logs; hand_logs.collect { |e| e.to_kif(with_mark: false) }; end
-      def ki2_hand_logs; hand_logs.collect { |e| e.to_ki2(with_mark: true) }; end
     end
   end
 end

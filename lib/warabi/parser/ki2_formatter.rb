@@ -21,14 +21,14 @@ module Warabi
           # 固定幅で整列(値が小さいと揃わない場合がある)
           out << mediator.hand_logs.group_by.with_index {|_, i| i / options[:cols] }.values.collect { |v|
             v.collect { |e|
-              s = e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
+              s = e.to_ki2(with_location: true, same_suffix: options[:same_suffix])
               mb_ljust(s, options[:fixed_width])
             }.join.strip + "\n"
           }.join
         else
           # 自動整列(かならず揃う)
           list = mediator.hand_logs.collect do |e|
-            e.to_ki2(with_mark: true, same_suffix: options[:same_suffix])
+            e.to_ki2(with_location: true, same_suffix: options[:same_suffix])
           end
 
           list2 = list.in_groups_of(options[:cols])

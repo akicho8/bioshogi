@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/soldier_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/soldier_spec.rb" -*-
 # frozen-string-literal: true
 
 module Warabi
@@ -67,10 +67,10 @@ module Warabi
     def initialize(*)
       super
 
-      raise WarabiError, "piece is nil" if piece.nil?
-      raise WarabiError, "promoted is nil" if promoted.nil?
-      raise WarabiError, "location missing" unless location
-      raise WarabiError, "point missing" unless point
+      raise MustNotHappen, "piece is nil" if piece.nil?
+      raise MustNotHappen, "promoted is nil" if promoted.nil?
+      raise MustNotHappen, "location missing" unless location
+      raise MustNotHappen, "point missing" unless point
     end
 
     def attributes
@@ -225,10 +225,10 @@ module Warabi
 
     def to_kif(**options)
       options = {
-        with_mark: true,
+        with_location: true,
       }.merge(options)
 
-      if options[:with_mark]
+      if options[:with_location]
         s = soldier.name
       else
         s = soldier.name_without_location
@@ -265,11 +265,11 @@ module Warabi
 
     def to_kif(**options)
       options = {
-        with_mark: true,
+        with_location: true,
       }.merge(options)
 
       [
-        options[:with_mark] ? soldier.location.name : nil,
+        options[:with_location] ? soldier.location.name : nil,
         soldier.point.name,
         origin_soldier.any_name,
         promote_trigger? ? "成" : "",

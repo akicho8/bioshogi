@@ -7,7 +7,7 @@ module Warabi
 
     def initialize(base, **options)
       @options = {
-        with_mark: false,    # 先手後手のマークを入れる？
+        with_location: false,    # 先手後手のマークを入れる？
         direct_force: false, # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",     # 「同」の後に入れる文字列
         compact: true,       # 3文字を超えたらとき空白が含まれていれば詰める？
@@ -93,7 +93,7 @@ module Warabi
         end
       end
 
-      if @options[:with_mark]
+      if @options[:with_location]
         s = location.mark + s
       end
 

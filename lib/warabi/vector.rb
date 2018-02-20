@@ -1,4 +1,4 @@
-# -*- compile-command: "bundle exec rspec ../../spec/vector_spec.rb" -*-
+# -*- compile-command: "bundle execute rspec ../../spec/vector_spec.rb" -*-
 # frozen-string-literal: true
 #
 # 駒の移動情報定義用

@@ -13,7 +13,7 @@
 #   # | ・|二
 #   # | 香|三
 #   # +---+
-#   Board.size_change([1, 3]) do
+#   Board.dimensiton_change([1, 3]) do
 #     mediator = Mediator.new
 #     mediator.player_at(:black).soldier_create("１三香", from_stand: false)
 #     # puts mediator
@@ -29,7 +29,7 @@
 #   # | ・|二
 #   # | 杏|三
 #   # +---+
-#   Board.size_change([1, 3]) do
+#   Board.dimensiton_change([1, 3]) do
 #     mediator = Mediator.new
 #     mediator.player_at(:black).soldier_create("１三杏", from_stand: false)
 #     # puts mediator

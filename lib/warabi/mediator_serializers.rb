@@ -17,15 +17,15 @@ module Warabi
 
         last = ""
         if hand_log = hand_logs.last
-          last = hand_log.to_kif(with_mark: true)
+          last = hand_log.to_kif(with_location: true)
         end
 
         s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
 
-        if current_player.location.key == :white
-          s << "\n"
-          s << "#{current_player.call_name}番\n"
-        end
+        # if current_player.location.key == :white
+        s << "\n"
+        s << "#{current_player.call_name}番\n"
+        # end
 
         s.join
       end

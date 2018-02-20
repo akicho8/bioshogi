@@ -1,24 +1,17 @@
-# NegaMaxのログ表示
-
 require "./example_helper"
 
-Board.logger = ActiveSupport::Logger.new(STDOUT)
-Board.dimensiton_change([3, 3]) do
-  mediator = Mediator.new
-  mediator.board.placement_from_human("▲３三歩 △１一歩")
-  puts mediator
-  object = NegaMaxRunner.new(depth_max: 1)
-  puts object.nega_max(player: mediator.player_at(:black))
-end
-# >> 後手の持駒：なし
-# >>   ３ ２ １
-# >> +---------+
-# >> | ・ ・v歩|一
-# >> | ・ ・ ・|二
-# >> | 歩 ・ ・|三
-# >> +---------+
-# >> 先手の持駒：なし
-# >> 手数＝0 まで
+Warabi.logger = ActiveSupport::Logger.new(STDOUT)
+
+Board.dimensiton_change([3, 3])
+mediator = Mediator.new
+mediator.board.placement_from_shape <<~EOT
++---------+
+| ・ ・v歩|
+| ・ ・ ・|
+| 歩 ・ ・|
++---------+
+EOT
+tp mediator.player_at(:black).brain.nega_max_run(depth_max: 1)
 # >>    0  試打 ▲３二歩(33) (1/2)
 # >> 葉 1      試打 △１二歩(11) (1/2)
 # >> 葉 1      評価 △１二歩(11)    +0
@@ -34,4 +27,9 @@ end
 # >> 葉 1      確定 △１二歩成(11)    +0 候補:[△１二歩成(11)(0) △１二歩(11)(-1100)]
 # >>    0  評価 ▲３二歩成(33)    +0
 # >>    0  確定 ▲３二歩成(33)    +0 候補:[▲３二歩成(33)(0) ▲３二歩(33)(-1100)]
-# >> ▲３二歩成(33)    +0
+# >> |---------------+--------------------------------------|
+# >> |          hand | ▲３二歩成(33)                       |
+# >> |         score | 0                                    |
+# >> |         level | 0                                    |
+# >> | reading_hands | ["▲３二歩成(33)", "△１二歩成(11)"] |
+# >> |---------------+--------------------------------------|

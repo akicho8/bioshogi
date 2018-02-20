@@ -25,15 +25,17 @@ module Warabi
 +---------------------------+
 先手の持駒：なし
 手数＝2 △３四歩(33) まで
+
+先手番
 EOT
     end
 
     it "状態の復元" do
-      mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", exec: ["１三歩成", "１三歩"])
+      mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
       m2 = mediator.deep_dup
       mediator.turn_info.counter.should == m2.turn_info.counter
-      mediator.kif_hand_logs.should     == m2.kif_hand_logs
-      mediator.ki2_hand_logs.should     == m2.ki2_hand_logs
+      mediator.to_kif_a.should     == m2.to_kif_a
+      mediator.to_ki2_a.should     == m2.to_ki2_a
       mediator.to_s.should              == m2.to_s
 
       mediator.board.to_s_soldiers == m2.board.to_s_soldiers
@@ -45,7 +47,7 @@ EOT
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do
-      mediator = Mediator.test1(init: "▲１五歩 △１三歩", exec: "１四歩")
+      mediator = Mediator.test1(init: "▲１五歩 △１三歩", execute: "１四歩")
       mediator = Marshal.load(Marshal.dump(mediator))
       mediator.execute("同歩")
       mediator.opponent_player.executor.hand_log.to_kif_ki2.should == ["１四歩(13)", "同歩"]
@@ -53,7 +55,7 @@ EOT
 
     it "同歩からの同飛になること" do
       object = Simulator.run({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
-      object.mediator.ki2_hand_logs.should == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"]
+      object.mediator.to_ki2_a.should == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"]
     end
 
     it "Sequencer" do
@@ -74,7 +76,7 @@ EOT
     end
 
     it "「打」にすると Marshal.dump できない件→修正" do
-      mediator = Mediator.test1(exec: "１二歩打", pieces_set: "▼歩")
+      mediator = Mediator.test1(execute: "１二歩打", pieces_set: "▼歩")
       mediator.deep_dup
     end
 

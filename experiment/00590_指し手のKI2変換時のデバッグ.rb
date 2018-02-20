@@ -41,7 +41,7 @@ tp official_formatter.options
 # >> |            _yr | 0..2                                             |
 # >> |----------------+--------------------------------------------------|
 # >> |--------------+-------|
-# >> |    with_mark | false |
+# >> |    with_location | false |
 # >> | direct_force | false |
 # >> |  same_suffix |       |
 # >> |      compact | true  |

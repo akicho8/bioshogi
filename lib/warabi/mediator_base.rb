@@ -2,9 +2,9 @@
 
 module Warabi
   concern :MediatorBase do
-    def mediator_options
-      @mediator_options ||= {
-        skill_set_flag: false,
+    def params
+      @params ||= {
+        skill_monitor_enable: false,
       }
     end
 

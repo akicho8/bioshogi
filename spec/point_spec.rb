@@ -27,8 +27,8 @@ module Warabi
       expect { Point.fetch("")     }.to raise_error(SyntaxDefact)
       expect { Point.fetch("0")    }.to raise_error(SyntaxDefact)
 
-      expect { Board.size_change([2, 2]) { Point.fetch("33")   } }.to raise_error(SyntaxDefact)
-      expect { Board.size_change([2, 2]) { Point.fetch("３三") } }.to raise_error(SyntaxDefact)
+      expect { Board.dimensiton_change([2, 2]) { Point.fetch("33")   } }.to raise_error(SyntaxDefact)
+      expect { Board.dimensiton_change([2, 2]) { Point.fetch("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it "#valid?" do

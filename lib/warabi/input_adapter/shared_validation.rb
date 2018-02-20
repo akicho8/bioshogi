@@ -29,6 +29,12 @@ module Warabi
             end
           end
         end
+
+        if direct_trigger
+          if board.lookup(point)
+            errors_add PieceAlredyExist, "駒の上に打とうとしています"
+          end
+        end
       end
 
       def soft_validations

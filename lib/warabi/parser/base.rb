@@ -1,4 +1,4 @@
-# -*- compile-command: "bundle exec rspec ../../spec/kif_format_spec.rb" -*-
+# -*- compile-command: "bundle execute rspec ../../spec/kif_format_spec.rb" -*-
 # frozen-string-literal: true
 
 require_relative "header"
@@ -50,7 +50,7 @@ module Warabi
           # false: 例外を出す(デフォルト)
           typical_error_case: false,
           # run_and_build_skip: false,
-          skill_set_flag: true,
+          skill_monitor_enable: true,
         }
       end
 
@@ -121,7 +121,7 @@ module Warabi
 
         def mediator_new
           Mediator.new.tap do |e|
-            e.mediator_options[:skill_set_flag] = @parser_options[:skill_set_flag]
+            e.params[:skill_monitor_enable] = @parser_options[:skill_monitor_enable]
           end
         end
 
@@ -200,7 +200,7 @@ module Warabi
             end
           end
 
-          if @parser_options[:skill_set_flag]
+          if @parser_options[:skill_monitor_enable]
             TacticInfo.each do |e|
               mediator.players.each do |player|
                 if v = player.skill_set.public_send(e.list_key).normalize.collect(&:name).presence

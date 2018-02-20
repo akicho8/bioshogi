@@ -1,6 +1,6 @@
 require "./example_helper"
 
-# Warabi.config[:skill_set_flag] = false
+# Warabi.config[:skill_monitor_enable] = false
 
 require "stackprof"
 
