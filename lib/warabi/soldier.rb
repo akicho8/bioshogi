@@ -112,7 +112,7 @@ module Warabi
 
     # 成り(=絶対に死に駒ならない)の状態を先にチェックすることで高速化
     def alive?
-      promoted || all_vectors.any? { |e| point.vector_add(e).valid? }
+      piece.always_alive || promoted || all_vectors.any? { |e| point.vector_add(e).valid? }
     end
 
     def merge(attributes)

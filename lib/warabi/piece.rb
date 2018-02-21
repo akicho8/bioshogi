@@ -77,14 +77,14 @@ module Warabi
 
     include ApplicationMemoryRecord
     memory_record [
-      {key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    sfen_char: "K", promotable: false, },
-      {key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   sfen_char: "R", promotable: true,  },
-      {key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    sfen_char: "B", promotable: true,  },
-      {key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    sfen_char: "G", promotable: false, },
-      {key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", sfen_char: "S", promotable: true,  },
-      {key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", sfen_char: "N", promotable: true,  },
-      {key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", sfen_char: "L", promotable: true,  },
-      {key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    sfen_char: "P", promotable: true,  },
+      { key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_alias: nil,    sfen_char: "K", promotable: false, always_alive: true,  },
+      { key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_alias: "竜",   sfen_char: "R", promotable: true,  always_alive: true,  },
+      { key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_alias: nil,    sfen_char: "B", promotable: true,  always_alive: true,  },
+      { key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_alias: nil,    sfen_char: "G", promotable: false, always_alive: true,  },
+      { key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_alias: "成銀", sfen_char: "S", promotable: true,  always_alive: true,  },
+      { key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_alias: "成桂", sfen_char: "N", promotable: true,  always_alive: false, },
+      { key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_alias: "成香", sfen_char: "L", promotable: true,  always_alive: false, },
+      { key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_alias: nil,    sfen_char: "P", promotable: true,  always_alive: false, },
     ]
 
     class << self
