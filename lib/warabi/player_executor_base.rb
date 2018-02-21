@@ -46,7 +46,7 @@ module Warabi
           piece_box_added
         end
         board.pick_up(@move_hand.origin_soldier.point)
-        board.put_on(soldier, validate: true)
+        board.put_on(soldier)
       end
 
       perform_skill_monitor
