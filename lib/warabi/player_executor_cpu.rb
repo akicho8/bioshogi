@@ -2,7 +2,7 @@
 
 module Warabi
   class PlayerExecutorCpu < PlayerExecutorHuman
-    def after_execute
+    def turn_changed_process
       mediator.position_map[mediator.position_hash] += 1
     end
   end

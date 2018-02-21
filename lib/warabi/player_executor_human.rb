@@ -2,11 +2,11 @@
 
 module Warabi
   class PlayerExecutorHuman < PlayerExecutorBase
-    def kill_counter_inc
+    def piece_box_added
       mediator.kill_counter += 1
     end
 
-    def hand_push
+    def turn_ended_process
       mediator.hand_logs << hand_log
     end
 
@@ -27,7 +27,6 @@ module Warabi
           :candidate      => @candidate_soldiers,
           :point_same     => point_same?,
           :skill_set      => skill_set,
-          :killed_soldier => @killed_soldier,
         }).freeze
     end
 
@@ -37,7 +36,7 @@ module Warabi
 
     def point_same?
       if hand_log = mediator.hand_logs.last
-        hand_log.soldier.point == @soldier.point
+        hand_log.soldier.point == soldier.point
       end
     end
   end

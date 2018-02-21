@@ -6,17 +6,12 @@ module Warabi
     attr_reader :source
     attr_reader :params
 
-    attr_reader :point
-    attr_reader :piece
-    attr_reader :point_from
-    attr_reader :killed_soldier
-    attr_reader :origin_soldier
-
-    attr_reader :soldier
     attr_reader :direct_hand
     attr_reader :move_hand
 
     delegate :board, :piece_box, :mediator, to: :player
+    delegate :origin_soldier, :killed_soldier, to: :@move_hand, allow_nil: true
+    delegate :soldier, to: :hand
 
     def initialize(player, source, **params)
       @player = player
@@ -37,45 +32,48 @@ module Warabi
         raise_error(error)
       end
 
-      @candidate_soldiers = input.candidate_soldiers
-      @origin_soldier     = input.origin_soldier
-      @soldier            = input.soldier
       @direct_hand        = input.direct_hand
       @move_hand          = input.move_hand
-      @killed_soldier     = nil
+      @candidate_soldiers = input.candidate_soldiers
 
-      if input.direct_trigger
-        piece_box.pick_out(@soldier.piece)
-        board.put_on(@soldier)
+      if @direct_hand
+        piece_box.pick_out(soldier.piece)
+        board.put_on(soldier)
       else
-        @killed_soldier = board.lookup(@soldier.point)
-        if @killed_soldier
-          board.pick_up(@soldier.point)
-          piece_box.add(@killed_soldier.piece.key => 1)
-          kill_counter_inc
+        if killed_soldier
+          board.pick_up(soldier.point)
+          piece_box.add(killed_soldier.piece.key => 1)
+          piece_box_added
         end
         board.pick_up(@move_hand.origin_soldier.point)
-        board.put_on(@move_hand.soldier, validate: true)
+        board.put_on(soldier, validate: true)
       end
 
       perform_skill_monitor
 
-      hand_push
+      turn_ended_process
+
       mediator.turn_info.counter += 1
 
-      after_execute
+      turn_changed_process
+
+      hand
     end
 
-    def kill_counter_inc
+    def hand
+      @move_hand || @direct_hand
     end
 
-    def hand_push
+    def piece_box_added
+    end
+
+    def turn_ended_process
     end
 
     def perform_skill_monitor
     end
 
-    def after_execute
+    def turn_changed_process
     end
 
     private

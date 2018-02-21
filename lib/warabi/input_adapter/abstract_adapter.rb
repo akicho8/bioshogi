@@ -56,7 +56,7 @@ module Warabi
 
       def move_hand
         if origin_soldier
-          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, target_soldier: board.surface[point])
+          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, killed_soldier: board.surface[point])
         end
       end
 

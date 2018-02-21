@@ -10,7 +10,6 @@ module Warabi
     attr_accessor :candidate
     attr_accessor :point_same
     attr_accessor :skill_set
-    attr_accessor :killed_soldier
 
     def to_kif(**options)
       options = {

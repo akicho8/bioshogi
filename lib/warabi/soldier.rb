@@ -263,7 +263,7 @@ module Warabi
     include HandShared
 
     attr_accessor :origin_soldier
-    attr_accessor :target_soldier
+    attr_accessor :killed_soldier
 
     def promote_trigger?
       !origin_soldier.promoted && soldier.promoted
