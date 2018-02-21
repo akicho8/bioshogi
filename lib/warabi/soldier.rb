@@ -110,7 +110,9 @@ module Warabi
       piece.all_vectors(promoted: promoted, location: location)
     end
 
-    # 成り(=絶対に死に駒ならない)の状態を先にチェックすることで高速化
+    # 1. 常に生きている
+    # 2. 成り(=絶対に死に駒ならない)
+    # の順で先にチェックすることで高速化
     def alive?
       piece.always_alive || promoted || all_vectors.any? { |e| point.vector_add(e).valid? }
     end
