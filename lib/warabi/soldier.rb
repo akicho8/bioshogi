@@ -192,33 +192,35 @@ module Warabi
     end
   end
 
-  class DirectHand
-    concerning :Shared do
-      included do
-        include ActiveModel::Model
-        attr_accessor :soldier
+  concern :HandShared do
+    included do
+      include ActiveModel::Model
+      attr_accessor :soldier
 
-        private_class_method :new
-      end
+      private_class_method :new
+    end
 
-      class_methods do
-        def create(*args)
-          new(*args).freeze
-        end
-      end
-
-      def to_kif(*)
-        raise NotImplementedError, "#{__method__} is not implemented"
-      end
-
-      def inspect
-        "#<#{self}>"
-      end
-
-      def to_s(**options)
-        to_kif(options)
+    class_methods do
+      def create(*args)
+        new(*args).freeze
       end
     end
+
+    def to_kif(*)
+      raise NotImplementedError, "#{__method__} is not implemented"
+    end
+
+    def inspect
+      "#<#{self}>"
+    end
+
+    def to_s(**options)
+      to_kif(options)
+    end
+  end
+
+  class DirectHand
+    include HandShared
 
     def initialize(*)
       super
@@ -258,9 +260,10 @@ module Warabi
   end
 
   class MoveHand
-    include DirectHand::Shared
+    include HandShared
 
     attr_accessor :origin_soldier
+    attr_accessor :target_soldier
 
     def promote_trigger?
       !origin_soldier.promoted && soldier.promoted
