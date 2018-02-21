@@ -117,8 +117,8 @@ module Warabi
         end
       end
 
-      def move_list(soldier)
-        Movabler.move_list(self, soldier)
+      def move_list(soldier, **options)
+        Movabler.move_list(self, soldier, options)
       end
 
       def to_s_soldiers

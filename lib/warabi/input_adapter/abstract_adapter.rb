@@ -66,6 +66,10 @@ module Warabi
         end
       end
 
+      def hand
+        @hand ||= move_hand || direct_hand
+      end
+
       def to_h
         {
           :point_from      => point_from,

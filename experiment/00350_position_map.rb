@@ -20,19 +20,22 @@ mediator.board.placement_from_shape <<~EOT
   EOT
 
 mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
+mediator.player_at(:black).evaluator.score  # => 0
+mediator.player_at(:black).evaluator.score2 # => -9999
+
 mediator.execute("△23飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲19飛", executor_class: PlayerExecutorCpu)
 mediator.execute("△21飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
 tp mediator.position_map
 
-# # mediator.player_at(:black).evaluator.score  # => 0
-mediator.player_at(:black).evaluator.score2 # => -9999
+mediator.player_at(:black).evaluator.score  # => 0
+mediator.player_at(:black).evaluator.score2 # => -19998
 #
 # mediator.player_at(:black).brain.nega_max_run(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
 # >> |----------------------+---|
-# >> | -2201985572769237301 | 2 |
-# >> | -3392467357532971939 | 1 |
-# >> |  3862360879933289846 | 1 |
-# >> | -4549603661826407585 | 1 |
+# >> |  2068361328277002845 | 2 |
+# >> | -1581136720064930357 | 1 |
+# >> |  -273841745352659855 | 1 |
+# >> |  3195651637983543358 | 1 |
 # >> |----------------------+---|

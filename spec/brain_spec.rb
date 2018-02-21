@@ -26,23 +26,25 @@ EOT
     end
 
     it do
-      Board.promotable_disable do
-        Board.dimensiton_change([2, 5]) do
-          mediator = MediatorSimple.new
-          mediator.board.placement_from_shape <<~EOT
-          +------+
-          | ・v香|
-          | ・v飛|
-          | ・v歩|
-          | ・ 飛|
-          | ・ 香|
-          +------+
-            EOT
-          brain = mediator.player_at(:black).brain
-          brain.nega_max_run(depth_max: 0)[:hand].to_kif.should == "▲１三飛(14)"
-          brain.nega_max_run(depth_max: 1)[:hand].to_kif.should == "▲２四飛(14)"
-          brain.nega_max_run(depth_max: 2)[:hand].to_kif.should == "▲１三飛(14)"
-          brain.nega_max_run(depth_max: 3)[:hand].to_kif.should == "▲２四飛(14)"
+      1.times do
+        Board.promotable_disable do
+          Board.dimensiton_change([2, 5]) do
+            mediator = MediatorSimple.new
+            mediator.board.placement_from_shape <<~EOT
+            +------+
+            | ・v香|
+            | ・v飛|
+            | ・v歩|
+            | ・ 飛|
+            | ・ 香|
+            +------+
+              EOT
+            brain = mediator.player_at(:black).brain
+            brain.nega_max_run(depth_max: 0)[:hand].to_kif.should == "▲１三飛(14)"
+            brain.nega_max_run(depth_max: 1)[:hand].to_kif.should == "▲２四飛(14)"
+            brain.nega_max_run(depth_max: 2)[:hand].to_kif.should == "▲１三飛(14)"
+            brain.nega_max_run(depth_max: 3)[:hand].to_kif.should == "▲２四飛(14)"
+          end
         end
       end
     end
@@ -61,7 +63,7 @@ EOT
     it "盤上の駒の全手筋" do
       Board.dimensiton_change([1, 5]) do
         mediator = MediatorSimple.test1(init: "▲１五香")
-        mediator.player_at(:black).brain.move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１一香成(15)"] # 入力文字列
+        mediator.player_at(:black).brain.move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"]
       end
     end
 

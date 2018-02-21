@@ -24,7 +24,7 @@ module Warabi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def move_list(board, soldier)
+    def move_list(board, soldier, **options)
       Enumerator.new do |yielder|
         soldier.all_vectors.each do |vector|
           point = soldier.point
@@ -44,7 +44,7 @@ module Warabi
             end
 
             # 空または相手駒の升には行ける
-            piece_store(soldier, point, killed_soldier, yielder)
+            piece_store(soldier, point, killed_soldier, yielder, options)
 
             # 相手駒があるのでこれ以上は進めない
             if killed_soldier
@@ -66,18 +66,19 @@ module Warabi
     # でも point に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(origin_soldier, point, killed_soldier, yielder)
+    def piece_store(origin_soldier, point, killed_soldier, yielder, options)
       # 死に駒にならないのであれば有効
       soldier = origin_soldier.merge(point: point)
-      store_if_alive(soldier, origin_soldier, killed_soldier, yielder)
 
-      # また成れるなら成ってみて死に駒にならないなら有効
-      if soldier.next_promotable?
-        store_if_alive(soldier.merge(promoted: true), origin_soldier, killed_soldier, yielder)
+      # 成れるなら成る
+      if origin_soldier.next_promotable?(soldier.point)
+        yielder << MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, killed_soldier: killed_soldier)
+
+        if options[:promoted_preferred]
+          return
+        end
       end
-    end
 
-    def store_if_alive(soldier, origin_soldier, killed_soldier, yielder)
       if soldier.alive?
         yielder << MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, killed_soldier: killed_soldier)
       end

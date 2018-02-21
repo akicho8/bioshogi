@@ -6,11 +6,12 @@ module Warabi
     attr_reader :source
     attr_reader :params
 
+    attr_reader :hand
     attr_reader :direct_hand
     attr_reader :move_hand
 
     delegate :board, :piece_box, :mediator, to: :player
-    delegate :origin_soldier, :killed_soldier, to: :@move_hand, allow_nil: true
+    delegate :origin_soldier, :killed_soldier, to: :move_hand, allow_nil: true
     delegate :soldier, to: :hand
 
     def initialize(player, source, **params)
@@ -32,21 +33,14 @@ module Warabi
         raise_error(error)
       end
 
+      @hand               = input.hand
       @direct_hand        = input.direct_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = input.candidate_soldiers
 
-      if @direct_hand
-        piece_box.pick_out(soldier.piece)
-        board.put_on(soldier)
-      else
-        if killed_soldier
-          board.pick_up(soldier.point)
-          piece_box.add(killed_soldier.piece.key => 1)
-          piece_box_added
-        end
-        board.pick_up(@move_hand.origin_soldier.point)
-        board.put_on(soldier)
+      hand.execute(mediator)
+      if killed_soldier
+        piece_box_added
       end
 
       perform_skill_monitor
@@ -58,10 +52,6 @@ module Warabi
       turn_changed_process
 
       hand
-    end
-
-    def hand
-      @move_hand || @direct_hand
     end
 
     def piece_box_added

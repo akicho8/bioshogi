@@ -39,5 +39,20 @@ module Warabi
     def position_hash
       board.hash ^ players.collect(&:piece_box).hash ^ turn_info.current_location.hash
     end
+
+    def placement_from_bod(str)
+      if md = str.match(/(?<board>^\+\-.*\-\+$)/m)
+        board.placement_from_shape md[:board]
+      end
+      str.scan(/(.*)の持駒：(.*)/) do |location_key, piece_str|
+        player_at(location_key).pieces_set(piece_str)
+      end
+      if md = str.match(/^手数\s*＝\s*(?<counter>\d+)/)
+        turn_info.counter = md[:counter].to_i
+      end
+      if Location.any? { |e| str.include?(e.handicap_name) }
+        turn_info.handicap = true
+      end
+    end
   end
 end

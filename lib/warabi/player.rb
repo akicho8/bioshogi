@@ -129,8 +129,8 @@ module Warabi
 
     private
 
-    def move_list(soldier)
-      Movabler.move_list(board, soldier)
+    def move_list(soldier, **options)
+      Movabler.move_list(board, soldier, options)
     end
   end
 end

@@ -4,13 +4,13 @@ mediator = Mediator.new
 mediator.board.hash
 mediator.board.placement_from_hash(black: "裸玉", white: "裸玉")
 mediator.pieces_set("▲飛 △飛")
-mediator.position_hash # => -593034513367850119
+mediator.position_hash # => 211726173902968666
 mediator.execute("▲５八玉")
 mediator.execute("△５二玉")
-mediator.position_hash # => 3471330729968283189
+mediator.position_hash # => 2616259334959616679
 mediator.execute("▲５九玉")
 mediator.execute("△５一玉")
-mediator.position_hash # => -593034513367850119
+mediator.position_hash # => 211726173902968666
 mediator.position_map      # => {}
 puts mediator
 # >> 後手の持駒：飛

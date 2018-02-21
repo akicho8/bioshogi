@@ -49,6 +49,13 @@ module Warabi
       }.sum
     end
 
+    def score_debug
+      object.collect { |piece_key, count|
+        piece = Piece[piece_key]
+        {piece: piece.name, count: count, weight: piece.hold_weight, total: piece.hold_weight * count}
+      }
+    end
+
     ################################################################################ formatter
 
     def to_s(**options)

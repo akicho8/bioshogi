@@ -7,16 +7,14 @@ module Warabi
         super
 
         if move_hand
-          if move_hand.promote_trigger?
-            from = origin_soldier.point
-            to = soldier.point
-            if !from.promotable?(player.location) && !to.promotable?(player.location)
-              errors_add NotPromotable, "#{from}から#{to}への移動では成れません"
-            end
-          end
-
           if move_hand.promote_trigger? && origin_soldier.promoted
             errors_add AlredyPromoted, "成りを明示しましたがすでに成っています"
+          end
+
+          if move_hand.promote_trigger?
+            if !origin_soldier.next_promotable?(point)
+              errors_add NotPromotable, "#{origin_soldier.point}から#{point}への移動では成れません"
+            end
           end
 
           if player.location != origin_soldier.location

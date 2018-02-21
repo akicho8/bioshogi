@@ -123,20 +123,14 @@ module Warabi
 
     ################################################################################ Utility
 
-    # 現状の状態から成れるか？
-    # 相手陣地から出たときのことは考慮しなくてよい
-    # そもそも移動元をこのインスタンスは知らない
-    def next_promotable?
-      true &&
-        piece.promotable? &&           # 成ることができる駒の種類かつ
-        !promoted &&                   # まだ成っていないかつ
-        point.promotable?(location) && # 現在地点は相手の陣地内か？
-        true
+    # 自分を移動元の状態と考えて to に移動したとき成れるか？
+    def next_promotable?(to)
+      piece.promotable? && !promoted && (point.promotable?(location) || to.promotable?(location))
     end
 
     # 移動可能な座標を取得
-    def move_list(board)
-      Movabler.move_list(board, self)
+    def move_list(board, **options)
+      Movabler.move_list(board, self, options)
     end
 
     # 二歩？
@@ -228,6 +222,18 @@ module Warabi
       raise MustNotHappen, "打つと同時に成った" if soldier.promoted
     end
 
+    def execute(mediator)
+      player = mediator.player_at(soldier.location)
+      player.piece_box.pick_out(soldier.piece)
+      mediator.board.put_on(soldier)
+    end
+
+    def revert(mediator)
+      mediator.board.safe_delete_on(soldier.point)
+      player = mediator.player_at(soldier.location)
+      player.piece_box.add(soldier.piece.key => 1)
+    end
+
     def to_kif(**options)
       options = {
         with_location: true,
@@ -264,6 +270,27 @@ module Warabi
 
     attr_accessor :origin_soldier
     attr_accessor :killed_soldier
+
+    def execute(mediator)
+      if killed_soldier
+        mediator.board.safe_delete_on(soldier.point)
+        player = mediator.player_at(soldier.location)
+        player.piece_box.add(killed_soldier.piece.key => 1)
+      end
+      mediator.board.pick_up(origin_soldier.point)
+      mediator.board.put_on(soldier)
+    end
+
+    def revert(mediator)
+      mediator.board.pick_up(soldier.point)
+      mediator.board.put_on(origin_soldier)
+
+      if killed_soldier
+        player = mediator.player_at(soldier.location)
+        player.piece_box.pick_out(killed_soldier.piece)
+        mediator.board.put_on(killed_soldier)
+      end
+    end
 
     def promote_trigger?
       !origin_soldier.promoted && soldier.promoted
