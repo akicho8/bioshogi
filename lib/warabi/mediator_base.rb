@@ -14,12 +14,6 @@ module Warabi
       Marshal.load(Marshal.dump(self))
     end
 
-    def to_mini
-      mediator = MediatorSimple.new
-      mediator.players = players.dup
-      mediator
-    end
-
     def context_new(&block)
       yield deep_dup
     end

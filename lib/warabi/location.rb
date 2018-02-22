@@ -23,14 +23,12 @@ module Warabi
       def lookup(value)
         v = super
 
-        # -1 など
         unless v
           if value.kind_of?(Integer)
             v = lookup(value.modulo(count))
           end
         end
 
-        # "☗" など
         unless v
           v = find { |e| e.match_target_values_set.include?(value) }
         end
@@ -38,7 +36,6 @@ module Warabi
         v
       end
 
-      # "▲▼△△"
       def triangles_str
         @triangles_str ||= flat_map { |e| [e.mark, e.flip_mark] }.join
       end
@@ -84,8 +81,6 @@ module Warabi
 
     alias next_location flip
 
-    # lookup で引ける値のセットを返す
-    # 自分のクラスメソッド内で使っているだけなので protected にしたいけど ruby はできない
     def match_target_values_set
       @match_target_values_set ||= [
         key,
