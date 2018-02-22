@@ -84,7 +84,7 @@ module Warabi
       @params = {
         random: false,
         depth_max: 0,           # 最大の深さ
-        debug_level: nil,
+        log_skip_depth: nil,
       }.merge(params)
 
       @eval_count = 0
@@ -103,28 +103,19 @@ module Warabi
 
       all_hands = player.brain.all_hands
 
+      # now_score = player.evaluator.score
+
       hands = []
       score_max = -Float::INFINITY
-      score_max_object = nil
+      max_obj = nil
 
       all_hands.each.with_index do |hand, i|
-        # memento = mediator.create_memento
-        # m = mediator.deep_dup
-        # _player = m.player_at(player.location)
-
-        # hand2 = player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
-
-        hand2 = hand
-        foo = player.mediator.to_long_sfen_without_turn
-        hand2.execute(player.mediator)
+        hand.execute(player.mediator)
 
         # count = player.mediator.position_map[player.mediator.position_hash] # 同一局面数
-        # count == 0 && 
-        # ログに盤面を入れる場合
+
         if locals[:depth] < params[:depth_max]
-          # log_puts locals, "-" * 40
           log_puts locals, "試指 #{hand} (%d/%d)" % [i.next, all_hands.size] if logger
-          # log_puts locals, mediator.to_bod
 
           # 相手が良くなればなるほど自分にとってはマイナス
           info = nega_max(locals.merge(player: player.opponent_player, depth: locals[:depth].next))
@@ -140,18 +131,20 @@ module Warabi
           log_puts locals, "試指 #{hand} => #{score}" if logger
         end
 
-        hand2.revert(mediator)
-        raise if player.mediator.to_long_sfen_without_turn != foo
-        # mediator.turn_info.counter -= 1
+        hand.revert(mediator)
 
         if info[:score] > score_max
           score_max = info[:score]
-          score_max_object = info
+          max_obj = info
         end
 
         if locals[:depth] == 0
           hands << info
         end
+
+        # if score_max >= now_score
+        #   break
+        # end
       end
 
       if logger
@@ -165,17 +158,17 @@ module Warabi
         end
 
         log_puts locals, "抽出\n#{hands.collect(&:to_s).join("\n")}"
-        log_puts locals, "★確 #{score_max_object} 読み数:#{eval_count}"
+        log_puts locals, "★確 #{max_obj} 読み数:#{eval_count}"
       end
 
-      score_max_object
+      max_obj
     end
 
     def log_puts(locals, str)
       return unless logger
 
-      if params[:debug_level]
-        if locals[:depth] >= params[:debug_level]
+      if v = params[:log_skip_depth]
+        if locals[:depth] >= v
           return
         end
       end
