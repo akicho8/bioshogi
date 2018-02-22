@@ -1,13 +1,24 @@
 require "./example_helper"
 
-mediator = Mediator.new
-mediator.players.collect { |e| e.evaluator.score } # => [0, 0]
-
-mediator.board.placement_from_human("▲９七歩")
-mediator.players.collect { |e| e.evaluator.score } # => [100, -100]
-
-mediator.board.placement_from_human("▲９七歩 △１三歩")
-mediator.players.collect { |e| e.evaluator.score } # => [0, 0]
+# 両取りをかけられた状態で馬を切ったCPUの考え方
+#
+# |--------+-------+------------------------------------------------+-------|
+# | 手     | score | 内訳                                           |  差分 |
+# |--------+-------+------------------------------------------------+-------|
+# | ▲71馬 | +3250 | 銀入手(+1050) 相手の銀消滅(+1000) 角成り(+200) | +2250 |
+# | △同玉 |  -640 | 盤上の馬が消える(-2000)、馬を入手される(-1890) | -3890 |
+# |--------+-------+------------------------------------------------+-------|
+#
+# |--------+-------+--------------------------------------------------+-------|
+# | 手     | score | 内訳                                             | 差分  |
+# |--------+-------+--------------------------------------------------+-------|
+# | ▲42馬 | +1200 | 角成り(+200)                                     | +200  |
+# | △79馬 | -1050 | 銀損失(-1000) 相手に銀が渡る(-1050) 角成り(-200) | -2250 |
+# |--------+-------+--------------------------------------------------+-------|
+#
+# ここからわかるのは、何を指しても損するから損を最小限にする手を指したということ。
+# 理想は▲42馬(+1200)だが、相手の手番で銀を必ず取られ -1050 になるのなら馬を切って -640 程度になる方を選んだ。
+# 人間的には違和感のある手だけど一貫性のある考え方で、ある意味、両取り逃げるべからずを実践した手だった。
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT
@@ -29,7 +40,6 @@ EOT
 puts mediator
 tp mediator.player_at(:black).evaluator.detail_score
 mediator.player_at(:black).evaluator.score # => 1000
-mediator.player_at(:white).evaluator.score # => -1000
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT
@@ -50,9 +60,7 @@ mediator.placement_from_bod <<~EOT
 EOT
 puts mediator
 tp mediator.player_at(:black).evaluator.detail_score
-tp mediator.player_at(:white).evaluator.detail_score
 mediator.player_at(:black).evaluator.score # => 3250
-mediator.player_at(:white).evaluator.score # => -3250
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT
@@ -73,9 +81,7 @@ mediator.placement_from_bod <<~EOT
 EOT
 puts mediator
 tp mediator.player_at(:black).evaluator.detail_score
-tp mediator.player_at(:white).evaluator.detail_score
 mediator.player_at(:black).evaluator.score # => -640
-mediator.player_at(:white).evaluator.score # => 640
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT
@@ -97,7 +103,6 @@ EOT
 puts mediator
 tp mediator.player_at(:black).evaluator.detail_score
 mediator.player_at(:black).evaluator.score # => 1200
-mediator.player_at(:white).evaluator.score # => -1200
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT
@@ -119,7 +124,6 @@ EOT
 puts mediator
 tp mediator.player_at(:black).evaluator.detail_score
 mediator.player_at(:black).evaluator.score # => -1050
-mediator.player_at(:white).evaluator.score # => 1050
 
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -179,18 +183,6 @@ mediator.player_at(:white).evaluator.score # => 1050
 # >> | △５七角 |     1 |   1800 | -1800 |
 # >> |          |       |        |  3250 |
 # >> |----------+-------+--------+-------|
-# >> |----------+-------+--------+-------|
-# >> | piece    | count | weight | total |
-# >> |----------+-------+--------+-------|
-# >> | △６一玉 |     1 |   9999 |  9999 |
-# >> | △５七角 |     1 |   1800 |  1800 |
-# >> | ▲７一馬 |     1 |   2000 | -2000 |
-# >> | ▲７九銀 |     1 |   1000 | -1000 |
-# >> | ▲５九玉 |     1 |   9999 | -9999 |
-# >> | ▲３九銀 |     1 |   1000 | -1000 |
-# >> | 銀       |     1 |   1050 | -1050 |
-# >> |          |       |        | -3250 |
-# >> |----------+-------+--------+-------|
 # >> 後手の持駒：角
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -219,18 +211,6 @@ mediator.player_at(:white).evaluator.score # => 1050
 # >> | △５七角 |     1 |   1800 | -1800 |
 # >> | 角       |     1 |   1890 | -1890 |
 # >> |          |       |        |  -640 |
-# >> |----------+-------+--------+-------|
-# >> |----------+-------+--------+-------|
-# >> | piece    | count | weight | total |
-# >> |----------+-------+--------+-------|
-# >> | △７一玉 |     1 |   9999 |  9999 |
-# >> | △５七角 |     1 |   1800 |  1800 |
-# >> | 角       |     1 |   1890 |  1890 |
-# >> | ▲７九銀 |     1 |   1000 | -1000 |
-# >> | ▲５九玉 |     1 |   9999 | -9999 |
-# >> | ▲３九銀 |     1 |   1000 | -1000 |
-# >> | 銀       |     1 |   1050 | -1050 |
-# >> |          |       |        |   640 |
 # >> |----------+-------+--------+-------|
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

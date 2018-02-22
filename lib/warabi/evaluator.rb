@@ -30,16 +30,16 @@ module Warabi
       score
     end
 
-    def score_debug
+    def detail_score
       rows = []
-      rows += score_debug2(player)
-      rows += score_debug2(player.opponent_player).collect { |e| e.merge(total: -e[:total]) }
+      rows += detail_score2(player)
+      rows += detail_score2(player.opponent_player).collect { |e| e.merge(total: -e[:total]) }
       rows + [{total: rows.collect { |e| e[:total] }.sum }]
     end
 
     private
 
-    def score_debug2(player)
+    def detail_score2(player)
       rows = player.soldiers.group_by(&:itself).transform_values(&:size).collect { |soldier, count|
         if soldier.promoted
           weight = soldier.piece.promoted_weight
@@ -48,7 +48,7 @@ module Warabi
         end
         {piece: soldier, count: count, weight: weight, total: weight * count}
       }
-      rows + player.piece_box.score_debug
+      rows + player.piece_box.detail_score
     end
 
     def player_score_for(player)

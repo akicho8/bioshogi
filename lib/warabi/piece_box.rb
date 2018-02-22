@@ -49,7 +49,7 @@ module Warabi
       }.sum
     end
 
-    def score_debug
+    def detail_score
       object.collect { |piece_key, count|
         piece = Piece[piece_key]
         {piece: piece.name, count: count, weight: piece.hold_weight, total: piece.hold_weight * count}
