@@ -11,8 +11,8 @@ rows = [
 ].collect do |klass|
   strategy = klass.new
   strategy.params[:silent] = true
-  strategy.params[:depth_max] = 4
-  strategy.params[:dimension] = 5
+  strategy.params[:depth_max] = 7
+  strategy.params[:dimension] = 4
   strategy.run
 
   row = {}
@@ -22,10 +22,10 @@ rows = [
 end
 tp rows
 # >> |---------------+--------+----+---|
-# >> | class         | put_on | o  | x |
+# >> | class         | put_on | x  | o |
 # >> |---------------+--------+----+---|
-# >> | DirtyMinimax  |   5008 | 17 | 4 |
-# >> | BeautyMinimax |   5008 | 17 | 4 |
-# >> | NegaMax       |   5008 | 17 | 4 |
-# >> | NegaAlpha     |   1296 | 17 | 4 |
+# >> | DirtyMinimax  |  14245 | 11 | 5 |
+# >> | BeautyMinimax |  14245 | 11 | 5 |
+# >> | NegaMax       |  14245 | 11 | 5 |
+# >> | NegaAlpha     |   2069 | 11 | 5 |
 # >> |---------------+--------+----+---|
