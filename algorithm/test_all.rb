@@ -1,7 +1,5 @@
 require "test-unit"
 
-require "./reversi_app"
-require "./simple_minimax"
 require "./dirty_minimax"
 require "./beauty_minimax"
 require "./nega_max"
@@ -18,7 +16,7 @@ class TestAll < Test::Unit::TestCase
       obj = klass.new
       obj.params[:silent] = true
       obj.run
-      assert_equal({"o" => 3, "x" => 13}, obj.app.histogram)
+      assert_equal({o: 8, x: 8}, obj.app.histogram)
     end
   end
 end

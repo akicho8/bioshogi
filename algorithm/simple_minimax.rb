@@ -19,8 +19,13 @@ class SimpleMinimax
     player = app.player_at(turn)
     children = app.available_points(player)
 
-    if children.empty? || depth >= depth_max
-      return app.evaluate_for_o # 常に先手からの評価値
+    if depth >= depth_max
+      return app.evaluate(:o) # 常に先手からの評価値
+    end
+
+    # 合法手がないので相手に手番を渡す
+    if children.empty?
+      return mini_max(turn + 1, depth + 1, depth_max)
     end
 
     if turn.even?
