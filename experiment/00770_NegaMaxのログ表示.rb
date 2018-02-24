@@ -7,7 +7,7 @@ Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
   mediator.board.placement_from_human("▲３三歩 △１一歩")
   puts mediator
-  object = NegaMaxRunner.new(depth_max: 1)
+  object = NegaAlphaExecuter.new(depth_max: 1)
   puts object.nega_max(player: mediator.player_at(:black))
 end
 # >> 後手の持駒：なし

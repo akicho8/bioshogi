@@ -23,6 +23,8 @@ require "memory_record"
 module Warabi
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
+
+  mattr_accessor(:exec_counts) { Hash.new(0) }
 end
 
 require_relative "warabi/logger"

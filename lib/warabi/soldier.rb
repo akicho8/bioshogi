@@ -196,6 +196,7 @@ module Warabi
 
     class_methods do
       def create(*args)
+        Warabi.exec_counts["#{name}.#{__method__}"] += 1
         new(*args).freeze
       end
     end

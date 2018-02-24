@@ -46,6 +46,22 @@ module Warabi
       players.collect { |e| e.piece_box.clear }
     end
 
+    def basic_score
+      score = 0
+      board.surface.each_value do |e|
+        if e.promoted
+          w = e.piece.promoted_weight
+        else
+          w = e.piece.basic_weight
+        end
+        score += w * e.location.value_sign
+      end
+      players.each do |e|
+        score += e.piece_box.score * e.location.value_sign
+      end
+      score
+    end
+
     concerning :Other do
       def pieces_set(str)
         Piece.s_to_h2(str).each do |location_key, counts|

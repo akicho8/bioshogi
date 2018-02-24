@@ -64,9 +64,6 @@ module Warabi
       private_class_method :new
 
       class << self
-        # 座標をパースする
-        # @example
-        #   Position::Hpos.fetch("１").name # => "1"
         def fetch(value)
           lookup(value) or raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
         end
@@ -112,33 +109,22 @@ module Warabi
         @value = value
       end
 
-      # 座標が盤上か？
       def valid?
         self.class.value_range.cover?(@value)
       end
 
-      # 名前
-      # @example
-      #   Position::Vpos.fetch("一").name # => "一"
       def name
         self.class.units[@value]
       end
 
-      # 数字表記
-      # @example
-      #   Position::Vpos.fetch("一").number_format # => "1"
       def number_format
         name
       end
 
-      # SFEN表記
       def to_sfen
         raise NotImplementedError, "#{__method__} is not implemented"
       end
 
-      # 座標反転
-      # @example
-      #   Position::Hpos.fetch("1").flip.name # => "9"
       def flip
         self.class.fetch(self.class.units.size - 1 - @value)
       end
@@ -214,8 +200,7 @@ module Warabi
       end
 
       def number_format
-        # "一-九" は文字コード順ではないので指定できない
-        super.tr(_units, "1-9")
+        super.tr(_units, "1-9") # 文字コード順ではないため "一-九" とは書けない
       end
 
       def to_sfen

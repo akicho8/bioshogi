@@ -12,17 +12,11 @@ module Warabi
     end
 
     def score
-      score = 0
-      score += player_score_for(player)
-      score -= player_score_for(player.opponent_player)
-      score
+      player.mediator.basic_score * player.location.value_sign
     end
 
     def score2
-      score = 0
-      score += player_score_for(player)
-      score -= player_score_for(player.opponent_player)
-
+      score = player_score_for
       count = player.mediator.position_map[player.mediator.position_hash]
       if count >= 1
         score -= 9999 * count
@@ -49,22 +43,6 @@ module Warabi
         {piece: soldier, count: count, weight: weight, total: weight * count}
       }
       rows + player.piece_box.detail_score
-    end
-
-    def player_score_for(player)
-      score = 0
-
-      score += player.soldiers.collect { |e|
-        if e.promoted
-          e.piece.promoted_weight
-        else
-          e.piece.basic_weight
-        end
-      }.sum
-
-      score += player.piece_box.score
-
-      score
     end
   end
 end

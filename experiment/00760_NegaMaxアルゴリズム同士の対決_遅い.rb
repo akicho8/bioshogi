@@ -5,7 +5,7 @@ require "./example_helper"
 mediator = Mediator.start
 mediator.piece_plot
 loop do
-  think_result = mediator.current_player.brain.nega_max_run(depth_max: 1, random: true)
+  think_result = mediator.current_player.brain.nega_alpha_run(depth_max: 1, random: true)
   hand = InputParser.slice_one(think_result[:hand])
   p hand
   mediator.execute(hand)

@@ -9,39 +9,41 @@ module Warabi
       @player = player
     end
 
-    def nega_max_run(**params)
-      nega_max_runner = NegaMaxRunner.new(params)
-      nega_max_runner.nega_max(player: player)
+    def nega_alpha_run(**params)
+      nega_alpha_executer = NegaAlphaExecuter.new(params)
+      nega_alpha_executer.nega_alpha(player: player)
     end
 
-    def all_hands
-      [*move_hands, *direct_hands]
-    end
-
-    def best_hand
-      if v = score_list.first
-        v[:hand]
-      end
-    end
-
-    def score_list
-      hands = []
-      all_hands.each do |hand|
-        # m = player.mediator.deep_dup
-        # _player = m.player_at(player.location)
-        # _player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
-        # hands << {hand: hand, score: _player.evaluator.score}
-
-        # memento = player.mediator.create_memento
-
-        # hand = player.execute(hand.to_sfen, executor_class: PlayerExecutorBrain)
+    def smart_score_list(**params)
+      hands = lazy_all_hands.collect do |hand|
         hand.execute(player.mediator)
-        hands << {hand: hand, score: player.evaluator.score}
+        nega_alpha_executer = NegaAlphaExecuter.new(params)
+        info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
         hand.revert(player.mediator)
-
-        # player.mediator.restore_memento(memento)
+        {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
       end
       hands.sort_by { |e| -e[:score] }
+    end
+
+    def fast_score_list
+      hands = lazy_all_hands.collect do |hand|
+        hand.execute(player.mediator)
+        score = player.evaluator.score
+        hand.revert(player.mediator)
+        {hand: hand, score: score}
+      end
+      hands.sort_by { |e| -e[:score] }
+    end
+
+    def lazy_all_hands
+      Enumerator.new do |y|
+        move_hands.each do |e|
+          y << e
+        end
+        direct_hands.each do |e|
+          y << e
+        end
+      end
     end
 
     # 盤上の駒の全手筋
@@ -58,8 +60,12 @@ module Warabi
     # 持駒の全打筋
     def direct_hands
       Enumerator.new do |y|
+        # piece_box.each_key を使わずに keys で一旦キーの拝謁を取り出している理由は
+        # 外側で execute 〜 revert するとき a.each { a.update } の状態になり
+        # "can't add a new key into hash during iteration" が発生するため
+        piece_keys = player.piece_box.keys
         player.board.blank_points.each do |point|
-          player.piece_box.each_key do |piece_key|
+          piece_keys.each do |piece_key|
             soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: player.location)
             if soldier.rule_valid?(player.board)
               y << DirectHand.create(soldier: soldier)
@@ -72,99 +78,72 @@ module Warabi
 
   class HandInfo < Hash
     def to_s
-      "%s => %d" % [self[:hand], self[:score]]
+      "#{self[:hand]} => #{self[:score]}"
     end
   end
 
-  class NegaMaxRunner
+  class NegaAlphaExecuter
     attr_accessor :params
-    attr_accessor :eval_count
+    attr_accessor :eval_counter
 
     def initialize(params)
       @params = {
-        random: false,
         depth_max: 0,           # 最大の深さ
         log_skip_depth: nil,
       }.merge(params)
 
-      @eval_count = 0
+      @eval_counter = 0
     end
 
-    def nega_max(locals = {})
-      locals = {
-        depth: 0,               # 現在の深さ
-      }.merge(locals)
+    def nega_alpha(player:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
+      if logger
+        locals = {player: player, depth: depth}
+      end
 
-      logs = []
-
-      player = locals[:player]
+      if depth >= params[:depth_max]
+        @eval_counter += 1
+        score = player.evaluator.score
+        logger_info(locals, "評価 #{score}") if logger
+        return HandInfo[score: score, eval_times: eval_counter, readout: []]
+      end
 
       mediator = player.mediator
+      children = player.brain.lazy_all_hands
 
-      all_hands = player.brain.all_hands
+      best_hand = nil
+      readout = nil
+      eval_times = nil
+      children_exist = false
 
-      # now_score = player.evaluator.score
-
-      hands = []
-      score_max = -Float::INFINITY
-      max_obj = nil
-
-      all_hands.each.with_index do |hand, i|
-        hand.execute(player.mediator)
-
-        # count = player.mediator.position_map[player.mediator.position_hash] # 同一局面数
-
-        if locals[:depth] < params[:depth_max]
-          log_puts locals, "試指 #{hand} (%d/%d)" % [i.next, all_hands.size] if logger
-
-          # 相手が良くなればなるほど自分にとってはマイナス
-          info = nega_max(locals.merge(player: player.opponent_player, depth: locals[:depth].next))
-          score = -info[:score]
-          info = HandInfo[hand: hand, score: score, depth: locals[:depth], hands: [hand, *info[:hands]]]
-
-          log_puts locals, "評価 #{info} (%d/%d)" % [i.next, all_hands.size] if logger
-        else
-          # 自分か相手かはわからない
-          score = player.evaluator.score
-          @eval_count += 1
-          info = HandInfo[hand: hand, score: score, depth: locals[:depth], hands: [hand]]
-          log_puts locals, "試指 #{hand} => #{score}" if logger
-        end
-
+      children.each.with_index do |hand, i|
+        children_exist = true
+        hand.execute(mediator)
+        logger_info(locals, "試指 #{hand} (%d)" % i) if logger
+        info = nega_alpha(player: player.opponent_player, depth: depth + 1, alpha: -beta, beta: -alpha)
+        score = -info[:score] # 相手が良くなればなるほど自分にとってはマイナス
         hand.revert(mediator)
 
-        if info[:score] > score_max
-          score_max = info[:score]
-          max_obj = info
+        if score > alpha
+          alpha = score
+          best_hand = hand
+          readout = info[:readout]
+          eval_times = eval_counter
         end
-
-        if locals[:depth] == 0
-          hands << info
+        if alpha >= beta
+          break
         end
-
-        # if score_max >= now_score
-        #   break
-        # end
       end
+
+      raise MustNotHappen unless children_exist
 
       if logger
-        if locals[:depth] == 0
-          hands = hands.sort_by { |e| -e[:score] }
-          rows = hands.collect { |e|
-            row = e[:hands].each.with_index.inject({}) {|a, (e, i)| a.merge(i => e)}
-            {score: e[:score]}.merge(row)
-          }
-          log_puts locals, rows.to_t
-        end
-
-        log_puts locals, "抽出\n#{hands.collect(&:to_s).join("\n")}"
-        log_puts locals, "★確 #{max_obj} 読み数:#{eval_count}"
+        logger_info(locals, "★確 #{best_hand} 読み数:#{eval_counter}")
       end
 
-      max_obj
+      HandInfo[hand: best_hand, score: alpha, eval_times: eval_times, readout: [best_hand, *readout]]
     end
 
-    def log_puts(locals, str)
+    def logger_info(locals, str)
       return unless logger
 
       if v = params[:log_skip_depth]

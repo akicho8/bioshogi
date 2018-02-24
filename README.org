@@ -60,7 +60,7 @@ info[:piece].name # => "歩"
 #+BEGIN_SRC ruby
 mediator = Mediator.start
 loop do
-  hand = mediator.current_player.brain.all_hands.sample
+  hand = mediator.current_player.brain.lazy_all_hands.sample
   mediator.execute(hand)
   killed_soldier = mediator.opponent_player.executor.killed_soldier
   if executor.killed_soldier && executor.killed_soldier.piece.key == :king
@@ -376,7 +376,7 @@ Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
   mediator.board.placement_from_human("▲３三歩 △１一歩")
   puts mediator
-  pp NegaMaxRunner.run(player: mediator.player_at(:black), depth_max: 1)
+  pp NegaAlphaExecuter.run(player: mediator.player_at(:black), depth_max: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １

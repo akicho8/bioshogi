@@ -32,10 +32,10 @@ tp mediator.position_map
 mediator.player_at(:black).evaluator.score  # => 0
 mediator.player_at(:black).evaluator.score2 # => -19998
 #
-# mediator.player_at(:black).brain.nega_max_run(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
+# mediator.player_at(:black).brain.nega_alpha_run(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
 # >> |----------------------+---|
-# >> |  2068361328277002845 | 2 |
-# >> | -1581136720064930357 | 1 |
-# >> |  -273841745352659855 | 1 |
-# >> |  3195651637983543358 | 1 |
+# >> |  1474356179798556947 | 2 |
+# >> | -3347518827265389249 | 1 |
+# >> | -1353635129852801790 | 1 |
+# >> | -1752182937165605632 | 1 |
 # >> |----------------------+---|

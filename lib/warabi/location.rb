@@ -12,8 +12,8 @@ module Warabi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself,  },
-      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip, },
+      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1 },
+      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1 },
     ]
 
     alias index code

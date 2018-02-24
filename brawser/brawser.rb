@@ -91,20 +91,20 @@ class Brawser < Sinatra::Base
         @mediator.execute(params[:hand])
       end
       # if params[:think_put].present?
-      #   score_list = @mediator.current_player.brain.score_list
-      #   if info = score_list.first
+      #   fast_score_list = @mediator.current_player.brain.fast_score_list
+      #   if info = fast_score_list.first
       #     @mediator.execute(info[:hand])
       #   end
       # end
       if params[:think_put_lv].present?
         @runtime = Time.now
-        @think_result = @mediator.current_player.brain.nega_max_run(:depth_max => params[:think_put_lv].to_i)
+        @think_result = @mediator.current_player.brain.nega_alpha_run(:depth_max => params[:think_put_lv].to_i)
         @runtime = Time.now - @runtime
         input = Warabi::InputParser.slice_one(@think_result[:hand])[:input]
         @mediator.execute(input)
       end
       if params[:random_put].present?
-        if hand = @mediator.current_player.brain.all_hands.sample.presence
+        if hand = @mediator.current_player.brain.lazy_all_hands.sample.presence
           @mediator.execute(hand)
         end
       end

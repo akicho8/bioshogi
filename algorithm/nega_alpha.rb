@@ -46,7 +46,7 @@ class NegaAlpha < NegaMax
       score, before = nega_alpha(turn + 1, depth + 1, depth_max, -beta, -alpha)
       app.board = memento
       score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
-      if score > alpha # 以上(以下)とするのはスコアが -Infinity であっても有効手としなければ指せるのにパスすることになり反則となってしまう
+      if score > alpha
         hands = [point, *before]
         alpha = score
       end

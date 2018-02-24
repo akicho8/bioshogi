@@ -45,7 +45,7 @@ class DirtyMinimax
 
       if app.continuous_pass?
         unless params[:silent]
-          puts "両方ともパスしたので終了 : #{app.pass_counts}"
+          puts "両方ともパスしたので終了 : #{app.throughput}"
         end
         break
       end
