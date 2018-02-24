@@ -28,7 +28,7 @@ module Warabi
 
       mediator = Mediator.start
       options[:times].times do
-        infos = mediator.current_player.brain.smart_score_list(options.to_options)
+        infos = mediator.current_player.brain.deepen_score_list(options.to_options)
 
         info = infos.first
         hand = info[:hand]

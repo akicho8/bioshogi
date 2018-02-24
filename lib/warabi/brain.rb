@@ -1,8 +1,13 @@
 # -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/player_spec.rb" -*-
 # frozen-string-literal: true
 
+require "timeout"
+
 module Warabi
   class Brain
+    class DeepenNegaAlphaTimeOut < WarabiError
+    end
+
     attr_accessor :player
 
     def initialize(player)
@@ -12,6 +17,31 @@ module Warabi
     def nega_alpha_run(**params)
       nega_alpha_executer = NegaAlphaExecuter.new(params)
       nega_alpha_executer.nega_alpha(player: player)
+    end
+
+    def deepen_score_list(**params)
+      params = {
+        depth_max_range: 1..2,
+        timeout: 1.0,
+      }.merge(params)
+
+      cached_all_hands = lazy_all_hands.to_a
+      hands = []
+      timeout = Time.now + params[:timeout]
+
+      begin
+        params[:depth_max_range].each do |depth_max|
+          hands = cached_all_hands.collect do |hand|
+            hand.execute(player.mediator) # ← ここをブロックにする
+            nega_alpha_executer = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
+            info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
+            hand.revert(player.mediator)
+            {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+          end
+        end
+      rescue Timeout::Error
+      end
+      hands.sort_by { |e| -e[:score] }
     end
 
     def smart_score_list(**params)
