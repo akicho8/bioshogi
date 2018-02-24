@@ -13,7 +13,7 @@ class ReversiApp
   attr_accessor :board
   attr_accessor :players
   attr_accessor :params
-  attr_accessor :throughput
+  attr_accessor :pass_counts
 
   def initialize(**params)
     @params = {
@@ -22,7 +22,7 @@ class ReversiApp
 
     @players = [:o, :x]
     @board = {}
-    @throughput = {}
+    @pass_counts = Hash.new(0)
 
     placement
   end
@@ -177,17 +177,16 @@ class ReversiApp
   end
 
   def pass(player)
-    throughput[player] ||= 0
-    throughput[player] += 1
+    pass_counts[player] += 1
   end
 
   def pass_reset
-    throughput.clear
+    pass_counts.clear
   end
 
   def continuous_pass?
-    if throughput.count >= players.size
-      throughput.values.all?(&:positive?)
+    if pass_counts.count >= players.size
+      pass_counts.values.all?(&:positive?)
     end
   end
 
