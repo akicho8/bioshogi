@@ -14,7 +14,7 @@ class NegaMax < BeautyMinimax
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = app.available_points(player)
+    children = app.can_put_points(player)
     if children.empty?
       score, before = nega_max(turn + 1, depth + 1, depth_max)
       return [-score, [:pass, *before]]
@@ -24,15 +24,13 @@ class NegaMax < BeautyMinimax
     hands = []
 
     children.each do |point|
-      memento = app.board.dup
-      app.assert_put_on(player, point)
-      app.put_on(player, point)
-      score, before = nega_max(turn + 1, depth + 1, depth_max)
-      app.board = memento
-      score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
-      if score > max
-        hands = [point, *before]
-        max = score
+      app.put_on(player, point) do
+        score, before = nega_max(turn + 1, depth + 1, depth_max)
+        score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
+        if score > max
+          hands = [point, *before]
+          max = score
+        end
       end
     end
 

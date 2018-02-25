@@ -17,7 +17,7 @@ class SimpleMinimax
 
   def mini_max(turn, depth, depth_max)
     player = app.player_at(turn)
-    children = app.available_points(player)
+    children = app.can_put_points(player)
 
     if depth >= depth_max
       return app.evaluate(:o) # 常に先手からの評価値

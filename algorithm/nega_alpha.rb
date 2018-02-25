@@ -33,7 +33,7 @@ class NegaAlpha < NegaMax
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = app.available_points(player)
+    children = app.can_put_points(player)
     if children.empty?
       score, before = nega_alpha(turn + 1, depth + 1, depth_max, -beta, -alpha)
       return [-score, [:pass, *before]]

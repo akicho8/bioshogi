@@ -67,7 +67,8 @@ class DirtyMinimax
 
     # 合法手がない場合はパスして相手に手番を渡す
     player = app.player_at(turn)
-    children = app.available_points(player)
+    children = app.can_put_points(player)
+
     if children.empty?
       score, before = mini_max(turn + 1, depth + 1, depth_max)
       return [score, [:pass, *before]]
@@ -77,7 +78,6 @@ class DirtyMinimax
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       hands = []
-
       children.each do |point|
         app.put_on(player, point) do
           score, before = mini_max(turn + 1, depth + 1, depth_max)

@@ -27,20 +27,8 @@ class ReversiApp
     placement
   end
 
-  def run_counts
-    @run_counts ||= Hash.new(0)
-  end
-
-  def dimension
-    params[:dimension]
-  end
-
-  def placement
-    half = dimension / 2
-    board[V[half - 1, half - 1]] = :x
-    board[V[half, half]]         = :x
-    board[V[half, half - 1]]     = :o
-    board[V[half - 1, half]]     = :o
+  def can_put_points(player)
+    blank_points.find_all { |e| can_put_on?(player, e) }
   end
 
   def put_on(player, point, &block)
@@ -53,12 +41,11 @@ class ReversiApp
         self.board = memento
       end
     else
-      # 1個以上反転させられる利きと個数をペアにしたハッシュを返す
-      hash = reversible_info(player, point)
+      hash = reversible_counts_hash(player, point)
 
-      # 空なら利きが一つもないことになるのでパス
-      if hash.values.sum.zero?
-        return
+      # 空なら利きが一つもないことになるのでパスになるが事前にチェックしておきたいのでここでは例外とする
+      if hash.empty?
+        raise "反転できないのに置きました : player:#{player} point:#{point}\n#{self}"
       end
 
       # 置く
@@ -73,87 +60,6 @@ class ReversiApp
           board[v] = player
         end
       end
-
-      # 反転させた数
-      hash.values.sum
-    end
-  end
-
-  def assert_put_on(player, point)
-    if reversible_info(player, point).empty?
-      raise "無効な手です"
-    end
-  end
-
-  # 1個以上反転させられる利きと個数をペアにしたハッシュを返す
-  def reversible_info(player, point)
-    Around.collect { |vec|
-      count = reversible_count(player, point, vec)
-      if count >= 1
-        [vec, count]
-      end
-    }.compact.to_h
-  end
-
-  # player が point の位置に置いたと仮定したとき vec の方向で何枚裏返すことができるか
-  # 1個以上のときだけその個数を返す
-  def reversible_count(player, point, vec)
-    count = 0
-    loop do
-      point += vec          # 置いた次の位置から進めるため最初に実行する
-      # 外に出てしまったらダメ
-      if point.any? { |e| !(0...dimension).cover?(e) }
-        count = 0
-        break
-      end
-      element = board[point]
-      # 空の升ならダメ
-      unless element
-        count = 0
-        break
-      end
-      # 自分の駒が見つかった
-      if element == player
-        break
-      end
-      count += 1
-    end
-    count
-  end
-
-  def to_s
-    dimension.times.collect { |y|
-      dimension.times.collect { |x|
-        v = board[V[x, y]]
-        if v
-          if v == :o
-            "○"
-          else
-            "×"
-          end
-        else
-          "・"
-        end
-      }.join + "\n"
-    }.join
-  end
-
-  # 空いている位置をすべて返す
-  def blank_points
-    dimension.times.flat_map { |y|
-      dimension.times.collect { |x|
-        v = Vector[x, y]
-        unless board[v]
-          v
-        end
-      }
-    }.compact
-  end
-
-  # 置ける部分をすべて返す
-  def available_points(player)
-    blank_points.find_all do |v|
-      !reversible_info(player, v).empty?
     end
   end
 
@@ -169,7 +75,7 @@ class ReversiApp
   end
 
   def histogram
-    players.inject({}) { |a, player| a.merge(player => board.values.count(player)) }
+    players.inject({}) { |a, e| a.merge(e => board.values.count(e)) }
   end
 
   def player_at(turn)
@@ -194,51 +100,125 @@ class ReversiApp
     board.size >= (dimension**2) || continuous_pass?
   end
 
+  def run_counts
+    @run_counts ||= Hash.new(0)
+  end
+
+  def dimension
+    params[:dimension]
+  end
+
+  def to_s
+    dimension.times.collect { |y|
+      dimension.times.collect { |x|
+        v = board[V[x, y]]
+        if v
+          if v == :o
+            "○"
+          else
+            "×"
+          end
+        else
+          "・"
+        end
+      }.join + "\n"
+    }.join
+  end
+
   def run
-    # 中央に4つ置く
     placement
-    puts self
-
-    turn = 0                 # 手番カウンター
-
     256.times do |turn|
-      player = player_at(turn)
-      if blank_points.empty?
+      if game_over?
         break
       end
-
-      reversed_count = nil      # 反転した駒数を入れる
-      if true
-        # 賢く指す
-        # 相手の駒をより多く反転させられる位置を取得
-        point = blank_points.shuffle.max { |point| reversible_info(player, point).values.sum }
-        if point
-          # その位置に指す (指せない場合もある)
-          if count = put_on(player, point) # ここで reversible_info を再び呼ぶのはちょっと無駄がある
-            reversed_count = count
-          end
-        end
+      player = player_at(turn)
+      points = can_put_points(player)
+      count = nil
+      if points.empty?
+        pass(player)
       else
-        # ルールを守ってランダムに指す
-        blank_points.shuffle.each do |point|
-          count = put_on(player, point)
-          # 反転した数が返る。正しい手が指せたので手番を渡す
-          if count
-            reversed_count = count
-            break
-          end
+        pass_reset
+        if true
+          # 賢く指す
+          point = points.max { |e| reversible_total_count(player, e) }
+        else
+          # 適当に指す
+          point = points.sample
         end
+        count = put_on(player, point)
       end
-
-      turn += 1
-
-      puts "--------------------------------------------------------------------------------"
-      puts "TURN #{turn} #{player} 反転数:#{reversed_count || 'skip'} #{histogram} 評価値:#{evaluate(:o)}"
+      puts "---------------------------------------- [#{turn}] #{player} 反転数:#{count || 'pass'} #{histogram} 評価値:#{evaluate(:o)}"
       puts self
     end
+    tp board.values.group_by(&:itself).transform_values(&:size)
+  end
 
-    puts self
-    p board.values.group_by(&:itself).transform_values(&:size)
+  private
+
+  # 1個以上反転させられる利きと個数をペアにしたハッシュを返す
+  def reversible_counts_hash(player, point)
+    Around.collect { |vec|
+      count = reversible_one_way_count(player, point, vec)
+      if count >= 1
+        [vec, count]
+      end
+    }.compact.to_h
+  end
+
+  def placement
+    half = dimension / 2
+    board[V[half - 1, half - 1]] = :x
+    board[V[half, half]]         = :x
+    board[V[half, half - 1]]     = :o
+    board[V[half - 1, half]]     = :o
+  end
+
+  # point に置いたときに反転できる数
+  def reversible_total_count(player, point)
+    reversible_counts_hash(player, point).values.sum
+  end
+
+  # 空いている位置をすべて返す
+  def blank_points
+    dimension.times.flat_map { |y|
+      dimension.times.collect { |x|
+        v = Vector[x, y]
+        unless board[v]
+          v
+        end
+      }
+    }.compact
+  end
+
+  def can_put_on?(player, point)
+    raise "not blank" if board[point]
+    Around.any? { |e| reversible_one_way_count(player, point, e) >= 1 }
+  end
+
+  # player が point の位置に置いたと仮定したとき vec の方向で何枚裏返すことができるか
+  # 1個以上のときだけその個数を返す
+  def reversible_one_way_count(player, point, vec)
+    count = 0
+    loop do
+      point += vec          # 置いた次の位置から進めるため最初に実行する
+      # 外に出てしまったらダメ
+      if point.any? { |e| !(0...dimension).cover?(e) }
+        count = 0
+        break
+      end
+      element = board[point]
+      # 空の升ならダメ
+      unless element
+        count = 0
+        break
+      end
+      # 自分の駒が見つかった
+      if element == player
+        break
+      end
+      count += 1
+    end
+    count
   end
 end
 

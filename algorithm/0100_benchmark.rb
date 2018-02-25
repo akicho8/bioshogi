@@ -6,8 +6,8 @@ require "./nega_max"
 require "./nega_alpha"
 
 dimension = 4
-(4..6).each do |dimension|
-  (3..5).each do |depth_max|
+(4..4).each do |dimension|
+  (3..3).each do |depth_max|
     rows = [
       DirtyMinimax,
       BeautyMinimax,
