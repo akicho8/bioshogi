@@ -167,12 +167,10 @@ class ReversiApp
     board[Vector[half - 1, half]]     = :o
   end
 
-  # point に置いたときに反転できる数
   def reversible_total_count(player, point)
     reversible_counts_hash(player, point).values.sum
   end
 
-  # 空いている位置をすべて返す
   def blank_points
     dimension.times.flat_map { |y|
       dimension.times.collect { |x|
@@ -189,8 +187,6 @@ class ReversiApp
     Around.any? { |e| reversible_one_way_count(player, point, e) >= 1 }
   end
 
-  # player が point の位置に置いたと仮定したとき vec の方向で何枚裏返すことができるか
-  # 1個以上のときだけその個数を返す
   def reversible_one_way_count(player, point, vec)
     count = 0
     loop do
