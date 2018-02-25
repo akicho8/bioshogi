@@ -18,10 +18,10 @@ dimension = 4
       strategy.params[:silent] = true
       strategy.params[:depth_max] = depth_max
       strategy.params[:dimension] = dimension
-      ms = "%8.2f ms" % Benchmark.ms { strategy.run }
+      ms = "%.2f" % Benchmark.ms { strategy.run }
 
       row = {}
-      row[:class] = klass.name
+      row[:model] = klass.name
       row.update(strategy.app.run_counts)
       row.update(strategy.app.histogram)
       row.update(ms: ms)
@@ -31,3 +31,12 @@ dimension = 4
     tp rows
   end
 end
+# >> ** 盤面: 4x4, 深さ: 3
+# >> |---------------+--------+----------+---+----+-------|
+# >> | model         | put_on | evaluate | o | x  | ms    |
+# >> |---------------+--------+----------+---+----+-------|
+# >> | DirtyMinimax  |    707 |      461 | 1 | 10 | 88.24 |
+# >> | BeautyMinimax |    707 |      461 | 1 | 10 | 85.96 |
+# >> | NegaMax       |    707 |      461 | 1 | 10 | 85.80 |
+# >> | NegaAlpha     |    441 |      244 | 1 | 10 | 65.59 |
+# >> |---------------+--------+----------+---+----+-------|

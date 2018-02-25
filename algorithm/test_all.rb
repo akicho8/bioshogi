@@ -7,26 +7,27 @@ require "./nega_alpha"
 
 class TestAll < Test::Unit::TestCase
   test "all" do
-    [
+    histograms = [
       DirtyMinimax,
       BeautyMinimax,
       NegaMax,
       NegaAlpha,
-    ].each do |klass|
+    ].collect do |klass|
       obj = klass.new
+      obj.params[:dimension] = 4
       obj.params[:silent] = true
       obj.params[:depth_max] = 3
       obj.run
-      assert_equal({o: 8, x: 8}, obj.app.histogram)
     end
+    assert histograms.uniq.count == 1
   end
 end
 # >> Loaded suite -
 # >> Started
 # >> .
-# >> Finished in 0.201192 seconds.
+# >> Finished in 0.549346 seconds.
 # >> -------------------------------------------------------------------------------
-# >> 1 tests, 4 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+# >> 1 tests, 1 assertions, 0 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
 # >> 100% passed
 # >> -------------------------------------------------------------------------------
-# >> 4.97 tests/s, 19.88 assertions/s
+# >> 1.82 tests/s, 1.82 assertions/s

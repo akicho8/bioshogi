@@ -2,18 +2,16 @@ require "matrix"
 require "org_tp"
 
 class ReversiApp
-  V = Vector
-
   Around = [
     [-1, -1], [0, -1], [1, -1],
     [-1,  0],          [1,  0],
     [-1,  1], [0,  1], [1,  1],
-  ].collect { |e| V[*e] }
+  ].collect { |e| Vector[*e] }
 
   attr_accessor :board
   attr_accessor :players
   attr_accessor :params
-  attr_accessor :pass_counts
+  attr_accessor :pass_count
 
   def initialize(**params)
     @params = {
@@ -22,7 +20,7 @@ class ReversiApp
 
     @players = [:o, :x]
     @board = {}
-    @pass_counts = Hash.new(0)
+    @pass_count = 0
 
     placement
   end
@@ -65,8 +63,10 @@ class ReversiApp
 
   def evaluate(player)
     run_counts[:evaluate] += 1
-    o = histogram[:o]
-    x = histogram[:x]
+    hash = histogram
+    same_pos[board] += 1
+    o = hash[:o]
+    x = hash[:x]
     if player == :o
       o - x
     else
@@ -82,18 +82,8 @@ class ReversiApp
     players[turn.modulo(players.count)]
   end
 
-  def pass(player)
-    pass_counts[player] += 1
-  end
-
-  def pass_reset
-    pass_counts.clear
-  end
-
   def continuous_pass?
-    if pass_counts.count >= players.size
-      pass_counts.values.all?(&:positive?)
-    end
+    pass_count >= players.size
   end
 
   def game_over?
@@ -104,6 +94,10 @@ class ReversiApp
     @run_counts ||= Hash.new(0)
   end
 
+  def same_pos
+    @same_pos ||= Hash.new(0)
+  end
+
   def dimension
     params[:dimension]
   end
@@ -111,7 +105,7 @@ class ReversiApp
   def to_s
     dimension.times.collect { |y|
       dimension.times.collect { |x|
-        v = board[V[x, y]]
+        v = board[Vector[x, y]]
         if v
           if v == :o
             "○"
@@ -135,7 +129,7 @@ class ReversiApp
       points = can_put_points(player)
       count = nil
       if points.empty?
-        pass(player)
+        pass
       else
         pass_reset
         if true
@@ -167,10 +161,10 @@ class ReversiApp
 
   def placement
     half = dimension / 2
-    board[V[half - 1, half - 1]] = :x
-    board[V[half, half]]         = :x
-    board[V[half, half - 1]]     = :o
-    board[V[half - 1, half]]     = :o
+    board[Vector[half - 1, half - 1]] = :x
+    board[Vector[half, half]]         = :x
+    board[Vector[half, half - 1]]     = :o
+    board[Vector[half - 1, half]]     = :o
   end
 
   # point に置いたときに反転できる数
