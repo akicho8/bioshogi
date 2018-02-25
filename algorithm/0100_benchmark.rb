@@ -14,16 +14,16 @@ dimension = 4
       NegaMax,
       NegaAlpha,
     ].collect do |klass|
-      strategy = klass.new
-      strategy.params[:silent] = true
-      strategy.params[:depth_max] = depth_max
-      strategy.params[:dimension] = dimension
-      ms = "%.2f" % Benchmark.ms { strategy.run }
+      app = klass.new
+      app.params[:silent] = true
+      app.params[:depth_max] = depth_max
+      app.params[:dimension] = dimension
+      ms = "%.2f" % Benchmark.ms { app.run }
 
       row = {}
       row[:model] = klass.name
-      row.update(strategy.app.run_counts)
-      row.update(strategy.app.histogram)
+      row.update(app.mediator.run_counts)
+      row.update(app.mediator.histogram)
       row.update(ms: ms)
     end
     puts

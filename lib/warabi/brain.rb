@@ -1,13 +1,10 @@
-# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/player_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/brain_spec.rb" -*-
 # frozen-string-literal: true
 
 require "timeout"
 
 module Warabi
   class Brain
-    class DeepenNegaAlphaTimeOut < WarabiError
-    end
-
     attr_accessor :player
 
     def initialize(player)
@@ -21,48 +18,49 @@ module Warabi
 
     def deepen_score_list(**params)
       params = {
-        depth_max_range: 1..2,
-        timeout: 1.0,
+        depth_max_range: 1..1,
+        time_limit: nil,        # nil: 時間制限なし
       }.merge(params)
 
-      cached_all_hands = lazy_all_hands.to_a
+      children = lazy_all_hands.to_a # 何度も実行するためあえて配列化
       hands = []
-      timeout = Time.now + params[:timeout]
-
       begin
         params[:depth_max_range].each do |depth_max|
-          hands = cached_all_hands.collect do |hand|
-            hand.execute(player.mediator) # ← ここをブロックにする
-            nega_alpha_executer = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
-            info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
-            hand.revert(player.mediator)
-            {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+          nega_alpha_executer = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
+          hands = children.collect do |hand|
+            hand.sandbox_execute(player.mediator) do
+              info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
+              {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+            end
           end
         end
       rescue Timeout::Error
       end
+
+      if !children.empty? && hands.empty?
+        raise WarabiError, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
+      end
+
       hands.sort_by { |e| -e[:score] }
     end
 
     def smart_score_list(**params)
-      hands = lazy_all_hands.collect do |hand|
-        hand.execute(player.mediator)
-        nega_alpha_executer = NegaAlphaExecuter.new(params)
-        info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
-        hand.revert(player.mediator)
-        {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
-      end
-      hands.sort_by { |e| -e[:score] }
+      nega_alpha_executer = NegaAlphaExecuter.new(params)
+
+      lazy_all_hands.collect { |hand|
+        hand.sandbox_execute(player.mediator) do
+          info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
+          {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+        end
+      }.sort_by { |e| -e[:score] }
     end
 
     def fast_score_list
-      hands = lazy_all_hands.collect do |hand|
-        hand.execute(player.mediator)
-        score = player.evaluator.score
-        hand.revert(player.mediator)
-        {hand: hand, score: score}
-      end
-      hands.sort_by { |e| -e[:score] }
+      lazy_all_hands.collect { |hand|
+        hand.sandbox_execute(player.mediator) do
+          {hand: hand, score: player.evaluator.score}
+        end
+      }.sort_by { |e| -e[:score] }
     end
 
     def lazy_all_hands
@@ -127,13 +125,13 @@ module Warabi
 
     def nega_alpha(player:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
       if logger
-        locals = {player: player, depth: depth}
+        log = -> s { logger_info(s, player: player, depth: depth) }
       end
 
       if depth >= params[:depth_max]
         @eval_counter += 1
         score = player.evaluator.score
-        logger_info(locals, "評価 #{score}") if logger
+        log.call "評価 #{score}" if log
         return HandInfo[score: score, eval_times: eval_counter, readout: []]
       end
 
@@ -146,44 +144,45 @@ module Warabi
       children_exist = false
 
       children.each.with_index do |hand, i|
-        children_exist = true
-        hand.execute(mediator)
-        logger_info(locals, "試指 #{hand} (%d)" % i) if logger
-        info = nega_alpha(player: player.opponent_player, depth: depth + 1, alpha: -beta, beta: -alpha)
-        score = -info[:score] # 相手が良くなればなるほど自分にとってはマイナス
-        hand.revert(mediator)
-
-        if score > alpha
-          alpha = score
-          best_hand = hand
-          readout = info[:readout]
-          eval_times = eval_counter
-        end
-        if alpha >= beta
-          break
+        hand.sandbox_execute(mediator) do
+          children_exist = true
+          log.call "試指 #{hand} (%d)" % i if log
+          info = nega_alpha(player: player.opponent_player, depth: depth + 1, alpha: -beta, beta: -alpha)
+          score = -info[:score] # 相手が良くなればなるほど自分にとってはマイナス
+          if score > alpha
+            alpha = score
+            best_hand = hand
+            readout = info[:readout]
+            eval_times = eval_counter
+          end
+          if alpha >= beta
+            break
+          end
         end
       end
 
-      raise MustNotHappen unless children_exist
+      # unless children_exist
+      #   raise WarabiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{mediator.to_bod}"
+      # end
 
-      if logger
-        logger_info(locals, "★確 #{best_hand} 読み数:#{eval_counter}")
-      end
+      log.call "★確 #{best_hand} 読み数:#{eval_counter}" if log
 
       HandInfo[hand: best_hand, score: alpha, eval_times: eval_times, readout: [best_hand, *readout]]
     end
 
-    def logger_info(locals, str)
+    private
+
+    def logger_info(str, context)
       return unless logger
 
       if v = params[:log_skip_depth]
-        if locals[:depth] >= v
+        if context[:depth] >= v
           return
         end
       end
 
       str = str.lines.collect { |e|
-        (" " * 4 * locals[:depth]) + e
+        (" " * 4 * context[:depth]) + e
       }.join.rstrip
 
       if str.match?(/\n/)
@@ -191,8 +190,8 @@ module Warabi
       end
 
       Warabi.logger.info "%d %s %s" % [
-        locals[:depth],
-        locals[:player].location,
+        context[:depth],
+        context[:player].location,
         str,
       ]
     end

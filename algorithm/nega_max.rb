@@ -6,15 +6,15 @@ class NegaMax < BeautyMinimax
   end
 
   def nega_max(turn:, depth_max:, depth: 0)
-    player = app.player_at(turn)
+    player = mediator.player_at(turn)
 
     # 一番深い局面に達したらはじめて評価する
     if depth >= depth_max
-      return [app.evaluate(player), []] # ミニマックスのときとは異なり player から見たscore
+      return [mediator.evaluate(player), []] # ミニマックスのときとは異なり player から見たscore
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = app.can_put_points(player)
+    children = mediator.can_put_points(player)
     if children.empty?
       score, before_readout = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [-score, [:pass, *before_readout]]
@@ -24,7 +24,7 @@ class NegaMax < BeautyMinimax
     readout = []
 
     children.each do |point|
-      app.put_on(player, point) do
+      mediator.put_on(player, point) do
         score, before_readout = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if score > max

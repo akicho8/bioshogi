@@ -201,6 +201,15 @@ module Warabi
       end
     end
 
+    def sandbox_execute(mediator, &block)
+      begin
+        execute(mediator)
+        yield
+      ensure
+        revert(mediator)
+      end
+    end
+
     def to_kif(*)
       raise NotImplementedError, "#{__method__} is not implemented"
     end

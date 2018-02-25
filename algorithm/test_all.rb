@@ -13,11 +13,11 @@ class TestAll < Test::Unit::TestCase
       NegaMax,
       NegaAlpha,
     ].collect do |klass|
-      obj = klass.new
-      obj.params[:dimension] = 4
-      obj.params[:silent] = true
-      obj.params[:depth_max] = 3
-      obj.run
+      mediator = klass.new
+      mediator.params[:dimension] = 4
+      mediator.params[:silent] = true
+      mediator.params[:depth_max] = 3
+      mediator.run
     end
     assert histograms.uniq.count == 1
   end

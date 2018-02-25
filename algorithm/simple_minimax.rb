@@ -3,10 +3,10 @@
 require "./reversi_app"
 
 class SimpleMinimax
-  attr_accessor :app
+  attr_accessor :mediator
 
   def run
-    @app = ReversiApp.new(dimension: 6)
+    @mediator = ReversiApp.new(dimension: 6)
     depth_max = 3
 
     turn = 0
@@ -16,11 +16,11 @@ class SimpleMinimax
   end
 
   def mini_max(turn, depth, depth_max)
-    player = app.player_at(turn)
-    children = app.can_put_points(player)
+    player = mediator.player_at(turn)
+    children = mediator.can_put_points(player)
 
     if depth >= depth_max
-      return app.evaluate(:o) # 常に先手からの評価値
+      return mediator.evaluate(:o) # 常に先手からの評価値
     end
 
     # 合法手がないので相手に手番を渡す
@@ -32,7 +32,7 @@ class SimpleMinimax
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       children.each do |vec|
-        app.put_on(player, vec) do
+        mediator.put_on(player, vec) do
           score = mini_max(turn + 1, depth + 1, depth_max)
           if score > max
             max = score
@@ -44,7 +44,7 @@ class SimpleMinimax
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
       children.each do |vec|
-        app.put_on(player, vec) do
+        mediator.put_on(player, vec) do
           score = mini_max(turn + 1, depth + 1, depth_max)
           if score < min
             min = score

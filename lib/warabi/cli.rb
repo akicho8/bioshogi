@@ -17,6 +17,7 @@ module Warabi
     desc "versus", "CPU同士の対戦"
     option :depth_max, type: :numeric, default: 2, aliases: "-d"
     option :times, type: :numeric, default: 10, aliases: "-t"
+    option :time_limit, type: :numeric, default: 3.0
     option :logging, type: :boolean, aliases: "-l"
     option :log_file, type: :string, default: "brain.log"
     def versus
@@ -28,7 +29,11 @@ module Warabi
 
       mediator = Mediator.start
       options[:times].times do
-        infos = mediator.current_player.brain.deepen_score_list(options.to_options)
+        current_player = mediator.current_player
+        infos = current_player.brain.deepen_score_list({
+            time_limit: options[:time_limit],
+            depth_max_range: 1..options[:depth_max],
+          })
 
         info = infos.first
         hand = info[:hand]
@@ -40,7 +45,7 @@ module Warabi
           {
             "順位"   => i.next,
             "候補手" => e[:hand],
-            "評価値" => e[:score],
+            "評価値" => e[:score] * current_player.location.value_sign,
             "読み筋" => e[:readout].collect { |e| e.to_s }.join(" "),
             "処理量" => e[:eval_times],
           }
@@ -78,7 +83,7 @@ end
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝1 ▲７六歩(77) まで
-# >> 
+# >>
 # >> 後手番
 # >> |------+--------------+--------+---------------------------+--------|
 # >> | 順位 | 候補手       | 評価値 | 読み筋                    | 処理量 |

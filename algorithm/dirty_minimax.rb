@@ -4,7 +4,7 @@ require "./reversi_app"
 require "timeout"
 
 class DirtyMinimax
-  attr_accessor :app
+  attr_accessor :mediator
   attr_accessor :params
   attr_accessor :current_turn
 
@@ -23,11 +23,11 @@ class DirtyMinimax
   end
 
   def run
-    @app = ReversiApp.new(params)
+    @mediator = ReversiApp.new(params)
 
     params[:times].times do |turn|
       @current_turn = turn
-      player = app.player_at(turn)
+      player = mediator.player_at(turn)
 
       start_time = Time.now
       if params[:depth_max_range]
@@ -39,23 +39,23 @@ class DirtyMinimax
 
       if infos.empty?
         # 手がないときはここでパスする
-        app.pass_count += 1
+        mediator.pass_count += 1
       else
         if best = infos.first
           hand = best[:hand]
           if hand == :pass
             raise "must not happen"
-            app.pass_count += 1
+            mediator.pass_count += 1
           else
-            app.put_on(player, hand)
-            app.pass_count = 0
+            mediator.put_on(player, hand)
+            mediator.pass_count = 0
           end
         end
       end
 
       unless params[:silent]
         puts "#{'-' * 60} [#{turn}] #{player} 実行速度:#{time}".strip
-        puts app
+        puts mediator
         if infos.empty?
           puts "(pass)"
         end
@@ -71,28 +71,28 @@ class DirtyMinimax
         tp rows
       end
 
-      if app.continuous_pass?
+      if mediator.continuous_pass?
         unless params[:silent]
           puts "連続パスで終了"
         end
         break
       end
 
-      if app.game_over?
+      if mediator.game_over?
         break
       end
     end
     unless params[:silent]
-      tp app.histogram
+      tp mediator.histogram
     end
-    app.histogram
+    mediator.histogram
   end
 
   def fast_score_list(turn)
-    player = app.player_at(turn)
+    player = mediator.player_at(turn)
 
-    infos = app.can_put_points(player).collect do |e|
-      app.put_on(player, e) do
+    infos = mediator.can_put_points(player).collect do |e|
+      mediator.put_on(player, e) do
         score, before_readout = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         {hand: e, readout: before_readout, score: -score}
       end
@@ -101,14 +101,14 @@ class DirtyMinimax
   end
 
   def deepen_score_list(turn)
-    player = app.player_at(turn)
+    player = mediator.player_at(turn)
 
     infos = []
     begin
       Timeout.timeout(params[:time_limit]) do
         params[:depth_max_range].each do |depth_max|
-          infos = app.can_put_points(player).collect do |e|
-            app.put_on(player, e) do
+          infos = mediator.can_put_points(player).collect do |e|
+            mediator.put_on(player, e) do
               score, readout = compute_score(turn: turn + 1, depth_max: depth_max)
               {hand: e, readout: readout, score: -score}
             end
@@ -116,11 +116,11 @@ class DirtyMinimax
         end
       end
     rescue Timeout::Error
-      app.run_counts[:TLE] += 1
+      mediator.run_counts[:TLE] += 1
     end
 
     if infos.empty?
-      unless app.can_put_points(player).empty?
+      unless mediator.can_put_points(player).empty?
         raise "指し手があるのにパスすることになってしまいます。制限時間を増やすか読みを浅くしてください。"
       end
     end
@@ -131,7 +131,7 @@ class DirtyMinimax
   def compute_score(turn:, depth_max:)
     score, readout = mini_max(turn: turn, depth_max: depth_max)
 
-    player = app.player_at(turn)
+    player = mediator.player_at(turn)
     if player == :x
       score = -score
     end
@@ -142,12 +142,12 @@ class DirtyMinimax
   def mini_max(turn:, depth_max:, depth: 0)
     # 一番深い局面に達したらはじめて評価する
     if depth >= depth_max
-      return [app.evaluate(:o), []] # 常に「先手から」の評価値
+      return [mediator.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    player = app.player_at(turn)
-    children = app.can_put_points(player)
+    player = mediator.player_at(turn)
+    children = mediator.can_put_points(player)
 
     if children.empty?
       score, readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
@@ -159,7 +159,7 @@ class DirtyMinimax
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       children.each do |point|
-        app.put_on(player, point) do
+        mediator.put_on(player, point) do
           score, before_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if score > max
             readout = [point, *before_readout]
@@ -173,7 +173,7 @@ class DirtyMinimax
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
       children.each do |point|
-        app.put_on(player, point) do
+        mediator.put_on(player, point) do
           score, before_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if score < min
             readout = [point, *before_readout]

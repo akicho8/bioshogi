@@ -6,12 +6,12 @@ class BeautyMinimax < DirtyMinimax
   def mini_max(turn:, depth_max:, depth: 0)
     # 一番深い局面に達したらはじめて評価する
     if depth >= depth_max
-      return [app.evaluate(:o), []] # 常に「先手から」の評価値
+      return [mediator.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    player = app.player_at(turn)
-    children = app.can_put_points(player)
+    player = mediator.player_at(turn)
+    children = mediator.can_put_points(player)
     if children.empty?
       score, before_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [score, [:pass, *before_readout]]
@@ -25,7 +25,7 @@ class BeautyMinimax < DirtyMinimax
 
     readout = []
     children.each do |point|
-      app.put_on(player, point) do
+      mediator.put_on(player, point) do
         score, before_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         if turn.even?
           # 自分が自分にとってもっとも有利な手を選択する
