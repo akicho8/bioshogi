@@ -1,14 +1,14 @@
 require 'active_support/core_ext/benchmark'
 require "./all_algorithms"
 
-(5..5).each do |dimension|
-  (4..6).each do |depth_max|
+(4..6).each do |dimension|
+  (3..5).each do |depth_max|
     rows = [
-      # DirtyMinimax,
-      # BeautyMinimax,
-      # NegaMax,
+      DirtyMinimax,
+      BeautyMinimax,
+      NegaMax,
       NegaAlpha,
-      # FailSoftNegaAlpha,
+      FailSoftNegaAlpha,
       NegaScout,
     ].collect do |klass|
       app = klass.new
