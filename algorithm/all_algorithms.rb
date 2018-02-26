@@ -1,0 +1,6 @@
+require "./dirty_minimax"
+require "./beauty_minimax"
+require "./nega_max"
+require "./nega_alpha"
+require "./fail_soft_nega_alpha"
+require "./nega_scout"

@@ -15,7 +15,7 @@ module Warabi
 EOT
         brain = mediator.player_at(:black).brain
         brain.lazy_all_hands.collect(&:to_kif).should == ["▲２一歩成(22)", "▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"]
-        brain.fast_score_list.collect { |e| e.merge(hand: e[:hand].to_kif) }.should == [
+        brain.fast_score_list.collect { |e| e.merge(hand: e[:hand].to_kif).slice(:hand, :score) }.should == [
           {hand: "▲２一歩成(22)", score: 1305},
           {hand: "▲３二歩打",     score: 200},
           {hand: "▲１二歩打",     score: 200},

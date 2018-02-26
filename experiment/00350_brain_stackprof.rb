@@ -20,7 +20,7 @@ StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   end
 end
 puts mediator
-tp Warabi.exec_counts
+tp Warabi.run_counts
 
 system "stackprof stackprof.dump"
 system "stackprof stackprof.dump --method Warabi::Point.lookup"
@@ -76,7 +76,7 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # >>          6   (1.0%)           6   (1.0%)     Warabi::MediatorBase#board
 # >>          6   (1.0%)           6   (1.0%)     Warabi::Soldier#attributes
 # >>         27   (4.5%)           6   (1.0%)     Warabi::MoveHand#execute
-# >>          5   (0.8%)           5   (0.8%)     #<Module:0x00007fda0982f7b8>.exec_counts
+# >>          5   (0.8%)           5   (0.8%)     #<Module:0x00007fda0982f7b8>.run_counts
 # >>         14   (2.3%)           5   (0.8%)     Warabi::Position::Base#valid?
 # >>          5   (0.8%)           5   (0.8%)     Warabi::Board#surface
 # >>          4   (0.7%)           4   (0.7%)     ActiveModel::ForbiddenAttributesProtection#sanitize_for_mass_assignment

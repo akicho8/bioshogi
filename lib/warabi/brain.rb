@@ -5,6 +5,19 @@ require "timeout"
 
 module Warabi
   class Brain
+    def self.human_format(infos)
+      infos.collect.with_index do |e, i|
+        {
+          "順位"       => i.next,
+          "候補手"     => e[:hand],
+          "読み筋"     => e[:readout].collect { |e| e.to_s }.join(" "),
+          "形勢"       => e[:score2],
+          "評価局面数" => e[:eval_times],
+          "処理時間"   => e[:sec],
+        }
+      end
+    end
+
     attr_accessor :player
 
     def initialize(player)
@@ -12,8 +25,8 @@ module Warabi
     end
 
     def nega_alpha_run(**params)
-      nega_alpha_executer = NegaAlphaExecuter.new(params)
-      nega_alpha_executer.nega_alpha(player: player)
+      thinker = NegaAlphaExecuter.new(params)
+      thinker.nega_alpha(player: player)
     end
 
     def deepen_score_list(**params)
@@ -22,19 +35,24 @@ module Warabi
         time_limit: nil,        # nil: 時間制限なし
       }.merge(params)
 
-      children = lazy_all_hands.to_a # 何度も実行するためあえて配列化
+      if params[:time_limit]
+        params[:out_of_time] ||= Time.now + params[:time_limit]
+      end
+
+      children = lazy_all_hands.to_a # 何度も実行するためあえて配列化しておくの重要
       hands = []
-      begin
+      finished = catch params[:out_of_time] do
         params[:depth_max_range].each do |depth_max|
-          nega_alpha_executer = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
+          thinker = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
           hands = children.collect do |hand|
             hand.sandbox_execute(player.mediator) do
-              info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
-              {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+              start_time = Time.now
+              info = thinker.nega_alpha(player: player.opponent_player)
+              {hand: hand, score: -info[:score], score2: -info[:score] * player.location.value_sign, readout: info[:readout], eval_times: info[:eval_times], sec: Time.now - start_time}
             end
           end
         end
-      rescue Timeout::Error
+        true
       end
 
       if !children.empty? && hands.empty?
@@ -45,20 +63,23 @@ module Warabi
     end
 
     def smart_score_list(**params)
-      nega_alpha_executer = NegaAlphaExecuter.new(params)
+      thinker = NegaAlphaExecuter.new(params)
 
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
-          info = nega_alpha_executer.nega_alpha(player: player.opponent_player)
-          {hand: hand, score: -info[:score], readout: info[:readout], eval_times: info[:eval_times]}
+          start_time = Time.now
+          info = thinker.nega_alpha(player: player.opponent_player)
+          {hand: hand, score: -info[:score], socre2: -info[:score] * player.location.value_sign, readout: info[:readout], eval_times: info[:eval_times], sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
 
-    def fast_score_list
+    def fast_score_list(**params)
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
-          {hand: hand, score: player.evaluator.score}
+          start_time = Time.now
+          score = player.evaluator.score
+          {hand: hand, score: score, socre2: score * player.location.value_sign, readout: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -88,9 +109,9 @@ module Warabi
     # 持駒の全打筋
     def direct_hands
       Enumerator.new do |y|
-        # piece_box.each_key を使わずに keys で一旦キーの拝謁を取り出している理由は
-        # 外側で execute 〜 revert するとき a.each { a.update } の状態になり
-        # "can't add a new key into hash during iteration" が発生するため
+        # 直接 piece_box.each_key とせずに piece_keys にいったん取り出している理由は
+        # 外側で execute 〜 revert するときの a.each { a.update } の状態になるのを回避するため。
+        # each の中で元を更新すると "can't add a new key into hash during iteration" のエラーになる
         piece_keys = player.piece_box.keys
         player.board.blank_points.each do |point|
           piece_keys.each do |piece_key|
@@ -128,6 +149,16 @@ module Warabi
         log = -> s { logger_info(s, player: player, depth: depth) }
       end
 
+      if time = params[:out_of_time]
+        if time && time <= Time.now
+          throw time
+        end
+      end
+
+      if depth == 0
+        @eval_counter = 0
+      end
+
       if depth >= params[:depth_max]
         @eval_counter += 1
         score = player.evaluator.score
@@ -155,9 +186,9 @@ module Warabi
             readout = info[:readout]
             eval_times = eval_counter
           end
-          if alpha >= beta
-            break
-          end
+        end
+        if alpha >= beta
+          break
         end
       end
 

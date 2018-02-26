@@ -196,7 +196,7 @@ module Warabi
 
     class_methods do
       def create(*args)
-        Warabi.exec_counts["#{name}.#{__method__}"] += 1
+        Warabi.run_counts["#{name}.#{__method__}"] += 1
         new(*args).freeze
       end
     end
@@ -204,9 +204,11 @@ module Warabi
     def sandbox_execute(mediator, &block)
       begin
         execute(mediator)
+        Warabi.run_counts["sandbox_execute.execute"] += 1
         yield
       ensure
         revert(mediator)
+        Warabi.run_counts["sandbox_execute.revert"] += 1
       end
     end
 

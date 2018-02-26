@@ -15,12 +15,15 @@ module Warabi
     end
 
     desc "versus", "CPU同士の対戦"
-    option :depth_max, type: :numeric, default: 2, aliases: "-d"
-    option :times, type: :numeric, default: 10, aliases: "-t"
-    option :time_limit, type: :numeric, default: 3.0
-    option :logging, type: :boolean, aliases: "-l"
-    option :log_file, type: :string, default: "brain.log"
+    option :depth_max,  type: :numeric, aliases: "-d",   default: 4
+    option :times,      type: :numeric, aliases: "-t",   default: 512
+    option :time_limit, type: :numeric, aliases: "--tl", default: 1.0
+    option :logging,    type: :boolean, aliases: "-l",   default: false
+    option :log_file,   type: :string,                   default: "brain.log"
     def versus
+      pp options
+      tp options
+
       if options[:logging]
         log_file = Pathname(options[:log_file])
         FileUtils.rm_rf(log_file)
@@ -30,27 +33,20 @@ module Warabi
       mediator = Mediator.start
       options[:times].times do
         current_player = mediator.current_player
-        infos = current_player.brain.deepen_score_list({
-            time_limit: options[:time_limit],
-            depth_max_range: 1..options[:depth_max],
-          })
 
+        deepen_score_list_params = {
+          time_limit: options[:time_limit],
+          depth_max_range: 0..options[:depth_max],
+        }
+        infos = current_player.brain.deepen_score_list(deepen_score_list_params)
         info = infos.first
         hand = info[:hand]
         mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 
         puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand}"
+        tp deepen_score_list_params
+        tp Brain.human_format(infos)
         puts mediator
-        rows = infos.collect.with_index do |e, i|
-          {
-            "順位"   => i.next,
-            "候補手" => e[:hand],
-            "評価値" => e[:score] * current_player.location.value_sign,
-            "読み筋" => e[:readout].collect { |e| e.to_s }.join(" "),
-            "処理量" => e[:eval_times],
-          }
-        end
-        tp rows
 
         killed_soldier = mediator.opponent_player.executor.killed_soldier
         if killed_soldier && killed_soldier.piece.key == :king

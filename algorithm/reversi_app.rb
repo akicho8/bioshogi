@@ -48,7 +48,7 @@ class ReversiApp
 
       # 置く
       board[point] = player
-      run_counts[:put_on] += 1
+      # run_counts[:put_on] += 1
 
       # 反転していく
       hash.each do |vec, count|
@@ -134,7 +134,7 @@ class ReversiApp
         pass_reset
         if true
           # 賢く指す
-          point = points.max { |e| reversible_total_count(player, e) }
+          point = move_ordering(player, points).first
         else
           # 適当に指す
           point = points.sample
@@ -147,7 +147,15 @@ class ReversiApp
     tp board.values.group_by(&:itself).transform_values(&:size)
   end
 
+  def move_ordering(player, points)
+    points.sort_by { |e| -reversible_total_count(player, e) }
+  end
+
   private
+
+  def reversible_total_count(player, point)
+    reversible_counts_hash(player, point).values.sum
+  end
 
   # 1個以上反転させられる利きと個数をペアにしたハッシュを返す
   def reversible_counts_hash(player, point)
@@ -165,10 +173,6 @@ class ReversiApp
     board[Vector[half, half]]         = :x
     board[Vector[half, half - 1]]     = :o
     board[Vector[half - 1, half]]     = :o
-  end
-
-  def reversible_total_count(player, point)
-    reversible_counts_hash(player, point).values.sum
   end
 
   def blank_points

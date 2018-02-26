@@ -1,9 +1,5 @@
 require "test-unit"
-
-require "./dirty_minimax"
-require "./beauty_minimax"
-require "./nega_max"
-require "./nega_alpha"
+require "./all_algorithms"
 
 class TestAll < Test::Unit::TestCase
   test "all" do
@@ -12,6 +8,8 @@ class TestAll < Test::Unit::TestCase
       BeautyMinimax,
       NegaMax,
       NegaAlpha,
+      FailSoftNegaAlpha,
+      NegaScout,
     ].collect do |klass|
       mediator = klass.new
       mediator.params[:dimension] = 4
