@@ -58,7 +58,7 @@ module Warabi
         end
 
         # 「打」時制限。移動元駒があればskip
-        if e.direct_only
+        if e.drop_only
           if origin_soldier
             throw :skip
           end

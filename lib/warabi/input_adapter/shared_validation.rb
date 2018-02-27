@@ -28,7 +28,7 @@ module Warabi
           end
         end
 
-        if direct_trigger
+        if drop_trigger
           if board.lookup(point)
             errors_add PieceAlredyExist, "駒の上に打とうとしています"
           end
@@ -38,9 +38,9 @@ module Warabi
       def soft_validations
         super
 
-        if direct_hand
+        if drop_hand
           if collision_soldier = soldier.collision_pawn(board)
-            errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{direct_hand}ができません"
+            errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{drop_hand}ができません"
           end
         end
 

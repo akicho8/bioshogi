@@ -42,7 +42,7 @@ tp official_formatter.options
 # >> |----------------+--------------------------------------------------|
 # >> |--------------+-------|
 # >> |    with_location | false |
-# >> | direct_force | false |
+# >> | force_drop | false |
 # >> |  same_suffix |       |
 # >> |      compact | true  |
 # >> |--------------+-------|

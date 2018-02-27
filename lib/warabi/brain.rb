@@ -89,7 +89,7 @@ module Warabi
         move_hands.each do |e|
           y << e
         end
-        direct_hands.each do |e|
+        drop_hands.each do |e|
           y << e
         end
       end
@@ -107,7 +107,7 @@ module Warabi
     end
 
     # 持駒の全打筋
-    def direct_hands
+    def drop_hands
       Enumerator.new do |y|
         # 直接 piece_box.each_key とせずに piece_keys にいったん取り出している理由は
         # 外側で execute 〜 revert するときの a.each { a.update } の状態になるのを回避するため。
@@ -117,7 +117,7 @@ module Warabi
           piece_keys.each do |piece_key|
             soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: player.location)
             if soldier.rule_valid?(player.board)
-              y << DirectHand.create(soldier: soldier)
+              y << DropHand.create(soldier: soldier)
             end
           end
         end

@@ -41,7 +41,7 @@ module Warabi
       soldier = Soldier.from_str("▲６八全")
       origin_soldier = Soldier.from_str("▲７九銀")
       MoveHand.create(soldier: soldier, origin_soldier: origin_soldier).to_kif.should == "▲６八銀成(79)"
-      DirectHand.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
+      DropHand.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
     end
   end
 end

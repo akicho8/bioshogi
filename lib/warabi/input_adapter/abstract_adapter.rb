@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 #
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
-# >> | source     | triangle | absolute_point | same | piece | ki2_motion_part | kif_trigger_part | point_from | csa_sign | csa_from | csa_to | csa.basic_name | csa.promoted_name | usi_direct_piece | usi_direct_trigger | usi_to | usi_from | usi_promote_trigger |
+# >> | source     | triangle | absolute_point | same | piece | ki2_motion_part | kif_trigger_part | point_from | csa_sign | csa_from | csa_to | csa.basic_name | csa.promoted_name | usi_drop_piece | usi_drop_trigger | usi_to | usi_from | usi_promote_trigger |
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
 # >> | ６八銀左   |          | ６八  |      | 銀    | 左          |              |            |          |          |        |                |                   |                  |            |        |          |                     |
 # >> | △６八全   | △       | ６八  |      | 全    |             |              |            |          |          |        |                |                   |                  |            |        |          |                     |
@@ -60,14 +60,14 @@ module Warabi
         end
       end
 
-      def direct_hand
+      def drop_hand
         unless origin_soldier
-          @direct_hand ||= DirectHand.create(soldier: soldier)
+          @drop_hand ||= DropHand.create(soldier: soldier)
         end
       end
 
       def hand
-        @hand ||= move_hand || direct_hand
+        @hand ||= move_hand || drop_hand
       end
 
       def to_h
@@ -77,7 +77,7 @@ module Warabi
           :piece           => piece,
           :promoted        => promoted,
           :promote_trigger => promote_trigger,
-          :direct_trigger  => direct_trigger,
+          :drop_trigger  => drop_trigger,
           :errors          => errors,
         }
       end

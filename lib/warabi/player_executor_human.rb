@@ -22,7 +22,7 @@ module Warabi
 
     def hand_log
       @hand_log ||= HandLog.new({
-          :direct_hand    => @direct_hand,
+          :drop_hand    => @drop_hand,
           :move_hand      => @move_hand,
           :candidate      => @candidate_soldiers,
           :point_same     => point_same?,

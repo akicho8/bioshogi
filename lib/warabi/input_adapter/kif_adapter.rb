@@ -24,14 +24,14 @@ module Warabi
         !!input[:ki2_promote_trigger]
       end
 
-      def direct_trigger
-        force_direct_trigger
+      def drop_trigger
+        force_drop_trigger
       end
 
       def hard_validations
         super
 
-        if promoted && force_direct_trigger
+        if promoted && force_drop_trigger
           errors_add PromotedPiecePutOnError, "成った状態の駒は打てません"
         end
 
@@ -49,8 +49,8 @@ module Warabi
 
       private
 
-      def force_direct_trigger
-        !!input[:kif_direct_trigger]
+      def force_drop_trigger
+        !!input[:kif_drop_trigger]
       end
 
       def location_key

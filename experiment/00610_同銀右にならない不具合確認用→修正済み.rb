@@ -13,7 +13,6 @@ info.move_infos.each do |info|
   puts info[:input]
   mediator.execute(info[:input])
 end
-tp mediator.hand_logs.last.to_h
 tp mediator.hand_logs.last.to_ki2
 # >> ▲７六歩
 # >> △８四歩
@@ -52,17 +51,6 @@ tp mediator.hand_logs.last.to_ki2
 # >> ▲６七銀
 # >> △７六歩
 # >> ▲同銀右
-# >> |-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |           point | ７六                                                                                                                                                                                                 |
-# >> |           piece | 銀                                                                                                                                                                                                   |
-# >> |        promoted | false                                                                                                                                                                                                |
-# >> | promote_trigger | false                                                                                                                                                                                                |
-# >> |  direct_trigger | false                                                                                                                                                                                                |
-# >> |    point_from | ６七                                                                                                                                                                                                 |
-# >> |          player | #<Warabi::Player:0x007fc922e8e958>                                                                                                                                                                  |
-# >> |       candidate | [<Warabi::Battler:70250925847060 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲７七銀>, <Warabi::Battler:70250925847040 @player=#<Warabi::Player:0x007fc922e8e958> @piece=銀 ▲６七銀>] |
-# >> |    point_same | true                                                                                                                                                                                                 |
-# >> |-----------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |--------|
 # >> | 同銀右 |
 # >> |--------|

@@ -8,7 +8,7 @@ module Warabi
     def initialize(base, **options)
       @options = {
         with_location: false,    # 先手後手のマークを入れる？
-        direct_force: false, # 「打」を省略できるときでも「打」を明示する？
+        force_drop: false, # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",     # 「同」の後に入れる文字列
         compact: true,       # 3文字を超えたらとき空白が含まれていれば詰める？
       }.merge(options)
@@ -50,7 +50,7 @@ module Warabi
         s << point_to.name
       end
 
-      if direct_trigger?
+      if drop_trigger?
         s << piece.name
 
         # 日本将棋連盟 棋譜の表記方法
@@ -60,7 +60,7 @@ module Warabi
         # > 盤上の駒が動いた場合は通常の表記と同じ
         # > 持駒を打った場合は「打」と記入
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
-        if @options[:direct_force] || !candidate.empty?
+        if @options[:force_drop] || !candidate.empty?
           s << "打"
         end
       else
@@ -338,11 +338,11 @@ module Warabi
       !_yr.cover?(_ty)
     end
 
-    delegate :direct_hand, :move_hand, :soldier, :hand, :candidate, to: :base
+    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, to: :base
     delegate :point, :piece, :location, :promoted, to: :soldier
 
-    def direct_trigger?
-      direct_hand
+    def drop_trigger?
+      drop_hand
     end
 
     def promote_trigger?

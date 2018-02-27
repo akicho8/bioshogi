@@ -16,7 +16,7 @@ module Warabi
       end
 
       def point_from
-        unless direct_trigger
+        unless drop_trigger
           Point.fetch(input[:csa_from])
         end
       end
@@ -30,7 +30,7 @@ module Warabi
         promoted && !board.fetch(point_from).promoted
       end
 
-      def direct_trigger
+      def drop_trigger
         input[:csa_from] == "00"
       end
 

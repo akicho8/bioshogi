@@ -33,7 +33,7 @@ module Warabi
 
       ki2_as_it_is = /(?<ki2_as_it_is>不成|生)/
       ki2_promote_trigger = /(?<ki2_promote_trigger>成)/
-      kif_direct_trigger = /(?<kif_direct_trigger>[打合])/
+      kif_drop_trigger = /(?<kif_drop_trigger>[打合])/
 
       ki2_one_up = /(?<ki2_one_up>直)/
       ki2_left_right = /(?<ki2_left_right>[左右])/
@@ -44,7 +44,7 @@ module Warabi
         (#{kif_point}#{ki2_same}|#{ki2_same}#{kif_point}|#{kif_point}|#{ki2_same}) # 12同 or 同12 or 12 or 同 に対応
         (?<kif_piece>#{Piece.all_names.join("|")})
         (#{ki2_one_up}|#{ki2_left_right}?#{ki2_up_down}?)?
-        (#{ki2_as_it_is}|#{ki2_promote_trigger}|#{kif_direct_trigger})?
+        (#{ki2_as_it_is}|#{ki2_promote_trigger}|#{kif_drop_trigger})?
         (?<kif_point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
       /ox
     end
@@ -61,13 +61,13 @@ module Warabi
     end
 
     def usi_regexp
-      usi_direct_piece = Piece.collect(&:sfen_char).compact.join
+      usi_drop_piece = Piece.collect(&:sfen_char).compact.join
       usi_to = /[1-9][[:lower:]]/
 
-      direct_part = /(?<usi_direct_piece>[#{usi_direct_piece}])(?<usi_direct_trigger>\*)(?<usi_to>#{usi_to})/o
+      drop_part = /(?<usi_drop_piece>[#{usi_drop_piece}])(?<usi_drop_trigger>\*)(?<usi_to>#{usi_to})/o
       move_part = /(?<usi_from>#{usi_to})(?<usi_to>#{usi_to})(?<usi_promote_trigger>\+)?/o
 
-      /((#{direct_part})|(#{move_part}))/o
+      /((#{drop_part})|(#{move_part}))/o
     end
   end
 end

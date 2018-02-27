@@ -13,8 +13,8 @@ module Warabi
       include Ki2MotionWrapper
 
       # 移動元候補がない場合は打が省略されている
-      def direct_trigger
-        super || direct_abbreviation?
+      def drop_trigger
+        super || drop_abbreviation?
       end
 
       def point_from
@@ -28,34 +28,34 @@ module Warabi
       def hard_validations
         super
 
-        if !direct_trigger && candidate_soldiers.size >= 2 && motion_str.empty?
+        if !drop_trigger && candidate_soldiers.size >= 2 && motion_str.empty?
           errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
-        if !direct_trigger && candidate_soldiers.count >= 2 && !point_from
+        if !drop_trigger && candidate_soldiers.count >= 2 && !point_from
           errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますが#{motion_str}からは特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
-        if force_direct_trigger && !player.piece_box.exist?(piece)
+        if force_drop_trigger && !player.piece_box.exist?(piece)
           errors_add HoldPieceNotFound, "打を明示しましたが持駒に#{piece}がありません"
         end
 
-        if direct_abbreviation? && !player.piece_box.exist?(piece)
+        if drop_abbreviation? && !player.piece_box.exist?(piece)
           errors_add HoldPieceNotFound2, "移動できる駒がなく打の省略形と思われる指し手ですが#{piece}を持っていません"
         end
 
-        if !direct_trigger && candidate_soldiers.empty?
+        if !drop_trigger && candidate_soldiers.empty?
           errors_add MovableBattlerNotFound, "#{player.call_name}の手番で#{point}に移動できる駒がありません"
         end
 
-        if direct_trigger && promoted
+        if drop_trigger && promoted
           errors_add IllegibleFormat, "成・不成と打が干渉しています"
         end
       end
 
       def origin_soldier
         @origin_soldier ||= -> {
-          if !force_direct_trigger
+          if !force_drop_trigger
             v = candidate_soldiers_select
             if v.size == 1
               v.first
@@ -125,7 +125,7 @@ module Warabi
 
       # 「打」の省略形か？
       # 「同」も「左右や打」も移動候補もないとき「打」の省略系
-      def direct_abbreviation?
+      def drop_abbreviation?
         !suffix_exist? && candidate_soldiers.empty?
       end
 

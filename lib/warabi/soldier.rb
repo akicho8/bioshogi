@@ -225,7 +225,7 @@ module Warabi
     end
   end
 
-  class DirectHand
+  class DropHand
     include HandShared
 
     def initialize(*)

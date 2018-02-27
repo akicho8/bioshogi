@@ -7,15 +7,15 @@ module Warabi
       include SharedValidation
 
       def piece
-        if direct_trigger
-          Piece.fetch(input[:usi_direct_piece])
+        if drop_trigger
+          Piece.fetch(input[:usi_drop_piece])
         else
           origin_soldier.piece
         end
       end
 
       def promoted
-        if direct_trigger
+        if drop_trigger
           false
         else
           origin_soldier.promoted || promote_trigger
@@ -32,8 +32,8 @@ module Warabi
         Point.fetch(alpha_to_digit(input[:usi_to]))
       end
 
-      def direct_trigger
-        !!input[:usi_direct_trigger]
+      def drop_trigger
+        !!input[:usi_drop_trigger]
       end
 
       def promote_trigger

@@ -4,7 +4,7 @@ module Warabi
   class HandLog
     include ActiveModel::Model
 
-    attr_accessor :direct_hand
+    attr_accessor :drop_hand
     attr_accessor :move_hand
 
     attr_accessor :candidate
@@ -48,7 +48,7 @@ module Warabi
     end
 
     def hand
-      move_hand || direct_hand
+      move_hand || drop_hand
     end
 
     def official_formatter(**options)

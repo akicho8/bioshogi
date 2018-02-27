@@ -7,7 +7,7 @@ module Warabi
     attr_reader :params
 
     attr_reader :hand
-    attr_reader :direct_hand
+    attr_reader :drop_hand
     attr_reader :move_hand
 
     delegate :board, :piece_box, :mediator, to: :player
@@ -34,7 +34,7 @@ module Warabi
       end
 
       @hand               = input.hand
-      @direct_hand        = input.direct_hand
+      @drop_hand        = input.drop_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = input.candidate_soldiers
 
