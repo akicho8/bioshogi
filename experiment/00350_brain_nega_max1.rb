@@ -19,7 +19,7 @@ tp mediator.player_at(:black).brain.nega_alpha_run(depth_max: 2)
 # >> |------------+----|
 # >> |      score | 0  |
 # >> | eval_times | 1  |
-# >> |    readout | [] |
+# >> |    forecast | [] |
 # >> |------------+----|
 # >> 0 ▲ 試指 ▲３二歩成(33) (0)
 # >> 1 △     評価 -1100
@@ -28,7 +28,7 @@ tp mediator.player_at(:black).brain.nega_alpha_run(depth_max: 2)
 # >> |       hand | ▲３二歩成(33)      |
 # >> |      score | 1100                |
 # >> | eval_times | 1                   |
-# >> |    readout | [#<▲３二歩成(33)>] |
+# >> |    forecast | [#<▲３二歩成(33)>] |
 # >> |------------+---------------------|
 # >> 0 ▲ 試指 ▲３二歩成(33) (0)
 # >> 1 △     試指 △１二歩成(11) (0)
@@ -39,5 +39,5 @@ tp mediator.player_at(:black).brain.nega_alpha_run(depth_max: 2)
 # >> |       hand | ▲３二歩成(33)                         |
 # >> |      score | 0                                      |
 # >> | eval_times | 1                                      |
-# >> |    readout | [#<▲３二歩成(33)>, #<△１二歩成(11)>] |
+# >> |    forecast | [#<▲３二歩成(33)>, #<△１二歩成(11)>] |
 # >> |------------+----------------------------------------|

@@ -38,7 +38,7 @@ module Warabi
           time_limit: options[:time_limit],
           depth_max_range: 0..options[:depth_max],
         }
-        infos = current_player.brain.deepen_score_list(deepen_score_list_params)
+        infos = current_player.brain.interactive_deepning(deepen_score_list_params)
         info = infos.first
         hand = info[:hand]
         mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)

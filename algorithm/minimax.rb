@@ -2,21 +2,21 @@
 
 require "./dirty_minimax"
 
-class BeautyMinimax < DirtyMinimax
+class Minimax < DirtyMinimax
   def mini_max(turn:, depth_max:, depth: 0)
     perform_out_of_time_check
 
     # 一番深い局面に達したらはじめて評価する
-    if depth >= depth_max
+    if depth_max <= depth
       return [mediator.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
     player = mediator.player_at(turn)
-    children = mediator.can_put_points(player)
+    children = mediator.available_points(player)
     if children.empty?
-      score, deep_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-      return [score, [:pass, *deep_readout]]
+      v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+      return [v, [:pass, *way]]
     end
 
     if turn.even?
@@ -25,30 +25,27 @@ class BeautyMinimax < DirtyMinimax
       max = Float::INFINITY
     end
 
-    readout = []
+    forecast = []
     children.each do |point|
       mediator.put_on(player, point) do
-        score, deep_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+        v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         if turn.even?
-          # 自分が自分にとってもっとも有利な手を選択する
-          flag = score > max
+          flag = v > max # 自分が自分にとってもっとも有利な手を選択する
         else
-          # 相手が自分にとってもっとも不利な手を選択する
-          flag = score < max
+          flag = v < max # 相手が自分にとってもっとも不利な手を選択する
         end
         if flag
-          readout = [point, *deep_readout]
-          max = score
+          forecast = [point, *way]
+          max = v
         end
       end
     end
-
-    [max, readout]
+    [max, forecast]
   end
 end
 
 if $0 == __FILE__
-  BeautyMinimax.new.run         # => {:o=>1, :x=>10}
+  Minimax.new.run         # => {:o=>1, :x=>10}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:0.040098
 # >> ・○・・

@@ -1,6 +1,6 @@
-require "./beauty_minimax"
+require "./minimax"
 
-class NegaMax < BeautyMinimax
+class NegaMax < Minimax
   def compute_score(*args)
     nega_max(*args)
   end
@@ -11,32 +11,32 @@ class NegaMax < BeautyMinimax
     player = mediator.player_at(turn)
 
     # 一番深い局面に達したらはじめて評価する
-    if depth >= depth_max
-      return [mediator.evaluate(player), []] # ミニマックスのときとは異なり player から見たscore
+    if depth_max <= depth
+      return [mediator.evaluate(player), []] # 現局面手番視点
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = mediator.can_put_points(player)
+    children = mediator.available_points(player)
     if children.empty?
-      score, deep_readout = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-      return [-score, [:pass, *deep_readout]]
+      v, way = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+      return [-v, [:pass, *way]]
     end
 
     max = -Float::INFINITY
-    readout = []
+    forecast = []
 
     children.each do |point|
       mediator.put_on(player, point) do
-        score, deep_readout = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-        score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
-        if score > max
-          readout = [point, *deep_readout]
-          max = score
+        v, way = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+        v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
+        if v > max
+          forecast = [point, *way]
+          max = v
         end
       end
     end
 
-    [max, readout]
+    [max, forecast]
   end
 end
 

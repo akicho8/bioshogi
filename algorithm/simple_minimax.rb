@@ -17,9 +17,9 @@ class SimpleMinimax
 
   def mini_max(turn, depth, depth_max)
     player = mediator.player_at(turn)
-    children = mediator.can_put_points(player)
+    children = mediator.available_points(player)
 
-    if depth >= depth_max
+    if depth_max <= depth
       return mediator.evaluate(:o) # 常に先手からの評価値
     end
 

@@ -1,11 +1,11 @@
-# def fail_soft_nega_alpha(node, depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
+# def nega_alpha_fs(node, depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
 #   if depth.zero?
 #     return evaluate(node.player)
 #   end
 #
 #   max = -Float::INFINITY
 #   node.children.each do |node|
-#     max = [max, -fail_soft_nega_alpha(node, depth.pred, -beta, -[alpha, max].max)].max
+#     max = [max, -nega_alpha_fs(node, depth.pred, -beta, -[alpha, max].max)].max
 #     if max >= beta
 #       break
 #     end
@@ -15,49 +15,49 @@
 
 require "./nega_alpha"
 
-class FailSoftNegaAlpha < NegaAlpha
+class NegaAlphaFs < NegaAlpha
   def compute_score(*args)
-    fail_soft_nega_alpha(*args)
+    nega_alpha_fs(*args)
   end
 
-  def fail_soft_nega_alpha(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
+  def nega_alpha_fs(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
     perform_out_of_time_check
 
     player = mediator.player_at(turn)
 
     # 一番深い局面に達したらはじめて評価する
-    if depth >= depth_max
-      return [mediator.evaluate(player), []] # ミニマックスのときとは異なり player から見たscore
+    if depth_max <= depth
+      return [mediator.evaluate(player), []] # 現局面手番視点
     end
 
     # # 合法手がない場合はパスして相手に手番を渡す
-    children = mediator.can_put_points(player)
+    children = mediator.available_points(player)
     if children.empty?
-      score, deep_readout = fail_soft_nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
-      return [-score, [:pass, *deep_readout]]
+      v, way = nega_alpha_fs(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
+      return [-v, [:pass, *way]]
     end
 
     max_v = -Float::INFINITY
-    readout = []
+    forecast = []
     children.each do |point|
       mediator.put_on(player, point) do
-        score, deep_readout = fail_soft_nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -[alpha, max_v].max)
-        score = -score # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
-        if max_v < score
-          max_v = score
-          readout = [point, *deep_readout]
+        v, way = nega_alpha_fs(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -[alpha, max_v].max)
+        v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
+        if max_v < v
+          max_v = v
+          forecast = [point, *way]
         end
       end
       if beta <= alpha
         break
       end
     end
-    [max_v, readout]
+    [max_v, forecast]
   end
 end
 
 if $0 == __FILE__
-  FailSoftNegaAlpha.new.run             # => {:o=>1, :x=>10}
+  NegaAlphaFs.new.run             # => {:o=>1, :x=>10}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:0.031326
 # >> ・○・・

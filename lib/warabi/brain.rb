@@ -10,7 +10,7 @@ module Warabi
         {
           "順位"       => i.next,
           "候補手"     => e[:hand],
-          "読み筋"     => e[:readout].collect { |e| e.to_s }.join(" "),
+          "読み筋"     => e[:forecast].collect { |e| e.to_s }.join(" "),
           "形勢"       => e[:score2],
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
@@ -29,7 +29,7 @@ module Warabi
       thinker.nega_alpha(player: player)
     end
 
-    def deepen_score_list(**params)
+    def interactive_deepning(**params)
       params = {
         depth_max_range: 1..1,
         time_limit: nil,        # nil: 時間制限なし
@@ -48,7 +48,7 @@ module Warabi
             hand.sandbox_execute(player.mediator) do
               start_time = Time.now
               info = thinker.nega_alpha(player: player.opponent_player)
-              {hand: hand, score: -info[:score], score2: -info[:score] * player.location.value_sign, readout: info[:readout], eval_times: info[:eval_times], sec: Time.now - start_time}
+              {hand: hand, score: -info[:score], score2: -info[:score] * player.location.value_sign, forecast: info[:forecast], eval_times: info[:eval_times], sec: Time.now - start_time}
             end
           end
         end
@@ -69,7 +69,7 @@ module Warabi
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
           info = thinker.nega_alpha(player: player.opponent_player)
-          {hand: hand, score: -info[:score], socre2: -info[:score] * player.location.value_sign, readout: info[:readout], eval_times: info[:eval_times], sec: Time.now - start_time}
+          {hand: hand, score: -info[:score], socre2: -info[:score] * player.location.value_sign, forecast: info[:forecast], eval_times: info[:eval_times], sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -79,7 +79,7 @@ module Warabi
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
           score = player.evaluator.score
-          {hand: hand, score: score, socre2: score * player.location.value_sign, readout: [], eval_times: 1, sec: Time.now - start_time}
+          {hand: hand, score: score, socre2: score * player.location.value_sign, forecast: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -163,14 +163,14 @@ module Warabi
         @eval_counter += 1
         score = player.evaluator.score
         log.call "評価 #{score}" if log
-        return HandInfo[score: score, eval_times: eval_counter, readout: []]
+        return HandInfo[score: score, eval_times: eval_counter, forecast: []]
       end
 
       mediator = player.mediator
       children = player.brain.lazy_all_hands
 
       best_hand = nil
-      readout = nil
+      forecast = nil
       eval_times = nil
       children_exist = false
 
@@ -183,7 +183,7 @@ module Warabi
           if score > alpha
             alpha = score
             best_hand = hand
-            readout = info[:readout]
+            forecast = info[:forecast]
             eval_times = eval_counter
           end
         end
@@ -198,7 +198,7 @@ module Warabi
 
       log.call "★確 #{best_hand} 読み数:#{eval_counter}" if log
 
-      HandInfo[hand: best_hand, score: alpha, eval_times: eval_times, readout: [best_hand, *readout]]
+      HandInfo[hand: best_hand, score: alpha, eval_times: eval_times, forecast: [best_hand, *forecast]]
     end
 
     private

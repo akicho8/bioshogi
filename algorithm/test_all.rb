@@ -5,10 +5,11 @@ class TestAll < Test::Unit::TestCase
   test "all" do
     histograms = [
       DirtyMinimax,
-      BeautyMinimax,
+      Minimax,
       NegaMax,
       NegaAlpha,
-      FailSoftNegaAlpha,
+      NegaAlphaFs,
+      # BuggyNegaScout,
       NegaScout,
     ].collect do |klass|
       mediator = klass.new

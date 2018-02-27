@@ -1,10 +1,10 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'warabi/gem_version'
+require 'warabi/version'
 
 Gem::Specification.new do |spec|
   spec.name         = "warabi"
-  spec.version      = Warabi::VERSION::STRING
+  spec.version      = Warabi::VERSION
   spec.author       = "akicho8"
   spec.email        = "akicho8@gmail.com"
   spec.homepage     = "https://github.com/akicho8/warabi"

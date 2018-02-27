@@ -1,7 +1,3 @@
-require_relative 'gem_version'
-
 module Warabi
-  def self.version
-    gem_version
-  end
+  VERSION = "0.0.1"
 end

@@ -12,6 +12,8 @@ class DirtyMinimax
 
   def initialize(**params)
     self.params.update(params)
+
+    @out_of_time = nil
   end
 
   def params
@@ -33,7 +35,7 @@ class DirtyMinimax
 
       start_time = Time.now
       if params[:depth_max_range]
-        infos = deepen_score_list(turn)
+        infos = interactive_deepning(turn)
       else
         infos = fast_score_list(turn)
       end
@@ -66,8 +68,9 @@ class DirtyMinimax
           {
             "順位"   => i.next,
             "候補手" => e[:hand].to_a,
-            "読み筋" => e[:readout].collect { |e| e == :pass ? "PASS" : e.to_a.to_s }.join(" "),
-            "評価値" => player == :o ? e[:score] : -e[:score], # 表示は常に先手からの評価にしておく
+            "読み筋" => e[:forecast].collect { |e| e == :pass ? "PASS" : e.to_a.to_s }.join(" "),
+            "評価値" => e[:score],
+            "形勢"   => player == :o ? e[:score] : -e[:score], # 表示は常に先手からの評価にしておく
             "時間"   => e[:sec],
           }
         end
@@ -94,16 +97,17 @@ class DirtyMinimax
   def fast_score_list(turn)
     player = mediator.player_at(turn)
 
-    infos = mediator.can_put_points(player).collect do |e|
+    infos = mediator.available_points(player).collect do |e|
       mediator.put_on(player, e) do
-        score, deep_readout = compute_score(turn: turn + 1, depth_max: params[:depth_max])
-        {hand: e, readout: deep_readout, score: -score}
+        v, way = compute_score(turn: turn + 1, depth_max: params[:depth_max])
+        v = -v
+        {hand: e, forecast: way, score: v, score2: player == :o ? v : -v}
       end
     end
     infos.sort_by { |e| -e[:score] }
   end
 
-  def deepen_score_list(turn)
+  def interactive_deepning(turn)
     player = mediator.player_at(turn)
 
     @out_of_time = nil
@@ -114,11 +118,12 @@ class DirtyMinimax
     infos = []
     all_finished = catch @out_of_time do
       params[:depth_max_range].each do |depth_max|
-        infos = mediator.can_put_points(player).collect do |e|
+        infos = mediator.available_points(player).collect do |e|
           mediator.put_on(player, e) do
             start_time = Time.now
-            score, readout = compute_score(turn: turn + 1, depth_max: depth_max)
-            {hand: e, readout: readout, score: -score, sec: Time.now - start_time}
+            v, way = compute_score(turn: turn + 1, depth_max: depth_max)
+            v = -v
+            {hand: e, forecast: way, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
           end
         end
       end
@@ -126,7 +131,7 @@ class DirtyMinimax
     end
 
     if infos.empty?
-      unless mediator.can_put_points(player).empty?
+      unless mediator.available_points(player).empty?
         puts "指し手があるのにパスすることになってしまいます。制限時間を増やすか読みを浅くしてください。"
       end
     end
@@ -143,61 +148,62 @@ class DirtyMinimax
   end
 
   def compute_score(turn:, depth_max:)
-    score, readout = mini_max(turn: turn, depth_max: depth_max)
+    v, way = primitive_mini_max(turn: turn, depth_max: depth_max)
 
+    # Negamax を想定しているため後手番なら符号を逆にする(後手から見て有利な状況は、よりマイナスではなく、よりプラスであるとする)
     player = mediator.player_at(turn)
     if player == :x
-      score = -score
+      v = -v
     end
 
-    [score, readout]
+    [v, way]
   end
 
-  def mini_max(turn:, depth_max:, depth: 0)
+  def primitive_mini_max(turn:, depth_max:, depth: 0)
     perform_out_of_time_check   # 深さ6ぐらいになると一手で数秒かかるためここに入れた方がいい
 
     # 一番深い局面に達したらはじめて評価する
-    if depth >= depth_max
+    if depth_max <= depth
       return [mediator.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
     player = mediator.player_at(turn)
-    children = mediator.can_put_points(player)
+    children = mediator.available_points(player)
 
     if children.empty?
-      score, readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-      return [score, [:pass, *readout]]
+      v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+      return [v, [:pass, *way]]
     end
 
-    readout = []
+    forecast = []
     if turn.even?
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       children.each do |point|
         mediator.put_on(player, point) do
-          score, deep_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-          if score > max
-            readout = [point, *deep_readout]
-            max = score
+          v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+          if v > max
+            forecast = [point, *way]
+            max = v
           end
         end
       end
 
-      [max, readout]
+      [max, forecast]
     else
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
       children.each do |point|
         mediator.put_on(player, point) do
-          score, deep_readout = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-          if score < min
-            readout = [point, *deep_readout]
-            min = score
+          v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+          if v < min
+            forecast = [point, *way]
+            min = v
           end
         end
       end
-      [min, readout]
+      [min, forecast]
     end
   end
 end
