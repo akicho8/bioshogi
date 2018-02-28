@@ -165,7 +165,7 @@ module Warabi
         end
 
         # どれかが盤上に正確に含まれるならOK
-        if ary = e.board_parser.any_exist_soldiers_loc[location.key].presence
+        if ary = e.board_parser.any_exist_soldiers.location_adjust[location.key].presence
           if ary.any? { |e| soldier_exist?(e) }
           else
             throw :skip

@@ -196,11 +196,11 @@ module Warabi
       end
 
       def trigger_soldiers
-        @trigger_soldiers ||= []
+        @trigger_soldiers ||= SoldierBox.new
       end
 
       def any_exist_soldiers
-        @any_exist_soldiers ||= []
+        @any_exist_soldiers ||= SoldierBox.new
       end
 
       # 高速に比較するためにメモ化したアクセサシリーズ
@@ -236,17 +236,6 @@ module Warabi
           end
           a.merge(l.key => points_hash)
         end
-      end
-
-      # any_exist_soldiers + 末尾配列
-      def any_exist_soldiers_loc
-        @any_exist_soldiers_loc ||= Location.inject({}) do |a, l|
-          a.merge(l.key => any_exist_soldiers.collect { |e| e.public_send(l.normalize_key) })
-        end
-      end
-
-      def trigger_soldiers_hash
-        @trigger_soldiers_hash ||= trigger_soldiers.inject({}) { |a, e| a.merge(e[:point] => e) }
       end
 
       # テーブルのキーとする駒すべて

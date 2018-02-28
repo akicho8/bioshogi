@@ -7,7 +7,7 @@ module Warabi
     ]
 
     def model
-      "warabi/#{key}_info".classify.constantize
+      @model ||= "warabi/#{key}_info".classify.constantize
     end
 
     def list_key

@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require_relative "spec_helper"
 
 module Warabi
   describe "盤面の読み取り" do
@@ -89,6 +89,24 @@ EOT
 +------+
           EOT
         info.other_objects == [{point: Point["21"], location: Location[:white], something: "○"}]
+      end
+
+      id do
+        board_parser = BoardParser::FireBoardParser.parse(<<~EOT)
++------------+
+| ・ ・ ★v香|
+|!歩@歩?歩*歩|
++------------+
+EOT
+
+        assert board_parser.soldiers                      # => [<Warabi::Soldier "△１一香">, <Warabi::Soldier "▲３二歩">]
+        assert board_parser.trigger_soldiers              # => [<Warabi::Soldier "▲４二歩">, <Warabi::Soldier "▲３二歩">]
+        assert board_parser.other_objects_hash_ary        # => {"★"=>[{:point=>#<Warabi::Point ２一>, :prefix_char=>" ", :something=>"★"}]}
+        assert board_parser.other_objects_hash            # => {"★"=>{#<Warabi::Point ２一>=>{:point=>#<Warabi::Point ２一>, :prefix_char=>" ", :something=>"★"}}}
+        assert board_parser.any_exist_soldiers            # => [<Warabi::Soldier "△２二歩">, <Warabi::Soldier "▲１二歩">]
+        assert board_parser.other_objects_loc_points_hash # => {:black=>{"★"=>{#<Warabi::Point ２一>=>{:point=>#<Warabi::Point ２一>, :prefix_char=>" ", :something=>"★"}}}, :white=>{"★"=>{#<Warabi::Point ８九>=>{:point=>#<Warabi::Point ８九>, :prefix_char=>" ", :something=>"★"}}}}
+        assert board_parser.any_exist_soldiers            # => [<Warabi::Soldier "△２二歩">, <Warabi::Soldier "▲１二歩">]
+        assert board_parser.primary_soldiers              # => [<Warabi::Soldier "▲４二歩">, <Warabi::Soldier "▲３二歩">]
       end
     end
   end
