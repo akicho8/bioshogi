@@ -26,7 +26,7 @@ EOT
 puts mediator
 
 mediator.player_at(:black).evaluator.score # => 205
-mediator.player_at(:black).brain.nega_alpha_run(depth_max: 1, log_skip_depth: 1) # => {:hand=>#<▲７一馬(53)>, :score=>2255, :eval_times=>6, :forecast=>[#<▲７一馬(53)>]}
+mediator.player_at(:black).brain.diver_dive(depth_max: 1, log_skip_depth: 1) # => {:hand=>#<▲７一馬(53)>, :score=>2255, :eval_times=>6, :forecast=>[#<▲７一馬(53)>]}
 # >> 後手の持駒：歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

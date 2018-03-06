@@ -21,7 +21,7 @@ mediator.board.placement_from_shape <<~EOT
 
 mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
 mediator.player_at(:black).evaluator.score  # => 0
-mediator.player_at(:black).evaluator.score2 # => -9999
+mediator.player_at(:black).evaluator.score2 # => 
 
 mediator.execute("△23飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲19飛", executor_class: PlayerExecutorCpu)
@@ -29,13 +29,9 @@ mediator.execute("△21飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
 tp mediator.position_map
 
-mediator.player_at(:black).evaluator.score  # => 0
-mediator.player_at(:black).evaluator.score2 # => -19998
+mediator.player_at(:black).evaluator.score  # => 
+mediator.player_at(:black).evaluator.score2 # => 
 #
-# mediator.player_at(:black).brain.nega_alpha_run(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
-# >> |----------------------+---|
-# >> |  1474356179798556947 | 2 |
-# >> | -3347518827265389249 | 1 |
-# >> | -1353635129852801790 | 1 |
-# >> | -1752182937165605632 | 1 |
-# >> |----------------------+---|
+# mediator.player_at(:black).brain.diver_dive(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
+# ~> /Users/ikeda/src/warabi/lib/warabi/evaluator.rb:19:in `score2': undefined local variable or method `player_score_for' for #<Warabi::Evaluator:0x00007fa7af25f568> (NameError)
+# ~> 	from -:24:in `<main>'

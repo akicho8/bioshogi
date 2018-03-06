@@ -17,7 +17,7 @@ mediator.board.placement_from_shape <<~EOT
   puts "-" * 80
   puts mediator
 
-  info = mediator.current_player.brain.nega_alpha_run(depth_max: 1)
+  info = mediator.current_player.brain.diver_dive(depth_max: 1)
   p info
   hand = info[:hand]
   puts "指し手: #{hand}"
@@ -35,9 +35,9 @@ end
 # # mediator.player_at(:black).evaluator.score  # => 0
 # # mediator.player_at(:black).evaluator.score2 # => 0
 #
-# mediator.player_at(:black).brain.nega_alpha_run(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
+# mediator.player_at(:black).brain.diver_dive(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
 # ~> /Users/ikeda/src/warabi/lib/warabi/brain.rb:107:in `nega_alpha': Warabi::MustNotHappen (Warabi::MustNotHappen)
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/brain.rb:14:in `nega_alpha_run'
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/brain.rb:14:in `diver_dive'
 # ~> 	from -:20:in `block in <main>'
 # ~> 	from -:16:in `times'
 # ~> 	from -:16:in `<main>'
