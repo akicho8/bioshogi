@@ -2,7 +2,7 @@
 
 module Warabi
   class HandLog
-    include ActiveModel::Model
+    include SimpleModel
 
     attr_accessor :drop_hand
     attr_accessor :move_hand

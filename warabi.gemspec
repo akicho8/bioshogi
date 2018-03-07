@@ -22,14 +22,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "stackprof"
+  spec.add_development_dependency "pry"
 
   spec.add_dependency "activesupport"
-  spec.add_dependency "activemodel"
   spec.add_dependency "actionview"
   spec.add_dependency "org_tp"
   spec.add_dependency "memory_record"
   spec.add_dependency "tree_support"
-  spec.add_dependency "tapp"
-  spec.add_dependency "pry"
-  #pec s.add_dependency "pry-debugger"
 end

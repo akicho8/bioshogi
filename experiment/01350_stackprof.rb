@@ -37,55 +37,55 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
-# >> 3266.3 ms
+# >> 3029.9 ms
 # >> ==================================
 # >>   Mode: cpu(1000)
-# >>   Samples: 799 (0.00% miss rate)
-# >>   GC: 159 (19.90%)
+# >>   Samples: 745 (0.00% miss rate)
+# >>   GC: 129 (17.32%)
 # >> ==================================
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
-# >>        159  (19.9%)         159  (19.9%)     (garbage collection)
-# >>         88  (11.0%)          86  (10.8%)     Warabi::OnePlace::Base.lookup
-# >>         42   (5.3%)          41   (5.1%)     Hash#transform_keys
-# >>         35   (4.4%)          35   (4.4%)     block (4 levels) in memory_record
-# >>         47   (5.9%)          31   (3.9%)     Warabi::Parser#file_parse
-# >>         30   (3.8%)          30   (3.8%)     Warabi::Parser::Base::ConverterMethods#clock_exist?
-# >>         29   (3.6%)          29   (3.6%)     Warabi::OnePlace::Base#hash
-# >>         30   (3.8%)          27   (3.4%)     Warabi::PieceVector#all_vectors
-# >>         23   (2.9%)          23   (2.9%)     Warabi::Soldier#attributes
-# >>         17   (2.1%)          17   (2.1%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>         50   (6.3%)          16   (2.0%)     ActiveModel::AttributeAssignment#assign_attributes
-# >>        132  (16.5%)          15   (1.9%)     Warabi::Place.lookup
-# >>         16   (2.0%)          15   (1.9%)     Warabi::InputParser#scan
-# >>         29   (3.6%)          12   (1.5%)     ActiveModel::AttributeAssignment#assign_attributes
-# >>         17   (2.1%)          12   (1.5%)     Warabi::Place#hash
-# >>        202  (25.3%)          11   (1.4%)     Warabi::Player#candidate_soldiers
-# >>         11   (1.4%)          11   (1.4%)     Warabi::Place#to_xy
-# >>          9   (1.1%)           9   (1.1%)     #<Module:0x00007fea642efd78>.kconv
-# >>          9   (1.1%)           9   (1.1%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>          8   (1.0%)           8   (1.0%)     Warabi::Parser::Base::ConverterMethods#mb_ljust
-# >>          7   (0.9%)           7   (0.9%)     Warabi::MediatorBoard#board
-# >>          7   (0.9%)           7   (0.9%)     Warabi::OnePlace::Xplace#number_format
-# >>          6   (0.8%)           6   (0.8%)     Warabi::OnePlace::Base.units
-# >>          5   (0.6%)           5   (0.6%)     Warabi::Piece::VectorMethods#piece_vector
-# >>         75   (9.4%)           5   (0.6%)     Set#each
-# >>          5   (0.6%)           5   (0.6%)     ActiveModel::AttributeAssignment#_assign_attribute
-# >>          4   (0.5%)           4   (0.5%)     ActiveSupport::Duration#initialize
-# >>        172  (21.5%)           4   (0.5%)     Warabi::Movabler#move_list
-# >>          4   (0.5%)           4   (0.5%)     Warabi::OfficialFormatter#initialize
-# >>         13   (1.6%)           4   (0.5%)     Warabi::MoveHand#to_kif
+# >>        129  (17.3%)         129  (17.3%)     (garbage collection)
+# >>         85  (11.4%)          83  (11.1%)     Warabi::OnePlace::Base.lookup
+# >>         51   (6.8%)          51   (6.8%)     block (3 levels) in memory_record
+# >>         45   (6.0%)          45   (6.0%)     Warabi::SimpleModel#initialize
+# >>         49   (6.6%)          34   (4.6%)     Warabi::Parser#file_parse
+# >>        147  (19.7%)          29   (3.9%)     Warabi::Place.lookup
+# >>         28   (3.8%)          28   (3.8%)     Warabi::OnePlace::Base#hash
+# >>         17   (2.3%)          16   (2.1%)     Warabi::InputParser#scan
+# >>         16   (2.1%)          16   (2.1%)     Warabi::Place#to_xy
+# >>         15   (2.0%)          15   (2.0%)     Warabi::OnePlace::Yplace#number_format
+# >>         15   (2.0%)          15   (2.0%)     Hash#symbolize_keys
+# >>         15   (2.0%)          14   (1.9%)     Warabi::PieceVector#all_vectors
+# >>         14   (1.9%)          14   (1.9%)     Warabi::Soldier#attributes
+# >>         13   (1.7%)          13   (1.7%)     Warabi::SimpleModel#initialize
+# >>         13   (1.7%)          13   (1.7%)     ActiveSupport::Duration#initialize
+# >>        169  (22.7%)          10   (1.3%)     Warabi::Player#candidate_soldiers
+# >>          9   (1.2%)           9   (1.2%)     #<Module:0x00007ff8a51ca4f8>.kconv
+# >>          9   (1.2%)           9   (1.2%)     Warabi::Parser::Base::ConverterMethods#mb_ljust
+# >>          7   (0.9%)           7   (0.9%)     Warabi::SimpleModel#initialize
+# >>        137  (18.4%)           7   (0.9%)     Warabi::Movabler#move_list
+# >>          7   (0.9%)           7   (0.9%)     Warabi::OfficialFormatter#initialize
+# >>          7   (0.9%)           7   (0.9%)     Warabi::OnePlace::Base.value_range
+# >>          6   (0.8%)           6   (0.8%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
+# >>          5   (0.7%)           5   (0.7%)     #<Module:0x00007ff8a4b27330>.run_counts
+# >>         43   (5.8%)           5   (0.7%)     Warabi::OnePlace::Xplace.lookup
+# >>          5   (0.7%)           5   (0.7%)     Warabi::OnePlace::Base.units
+# >>          4   (0.5%)           4   (0.5%)     ActiveSupport::Duration#respond_to_missing?
+# >>          4   (0.5%)           4   (0.5%)     Warabi::Piece::VectorMethods#piece_vector
+# >>          5   (0.7%)           4   (0.5%)     MemoryRecord::SingletonMethods::ClassMethods#fetch
+# >>          4   (0.5%)           4   (0.5%)     Warabi::MediatorBase#board
 # >> Warabi::Place.lookup (/Users/ikeda/src/warabi/lib/warabi/place.rb:30)
-# >>   samples:    15 self (1.9%)  /    132 total (16.5%)
+# >>   samples:    29 self (3.9%)  /    147 total (19.7%)
 # >>   callers:
-# >>       76  (   57.6%)  Warabi::Place.fetch
-# >>       56  (   42.4%)  Warabi::Place.[]
-# >>   callees (117 total):
-# >>       45  (   38.5%)  Warabi::OnePlace::Yplace.lookup
-# >>       43  (   36.8%)  Warabi::OnePlace::Xplace.lookup
-# >>       29  (   24.8%)  Warabi::OnePlace::Base#hash
+# >>      103  (   70.1%)  Warabi::Place.fetch
+# >>       44  (   29.9%)  Warabi::Place.[]
+# >>   callees (118 total):
+# >>       49  (   41.5%)  Warabi::OnePlace::Yplace.lookup
+# >>       41  (   34.7%)  Warabi::OnePlace::Xplace.lookup
+# >>       28  (   23.7%)  Warabi::OnePlace::Base#hash
 # >>   code:
 # >>                                   |    30  |       def lookup(value)
-# >>     4    (0.5%) /     4   (0.5%)  |    31  |         if value.kind_of?(self)
+# >>    21    (2.8%) /    21   (2.8%)  |    31  |         if value.kind_of?(self)
 # >>     1    (0.1%) /     1   (0.1%)  |    32  |           return value
 # >>                                   |    33  |         end
 # >>                                   |    34  | 
@@ -93,18 +93,20 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>                                   |    36  |         y = nil
 # >>                                   |    37  | 
 # >>                                   |    38  |         case value
-# >>     1    (0.1%) /     1   (0.1%)  |    39  |         when Array
+# >>     2    (0.3%) /     2   (0.3%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
-# >>     5    (0.6%)                   |    41  |           x = OnePlace::Yplace.lookup(a)
-# >>     3    (0.4%)                   |    42  |           y = OnePlace::Xplace.lookup(b)
+# >>     2    (0.3%)                   |    41  |           x = OnePlace::Yplace.lookup(a)
+# >>     8    (1.1%)                   |    42  |           y = OnePlace::Xplace.lookup(b)
 # >>     1    (0.1%) /     1   (0.1%)  |    43  |         when String
 # >>                                   |    44  |           a, b = value.chars
-# >>    40    (5.0%)                   |    45  |           x = OnePlace::Yplace.lookup(a)
-# >>    40    (5.0%)                   |    46  |           y = OnePlace::Xplace.lookup(b)
+# >>    47    (6.3%)                   |    45  |           x = OnePlace::Yplace.lookup(a)
+# >>    33    (4.4%)                   |    46  |           y = OnePlace::Xplace.lookup(b)
 # >>                                   |    47  |         end
 # >>                                   |    48  | 
 # >>                                   |    49  |         if x && y
-# >>     3    (0.4%) /     3   (0.4%)  |    50  |           @memo ||= {}
-# >>    14    (1.8%) /     3   (0.4%)  |    51  |           @memo[x] ||= {}
-# >>    20    (2.5%) /     2   (0.3%)  |    52  |           @memo[x][y] ||= new(x, y).freeze
+# >>                                   |    50  |           @memo ||= {}
+# >>    13    (1.7%) /     2   (0.3%)  |    51  |           @memo[x] ||= {}
+# >>    18    (2.4%) /     1   (0.1%)  |    52  |           @memo[x][y] ||= new(x, y).freeze
 # >>                                   |    53  |         end
+# >>     1    (0.1%) /     1   (0.1%)  |    54  |       end
+# >>                                   |    55  | 

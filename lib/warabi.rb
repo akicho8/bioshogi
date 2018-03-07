@@ -12,8 +12,6 @@ require "active_support/dependencies/autoload"
 require "active_support/core_ext/array/grouping" # for in_groups_of
 require "active_support/core_ext/numeric"        # for 1.minute
 
-require "active_model"
-
 require "time"                  # for Time.parse
 require "kconv"                 # for toeuc
 
@@ -31,6 +29,7 @@ require_relative "warabi/logger"
 require_relative "warabi/vector"
 require_relative "warabi/errors"
 require_relative "warabi/application_memory_record"
+require_relative "warabi/simple_model"
 require_relative "warabi/one_place"
 require_relative "warabi/place"
 require_relative "warabi/location"

@@ -55,7 +55,7 @@ module Warabi
       end
     end
 
-    include ActiveModel::Model
+    include SimpleModel
 
     attr_accessor :piece
     attr_accessor :promoted
@@ -188,7 +188,7 @@ module Warabi
 
   concern :HandShared do
     included do
-      include ActiveModel::Model
+      include SimpleModel
       attr_accessor :soldier
 
       private_class_method :new
