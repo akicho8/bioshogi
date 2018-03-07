@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+
 module Warabi
   concern :MediatorMemento do
     def create_memento

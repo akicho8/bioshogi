@@ -62,7 +62,7 @@ module Warabi
           puts
           puts "#{hand} #{record[:score2]}"
           puts
-          puts mediator.to_kif_simple
+          puts mediator.to_kif_oneline
 
           killed_soldier = current_player.executor.killed_soldier
           if killed_soldier && killed_soldier.piece.key == :king

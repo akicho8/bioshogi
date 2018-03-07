@@ -14,7 +14,7 @@ module Warabi
       collect { |e| e.to_ki2(with_location: true) }
     end
 
-    def to_kif_simple
+    def to_kif_oneline
       collect { |e| e.to_kif(with_location: true) }.join(" ")
     end
   end
