@@ -17,7 +17,7 @@ module Warabi
     ]
 
     alias index code
-    alias position code
+    alias one_place code
 
     class << self
       def lookup(value)

@@ -34,17 +34,17 @@ module Warabi
     end
 
     it "拾う" do
-      test1("24歩").should   == {"kif_point" => "24", "kif_piece" => "歩"}
+      test1("24歩").should   == {"kif_place" => "24", "kif_piece" => "歩"}
       test1("同歩").should   == {"ki2_same" => "同", "kif_piece" => "歩"}
     end
 
     it "紙面の改ページのあと同の前に座標を書く場合があるため「24同歩」に対応する。ついでに「同24歩」にも対応" do
-      test1("24同歩").should == {"kif_point" => "24", "ki2_same" => "同", "kif_piece" => "歩"}
-      test1("同24歩").should == {"kif_point" => "24", "ki2_same" => "同", "kif_piece" => "歩"}
+      test1("24同歩").should == {"kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩"}
+      test1("同24歩").should == {"kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩"}
     end
 
     it "元座標あり" do
-      test1("74歩(77)").should == {"kif_point" => "74", "kif_piece" => "歩", "kif_point_from" => "(77)"}
+      test1("74歩(77)").should == {"kif_place" => "74", "kif_piece" => "歩", "kif_place_from" => "(77)"}
     end
   end
 end

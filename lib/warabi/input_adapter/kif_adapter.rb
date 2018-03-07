@@ -3,7 +3,7 @@
 module Warabi
   module InputAdapter
     class KifAdapter < AbstractAdapter
-      include Ki2PointMethods
+      include Ki2PlaceMethods
       include LocationValidation
       include OriginSoldierMethods
       include SharedValidation
@@ -16,8 +16,8 @@ module Warabi
         piece_with_promoted[:promoted] || promote_trigger
       end
 
-      def point_from
-        Point.fetch(input[:kif_point_from].slice(/\d+/))
+      def place_from
+        Place.fetch(input[:kif_place_from].slice(/\d+/))
       end
 
       def promote_trigger

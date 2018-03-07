@@ -9,7 +9,7 @@ rows = TacticInfo.flat_map do |tactic_info|
       "子供"           => e.children.collect(&:key).join(" "),
       "指定駒数"       => e.sorted_soldiers.count,
       # "配置"           => e.board_parser.sorted_soldiers.collect(&:name).join(" "),
-      # "空升指定"       => e.board_parser.other_objects.find_all{|e|e[:something] == "○"}.collect{|e|e[:point].name}.join(" "),
+      # "空升指定"       => e.board_parser.other_objects.find_all{|e|e[:something] == "○"}.collect{|e|e[:place].name}.join(" "),
     }
   end
 end

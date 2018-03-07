@@ -23,7 +23,7 @@ puts mediator
 tp Warabi.run_counts
 
 system "stackprof stackprof.dump"
-system "stackprof stackprof.dump --method Warabi::Point.lookup"
+system "stackprof stackprof.dump --method Warabi::Place.lookup"
 
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -55,16 +55,16 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
 # >>        108  (15.3%)         108  (15.3%)     (garbage collection)
 # >>         80  (11.4%)          80  (11.4%)     block (4 levels) in memory_record
-# >>         93  (13.2%)          38   (5.4%)     Warabi::Point.lookup
+# >>         93  (13.2%)          38   (5.4%)     Warabi::Place.lookup
 # >>         31   (4.4%)          31   (4.4%)     Hash#transform_keys
-# >>         29   (4.1%)          29   (4.1%)     Warabi::Position::Base#hash
+# >>         29   (4.1%)          29   (4.1%)     Warabi::OnePlace::Base#hash
 # >>        551  (78.3%)          28   (4.0%)     Warabi::Movabler#move_list
 # >>         28   (4.0%)          28   (4.0%)     Warabi::PieceVector#all_vectors
-# >>         47   (6.7%)          27   (3.8%)     Warabi::Point#hash
+# >>         47   (6.7%)          27   (3.8%)     Warabi::Place#hash
 # >>         24   (3.4%)          24   (3.4%)     Warabi::Piece::ScoreMethods#piece_score
-# >>         24   (3.4%)          24   (3.4%)     Warabi::Position::Base.lookup
+# >>         24   (3.4%)          24   (3.4%)     Warabi::OnePlace::Base.lookup
 # >>         49   (7.0%)          21   (3.0%)     ActiveModel::AttributeAssignment#assign_attributes
-# >>         20   (2.8%)          20   (2.8%)     Warabi::Point#to_xy
+# >>         20   (2.8%)          20   (2.8%)     Warabi::Place#to_xy
 # >>        556  (79.0%)          17   (2.4%)     Warabi::NegaAlphaDiver#dive
 # >>         14   (2.0%)          14   (2.0%)     Warabi::Soldier#attributes
 # >>         13   (1.8%)          13   (1.8%)     ActiveModel::AttributeAssignment#_assign_attribute
@@ -72,9 +72,9 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # >>         91  (12.9%)          12   (1.7%)     Warabi::MediatorPlayers#basic_score
 # >>         12   (1.7%)          12   (1.7%)     ActiveModel::AttributeAssignment#_assign_attribute
 # >>        541  (76.8%)          10   (1.4%)     Warabi::Brain#move_hands
-# >>         24   (3.4%)          10   (1.4%)     Warabi::Board::UpdateMethods#put_on
-# >>          9   (1.3%)           9   (1.3%)     Warabi::Position::Base.value_range
-# >>         18   (2.6%)           9   (1.3%)     Warabi::Position::Base#valid?
+# >>         24   (3.4%)          10   (1.4%)     Warabi::Board::UpdateMethods#place_on
+# >>          9   (1.3%)           9   (1.3%)     Warabi::OnePlace::Base.value_range
+# >>         18   (2.6%)           9   (1.3%)     Warabi::OnePlace::Base#valid?
 # >>          8   (1.1%)           8   (1.1%)     #<Module:0x00007fa66a13bdd0>.run_counts
 # >>          8   (1.1%)           8   (1.1%)     Warabi::MediatorBase#board
 # >>        556  (79.0%)           8   (1.1%)     Warabi::Brain#lazy_all_hands
@@ -83,15 +83,15 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # >>          6   (0.9%)           6   (0.9%)     Warabi::Board#surface
 # >>        437  (62.1%)           5   (0.7%)     Set#each
 # >>          5   (0.7%)           5   (0.7%)     SimpleDelegator#__getobj__
-# >> Warabi::Point.lookup (/Users/ikeda/src/warabi/lib/warabi/point.rb:30)
+# >> Warabi::Place.lookup (/Users/ikeda/src/warabi/lib/warabi/place.rb:30)
 # >>   samples:    38 self (5.4%)  /     93 total (13.2%)
 # >>   callers:
-# >>       72  (   77.4%)  Warabi::Point.fetch
-# >>       21  (   22.6%)  Warabi::Point.[]
+# >>       72  (   77.4%)  Warabi::Place.fetch
+# >>       21  (   22.6%)  Warabi::Place.[]
 # >>   callees (55 total):
-# >>       29  (   52.7%)  Warabi::Position::Base#hash
-# >>       15  (   27.3%)  Warabi::Position::Hpos.lookup
-# >>       11  (   20.0%)  Warabi::Position::Vpos.lookup
+# >>       29  (   52.7%)  Warabi::OnePlace::Base#hash
+# >>       15  (   27.3%)  Warabi::OnePlace::Yplace.lookup
+# >>       11  (   20.0%)  Warabi::OnePlace::Xplace.lookup
 # >>   code:
 # >>                                   |    30  |       def lookup(value)
 # >>    24    (3.4%) /    24   (3.4%)  |    31  |         if value.kind_of?(self)
@@ -104,12 +104,12 @@ system "stackprof stackprof.dump --method Warabi::Point.lookup"
 # >>                                   |    38  |         case value
 # >>     3    (0.4%) /     3   (0.4%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
-# >>    14    (2.0%)                   |    41  |           x = Position::Hpos.lookup(a)
-# >>     8    (1.1%)                   |    42  |           y = Position::Vpos.lookup(b)
+# >>    14    (2.0%)                   |    41  |           x = OnePlace::Yplace.lookup(a)
+# >>     8    (1.1%)                   |    42  |           y = OnePlace::Xplace.lookup(b)
 # >>                                   |    43  |         when String
 # >>                                   |    44  |           a, b = value.chars
-# >>     1    (0.1%)                   |    45  |           x = Position::Hpos.lookup(a)
-# >>     3    (0.4%)                   |    46  |           y = Position::Vpos.lookup(b)
+# >>     1    (0.1%)                   |    45  |           x = OnePlace::Yplace.lookup(a)
+# >>     3    (0.4%)                   |    46  |           y = OnePlace::Xplace.lookup(b)
 # >>                                   |    47  |         end
 # >>                                   |    48  | 
 # >>                                   |    49  |         if x && y

@@ -27,7 +27,7 @@ mediator.execute("△23飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲19飛", executor_class: PlayerExecutorCpu)
 mediator.execute("△21飛", executor_class: PlayerExecutorCpu)
 mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
-tp mediator.position_map
+tp mediator.one_place_map
 
 mediator.player_at(:black).evaluator.score  # => 
 mediator.player_at(:black).evaluator.score2 # => 

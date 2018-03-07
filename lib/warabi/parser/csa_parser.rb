@@ -71,13 +71,13 @@ module Warabi
             mediator.board.placement_from_preset("平手")
             if v = md[:handicap_piece_list]
               v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
-                point = Point.fetch(xy)
+                place = Place.fetch(xy)
                 piece = Piece.fetch(piece_key)
-                soldier = mediator.board.fetch(point)
+                soldier = mediator.board.fetch(place)
                 if soldier.piece != piece
-                  raise SyntaxDefact, "#{v}として#{point}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
+                  raise SyntaxDefact, "#{v}として#{place}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
                 end
-                mediator.board.safe_delete_on(soldier.point)
+                mediator.board.safe_delete_on(soldier.place)
               end
             end
             @board_source = mediator.board.to_s
@@ -132,8 +132,8 @@ module Warabi
                   hold_pieces[location] << piece
                 else
                   # 盤に置く
-                  soldier = Soldier.create(attrs.merge(location: location, point: Point.fetch(xy)))
-                  sub_mediator.board.put_on(soldier)
+                  soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
+                  sub_mediator.board.place_on(soldier)
                 end
               end
             end

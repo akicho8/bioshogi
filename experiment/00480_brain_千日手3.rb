@@ -21,7 +21,7 @@ mediator.board.placement_from_shape <<~EOT
   p info
   hand = info[:hand]
   puts "指し手: #{hand}"
-  tp mediator.position_map
+  tp mediator.one_place_map
   mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 end
 
@@ -31,7 +31,7 @@ end
 # mediator.execute("△21飛", executor_class: PlayerExecutorCpu)
 #
 # # mediator.execute("▲１七飛", executor_class: PlayerExecutorCpu)
-# # tp mediator.position_map
+# # tp mediator.one_place_map
 # # mediator.player_at(:black).evaluator.score  # => 0
 # # mediator.player_at(:black).evaluator.score2 # => 0
 #

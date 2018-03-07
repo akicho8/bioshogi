@@ -15,19 +15,19 @@ module Warabi
         piece_and_promoted[:promoted]
       end
 
-      def point_from
+      def place_from
         unless drop_trigger
-          Point.fetch(input[:csa_from])
+          Place.fetch(input[:csa_from])
         end
       end
 
-      def point
-        Point.fetch(input[:csa_to])
+      def place
+        Place.fetch(input[:csa_to])
       end
 
       # 移動元の駒との差分で「成」を判断する
       def promote_trigger
-        promoted && !board.fetch(point_from).promoted
+        promoted && !board.fetch(place_from).promoted
       end
 
       def drop_trigger

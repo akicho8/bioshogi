@@ -16,8 +16,8 @@ require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
-    rows = Warabi::Position::Vpos.dimension.times.collect do |y|
-      tds = Warabi::Position::Hpos.dimension.times.collect do |x|
+    rows = Warabi::OnePlace::Xplace.dimension.times.collect do |y|
+      tds = Warabi::OnePlace::Yplace.dimension.times.collect do |x|
         tag_class = []
         cell = ""
         if soldier = board.surface[[x, y]]
@@ -25,11 +25,11 @@ class MediatorDecorator < SimpleDelegator
           cell = soldier.any_name
         end
         if hand_log = hand_logs.last
-          if hand_log.point_to == Warabi::Point[[x, y]]
-            tag_class << "last_point"
+          if hand_log.place_to == Warabi::Place[[x, y]]
+            tag_class << "last_place"
           end
-          if hand_log.point_from == Warabi::Point[[x, y]]
-            tag_class << "last_point2"
+          if hand_log.place_from == Warabi::Place[[x, y]]
+            tag_class << "last_place2"
           end
         end
         "<td class=\"#{tag_class.join(' ')}\">#{cell}</td>"

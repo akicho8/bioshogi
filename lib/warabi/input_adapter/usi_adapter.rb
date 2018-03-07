@@ -22,14 +22,14 @@ module Warabi
         end
       end
 
-      def point_from
+      def place_from
         if v = input[:usi_from]
-          Point.fetch(alpha_to_digit(v))
+          Place.fetch(alpha_to_digit(v))
         end
       end
 
-      def point
-        Point.fetch(alpha_to_digit(input[:usi_to]))
+      def place
+        Place.fetch(alpha_to_digit(input[:usi_to]))
       end
 
       def drop_trigger

@@ -11,9 +11,9 @@ class MediatorDecorator < SimpleDelegator
 
   def to_html
     tag.table(border: true) do
-      Position::Vpos.dimension.times.collect { |y|
+      OnePlace::Xplace.dimension.times.collect { |y|
         tag.tr {
-          Position::Hpos.dimension.times.collect { |x|
+          OnePlace::Yplace.dimension.times.collect { |x|
             style = nil
             cell = ""
             if soldier = board.lookup([x, y])

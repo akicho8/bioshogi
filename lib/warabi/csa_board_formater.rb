@@ -16,10 +16,10 @@ module Warabi
     end
 
     def to_s
-      Position::Vpos.dimension.times.collect { |y|
-        "P#{y.next}" + Position::Hpos.dimension.times.collect { |x|
-          point = Point.fetch([x, y])
-          soldier_to_str(@board.surface[point])
+      OnePlace::Xplace.dimension.times.collect { |y|
+        "P#{y.next}" + OnePlace::Yplace.dimension.times.collect { |x|
+          place = Place.fetch([x, y])
+          soldier_to_str(@board.surface[place])
         }.join + "\n"
       }.join
     end

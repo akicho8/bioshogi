@@ -26,11 +26,11 @@ module Warabi
       @board ||= Board.new
     end
 
-    def position_map
-      @position_map ||= Hash.new(0)
+    def one_place_map
+      @one_place_map ||= Hash.new(0)
     end
 
-    def position_hash
+    def one_place_hash
       board.hash ^ players.collect(&:piece_box).hash ^ turn_info.current_location.hash
     end
 

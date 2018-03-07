@@ -3,7 +3,7 @@ require_relative "spec_helper"
 module Warabi
   describe Soldier do
     before do
-      @attributes = {point: Point["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}
+      @attributes = {place: Place["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}
     end
 
     it "基本形" do
@@ -25,7 +25,7 @@ module Warabi
       {a => true}[b].should == true
     end
 
-    it "Point の #eql? と #hash の定義で異なる object_id でも内容で判断して [obj1] - [obj2] = [] ができるようになる" do
+    it "Place の #eql? と #hash の定義で異なる object_id でも内容で判断して [obj1] - [obj2] = [] ができるようになる" do
       a = Soldier.from_str("▲６八銀")
       b = Soldier.from_str("▲６八銀")
       (a.object_id != b.object_id).should == true

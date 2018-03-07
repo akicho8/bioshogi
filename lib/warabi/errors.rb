@@ -63,7 +63,7 @@ module Warabi
   end
 
   # 「同」に対する座標が不明
-  class BeforePointNotFound < SyntaxDefact
+  class BeforePlaceNotFound < SyntaxDefact
   end
 
   # 「２二角打」または「２二角」(打の省略形)とするところを「２二角成打」と書いている
@@ -71,7 +71,7 @@ module Warabi
   end
 
   # "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない
-  class SamePointDifferent < SyntaxDefact
+  class SamePlaceDifferent < SyntaxDefact
   end
 
   ################################################################################ ルール系 (RuleError) 人間同士で指すと現われる反則。しかし公式の棋譜には残らないグループ

@@ -2,12 +2,12 @@
 #
 # 座標
 #
-#   Point["４三"].name   # => "４三"
-#   Point["４三"].name  # => "４三"
-#   Point["43"].name    # => "４三"
+#   Place["４三"].name   # => "４三"
+#   Place["４三"].name  # => "４三"
+#   Place["43"].name    # => "４三"
 #
 module Warabi
-  class Point
+  class Place
     attr_accessor :x, :y
 
     class << self
@@ -16,8 +16,8 @@ module Warabi
       include Enumerable
 
       def each(&block)
-        Position::Vpos.dimension.times.flat_map { |y|
-          Position::Hpos.dimension.times.collect { |x|
+        OnePlace::Xplace.dimension.times.flat_map { |y|
+          OnePlace::Yplace.dimension.times.collect { |x|
             self[[x, y]]
           }
         }.each(&block)
@@ -38,12 +38,12 @@ module Warabi
         case value
         when Array
           a, b = value
-          x = Position::Hpos.lookup(a)
-          y = Position::Vpos.lookup(b)
+          x = OnePlace::Yplace.lookup(a)
+          y = OnePlace::Xplace.lookup(b)
         when String
           a, b = value.chars
-          x = Position::Hpos.lookup(a)
-          y = Position::Vpos.lookup(b)
+          x = OnePlace::Yplace.lookup(a)
+          y = OnePlace::Xplace.lookup(b)
         end
 
         if x && y

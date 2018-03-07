@@ -51,7 +51,7 @@ class DirtyMinimax
             raise "must not happen"
             mediator.pass_count += 1
           else
-            mediator.put_on(player, hand)
+            mediator.place_on(player, hand)
             mediator.pass_count = 0
           end
         end
@@ -97,8 +97,8 @@ class DirtyMinimax
   def fast_score_list(turn)
     player = mediator.player_at(turn)
 
-    infos = mediator.available_points(player).collect do |e|
-      mediator.put_on(player, e) do
+    infos = mediator.available_places(player).collect do |e|
+      mediator.place_on(player, e) do
         v, way = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         v = -v
         {hand: e, forecast: way, score: v, score2: player == :o ? v : -v}
@@ -118,8 +118,8 @@ class DirtyMinimax
     infos = []
     all_finished = catch @out_of_time do
       params[:depth_max_range].each do |depth_max|
-        infos = mediator.available_points(player).collect do |e|
-          mediator.put_on(player, e) do
+        infos = mediator.available_places(player).collect do |e|
+          mediator.place_on(player, e) do
             start_time = Time.now
             v, way = compute_score(turn: turn + 1, depth_max: depth_max)
             v = -v
@@ -131,7 +131,7 @@ class DirtyMinimax
     end
 
     if infos.empty?
-      unless mediator.available_points(player).empty?
+      unless mediator.available_places(player).empty?
         puts "指し手があるのにパスすることになってしまいます。制限時間を増やすか読みを浅くしてください。"
       end
     end
@@ -169,7 +169,7 @@ class DirtyMinimax
 
     # 合法手がない場合はパスして相手に手番を渡す
     player = mediator.player_at(turn)
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
 
     if children.empty?
       v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
@@ -180,11 +180,11 @@ class DirtyMinimax
     if turn.even?
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
-      children.each do |point|
-        mediator.put_on(player, point) do
+      children.each do |place|
+        mediator.place_on(player, place) do
           v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v > max
-            forecast = [point, *way]
+            forecast = [place, *way]
             max = v
           end
         end
@@ -194,11 +194,11 @@ class DirtyMinimax
     else
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
-      children.each do |point|
-        mediator.put_on(player, point) do
+      children.each do |place|
+        mediator.place_on(player, place) do
           v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v < min
-            forecast = [point, *way]
+            forecast = [place, *way]
             min = v
           end
         end

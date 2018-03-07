@@ -4,7 +4,7 @@ module Warabi
   class Sequencer
     attr_accessor :snapshots
     attr_accessor :pattern
-    attr_accessor :instruction_pointer
+    attr_accessor :instruction_placeer
     attr_accessor :mediator_stack
 
     def initialize(pattern = nil)
@@ -12,7 +12,7 @@ module Warabi
 
       @pattern = pattern
       @snapshots = []
-      @instruction_pointer = 0
+      @instruction_placeer = 0
       @mediator_stack = MediatorStack.new
     end
 
@@ -31,11 +31,11 @@ module Warabi
     def step_evaluate
       expr = nil
       loop do
-        expr = @pattern.sequence[@instruction_pointer]
+        expr = @pattern.sequence[@instruction_placeer]
         unless expr
           break
         end
-        @instruction_pointer += 1
+        @instruction_placeer += 1
         expr.evaluate(self)
         if expr.kind_of?(NotationDsl::Mov)
           break

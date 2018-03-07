@@ -17,7 +17,7 @@ module Warabi
 
     def score2
       score = player_score_for
-      count = player.mediator.position_map[player.mediator.position_hash]
+      count = player.mediator.one_place_map[player.mediator.one_place_hash]
       if count >= 1
         score -= 9999 * count
       end

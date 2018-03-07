@@ -44,7 +44,7 @@ module Warabi
       Board.dimensiton_change([1, 3]) do
         mediator = Mediator.new
         mediator.player_at(:black).soldier_create("１三香")
-        mediator.board.safe_delete_on(Point["１三"])
+        mediator.board.safe_delete_on(Place["１三"])
         mediator.board["１三"].should == nil
       end
     end

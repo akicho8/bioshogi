@@ -28,7 +28,7 @@ module Warabi
 
     def kif_or_ki2_regexp
       ki2_location = /(?<ki2_location>[#{Location.triangles_str}])/o
-      kif_point = /(?<kif_point>#{Point.regexp})/o
+      kif_place = /(?<kif_place>#{Place.regexp})/o
       ki2_same = /(?<ki2_same>同)\p{blank}*/
 
       ki2_as_it_is = /(?<ki2_as_it_is>不成|生)/
@@ -41,11 +41,11 @@ module Warabi
 
       /
         #{ki2_location}?
-        (#{kif_point}#{ki2_same}|#{ki2_same}#{kif_point}|#{kif_point}|#{ki2_same}) # 12同 or 同12 or 12 or 同 に対応
+        (#{kif_place}#{ki2_same}|#{ki2_same}#{kif_place}|#{kif_place}|#{ki2_same}) # 12同 or 同12 or 12 or 同 に対応
         (?<kif_piece>#{Piece.all_names.join("|")})
         (#{ki2_one_up}|#{ki2_left_right}?#{ki2_up_down}?)?
         (#{ki2_as_it_is}|#{ki2_promote_trigger}|#{kif_drop_trigger})?
-        (?<kif_point_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
+        (?<kif_place_from>\(\d{2}\))? # scan の結果を join したものがマッチした元の文字列と一致するように () も含める
       /ox
     end
 

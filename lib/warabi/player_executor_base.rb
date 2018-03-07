@@ -85,7 +85,7 @@ module Warabi
 
     def input_adapter_class(md)
       case
-      when md[:kif_point_from]
+      when md[:kif_place_from]
         InputAdapter::KifAdapter
       when md[:usi_to]
         InputAdapter::UsiAdapter

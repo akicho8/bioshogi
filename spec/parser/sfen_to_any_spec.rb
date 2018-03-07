@@ -4,8 +4,8 @@ module Warabi
   describe Parser::Base do
     describe "sfen から変換" do
       it "startpos の状態から" do
-        info = Parser.parse("position startpos moves 7i6h")
-        info.to_sfen.should == "position startpos moves 7i6h"
+        info = Parser.parse("one_place startpos moves 7i6h")
+        info.to_sfen.should == "one_place startpos moves 7i6h"
         info.to_kif.should == <<~EOT
 先手の戦型：嬉野流
 手合割：平手
@@ -18,8 +18,8 @@ EOT
       end
 
       it "startpos の代わりに sfen で記述" do
-        info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h")
-        info.to_sfen.should == "position startpos moves 7i6h"
+        info = Parser.parse("one_place sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h")
+        info.to_sfen.should == "one_place startpos moves 7i6h"
         info.to_kif.should == <<~EOT
 先手の戦型：嬉野流
 手合割：平手
@@ -32,8 +32,8 @@ EOT
       end
 
       it "盤面は平手 + 持駒あり なので省略形にならない" do
-        info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
-        info.to_sfen.should == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"
+        info = Parser.parse("one_place sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
+        info.to_sfen.should == "one_place sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"
         info.to_kif.should == <<~EOT
 先手の持駒：銀
 後手の持駒：銀二

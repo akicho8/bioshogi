@@ -9,7 +9,7 @@ class NegaScout < NegaMax
     perform_out_of_time_check
 
     player = mediator.player_at(turn)
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
@@ -24,8 +24,8 @@ class NegaScout < NegaMax
     end
 
     # 再帰を簡潔に記述するため
-    recursive = -> _point, alpha2, beta2 {
-      mediator.put_on(player, _point) do
+    recursive = -> _place, alpha2, beta2 {
+      mediator.place_on(player, _place) do
         v, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: alpha2, beta: beta2)
         v = -v
         [v, way]
@@ -36,28 +36,28 @@ class NegaScout < NegaMax
     children = mediator.move_ordering(player, children)
 
     # 最善候補を通常の窓で探索
-    point = children.shift
-    v, way = recursive.(point, -beta, -alpha)
+    place = children.shift
+    v, way = recursive.(place, -beta, -alpha)
     max_v = v
-    forecast = [point, *way]
+    forecast = [place, *way]
     if beta <= v
-      return [v, [point, *way]]
+      return [v, [place, *way]]
     end
     if alpha < v
       alpha = v
     end
 
     forecast = []
-    children.each do |point|
-      v, way = recursive.(point, -(alpha + 1), -alpha) # null window search
+    children.each do |place|
+      v, way = recursive.(place, -(alpha + 1), -alpha) # null window search
       if beta <= v
-        return [v, [point, *way]]
+        return [v, [place, *way]]
       end
       if alpha < v
         alpha = v
-        v, way = recursive.(point, -beta, -alpha) # 通常の窓で再探索
+        v, way = recursive.(place, -beta, -alpha) # 通常の窓で再探索
         if beta <= v
-          return [v, [point, *way]]
+          return [v, [place, *way]]
         end
         if alpha < v
           alpha = v
@@ -65,7 +65,7 @@ class NegaScout < NegaMax
       end
       if max_v < v
         max_v = v
-        forecast = [point, *way]
+        forecast = [place, *way]
       end
     end
 

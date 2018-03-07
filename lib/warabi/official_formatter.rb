@@ -18,8 +18,8 @@ module Warabi
 
     def to_debug_hash
       {
-        :point_from     => point_from,
-        :point_to       => point_to,
+        :place_from     => place_from,
+        :place_to       => place_to,
         :candidate      => candidate.collect(&:name),
         :koreru_c       => koreru_c,
         :_migi_idou     => _migi_idou?,
@@ -44,10 +44,10 @@ module Warabi
     def to_s
       s = []
 
-      if base.point_same
+      if base.place_same
         s << "同" + @options[:same_suffix]
       else
-        s << point_to.name
+        s << place_to.name
       end
 
       if drop_trigger?
@@ -71,9 +71,9 @@ module Warabi
         else
           s << soldier.any_name
           s << motion
-          if point_from && point_to           # 移動した and
-            if point_from.promotable?(location) || # 移動元が相手の相手陣地 or
-                point_to.promotable?(location)     # 移動元が相手の相手陣地
+          if place_from && place_to           # 移動した and
+            if place_from.promotable?(location) || # 移動元が相手の相手陣地 or
+                place_to.promotable?(location)     # 移動元が相手の相手陣地
               unless promoted                           # 成ってない and
                 if piece.promotable?               # 成駒になれる
                   s << "不成" # or "生"
@@ -264,37 +264,37 @@ module Warabi
 
     # 左からこれる数
     def _hidari_kara_c
-      candidate.count { |s| s.point.x.value < _tx }
+      candidate.count { |s| s.place.x.value < _tx }
     end
 
     # 右からこれる数
     def _migi_kara_c
-      candidate.count { |s| s.point.x.value > _tx }
+      candidate.count { |s| s.place.x.value > _tx }
     end
 
     # 寄れる数 (水平ラインから移動できる駒数)
     def yoreru_c
-      candidate.count { |s| s.point.y.value == _ty }
+      candidate.count { |s| s.place.y.value == _ty }
     end
 
     # 上がれる数(移動先より下にある数)
     def agareru_c
-      candidate.count { |s| s.point.y.value.send(_i(:>), _ty) }
+      candidate.count { |s| s.place.y.value.send(_i(:>), _ty) }
     end
 
     # 下がれる数(移動先より上にある数)
     def sagareru_c
-      candidate.count { |s| s.point.y.value.send(_i(:<), _ty) }
+      candidate.count { |s| s.place.y.value.send(_i(:<), _ty) }
     end
 
     # 移動先X
     def _tx
-      @_tx ||= point_to.x.value
+      @_tx ||= place_to.x.value
     end
 
     # 移動元Y
     def _ty
-      @_ty ||= point_to.y.value
+      @_ty ||= place_to.y.value
     end
 
     # プレイヤーの視点から見た移動先の一つ下
@@ -309,37 +309,37 @@ module Warabi
 
     # 移動元X
     def _ox
-      @_ox ||= point_from.x.value
+      @_ox ||= place_from.x.value
     end
 
     # 移動先Y
     def _oy
-      @_oy ||= point_from.y.value
+      @_oy ||= place_from.y.value
     end
 
     # 候補手の座標範囲
     def _xr
-      @_xr ||= Range.new(*candidate.collect { |e| e.point.x.value }.minmax)
+      @_xr ||= Range.new(*candidate.collect { |e| e.place.x.value }.minmax)
     end
 
     def _yr
-      @_yr ||= Range.new(*candidate.collect { |e| e.point.y.value }.minmax)
+      @_yr ||= Range.new(*candidate.collect { |e| e.place.y.value }.minmax)
     end
 
     # 移動元で二つの龍が水平線上にいる
     def idou_moto_no_ryu_ga_suihei_ni_iru?
-      candidate.collect { |e| e.point.y.value }.uniq.size == 1
+      candidate.collect { |e| e.place.y.value }.uniq.size == 1
     end
 
     # 移動先の水平線上よりすべて上 or すべて下
     # つまり、移動先のYが候補のYの範囲に含まれている
-    # だから candidate.all?{|s|s.point.y.value < _ty} || candidate.all?{|s|s.point.y.value > _ty} から !_yr.cover?(_ty) に変更できる
+    # だから candidate.all?{|s|s.place.y.value < _ty} || candidate.all?{|s|s.place.y.value > _ty} から !_yr.cover?(_ty) に変更できる
     def idousakino_suiheisenjou_yori_subete_ue_mataha_shita?
       !_yr.cover?(_ty)
     end
 
     delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, to: :base
-    delegate :point, :piece, :location, :promoted, to: :soldier
+    delegate :place, :piece, :location, :promoted, to: :soldier
 
     def drop_trigger?
       drop_hand
@@ -351,14 +351,14 @@ module Warabi
       end
     end
 
-    def point_from
+    def place_from
       if move_hand
-        move_hand.origin_soldier.point
+        move_hand.origin_soldier.place
       end
     end
 
-    def point_to
-      point
+    def place_to
+      place
     end
 
     concerning :InvertMethods do

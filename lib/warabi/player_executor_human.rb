@@ -12,7 +12,7 @@ module Warabi
 
     def perform_skill_monitor
       if Warabi.config[:skill_monitor_enable]
-        if Position.size_type == :board_size_9x9
+        if OnePlace.size_type == :board_size_9x9
           if mediator.params[:skill_monitor_enable]
             SkillMonitor.new(self).execute
           end
@@ -25,7 +25,7 @@ module Warabi
           :drop_hand    => @drop_hand,
           :move_hand      => @move_hand,
           :candidate      => @candidate_soldiers,
-          :point_same     => point_same?,
+          :place_same     => place_same?,
           :skill_set      => skill_set,
         }).freeze
     end
@@ -34,9 +34,9 @@ module Warabi
       @skill_set ||= SkillSet.new
     end
 
-    def point_same?
+    def place_same?
       if hand_log = mediator.hand_logs.last
-        hand_log.soldier.point == soldier.point
+        hand_log.soldier.place == soldier.place
       end
     end
   end

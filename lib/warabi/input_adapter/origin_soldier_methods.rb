@@ -5,7 +5,7 @@ module Warabi
     concern :OriginSoldierMethods do
       def origin_soldier
         @origin_soldier ||= -> {
-          if v = point_from
+          if v = place_from
             player.board.fetch(v)
           end
         }.call

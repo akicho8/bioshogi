@@ -8,7 +8,7 @@ module Warabi
     attr_accessor :move_hand
 
     attr_accessor :candidate
-    attr_accessor :point_same
+    attr_accessor :place_same
     attr_accessor :skill_set
 
     def to_kif(**options)

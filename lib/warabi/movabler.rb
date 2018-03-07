@@ -27,16 +27,16 @@ module Warabi
     def move_list(board, soldier, **options)
       Enumerator.new do |yielder|
         soldier.all_vectors.each do |vector|
-          point = soldier.point
+          place = soldier.place
           loop do
-            point = point.vector_add(vector)
+            place = place.vector_add(vector)
 
             # 盤外に出たら終わり
-            if point.invalid?
+            if place.invalid?
               break
             end
 
-            killed_soldier = board.surface[point]
+            killed_soldier = board.surface[place]
 
             # 自分の駒に衝突したら終わり
             if killed_soldier && killed_soldier.location == soldier.location
@@ -44,7 +44,7 @@ module Warabi
             end
 
             # 空または相手駒の升には行ける
-            piece_store(soldier, point, killed_soldier, yielder, options)
+            piece_store(soldier, place, killed_soldier, yielder, options)
 
             # 相手駒があるのでこれ以上は進めない
             if killed_soldier
@@ -62,16 +62,16 @@ module Warabi
 
     private
 
-    # point の場所は空なので player の soldier を point に置けそうだ
-    # でも point に置いてそれ以上動けなかったら反則になるので
+    # place の場所は空なので player の soldier を place に置けそうだ
+    # でも place に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(origin_soldier, point, killed_soldier, yielder, options)
+    def piece_store(origin_soldier, place, killed_soldier, yielder, options)
       # 死に駒にならないのであれば有効
-      soldier = origin_soldier.merge(point: point)
+      soldier = origin_soldier.merge(place: place)
 
       # 成れるなら成る
-      if origin_soldier.next_promotable?(soldier.point)
+      if origin_soldier.next_promotable?(soldier.place)
         yielder << MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, killed_soldier: killed_soldier)
 
         if options[:promoted_preferred]

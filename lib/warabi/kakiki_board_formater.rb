@@ -26,20 +26,20 @@ module Warabi
     private
 
     def header
-      "  " + Position::Hpos.units.join(" ")
+      "  " + OnePlace::Yplace.units.join(" ")
     end
 
     def line
-      "+" + "---" * Position::Hpos.dimension + "+"
+      "+" + "---" * OnePlace::Yplace.dimension + "+"
     end
 
     def rows
-      Position::Vpos.dimension.times.collect do |y|
-        fields = Position::Hpos.dimension.times.collect do |x|
-          point = Point.fetch([x, y])
-          soldier_to_str(@board.surface[point])
+      OnePlace::Xplace.dimension.times.collect do |y|
+        fields = OnePlace::Yplace.dimension.times.collect do |x|
+          place = Place.fetch([x, y])
+          soldier_to_str(@board.surface[place])
         end
-        "|" + fields.join + "|" + Position::Vpos.fetch(y).name
+        "|" + fields.join + "|" + OnePlace::Xplace.fetch(y).name
       end
     end
 

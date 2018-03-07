@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 #
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
-# >> | source     | triangle | absolute_point | same | piece | ki2_motion_part | kif_trigger_part | point_from | csa_sign | csa_from | csa_to | csa.basic_name | csa.promoted_name | usi_drop_piece | usi_drop_trigger | usi_to | usi_from | usi_promote_trigger |
+# >> | source     | triangle | absolute_place | same | piece | ki2_motion_part | kif_trigger_part | place_from | csa_sign | csa_from | csa_to | csa.basic_name | csa.promoted_name | usi_drop_piece | usi_drop_trigger | usi_to | usi_from | usi_promote_trigger |
 # >> |------------+----------+-------+------+-------+-------------+--------------+------------+----------+----------+--------+----------------+-------------------+------------------+------------+--------+----------+---------------------|
 # >> | ６八銀左   |          | ６八  |      | 銀    | 左          |              |            |          |          |        |                |                   |                  |            |        |          |                     |
 # >> | △６八全   | △       | ６八  |      | 全    |             |              |            |          |          |        |                |                   |                  |            |        |          |                     |
@@ -47,16 +47,16 @@ module Warabi
       end
 
       def candidate_soldiers
-        @candidate_soldiers ||= player.candidate_soldiers(piece: piece, promoted: !promote_trigger && promoted, point: point)
+        @candidate_soldiers ||= player.candidate_soldiers(piece: piece, promoted: !promote_trigger && promoted, place: place)
       end
 
       def soldier
-        @soldier ||= Soldier.create(piece: piece, promoted: promoted, point: point, location: player.location)
+        @soldier ||= Soldier.create(piece: piece, promoted: promoted, place: place, location: player.location)
       end
 
       def move_hand
         if origin_soldier
-          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, killed_soldier: board.surface[point])
+          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, killed_soldier: board.surface[place])
         end
       end
 
@@ -72,8 +72,8 @@ module Warabi
 
       def to_h
         {
-          :point_from      => point_from,
-          :point           => point,
+          :place_from      => place_from,
+          :place           => place,
           :piece           => piece,
           :promoted        => promoted,
           :promote_trigger => promote_trigger,

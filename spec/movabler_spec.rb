@@ -4,7 +4,7 @@ module Warabi
   describe "#move_list" do
     it "ある地点に移動するとき成れるのか？" do
       soldier = Soldier.from_str("▲13銀")
-      assert soldier.next_promotable?(Point["14"])
+      assert soldier.next_promotable?(Place["14"])
     end
 
     it "移動可能な筋(相手陣地から外に出た場合にも成れる)" do
@@ -41,7 +41,7 @@ module Warabi
 
     it "初期配置での移動可能な座標" do
       mediator = Mediator.start
-      test = -> point { mediator.board[point].move_list(mediator.board).collect(&:to_kif) }
+      test = -> place { mediator.board[place].move_list(mediator.board).collect(&:to_kif) }
       test["７七"].should == ["▲７六歩(77)"]                                                                                 # 歩
       test["９九"].should == ["▲９八香(99)"]                                                                                 # 香
       test["８九"].should == []                                                                                               # 桂

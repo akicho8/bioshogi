@@ -121,7 +121,7 @@ module Warabi
       # 最初から現在までの局面
       def to_sfen(**options)
         s = []
-        s << "position"
+        s << "one_place"
         s << @first_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
         if hand_logs.present?
           s << "moves"

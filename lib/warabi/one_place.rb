@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Warabi
-  module Position
+  module OnePlace
     class << self
       # 一時的に盤面のサイズを変更する(テスト用)
       #
@@ -13,17 +13,17 @@ module Warabi
       #   end
       #
       def dimensiton_change(wsize, &block)
-        save_value = [Hpos.dimension, Vpos.dimension]
+        save_value = [Yplace.dimension, Xplace.dimension]
         h, v = wsize
-        Hpos.board_size_reset(h)
-        Vpos.board_size_reset(v)
+        Yplace.board_size_reset(h)
+        Xplace.board_size_reset(v)
         if block_given?
           begin
             yield
           ensure
             h, v = save_value
-            Hpos.board_size_reset(h)
-            Vpos.board_size_reset(v)
+            Yplace.board_size_reset(h)
+            Xplace.board_size_reset(v)
           end
         else
           save_value
@@ -33,7 +33,7 @@ module Warabi
       # サイズ毎のクラスがいるかも
       # かなりやっつけの仮
       def size_type
-        key = [Hpos.dimension, Vpos.dimension]
+        key = [Yplace.dimension, Xplace.dimension]
         {
           [5, 5] => :x55,
           [9, 9] => :board_size_9x9,
@@ -42,13 +42,13 @@ module Warabi
 
       # 一時的に成れない状況にする
       def promotable_disable
-        _promotable_size = Vpos._promotable_size
-        Vpos._promotable_size = nil
+        _promotable_size = Xplace._promotable_size
+        Xplace._promotable_size = nil
         if block_given?
           begin
             yield
           ensure
-            Vpos._promotable_size = _promotable_size
+            Xplace._promotable_size = _promotable_size
           end
         else
           _promotable_size
@@ -152,8 +152,8 @@ module Warabi
 
       # 成れるか？
       # @example
-      #   Point.fetch("１三").promotable?(:black) # => true
-      #   Point.fetch("１四").promotable?(:black) # => false
+      #   Place.fetch("１三").promotable?(:black) # => true
+      #   Place.fetch("１四").promotable?(:black) # => false
       def promotable?(location)
         v = self
         if location.white?
@@ -165,7 +165,7 @@ module Warabi
       end
     end
 
-    class Hpos < Base
+    class Yplace < Base
       cattr_accessor(:_units)           { "９８７６５４３２１" }
       cattr_accessor(:_arrow)           { :last } # ←左方向に増加
       cattr_accessor(:_promotable_size) { nil }
@@ -186,7 +186,7 @@ module Warabi
       end
     end
 
-    class Vpos < Base
+    class Xplace < Base
       cattr_accessor(:_units)           { "一二三四五六七八九" }
       cattr_accessor(:_arrow)           { :first } # 右方向に増加→
       cattr_accessor(:_promotable_size) { 3 }      # 相手の陣地の成れる縦幅

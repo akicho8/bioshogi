@@ -12,8 +12,8 @@ module Warabi
           end
 
           if move_hand.promote_trigger?
-            if !origin_soldier.next_promotable?(point)
-              errors_add NotPromotable, "#{origin_soldier.point}から#{point}への移動では成れません"
+            if !origin_soldier.next_promotable?(place)
+              errors_add NotPromotable, "#{origin_soldier.place}から#{place}への移動では成れません"
             end
           end
 
@@ -21,7 +21,7 @@ module Warabi
             errors_add ReversePlayerPieceMoveError, "相手の駒を動かそうとしています"
           end
 
-          if s = board.lookup(soldier.point)
+          if s = board.lookup(soldier.place)
             if s.location == player.location
               errors_add SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています"
             end
@@ -29,7 +29,7 @@ module Warabi
         end
 
         if drop_trigger
-          if board.lookup(point)
+          if board.lookup(place)
             errors_add PieceAlredyExist, "駒の上に打とうとしています"
           end
         end

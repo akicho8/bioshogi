@@ -115,9 +115,9 @@ module Warabi
         # 外側で execute 〜 revert するときの a.each { a.update } の状態になるのを回避するため。
         # each の中で元を更新すると "can't add a new key into hash during iteration" のエラーになる
         piece_keys = player.piece_box.keys
-        player.board.blank_points.each do |point|
+        player.board.blank_places.each do |place|
           piece_keys.each do |piece_key|
-            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, point: point, location: player.location)
+            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, place: place, location: player.location)
             if soldier.rule_valid?(player.board)
               y << DropHand.create(soldier: soldier)
             end
@@ -139,7 +139,7 @@ module Warabi
 
     # delegate :mediator, to: :player
     # delegate :evaluate, to: :mediator
-    # delegate :put_on, to: :mediator
+    # delegate :place_on, to: :mediator
 
     def initialize(params)
       @params = {

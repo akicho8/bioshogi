@@ -13,7 +13,7 @@ class Minimax < DirtyMinimax
 
     # 合法手がない場合はパスして相手に手番を渡す
     player = mediator.player_at(turn)
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
     if children.empty?
       v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [v, [:pass, *way]]
@@ -26,8 +26,8 @@ class Minimax < DirtyMinimax
     end
 
     forecast = []
-    children.each do |point|
-      mediator.put_on(player, point) do
+    children.each do |place|
+      mediator.place_on(player, place) do
         v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         if turn.even?
           flag = v > max # 自分が自分にとってもっとも有利な手を選択する
@@ -35,7 +35,7 @@ class Minimax < DirtyMinimax
           flag = v < max # 相手が自分にとってもっとも不利な手を選択する
         end
         if flag
-          forecast = [point, *way]
+          forecast = [place, *way]
           max = v
         end
       end

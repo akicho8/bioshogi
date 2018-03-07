@@ -117,17 +117,17 @@ $.fn.image_preview = (options) ->
 # 
 #   $(@).toggle (e) ->
 #     if (options.has_shift_key and e.shiftKey) or !options.has_shift_key
-#       position = $(@).position()
+#       one_place = $(@).one_place()
 #       $(@)
 #         .css
-#           position:"absolute"
-#           top: position.top
-#           left: position.left
+#           one_place:"absolute"
+#           top: one_place.top
+#           left: one_place.left
 #         .animate
 #           width: options.width
 #           height: options.height
-#           left: position.left - (options.width / 4)
-#           top: position.top - (options.height / 4)
+#           left: one_place.left - (options.width / 4)
+#           top: one_place.top - (options.height / 4)
 #         , options.speed
 #   , (e) ->
 #     $(@)
@@ -137,7 +137,7 @@ $.fn.image_preview = (options) ->
 #         top: "auto"
 #         left: "auto"
 #         opacity: 1.0
-#         position: "static"
+#         one_place: "static"
 #       .show()
 # 
 # #

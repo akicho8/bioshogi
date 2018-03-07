@@ -50,7 +50,7 @@ pp mediator.to_kif_a
 
 #+BEGIN_SRC ruby
 info = Soldier.from_str("７六と")
-info[:point].name # => "７六"
+info[:place].name # => "７六"
 info[:promoted]   # => true
 info[:piece].name # => "歩"
 #+END_SRC
@@ -205,8 +205,8 @@ puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join
 mediator = Mediator.start
 player = mediator.player_at(:black)
 player.soldier_create("５五馬")
-player.soldiers.first.move_list.each{|point|
-  player.soldier_create("#{point}馬")
+player.soldiers.first.move_list.each{|place|
+  player.soldier_create("#{place}馬")
 }
 puts mediator.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -225,24 +225,24 @@ puts mediator.board
 
 *** 座標のパース
 
-    Pointクラス経由で扱えばだいたいパース可
+    Placeクラス経由で扱えばだいたいパース可
 
 #+BEGIN_SRC ruby
-Point["４三"].name   # => "４三"
-Point["４三"].name  # => "４三"
-Point["43"].name    # => "４三"
+Place["４三"].name   # => "４三"
+Place["４三"].name  # => "４三"
+Place["43"].name    # => "４三"
 #+END_SRC
 
     内部では別の座標
 
 #+BEGIN_SRC ruby
-Point["４三"].to_xy  # => [5, 2]
+Place["４三"].to_xy  # => [5, 2]
 #+END_SRC
 
     引数が配列だったときのみスルー
 
 #+BEGIN_SRC ruby
-Point[[5, 2]].to_xy # => [5, 2]
+Place[[5, 2]].to_xy # => [5, 2]
 #+END_SRC
 
 *** 駒の情報取得例
@@ -325,7 +325,7 @@ soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "�
 mediator.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = Soldier.from_str(s)
-    s.merge(point: s[:point].flip_if_white(player.location))
+    s.merge(place: s[:place].flip_if_white(player.location))
   }
   player.soldier_create(_soldiers)
 end
@@ -466,10 +466,10 @@ end
     | HoldPieceNotFound      | 持駒が無い                                     | 歩を持っていないのに歩を打とうとした                                                    |
     | PieceAlredyExist       | 自分の駒の上に自分の駒を初期配置               | 配置時に2連続で "９七歩"                                                                |
     | AlredyPromoted         | すでに成っている                               | "５五" の龍を "５一飛成"                                                                |
-    | BeforePointNotFound    | 「同」に対する座標が不明                       | 初手 "同歩"                                                                             |
+    | BeforePlaceNotFound    | 「同」に対する座標が不明                       | 初手 "同歩"                                                                             |
     | RuleError              | 反則系例外の親                                 | 二歩など                                                                                |
     | CommonError           | 黙認できる例外の親                             | いまのところ二歩と手番間違いの2つだけ                                                   |
-    | SamePointDifferent     | 座標と「同」を同時に指定したが一致しない       | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
+    | SamePlaceDifferent     | 座標と「同」を同時に指定したが一致しない       | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
     | FileFormatError        | ファイルのフォーマットがおかしい               | KIFファイルとして画像ファイルを読ませた                                                 |
     | KeyNotFound            | 手合割・囲い・戦型などのあるはずのデータがない | 手合割で「二枚落ち」と書くところを「飛車角落ち」と書いた                                |
 
@@ -624,7 +624,7 @@ Web Page：(Web Page)
     | 玉       | king     |
     | 成った   | promoted |
     | 盤面     | board    |
-    | 座標     | point    |
+    | 座標     | place    |
     | 相対座標 | vector   |
     | 先手     | black    |
     | 後手     | white    |

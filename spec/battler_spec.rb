@@ -17,7 +17,7 @@ module Warabi
         @soldier.any_name.should == "と"
       end
       # it "盤上に置いてない場合" do
-      #   @soldier.point = nil
+      #   @soldier.place = nil
       #   @soldier.name.should == "▲(どこにも置いてない)と"
       # end
     end
@@ -25,9 +25,9 @@ module Warabi
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.dimensiton_change([3, 3]) do
         player = Mediator.player_test(init: "▲１一飛")
-        soldier = player.board.safe_delete_on(Point["１一"])
+        soldier = player.board.safe_delete_on(Place["１一"])
         player.board["１一"].should == nil # 盤面から消えている
-        # soldier.point.should == nil        # 盤上から削除した駒の座標は nil になっている
+        # soldier.place.should == nil        # 盤上から削除した駒の座標は nil になっている
         player.soldiers.should == []       # プレイヤーから見た盤面上の駒にも含まれてない
       end
     end

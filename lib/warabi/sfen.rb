@@ -17,7 +17,7 @@ module Warabi
 
     def parse
       s = source.sub(/startpos/, STARTPOS)
-      md = s.match(/position\s+sfen\s+(?<board>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/)
+      md = s.match(/one_place\s+sfen\s+(?<board>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/)
       unless md
         raise SyntaxDefact, "構文が不正です : #{source.inspect}"
       end

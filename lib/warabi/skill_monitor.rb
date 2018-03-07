@@ -82,7 +82,7 @@ module Warabi
           # 何もない制限。何かあればskip
           if ary = e.board_parser.other_objects_loc_ary[location.key]["○"]
             ary.each do |e|
-              if surface[e[:point]]
+              if surface[e[:place]]
                 throw :skip
               end
             end
@@ -91,7 +91,7 @@ module Warabi
           # 何かある制限。何もなければskip
           if ary = e.board_parser.other_objects_loc_ary[location.key]["●"]
             ary.each do |e|
-              if !surface[e[:point]]
+              if !surface[e[:place]]
                 throw :skip
               end
             end
@@ -106,19 +106,19 @@ module Warabi
               throw :skip
             end
             ary.each do |e|
-              if e[:point] == origin_soldier.point
+              if e[:place] == origin_soldier.place
                 throw :skip
               end
             end
           end
 
           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
-          if points_hash = e.board_parser.other_objects_loc_points_hash[location.key]["★"]
+          if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
             # 移動元がないということは、もう何も該当しないので skip
             unless origin_soldier
               throw :skip
             end
-            if points_hash[origin_soldier.point]
+            if places_hash[origin_soldier.place]
               # 移動元があったのでOK
             else
               throw :skip
@@ -191,7 +191,7 @@ module Warabi
 
     # 比較順序超重要。不一致しやすいものから比較する
     def soldier_exist?(s)
-      if v = surface[s.point]
+      if v = surface[s.place]
         v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
       end
     end

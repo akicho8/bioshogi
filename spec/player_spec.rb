@@ -220,7 +220,7 @@ EOT
 
         describe "取れない" do
           it "初手に同歩" do
-            expect { Mediator.test1(execute: "同歩") }.to raise_error(BeforePointNotFound, /同に対する座標が不明/)
+            expect { Mediator.test1(execute: "同歩") }.to raise_error(BeforePlaceNotFound, /同に対する座標が不明/)
           end
         end
       end

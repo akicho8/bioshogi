@@ -2,43 +2,43 @@
 
 module Warabi
   module InputAdapter
-    concern :Ki2PointMethods do
-      def point
-        absolute_point || same_point
+    concern :Ki2PlaceMethods do
+      def place
+        absolute_place || same_place
       end
 
       def hard_validations
         super
 
         # 初手に同歩の場合
-        if same? && !same_point
-          errors_add BeforePointNotFound, "同に対する座標が不明です"
+        if same? && !same_place
+          errors_add BeforePlaceNotFound, "同に対する座標が不明です"
         end
 
         # 記事などで改ページしたとき明示的に "同歩" ではなく "同２四歩" と書く場合もあるとのことで同の座標が２四ではない場合
-        if same? && same_point && absolute_point
-          if same_point != absolute_point
-            errors_add SamePointDifferent, "同は#{same_point}を意味しますが明示的に指定した移動先は#{absolute_point}です"
+        if same? && same_place && absolute_place
+          if same_place != absolute_place
+            errors_add SamePlaceDifferent, "同は#{same_place}を意味しますが明示的に指定した移動先は#{absolute_place}です"
           end
         end
 
         # 結局座標がわからない場合
-        if !point
+        if !place
           errors_add SyntaxDefact, "移動先の座標が不明です"
         end
       end
 
       private
 
-      def absolute_point
-        if v = input[:kif_point]
-          Point.fetch(v)
+      def absolute_place
+        if v = input[:kif_place]
+          Place.fetch(v)
         end
       end
 
-      def same_point
+      def same_place
         if hand_log = player.mediator.hand_logs.last
-          hand_log.soldier.point
+          hand_log.soldier.place
         end
       end
 

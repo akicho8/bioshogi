@@ -25,34 +25,34 @@ class ReversiApp
     placement
   end
 
-  def available_points(player)
-    blank_points.find_all { |e| can_put_on?(player, e) }
+  def available_places(player)
+    blank_places.find_all { |e| can_place_on?(player, e) }
   end
 
-  def put_on(player, point, &block)
+  def place_on(player, place, &block)
     if block_given?
       memento = board.dup
       begin
-        put_on(player, point)
+        place_on(player, place)
         yield
       ensure
         self.board = memento
       end
     else
-      hash = reversible_counts_hash(player, point)
+      hash = reversible_counts_hash(player, place)
 
       # 空なら利きが一つもないことになるのでパスになるが事前にチェックしておきたいのでここでは例外とする
       if hash.empty?
-        raise "反転できないのに置きました : player:#{player} point:#{point}\n#{self}"
+        raise "反転できないのに置きました : player:#{player} place:#{place}\n#{self}"
       end
 
       # 置く
-      board[point] = player
-      # run_counts[:put_on] += 1
+      board[place] = player
+      # run_counts[:place_on] += 1
 
       # 反転していく
       hash.each do |vec, count|
-        v = point
+        v = place
         count.times do
           v += vec
           board[v] = player
@@ -126,20 +126,20 @@ class ReversiApp
         break
       end
       player = player_at(turn)
-      points = available_points(player)
+      places = available_places(player)
       count = nil
-      if points.empty?
+      if places.empty?
         @pass_count += 1
       else
         @pass_count = 0
         if true
           # 賢く指す
-          point = move_ordering(player, points).first
+          place = move_ordering(player, places).first
         else
           # 適当に指す
-          point = points.sample
+          place = places.sample
         end
-        count = put_on(player, point)
+        count = place_on(player, place)
       end
       puts "---------------------------------------- [#{turn}] #{player} 反転数:#{count || 'pass'} #{histogram} 評価値:#{evaluate(:o)}"
       puts self
@@ -147,20 +147,20 @@ class ReversiApp
     tp board.values.group_by(&:itself).transform_values(&:size)
   end
 
-  def move_ordering(player, points)
-    points.sort_by { |e| -reversible_total_count(player, e) }
+  def move_ordering(player, places)
+    places.sort_by { |e| -reversible_total_count(player, e) }
   end
 
   private
 
-  def reversible_total_count(player, point)
-    reversible_counts_hash(player, point).values.sum
+  def reversible_total_count(player, place)
+    reversible_counts_hash(player, place).values.sum
   end
 
   # 1個以上反転させられる利きと個数をペアにしたハッシュを返す
-  def reversible_counts_hash(player, point)
+  def reversible_counts_hash(player, place)
     Around.collect { |vec|
-      count = reversible_one_way_count(player, point, vec)
+      count = reversible_one_way_count(player, place, vec)
       if count >= 1
         [vec, count]
       end
@@ -175,7 +175,7 @@ class ReversiApp
     board[Vector[half - 1, half]]     = :o
   end
 
-  def blank_points
+  def blank_places
     dimension.times.flat_map { |y|
       dimension.times.collect { |x|
         v = Vector[x, y]
@@ -186,21 +186,21 @@ class ReversiApp
     }.compact
   end
 
-  def can_put_on?(player, point)
-    raise "not blank" if board[point]
-    Around.any? { |e| reversible_one_way_count(player, point, e) >= 1 }
+  def can_place_on?(player, place)
+    raise "not blank" if board[place]
+    Around.any? { |e| reversible_one_way_count(player, place, e) >= 1 }
   end
 
-  def reversible_one_way_count(player, point, vec)
+  def reversible_one_way_count(player, place, vec)
     count = 0
     loop do
-      point += vec          # 置いた次の位置から進めるため最初に実行する
+      place += vec          # 置いた次の位置から進めるため最初に実行する
       # 外に出てしまったらダメ
-      if point.any? { |e| !(0...dimension).cover?(e) }
+      if place.any? { |e| !(0...dimension).cover?(e) }
         count = 0
         break
       end
-      element = board[point]
+      element = board[place]
       # 空の升ならダメ
       unless element
         count = 0

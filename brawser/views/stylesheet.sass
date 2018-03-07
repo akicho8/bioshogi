@@ -8,8 +8,8 @@
 $border_color:     #aaa
 $board_color:      #fff
 $piece_color:      #000
-$last_point_color:  #ccffff
-$last_point_color2: #f2f2f2
+$last_place_color:  #ccffff
+$last_place_color2: #f2f2f2
 
 .nowrap
   white-space: nowrap
@@ -38,11 +38,11 @@ $last_point_color2: #f2f2f2
     width: 16px
     height: 16px
     background: $board_color
-    &.last_point
+    &.last_place
       font-weight: bold
-      background: $last_point_color
-    &.last_point2
-      background: $last_point_color2
+      background: $last_place_color
+    &.last_place2
+      background: $last_place_color2
 
   &.small
     td

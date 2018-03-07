@@ -38,7 +38,7 @@ module Warabi
         if options[:from_stand]
           piece_box.pick_out(soldier.piece)
         end
-        board.put_on(soldier, validate: true)
+        board.place_on(soldier, validate: true)
       end
     end
 
@@ -47,13 +47,13 @@ module Warabi
       board.placement_from_soldiers(soldiers)
     end
 
-    def candidate_soldiers(piece:, promoted:, point:)
+    def candidate_soldiers(piece:, promoted:, place:)
       piece_key = piece.key
       soldiers.find_all do |e|
         true &&
           e.promoted == promoted &&                                   # 成っているかどうかで絞る
           e.piece.key == piece_key &&                                 # 同じ種類に絞る
-          e.move_list(board).any? { |e| e.soldier.point == point } && # 目的地に来れる
+          e.move_list(board).any? { |e| e.soldier.place == place } && # 目的地に来れる
           true
       end
     end

@@ -18,7 +18,7 @@ module Warabi
       # @mediator.to_sfen                # => "lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
       # @mediator.first_state_board_sfen # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
       # puts @mediator.board
-      # @mediator.to_source        # => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h S*2d"
+      # @mediator.to_source        # => "one_place sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h S*2d"
 
       attr_accessor :sfen
 
@@ -26,7 +26,7 @@ module Warabi
       def board_setup(mediator)
         sfen.soldiers.each do |soldier|
           player = mediator.player_at(soldier.location)
-          player.board.put_on(soldier, validate: true)
+          player.board.place_on(soldier, validate: true)
         end
         mediator.turn_info.handicap = sfen.handicap?
         mediator.turn_info.counter = sfen.turn_counter

@@ -16,7 +16,7 @@ class NegaMax < Minimax
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
     if children.empty?
       v, way = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [-v, [:pass, *way]]
@@ -25,12 +25,12 @@ class NegaMax < Minimax
     max = -Float::INFINITY
     forecast = []
 
-    children.each do |point|
-      mediator.put_on(player, point) do
+    children.each do |place|
+      mediator.place_on(player, place) do
         v, way = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if v > max
-          forecast = [point, *way]
+          forecast = [place, *way]
           max = v
         end
       end

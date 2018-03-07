@@ -31,7 +31,7 @@ class NegaAlphaFs < NegaAlpha
     end
 
     # # 合法手がない場合はパスして相手に手番を渡す
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
     if children.empty?
       v, way = nega_alpha_fs(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
       return [-v, [:pass, *way]]
@@ -39,13 +39,13 @@ class NegaAlphaFs < NegaAlpha
 
     max_v = -Float::INFINITY
     forecast = []
-    children.each do |point|
-      mediator.put_on(player, point) do
+    children.each do |place|
+      mediator.place_on(player, place) do
         v, way = nega_alpha_fs(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -[alpha, max_v].max)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if max_v < v
           max_v = v
-          forecast = [point, *way]
+          forecast = [place, *way]
         end
       end
       if beta <= alpha

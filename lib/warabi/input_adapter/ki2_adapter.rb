@@ -17,10 +17,10 @@ module Warabi
         super || drop_abbreviation?
       end
 
-      def point_from
-        @point_from ||= -> {
+      def place_from
+        @place_from ||= -> {
           if soldier = origin_soldier
-            soldier.point
+            soldier.place
           end
         }.call
       end
@@ -29,11 +29,11 @@ module Warabi
         super
 
         if !drop_trigger && candidate_soldiers.size >= 2 && motion_str.empty?
-          errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
+          errors_add AmbiguousFormatError, "#{place}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
-        if !drop_trigger && candidate_soldiers.count >= 2 && !point_from
-          errors_add AmbiguousFormatError, "#{point}に移動できる候補が2つ以上ありますが#{motion_str}からは特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
+        if !drop_trigger && candidate_soldiers.count >= 2 && !place_from
+          errors_add AmbiguousFormatError, "#{place}に移動できる候補が2つ以上ありますが#{motion_str}からは特定できません : #{candidate_soldiers.collect(&:name).join(', ')})"
         end
 
         if force_drop_trigger && !player.piece_box.exist?(piece)
@@ -45,7 +45,7 @@ module Warabi
         end
 
         if !drop_trigger && candidate_soldiers.empty?
-          errors_add MovableBattlerNotFound, "#{player.call_name}の手番で#{point}に移動できる駒がありません"
+          errors_add MovableBattlerNotFound, "#{player.call_name}の手番で#{place}に移動できる駒がありません"
         end
 
         if drop_trigger && promoted
@@ -76,12 +76,12 @@ module Warabi
                 if piece.brave?
                   m = {"左" => :first, "右" => :last}.fetch(md.to_s)
                   m = flip_if_white(m)
-                  list = list.sort_by { |e| e.point.x.value }.send(m, 1)
+                  list = list.sort_by { |e| e.place.x.value }.send(m, 1)
                 else
                   m = {"左" => :>, "右" => :<}.fetch(md.to_s)
                   m = flip_if_white(m)
                   list = list.find_all do |e|
-                    point.x.value.send(m, e.point.x.value)
+                    place.x.value.send(m, e.place.x.value)
                   end
                 end
               end
@@ -94,7 +94,7 @@ module Warabi
                 m = {"上" => :<, "引" => :>}.fetch(md.to_s)
                 m = flip_if_white(m)
                 list = list.find_all do |e|
-                  point.y.value.send(m, e.point.y.value)
+                  place.y.value.send(m, e.place.y.value)
                 end
               end
             end
@@ -104,7 +104,7 @@ module Warabi
           if list.size >= 2
             if v = up_down
               if v.include?("寄")
-                list = list.find_all { |e| e.point.y == point.y }
+                list = list.find_all { |e| e.place.y == place.y }
               end
             end
           end
@@ -112,9 +112,9 @@ module Warabi
           # 真下にあるもの
           if list.size >= 2
             if one_up?
-              y = point.y.value + player.location.which_val(1, -1)
+              y = place.y.value + player.location.which_val(1, -1)
               list = list.find_all { |e|
-                e.point.x == point.x && e.point.y.value == y
+                e.place.x == place.x && e.place.y.value == y
               }
             end
           end

@@ -17,7 +17,7 @@ class SimpleMinimax
 
   def mini_max(turn, depth, depth_max)
     player = mediator.player_at(turn)
-    children = mediator.available_points(player)
+    children = mediator.available_places(player)
 
     if depth_max <= depth
       return mediator.evaluate(:o) # 常に先手からの評価値
@@ -32,7 +32,7 @@ class SimpleMinimax
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       children.each do |vec|
-        mediator.put_on(player, vec) do
+        mediator.place_on(player, vec) do
           score = mini_max(turn + 1, depth + 1, depth_max)
           if score > max
             max = score
@@ -44,7 +44,7 @@ class SimpleMinimax
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
       children.each do |vec|
-        mediator.put_on(player, vec) do
+        mediator.place_on(player, vec) do
           score = mini_max(turn + 1, depth + 1, depth_max)
           if score < min
             min = score
