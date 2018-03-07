@@ -217,7 +217,7 @@ module Warabi
     end
 
     def inspect
-      "#<#{self}>"
+      "<#{self}>"
     end
 
     def to_s(**options)

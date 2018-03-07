@@ -14,7 +14,7 @@ module Warabi
 
     attr_writer :kill_counter
 
-    delegate :to_kif_a, :to_ki2_a, to: :hand_logs
+    delegate :to_kif_a, :to_ki2_a, :to_kif_simple, to: :hand_logs
 
     def kill_counter
       @kill_counter ||= 0

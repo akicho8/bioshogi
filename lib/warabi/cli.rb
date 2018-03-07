@@ -15,46 +15,63 @@ module Warabi
     end
 
     desc "versus", "CPU同士の対戦"
-    option :depth_max,  type: :numeric, aliases: "-d",   default: 4
-    option :times,      type: :numeric, aliases: "-t",   default: 512
-    option :time_limit, type: :numeric, aliases: "--tl", default: 1.0
-    option :logging,    type: :boolean, aliases: "-l",   default: false
-    option :log_file,   type: :string,                   default: "brain.log"
+    option :depth_max,   type: :numeric, aliases: "-d", default: 8
+    option :times,       type: :numeric, aliases: "-n", default: 512
+    option :time_limit,  type: :numeric, aliases: "-t", default: 5.0
+    option :round,       type: :numeric, aliases: "-r", default: 100
+    option :logging,     type: :boolean, aliases: "-l", default: false
+    option :log_file,    type: :string,                 default: "brain.log"
+    option :black_diver, type: :string,                 default: "NegaAlphaDiver"
+    option :white_diver, type: :string,                 default: "NegaScoutDiver"
     def versus
-      pp options
-      tp options
-
       if options[:logging]
         log_file = Pathname(options[:log_file])
         FileUtils.rm_rf(log_file)
         Warabi.logger = ActiveSupport::Logger.new(log_file)
       end
 
-      mediator = Mediator.start
-      options[:times].times do
-        current_player = mediator.current_player
+      divers = [
+        Warabi.const_get(options[:black_diver]),
+        Warabi.const_get(options[:white_diver]),
+      ]
+      tp divers
+      pp options
+      tp options
 
-        deepen_score_list_params = {
-          time_limit: options[:time_limit],
-          depth_max_range: 0..options[:depth_max],
-        }
-        infos = current_player.brain.interactive_deepning(deepen_score_list_params)
-        info = infos.first
-        hand = info[:hand]
-        mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
+      win_counts = Location.inject({}) { |a, e| a.merge(e.key => 0) }
 
-        puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand}"
-        tp deepen_score_list_params
-        tp Brain.human_format(infos)
-        puts mediator
+      options[:round].times do |round|
+        mediator = Mediator.start
+        options[:times].times do
+          current_player = mediator.current_player
 
-        killed_soldier = mediator.opponent_player.executor.killed_soldier
-        if killed_soldier && killed_soldier.piece.key == :king
-          break
+          deepen_score_list_params = {
+            time_limit: options[:time_limit],
+            depth_max_range: 0..options[:depth_max],
+          }
+          default_diver_class = divers[mediator.turn_info.current_location.code]
+          records = current_player.brain(default_diver_class: default_diver_class).interactive_deepning(deepen_score_list_params)
+          record = records.first
+          hand = record[:hand]
+          mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
+
+          puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand} (#{default_diver_class})"
+          tp deepen_score_list_params
+          tp Brain.human_format(records)
+          puts mediator
+          puts
+          puts "#{hand} #{record[:score2]}"
+          puts
+          puts mediator.to_kif_simple
+
+          killed_soldier = current_player.executor.killed_soldier
+          if killed_soldier && killed_soldier.piece.key == :king
+            win_counts[current_player.location.key] += 1
+            Pathname("win_counts.txt").write(win_counts.inspect)
+            break
+          end
         end
       end
-      puts mediator.to_kif_a.join(" ")
-      p options
     end
   end
 end

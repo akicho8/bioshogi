@@ -59,15 +59,15 @@ def nega_alpha_fs(node, depth = 0, alpha = -Float::INFINITY, beta = Float::INFIN
   max_v
 end
 
-# from wiki
-def nega_scout(node, alpha, beta, depth)
+# 正しく動く (from wiki)
+def nega_scout(node, depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
   if depth.zero?
     return evaluate(node.player)
   end
 
   node.move_ordering     # 手の並べ替え
 
-  v = -buggy_nega_scout(node.children.first, depth - 1, -beta, -alpha) # 最善候補を通常の窓で探索
+  v = -nega_scout(node.children.first, depth - 1, -beta, -alpha) # 最善候補を通常の窓で探索
   max = v
   if beta <= v
     return v
@@ -77,13 +77,13 @@ def nega_scout(node, alpha, beta, depth)
   end
 
   children.drop(1).each do |node|
-    v = -buggy_nega_scout(node, depth - 1, -alpha - 1, -alpha) # Null Window Search
+    v = -nega_scout(node, depth - 1, -alpha - 1, -alpha) # Null Window Search
     if beta <= v
       return v
     end
     if alpha < v
       alpha = v
-      v = -buggy_nega_scout(node, depth - 1, -beta, -alpha) # 通常の窓で再探索
+      v = -nega_scout(node, depth - 1, -beta, -alpha) # 通常の窓で再探索
       if beta <= v
         return v
       end
@@ -115,11 +115,11 @@ def buggy_nega_scout(node, depth, alpha, beta)
     v = -buggy_nega_scout(node, depth - 1, -(a + 1), -a) # null window search
     if a < v && v < beta
       v = -buggy_nega_scout(node, depth - 1, -beta, -v) # 再探索
-      if max_v < v              # ネガマックス法 : 大きな値を選ぶ
+      if max_v < v              # nega max
         max_v = v
       end
     end
-    if max_v >= beta            # ネガアルファ法
+    if max_v >= beta            # nega alpha
       break
     end
   end

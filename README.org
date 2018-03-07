@@ -376,7 +376,7 @@ Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
   mediator.board.placement_from_human("▲３三歩 △１一歩")
   puts mediator
-  pp NegaAlphaExecuter.run(player: mediator.player_at(:black), depth_max: 1)
+  pp NegaAlphaDiver.run(player: mediator.player_at(:black), depth_max: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １

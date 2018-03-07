@@ -18,15 +18,17 @@ module Warabi
       end
     end
 
-    attr_accessor :player
+    attr_accessor :player, :params
 
-    def initialize(player)
+    def initialize(player, **params)
       @player = player
+      @params = {
+        default_diver_class: NegaAlphaDiver, # [NegaAlphaDiver, NegaScoutDiver]
+      }.merge(params)
     end
 
-    def nega_alpha_run(**params)
-      thinker = NegaAlphaExecuter.new(params)
-      thinker.nega_alpha(player: player)
+    def diver_dive(**params)
+      self.params[:default_diver_class].new(params.merge(current_player: player)).dive
     end
 
     def interactive_deepning(**params)
@@ -43,12 +45,13 @@ module Warabi
       hands = []
       finished = catch params[:out_of_time] do
         params[:depth_max_range].each do |depth_max|
-          thinker = NegaAlphaExecuter.new(params.merge(depth_max: depth_max))
+          diver = self.params[:default_diver_class].new(params.merge(current_player: player.opponent_player, depth_max: depth_max))
           hands = children.collect do |hand|
+            Warabi.logger.debug "試指 #{hand}" if Warabi.logger
             hand.sandbox_execute(player.mediator) do
               start_time = Time.now
-              info = thinker.nega_alpha(player: player.opponent_player)
-              {hand: hand, score: -info[:score], score2: -info[:score] * player.location.value_sign, forecast: info[:forecast], eval_times: info[:eval_times], sec: Time.now - start_time}
+              v, way = diver.dive
+              {hand: hand, score: -v, score2: -v * player.location.value_sign, forecast: way, eval_times: diver.eval_counter, sec: Time.now - start_time}
             end
           end
         end
@@ -63,13 +66,12 @@ module Warabi
     end
 
     def smart_score_list(**params)
-      thinker = NegaAlphaExecuter.new(params)
-
+      diver = self.params[:default_diver_class].new(params.merge(current_player: player.opponent_player))
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
-          info = thinker.nega_alpha(player: player.opponent_player)
-          {hand: hand, score: -info[:score], socre2: -info[:score] * player.location.value_sign, forecast: info[:forecast], eval_times: info[:eval_times], sec: Time.now - start_time}
+          v, way = diver.dive
+          {hand: hand, score: -v, socre2: -v * player.location.value_sign, forecast: way, eval_times: diver.eval_counter, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -78,8 +80,8 @@ module Warabi
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
-          score = player.evaluator.score
-          {hand: hand, score: score, socre2: score * player.location.value_sign, forecast: [], eval_times: 1, sec: Time.now - start_time}
+          v = player.evaluator.score
+          {hand: hand, score: v, socre2: v * player.location.value_sign, forecast: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -131,9 +133,13 @@ module Warabi
     end
   end
 
-  class NegaAlphaExecuter
+  class Diver
     attr_accessor :params
     attr_accessor :eval_counter
+
+    # delegate :mediator, to: :player
+    # delegate :evaluate, to: :mediator
+    # delegate :put_on, to: :mediator
 
     def initialize(params)
       @params = {
@@ -142,63 +148,6 @@ module Warabi
       }.merge(params)
 
       @eval_counter = 0
-    end
-
-    def nega_alpha(player:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
-      if logger
-        log = -> s { logger_info(s, player: player, depth: depth) }
-      end
-
-      if time = params[:out_of_time]
-        if time && time <= Time.now
-          throw time
-        end
-      end
-
-      if depth == 0
-        @eval_counter = 0
-      end
-
-      if depth >= params[:depth_max]
-        @eval_counter += 1
-        score = player.evaluator.score
-        log.call "評価 #{score}" if log
-        return HandInfo[score: score, eval_times: eval_counter, forecast: []]
-      end
-
-      mediator = player.mediator
-      children = player.brain.lazy_all_hands
-
-      best_hand = nil
-      forecast = nil
-      eval_times = nil
-      children_exist = false
-
-      children.each.with_index do |hand, i|
-        hand.sandbox_execute(mediator) do
-          children_exist = true
-          log.call "試指 #{hand} (%d)" % i if log
-          info = nega_alpha(player: player.opponent_player, depth: depth + 1, alpha: -beta, beta: -alpha)
-          score = -info[:score] # 相手が良くなればなるほど自分にとってはマイナス
-          if score > alpha
-            alpha = score
-            best_hand = hand
-            forecast = info[:forecast]
-            eval_times = eval_counter
-          end
-        end
-        if alpha >= beta
-          break
-        end
-      end
-
-      # unless children_exist
-      #   raise WarabiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{mediator.to_bod}"
-      # end
-
-      log.call "★確 #{best_hand} 読み数:#{eval_counter}" if log
-
-      HandInfo[hand: best_hand, score: alpha, eval_times: eval_times, forecast: [best_hand, *forecast]]
     end
 
     private
@@ -220,7 +169,7 @@ module Warabi
         str = "\n" + str
       end
 
-      Warabi.logger.info "%d %s %s" % [
+      Warabi.logger.info "    %d %s %s" % [
         context[:depth],
         context[:player].location,
         str,
@@ -229,6 +178,160 @@ module Warabi
 
     def logger
       Warabi.logger
+    end
+
+    def out_of_time_check
+      if time = params[:out_of_time]
+        if time && time <= Time.now
+          throw time
+        end
+      end
+    end
+
+    def depth_max
+      params[:depth_max]
+    end
+  end
+
+  class NegaAlphaDiver < Diver
+    def dive(player = params[:current_player], depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
+      out_of_time_check
+
+      mediator = player.mediator
+
+      if depth == 0
+        @eval_counter = 0
+      end
+
+      if logger
+        log = -> s { logger_info(s, player: player, depth: depth) }
+      end
+
+      if depth_max <= depth
+        @eval_counter += 1
+        score = player.evaluator.score
+        log.call "評価 #{score}" if log
+        return [score, []]
+      end
+
+      children = player.brain.lazy_all_hands
+
+      best_hand = nil
+      forecast = nil
+      children_exist = false
+
+      children.each.with_index do |hand, i|
+        children_exist = true
+        log.call "試指 #{hand} (%d)" % i if log
+        hand.sandbox_execute(mediator) do
+          v, way = dive(player.opponent_player, depth + 1, -beta, -alpha)
+          v = -v
+          if alpha < v
+            alpha = v
+            best_hand = hand
+            forecast = way
+          end
+        end
+        if alpha >= beta
+          break
+        end
+      end
+
+      # unless children_exist
+      #   raise WarabiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{mediator.to_bod}"
+      # end
+
+      log.call "★確 #{best_hand}" if log
+
+      [alpha, [best_hand, *forecast]]
+    end
+  end
+
+  class NegaScoutDiver < Diver
+    def dive(player = params[:current_player], depth = 0, alpha = -Float::INFINITY, beta = Float::INFINITY)
+      out_of_time_check
+
+      mediator = player.mediator
+
+      if depth == 0
+        @eval_counter = 0
+      end
+
+      if logger
+        log = -> s { logger_info(s, player: player, depth: depth) }
+      end
+
+      if depth_max <= depth
+        @eval_counter += 1
+        score = player.evaluator.score
+        log.call "評価 #{score}" if log
+        return [score, []]
+      end
+
+      children = player.brain.lazy_all_hands
+
+      # # 合法手がない場合はパスして相手に手番を渡す
+      # if children.empty?
+      #   v, way = dive(player.opponent_player, depth + 1, -beta, -alpha)
+      #   v = -v
+      #   return [v, [:pass, *way]]
+      # end
+
+      # 再帰を簡潔に記述するため
+      recursive = -> hand, alpha2, beta2 {
+        log.call "試指 #{hand}" if log
+        hand.sandbox_execute(mediator) do
+          v, way = dive(player.opponent_player, depth + 1, alpha2, beta2)
+          v = -v
+          [v, way]
+        end
+      }
+
+      forecast = []
+
+      if false
+        max_v = -Float::INFINITY
+      else
+        # 効果的なもの順に並び換える
+        # children = mediator.move_ordering(player, children)
+        children = children.to_a # FIXME: 並び返るために全取得すると遅延評価にした意味がない
+
+        # 最善候補を通常の窓で探索
+        hand = children.shift
+        v, way = recursive.(hand, -beta, -alpha)
+        max_v = v
+        forecast = [hand, *way]
+        if beta <= v
+          return [v, [hand, *way]]
+        end
+        if alpha < v
+          alpha = v
+        end
+      end
+
+      children.each do |hand|
+        v, way = recursive.(hand, -(alpha + 1), -alpha) # null window search
+        if beta <= v
+          return [v, [hand, *way]]
+        end
+        if alpha < v
+          alpha = v
+          v, way = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
+          if beta <= v
+            return [v, [hand, *way]]
+          end
+          if alpha < v
+            alpha = v
+          end
+        end
+        if max_v < v
+          max_v = v
+          forecast = [hand, *way]
+        end
+      end
+
+      log.call "★確 #{forecast.first || '?'}" if log
+      [max_v, forecast]
     end
   end
 end

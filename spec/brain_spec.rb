@@ -26,7 +26,7 @@ EOT
     end
 
     it do
-      1.times do
+      [NegaAlphaDiver, NegaScoutDiver].each do |default_diver_class|
         Board.promotable_disable do
           Board.dimensiton_change([2, 5]) do
             mediator = MediatorSimple.new
@@ -39,11 +39,11 @@ EOT
             | ・ 香|
             +------+
               EOT
-            brain = mediator.player_at(:black).brain
-            brain.nega_alpha_run(depth_max: 1)[:hand].to_kif.should == "▲１三飛(14)"
-            brain.nega_alpha_run(depth_max: 2)[:hand].to_kif.should == "▲２四飛(14)"
-            brain.nega_alpha_run(depth_max: 3)[:hand].to_kif.should == "▲１三飛(14)"
-            brain.nega_alpha_run(depth_max: 4)[:hand].to_kif.should == "▲２四飛(14)"
+            brain = mediator.player_at(:black).brain(default_diver_class: default_diver_class)
+            brain.diver_dive(depth_max: 1).last.first.to_kif.should == "▲１三飛(14)"
+            brain.diver_dive(depth_max: 2).last.first.to_kif.should == "▲２四飛(14)"
+            brain.diver_dive(depth_max: 3).last.first.to_kif.should == "▲１三飛(14)"
+            brain.diver_dive(depth_max: 4).last.first.to_kif.should == "▲２四飛(14)"
           end
         end
       end

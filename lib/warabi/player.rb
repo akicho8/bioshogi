@@ -122,8 +122,8 @@ module Warabi
         (options[:evaluator_class] || Evaluator).new(self, options)
       end
 
-      def brain
-        Brain.new(self)
+      def brain(**params)
+        Brain.new(self, **params)
       end
     end
 
