@@ -11,7 +11,7 @@ module Warabi
     attr_reader :move_hand
 
     delegate :board, :piece_box, :mediator, to: :player
-    delegate :origin_soldier, :killed_soldier, to: :move_hand, allow_nil: true
+    delegate :origin_soldier, :captured_soldier, to: :move_hand, allow_nil: true
     delegate :soldier, to: :hand
 
     def initialize(player, source, **params)
@@ -39,7 +39,7 @@ module Warabi
       @candidate_soldiers = input.candidate_soldiers
 
       hand.execute(mediator)
-      if killed_soldier
+      if captured_soldier
         piece_box_added
       end
 

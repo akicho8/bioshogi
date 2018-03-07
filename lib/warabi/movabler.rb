@@ -36,18 +36,18 @@ module Warabi
               break
             end
 
-            killed_soldier = board.surface[place]
+            captured_soldier = board.surface[place]
 
             # 自分の駒に衝突したら終わり
-            if killed_soldier && killed_soldier.location == soldier.location
+            if captured_soldier && captured_soldier.location == soldier.location
               break
             end
 
             # 空または相手駒の升には行ける
-            piece_store(soldier, place, killed_soldier, yielder, options)
+            piece_store(soldier, place, captured_soldier, yielder, options)
 
             # 相手駒があるのでこれ以上は進めない
-            if killed_soldier
+            if captured_soldier
               break
             end
 
@@ -66,13 +66,13 @@ module Warabi
     # でも place に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(origin_soldier, place, killed_soldier, yielder, options)
+    def piece_store(origin_soldier, place, captured_soldier, yielder, options)
       # 死に駒にならないのであれば有効
       soldier = origin_soldier.merge(place: place)
 
       # 成れるなら成る
       if origin_soldier.next_promotable?(soldier.place)
-        yielder << MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, killed_soldier: killed_soldier)
+        yielder << MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
 
         if options[:promoted_preferred]
           return
@@ -80,7 +80,7 @@ module Warabi
       end
 
       if soldier.alive?
-        yielder << MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, killed_soldier: killed_soldier)
+        yielder << MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
       end
     end
   end

@@ -66,7 +66,7 @@ module Warabi
 
         # 駒を取ったとき制限。取ってないならskip
         if e.kill_only
-          unless executor.killed_soldier
+          unless executor.captured_soldier
             throw :skip
           end
         end

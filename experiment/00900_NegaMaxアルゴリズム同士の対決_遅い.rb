@@ -10,9 +10,9 @@ loop do
   p hand
   mediator.execute(hand)
   p mediator
-  killed_soldier = mediator.opponent_player.executor.killed_soldier
+  captured_soldier = mediator.opponent_player.executor.captured_soldier
   # break
-  if killed_soldier && killed_soldier.piece.key == :king
+  if captured_soldier && captured_soldier.piece.key == :king
     break
   end
 end

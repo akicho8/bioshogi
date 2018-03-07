@@ -4,8 +4,8 @@ mediator = Mediator.start
 loop do
   hand = mediator.current_player.brain.lazy_all_hands.to_a.sample
   mediator.execute(hand)
-  killed_soldier = mediator.opponent_player.executor.killed_soldier
-  if killed_soldier && killed_soldier.piece.key == :king
+  captured_soldier = mediator.opponent_player.executor.captured_soldier
+  if captured_soldier && captured_soldier.piece.key == :king
     break
   end
 end

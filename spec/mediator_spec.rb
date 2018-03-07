@@ -43,7 +43,7 @@ EOT
       mediator.opponent_player.location                == m2.opponent_player.location
       mediator.opponent_player.piece_box.to_s          == m2.opponent_player.piece_box.to_s
       mediator.opponent_player.to_s_soldiers           == m2.opponent_player.to_s_soldiers
-      mediator.opponent_player.executor.killed_soldier == m2.opponent_player.executor.killed_soldier
+      mediator.opponent_player.executor.captured_soldier == m2.opponent_player.executor.captured_soldier
     end
 
     it "相手が前回打った位置を復元するので同歩ができる" do

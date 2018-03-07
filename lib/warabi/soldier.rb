@@ -281,13 +281,13 @@ module Warabi
     include HandShared
 
     attr_accessor :origin_soldier
-    attr_accessor :killed_soldier
+    attr_accessor :captured_soldier
 
     def execute(mediator)
-      if killed_soldier
+      if captured_soldier
         mediator.board.safe_delete_on(soldier.place)
         player = mediator.player_at(soldier.location)
-        player.piece_box.add(killed_soldier.piece.key => 1)
+        player.piece_box.add(captured_soldier.piece.key => 1)
       end
       mediator.board.pick_up(origin_soldier.place)
       mediator.board.place_on(soldier)
@@ -297,10 +297,10 @@ module Warabi
       mediator.board.pick_up(soldier.place)
       mediator.board.place_on(origin_soldier)
 
-      if killed_soldier
+      if captured_soldier
         player = mediator.player_at(soldier.location)
-        player.piece_box.pick_out(killed_soldier.piece)
-        mediator.board.place_on(killed_soldier)
+        player.piece_box.pick_out(captured_soldier.piece)
+        mediator.board.place_on(captured_soldier)
       end
     end
 

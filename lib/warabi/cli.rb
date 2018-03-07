@@ -64,8 +64,8 @@ module Warabi
           puts
           puts mediator.to_kif_oneline
 
-          killed_soldier = current_player.executor.killed_soldier
-          if killed_soldier && killed_soldier.piece.key == :king
+          captured_soldier = current_player.executor.captured_soldier
+          if captured_soldier && captured_soldier.piece.key == :king
             win_counts[current_player.location.key] += 1
             Pathname("win_counts.txt").write(win_counts.inspect)
             break
