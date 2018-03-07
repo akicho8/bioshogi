@@ -21,6 +21,7 @@ module Warabi
         if options[:validate]
           assert_cell_blank(soldier.place)
         end
+
         surface[soldier.place] = soldier
       end
 

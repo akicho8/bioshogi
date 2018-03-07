@@ -10,7 +10,7 @@ module Warabi
       end
     end
 
-    attr_writer :players
+    attr_reader :players
 
     def players
       @players ||= Location.collect do |e|
@@ -19,7 +19,7 @@ module Warabi
     end
 
     def player_at(location)
-      players[Location.fetch(location).index]
+      players[Location.fetch(location).code]
     end
 
     def current_player(diff = 0)

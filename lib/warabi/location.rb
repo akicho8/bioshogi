@@ -16,9 +16,6 @@ module Warabi
       {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1 },
     ]
 
-    alias index code
-    alias one_place code
-
     class << self
       def lookup(value)
         v = super
@@ -76,7 +73,7 @@ module Warabi
     end
 
     def flip
-      @flip ||= self.class.fetch(index.next.modulo(self.class.count))
+      @flip ||= self.class.fetch(code.next.modulo(self.class.count))
     end
 
     alias next_location flip
@@ -90,7 +87,7 @@ module Warabi
         to_sfen,
         name,
         name.chars.first,
-        index,
+        code,
         varrow,
         csa_sign,
         equality_name,

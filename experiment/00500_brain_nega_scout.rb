@@ -16,7 +16,7 @@ mediator.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-brain = mediator.player_at(:black).brain(default_diver_class: NegaScoutDiver)
+brain = mediator.player_at(:black).brain(diver_class: NegaScoutDiver)
 brain.diver_dive(depth_max: 0) # => [-100, []]
 brain.diver_dive(depth_max: 1) # => [105, []]
 brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]

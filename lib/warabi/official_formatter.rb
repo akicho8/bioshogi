@@ -2,49 +2,24 @@
 
 module Warabi
   class OfficialFormatter
-    attr_reader :base
+    attr_reader :hand_log
     attr_reader :options
 
-    def initialize(base, **options)
+    def initialize(hand_log, **options)
       @options = {
-        with_location: false,    # 先手後手のマークを入れる？
-        force_drop: false, # 「打」を省略できるときでも「打」を明示する？
-        same_suffix: "",     # 「同」の後に入れる文字列
-        compact: true,       # 3文字を超えたらとき空白が含まれていれば詰める？
+        with_location: false, # 先手後手のマークを入れる？
+        force_drop: false,    # 「打」を省略できるときでも「打」を明示する？
+        same_suffix: "",      # 「同」の後に入れる文字列
+        compact: true,        # 3文字を超えたらとき空白が含まれていれば詰める？
       }.merge(options)
 
-      @base = base
-    end
-
-    def to_debug_hash
-      {
-        :place_from     => place_from,
-        :place_to       => place_to,
-        :candidate      => candidate.collect(&:name),
-        :koreru_c       => koreru_c,
-        :_migi_idou     => _migi_idou?,
-        :_hidari_idou   => _hidari_idou?,
-        :_ue_idou       => _ue_idou?,
-        :_shita_idou    => _shita_idou?,
-        :_hidari_kara_c => _hidari_kara_c,
-        :_migi_kara_c   => _migi_kara_c,
-        :yoreru_c       => yoreru_c,
-        :agareru_c      => agareru_c,
-        :sagareru_c     => sagareru_c,
-        :shita_y        => shita_y,
-        :_tx            => _tx,
-        :_ty            => _ty,
-        :_ox            => _ox,
-        :_oy            => _oy,
-        :_xr            => _xr,
-        :_yr            => _yr,
-      }
+      @hand_log = hand_log
     end
 
     def to_s
       s = []
 
-      if base.place_same
+      if hand_log.place_same
         s << "同" + @options[:same_suffix]
       else
         s << place_to.name
@@ -71,10 +46,10 @@ module Warabi
         else
           s << soldier.any_name
           s << motion
-          if place_from && place_to           # 移動した and
+          if place_from && place_to                # 移動した and
             if place_from.promotable?(location) || # 移動元が相手の相手陣地 or
                 place_to.promotable?(location)     # 移動元が相手の相手陣地
-              unless promoted                           # 成ってない and
+              unless promoted                      # 成ってない and
                 if piece.promotable?               # 成駒になれる
                   s << "不成" # or "生"
                 end
@@ -98,6 +73,31 @@ module Warabi
       end
 
       s
+    end
+
+    def to_debug_hash
+      {
+        :place_from     => place_from,
+        :place_to       => place_to,
+        :candidate      => candidate.collect(&:name),
+        :koreru_c       => koreru_c,
+        :_migi_idou     => _migi_idou?,
+        :_hidari_idou   => _hidari_idou?,
+        :_ue_idou       => _ue_idou?,
+        :_shita_idou    => _shita_idou?,
+        :_hidari_kara_c => _hidari_kara_c,
+        :_migi_kara_c   => _migi_kara_c,
+        :yoreru_c       => yoreru_c,
+        :agareru_c      => agareru_c,
+        :sagareru_c     => sagareru_c,
+        :shita_y        => shita_y,
+        :_tx            => _tx,
+        :_ty            => _ty,
+        :_ox            => _ox,
+        :_oy            => _oy,
+        :_xr            => _xr,
+        :_yr            => _yr,
+      }
     end
 
     private
@@ -227,62 +227,62 @@ module Warabi
       end
     end
 
-    # →
+    # 右に移動する？
     def _migi_idou?
       _ox < _tx
     end
 
-    # ←
+    # 左に移動する？
     def _hidari_idou?
       _tx < _ox
     end
 
-    # ↑
+    # 上に移動する？
     def _ue_idou?
       _ty < _oy
     end
 
-    # ↓
+    # 下に移動する？
     def _shita_idou?
       _oy < _ty
     end
 
-    # 左右移動
+    # 水平に移動する？
     def yoko_idou?
       _oy == _ty
     end
 
-    # 上下移動
+    # 垂直に移動する？
     def tate_idou?
       _ox == _tx
     end
 
-    # 移動先にこれる数
+    # 移動先にこれる駒の数
     def koreru_c
       candidate.count
     end
 
-    # 左からこれる数
+    # 左からこれる駒の数
     def _hidari_kara_c
       candidate.count { |s| s.place.x.value < _tx }
     end
 
-    # 右からこれる数
+    # 右からこれる駒の数
     def _migi_kara_c
       candidate.count { |s| s.place.x.value > _tx }
     end
 
-    # 寄れる数 (水平ラインから移動できる駒数)
+    # 水平に寄れる駒の数
     def yoreru_c
       candidate.count { |s| s.place.y.value == _ty }
     end
 
-    # 上がれる数(移動先より下にある数)
+    # 上がれる駒の数(移動先より下にある数)
     def agareru_c
       candidate.count { |s| s.place.y.value.send(_i(:>), _ty) }
     end
 
-    # 下がれる数(移動先より上にある数)
+    # 下がれる駒の数(移動先より上にある数)
     def sagareru_c
       candidate.count { |s| s.place.y.value.send(_i(:<), _ty) }
     end
@@ -297,12 +297,12 @@ module Warabi
       @_ty ||= place_to.y.value
     end
 
-    # プレイヤーの視点から見た移動先の一つ下
+    # プレイヤー視点から見た移動先の一つ下
     def shita_y
       _ty + _i(1)
     end
 
-    # プレイヤーの視点から見た移動先の一つ上
+    # プレイヤー視点から見た移動先の一つ上
     def ue_y
       _ty + _i(-1)
     end
@@ -326,7 +326,7 @@ module Warabi
       @_yr ||= Range.new(*candidate.collect { |e| e.place.y.value }.minmax)
     end
 
-    # 移動元で二つの龍が水平線上にいる
+    # 移動元で二つの龍が水平線上にいる？
     def idou_moto_no_ryu_ga_suihei_ni_iru?
       candidate.collect { |e| e.place.y.value }.uniq.size == 1
     end
@@ -338,25 +338,29 @@ module Warabi
       !_yr.cover?(_ty)
     end
 
-    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, to: :base
+    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, to: :hand_log
     delegate :place, :piece, :location, :promoted, to: :soldier
 
+    # 「打」？
     def drop_trigger?
       drop_hand
     end
 
+    # 「成」？
     def promote_trigger?
       if move_hand
         move_hand.promote_trigger?
       end
     end
 
+    # 移動元
     def place_from
       if move_hand
         move_hand.origin_soldier.place
       end
     end
 
+    # 移動先
     def place_to
       place
     end

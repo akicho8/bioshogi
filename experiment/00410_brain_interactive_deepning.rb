@@ -6,7 +6,7 @@ Board.dimensiton_change([2, 5])
 [
   NegaAlphaDiver,
   NegaScoutDiver,
-].each do |default_diver_class|
+].each do |diver_class|
   mediator = Mediator.new
   mediator.board.placement_from_shape <<~EOT
   +------+
@@ -17,7 +17,7 @@ Board.dimensiton_change([2, 5])
   | ・ 香|
   +------+
     EOT
-  brain = mediator.player_at(:black).brain(default_diver_class: default_diver_class)
+  brain = mediator.player_at(:black).brain(diver_class: diver_class)
   tp brain.interactive_deepning(depth_max_range: 0..0) # => [{:hand=><▲１三飛成(14)>, :score=>305, :score2=>305, :forecast=>[], :eval_times=>1, :sec=>3.5e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :score2=>-100, :forecast=>[], :eval_times=>1, :sec=>1.0e-05}], [{:hand=><▲１三飛成(14)>, :score=>305, :score2=>305, :forecast=>[], :eval_times=>1, :sec=>2.6e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :score2=>-100, :forecast=>[], :eval_times=>1, :sec=>3.3e-05}]
   tp brain.interactive_deepning(depth_max_range: 0..1) # => [{:hand=><▲２四飛(14)>, :score=>-1200, :score2=>-1200, :forecast=>[<△１四歩成(13)>], :eval_times=>2, :sec=>0.000244}, {:hand=><▲１三飛成(14)>, :score=>-4195, :score2=>-4195, :forecast=>[<△１三飛成(12)>], :eval_times=>2, :sec=>0.000313}], [{:hand=><▲２四飛(14)>, :score=>-1200, :score2=>-1200, :forecast=>[<△１四歩成(13)>], :eval_times=>3, :sec=>0.0003}, {:hand=><▲１三飛成(14)>, :score=>-4195, :score2=>-4195, :forecast=>[<△１三飛成(12)>], :eval_times=>2, :sec=>0.000257}]
   tp brain.interactive_deepning(depth_max_range: 0..2) # => [{:hand=><▲１三飛成(14)>, :score=>705, :score2=>705, :forecast=>[<△１三飛成(12)>, <▲１三香成(15)>], :eval_times=>10, :sec=>0.001313}, {:hand=><▲２四飛(14)>, :score=>105, :score2=>105, :forecast=>[<△１四歩成(13)>, <▲１四香(15)>], :eval_times=>12, :sec=>0.001181}], [{:hand=><▲１三飛成(14)>, :score=>705, :score2=>705, :forecast=>[<△１三飛成(12)>, <▲１三香成(15)>], :eval_times=>11, :sec=>0.002365}, {:hand=><▲２四飛(14)>, :score=>105, :score2=>105, :forecast=>[<△１四歩成(13)>, <▲１四香(15)>], :eval_times=>15, :sec=>0.001435}]
