@@ -114,7 +114,7 @@ EOT
         EOT
       end
       it "to_sfen" do
-        @info.to_sfen.should == "one_place sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d"
+        @info.to_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d"
       end
     end
   end

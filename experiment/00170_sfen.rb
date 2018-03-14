@@ -1,6 +1,6 @@
 require "./example_helper"
 
-sfen = Sfen.parse("one_place sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
+sfen = Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
 sfen.soldiers.first(3).collect(&:name) # => ["△９一香", "△８一桂", "△７一銀"]
 sfen.location.key                      # => :black
 sfen.move_infos                        # => [{:input=>"7i6h"}, {:input=>"S*2d"}]
@@ -9,7 +9,7 @@ sfen.turn_counter                      # => 0
 sfen.handicap?                         # => false
 tp sfen.attributes
 
-sfen = Sfen.parse("one_place startpos")
+sfen = Sfen.parse("position startpos")
 tp sfen.attributes
 sfen.soldiers
 

@@ -6,7 +6,7 @@ module Warabi
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(/^one_place\s+/)
+          source.match?(/^position\s+/)
         end
       end
 

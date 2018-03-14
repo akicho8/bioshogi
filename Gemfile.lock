@@ -6,7 +6,6 @@ PATH
       activesupport
       memory_record
       org_tp
-      pry
       tree_support
 
 GEM
@@ -77,6 +76,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
+  pry
   rake
   rspec
   stackprof

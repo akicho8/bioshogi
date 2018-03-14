@@ -1,7 +1,7 @@
 require "./example_helper"
 require "json"
 
-info = Parser.parse("one_place startpos moves 7i6h")
+info = Parser.parse("position startpos moves 7i6h")
 info.mediator.to_current_sfen # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w - 2"
 
 # ▼サーバーレス将棋 AI ☖ - Qiita
