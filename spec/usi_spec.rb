@@ -23,7 +23,7 @@ module Warabi
       mediator.to_sfen.should == "position startpos moves 7i6h S*2d"
     end
 
-    it "one_place 形式で入力" do
+    it "dimension 形式で入力" do
       usi = Usi::Class2.new
       usi.execute("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
       usi.mediator.to_sfen.should == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"

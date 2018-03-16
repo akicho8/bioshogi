@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Warabi
-  module OnePlace
+  module Dimension
     class << self
       # 一時的に盤面のサイズを変更する(テスト用)
       #

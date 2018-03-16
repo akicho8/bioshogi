@@ -12,7 +12,7 @@ module Warabi
 
     def perform_skill_monitor
       if Warabi.config[:skill_monitor_enable]
-        if OnePlace.size_type == :board_size_9x9
+        if Dimension.size_type == :board_size_9x9
           if mediator.params[:skill_monitor_enable]
             SkillMonitor.new(self).execute
           end

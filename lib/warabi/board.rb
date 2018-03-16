@@ -3,7 +3,7 @@
 module Warabi
   class Board
     class << self
-      delegate :dimensiton_change, :size_type, :promotable_disable, to: "Warabi::OnePlace"
+      delegate :dimensiton_change, :size_type, :promotable_disable, to: "Warabi::Dimension"
     end
 
     delegate :hash, to: :surface
@@ -110,7 +110,7 @@ module Warabi
 
       def vertical_pieces(x)
         Enumerator.new do |yielder|
-          OnePlace::Xplace.dimension.times do |y|
+          Dimension::Xplace.dimension.times do |y|
             if soldier = lookup([x, y])
               yielder << soldier
             end
@@ -143,8 +143,8 @@ module Warabi
       end
 
       def to_sfen
-        OnePlace::Xplace.dimension.times.collect { |y|
-          OnePlace::Yplace.dimension.times.collect { |x|
+        Dimension::Xplace.dimension.times.collect { |y|
+          Dimension::Yplace.dimension.times.collect { |x|
             place = Place.fetch([x, y])
             surface[place]
           }.chunk(&:class).flat_map { |klass, e|
@@ -179,7 +179,7 @@ module Warabi
       def preset_info_by_location(location)
         # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
         # これがないと、board_spec.rb だけを実行したとき落ちる
-        if OnePlace.size_type != :board_size_9x9
+        if Dimension.size_type != :board_size_9x9
           return
         end
 

@@ -121,7 +121,7 @@ Time_Unit:1sec
 Total_Time:1500
 Least_Time_Per_Move:1
 END Time
-BEGIN OnePlace
+BEGIN Dimension
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA * 
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -136,7 +136,7 @@ P-
 +
 +2726FU,T12
 -3334FU,T6
-END OnePlace
+END Dimension
 END Game_Summary
 </pre> 対局の情報は、BEGIN～ENDによって階層構造で表現される。
 プロトコルのバージョンは将来のプロトコルの拡張のため、フォーマットは多くの競技への対応のために準備される。
@@ -155,8 +155,8 @@ END Game_Summary
    'Server' の場合は、サーバを経由する対局プロトコルであることを表す。'Direct' の場合は、対局者同士が直接指し手を送り合う1対1のプロトコルであることを表す。
 なお、本文書では1対1のプロトコルについて取り扱わない。
    <pre>Format: （必須）</pre>
-このプロトコルの、種目に依存した情報の書式を識別する文字列を表す。具体的には、'BEGIN OnePlace' の行で始まり、'END
-OnePlace' の行で終わる階層の内部の書式と、指し手の表記方法、および 'Declaration:'
+このプロトコルの、種目に依存した情報の書式を識別する文字列を表す。具体的には、'BEGIN Dimension' の行で始まり、'END
+Dimension' の行で終わる階層の内部の書式と、指し手の表記方法、および 'Declaration:'
 の行に記述された情報の意味内容を規定する。 ここでは、将棋に関する記述についてのみ述べる。 'Shogi 1.0'
 となっている場合、このプロトコルにおいて規定された将棋のゲームをプレイすることを意味する。 <pre>Declaration: （省略時は情報なし）</pre>
    ゲームのプレイ時、指し手以外の宣言に関する規定を示す文字列を表す。情報の意味は、Formatに記述された文字列に依存する。
@@ -205,7 +205,7 @@ OnePlace' の行で終わる階層の内部の書式と、指し手の表記方�
    3.2.3. 対局の局面情報
    </h3></a>
    <p>　
-開始する対局の局面情報は、'BEGIN OnePlace' と書かれた行と、'END OnePlace'
+開始する対局の局面情報は、'BEGIN Dimension' と書かれた行と、'END Dimension'
 と書かれた行の間に記述され、初期状態の局面を表す。この階層の書式は、Formatに記述された文字列によって識別される。ここでは、将棋の書式につい
 てのみ述べる。</p>
    <p>　書式はCSAファイル形式に準拠した初期局面表記と指し手表記に一部変更を加えた形式からなる。指し手表記がな
