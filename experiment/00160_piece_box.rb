@@ -19,7 +19,7 @@ piece_box.to_h                                 # => {:king=>1, :bishop=>3}
 piece_box.to_sfen(:black)                      # => "K3B"
 piece_box.to_csa(:black)                       # => "P+00OU00KA00KA00KA"
 piece_box.to_s(separator: "/")                 # => "玉/角三"
-piece_box.score                                # => 15669
+piece_box.score                                # => 45670
 
 a = PieceBox.new(Piece.s_to_h("飛玉"))
 b = PieceBox.new(Piece.s_to_h("玉飛"))
