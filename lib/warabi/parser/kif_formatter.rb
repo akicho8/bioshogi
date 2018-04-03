@@ -30,12 +30,16 @@ module Warabi
 
         ################################################################################
 
-        left_part = "%*d %s" % [
-          options[:number_width],
-          mediator.hand_logs.size.next,
-          mb_ljust(last_action_info.kif_word, options[:length]),
-        ]
+        left_part = nil
         right_part = nil
+
+        if last_action_info.kif_word
+          left_part = "%*d %s" % [
+            options[:number_width],
+            mediator.hand_logs.size.next,
+            mb_ljust(last_action_info.kif_word, options[:length]),
+          ]
+        end
 
         if true
           if @last_status_params
@@ -46,7 +50,10 @@ module Warabi
           end
         end
 
-        out << "#{left_part} #{right_part}".rstrip + "\n"
+        if left_part
+          out << "#{left_part} #{right_part}".rstrip + "\n"
+        end
+
         out << judgment_message + "\n"
         out << error_message_part
 
