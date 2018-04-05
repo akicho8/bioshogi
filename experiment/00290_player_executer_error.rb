@@ -6,10 +6,10 @@ mediator.execute("△３四歩")
 player = mediator.player_at(:black)
 player_executor = PlayerExecutorHuman.new(player, "▲５五銀")
 player_executor.execute
-# ~> /Users/ikeda/src/warabi/lib/warabi/player_executor.rb:35:in `execute': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Warabi::HoldPieceNotFound2)
+# ~> /Users/ikeda/src/warabi/lib/warabi/player_executor_base.rb:83:in `raise_error': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Warabi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀
-# ~> 棋譜: ▲２六歩(27) △３四歩(33)
+# ~> 棋譜: ２六歩(27) ３四歩(33)
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
@@ -25,4 +25,7 @@ player_executor.execute
 # ~> +---------------------------+
 # ~> 先手の持駒：なし
 # ~> 手数＝2 △３四歩(33) まで
+# ~> 
+# ~> 先手番
+# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player_executor_base.rb:33:in `execute'
 # ~> 	from -:8:in `<main>'

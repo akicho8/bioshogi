@@ -118,6 +118,11 @@ EOT
         it "ルール上、成っている状態から成らない状態に戻れないので(移動元を明記しても同様。ただ例外の種類が異なる)" do
           expect { Mediator.player_test_soldier_names(init: "５五龍", execute: "５六飛(55)") }.to raise_error(PromotedPieceToNormalPiece)
         end
+
+        it "初手 25歩(27) とした場合、27から1升飛んで25の地点には移動できないので" do
+          expect { Mediator.player_test_soldier_names(init: "27歩", execute: "25歩(27)") }.to raise_error(CandidateSoldiersNotInclude)
+          expect { Mediator.player_test_soldier_names(init: "27歩", execute: "2g2e") }.to raise_error(CandidateSoldiersNotInclude)
+        end
       end
 
       describe "成" do

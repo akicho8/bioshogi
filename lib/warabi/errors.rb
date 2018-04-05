@@ -12,7 +12,7 @@ module Warabi
   class UnconfirmedObject < WarabiError
   end
 
-  # 指定座標に移動できる駒が一つもない
+  # 指定座標に移動できる駒が一つもない (KI2の場合でのみ)
   class MovableBattlerNotFound < WarabiError
   end
 
@@ -94,6 +94,10 @@ module Warabi
 
   # ２七に歩がないのに２六歩(27)とした
   class NotFoundOnBoard < RuleError
+  end
+
+  # 指定座標に移動できる駒に移動元の駒が含まれていない。初手25歩(27)の場合
+  class CandidateSoldiersNotInclude < RuleError
   end
 
   # 成れない条件で成ろうとする。初手７六歩成など

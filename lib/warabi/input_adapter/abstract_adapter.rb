@@ -46,8 +46,13 @@ module Warabi
         errors << {error_class: error_class, message: message}
       end
 
+      # 目的地に来れる盤上の駒の配列
       def candidate_soldiers
         @candidate_soldiers ||= player.candidate_soldiers(piece: piece, promoted: !promote_trigger && promoted, place: place)
+      end
+
+      def candidate_soldiers_as_string
+        candidate_soldiers.collect(&:name).join(', ')
       end
 
       def soldier
@@ -77,7 +82,7 @@ module Warabi
           :piece           => piece,
           :promoted        => promoted,
           :promote_trigger => promote_trigger,
-          :drop_trigger  => drop_trigger,
+          :drop_trigger    => drop_trigger,
           :errors          => errors,
         }
       end

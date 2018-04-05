@@ -26,6 +26,19 @@ module Warabi
               errors_add SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています"
             end
           end
+
+          # この検証を外すと次の !candidate_soldiers.include?(move_hand.origin_soldier) の検証にひっかかるので外してもよいけど、
+          # エラーの原因を明確にするために入れてある
+          if !promote_trigger && origin_soldier
+            if origin_soldier.promoted && !promoted
+              errors_add PromotedPieceToNormalPiece, "成った状態から成らない状態に戻れません"
+            end
+          end
+
+          # 初手 "25歩(27)" とした場合
+          if !candidate_soldiers.include?(move_hand.origin_soldier)
+            errors_add CandidateSoldiersNotInclude, "#{move_hand}としましたが#{place_from}から#{place}に移動することはできません"
+          end
         end
 
         if drop_trigger

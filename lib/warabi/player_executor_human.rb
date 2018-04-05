@@ -22,11 +22,11 @@ module Warabi
 
     def hand_log
       @hand_log ||= HandLog.new({
-          :drop_hand    => @drop_hand,
-          :move_hand      => @move_hand,
-          :candidate      => @candidate_soldiers,
-          :place_same     => place_same?,
-          :skill_set      => skill_set,
+          :drop_hand  => @drop_hand,
+          :move_hand  => @move_hand,
+          :candidate  => @candidate_soldiers,
+          :place_same => place_same?,
+          :skill_set  => skill_set,
         }).freeze
     end
 

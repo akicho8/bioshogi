@@ -40,6 +40,10 @@ module Warabi
         !!input[:usi_promote_trigger]
       end
 
+      # def hard_validations
+      #   super
+      # end
+
       private
 
       def alpha_to_digit(s)

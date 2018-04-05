@@ -39,12 +39,6 @@ module Warabi
         if have_promote_or_not_promote_force_instruction? && !piece.promotable?
           errors_add NoPromotablePiece, "#{piece}は裏がないので「成・不成・生」は指定できません"
         end
-
-        if !promote_trigger && origin_soldier
-          if origin_soldier.promoted && !promoted
-            errors_add PromotedPieceToNormalPiece, "成った状態から成らない状態に戻れません"
-          end
-        end
       end
 
       private

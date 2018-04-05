@@ -1,4 +1,4 @@
-# standard_kif_white_side_spec_generator.rb から生成するファイルなので変更禁止
+# - から生成するファイルなので変更禁止
 require_relative "../spec_helper"
 
 module Warabi

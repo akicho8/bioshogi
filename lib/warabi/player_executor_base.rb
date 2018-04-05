@@ -34,7 +34,7 @@ module Warabi
       end
 
       @hand               = input.hand
-      @drop_hand        = input.drop_hand
+      @drop_hand          = input.drop_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = input.candidate_soldiers
 
