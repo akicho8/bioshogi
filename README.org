@@ -1,13 +1,10 @@
-* 将棋のAI
+* 将棋の棋譜相互変換、棋譜から戦術抽出、超弱いCPUなどのライブラリ
 
-  - [[https://travis-ci.org/akicho8/warabi][Travis]]: [[https://travis-ci.org/akicho8/warabi.png]]
-  - [[https://gemnasium.com/akicho8/warabi/][Gemnasium]]: [[https://gemnasium.com/akicho8/warabi.png]]
-  - [[https://codeclimate.com/github/akicho8/warabi][Code Climate]]: [[https://codeclimate.com/github/akicho8/warabi.png]]
-  - [[https://bettercodehub.com/edge/badge/akicho8/warabi?branch%3Dmaster][https://bettercodehub.com/edge/badge/akicho8/warabi?branch=master]]
+#+html: <a href="https://travis-ci.org/akicho8/warabi"><img src="https://travis-ci.org/akicho8/warabi.svg?branch=master" /></a>
+#+html: <a href="https://codeclimate.com/github/akicho8/warabi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>  
 
-  デモ: http://fast-plateau-7460.herokuapp.com/
-
-  [[https://raw.github.com/akicho8/warabi/master/brawser/demo2.png]]
+  [[file:http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][file:https://raw.github.com/akicho8/warabi/master/warabi.png]]
+  [[http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][デモ]]
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
