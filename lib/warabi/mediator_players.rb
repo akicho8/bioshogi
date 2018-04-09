@@ -47,19 +47,7 @@ module Warabi
     end
 
     def basic_score
-      score = 0
-      board.surface.each_value do |e|
-        if e.promoted
-          w = e.piece.promoted_weight
-        else
-          w = e.piece.basic_weight
-        end
-        score += w * e.location.value_sign
-      end
-      players.each do |e|
-        score += e.piece_box.score * e.location.value_sign
-      end
-      score
+      evaluator.basic_score
     end
 
     concerning :Other do

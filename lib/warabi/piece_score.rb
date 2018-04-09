@@ -11,9 +11,17 @@ module Warabi
       {key: :lance,  basic_weight:   600, promoted_weight: 1200, hold_weight:   630},
       {key: :pawn,   basic_weight:   100, promoted_weight: 1200, hold_weight:   105},
     ]
-  end
 
-  def piece
-    Piece[key]
+    def piece
+      Piece[key]
+    end
+
+    def any_weight(promoted)
+      if promoted
+        promoted_weight
+      else
+        basic_weight
+      end
+    end
   end
 end

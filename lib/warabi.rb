@@ -93,6 +93,7 @@ require_relative "warabi/sect_info"
 require_relative "warabi/defense_group_info"
 
 require_relative "warabi/brain"
+require_relative "warabi/board_place_score"
 require_relative "warabi/evaluator"
 
 require_relative "warabi/parser"
