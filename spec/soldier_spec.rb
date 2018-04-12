@@ -43,5 +43,12 @@ module Warabi
       MoveHand.create(soldier: soldier, origin_soldier: origin_soldier).to_kif.should == "▲６八銀成(79)"
       DropHand.create(soldier: Soldier.from_str("▲５五飛")).to_kif.should == "▲５五飛打"
     end
+
+    it "底からの移動幅" do
+      Soldier.from_str("▲19香").advance_level.should == 0
+      Soldier.from_str("▲18香").advance_level.should == 1
+      Soldier.from_str("△11香").advance_level.should == 0
+      Soldier.from_str("△12香").advance_level.should == 1
+    end
   end
 end

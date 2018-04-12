@@ -51,13 +51,18 @@ module Warabi
     def soldier_score(e)
       w = e.piece.any_weight(e.promoted)
       key = [e.piece.key, e.promoted].join("_")
+      x, y = e.normalized_place.to_xy
+
       if v = BoardPlaceScore[key]
-        place = e.place.flip_if_white(e.location) # ▲側からの座標に補正
-        y = place.y.value
-        x = place.x.value
-        s = v.score_fields[y][x]
+        s = v.weight_fields[y][x]
         w += s
       end
+
+      if v = BoardAdvanceScore[key]
+        s = v.weight_list[e.advance_level]
+        w += s
+      end
+
       w * e.location.value_sign
     end
 

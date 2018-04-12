@@ -36,4 +36,3 @@ mediator.player_at(:black).evaluator.score # => 110
 # >> 手数＝0 まで
 # >> 
 # >> 先手番
-# >> [7, 5, 10]

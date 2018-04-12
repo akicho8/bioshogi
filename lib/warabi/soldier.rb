@@ -147,6 +147,16 @@ module Warabi
       !collision_pawn(board) && alive?
     end
 
+    # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
+    def advance_level
+      Dimension::Yplace.dimension - 1 - place.flip_if_white(location).y.value
+    end
+
+    # 自分を▲側に補正したときの座標
+    def normalized_place
+      place.flip_if_white(location)
+    end
+
     ################################################################################ Formatter
 
     def to_s
