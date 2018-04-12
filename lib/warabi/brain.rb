@@ -24,11 +24,12 @@ module Warabi
       @player = player
       @params = {
         diver_class: NegaAlphaDiver, # [NegaAlphaDiver, NegaScoutDiver]
+        evaluator_class: EvaluatorBase,
       }.merge(params)
     end
 
     def diver_dive(**params)
-      self.params[:diver_class].new(params.merge(current_player: player)).dive
+      self.params[:diver_class].new(self.params.merge(params).merge(current_player: player)).dive
     end
 
     def interactive_deepning(**params)
@@ -45,7 +46,7 @@ module Warabi
       hands = []
       finished = catch params[:out_of_time] do
         params[:depth_max_range].each do |depth_max|
-          diver = self.params[:diver_class].new(params.merge(current_player: player.opponent_player, depth_max: depth_max))
+          diver = self.params[:diver_class].new(self.params.merge(params).merge(current_player: player.opponent_player, depth_max: depth_max))
           hands = children.collect do |hand|
             Warabi.logger.debug "試指 #{hand}" if Warabi.logger
             hand.sandbox_execute(player.mediator) do
@@ -66,7 +67,7 @@ module Warabi
     end
 
     def smart_score_list(**params)
-      diver = self.params[:diver_class].new(params.merge(current_player: player.opponent_player))
+      diver = self.params[:diver_class].new(self.params.merge(params).merge(current_player: player.opponent_player))
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
@@ -77,10 +78,11 @@ module Warabi
     end
 
     def fast_score_list(**params)
+      evaluator = player.evaluator(self.params.merge(params))
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
-          v = player.evaluator.score
+          v = evaluator.score
           {hand: hand, score: v, socre2: v * player.location.value_sign, forecast: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
@@ -209,7 +211,7 @@ module Warabi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator.score
+        score = player.evaluator(params).score
         log.call "評価 #{score}" if log
         return [score, []]
       end
@@ -263,7 +265,7 @@ module Warabi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator.score
+        score = player.evaluator(params).score
         log.call "評価 #{score}" if log
         return [score, []]
       end

@@ -119,7 +119,7 @@ module Warabi
 
     concerning :BrainMethods do
       def evaluator(**options)
-        (options[:evaluator_class] || Evaluator).new(self, options)
+        (options[:evaluator_class] || EvaluatorBase).new(self, options)
       end
 
       def brain(**params)
