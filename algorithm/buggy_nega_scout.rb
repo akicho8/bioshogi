@@ -18,8 +18,8 @@ class BuggyNegaScout < NegaMax
 
     # 合法手がない場合はパスして相手に手番を渡す
     if children.empty?
-      score, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
-      return [-score, [:pass, *way]]
+      score, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
+      return [-score, [:pass, *pv]]
     end
 
     # 効果的なもの順に並び換える
@@ -38,14 +38,14 @@ class BuggyNegaScout < NegaMax
     children.each do |place|
       mediator.place_on(player, place) do
         a = [alpha, max_v].max
-        v, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -(a + 1), beta: -a) # null window search
+        v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -(a + 1), beta: -a) # null window search
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if a < v && v < beta
-          v, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -v) # 再探索
+          v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -v) # 再探索
           v = -v
           if max_v < v          # ネガマックス法 : 大きな値を選ぶ
             max_v = v
-            forecast = [place, *way]
+            forecast = [place, *pv]
           end
         end
       end

@@ -51,8 +51,8 @@ module Warabi
             Warabi.logger.debug "試指 #{hand}" if Warabi.logger
             hand.sandbox_execute(player.mediator) do
               start_time = Time.now
-              v, way = diver.dive
-              {hand: hand, score: -v, score2: -v * player.location.value_sign, forecast: way, eval_times: diver.eval_counter, sec: Time.now - start_time}
+              v, pv = diver.dive
+              {hand: hand, score: -v, score2: -v * player.location.value_sign, forecast: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
             end
           end
         end
@@ -71,8 +71,8 @@ module Warabi
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
-          v, way = diver.dive
-          {hand: hand, score: -v, socre2: -v * player.location.value_sign, forecast: way, eval_times: diver.eval_counter, sec: Time.now - start_time}
+          v, pv = diver.dive
+          {hand: hand, score: -v, socre2: -v * player.location.value_sign, forecast: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -226,12 +226,12 @@ module Warabi
         children_exist = true
         log.call "試指 #{hand} (%d)" % i if log
         hand.sandbox_execute(mediator) do
-          v, way = dive(player.opponent_player, depth + 1, -beta, -alpha)
+          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
           v = -v
           if alpha < v
             alpha = v
             best_hand = hand
-            forecast = way
+            forecast = pv
           end
         end
         if alpha >= beta
@@ -274,18 +274,18 @@ module Warabi
 
       # # 合法手がない場合はパスして相手に手番を渡す
       # if children.empty?
-      #   v, way = dive(player.opponent_player, depth + 1, -beta, -alpha)
+      #   v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
       #   v = -v
-      #   return [v, [:pass, *way]]
+      #   return [v, [:pass, *pv]]
       # end
 
       # 再帰を簡潔に記述するため
       recursive = -> hand, alpha2, beta2 {
         log.call "試指 #{hand}" if log
         hand.sandbox_execute(mediator) do
-          v, way = dive(player.opponent_player, depth + 1, alpha2, beta2)
+          v, pv = dive(player.opponent_player, depth + 1, alpha2, beta2)
           v = -v
-          [v, way]
+          [v, pv]
         end
       }
 
@@ -300,11 +300,11 @@ module Warabi
 
         # 最善候補を通常の窓で探索
         hand = children.shift
-        v, way = recursive.(hand, -beta, -alpha)
+        v, pv = recursive.(hand, -beta, -alpha)
         max_v = v
-        forecast = [hand, *way]
+        forecast = [hand, *pv]
         if beta <= v
-          return [v, [hand, *way]]
+          return [v, [hand, *pv]]
         end
         if alpha < v
           alpha = v
@@ -312,15 +312,15 @@ module Warabi
       end
 
       children.each do |hand|
-        v, way = recursive.(hand, -(alpha + 1), -alpha) # null window search
+        v, pv = recursive.(hand, -(alpha + 1), -alpha) # null window search
         if beta <= v
-          return [v, [hand, *way]]
+          return [v, [hand, *pv]]
         end
         if alpha < v
           alpha = v
-          v, way = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
+          v, pv = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
           if beta <= v
-            return [v, [hand, *way]]
+            return [v, [hand, *pv]]
           end
           if alpha < v
             alpha = v
@@ -328,7 +328,7 @@ module Warabi
         end
         if max_v < v
           max_v = v
-          forecast = [hand, *way]
+          forecast = [hand, *pv]
         end
       end
 

@@ -14,8 +14,8 @@ mediator = Mediator.start
 
 StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   50.times do
-    v, way = mediator.current_player.brain.diver_dive(depth_max: 2)
-    hand = way.first
+    v, pv = mediator.current_player.brain.diver_dive(depth_max: 2)
+    hand = pv.first
     mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
   end
 end

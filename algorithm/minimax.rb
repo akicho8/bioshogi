@@ -15,8 +15,8 @@ class Minimax < DirtyMinimax
     player = mediator.player_at(turn)
     children = mediator.available_places(player)
     if children.empty?
-      v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-      return [v, [:pass, *way]]
+      v, pv = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+      return [v, [:pass, *pv]]
     end
 
     if turn.even?
@@ -28,14 +28,14 @@ class Minimax < DirtyMinimax
     forecast = []
     children.each do |place|
       mediator.place_on(player, place) do
-        v, way = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+        v, pv = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         if turn.even?
           flag = v > max # 自分が自分にとってもっとも有利な手を選択する
         else
           flag = v < max # 相手が自分にとってもっとも不利な手を選択する
         end
         if flag
-          forecast = [place, *way]
+          forecast = [place, *pv]
           max = v
         end
       end

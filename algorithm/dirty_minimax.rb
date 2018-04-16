@@ -99,9 +99,9 @@ class DirtyMinimax
 
     infos = mediator.available_places(player).collect do |e|
       mediator.place_on(player, e) do
-        v, way = compute_score(turn: turn + 1, depth_max: params[:depth_max])
+        v, pv = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         v = -v
-        {hand: e, forecast: way, score: v, score2: player == :o ? v : -v}
+        {hand: e, forecast: pv, score: v, score2: player == :o ? v : -v}
       end
     end
     infos.sort_by { |e| -e[:score] }
@@ -121,9 +121,9 @@ class DirtyMinimax
         infos = mediator.available_places(player).collect do |e|
           mediator.place_on(player, e) do
             start_time = Time.now
-            v, way = compute_score(turn: turn + 1, depth_max: depth_max)
+            v, pv = compute_score(turn: turn + 1, depth_max: depth_max)
             v = -v
-            {hand: e, forecast: way, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
+            {hand: e, forecast: pv, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
           end
         end
       end
@@ -148,7 +148,7 @@ class DirtyMinimax
   end
 
   def compute_score(turn:, depth_max:)
-    v, way = primitive_mini_max(turn: turn, depth_max: depth_max)
+    v, pv = primitive_mini_max(turn: turn, depth_max: depth_max)
 
     # Negamax を想定しているため後手番なら符号を逆にする(後手から見て有利な状況は、よりマイナスではなく、よりプラスであるとする)
     player = mediator.player_at(turn)
@@ -156,7 +156,7 @@ class DirtyMinimax
       v = -v
     end
 
-    [v, way]
+    [v, pv]
   end
 
   def primitive_mini_max(turn:, depth_max:, depth: 0)
@@ -172,8 +172,8 @@ class DirtyMinimax
     children = mediator.available_places(player)
 
     if children.empty?
-      v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
-      return [v, [:pass, *way]]
+      v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+      return [v, [:pass, *pv]]
     end
 
     forecast = []
@@ -182,9 +182,9 @@ class DirtyMinimax
       max = -Float::INFINITY
       children.each do |place|
         mediator.place_on(player, place) do
-          v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+          v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v > max
-            forecast = [place, *way]
+            forecast = [place, *pv]
             max = v
           end
         end
@@ -196,9 +196,9 @@ class DirtyMinimax
       min = Float::INFINITY
       children.each do |place|
         mediator.place_on(player, place) do
-          v, way = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
+          v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v < min
-            forecast = [place, *way]
+            forecast = [place, *pv]
             min = v
           end
         end

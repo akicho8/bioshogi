@@ -18,17 +18,17 @@ class NegaScout < NegaMax
 
     # 合法手がない場合はパスして相手に手番を渡す
     if children.empty?
-      v, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
+      v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
       v = -v
-      return [v, [:pass, *way]]
+      return [v, [:pass, *pv]]
     end
 
     # 再帰を簡潔に記述するため
     recursive = -> _place, alpha2, beta2 {
       mediator.place_on(player, _place) do
-        v, way = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: alpha2, beta: beta2)
+        v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: alpha2, beta: beta2)
         v = -v
-        [v, way]
+        [v, pv]
       end
     }
 
@@ -37,11 +37,11 @@ class NegaScout < NegaMax
 
     # 最善候補を通常の窓で探索
     place = children.shift
-    v, way = recursive.(place, -beta, -alpha)
+    v, pv = recursive.(place, -beta, -alpha)
     max_v = v
-    forecast = [place, *way]
+    forecast = [place, *pv]
     if beta <= v
-      return [v, [place, *way]]
+      return [v, [place, *pv]]
     end
     if alpha < v
       alpha = v
@@ -49,15 +49,15 @@ class NegaScout < NegaMax
 
     forecast = []
     children.each do |place|
-      v, way = recursive.(place, -(alpha + 1), -alpha) # null window search
+      v, pv = recursive.(place, -(alpha + 1), -alpha) # null window search
       if beta <= v
-        return [v, [place, *way]]
+        return [v, [place, *pv]]
       end
       if alpha < v
         alpha = v
-        v, way = recursive.(place, -beta, -alpha) # 通常の窓で再探索
+        v, pv = recursive.(place, -beta, -alpha) # 通常の窓で再探索
         if beta <= v
-          return [v, [place, *way]]
+          return [v, [place, *pv]]
         end
         if alpha < v
           alpha = v
@@ -65,7 +65,7 @@ class NegaScout < NegaMax
       end
       if max_v < v
         max_v = v
-        forecast = [place, *way]
+        forecast = [place, *pv]
       end
     end
 
