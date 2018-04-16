@@ -47,7 +47,7 @@ module Warabi
 
           deepen_score_list_params = {
             time_limit: options[:time_limit],
-            depth_range: 0..options[:depth_max],
+            depth_max_range: 0..options[:depth_max],
           }
           diver_class = divers[mediator.turn_info.current_location.code]
           records = current_player.brain(diver_class: diver_class, evaluator_class: EvaluatorAdvance).interactive_deepning(deepen_score_list_params)
@@ -105,7 +105,7 @@ end
 # >> ---------------------------------------- [1] ▲７六歩(77) (Warabi::NegaAlphaDiver)
 # >> |-----------------+------|
 # >> |      time_limit | 3    |
-# >> | depth_range | 0..3 |
+# >> | depth_max_range | 0..3 |
 # >> |-----------------+------|
 # >> |------+--------------+---------------------------+------+------------+----------|
 # >> | 順位 | 候補手       | 読み筋                    | 形勢 | 評価局面数 | 処理時間 |

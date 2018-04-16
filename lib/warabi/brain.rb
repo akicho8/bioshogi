@@ -34,7 +34,7 @@ module Warabi
 
     def interactive_deepning(**params)
       params = {
-        depth_range: 1..1,
+        depth_max_range: 1..1,
         time_limit: nil,        # nil: 時間制限なし
       }.merge(params)
 
@@ -45,7 +45,7 @@ module Warabi
       children = lazy_all_hands.to_a # 何度も実行するためあえて配列化しておくの重要
       hands = []
       finished = catch params[:out_of_time] do
-        params[:depth_range].each do |depth_max|
+        params[:depth_max_range].each do |depth_max|
           diver = self.params[:diver_class].new(self.params.merge(params).merge(current_player: player.opponent_player, depth_max: depth_max))
           hands = children.collect do |hand|
             Warabi.logger.debug "試指 #{hand}" if Warabi.logger
