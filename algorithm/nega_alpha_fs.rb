@@ -38,21 +38,21 @@ class NegaAlphaFs < NegaAlpha
     end
 
     max_v = -Float::INFINITY
-    forecast = []
+    best_pv = []
     children.each do |place|
       mediator.place_on(player, place) do
         v, pv = nega_alpha_fs(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -[alpha, max_v].max)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if max_v < v
           max_v = v
-          forecast = [place, *pv]
+          best_pv = [place, *pv]
         end
       end
       if beta <= alpha
         break
       end
     end
-    [max_v, forecast]
+    [max_v, best_pv]
   end
 end
 

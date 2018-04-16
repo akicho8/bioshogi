@@ -39,7 +39,7 @@ class NegaScout < NegaMax
     place = children.shift
     v, pv = recursive.(place, -beta, -alpha)
     max_v = v
-    forecast = [place, *pv]
+    best_pv = [place, *pv]
     if beta <= v
       return [v, [place, *pv]]
     end
@@ -47,7 +47,7 @@ class NegaScout < NegaMax
       alpha = v
     end
 
-    forecast = []
+    best_pv = []
     children.each do |place|
       v, pv = recursive.(place, -(alpha + 1), -alpha) # null window search
       if beta <= v
@@ -65,11 +65,11 @@ class NegaScout < NegaMax
       end
       if max_v < v
         max_v = v
-        forecast = [place, *pv]
+        best_pv = [place, *pv]
       end
     end
 
-    [max_v, forecast]
+    [max_v, best_pv]
   end
 end
 

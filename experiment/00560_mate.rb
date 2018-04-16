@@ -24,7 +24,7 @@ brain = mediator.player_at(:black).brain(diver_class: NegaAlphaDiver)
 # brain.diver_dive(depth_max: 3) # => [60, [<▲２四玉(13)>, <△２二玉(11)>, <▲３三玉(24)>]]
 # brain.diver_dive(depth_max: 4) # => [-2460, [<▲２一金打>, <△２一玉(11)>, <▲２四玉(13)>, <△２二玉(21)>]]
 
-tp brain.smart_score_list(depth_max: 2) # => [{:hand=><▲１二玉(13)>, :score=>-80060, :socre2=>-80060, :forecast=>[<△１二玉(11)>, <▲２一金打>], :eval_times=>11, :sec=>0.001684}, {:hand=><▲２二玉(13)>, :score=>-Infinity, :socre2=>-Infinity, :forecast=>[<△２二玉(11)>, nil], :eval_times=>0, :sec=>0.000292}, {:hand=><▲２三玉(13)>, :score=>-Infinity, :socre2=>-Infinity, :forecast=>[<△２三金(12)>, nil], :eval_times=>9, :sec=>0.001447}]
+tp brain.smart_score_list(depth_max: 2) # => [{:hand=><▲１二玉(13)>, :score=>-80060, :socre2=>-80060, :best_pv=>[<△１二玉(11)>, <▲２一金打>], :eval_times=>11, :sec=>0.001684}, {:hand=><▲２二玉(13)>, :score=>-Infinity, :socre2=>-Infinity, :best_pv=>[<△２二玉(11)>, nil], :eval_times=>0, :sec=>0.000292}, {:hand=><▲２三玉(13)>, :score=>-Infinity, :socre2=>-Infinity, :best_pv=>[<△２三金(12)>, nil], :eval_times=>9, :sec=>0.001447}]
 # >> 後手の持駒：金
 # >>   ２ １
 # >> +------+
@@ -37,7 +37,7 @@ tp brain.smart_score_list(depth_max: 2) # => [{:hand=><▲１二玉(13)>, :score
 # >> 
 # >> 先手番
 # >> |--------------+-----------+-----------+--------------------------------+------------+----------|
-# >> | hand         | score     | socre2    | forecast                       | eval_times | sec      |
+# >> | hand         | score     | socre2    | best_pv                       | eval_times | sec      |
 # >> |--------------+-----------+-----------+--------------------------------+------------+----------|
 # >> | ▲１二玉(13) |    -80060 |    -80060 | [<△１二玉(11)>, <▲２一金打>] |         11 | 0.001684 |
 # >> | ▲２二玉(13) | -Infinity | -Infinity | [<△２二玉(11)>, nil]          |          0 | 0.000292 |

@@ -23,20 +23,20 @@ class NegaMax < Minimax
     end
 
     max = -Float::INFINITY
-    forecast = []
+    best_pv = []
 
     children.each do |place|
       mediator.place_on(player, place) do
         v, pv = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if v > max
-          forecast = [place, *pv]
+          best_pv = [place, *pv]
           max = v
         end
       end
     end
 
-    [max, forecast]
+    [max, best_pv]
   end
 end
 

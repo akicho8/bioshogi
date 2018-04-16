@@ -10,7 +10,7 @@ module Warabi
         {
           "順位"       => i.next,
           "候補手"     => e[:hand],
-          "読み筋"     => e[:forecast].collect { |e| e.to_s }.join(" "),
+          "読み筋"     => e[:best_pv].collect { |e| e.to_s }.join(" "),
           "形勢"       => e[:score2],
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
@@ -52,7 +52,7 @@ module Warabi
             hand.sandbox_execute(player.mediator) do
               start_time = Time.now
               v, pv = diver.dive
-              {hand: hand, score: -v, score2: -v * player.location.value_sign, forecast: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+              {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
             end
           end
         end
@@ -72,7 +72,7 @@ module Warabi
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
           v, pv = diver.dive
-          {hand: hand, score: -v, socre2: -v * player.location.value_sign, forecast: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+          {hand: hand, score: -v, socre2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -83,7 +83,7 @@ module Warabi
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
           v = evaluator.score
-          {hand: hand, score: v, socre2: v * player.location.value_sign, forecast: [], eval_times: 1, sec: Time.now - start_time}
+          {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -219,7 +219,7 @@ module Warabi
       children = player.brain.lazy_all_hands
 
       best_hand = nil
-      forecast = nil
+      best_pv = nil
       children_exist = false
 
       children.each.with_index do |hand, i|
@@ -231,7 +231,7 @@ module Warabi
           if alpha < v
             alpha = v
             best_hand = hand
-            forecast = pv
+            best_pv = pv
           end
         end
         if alpha >= beta
@@ -245,7 +245,7 @@ module Warabi
 
       log.call "★確 #{best_hand}" if log
 
-      [alpha, [best_hand, *forecast]]
+      [alpha, [best_hand, *best_pv]]
     end
   end
 
@@ -289,7 +289,7 @@ module Warabi
         end
       }
 
-      forecast = []
+      best_pv = []
 
       if false
         max_v = -Float::INFINITY
@@ -302,7 +302,7 @@ module Warabi
         hand = children.shift
         v, pv = recursive.(hand, -beta, -alpha)
         max_v = v
-        forecast = [hand, *pv]
+        best_pv = [hand, *pv]
         if beta <= v
           return [v, [hand, *pv]]
         end
@@ -328,12 +328,12 @@ module Warabi
         end
         if max_v < v
           max_v = v
-          forecast = [hand, *pv]
+          best_pv = [hand, *pv]
         end
       end
 
-      log.call "★確 #{forecast.first || '?'}" if log
-      [max_v, forecast]
+      log.call "★確 #{best_pv.first || '?'}" if log
+      [max_v, best_pv]
     end
   end
 end

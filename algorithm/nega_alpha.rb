@@ -41,13 +41,13 @@ class NegaAlpha < NegaMax
       return [-v, [:pass, *pv]]
     end
 
-    forecast = []
+    best_pv = []
     children.each do |place|
       mediator.place_on(player, place) do
         v, pv = nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if v > alpha
-          forecast = [place, *pv]
+          best_pv = [place, *pv]
           alpha = v
         end
       end
@@ -55,7 +55,7 @@ class NegaAlpha < NegaMax
         break
       end
     end
-    [alpha, forecast]
+    [alpha, best_pv]
   end
 end
 

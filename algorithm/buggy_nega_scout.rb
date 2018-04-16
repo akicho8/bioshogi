@@ -34,7 +34,7 @@ class BuggyNegaScout < NegaMax
     # end
 
     max_v = -Float::INFINITY
-    forecast = []
+    best_pv = []
     children.each do |place|
       mediator.place_on(player, place) do
         a = [alpha, max_v].max
@@ -45,7 +45,7 @@ class BuggyNegaScout < NegaMax
           v = -v
           if max_v < v          # ネガマックス法 : 大きな値を選ぶ
             max_v = v
-            forecast = [place, *pv]
+            best_pv = [place, *pv]
           end
         end
       end
@@ -53,7 +53,7 @@ class BuggyNegaScout < NegaMax
         break
       end
     end
-    [max_v, forecast]
+    [max_v, best_pv]
   end
 
   # private

@@ -25,7 +25,7 @@ class Minimax < DirtyMinimax
       max = Float::INFINITY
     end
 
-    forecast = []
+    best_pv = []
     children.each do |place|
       mediator.place_on(player, place) do
         v, pv = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
@@ -35,12 +35,12 @@ class Minimax < DirtyMinimax
           flag = v < max # 相手が自分にとってもっとも不利な手を選択する
         end
         if flag
-          forecast = [place, *pv]
+          best_pv = [place, *pv]
           max = v
         end
       end
     end
-    [max, forecast]
+    [max, best_pv]
   end
 end
 

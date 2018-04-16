@@ -68,7 +68,7 @@ class DirtyMinimax
           {
             "順位"   => i.next,
             "候補手" => e[:hand].to_a,
-            "読み筋" => e[:forecast].collect { |e| e == :pass ? "PASS" : e.to_a.to_s }.join(" "),
+            "読み筋" => e[:best_pv].collect { |e| e == :pass ? "PASS" : e.to_a.to_s }.join(" "),
             "評価値" => e[:score],
             "形勢"   => player == :o ? e[:score] : -e[:score], # 表示は常に先手からの評価にしておく
             "時間"   => e[:sec],
@@ -101,7 +101,7 @@ class DirtyMinimax
       mediator.place_on(player, e) do
         v, pv = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         v = -v
-        {hand: e, forecast: pv, score: v, score2: player == :o ? v : -v}
+        {hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v}
       end
     end
     infos.sort_by { |e| -e[:score] }
@@ -123,7 +123,7 @@ class DirtyMinimax
             start_time = Time.now
             v, pv = compute_score(turn: turn + 1, depth_max: depth_max)
             v = -v
-            {hand: e, forecast: pv, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
+            {hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
           end
         end
       end
@@ -176,7 +176,7 @@ class DirtyMinimax
       return [v, [:pass, *pv]]
     end
 
-    forecast = []
+    best_pv = []
     if turn.even?
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
@@ -184,13 +184,13 @@ class DirtyMinimax
         mediator.place_on(player, place) do
           v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v > max
-            forecast = [place, *pv]
+            best_pv = [place, *pv]
             max = v
           end
         end
       end
 
-      [max, forecast]
+      [max, best_pv]
     else
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
@@ -198,12 +198,12 @@ class DirtyMinimax
         mediator.place_on(player, place) do
           v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v < min
-            forecast = [place, *pv]
+            best_pv = [place, *pv]
             min = v
           end
         end
       end
-      [min, forecast]
+      [min, best_pv]
     end
   end
 end
