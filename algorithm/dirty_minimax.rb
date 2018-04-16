@@ -21,7 +21,7 @@ class DirtyMinimax
       times: 256,
       depth_max: 3,
       dimension: 4,
-      depth_max_range: nil,
+      depth_range: nil,
       time_limit: nil,          # 制限なし
     }
   end
@@ -34,7 +34,7 @@ class DirtyMinimax
       player = mediator.player_at(turn)
 
       start_time = Time.now
-      if params[:depth_max_range]
+      if params[:depth_range]
         infos = interactive_deepning(turn)
       else
         infos = fast_score_list(turn)
@@ -117,7 +117,7 @@ class DirtyMinimax
 
     infos = []
     all_finished = catch @out_of_time do
-      params[:depth_max_range].each do |depth_max|
+      params[:depth_range].each do |depth_max|
         infos = mediator.available_places(player).collect do |e|
           mediator.place_on(player, e) do
             start_time = Time.now
@@ -211,9 +211,9 @@ end
 if $0 == __FILE__
   # DirtyMinimax.new.run          # => {:o=>1, :x=>10}
   # DirtyMinimax.new(times: 2, dimension: 4, depth_max: 3).run                           # => {:o=>3, :x=>3}
-  # DirtyMinimax.new(times: 2, dimension: 4, depth_max_range: 3..3, time_limit: 0.5).run # => {:o=>3, :x=>3}
-  # DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 1..8, time_limit: 1.0).run # => {:o=>4, :x=>1}
-  DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 0..7, time_limit: 1.0).run # => {:o=>4, :x=>1}
+  # DirtyMinimax.new(times: 2, dimension: 4, depth_range: 3..3, time_limit: 0.5).run # => {:o=>3, :x=>3}
+  # DirtyMinimax.new(times: 1, dimension: 6, depth_range: 1..8, time_limit: 1.0).run # => {:o=>4, :x=>1}
+  DirtyMinimax.new(times: 1, dimension: 6, depth_range: 0..7, time_limit: 1.0).run # => {:o=>4, :x=>1}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:1.000247
 # >> ・・・・・・

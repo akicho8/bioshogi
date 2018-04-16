@@ -12,7 +12,7 @@ rows = [
   (3..8).collect do |depth_max|
     app = model.new
     app.params[:silent] = true
-    app.params[:depth_max_range] = 1..depth_max
+    app.params[:depth_range] = 1..depth_max
     app.params[:time_limit] = 0.05
     app.params[:dimension] = dimension
     app.params[:times] = 2
@@ -21,7 +21,7 @@ rows = [
 
     row = {}
     row[:model] = model.name
-    row[:depth_max_range] = 1..depth_max
+    row[:depth_range] = 1..depth_max
     row.update(app.mediator.run_counts)
     row.update(turn: app.current_turn.next)
     row.update(app.mediator.histogram)
@@ -31,7 +31,7 @@ rows = [
 end
 tp rows
 # >> |----------------+-----------------+----------+------+---+---+------------+-------+-------+-------+-------|
-# >> | model          | depth_max_range | evaluate | turn | o | x | 1手平均(s) | 深度1 | 深度2 | 深度3 | 深度4 |
+# >> | model          | depth_range | evaluate | turn | o | x | 1手平均(s) | 深度1 | 深度2 | 深度3 | 深度4 |
 # >> |----------------+-----------------+----------+------+---+---+------------+-------+-------+-------+-------|
 # >> | NegaMax        | 1..3            |      282 |    2 | 3 | 3 |       0.05 |   174 |    48 |     4 |       |
 # >> | NegaMax        | 1..4            |      288 |    2 | 3 | 3 |       0.05 |   180 |    48 |     4 |       |
