@@ -56,6 +56,10 @@ module Warabi
   class MementoStackEmpty < WarabiError
   end
 
+  # (時間が短かすぎて)何も手がとれない
+  class BrainHandsEmpty < WarabiError
+  end
+
   ################################################################################ 構文系 (SyntaxDefact)
 
   # 構文エラー

@@ -72,7 +72,7 @@ module Warabi
       end
 
       if !children.empty? && hands.empty?
-        raise WarabiError, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
+        raise BrainHandsEmpty, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
       end
 
       hands.sort_by { |e| -e[:score] }
