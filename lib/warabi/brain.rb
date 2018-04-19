@@ -293,26 +293,27 @@ module Warabi
         end
       }
 
+      # children が空の場合を考慮して初期値を投了級にしておく
+      max_v = -Float::INFINITY
       best_pv = []
 
-      if false
-        max_v = -Float::INFINITY
-      else
+      if true
         # 効果的なもの順に並び換える
         # children = mediator.move_ordering(player, children)
         children = children.to_a # FIXME: 並び返るために全取得すると遅延評価にした意味がない
 
         # 最善候補を通常の窓で探索
-        hand = children.shift or raise MustNotHappen, "指し手が一つも見つかりません"
-
-        v, pv = recursive.(hand, -beta, -alpha)
-        max_v = v
-        best_pv = [hand, *pv]
-        if beta <= v
-          return [v, [hand, *pv]]
-        end
-        if alpha < v
-          alpha = v
+        hand = children.shift
+        if hand
+          v, pv = recursive.(hand, -beta, -alpha)
+          max_v = v
+          best_pv = [hand, *pv]
+          if beta <= v
+            return [v, [hand, *pv]]
+          end
+          if alpha < v
+            alpha = v
+          end
         end
       end
 
