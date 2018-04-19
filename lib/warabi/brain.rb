@@ -217,9 +217,6 @@ module Warabi
       end
 
       children = player.brain.lazy_all_hands
-      if children.empty?
-        raise MustNotHappen, "指し手が一つも見つかりません"
-      end
 
       best_hand = nil
       best_pv = nil
@@ -274,9 +271,6 @@ module Warabi
       end
 
       children = player.brain.lazy_all_hands
-      if children.empty?
-        raise MustNotHappen, "指し手が一つも見つかりません"
-      end
 
       # # 合法手がない場合はパスして相手に手番を渡す
       # if children.empty?
@@ -305,7 +299,8 @@ module Warabi
         children = children.to_a # FIXME: 並び返るために全取得すると遅延評価にした意味がない
 
         # 最善候補を通常の窓で探索
-        hand = children.shift
+        hand = children.shift or raise MustNotHappen, "指し手が一つも見つかりません"
+
         v, pv = recursive.(hand, -beta, -alpha)
         max_v = v
         best_pv = [hand, *pv]
