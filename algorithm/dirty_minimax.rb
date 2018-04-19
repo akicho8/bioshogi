@@ -70,7 +70,7 @@ class DirtyMinimax
             "候補手" => e[:hand].to_a,
             "読み筋" => e[:best_pv].collect { |e| e == :pass ? "PASS" : e.to_a.to_s }.join(" "),
             "評価値" => e[:score],
-            "形勢"   => player == :o ? e[:score] : -e[:score], # 表示は常に先手からの評価にしておく
+            "▲形勢" => player == :o ? e[:score] : -e[:score], # 表示は常に先手からの評価にしておく
             "時間"   => e[:sec],
           }
         end

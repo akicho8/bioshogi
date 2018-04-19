@@ -233,6 +233,10 @@ module Warabi
     def to_s(**options)
       to_kif(options)
     end
+
+    def king_captured?
+      respond_to?(:captured_soldier) && captured_soldier && captured_soldier.piece.key == :king
+    end
   end
 
   class DropHand
