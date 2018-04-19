@@ -27,6 +27,7 @@ module Warabi
       @params = {
         diver_class: NegaAlphaDiver, # [NegaAlphaDiver, NegaScoutDiver]
         evaluator_class: EvaluatorBase,
+        legal_moves_only: true,
       }.merge(params)
     end
 
@@ -108,7 +109,7 @@ module Warabi
     def lazy_all_hands
       Enumerator.new do |y|
         move_hands.each do |e|
-          if true
+          if params[:legal_moves_only]
             # 駒を動かすことで王が即死してしまう手を除外する (要テスト)
             regal = e.sandbox_execute(player.mediator) do
               player.opponent_player.brain(params).move_hands.none?(&:king_captured?)
