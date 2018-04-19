@@ -217,6 +217,9 @@ module Warabi
       end
 
       children = player.brain.lazy_all_hands
+      if children.empty?
+        raise MustNotHappen, "指し手が一つも見つかりません"
+      end
 
       best_hand = nil
       best_pv = nil
@@ -271,6 +274,9 @@ module Warabi
       end
 
       children = player.brain.lazy_all_hands
+      if children.empty?
+        raise MustNotHappen, "指し手が一つも見つかりません"
+      end
 
       # # 合法手がない場合はパスして相手に手番を渡す
       # if children.empty?
