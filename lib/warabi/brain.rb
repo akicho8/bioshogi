@@ -29,7 +29,7 @@ module Warabi
     end
 
     def diver_dive(**params)
-      self.params[:diver_class].new(self.params.merge(params).merge(current_player: player)).dive
+      diver_instance(params.merge(current_player: player)).dive
     end
 
     def interactive_deepning(**params)
@@ -46,7 +46,7 @@ module Warabi
       hands = []
       finished = catch params[:out_of_time] do
         params[:depth_max_range].each do |depth_max|
-          diver = self.params[:diver_class].new(self.params.merge(params).merge(current_player: player.opponent_player, depth_max: depth_max))
+          diver = diver_instance(params.merge(current_player: player.opponent_player, depth_max: depth_max))
           hands = children.collect do |hand|
             Warabi.logger.debug "試指 #{hand}" if Warabi.logger
             hand.sandbox_execute(player.mediator) do
@@ -66,8 +66,12 @@ module Warabi
       hands.sort_by { |e| -e[:score] }
     end
 
+    def diver_instance(args)
+      self.params[:diver_class].new(self.params.merge(args))
+    end
+
     def smart_score_list(**params)
-      diver = self.params[:diver_class].new(self.params.merge(params).merge(current_player: player.opponent_player))
+      diver = diver_instance(current_player: player.opponent_player)
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(player.mediator) do
           start_time = Time.now
@@ -216,7 +220,7 @@ module Warabi
         return [score, []]
       end
 
-      children = player.brain.lazy_all_hands
+      children = player.brain(params).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
 
       best_hand = nil
       best_pv = nil
@@ -270,7 +274,7 @@ module Warabi
         return [score, []]
       end
 
-      children = player.brain.lazy_all_hands
+      children = player.brain(params).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
 
       # # 合法手がない場合はパスして相手に手番を渡す
       # if children.empty?
