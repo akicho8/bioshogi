@@ -179,6 +179,16 @@ module Warabi
           end
         end
       end
+
+      # 相手の王を取る手が存在する？
+      def suguni_ou_toreru?
+        move_hands(promoted_preferred: true, king_captured_only: true).any?
+      end
+
+      # 逆に王手がかかっている？
+      def oute_kakerareteru?
+        opponent_player.suguni_ou_toreru?
+      end
     end
 
     private

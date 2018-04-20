@@ -50,6 +50,11 @@ module Warabi
       evaluator.basic_score
     end
 
+    # 互いに王手されている局面はありえない
+    def position_invalid?
+      players.all?(&:suguni_ou_toreru?)
+    end
+
     concerning :Other do
       def pieces_set(str)
         Piece.s_to_h2(str).each do |location_key, counts|

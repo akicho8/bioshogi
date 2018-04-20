@@ -20,6 +20,8 @@ module Warabi
         mediator.current_player.move_hands(promoted_preferred: false).collect(&:to_s).should == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２三角(12)", "△２一角成(12)", "△２一角(12)"]
         mediator.current_player.move_hands(king_captured_only: true).collect(&:to_s).should  == ["△２三角成(12)"]
         mediator.current_player.legal_move_hands.collect(&:to_s).should                      == ["△２一玉(11)"]
+        mediator.current_player.oute_kakerareteru?.should                                    == false
+        mediator.current_player.suguni_ou_toreru?.should                                     == true
       end
     end
   end
