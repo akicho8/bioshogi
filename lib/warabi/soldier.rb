@@ -362,7 +362,7 @@ module Warabi
     # 自分が何か指してみて→相手の駒を動かして自分の玉が取られる→非合法手
     def regal_move?(mediator)
       sandbox_execute(mediator) do
-        player = mediator.player_at(location).opponent_player
+        player = mediator.player_at(soldier.location).opponent_player
         player.move_hands(promoted_preferred: true, king_captured_only: true).none? # to_a.empty? と同じ
       end
     end

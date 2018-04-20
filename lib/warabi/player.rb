@@ -139,7 +139,7 @@ module Warabi
       def legal_move_hands
         Enumerator.new do |y|
           move_hands.each do |e|
-            if e.regal_move?
+            if e.regal_move?(mediator)
               y << e
             end
           end
