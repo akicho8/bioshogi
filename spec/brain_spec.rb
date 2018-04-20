@@ -63,7 +63,7 @@ EOT
     it "盤上の駒の全手筋" do
       Board.dimensiton_change([1, 5]) do
         mediator = MediatorSimple.test1(init: "▲１五香")
-        mediator.player_at(:black).brain.move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"]
+        mediator.player_at(:black).move_hands.collect(&:to_kif).should == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"]
       end
     end
 

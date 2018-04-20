@@ -51,7 +51,7 @@ module Warabi
 
       children = lazy_all_hands
 
-      if iparams[:legal_moves_first_only]
+      if true
         # あまりに重いので読みの最初の手を合法手に絞る
         children = children.find_all { |e| e.regal_move?(mediator) }
       end
@@ -74,7 +74,7 @@ module Warabi
             end
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv = diver.dive
+              v, pv = diver.dive(player.opponent_player, 0, -INF_MAX, INF_MAX, [hand])
               hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
               # if v == -INF_MAX
               #   break
@@ -138,11 +138,11 @@ module Warabi
 
     def lazy_all_hands
       Enumerator.new do |y|
-        if iparams[:legal_moves_all]
-          list = player.legal_move_hands
-        else
-          list = player.move_hands
-        end
+        # if iparams[:legal_moves_all]
+        #   list = player.legal_move_hands
+        # else
+        list = player.move_hands
+        # end
         list.each do |e|
           y << e
         end
@@ -220,7 +220,7 @@ module Warabi
   end
 
   class NegaAlphaDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, foo = [])
       out_of_time_check
 
       mediator = player.mediator
@@ -242,17 +242,27 @@ module Warabi
 
       children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
 
+      if true
+        children = children.find_all { |e| e.regal_move?(mediator) }
+        if children.empty?
+          return [-INF_MAX, ["STOP"]]
+        end
+      end
+
+      # children = children.to_a
+
       best_pv = []
       best_hand = nil
-      children_exist = false
 
-      children.each.with_index do |hand, i|
+      # p foo
+
+      children.each do |hand|
         unless hand.regal_move?(mediator)
+          log.call "skip: #{hand}" if log
           next
         end
 
-        children_exist = true
-        log.call "#{hand} (%d)" % i if log
+        log.call "#{hand}" if log
 
         # 玉が取られても相手の玉を取り返せば形勢は互角になる。
         # そうなるとピンチであることに気づかない。
@@ -260,18 +270,20 @@ module Warabi
 
         # 非合法手が混っている場合はこのチェックが重要になってくる
         if hand.king_captured?
-          alpha = INF_MAX - depth
-          best_hand = hand
-          best_pv = [best_hand]
-          # # return [INF_MAX, [hand]]
+          raise
+          # alpha = INF_MAX - depth
+          # best_hand = hand
+          # best_pv = [best_hand]
+          return [INF_MAX, [hand]]
         else
           hand.sandbox_execute(mediator) do
-            v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
+            v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha, foo + [hand])
             v = -v
             if alpha < v
               alpha = v
               best_hand = hand
               best_pv = [best_hand, *pv]
+              # best_pv = foo + [hand]
             end
           end
         end
@@ -286,11 +298,7 @@ module Warabi
       # end
 
       if best_hand
-        log.call "★確 #{best_hand}" if log
-      else
-        # p alpha
-        # p depth
-        # alpha += depth
+        log.call "★確 #{best_hand} (#{alpha})" if log
       end
 
       [alpha, best_pv]
@@ -298,7 +306,7 @@ module Warabi
   end
 
   class NegaScoutDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, foo = [])
       out_of_time_check
 
       mediator = player.mediator
@@ -428,5 +436,5 @@ module Warabi
 end
 # ~> -:25:in `<class:Brain>': undefined method `delegate' for Warabi::Brain:Class (NoMethodError)
 # ~> Did you mean?  DelegateClass
-# ~> 	from -:9:in `<module:Warabi>'
-# ~> 	from -:6:in `<main>'
+# ~>    from -:9:in `<module:Warabi>'
+# ~>    from -:6:in `<main>'

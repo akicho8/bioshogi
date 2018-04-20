@@ -239,8 +239,25 @@ module Warabi
       respond_to?(:captured_soldier) && captured_soldier && captured_soldier.piece.key == :king
     end
 
+    # 合法手か？
+    # 指してみて自分に王手がかかってない状態なら合法手
+    # 自分が何か指してみて→相手の駒を動かして自分の玉が取られる→非合法手
+    #
+    # DropHand, MoveHand 両方に必要
+    # 王手をかけらている状態なら、打ってさえぎらないといけない
+    # 王手をかけらている状態なら、動いてかわさないといけない
+    # つまり両方チェックが必要
+    # MoveHand だけにしてしまうと王手をかけられた状態で無駄な打をしてしまう(王手放置)
+    # このとき相手の玉に対して王手していると局面が不正ということになる。激指でも同様のエラーになった。
+    #
+    # 1. 駒を動かしたことで王手になっていないこと
+    # 2. 王手の状態を回避したこと
+    # の両方チェックするので↓この一つでよい。
+    #
     def regal_move?(mediator)
-      true
+      sandbox_execute(mediator) do
+        !mediator.player_at(soldier.location).oute_kakerareteru?
+      end
     end
   end
 
@@ -294,6 +311,12 @@ module Warabi
         soldier.place.to_sfen,
       ].join
     end
+
+    # def regal_move?(mediator)
+    #   true
+    # end
+    
+    
   end
 
   class MoveHand
@@ -358,12 +381,20 @@ module Warabi
       ].join
     end
 
-    # 合法手か？
-    # 自分が何か指してみて→相手の駒を動かして自分の玉が取られる→非合法手
-    def regal_move?(mediator)
-      sandbox_execute(mediator) do
-        !mediator.player_at(soldier.location).oute_kakerareteru?
-      end
-    end
+    # def regal_move2?(mediator)
+    # 
+    #   # もし王手を掛けられているなら
+    #   if mediator.player_at(soldier.location).oute_kakerareteru?
+    #     sandbox_execute(mediator) do
+    #       !mediator.player_at(soldier.location).oute_kakerareteru?
+    #     end
+    #   else
+    #     # 自滅しないこと
+    #     sandbox_execute(mediator) do
+    #       !mediator.player_at(soldier.location).oute_kakerareteru?
+    #     end
+    #   end
+    # end
+
   end
 end
