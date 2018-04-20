@@ -35,7 +35,7 @@ class DirtyMinimax
 
       start_time = Time.now
       if params[:depth_max_range]
-        infos = interactive_deepning(turn)
+        infos = iterative_deepening(turn)
       else
         infos = fast_score_list(turn)
       end
@@ -107,7 +107,7 @@ class DirtyMinimax
     infos.sort_by { |e| -e[:score] }
   end
 
-  def interactive_deepning(turn)
+  def iterative_deepening(turn)
     player = mediator.player_at(turn)
 
     @out_of_time = nil

@@ -35,7 +35,7 @@ module Warabi
       diver_instance(params.merge(current_player: player)).dive
     end
 
-    def interactive_deepning(**params)
+    def iterative_deepening(**params)
       params = {
         depth_max_range: 1..1,
         time_limit: nil,        # nil: 時間制限なし

@@ -15,7 +15,7 @@ Board.dimensiton_change([2, 4]) do
 手数＝0
 EOT
   brain = mediator.current_player.brain(diver_class: NegaAlphaDiver)
-  records = brain.interactive_deepning(depth_max_range: 4..4)
+  records = brain.iterative_deepening(depth_max_range: 4..4)
   tp Brain.human_format(records)
 end
 # >> |------+----------------+---------------------------------------------------------+---------+------------+----------|

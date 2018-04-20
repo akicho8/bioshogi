@@ -14,7 +14,7 @@ Board.dimensiton_change([2, 4]) do
 先手の持駒：
 手数＝0
   EOT
-  records = mediator.current_player.brain(diver_class: NegaScoutDiver).interactive_deepning(depth_max_range: 3..3)
+  records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(depth_max_range: 3..3)
   tp Brain.human_format(records)
 end
 # >> |------+----------------+----------------------------------------+--------+------------+----------|

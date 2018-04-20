@@ -18,7 +18,7 @@ mediator.placement_from_bod <<~EOT
 EOT
 
 brain = mediator.current_player.brain(diver_class: NegaScoutDiver)
-records = brain.interactive_deepning(depth_max_range: 5..5)
+records = brain.iterative_deepening(depth_max_range: 5..5)
 tp Brain.human_format(records)
 
 # >> |------+--------------+--------------------------------------------------------------------+-----------+------------+----------|
