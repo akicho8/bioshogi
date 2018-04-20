@@ -125,6 +125,60 @@ module Warabi
       def brain(**params)
         Brain.new(self, **params)
       end
+
+      # ピンを考慮した合法手の生成
+      #
+      # ▼PinCheck機構つきのMakeMoveの提案 - Bonanzaソース完全解析ブログ
+      # http://d.hatena.ne.jp/LS3600/20091229
+      # > MakeMoveのあとに王手がかかっているかを調べてはならない
+      # > MakeMove → InCheck(自王に王手がかかっているかを判定)→(自玉に王手がかかっているなら) UnMakeMove というのは良くない
+      # > それというのも、MakeMoveでは局面ハッシュ値やoccupied bitboardなどを更新したりしているのが普通であり、王手がかかっているのがわかってから局面を戻すというのは無駄なやりかただ。
+      #
+      # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
+      #
+      def legal_move_hands
+        Enumerator.new do |y|
+          move_hands.each do |e|
+            if e.regal_move?
+              y << e
+            end
+          end
+        end
+      end
+
+      # 盤上の駒の全手筋
+      def move_hands(**options)
+        options = {
+          promoted_preferred: true,  # 成と不成は成だけ生成する？
+          king_captured_only: false, # 玉を取る手だけ生成する？
+        }.merge(options)
+
+        Enumerator.new do |y|
+          soldiers.each do |soldier|
+            soldier.move_list(board, options).each do |move_hand|
+              y << move_hand
+            end
+          end
+        end
+      end
+
+      # 持駒の全打筋
+      def drop_hands
+        Enumerator.new do |y|
+          # 直接 piece_box.each_key とせずに piece_keys にいったん取り出している理由は
+          # 外側で execute 〜 revert するときの a.each { a.update } の状態になるのを回避するため。
+          # each の中で元を更新すると "can't add a new key into hash during iteration" のエラーになる
+          piece_keys = piece_box.keys
+          board.blank_places.each do |place|
+            piece_keys.each do |piece_key|
+              soldier = Soldier.create(piece: Piece[piece_key], promoted: false, place: place, location: location)
+              if soldier.rule_valid?(board)
+                y << DropHand.create(soldier: soldier)
+              end
+            end
+          end
+        end
+      end
     end
 
     private

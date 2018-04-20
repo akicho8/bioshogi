@@ -22,6 +22,8 @@ module Warabi
 
     attr_accessor :player, :params
 
+    delegate :mediator, to: :player
+
     def initialize(player, **params)
       @player = player
       @params = {
@@ -57,7 +59,7 @@ module Warabi
             #   v = -INF_MAX
             #   hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
             # else
-            hand.sandbox_execute(player.mediator) do
+            hand.sandbox_execute(mediator) do
               start_time = Time.now
               v, pv = diver.dive
               hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
@@ -83,10 +85,24 @@ module Warabi
       self.params[:diver_class].new(self.params.merge(args))
     end
 
+    # Board.promotable_disable
+    # Board.dimensiton_change([2, 5])
+    # mediator = Mediator.new
+    # mediator.board.placement_from_shape <<~EOT
+    # +------+
+    # | ・v香|
+    # | ・v飛|
+    # | ・v歩|
+    # | ・ 飛|
+    # | ・ 香|
+    # +------+
+    # EOT
+    # brain = mediator.player_at(:black).brain(evaluator_class: EvaluatorAdvance)
+    # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)
       lazy_all_hands.collect { |hand|
-        hand.sandbox_execute(player.mediator) do
+        hand.sandbox_execute(mediator) do
           start_time = Time.now
           v, pv = diver.dive
           {hand: hand, score: -v, socre2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
@@ -97,7 +113,7 @@ module Warabi
     def fast_score_list(**params)
       evaluator = player.evaluator(self.params.merge(params))
       lazy_all_hands.collect { |hand|
-        hand.sandbox_execute(player.mediator) do
+        hand.sandbox_execute(mediator) do
           start_time = Time.now
           v = evaluator.score
           {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
@@ -105,53 +121,18 @@ module Warabi
       }.sort_by { |e| -e[:score] }
     end
 
-    # FIXME: lazy_all_hands, move_hands, drop_hands は player から直接参照できるようにする
     def lazy_all_hands
       Enumerator.new do |y|
-        move_hands.each do |e|
-          if params[:legal_moves_only]
-            # 駒を動かすことで王が即死してしまう手を除外する (要テスト)
-            regal = e.sandbox_execute(player.mediator) do
-              player.opponent_player.brain(params).move_hands.none?(&:king_captured?)
-            end
-            if regal
-              y << e
-            end
-          else
-            y << e
-          end
+        if params[:legal_moves_only]
+          list = player.legal_move_hands
+        else
+          list = player.move_hands
         end
-        drop_hands.each do |e|
+        list.each do |e|
           y << e
         end
-      end
-    end
-
-    # 盤上の駒の全手筋
-    def move_hands
-      Enumerator.new do |y|
-        player.soldiers.each do |soldier|
-          soldier.move_list(player.board, promoted_preferred: true).each do |move_hand|
-            y << move_hand
-          end
-        end
-      end
-    end
-
-    # 持駒の全打筋
-    def drop_hands
-      Enumerator.new do |y|
-        # 直接 piece_box.each_key とせずに piece_keys にいったん取り出している理由は
-        # 外側で execute 〜 revert するときの a.each { a.update } の状態になるのを回避するため。
-        # each の中で元を更新すると "can't add a new key into hash during iteration" のエラーになる
-        piece_keys = player.piece_box.keys
-        player.board.blank_places.each do |place|
-          piece_keys.each do |piece_key|
-            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, place: place, location: player.location)
-            if soldier.rule_valid?(player.board)
-              y << DropHand.create(soldier: soldier)
-            end
-          end
+        player.drop_hands.each do |e|
+          y << e
         end
       end
     end
@@ -260,14 +241,14 @@ module Warabi
         # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
 
         if hand.king_captured?
-          puts hand
-          puts mediator
-          raise "must not happen"
+          # puts hand
+          # puts mediator
+          # raise "must not happen"
 
-          # alpha = INF_MAX
-          # best_pv = []
-          # # return [INF_MAX, [hand]]
-          # break
+          alpha = INF_MAX
+          best_pv = []
+          # return [INF_MAX, [hand]]
+          break
         end
 
         hand.sandbox_execute(mediator) do

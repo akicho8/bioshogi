@@ -110,11 +110,12 @@ module Warabi
       piece.all_vectors(promoted: promoted, location: location)
     end
 
-    # 1. 常に生きている
-    # 2. 成り(=絶対に死に駒ならない)
-    # の順で先にチェックすることで高速化
+    # 死に駒ではない？
     def alive?
-      piece.always_alive || promoted || all_vectors.any? { |e| place.vector_add(e).valid? }
+      v = false
+      v ||= piece.always_alive # 死に駒にならない駒か？ (基本、後ろに移動できる駒)
+      v ||= promoted           # すでに成っているか？ (成っている駒は金の動きなので後ろに移動できる)
+      v ||= all_vectors.any? { |e| place.vector_add(e).valid? } # ちょっとでも動ける？
     end
 
     def merge(attributes)
@@ -237,6 +238,10 @@ module Warabi
     def king_captured?
       respond_to?(:captured_soldier) && captured_soldier && captured_soldier.piece.key == :king
     end
+
+    def regal_move?(mediator)
+      true
+    end
   end
 
   class DropHand
@@ -351,6 +356,15 @@ module Warabi
         soldier.place.to_sfen,
         promote_trigger? ? "+" : nil,
       ].join
+    end
+
+    # 合法手か？
+    # 自分が何か指してみて→相手の駒を動かして自分の玉が取られる→非合法手
+    def regal_move?(mediator)
+      sandbox_execute(mediator) do
+        player = mediator.player_at(location).opponent_player
+        player.move_hands(promoted_preferred: true, king_captured_only: true).none? # to_a.empty? と同じ
+      end
     end
   end
 end
