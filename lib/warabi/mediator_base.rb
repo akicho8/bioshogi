@@ -35,6 +35,7 @@ module Warabi
     end
 
     def placement_from_bod(str)
+      str = str.lines.collect(&:strip).join("\n")
       if md = str.match(/(?<board>^\+\-.*\-\+$)/m)
         board.placement_from_shape md[:board]
       end
