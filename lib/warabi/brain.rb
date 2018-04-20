@@ -20,19 +20,21 @@ module Warabi
       end
     end
 
-    attr_accessor :player, :params
+    attr_accessor :player, :iparams
 
     delegate :mediator, to: :player
 
-    def initialize(player, **params)
+    def initialize(player, **iparams)
       @player = player
-      @params = {
-        diver_class: NegaAlphaDiver, # [NegaAlphaDiver, NegaScoutDiver]
-        evaluator_class: EvaluatorBase,
-        legal_moves_only: true,
-      }.merge(params)
+      @iparams = {
+        diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
+        evaluator_class: EvaluatorBase, # [EvaluatorBase, EvaluatorAdvance]
+        legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
+        legal_moves_first_only: true,   # 最初の手だけ合法手に絞る
+      }.merge(iparams)
     end
 
+    # ショートカット用
     def diver_dive(**params)
       diver_instance(params.merge(current_player: player)).dive
     end
@@ -47,18 +49,29 @@ module Warabi
         params[:out_of_time] ||= Time.now + params[:time_limit]
       end
 
-      children = lazy_all_hands.to_a # 何度も実行するためあえて配列化しておくの重要
+      children = lazy_all_hands
+
+      if iparams[:legal_moves_first_only]
+        # あまりに重いので読みの最初の手を合法手に絞る
+        children = children.find_all { |e| e.regal_move?(mediator) }
+      end
+
+      children = children.to_a # 何度も実行するためあえて配列化しておくの重要
+
       hands = []
+      mate = false
       finished = catch :out_of_time do
         params[:depth_max_range].each do |depth_max|
           diver = diver_instance(params.merge(current_player: player.opponent_player, depth_max: depth_max))
           hands2 = []
           children.each do |hand|
             Warabi.logger.debug "#ROOT #{hand}" if Warabi.logger
-            # if hand.king_captured? && false
-            #   v = -INF_MAX
-            #   hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
-            # else
+            if hand.king_captured?
+              v = -INF_MAX
+              hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
+              mate = true
+              break
+            end
             hand.sandbox_execute(mediator) do
               start_time = Time.now
               v, pv = diver.dive
@@ -67,22 +80,24 @@ module Warabi
               #   break
               # end
             end
-            # end
           end
           hands = hands2
+          if mate
+            break
+          end
         end
         true
       end
 
       if !children.empty? && hands.empty?
-        raise BrainHandsEmpty, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
+        raise BrainProcessingHeavy, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
       end
 
       hands.sort_by { |e| -e[:score] }
     end
 
     def diver_instance(args)
-      self.params[:diver_class].new(self.params.merge(args))
+      iparams[:diver_class].new(iparams.merge(args))
     end
 
     # Board.promotable_disable
@@ -111,7 +126,7 @@ module Warabi
     end
 
     def fast_score_list(**params)
-      evaluator = player.evaluator(self.params.merge(params))
+      evaluator = player.evaluator(iparams.merge(params))
       lazy_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
@@ -123,7 +138,7 @@ module Warabi
 
     def lazy_all_hands
       Enumerator.new do |y|
-        if params[:legal_moves_only]
+        if iparams[:legal_moves_all]
           list = player.legal_move_hands
         else
           list = player.move_hands
@@ -145,18 +160,18 @@ module Warabi
   end
 
   class Diver
-    attr_accessor :params
+    attr_accessor :iparams
     attr_accessor :eval_counter
 
     # delegate :mediator, to: :player
     # delegate :evaluate, to: :mediator
     # delegate :place_on, to: :mediator
 
-    def initialize(params)
-      @params = {
+    def initialize(iparams)
+      @iparams = {
         depth_max: 0,           # 最大の深さ
         log_skip_depth: nil,
-      }.merge(params)
+      }.merge(iparams)
 
       @eval_counter = 0
     end
@@ -166,7 +181,7 @@ module Warabi
     def logger_info(str, context)
       return unless logger
 
-      if v = params[:log_skip_depth]
+      if v = iparams[:log_skip_depth]
         if context[:depth] >= v
           return
         end
@@ -192,7 +207,7 @@ module Warabi
     end
 
     def out_of_time_check
-      if time = params[:out_of_time]
+      if time = iparams[:out_of_time]
         if time && time <= Time.now
           throw :out_of_time
         end
@@ -200,12 +215,12 @@ module Warabi
     end
 
     def depth_max
-      params[:depth_max]
+      iparams[:depth_max]
     end
   end
 
   class NegaAlphaDiver < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
@@ -220,18 +235,21 @@ module Warabi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator(params).score
+        score = player.evaluator(iparams).score
         log.call("%+d" % score) if log
         return [score, []]
       end
 
-      children = player.brain(params).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
+      children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
 
       best_pv = []
       best_hand = nil
       children_exist = false
 
       children.each.with_index do |hand, i|
+        unless hand.regal_move?(mediator)
+          next
+        end
 
         children_exist = true
         log.call "#{hand} (%d)" % i if log
@@ -240,26 +258,24 @@ module Warabi
         # そうなるとピンチであることに気づかない。
         # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
 
+        # 非合法手が混っている場合はこのチェックが重要になってくる
         if hand.king_captured?
-          # puts hand
-          # puts mediator
-          # raise "must not happen"
-
-          alpha = INF_MAX
-          best_pv = []
-          # return [INF_MAX, [hand]]
-          break
-        end
-
-        hand.sandbox_execute(mediator) do
-          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
-          v = -v
-          if alpha < v
-            alpha = v
-            best_hand = hand
-            best_pv = [best_hand, *pv]
+          alpha = INF_MAX - depth
+          best_hand = hand
+          best_pv = [best_hand]
+          # # return [INF_MAX, [hand]]
+        else
+          hand.sandbox_execute(mediator) do
+            v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
+            v = -v
+            if alpha < v
+              alpha = v
+              best_hand = hand
+              best_pv = [best_hand, *pv]
+            end
           end
         end
+
         if alpha >= beta
           break
         end
@@ -282,7 +298,7 @@ module Warabi
   end
 
   class NegaScoutDiver < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
@@ -297,12 +313,13 @@ module Warabi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator(params).score
+        score = player.evaluator(iparams).score
         log.call("%+d" % score) if log
         return [score, []]
       end
 
-      children = player.brain(params).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
+      children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
+
       # log.call "指し手 #{children.to_a}" if log
 
       # # 合法手がない場合はパスして相手に手番を渡す
@@ -312,11 +329,11 @@ module Warabi
       #   return [v, [:pass, *pv]]
       # end
 
-      mate_check = Proc.new { |hand|
-        # if hand.king_captured?
-        #   return [INF_MAX, [hand]]
-        # end
-      }
+      # mate_check = Proc.new { |hand|
+      #   # if hand.king_captured?
+      #   #   return [INF_MAX, [hand]]
+      #   # end
+      # }
 
       # 再帰を簡潔に記述するため
       recursive = Proc.new { |hand, alpha2, beta2|
@@ -340,19 +357,32 @@ module Warabi
       }
 
       # children が空の場合を考慮して初期値を投了級にしておく
-      # max_v = -INF_MAX + depth # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
-      max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
+      max_v = -INF_MAX + depth # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
+      # max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
       best_pv = []
 
       if true
-        # 効果的なもの順に並び換える
+        # 効果的なもの順に並び換える→どうやって？？？
         # children = mediator.move_ordering(player, children)
         children = children.to_a # FIXME: 並び返るために全取得すると遅延評価にした意味がない
 
         # 最善候補を通常の窓で探索
-        hand = children.shift
+
+        # ベストな「合法手」を取得
+        hand = nil
+        loop do
+          hand = children.shift # FIXME: 配列として扱わなければ速くなるかも
+          if hand.nil?
+            break
+          end
+          if hand.regal_move?(mediator)
+            break
+          end
+        end
+
         if hand
           # mate_check.call(hand)
+
           v, pv = recursive.(hand, -beta, -alpha)
           max_v = v
           best_pv = [hand, *pv]
@@ -366,6 +396,10 @@ module Warabi
       end
 
       children.each do |hand|
+        unless hand.regal_move?(mediator)
+          next
+        end
+
         # mate_check.call(hand)
         v, pv = recursive.(hand, -(alpha + 1), -alpha) # null window search
         if beta <= v
@@ -392,3 +426,7 @@ module Warabi
     end
   end
 end
+# ~> -:25:in `<class:Brain>': undefined method `delegate' for Warabi::Brain:Class (NoMethodError)
+# ~> Did you mean?  DelegateClass
+# ~> 	from -:9:in `<module:Warabi>'
+# ~> 	from -:6:in `<main>'
