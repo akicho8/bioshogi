@@ -59,6 +59,7 @@ module Warabi
       children = children.to_a # 何度も実行するためあえて配列化しておくの重要
 
       hands = []
+      hands2 = []
       mate = false
       finished = catch :out_of_time do
         params[:depth_max_range].each do |depth_max|
@@ -66,12 +67,18 @@ module Warabi
           hands2 = []
           children.each do |hand|
             Warabi.logger.debug "#ROOT #{hand}" if Warabi.logger
-            if hand.king_captured?
-              v = -INF_MAX
-              hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
-              mate = true
-              break
-            end
+
+            # 即詰があれば探索を速攻打ち切る場合
+            # 無効にしてもいいけど他の探索で時間がかかったら、この深さの探索全体がTLEでキャンセルされる可能性がある
+            # if true
+            #   if hand.king_captured?
+            #     v = -INF_MAX
+            #     hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
+            #     mate = true
+            #     break
+            #   end
+            # end
+
             hand.sandbox_execute(mediator) do
               start_time = Time.now
               v, pv = diver.dive(player.opponent_player, 0, -INF_MAX, INF_MAX, [hand])
@@ -80,13 +87,21 @@ module Warabi
               #   break
               # end
             end
+            if hand.king_captured?
+              mate = true       # 即詰がある
+            end
           end
           hands = hands2
           if mate
-            break
+            break     # この深さで詰みを発見したらこれ以上は潜らない
           end
         end
         true
+      end
+
+      # 即詰みがあった場合は最後の hands2 を採用する
+      if mate
+        hands = hands2
       end
 
       if !children.empty? && hands.empty?
@@ -217,6 +232,11 @@ module Warabi
     def depth_max
       iparams[:depth_max]
     end
+
+    # 深いほど手がかかるので最大の評価値を下げる
+    def score_max_for(depth)
+      INF_MAX - depth
+    end
   end
 
   class NegaAlphaDiver < Diver
@@ -242,25 +262,20 @@ module Warabi
 
       children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
 
-      if true
-        children = children.find_all { |e| e.regal_move?(mediator) }
-        if children.empty?
-          return [-INF_MAX, ["STOP"]]
-        end
-      end
-
       # children = children.to_a
 
       best_pv = []
       best_hand = nil
+      children_exist = false
 
       # p foo
 
       children.each do |hand|
         unless hand.regal_move?(mediator)
-          log.call "skip: #{hand}" if log
+          # log.call "skip: #{hand}" if log
           next
         end
+        children_exist = true
 
         log.call "#{hand}" if log
 
@@ -269,27 +284,37 @@ module Warabi
         # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
 
         # 非合法手が混っている場合はこのチェックが重要になってくる
-        if hand.king_captured?
-          raise
-          # alpha = INF_MAX - depth
-          # best_hand = hand
-          # best_pv = [best_hand]
-          return [INF_MAX, [hand]]
-        else
-          hand.sandbox_execute(mediator) do
-            v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha, foo + [hand])
-            v = -v
-            if alpha < v
-              alpha = v
-              best_hand = hand
-              best_pv = [best_hand, *pv]
-              # best_pv = foo + [hand]
-            end
-          end
+        # if hand.king_captured?
+        #   raise
+        #   # alpha = INF_MAX - depth
+        #   # best_hand = hand
+        #   # best_pv = [best_hand]
+        #   return [INF_MAX, [hand]]
+        # else
+        v = nil
+        pv = nil
+        hand.sandbox_execute(mediator) do
+          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha, foo + [hand])
+          v = -v
         end
-
+        # p [alpha, v]
+        if alpha < v
+          alpha = v
+          best_hand = hand
+          best_pv = [hand, *pv]
+          # best_pv = foo + [hand]
+        end
         if alpha >= beta
           break
+          # end
+        end
+      end
+
+      if true
+        unless children_exist
+          # 手が一つも生成できなかった場合は詰んでいる
+          alpha = -score_max_for(depth)
+          best_pv = ["(詰み)"] # 注意。-INF_MAX を返すと alpha < v が成立しないため読み筋が返せない。
         end
       end
 
@@ -301,6 +326,7 @@ module Warabi
         log.call "★確 #{best_hand} (#{alpha})" if log
       end
 
+      # p [alpha, best_pv]
       [alpha, best_pv]
     end
   end
@@ -349,6 +375,7 @@ module Warabi
         # # そうなるとピンチであることに気づかない。
         # # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
         if hand.king_captured?
+          raise
           # v = INF_MAX - depth
           v = INF_MAX
           log.call "#{hand} -> #{v} #{player.location}勝" if log
@@ -365,9 +392,9 @@ module Warabi
       }
 
       # children が空の場合を考慮して初期値を投了級にしておく
-      max_v = -INF_MAX + depth # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
-      # max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする (TOTO: NegaAlphaDiver の場合はどうやればいいんだろう？)
-      best_pv = []
+      max_v = -score_max_for(depth) # 浅いほど評価値を高くして最短で詰ますようにする
+      # max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする
+      best_pv = ["(詰み)"]      # 一度も更新されなかったら手がないということなので詰んでいる
 
       if true
         # 効果的なもの順に並び換える→どうやって？？？
@@ -434,7 +461,3 @@ module Warabi
     end
   end
 end
-# ~> -:25:in `<class:Brain>': undefined method `delegate' for Warabi::Brain:Class (NoMethodError)
-# ~> Did you mean?  DelegateClass
-# ~>    from -:9:in `<module:Warabi>'
-# ~>    from -:6:in `<main>'
