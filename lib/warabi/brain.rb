@@ -59,7 +59,7 @@ module Warabi
 
       children = children.to_a # 何度も実行するためあえて配列化しておくの重要
 
-      hands = nil
+      hands = []
       tmp_hands = []
       mate = false
       finished = catch :out_of_time do
