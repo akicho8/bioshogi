@@ -29,8 +29,9 @@ module Warabi
       @iparams = {
         diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
         evaluator_class: EvaluatorBase, # [EvaluatorBase, EvaluatorAdvance]
-        legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
-        legal_moves_first_only: true,   # 最初の手だけ合法手に絞る
+
+        # legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
+        # legal_moves_first_only: true,   # 最初の手だけ合法手に絞る
       }.merge(iparams)
     end
 
@@ -58,13 +59,14 @@ module Warabi
 
       children = children.to_a # 何度も実行するためあえて配列化しておくの重要
 
-      hands = []
-      hands2 = []
+      hands = nil
+      tmp_hands = []
       mate = false
       finished = catch :out_of_time do
         params[:depth_max_range].each do |depth_max|
           diver = diver_instance(params.merge(current_player: player.opponent_player, depth_max: depth_max))
-          hands2 = []
+          tmp_hands = []
+          mate = false
           children.each do |hand|
             Warabi.logger.debug "#ROOT #{hand}" if Warabi.logger
 
@@ -73,7 +75,7 @@ module Warabi
             # if true
             #   if hand.king_captured?
             #     v = -INF_MAX
-            #     hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
+            #     tmp_hands << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
             #     mate = true
             #     break
             #   end
@@ -81,17 +83,21 @@ module Warabi
 
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv = diver.dive(player.opponent_player, 0, -INF_MAX, INF_MAX, [hand])
-              hands2 << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
-              # if v == -INF_MAX
-              #   break
-              # end
+              v, pv = diver.dive # (player.opponent_player, 0, -INF_MAX, INF_MAX, [hand])
+              v = -v
+              tmp_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+              # 1手詰: (v >= INF_MAX - 0)
+              # 3手詰: (v >= INF_MAX - 2)
+              # 5手詰: (v >= INF_MAX - 4)
+              if v >= INF_MAX
+                mate = true     # 1手詰があった
+              end
             end
-            if hand.king_captured?
-              mate = true       # 即詰がある
-            end
+            # if hand.king_captured?
+            #   mate = true       # 即詰がある
+            # end
           end
-          hands = hands2
+          hands = tmp_hands
           if mate
             break     # この深さで詰みを発見したらこれ以上は潜らない
           end
@@ -99,9 +105,9 @@ module Warabi
         true
       end
 
-      # 即詰みがあった場合は最後の hands2 を採用する
+      # 詰みがあった場合は最後の tmp_hands を採用する
       if mate
-        hands = hands2
+        hands = tmp_hands
       end
 
       if !children.empty? && hands.empty?
@@ -240,7 +246,7 @@ module Warabi
   end
 
   class NegaAlphaDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, foo = [])
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
@@ -294,7 +300,7 @@ module Warabi
         v = nil
         pv = nil
         hand.sandbox_execute(mediator) do
-          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha, foo + [hand])
+          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
           v = -v
         end
         # p [alpha, v]
@@ -332,7 +338,7 @@ module Warabi
   end
 
   class NegaScoutDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, foo = [])
+    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
