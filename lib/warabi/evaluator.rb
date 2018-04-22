@@ -14,6 +14,7 @@ module Warabi
     end
 
     def score
+      Warabi.run_counts["#{self.class.name}#score"] += 1
       basic_score * player.location.value_sign
     end
 

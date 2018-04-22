@@ -42,6 +42,9 @@ module Warabi
 
     # 反復深化深さ優先探索
     # https://ja.wikipedia.org/wiki/%E5%8F%8D%E5%BE%A9%E6%B7%B1%E5%8C%96%E6%B7%B1%E3%81%95%E5%84%AA%E5%85%88%E6%8E%A2%E7%B4%A2
+    # > ゲーム木でIDDFSを使う場合、アルファ・ベータ枝刈りなどのヒューリスティックが反復によって改善されていき、
+    # > 最も深い探索でのスコアの推定値がより正確になるという利点がある。また、探索順序を改善することができるため、
+    # > 探索をより高速に行えるという利点もある（前の反復で最善とされた手を次の反復で最初に調べることでアルファ・ベータ法の効率が良くなる）。
     def iterative_deepening(**params)
       params = {
         depth_max_range: 1..1,
@@ -57,9 +60,11 @@ module Warabi
       if true
         # あまりに重いので読みの最初の手を合法手に絞る
         children = children.find_all { |e| e.regal_move?(mediator) }
+      else
+        children = children.to_a # 何度も実行するためあえて配列化しておくの重要
       end
 
-      children = children.to_a # 何度も実行するためあえて配列化しておくの重要
+      # ordered_children = children # 前の反復で最善とされた順に並んでいる手
 
       hands = []
       tmp_hands = []
@@ -85,7 +90,7 @@ module Warabi
 
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv = diver.dive # (player.opponent_player, 0, -INF_MAX, INF_MAX, [hand])
+              v, pv = diver.dive # ここで TLE 発生
               v = -v
               tmp_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
               # 1手詰: (v >= INF_MAX - 0)
@@ -100,23 +105,36 @@ module Warabi
             # end
           end
           hands = tmp_hands
+          if true
+            hands = hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用(途中でbreakするのは詰みがあったときぐらいなのであんまり効果ないかも)
+          end
+
           if mate
             break     # この深さで詰みを発見したらこれ以上は潜らない
           end
+
+          # 次の反復では前の反復で最善とされた順で探索する
+          children = hands.collect { |e| e[:hand] }
         end
         true
-      end
+      end # catch
 
-      # 詰みがあった場合は最後の tmp_hands を採用する
-      if mate
-        hands = tmp_hands
+      if finished
+        # すべての探索を終えた
+      else
+        # タイムアウトしてきた
+
+        # 詰みがあった場合は最後の tmp_hands を採用する
+        if mate
+          hands = tmp_hands.hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用
+        end
       end
 
       if !children.empty? && hands.empty?
-        raise BrainProcessingHeavy, "指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
+        raise BrainProcessingHeavy, "合法手を生成したにもかかわらず、指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
       end
 
-      hands.sort_by { |e| -e[:score] }
+      hands
     end
 
     def diver_instance(args)
@@ -181,6 +199,7 @@ module Warabi
       }.merge(iparams)
 
       @eval_counter = 0
+      # @hands_memo = {}
     end
 
     private
@@ -252,9 +271,12 @@ module Warabi
         return [score, []]
       end
 
-      children = player.normal_all_hands
-
-      # children = children.to_a
+      if true
+        children = player.normal_all_hands
+      else
+        # @hands_memo[depth] ||= player.normal_all_hands.to_a
+        # children = @hands_memo[depth]
+      end
 
       best_pv = []
       best_hand = nil
