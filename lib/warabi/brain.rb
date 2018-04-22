@@ -40,6 +40,8 @@ module Warabi
       diver_instance(params.merge(current_player: player)).dive
     end
 
+    # 反復深化深さ優先探索
+    # https://ja.wikipedia.org/wiki/%E5%8F%8D%E5%BE%A9%E6%B7%B1%E5%8C%96%E6%B7%B1%E3%81%95%E5%84%AA%E5%85%88%E6%8E%A2%E7%B4%A2
     def iterative_deepening(**params)
       params = {
         depth_max_range: 1..1,
