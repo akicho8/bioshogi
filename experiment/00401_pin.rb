@@ -11,4 +11,4 @@ mediator.placement_from_bod <<~EOT
 先手の持駒：
 手数＝1
   EOT
-mediator.current_player.brain.lazy_all_hands.to_a # => [<△２一玉(11)>]
+mediator.current_player.brain.normal_all_hands.to_a # => [<△２一玉(11)>]

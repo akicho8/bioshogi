@@ -126,6 +126,18 @@ module Warabi
         Brain.new(self, **params)
       end
 
+      # 非合法手を含む(ピンを考慮しない)すべての指し手の生成
+      def normal_all_hands
+        Enumerator.new do |y|
+          move_hands.each do |e|
+            y << e
+          end
+          drop_hands.each do |e|
+            y << e
+          end
+        end
+      end
+
       # ピンを考慮した合法手の生成
       #
       # ▼PinCheck機構つきのMakeMoveの提案 - Bonanzaソース完全解析ブログ
@@ -136,9 +148,14 @@ module Warabi
       #
       # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
       #
-      def legal_move_hands
+      def legal_all_hands
         Enumerator.new do |y|
           move_hands.each do |e|
+            if e.regal_move?(mediator)
+              y << e
+            end
+          end
+          drop_hands.each do |e|
             if e.regal_move?(mediator)
               y << e
             end

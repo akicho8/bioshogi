@@ -22,7 +22,7 @@ module Warabi
 
     attr_accessor :player, :iparams
 
-    delegate :mediator, to: :player
+    delegate :mediator, :normal_all_hands, to: :player
 
     def initialize(player, **iparams)
       @player = player
@@ -50,7 +50,7 @@ module Warabi
         params[:out_of_time] ||= Time.now + params[:time_limit]
       end
 
-      children = lazy_all_hands
+      children = normal_all_hands
 
       if true
         # あまりに重いので読みの最初の手を合法手に絞る
@@ -137,7 +137,7 @@ module Warabi
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)
-      lazy_all_hands.collect { |hand|
+      normal_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v, pv = diver.dive
@@ -148,29 +148,13 @@ module Warabi
 
     def fast_score_list(**params)
       evaluator = player.evaluator(iparams.merge(params))
-      lazy_all_hands.collect { |hand|
+      normal_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v = evaluator.score
           {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
-    end
-
-    def lazy_all_hands
-      Enumerator.new do |y|
-        # if iparams[:legal_moves_all]
-        #   list = player.legal_move_hands
-        # else
-        list = player.move_hands
-        # end
-        list.each do |e|
-          y << e
-        end
-        player.drop_hands.each do |e|
-          y << e
-        end
-      end
     end
   end
 
@@ -266,7 +250,7 @@ module Warabi
         return [score, []]
       end
 
-      children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
+      children = player.normal_all_hands
 
       # children = children.to_a
 
@@ -358,7 +342,7 @@ module Warabi
         return [score, []]
       end
 
-      children = player.brain(iparams).lazy_all_hands # FIXME: 同じパラメータで相手の立場にならないといけない(が lazy_all_hands は共通なので brain を経由する意味がない)
+      children = player.normal_all_hands
 
       # log.call "指し手 #{children.to_a}" if log
 

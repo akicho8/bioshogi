@@ -43,7 +43,7 @@ mediator.opponent_player.executor.captured_soldier # => <Warabi::Soldier "△１
 # mediator.current_player.brain(diver_class: NegaScoutDiver).move_hands.to_a # =>
 # exit
 
-mediator.current_player.brain(diver_class: NegaScoutDiver).lazy_all_hands.to_a # => [<△２三歩成(22)>]
+mediator.current_player.brain(diver_class: NegaScoutDiver).normal_all_hands.to_a # => [<△２三歩成(22)>]
 records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record

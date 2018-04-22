@@ -77,7 +77,7 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>         18   (2.6%)           9   (1.3%)     Warabi::Dimension::Base#valid?
 # >>          8   (1.1%)           8   (1.1%)     #<Module:0x00007fa66a13bdd0>.run_counts
 # >>          8   (1.1%)           8   (1.1%)     Warabi::MediatorBase#board
-# >>        556  (79.0%)           8   (1.1%)     Warabi::Brain#lazy_all_hands
+# >>        556  (79.0%)           8   (1.1%)     Warabi::Brain#normal_all_hands
 # >>         46   (6.5%)           7   (1.0%)     Warabi::Piece#basic_weight
 # >>          7   (1.0%)           7   (1.0%)     Warabi::Piece::VectorMethods#piece_vector
 # >>          6   (0.9%)           6   (0.9%)     Warabi::Board#surface

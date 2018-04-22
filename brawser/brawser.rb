@@ -104,7 +104,7 @@ class Brawser < Sinatra::Base
         @mediator.execute(input)
       end
       if params[:random_put].present?
-        if hand = @mediator.current_player.brain.lazy_all_hands.sample.presence
+        if hand = @mediator.current_player.brain.normal_all_hands.sample.presence
           @mediator.execute(hand)
         end
       end
