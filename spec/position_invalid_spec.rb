@@ -13,8 +13,8 @@ module Warabi
         先手の持駒：
       手数＝0
       EOT
-      mediator.current_player.suguni_ou_toreru?.should == true
-      mediator.opponent_player.suguni_ou_toreru?.should == true
+      mediator.current_player.mate_advantage?.should == true
+      mediator.opponent_player.mate_advantage?.should == true
       mediator.position_invalid?.should == true
     end
 
@@ -30,8 +30,8 @@ module Warabi
         先手の持駒：
       手数＝0
       EOT
-      mediator.current_player.oute_kakerareteru?.should == true
-      mediator.current_player.suguni_ou_toreru?.should == false
+      mediator.current_player.mate_danger?.should == true
+      mediator.current_player.mate_advantage?.should == false
       mediator.position_invalid?.should == false
     end
   end

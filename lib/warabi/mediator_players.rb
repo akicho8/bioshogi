@@ -52,7 +52,7 @@ module Warabi
 
     # 互いに王手されている局面はありえない
     def position_invalid?
-      players.all?(&:suguni_ou_toreru?)
+      players.all?(&:mate_advantage?)
     end
 
     concerning :Other do

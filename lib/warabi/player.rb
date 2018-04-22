@@ -197,14 +197,14 @@ module Warabi
         end
       end
 
-      # 相手の王を取る手が存在する？
-      def suguni_ou_toreru?
+      # 王手をかけている？
+      def mate_advantage?
         move_hands(promoted_preferred: true, king_captured_only: true).any?
       end
 
-      # 逆に王手がかかっている？
-      def oute_kakerareteru?
-        opponent_player.suguni_ou_toreru?
+      # 王手をかけられている？
+      def mate_danger?
+        opponent_player.mate_advantage?
       end
     end
 

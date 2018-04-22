@@ -256,7 +256,7 @@ module Warabi
     #
     def regal_move?(mediator)
       sandbox_execute(mediator) do
-        !mediator.player_at(soldier.location).oute_kakerareteru?
+        !mediator.player_at(soldier.location).mate_danger?
       end
     end
   end
@@ -384,14 +384,14 @@ module Warabi
     # def regal_move2?(mediator)
     # 
     #   # もし王手を掛けられているなら
-    #   if mediator.player_at(soldier.location).oute_kakerareteru?
+    #   if mediator.player_at(soldier.location).mate_danger?
     #     sandbox_execute(mediator) do
-    #       !mediator.player_at(soldier.location).oute_kakerareteru?
+    #       !mediator.player_at(soldier.location).mate_danger?
     #     end
     #   else
     #     # 自滅しないこと
     #     sandbox_execute(mediator) do
-    #       !mediator.player_at(soldier.location).oute_kakerareteru?
+    #       !mediator.player_at(soldier.location).mate_danger?
     #     end
     #   end
     # end

@@ -16,3 +16,6 @@ mediator.placement_from_bod <<~EOT
 EOT
 mediator.current_player.normal_all_hands.to_a.collect(&:to_s) # => ["▲２一歩成(22)", "▲１一歩成(12)", "▲２三玉(13)"]
 mediator.current_player.legal_all_hands.to_a.collect(&:to_s)  # => []
+
+hand = mediator.current_player.normal_all_hands.first # => <▲２一歩成(22)>
+hand.regal_move?(mediator)                            # => false

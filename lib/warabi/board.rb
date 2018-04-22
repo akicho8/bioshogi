@@ -98,6 +98,7 @@ module Warabi
         lookup(place) or raise PieceNotFoundOnBoard, "#{place}に何もありません\n#{self}"
       end
 
+      # FIXME: 空いている升の情報は駒を動かした時点で更新するようにすればこの部分の無駄な判定を減らせる
       def blank_places
         Enumerator.new do |y|
           Place.each do |place|
