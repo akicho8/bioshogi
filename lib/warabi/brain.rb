@@ -126,7 +126,7 @@ module Warabi
 
         # 詰みがあった場合は最後の tmp_hands を採用する
         if mate
-          hands = tmp_hands.hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用
+          hands = tmp_hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用
         end
       end
 
