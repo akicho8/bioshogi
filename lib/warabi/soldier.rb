@@ -254,7 +254,7 @@ module Warabi
     # 2. 王手の状態を回避したこと
     # の両方チェックするので↓この一つでよい。
     #
-    def regal_move?(mediator)
+    def legal_move?(mediator)
       sandbox_execute(mediator) do
         !mediator.player_at(soldier.location).mate_danger?
       end
@@ -312,7 +312,7 @@ module Warabi
       ].join
     end
 
-    # def regal_move?(mediator)
+    # def legal_move?(mediator)
     #   true
     # end
     
@@ -381,7 +381,7 @@ module Warabi
       ].join
     end
 
-    # def regal_move2?(mediator)
+    # def legal_move2?(mediator)
     # 
     #   # もし王手を掛けられているなら
     #   if mediator.player_at(soldier.location).mate_danger?

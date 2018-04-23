@@ -151,12 +151,12 @@ module Warabi
       def legal_all_hands
         Enumerator.new do |y|
           move_hands.each do |e|
-            if e.regal_move?(mediator)
+            if e.legal_move?(mediator)
               y << e
             end
           end
           drop_hands.each do |e|
-            if e.regal_move?(mediator)
+            if e.legal_move?(mediator)
               y << e
             end
           end

@@ -59,7 +59,7 @@ module Warabi
 
       if true
         # あまりに重いので読みの最初の手を合法手に絞る
-        children = children.find_all { |e| e.regal_move?(mediator) }
+        children = children.find_all { |e| e.legal_move?(mediator) }
       else
         children = children.to_a # 何度も実行するためあえて配列化しておくの重要
       end
@@ -285,7 +285,7 @@ module Warabi
       # p foo
 
       children.each do |hand|
-        unless hand.regal_move?(mediator)
+        unless hand.legal_move?(mediator)
           # log.call "skip: #{hand}" if log
           next
         end
@@ -424,7 +424,7 @@ module Warabi
           if hand.nil?
             break
           end
-          if hand.regal_move?(mediator)
+          if hand.legal_move?(mediator)
             break
           end
         end
@@ -445,7 +445,7 @@ module Warabi
       end
 
       children.each do |hand|
-        unless hand.regal_move?(mediator)
+        unless hand.legal_move?(mediator)
           next
         end
 
