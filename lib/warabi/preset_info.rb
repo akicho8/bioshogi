@@ -29,6 +29,16 @@ module Warabi
       end
     end
 
+    def to_sfen
+      mediator = Mediator.new
+      mediator.board.placement_from_preset(key)
+      mediator.to_long_sfen
+    end
+
+    def to_position_sfen
+      "position #{to_sfen}"
+    end
+
     concerning :DelegateToShapeInfoMethods do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info
