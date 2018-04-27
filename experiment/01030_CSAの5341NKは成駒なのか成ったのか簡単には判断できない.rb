@@ -3,7 +3,7 @@ require "./example_helper"
 # 5341NK だけでは判断が難しい例
 
 mediator = Mediator.new
-mediator.placement_from_preset
+mediator.placement_from_preset("平手")
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("７七桂")

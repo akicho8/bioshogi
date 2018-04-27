@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.placement_from_preset
+mediator.placement_from_preset("平手")
 mediator.to_sfen                # => "position startpos"
 mediator.pieces_set("▲銀△銀銀")
 puts mediator

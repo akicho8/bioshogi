@@ -4,7 +4,7 @@ module Warabi
   describe do
     it "5341NK だけでは判断が難しい例" do
       mediator = Mediator.new
-      mediator.placement_from_preset
+      mediator.placement_from_preset("平手")
       mediator.execute("７六歩")
       mediator.execute("３四歩")
       mediator.execute("７七桂")
@@ -37,7 +37,7 @@ EOT
 
     it "基本" do
       mediator = Mediator.new
-      mediator.placement_from_preset
+      mediator.placement_from_preset("平手")
       mediator.execute("7776FU")
       mediator.to_s.should == <<~EOT
 後手の持駒：なし

@@ -1,7 +1,7 @@
 require "./example_helper"
 
 object = MediatorStack.new
-object.mediator.placement_from_preset
+object.mediator.placement_from_preset("平手")
 object.mediator.execute("▲７六歩")
 object.stack_push
 object.mediator.execute("△３四歩")

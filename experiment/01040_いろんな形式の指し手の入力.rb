@@ -2,7 +2,7 @@ require "./example_helper"
 
 def f(v)
   mediator = Mediator.new
-  mediator.placement_from_preset
+  mediator.placement_from_preset("平手")
   mediator.execute(v)
   mediator.hand_logs.to_kif_a
 end
