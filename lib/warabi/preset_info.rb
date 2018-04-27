@@ -8,7 +8,7 @@ module Warabi
       {key: "右香落ち",   handicap: true,  },
       {key: "角落ち",     handicap: true,  },
       {key: "飛車落ち",   handicap: true,  },
-      {key: "飛車香落ち", handicap: true,  },
+      {key: "飛香落ち",   handicap: true,  },
       {key: "二枚落ち",   handicap: true,  },
       {key: "三枚落ち",   handicap: true,  }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
       {key: "四枚落ち",   handicap: true,  },
@@ -22,8 +22,8 @@ module Warabi
     class << self
       def lookup(key)
         key = key.to_s
-        key = key.gsub(/飛([^車])/, '飛車\1')
-        key = key.gsub(/香車/, "香")
+        key = key.gsub(/(.)車/, '\1') # (飛|香)車 -> 飛|香
+        key = key.gsub(/飛落/, '飛車落')
         key = key.gsub(/裸玉/, "十九枚落ち")
         super
       end
