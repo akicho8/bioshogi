@@ -49,5 +49,14 @@ module Warabi
         turn_info.handicap = true
       end
     end
+
+    def placement_from_preset(value = nil)
+      board.placement_from_preset(value)
+
+      # 手番の反映
+      preset_info = PresetInfo.fetch(value || :"平手")
+      turn_info.handicap = preset_info.handicap
+      turn_info.counter = 0
+    end
   end
 end

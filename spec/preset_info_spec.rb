@@ -2,6 +2,11 @@ require_relative "spec_helper"
 
 module Warabi
   describe PresetInfo do
+    it "to_position_sfen" do
+      PresetInfo["平手"].to_position_sfen.should   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+      PresetInfo["香落ち"].to_position_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+    end
+
     it "black_only_soldiers" do
       PresetInfo["平手"].location_split[:black].collect(&:name).should == ["▲９七歩", "▲９九香", "▲８七歩", "▲８八角", "▲８九桂", "▲７七歩", "▲７九銀", "▲６七歩", "▲６九金", "▲５七歩", "▲５九玉", "▲４七歩", "▲４九金", "▲３七歩", "▲３九銀", "▲２七歩", "▲２八飛", "▲２九桂", "▲１七歩", "▲１九香"]
     end

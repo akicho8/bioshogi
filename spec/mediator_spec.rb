@@ -2,6 +2,12 @@ require_relative "spec_helper"
 
 module Warabi
   describe Mediator do
+    it "placement_from_preset は手番も反映する" do
+      mediator = Mediator.new
+      mediator.placement_from_preset("香落ち")
+      mediator.to_long_sfen.should == "sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+    end
+
     it "交互に打ちながら戦況表示" do
       mediator = Mediator.new
       mediator.board.placement_from_preset

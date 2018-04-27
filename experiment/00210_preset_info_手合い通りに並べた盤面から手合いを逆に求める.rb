@@ -5,6 +5,7 @@ PresetInfo.each do |preset_info|
   mediator.board.placement_from_preset(preset_info.key)
   puts mediator.board
 
+  # ここを簡潔にしたメソッドがある
   Location.each do |location|
     soldiers = mediator.board.surface.values.find_all {|e| e.location == location }
     soldiers = soldiers.collect(&:flip_if_white).sort

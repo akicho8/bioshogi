@@ -3,20 +3,20 @@ module Warabi
   class PresetInfo
     include ApplicationMemoryRecord
     memory_record [
-      {key: "平手",       },
-      {key: "香落ち",     },
-      {key: "右香落ち",   },
-      {key: "角落ち",     },
-      {key: "飛車落ち",   },
-      {key: "飛車香落ち", },
-      {key: "二枚落ち",   },
-      {key: "三枚落ち",   }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
-      {key: "四枚落ち",   },
-      {key: "六枚落ち",   },
-      {key: "八枚落ち",   },
-      {key: "十枚落ち",   },
-      {key: "十九枚落ち", },
-      {key: "二十枚落ち", },
+      {key: "平手",       handicap: false, },
+      {key: "香落ち",     handicap: true,  },
+      {key: "右香落ち",   handicap: true,  },
+      {key: "角落ち",     handicap: true,  },
+      {key: "飛車落ち",   handicap: true,  },
+      {key: "飛車香落ち", handicap: true,  },
+      {key: "二枚落ち",   handicap: true,  },
+      {key: "三枚落ち",   handicap: true,  }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
+      {key: "四枚落ち",   handicap: true,  },
+      {key: "六枚落ち",   handicap: true,  },
+      {key: "八枚落ち",   handicap: true,  },
+      {key: "十枚落ち",   handicap: true,  },
+      {key: "十九枚落ち", handicap: true,  },
+      {key: "二十枚落ち", handicap: true,  },
     ]
 
     class << self
@@ -32,6 +32,7 @@ module Warabi
     def to_sfen
       mediator = Mediator.new
       mediator.board.placement_from_preset(key)
+      mediator.turn_info.handicap = handicap
       mediator.to_long_sfen
     end
 
