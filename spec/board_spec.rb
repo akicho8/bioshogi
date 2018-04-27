@@ -6,7 +6,7 @@ module Warabi
       mediator = Mediator.new
 
       mediator.board.all_clear
-      mediator.board.placement_from_preset("裸玉")
+      mediator.placement_from_preset("裸玉")
       mediator.board.preset_key.should == :"十九枚落ち"
 
       mediator.board.all_clear

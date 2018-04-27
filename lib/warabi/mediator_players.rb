@@ -5,7 +5,7 @@ module Warabi
     class_methods do
       def start
         new.tap do |e|
-          e.board.placement_from_preset
+          e.placement_from_preset("平手")
         end
       end
     end

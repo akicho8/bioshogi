@@ -54,7 +54,7 @@ puts "-" * 80
 puts info.to_csa
 
 mediator = Mediator.new
-mediator.board.placement_from_preset("香落ち")
+mediator.placement_from_preset("香落ち")
 puts mediator
 mediator.execute("３四歩")
 puts mediator

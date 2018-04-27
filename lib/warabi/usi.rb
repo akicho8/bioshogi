@@ -4,7 +4,7 @@ module Warabi
     # mediator 側に sfen を受け取るメソッドを入れる方法もある
     class Class1
       # @mediator = Mediator.new
-      # @mediator.board.placement_from_preset
+      # @mediator.placement_from_preset
       # @mediator.to_sfen                # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
       # @mediator.pieces_set("▲銀△銀銀")
       # puts @mediator

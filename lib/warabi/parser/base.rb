@@ -144,7 +144,7 @@ module Warabi
           if @board_source
             mediator.board.placement_from_shape(@board_source)
           else
-            mediator.board.placement_from_preset(header["手合割"] || "平手")
+            mediator.placement_from_preset(header["手合割"] || "平手")
           end
 
           mediator.turn_info.handicap = handicap?

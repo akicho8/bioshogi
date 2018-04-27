@@ -2,7 +2,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board.placement_from_preset
+mediator.placement_from_preset
 mediator.execute("７六歩")
 mediator.execute("３四歩")
 mediator.execute("２二角成")

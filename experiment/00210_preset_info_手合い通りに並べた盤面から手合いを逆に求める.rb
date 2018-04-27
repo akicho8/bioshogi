@@ -2,7 +2,7 @@ require "./example_helper"
 
 PresetInfo.each do |preset_info|
   mediator = Mediator.new
-  mediator.board.placement_from_preset(preset_info.key)
+  mediator.placement_from_preset(preset_info.key)
   puts mediator.board
 
   # ここを簡潔にしたメソッドがある

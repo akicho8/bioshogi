@@ -1,7 +1,7 @@
 require "./example_helper"
 
 mediator = Mediator.new
-mediator.board.placement_from_preset
+mediator.placement_from_preset
 mediator.execute("７六歩")
 puts mediator
 # >> 後手の持駒：なし

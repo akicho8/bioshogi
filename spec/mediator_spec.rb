@@ -10,7 +10,7 @@ module Warabi
 
     it "交互に打ちながら戦況表示" do
       mediator = Mediator.new
-      mediator.board.placement_from_preset
+      mediator.placement_from_preset
       mediator.execute(["７六歩", "３四歩"])
       mediator.turn_info.counter.should == 2
       mediator.turn_info.turn_max.should == 2

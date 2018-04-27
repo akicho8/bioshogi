@@ -31,7 +31,7 @@ module Warabi
 
     def to_sfen
       mediator = Mediator.new
-      mediator.board.placement_from_preset(key)
+      mediator.placement_from_preset(key)
       mediator.turn_info.handicap = handicap
       mediator.to_long_sfen
     end
