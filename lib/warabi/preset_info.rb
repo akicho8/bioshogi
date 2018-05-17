@@ -40,6 +40,11 @@ module Warabi
       "position #{to_sfen}"
     end
 
+    # 格式の高さ(ソート用)
+    def formal_level
+      self.class.count - code
+    end
+
     concerning :DelegateToShapeInfoMethods do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info
