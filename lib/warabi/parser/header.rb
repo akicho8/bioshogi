@@ -1,7 +1,7 @@
 module Warabi
   module Parser
     class Header
-      delegate :[], :to_h, to: :object
+      delegate :[], :to_h, :delete, to: :object
       attr_reader :turn_counter
 
       def []=(key, value)
@@ -84,7 +84,7 @@ module Warabi
       # 駒落ち判定順序
       # 1. 手合割があれば正規化して平手以外であれば
       # 2. 下手・上手の言葉が使われていれば
-      def handicap_hantei
+      def handicap_validity
         preset_info = PresetInfo[object["手合割"]]
         if preset_info
           if preset_info.name != "平手"
@@ -174,7 +174,7 @@ module Warabi
       # 「上手」「下手」の文字がなければ「平手」と見なしている
       # 棋譜を見ずにヘッダーだけで推測している点に注意
       def equality_or_handicap
-        if handicap_hantei == true
+        if handicap_validity == true
           :handicap_name
         else
           :equality_name

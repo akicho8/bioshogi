@@ -155,7 +155,7 @@ module Warabi
         end
 
         def handicap?
-          v = header.handicap_hantei
+          v = header.handicap_validity
           if !v.nil?
             return v
           end
@@ -259,8 +259,6 @@ module Warabi
         private
 
         def __header_part_string
-          out = []
-
           mediator_run
 
           obj = Mediator.new
@@ -275,19 +273,20 @@ module Warabi
                 key = "#{e}の持駒"
                 if v = header[key]
                   if v.blank?
-                    header.object.delete(key)
-            pp      end
+                    header.delete(key)
+                  end
                 end
               end
             end
 
-            out << raw_header_part_string
+            raw_header_part_string
           else
             # 手合がわからないので図を出す場合
             # 2つヘッダー行に挟む形になっている仕様が特殊でデータの扱いが難しい
 
             # header["手合割"] ||= "その他"
 
+            # 「なし」を埋める
             Location.each do |location|
               key = "#{location.call_name(obj.turn_info.handicap?)}の持駒"
               v = header[key]
@@ -295,11 +294,19 @@ module Warabi
                 header[key] = "なし"
               end
             end
-            s = raw_header_part_string
-            out << s.gsub(/(#{Location[:white].call_name(obj.turn_info.handicap?)}の持駒：.*\n)/, '\1' + obj.board.to_s)
-          end
 
-          out.join
+            # 駒落ちの場合は「上手」「下手」の順に並べる (盤面をその間に入れるため)
+            Location.reverse_each do |e|
+              key = "#{e.call_name(obj.turn_info.handicap?)}の持駒"
+              if v = header.delete(key)
+                header[key] = v
+              end
+            end
+
+            s = raw_header_part_string
+            key = "#{Location[:white].call_name(obj.turn_info.handicap?)}の持駒"
+            s.gsub(/(#{key}：.*\n)/, '\1' + obj.board.to_s)
+          end
         end
 
         def raw_header_part_string
