@@ -21,6 +21,10 @@ module Warabi
         end
       end
 
+      def handicap?
+        @sfen.handicap?
+      end
+
       def board_setup(mediator)
         usi = Usi::Class1.new
         usi.sfen = @sfen
