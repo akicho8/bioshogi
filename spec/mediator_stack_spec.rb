@@ -14,10 +14,10 @@ module Warabi
       object.mediator.object_id
       object_id = object.mediator.object_id
       object.stack_push
-      (object.mediator.object_id != object_id).should == true
+      assert { (object.mediator.object_id != object_id) == true }
       object.stack_pop
       object.mediator.object_id
-      (object.mediator.object_id == object_id).should == true
+      assert { (object.mediator.object_id == object_id) == true }
     end
   end
 end

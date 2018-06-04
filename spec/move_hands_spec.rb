@@ -15,13 +15,13 @@ module Warabi
         先手の持駒：
         手数＝1
         EOT
-        mediator.current_player.move_hands.collect(&:to_s).should                            == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"]
-        mediator.current_player.move_hands(promoted_preferred: true).collect(&:to_s).should  == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"]
-        mediator.current_player.move_hands(promoted_preferred: false).collect(&:to_s).should == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２三角(12)", "△２一角成(12)", "△２一角(12)"]
-        mediator.current_player.move_hands(king_captured_only: true).collect(&:to_s).should  == ["△２三角成(12)"]
-        mediator.current_player.legal_all_hands.collect(&:to_s).should                      == ["△２一玉(11)"]
-        mediator.current_player.mate_danger?.should                                    == false
-        mediator.current_player.mate_advantage?.should                                     == true
+        assert { mediator.current_player.move_hands.collect(&:to_s)                            == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"] }
+        assert { mediator.current_player.move_hands(promoted_preferred: true).collect(&:to_s)  == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"] }
+        assert { mediator.current_player.move_hands(promoted_preferred: false).collect(&:to_s) == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２三角(12)", "△２一角成(12)", "△２一角(12)"] }
+        assert { mediator.current_player.move_hands(king_captured_only: true).collect(&:to_s)  == ["△２三角成(12)"] }
+        assert { mediator.current_player.legal_all_hands.collect(&:to_s)                      == ["△２一玉(11)"] }
+        assert { mediator.current_player.mate_danger?                                    == false }
+        assert { mediator.current_player.mate_advantage?                                     == true }
       end
     end
   end

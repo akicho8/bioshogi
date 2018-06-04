@@ -13,7 +13,7 @@ module Warabi
       end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 場所：(場所)
 先手：(先手)
 後手：(後手)
@@ -37,7 +37,7 @@ EOT
       end
 
       it "to_ki2" do
-        @info.to_ki2.should == <<~EOT
+        assert { @info.to_ki2 == <<~EOT }
 場所：(場所)
 先手：(先手)
 後手：(後手)
@@ -50,7 +50,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa.should == <<~EOT
+        assert { @info.to_csa == <<~EOT }
 V2.2
 N+(先手)
 N-(後手)
@@ -73,7 +73,7 @@ EOT
       end
 
       it "to_csa(board_expansion: true)" do
-        @info.to_csa(board_expansion: true, strip: true).should == <<~EOT
+        assert { @info.to_csa(board_expansion: true, strip: true) == <<~EOT }
 V2.2
 N+(先手)
 N-(後手)
@@ -114,7 +114,7 @@ EOT
         EOT
       end
       it "to_sfen" do
-        @info.to_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d"
+        assert { @info.to_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d" }
       end
     end
   end

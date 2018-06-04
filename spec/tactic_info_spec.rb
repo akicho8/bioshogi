@@ -10,13 +10,13 @@ module Warabi
         matches = info.mediator.players.collect { |player|
           player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
         }.flatten
-        assert matches.include?(e.key), e.key
+        assert { matches.include?(e.key) }
       end
     end
 
     it "すべての戦法に参考URLがある" do
       TacticInfo.all_elements.each do |e|
-        assert e.urls, e.key
+        assert { e.urls }
       end
     end
   end

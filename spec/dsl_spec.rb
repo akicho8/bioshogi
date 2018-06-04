@@ -79,11 +79,11 @@ module Warabi
       end
 
       it "title" do
-        dsl_block { title "(title)" }.variables[:title].should   == "(title)"
+        assert { dsl_block { title "(title)" }.variables[:title]   == "(title)" }
       end
 
       it "comment" do
-        dsl_block { comment "(comment)" }.variables[:comment].should == "(comment)"
+        assert { dsl_block { comment "(comment)" }.variables[:comment] == "(comment)" }
       end
 
       describe "board" do
@@ -102,18 +102,18 @@ EOT
       end
 
       it "pieces" do
-        dsl_block { pieces "▲" => "歩1 桂2" }.player_at("▲").piece_box.to_s.should == "桂二 歩"
+        assert { dsl_block { pieces "▲" => "歩1 桂2" }.player_at("▲").piece_box.to_s == "桂二 歩" }
       end
 
       describe "stack" do
         it "push にブロック指定" do
-          dsl_block { board; push { mov "▲７六歩" }    }.hand_logs.count.should == 0
+          assert { dsl_block { board; push { mov "▲７六歩" }    }.hand_logs.count == 0 }
         end
         it "明示的に pop で戻る" do
-          dsl_block { board; push;  mov "▲７六歩"; pop }.hand_logs.count.should == 0
+          assert { dsl_block { board; push;  mov "▲７六歩"; pop }.hand_logs.count == 0 }
         end
         it "pushのみ" do
-          dsl_block { board; push;  mov "▲７六歩"      }.hand_logs.count.should == 1
+          assert { dsl_block { board; push;  mov "▲７六歩"      }.hand_logs.count == 1 }
         end
         it "スタックが空のときにpopできない" do
           expect { dsl_block { pop } }.to raise_error(MementoStackEmpty)

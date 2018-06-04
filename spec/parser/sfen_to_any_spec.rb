@@ -5,8 +5,8 @@ module Warabi
     describe "sfen から変換" do
       it "startpos の状態から" do
         info = Parser.parse("position startpos moves 7i6h")
-        info.to_sfen.should == "position startpos moves 7i6h"
-        info.to_kif.should == <<~EOT
+        assert { info.to_sfen == "position startpos moves 7i6h" }
+        assert { info.to_kif == <<~EOT }
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -19,8 +19,8 @@ EOT
 
       it "startpos の代わりに sfen で記述" do
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h")
-        info.to_sfen.should == "position startpos moves 7i6h"
-        info.to_kif.should == <<~EOT
+        assert { info.to_sfen == "position startpos moves 7i6h" }
+        assert { info.to_kif == <<~EOT }
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -33,8 +33,8 @@ EOT
 
       it "盤面は平手 + 持駒あり なので省略形にならない" do
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
-        info.to_sfen.should == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"
-        info.to_kif.should == <<~EOT
+        assert { info.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
+        assert { info.to_kif == <<~EOT }
 先手の持駒：銀
 後手の持駒：銀二
 先手の戦型：嬉野流

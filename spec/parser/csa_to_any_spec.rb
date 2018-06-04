@@ -4,7 +4,7 @@ module Warabi
   describe Parser::Base do
     it "-2725RYのときに候補が2つあるのでKI2にしたときに「△２五飛引成」になる" do
       info = Parser.parse("+7776FU,-3334FU,+2726FU,-4344FU,+2625FU,-2233KA,+5756FU,-8222HI,+5968OU,-2324FU,+2524FU,-3324KA,+2824HI,-2224HI,+0015KA,-0027HI,+0028FU,-2725RY")
-      info.to_ki2.include?("△２五飛引成").should == true
+      assert { info.to_ki2.include?("△２五飛引成") == true }
     end
 
     describe "消費時間があるCSAからの変換" do
@@ -20,7 +20,7 @@ EOT
         end
 
         it "to_csa" do
-          @info.to_csa.should == <<~EOT
+          assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:平手
 PI
@@ -34,7 +34,7 @@ EOT
         end
 
         it "to_kif" do
-          @info.to_kif.should == <<~EOT
+          assert { @info.to_kif == <<~EOT }
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)
@@ -59,7 +59,7 @@ EOT
         end
 
         it "to_csa" do
-          @info.to_csa.should == <<~EOT
+          assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:平手
 PI
@@ -73,7 +73,7 @@ EOT
         end
 
         it "to_kif" do
-          @info.to_kif.should == <<~EOT
+          assert { @info.to_kif == <<~EOT }
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)

@@ -8,7 +8,7 @@ module Warabi
 
     describe "縦横軸の数字" do
       it "なくてもいい" do
-        test1(<<-EOT).should == ["▲１二歩", "△１一歩"]
+        assert { test1(<<-EOT) == ["▲１二歩", "△１一歩"] }
 +------+
 | ・v歩|
 | ・ 歩|
@@ -17,7 +17,7 @@ EOT
       end
 
       it "あると任意の位置とみなす" do
-        test1(<<-EOT).should == ["▲８九歩", "△８八歩"]
+        assert { test1(<<-EOT) == ["▲８九歩", "△８八歩"] }
   ９ ８
 +------+
 | ・v歩|八
@@ -28,7 +28,7 @@ EOT
     end
 
     it "コメント" do
-      test1(<<-EOT).should == ["▲１一歩"]
+      assert { test1(<<-EOT) == ["▲１一歩"] }
 +---+
 | 歩| # コメント
 +---+
@@ -36,7 +36,7 @@ EOT
       end
     
     it "成駒を認識" do
-      test1(<<-EOT).should == ["△１一龍"]
+      assert { test1(<<-EOT) == ["△１一龍"] }
 +---+
 |v龍|
 +---+
@@ -45,7 +45,7 @@ EOT
 
     it "盤面サイズを変更していてもパースできる" do
       Board.dimensiton_change([2, 2]) do
-        test1(<<-EOT).should == ["▲２一歩"]
+        assert { test1(<<-EOT) == ["▲２一歩"] }
 +------+
 | 歩 ・|
 +------+
@@ -54,7 +54,7 @@ EOT
     end
 
     it "盤面の「・」はなくてもいい" do
-      test1(<<-EOT).should == ["▲１二歩", "△１一歩"]
+      assert { test1(<<-EOT) == ["▲１二歩", "△１一歩"] }
 +------+
 |   v歩|
 |    歩|

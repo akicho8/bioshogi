@@ -33,8 +33,8 @@ module Warabi
       # | 変化：1手
       # |    1 ２六歩(25)   ( 0:00/00:00:00)
       #
-      #   @result.move_infos.first.should == {turn_number: "1", input: "７六歩(77)", clock_part: "0:10/00:00:10", comments: ["コメント1"]}
-      #   @result.move_infos.last.should  == {turn_number: "5", input: "投了", clock_part: "0:10/00:00:50"}
+      # assert { @result.move_infos.first == {turn_number: "1", input: "７六歩(77)", clock_part: "0:10/00:00:10", comments: ["コメント1"]} }
+      # assert { @result.move_infos.last  == {turn_number: "5", input: "投了", clock_part: "0:10/00:00:50"} }
       #
       def parse
         header_read

@@ -28,7 +28,7 @@ module Warabi
       end
 
       it "to_bod" do
-        @info.to_bod.should == <<~EOT
+        assert { @info.to_bod == <<~EOT }
 後手の持駒：飛 角 金 銀 桂 香 歩四
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -50,7 +50,7 @@ EOT
       end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 後手：ごて
 先手：せんて
 後手の持駒：飛 角 金 銀 桂 香 歩四

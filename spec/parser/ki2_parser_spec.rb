@@ -3,15 +3,15 @@ require_relative "../spec_helper"
 module Warabi
   describe Parser::Ki2Parser do
     it "棋譜部分のパース" do
-      Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input].should == "７六歩(77)"
-      Parser::Ki2Parser.parse("７六歩").move_infos.first[:input].should == "７六歩"
-      Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input].should == "△７六歩"
+      assert Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input] == "７六歩(77)"
+      assert Parser::Ki2Parser.parse("７六歩").move_infos.first[:input] == "７六歩"
+      assert Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input] == "△７六歩"
     end
 
     it "激指定跡道場4のクリップボード書き出し結果が読める" do
       info = Parser::Ki2Parser.file_parse("#{__dir__}/../files/激指定跡道場4のクリップボード書き出し結果.ki2")
       # puts info.to_ki2
-      info.to_ki2.should == <<~EOT
+      assert { info.to_ki2 == <<~EOT }
 手合割：平手
 後手の戦型：嬉野流
 
@@ -63,40 +63,44 @@ EOT
       end
 
       it "ヘッダー部" do
-        @result.header.to_h.should == {
-          "Web Page" => "(Web Page)",
-          "先手"     => "(先手)",
-          "副立会人" => "(副立会人)",
-          "場所"     => "(場所)",
-          "後手"     => "(後手)",
-          "戦型"     => "(戦型)",
-          "持ち時間" => "(持ち時間)",
-          "掲載"     => "(掲載)",
-          "棋戦"     => "(棋戦)",
-          "立会人"   => "(立会人)",
-          "終了日時" => "2000/01/01 01:00:00",
-          "表題"     => "(表題)",
-          "記録係"   => "(記録係)",
-          "通算成績" => "(通算成績)",
-          "開始日時" => "2000/01/01",
-          "備考1"    => "01:02",
-          "備考2"    => "1回",
-          "解説"     => "一太郎",
-          "聞き手"   => "二太郎",
-        }
+        assert do
+          @result.header.to_h == {
+            "Web Page" => "(Web Page)",
+            "先手"     => "(先手)",
+            "副立会人" => "(副立会人)",
+            "場所"     => "(場所)",
+            "後手"     => "(後手)",
+            "戦型"     => "(戦型)",
+            "持ち時間" => "(持ち時間)",
+            "掲載"     => "(掲載)",
+            "棋戦"     => "(棋戦)",
+            "立会人"   => "(立会人)",
+            "終了日時" => "2000/01/01 01:00:00",
+            "表題"     => "(表題)",
+            "記録係"   => "(記録係)",
+            "通算成績" => "(通算成績)",
+            "開始日時" => "2000/01/01",
+            "備考1"    => "01:02",
+            "備考2"    => "1回",
+            "解説"     => "一太郎",
+            "聞き手"   => "二太郎",
+          }
+        end
       end
 
       it "棋譜の羅列" do
-        @result.move_infos.should == [
-          {input: "▲７六歩"},
-          {input: "△３四歩", comments: ["コメント1"]},
-          {input: "▲６六歩"},
-          {input: "△８四歩", comments: ["コメント2"]},
-        ]
+        assert do
+          @result.move_infos == [
+            {input: "▲７六歩"},
+            {input: "△３四歩", comments: ["コメント1"]},
+            {input: "▲６六歩"},
+            {input: "△８四歩", comments: ["コメント2"]},
+          ]
+        end
       end
 
       it "対局前コメント" do
-        @result.first_comments.should == ["対局前コメント"]
+        assert { @result.first_comments == ["対局前コメント"] }
       end
     end
 
@@ -111,7 +115,7 @@ EOT
       info = Parser::Ki2Parser.parse(["*引き分け", "まで100手で千日手"].join("\n"))
       info.mediator_run
       str = info.last_action_info.judgment_message(info.mediator)
-      str.should == "まで0手で千日手"
+      assert { str == "まで0手で千日手" }
     end
   end
 end

@@ -16,7 +16,7 @@ EOT
       end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 手合割：三枚落ち
 上手：伊藤宗印
 下手：天満屋
@@ -54,7 +54,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa.should == <<~EOT
+        assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:三枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
@@ -73,7 +73,7 @@ EOT
       end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 手合割：三枚落ち
 上手：伊藤宗印
 下手：天満屋
@@ -109,7 +109,7 @@ EOT
       end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 手合割：その他
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -133,7 +133,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa.should == <<~EOT
+        assert { @info.to_csa == <<~EOT }
 V2.2
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -KA *

@@ -3,20 +3,20 @@ require_relative "spec_helper"
 module Warabi
   describe Location do
     it "変換可能" do
-      Location[-1].key.should      == :white
-      Location[0].key.should       == :black
-      Location[1].key.should       == :white
-      Location[2].key.should       == :black
-      Location[:black].key.should  == :black
-      Location["▲"].key.should    == :black
-      Location["▼"].key.should    == :black
-      Location["☗"].key.should    == :black
-      Location["b"].key.should     == :black
+      assert { Location[-1].key      == :white }
+      assert { Location[0].key       == :black }
+      assert { Location[1].key       == :white }
+      assert { Location[2].key       == :black }
+      assert { Location[:black].key  == :black }
+      assert { Location["▲"].key    == :black }
+      assert { Location["▼"].key    == :black }
+      assert { Location["☗"].key    == :black }
+      assert { Location["b"].key     == :black }
     end
 
     it "これは微妙だけどないと困るので引けるようにする" do
-      Location["先手"].key.should  == :black
-      Location["上手"].key.should  == :white
+      assert { Location["先手"].key  == :black }
+      assert { Location["上手"].key  == :white }
     end
 
     it "手番と位置は異なる。先に指すからといって一方が特定できるわけではない(重要)" do
@@ -25,12 +25,12 @@ module Warabi
     end
 
     it "盤面読み取り用" do
-      Location[" "].key.should == :black
-      Location["v"].key.should == :white
+      assert { Location[" "].key == :black }
+      assert { Location["v"].key == :white }
     end
 
     it "変換不能で nil" do
-      Location["xxx"].should == nil
+      assert { Location["xxx"] == nil }
     end
 
     it "変換不能でエラー" do
@@ -40,26 +40,26 @@ module Warabi
     end
 
     it "簡潔に書きたいとき用" do
-      Location[:black].key.should == :black
-      Location[:white].key.should == :white
+      assert { Location[:black].key == :black }
+      assert { Location[:white].key == :white }
     end
 
     it "次の手番を返す" do
-      Location[:white].flip.key.should == :black
-      Location[:white].next_location.key.should == :black
+      assert { Location[:white].flip.key == :black }
+      assert { Location[:white].next_location.key == :black }
     end
 
     it "属性っぽい値を全部返す" do
-      Location[:black].match_target_values_set.should be_an_instance_of Set
+      assert { Location[:black].match_target_values_set.kind_of?(Set) }
     end
 
     it "先手後手を表す文字一覧の正規表現" do
-      Location.triangles_str.should == "▲▼△▽"
+      assert { Location.triangles_str == "▲▼△▽" }
     end
 
     it "cssのstyle" do
-      Location[:white].style_transform.should == "transform: rotate(180deg)"
-      Location[:black].style_transform.should == nil
+      assert { Location[:white].style_transform == "transform: rotate(180deg)" }
+      assert { Location[:black].style_transform == nil }
     end
   end
 end

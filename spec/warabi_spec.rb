@@ -14,9 +14,9 @@ module Warabi
 
     describe "棋譜コンテンツのパース" do
       it "できる" do
-        Parser.parse("手数----指手---------消費時間--").class.should == Parser::KifParser
-        Parser.parse("").class.should == Parser::Ki2Parser
-        Parser.parse(nil).class.should == Parser::Ki2Parser
+        assert { Parser.parse("手数----指手---------消費時間--").class == Parser::KifParser }
+        assert { Parser.parse("").class == Parser::Ki2Parser }
+        assert { Parser.parse(nil).class == Parser::Ki2Parser }
       end
 
       # it "できない" do

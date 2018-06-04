@@ -9,7 +9,7 @@ module Warabi
       # 平手で途中の状態
       mediator.turn_info.handicap = false
       info = Parser.parse("position #{mediator.to_long_sfen}")
-      info.to_ki2.should == <<~EOT
+      assert { info.to_ki2 == <<~EOT }
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -33,7 +33,7 @@ EOT
       mediator.board.placement_from_hash(black: "十枚落ち", white: "裸玉")
       mediator.turn_info.handicap = true
       info = Parser.parse("position #{mediator.to_long_sfen}")
-      info.to_ki2.should == <<~EOT
+      assert { info.to_ki2 == <<~EOT }
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

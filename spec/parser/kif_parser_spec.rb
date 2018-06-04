@@ -38,38 +38,40 @@ EOT
       end
 
       it "ヘッダー部" do
-        @info.header.to_h.should == {
-          "開始日時" => "2000/01/01",
-          "終了日時" => "2000/01/01 01:00:00",
-          "棋戦"     => "(棋戦)",
-          "持ち時間" => "(持ち時間)",
-          "放映日"   => "2003/09/07",
-          "棋戦詳細" => "第53回NHK杯戦2回戦第5局",
-          "手合割"   => "平手",
-          "先手"     => "(先  手)",
-          "先手詳細" => "(先 手)七段",
-          "後手"     => "(後手)",
-          "後手詳細" => "(後手)九段",
-        }
+        assert do
+          @info.header.to_h == {
+            "開始日時" => "2000/01/01",
+            "終了日時" => "2000/01/01 01:00:00",
+            "棋戦"     => "(棋戦)",
+            "持ち時間" => "(持ち時間)",
+            "放映日"   => "2003/09/07",
+            "棋戦詳細" => "第53回NHK杯戦2回戦第5局",
+            "手合割"   => "平手",
+            "先手"     => "(先  手)",
+            "先手詳細" => "(先 手)七段",
+            "後手"     => "(後手)",
+            "後手詳細" => "(後手)九段",
+          }
+        end
       end
 
       it "棋譜の羅列" do
-        @info.move_infos.first[:input].should == "７六歩(77)"
+        assert { @info.move_infos.first[:input] == "７六歩(77)" }
       end
 
       it "最後の情報" do
-        @info.last_status_params[:last_action_key].should == "投了"
-        @info.last_status_params[:used_seconds].should == 10
+        assert { @info.last_status_params[:last_action_key] == "投了" }
+        assert { @info.last_status_params[:used_seconds] == 10 }
       end
 
       it "対局前コメント" do
-        @info.first_comments.should == ["放映日：2003/09/7", "棋戦詳細：第53回ＮＨＫ杯戦2回戦第05局", "「(先 手)七段」vs「(後手)九段」", "対局前コメント"]
+        assert { @info.first_comments == ["放映日：2003/09/7", "棋戦詳細：第53回ＮＨＫ杯戦2回戦第05局", "「(先 手)七段」vs「(後手)九段」", "対局前コメント"] }
       end
     end
 
     it "盤面表示" do
       mediator = Mediator.start
-      mediator.board.to_s.should == <<~EOT
+      assert { mediator.board.to_s == <<~EOT }
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -117,7 +119,7 @@ EOT
       end
 
       it do
-        @info.to_csa.should == <<~EOT
+        assert { @info.to_csa == <<~EOT }
 V2.2
 $SITE:(site)
 P1 *  *  *  *  *  *  *  * -OU
@@ -142,8 +144,8 @@ EOT
     # curl -O http://swks.sakura.ne.jp/wars/kifu/akicho8-JackTuti-20130609_201346.kif
     it "将棋ウォーズ棋譜変換サイトが生成したKIFフォーマットが読める" do
       info = Parser::KifParser.parse(Pathname(__FILE__).dirname.join("../../resources/akicho8-JackTuti-20130609_201346.kif").expand_path)
-      info.header.should be_present
-      info.move_infos.should be_present
+      assert { info.header }
+      assert { info.move_infos }
     end
   end
 end

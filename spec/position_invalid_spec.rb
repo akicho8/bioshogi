@@ -13,9 +13,9 @@ module Warabi
         先手の持駒：
       手数＝0
       EOT
-      mediator.current_player.mate_advantage?.should == true
-      mediator.opponent_player.mate_advantage?.should == true
-      mediator.position_invalid?.should == true
+      assert { mediator.current_player.mate_advantage? == true }
+      assert { mediator.opponent_player.mate_advantage? == true }
+      assert { mediator.position_invalid? == true }
     end
 
     it do
@@ -30,9 +30,9 @@ module Warabi
         先手の持駒：
       手数＝0
       EOT
-      mediator.current_player.mate_danger?.should == true
-      mediator.current_player.mate_advantage?.should == false
-      mediator.position_invalid?.should == false
+      assert { mediator.current_player.mate_danger? == true }
+      assert { mediator.current_player.mate_advantage? == false }
+      assert { mediator.position_invalid? == false }
     end
   end
 end

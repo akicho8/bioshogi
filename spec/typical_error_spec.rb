@@ -17,16 +17,16 @@ module Warabi
 
       it "オプションをつければ例外がでない" do
         info = Parser.file_parse(@file, typical_error_case: :skip)
-        assert info.to_kif
-        assert info.to_ki2
-        assert !info.to_csa.match?(/【反則】/)
+       assert { info.to_kif }
+       assert { info.to_ki2 }
+       assert { !info.to_csa.match?(/【反則】/) }
       end
 
       it "エラー情報を棋譜に埋め込む" do
         info = Parser.file_parse(@file, typical_error_case: :embed)
-        assert info.to_kif
-        assert info.to_ki2
-        assert info.to_csa.match?(/【反則】/)
+       assert { info.to_kif }
+       assert { info.to_ki2 }
+       assert { info.to_csa.match?(/【反則】/) }
       end
     end
 
@@ -41,16 +41,16 @@ module Warabi
 
       it "オプションをつければ例外がでない" do
         info = Parser.parse(@body, typical_error_case: :skip)
-        assert info.to_kif
-        assert info.to_ki2
-        assert !info.to_csa.match?(/【反則】/)
+       assert { info.to_kif }
+       assert { info.to_ki2 }
+       assert { !info.to_csa.match?(/【反則】/) }
       end
 
       it "エラー情報を棋譜に埋め込む" do
         info = Parser.parse(@body, typical_error_case: :embed)
-        assert info.to_kif
-        assert info.to_ki2
-        assert info.to_csa.match?(/【反則】/)
+       assert { info.to_kif }
+       assert { info.to_ki2 }
+       assert { info.to_csa.match?(/【反則】/) }
       end
     end
   end

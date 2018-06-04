@@ -23,7 +23,7 @@ EOT
             end
 
       it "to_kif" do
-        @info.to_kif.should == <<~EOT
+        assert { @info.to_kif == <<~EOT }
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -36,7 +36,7 @@ EOT
       end
 
       it "to_ki2" do
-        @info.to_ki2.should == <<~EOT
+        assert { @info.to_ki2 == <<~EOT }
 先手の戦型：嬉野流
 手合割：平手
 
@@ -46,7 +46,7 @@ EOT
       end
 
       it "to_csa" do
-        @info.to_csa.should == <<~EOT
+        assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:平手
 PI

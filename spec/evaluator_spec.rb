@@ -5,7 +5,7 @@ module Warabi
     it do
       mediator = Mediator.new
       mediator.board.placement_from_human("▲９七歩")
-      assert mediator.player_at(:black).evaluator.score >= 1
+     assert { mediator.player_at(:black).evaluator.score >= 1 }
     end
   end
 end

@@ -17,7 +17,7 @@ EOT
         end
 
         it "to_csa" do
-          @info.to_csa.should == <<~EOT
+          assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:平手
 PI
@@ -31,7 +31,7 @@ EOT
         end
 
         it "to_kif" do
-          @info.to_kif.should == <<~EOT
+          assert { @info.to_kif == <<~EOT }
 手合割：平手
 先手の戦型：嬉野流
 手数----指手---------消費時間--
@@ -60,7 +60,7 @@ EOT
         end
 
         it "to_csa" do
-          @info.to_csa.should == <<~EOT
+          assert { @info.to_csa == <<~EOT }
 V2.2
 ' 手合割:平手
 PI
@@ -74,7 +74,7 @@ EOT
         end
 
         it "to_kif" do
-          @info.to_kif.should == <<~EOT
+          assert { @info.to_kif == <<~EOT }
 手合割：平手
 先手の戦型：嬉野流
 手数----指手---------消費時間--

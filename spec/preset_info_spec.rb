@@ -3,12 +3,12 @@ require_relative "spec_helper"
 module Warabi
   describe PresetInfo do
     it "to_position_sfen" do
-      PresetInfo["平手"].to_position_sfen.should   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
-      PresetInfo["香落ち"].to_position_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      assert { PresetInfo["平手"].to_position_sfen   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { PresetInfo["香落ち"].to_position_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
     end
 
     it "black_only_soldiers" do
-      PresetInfo["平手"].location_split[:black].collect(&:name).should == ["▲９七歩", "▲９九香", "▲８七歩", "▲８八角", "▲８九桂", "▲７七歩", "▲７九銀", "▲６七歩", "▲６九金", "▲５七歩", "▲５九玉", "▲４七歩", "▲４九金", "▲３七歩", "▲３九銀", "▲２七歩", "▲２八飛", "▲２九桂", "▲１七歩", "▲１九香"]
+      assert PresetInfo["平手"].location_split[:black].collect(&:name) == ["▲９七歩", "▲９九香", "▲８七歩", "▲８八角", "▲８九桂", "▲７七歩", "▲７九銀", "▲６七歩", "▲６九金", "▲５七歩", "▲５九玉", "▲４七歩", "▲４九金", "▲３七歩", "▲３九銀", "▲２七歩", "▲２八飛", "▲２九桂", "▲１七歩", "▲１九香"]
     end
 
     it "ある" do
@@ -16,7 +16,7 @@ module Warabi
     end
 
     it "名前が微妙に違っても同じインスタンス" do
-      PresetInfo["飛車落ち"].should == PresetInfo["飛落ち"]
+      assert PresetInfo["飛車落ち"] == PresetInfo["飛落ち"]
     end
 
     it "▲が平手で△が香落ちなので「香落ち」だと判断できる" do
@@ -35,7 +35,7 @@ module Warabi
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_key.should == :"香落ち"
+      assert { mediator.board.preset_key == :"香落ち" }
     end
 
     it "▲は平手状態だけど△は不明" do
@@ -54,7 +54,7 @@ mediator.board.placement_from_shape(<<~EOT)
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_key.should == nil
+      assert { mediator.board.preset_key == nil }
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
@@ -73,7 +73,7 @@ EOT
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      mediator.board.preset_key.should == nil
+      assert { mediator.board.preset_key == nil }
     end
   end
 end

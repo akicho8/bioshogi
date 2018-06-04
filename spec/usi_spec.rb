@@ -6,33 +6,33 @@ module Warabi
       mediator = Mediator.new
       mediator.placement_from_preset("平手")
       mediator.play_standby
-      mediator.to_sfen.should == "position startpos"
-      mediator.to_long_sfen.should == "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+      assert { mediator.to_sfen == "position startpos" }
+      assert { mediator.to_long_sfen == "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
       mediator.pieces_set("▲銀△銀銀")
       # puts mediator
-      mediator.board.to_sfen.should == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL"
-      mediator.to_sfen.should == "position startpos"
+      assert { mediator.board.to_sfen == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL" }
+      assert { mediator.to_sfen == "position startpos" }
       mediator.execute("▲６八銀")
-      mediator.hand_logs.last.to_sfen.should == "7i6h"
-      mediator.to_sfen.should == "position startpos moves 7i6h"
+      assert { mediator.hand_logs.last.to_sfen == "7i6h" }
+      assert { mediator.to_sfen == "position startpos moves 7i6h" }
       mediator.execute("△２四銀打")
-      mediator.hand_logs.last.to_sfen.should == "S*2d"
-      mediator.to_sfen.should == "position startpos moves 7i6h S*2d"
-      mediator.first_state_board_sfen.should == "startpos"
+      assert { mediator.hand_logs.last.to_sfen == "S*2d" }
+      assert { mediator.to_sfen == "position startpos moves 7i6h S*2d" }
+      assert { mediator.first_state_board_sfen == "startpos" }
       # puts mediator.board
-      mediator.to_sfen.should == "position startpos moves 7i6h S*2d"
+      assert { mediator.to_sfen == "position startpos moves 7i6h S*2d" }
     end
 
     it "dimension 形式で入力" do
       usi = Usi::Class2.new
       usi.execute("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
-      usi.mediator.to_sfen.should == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"
+      assert { usi.mediator.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
       usi.execute("position startpos moves 7i6h")
-      usi.mediator.to_sfen.should == "position startpos moves 7i6h"
+      assert { usi.mediator.to_sfen == "position startpos moves 7i6h" }
       usi.execute("position startpos")
-      usi.mediator.to_sfen.should ==  "position startpos"
+      assert { usi.mediator.to_sfen ==  "position startpos" }
       usi.execute("position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
-      usi.mediator.to_sfen.should == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
+      assert { usi.mediator.to_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
     end
   end
 end

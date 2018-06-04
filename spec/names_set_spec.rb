@@ -5,7 +5,7 @@ module Warabi
     it do
       info = Parser.parse("position sfen 4k4/9/9/9/9/9/PPPPPPPPP/9/4K4 w - 1")
       info.names_set(black: "alice", white: "bob")
-      info.to_ki2.should == <<~EOT
+      assert { info.to_ki2 == <<~EOT }
 上手：bob
 下手：alice
 上手の持駒：なし
@@ -28,7 +28,7 @@ EOT
 
       info = Parser.parse("position startpos")
       info.names_set(black: "alice", white: "bob")
-      info.to_ki2.should == <<~EOT
+      assert { info.to_ki2 == <<~EOT }
 先手：alice
 後手：bob
 手合割：平手
