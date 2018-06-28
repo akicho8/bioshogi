@@ -56,6 +56,7 @@ module Warabi
         (?<csa_sign>[+-])?
         (?<csa_from>[0-9]{2}) # 00 = 駒台
         (?<csa_to>[1-9]{2})
+
         (?<csa_piece>#{csa_piece})
       /ox
     end

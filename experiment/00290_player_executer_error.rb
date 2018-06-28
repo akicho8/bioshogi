@@ -6,6 +6,9 @@ mediator.execute("△３四歩")
 player = mediator.player_at(:black)
 player_executor = PlayerExecutorHuman.new(player, "▲５五銀")
 player_executor.execute
+
+mediator = Mediator.start
+mediator.execute("▲22角成")    # => 
 # ~> /Users/ikeda/src/warabi/lib/warabi/player_executor_base.rb:83:in `raise_error': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Warabi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀

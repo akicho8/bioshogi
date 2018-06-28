@@ -12,10 +12,6 @@ module Warabi
   class UnconfirmedObject < WarabiError
   end
 
-  # 指定座標に移動できる駒が一つもない (KI2の場合でのみ)
-  class MovableBattlerNotFound < WarabiError
-  end
-
   # 指定座標に移動できる駒が多すぎる
   class AmbiguousFormatError < WarabiError
   end
@@ -122,6 +118,10 @@ module Warabi
 
   # 相手の駒を動かそうとした。▲の手番で初手 "３四歩"
   class ReversePlayerPieceMoveError < RuleError
+  end
+
+  # 指定座標に移動できる駒が一つもない (KI2の場合でのみ)。初手▲22角成
+  class MovableBattlerNotFound < RuleError
   end
 
   ################################################################################ 棋譜にも残る場合がある反則 (CommonError)

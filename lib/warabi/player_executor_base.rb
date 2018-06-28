@@ -80,7 +80,14 @@ module Warabi
       str << mediator.to_bod
       str = str.join("\n")
 
-      raise error[:error_class].new(str)
+      obj = error[:error_class].new(str)
+
+      obj.instance_variable_set(:@mediator, mediator)
+      def obj.mediator
+        @mediator
+      end
+
+      raise obj
     end
 
     def input_adapter_class(md)
