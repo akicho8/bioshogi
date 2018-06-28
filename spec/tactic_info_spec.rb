@@ -4,7 +4,7 @@ module Warabi
   describe TacticInfo do
     it "すべての戦法の判定" do
       TacticInfo.all_elements.each do |e|
-        file = Pathname.glob("#{__dir__}/../experiment/#{e.tactic_info.name}/#{e.key}.*").first
+        file = Pathname.glob("#{__dir__}/../experiment/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first # 拡張子を "*" とすると ruby 2.5.1 から(？) 動かない
         info = Parser.file_parse(file)
         info.mediator_run
         matches = info.mediator.players.collect { |player|
