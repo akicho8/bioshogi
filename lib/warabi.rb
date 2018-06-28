@@ -101,3 +101,5 @@ require_relative "warabi/parser"
 
 require_relative "warabi/sfen"
 require_relative "warabi/usi"
+
+require_relative "warabi/kifu_format_info"
