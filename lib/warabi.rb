@@ -15,7 +15,7 @@ require "active_support/core_ext/numeric"        # for 1.minute
 require "time"                  # for Time.parse
 require "kconv"                 # for toeuc
 
-require "org_tp"
+require "table_format"
 require "memory_record"
 
 module Warabi

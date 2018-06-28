@@ -5,7 +5,7 @@ PATH
       actionview
       activesupport
       memory_record
-      org_tp
+      table_format
       tree_support
 
 GEM
@@ -59,7 +59,7 @@ GEM
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     ntlm-http (0.1.1)
-    org_tp (0.0.17)
+    table_format (0.0.17)
       activesupport
     power_assert (1.1.1)
     rails-dom-testing (2.0.3)

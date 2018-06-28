@@ -6,7 +6,7 @@ PATH
       activemodel
       activesupport
       memory_record
-      org_tp
+      table_format
       pry
       tapp
       tree_support
@@ -65,7 +65,7 @@ GEM
     mustermann (1.0.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
-    org_tp (0.0.14)
+    table_format (0.0.14)
       activesupport
     pry (0.11.3)
       coderay (~> 1.1.0)

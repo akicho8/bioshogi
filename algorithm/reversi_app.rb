@@ -1,5 +1,5 @@
 require "matrix"
-require "org_tp"
+require "table_format"
 
 class ReversiApp
   Around = [
