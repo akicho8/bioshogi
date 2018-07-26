@@ -21,13 +21,13 @@ module Warabi
 
     def to_h
       TacticInfo.inject({}) do |a, e|
-        a.merge(e.key => public_send(e.list_key).normalized_tactics.collect(&:key))
+        a.merge(e.key => public_send(e.list_key).normalize.collect(&:key))
       end
     end
 
     def kif_comment(location)
       TacticInfo.collect { |e|
-        if v = public_send(e.list_key).normalized_tactics.presence
+        if v = public_send(e.list_key).normalize.presence
           [location.name, e.name, "：", v.collect(&:name).join(', '), "\n"].sum("*")
         end
       }.compact.join.presence
@@ -35,7 +35,7 @@ module Warabi
 
     class List < Array
       # 重複しているように感じる囲いなどを整理する
-      def normalized_tactics
+      def normalize
         list = to_a
         # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
         list -= list.flat_map { |e| e.ancestors }
