@@ -211,7 +211,7 @@ module Warabi
           if @parser_options[:skill_monitor_enable]
             TacticInfo.each do |e|
               mediator.players.each do |player|
-                if v = player.skill_set.public_send(e.list_key).normalize.collect(&:name).presence
+                if v = player.skill_set.public_send(e.list_key).normalized_tactics.collect(&:name).presence
                   skill_set_hash["#{player.call_name}の#{e.name}"] = v
                 end
               end

@@ -16,11 +16,11 @@ module Warabi
     end
 
     it "「ダイヤモンド美濃」に含まれる「片美濃囲い」と、親戚の「銀美濃」を除外する" do
-      assert { @skill_set.defense_infos.normalize.collect(&:key) == [:"ダイヤモンド美濃", :"坊主美濃"] }
+      assert { @skill_set.defense_infos.normalized_tactics.collect(&:key) == [:"ダイヤモンド美濃", :"坊主美濃"] }
     end
 
     it "それに別名を足す" do
-      assert { @skill_set.defense_infos.normalize.flat_map {|e|[e.key, *e.alias_names]} == [:"ダイヤモンド美濃", :"坊主美濃", "大山美濃"] }
+      assert { @skill_set.defense_infos.normalized_tactics.flat_map {|e|[e.key, *e.alias_names]} == [:"ダイヤモンド美濃", :"坊主美濃", "大山美濃"] }
     end
 
     it "all" do

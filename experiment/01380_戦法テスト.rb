@@ -8,7 +8,7 @@ rows = TacticInfo.all_elements.collect do |e|
     info = Parser.parse(str)
     info.mediator_run
     row[:matches] = info.mediator.players.collect { |player|
-      player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
+      player.skill_set.public_send(e.tactic_info.list_key).normalized_tactics.collect(&:key)
     }.flatten
     row[:status] = row[:matches].include?(e.key)
   end

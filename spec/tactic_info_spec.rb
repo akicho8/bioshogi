@@ -8,7 +8,7 @@ module Warabi
         info = Parser.file_parse(file)
         info.mediator_run
         matches = info.mediator.players.collect { |player|
-          player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
+          player.skill_set.public_send(e.tactic_info.list_key).normalized_tactics.collect(&:key)
         }.flatten
         assert { matches.include?(e.key) }
       end
