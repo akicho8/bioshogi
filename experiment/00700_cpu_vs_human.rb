@@ -1,7 +1,7 @@
 require "./example_helper"
 
-# info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2f")
-info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e", typical_error_case: :embed)
+info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2f")
+# info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e", typical_error_case: :embed)
 mediator = info.mediator
 puts mediator
 records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
@@ -10,36 +10,55 @@ record = records.first
 hand = record[:hand]
 mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 puts mediator.to_sfen
-# ~> /Users/ikeda/src/warabi/lib/warabi/player_executor_base.rb:83:in `raise_error': 【反則】▲２五歩(27)としましたが２七から２五に移動することはできません (Warabi::CandidateSoldiersNotInclude)
-# ~> 手番: 先手
-# ~> 指し手: 2e2g
-# ~> 棋譜: 
-# ~> 後手の持駒：なし
-# ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# ~> +---------------------------+
-# ~> |v香v桂v銀v金v玉v金v銀v桂v香|一
-# ~> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
-# ~> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-# ~> | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-# ~> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-# ~> | 香 桂 銀 金 玉 金 銀 桂 香|九
-# ~> +---------------------------+
-# ~> 先手の持駒：なし
-# ~> 手数＝0 まで
-# ~> 
-# ~> 先手番
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player_executor_base.rb:33:in `execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/player.rb:20:in `execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:11:in `block in execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:10:in `each'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/mediator_executor.rb:10:in `execute'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:187:in `block in mediator_run_all'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:177:in `each'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:177:in `mediator_run_all'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:131:in `block in mediator'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:129:in `tap'
-# ~> 	from /Users/ikeda/src/warabi/lib/warabi/parser/base.rb:129:in `mediator'
-# ~> 	from -:5:in `<main>'
+# >> 後手の持駒：なし
+# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
+# >> +---------------------------+
+# >> |v香v桂v銀v金v玉v金v銀v桂v香|一
+# >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
+# >> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+# >> | ・ ・ ・ ・ ・ ・ ・ 歩 ・|六
+# >> | 歩 歩 歩 歩 歩 歩 歩 ・ 歩|七
+# >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+# >> | 香 桂 銀 金 玉 金 銀 桂 香|九
+# >> +---------------------------+
+# >> 先手の持駒：なし
+# >> 手数＝1 ▲２六歩(27) まで
+# >> 
+# >> 後手番
+# >> |------+--------------+--------------+--------+------------+----------|
+# >> | 順位 | 候補手       | 読み筋       | ▲形勢 | 評価局面数 | 処理時間 |
+# >> |------+--------------+--------------+--------+------------+----------|
+# >> |    1 | △９二香(91) | ▲９六歩(97) |      0 |         31 | 0.018089 |
+# >> |    2 | △６二銀(71) | ▲９六歩(97) |      0 |         31 | 0.018666 |
+# >> |    3 | △７二銀(71) | ▲９六歩(97) |      0 |         31 | 0.019296 |
+# >> |    4 | △５二金(61) | ▲９六歩(97) |      0 |         31 | 0.018584 |
+# >> |    5 | △６二金(61) | ▲９六歩(97) |      0 |         31 | 0.018405 |
+# >> |    6 | △７二金(61) | ▲９六歩(97) |      0 |         31 |  0.01807 |
+# >> |    7 | △４二玉(51) | ▲９六歩(97) |      0 |         31 | 0.020054 |
+# >> |    8 | △５二玉(51) | ▲９六歩(97) |      0 |         31 | 0.018388 |
+# >> |    9 | △６二玉(51) | ▲９六歩(97) |      0 |         31 | 0.018588 |
+# >> |   10 | △３二金(41) | ▲９六歩(97) |      0 |         31 | 0.019949 |
+# >> |   11 | △４二金(41) | ▲９六歩(97) |      0 |         31 | 0.017833 |
+# >> |   12 | △５二金(41) | ▲９六歩(97) |      0 |         31 | 0.019086 |
+# >> |   13 | △３二銀(31) | ▲９六歩(97) |      0 |         31 | 0.018233 |
+# >> |   14 | △４二銀(31) | ▲９六歩(97) |      0 |         31 | 0.019181 |
+# >> |   15 | △１二香(11) | ▲９六歩(97) |      0 |         31 | 0.018389 |
+# >> |   16 | △７二飛(82) | ▲９六歩(97) |      0 |         31 | 0.019582 |
+# >> |   17 | △６二飛(82) | ▲９六歩(97) |      0 |         31 | 0.019895 |
+# >> |   18 | △５二飛(82) | ▲９六歩(97) |      0 |         31 | 0.018596 |
+# >> |   19 | △４二飛(82) | ▲９六歩(97) |      0 |         31 | 0.019404 |
+# >> |   20 | △３二飛(82) | ▲９六歩(97) |      0 |         31 | 0.019144 |
+# >> |   21 | △９二飛(82) | ▲９六歩(97) |      0 |         31 | 0.019215 |
+# >> |   22 | △９四歩(93) | ▲９六歩(97) |      0 |         31 | 0.019918 |
+# >> |   23 | △８四歩(83) | ▲９六歩(97) |      0 |         31 | 0.018353 |
+# >> |   24 | △７四歩(73) | ▲９六歩(97) |      0 |         31 | 0.020154 |
+# >> |   25 | △６四歩(63) | ▲９六歩(97) |      0 |         31 | 0.019802 |
+# >> |   26 | △５四歩(53) | ▲９六歩(97) |      0 |         31 |  0.01936 |
+# >> |   27 | △４四歩(43) | ▲９六歩(97) |      0 |         31 | 0.019565 |
+# >> |   28 | △３四歩(33) | ▲９六歩(97) |      0 |         31 | 0.019993 |
+# >> |   29 | △２四歩(23) | ▲９六歩(97) |      0 |         31 | 0.019692 |
+# >> |   30 | △１四歩(13) | ▲９六歩(97) |      0 |         31 | 0.019479 |
+# >> |------+--------------+--------------+--------+------------+----------|
+# >> position startpos moves 2g2f 9a9b

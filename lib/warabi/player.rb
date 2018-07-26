@@ -112,6 +112,7 @@ module Warabi
 
     concerning :SkillMonitorMethods do
       delegate :attack_infos, :defense_infos, to: :skill_set
+
       def skill_set
         @skill_set ||= SkillSet.new
       end
