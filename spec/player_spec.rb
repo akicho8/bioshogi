@@ -193,7 +193,7 @@ EOT
       describe "取る" do
         describe "取れる" do
           it "座標指定で" do
-            mediator = Mediator.test1(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
+            mediator = Mediator.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
             assert { mediator.opponent_player.executor.captured_soldier.piece.name == "歩" }
             assert { mediator.opponent_player.piece_box.to_s == "歩" }
             assert { mediator.opponent_player.to_s_soldiers == "１一玉 １三歩" }
@@ -202,7 +202,7 @@ EOT
           end
 
           it "同歩で取る" do
-            mediator = Mediator.test1(init: "▲２五歩 △２三歩", execute: ["２四歩", "同歩"])
+            mediator = Mediator.facade(init: "▲２五歩 △２三歩", execute: ["２四歩", "同歩"])
             assert { mediator.hand_logs.last.to_kif_ki2 == ["２四歩(23)", "同歩"] }
 
             assert { mediator.opponent_player.executor.captured_soldier.piece.name == "歩" }
@@ -213,19 +213,19 @@ EOT
           end
 
           it "「同歩」ではなくわかりやすく「２四同歩」とした場合" do
-            mediator = Mediator.test1(init: "▲２五歩 △２三歩", execute: ["２四歩", "２四同歩"])
+            mediator = Mediator.facade(init: "▲２五歩 △２三歩", execute: ["２四歩", "２四同歩"])
             assert { mediator.hand_logs.last.to_kif_ki2 == ["２四歩(23)", "同歩"] }
           end
 
           it "２五の地点にたたみ掛けるときki2形式で同が連続すること" do
-            mediator = Mediator.test1(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", execute: ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
+            mediator = Mediator.facade(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", execute: ["２六歩", "２四歩", "２五歩", "同歩", "同飛", "同飛"])
             assert { mediator.to_ki2_a == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛", "△同飛"] }
           end
         end
 
         describe "取れない" do
           it "初手に同歩" do
-            expect { Mediator.test1(execute: "同歩") }.to raise_error(BeforePlaceNotFound, /同に対する座標が不明/)
+            expect { Mediator.facade(execute: "同歩") }.to raise_error(BeforePlaceNotFound, /同に対する座標が不明/)
           end
         end
       end
@@ -268,7 +268,7 @@ EOT
         end
 
         it "相手の駒の上に" do
-          expect { Mediator.test1(execute: ["５五飛打", "５五角打"], pieces_set: "▼飛△角") }.to raise_error(PieceAlredyExist)
+          expect { Mediator.facade(execute: ["５五飛打", "５五角打"], pieces_set: "▼飛△角") }.to raise_error(PieceAlredyExist)
         end
 
         it "卍という駒がないので" do
@@ -333,7 +333,7 @@ EOT
     end
 
     it "同" do
-      assert { Mediator.test1(init: "▲２五歩 △２三歩", execute: ["２四歩", "同歩"]).hand_logs.last.to_kif_ki2 == ["２四歩(23)", "同歩"] }
+      assert { Mediator.facade(init: "▲２五歩 △２三歩", execute: ["２四歩", "同歩"]).hand_logs.last.to_kif_ki2 == ["２四歩(23)", "同歩"] }
     end
 
     it "「５八金(49)」を入力した結果からKI2変換したとき「58金右」となる" do

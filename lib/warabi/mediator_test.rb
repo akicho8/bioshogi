@@ -1,7 +1,7 @@
 module Warabi
   concern :MediatorTest do
     class_methods do
-      def test1(params = {})
+      def facade(params = {})
         mediator = new
 
         if params[:init]

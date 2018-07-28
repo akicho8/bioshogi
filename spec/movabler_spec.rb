@@ -34,7 +34,7 @@ module Warabi
 
     it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
       Board.dimensiton_change([1, 5]) do
-        mediator = Mediator.test1(init: "▲１五香 △１三歩")
+        mediator = Mediator.facade(init: "▲１五香 △１三歩")
         assert { mediator.board["１五"].move_list(mediator.board).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１三香(15)"] }
       end
     end

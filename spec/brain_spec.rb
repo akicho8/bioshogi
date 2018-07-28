@@ -64,14 +64,14 @@ module Warabi
 
     it "盤上の駒の全手筋" do
       Board.dimensiton_change([1, 5]) do
-        mediator = MediatorSimple.test1(init: "▲１五香")
+        mediator = MediatorSimple.facade(init: "▲１五香")
         assert { mediator.player_at(:black).move_hands.collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"] }
       end
     end
 
     it "一番得するように打つ" do
       Board.dimensiton_change([2, 2]) do
-        mediator = MediatorSimple.test1(init: "▲１二歩", pieces_set: "▲歩")
+        mediator = MediatorSimple.facade(init: "▲１二歩", pieces_set: "▲歩")
         assert { mediator.player_at(:black).brain.fast_score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} } == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}] }
       end
     end
