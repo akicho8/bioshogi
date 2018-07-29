@@ -45,7 +45,7 @@ EOT
 # mediator.current_player.brain(diver_class: NegaScoutDiver).move_hands.to_a # =>
 # exit
 
-mediator.current_player.brain(diver_class: NegaScoutDiver).normal_all_hands.to_a # => [<△２三歩成(22)>]
+mediator.current_player.brain(diver_class: NegaScoutDiver).normal_all_hands.to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
 records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record
@@ -72,15 +72,14 @@ tp Brain.human_format(records)
 # end
 # >> |------------+----------------|
 # >> |       hand | △２三歩成(22) |
-# >> |      score | -999999        |
-# >> |     score2 | 999999         |
-# >> |    best_pv | [<▲１二金打>] |
-# >> | eval_times | 1              |
-# >> |        sec | 0.037499       |
+# >> |      score | 999999         |
+# >> |     score2 | -999999        |
+# >> |    best_pv | ["(詰み)"]     |
+# >> | eval_times | 0              |
+# >> |        sec | 0.003939       |
 # >> |------------+----------------|
-# >> "投了"
-# >> |------+----------------+------------+--------+------------+----------|
-# >> | 順位 | 候補手         | 読み筋     | ▲形勢 | 評価局面数 | 処理時間 |
-# >> |------+----------------+------------+--------+------------+----------|
-# >> |    1 | △２三歩成(22) | ▲１二金打 | 999999 |          1 | 0.037499 |
-# >> |------+----------------+------------+--------+------------+----------|
+# >> |------+----------------+--------+---------+------------+----------|
+# >> | 順位 | 候補手         | 読み筋 | ▲形勢  | 評価局面数 | 処理時間 |
+# >> |------+----------------+--------+---------+------------+----------|
+# >> |    1 | △２三歩成(22) | (詰み) | -999999 |          0 | 0.003939 |
+# >> |------+----------------+--------+---------+------------+----------|

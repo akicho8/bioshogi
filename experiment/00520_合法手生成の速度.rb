@@ -23,6 +23,6 @@ mediator.placement_from_bod <<~EOT
 EOT
 
 hand = mediator.current_player.normal_all_hands.first # => <▲９六歩(97)>
-Benchmark.ms { hand.legal_move?(mediator)  }                   # => 0.8699999889358878
-Benchmark.ms { mediator.current_player.normal_all_hands.to_a } # => 1.424000016413629
-Benchmark.ms { mediator.current_player.legal_all_hands.to_a  } # => 16.298000002279878
+Benchmark.ms { hand.legal_move?(mediator)  }                   # => 1.5039999270811677
+Benchmark.ms { mediator.current_player.normal_all_hands.to_a } # => 2.921000006608665
+Benchmark.ms { mediator.current_player.legal_all_hands.to_a  } # => 22.844999912194908
