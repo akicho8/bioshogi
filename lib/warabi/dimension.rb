@@ -121,6 +121,10 @@ module Warabi
         name
       end
 
+      def kifuyomi
+        NumberInfo.fetch(number_format).yomikata
+      end
+
       def to_sfen
         raise NotImplementedError, "#{__method__} is not implemented"
       end

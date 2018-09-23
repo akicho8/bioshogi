@@ -95,6 +95,10 @@ module Warabi
       end
     end
 
+    def kifuyomi
+      to_a.collect(&:kifuyomi).join
+    end
+
     def to_s
       name
     end

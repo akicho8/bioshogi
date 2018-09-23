@@ -56,6 +56,10 @@ module Warabi
       send(call_name_key(handicap))
     end
 
+    def kifuyomi
+      equality_name
+    end
+
     def mark
       name
     end

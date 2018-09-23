@@ -147,18 +147,35 @@ module Warabi
       end
     end
 
-    concerning :UsiMethods do
+    concerning :NameMethods do
       class_methods do
-        def fetch_by_sfen_char(ch)
-          fetch(ch.upcase)
+        def all_names
+          @all_names ||= flat_map(&:names)
+        end
+
+        def all_basic_names
+          @all_basic_names ||= flat_map(&:basic_names)
         end
       end
 
-      def to_sfen(promoted: false, location: :black)
-        [
-          promoted ? "+" : nil,
-          sfen_char.public_send(Location[location].key == :black ? :upcase : :downcase),
-        ].join
+      def any_name(promoted)
+        if promoted
+          promoted_name
+        else
+          name
+        end
+      end
+
+      def names
+        basic_names + promoted_names
+      end
+
+      def basic_names
+        [name, basic_alias, csa.basic_name, sfen_char, key].flatten.compact
+      end
+
+      def promoted_names
+        [promoted_name, promoted_alias, csa.promoted_name].flatten.compact
       end
     end
 
@@ -191,6 +208,16 @@ module Warabi
 
       def piece_score
         @piece_score ||= PieceScore[key]
+      end
+    end
+
+    concerning :KifuyomiMethods do
+      included do
+        delegate :kifuyomi, to: :piece_yomikata
+      end
+
+      def piece_yomikata
+        @piece_yomikata ||= PieceYomikata[key]
       end
     end
   end

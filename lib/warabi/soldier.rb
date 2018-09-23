@@ -176,6 +176,10 @@ module Warabi
       piece.any_name(promoted)
     end
 
+    def any_name2
+      piece.kifuyomi(promoted)
+    end
+
     def to_bod
       location.varrow + any_name
     end
@@ -224,6 +228,10 @@ module Warabi
     end
 
     def to_kif(*)
+      raise NotImplementedError, "#{__method__} is not implemented"
+    end
+
+    def to_kifuyomi(*)
       raise NotImplementedError, "#{__method__} is not implemented"
     end
 
@@ -295,6 +303,19 @@ module Warabi
       s + "打"
     end
 
+    def to_kifuyomi(**options)
+      options = {
+        with_location: true,
+      }.merge(options)
+
+      [
+        options[:with_location] ? (soldier.location.kifuyomi + "、") : nil,
+        soldier.place.kifuyomi,
+        soldier.any_name2,
+        "打つ！"
+      ].join
+    end
+
     def to_csa(**options)
       [
         soldier.location.csa_sign,
@@ -315,8 +336,6 @@ module Warabi
     # def legal_move?(mediator)
     #   true
     # end
-    
-    
   end
 
   class MoveHand
@@ -364,6 +383,20 @@ module Warabi
       ].join
     end
 
+    # FIXME: 読み上げは KI2 形式でないと意味がない
+    def to_kifuyomi(**options)
+      options = {
+        with_location: true,
+      }.merge(options)
+
+      [
+        options[:with_location] ? (soldier.location.kifuyomi + "、") : nil,
+        soldier.place.kifuyomi,
+        origin_soldier.any_name2,
+        promote_trigger? ? "成り" : "",
+      ].join
+    end
+
     def to_csa(**options)
       [
         soldier.location.csa_sign,
@@ -382,7 +415,7 @@ module Warabi
     end
 
     # def legal_move2?(mediator)
-    # 
+    #
     #   # もし王手を掛けられているなら
     #   if mediator.player_at(soldier.location).mate_danger?
     #     sandbox_execute(mediator) do
@@ -395,6 +428,28 @@ module Warabi
     #     end
     #   end
     # end
+
+    private
+
+    # def hunari
+    #     if promote_trigger?
+    #       s << piece.name
+    #       s << motion
+    #       s << "成"
+    #     else
+    #       s << soldier.any_name
+    #       s << motion
+    #       if place_from && place_to                # 移動した and
+    #         if place_from.promotable?(location) || # 移動元が相手の相手陣地 or
+    #             place_to.promotable?(location)     # 移動元が相手の相手陣地
+    #           unless promoted                      # 成ってない and
+    #             if piece.promotable?               # 成駒になれる
+    #               s << "不成" # or "生"
+    #             end
+    #           end
+    #         end
+    #       end
+    #     end
 
   end
 end
