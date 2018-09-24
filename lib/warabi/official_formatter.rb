@@ -19,14 +19,18 @@ module Warabi
     def to_s
       s = []
 
+      if location_name
+        s << location_name
+      end
+
       if hand_log.place_same
-        s << "同" + @options[:same_suffix]
+        s << kw("同") + @options[:same_suffix]
       else
-        s << place_to.name
+        s << place_name
       end
 
       if drop_trigger?
-        s << piece.name
+        s << piece_name
 
         # 日本将棋連盟 棋譜の表記方法
         # https://www.shogi.or.jp/faq/kihuhyouki.html
@@ -36,22 +40,22 @@ module Warabi
         # > 持駒を打った場合は「打」と記入
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
         if @options[:force_drop] || !candidate.empty?
-          s << "打"
+          s << kw("打")
         end
       else
         if promote_trigger?
-          s << piece.name
+          s << piece_name
           s << motion
-          s << "成"
+          s << kw("成")
         else
-          s << soldier.any_name
+          s << soldier_name
           s << motion
           if place_from && place_to                # 移動した and
             if place_from.promotable?(location) || # 移動元が相手の相手陣地 or
                 place_to.promotable?(location)     # 移動元が相手の相手陣地
               unless promoted                      # 成ってない and
                 if piece.promotable?               # 成駒になれる
-                  s << "不成" # or "生"
+                  s << kw("不成") # or "生"
                 end
               end
             end
@@ -142,7 +146,7 @@ module Warabi
         when _ue_idou?
           _i("上")
         when yoko_idou?
-          "寄"
+          kw("寄")
         end
       end
     end
@@ -156,9 +160,9 @@ module Warabi
         when yoko_idou? && yoreru_c >= 2 # P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」
           case
           when _hidari_idou?
-            _i("右") + "寄"
+            _i("右") + kw("寄")
           when _migi_idou?
-            _i("左") + "寄"
+            _i("左") + kw("寄")
           else
             raise MustNotHappen
           end
@@ -184,7 +188,7 @@ module Warabi
           raise MustNotHappen
         end
       when agareru_c >= 2 && shita_y == _oy && tate_idou? # P2D 例外で、金銀が横に2枚以上並んでいる場合のみ1段上に上がる時「直」
-        "直"
+        kw("直")
       when agareru_c == 2 # P2A 上がる駒が2枚ある場合「上」を省略して「左」「右」
         case
         when _hidari_idou?
@@ -220,7 +224,7 @@ module Warabi
         when _shita_idou?
           _w("引", "上")
         when _ty == _oy
-          "寄"
+          kw("寄")
         else
           raise MustNotHappen
         end
@@ -338,7 +342,7 @@ module Warabi
       !_yr.cover?(_ty)
     end
 
-    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, to: :hand_log
+    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, :handicap, to: :hand_log
     delegate :place, :piece, :location, :promoted, to: :soldier
 
     # 「打」？
@@ -365,11 +369,37 @@ module Warabi
       place
     end
 
+    def location_name
+    end
+
+    ################################################################################ 読み方
+
+    def piece_name
+      piece.name
+    end
+
+    def place_name
+      place_to.name
+    end
+
+    def soldier_name
+      soldier.any_name
+    end
+
+    def kw(s)
+      s
+    end
+
     concerning :InvertMethods do
       private
 
       def _w(*values)
-        location.which_val(*values)
+        if s = location.which_val(*values)
+          if s.kind_of?(String)
+            s = kw(s)
+          end
+        end
+        s
       end
 
       def _i(v)

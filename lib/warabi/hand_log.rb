@@ -10,6 +10,7 @@ module Warabi
     attr_accessor :candidate
     attr_accessor :place_same
     attr_accessor :skill_set
+    attr_accessor :handicap
 
     def to_kif(**options)
       options = {
@@ -21,6 +22,10 @@ module Warabi
 
     def to_ki2(**options)
       official_formatter(options).to_s
+    end
+
+    def to_kifuyomi(**options)
+      yomiage_formatter(options).to_s
     end
 
     def to_csa(**options)
@@ -53,6 +58,10 @@ module Warabi
 
     def official_formatter(**options)
       OfficialFormatter.new(self, options)
+    end
+
+    def yomiage_formatter(**options)
+      YomiageFormatter.new(self, options)
     end
   end
 end

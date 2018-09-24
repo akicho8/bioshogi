@@ -176,7 +176,7 @@ module Warabi
       piece.any_name(promoted)
     end
 
-    def any_name2
+    def kifuyomi
       piece.kifuyomi(promoted)
     end
 
@@ -303,15 +303,16 @@ module Warabi
       s + "打"
     end
 
+    # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
     def to_kifuyomi(**options)
       options = {
         with_location: true,
       }.merge(options)
 
       [
-        options[:with_location] ? (soldier.location.kifuyomi + "、") : nil,
+        options[:with_location] ? (soldier.location.kifuyomi(false) + "、") : nil,
         soldier.place.kifuyomi,
-        soldier.any_name2,
+        soldier.kifuyomi,
         "打つ！"
       ].join
     end
@@ -383,16 +384,16 @@ module Warabi
       ].join
     end
 
-    # FIXME: 読み上げは KI2 形式でないと意味がない
+    # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
     def to_kifuyomi(**options)
       options = {
         with_location: true,
       }.merge(options)
 
       [
-        options[:with_location] ? (soldier.location.kifuyomi + "、") : nil,
+        options[:with_location] ? (soldier.location.kifuyomi(false) + "、") : nil,
         soldier.place.kifuyomi,
-        origin_soldier.any_name2,
+        origin_soldier.kifuyomi,
         promote_trigger? ? "成り" : "",
       ].join
     end

@@ -38,6 +38,8 @@ require_relative "warabi/turn_info"
 require_relative "warabi/order_info"
 require_relative "warabi/piece_box"
 require_relative "warabi/official_formatter"
+require_relative "warabi/yomiage_formatter"
+require_relative "warabi/yomikata_info"
 require_relative "warabi/hand_log"
 require_relative "warabi/hand_logs"
 

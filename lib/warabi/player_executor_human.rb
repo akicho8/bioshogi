@@ -27,6 +27,7 @@ module Warabi
           :candidate  => @candidate_soldiers,
           :place_same => place_same?,
           :skill_set  => skill_set,
+          :handicap   => mediator.turn_info.handicap?,
         }).freeze
     end
 
