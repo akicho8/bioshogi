@@ -4,7 +4,7 @@ module Warabi
     memory_record [
       { key: :king,   name: "ぎょく", promoted_name: nil,          },
       { key: :rook,   name: "ひしゃ", promoted_name: "龍",         },
-      { key: :bishop, name: "角",     promoted_name: "馬",         },
+      { key: :bishop, name: "角",     promoted_name: "うま",       }, # 馬は「ば」と読まれてしまう
       { key: :gold,   name: "金",     promoted_name: nil,          },
       { key: :silver, name: "ぎん",   promoted_name: "成り銀",     },
       { key: :knight, name: "けいま", promoted_name: "なりけい",   },
