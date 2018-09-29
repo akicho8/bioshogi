@@ -64,13 +64,7 @@ module Warabi
       end
 
       s = s.join
-
-      # 3文字以上なら空白を詰める
-      if @options[:compact]
-        if s.size > 3
-          s = s.remove(/\p{blank}/)
-        end
-      end
+      s = str_compact(s)
 
       if @options[:with_location]
         s = location.mark + s
@@ -105,6 +99,16 @@ module Warabi
     end
 
     private
+
+    # 3文字以上なら空白を詰める
+    def str_compact(str)
+      if @options[:compact]
+        if str.size > 3
+          str = str.remove(/\p{blank}/)
+        end
+      end
+      str
+    end
 
     def motion
       if koreru_c >= 2

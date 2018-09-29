@@ -3,10 +3,10 @@ module Warabi
     include ApplicationMemoryRecord
     memory_record [
       { key: :king,   name: "ぎょく", promoted_name: nil,          },
-      { key: :rook,   name: "ひしゃ", promoted_name: "りゅう",     },
-      { key: :bishop, name: "かく",   promoted_name: "うま",       },
-      { key: :gold,   name: "きん",   promoted_name: nil,          },
-      { key: :silver, name: "ぎん",   promoted_name: "なりぎん",   },
+      { key: :rook,   name: "ひしゃ", promoted_name: "龍",         },
+      { key: :bishop, name: "角",     promoted_name: "馬",         },
+      { key: :gold,   name: "金",     promoted_name: nil,          },
+      { key: :silver, name: "ぎん",   promoted_name: "成り銀",     },
       { key: :knight, name: "けいま", promoted_name: "なりけい",   },
       { key: :lance,  name: "きょう", promoted_name: "なりきょう", },
       { key: :pawn,   name: "ふ",     promoted_name: "と",         },

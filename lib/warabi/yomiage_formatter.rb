@@ -2,6 +2,10 @@
 
 module Warabi
   class YomiageFormatter < OfficialFormatter
+    def str_compact(str)
+      str
+    end
+
     def location_name
       location.kifuyomi(handicap) + "、"
     end
