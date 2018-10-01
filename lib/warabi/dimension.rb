@@ -121,8 +121,8 @@ module Warabi
         name
       end
 
-      def kifuyomi
-        NumberInfo.fetch(number_format).yomikata
+      def yomiage
+        YomiageNumberInfo.fetch(number_format).yomiage
       end
 
       def to_sfen

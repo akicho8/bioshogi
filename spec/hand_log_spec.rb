@@ -11,7 +11,7 @@ module Warabi
       assert { object.to_sfen == "7i6h" }
     end
 
-    it "to_kifuyomi" do
+    it "yomiage" do
       mediator = Mediator.new
       mediator.placement_from_bod(<<~EOT)
       上手の持駒：飛
@@ -33,17 +33,17 @@ module Warabi
       後手番
       EOT
       mediator.execute("68銀")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
       mediator.execute("55飛打")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
       mediator.execute("34銀成")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
       mediator.execute("57飛成")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
       mediator.execute("53銀不成")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
       mediator.execute("同成銀")
-      assert { mediator.hand_logs.last.to_kifuyomi }
+      assert { mediator.hand_logs.last.yomiage }
     end
   end
 end

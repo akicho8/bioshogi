@@ -95,8 +95,8 @@ module Warabi
       end
     end
 
-    def kifuyomi
-      to_a.collect(&:kifuyomi).join
+    def yomiage
+      to_a.collect(&:yomiage).join
     end
 
     def to_s

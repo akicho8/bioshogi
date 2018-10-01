@@ -56,7 +56,7 @@ module Warabi
       send(call_name_key(handicap))
     end
 
-    def kifuyomi(handicap)
+    def yomiage(handicap)
       if handicap
         handicap_name2
       else

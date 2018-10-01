@@ -24,7 +24,7 @@ module Warabi
       official_formatter(options).to_s
     end
 
-    def to_kifuyomi(**options)
+    def yomiage(**options)
       yomiage_formatter(options).to_s
     end
 

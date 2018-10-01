@@ -196,11 +196,11 @@ module Warabi
 
     concerning :KifuyomiMethods do
       included do
-        delegate :kifuyomi, to: :piece_yomikata
+        delegate :yomiage, to: :yomiage_piece_info
       end
 
-      def piece_yomikata
-        @piece_yomikata ||= PieceYomikata[key]
+      def yomiage_piece_info
+        @yomiage_piece_info ||= YomiagePieceInfo[key]
       end
     end
   end

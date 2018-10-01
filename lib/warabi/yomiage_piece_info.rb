@@ -1,5 +1,5 @@
 module Warabi
-  class PieceYomikata
+  class YomiagePieceInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: :king,   name: "ぎょく", promoted_name: nil,          },
@@ -16,7 +16,7 @@ module Warabi
       Piece[key]
     end
 
-    def kifuyomi(promoted)
+    def yomiage(promoted)
       if promoted
         promoted_name
       else

@@ -176,8 +176,8 @@ module Warabi
       piece.any_name(promoted)
     end
 
-    def kifuyomi
-      piece.kifuyomi(promoted)
+    def yomiage
+      piece.yomiage(promoted)
     end
 
     def to_bod
@@ -231,7 +231,7 @@ module Warabi
       raise NotImplementedError, "#{__method__} is not implemented"
     end
 
-    def to_kifuyomi(*)
+    def yomiage(*)
       raise NotImplementedError, "#{__method__} is not implemented"
     end
 
@@ -304,15 +304,15 @@ module Warabi
     end
 
     # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
-    def to_kifuyomi(**options)
+    def yomiage(**options)
       options = {
         with_location: true,
       }.merge(options)
 
       [
-        options[:with_location] ? (soldier.location.kifuyomi(false) + "、") : nil,
-        soldier.place.kifuyomi,
-        soldier.kifuyomi,
+        options[:with_location] ? (soldier.location.yomiage(false) + "、") : nil,
+        soldier.place.yomiage,
+        soldier.yomiage,
         "打つ！"
       ].join
     end
@@ -385,15 +385,15 @@ module Warabi
     end
 
     # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
-    def to_kifuyomi(**options)
+    def yomiage(**options)
       options = {
         with_location: true,
       }.merge(options)
 
       [
-        options[:with_location] ? (soldier.location.kifuyomi(false) + "、") : nil,
-        soldier.place.kifuyomi,
-        origin_soldier.kifuyomi,
+        options[:with_location] ? (soldier.location.yomiage(false) + "、") : nil,
+        soldier.place.yomiage,
+        origin_soldier.yomiage,
         promote_trigger? ? "成り" : "",
       ].join
     end

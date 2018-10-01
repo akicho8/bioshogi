@@ -7,23 +7,23 @@ module Warabi
     end
 
     def location_name
-      location.kifuyomi(handicap) + "、"
+      location.yomiage(handicap) + "、"
     end
 
     def piece_name
-      piece.kifuyomi(false)
+      piece.yomiage(false)
     end
 
     def place_name
-      place_to.kifuyomi
+      place_to.yomiage
     end
 
     def soldier_name
-      soldier.kifuyomi
+      soldier.yomiage
     end
 
     def kw(s)
-      YomikataInfo.fetch(s).yomikata
+      YomiageKanjiInfo.fetch(s).yomiage
     end
   end
 end
