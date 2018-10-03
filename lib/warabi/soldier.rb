@@ -231,10 +231,6 @@ module Warabi
       raise NotImplementedError, "#{__method__} is not implemented"
     end
 
-    def yomiage(*)
-      raise NotImplementedError, "#{__method__} is not implemented"
-    end
-
     def inspect
       "<#{self}>"
     end
@@ -303,20 +299,6 @@ module Warabi
       s + "打"
     end
 
-    # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
-    def yomiage(**options)
-      options = {
-        with_location: true,
-      }.merge(options)
-
-      [
-        options[:with_location] ? (soldier.location.yomiage(false) + "、") : nil,
-        soldier.place.yomiage,
-        soldier.yomiage,
-        "打つ！"
-      ].join
-    end
-
     def to_csa(**options)
       [
         soldier.location.csa_sign,
@@ -381,20 +363,6 @@ module Warabi
         origin_soldier.any_name,
         promote_trigger? ? "成" : "",
         "(", origin_soldier.place.number_format, ")",
-      ].join
-    end
-
-    # FIXME: 仮の機能。読み上げは KI2 形式でないと意味がない。このメソッドだとどこから来たのかわからない
-    def yomiage(**options)
-      options = {
-        with_location: true,
-      }.merge(options)
-
-      [
-        options[:with_location] ? (soldier.location.yomiage(false) + "、") : nil,
-        soldier.place.yomiage,
-        origin_soldier.yomiage,
-        promote_trigger? ? "成り" : "",
       ].join
     end
 
