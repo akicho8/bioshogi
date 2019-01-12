@@ -75,5 +75,9 @@ EOT
 EOT
       assert { mediator.board.preset_key == nil }
     end
+
+    it "to_board" do
+      assert { PresetInfo["飛香落ち"].to_board }
+    end
   end
 end

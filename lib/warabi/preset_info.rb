@@ -40,6 +40,12 @@ module Warabi
       "position #{to_sfen}"
     end
 
+    def to_board
+      Board.new.tap do |e|
+        e.placement_from_preset(key)
+      end
+    end
+
     # 格式の高さ(ソート用)
     def formal_level
       self.class.count - code
