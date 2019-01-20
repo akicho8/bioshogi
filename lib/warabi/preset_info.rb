@@ -46,6 +46,11 @@ module Warabi
       end
     end
 
+    # 手合を元に手番を得る
+    def to_turn_info
+      TurnInfo.new(handicap: handicap)
+    end
+
     # 格式の高さ(ソート用)
     def formal_level
       self.class.count - code
