@@ -1075,6 +1075,13 @@ module Warabi
           "http://shogi98.hatenablog.com/entry/2017/07/18/235824",
         ],
       },
+      {
+        :key => "アヒル戦法",
+        :urls => [
+          "http://karyuu.hatenablog.com/entry/2018/08/31/200000",
+          "https://game14.5ch.net/test/read.cgi/bgame/1216116942/",
+        ],
+      },
     ]
   end
 end

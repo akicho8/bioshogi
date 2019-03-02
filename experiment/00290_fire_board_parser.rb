@@ -15,4 +15,3 @@ board_parser.any_exist_soldiers            # => [<Warabi::Soldier "△２二歩"
 board_parser.other_objects_loc_places_hash # => {:black=>{"★"=>{#<Warabi::Place ２一>=>{:place=>#<Warabi::Place ２一>, :prefix_char=>" ", :something=>"★"}}}, :white=>{"★"=>{#<Warabi::Place ８九>=>{:place=>#<Warabi::Place ８九>, :prefix_char=>" ", :something=>"★"}}}}
 board_parser.any_exist_soldiers            # => [<Warabi::Soldier "△２二歩">, <Warabi::Soldier "▲１二歩">]
 board_parser.primary_soldiers              # => [<Warabi::Soldier "▲４二歩">, <Warabi::Soldier "▲３二歩">]
-

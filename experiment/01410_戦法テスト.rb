@@ -1,7 +1,7 @@
 require "./example_helper"
 
 rows = TacticInfo.all_elements.collect do |e|
-  file = Pathname.glob("#{e.tactic_info.name}/#{e.key}.*").first
+  file = Pathname.glob("#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
   row = {key: e.key, file: file.to_s}
   if file
     str = file.read
@@ -172,4 +172,5 @@ tp rows
 # >> | 穴角戦法             | 戦型/穴角戦法.kif             | [:三間飛車, :四間飛車, :穴角戦法, :右四間飛車, :腰掛け銀, :対振り持久戦]           | true   |
 # >> | 穴角向かい飛車       | 戦型/穴角向かい飛車.kif       | [:穴角向かい飛車]                                                                  | true   |
 # >> | うっかり三間飛車     | 戦型/うっかり三間飛車.ki2     | [:三間飛車, :うっかり三間飛車]                                                     | true   |
+# >> | アヒル戦法           | 戦型/アヒル戦法.kif           | [:アヒル戦法, :アヒル戦法]                                                         | true   |
 # >> |----------------------+-------------------------------+------------------------------------------------------------------------------------+--------|
