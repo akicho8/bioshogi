@@ -326,6 +326,12 @@ module Warabi
         ],
       },
       {
+        :key => "elmo囲い",
+        :urls => [
+          "http://blog.livedoor.jp/amayaryouma/archives/18016007.html",
+        ],
+      },
+      {
         :key => "３七銀戦法",
         :urls => [
           "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
