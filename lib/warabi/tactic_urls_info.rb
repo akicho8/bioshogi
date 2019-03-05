@@ -332,6 +332,18 @@ module Warabi
         ],
       },
       {
+        :key => "左山囲い",
+        :urls => [
+          "https://www.youtube.com/watch?v=7jpvgjvmSMA",
+        ],
+      },
+      {
+        :key => "無責任矢倉",
+        :urls => [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/musekininyagura.html",
+        ],
+      },
+      {
         :key => "３七銀戦法",
         :urls => [
           "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
