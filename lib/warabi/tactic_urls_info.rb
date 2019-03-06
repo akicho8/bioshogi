@@ -344,6 +344,12 @@ module Warabi
         ],
       },
       {
+        :key => "ツノ銀雁木",
+        :urls => [
+          "https://ja.wikipedia.org/wiki/%E9%9B%81%E6%9C%A8%E5%9B%B2%E3%81%84#%E6%96%B0%E5%9E%8B%E3%81%AE%E9%9B%81%E6%9C%A8%EF%BC%88%E7%9B%B8%E5%B1%85%E9%A3%9B%E8%BB%8A%E3%83%84%E3%83%8E%E9%8A%80%E9%9B%81%E6%9C%A8%E3%81%AA%E3%81%A9%EF%BC%89",
+        ],
+      },
+      {
         :key => "３七銀戦法",
         :urls => [
           "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
@@ -1098,6 +1104,15 @@ module Warabi
         :urls => [
           "http://karyuu.hatenablog.com/entry/2018/08/31/200000",
           "https://game14.5ch.net/test/read.cgi/bgame/1216116942/",
+        ],
+      },
+      {
+        :key => "矢倉左美濃急戦",
+        :urls => [
+          "https://shogidb2.com/games/43f27721c306c072533caf7372f6dcab621e715a",
+          "https://www.fgfan7.com/entry/2016/05/29/094145",
+          "https://www.fgfan7.com/entry/2017/09/30/164622",
+          "https://shogi.io/kifus/87151?start_tesuu=22",
         ],
       },
     ]
