@@ -1100,6 +1100,12 @@ module Warabi
         ],
       },
       {
+        :key => "菅井流三間飛車",
+        :urls => [
+          "http://syogikagaku.tokyo/5370",
+        ],
+      },
+      {
         :key => "アヒル戦法",
         :urls => [
           "http://karyuu.hatenablog.com/entry/2018/08/31/200000",
