@@ -1115,6 +1115,18 @@ module Warabi
           "https://shogi.io/kifus/87151?start_tesuu=22",
         ],
       },
+      {
+        :key => "青野流",
+        :urls => [
+          "https://www.shogi.or.jp/column/2018/05/post_387.html",
+        ],
+      },
+      {
+        :key => "勇気流",
+        :urls => [
+          "http://taneta0618.hatenablog.com/entry/2017/02/20/155930",
+        ],
+      },
     ]
   end
 end
