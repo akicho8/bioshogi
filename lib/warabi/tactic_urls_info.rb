@@ -1133,6 +1133,14 @@ module Warabi
           "http://taneta0618.hatenablog.com/entry/2017/02/20/155930",
         ],
       },
+      {
+        :key => "極限早繰り銀",
+        :urls => [
+          "https://www.youtube.com/watch?v=Q9y6fY5WH5I",
+          "https://book.mynavi.jp/shogi/detail/id=87764",
+          "http://blog.livedoor.jp/nifu_senkin-daily/archives/74365757.html",
+        ],
+      },
     ]
   end
 end
