@@ -1183,6 +1183,13 @@ module Warabi
           "https://www.youtube.com/watch?v=-xE3NOjdCpY",
         ],
       },
+      {
+        :key => "目くらまし戦法",
+        :urls => [
+          "http://www.shogi-chess.net/senpouzukan/tactics062.htm",
+          "https://shogi.zukeran.org/2016/08/12/post-7531/",
+        ],
+      },
     ]
   end
 end
