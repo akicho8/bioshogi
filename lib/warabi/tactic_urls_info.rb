@@ -1163,6 +1163,13 @@ module Warabi
         ],
       },
       {
+        :key => "初手３六歩戦法",
+        :urls => [
+          "https://matome.naver.jp/odai/2142189706860491601",
+          "https://blog.goo.ne.jp/kishi-akira/e/ab91a7c95356ad016ab1210457874050",
+        ],
+      },
+      {
         :key => "きんとうん戦法",
         :urls => [
           "https://book.mynavi.jp/shogi/detail/id=90070",
