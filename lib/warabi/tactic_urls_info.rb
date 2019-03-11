@@ -1141,6 +1141,14 @@ module Warabi
           "http://blog.livedoor.jp/nifu_senkin-daily/archives/74365757.html",
         ],
       },
+      {
+        :key => "トマホーク",
+        :urls => [
+          "https://ja.wikipedia.org/wiki/%E3%83%88%E3%83%9E%E3%83%9B%E3%83%BC%E3%82%AF_(%E5%B0%86%E6%A3%8B)",
+          "https://shogi.io/kifus/131719?start_tesuu=26",
+          "https://book.mynavi.jp/shogi/detail/id=79071",
+        ],
+      },
     ]
   end
 end
