@@ -1149,6 +1149,12 @@ module Warabi
           "https://book.mynavi.jp/shogi/detail/id=79071",
         ],
       },
+      {
+        :key => "羽生式袖飛車",
+        :urls => [
+          "http://i2chmeijin.blog.fc2.com/blog-entry-8378.html",
+        ],
+      },
     ]
   end
 end
