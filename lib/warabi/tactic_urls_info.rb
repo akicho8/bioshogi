@@ -1162,6 +1162,13 @@ module Warabi
           "https://ameblo.jp/shogi-strategy/entry-10733220609.html",
         ],
       },
+      {
+        :key => "きんとうん戦法",
+        :urls => [
+          "https://book.mynavi.jp/shogi/detail/id=90070",
+          "https://www.youtube.com/watch?v=YWnSFP29ITA",
+        ],
+      },
     ]
   end
 end
