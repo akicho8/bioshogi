@@ -1155,6 +1155,13 @@ module Warabi
           "http://i2chmeijin.blog.fc2.com/blog-entry-8378.html",
         ],
       },
+      {
+        :key => "初手７八銀戦法",
+        :urls => [
+          "http://inthelife178.xsrv.jp/hobby/2016/09/11/post-857/",
+          "https://ameblo.jp/shogi-strategy/entry-10733220609.html",
+        ],
+      },
     ]
   end
 end
