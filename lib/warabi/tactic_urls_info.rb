@@ -1176,6 +1176,13 @@ module Warabi
           "https://www.youtube.com/watch?v=YWnSFP29ITA",
         ],
       },
+      {
+        :key => "魔界四間飛車",
+        :urls => [
+          "http://makaigundan.blog133.fc2.com/",
+          "https://www.youtube.com/watch?v=-xE3NOjdCpY",
+        ],
+      },
     ]
   end
 end
