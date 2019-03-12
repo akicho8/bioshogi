@@ -62,7 +62,7 @@ module Warabi
       end
 
       def shape_info
-        ShapeInfo.fetch(key)
+        ShapeInfo.lookup(key)
       end
     end
   end

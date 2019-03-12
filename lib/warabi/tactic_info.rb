@@ -4,6 +4,7 @@ module Warabi
     memory_record [
       {key: :defense, name: "囲い"},
       {key: :attack,  name: "戦型"},
+      {key: :foo_tesuji,  name: "手筋"},
     ]
 
     def model
@@ -23,12 +24,19 @@ module Warabi
       # 登録がないものはすべてをトリガーキーと見なす
       def soldier_hash_table
         @soldier_hash_table ||= all_elements.each_with_object({}) do |e, m|
-          e.board_parser.primary_soldiers.each do |s|
-            # soldier 自体をキーにすればほどよく分散できる
-            m[s] ||= []
-            m[s] << e
+          if e.shape_info
+            e.board_parser.primary_soldiers.each do |s|
+              # soldier 自体をキーにすればほどよく分散できる
+              m[s] ||= []
+              m[s] << e
+            end
           end
         end
+      end
+
+      # メソッドでチェックするものリスト
+      def check_method_list
+        @check_method_list ||= all_elements.find_all { |e| e.check_method }
       end
     end
   end

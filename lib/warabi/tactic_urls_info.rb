@@ -1190,6 +1190,12 @@ module Warabi
           "https://shogi.zukeran.org/2016/08/12/post-7531/",
         ],
       },
+      {
+        :key => "金底の歩",
+        :urls => [
+          "http://be-multiple.xyz/shougi-tesuzi-kinzokonohu",
+        ],
+      },
     ]
   end
 end

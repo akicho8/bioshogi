@@ -12,14 +12,28 @@ module Warabi
       if e = TacticInfo.soldier_hash_table[soldier]
         e.each { |e| execute_one(e) }
       end
+
+      TacticInfo.check_method_list.each do |e|
+        execute_block(e) do |list|
+          e.check_method_execute(self)
+        end
+      end
     end
 
     private
 
-    def execute_one(e)
+    def execute_block(e)
       catch :skip do
-        # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
         list = player.skill_set.public_send(e.tactic_info.list_key)
+        yield list
+        list << e               # FIXME: これ要らなくね？
+        executor.skill_set.public_send(e.tactic_info.list_key) << e
+      end
+    end
+
+    def execute_one(e)
+      execute_block(e) do |list|
+        # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
         if list.include?(e)
           throw :skip
         end
@@ -178,9 +192,6 @@ module Warabi
         else
           throw :skip
         end
-
-        list << e
-        executor.skill_set.public_send(e.tactic_info.list_key) << e
       end
     end
 
