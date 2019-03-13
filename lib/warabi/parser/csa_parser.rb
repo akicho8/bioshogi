@@ -148,7 +148,7 @@ module Warabi
         # 手番は見ていない
 
         # 指し手
-        @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:[A-Z](\d+))?/).collect do |input, used_seconds|
+        @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:#{time_regexp})?/o).collect do |input, used_seconds|
           if used_seconds
             used_seconds = used_seconds.to_i
           end
@@ -165,6 +165,14 @@ module Warabi
         normalized_source.match?(/^\-$/)
       end
 
+      private
+
+      # 時間の部分
+      # T123 形式
+      # ありえないことだけど将棋ウォーズの時間はバグっていて時間が過去に戻ったりしてマイナスになることがあるため T-123 形式も考慮している
+      def time_regexp
+        /[A-Z]([+-]?\d+)/
+      end
     end
   end
 end

@@ -21,5 +21,14 @@ module Warabi
       assert { Parser::CsaParser.parse("%ERROR").judgment_message   == "まで0手でエラーにより後手の勝ち" }
       assert { Parser::CsaParser.parse("%TSUMI").judgment_message   == "まで0手で後手の勝ち" }
     end
+
+    it "マイナス時間を考慮する(将棋ウォーズ不具合対策)" do
+      info = Parser.parse(<<~EOT)
+      +7776FU,T+600
+      -3334FU,T-600
+      EOT
+      assert { info.move_infos[0][:used_seconds] == 600 }
+      assert { info.move_infos[1][:used_seconds] == -600 }
+    end
   end
 end
