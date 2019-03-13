@@ -159,6 +159,24 @@ module Warabi
       end
     end
 
+    concerning :TechniqueMatcherMethods do
+      def flip
+         self.class.new.tap do |board|
+          surface.values.each do |e|
+            board.place_on(e.flip)
+          end
+        end
+      end
+
+      def horizontal_flip
+         self.class.new.tap do |board|
+          surface.values.each do |e|
+            board.place_on(e.horizontal_flip)
+          end
+        end
+      end
+    end
+
     concerning :PresetMethods do
       # ▲が平手であることが条件
       def preset_key
@@ -187,7 +205,8 @@ module Warabi
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        black_only_soldiers = surface.values.collect { |e|
+        black_only_soldiers = surface.values.collect { |
+e|
           if e.location == location
             e.flip_if_white
           end

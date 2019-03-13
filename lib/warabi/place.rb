@@ -79,6 +79,10 @@ module Warabi
       self.class.fetch([@x.flip, @y.flip])
     end
 
+    def horizontal_flip
+      self.class.fetch([@x.flip, @y])
+    end
+
     def flip_if_white(location)
       if Location[location].key == :white
         flip

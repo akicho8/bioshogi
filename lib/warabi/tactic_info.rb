@@ -2,9 +2,9 @@ module Warabi
   class TacticInfo
     include ApplicationMemoryRecord
     memory_record [
-      {key: :defense, name: "囲い"},
-      {key: :attack,  name: "戦型"},
-      {key: :foo_tesuji,  name: "手筋"},
+      { key: :defense,   name: "囲い", },
+      { key: :attack,    name: "戦型", },
+      { key: :technique, name: "手筋", },
     ]
 
     def model
@@ -20,6 +20,22 @@ module Warabi
         @all_elements ||= flat_map { |e| e.model.to_a }
       end
 
+      # technique_matcher_info を持っている all_elements
+      def piece_hash_table
+        # @piece_hash_table ||= all_elements.find_all(&:technique_matcher_info)
+
+        @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
+          technique_matcher_info = e.technique_matcher_info
+          if technique_matcher_info
+            technique_matcher_info.trigger_piece_keys.each do |trigger_piece_key|
+              m[trigger_piece_key] ||= []
+              m[trigger_piece_key] << e
+            end
+          end
+        end
+
+      end
+
       # トリガーがある場合はそれだけ登録すればよくて
       # 登録がないものはすべてをトリガーキーと見なす
       def soldier_hash_table
@@ -32,11 +48,6 @@ module Warabi
             end
           end
         end
-      end
-
-      # メソッドでチェックするものリスト
-      def check_method_list
-        @check_method_list ||= all_elements.find_all { |e| e.check_method }
       end
     end
   end

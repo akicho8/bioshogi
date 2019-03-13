@@ -1196,6 +1196,13 @@ module Warabi
           "http://be-multiple.xyz/shougi-tesuzi-kinzokonohu",
         ],
       },
+      {
+        :key => "パンツを脱ぐ",
+        :urls => [
+          "https://www.youtube.com/watch?v=hzI6CBKN0i8",
+          "https://xn--pet04dr1n5x9a.com/%E5%B0%86%E6%A3%8B%E7%94%A8%E8%AA%9E/%E3%83%91%E3%83%B3%E3%83%84%E3%82%92%E8%84%B1%E3%81%90.html",
+        ],
+      },
     ]
   end
 end

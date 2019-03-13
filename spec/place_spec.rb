@@ -84,6 +84,10 @@ module Warabi
       assert Place["７六"].flip == Place["３四"]
     end
 
+    it "左右反転" do
+      assert Place["７六"].horizontal_flip == Place["３六"]
+    end
+
     it "後手なら反転" do
       assert Place["７六"].flip_if_white(:white) == Place["３四"]
     end

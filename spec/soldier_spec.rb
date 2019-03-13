@@ -50,5 +50,23 @@ module Warabi
       assert { Soldier.from_str("△11香").advance_level == 0 }
       assert { Soldier.from_str("△12香").advance_level == 1 }
     end
+
+    it "「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)" do
+      assert { Soldier.from_str("▲41歩").smaller_one_of_distance_to_wall == 3 }
+      assert { Soldier.from_str("△41歩").smaller_one_of_distance_to_wall == 3 }
+      assert { Soldier.from_str("▲51歩").smaller_one_of_distance_to_wall == 4 }
+      assert { Soldier.from_str("△51歩").smaller_one_of_distance_to_wall == 4 }
+      assert { Soldier.from_str("▲61歩").smaller_one_of_distance_to_wall == 3 }
+      assert { Soldier.from_str("△61歩").smaller_one_of_distance_to_wall == 3 }
+    end
+
+    it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
+      assert { Soldier.from_str("▲41歩").distance_to_wall_sign == 1  }
+      assert { Soldier.from_str("△41歩").distance_to_wall_sign == 1  }
+      assert { Soldier.from_str("▲51歩").distance_to_wall_sign == -1 }
+      assert { Soldier.from_str("△51歩").distance_to_wall_sign == -1 }
+      assert { Soldier.from_str("▲61歩").distance_to_wall_sign == -1 }
+      assert { Soldier.from_str("△61歩").distance_to_wall_sign == -1 }
+    end
   end
 end

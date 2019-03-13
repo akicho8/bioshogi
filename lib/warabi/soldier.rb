@@ -98,6 +98,10 @@ module Warabi
       self.class.create(piece: piece, promoted: promoted, place: place.flip, location: location.flip)
     end
 
+    def horizontal_flip
+      self.class.create(piece: piece, promoted: promoted, place: place.horizontal_flip, location: location)
+    end
+
     def flip_if_white
       if location.key == :white
         flip
@@ -148,14 +152,36 @@ module Warabi
       !collision_pawn(board) && alive?
     end
 
-    # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
-    def advance_level
-      Dimension::Yplace.dimension - 1 - place.flip_if_white(location).y.value
-    end
-
     # 自分を▲側に補正したときの座標
     def normalized_place
       place.flip_if_white(location)
+    end
+
+    # 手筋判定用
+    concerning :TechniqueMatcherMethods do
+      # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
+      def advance_level
+        Dimension::Yplace.dimension - 1 - place.flip_if_white(location).y.value
+      end
+
+      # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
+      def smaller_one_of_distance_to_wall
+        [place.x.value, __distance_from_right].min
+      end
+
+      # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
+      def distance_to_wall_sign
+        if place.x.value > __distance_from_right
+          1
+        else
+          -1
+        end
+      end
+
+      # 先手から見て右からの距離
+      def __distance_from_right
+        Dimension::Xplace.dimension - 1 - place.x.value
+      end
     end
 
     ################################################################################ Formatter

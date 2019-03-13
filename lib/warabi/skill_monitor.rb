@@ -13,11 +13,24 @@ module Warabi
         e.each { |e| execute_one(e) }
       end
 
-      TacticInfo.check_method_list.each do |e|
-        execute_block(e) do |list|
-          e.check_method_execute(self)
+      # 主に手筋用で戦型チェックにも使える
+      if e = TacticInfo.piece_hash_table[soldier.piece.key]
+        e.each do |e|
+          execute_block(e) do |list|
+            cold_war_verification(e)
+            instance_eval(&e.technique_matcher_info.function)
+          end
         end
       end
+
+      # これはループなので遅い
+      # TacticInfo.piece_hash_table.each do |e|
+      #   execute_block(e) do |list|
+      #     cold_war_verification(e)
+      #     instance_eval(&e.technique_matcher_info.function)
+      #   end
+      # end
+
     end
 
     private
@@ -26,8 +39,8 @@ module Warabi
       catch :skip do
         list = player.skill_set.public_send(e.tactic_info.list_key)
         yield list
-        list << e               # FIXME: これ要らなくね？
-        executor.skill_set.public_send(e.tactic_info.list_key) << e
+        list << e               # プレイヤーの個別設定
+        executor.skill_set.public_send(e.tactic_info.list_key) << e # executor の方にも設定(これいる？)
       end
     end
 
@@ -65,11 +78,7 @@ module Warabi
         end
 
         # 開戦済みならskip
-        if e.cold_war
-          if player.mediator.kill_counter.positive?
-            throw :skip
-          end
-        end
+        cold_war_verification(e)
 
         # 「打」時制限。移動元駒があればskip
         if e.drop_only
@@ -195,6 +204,19 @@ module Warabi
       end
     end
 
+    ################################################################################
+
+    def cold_war_verification(e)
+      # 開戦済みならskip
+      if e.cold_war
+        if player.mediator.kill_counter.positive?
+          throw :skip
+        end
+      end
+    end
+
+    ################################################################################
+
     # 後手側の場合は先手側の座標に切り替え済み
     def soldier
       @soldier ||= executor.soldier.flip_if_white
@@ -230,5 +252,6 @@ module Warabi
     def player
       @player ||= executor.player
     end
+
   end
 end

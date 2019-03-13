@@ -4,7 +4,7 @@ module Warabi
   class SkillSet
     attr_accessor :attack_infos
     attr_accessor :defense_infos
-    attr_accessor :foo_tesuji_infos
+    attr_accessor :technique_infos
 
     include Enumerable
 
@@ -20,8 +20,8 @@ module Warabi
       @defense_infos ||= List.new
     end
 
-    def foo_tesuji_infos
-      @foo_tesuji_infos ||= List.new
+    def technique_infos
+      @technique_infos ||= List.new
     end
 
     def to_h
