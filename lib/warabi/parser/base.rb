@@ -211,7 +211,7 @@ module Warabi
           if @parser_options[:skill_monitor_enable]
             TacticInfo.each do |e|
               mediator.players.each do |player|
-                if v = player.skill_set.public_send(e.list_key).normalize.collect(&:name).presence
+                if v = player.skill_set.public_send(e.list_key).normalize.uniq.collect(&:name).presence # 手筋の場合、複数になる場合があるので uniq している
                   skill_set_hash["#{player.call_name}の#{e.name}"] = v
                 end
               end

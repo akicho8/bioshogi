@@ -19,13 +19,6 @@ info = Parser.parse(<<~EOT)
    1 51銀
 EOT
 puts info.to_kif
-# >> {:piece_key=>:pawn, :promoted=>false, :motion=>:drop}
-# >> {:piece_key=>:knight, :promoted=>false, :motion=>:move}
-# >> {:piece_key=>:silver, :promoted=>false, :motion=>:both}
-# >> {:piece_key=>:pawn, :promoted=>false, :motion=>:drop}
-# >> {:piece_key=>:bishop, :promoted=>false, :motion=>:drop}
-# >> {:piece_key=>:silver, :promoted=>false, :motion=>:drop}
-# >> {:piece_key=>:silver, :promoted=>false, :motion=>:both}
 # >> 先手の手筋：割り打ちの銀
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
