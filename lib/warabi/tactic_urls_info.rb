@@ -1221,6 +1221,12 @@ module Warabi
           "https://将棋講座.com/手筋/遠見の角.html",
         ],
       },
+      {
+        :key => "割り打ちの銀",
+        :urls => [
+          "https://将棋講座.com/手筋/割り打ちの銀.html",
+        ],
+      },
     ]
   end
 end

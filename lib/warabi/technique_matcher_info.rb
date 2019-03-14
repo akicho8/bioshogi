@@ -143,7 +143,7 @@ module Warabi
           soldier = executor.drop_hand.soldier
 
           # 「歩」でないとだめ
-          unless soldier.piece.key == :pawn && !soldier.promoted
+          unless soldier.piece.key == :pawn
             throw :skip
           end
 
@@ -155,7 +155,7 @@ module Warabi
 
           # 一歩先が空
           place = soldier.place
-          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign * 1])
+          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
           if surface[v]
             throw :skip
           end
@@ -174,7 +174,7 @@ module Warabi
           soldier = executor.drop_hand.soldier
 
           # 「角」でないとだめ
-          unless soldier.piece.key == :bishop && !soldier.promoted
+          unless soldier.piece.key == :bishop
             throw :skip
           end
 
@@ -189,6 +189,39 @@ module Warabi
           end
         },
       },
+
+      {
+        key: "割り打ちの銀",
+        trigger_piece_keys: [:silver],
+        verify_process: proc {
+          # 「打」でなければだめ
+          unless executor.drop_hand
+            throw :skip
+          end
+
+          soldier = executor.drop_hand.soldier
+
+          # 「銀」でないとだめ
+          unless soldier.piece.key == :silver
+            throw :skip
+          end
+
+          # 一つ下の左右に相手の金か飛がいる
+          place = soldier.place
+          retv = [-1, +1].all? do |x|
+            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign]) # 1歩後ろ
+            if v = surface[v]
+              if v.location != soldier.location
+                v.piece.key == :rook || v.piece.key == :gold
+              end
+            end
+          end
+          unless retv
+            throw :skip
+          end
+        },
+      },
+
     ]
   end
 end
