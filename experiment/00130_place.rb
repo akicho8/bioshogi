@@ -12,8 +12,8 @@ b = Place["２一"]
 Place["１一"].object_id         # => 70320263722920
 Place["11"].object_id           # => 70320263722920
 
-# Dimension::Yplace.fetch(1).object_id # => 70357212614280
-# Dimension::Yplace.fetch(1).object_id # => 70357212614280
+# Dimension::Xplace.fetch(1).object_id # => 70357212614280
+# Dimension::Xplace.fetch(1).object_id # => 70357212614280
 
 Place["76"].hash                # => 424653379765652915
 Place["７６"].hash              # => 424653379765652915

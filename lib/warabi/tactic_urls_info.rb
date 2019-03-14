@@ -1206,7 +1206,13 @@ module Warabi
       {
         :key => "腹銀",
         :urls => [
-          "https://xn--pet04dr1n5x9a.com/%E5%B0%86%E6%A3%8B%E7%94%A8%E8%AA%9E/%E8%85%B9%E9%8A%80.html",
+          "https://xn--pet04dr1n5x9a.com/%E6%89%8B%E7%AD%8B/%E8%85%B9%E9%8A%80.html",
+        ],
+      },
+      {
+        :key => "垂れ歩",
+        :urls => [
+          "https://xn--pet04dr1n5x9a.com/%E6%89%8B%E7%AD%8B/%E5%9E%82%E3%82%8C%E6%AD%A9.html",
         ],
       },
     ]

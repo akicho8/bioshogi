@@ -9,7 +9,7 @@ Soldier.from_str("６八銀").name rescue $! # => #<Warabi::MustNotHappen: locat
 soldier = Soldier.from_str("△６八銀")
 soldier.name          # => "△６八銀"
 soldier.to_sfen       # => "s"
-soldier.advance_level # => 7
+soldier.bottom_spaces # => 7
 soldier.normalized_place      # => #<Warabi::Place ４二>
 
 Marshal.load(Marshal.dump(soldier)) == soldier # => true

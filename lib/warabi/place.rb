@@ -16,8 +16,8 @@ module Warabi
       include Enumerable
 
       def each(&block)
-        Dimension::Xplace.dimension.times.flat_map { |y|
-          Dimension::Yplace.dimension.times.collect { |x|
+        Dimension::Yplace.dimension.times.flat_map { |y|
+          Dimension::Xplace.dimension.times.collect { |x|
             self[[x, y]]
           }
         }.each(&block)
@@ -38,12 +38,12 @@ module Warabi
         case value
         when Array
           a, b = value
-          x = Dimension::Yplace.lookup(a)
-          y = Dimension::Xplace.lookup(b)
+          x = Dimension::Xplace.lookup(a)
+          y = Dimension::Yplace.lookup(b)
         when String
           a, b = value.chars
-          x = Dimension::Yplace.lookup(a)
-          y = Dimension::Xplace.lookup(b)
+          x = Dimension::Xplace.lookup(a)
+          y = Dimension::Yplace.lookup(b)
         end
 
         if x && y

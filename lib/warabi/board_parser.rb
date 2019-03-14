@@ -117,7 +117,7 @@ module Warabi
             raise SyntaxDefact, "最初の行の横幅が#{cell_width}桁毎になっていません\n#{@source}"
           end
           count = s.gsub("---", "-").count("-")
-          @h_units = Dimension::Yplace.units.last(count)
+          @h_units = Dimension::Xplace.units.last(count)
         else
           @h_units = s.strip.split # 一行目のX座標の単位取得。全角数字の羅列から推測する。「一 二」なら横幅2と判定できる
         end
@@ -139,7 +139,7 @@ module Warabi
         h_units_read
 
         mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        @v_units = mds.collect.with_index { |v, i| v[:y] || Dimension::Xplace.units[i] }
+        @v_units = mds.collect.with_index { |v, i| v[:y] || Dimension::Yplace.units[i] }
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|

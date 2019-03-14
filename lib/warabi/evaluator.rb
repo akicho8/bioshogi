@@ -74,7 +74,7 @@ module Warabi
       w += s
 
       v = BoardAdvanceScore.fetch(key)
-      s = v.weight_list[e.advance_level]
+      s = v.weight_list[e.bottom_spaces]
       w += s
 
       w * e.location.value_sign

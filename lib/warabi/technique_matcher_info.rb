@@ -12,7 +12,7 @@ module Warabi
             p executor.drop_hand
             soldier = executor.drop_hand.soldier
             p soldier.piece.key
-            p soldier.advance_level
+            p soldier.bottom_spaces
             p soldier.place
             p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
           end
@@ -25,7 +25,7 @@ module Warabi
           soldier = executor.drop_hand.soldier
 
           # 「最下段」でないとだめ
-          unless soldier.advance_level == 0
+          unless soldier.bottom_spaces == 0
             throw :skip
           end
 
@@ -58,7 +58,7 @@ module Warabi
             p executor.move_hand
             soldier = executor.move_hand.soldier
             p soldier.piece.key
-            p soldier.advance_level
+            p soldier.bottom_spaces
             p soldier.place
             p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
           end
@@ -71,12 +71,12 @@ module Warabi
           soldier = executor.move_hand.soldier
 
           # 「3段目」でないとだめ
-          unless soldier.advance_level == 2
+          unless soldier.bottom_spaces == 2
             throw :skip
           end
 
           # 「端から3つ目」でなければだめ
-          unless soldier.smaller_one_of_distance_to_wall == 2
+          unless soldier.smaller_one_of_side_spaces == 2
             throw :skip
           end
 
@@ -86,13 +86,13 @@ module Warabi
           end
 
           # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
-          unless executor.move_hand.origin_soldier.smaller_one_of_distance_to_wall == 1
+          unless executor.move_hand.origin_soldier.smaller_one_of_side_spaces == 1
             throw :skip
           end
 
           # 下に2つ、壁の方に2つ
           place = soldier.place
-          v = Place.lookup([place.x.value + soldier.distance_to_wall_sign * 2, place.y.value + soldier.location.value_sign * 2])
+          v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
 
           # そこに何かないとだめ
           unless v = surface[v]
@@ -130,6 +130,38 @@ module Warabi
           end
         },
       },
+
+      {
+        key: "垂れ歩",
+        trigger_piece_keys: [:pawn],
+        verify_process: proc {
+          # 「打」でなければだめ
+          unless executor.drop_hand
+            throw :skip
+          end
+
+          soldier = executor.drop_hand.soldier
+
+          # 「歩」でないとだめ
+          unless soldier.piece.key == :pawn && !soldier.promoted
+            throw :skip
+          end
+
+          # 2, 3, 4段目でなければだめ(1段目は反則)
+          v = soldier.top_spaces
+          unless 1 <= v && v <= Dimension::Yplace._promotable_size
+            throw :skip
+          end
+
+          # 一歩先が空
+          place = soldier.place
+          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign * 1])
+          if surface[v]
+            throw :skip
+          end
+        },
+      },
+
     ]
   end
 end

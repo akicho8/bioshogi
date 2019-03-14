@@ -160,17 +160,22 @@ module Warabi
     # 手筋判定用
     concerning :TechniqueMatcherMethods do
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
-      def advance_level
-        Dimension::Yplace.dimension - 1 - place.flip_if_white(location).y.value
+      def bottom_spaces
+        Dimension::Xplace.dimension - 1 - top_spaces
+      end
+
+      # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
+      def top_spaces
+        place.flip_if_white(location).y.value
       end
 
       # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
-      def smaller_one_of_distance_to_wall
+      def smaller_one_of_side_spaces
         [place.x.value, __distance_from_right].min
       end
 
       # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
-      def distance_to_wall_sign
+      def sign_to_goto_closer_side
         if place.x.value > __distance_from_right
           1
         else
@@ -180,7 +185,7 @@ module Warabi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::Xplace.dimension - 1 - place.x.value
+        Dimension::Yplace.dimension - 1 - place.x.value
       end
     end
 

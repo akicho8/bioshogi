@@ -16,8 +16,8 @@ module Warabi
     end
 
     def to_s
-      Dimension::Xplace.dimension.times.collect { |y|
-        "P#{y.next}" + Dimension::Yplace.dimension.times.collect { |x|
+      Dimension::Yplace.dimension.times.collect { |y|
+        "P#{y.next}" + Dimension::Xplace.dimension.times.collect { |x|
           place = Place.fetch([x, y])
           soldier_to_str(@board.surface[place])
         }.join + "\n"

@@ -111,7 +111,7 @@ module Warabi
 
       def vertical_pieces(x)
         Enumerator.new do |yielder|
-          Dimension::Xplace.dimension.times do |y|
+          Dimension::Yplace.dimension.times do |y|
             if soldier = lookup([x, y])
               yielder << soldier
             end
@@ -144,8 +144,8 @@ module Warabi
       end
 
       def to_sfen
-        Dimension::Xplace.dimension.times.collect { |y|
-          Dimension::Yplace.dimension.times.collect { |x|
+        Dimension::Yplace.dimension.times.collect { |y|
+          Dimension::Xplace.dimension.times.collect { |x|
             place = Place.fetch([x, y])
             surface[place]
           }.chunk(&:class).flat_map { |klass, e|

@@ -53,7 +53,7 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>         28   (3.8%)          28   (3.8%)     Warabi::Dimension::Base#hash
 # >>         17   (2.3%)          16   (2.1%)     Warabi::InputParser#scan
 # >>         16   (2.1%)          16   (2.1%)     Warabi::Place#to_xy
-# >>         15   (2.0%)          15   (2.0%)     Warabi::Dimension::Yplace#number_format
+# >>         15   (2.0%)          15   (2.0%)     Warabi::Dimension::Xplace#number_format
 # >>         15   (2.0%)          15   (2.0%)     Hash#symbolize_keys
 # >>         15   (2.0%)          14   (1.9%)     Warabi::PieceVector#all_vectors
 # >>         14   (1.9%)          14   (1.9%)     Warabi::Soldier#attributes
@@ -68,7 +68,7 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>          7   (0.9%)           7   (0.9%)     Warabi::Dimension::Base.value_range
 # >>          6   (0.8%)           6   (0.8%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
 # >>          5   (0.7%)           5   (0.7%)     #<Module:0x00007ff8a4b27330>.run_counts
-# >>         43   (5.8%)           5   (0.7%)     Warabi::Dimension::Xplace.lookup
+# >>         43   (5.8%)           5   (0.7%)     Warabi::Dimension::Yplace.lookup
 # >>          5   (0.7%)           5   (0.7%)     Warabi::Dimension::Base.units
 # >>          4   (0.5%)           4   (0.5%)     ActiveSupport::Duration#respond_to_missing?
 # >>          4   (0.5%)           4   (0.5%)     Warabi::Piece::VectorMethods#piece_vector
@@ -80,8 +80,8 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>      103  (   70.1%)  Warabi::Place.fetch
 # >>       44  (   29.9%)  Warabi::Place.[]
 # >>   callees (118 total):
-# >>       49  (   41.5%)  Warabi::Dimension::Yplace.lookup
-# >>       41  (   34.7%)  Warabi::Dimension::Xplace.lookup
+# >>       49  (   41.5%)  Warabi::Dimension::Xplace.lookup
+# >>       41  (   34.7%)  Warabi::Dimension::Yplace.lookup
 # >>       28  (   23.7%)  Warabi::Dimension::Base#hash
 # >>   code:
 # >>                                   |    30  |       def lookup(value)
@@ -95,12 +95,12 @@ system "stackprof stackprof.dump --method Warabi::Place.lookup"
 # >>                                   |    38  |         case value
 # >>     2    (0.3%) /     2   (0.3%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
-# >>     2    (0.3%)                   |    41  |           x = Dimension::Yplace.lookup(a)
-# >>     8    (1.1%)                   |    42  |           y = Dimension::Xplace.lookup(b)
+# >>     2    (0.3%)                   |    41  |           x = Dimension::Xplace.lookup(a)
+# >>     8    (1.1%)                   |    42  |           y = Dimension::Yplace.lookup(b)
 # >>     1    (0.1%) /     1   (0.1%)  |    43  |         when String
 # >>                                   |    44  |           a, b = value.chars
-# >>    47    (6.3%)                   |    45  |           x = Dimension::Yplace.lookup(a)
-# >>    33    (4.4%)                   |    46  |           y = Dimension::Xplace.lookup(b)
+# >>    47    (6.3%)                   |    45  |           x = Dimension::Xplace.lookup(a)
+# >>    33    (4.4%)                   |    46  |           y = Dimension::Yplace.lookup(b)
 # >>                                   |    47  |         end
 # >>                                   |    48  | 
 # >>                                   |    49  |         if x && y
