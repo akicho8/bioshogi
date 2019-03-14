@@ -1227,6 +1227,12 @@ module Warabi
           "https://将棋講座.com/手筋/割り打ちの銀.html",
         ],
       },
+      {
+        :key => "桂頭の銀",
+        :urls => [
+          "https://将棋講座.com/手筋/桂頭の銀.html",
+        ],
+      },
     ]
   end
 end

@@ -9,7 +9,7 @@ module Warabi
         verify_process: proc {
           if false
             p executor.drop_hand
-            soldier = executor.drop_hand.soldier
+            soldier = executor.hand.soldier
             p soldier.piece.key
             p soldier.bottom_spaces
             p soldier.place
@@ -21,7 +21,7 @@ module Warabi
           #   throw :skip
           # end
 
-          soldier = executor.drop_hand.soldier
+          soldier = executor.hand.soldier
 
           # 「最下段」でないとだめ
           unless soldier.bottom_spaces == 0
@@ -126,7 +126,7 @@ module Warabi
       {
         key: "垂れ歩",
         verify_process: proc {
-          soldier = executor.drop_hand.soldier
+          soldier = executor.hand.soldier
 
           # 2, 3, 4段目でなければだめ(1段目は反則)
           v = soldier.top_spaces
@@ -146,12 +146,12 @@ module Warabi
       {
         key: "遠見の角",
         verify_process: proc {
-          # 「打」でなければだめ
-          unless executor.drop_hand
-            throw :skip
-          end
+          # # 「打」でなければだめ
+          # unless executor.drop_hand
+          #   throw :skip
+          # end
 
-          soldier = executor.drop_hand.soldier
+          soldier = executor.hand.soldier
 
           # # 「角」でないとだめ
           # unless soldier.piece.key == :bishop
@@ -178,7 +178,7 @@ module Warabi
           #   throw :skip
           # end
 
-          soldier = executor.drop_hand.soldier
+          soldier = executor.hand.soldier
 
           # # 「銀」でないとだめ
           # unless soldier.piece.key == :silver
@@ -201,6 +201,26 @@ module Warabi
         },
       },
 
+      {
+        key: "桂頭の銀",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+
+          # 1つ上
+          place = soldier.place
+          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+
+          # 1つ上の位置になにかないとだめ
+          unless v = surface[v]
+            throw :skip
+          end
+
+          # 1つ上の駒が「相手」の「桂」でないとだめ
+          unless v.piece.key == :knight && v.location != soldier.location
+            throw :skip
+          end
+        },
+      },
     ]
   end
 end
