@@ -18,7 +18,7 @@ module Warabi
         e.each do |e|
           execute_block(e) do |list|
             cold_war_verification(e)
-            instance_eval(&e.technique_matcher_info.function)
+            instance_eval(&e.technique_matcher_info.verify_process)
           end
         end
       end
@@ -27,7 +27,7 @@ module Warabi
       # TacticInfo.piece_hash_table.each do |e|
       #   execute_block(e) do |list|
       #     cold_war_verification(e)
-      #     instance_eval(&e.technique_matcher_info.function)
+      #     instance_eval(&e.technique_matcher_info.verify_process)
       #   end
       # end
 

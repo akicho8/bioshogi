@@ -7,7 +7,7 @@ module Warabi
       {
         key: "金底の歩",
         trigger_piece_keys: [:pawn],
-        function: proc {
+        verify_process: proc {
           if false
             p executor.drop_hand
             soldier = executor.drop_hand.soldier
@@ -53,7 +53,7 @@ module Warabi
       {
         key: "パンツを脱ぐ",
         trigger_piece_keys: [:knight],
-        function: proc {
+        verify_process: proc {
           if false
             p executor.move_hand
             soldier = executor.move_hand.soldier
@@ -101,6 +101,31 @@ module Warabi
 
           # その駒が「自分」の「玉」でないとだめ
           unless v.piece.key == :king && v.location == soldier.location
+            throw :skip
+          end
+        },
+      },
+
+      {
+        key: "腹銀",
+        trigger_piece_keys: [:silver],
+        verify_process: proc {
+          soldier = executor.hand.soldier
+
+          # 「銀」でないとだめ
+          unless soldier.piece.key == :silver && !soldier.promoted
+            throw :skip
+          end
+
+          # 左右に相手の玉がいるか？
+          place = soldier.place
+          retv = [-1, +1].any? do |x|
+            v = Place.lookup([place.x.value + x, place.y.value])
+            if v = surface[v]
+              v.piece.key == :king && v.location != soldier.location
+            end
+          end
+          unless retv
             throw :skip
           end
         },

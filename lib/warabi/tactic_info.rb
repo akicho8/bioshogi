@@ -16,14 +16,23 @@ module Warabi
     end
 
     class << self
+      # TacticInfo.flat_lookup("金底の歩").key # => :金底の歩
+      def flat_lookup(key)
+        v = nil
+        each do |e|
+          if v = e.model.lookup(key)
+            break
+          end
+        end
+        v
+      end
+
       def all_elements
         @all_elements ||= flat_map { |e| e.model.to_a }
       end
 
       # technique_matcher_info を持っている all_elements
       def piece_hash_table
-        # @piece_hash_table ||= all_elements.find_all(&:technique_matcher_info)
-
         @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
           technique_matcher_info = e.technique_matcher_info
           if technique_matcher_info

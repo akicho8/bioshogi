@@ -19,5 +19,9 @@ module Warabi
         assert { e.urls }
       end
     end
+
+    it "flat_lookup" do
+      assert { TacticInfo.flat_lookup("金底の歩") }
+    end
   end
 end

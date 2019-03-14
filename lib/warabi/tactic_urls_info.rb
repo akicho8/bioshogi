@@ -1203,6 +1203,12 @@ module Warabi
           "https://xn--pet04dr1n5x9a.com/%E5%B0%86%E6%A3%8B%E7%94%A8%E8%AA%9E/%E3%83%91%E3%83%B3%E3%83%84%E3%82%92%E8%84%B1%E3%81%90.html",
         ],
       },
+      {
+        :key => "腹銀",
+        :urls => [
+          "https://xn--pet04dr1n5x9a.com/%E5%B0%86%E6%A3%8B%E7%94%A8%E8%AA%9E/%E8%85%B9%E9%8A%80.html",
+        ],
+      },
     ]
   end
 end
