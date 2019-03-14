@@ -36,8 +36,26 @@ module Warabi
         @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
           technique_matcher_info = e.technique_matcher_info
           if technique_matcher_info
-            e.trigger_piece_keys.each do |trigger_piece_key|
-              key = trigger_piece_key.values
+            v = e.trigger_piece_key
+            keys = nil
+            case v[:motion]
+            when :both
+              keys = [
+                [v[:piece_key], v[:promoted], true],   # 「打」許可
+                [v[:piece_key], v[:promoted], false],  # 「移動」も許可
+              ]
+            when :move
+              keys = [
+                [v[:piece_key], v[:promoted], false],
+              ]
+            when :drop
+              keys = [
+                [v[:piece_key], v[:promoted], true],
+              ]
+            else
+              raise "must not happen"
+            end
+            keys.each do |key|
               m[key] ||= []
               m[key] << e
             end
