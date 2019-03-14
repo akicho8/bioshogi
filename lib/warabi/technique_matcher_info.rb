@@ -6,7 +6,6 @@ module Warabi
     memory_record [
       {
         key: "金底の歩",
-        trigger_piece_keys: [:pawn],
         verify_process: proc {
           if false
             p executor.drop_hand
@@ -17,10 +16,10 @@ module Warabi
             p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
           end
 
-          # 「打」でないとだめ
-          unless executor.drop_hand
-            throw :skip
-          end
+          # # 「打」でないとだめ
+          # unless executor.drop_hand
+          #   throw :skip
+          # end
 
           soldier = executor.drop_hand.soldier
 
@@ -29,10 +28,10 @@ module Warabi
             throw :skip
           end
 
-          # 「歩」でないとだめ
-          unless soldier.piece.key == :pawn
-            throw :skip
-          end
+          # # 「歩」でないとだめ
+          # unless soldier.piece.key == :pawn
+          #   throw :skip
+          # end
 
           # 1つ上の位置
           place = soldier.place
@@ -52,7 +51,6 @@ module Warabi
 
       {
         key: "パンツを脱ぐ",
-        trigger_piece_keys: [:knight],
         verify_process: proc {
           if false
             p executor.move_hand
@@ -63,10 +61,10 @@ module Warabi
             p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
           end
 
-          # 「移動」でなければだめ
-          unless executor.move_hand
-            throw :skip
-          end
+          # # 「移動」でなければだめ
+          # unless executor.move_hand
+          #   throw :skip
+          # end
 
           soldier = executor.move_hand.soldier
 
@@ -80,10 +78,10 @@ module Warabi
             throw :skip
           end
 
-          # 「桂」でないとだめ
-          unless soldier.piece.key == :knight && !soldier.promoted
-            throw :skip
-          end
+          # # 「桂」でないとだめ
+          # unless soldier.piece.key == :knight && !soldier.promoted
+          #   throw :skip
+          # end
 
           # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
           unless executor.move_hand.origin_soldier.smaller_one_of_side_spaces == 1
@@ -108,14 +106,8 @@ module Warabi
 
       {
         key: "腹銀",
-        trigger_piece_keys: [:silver],
         verify_process: proc {
           soldier = executor.hand.soldier
-
-          # 「銀」でないとだめ
-          unless soldier.piece.key == :silver && !soldier.promoted
-            throw :skip
-          end
 
           # 左右に相手の玉がいるか？
           place = soldier.place
@@ -133,19 +125,8 @@ module Warabi
 
       {
         key: "垂れ歩",
-        trigger_piece_keys: [:pawn],
         verify_process: proc {
-          # 「打」でなければだめ
-          unless executor.drop_hand
-            throw :skip
-          end
-
           soldier = executor.drop_hand.soldier
-
-          # 「歩」でないとだめ
-          unless soldier.piece.key == :pawn
-            throw :skip
-          end
 
           # 2, 3, 4段目でなければだめ(1段目は反則)
           v = soldier.top_spaces
@@ -164,7 +145,6 @@ module Warabi
 
       {
         key: "遠見の角",
-        trigger_piece_keys: [:bishop],
         verify_process: proc {
           # 「打」でなければだめ
           unless executor.drop_hand
@@ -173,10 +153,10 @@ module Warabi
 
           soldier = executor.drop_hand.soldier
 
-          # 「角」でないとだめ
-          unless soldier.piece.key == :bishop
-            throw :skip
-          end
+          # # 「角」でないとだめ
+          # unless soldier.piece.key == :bishop
+          #   throw :skip
+          # end
 
           # 8段目でなければだめ
           unless soldier.bottom_spaces == 1
@@ -192,19 +172,18 @@ module Warabi
 
       {
         key: "割り打ちの銀",
-        trigger_piece_keys: [:silver],
         verify_process: proc {
-          # 「打」でなければだめ
-          unless executor.drop_hand
-            throw :skip
-          end
+          # # 「打」でなければだめ
+          # unless executor.drop_hand
+          #   throw :skip
+          # end
 
           soldier = executor.drop_hand.soldier
 
-          # 「銀」でないとだめ
-          unless soldier.piece.key == :silver
-            throw :skip
-          end
+          # # 「銀」でないとだめ
+          # unless soldier.piece.key == :silver
+          #   throw :skip
+          # end
 
           # 一つ下の左右に相手の金か飛がいる
           place = soldier.place

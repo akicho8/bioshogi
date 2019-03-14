@@ -36,9 +36,10 @@ module Warabi
         @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
           technique_matcher_info = e.technique_matcher_info
           if technique_matcher_info
-            technique_matcher_info.trigger_piece_keys.each do |trigger_piece_key|
-              m[trigger_piece_key] ||= []
-              m[trigger_piece_key] << e
+            e.trigger_piece_keys.each do |trigger_piece_key|
+              key = trigger_piece_key.values
+              m[key] ||= []
+              m[key] << e
             end
           end
         end

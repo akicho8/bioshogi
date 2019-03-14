@@ -14,7 +14,8 @@ module Warabi
       end
 
       # 主に手筋用で戦型チェックにも使える
-      if e = TacticInfo.piece_hash_table[soldier.piece.key]
+      key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
+      if e = TacticInfo.piece_hash_table[key]
         e.each do |e|
           execute_block(e) do |list|
             cold_war_verification(e)
