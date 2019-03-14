@@ -1200,19 +1200,25 @@ module Warabi
         :key => "パンツを脱ぐ",
         :urls => [
           "https://www.youtube.com/watch?v=hzI6CBKN0i8",
-          "https://xn--pet04dr1n5x9a.com/%E5%B0%86%E6%A3%8B%E7%94%A8%E8%AA%9E/%E3%83%91%E3%83%B3%E3%83%84%E3%82%92%E8%84%B1%E3%81%90.html",
+          "https://将棋講座.com/将棋用語/パンツを脱ぐ.html",
         ],
       },
       {
         :key => "腹銀",
         :urls => [
-          "https://xn--pet04dr1n5x9a.com/%E6%89%8B%E7%AD%8B/%E8%85%B9%E9%8A%80.html",
+          "https://将棋講座.com/手筋/腹銀.html",
         ],
       },
       {
         :key => "垂れ歩",
         :urls => [
-          "https://xn--pet04dr1n5x9a.com/%E6%89%8B%E7%AD%8B/%E5%9E%82%E3%82%8C%E6%AD%A9.html",
+          "https://将棋講座.com/手筋/垂れ歩.html",
+        ],
+      },
+      {
+        :key => "遠見の角",
+        :urls => [
+          "https://将棋講座.com/手筋/遠見の角.html",
         ],
       },
     ]

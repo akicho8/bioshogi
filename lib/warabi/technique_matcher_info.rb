@@ -162,6 +162,33 @@ module Warabi
         },
       },
 
+      {
+        key: "遠見の角",
+        trigger_piece_keys: [:bishop],
+        verify_process: proc {
+          # 「打」でなければだめ
+          unless executor.drop_hand
+            throw :skip
+          end
+
+          soldier = executor.drop_hand.soldier
+
+          # 「角」でないとだめ
+          unless soldier.piece.key == :bishop && !soldier.promoted
+            throw :skip
+          end
+
+          # 8段目でなければだめ
+          unless soldier.bottom_spaces == 1
+            throw :skip
+          end
+
+          # 端でなければだめ
+          unless soldier.smaller_one_of_side_spaces == 0
+            throw :skip
+          end
+        },
+      },
     ]
   end
 end
