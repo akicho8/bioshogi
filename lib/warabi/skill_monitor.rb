@@ -2,6 +2,8 @@
 
 module Warabi
   class SkillMonitor
+    cattr_accessor(:walk_counts) { Hash.new(0) }
+
     attr_reader :executor
 
     def initialize(executor)
@@ -10,7 +12,10 @@ module Warabi
 
     def execute
       if e = TacticInfo.soldier_hash_table[soldier]
-        e.each { |e| execute_one(e) }
+        e.each do |e|
+          walk_counts[e.key] += 1
+          execute_one(e)
+        end
       end
 
       # 主に手筋用で戦型チェックにも使える
@@ -18,6 +23,7 @@ module Warabi
       if e = TacticInfo.piece_hash_table[key]
         e.each do |e|
           execute_block(e) do |list|
+            walk_counts[e.key] += 1
             cold_war_verification(e)
             instance_eval(&e.technique_matcher_info.verify_process)
           end
