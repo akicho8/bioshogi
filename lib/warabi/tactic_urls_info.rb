@@ -1233,6 +1233,12 @@ module Warabi
           "https://将棋講座.com/手筋/桂頭の銀.html",
         ],
       },
+      {
+        :key => "ロケット",
+        :urls => [
+          "https://将棋講座.com/手筋/ロケット.html",
+        ],
+      },
     ]
   end
 end

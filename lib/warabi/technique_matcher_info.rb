@@ -221,6 +221,30 @@ module Warabi
           end
         },
       },
+
+      {
+        key: "ロケット",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+
+          # 1つ下
+          place = soldier.place
+          v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
+
+          # なにかないとだめ
+          unless v = surface[v]
+            throw :skip
+          end
+
+          # 駒が「自分」の「香」か「飛」でないとだめ
+          unless v.location == soldier.location
+            throw :skip
+          end
+          unless (v.piece.key == :lance && !v.promoted) || v.piece.key == :rook
+            throw :skip
+          end
+        },
+      },
     ]
   end
 end
