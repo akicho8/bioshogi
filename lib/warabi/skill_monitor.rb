@@ -18,14 +18,16 @@ module Warabi
         end
       end
 
-      # 主に手筋用で戦型チェックにも使える
-      key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
-      if e = TacticInfo.piece_hash_table[key]
-        e.each do |e|
-          execute_block(e) do |list|
-            walk_counts[e.key] += 1
-            cold_war_verification(e)
-            instance_eval(&e.technique_matcher_info.verify_process)
+      if executor.mediator.params[:skill_monitor_technique_enable]
+        # 主に手筋用で戦型チェックにも使える
+        key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
+        if e = TacticInfo.piece_hash_table[key]
+          e.each do |e|
+            execute_block(e) do |list|
+              walk_counts[e.key] += 1
+              cold_war_verification(e)
+              instance_eval(&e.technique_matcher_info.verify_process)
+            end
           end
         end
       end

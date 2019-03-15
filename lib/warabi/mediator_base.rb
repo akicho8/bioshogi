@@ -7,6 +7,7 @@ module Warabi
     def params
       @params ||= {
         skill_monitor_enable: false,
+        skill_monitor_technique_enable: false,
       }
     end
 

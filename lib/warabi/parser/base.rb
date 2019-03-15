@@ -51,6 +51,7 @@ module Warabi
           typical_error_case: false,
           # run_and_build_skip: false,
           skill_monitor_enable: true,
+          skill_monitor_technique_enable: true,
         }
       end
 
@@ -121,7 +122,7 @@ module Warabi
 
         def mediator_new
           Mediator.new.tap do |e|
-            e.params[:skill_monitor_enable] = @parser_options[:skill_monitor_enable]
+            e.params.update(@parser_options.slice(:skill_monitor_enable, :skill_monitor_technique_enable))
           end
         end
 
