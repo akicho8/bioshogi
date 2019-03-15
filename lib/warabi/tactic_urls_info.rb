@@ -1245,6 +1245,12 @@ module Warabi
           "https://将棋講座.com/手筋/ふんどしの桂.html",
         ],
       },
+      {
+        :key => "継ぎ桂",
+        :urls => [
+          "https://将棋講座.com/手筋/継ぎ桂.html",
+        ],
+      },
     ]
   end
 end

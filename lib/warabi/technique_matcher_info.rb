@@ -6,6 +6,7 @@ module Warabi
     memory_record [
       {
         key: "金底の歩",
+        logic_desc: "打った歩が一番下の段でその上に自分の金がある",
         verify_process: proc {
           if false
             p executor.drop_hand
@@ -51,6 +52,7 @@ module Warabi
 
       {
         key: "パンツを脱ぐ",
+        logic_desc: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
         verify_process: proc {
           if false
             p executor.move_hand
@@ -60,11 +62,6 @@ module Warabi
             p soldier.place
             p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
           end
-
-          # # 「移動」でなければだめ
-          # unless executor.move_hand
-          #   throw :skip
-          # end
 
           soldier = executor.move_hand.soldier
 
@@ -78,16 +75,12 @@ module Warabi
             throw :skip
           end
 
-          # # 「桂」でないとだめ
-          # unless soldier.piece.key == :knight && !soldier.promoted
-          #   throw :skip
-          # end
-
           # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
           unless executor.move_hand.origin_soldier.smaller_one_of_side_spaces == 1
             throw :skip
           end
 
+          # FIXME: origin_soldier
           # 下に2つ、壁の方に2つ
           place = soldier.place
           v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
@@ -106,6 +99,7 @@ module Warabi
 
       {
         key: "腹銀",
+        logic_desc: "銀を打ったり移動したとき左右どちらかに相手の玉がある",
         verify_process: proc {
           soldier = executor.hand.soldier
 
@@ -125,6 +119,7 @@ module Warabi
 
       {
         key: "垂れ歩",
+        logic_desc: "打った歩の前が空で次に成れる可能性がある",
         verify_process: proc {
           soldier = executor.hand.soldier
 
@@ -145,18 +140,9 @@ module Warabi
 
       {
         key: "遠見の角",
+        logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
         verify_process: proc {
-          # # 「打」でなければだめ
-          # unless executor.drop_hand
-          #   throw :skip
-          # end
-
           soldier = executor.hand.soldier
-
-          # # 「角」でないとだめ
-          # unless soldier.piece.key == :bishop
-          #   throw :skip
-          # end
 
           # 8段目でなければだめ
           unless soldier.bottom_spaces == 1
@@ -172,26 +158,15 @@ module Warabi
 
       {
         key: "割り打ちの銀",
+        logic_desc: "打った銀の後ろの左右両方に相手の飛か金がある",
         verify_process: proc {
-          # # 「打」でなければだめ
-          # unless executor.drop_hand
-          #   throw :skip
-          # end
-
           soldier = executor.hand.soldier
-
-          # # 「銀」でないとだめ
-          # unless soldier.piece.key == :silver
-          #   throw :skip
-          # end
-
-          # 一つ下の左右に相手の金か飛がいる
           place = soldier.place
           retv = [-1, +1].all? do |x|
-            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign]) # 1歩後ろ
+            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign])
             if s = surface[v]
               if s.location != soldier.location
-                s.piece.key == :rook || s.piece.key == :gold
+                (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
               end
             end
           end
@@ -203,20 +178,15 @@ module Warabi
 
       {
         key: "桂頭の銀",
+        logic_desc: "打った銀の上に相手の桂がある",
         verify_process: proc {
           soldier = executor.hand.soldier
-
-          # 1つ上
           place = soldier.place
           v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-
-          # 1つ上の位置になにかないとだめ
           unless s = surface[v]
             throw :skip
           end
-
-          # 1つ上の駒が「相手」の「桂」でないとだめ
-          unless s.piece.key == :knight && s.location != soldier.location
+          unless s.piece.key == :knight && !s.promoted && s.location != soldier.location
             throw :skip
           end
         },
@@ -224,19 +194,14 @@ module Warabi
 
       {
         key: "ロケット",
+        logic_desc: "打った香の下に自分の香か飛か龍がある",
         verify_process: proc {
           soldier = executor.hand.soldier
-
-          # 1つ下
           place = soldier.place
           v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
-
-          # なにかないとだめ
           unless s = surface[v]
             throw :skip
           end
-
-          # 駒が「自分」の「香」か「飛」でないとだめ
           unless s.location == soldier.location
             throw :skip
           end
@@ -248,10 +213,9 @@ module Warabi
 
       {
         key: "ふんどしの桂",
+        logic_desc: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
         verify_process: proc {
           soldier = executor.hand.soldier
-
-          # 2つ前の左右に自分より価値の高い相手の駒があること
           place = soldier.place
           retv = [-1, +1].all? do |x|
             v = Place.lookup([place.x.value + x, place.y.value - soldier.location.value_sign * 2])
@@ -259,6 +223,24 @@ module Warabi
               if s.location != soldier.location
                 s.abs_weight > soldier.abs_weight
               end
+            end
+          end
+          unless retv
+            throw :skip
+          end
+        },
+      },
+
+      {
+        key: "継ぎ桂",
+        logic_desc: "打った桂の2つ後ろの左右のどちらかに自分の桂がある",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+          place = soldier.place
+          retv = [-1, +1].any? do |x|
+            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign * 2])
+            if s = surface[v]
+              s.piece.key == :knight && !s.promoted && s.location == soldier.location
             end
           end
           unless retv
