@@ -1239,6 +1239,12 @@ module Warabi
           "https://将棋講座.com/手筋/ロケット.html",
         ],
       },
+      {
+        :key => "ふんどしの桂",
+        :urls => [
+          "https://将棋講座.com/手筋/ふんどしの桂.html",
+        ],
+      },
     ]
   end
 end

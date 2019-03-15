@@ -33,7 +33,7 @@ module Warabi
     private
 
     def soldier_score(e)
-      e.piece.any_weight(e.promoted) * e.location.value_sign
+      e.relative_weight
     end
 
     concerning :DebugMethods do
@@ -64,7 +64,7 @@ module Warabi
     private
 
     def soldier_score(e)
-      w = e.piece.any_weight(e.promoted)
+      w = e.relative_weight
 
       key = [e.piece.key, e.promoted].join("_")
       x, y = e.normalized_place.to_xy

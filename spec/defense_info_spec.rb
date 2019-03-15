@@ -36,6 +36,7 @@ module Warabi
       it "囲いチェック", :if => Warabi.config.skill_monitor_enable do
         info = Parser.file_parse("#{__dir__}/yagura.kif")
         info.mediator_run
+        # puts info.header_part_string
         assert { info.header_part_string == <<~EOT }
 開始日時：1981/05/15 09:00:00
 棋戦：名将戦
@@ -48,7 +49,7 @@ module Warabi
 後手の囲い：雁木囲い
 先手の戦型：四手角
 後手の戦型：四手角
-先手の手筋：垂れ歩
+先手の手筋：垂れ歩, ふんどしの桂
              EOT
       end
     end

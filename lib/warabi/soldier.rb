@@ -187,6 +187,16 @@ module Warabi
       def __distance_from_right
         Dimension::Yplace.dimension - 1 - place.x.value
       end
+
+      # 駒の重さ(=価値) 常にプラス
+      def abs_weight
+        piece.any_weight(promoted)
+      end
+
+      # 駒の重さ(=価値)。先手視点。後手ならマイナスになる
+      def relative_weight
+        abs_weight * location.value_sign
+      end
     end
 
     ################################################################################ Formatter

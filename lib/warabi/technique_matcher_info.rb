@@ -38,12 +38,12 @@ module Warabi
           v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
 
           # 1つ上の位置になにかないとだめ
-          unless v = surface[v]
+          unless s = surface[v]
             throw :skip
           end
 
           # 1つ上の駒が「自分」の「金」でないとだめ
-          unless v.piece.key == :gold && v.location == soldier.location
+          unless s.piece.key == :gold && s.location == soldier.location
             throw :skip
           end
         },
@@ -93,12 +93,12 @@ module Warabi
           v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
 
           # そこに何かないとだめ
-          unless v = surface[v]
+          unless s = surface[v]
             throw :skip
           end
 
           # その駒が「自分」の「玉」でないとだめ
-          unless v.piece.key == :king && v.location == soldier.location
+          unless s.piece.key == :king && s.location == soldier.location
             throw :skip
           end
         },
@@ -113,8 +113,8 @@ module Warabi
           place = soldier.place
           retv = [-1, +1].any? do |x|
             v = Place.lookup([place.x.value + x, place.y.value])
-            if v = surface[v]
-              v.piece.key == :king && v.location != soldier.location
+            if s = surface[v]
+              s.piece.key == :king && s.location != soldier.location
             end
           end
           unless retv
@@ -189,9 +189,9 @@ module Warabi
           place = soldier.place
           retv = [-1, +1].all? do |x|
             v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign]) # 1歩後ろ
-            if v = surface[v]
-              if v.location != soldier.location
-                v.piece.key == :rook || v.piece.key == :gold
+            if s = surface[v]
+              if s.location != soldier.location
+                s.piece.key == :rook || s.piece.key == :gold
               end
             end
           end
@@ -211,12 +211,12 @@ module Warabi
           v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
 
           # 1つ上の位置になにかないとだめ
-          unless v = surface[v]
+          unless s = surface[v]
             throw :skip
           end
 
           # 1つ上の駒が「相手」の「桂」でないとだめ
-          unless v.piece.key == :knight && v.location != soldier.location
+          unless s.piece.key == :knight && s.location != soldier.location
             throw :skip
           end
         },
@@ -232,15 +232,36 @@ module Warabi
           v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
 
           # なにかないとだめ
-          unless v = surface[v]
+          unless s = surface[v]
             throw :skip
           end
 
           # 駒が「自分」の「香」か「飛」でないとだめ
-          unless v.location == soldier.location
+          unless s.location == soldier.location
             throw :skip
           end
-          unless (v.piece.key == :lance && !v.promoted) || v.piece.key == :rook
+          unless (s.piece.key == :lance && !s.promoted) || s.piece.key == :rook
+            throw :skip
+          end
+        },
+      },
+
+      {
+        key: "ふんどしの桂",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+
+          # 2つ前の左右に自分より価値の高い相手の駒があること
+          place = soldier.place
+          retv = [-1, +1].all? do |x|
+            v = Place.lookup([place.x.value + x, place.y.value - soldier.location.value_sign * 2])
+            if s = surface[v]
+              if s.location != soldier.location
+                s.abs_weight > soldier.abs_weight
+              end
+            end
+          end
+          unless retv
             throw :skip
           end
         },
