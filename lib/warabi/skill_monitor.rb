@@ -158,6 +158,24 @@ module Warabi
           end
         end
 
+        # 自分の金or銀がある
+        if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
+          ary.each do |e|
+            unless worth_more_gteq_silver?(e[:place])
+              throw :skip
+            end
+          end
+        end
+
+        # 自分の歩以上の駒がある
+        if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
+          ary.each do |e|
+            unless worth_more_gteq_pawn?(e[:place])
+              throw :skip
+            end
+          end
+        end
+
         # 歩を持っていたらskip
         if e.not_have_pawn
           if piece_box.has_key?(:pawn)
@@ -238,6 +256,25 @@ module Warabi
       end
     end
 
+    # place の位置に銀以上の価値がある(自分の)駒がある
+    def worth_more_gteq_silver?(place)
+      if v = surface[place]
+        v.location == location && v.abs_weight >= silver_piece_basic_weight
+      end
+    end
+
+    # place の位置に歩以上の価値がある(自分の)駒がある
+    def worth_more_gteq_pawn?(place)
+      if v = surface[place]
+        v.location == location
+      end
+    end
+
+    # 銀の価値
+    def silver_piece_basic_weight
+      @silver_piece_basic_weight ||= Piece[:silver].basic_weight
+    end
+
     # 持駒
     def piece_box
       @piece_box ||= player.piece_box
@@ -261,6 +298,5 @@ module Warabi
     def player
       @player ||= executor.player
     end
-
   end
 end
