@@ -5,11 +5,17 @@ module Warabi
     attr_accessor :attack_infos
     attr_accessor :defense_infos
     attr_accessor :technique_infos
+    attr_accessor :note_infos
 
     include Enumerable
 
     def each(&block)
-      [defense_infos, attack_infos].each(&block)
+      [
+        defense_infos,
+        attack_infos,
+        technique_infos,
+        note_infos,
+      ].each(&block)
     end
 
     def attack_infos
@@ -22,6 +28,10 @@ module Warabi
 
     def technique_infos
       @technique_infos ||= List.new
+    end
+
+    def note_infos
+      @note_infos ||= List.new
     end
 
     def to_h

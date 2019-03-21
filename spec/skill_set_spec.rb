@@ -9,6 +9,7 @@ module Warabi
       @skill_set.defense_infos << DefenseInfo["ダイヤモンド美濃"]
       @skill_set.defense_infos << DefenseInfo["坊主美濃"]
       @skill_set.attack_infos << AttackInfo["嬉野流"]
+      @skill_set.note_infos << NoteInfo["入玉"]
     end
 
     it "全部入り" do
@@ -24,7 +25,7 @@ module Warabi
     end
 
     it "all" do
-      assert { @skill_set.collect(&:size) == [4, 1] }
+      assert { @skill_set.collect(&:size) == [4, 1, 0, 1] }
     end
   end
 end

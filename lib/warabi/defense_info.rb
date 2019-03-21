@@ -158,6 +158,10 @@ module Warabi
       def tactic_info
         TacticInfo.fetch(tactic_key)
       end
+
+      def technique_matcher_info
+        @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
+      end
     end
   end
 end
