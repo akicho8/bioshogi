@@ -183,12 +183,12 @@ module Warabi
           end
         end
 
-        # 歩を除いて何か持っていたらskip
-        if e.not_have_anything_except_pawn
-          if !piece_box.except(:pawn).empty?
-            throw :skip
-          end
-        end
+        # # 歩を除いて何か持っていたらskip
+        # if e.not_have_anything_except_pawn
+        #   if !piece_box.except(:pawn).empty?
+        #     throw :skip
+        #   end
+        # end
 
         if true
           # 駒が一致していなければskip
@@ -237,6 +237,13 @@ module Warabi
       # 開戦済みならskip
       if e.cold_war
         if player.mediator.kill_counter.positive?
+          throw :skip
+        end
+      end
+
+      # 歩を除いて何か持っていたらskip
+      if e.not_have_anything_except_pawn
+        if !piece_box.except(:pawn).empty?
           throw :skip
         end
       end

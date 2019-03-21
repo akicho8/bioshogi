@@ -1251,6 +1251,12 @@ module Warabi
           "https://将棋講座.com/手筋/継ぎ桂.html",
         ],
       },
+      {
+        key: "入玉",
+        urls: [
+          "https://ja.wikipedia.org/wiki/%E5%85%A5%E7%8E%89",
+        ],
+      },
 
       {
         key: "音無しの構え",

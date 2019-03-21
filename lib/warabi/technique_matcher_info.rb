@@ -248,6 +248,22 @@ module Warabi
           end
         },
       },
+
+      {
+        key: "入玉",
+        logic_desc: "玉が移動して上のスペースが3つの状態から2つの状態になった",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+          unless soldier.top_spaces == Dimension::Yplace._promotable_size - 1
+            throw :skip
+          end
+
+          origin_soldier = executor.hand.origin_soldier
+          unless origin_soldier.top_spaces == Dimension::Yplace._promotable_size
+            throw :skip
+          end
+        },
+      },
     ]
   end
 end
