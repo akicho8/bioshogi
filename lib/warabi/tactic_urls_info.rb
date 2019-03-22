@@ -158,6 +158,38 @@ module Warabi
         ],
       },
       {
+        key: "早囲い",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/furibisya/hayagakoi.html",
+        ],
+      },
+      {
+        key: "三手囲い",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/furibisya/santegakoi.html",
+          "https://www.shougi.jp/kakoi/f-oth/sante.html",
+        ],
+      },
+      {
+        key: "ずれ美濃",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/furibisya/zuremino.html",
+        ],
+      },
+      {
+        key: "カブト美濃",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/furibisya/kabutomino.html",
+          "http://www.geocities.jp/sino1700/kabut_mino",
+        ],
+      },
+      {
+        key: "カブト囲い",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/kabutogakoi.html",
+        ],
+      },
+      {
         key: "ちょんまげ美濃",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-106.html",
