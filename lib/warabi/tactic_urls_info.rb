@@ -144,6 +144,12 @@ module Warabi
         ],
       },
       {
+        key: "裾固め",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/furibisya/susogatame.html",
+        ],
+      },
+      {
         key: "片美濃囲い",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-105.html",
