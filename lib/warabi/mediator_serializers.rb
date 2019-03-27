@@ -76,6 +76,7 @@ module Warabi
 
     concerning :UsiMethods do
       attr_reader :first_state_board_sfen
+      attr_reader :first_state_turn_info
 
       def initialize(*)
         super
@@ -85,6 +86,7 @@ module Warabi
       def play_standby
         # turn_info_auto_set
         @first_state_board_sfen = to_current_sfen # FIXME: これはイケてない
+        @first_state_turn_info = turn_info.clone
       end
 
       # 平手で開始する直前の状態か？

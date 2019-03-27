@@ -152,7 +152,15 @@ module Warabi
           if header.turn_counter
             mediator.turn_info.counter = header.turn_counter
           end
-          mediator.play_standby
+
+          # KIFに手数の表記があって2手目から始まっているなら2手目までカウンタを進める
+          if e = move_infos.first
+            if v = e[:turn_number]
+              mediator.turn_info.counter += v.to_i.pred
+            end
+          end
+
+          mediator.play_standby # 最初の状態を記録
         end
 
         def handicap?
