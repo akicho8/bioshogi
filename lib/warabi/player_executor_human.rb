@@ -6,7 +6,7 @@ module Warabi
       mediator.kill_counter += 1
 
       TacticInfo.piece_box_added_func_table.each do |e|
-        if instance_exec(captured_soldier, &e.piece_box_added_func)
+        if instance_exec(e, captured_soldier, &e.piece_box_added_trigger)
           list = player.skill_set.public_send(e.tactic_info.list_key)
           list << e
           skill_set.public_send(e.tactic_info.list_key) << e

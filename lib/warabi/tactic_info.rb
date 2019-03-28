@@ -80,7 +80,7 @@ module Warabi
 
       def piece_box_added_func_table
         @piece_box_added_func_table ||= all_elements.find_all do |e|
-          e.respond_to?(:piece_box_added_func) && e.piece_box_added_func
+          e.respond_to?(:piece_box_added_trigger) && e.piece_box_added_trigger
         end
       end
     end

@@ -12,10 +12,6 @@ module Warabi
       @surface ||= {}
     end
 
-    def surface2
-      @surface2 ||= Hash.new(0)
-    end
-
     concerning :UpdateMethods do
       def place_on(soldier, **options)
         options = {
@@ -27,7 +23,7 @@ module Warabi
         end
 
         surface[soldier.place] = soldier
-        surface2[[soldier.location, soldier.piece]] += 1
+        soldier_counts_surface[[soldier.location.key, soldier.piece.key]] += 1
       end
 
       def pick_up(place)
@@ -41,14 +37,14 @@ module Warabi
       def safe_delete_on(place)
         surface.delete(place).tap do |soldier|
           if soldier
-            surface2[[soldier.location, soldier.piece]] -= 1
+            soldier_counts_surface[[soldier.location.key, soldier.piece.key]] -= 1
           end
         end
       end
 
       def all_clear
         surface.clear
-        surface2.clear
+        soldier_counts_surface.clear
       end
 
       def board_set_any(v)
@@ -87,7 +83,12 @@ module Warabi
 
       private
 
+      def soldier_counts_surface
+        @soldier_counts_surface ||= Hash.new(0)
+      end
+
       def assert_cell_blank(place)
+
         if surface.has_key?(place)
           raise PieceAlredyExist, "空のはずの#{place}に駒があります\n#{self}"
         end
@@ -106,6 +107,10 @@ module Warabi
 
       def fetch(place)
         lookup(place) or raise PieceNotFoundOnBoard, "#{place}に何もありません\n#{self}"
+      end
+
+      def piece_counts(location_key, piece_key)
+        soldier_counts_surface[[location_key, piece_key]]
       end
 
       # FIXME: 空いている升の情報は駒を動かした時点で更新するようにすればこの部分の無駄な判定を減らせる
@@ -215,8 +220,7 @@ module Warabi
         location = Location[location]
 
         # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        black_only_soldiers = surface.values.collect { |
-e|
+        black_only_soldiers = surface.values.collect { |e|
           if e.location == location
             e.flip_if_white
           end
