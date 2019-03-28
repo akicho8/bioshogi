@@ -13,7 +13,7 @@ mediator.to_sfen                # => "position startpos moves 7i6h"
 mediator.execute("△２四銀打")
 mediator.hand_logs.last.to_sfen # => "S*2d"
 mediator.to_sfen                # => "position startpos moves 7i6h S*2d"
-mediator.first_state_board_sfen # => "startpos"
+mediator.initial_state_board_sfen # => "startpos"
 puts mediator.board
 mediator.to_current_sfen        # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
 

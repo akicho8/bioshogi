@@ -75,18 +75,18 @@ module Warabi
     end
 
     concerning :UsiMethods do
-      attr_reader :first_state_board_sfen
-      attr_reader :first_state_turn_info
+      attr_reader :initial_state_board_sfen
+      attr_reader :initial_state_turn_info
 
       def initialize(*)
         super
-        play_standby            # FIXME
+        before_run_process            # FIXME
       end
 
-      def play_standby
+      def before_run_process
         # turn_info_auto_set
-        @first_state_board_sfen = to_current_sfen # FIXME: これはイケてない
-        @first_state_turn_info = turn_info.clone
+        @initial_state_board_sfen = to_current_sfen # FIXME: これはイケてない
+        @initial_state_turn_info = turn_info.clone
       end
 
       # 平手で開始する直前の状態か？
@@ -124,7 +124,7 @@ module Warabi
       def to_sfen(**options)
         s = []
         s << "position"
-        s << @first_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
+        s << @initial_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
         if hand_logs.present?
           s << "moves"
           s.concat(hand_logs.collect(&:to_sfen))

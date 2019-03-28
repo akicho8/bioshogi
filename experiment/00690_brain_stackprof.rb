@@ -2,7 +2,7 @@ require "./example_helper"
 
 # mediator = Mediator.start
 # mediator.execute("▲６八銀")
-# mediator.instance_variables     # => [:@board, :@turn_info, :@players, :@first_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
+# mediator.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
 # 
 # mediator = MediatorSimple.start
 # mediator.execute("▲６八銀")

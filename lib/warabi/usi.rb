@@ -16,7 +16,7 @@ module Warabi
       # @mediator.execute("△２四銀打")
       # @mediator.hand_logs.last.to_sfen # => "S*2d"
       # @mediator.to_sfen                # => "lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
-      # @mediator.first_state_board_sfen # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+      # @mediator.initial_state_board_sfen # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
       # puts @mediator.board
       # @mediator.to_source        # => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h S*2d"
 
@@ -33,7 +33,7 @@ module Warabi
         sfen.piece_counts.each do |location_key, counts|
           mediator.player_at(location_key).piece_box.set(counts)
         end
-        mediator.play_standby
+        mediator.before_run_process
       end
 
       def execute_moves(mediator)

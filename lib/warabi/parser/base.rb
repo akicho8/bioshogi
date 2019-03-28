@@ -160,7 +160,7 @@ module Warabi
             end
           end
 
-          mediator.play_standby # 最初の状態を記録
+          mediator.before_run_process # 最初の状態を記録
         end
 
         def handicap?

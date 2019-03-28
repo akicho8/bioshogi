@@ -65,7 +65,7 @@ module Warabi
         # 2. mediator.turn_info を利用して mediator.turn_info.base_location.csa_sign を参照
         # ↑どちらも違う
         # 3. これが正しい
-        out << mediator.first_state_turn_info.current_location.csa_sign + "\n"
+        out << mediator.initial_state_turn_info.current_location.csa_sign + "\n"
 
         list = mediator.hand_logs.collect.with_index do |e, i|
           if clock_exist?
