@@ -23,7 +23,7 @@ module Warabi
         end
 
         surface[soldier.place] = soldier
-        soldier_counts_surface[[soldier.location.key, soldier.piece.key]] += 1
+        soldier_counts_surface[[soldier.location.key, soldier.piece.key]] += 1 # soldier.piece.stronger をキーにすると速くなるかも？
       end
 
       def pick_up(place)

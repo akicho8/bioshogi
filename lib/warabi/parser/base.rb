@@ -218,6 +218,15 @@ module Warabi
           end
 
           if @parser_options[:skill_monitor_enable]
+            # 両方が入玉していれば「相入玉」タグを追加する
+            # この場合、両方同時に入玉しているかどうかは判定できない
+            if mediator.players.all? { |e| e.skill_set.note_infos.include?(NoteInfo["入玉"]) }
+              mediator.players.each do |player|
+                player.skill_set.note_infos << NoteInfo["相入玉"]
+              end
+            end
+
+            # ヘッダーに埋める
             TacticInfo.each do |e|
               mediator.players.each do |player|
                 if v = player.skill_set.public_send(e.list_key).normalize.uniq.collect(&:name).presence # 手筋の場合、複数になる場合があるので uniq している
