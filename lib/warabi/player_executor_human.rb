@@ -2,8 +2,16 @@
 
 module Warabi
   class PlayerExecutorHuman < PlayerExecutorBase
-    def piece_box_added
+    def piece_box_added(captured_soldier)
       mediator.kill_counter += 1
+
+      TacticInfo.piece_box_added_func_table.each do |e|
+        if instance_exec(captured_soldier, &e.piece_box_added_func)
+          list = player.skill_set.public_send(e.tactic_info.list_key)
+          list << e
+          skill_set.public_send(e.tactic_info.list_key) << e
+        end
+      end
     end
 
     def turn_ended_process

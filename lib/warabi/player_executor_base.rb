@@ -40,7 +40,7 @@ module Warabi
 
       hand.execute(mediator)
       if captured_soldier
-        piece_box_added
+        piece_box_added(captured_soldier)
       end
 
       perform_skill_monitor
@@ -54,7 +54,7 @@ module Warabi
       hand
     end
 
-    def piece_box_added
+    def piece_box_added(captured_soldier)
     end
 
     def turn_ended_process

@@ -141,7 +141,11 @@ module Warabi
       end
 
       def urls
-        TacticUrlsInfo.fetch(key).urls
+        v = TacticUrlsInfo[key]
+        unless v
+          return []
+        end
+        v.urls
       end
 
       def hold_piece_eq

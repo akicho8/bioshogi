@@ -62,7 +62,6 @@ module Warabi
             end
           end
         end
-
       end
 
       # トリガーがある場合はそれだけ登録すればよくて
@@ -76,6 +75,12 @@ module Warabi
               m[s] << e
             end
           end
+        end
+      end
+
+      def piece_box_added_func_table
+        @piece_box_added_func_table ||= all_elements.find_all do |e|
+          e.respond_to?(:piece_box_added_func) && e.piece_box_added_func
         end
       end
     end

@@ -12,6 +12,10 @@ module Warabi
       @surface ||= {}
     end
 
+    def surface2
+      @surface2 ||= Hash.new(0)
+    end
+
     concerning :UpdateMethods do
       def place_on(soldier, **options)
         options = {
@@ -23,6 +27,7 @@ module Warabi
         end
 
         surface[soldier.place] = soldier
+        surface2[[soldier.location, soldier.piece]] += 1
       end
 
       def pick_up(place)
@@ -34,11 +39,16 @@ module Warabi
       end
 
       def safe_delete_on(place)
-        surface.delete(place)
+        surface.delete(place).tap do |soldier|
+          if soldier
+            surface2[[soldier.location, soldier.piece]] -= 1
+          end
+        end
       end
 
       def all_clear
         surface.clear
+        surface2.clear
       end
 
       def board_set_any(v)
