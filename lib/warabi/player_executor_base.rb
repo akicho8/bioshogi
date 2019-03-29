@@ -43,6 +43,10 @@ module Warabi
         piece_box_added(captured_soldier)
       end
 
+      if move_hand
+        move_hand_process(move_hand)
+      end
+
       perform_skill_monitor
 
       turn_ended_process
@@ -55,6 +59,9 @@ module Warabi
     end
 
     def piece_box_added(captured_soldier)
+    end
+
+    def move_hand_process(move_hand)
     end
 
     def turn_ended_process

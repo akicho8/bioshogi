@@ -118,6 +118,14 @@ module Warabi
       end
     end
 
+    concerning :OtherMethods do
+      attr_writer :king_moved_counter
+
+      def king_moved_counter
+        @king_moved_counter ||= 0
+      end
+    end
+
     concerning :BrainMethods do
       def evaluator(**options)
         (options[:evaluator_class] || EvaluatorBase).new(self, options)

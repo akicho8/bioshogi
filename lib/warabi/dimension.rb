@@ -32,6 +32,7 @@ module Warabi
 
       # サイズ毎のクラスがいるかも
       # かなりやっつけの仮
+      # FIXME: 最適化
       def size_type
         key = [Xplace.dimension, Yplace.dimension]
         {

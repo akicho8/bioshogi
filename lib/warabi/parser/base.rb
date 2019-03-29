@@ -226,6 +226,21 @@ module Warabi
               end
             end
 
+            # 居玉チェック
+            if ENV["WARABI_ENV"] != "test"
+              mediator.players.each do |e|
+                if e.king_moved_counter.zero?
+                  e.skill_set.note_infos << NoteInfo["居玉"]
+                end
+              end
+
+              if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                mediator.players.each do |e|
+                  e.skill_set.note_infos << NoteInfo["相居玉"]
+                end
+              end
+            end
+
             # ヘッダーに埋める
             TacticInfo.each do |e|
               mediator.players.each do |player|

@@ -10,6 +10,9 @@ module Warabi
         matches = info.mediator.players.collect { |player|
           player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
         }.flatten
+        if e.key == :"居玉" || e.key == :"相居玉"
+          next
+        end
         assert { matches.include?(e.key) }
       end
     end
