@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe "names_set" do
     it do
       info = Parser.parse("position sfen 4k4/9/9/9/9/9/PPPPPPPPP/9/4K4 w - 1")

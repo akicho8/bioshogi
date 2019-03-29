@@ -1,6 +1,6 @@
 require "./example_helper"
 
-Warabi.logger = ActiveSupport::Logger.new(STDOUT)
+Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
 
 Board.dimensiton_change([3, 3])
 mediator = Mediator.new

@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe PresetInfo do
     it "to_position_sfen" do
       assert { PresetInfo["平手"].to_position_sfen   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }

@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe Parser::CsaParser do
     it "棋譜部分のパース" do
       assert { Parser::CsaParser.parse("1234FU").move_infos.first[:input] == "1234FU" }

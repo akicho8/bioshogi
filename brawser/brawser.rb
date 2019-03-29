@@ -4,20 +4,20 @@ require "bundler/setup"
 
 require "active_support/core_ext/array/conversions"
 
-Warabi::XtraPattern.reload_all
+Bioshogi::XtraPattern.reload_all
 
 # for /swars_skills
 # require 'active_support'
 # require 'active_support/core_ext/object/to_json'
-require "warabi/contrib/other_files/swars_skills"
+require "bioshogi/contrib/other_files/swars_skills"
 
 require "sinatra/json"
 require "open-uri"
 
 class MediatorDecorator < SimpleDelegator
   def to_html_board(type = :default)
-    rows = Warabi::Dimension::Yplace.dimension.times.collect do |y|
-      tds = Warabi::Dimension::Xplace.dimension.times.collect do |x|
+    rows = Bioshogi::Dimension::Yplace.dimension.times.collect do |y|
+      tds = Bioshogi::Dimension::Xplace.dimension.times.collect do |x|
         tag_class = []
         cell = ""
         if soldier = board.surface[[x, y]]
@@ -25,10 +25,10 @@ class MediatorDecorator < SimpleDelegator
           cell = soldier.any_name
         end
         if hand_log = hand_logs.last
-          if hand_log.place_to == Warabi::Place[[x, y]]
+          if hand_log.place_to == Bioshogi::Place[[x, y]]
             tag_class << "last_place"
           end
-          if hand_log.place_from == Warabi::Place[[x, y]]
+          if hand_log.place_from == Bioshogi::Place[[x, y]]
             tag_class << "last_place2"
           end
         end
@@ -78,12 +78,12 @@ class Brawser < Sinatra::Base
     @session_id = env["rack.session"]["session_id"]
 
     if !params[:reset].nil? || REDIS.get(@session_id).nil?
-      mediator = Warabi::Mediator.start
+      mediator = Bioshogi::Mediator.start
       REDIS.set(@session_id, Marshal.dump(mediator))
     end
 
     dump = Marshal.load(REDIS.get(@session_id))
-    @mediator = Warabi::Mediator.from_dump(dump)
+    @mediator = Bioshogi::Mediator.from_dump(dump)
     # @mediator = dump
 
     if params[:location].nil? || @mediator.current_player.location.key.to_s == params[:location]
@@ -100,7 +100,7 @@ class Brawser < Sinatra::Base
         @runtime = Time.now
         @think_result = @mediator.current_player.brain.diver_dive(:depth_max => params[:think_put_lv].to_i)
         @runtime = Time.now - @runtime
-        input = Warabi::InputParser.slice_one(@think_result[:hand])[:input]
+        input = Bioshogi::InputParser.slice_one(@think_result[:hand])[:input]
         @mediator.execute(input)
       end
       if params[:random_put].present?
@@ -127,13 +127,13 @@ class Brawser < Sinatra::Base
 
   get "/tactics" do
     if Sinatra::Base.environment == :development
-      Warabi::XtraPattern.reload_all
+      Bioshogi::XtraPattern.reload_all
     end
 
     if params[:id]
-      @pattern = Warabi::XtraPattern.list[params[:id].to_i]
+      @pattern = Bioshogi::XtraPattern.list[params[:id].to_i]
       if @pattern
-        @snapshots = Warabi::HybridSequencer.execute(@pattern)
+        @snapshots = Bioshogi::HybridSequencer.execute(@pattern)
       end
     end
     haml :tactics
@@ -172,11 +172,11 @@ auto_flushing {
   }
 })
     if params[:kif_title].present?
-      @pattern = Warabi::XtraPattern.new({
+      @pattern = Bioshogi::XtraPattern.new({
           title: params[:kif_title],
-          notation_dsl: Warabi::NotationDsl.define(params){|params|eval(params[:kif_body])},
+          notation_dsl: Bioshogi::NotationDsl.define(params){|params|eval(params[:kif_body])},
         })
-      @snapshots = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Bioshogi::HybridSequencer.execute(@pattern)
     else
       params[:kif_title] ||= "垂らしの歩"
       params[:kif_body] ||= @pattern_body_default
@@ -190,15 +190,15 @@ auto_flushing {
 
   get "/simple_kifu_form" do
     if params[:body].present?
-      @pattern = Warabi::XtraPattern.new({
+      @pattern = Bioshogi::XtraPattern.new({
           title: params[:title],
-          notation_dsl: Warabi::NotationDsl.define(params){|params|
+          notation_dsl: Bioshogi::NotationDsl.define(params){|params|
             board "平手"
             auto_flushing
             mov params[:body]
           },
         })
-      @snapshots = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Bioshogi::HybridSequencer.execute(@pattern)
     else
       if Sinatra::Base.environment == :development
         params[:body] ||= "▲７六歩 △３四歩 ▲２六歩"
@@ -228,10 +228,10 @@ auto_flushing {
       params[:body] = URI(params[:url]).read.to_s.toutf8
     end
     if params[:body].present?
-      @kif_info = Warabi::Parser.parse(params[:body])
-      @pattern = Warabi::XtraPattern.new({
+      @kif_info = Bioshogi::Parser.parse(params[:body])
+      @pattern = Bioshogi::XtraPattern.new({
           title: params[:title],
-          notation_dsl: Warabi::NotationDsl.define(@kif_info){|kif_info|
+          notation_dsl: Bioshogi::NotationDsl.define(@kif_info){|kif_info|
             board "平手"
             auto_flushing
             kif_info.move_infos.each{|move_info|
@@ -240,7 +240,7 @@ auto_flushing {
             }
           },
         })
-      @snapshots = Warabi::HybridSequencer.execute(@pattern)
+      @snapshots = Bioshogi::HybridSequencer.execute(@pattern)
     end
   end
 

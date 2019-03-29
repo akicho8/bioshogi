@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Parser do
     it "ヘッダー行のセパレータは全角セミコロン" do
       assert { Parser.parse("a：b").header.to_h == {"a" => "b"} }

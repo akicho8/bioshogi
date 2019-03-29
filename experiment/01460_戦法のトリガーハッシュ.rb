@@ -8,8 +8,8 @@ tp TacticInfo.primary_soldiers.inject({}) {|a, (k, v)| a.merge(k.name => v.count
 
 tp TacticInfo.all_soldier_places_hash.inject({}) {|a, (k, v)| a.merge(k.name => v.count) }
 
-# ~> -:7:in `<main>': undefined method `primary_soldiers' for Warabi::TacticInfo:Class (NoMethodError)
+# ~> -:7:in `<main>': undefined method `primary_soldiers' for Bioshogi::TacticInfo:Class (NoMethodError)
 # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | black | {"○"=>[{:place=>#<Warabi::Place ３三>, :prefix_char=>" ", :something=>"○"}, {:place=>#<Warabi::Place ７七>, :prefix_char=>" ", :something=>"○"}]} |
-# >> | white | {"○"=>[{:place=>#<Warabi::Place ７七>, :prefix_char=>" ", :something=>"○"}, {:place=>#<Warabi::Place ３三>, :prefix_char=>" ", :something=>"○"}]} |
+# >> | black | {"○"=>[{:place=>#<Bioshogi::Place ３三>, :prefix_char=>" ", :something=>"○"}, {:place=>#<Bioshogi::Place ７七>, :prefix_char=>" ", :something=>"○"}]} |
+# >> | white | {"○"=>[{:place=>#<Bioshogi::Place ７七>, :prefix_char=>" ", :something=>"○"}, {:place=>#<Bioshogi::Place ３三>, :prefix_char=>" ", :something=>"○"}]} |
 # >> |-------+------------------------------------------------------------------------------------------------------------------------------------------------------|

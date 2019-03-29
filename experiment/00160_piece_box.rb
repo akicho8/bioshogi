@@ -8,7 +8,7 @@ piece_box.to_sfen(:black)                      # => ""
 piece_box.to_csa(:black)                       # => ""
 piece_box.set(Piece.s_to_h("飛玉角角"))
 piece_box.to_h                                 # => {:rook=>1, :king=>1, :bishop=>2}
-piece_box.pick_out("歩") rescue $!             # => #<Warabi::HoldPieceNotFound: 歩がありません : {:rook=>1, :king=>1, :bishop=>2}>
+piece_box.pick_out("歩") rescue $!             # => #<Bioshogi::HoldPieceNotFound: 歩がありません : {:rook=>1, :king=>1, :bishop=>2}>
 piece_box.pick_out("飛").key                   # => :rook
 piece_box.to_h                                 # => {:king=>1, :bishop=>2}
 piece_box.pick_out_without_king.collect(&:key) # => [:bishop, :bishop]

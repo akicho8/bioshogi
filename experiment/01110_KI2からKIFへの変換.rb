@@ -1,6 +1,6 @@
 require "./example_helper"
 
-info = Warabi::Parser.parse(Pathname("katomomo.ki2"))
+info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 
 out = ""
 out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join

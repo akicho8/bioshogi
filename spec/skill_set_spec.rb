@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe SkillSet do
     before do
       @skill_set = SkillSet.new

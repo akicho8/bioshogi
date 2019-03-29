@@ -19,8 +19,8 @@ info = Parser.parse(<<~EOT)
    1 72銀
 EOT
 puts info.to_kif
-# >> #<Warabi::Place ８二>
-# >> <Warabi::Soldier "△８二玉">
+# >> #<Bioshogi::Place ８二>
+# >> <Bioshogi::Soldier "△８二玉">
 # >> 先手の手筋：腹銀
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

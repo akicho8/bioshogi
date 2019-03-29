@@ -38,7 +38,7 @@ defense_info = DefenseInfo.find do |e|
   # e.sorted_black_side_soldiers == sorted_black_side_soldiers
 end
 tp defense_info
-# ~> -:29:in `block in <main>': undefined method `black_side_soldiers' for #<Warabi::DefenseInfo:0x00007f82a51bec00> (NoMethodError)
+# ~> -:29:in `block in <main>': undefined method `black_side_soldiers' for #<Bioshogi::DefenseInfo:0x00007f82a51bec00> (NoMethodError)
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/memory_record-0.0.9/lib/memory_record/memory_record.rb:147:in `each'
 # ~> 	from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/memory_record-0.0.9/lib/memory_record/memory_record.rb:147:in `each'
 # ~> 	from -:25:in `find'

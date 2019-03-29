@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe InputParser do
     def test1(s)
       s.match(InputParser.regexp).named_captures.compact

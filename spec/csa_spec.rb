@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe do
     it "5341NK だけでは判断が難しい例" do
       mediator = Mediator.new

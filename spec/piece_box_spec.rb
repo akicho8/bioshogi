@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe PieceBox do
     it do
       piece_box = PieceBox.new(Piece.s_to_h("飛玉角角"))

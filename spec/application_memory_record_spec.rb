@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe ApplicationMemoryRecord do
     it do
       klass = Class.new do

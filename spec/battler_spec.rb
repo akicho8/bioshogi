@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Soldier do
     describe "文字列表現" do
       before do

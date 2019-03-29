@@ -19,4 +19,4 @@ gem "puma"
 
 gem "foreman"
 
-gem "warabi", path: "../"
+gem "bioshogi", path: "../"

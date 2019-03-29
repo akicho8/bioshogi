@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe TechniqueInfo do
     def mediator_new
       Mediator.new.tap do |e|

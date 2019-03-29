@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Mediator do
     it "placement_from_preset は手番も反映する" do
       mediator = Mediator.new

@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe Parser::Ki2Parser do
     it "棋譜部分のパース" do
       assert Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input] == "７六歩(77)"

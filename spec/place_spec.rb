@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Place do
     it "コレクション" do
       assert { Place.each.present? == true }

@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-# Warabi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:skill_monitor_enable] = false
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
 files = Array(files).take((ARGV.first || 100).to_i)

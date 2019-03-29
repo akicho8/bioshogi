@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe DefenseInfo do
     it "ある" do
       assert { DefenseInfo["アヒル囲い"] }
@@ -33,7 +33,7 @@ module Warabi
     end
 
     describe "囲い" do
-      it "囲いチェック", :if => Warabi.config.skill_monitor_enable do
+      it "囲いチェック", :if => Bioshogi.config.skill_monitor_enable do
         info = Parser.file_parse("#{__dir__}/yagura.kif")
         info.mediator_run
         # puts info.header_part_string

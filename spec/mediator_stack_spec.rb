@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe MediatorStack do
     it do
       object = MediatorStack.new

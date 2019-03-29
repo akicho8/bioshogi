@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe "持ち時間" do
     it do
      assert { Parser.parse("持ち時間：１時間２分").to_kif.match?(/：1時間2分$/) }

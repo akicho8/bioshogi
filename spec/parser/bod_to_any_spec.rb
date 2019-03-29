@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe Parser::Base do
     describe "BODからの変換" do
       before do

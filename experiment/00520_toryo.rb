@@ -36,7 +36,7 @@ EOT
 # 王手された状態で後手の手番
 
 # player = mediator.current_player
-# soldier = player.soldiers.first                                   # => <Warabi::Soldier "▲２四桂">
+# soldier = player.soldiers.first                                   # => <Bioshogi::Soldier "▲２四桂">
 # soldier.move_list(mediator.board, promoted_preferred: false).to_a # => [<▲１二桂成(24)>]
 # exit
 #
@@ -50,7 +50,7 @@ records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_d
 record = records.first
 tp record
 hand = record[:hand]
-if record[:score] <= -(Warabi::INF_MAX - 1)
+if record[:score] <= -(Bioshogi::INF_MAX - 1)
   p "投了"
 end
 tp Brain.human_format(records)

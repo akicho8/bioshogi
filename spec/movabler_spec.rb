@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe "#move_list" do
     it "ある地点に移動するとき成れるのか？" do
       soldier = Soldier.from_str("▲13銀")

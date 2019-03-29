@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Player do
     it "座標を漢字・全角数字・半角数字のみでも指定できる" do
       assert { Mediator.player_test_soldier_names(init: "五五歩", execute: "五四歩") == ["▲５四歩"] }

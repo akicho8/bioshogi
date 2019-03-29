@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Dimension do
     describe "座標パース" do
       it "引数が根本的にダメなのでエラー" do

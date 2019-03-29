@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Brain do
     it do
       Board.dimensiton_change([3, 3]) do

@@ -1,10 +1,10 @@
 .well
-  - Warabi::DefenseInfo.each do |stock|
+  - Bioshogi::DefenseInfo.each do |stock|
     %a{href:"/tactics_and_enclosure##{stock[:key]}"}= "【#{stock[:key]}】"
 
 .text-center
-  - Warabi::DefenseInfo.each do |stock|
-    - mediator = Warabi::Mediator.new
+  - Bioshogi::DefenseInfo.each do |stock|
+    - mediator = Bioshogi::Mediator.new
     - mediator.board.placement_from_hash("▲" => stock[:key], "△" => stock[:key])
     %a{name:"#{stock[:key]}"}
     %p

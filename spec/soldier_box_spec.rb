@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe SoldierBox do
     it do
       soldier_box = SoldierBox.new

@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe do
     def test1(str)
-      mediator = Warabi::Mediator.new
+      mediator = Bioshogi::Mediator.new
       mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・v角|

@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe Parser::Base do
     describe "平手の盤面があるCSAからの変換" do
       before do

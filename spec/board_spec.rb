@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Board do
     it "配置" do
       mediator = Mediator.new

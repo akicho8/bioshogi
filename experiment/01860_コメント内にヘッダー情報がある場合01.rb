@@ -28,7 +28,7 @@ info.mediator_run
 tp info.header.to_h
 tp info.skill_set_hash
 
-# ~> -:21:in `<main>': undefined method `__to_simple_names_h' for #<Warabi::Parser::Header:0x00007fa5a4977178> (NoMethodError)
+# ~> -:21:in `<main>': undefined method `__to_simple_names_h' for #<Bioshogi::Parser::Header:0x00007fa5a4977178> (NoMethodError)
 # ~> Did you mean?  to_enum
 # >> |----------+--------------------------|
 # >> | 開始日時 | 2003/08/25               |

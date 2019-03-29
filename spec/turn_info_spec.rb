@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe TurnInfo do
     it "駒落ちなので△から始まる" do
       turn_info = TurnInfo.new(handicap: true)

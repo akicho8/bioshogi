@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Location do
     it "変換可能" do
       assert { Location[-1].key      == :white }
@@ -20,8 +20,8 @@ module Warabi
     end
 
     it "手番と位置は異なる。先に指すからといって一方が特定できるわけではない(重要)" do
-      expect { Location.fetch("1手目") }.to raise_error(WarabiError)
-      expect { Location.fetch("3")     }.to raise_error(WarabiError)
+      expect { Location.fetch("1手目") }.to raise_error(BioshogiError)
+      expect { Location.fetch("3")     }.to raise_error(BioshogiError)
     end
 
     it "盤面読み取り用" do
@@ -34,9 +34,9 @@ module Warabi
     end
 
     it "変換不能でエラー" do
-      expect { Location.fetch(nil)   }.to raise_error(WarabiError)
-      expect { Location.fetch("")    }.to raise_error(WarabiError)
-      expect { Location.fetch("foo") }.to raise_error(WarabiError)
+      expect { Location.fetch(nil)   }.to raise_error(BioshogiError)
+      expect { Location.fetch("")    }.to raise_error(BioshogiError)
+      expect { Location.fetch("foo") }.to raise_error(BioshogiError)
     end
 
     it "簡潔に書きたいとき用" do

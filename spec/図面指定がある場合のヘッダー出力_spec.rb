@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do
     it do
       mediator = Mediator.new

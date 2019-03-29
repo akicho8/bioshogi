@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 
-module Warabi
+module Bioshogi
   describe "駒落ちCSA棋譜からの変換" do
     before do
       @info = Parser.parse(<<~EOT, skill_monitor_enable: false)

@@ -20,12 +20,12 @@ EOT
   NegaAlphaDiver,
   NegaScoutDiver,
 ].each do |diver_class|
-  tp Warabi.run_counts.clear
+  tp Bioshogi.run_counts.clear
   brain = mediator.current_player.brain(diver_class: diver_class) # NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
   tp Brain.human_format(records)
-  tp Warabi.run_counts
+  tp Bioshogi.run_counts
 end
 
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
@@ -41,11 +41,11 @@ end
 # >> |    8 | ▲２四玉(14) | △２三歩成(22) (詰み)                                          | -999998 |          0 | 0.006215 |
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> |-----------------------------+-----|
-# >> |     Warabi::MoveHand.create | 562 |
+# >> |     Bioshogi::MoveHand.create | 562 |
 # >> |     sandbox_execute.execute | 590 |
 # >> |      sandbox_execute.revert | 590 |
-# >> |     Warabi::DropHand.create | 102 |
-# >> | Warabi::EvaluatorBase#score | 67  |
+# >> |     Bioshogi::DropHand.create | 102 |
+# >> | Bioshogi::EvaluatorBase#score | 67  |
 # >> |-----------------------------+-----|
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> | 順位 | 候補手       | 読み筋                                                         | ▲形勢  | 評価局面数 | 処理時間 |
@@ -60,9 +60,9 @@ end
 # >> |    8 | ▲２四玉(14) | △２三歩成(22) (詰み)                                          | -999998 |          0 | 0.004279 |
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> |-----------------------------+-----|
-# >> |     Warabi::MoveHand.create | 657 |
+# >> |     Bioshogi::MoveHand.create | 657 |
 # >> |     sandbox_execute.execute | 587 |
 # >> |      sandbox_execute.revert | 587 |
-# >> |     Warabi::DropHand.create | 208 |
-# >> | Warabi::EvaluatorBase#score | 62  |
+# >> |     Bioshogi::DropHand.create | 208 |
+# >> | Bioshogi::EvaluatorBase#score | 62  |
 # >> |-----------------------------+-----|

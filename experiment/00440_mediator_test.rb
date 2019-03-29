@@ -10,7 +10,7 @@ Board.dimensiton_change([2, 2]) do
   mediator.player_at(:black).brain.normal_all_hands  # => 
   mediator.player_at(:black).brain.fast_score_list # => 
 end
-# ~> -:6:in `block in <main>': undefined method `evaluate' for #<Warabi::Player:0x00007fc89ec27d60> (NoMethodError)
+# ~> -:6:in `block in <main>': undefined method `evaluate' for #<Bioshogi::Player:0x00007fc89ec27d60> (NoMethodError)
 # ~> Did you mean?  evaluator
 # ~> 	from -:6:in `collect'
 # ~> 	from -:6:in `<main>'

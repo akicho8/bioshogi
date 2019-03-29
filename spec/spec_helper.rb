@@ -1,14 +1,14 @@
 # $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-# require 'warabi'
+# require 'bioshogi'
 
 require "bundler/setup"
-require "warabi"
+require "bioshogi"
 
 ENV["WARABI_ENV"] = "test"
 
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)
-Warabi.logger = ActiveSupport::Logger.new(log_file)
+Bioshogi.logger = ActiveSupport::Logger.new(log_file)
 
 # Traceback (most recent call last):
 #       11: from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/simplecov-0.16.1/lib/simplecov/defaults.rb:27:in `block in <top (required)>'

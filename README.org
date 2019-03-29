@@ -1,9 +1,9 @@
 * 将棋の棋譜相互変換、棋譜から戦術抽出、超弱いAIなどのライブラリ
 
-#+html: <a href="https://travis-ci.org/akicho8/warabi"><img src="https://travis-ci.org/akicho8/warabi.svg?branch=master" /></a>
-#+html: <a href="https://codeclimate.com/github/akicho8/warabi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>  
+#+html: <a href="https://travis-ci.org/akicho8/bioshogi"><img src="https://travis-ci.org/akicho8/bioshogi.svg?branch=master" /></a>
+#+html: <a href="https://codeclimate.com/github/akicho8/bioshogi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>  
 
-  [[file:http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][file:https://raw.github.com/akicho8/warabi/master/warabi.png]]
+  [[file:http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][file:https://raw.github.com/akicho8/bioshogi/master/bioshogi.png]]
   [[http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][デモ]]
 
 #+BEGIN_SRC ruby
@@ -101,7 +101,7 @@ puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join
     KIFファイルを読み込み
 
 #+BEGIN_SRC ruby
-info = Warabi::Parser.parse(Pathname("ryuou20101214.kif"))
+info = Bioshogi::Parser.parse(Pathname("ryuou20101214.kif"))
 pp info.header
 # >> {"対局ID"=>"333",
 # >>  "開始日時"=>"2010/12/14 9:00",
@@ -368,7 +368,7 @@ p mediator
     3x3の盤面で対角線上に歩がある場合の駆け引き
 
 #+BEGIN_SRC ruby
-Warabi.logger = ActiveSupport::Logger.new(STDOUT)
+Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
 Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
   mediator.board.placement_from_human("▲３三歩 △１一歩")
@@ -454,7 +454,7 @@ end
 
     | 例外                   | 意味                                           | どんなときに起きる？                                                                    |
     |------------------------+------------------------------------------------+-----------------------------------------------------------------------------------------|
-    | WarabiError            | すべての例外の親                               |                                                                                         |
+    | BioshogiError            | すべての例外の親                               |                                                                                         |
     | MustNotHappen          | ありえない処理                                 | ブログラムがバグっている                                                                |
     | AmbiguousFormatError   | 指定座標に移動できる駒が多すぎる               | 初手 "▲５八金"                                                                         |
     | SyntaxDefact           | とりあえず表記が違う                           | 駒の配置時に "４二銀成" とした                                                          |

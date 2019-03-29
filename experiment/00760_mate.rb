@@ -1,6 +1,6 @@
 require "./example_helper"
 
-# Warabi.logger = ActiveSupport::Logger.new(STDOUT)
+# Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
 
 Board.promotable_disable
 Board.dimensiton_change([2, 3])

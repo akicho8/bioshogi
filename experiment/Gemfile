@@ -1,4 +1,4 @@
-gem "warabi", path: ".."
+gem "bioshogi", path: ".."
 gem "mechanize"
 gem "test-unit"
 gem "stackprof"

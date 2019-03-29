@@ -5,9 +5,9 @@ Place["１一"] == Place["１一"]  # => true
 
 a = Place["１一"]
 b = Place["２一"]
-[a, b]                          # => [#<Warabi::Place １一>, #<Warabi::Place ２一>]
-[a, b].sort rescue $!           # => [#<Warabi::Place ２一>, #<Warabi::Place １一>]
-[a, b].sort_by(&:to_xy)         # => [#<Warabi::Place ２一>, #<Warabi::Place １一>]
+[a, b]                          # => [#<Bioshogi::Place １一>, #<Bioshogi::Place ２一>]
+[a, b].sort rescue $!           # => [#<Bioshogi::Place ２一>, #<Bioshogi::Place １一>]
+[a, b].sort_by(&:to_xy)         # => [#<Bioshogi::Place ２一>, #<Bioshogi::Place １一>]
 
 Place["１一"].object_id         # => 70320263722920
 Place["11"].object_id           # => 70320263722920

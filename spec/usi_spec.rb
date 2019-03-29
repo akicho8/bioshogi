@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe "usi" do
     it "usi (sfen) 形式で出力" do
       mediator = Mediator.new

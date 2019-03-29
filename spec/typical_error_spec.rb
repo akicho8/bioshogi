@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe CommonError do
     describe "二歩の反則負け" do
       before do

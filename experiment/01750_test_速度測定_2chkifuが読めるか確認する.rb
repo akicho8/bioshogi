@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-# Warabi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:skill_monitor_enable] = false
 
 @error_file = Pathname("__error.log")
 @error_file.unlink rescue nil
@@ -89,7 +89,7 @@ seconds = Benchmark.realtime do
       @result[error.class.name] += 1
 
       if false
-        if error.kind_of?(Warabi::DoublePawnCommonError)
+        if error.kind_of?(Bioshogi::DoublePawnCommonError)
           print "_"
           next
         end

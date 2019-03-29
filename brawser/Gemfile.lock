@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    warabi (0.0.1)
+    bioshogi (0.0.1)
       actionview
       activemodel
       activesupport
@@ -135,7 +135,7 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   slim
-  warabi!
+  bioshogi!
 
 BUNDLED WITH
    1.16.1

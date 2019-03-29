@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe Soldier do
     before do
       @attributes = {place: Place["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}
@@ -12,7 +12,7 @@ module Warabi
     end
 
     it "文字列から簡単に作る" do
-      expect { Soldier.from_str("６八銀") }.to raise_error(WarabiError)
+      expect { Soldier.from_str("６八銀") }.to raise_error(BioshogiError)
       assert Soldier.from_str("６八銀", location: Location[:white]).name == "△６八銀"
       assert Soldier.from_str("６八銀", location: Location[:black]).name == "▲６八銀"
       assert Soldier.from_str("▲６八銀").name == "▲６八銀"

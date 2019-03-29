@@ -1,6 +1,6 @@
 require_relative "spec_helper"
 
-module Warabi
+module Bioshogi
   describe NotationDsl do
     it "試行錯誤用" do
       builder = NotationDsl.define do
