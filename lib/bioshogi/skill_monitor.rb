@@ -46,10 +46,10 @@ module Bioshogi
 
     def execute_block(e)
       catch :skip do
-        list = player.skill_set.public_send(e.tactic_info.list_key)
+        list = player.skill_set.list_of(e)
         yield list
-        list << e               # プレイヤーの個別設定
-        executor.skill_set.public_send(e.tactic_info.list_key) << e # executor の方にも設定(これいる？)
+        player.skill_set.list_push(e) # プレイヤーの個別設定
+        executor.skill_set.list_push(e) # executor の方にも設定(これいる？)
       end
     end
 
@@ -58,6 +58,13 @@ module Bioshogi
         # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
         if list.include?(e)
           throw :skip
+        end
+
+        # 「居飛車」判定のとき「振り飛車」がすでにあればスキップ
+        if e.skip_elements
+          if e.skip_elements.any? { |e| list.include?(e) }
+            throw :skip
+          end
         end
 
         # 片美濃のチェックをしようとするとき、すでに子孫のダイヤモンド美濃があれば、片美濃のチェックはスキップ

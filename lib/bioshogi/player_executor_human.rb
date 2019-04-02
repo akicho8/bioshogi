@@ -16,9 +16,8 @@ module Bioshogi
       if perform_skill_monitor_enable?
         TacticInfo.piece_box_added_func_table.each do |e|
           if instance_exec(e, captured_soldier, &e.piece_box_added_trigger)
-            list = player.skill_set.public_send(e.tactic_info.list_key)
-            list << e
-            skill_set.public_send(e.tactic_info.list_key) << e
+            player.skill_set.list_push(e)
+            skill_set.list_push(e)
           end
         end
       end

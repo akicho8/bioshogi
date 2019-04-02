@@ -173,6 +173,15 @@ module Bioshogi
       def technique_matcher_info
         @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
       end
+
+      def skip_elements
+        return @skip_elements if instance_variable_defined?(:@skip_elements)
+
+        @skip_elements = nil
+        if respond_to?(:skip_if_exist_keys)
+          @skip_elements = Array(skip_if_exist_keys).collect { |e| TacticInfo.flat_lookup(e) }
+        end
+      end
     end
   end
 end

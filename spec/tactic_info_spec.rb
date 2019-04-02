@@ -8,9 +8,9 @@ module Bioshogi
         info = Parser.file_parse(file)
         info.mediator_run
         matches = info.mediator.players.collect { |player|
-          player.skill_set.public_send(e.tactic_info.list_key).normalize.collect(&:key)
+          player.skill_set.list_of(e).normalize.collect(&:key)
         }.flatten
-        if e.key == :"居玉" || e.key == :"相居玉"
+        if ["居玉", "相居玉", "相居飛車", "相居飛車", "対振り", "相振り"].include?(e.key.to_s)
           next
         end
         assert { matches.include?(e.key) }

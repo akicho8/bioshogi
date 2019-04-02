@@ -34,6 +34,18 @@ module Bioshogi
       @note_infos ||= List.new
     end
 
+    def list_of(e)
+      public_send(e.tactic_info.list_key)
+    end
+
+    def list_push(e)
+      list_of(e).push(e)
+    end
+
+    def has_skill?(e)
+      list_of(e).include?(e)
+    end
+
     def to_h
       TacticInfo.inject({}) do |a, e|
         a.merge(e.key => public_send(e.list_key).normalize.collect(&:key))
