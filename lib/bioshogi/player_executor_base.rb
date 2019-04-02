@@ -27,16 +27,29 @@ module Bioshogi
       }.call
     end
 
-    def execute
+    def perform_validations
+      if mediator.params[:validate_skip]
+        return
+      end
+
       input.perform_validations
       if error = input.errors.first
         raise_error(error)
       end
+    end
 
+    def execute
+      perform_validations
+
+      # hand.execute で board が変化してしまうため実行するまえに取得しておく
+      # ただし candidate_soldiers は重いので to_ki2 しないのであれば呼ばない方がいい
       @hand               = input.hand
       @drop_hand          = input.drop_hand
       @move_hand          = input.move_hand
-      @candidate_soldiers = input.candidate_soldiers
+      @candidate_soldiers = nil
+      unless mediator.params[:candidate_skip]
+        @candidate_soldiers = input.candidate_soldiers
+      end
 
       hand.execute(mediator)
       if captured_soldier

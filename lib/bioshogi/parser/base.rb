@@ -52,6 +52,9 @@ module Bioshogi
           # run_and_build_skip: false,
           skill_monitor_enable: true,
           skill_monitor_technique_enable: true,
+
+          validate_skip: false,           # 将棋ウォーズの棋譜なら指定すると少し速くなる
+          candidate_skip: false, # ki2にしないのであれば指定するとかなり速くなる
         }
       end
 
@@ -122,7 +125,12 @@ module Bioshogi
 
         def mediator_new
           Mediator.new.tap do |e|
-            e.params.update(@parser_options.slice(:skill_monitor_enable, :skill_monitor_technique_enable))
+            e.params.update(@parser_options.slice(*[
+                  :skill_monitor_enable,
+                  :skill_monitor_technique_enable,
+                  :candidate_skip,
+                  :validate_skip,
+                ]))
           end
         end
 
