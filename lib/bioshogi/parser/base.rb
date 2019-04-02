@@ -258,12 +258,12 @@ module Bioshogi
                   end
                 end
 
-                # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」
+                # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
                 if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                  (mediator.players - [player]).each do |e|
-                    unless e.skill_set.has_skill?(NoteInfo["振り飛車"])
-                      e.skill_set.list_push(NoteInfo["対振り"])
-                    end
+                  others = mediator.players - [player]
+                  if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                    others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
+                    mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
                   end
                 end
               end
