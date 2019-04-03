@@ -97,8 +97,7 @@ module Bioshogi
 
     concerning :ReaderMethods do
       def lookup(place)
-        place = Place.fetch(place)
-        surface[place]
+        surface[Place.fetch(place)]
       end
 
       def [](place)
@@ -161,8 +160,7 @@ module Bioshogi
       def to_sfen
         Dimension::Yplace.dimension.times.collect { |y|
           Dimension::Xplace.dimension.times.collect { |x|
-            place = Place.fetch([x, y])
-            surface[place]
+            lookup([x, y])
           }.chunk(&:class).flat_map { |klass, e|
             if klass == NilClass
               e.count

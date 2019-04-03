@@ -4,10 +4,11 @@ require "./example_helper"
 
 require "stackprof"
 
+# StackProf.run(mode: :object, out: "stackprof.dump", raw: true) do
+# StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
+
 ms = Benchmark.ms do
   StackProf.run(mode: :cpu, out: "stackprof.dump", raw: true) do
-    # StackProf.run(mode: :object, out: "stackprof.dump", raw: true) do
-    # StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
     20.times do
       ["csa", "ki2", "kif", "sfen"].each do |e|
         info = Parser.file_parse("katomomo.#{e}")

@@ -21,7 +21,7 @@ module Bioshogi
             errors_add ReversePlayerPieceMoveError, "相手の駒を動かそうとしています"
           end
 
-          if s = board.lookup(soldier.place)
+          if s = board.surface[soldier.place]
             if s.location == player.location
               errors_add SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています"
             end
@@ -42,7 +42,7 @@ module Bioshogi
         end
 
         if drop_trigger
-          if board.lookup(place)
+          if board.surface[place]
             errors_add PieceAlredyExist, "駒の上に打とうとしています"
           end
         end
