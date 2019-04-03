@@ -243,6 +243,12 @@ module Bioshogi
         ],
       },
       {
+        key: "四枚銀冠",
+        urls: [
+          "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/yonnmaiginnkannmuri.html",
+        ],
+      },
+      {
         key: "串カツ囲い",
         urls: [
           "http://mudasure.com/blog-entry-27.html",
