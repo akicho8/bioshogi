@@ -1076,6 +1076,12 @@ module Bioshogi
         ],
       },
       {
+        key: "メイドシステム",
+        urls: [
+          "https://www.youtube.com/watch?v=sUh1KBSmkNs",
+        ],
+      },
+      {
         key: "棒金",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-138.html",
