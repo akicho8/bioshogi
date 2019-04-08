@@ -78,7 +78,7 @@ module Bioshogi
       end
 
       def placement_from_soldiers(soldiers)
-        soldiers.each { |soldier| place_on(soldier) }
+        soldiers.each { |e| place_on(e) }
       end
 
       private
@@ -173,6 +173,7 @@ module Bioshogi
     end
 
     concerning :TechniqueMatcherMethods do
+      # 180度回転した盤面を返す
       def flip
          self.class.new.tap do |board|
           surface.values.each do |e|
@@ -181,6 +182,7 @@ module Bioshogi
         end
       end
 
+      # X軸のみを反転した盤面を返す
       def horizontal_flip
          self.class.new.tap do |board|
           surface.values.each do |e|
