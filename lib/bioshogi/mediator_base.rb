@@ -10,6 +10,7 @@ module Bioshogi
         skill_monitor_technique_enable: false,
         candidate_skip: false,
         validate_skip: false,
+        board_class: Board,
       }
     end
 
@@ -26,7 +27,7 @@ module Bioshogi
     end
 
     def board
-      @board ||= Board.new
+      @board ||= params[:board_class].new
     end
 
     def one_place_map
