@@ -40,6 +40,13 @@ module Bioshogi
       #   end
       # end
 
+      # 毎回呼ぶやつ
+      TacticInfo.every_time_proc_list.each do |e|
+        walk_counts[e.key] += 1
+        if instance_exec(e, &e.every_time_proc)
+          skill_push(e)
+        end
+      end
     end
 
     private
@@ -48,9 +55,13 @@ module Bioshogi
       catch :skip do
         list = player.skill_set.list_of(e)
         yield list
-        player.skill_set.list_push(e) # プレイヤーの個別設定
-        executor.skill_set.list_push(e) # executor の方にも設定(これいる？)
+        skill_push(e)
       end
+    end
+
+    def skill_push(skill)
+      player.skill_set.list_push(skill)   # プレイヤーの個別設定
+      executor.skill_set.list_push(skill) # executor の方にも設定(これいる？)
     end
 
     def execute_one(e)

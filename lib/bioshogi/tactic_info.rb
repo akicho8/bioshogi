@@ -78,9 +78,15 @@ module Bioshogi
         end
       end
 
-      def piece_box_added_func_table
-        @piece_box_added_func_table ||= all_elements.find_all do |e|
-          e.respond_to?(:piece_box_added_trigger) && e.piece_box_added_trigger
+      def piece_box_added_proc_list
+        @piece_box_added_proc_list ||= all_elements.find_all do |e|
+          e.respond_to?(:piece_box_added_proc) && e.piece_box_added_proc
+        end
+      end
+
+      def every_time_proc_list
+        @every_time_proc_list ||= all_elements.find_all do |e|
+          e.respond_to?(:every_time_proc) && e.every_time_proc
         end
       end
     end

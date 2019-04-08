@@ -23,6 +23,7 @@ module Bioshogi
         end
 
         surface[soldier.place] = soldier
+
         soldier_counts_surface[[soldier.location.key, soldier.piece.key]] += 1 # soldier.piece.stronger をキーにすると速くなるかも？
       end
 
@@ -88,7 +89,6 @@ module Bioshogi
       end
 
       def assert_cell_blank(place)
-
         if surface.has_key?(place)
           raise PieceAlredyExist, "空のはずの#{place}に駒があります\n#{self}"
         end
@@ -175,7 +175,7 @@ module Bioshogi
     concerning :TechniqueMatcherMethods do
       # 180度回転した盤面を返す
       def flip
-         self.class.new.tap do |board|
+        self.class.new.tap do |board|
           surface.values.each do |e|
             board.place_on(e.flip)
           end
@@ -184,7 +184,7 @@ module Bioshogi
 
       # X軸のみを反転した盤面を返す
       def horizontal_flip
-         self.class.new.tap do |board|
+        self.class.new.tap do |board|
           surface.values.each do |e|
             board.place_on(e.horizontal_flip)
           end
@@ -229,6 +229,46 @@ module Bioshogi
         PresetInfo.find do |e|
           e.location_split[:black] == black_only_soldiers
         end
+      end
+    end
+
+    # 駒柱用
+    concerning :PillerMethods do
+      def place_on(soldier, **options)
+        super
+
+        c = (piller_counts[soldier.place.x] += 1)
+        raise Dimension::Yplace.dimension if c > Dimension::Yplace.dimension
+        @piece_piller_p = c >= Dimension::Yplace.dimension
+      end
+
+      # 駒柱ができているか？
+      def piece_piller?
+        # piller_counts.each_value.any? { |c| c >= Dimension::Yplace.dimension } # O(n) になるので使いたくない
+        @piece_piller_p
+      end
+
+      def all_clear
+        super
+
+        piller_counts.clear
+        @piece_piller_p = false
+      end
+
+      def safe_delete_on(*)
+        super.tap do |soldier|
+          if soldier
+            c = (piller_counts[soldier.place.x] -= 1)
+            raise if c.negative?
+            @piece_piller_p = c >= Dimension::Yplace.dimension
+          end
+        end
+      end
+
+      private
+
+      def piller_counts
+        @piller_counts ||= Hash.new(0)
       end
     end
   end

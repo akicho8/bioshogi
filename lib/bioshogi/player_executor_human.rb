@@ -14,8 +14,8 @@ module Bioshogi
       mediator.kill_counter += 1
 
       if perform_skill_monitor_enable?
-        TacticInfo.piece_box_added_func_table.each do |e|
-          if instance_exec(e, captured_soldier, &e.piece_box_added_trigger)
+        TacticInfo.piece_box_added_proc_list.each do |e|
+          if instance_exec(e, captured_soldier, &e.piece_box_added_proc)
             player.skill_set.list_push(e)
             skill_set.list_push(e)
           end
