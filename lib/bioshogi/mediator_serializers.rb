@@ -46,18 +46,18 @@ module Bioshogi
       def to_csa(**options)
         s = []
 
-        preset_key = board.preset_key
+        preset_info = board.preset_info
 
-        if preset_key
+        if preset_info
           unless options[:oneline]
-            s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_key}" + "\n"
+            s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_info.name}" + "\n"
           end
         end
 
         if options[:board_expansion]
           s << board.to_csa
         else
-          if preset_key == :"平手"
+          if preset_info&.key == :"平手"
             s << "PI" + "\n"
           else
             s << board.to_csa
@@ -91,7 +91,9 @@ module Bioshogi
 
       # 平手で開始する直前の状態か？
       def startpos?
-        board.preset_key == :"平手" && players.all? { |e| e.piece_box.empty? }
+        if e = board.preset_info
+          e.key == :"平手" && players.all? { |e| e.piece_box.empty? }
+        end
       end
 
       # 現在の局面

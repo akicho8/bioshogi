@@ -177,15 +177,24 @@ module Bioshogi
             return v
           end
 
-          if @board_source
-            mediator = Mediator.new
-            mediator.board.placement_from_shape(@board_source)
-            if mediator.board.preset_key != :"平手"
+          if e = board_preset_info
+            if e.key != :"平手"
               return true
             end
           end
 
           false
+        end
+
+        # 盤面の指定があるとき、盤面だけを見て、手合割を得る
+        def board_preset_info
+          @board_preset_info ||= -> {
+            if @board_source
+              mediator = Mediator.new
+              mediator.board.placement_from_shape(@board_source)
+              mediator.board.preset_info
+            end
+          }.call
         end
 
         # names_set(black: "alice", white: "bob")
@@ -235,56 +244,62 @@ module Bioshogi
             end
 
             if ENV["WARABI_ENV"] != "test"
+
               # 1. 最初に設定
               # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
-              mediator.players.each do |player|
-                if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
-                  !player.skill_set.list_push(NoteInfo["居飛車"])
-                end
-              end
-
-              if true
-                # 両方居飛車なら相居飛車
-                if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
+              if board_preset_info
+                if board_preset_info.special_piece
                   mediator.players.each do |player|
-                    player.skill_set.list_push(NoteInfo["相居飛車"])
+                    if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
+                      !player.skill_set.list_push(NoteInfo["居飛車"])
+                    end
+                  end
+
+                  if true
+                    # 両方居飛車なら相居飛車
+                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
+                      mediator.players.each do |player|
+                        player.skill_set.list_push(NoteInfo["相居飛車"])
+                      end
+                    end
+
+                    # 両方振り飛車なら相振り
+                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      mediator.players.each do |player|
+                        player.skill_set.list_push(NoteInfo["相振り"])
+                      end
+                    end
+
+                    # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+                    if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      others = mediator.players - [player]
+                      if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                        others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
+                        mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
+                      end
+                    end
                   end
                 end
 
-                # 両方振り飛車なら相振り
-                if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                  mediator.players.each do |player|
-                    player.skill_set.list_push(NoteInfo["相振り"])
-                  end
-                end
+                # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
+                #   mediator.players.each do |player|
+                #     player.skill_set.list_push(NoteInfo["相振り飛車"])
+                #   end
+                # end
 
-                # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-                if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                  others = mediator.players - [player]
-                  if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                    others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
-                    mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
-                  end
-                end
-              end
-
-              # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
-              #   mediator.players.each do |player|
-              #     player.skill_set.list_push(NoteInfo["相振り飛車"])
-              #   end
-              # end
-
-              if true
-                # 居玉チェック
-                mediator.players.each do |e|
-                  if e.king_moved_counter.zero?
-                    e.skill_set.list_push(NoteInfo["居玉"])
-                  end
-                end
-
-                if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                if true
+                  # どれかの手合割に該当すれば玉は定位置から始まっていることがかある
+                  # 居玉チェック
                   mediator.players.each do |e|
-                    e.skill_set.list_push(NoteInfo["相居玉"])
+                    if e.king_moved_counter.zero?
+                      e.skill_set.list_push(NoteInfo["居玉"])
+                    end
+                  end
+
+                  if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                    mediator.players.each do |e|
+                      e.skill_set.list_push(NoteInfo["相居玉"])
+                    end
                   end
                 end
               end
@@ -354,8 +369,8 @@ module Bioshogi
           obj = Mediator.new
           board_setup(obj)
 
-          if v = obj.board.preset_key
-            header["手合割"] = v.to_s
+          if e = obj.board.preset_info
+            header["手合割"] = e.name
 
             # 手合割がわかるとき持駒が空なら消す
             Location.each do |e|

@@ -35,7 +35,7 @@ module Bioshogi
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_key == :"香落ち" }
+      assert { mediator.board.preset_info&.key == :"香落ち" }
     end
 
     it "▲は平手状態だけど△は不明" do
@@ -54,7 +54,7 @@ mediator.board.placement_from_shape(<<~EOT)
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_key == nil }
+      assert { mediator.board.preset_info&.key == nil }
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
@@ -73,7 +73,7 @@ EOT
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_key == nil }
+      assert { mediator.board.preset_info&.key == nil }
     end
 
     it "to_board" do

@@ -2,7 +2,7 @@ require "./example_helper"
 
 mediator = Mediator.new
 mediator.placement_from_preset("裸玉")
-mediator.board.preset_key    # => :十九枚落ち
+mediator.board.preset_info&.key    # => :十九枚落ち
 puts mediator.board.to_ki2
 puts mediator.board.to_kif
 puts mediator.board.to_csa

@@ -16,7 +16,7 @@ mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.preset_key        # => "香落ち"
+mediator.board.preset_info&.key        # => "香落ち"
 
 mediator = Mediator.new
 mediator.board.placement_from_shape(<<~EOT)
@@ -34,7 +34,7 @@ mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
 EOT
 puts mediator
-mediator.board.preset_key        # => nil
+mediator.board.preset_info&.key        # => nil
 # >> 1手目: ▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

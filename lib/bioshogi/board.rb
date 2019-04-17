@@ -194,20 +194,13 @@ module Bioshogi
 
     concerning :PresetMethods do
       # ▲が平手であることが条件
-      def preset_key
-        if preset_key_by_location(:black) == :"平手"
-          preset_key_by_location(:white)
+      def preset_info
+        if preset_info_by_location(:black)&.key == :"平手"
+          preset_info_by_location(:white)
         end
       end
 
       private
-
-      # location 側の手合割を文字列で得る
-      def preset_key_by_location(location)
-        if e = preset_info_by_location(location)
-          e.key
-        end
-      end
 
       # location 側の手合割情報を得る
       def preset_info_by_location(location)
