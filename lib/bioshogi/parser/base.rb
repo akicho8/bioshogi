@@ -55,6 +55,8 @@ module Bioshogi
 
           validate_skip: false,           # 将棋ウォーズの棋譜なら指定すると少し速くなる
           candidate_skip: false, # ki2にしないのであれば指定するとかなり速くなる
+
+          support_for_piyo_shogi_v4_1_5: false, # ぴよ将棋でKIFが読めるようにする
         }
       end
 
@@ -415,7 +417,14 @@ module Bioshogi
         end
 
         def raw_header_part_string
-          raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
+          s = raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
+
+          if @parser_options[:support_for_piyo_shogi_v4_1_5]
+            s = s.gsub(/(の持駒：.*)$/, '\1 ')
+          end
+
+          s
+
         end
 
         # mb_ljust("あ", 3)               # => "あ "
