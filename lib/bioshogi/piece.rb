@@ -18,7 +18,7 @@ module Bioshogi
 
         # Piece.s_to_h("飛0 角 竜1 馬2 龍2") # => {:rook=>3, :bishop=>3}
         def s_to_h(str)
-          str = str.tr("〇一二三四五六七八九", "0-9")
+          str = KanjiNumber.kanji_to_number_string(str)
           str = str.remove(/\p{blank}/)
           str.scan(/(#{Piece.all_names.join("|")})(\d+)?/o).inject({}) do |a, (piece, count)|
             piece = Piece.fetch(piece)
@@ -48,8 +48,8 @@ module Bioshogi
 
           hash.map { |piece, count|
             raise MustNotHappen if count < 0
-            if count > 1
-              count = count.to_s.tr("0-9", "〇一二三四五六七八九")
+            if count >= 2
+              count = KanjiNumber.integer_to_kanji(count)
             else
               count = ""
             end

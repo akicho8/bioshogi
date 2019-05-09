@@ -7,15 +7,12 @@ Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
 Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
 Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
 
-tp Piece["飛"].to_h
-# >> |----------------+------|
-# >> |            key | rook |
-# >> |           name | 飛   |
-# >> |    basic_alias |      |
-# >> |  promoted_name | 龍   |
-# >> | promoted_alias | 竜   |
-# >> |      sfen_char | R    |
-# >> |     promotable | true |
-# >> |   always_alive | true |
-# >> |           code | 1    |
-# >> |----------------+------|
+Piece.s_to_h("歩")              # => {:pawn=>1}
+Piece.s_to_h("歩〇")            # => {:pawn=>0}
+Piece.s_to_h("歩一")            # => {:pawn=>1}
+Piece.s_to_h("歩十〇")          # => {:pawn=>10}
+Piece.s_to_h("歩十")            # => {:pawn=>10}
+Piece.s_to_h("歩十一")          # => {:pawn=>11}
+Piece.s_to_h("歩二十一")        # => {:pawn=>21}
+
+Piece["飛"].to_h

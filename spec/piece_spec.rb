@@ -14,6 +14,16 @@ module Bioshogi
       assert { Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") == {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}} }
     end
 
+    it "漢数字" do
+      assert { Piece.s_to_h("歩")       == { :pawn => 1  } }
+      assert { Piece.s_to_h("歩〇")     == { :pawn => 0  } }
+      assert { Piece.s_to_h("歩一")     == { :pawn => 1  } }
+      assert { Piece.s_to_h("歩十〇")   == { :pawn => 10 } }
+      assert { Piece.s_to_h("歩十")     == { :pawn => 10 } }
+      assert { Piece.s_to_h("歩十一")   == { :pawn => 11 } }
+      assert { Piece.s_to_h("歩二十一") == { :pawn => 21 } }
+    end
+
     it "s_to_a" do
       assert { Piece.s_to_a("歩2 飛")           == @pieces }
       assert { Piece.s_to_a("歩歩 龍")          == @pieces }
