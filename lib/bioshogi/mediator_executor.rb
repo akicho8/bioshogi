@@ -9,6 +9,7 @@ module Bioshogi
       end
 
       attr_writer :kill_counter
+      attr_accessor :critical_turn
 
       def kill_counter
         @kill_counter ||= 0

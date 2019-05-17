@@ -103,5 +103,14 @@ EOT
         end
       end
     end
+
+    it "開戦前の手数を得る" do
+      info = Mediator.start
+      info.execute("26歩")
+      info.execute("24歩")
+      info.execute("25歩")
+      info.execute("25歩")
+      assert { info.critical_turn == 3 }
+    end
   end
 end
