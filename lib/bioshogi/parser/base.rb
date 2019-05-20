@@ -219,7 +219,7 @@ module Bioshogi
               if @parser_options[:callback]
                 @parser_options[:callback].call(mediator)
               end
-              if @parser_options[:turn_limit] && mediator.turn_info.turn_max > @parser_options[:turn_limit]
+              if @parser_options[:turn_limit] && mediator.turn_info.turn_max >= @parser_options[:turn_limit]
                 break
               end
               mediator.execute(info[:input])
