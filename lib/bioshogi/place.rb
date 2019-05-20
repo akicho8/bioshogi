@@ -44,6 +44,10 @@ module Bioshogi
           a, b = value.chars
           x = Dimension::Xplace.lookup(a)
           y = Dimension::Yplace.lookup(b)
+        else
+          if respond_to?(:to_a)
+            return lookup(value.to_a)
+          end
         end
 
         if x && y

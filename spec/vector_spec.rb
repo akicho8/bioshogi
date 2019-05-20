@@ -1,9 +1,9 @@
 require_relative "spec_helper"
 
 module Bioshogi
-  describe Vector do
+  describe Pvec do
     it do
-      assert { Vector[1, 2].flip_sign == Vector[-1, -2] }
+      assert { Pvec[1, 2].flip_sign == Pvec[-1, -2] }
     end
   end
 end

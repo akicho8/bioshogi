@@ -5,7 +5,7 @@
 #
 
 module Bioshogi
-  class Vector < Array
+  class Pvec < Array
     def flip_sign
       x, y = self
       self.class[-x, -y]
@@ -13,14 +13,14 @@ module Bioshogi
   end
 
   # 銀桂などの1回進む駒用
-  class OnceVector < Vector
+  class OnceVector < Pvec
     def inspect
       "OV#{super}"
     end
   end
 
   # 飛香などの連続して進む駒用
-  class RepeatVector < Vector
+  class RepeatVector < Pvec
     def inspect
       "RV#{super}"
     end

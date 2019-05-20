@@ -105,6 +105,7 @@ require_relative "bioshogi/board_place_score"
 require_relative "bioshogi/board_advance_score"
 require_relative "bioshogi/evaluator"
 
+require_relative "bioshogi/gazo_formater"
 require_relative "bioshogi/parser"
 
 require_relative "bioshogi/sfen"
