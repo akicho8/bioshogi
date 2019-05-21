@@ -142,7 +142,7 @@ module Bioshogi
       end
 
       def to_kif
-        KakikiBoardFormater.new(self).to_s
+        KakikiBoardFormatter.new(self).to_s
       end
 
       def to_ki2
@@ -150,7 +150,7 @@ module Bioshogi
       end
 
       def to_csa
-        CsaBoardFormater.new(self).to_s
+        CsaBoardFormatter.new(self).to_s
       end
 
       def to_s

@@ -13,7 +13,7 @@ module Bioshogi
       #   end
       #
       def dimensiton_change(wsize, &block)
-        save_value = [Xplace.dimension, Yplace.dimension]
+        save_value = dimension_wh
         h, v = wsize
         Xplace.board_size_reset(h)
         Yplace.board_size_reset(v)
@@ -34,11 +34,14 @@ module Bioshogi
       # かなりやっつけの仮
       # FIXME: 最適化
       def size_type
-        key = [Xplace.dimension, Yplace.dimension]
         {
           [5, 5] => :x55,
           [9, 9] => :board_size_9x9,
-        }[key]
+        }[dimension_wh]
+      end
+
+      def dimension_wh
+        [Xplace.dimension, Yplace.dimension]
       end
 
       # 一時的に成れない状況にする

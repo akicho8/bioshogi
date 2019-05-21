@@ -10,7 +10,7 @@ module Bioshogi
   # P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
   # P8 * +KA *  *  *  *  * +HI *
   # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-  class CsaBoardFormater
+  class CsaBoardFormatter
     def initialize(board)
       @board = board
     end

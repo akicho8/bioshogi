@@ -10,7 +10,7 @@ require_relative "ki2_formatter"
 require_relative "csa_formatter"
 require_relative "usi_formatter"
 require_relative "bod_formatter"
-require_relative "img_formatter"
+require_relative "png_formatter"
 
 module Bioshogi
   module Parser
@@ -121,7 +121,7 @@ module Bioshogi
         include CsaFormatter
         include UsiFormatter
         include BodFormatter
-        include ImgFormatter
+        include PngFormatter
 
         def mediator_run
           mediator

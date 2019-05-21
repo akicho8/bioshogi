@@ -12,8 +12,8 @@ module Bioshogi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      {key: :black, name: "▲", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1 },
-      {key: :white, name: "△", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1 },
+      {key: :black, name: "▲", hexagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1 },
+      {key: :white, name: "△", hexagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1 },
     ]
 
     class << self
@@ -91,6 +91,7 @@ module Bioshogi
         key,
         mark,
         flip_mark,
+        hexagon_mark,
         other_match_chars,
         to_sfen,
         name,
@@ -100,7 +101,7 @@ module Bioshogi
         csa_sign,
         equality_name,
         handicap_name,
-      ].flatten.to_set
+      ].flatten.compact.to_set
     end
 
     # HTMLにするとき楽なように後手なら transform: rotate(180deg) を返す
