@@ -636,3 +636,7 @@ Web Page：(Web Page)
    - CC Resources for Shogi Applications | 将棋アプリ用クリエイティブコモンズ画像 http://mucho.girly.jp/bona/
    - 将棋所：USIプロトコルとは http://www.geocities.jp/shogidokoro/usi.html
    - CSA標準棋譜ファイル形式 http://www.computer-shogi.org/protocol/record_v22.html
+
+** ライセンス
+
+   - Ricty Diminished https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
