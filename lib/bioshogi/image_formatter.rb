@@ -29,7 +29,7 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         # required
-        width: 1600,                   # 画像横幅
+        width: 1200,                   # 画像横幅
         height: 630,                   # 画像縦幅
         board_rate: 0.96,              # 縦横幅の小さい方に対する盤の寸法の割合
         font_size: 0.6,                # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
