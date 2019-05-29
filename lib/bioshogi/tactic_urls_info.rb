@@ -571,6 +571,11 @@ module Bioshogi
         ],
       },
       {
+        key: "相筋違い角",
+        urls: [
+        ],
+      },
+      {
         key: "木村定跡",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-157.html",
