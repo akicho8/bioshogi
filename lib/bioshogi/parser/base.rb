@@ -194,11 +194,21 @@ module Bioshogi
         def board_preset_info
           @board_preset_info ||= -> {
             if @board_source
-              mediator = Mediator.new
-              mediator.board.placement_from_shape(@board_source)
-              mediator.board.preset_info
+              # mediator = Mediator.new
+              # mediator.board.placement_from_shape(@board_source)
+              # mediator.board.preset_info
+
+              board = Board.new
+              board.placement_from_shape(@board_source)
+              board.preset_info
+
             end
           }.call
+        end
+
+        # 手合割
+        def preset_info
+          @preset_info ||= board_preset_info || PresetInfo.fetch(header["手合割"] || "平手")
         end
 
         # names_set(black: "alice", white: "bob")
@@ -250,8 +260,8 @@ module Bioshogi
             if ENV["WARABI_ENV"] != "test"
               # 1. 最初に設定
               # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
-              if board_preset_info
-                if board_preset_info.special_piece
+              if preset_info
+                if preset_info.special_piece
                   mediator.players.each do |player|
                     if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
                       !player.skill_set.list_push(NoteInfo["居飛車"])
