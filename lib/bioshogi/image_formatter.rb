@@ -32,10 +32,10 @@ module Bioshogi
         width: 1200,                   # 画像横幅
         height: 630,                   # 画像縦幅
         board_rate: 0.96,              # 縦横幅の小さい方に対する盤の寸法の割合
-        font_size: 0.6,                # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
+        font_size: 0.75,               # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
         stand_piece_line_height: 0.95, # 持駒と持駒の間隔割合
         stand_piece_count_gap: 0.6,    # 持駒と駒数の間隔の割合
-        piece_pull_rate: 0.1,          # 盤上の位置を下げる割合
+        piece_pull_rate: 0.025,        # 盤上の位置を下げる割合
         star_size: 0.03,               # 星のサイズ(割合)
         canvas_color: "white",         # 下地の色(必須)
         piece_color: "black",          # 駒の色(必須)
