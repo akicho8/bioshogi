@@ -27,7 +27,7 @@ EOT
 
 hand_logs = parser.mediator.hand_logs
 hand_logs.each do |e|
-  p e.to_ki2(place_format: :hankaku_number, separator: " ", same_suffix: " ", compact_if_gt: 5)
+  p e.to_ki2(place_format: :hankaku_number, separator: " ", same_suffix: " ")
 end
 # >> "26 歩"
 # >> "34 歩"

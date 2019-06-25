@@ -11,7 +11,7 @@ module Bioshogi
         force_drop: false,    # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",      # 「同」の後に入れる文字列
         separator: "",        # "34歩" を "34 歩" のようにしたいときの隙間文字列
-        compact_if_gt: 4,     # 4文字以上なら空白除去
+        compact_if_gt: 7,     # 半角7文字幅以上なら空白除去
         place_format: :name,  # name は "3四" で zenkaku_number は "３４" で hankaku_number なら "34"
       }.merge(options)
 
@@ -106,7 +106,7 @@ module Bioshogi
     # 3文字以上なら空白を詰める
     def str_compact(str)
       if v = @options[:compact_if_gt]
-        if str.size >= v
+        if str.encode("EUC-JP").bytesize >= v
           str = str.remove(/\p{blank}/)
         end
       end
