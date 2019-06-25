@@ -97,10 +97,14 @@ module Bioshogi
 
     def name
       if valid?
-        to_a.collect(&:name).join
+        to_a.collect { |e| e.name }.join
       else
         "盤外"
       end
+    end
+
+    def zenkaku_number
+      to_a.collect(&:zenkaku_number).join
     end
 
     def yomiage
@@ -111,8 +115,8 @@ module Bioshogi
       name
     end
 
-    def number_format
-      to_a.collect(&:number_format).join
+    def hankaku_number
+      to_a.collect(&:hankaku_number).join
     end
 
     def to_sfen

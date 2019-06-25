@@ -45,8 +45,8 @@ module Bioshogi
       assert { Place.fetch("４三").to_s == "４三" }
     end
 
-    it "#number_format は ７六歩(77) の 77 の部分を作るときに使う" do
-      assert Place.fetch("４三").number_format == "43"
+    it "#hankaku_number は ７六歩(77) の 77 の部分を作るときに使う" do
+      assert Place.fetch("４三").hankaku_number == "43"
     end
 
     it "相手陣地に入っているか？" do

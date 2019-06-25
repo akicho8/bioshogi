@@ -344,7 +344,7 @@ module Bioshogi
       [
         soldier.location.csa_sign,
         "00",
-        soldier.place.number_format,
+        soldier.place.hankaku_number,
         soldier.to_csa,
       ].join
     end
@@ -403,15 +403,15 @@ module Bioshogi
         soldier.place.name,
         origin_soldier.any_name,
         promote_trigger? ? "成" : "",
-        "(", origin_soldier.place.number_format, ")",
+        "(", origin_soldier.place.hankaku_number, ")",
       ].join
     end
 
     def to_csa(**options)
       [
         soldier.location.csa_sign,
-        origin_soldier.place.number_format,
-        soldier.place.number_format,
+        origin_soldier.place.hankaku_number,
+        soldier.place.hankaku_number,
         soldier.to_csa,
       ].join
     end

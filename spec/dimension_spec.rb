@@ -47,11 +47,11 @@ module Bioshogi
     end
 
     it "数字表記" do
-      assert { Dimension::Yplace.fetch("一").number_format == "1" }
+      assert { Dimension::Yplace.fetch("一").hankaku_number == "1" }
     end
 
     it "全角数字表記" do
-      assert Dimension::Yplace.fetch("９").number_format == "9"
+      assert Dimension::Yplace.fetch("９").hankaku_number == "9"
     end
 
     it "成れるか？" do

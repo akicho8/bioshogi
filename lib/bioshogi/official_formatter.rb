@@ -11,6 +11,7 @@ module Bioshogi
         force_drop: false,    # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",      # 「同」の後に入れる文字列
         compact: true,        # 3文字を超えたらとき空白が含まれていれば詰める？
+        place_format: :name,  # name は "3四" で zenkaku_number は "３４" で hankaku_number なら "34"
       }.merge(options)
 
       @hand_log = hand_log
@@ -383,7 +384,7 @@ module Bioshogi
     end
 
     def place_name
-      place_to.name
+      place_to.public_send(@options[:place_format])
     end
 
     def soldier_name

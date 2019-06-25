@@ -121,12 +121,16 @@ module Bioshogi
         self.class.units[@value]
       end
 
-      def number_format
+      def hankaku_number
+        name
+      end
+
+      def zenkaku_number
         name
       end
 
       def yomiage
-        YomiageNumberInfo.fetch(number_format).yomiage
+        YomiageNumberInfo.fetch(hankaku_number).yomiage
       end
 
       def to_sfen
@@ -185,7 +189,7 @@ module Bioshogi
         super
       end
 
-      def number_format
+      def hankaku_number
         name.tr("１-９", "1-9")
       end
 
@@ -207,8 +211,12 @@ module Bioshogi
         super
       end
 
-      def number_format
+      def hankaku_number
         super.tr(_units, "1-9") # 文字コード順ではないため "一-九" とは書けない
+      end
+
+      def zenkaku_number
+        super.tr(_units, "１-９")
       end
 
       def to_sfen

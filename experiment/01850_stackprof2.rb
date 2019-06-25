@@ -72,7 +72,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::Xplace.lookup"
 # >>         88  (10.6%)           6   (0.7%)     Bioshogi::Dimension::Xplace.lookup
 # >>          6   (0.7%)           6   (0.7%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
 # >>          5   (0.6%)           5   (0.6%)     Bioshogi::Piece::NameMethods::ClassMethods#all_names
-# >>          6   (0.7%)           5   (0.6%)     Bioshogi::Dimension::Xplace#number_format
+# >>          6   (0.7%)           5   (0.6%)     Bioshogi::Dimension::Xplace#hankaku_number
 # >>         12   (1.4%)           5   (0.6%)     Bioshogi::Dimension::Base#valid?
 # >> Bioshogi::Dimension::Xplace.lookup (/Users/ikeda/src/bioshogi/lib/bioshogi/dimension.rb:178)
 # >>   samples:     6 self (0.7%)  /     88 total (10.6%)
