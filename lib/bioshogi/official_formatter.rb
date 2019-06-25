@@ -10,7 +10,8 @@ module Bioshogi
         with_location: false, # 先手後手のマークを入れる？
         force_drop: false,    # 「打」を省略できるときでも「打」を明示する？
         same_suffix: "",      # 「同」の後に入れる文字列
-        compact: true,        # 3文字を超えたらとき空白が含まれていれば詰める？
+        separator: "",        # "34歩" を "34 歩" のようにしたいときの隙間文字列
+        compact_if_gt: 4,     # 4文字以上なら空白除去
         place_format: :name,  # name は "3四" で zenkaku_number は "３４" で hankaku_number なら "34"
       }.merge(options)
 
@@ -28,6 +29,7 @@ module Bioshogi
         s << kw("同") + @options[:same_suffix]
       else
         s << place_name
+        s << @options[:separator]
       end
 
       if drop_trigger?
@@ -103,8 +105,8 @@ module Bioshogi
 
     # 3文字以上なら空白を詰める
     def str_compact(str)
-      if @options[:compact]
-        if str.size > 3
+      if v = @options[:compact_if_gt]
+        if str.size >= v
           str = str.remove(/\p{blank}/)
         end
       end
