@@ -222,7 +222,7 @@ module Bioshogi
         def mediator_run_all(mediator)
           # FIXME: ここらへんは mediator のなかで実行する
           begin
-            move_infos.each do |info|
+            move_infos.each.with_index do |info, i|
               if @parser_options[:debug]
                 p mediator
               end
@@ -232,7 +232,8 @@ module Bioshogi
               if @parser_options[:turn_limit] && mediator.turn_info.turn_max >= @parser_options[:turn_limit]
                 break
               end
-              mediator.execute(info[:input])
+
+              mediator.execute(info[:input], used_seconds: used_seconds_at(i))
             end
           rescue CommonError => error
             if v = @parser_options[:typical_error_case]

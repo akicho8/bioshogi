@@ -126,6 +126,12 @@ module Bioshogi
       end
     end
 
+    concerning :SingleClockMethods do
+      def single_clock
+        @single_clock ||= ChessClock::SingleClock.new
+      end
+    end
+
     concerning :BrainMethods do
       def evaluator(**options)
         (options[:evaluator_class] || EvaluatorBase).new(self, options)
