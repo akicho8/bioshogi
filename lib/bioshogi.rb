@@ -112,3 +112,4 @@ require_relative "bioshogi/sfen"
 require_relative "bioshogi/usi"
 
 require_relative "bioshogi/kifu_format_info"
+require_relative "bioshogi/chess_clock"

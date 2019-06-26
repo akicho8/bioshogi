@@ -1,5 +1,3 @@
-require_relative "chess_clock"
-
 module Bioshogi
   module Parser
     concern :KifFormatter do
