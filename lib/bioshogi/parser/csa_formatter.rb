@@ -99,7 +99,7 @@ module Bioshogi
         else
           out += "\n"
 
-          if ENV["WARABI_ENV"] == "test"
+          if ENV["BIOSHOGI_ENV"] == "test"
             out = out.gsub(/\s+\n/, "\n")
           end
         end

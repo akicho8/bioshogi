@@ -4,7 +4,7 @@
 require "bundler/setup"
 require "bioshogi"
 
-ENV["WARABI_ENV"] = "test"
+ENV["BIOSHOGI_ENV"] = "test"
 
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)

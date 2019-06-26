@@ -257,7 +257,7 @@ module Bioshogi
               end
             end
 
-            if ENV["WARABI_ENV"] != "test"
+            if ENV["BIOSHOGI_ENV"] != "test"
               # 1. 最初に設定
               # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
               if preset_info
