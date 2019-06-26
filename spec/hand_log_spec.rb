@@ -45,5 +45,18 @@ module Bioshogi
       mediator.execute("同成銀")
       assert { mediator.hand_logs.last.yomiage }
     end
+
+    it "時間が指し手に結び付いている" do
+      parser = Parser.parse(<<~EOT)
+手数----指手---------消費時間--
+1 ２六歩(27) (00:01/00:00:00)
+2 ３四歩(33) (01:00/00:00:00)
+3 ２五歩(26) (00:02/00:00:00)
+4 ３三角(22) (02:00/00:00:00)
+5 ７六歩(77) (00:03/00:00:00)
+6 ４二銀(31) (03:00/00:00:00)
+      EOT
+      assert { parser.mediator.hand_logs.last.personal_clock.to_s == "(03:00/00:06:00)" }
+    end
   end
 end
