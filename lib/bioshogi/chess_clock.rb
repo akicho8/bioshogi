@@ -3,42 +3,42 @@
 module Bioshogi
   class ChessClock
     def initialize
-      @single_clocks = Location.inject({}) {|a, e| a.merge(e => SingleClock.new) }
+      @mini_clocks = Location.inject({}) {|a, e| a.merge(e => PersonalClock.new) }
       @counter = 0
     end
 
     def add(v)
-      @single_clocks[Location[@counter]].add(v)
+      @mini_clocks[Location[@counter]].add(v)
       @counter += 1
     end
 
     def last_clock
-      @single_clocks[Location[@counter.pred]]
+      @mini_clocks[Location[@counter.pred]]
     end
 
     def to_s
       last_clock.to_s
     end
 
-    class SingleClock
-      attr_reader :total
-      attr_reader :used
+    class PersonalClock
+      attr_reader :total_seconds
+      attr_reader :used_seconds
 
       def initialize
-        @total = 0
-        @used = 0
+        @total_seconds = 0
+        @used_seconds = 0
       end
 
       def add(v)
         v = v.to_i
-        @total += v
-        @used = v
+        @total_seconds += v
+        @used_seconds = v
       end
 
       def to_s
-        h, r = @total.divmod(1.hour)
+        h, r = @total_seconds.divmod(1.hour)
         m, s = r.divmod(1.minute)
-        "(%02d:%02d/%02d:%02d:%02d)" % [*@used.divmod(1.minute), h, m, s]
+        "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s]
       end
     end
   end

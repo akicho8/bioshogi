@@ -12,8 +12,7 @@ module Bioshogi
     attr_accessor :skill_set
     attr_accessor :handicap
 
-    attr_accessor :used_seconds
-    attr_accessor :total_seconds
+    attr_accessor :personal_clock
 
     def to_kif(**options)
       options = {

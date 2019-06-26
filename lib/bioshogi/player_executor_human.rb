@@ -26,7 +26,7 @@ module Bioshogi
 
     def turn_ended_process
       if v = @params[:used_seconds]
-        player.single_clock.add(v)
+        player.personal_clock.add(v)
       end
 
       mediator.hand_logs << hand_log
@@ -40,14 +40,13 @@ module Bioshogi
 
     def hand_log
       @hand_log ||= HandLog.new({
-          :drop_hand     => @drop_hand,
-          :move_hand     => @move_hand,
-          :candidate     => @candidate_soldiers,
-          :place_same    => place_same?,
-          :skill_set     => skill_set,
-          :handicap      => mediator.turn_info.handicap?,
-          :used_seconds  => player.single_clock.used,
-          :total_seconds => player.single_clock.total,
+          :drop_hand      => @drop_hand,
+          :move_hand      => @move_hand,
+          :candidate      => @candidate_soldiers,
+          :place_same     => place_same?,
+          :skill_set      => skill_set,
+          :handicap       => mediator.turn_info.handicap?,
+          :personal_clock => player.personal_clock.clone.freeze, # 時計の状態を保持して手に結びつける
         }).freeze
     end
 
