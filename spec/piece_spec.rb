@@ -63,15 +63,26 @@ module Bioshogi
 
     it "駒の情報" do
       piece = Piece.lookup("飛")
-      assert piece.name           == "飛"
-      assert piece.promoted_name  == "龍"
-      assert piece.basic_names    == ["飛", "HI", "R", :rook]
-      assert piece.promoted_names == ["龍", "竜", "RY"]
-      assert piece.names          == ["飛", "HI", "R", :rook, "龍", "竜", "RY"]
+      assert { piece.name           == "飛" }
+      assert { piece.promoted_name  == "龍" }
+      assert { piece.basic_names    == ["飛", "HI", "R", :rook] }
+      assert { piece.promoted_names == ["龍", "竜", "RY"] }
+      assert { piece.names          == ["飛", "HI", "R", :rook, "龍", "竜", "RY"] }
       assert { piece.key            == :rook }
       assert { piece.promotable?    == true }
       assert { piece.all_vectors(promoted: false, location: Location[:black]) == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
       assert { piece.all_vectors(promoted: true, location: Location[:black])  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
+    end
+
+    it "KIFやKI2用にオプションで「杏」ではなく「成香」と表記する" do
+      piece = Piece.lookup("香")
+      assert { piece.any_name(true) == "杏" }
+      assert { piece.any_name(true, char_type: :formal_paper) == "成香" }
+    end
+
+    it "昔の表記に対応" do
+      assert { Piece.lookup("仝").name == "香" }
+      assert { Piece.lookup("今").name == "桂" }
     end
 
     it "同じ種類の駒はcloneしても一致する" do

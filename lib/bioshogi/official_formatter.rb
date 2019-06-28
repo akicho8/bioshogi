@@ -7,12 +7,13 @@ module Bioshogi
 
     def initialize(hand_log, **options)
       @options = {
-        with_location: false, # 先手後手のマークを入れる？
-        force_drop: false,    # 「打」を省略できるときでも「打」を明示する？
-        same_suffix: "",      # 「同」の後に入れる文字列
-        separator: "",        # "34歩" を "34 歩" のようにしたいときの隙間文字列
-        compact_if_gt: 7,     # 半角7文字幅以上なら空白除去
-        place_format: :name,  # name は "3四" で zenkaku_number は "３４" で hankaku_number なら "34"
+        with_location: false,     # 先手後手のマークを入れる？
+        force_drop: false,        # 「打」を省略できるときでも「打」を明示する？
+        same_suffix: "",          # 「同」の後に入れる文字列
+        separator: "",            # "34歩" を "34 歩" のようにしたいときの隙間文字列
+        compact_if_gt: 7,         # 半角7文字幅以上なら空白除去
+        place_format: :name,      # name は "3四" で zenkaku_number は "３４" で hankaku_number なら "34"
+        char_type: :formal_paper, # 駒表記を「全」ではなく「成銀」のようにする
       }.merge(options)
 
       @hand_log = hand_log
@@ -390,7 +391,7 @@ module Bioshogi
     end
 
     def soldier_name
-      soldier.any_name
+      soldier.any_name(char_type: @options[:char_type])
     end
 
     def kw(s)

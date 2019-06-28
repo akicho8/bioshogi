@@ -205,16 +205,16 @@ module Bioshogi
       name
     end
 
-    def name
-      location.name + place.name + any_name
+    def name(**options)
+      location.name + place.name + any_name(options)
     end
 
-    def name_without_location
-      place.name + any_name
+    def name_without_location(**options)
+      place.name + any_name(options)
     end
 
-    def any_name
-      piece.any_name(promoted)
+    def any_name(**options)
+      piece.any_name(promoted, options)
     end
 
     def yomiage
@@ -333,9 +333,9 @@ module Bioshogi
       }.merge(options)
 
       if options[:with_location]
-        s = soldier.name
+        s = soldier.name(options)
       else
-        s = soldier.name_without_location
+        s = soldier.name_without_location(options)
       end
       s + "打"
     end
@@ -401,7 +401,7 @@ module Bioshogi
       [
         options[:with_location] ? soldier.location.name : nil,
         soldier.place.name,
-        origin_soldier.any_name,
+        origin_soldier.any_name(options),
         promote_trigger? ? "成" : "",
         "(", origin_soldier.place.hankaku_number, ")",
       ].join
