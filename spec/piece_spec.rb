@@ -77,7 +77,7 @@ module Bioshogi
     it "KIFやKI2用にオプションで「杏」ではなく「成香」と表記する" do
       piece = Piece.lookup("香")
       assert { piece.any_name(true) == "杏" }
-      assert { piece.any_name(true, char_type: :formal_paper) == "成香" }
+      assert { piece.any_name(true, char_type: :formal_sheet) == "成香" }
     end
 
     it "昔の表記に対応" do

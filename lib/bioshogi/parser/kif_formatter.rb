@@ -19,7 +19,7 @@ module Bioshogi
         chess_clock = ChessClock.new
         out << mediator.hand_logs.collect.with_index.collect { |e, i|
           chess_clock.add(used_seconds_at(i))
-          s = "%*d %s %s\n" % [options[:number_width], mediator.initial_state_turn_info.turn_max + i.next, mb_ljust(e.to_kif(char_type: :formal_paper), options[:length]), chess_clock]
+          s = "%*d %s %s\n" % [options[:number_width], mediator.initial_state_turn_info.turn_max + i.next, mb_ljust(e.to_kif(char_type: :formal_sheet), options[:length]), chess_clock]
           if v = e.to_skill_set_kif_comment
             s += v
           end

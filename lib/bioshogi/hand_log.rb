@@ -17,7 +17,7 @@ module Bioshogi
     def to_kif(**options)
       options = {
         with_location: false,
-        char_type: :formal_paper,
+        char_type: :formal_sheet,
       }.merge(options)
 
       hand.to_kif(options)
