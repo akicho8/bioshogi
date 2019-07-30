@@ -2,7 +2,7 @@ require "./example_helper"
 
 rows = TacticInfo.all_elements.collect do |e|
   file = Pathname.glob("#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
-  row = {key: e.key, file: file.to_s}
+  row = { key: e.key, file: file.to_s}
   if file
     str = file.read
     info = Parser.parse(str)

@@ -17,13 +17,13 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         # CSA側               KIF/KI2 形式
-        {key: "N+",           kif_side_key: "先手",     },
-        {key: "N-",           kif_side_key: "後手",     },
-        {key: "$EVENT:",      kif_side_key: "棋戦",     },
-        {key: "$SITE:",       kif_side_key: "場所",     },
-        {key: "$START_TIME:", kif_side_key: "開始日時", },
-        {key: "$END_TIME:",   kif_side_key: "終了日時", },
-        {key: "$OPENING:",    kif_side_key: "戦型",     },
+        { key: "N+",           kif_side_key: "先手",     },
+        { key: "N-",           kif_side_key: "後手",     },
+        { key: "$EVENT:",      kif_side_key: "棋戦",     },
+        { key: "$SITE:",       kif_side_key: "場所",     },
+        { key: "$START_TIME:", kif_side_key: "開始日時", },
+        { key: "$END_TIME:",   kif_side_key: "終了日時", },
+        { key: "$OPENING:",    kif_side_key: "戦型",     },
         {
           key: "$TIME_LIMIT:",
           kif_side_key: "持ち時間",
