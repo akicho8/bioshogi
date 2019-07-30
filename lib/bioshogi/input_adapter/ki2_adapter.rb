@@ -112,7 +112,7 @@ module Bioshogi
           # 真下にあるもの
           if list.size >= 2
             if one_up?
-              y = place.y.value + player.location.which_val(1, -1)
+              y = place.y.value + player.location.which_value(1, -1)
               list = list.find_all { |e|
                 e.place.x == place.x && e.place.y.value == y
               }

@@ -402,7 +402,7 @@ module Bioshogi
       private
 
       def _w(*values)
-        if s = location.which_val(*values)
+        if s = location.which_value(*values)
           if s.kind_of?(String)
             s = kw(s)
           end

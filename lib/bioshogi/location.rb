@@ -53,7 +53,7 @@ module Bioshogi
     end
 
     def call_name(handicap)
-      send(call_name_key(handicap))
+      public_send(call_name_method_name(handicap))
     end
 
     def yomiage(handicap)
@@ -76,7 +76,7 @@ module Bioshogi
       key == :white
     end
 
-    def which_val(a, b)
+    def which_value(a, b)
       black? ? a : b
     end
 
@@ -113,7 +113,7 @@ module Bioshogi
 
     private
 
-    def call_name_key(handicap)
+    def call_name_method_name(handicap)
       if handicap
         :handicap_name
       else
