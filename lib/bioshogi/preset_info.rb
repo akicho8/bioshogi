@@ -3,9 +3,9 @@ module Bioshogi
   class PresetInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "平手",       handicap: false, special_piece: true, },
-      { key: "香落ち",     handicap: true,  special_piece: true, },
-      { key: "右香落ち",   handicap: true,  special_piece: true, },
+      { key: "平手",       handicap: false, special_piece: true,  },
+      { key: "香落ち",     handicap: true,  special_piece: true,  },
+      { key: "右香落ち",   handicap: true,  special_piece: true,  },
       { key: "角落ち",     handicap: true,  special_piece: false, },
       { key: "飛車落ち",   handicap: true,  special_piece: false, },
       { key: "飛香落ち",   handicap: true,  special_piece: false, },
@@ -25,6 +25,7 @@ module Bioshogi
         key = key.gsub(/(.)車/, '\1') # (飛|香)車 -> 飛|香
         key = key.gsub(/飛落/, '飛車落')
         key = key.gsub(/裸玉/, "十九枚落ち")
+        key = key.gsub(/詰将棋/, "平手")
         super
       end
     end

@@ -139,6 +139,14 @@ P-00HI00HI00KA00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00FU00FU00FU00FU00FU00
 %TORYO
 EOT
       end
+
+      it "マイナビのKIFでは手合割に「詰将棋」が指定されている" do
+        info = Parser::KifParser.parse(<<~EOT)
+手合割：詰将棋
+手数----指手---------消費時間--
+EOT
+        assert { info.to_kif }
+      end
     end
 
     # curl -O http://swks.sakura.ne.jp/wars/kifu/akicho8-JackTuti-20130609_201346.kif
