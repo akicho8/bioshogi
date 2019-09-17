@@ -31,8 +31,8 @@ module Bioshogi
       if source.kind_of?(Pathname)
         source = source.expand_path.read
       end
-      s = source.to_s.toutf8 + "\n"    # 最後の行にも必ず改行で終わるようにする
-      s = s.gsub(/\p{blank}*\R/, "\n") # バイナリだとここで死ぬ
+      s = source.to_s.toutf8.rstrip + "\n"
+      s.gsub(/\p{blank}*\R/, "\n") # バイナリだとここで死ぬ
     end
 
     private
