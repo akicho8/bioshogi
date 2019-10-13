@@ -356,6 +356,12 @@ module Bioshogi
         ],
       },
       {
+        key: "裏アヒル囲い",
+        urls: [
+          "https://syougi.qinoa.com/ja/report/other/20160627-ahiru",
+        ],
+      },
+      {
         key: "いちご囲い",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-124.html",
