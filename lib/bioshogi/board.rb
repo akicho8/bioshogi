@@ -116,7 +116,7 @@ module Bioshogi
       def blank_places
         Enumerator.new do |y|
           Place.each do |place|
-            if !surface[place]
+            unless surface[place]
               y << place
             end
           end
