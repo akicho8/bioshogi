@@ -1,4 +1,4 @@
-# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/player_spec.rb" -*-
+# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
 # frozen-string-literal: true
 
 module Bioshogi
@@ -8,9 +8,13 @@ module Bioshogi
 
     delegate :mediator, :board, to: :player
 
+    def self.default_params
+      {}
+    end
+
     def initialize(player, **params)
       @player = player
-      @params = params
+      @params = self.class.default_params.merge(params)
     end
 
     def score
@@ -63,19 +67,30 @@ module Bioshogi
   class EvaluatorAdvance < EvaluatorBase
     private
 
+    def self.default_params
+      {
+        board_advance_score_class: BoardAdvanceScore,
+        board_place_score_class: BoardPlaceScore,
+      }
+    end
+
     def soldier_score(e)
       w = e.relative_weight
 
       key = [e.piece.key, e.promoted].join("_")
       x, y = e.normalized_place.to_xy
 
-      v = BoardPlaceScore.fetch(key)
-      s = v.weight_fields[y][x]
-      w += s
+      if klass = params[:board_place_score_class]
+        v = klass.fetch(key)
+        s = v.weight_fields[y][x]
+        w += s
+      end
 
-      v = BoardAdvanceScore.fetch(key)
-      s = v.weight_list[e.bottom_spaces]
-      w += s
+      if klass = params[:board_advance_score_class]
+        v = klass.fetch(key)
+        s = v.weight_list[e.bottom_spaces]
+        w += s
+      end
 
       w * e.location.value_sign
     end
