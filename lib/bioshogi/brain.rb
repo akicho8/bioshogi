@@ -4,7 +4,7 @@
 require "timeout"
 
 module Bioshogi
-  INF_MAX = 999999              # INF_MAX を使うとおかしくなるので注意
+  INF_MAX = 999999      # Float::INFINITY を使うとおかしくなるので注意
 
   class Brain
     def self.human_format(infos)
@@ -13,7 +13,7 @@ module Bioshogi
           "順位"       => i.next,
           "候補手"     => e[:hand],
           "読み筋"     => e[:best_pv].collect { |e| e.to_s }.join(" "),
-          "▲形勢"     => e[:score2],
+          "▲形勢"     => e[:score2], # 先手視点の評価値
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
         }
@@ -281,8 +281,6 @@ module Bioshogi
       best_pv = []
       best_hand = nil
       children_exist = false
-
-      # p foo
 
       children.each do |hand|
         unless hand.legal_move?(mediator)
