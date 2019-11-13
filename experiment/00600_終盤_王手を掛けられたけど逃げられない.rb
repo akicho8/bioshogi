@@ -24,3 +24,5 @@ Board.dimensiton_change([3, 3]) do
     tp Brain.human_format(records)
   end
 end
+# >> []
+# >> []

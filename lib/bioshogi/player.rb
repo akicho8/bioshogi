@@ -212,9 +212,15 @@ module Bioshogi
         end
       end
 
+      # 相手に対して王手をしている手の取得
+      # Enumerator なので mate_move_hands.first で最初の1件の処理だけになる
+      def mate_move_hands
+        move_hands(promoted_preferred: true, king_captured_only: true)
+      end
+
       # 王手をかけている？
       def mate_advantage?
-        move_hands(promoted_preferred: true, king_captured_only: true).any?
+        mate_move_hands.any?
       end
 
       # 王手をかけられている？

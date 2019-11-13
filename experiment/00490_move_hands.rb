@@ -19,4 +19,5 @@ Board.dimensiton_change([2, 3]) do
   mediator.current_player.legal_all_hands.collect(&:to_s)                       # => ["△２一玉(11)"]
   mediator.current_player.mate_danger?                                          # => false
   mediator.current_player.mate_advantage?                                       # => true
+  mediator.current_player.mate_move_hands.collect(&:to_s)                       # => ["△２三角成(12)"]
 end
