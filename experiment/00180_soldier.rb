@@ -7,9 +7,9 @@ Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name)      #
 Soldier.from_str("６八銀").name rescue $! # => #<Bioshogi::MustNotHappen: location missing>
 
 soldier = Soldier.from_str("△６八銀")
-soldier.name          # => "△６八銀"
-soldier.to_sfen       # => "s"
-soldier.bottom_spaces # => 7
-soldier.normalized_place      # => #<Bioshogi::Place ４二>
+soldier.name             # => "△６八銀"
+soldier.to_sfen          # => "s"
+soldier.bottom_spaces    # => 7
+soldier.normalized_place # => #<Bioshogi::Place ４二>
 
 Marshal.load(Marshal.dump(soldier)) == soldier # => true

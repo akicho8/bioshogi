@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 info = Parser.file_parse("yagura.kif")
 puts info.mediator

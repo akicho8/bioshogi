@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 info = Parser.parse(<<~EOT)
 後手の持駒：なし

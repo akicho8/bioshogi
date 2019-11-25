@@ -1,6 +1,6 @@
-require "./example_helper"
+require "../example_helper"
 
-info = Parser.file_parse("戦型/裏アヒル戦法.kif")
+info = Parser.file_parse("../戦型/裏アヒル戦法.kif")
 puts info.mediator
 puts info.to_kif
 # >> 後手の持駒：なし

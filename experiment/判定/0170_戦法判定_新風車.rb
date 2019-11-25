@@ -1,6 +1,6 @@
-require "./example_helper"
+require "../example_helper"
 
-info = Parser.file_parse("戦型/新風車.ki2", turn_limit: 42)
+info = Parser.file_parse("../戦型/新風車.ki2", turn_limit: 42)
 puts info.mediator
 puts info.to_ki2
 # >> 後手の持駒：なし

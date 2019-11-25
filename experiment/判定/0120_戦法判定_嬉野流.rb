@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 info = Parser.parse("▲６八銀")
 puts info.mediator
@@ -20,10 +20,9 @@ puts info.to_ki2
 # >> 手数＝1 ▲６八銀(79) まで
 # >> 
 # >> 後手番
-# >> 先手の囲い：
-# >> 後手の囲い：
 # >> 先手の戦型：嬉野流
-# >> 後手の戦型：
+# >> 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
+# >> 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
 # >> 手合割：平手
 # >> 
 # >> ▲６八銀
