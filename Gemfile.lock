@@ -81,7 +81,7 @@ GEM
       activesupport
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    zeitwerk (2.2.1)
+    zeitwerk (2.2.2)
 
 PLATFORMS
   ruby

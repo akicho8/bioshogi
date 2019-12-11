@@ -1,4 +1,7 @@
 # frozen-string-literal: true
+#
+# bioshogi versus -n 3
+#
 
 $LOAD_PATH.unshift(File.expand_path("..", __dir__))
 
@@ -8,73 +11,12 @@ require "thor"
 module Bioshogi
   class Cli < Thor
     class_option :debug, type: :boolean
-
-    desc "piece", "駒一覧"
-    def piece
-      tp Piece.collect(&:attributes)
-    end
-
-    desc "versus", "CPU同士の対戦"
-    option :depth_max,   type: :numeric, aliases: "-d", default: 8
-    option :times,       type: :numeric, aliases: "-n", default: 512
-    option :time_limit,  type: :numeric, aliases: "-t", default: 5.0
-    option :round,       type: :numeric, aliases: "-r", default: 1
-    option :logging,     type: :boolean, aliases: "-l", default: false
-    option :log_file,    type: :string,                 default: "brain.log"
-    option :black_diver, type: :string,                 default: "NegaAlphaDiver"
-    option :white_diver, type: :string,                 default: "NegaScoutDiver"
-    def versus
-      if options[:logging]
-        log_file = Pathname(options[:log_file])
-        FileUtils.rm_rf(log_file)
-        Bioshogi.logger = ActiveSupport::Logger.new(log_file)
-      end
-
-      divers = [
-        Bioshogi.const_get(options[:black_diver]),
-        Bioshogi.const_get(options[:white_diver]),
-      ]
-      tp divers
-      pp options
-      tp options
-
-      win_counts = Location.inject({}) { |a, e| a.merge(e.key => 0) }
-
-      options[:round].times do |round|
-        mediator = Mediator.start
-        options[:times].times do
-          current_player = mediator.current_player
-
-          deepen_score_list_params = {
-            time_limit: options[:time_limit],
-            depth_max_range: 0..options[:depth_max],
-          }
-          diver_class = divers[mediator.turn_info.current_location.code]
-          records = current_player.brain(diver_class: diver_class, evaluator_class: EvaluatorAdvance).iterative_deepening(deepen_score_list_params)
-          record = records.first
-          hand = record[:hand]
-          mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
-
-          puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand} (#{diver_class})"
-          tp deepen_score_list_params
-          tp Brain.human_format(records)
-          puts mediator
-          puts
-          puts "#{hand} #{record[:score2]}"
-          puts
-          puts mediator.to_kif_oneline
-
-          captured_soldier = current_player.executor.captured_soldier
-          if captured_soldier && captured_soldier.piece.key == :king
-            win_counts[current_player.location.key] += 1
-            Pathname("win_counts.txt").write(win_counts.inspect)
-            break
-          end
-        end
-      end
-    end
   end
 end
+
+require_relative "cli/piece"
+require_relative "cli/versus"
+require_relative "cli/input_parser"
 
 if $0 == __FILE__
   # Bioshogi::Cli.start(["piece"])
@@ -156,9 +98,9 @@ end
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝1 ▲７六歩(77) まで
-# >> 
+# >>
 # >> 後手番
-# >> 
+# >>
 # >> ▲７六歩(77) 205
-# >> 
+# >>
 # >> ▲７六歩(77)
