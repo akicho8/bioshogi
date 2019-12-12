@@ -11,16 +11,16 @@ require "thor"
 module Bioshogi
   class Cli < Thor
     class_option :debug, type: :boolean
+    class_option :quiet, type: :boolean
   end
 end
 
-require_relative "cli/piece"
-require_relative "cli/versus"
-require_relative "cli/input_parser"
+Pathname(__dir__).glob("cli/*.rb").each do |file|
+  require file
+end
 
 if $0 == __FILE__
-  # Bioshogi::Cli.start(["piece"])
-  Bioshogi::Cli.start(["versus", "-r1", "-n1", "-t3", "-d3"])
+  Bioshogi::Cli.start
 end
 # >> |------------------------|
 # >> | Bioshogi::NegaAlphaDiver |

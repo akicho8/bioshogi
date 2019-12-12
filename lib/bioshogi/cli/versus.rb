@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+# bioshogi versus
 
 if $0 == __FILE__
   require "../cli"
