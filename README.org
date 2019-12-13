@@ -1,7 +1,7 @@
 * 将棋の棋譜相互変換、棋譜から戦術抽出、超弱いAIなどのライブラリ
 
 #+html: <a href="https://travis-ci.org/akicho8/bioshogi"><img src="https://travis-ci.org/akicho8/bioshogi.svg?branch=master" /></a>
-#+html: <a href="https://codeclimate.com/github/akicho8/bioshogi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>  
+#+html: <a href="https://codeclimate.com/github/akicho8/bioshogi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>
 
   [[file:http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][file:https://raw.github.com/akicho8/bioshogi/master/bioshogi.png]]
   [[http://tk2-221-20341.vs.sakura.ne.jp/shogi/cpu-versus][デモ]]
@@ -470,7 +470,6 @@ end
     | KeyNotFound            | 手合割・囲い・戦型などのあるはずのデータがない | 手合割で「二枚落ち」と書くところを「飛車角落ち」と書いた                                |
     | BrainProcessingHeavy   | 処理が重すぎる                                 | 反復深化深さ優先探索でのタイムリミットが短かすぎて指し手を生成できない                  |
 
-
     反則系 (RuleError のサブクラス)
 
     こちらはプログラムの不具合や、棋譜の入力ミスに起因するものが多いので例外を出す
@@ -628,6 +627,22 @@ Web Page：(Web Page)
     | 先手     | black    |
     | 後手     | white    |
     | 対局室   | mediator |
+
+** コマンドラインツール
+
+#+BEGIN_SRC shell
+% bioshogi --help
+Commands:
+  bioshogi convert         # 棋譜フォーマット変換
+  bioshogi help [COMMAND]  # Describe available commands or one specific command
+  bioshogi input_parser    # 入力
+  bioshogi piece           # 駒一覧
+  bioshogi versus          # CPU同士の対戦
+
+Options:
+  [--debug], [--no-debug]
+  [--quiet], [--no-quiet]
+#+END_SRC
 
 ** 参考リンク集
 
