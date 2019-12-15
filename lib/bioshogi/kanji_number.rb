@@ -40,7 +40,7 @@ module Bioshogi
         when v == 1
           out << s
         when v >= 2
-          out << kanji_numbers[v] + s
+          out << (kanji_numbers[v] || v).to_s + s
         end
         v = r
       end
@@ -59,7 +59,7 @@ module Bioshogi
     end
 
     def units
-      @units ||= { 10 => "十" }
+      @units ||= { 100 => "百", 10 => "十" }
     end
 
     def units_invert
@@ -68,17 +68,18 @@ module Bioshogi
   end
 
   if $0 == __FILE__
-    KanjiNumber.kanji_to_number_string("")         # => ""
-    KanjiNumber.kanji_to_number_string("歩")       # => "歩"
-    KanjiNumber.kanji_to_number_string("歩〇")     # => "歩0"
-    KanjiNumber.kanji_to_number_string("歩九")     # => "歩9"
-    KanjiNumber.kanji_to_number_string("歩十")     # => "歩10"
-    KanjiNumber.kanji_to_number_string("歩十〇")   # => "歩10"
-    KanjiNumber.kanji_to_number_string("歩十一")   # => "歩11"
-    KanjiNumber.kanji_to_number_string("歩十九")   # => "歩19"
-    KanjiNumber.kanji_to_number_string("歩二十")   # => "歩20"
-    KanjiNumber.kanji_to_number_string("歩二十〇") # => "歩20"
-    KanjiNumber.kanji_to_number_string("歩二十一") # => "歩21"
+    KanjiNumber.kanji_to_number_string("")           # => ""
+    KanjiNumber.kanji_to_number_string("歩")         # => "歩"
+    KanjiNumber.kanji_to_number_string("歩〇")       # => "歩0"
+    KanjiNumber.kanji_to_number_string("歩九")       # => "歩9"
+    KanjiNumber.kanji_to_number_string("歩十")       # => "歩10"
+    KanjiNumber.kanji_to_number_string("歩十〇")     # => "歩10"
+    KanjiNumber.kanji_to_number_string("歩十一")     # => "歩11"
+    KanjiNumber.kanji_to_number_string("歩十九")     # => "歩19"
+    KanjiNumber.kanji_to_number_string("歩二十")     # => "歩20"
+    KanjiNumber.kanji_to_number_string("歩二十〇")   # => "歩20"
+    KanjiNumber.kanji_to_number_string("歩二十一")   # => "歩21"
+    KanjiNumber.kanji_to_number_string("歩百二十三") # => "歩10213"
 
     KanjiNumber.integer_to_kanji(0)                # => "〇"
     KanjiNumber.integer_to_kanji(1)                # => "一"
@@ -86,5 +87,7 @@ module Bioshogi
     KanjiNumber.integer_to_kanji(12)               # => "十二"
     KanjiNumber.integer_to_kanji(2)                # => "二"
     KanjiNumber.integer_to_kanji(23)               # => "二十三"
+    KanjiNumber.integer_to_kanji(123)              # => "百二十三"
+    KanjiNumber.integer_to_kanji(1234)             # => "12百三十四"
   end
 end
