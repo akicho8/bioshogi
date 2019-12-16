@@ -61,6 +61,9 @@ module Bioshogi
       preset_info = PresetInfo.fetch(value || :"平手")
       turn_info.handicap = preset_info.handicap
       turn_info.counter = 0
+
+      # 玉の位置を取得
+      players.each(&:king_place_update)
     end
   end
 end

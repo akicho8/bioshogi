@@ -59,15 +59,15 @@ module Bioshogi
 
     attr_accessor :piece
     attr_accessor :promoted
-    attr_accessor :place
     attr_accessor :location
+    attr_accessor :place
 
     private_class_method :new
 
     def initialize(*)
       super
 
-      raise MustNotHappen, "piece is nil" if piece.nil?
+      raise MustNotHappen, "piece missing" unless piece
       raise MustNotHappen, "promoted is nil" if promoted.nil?
       raise MustNotHappen, "location missing" unless location
       raise MustNotHappen, "place missing" unless place

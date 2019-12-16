@@ -2,10 +2,11 @@
 
 module Bioshogi
   class PlayerExecutorHuman < PlayerExecutorBase
-    # 居玉判定をするため
     def move_hand_process(move_hand)
+      super
+
       if move_hand.soldier.piece.key == :king
-        player.king_moved_counter += 1
+        player.king_moved_counter += 1 # 居玉判定用
       end
     end
 

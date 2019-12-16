@@ -105,6 +105,10 @@ module Bioshogi
         board.surface.values.find_all { |e| e.location == location }
       end
 
+      def king_soldier
+        soldiers.find { |e| e.piece.key == :king }
+      end
+
       def to_s_soldiers
         soldiers.collect(&:name_without_location).sort.join(" ")
       end
@@ -120,9 +124,18 @@ module Bioshogi
 
     concerning :OtherMethods do
       attr_writer :king_moved_counter
+      attr_accessor :king_place
 
       def king_moved_counter
         @king_moved_counter ||= 0
+      end
+
+      def king_place
+        @king_place ||= king_soldier&.place
+      end
+
+      def king_place_update
+        @king_place = king_soldier&.place
       end
     end
 

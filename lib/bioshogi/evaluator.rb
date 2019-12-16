@@ -67,32 +67,25 @@ module Bioshogi
   class EvaluatorAdvance < EvaluatorBase
     private
 
-    def self.default_params
-      {
-        board_advance_score_class: BoardAdvanceScore,
-        board_place_score_class: BoardPlaceScore,
-      }
-    end
-
     def soldier_score(e)
       w = e.relative_weight
 
-      key = [e.piece.key, e.promoted].join("_")
-      x, y = e.normalized_place.to_xy
-
-      if klass = params[:board_place_score_class]
-        v = klass.fetch(key)
-        s = v.weight_fields[y][x]
-        w += s
-      end
-
-      if klass = params[:board_advance_score_class]
-        v = klass.fetch(key)
-        s = v.weight_list[e.bottom_spaces]
-        w += s
+      if !e.promoted
+        if t = score_table[:field][e.piece.key]
+          x, y = e.normalized_place.to_xy
+          w += t[y][x]
+        end
+        if t = score_table[:advance][e.piece.key]
+          s = t[e.bottom_spaces]
+          w += s
+        end
       end
 
       w * e.location.value_sign
+    end
+
+    def score_table
+      EvaluatorAdvanceScoreTable
     end
   end
 end

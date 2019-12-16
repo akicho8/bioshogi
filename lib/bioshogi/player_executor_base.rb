@@ -75,6 +75,9 @@ module Bioshogi
     end
 
     def move_hand_process(move_hand)
+      if move_hand.soldier.piece.key == :king
+        player.king_place = move_hand.soldier.place
+      end
     end
 
     def turn_ended_process
