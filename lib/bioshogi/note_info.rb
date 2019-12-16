@@ -22,7 +22,9 @@ module Bioshogi
 
       # { wars_code: nil, key: "駒柱",               parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, not_have_anything_except_pawn: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  },
 
-      { wars_code: nil, key: "大駒コンプリート", piece_box_added_proc: -> note_info, captured_soldier {
+      {
+        wars_code: nil, key: "大駒コンプリート", parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, not_have_anything_except_pawn: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
+        piece_box_added_proc: -> note_info, captured_soldier {
           if captured_soldier.piece.stronger
             c = 0
             c += piece_box[:rook] || 0
@@ -43,15 +45,19 @@ module Bioshogi
 
             retv
           end
-        }, parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, not_have_anything_except_pawn: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  },
+        },
+      },
 
-      { wars_code: nil, key: "駒柱", every_time_proc: -> note_info {
+      {
+        wars_code: nil, key: "駒柱", parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, not_have_anything_except_pawn: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
+        every_time_proc: -> note_info {
           retv = player.board.piece_piller_by_latest_piece
           if retv
             player.opponent_player.skill_set.list_push(note_info)
           end
           retv
-        }, parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, not_have_anything_except_pawn: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  },
+        },
+      },
     ]
 
     include PresetInfo::DelegateToShapeInfoMethods
