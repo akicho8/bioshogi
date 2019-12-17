@@ -34,7 +34,7 @@ module Bioshogi
             mediator = MediatorSimple.new
             mediator.board.placement_from_shape <<~EOT
             +------+
-              | ・v香|
+            | ・v香|
             | ・v飛|
             | ・v歩|
             | ・ 飛|

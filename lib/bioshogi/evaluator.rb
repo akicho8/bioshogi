@@ -1,4 +1,3 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/player_spec.rb" -*-
 # frozen-string-literal: true
 
 module Bioshogi
@@ -17,16 +16,19 @@ module Bioshogi
       @params = self.class.default_params.merge(params)
     end
 
+    # 自分基準評価値
     def score
       Bioshogi.run_counts["#{self.class.name}#score"] += 1
       basic_score * player.location.value_sign
     end
 
-    # ▲から見た評価値
+    private
+
+    # ▲基準評価値
     def basic_score
       score = 0
       board.surface.each_value do |e|
-        score += soldier_score(e)
+        score += soldier_score(e) * e.location.value_sign
       end
       mediator.players.each do |e|
         score += e.piece_box.score * e.location.value_sign
@@ -34,10 +36,9 @@ module Bioshogi
       score
     end
 
-    private
-
+    # 自分基準評価値
     def soldier_score(e)
-      e.relative_weight
+      e.abs_weight
     end
 
     concerning :DebugMethods do
@@ -64,11 +65,63 @@ module Bioshogi
     end
   end
 
+  concern :AttackPieceWeightMethods do
+    private
+
+    def soldier_score_for_attack(e)
+      if e.promoted || e.piece.key == :gold || e.piece.key == :silver
+        # 相手玉
+        king_place = mediator.player_at(e.location.flip).king_place
+        if king_place
+          sx, sy = e.place.to_xy
+          tx, ty = king_place.to_xy
+          gx = tx - sx
+          gy = ty - sy
+
+          oy = attack_weight.size / 2 # 8
+          my = oy - gy                  # 8 - (-2) = 10
+
+          mx = gx.abs             # 左右対象
+          s = attack_weight.dig(my, mx)
+          if s
+            # p ["#{__FILE__}:#{__LINE__}", __method__, e, w, s, [mx, my], king_place]
+            s
+          end
+        end
+      end
+    end
+
+    # 相手玉近くの自分の金銀の価値
+    def attack_weight
+      @attack_weight ||= [
+        [  50,  50,  50,  50,  50,  50,  50,  50,  50],
+        [  50,  50,  50,  50,  50,  50,  50,  50,  50],
+        [  50,  50,  50,  50,  50,  50,  50,  50,  50],
+        [  54,  53,  51,  51,  50,  50,  50,  50,  50],
+        [  70,  66,  62,  55,  53,  50,  50,  50,  50],
+        [  90,  85,  80,  68,  68,  60,  53,  50,  50],
+        [ 100,  97,  95,  85,  84,  71,  51,  50,  50],
+        [ 132, 132, 129, 102,  95,  71,  51,  50,  50],
+        [ 180, 145, 137, 115,  91,  75,  57,  50,  50], # 0
+        [ 170, 165, 150, 121,  94,  78,  58,  52,  50],
+        [ 170, 160, 142, 114,  98,  80,  62,  55,  50],
+        [ 140, 130, 110, 100,  95,  75,  54,  50,  50],
+        [ 100,  99,  95,  87,  78,  69,  50,  50,  50],
+        [  80,  78,  72,  67,  55,  51,  50,  50,  50],
+        [  62,  60,  58,  52,  50,  50,  50,  50,  50],
+        [  50,  50,  50,  50,  50,  50,  50,  50,  50],
+        [  50,  50,  50,  50,  50,  50,  50,  50,  50],
+      ]
+    end
+  end
+
   class EvaluatorAdvance < EvaluatorBase
+    include AttackPieceWeightMethods
+
     private
 
     def soldier_score(e)
-      w = e.relative_weight
+      w = e.abs_weight
 
       if !e.promoted
         if t = score_table[:field][e.piece.key]
@@ -81,7 +134,9 @@ module Bioshogi
         end
       end
 
-      w * e.location.value_sign
+      w += soldier_score_for_attack(e) || 0
+
+      w
     end
 
     def score_table

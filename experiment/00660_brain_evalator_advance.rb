@@ -25,7 +25,7 @@ brain.diver_dive(depth_max: 4) # => [-100, [<▲２四飛(14)>, <△１四歩(13
 
 brain.player.location           # => <black>
 
-brain.smart_score_list(depth_max: 0) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>7.3e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>0.000101}]
-brain.smart_score_list(depth_max: 1) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>6.9e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>8.0e-05}]
-brain.smart_score_list(depth_max: 2) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>9.1e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>8.1e-05}]
-brain.smart_score_list(depth_max: 3) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>8.3e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>8.8e-05}]
+brain.smart_score_list(depth_max: 0) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>4.8e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>5.2e-05}]
+brain.smart_score_list(depth_max: 1) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>4.5e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>5.1e-05}]
+brain.smart_score_list(depth_max: 2) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>4.5e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>5.1e-05}]
+brain.smart_score_list(depth_max: 3) # => [{:hand=><▲１三飛(14)>, :score=>106, :socre2=>106, :best_pv=>[], :eval_times=>1, :sec=>4.6e-05}, {:hand=><▲２四飛(14)>, :score=>-100, :socre2=>-100, :best_pv=>[], :eval_times=>1, :sec=>5.1e-05}]

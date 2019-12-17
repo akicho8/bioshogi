@@ -46,9 +46,9 @@ module Bioshogi
       players.collect { |e| e.piece_box.clear }
     end
 
-    def basic_score
-      evaluator.basic_score
-    end
+    # def basic_score
+    #   evaluator.basic_score
+    # end
 
     # 互いに王手されている局面はありえない
     def position_invalid?
