@@ -28,7 +28,7 @@ module Bioshogi
       @player = player
       @iparams = {
         diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
-        evaluator_class: EvaluatorBase, # [EvaluatorBase, EvaluatorAdvance]
+        evaluator_class: Evaluator::Base, # [Evaluator::Base, Evaluator::Level1, Evaluator::Level2, Evaluator::Level3]
 
         # legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
         # legal_moves_first_only: true,   # 最初の手だけ合法手に絞る
@@ -153,7 +153,7 @@ module Bioshogi
     # | ・ 香|
     # +------+
     # EOT
-    # brain = mediator.player_at(:black).brain(evaluator_class: EvaluatorAdvance)
+    # brain = mediator.player_at(:black).brain(evaluator_class: Evaluator::Level2)
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)

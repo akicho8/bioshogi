@@ -45,7 +45,7 @@ end
 # >> |       sandbox_execute.execute | 590 |
 # >> |        sandbox_execute.revert | 590 |
 # >> |     Bioshogi::DropHand.create | 102 |
-# >> | Bioshogi::EvaluatorBase#score | 67  |
+# >> | Bioshogi::Evaluator::Base#score | 67  |
 # >> |-------------------------------+-----|
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> | 順位 | 候補手       | 読み筋                                                         | ▲形勢  | 評価局面数 | 処理時間 |
@@ -64,5 +64,5 @@ end
 # >> |       sandbox_execute.execute | 587 |
 # >> |        sandbox_execute.revert | 587 |
 # >> |     Bioshogi::DropHand.create | 208 |
-# >> | Bioshogi::EvaluatorBase#score | 62  |
+# >> | Bioshogi::Evaluator::Base#score | 62  |
 # >> |-------------------------------+-----|

@@ -43,7 +43,7 @@ module Bioshogi
             depth_max_range: 0..options[:depth_max],
           }
           diver_class = divers[mediator.turn_info.current_location.code]
-          records = current_player.brain(diver_class: diver_class, evaluator_class: EvaluatorAdvance).iterative_deepening(deepen_score_list_params)
+          records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level2).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
           mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)

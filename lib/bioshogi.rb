@@ -101,7 +101,6 @@ require_relative "bioshogi/sect_info"
 require_relative "bioshogi/defense_group_info"
 
 require_relative "bioshogi/brain"
-require_relative "bioshogi/evaluator_advance_score_table"
 require_relative "bioshogi/evaluator"
 
 require_relative "bioshogi/image_formatter"

@@ -147,7 +147,7 @@ module Bioshogi
 
     concerning :BrainMethods do
       def evaluator(**options)
-        (options[:evaluator_class] || EvaluatorBase).new(self, options)
+        (options[:evaluator_class] || Evaluator::Base).new(self, options)
       end
 
       def brain(**params)

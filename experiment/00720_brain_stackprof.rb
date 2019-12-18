@@ -46,7 +46,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >> |     Bioshogi::MoveHand.create | 21973 |
 # >> |     sandbox_execute.execute | 38626 |
 # >> |      sandbox_execute.revert | 38626 |
-# >> | Bioshogi::EvaluatorBase#score | 16796 |
+# >> | Bioshogi::Evaluator::Base#score | 16796 |
 # >> |     Bioshogi::DropHand.create | 550   |
 # >> |-----------------------------+-------|
 # >> ==================================
@@ -84,7 +84,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>         40   (0.3%)          40   (0.3%)     #<Module:0x00007ffcd23ba188>.run_counts
 # >>         67   (0.5%)          36   (0.3%)     Bioshogi::Player::BrainMethods#evaluator
 # >>         99   (0.7%)          36   (0.3%)     Bioshogi::PieceScore#any_weight
-# >>         31   (0.2%)          31   (0.2%)     Bioshogi::EvaluatorBase#initialize
+# >>         31   (0.2%)          31   (0.2%)     Bioshogi::Evaluator::Base#initialize
 # >> Bioshogi::Place.lookup (/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:30)
 # >>   samples:  1058 self (7.9%)  /   4246 total (31.8%)
 # >>   callers:
