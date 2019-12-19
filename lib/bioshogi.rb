@@ -45,10 +45,6 @@ require_relative "bioshogi/hand_log"
 require_relative "bioshogi/hand_logs"
 
 require_relative "bioshogi/piece"
-require_relative "bioshogi/piece_csa"
-require_relative "bioshogi/piece_vector"
-require_relative "bioshogi/piece_score"
-require_relative "bioshogi/yomiage_piece_info"
 
 require_relative "bioshogi/soldier"
 require_relative "bioshogi/soldier_box"

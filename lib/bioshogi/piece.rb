@@ -1,77 +1,82 @@
 # -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/piece_spec.rb" -*-
 # frozen-string-literal: true
 
+require "bioshogi/piece/piece_csa"
+require "bioshogi/piece/piece_vector"
+require "bioshogi/piece/piece_score"
+require "bioshogi/piece/piece_yomiage"
+require "bioshogi/piece/piece_pressure"
+
 module Bioshogi
   class Piece
-    concerning :UtilityMethods do
+    class << self
       # Piece.s_to_h("飛0 角 竜1 馬2 龍2")                    # => {:rook=>3, :bishop=>3}
       # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
       # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
       # Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
       # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
       # Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
-      class_methods do
-        # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
-        def s_to_a(str)
-          s_to_h(str).yield_self { |v| h_to_a(v) }
+
+      # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
+      def s_to_a(str)
+        s_to_h(str).yield_self { |v| h_to_a(v) }
+      end
+
+      # Piece.s_to_h("飛0 角 竜1 馬2 龍2") # => {:rook=>3, :bishop=>3}
+      def s_to_h(str)
+        str = KanjiNumber.kanji_to_number_string(str)
+        str = str.remove(/\p{blank}/)
+        str.scan(/(#{Piece.all_names.join("|")})(\d+)?/o).inject({}) do |a, (piece, count)|
+          piece = Piece.fetch(piece)
+          a.merge(piece.key => (count || 1).to_i) {|_, v1, v2| v1 + v2 }
+        end
+      end
+
+      # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
+      def h_to_a(hash)
+        hash.flat_map do |piece_key, count|
+          count.times.collect { Piece.fetch(piece_key) }
+        end
+      end
+
+      # Piece.h_to_s(bishop: 1, rook: 2) # => "飛二 角"
+      def h_to_s(hash, **options)
+        options = {
+          ordered: true,      # 価値のある駒順に並べる
+          separator: " ",
+        }.merge(options)
+
+        hash = hash.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
+
+        if options[:ordered]
+          hash = hash.sort_by { |piece, _| -piece.basic_weight }
         end
 
-        # Piece.s_to_h("飛0 角 竜1 馬2 龍2") # => {:rook=>3, :bishop=>3}
-        def s_to_h(str)
-          str = KanjiNumber.kanji_to_number_string(str)
-          str = str.remove(/\p{blank}/)
-          str.scan(/(#{Piece.all_names.join("|")})(\d+)?/o).inject({}) do |a, (piece, count)|
-            piece = Piece.fetch(piece)
-            a.merge(piece.key => (count || 1).to_i) {|_, v1, v2| v1 + v2 }
+        hash.map { |piece, count|
+          raise MustNotHappen if count < 0
+          if count >= 2
+            count = KanjiNumber.integer_to_kanji(count)
+          else
+            count = ""
           end
+          "#{piece.name}#{count}"
+        }.join(options[:separator])
+      end
+
+      # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
+      def a_to_s(pieces, **options)
+        pieces = pieces.collect { |e| Piece.fetch(e) }
+        h_to_s(pieces.group_by(&:key).transform_values(&:size), options)
+      end
+
+      # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
+      def s_to_h2(str)
+        hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
+        str.scan(/([#{Location.triangles_str}])([^#{Location.triangles_str}]+)/) do |triangle, str|
+          location = Location[triangle]
+          hash[location.key] << str
         end
-
-        # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
-        def h_to_a(hash)
-          hash.flat_map do |piece_key, count|
-            count.times.collect { Piece.fetch(piece_key) }
-          end
-        end
-
-        # Piece.h_to_s(bishop: 1, rook: 2) # => "飛二 角"
-        def h_to_s(hash, **options)
-          options = {
-            ordered: true,      # 価値のある駒順に並べる
-            separator: " ",
-          }.merge(options)
-
-          hash = hash.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
-
-          if options[:ordered]
-            hash = hash.sort_by { |piece, _| -piece.basic_weight }
-          end
-
-          hash.map { |piece, count|
-            raise MustNotHappen if count < 0
-            if count >= 2
-              count = KanjiNumber.integer_to_kanji(count)
-            else
-              count = ""
-            end
-            "#{piece.name}#{count}"
-          }.join(options[:separator])
-        end
-
-        # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
-        def a_to_s(pieces, **options)
-          pieces = pieces.collect { |e| Piece.fetch(e) }
-          h_to_s(pieces.group_by(&:key).transform_values(&:size), options)
-        end
-
-        # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
-        def s_to_h2(str)
-          hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
-          str.scan(/([#{Location.triangles_str}])([^#{Location.triangles_str}]+)/) do |triangle, str|
-            location = Location[triangle]
-            hash[location.key] << str
-          end
-          hash.transform_values { |e| s_to_h(e.join) }
-        end
+        hash.transform_values { |e| s_to_h(e.join) }
       end
     end
 
@@ -198,13 +203,23 @@ module Bioshogi
       end
     end
 
-    concerning :KifuyomiMethods do
+    concerning :PressureMethods do
       included do
-        delegate :yomiage, to: :yomiage_piece_info
+        delegate :any_level, :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
       end
 
-      def yomiage_piece_info
-        @yomiage_piece_info ||= YomiagePieceInfo[key]
+      def piece_pressure
+        @piece_pressure ||= PiecePressure[key]
+      end
+    end
+
+    concerning :KifuyomiMethods do
+      included do
+        delegate :yomiage, to: :piece_yomiage
+      end
+
+      def piece_yomiage
+        @piece_yomiage ||= YomiagePieceInfo[key]
       end
     end
   end

@@ -6,6 +6,7 @@
 #   Place["４三"].name  # => "４三"
 #   Place["43"].name    # => "４三"
 #
+
 module Bioshogi
   class Place
     attr_accessor :x, :y
