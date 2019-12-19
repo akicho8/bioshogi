@@ -205,7 +205,7 @@ module Bioshogi
 
     concerning :PressureMethods do
       included do
-        delegate :any_level, :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
+        delegate :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
       end
 
       def piece_pressure

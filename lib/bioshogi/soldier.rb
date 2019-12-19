@@ -197,6 +197,26 @@ module Bioshogi
       def relative_weight
         abs_weight * location.value_sign
       end
+
+      # 敵への駒の圧力
+      def pressure_level(area = 4)
+        case
+        when top_spaces < area
+          if promoted
+            piece.promoted_attack_level
+          else
+            piece.attack_level
+          end
+        when bottom_spaces < area
+          if promoted
+            -piece.promoted_defense_level
+          else
+            -piece.defense_level
+          end
+        else
+          0
+        end
+      end
     end
 
     ################################################################################ Formatter

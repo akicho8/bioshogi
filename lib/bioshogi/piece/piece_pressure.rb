@@ -16,14 +16,6 @@ module Bioshogi
       def piece
         Piece[key]
       end
-
-      def any_level(promoted)
-        if promoted
-          defense_level
-        else
-          attack_level
-        end
-      end
     end
   end
 end

@@ -9,25 +9,8 @@ module Bioshogi
     class Level3 < Base
       include AttackPieceWeightMethods
 
-      def danger_level
-        score = 0
-        board.surface.each_value.each do |e|
-          if e.top_spaces <= 3
-            if e.promoted || e.piece.key == :gold || e.piece.key == :silver
-              score += 1
-            end
-          end
-        end
-
-        mediator.players.each do |e|
-          e.piece_box.each do |piece, count|
-            if piece.key == :gold || piece.key == :silver
-              score += 1
-            end
-          end
-        end
-
-        score
+      def danger_level_at
+        @danger_level_at ||= mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_level_limited) }
       end
 
       private
@@ -39,18 +22,20 @@ module Bioshogi
       def soldier_score(e)
         w = e.abs_weight
 
+        w2 = 0
         unless e.promoted
           if t = OpeningBasicTable[:field][e.piece.key]
             x, y = e.normalized_place.to_xy
-            w += t[y][x]
+            w2 += t[y][x]
           end
           if t = OpeningBasicTable[:advance][e.piece.key]
             s = t[e.bottom_spaces]
-            w += s
+            w2 += s
           end
         end
 
-        w += soldier_score_for_attack(e) || 0
+        w += w2
+        w += (soldier_score_for_attack(e) || 0) * danger_level_at[e.location]
 
         w
       end

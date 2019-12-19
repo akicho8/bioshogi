@@ -56,6 +56,10 @@ module Bioshogi
       }
     end
 
+    def pressure_level
+      object.sum { |piece_key, count| Piece[piece_key].standby_level * count }
+    end
+
     ################################################################################ formatter
 
     def to_s(**options)
