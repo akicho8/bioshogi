@@ -9,6 +9,27 @@ module Bioshogi
     class Level3 < Base
       include AttackPieceWeightMethods
 
+      def danger_level
+        score = 0
+        board.surface.each_value.each do |e|
+          if e.top_spaces <= 3
+            if e.promoted || e.piece.key == :gold || e.piece.key == :silver
+              score += 1
+            end
+          end
+        end
+
+        mediator.players.each do |e|
+          e.piece_box.each do |piece, count|
+            if piece.key == :gold || piece.key == :silver
+              score += 1
+            end
+          end
+        end
+
+        score
+      end
+
       private
 
       # 評価すること
@@ -33,6 +54,7 @@ module Bioshogi
 
         w
       end
+
     end
   end
 end
