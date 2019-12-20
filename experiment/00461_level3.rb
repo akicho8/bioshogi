@@ -10,15 +10,14 @@ mediator.placement_from_bod(<<~EOT)
 先手の持駒：飛香
 EOT
 
-evaluator = mediator.player_at(:black).evaluator(evaluator_class: Evaluator::Level3)
 player = mediator.player_at(:black)
+evaluator = player.evaluator(evaluator_class: Evaluator::Level3)
 player.soldiers_pressure_level  # => 3
 player.piece_box.pressure_level # => 4
 player.pressure_level           # => 7
 tp evaluator.danger_level_at
 tp mediator.player_at(:black).pressure_level_report
 tp mediator.player_at(:white).pressure_level_report
-
 
 s1 = evaluator.score            # => -36000.0
 
@@ -32,7 +31,7 @@ s1 = evaluator.score            # => -36000.0
 # EOT
 # evaluator = mediator.player_at(:black).evaluator(evaluator_class: Evaluator::Level3)
 # s2 = evaluator.score                 # => -38635
-# 
+#
 # s2 - s1                         # => 5
 # >> |----+--------|
 # >> | ▲ | 0.4375 |

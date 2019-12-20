@@ -10,7 +10,7 @@ module Bioshogi
       include AttackPieceWeightMethods
 
       def danger_level_at
-        @danger_level_at ||= mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_level_limited) }
+        @danger_level_at ||= mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
       end
 
       private
