@@ -258,7 +258,13 @@ module Bioshogi
       def pressure_level_report
         rows = []
         rows += soldiers.collect { |e| {"盤上" => e, "勢力" => e.pressure_level} }
-        rows += piece_box.collect { |piece_key, count| {"持駒" => Piece[piece_key], "勢力" => Piece[piece_key].standby_level} }
+        rows += piece_box.collect { |piece_key, count|
+          piece = Piece[piece_key]
+          {
+            "勢力" => "#{piece.standby_level} * #{count}",
+            "持駒" => "#{piece}#{count}",
+          }
+        }
         rows += [{"勢力" => "合計 #{pressure_level}"}]
         rows += [{"勢力" => "終盤率 #{pressure_rate}"}]
         rows += [{"勢力" => "序盤率 #{1.0 - pressure_rate}"}]
@@ -275,3 +281,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:11:in `<class:Player>': undefined method `delegate' for Bioshogi::Player:Class (NoMethodError)
+# ~> Did you mean?  DelegateClass
+# ~> 	from -:5:in `<module:Bioshogi>'
+# ~> 	from -:4:in `<main>'

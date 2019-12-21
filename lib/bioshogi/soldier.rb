@@ -198,7 +198,7 @@ module Bioshogi
         abs_weight * location.value_sign
       end
 
-      # 敵への駒の圧力
+      # 敵への駒の圧力(終盤度)
       def pressure_level(area = 4)
         case
         when top_spaces < area

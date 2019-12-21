@@ -12,9 +12,6 @@ EOT
 
 player = mediator.player_at(:black)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level3)
-player.soldiers_pressure_level  # => 3
-player.piece_box.pressure_level # => 4
-player.pressure_level           # => 7
 tp evaluator.danger_level_at
 tp mediator.player_at(:black).pressure_level_report
 tp mediator.player_at(:white).pressure_level_report

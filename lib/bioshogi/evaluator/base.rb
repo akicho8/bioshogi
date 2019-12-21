@@ -7,6 +7,7 @@ module Bioshogi
       attr_reader :params
 
       delegate :mediator, :board, to: :player
+      delegate :players, to: :mediator
 
       def self.default_params
         {}
@@ -20,6 +21,10 @@ module Bioshogi
       # 自分基準評価値
       def score
         Bioshogi.run_counts["#{self.class.name}#score"] += 1
+        score_compute
+      end
+
+      def score_compute
         basic_score * player.location.value_sign
       end
 
@@ -31,7 +36,7 @@ module Bioshogi
         board.surface.each_value do |e|
           score += soldier_score(e) * e.location.value_sign
         end
-        mediator.players.each do |e|
+        players.each do |e|
           score += e.piece_box.score * e.location.value_sign
         end
         score
