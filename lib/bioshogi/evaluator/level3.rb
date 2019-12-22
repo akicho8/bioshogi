@@ -9,7 +9,7 @@ module Bioshogi
     class Level3 < Base
       # 自分基準
       def score_compute
-        player_score(player) - player_score(player.opponent_player)
+        (player_score(player) - player_score(player.opponent_player)).to_i
       end
 
       def score_compute_report
