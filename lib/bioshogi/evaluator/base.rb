@@ -25,26 +25,7 @@ module Bioshogi
       end
 
       def score_compute
-        basic_score * player.location.value_sign
-      end
-
-      private
-
-      # ▲基準評価値
-      def basic_score
-        score = 0
-        board.surface.each_value do |e|
-          score += soldier_score(e) * e.location.value_sign
-        end
-        players.each do |e|
-          score += e.piece_box.score * e.location.value_sign
-        end
-        score
-      end
-
-      # 自分基準評価値
-      def soldier_score(e)
-        e.abs_weight
+        0
       end
 
       concerning :DebugMethods do

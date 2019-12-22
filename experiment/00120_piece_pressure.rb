@@ -15,14 +15,14 @@ player.soldiers_pressure_level  # => 3
 player.piece_box.pressure_level # => 2
 player.pressure_level           # => 5
 player.pressure_rate            # => 0.3125
-tp player.pressure_level_report
+tp player.pressure_report
 
 player = mediator.player_at(:white)
 player.soldiers_pressure_level  # => 0
 player.piece_box.pressure_level # => 1
 player.pressure_level           # => 1
 player.pressure_rate            # => 0.0625
-tp player.pressure_level_report
+tp player.pressure_report
 # >> |----------+---------------+------|
 # >> | 盤上     | 勢力          | 持駒 |
 # >> |----------+---------------+------|

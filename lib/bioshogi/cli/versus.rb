@@ -43,14 +43,17 @@ module Bioshogi
             depth_max_range: 0..options[:depth_max],
           }
           diver_class = divers[mediator.turn_info.current_location.code]
-          records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level2).iterative_deepening(deepen_score_list_params)
+          records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level3).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
           mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 
           puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand} (#{diver_class})"
+          # mediator.players.each { |e| tp e.pressure_report }
+
           tp deepen_score_list_params
           tp Brain.human_format(records)
+          tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
           puts mediator
           puts
           puts "#{hand} #{record[:score2]}"
@@ -149,9 +152,9 @@ end
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝1 ▲７六歩(77) まで
-# >> 
+# >>
 # >> 後手番
-# >> 
+# >>
 # >> ▲７六歩(77) 103400
-# >> 
+# >>
 # >> ▲７六歩(77)

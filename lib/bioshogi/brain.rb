@@ -28,7 +28,7 @@ module Bioshogi
       @player = player
       @iparams = {
         diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
-        evaluator_class: Evaluator::Base, # [Evaluator::Base, Evaluator::Level1, Evaluator::Level2, Evaluator::Level3]
+        evaluator_class: Evaluator::Level1, # [Evaluator::Base, Evaluator::Level1, Evaluator::Level2, Evaluator::Level3]
 
         # legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
         # legal_moves_first_only: true,   # 最初の手だけ合法手に絞る

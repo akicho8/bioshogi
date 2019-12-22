@@ -1,11 +1,11 @@
 # frozen-string-literal: true
 
-require "bioshogi/evaluator/base"
+require "bioshogi/evaluator/level1"
 require "bioshogi/evaluator/opening_basic_table"
 
 module Bioshogi
   module Evaluator
-    class Level2 < Base
+    class Level2 < Level1
       private
 
       # 評価すること

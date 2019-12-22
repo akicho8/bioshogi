@@ -24,6 +24,11 @@ module Bioshogi
       @mediator.player_at(location.flip)
     end
 
+    # 自分と相手
+    def self_and_opponent
+      [self, opponent_player]
+    end
+
     def soldier_create(object, **options)
       if object.kind_of?(Array)
         object.each do |e|
@@ -147,7 +152,7 @@ module Bioshogi
 
     concerning :BrainMethods do
       def evaluator(**options)
-        (options[:evaluator_class] || Evaluator::Base).new(self, options)
+        (options[:evaluator_class] || Evaluator::Level1).new(self, options)
       end
 
       def brain(**params)
@@ -255,7 +260,7 @@ module Bioshogi
       end
 
       # 圧力レベル(デバッグ用)
-      def pressure_level_report
+      def pressure_report
         rows = []
         rows += soldiers.collect { |e| {"盤上" => e, "勢力" => e.pressure_level} }
         rows += piece_box.collect { |piece_key, count|
@@ -266,8 +271,8 @@ module Bioshogi
           }
         }
         rows += [{"勢力" => "合計 #{pressure_level}"}]
-        rows += [{"勢力" => "終盤率 #{pressure_rate}"}]
         rows += [{"勢力" => "序盤率 #{1.0 - pressure_rate}"}]
+        rows += [{"勢力" => "終盤率 #{pressure_rate}"}]
         rows
       end
 
