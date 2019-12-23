@@ -29,6 +29,14 @@ module Bioshogi
       [self, opponent_player]
     end
 
+    def op
+      opponent_player
+    end
+
+    def my
+      self
+    end
+
     def soldier_create(object, **options)
       if object.kind_of?(Array)
         object.each do |e|
@@ -288,5 +296,5 @@ module Bioshogi
 end
 # ~> -:11:in `<class:Player>': undefined method `delegate' for Bioshogi::Player:Class (NoMethodError)
 # ~> Did you mean?  DelegateClass
-# ~> 	from -:5:in `<module:Bioshogi>'
-# ~> 	from -:4:in `<main>'
+# ~>    from -:5:in `<module:Bioshogi>'
+# ~>    from -:4:in `<main>'

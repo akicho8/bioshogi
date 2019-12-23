@@ -9,7 +9,7 @@ module Bioshogi
     class Level3 < Base
       # 自分基準
       def score_compute
-        (player_score(player) - player_score(player.opponent_player)).to_i
+        (total_score(player) - total_score(player.op)).to_i
       end
 
       def score_compute_report
@@ -17,9 +17,9 @@ module Bioshogi
           {
             "先後"           => "#{player.location} #{player == self.player ? "自分" : ''}",
             "駒箱(常時加算)" => player.piece_box.score,
-            "序盤"           => "#{score1_of(player)} * #{(1.0 - pressure_rate_hash[player]).round(1)} = #{score1_of(player) * (1.0 - pressure_rate_hash[player])}",
-            "終盤"           => "#{score2_of(player)} * #{pressure_rate_hash[player].round(1)} = #{score2_of(player) * pressure_rate_hash[player]}",
-            "序終盤合計"     => player_score(player),
+            "序盤"           => "#{score1(player)} * #{(1.0 - pressure[player]).round(1)} = #{score1(player) * (1.0 - pressure[player])}",
+            "終盤"           => "#{score2(player)} * #{pressure[player].round(1)} = #{score2(player) * pressure[player]}",
+            "序終盤合計"     => total_score(player),
           }
         end
         rows += [{"全体" => score_compute}]
@@ -36,18 +36,19 @@ module Bioshogi
         # > http://www.yss-aya.com/book.html
         # > なお、高速化のため、歩、香、桂の小駒に対しては、探索途中で王が動いても再計算せずに、探索前の王の位置から増減表を作って加算している。
         #
-        pressure_rate_hash
+        pressure
       end
 
-      def player_score(player)
+      def total_score(player)
         w = 0
         w += player.piece_box.score
-        w += score1_of(player) * (1.0 - pressure_rate_hash[player]) # 序盤 * 序盤の重み
-        w += score2_of(player) * pressure_rate_hash[player]         # 終盤 * 終盤の重み
+        w += score1(player) * (1.0 - pressure[player]) # 序盤 * 序盤の重み
+        w += score2(player) * (0.0 + pressure[player]) # 終盤 * 終盤の重み
+        w
       end
 
       # 序盤評価値
-      def score1_of(player)
+      def score1(player)
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight
@@ -65,44 +66,50 @@ module Bioshogi
       end
 
       # 終盤評価値
-      def score2_of(player)
+      def score2(player)
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight
-          w += soldier_score_for_scene(e, player.opponent_player.king_place, AttackWeightTable[:attack]) || 0
-          w -= soldier_score_for_scene(e, player.king_place, AttackWeightTable[:defense]) || 0
+          w += soldier_score_for_scene(e, player.op.king_place, AttackWeightTable[:attack])  # 相手玉に攻まるとスコア＋
+          w -= soldier_score_for_scene(e, player.my.king_place, AttackWeightTable[:defense]) # 相手玉に攻まるとスコア＋
         end
         w
       end
 
       # プレイヤーそれぞれの終盤度
-      def pressure_rate_hash
-        @pressure_rate_hash ||= players.inject({}) { |a, e| a.merge(e => e.pressure_rate) }
+      def pressure
+        @pressure ||= players.inject({}) { |a, e| a.merge(e => e.pressure_rate) }
       end
 
       def opening_basic_table
         OpeningBasicTable
       end
 
+      # 盤上の駒の位置による重み
       def soldier_score_for_scene(e, king_place, table)
+        return 0 unless king_place
+
         if e.promoted || e.piece.key == :gold || e.piece.key == :silver
-          # 相手玉
-          if king_place
-            sx, sy = e.place.to_xy
-            tx, ty = king_place.to_xy
-            gx = tx - sx
-            gy = ty - sy
+          # 相手の玉との距離
+          sx, sy = e.place.to_xy
+          tx, ty = king_place.to_xy
+          gx = tx - sx
+          gy = ty - sy
 
-            oy = table.size / 2 # 8
-            my = oy - gy                  # 8 - (-2) = 10
+          # (mx, my) はテーブルのセルの位置
+          # 金銀は上からの方が強いので縦は上と下でそれぞれ重みが違う
+          oy = table.size / 2 # 8
+          my = oy - gy        # 8 - (-2) = 10
 
-            mx = gx.abs             # 左右対象
-            s = table.dig(my, mx)
-            if s
-              # p ["#{__FILE__}:#{__LINE__}", __method__, e, w, s, [mx, my], king_place]
-              s
-            end
-          end
+          # mx は左右対象
+          mx = gx.abs
+
+          s = table.dig(my, mx)
+          return 0 unless s
+          # p ["#{__FILE__}:#{__LINE__}", __method__, e, w, s, [mx, my], king_place]
+          s
+        else
+          0
         end
       end
     end
