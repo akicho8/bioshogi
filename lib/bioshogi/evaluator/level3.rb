@@ -104,10 +104,10 @@ module Bioshogi
           # mx は左右対象
           mx = gx.abs
 
-          s = table.dig(my, mx)
-          return 0 unless s
+          w = table.dig(my, mx)
+          return 0 unless w
           # p ["#{__FILE__}:#{__LINE__}", __method__, e, w, s, [mx, my], king_place]
-          s
+          w
         else
           0
         end
