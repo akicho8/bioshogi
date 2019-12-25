@@ -2,6 +2,17 @@
 
 module Bioshogi
   class PieceBox < SimpleDelegator
+    ALL_PIECES = "玉2飛2角2金4銀4桂4香4歩18"
+
+    def self.default_pieces
+      @default_pieces ||= Piece.s_to_h(ALL_PIECES).freeze
+    end
+    private_class_method :default_pieces
+
+    def self.all_in_create
+      new(default_pieces)
+    end
+
     def initialize(**)
       super
     end
