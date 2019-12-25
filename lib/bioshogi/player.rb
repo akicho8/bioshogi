@@ -279,8 +279,8 @@ module Bioshogi
           }
         }
         rows += [{"勢力" => "合計 #{pressure_level}"}]
-        rows += [{"勢力" => "序盤率 #{1.0 - pressure_rate}"}]
         rows += [{"勢力" => "終盤率 #{pressure_rate}"}]
+        rows += [{"勢力" => "序盤率 #{1.0 - pressure_rate}"}]
         rows
       end
 
@@ -294,7 +294,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:11:in `<class:Player>': undefined method `delegate' for Bioshogi::Player:Class (NoMethodError)
-# ~> Did you mean?  DelegateClass
-# ~>    from -:5:in `<module:Bioshogi>'
-# ~>    from -:4:in `<main>'
