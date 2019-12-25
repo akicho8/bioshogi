@@ -1,8 +1,6 @@
 # frozen-string-literal: true
 
 require "bioshogi/evaluator/base"
-require "bioshogi/evaluator/attack_weight_table"
-require "bioshogi/evaluator/opening_basic_table"
 
 module Bioshogi
   module Evaluator
@@ -32,17 +30,8 @@ module Bioshogi
 
       # 中終盤スコア
       def score2(player)
-        # ↓共通化
-
-        # 敵玉の近くにいるスコア
-        king_place = player.op.king_place
-        table = AttackWeightTable[:attack]
-        a = player.soldiers.sum { |e| soldier_score_for_scene(e, king_place, table)  }
-
-        # 自玉の近くにいるスコア
-        king_place = player.my.king_place
-        table = AttackWeightTable[:defense]
-        d = player.soldiers.sum { |e| soldier_score_for_scene(e, king_place, table) } # 守備スコア
+        a = a_d_score_of(player, player.op, :attack)  # 敵玉の近くにいるスコア
+        d = a_d_score_of(player, player.my, :defense) # 自玉の近くにいるスコア
 
         w = 0
         w += pressure[player.my] * a # 自分が敵玉に攻まっているほど、敵玉が危険なので、敵玉を攻める手のスコアを高くする

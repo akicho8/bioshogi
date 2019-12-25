@@ -70,8 +70,8 @@ module Bioshogi
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight
-          w += soldier_score_for_scene(e, player.op.king_place, AttackWeightTable[:attack])  # 相手玉に攻まるとスコア＋
-          w -= soldier_score_for_scene(e, player.my.king_place, AttackWeightTable[:defense]) # 相手玉に攻まるとスコア＋
+          w += a_d_score_of(player, player.op, :attack)  # 敵玉の近くにいるスコア
+          w -= a_d_score_of(player, player.my, :defense) # 自玉の近くにいるスコア
         end
         w
       end
@@ -83,6 +83,17 @@ module Bioshogi
 
       def opening_basic_table
         OpeningBasicTable
+      end
+
+      # player の 攻撃駒のスコア または 守り駒のスコア
+      #
+      # player: 自分
+      # target: 対象玉 (自分側 or 相手側)
+      # key: :attack or :defense
+      def a_d_score_of(player, target, key)
+        king_place = target.king_place
+        table = AttackWeightTable[key]
+        player.soldiers.sum { |e| soldier_score_for_scene(e, king_place, table) }
       end
 
       # 盤上の駒の位置による重み

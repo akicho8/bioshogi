@@ -1,5 +1,8 @@
 require "./example_helper"
 
+PresetInfo["裸玉"].sorted_soldiers.collect(&:to_s)       # => ["▲５九玉"]
+PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["▲８八角", "▲２八飛"]
+
 tp PresetInfo.collect { |e|
   mediator = Mediator.new
   mediator.placement_from_preset(e.key)
@@ -7,6 +10,7 @@ tp PresetInfo.collect { |e|
 }.to_h
 
 tp PresetInfo.collect(&:to_position_sfen)
+
 # >> |------------+----------------------------------------------------------------------|
 # >> |       平手 | sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
 # >> |     香落ち | sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 |

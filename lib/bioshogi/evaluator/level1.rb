@@ -9,6 +9,8 @@ module Bioshogi
     class Level1 < Base
       private
 
+      # FIXME: players.each にする
+
       # 自分基準評価値
       def score_compute
         w = 0
