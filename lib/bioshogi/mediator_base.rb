@@ -46,9 +46,18 @@ module Bioshogi
       str.scan(/(.*)の持駒：(.*)/) do |location_key, piece_str|
         player_at(location_key).pieces_set(piece_str)
       end
-      if md = str.match(/^手数\s*＝\s*(?<counter>\d+)/)
+
+      if md = str.match(/^手数\s*(＝|=)\s*(?<counter>\d+)/)
         turn_info.counter = md[:counter].to_i
       end
+
+      # 手合割は bod の仕様にはないはずだけどあれば駒落ちの判断材料にはなる
+      if md = str.match(/^手合割：\s*(\S+)\s*/)
+        preset_info = PresetInfo.fetch(md.captures.first)
+        turn_info.handicap = preset_info.handicap
+      end
+
+      # 「上手」「下手」の名前がどこかに使われていれば駒落ち(雑)
       if Location.any? { |e| str.include?(e.handicap_name) }
         turn_info.handicap = true
       end
