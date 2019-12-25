@@ -84,5 +84,9 @@ EOT
       assert { PresetInfo["平手"].to_turn_info.base_location.key   == :black }
       assert { PresetInfo["香落ち"].to_turn_info.base_location.key == :white }
     end
+
+    it "declined_soldiers" do
+      assert { PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) == ["▲８八角", "▲２八飛"] }
+    end
   end
 end

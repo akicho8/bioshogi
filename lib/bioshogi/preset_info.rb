@@ -57,6 +57,12 @@ module Bioshogi
       self.class.count - code
     end
 
+    # 控えの駒
+    # PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["▲８八角", "▲２八飛"] }
+    def declined_soldiers
+      @declined_soldiers ||= self.class.fetch("平手").sorted_soldiers - sorted_soldiers
+    end
+
     concerning :DelegateToShapeInfoMethods do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info
