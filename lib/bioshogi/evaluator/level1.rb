@@ -9,18 +9,11 @@ module Bioshogi
     class Level1 < Base
       private
 
-      # FIXME: players.each にする
-
-      # 自分基準評価値
-      def score_compute
+      def total_score(player)
         w = 0
-        board.surface.each_value do |e|
-          w += soldier_score(e) * e.location.value_sign
-        end
-        players.each do |e|
-          w += e.piece_box.score * e.location.value_sign
-        end
-        w * player.location.value_sign
+        w += player.piece_box.score
+        w += player.soldiers.sum { |e| soldier_score(e) }
+        w
       end
 
       # 自分基準評価値

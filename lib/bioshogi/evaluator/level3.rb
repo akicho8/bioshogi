@@ -7,11 +7,6 @@ require "bioshogi/evaluator/opening_basic_table"
 module Bioshogi
   module Evaluator
     class Level3 < Base
-      # 自分基準
-      def score_compute
-        (total_score(player) - total_score(player.op)).to_i
-      end
-
       def score_compute_report
         rows = player.self_and_opponent.collect do |player|
           {
