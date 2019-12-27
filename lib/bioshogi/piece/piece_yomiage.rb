@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+
 module Bioshogi
   class Piece
     class YomiagePieceInfo
