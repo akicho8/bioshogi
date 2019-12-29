@@ -74,7 +74,7 @@ module Bioshogi
     end
 
     def attributes
-      {piece: piece, promoted: promoted, place: place, location: location}
+      { piece: piece, promoted: promoted, place: place, location: location }
     end
 
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい。place は基本ユニークなのでこれで並べる

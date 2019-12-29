@@ -2,7 +2,7 @@ require_relative "spec_helper"
 
 module Bioshogi
   describe "usi" do
-    it "usi (sfen) 形式で出力" do
+    it "出力" do
       mediator = Mediator.new
       mediator.placement_from_preset("平手")
       mediator.before_run_process
@@ -23,7 +23,7 @@ module Bioshogi
       assert { mediator.to_sfen == "position startpos moves 7i6h S*2d" }
     end
 
-    it "dimension 形式で入力" do
+    it "入力" do
       usi = Usi::Class2.new
       usi.execute("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
       assert { usi.mediator.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
