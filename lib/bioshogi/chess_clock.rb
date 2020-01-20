@@ -38,7 +38,7 @@ module Bioshogi
       def to_s
         h, r = @total_seconds.divmod(1.hour)
         m, s = r.divmod(1.minute)
-        "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s]
+        "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s].collect(&:abs)
       end
     end
   end
