@@ -31,6 +31,9 @@ module Bioshogi
 
       def add(v)
         v = v.to_i
+        if v.negative?
+          raise KifTimeFormatBroken, "消費時間がマイナスになっています : #{v}"
+        end
         @total_seconds += v
         @used_seconds = v
       end
@@ -38,7 +41,7 @@ module Bioshogi
       def to_s
         h, r = @total_seconds.divmod(1.hour)
         m, s = r.divmod(1.minute)
-        "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s].collect(&:abs)
+        "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s]
       end
     end
   end

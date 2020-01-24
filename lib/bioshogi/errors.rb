@@ -74,6 +74,10 @@ module Bioshogi
   class SamePlaceDifferent < SyntaxDefact
   end
 
+  # .kif ファイルの時間がマイナスになっている
+  class KifTimeFormatBroken < SyntaxDefact
+  end
+
   ################################################################################ ルール系 (RuleError) 人間同士で指すと現われる反則。しかし公式の棋譜には残らないグループ
 
   class RuleError < SyntaxDefact
