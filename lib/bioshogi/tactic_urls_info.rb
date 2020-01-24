@@ -1386,6 +1386,12 @@ module Bioshogi
           "https://ja.wikipedia.org/wiki/%E4%B8%AD%E6%AE%B5%E7%8E%89",
         ],
       },
+      {
+        key: "金銀橋",
+        urls: [
+          "https://note.com/nifusen/n/nace05a8a2bca",
+        ],
+      },
     ]
   end
 end
