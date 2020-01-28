@@ -58,7 +58,7 @@ module Bioshogi
         end
 
         if !soldier.alive?
-          errors_add DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いの可能性があります"
+          errors_add DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いかもしれません"
         end
       end
     end

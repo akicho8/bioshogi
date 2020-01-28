@@ -125,13 +125,13 @@ module Bioshogi
 
       def place_validate(x, y, something)
         unless @h_units[x] && @v_units[y]
-          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ている可能性があります。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
+          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ているかもしれません。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
         end
       end
 
       def prefix_char_validate(x, y, prefix_char)
         unless prefix_char.match?(/[[:ascii:]]/)
-          raise SyntaxDefact, "盤面がずれている可能性があります。prefix_char=#{prefix_char.inspect}。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
+          raise SyntaxDefact, "盤面がずれているかもしれません。prefix_char=#{prefix_char.inspect}。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
         end
       end
 

@@ -119,7 +119,7 @@ module Bioshogi
 
       {
         key: "垂れ歩",
-        logic_desc: "打った歩の前が空で次に成れる可能性がある",
+        logic_desc: "打った歩の前が空で次に成れる余地がある場合",
         verify_process: proc {
           soldier = executor.hand.soldier
 
