@@ -32,7 +32,7 @@ module Bioshogi
       def add(v)
         v = v.to_i
         if v.negative?
-          raise KifTimeFormatBroken, "消費時間がマイナスになっています : #{v}"
+          raise TimeMinusError, "消費時間がマイナスになっています : #{v}"
         end
         @total_seconds += v
         @used_seconds = v
