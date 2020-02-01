@@ -348,9 +348,10 @@ module Bioshogi
               v = @last_status_params[:last_action_key]
               unless LastActionInfo[v]
                 if v == "反則勝ち"
-                  v = "#{mediator.current_player.call_name}の手番にもかかわらず#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する)"
+                  v = "#{mediator.current_player.call_name}の手番なのに#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
                 end
-                return "* #{v}"
+                # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
+                return "*#{v}"
               end
             end
           end
