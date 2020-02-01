@@ -2,6 +2,18 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::Base do
+    it "24棋譜の「反則勝ち」問題" do
+      info = Parser.parse(<<~EOT)
+      手数----指手---------消費時間--
+        1 ７六歩(77)   ( 0:02/00:00:02)
+      2 ３四歩(33)   ( 0:02/00:00:02)
+      3 反則勝ち
+      EOT
+      assert { info.last_action_info.key == :TORYO }
+      assert { info.judgment_message == "* 先手の手番にもかかわらず後手が投了 (将棋倶楽部24だけに存在する)" }
+      assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない
+    end
+
     describe "消費時間があるKIFからの変換" do
       describe "投了の部分まで時間が指定されている場合" do
         before do
@@ -190,3 +202,5 @@ EOT
     end
   end
 end
+# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:1:in `<main>'

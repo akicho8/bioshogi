@@ -341,6 +341,20 @@ module Bioshogi
 
         def judgment_message
           mediator_run
+
+          # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
+          if true
+            if @last_status_params
+              v = @last_status_params[:last_action_key]
+              unless LastActionInfo[v]
+                if v == "反則勝ち"
+                  v = "#{mediator.current_player.call_name}の手番にもかかわらず#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する)"
+                end
+                return "* #{v}"
+              end
+            end
+          end
+
           last_action_info.judgment_message(mediator)
         end
 
@@ -358,21 +372,26 @@ module Bioshogi
         end
 
         def last_action_info
-          # 棋譜の実行結果から見た判断を初期値として
-          key = :TORYO
-          if @error_message
-            key = :ILLEGAL_MOVE
-          end
-          last_action_info = LastActionInfo[key]
+          key = nil
 
-          # 元の棋譜の記載を優先
-          if @last_status_params
-            if v = LastActionInfo[@last_status_params[:last_action_key]]
-              last_action_info = v
+          # エラーなら最優先
+          unless key
+            if @error_message
+              key = :ILLEGAL_MOVE
             end
           end
 
-          last_action_info
+          # 元の棋譜の記載を優先
+          unless key
+            if @last_status_params
+              v = @last_status_params[:last_action_key]
+              if LastActionInfo[v]
+                key = v
+              end
+            end
+          end
+
+          LastActionInfo.fetch(key || :TORYO)
         end
 
         private

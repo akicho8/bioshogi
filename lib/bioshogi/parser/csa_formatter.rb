@@ -2,7 +2,8 @@ module Bioshogi
   module Parser
     concern :CsaFormatter do
       # CSA標準棋譜ファイル形式
-      # http://www.computer-shogi.org/protocol/record_v22.html
+      # http://www.computer-shogi.org/protocol/record_v22.html ← 見れなくなった
+      # http://www2.computer-shogi.org/protocol/tcp_ip_server_121.html
       #
       #   V2.2
       #   N+久保利明 王将
@@ -78,7 +79,10 @@ module Bioshogi
         out << list.join(sep) + "\n"
 
         if e = @last_status_params
-          last_action_info = LastActionInfo.fetch(e[:last_action_key])
+          # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
+          # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
+          # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
+          last_action_info = LastActionInfo.lookup(e[:last_action_key]) || LastActionInfo[:TORYO]
           s = "%#{last_action_info.csa_key}"
           if v = e[:used_seconds]
             s += ",T#{v}"
