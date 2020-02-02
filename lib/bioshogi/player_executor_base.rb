@@ -106,9 +106,7 @@ module Bioshogi
       obj = error[:error_class].new(str)
 
       obj.instance_variable_set(:@mediator, mediator)
-      def obj.mediator
-        @mediator
-      end
+      obj.define_singleton_method(:mediator) { @mediator }
 
       raise obj
     end
