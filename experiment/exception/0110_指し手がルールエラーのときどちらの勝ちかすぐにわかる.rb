@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 mediator = Mediator.start
 begin

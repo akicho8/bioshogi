@@ -25,7 +25,7 @@ module Bioshogi
   end
 
   # 指定の持駒が無い(打を省略からの)
-  class HoldPieceNotFound2 < BioshogiError
+  class HoldPieceNotFound2 < BioshogiError # FIXME: 名前変更する
   end
 
   # 自分の駒の上に自分の駒を初期配置

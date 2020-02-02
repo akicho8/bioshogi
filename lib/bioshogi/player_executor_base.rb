@@ -98,7 +98,14 @@ module Bioshogi
         "棋譜"   => mediator.hand_logs.to_kif_a.join(" "),
       }
 
-      str = [error[:message]]
+      message = error[:message]
+
+      # 一行に情報をつめこむ場合
+      if false
+        message = ["[#{player.call_name}][#{mediator.turn_info.counter.next}手目][#{input.input.values.join}]", message].join
+      end
+
+      str = [message]
       str.concat(attributes.collect { |*e| e.join(": ") })
       str << mediator.to_bod
       str = str.join("\n")
@@ -107,6 +114,9 @@ module Bioshogi
 
       obj.instance_variable_set(:@mediator, mediator)
       obj.define_singleton_method(:mediator) { @mediator }
+
+      obj.instance_variable_set(:@input, input)
+      obj.define_singleton_method(:input) { @input }
 
       raise obj
     end

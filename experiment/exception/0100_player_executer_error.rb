@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 mediator = Mediator.start
 mediator.execute("▲２六歩")
@@ -9,7 +9,7 @@ player_executor.execute
 
 mediator = Mediator.start
 mediator.execute("▲22角成")    # => 
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:83:in `raise_error': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Bioshogi::HoldPieceNotFound2)
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:111:in `raise_error': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Bioshogi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀
 # ~> 棋譜: ２六歩(27) ３四歩(33)
@@ -30,5 +30,6 @@ mediator.execute("▲22角成")    # =>
 # ~> 手数＝2 △３四歩(33) まで
 # ~> 
 # ~> 先手番
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:33:in `execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
 # ~> 	from -:8:in `<main>'

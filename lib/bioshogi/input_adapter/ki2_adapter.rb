@@ -37,11 +37,11 @@ module Bioshogi
         end
 
         if force_drop_trigger && !player.piece_box.exist?(piece)
-          errors_add HoldPieceNotFound, "打を明示しましたが持駒に#{piece}がありません"
+          errors_add HoldPieceNotFound, "打を明示しましたが#{piece}を持っていません"
         end
 
         if drop_abbreviation? && !player.piece_box.exist?(piece)
-          errors_add HoldPieceNotFound2, "移動できる駒がなく打の省略形と思われる指し手ですが#{piece}を持っていません"
+          errors_add HoldPieceNotFound2, "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません"
         end
 
         if !drop_trigger && candidate_soldiers.empty?
@@ -124,7 +124,7 @@ module Bioshogi
       end
 
       # 「打」の省略形か？
-      # 「同」も「左右や打」も移動候補もないとき「打」の省略系
+      # 「同」も「左右や打」も移動候補もないとき「打」の省略形
       def drop_abbreviation?
         !suffix_exist? && candidate_soldiers.empty?
       end
