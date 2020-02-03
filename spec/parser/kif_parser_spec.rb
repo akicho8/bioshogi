@@ -158,7 +158,7 @@ EOT
 
     it "ヘッダーがなくてもKIFと判定する" do
       info = Parser.parse(<<~EOT)
-      1７六歩
+      1 ７六歩
       2 ３四歩
       EOT
       assert { info.class == Bioshogi::Parser::KifParser }
