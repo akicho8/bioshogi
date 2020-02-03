@@ -2,6 +2,18 @@ require_relative "spec_helper"
 
 module Bioshogi
   describe Parser do
+    describe "判定" do
+      it "KIF" do
+        assert { Parser.parse("手数----指手---------消費時間--").class == Parser::KifParser }
+        assert { Parser.parse("1 76歩").class == Parser::KifParser }
+        assert { Parser.parse("1投了").class == Parser::KifParser }
+      end
+      it "KI2" do
+        assert { Parser.parse("").class == Parser::Ki2Parser }
+        assert { Parser.parse(nil).class == Parser::Ki2Parser }
+      end
+    end
+
     it "ヘッダー行のセパレータは全角セミコロン" do
       assert { Parser.parse("a：b").header.to_h == {"a" => "b"} }
       assert { Parser.parse("a:b：c").header.to_h == {"a:b" => "c"} }

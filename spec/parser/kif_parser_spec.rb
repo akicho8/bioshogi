@@ -155,5 +155,18 @@ EOT
       assert { info.header }
       assert { info.move_infos }
     end
+
+    it "ヘッダーがなくてもKIFと判定する" do
+      info = Parser.parse(<<~EOT)
+      1７六歩
+      2 ３四歩
+      EOT
+      assert { info.class == Bioshogi::Parser::KifParser }
+      assert { info.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
+
+      info = Parser.parse("1 投了")
+      assert { info.class == Bioshogi::Parser::KifParser }
+      assert { info.move_infos == [] }
+    end
   end
 end

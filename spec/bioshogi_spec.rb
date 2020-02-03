@@ -11,18 +11,5 @@ module Bioshogi
         expect { Parser.file_parse(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(Errno::ENOENT)
       end
     end
-
-    describe "棋譜コンテンツのパース" do
-      it "できる" do
-        assert { Parser.parse("手数----指手---------消費時間--").class == Parser::KifParser }
-        assert { Parser.parse("").class == Parser::Ki2Parser }
-        assert { Parser.parse(nil).class == Parser::Ki2Parser }
-      end
-
-      # it "できない" do
-      #   expect { Bioshogi::Parser.parse(nil) }.to raise_error(Bioshogi::FileFormatError)
-      #   expect { Bioshogi::Parser.parse("")  }.to raise_error(Bioshogi::FileFormatError)
-      # end
-    end
   end
 end
