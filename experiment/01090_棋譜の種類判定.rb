@@ -15,20 +15,33 @@ klass = Parser.accepted_class(<<~EOT) # => Bioshogi::Parser::KifParser
 2 ３四歩
 EOT
 
-klass = Parser.accepted_class(<<~EOT) # => Bioshogi::Parser::KifParser
+klass = Parser.accepted_class(<<~EOT) # => Bioshogi::Parser::Ki2Parser
 1７六歩
 2３四歩
 EOT
 
 info = Parser.parse(<<~EOT)
-1投了
+1 投了
 EOT
 info.class.name                       # => "Bioshogi::Parser::KifParser"
 info.last_status_params               # => {:last_action_key=>"投了", :used_seconds=>nil}
 
 info = Parser.parse(<<~EOT)
-1７六歩
-2３四歩
+1 ７六歩
+2 ３四歩
 EOT
 info.class.name                       # => "Bioshogi::Parser::KifParser"
 info.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
+
+info = Parser.parse(<<~EOT)
+1 ７六歩
+2 ３四歩
+EOT
+info.class.name                       # => "Bioshogi::Parser::KifParser"
+info.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
+
+info = Parser.parse(<<~EOT)
+68銀
+EOT
+info.class.name                       # => "Bioshogi::Parser::Ki2Parser"
+info.move_infos                       # => [{:input=>"68銀"}]

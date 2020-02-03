@@ -6,8 +6,8 @@ module Bioshogi
     class KifParser < Base
       cattr_accessor(:henka_reject) { true }
       cattr_accessor(:kif_separator) { /手数-+指手-+消費時間/ }
-      cattr_accessor(:line_regexp) { /^\p{blank}*(?<turn_number>\d+)\p{blank}*(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o }
-      cattr_accessor(:line_regexp2) { /^\p{blank}*(?<turn_number>\d+)\p{blank}*(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/ }
+      cattr_accessor(:line_regexp1) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o }
+      cattr_accessor(:line_regexp2) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/ }
 
       class << self
         # KIFフォーマットかどうかの判定
@@ -22,7 +22,7 @@ module Bioshogi
         #   1 ７六歩(77)   ( 00:01/00:00:01)
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(kif_separator) || source.match?(line_regexp) || source.match?(line_regexp2)
+          source.match?(kif_separator) || source.match?(line_regexp1) || source.match?(line_regexp2)
         end
       end
 
@@ -53,7 +53,7 @@ module Bioshogi
           end
 
           comment_read(line)
-          if md = line.match(line_regexp)
+          if md = line.match(line_regexp1)
             input = md[:input].remove(/\p{blank}/)
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
             @move_infos << {turn_number: md[:turn_number], input: input, clock_part: md[:clock_part], used_seconds: used_seconds}
