@@ -40,7 +40,7 @@ module Bioshogi
           white: 0.01,
         },
         piece_pull_right_rate: {       # 盤上の駒の位置を右に寄せる割合(これは理論的には不要だけど拡大すると気になるので少し右に寄せる)
-          black: 0.035,
+          black: 0.05,
           white: 0.0,
         },
         star_size: 0.03,               # 星のサイズ(割合)
