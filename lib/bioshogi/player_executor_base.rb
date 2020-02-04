@@ -105,10 +105,12 @@ module Bioshogi
         message = ["[#{player.call_name}][#{mediator.turn_info.counter.next}手目][#{input.input.values.join}]", message].join
       end
 
-      str = [message]
+      str = []
+      str << message
       str.concat(attributes.collect { |*e| e.join(": ") })
+      str << ""
       str << mediator.to_bod
-      str = str.join("\n")
+      str = str.collect(&:rstrip).join("\n")
 
       obj = error[:error_class].new(str)
 

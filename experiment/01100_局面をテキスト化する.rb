@@ -1,3 +1,4 @@
+
 require "./example_helper"
 
 mediator = Mediator.new
