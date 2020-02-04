@@ -35,7 +35,14 @@ module Bioshogi
         font_size: 0.75,               # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
         stand_piece_line_height: 0.95, # 持駒と持駒の間隔割合
         stand_piece_count_gap: 0.6,    # 持駒と駒数の間隔の割合
-        piece_pull_rate: 0.025,        # 盤上の位置を下げる割合
+        piece_pull_down_rate: {        # 盤上の駒の位置を下げる割合
+          black: 0.06,
+          white: 0.01,
+        },
+        piece_pull_right_rate: {       # 盤上の駒の位置を右に寄せる割合(これは理論的には不要だけど拡大すると気になるので少し右に寄せる)
+          black: 0.035,
+          white: 0.0,
+        },
         star_size: 0.03,               # 星のサイズ(割合)
         canvas_color: "white",         # 下地の色(必須)
         piece_color: "black",          # 駒の色(必須)
@@ -195,7 +202,10 @@ module Bioshogi
               color = params[:piece_color]
             end
             bold = hand_log && soldier == hand_log.soldier
-            v2 = v + V[0, 1] * params[:piece_pull_rate] * soldier.location.value_sign
+
+            v2 = v
+            v2 += V[0, 1] * params[:piece_pull_down_rate][soldier.location.key]  * soldier.location.value_sign # 下に少し下げる
+            v2 += V[1, 0] * params[:piece_pull_right_rate][soldier.location.key] * soldier.location.value_sign # 右に少し寄せる
             char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold)
           end
         end
