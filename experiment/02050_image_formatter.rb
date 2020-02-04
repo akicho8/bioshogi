@@ -17,6 +17,6 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 先手の持駒：角 金四 銀二 歩九
 EOT
 
-object = parser.image_formatter
+object = parser.image_formatter({width: 100, height: 100})
 object.to_png[0..5]             # => "\x89PNG\r\n"
 object.display

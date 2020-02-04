@@ -72,7 +72,7 @@ module Bioshogi
       # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
       def s_to_h2(str)
         hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
-        str.scan(/([#{Location.triangles_str}])([^#{Location.triangles_str}]+)/) do |triangle, str|
+        str.scan(/([#{Location.polygon_chars_str}])([^#{Location.polygon_chars_str}]+)/) do |triangle, str|
           location = Location[triangle]
           hash[location.key] << str
         end

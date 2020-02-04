@@ -10,6 +10,7 @@ module Bioshogi
       end
       it "KI2" do
         assert { Parser.parse("68銀").class == Parser::Ki2Parser }
+        assert { Parser.parse("☗68銀").class == Parser::Ki2Parser }
         assert { Parser.parse("").class     == Parser::Ki2Parser }
         assert { Parser.parse(nil).class    == Parser::Ki2Parser }
       end

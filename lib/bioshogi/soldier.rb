@@ -9,7 +9,7 @@ module Bioshogi
           return str
         end
 
-        md = str.match(/\A(?<location>[#{Location.triangles_str}])?(?<place>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
+        md = str.match(/\A(?<location>[#{Location.polygon_chars_str}])?(?<place>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
         md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
 
         location = nil

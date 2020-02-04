@@ -54,7 +54,7 @@ module Bioshogi
     end
 
     it "先手後手を表す文字一覧の正規表現" do
-      assert { Location.triangles_str == "▲▼△▽" }
+      assert { Location.polygon_chars_str == "▲▼☗△▽☖" }
     end
 
     it "cssのstyle" do

@@ -33,8 +33,8 @@ module Bioshogi
         v
       end
 
-      def triangles_str
-        @triangles_str ||= flat_map { |e| [e.mark, e.flip_mark] }.join
+      def polygon_chars_str
+        @polygon_chars_str ||= flat_map { |e| [e.mark, e.flip_mark, e.hexagon_mark] }.join
       end
 
       # b w とかではなく sfen の駒の文字の大文字小文字で判断する

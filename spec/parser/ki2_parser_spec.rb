@@ -3,9 +3,11 @@ require_relative "../spec_helper"
 module Bioshogi
   describe Parser::Ki2Parser do
     it "棋譜部分のパース" do
-      assert Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input] == "７六歩(77)"
-      assert Parser::Ki2Parser.parse("７六歩").move_infos.first[:input] == "７六歩"
-      assert Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input] == "△７六歩"
+      assert { Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input] == "７六歩(77)" }
+      assert { Parser::Ki2Parser.parse("７六歩").move_infos.first[:input]     == "７六歩"     }
+      assert { Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input]   == "△７六歩"   }
+      assert { Parser::Ki2Parser.parse("☗７六歩").move_infos.first[:input]    == "☗７六歩"    }
+      assert { Parser::Ki2Parser.parse("☖７六歩").move_infos.first[:input]    == "☖７六歩"    }
     end
 
     it "激指定跡道場4のクリップボード書き出し結果が読める" do

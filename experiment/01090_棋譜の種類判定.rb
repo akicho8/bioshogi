@@ -45,3 +45,9 @@ info = Parser.parse(<<~EOT)
 EOT
 info.class.name                       # => "Bioshogi::Parser::Ki2Parser"
 info.move_infos                       # => [{:input=>"68銀"}]
+
+info = Parser.parse(<<~EOT)
+☗68銀
+EOT
+info.class.name                       # => "Bioshogi::Parser::Ki2Parser"
+info.move_infos                       # => [{:input=>"☗68銀"}]
