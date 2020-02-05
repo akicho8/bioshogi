@@ -20,7 +20,7 @@ module Bioshogi
     def pick_out(piece)
       piece = Piece.fetch(piece)
       if (object[piece.key] || 0) <= 0
-        raise HoldPieceNotFound, "駒箱に#{piece.name}を持っていません : #{to_h}"
+        raise HoldPieceNotFound, "#{piece.name}を持っていません : #{to_h}"
       end
       object[piece.key] -= 1
       if object[piece.key] <= 0
