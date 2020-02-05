@@ -40,9 +40,15 @@ module Bioshogi
         !!input[:usi_promote_trigger]
       end
 
-      # def hard_validations
-      #   super
-      # end
+      def hard_validations
+        super
+
+        if drop_trigger
+          if !player.piece_box.exist?(piece)
+            errors_add HoldPieceNotFound, "#{piece}を打とうとしましたが#{piece}を持っていません"
+          end
+        end
+      end
 
       private
 

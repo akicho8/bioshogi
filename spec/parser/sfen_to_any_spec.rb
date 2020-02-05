@@ -72,6 +72,13 @@ EOT
 まで3手で先手の勝ち
 EOT
       end
+
+      it "持ってない駒を打った場合に hard_validations 内でバリデーションするのでエラー情報に盤面が含まれている" do
+        info = Parser.parse("position startpos moves B*1e")
+        error = info.to_kif rescue $!
+        assert { error.message.lines.first.strip == "角を打とうとしましたが角を持っていません" }
+        assert { error.message.include?("手数＝0 まで") }
+      end
     end
   end
 end
