@@ -4,6 +4,8 @@ module Bioshogi
       delegate :[], :to_h, :delete, to: :object
       attr_reader :turn_counter
 
+      cattr_accessor(:system_comment_char) { "#" }
+
       def []=(key, value)
         v = normalize_value(value)
         if v.present?
@@ -30,16 +32,24 @@ module Bioshogi
           source = md[:header_dirty_part]
         end
 
-        # 一行になっている「*解説：佐藤康光名人　聞き手：矢内理絵子女流三段」を整形する
+        # 扱いやすいように全角スペースを半角化
         source = source.gsub(/\p{blank}/, " ")
+
+        # システムコメント行を削除
+        source = source.remove(/^\s*#{system_comment_char}.*(\R|$)/o)
+
+        # 一行になっている「*解説：佐藤康光名人　聞き手：矢内理絵子女流三段」を整形する
         source = source.gsub(/[\*\s]+(解説|聞き手)：\S+/) { |s| "\n#{s.strip}\n" }
 
-        source.scan(/^(\S.*)#{Base.header_sep}(.*)$/o).each do |key, value|
-          if key.start_with?("#")
-            next
-          end
+        # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがあるらしく、
+        # "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
+        # そのため * を外して取り込んでいる
+        #
+        # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
+        #
+        source.scan(/^\s*([^#{Base.header_sep}\n]+)#{Base.header_sep}(.*)$/o).each do |key, value|
           key = key.remove(/^\*+/)
-          self[key] = value
+          self[key.strip] = value.strip
         end
 
         # @raw_header = header.dup
@@ -123,16 +133,23 @@ module Bioshogi
         object.each do |key, value|
           if key.match(/日時?\z/)
             if v = value.presence
-              if v = (Time.parse(v) rescue nil)
-                format = "%Y/%m/%d"
-                unless [v.hour, v.min, v.sec].all?(&:zero?)
-                  format = "#{format} %T"
-                end
-                object[key] = v.strftime(format)
+              case
+              when t = Time.parse(v) rescue nil
+                time_reformat_and_store(key, t)
+              when t = Time.local(*v.scan(/\d+/).collect(&:to_i)) rescue nil
+                time_reformat_and_store(key, t)
               end
             end
           end
         end
+      end
+
+      def time_reformat_and_store(key, t)
+        format = "%Y/%m/%d"
+        if [t.hour, t.min, t.sec].any?(&:nonzero?)
+          format = "#{format} %T"
+        end
+        object[key] = t.strftime(format)
       end
 
       def piece_order_normalize

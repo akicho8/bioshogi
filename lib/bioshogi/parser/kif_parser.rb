@@ -74,7 +74,8 @@ module Bioshogi
         end
       end
 
-      # これは簡易版
+      # KIF -> KIF 変換の簡易版
+      # mediator を経由しないので反則の判定などはできない
       def to_direct_kif
         out = ""
         out << @header.collect { |key, value| "#{key}：#{value}\n" }.join

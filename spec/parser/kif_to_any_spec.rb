@@ -202,5 +202,3 @@ EOT
     end
   end
 end
-# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
-# ~> 	from -:1:in `<main>'
