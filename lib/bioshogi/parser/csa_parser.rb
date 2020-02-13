@@ -106,43 +106,46 @@ module Bioshogi
         # P-51OU        …… 後手 ５一玉          を配置
         # P+53KI00GI    …… 先手 ５三金 駒台に銀 を配置
         # P-00AL        …… 後手 残りすべての駒を駒台に配置
-        if s.match?(/^P[\+\-]/)
-          sub_mediator = Mediator.new
 
-          # 駒箱
-          piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
+        unless @board_source
+          if s.match?(/^P[\+\-](.+)/) # 値がない "P+\n" もあるため .+ にしている
+            sub_mediator = Mediator.new
 
-          # 両者の駒台
-          hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+            # 駒箱
+            piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
 
-          s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
-            location = Location.fetch(location_key)
-            piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
-              if piece_ch == "AL"
-                raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません" if xy != "00"
-                # 残りすべてを駒台に置く
-                hold_pieces[location] += piece_box.pick_out_without_king
-              else
-                attrs = Soldier.piece_and_promoted(piece_ch)
-                # 駒箱から取り出す
-                piece = piece_box.pick_out(attrs[:piece])
-                if xy == "00"
-                  # 駒台に置く
-                  raise SyntaxDefact, "#{piece.name} は駒台に置けません" if piece.key == :king
-                  hold_pieces[location] << piece
+            # 両者の駒台
+            hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+
+            s.scan(/^P([\+\-])(.+)$/) do |location_key, piece_list|
+              location = Location.fetch(location_key)
+              piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
+                if piece_ch == "AL"
+                  raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません" if xy != "00"
+                  # 残りすべてを駒台に置く
+                  hold_pieces[location] += piece_box.pick_out_without_king
                 else
-                  # 盤に置く
-                  soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
-                  sub_mediator.board.place_on(soldier)
+                  attrs = Soldier.piece_and_promoted(piece_ch)
+                  # 駒箱から取り出す
+                  piece = piece_box.pick_out(attrs[:piece])
+                  if xy == "00"
+                    # 駒台に置く
+                    raise SyntaxDefact, "#{piece.name} は駒台に置けません" if piece.key == :king
+                    hold_pieces[location] << piece
+                  else
+                    # 盤に置く
+                    soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
+                    sub_mediator.board.place_on(soldier)
+                  end
                 end
               end
             end
+            hold_pieces.each do |location, pieces|
+              player = sub_mediator.player_at(location)
+              header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+            end
+            @board_source = sub_mediator.board.to_s
           end
-          hold_pieces.each do |location, pieces|
-            player = sub_mediator.player_at(location)
-            header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
-          end
-          @board_source = sub_mediator.board.to_s
         end
 
         # 手番は見ていない

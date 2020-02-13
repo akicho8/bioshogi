@@ -30,5 +30,27 @@ module Bioshogi
       assert { info.move_infos[0][:used_seconds] == 600 }
       assert { info.move_infos[1][:used_seconds] == -600 }
     end
+
+    it "空の P+ がある場合は無視というか盤面を読み取っているのでスキップしている" do
+      info = Parser.parse(<<~EOT)
+V2.2
+N+A
+N-B
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * -KA *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+P+
+P-
++
++7776FU,T6
+      EOT
+      assert { info.board_source.include?("P1") }
+    end
   end
 end
