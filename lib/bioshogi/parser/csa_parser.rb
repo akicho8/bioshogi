@@ -108,7 +108,7 @@ module Bioshogi
         # P-00AL        …… 後手 残りすべての駒を駒台に配置
 
         unless @board_source
-          if s.match?(/^P[\+\-](.+)/) # 値がない "P+\n" もあるため .+ にしている
+          if s.match?(/^P[\+\-](.*)/)
             sub_mediator = Mediator.new
 
             # 駒箱
@@ -117,7 +117,7 @@ module Bioshogi
             # 両者の駒台
             hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
 
-            s.scan(/^P([\+\-])(.+)$/) do |location_key, piece_list|
+            s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
               location = Location.fetch(location_key)
               piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
                 if piece_ch == "AL"
