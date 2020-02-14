@@ -35,7 +35,7 @@ module Bioshogi
         begin
           hard_validations
         rescue BioshogiError => error
-          errors_add(error.class, error.message)
+          errors_add(error.class, error.message.lines.first.strip)
         end
 
         if errors.empty?
