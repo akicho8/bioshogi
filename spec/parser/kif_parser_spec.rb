@@ -2,6 +2,10 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::KifParser do
+    it "移動元を明示したのに駒がなかったときの例外に指し手の情報が含まれている" do
+      proc { Parser.parse("55歩(56)").to_kif }.should raise_error(PieceNotFoundOnBoard, /棋譜/)
+    end
+
     it "残り時間の変換" do
       info = Parser.parse("持ち時間：1時間01分")
       info.to_kif.include?("持ち時間：1時間01分")

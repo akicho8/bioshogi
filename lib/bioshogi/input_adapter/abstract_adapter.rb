@@ -32,7 +32,12 @@ module Bioshogi
       end
 
       def perform_validations
-        hard_validations
+        begin
+          hard_validations
+        rescue BioshogiError => error
+          errors_add(error.class, error.message)
+        end
+
         if errors.empty?
           soft_validations
         end
