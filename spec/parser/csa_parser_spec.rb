@@ -2,6 +2,10 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::CsaParser do
+    it "ヘッダーのコメント内バージョンをCSAと間違わない" do
+      assert { Parser::CsaParser.accept?("# Kifu for iPhone V4.01 棋譜ファイル") == false }
+    end
+
     it "棋譜部分のパース" do
       assert { Parser::CsaParser.parse("1234FU").move_infos.first[:input] == "1234FU" }
       assert { Parser::CsaParser.parse("+1234FU").move_infos.first[:input] == "+1234FU" }

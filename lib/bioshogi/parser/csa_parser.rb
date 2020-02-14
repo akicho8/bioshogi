@@ -30,7 +30,7 @@ module Bioshogi
         def accept?(source)
           source = Parser.source_normalize(source)
           false ||
-            source.match?(/\b(V\d+\.\d+)\b/)      ||
+            source.match?(/^\s*\b(V\d+\.\d+)\b/)  || # '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
             source.match?(/\b(PI|P\d|P[\+\-])\b/) ||
             source.match?(/[+-]\d{4}[A-Z]{2}/)    ||
             source.match?(/\b(N[+-])\b/)          ||
