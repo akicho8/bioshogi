@@ -29,7 +29,7 @@ module Bioshogi
           player.board.place_on(soldier, validate: true)
         end
         mediator.turn_info.handicap = sfen.handicap?
-        mediator.turn_info.counter = sfen.turn_counter
+        mediator.turn_info.base_counter = sfen.base_counter
         sfen.piece_counts.each do |location_key, counts|
           mediator.player_at(location_key).piece_box.set(counts)
         end

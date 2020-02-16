@@ -161,7 +161,6 @@ EOT
       end
 
       it "to_kif" do
-        # puts @info.to_kif(header_skip: true)
         assert { @info.to_kif(header_skip: true) == <<~EOT }
 手数----指手---------消費時間--
    2 ５四歩(53)   (00:00/00:00:00)

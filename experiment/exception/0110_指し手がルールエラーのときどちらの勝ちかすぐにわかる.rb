@@ -7,7 +7,7 @@ begin
   mediator.execute("▲11角成")
 rescue => error
   puts error.mediator
-  error.mediator.turn_info.turn_max  # => 2
+  error.mediator.turn_info.display_turn  # => 2
   error.mediator.win_player.location.key # => :white
 end
 

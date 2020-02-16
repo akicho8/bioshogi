@@ -13,7 +13,7 @@ module Bioshogi
       mediator.placement_from_preset("平手")
       mediator.execute(["７六歩", "３四歩"])
       assert { mediator.turn_info.counter == 2 }
-      assert { mediator.turn_info.turn_max == 2 }
+      assert { mediator.turn_info.display_turn == 2 }
       mediator.judgment_message == "まで2手で後手の勝ち"
       assert { mediator.to_s == <<-EOT }
 後手の持駒：なし

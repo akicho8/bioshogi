@@ -2,15 +2,21 @@
 
 module Bioshogi
   class TurnInfo
+    attr_accessor :base_counter
     attr_accessor :counter
-    attr_accessor :handicap
+    attr_writer :handicap
 
-    def initialize(handicap: false, counter: 0)
+    def initialize(handicap: false, counter: nil, base_counter: nil)
       @handicap = handicap
       @counter = counter || 0
+      @base_counter = base_counter || 0
     end
 
-    def turn_max
+    def display_turn
+      base_counter + counter
+    end
+
+    def turn_offset
       counter
     end
 
@@ -32,7 +38,7 @@ module Bioshogi
     end
 
     def order_key
-      if counter.even?
+      if display_turn.even?
         :sente
       else
         :gote
@@ -48,13 +54,13 @@ module Bioshogi
     end
 
     def inspect
-      "#<#{counter}:#{current_location.name}#{location_call_name}番>"
+      "#<#{base_counter}+#{counter}:#{current_location.name}#{location_call_name}番>"
     end
 
     private
 
     def current_location_index(diff)
-      base_location.code + @counter + diff
+      base_location.code + display_turn + diff
     end
   end
 end

@@ -4,7 +4,8 @@ module Bioshogi
   describe Parser::KifParser do
     it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている" do
       info = Parser.parse("72 投了")
-      assert { info.mediator.turn_info.counter == 71                  } # 現在71手目
+      assert { info.mediator.turn_info.turn_offset == 0               } # 内部的には0手目
+      assert { info.mediator.turn_info.display_turn == 71             } # 表示するなら現在71手目
       assert { info.mediator.turn_info.current_location.key == :white } # 手番は△
       assert { info.to_kif.include?("72 投了")                        } # KIFにしたとき復元している
     end

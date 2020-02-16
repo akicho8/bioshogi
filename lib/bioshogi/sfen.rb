@@ -48,14 +48,14 @@ module Bioshogi
     end
 
     # 現在の局面+1が記載されているので -1 すること
-    def turn_counter
+    def base_counter
       if v = attributes[:turn_counter_next]
         v.to_i.pred
       end
     end
 
     def handicap?
-      turn_counter.even? && location.key == :white
+      base_counter.even? && location.key == :white
     end
 
     def move_infos

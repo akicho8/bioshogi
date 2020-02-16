@@ -8,7 +8,7 @@ module Bioshogi
       assert { sfen.location.key == :black }
       assert { sfen.move_infos == [{:input => "7i6h"}, {:input => "S*2d"}] }
       assert { sfen.piece_counts == {:black => {:silver => 1}, :white => {:silver => 2}} }
-      assert { sfen.turn_counter == 0 }
+      assert { sfen.base_counter == 0 }
       assert { sfen.handicap? == false }
     end
 

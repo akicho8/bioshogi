@@ -1,7 +1,7 @@
 module Bioshogi
   concern :MediatorSerializers do
     def judgment_message
-      "まで#{turn_info.counter}手で#{win_player.call_name}の勝ち"
+      "まで#{turn_info.display_turn}手で#{win_player.call_name}の勝ち"
     end
 
     def to_s(*args)
@@ -22,7 +22,7 @@ module Bioshogi
           end
         end
 
-        s << "手数＝#{turn_info.counter} #{last} まで".squish + "\n"
+        s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
 
         # if current_player.location.key == :white
         s << "\n"
@@ -106,7 +106,7 @@ module Bioshogi
       end
 
       def to_long_sfen
-        (to_long_sfen_without_turn + [turn_info.turn_max.next]).join(" ")
+        (to_long_sfen_without_turn + [turn_info.display_turn.next]).join(" ")
       end
 
       def to_long_sfen_without_turn

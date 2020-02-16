@@ -62,7 +62,7 @@ module Bioshogi
 
     def judgment_message(mediator)
       s = []
-      s << "まで#{mediator.turn_info.counter}手で"
+      s << "まで#{mediator.turn_info.display_turn}手で"
       s << reason
       unless draw
         s << mediator.opponent_player.call_name
