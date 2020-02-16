@@ -48,7 +48,7 @@ module Bioshogi
     end
 
     def inspect
-      "#<#{counter}:#{current_location.name}#{location_call_name}>"
+      "#<#{counter}:#{current_location.name}#{location_call_name}番>"
     end
 
     private

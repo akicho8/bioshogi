@@ -1,5 +1,5 @@
 module Bioshogi
-  module Parser
+  module Formatter
     concern :Ki2Formatter do
       def to_ki2(**options)
         options = {

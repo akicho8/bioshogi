@@ -99,11 +99,15 @@ require_relative "bioshogi/defense_group_info"
 require_relative "bioshogi/brain"
 require_relative "bioshogi/evaluator"
 
+require_relative "bioshogi/csa_header_info"
+require_relative "bioshogi/last_action_info"
+require_relative "bioshogi/kifu_format_info"
+require_relative "bioshogi/chess_clock"
+
+require_relative "bioshogi/formatter/anything"
+
 require_relative "bioshogi/image_formatter"
 require_relative "bioshogi/parser"
 
 require_relative "bioshogi/sfen"
 require_relative "bioshogi/sfen_facade"
-
-require_relative "bioshogi/kifu_format_info"
-require_relative "bioshogi/chess_clock"

@@ -1,5 +1,5 @@
 module Bioshogi
-  module Parser
+  module Formatter
     concern :CsaFormatter do
       # CSA標準棋譜ファイル形式
       # http://www.computer-shogi.org/protocol/record_v22.html ← 見れなくなった

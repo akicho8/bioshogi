@@ -1,5 +1,5 @@
 module Bioshogi
-  module Parser
+  module Formatter
     concern :SafenFormatter do
       def to_sfen(**options)
         mediator.to_sfen(options)

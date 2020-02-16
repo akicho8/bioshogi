@@ -2,14 +2,11 @@
 # frozen-string-literal: true
 
 require_relative "header"
-require_relative "csa_header_info"
-require_relative "last_action_info"
-require_relative "formatter_mod"
 
 module Bioshogi
   module Parser
     class Base
-      include FormatterMod
+      include Formatter::Anything
 
       cattr_accessor(:header_sep) { "：" }
 

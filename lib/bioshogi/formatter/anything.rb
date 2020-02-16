@@ -3,13 +3,13 @@
 require_relative "kif_formatter"
 require_relative "ki2_formatter"
 require_relative "csa_formatter"
-require_relative "safen_formatter"
+require_relative "sfen_formatter"
 require_relative "bod_formatter"
 require_relative "png_formatter"
 
 module Bioshogi
-  module Parser
-    concern :FormatterMod do
+  module Formatter
+    concern :Anything do
       include KifFormatter
       include Ki2Formatter
       include CsaFormatter

@@ -23,6 +23,7 @@ require "./example_helper"
 
 info = Parser.parse("72 投了")
 info.mediator.turn_info.current_location.key # => :white
+info.mediator.turn_info.inspect # => "#<71:△後手番>"
 puts info.to_kif
 
 # >> 先手の備考：居飛車, 相居飛車, 居玉, 相居玉

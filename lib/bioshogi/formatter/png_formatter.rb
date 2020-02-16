@@ -1,5 +1,5 @@
 module Bioshogi
-  module Parser
+  module Formatter
     concern :PngFormatter do
       def to_png(**options)
         image_formatter(options).to_png

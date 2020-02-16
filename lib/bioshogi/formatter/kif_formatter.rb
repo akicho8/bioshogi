@@ -1,5 +1,5 @@
 module Bioshogi
-  module Parser
+  module Formatter
     concern :KifFormatter do
       def to_kif(**options)
         options = {
