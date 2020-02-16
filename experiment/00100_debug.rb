@@ -23,8 +23,7 @@ require "./example_helper"
 
 info = Parser.parse("72 投了")
 info.mediator.turn_info.current_location.key # => :white
-info.mediator.turn_info.current_location.key # => :white
-info.mediator.turn_info.inspect # => "#<71+0:△後手番>"
+info.mediator.turn_info.inspect # => "#<平手:71+0:△後手番>"
 puts info.to_kif
 
 # >> 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
@@ -32,4 +31,4 @@ puts info.to_kif
 # >> 手合割：平手
 # >> 手数----指手---------消費時間--
 # >>   72 投了
-# >> まで0手で先手の勝ち
+# >> まで71手で先手の勝ち

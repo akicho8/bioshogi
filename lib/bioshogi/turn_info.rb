@@ -12,9 +12,27 @@ module Bioshogi
       @turn_base = turn_base || 0
     end
 
+    def inspect
+      "#<#{handicap? ? '駒落ち' : '平手'}:#{turn_base}+#{turn_offset}:#{current_location.name}#{location_call_name}番>"
+    end
+
     # 戦法判定や表示するときに用いる手数
     def display_turn
       turn_base + turn_offset
+    end
+
+    # turn_offset が 0 と仮定したときの手番
+    def turn_offset_zero_location
+      Location[location_consider_handicap.code + turn_base]
+    end
+
+    # 現在の手番
+    def current_location(diff = 0)
+      Location[location_consider_handicap.code + turn_base + turn_offset + diff]
+    end
+
+    def location_call_name
+      current_location.call_name(handicap?)
     end
 
     def handicap?
@@ -35,21 +53,10 @@ module Bioshogi
     end
     ################################################################################
 
-    def current_location(diff = 0)
-      Location[current_location_index(diff)]
-    end
-
-    def location_call_name
-      current_location.call_name(handicap?)
-    end
-
-    def inspect
-      "#<#{turn_base}+#{turn_offset}:#{current_location.name}#{location_call_name}番>"
-    end
-
     private
 
-    def base_location
+    # 駒落ちを考慮した最初の location
+    def location_consider_handicap
       if handicap?
         key = :white
       else
@@ -59,7 +66,7 @@ module Bioshogi
     end
 
     def current_location_index(diff)
-      base_location.code + display_turn + diff
+
     end
   end
 end
