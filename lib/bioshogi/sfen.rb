@@ -47,9 +47,10 @@ module Bioshogi
       hash
     end
 
+    # 現在の局面+1が記載されているので -1 すること
     def turn_counter
-      if attributes[:turn_counter_next]
-        attributes[:turn_counter_next].to_i.pred
+      if v = attributes[:turn_counter_next]
+        v.to_i.pred
       end
     end
 
