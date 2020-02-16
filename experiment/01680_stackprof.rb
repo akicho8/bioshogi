@@ -144,14 +144,14 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    74  | 
 # >>                                   |    75  |         # 手数制限。制限を超えていたらskip
 # >>     1    (0.1%)                   |    76  |         if e.turn_limit
-# >>                                   |    77  |           if e.turn_limit < player.mediator.turn_info.counter.next
+# >>                                   |    77  |           if e.turn_limit < player.mediator.turn_info.turn_offset.next
 # >>                                   |    78  |             throw :skip
 # >>                                   |    79  |           end
 # >>                                   |    80  |         end
 # >>                                   |    81  | 
 # >>                                   |    82  |         # 手数限定。手数が異なっていたらskip
 # >>                                   |    83  |         if e.turn_eq
-# >>                                   |    84  |           if e.turn_eq != player.mediator.turn_info.counter.next
+# >>                                   |    84  |           if e.turn_eq != player.mediator.turn_info.turn_offset.next
 # >>                                   |    85  |             throw :skip
 # >>                                   |    86  |           end
 # >>                                   |    87  |         end

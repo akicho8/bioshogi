@@ -73,7 +73,7 @@ EOT
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info&.key == nil }
+      assert { mediator.board.preset_info == nil }
     end
 
     it "to_board" do
@@ -81,8 +81,8 @@ EOT
     end
 
     it "to_turn_info" do
-      assert { PresetInfo["平手"].to_turn_info.base_location.key   == :black }
-      assert { PresetInfo["香落ち"].to_turn_info.base_location.key == :white }
+      assert { PresetInfo["平手"].to_turn_info.current_location.key   == :black }
+      assert { PresetInfo["香落ち"].to_turn_info.current_location.key == :white }
     end
 
     it "declined_soldiers" do

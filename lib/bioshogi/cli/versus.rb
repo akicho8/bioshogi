@@ -48,7 +48,7 @@ module Bioshogi
           hand = record[:hand]
           mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
 
-          puts "---------------------------------------- [#{mediator.turn_info.counter}] #{hand} (#{diver_class})"
+          puts "---------------------------------------- [#{mediator.turn_info.turn_offset}] #{hand} (#{diver_class})"
           # mediator.players.each { |e| tp e.pressure_report }
 
           tp deepen_score_list_params

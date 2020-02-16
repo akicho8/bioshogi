@@ -48,7 +48,7 @@ module Bioshogi
       end
 
       if md = str.match(/^手数\s*(＝|=)\s*(?<counter>\d+)/)
-        turn_info.base_counter = md[:counter].to_i
+        turn_info.turn_base = md[:counter].to_i
       end
 
       # 手合割は bod の仕様にはないはずだけどあれば駒落ちの判断材料にはなる
@@ -69,8 +69,8 @@ module Bioshogi
       # 手番の反映
       preset_info = PresetInfo.fetch(value || :"平手")
       turn_info.handicap = preset_info.handicap
-      turn_info.base_counter = 0 # FIXME: いる？
-      turn_info.counter = 0      # FIXME: いる？
+      turn_info.turn_base = 0 # FIXME: いる？
+      turn_info.turn_offset = 0      # FIXME: いる？
 
       # 玉の位置を取得
       players.each(&:king_place_update)

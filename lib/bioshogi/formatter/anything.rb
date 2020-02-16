@@ -57,8 +57,8 @@ module Bioshogi
         mediator.turn_info.handicap = handicap?
 
         # 手数＝xxx の読み取り
-        if header.base_counter
-          mediator.turn_info.base_counter = header.base_counter
+        if header.turn_base
+          mediator.turn_info.turn_base = header.turn_base
         end
 
         # KIFに手数の表記があって2手目から始まっているなら2手目までカウンタを進める
@@ -70,7 +70,7 @@ module Bioshogi
 
         if e = move_infos.first
           if v = e[:turn_number]
-            mediator.turn_info.base_counter = v.to_i.pred
+            mediator.turn_info.turn_base = v.to_i.pred
           end
         end
 
@@ -101,7 +101,7 @@ module Bioshogi
         if move_infos.empty?
           if @last_status_params
             if v = @last_status_params[:turn_number]
-              mediator.turn_info.base_counter = v.to_i.pred
+              mediator.turn_info.turn_base = v.to_i.pred
             end
           end
         end

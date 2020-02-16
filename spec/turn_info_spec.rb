@@ -14,8 +14,8 @@ module Bioshogi
 
     it "display_turn" do
       turn_info = TurnInfo.new
-      turn_info.base_counter = 2
-      turn_info.counter = 3
+      turn_info.turn_base = 2
+      turn_info.turn_offset = 3
       assert { turn_info.display_turn == 5 }
       assert { turn_info.order_info.key == :gote }
     end

@@ -2,7 +2,7 @@ module Bioshogi
   module Parser
     class Header
       delegate :[], :to_h, :delete, to: :object
-      attr_reader :base_counter
+      attr_reader :turn_base
 
       cattr_accessor(:system_comment_char) { "#" }
 
@@ -65,8 +65,8 @@ module Bioshogi
         end
 
         # BOD風の指定があれば取り込む
-        if md = source.match(/^手数＝(?<base_counter>\d+)/)
-          @base_counter = md[:base_counter].to_i
+        if md = source.match(/^手数＝(?<turn_base>\d+)/)
+          @turn_base = md[:turn_base].to_i
         end
       end
 

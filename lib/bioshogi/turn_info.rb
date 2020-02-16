@@ -2,37 +2,26 @@
 
 module Bioshogi
   class TurnInfo
-    attr_accessor :base_counter
-    attr_accessor :counter
-    attr_writer :handicap
+    attr_accessor :turn_base    # 何手の局面か？ 通常は0
+    attr_accessor :turn_offset  # 何手から始まっているか関係なく moves のオフセット
+    attr_accessor :handicap     # 駒落ちの場合 true にすると先後を調整する
 
-    def initialize(handicap: false, counter: nil, base_counter: nil)
+    def initialize(handicap: false, turn_base: nil, turn_offset: nil)
       @handicap = handicap
-      @counter = counter || 0
-      @base_counter = base_counter || 0
+      @turn_offset = turn_offset || 0
+      @turn_base = turn_base || 0
     end
 
+    # 戦法判定や表示するときに用いる手数
     def display_turn
-      base_counter + counter
-    end
-
-    def turn_offset
-      counter
+      turn_base + turn_offset
     end
 
     def handicap?
       @handicap
     end
 
-    def base_location
-      if handicap?
-        key = :white
-      else
-        key = :black
-      end
-      Location[key]
-    end
-
+    ################################################################################ FIXME: これは使われてない？
     def order_info
       OrderInfo.fetch(order_key)
     end
@@ -44,6 +33,7 @@ module Bioshogi
         :gote
       end
     end
+    ################################################################################
 
     def current_location(diff = 0)
       Location[current_location_index(diff)]
@@ -54,10 +44,19 @@ module Bioshogi
     end
 
     def inspect
-      "#<#{base_counter}+#{counter}:#{current_location.name}#{location_call_name}番>"
+      "#<#{turn_base}+#{turn_offset}:#{current_location.name}#{location_call_name}番>"
     end
 
     private
+
+    def base_location
+      if handicap?
+        key = :white
+      else
+        key = :black
+      end
+      Location[key]
+    end
 
     def current_location_index(diff)
       base_location.code + display_turn + diff

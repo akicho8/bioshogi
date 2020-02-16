@@ -12,7 +12,7 @@ module Bioshogi
       mediator = Mediator.new
       mediator.placement_from_preset("平手")
       mediator.execute(["７六歩", "３四歩"])
-      assert { mediator.turn_info.counter == 2 }
+      assert { mediator.turn_info.turn_offset == 2 }
       assert { mediator.turn_info.display_turn == 2 }
       mediator.judgment_message == "まで2手で後手の勝ち"
       assert { mediator.to_s == <<-EOT }
@@ -39,7 +39,7 @@ EOT
     it "状態の復元" do
       mediator = Mediator.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
       m2 = mediator.deep_dup
-      assert { mediator.turn_info.counter == m2.turn_info.counter }
+      assert { mediator.turn_info.turn_offset == m2.turn_info.turn_offset }
       assert { mediator.to_kif_a     == m2.to_kif_a }
       assert { mediator.to_ki2_a     == m2.to_ki2_a }
       assert { mediator.to_s              == m2.to_s }

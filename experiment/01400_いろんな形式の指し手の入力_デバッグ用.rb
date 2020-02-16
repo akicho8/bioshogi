@@ -6,7 +6,7 @@ list = ["7776FU","8384FU","7978GI","3334FU","7877GI","8485FU","2726FU","3142GI",
 list.each do |e|
   p e
   mediator.execute(e)
-  p mediator.turn_info.counter
+  p mediator.turn_info.turn_offset
   pp [e, mediator.hand_logs.last.to_kif]
 end
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/board.rb:67:in `rule_validate': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Bioshogi::DeadPieceRuleError)

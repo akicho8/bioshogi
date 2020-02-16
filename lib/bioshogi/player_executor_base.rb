@@ -64,7 +64,7 @@ module Bioshogi
 
       turn_ended_process
 
-      mediator.turn_info.counter += 1
+      mediator.turn_info.turn_offset += 1
 
       turn_changed_process
 
@@ -102,7 +102,7 @@ module Bioshogi
 
       # 一行に情報をつめこむ場合
       if false
-        message = ["[#{player.call_name}][#{mediator.turn_info.counter.next}手目][#{input.input.values.join}]", message].join
+        message = ["[#{player.call_name}][#{mediator.turn_info.turn_offset.next}手目][#{input.input.values.join}]", message].join
       end
 
       str = []

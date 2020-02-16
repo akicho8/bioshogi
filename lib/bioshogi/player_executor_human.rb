@@ -13,7 +13,7 @@ module Bioshogi
     # 大駒コンプリートチェック用にしか使ってない
     def piece_box_added(captured_soldier)
       mediator.kill_counter += 1
-      mediator.critical_turn ||= mediator.turn_info.counter # 開戦前手数
+      mediator.critical_turn ||= mediator.turn_info.turn_offset # 開戦前手数
 
       if perform_skill_monitor_enable?
         TacticInfo.piece_box_added_proc_list.each do |e|

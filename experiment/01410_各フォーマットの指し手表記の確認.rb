@@ -24,7 +24,7 @@ mediator = Mediator.new
 mediator.placement_from_preset("平手")
 info.move_infos.each do |e|
   mediator.execute(e[:input])
-  p [mediator.turn_info.counter, e[:input], mediator.hand_logs.last.to_kif_ki2_csa]
+  p [mediator.turn_info.turn_offset, e[:input], mediator.hand_logs.last.to_kif_ki2_csa]
 end
 # >> [1, "▲７六歩", ["７六歩(77)", "７六歩", "+7776FU"]]
 # >> [2, "△８四歩", ["８四歩(83)", "８四歩", "-8384FU"]]
