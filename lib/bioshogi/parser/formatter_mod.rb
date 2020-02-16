@@ -55,6 +55,8 @@ module Bioshogi
         end
 
         mediator.turn_info.handicap = handicap?
+
+        # 手数＝xxx の読み取り
         if header.turn_counter
           mediator.turn_info.counter = header.turn_counter
         end
@@ -65,6 +67,43 @@ module Bioshogi
             mediator.turn_info.counter += v.to_i.pred
           end
         end
+
+        # これに対応
+        #
+        # 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
+        # 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
+        # 後手の持駒：銀 歩三
+        #   ９ ８ ７ ６ ５ ４ ３ ２ １
+        # +---------------------------+
+        # |v香v飛 ・ ・ ・ ・v玉v桂v香|一
+        # | ・ ・ ・v金 ・ ・v金v銀 ・|二
+        # | ・ ・ ・ ・v歩v歩 歩 ・ ・|三
+        # |v歩 ・ ・ ・ ・v角 桂v歩v歩|四
+        # | ・ ・v歩 銀v銀 桂 ・ ・ ・|五
+        # | 歩 歩 歩 歩 ・ 歩 ・ ・ 歩|六
+        # | ・ ・ 桂 ・ 歩 ・ 金 ・ ・|七
+        # | ・ ・ 金 ・ ・ ・ ・ ・ ・|八
+        # | 香 ・ 玉 ・ ・ ・ ・ 飛 香|九
+        # +---------------------------+
+        # 先手の持駒：角 歩
+        # 手数----指手---------消費時間--
+        #   72 投了
+        # まで71手で先手の勝ち
+        #
+        # 72 で投了ということは 71 まで進める
+        #
+        if move_infos.empty?
+          if @last_status_params
+            if v = @last_status_params[:turn_number]
+              mediator.turn_info.counter = v.to_i.pred
+            end
+          end
+        end
+
+        # さらに
+        # "まで71手で先手の勝ち"
+        # の部分を見てカウンタをセットすることもできるけど
+        # まだ必要になってないのでやらない
 
         mediator.before_run_process # 最初の状態を記録
       end

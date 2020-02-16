@@ -2,6 +2,13 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::KifParser do
+    it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている" do
+      info = Parser.parse("72 投了")
+      assert { info.mediator.turn_info.counter == 71                  } # 現在71手目
+      assert { info.mediator.turn_info.current_location.key == :white } # 手番は△
+      assert { info.to_kif.include?("72 投了")                        } # KIFにしたとき復元している
+    end
+
     it "移動元を明示したのに駒がなかったときの例外に指し手の情報が含まれている" do
       proc { Parser.parse("55歩(56)").to_kif }.should raise_error(PieceNotFoundOnBoard, /棋譜/)
     end

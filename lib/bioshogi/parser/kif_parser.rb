@@ -60,7 +60,7 @@ module Bioshogi
           else
             if md = line.match(line_regexp2)
               used_seconds = min_sec_str_to_seconds(md[:clock_part])
-              @last_status_params = {last_action_key: md[:last_action_key], used_seconds: used_seconds}
+              @last_status_params = {turn_number: md[:turn_number], last_action_key: md[:last_action_key], used_seconds: used_seconds}
             end
           end
         end
