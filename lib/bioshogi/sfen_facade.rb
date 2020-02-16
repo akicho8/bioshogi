@@ -1,8 +1,8 @@
 # frozen-string-literal: true
 module Bioshogi
-  class Usi
+  class SfenFacade
     # mediator 側に sfen を受け取るメソッドを入れる方法もある
-    class Class1
+    class Setup
       # @mediator = Mediator.new
       # @mediator.placement_from_preset("平手")
       # @mediator.to_sfen                # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
@@ -43,7 +43,7 @@ module Bioshogi
       end
     end
 
-    class Class2 < Class1
+    class SetupFromSource < Setup
       attr_accessor :mediator
 
       def execute(source)

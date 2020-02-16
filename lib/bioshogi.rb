@@ -103,7 +103,7 @@ require_relative "bioshogi/image_formatter"
 require_relative "bioshogi/parser"
 
 require_relative "bioshogi/sfen"
-require_relative "bioshogi/usi"
+require_relative "bioshogi/sfen_facade"
 
 require_relative "bioshogi/kifu_format_info"
 require_relative "bioshogi/chess_clock"

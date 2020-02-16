@@ -26,9 +26,9 @@ module Bioshogi
       end
 
       def board_setup(mediator)
-        usi = Usi::Class1.new
-        usi.sfen = @sfen
-        usi.board_setup(mediator)
+        e = SfenFacade::Setup.new
+        e.sfen = @sfen
+        e.board_setup(mediator)
       end
     end
   end

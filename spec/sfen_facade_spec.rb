@@ -24,7 +24,7 @@ module Bioshogi
     end
 
     it "入力" do
-      usi = Usi::Class2.new
+      usi = SfenFacade::SetupFromSource.new
       usi.execute("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
       assert { usi.mediator.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
       usi.execute("position startpos moves 7i6h")
