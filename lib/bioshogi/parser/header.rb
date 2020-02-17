@@ -3,6 +3,7 @@ module Bioshogi
     class Header
       delegate :[], :to_h, :delete, to: :object
       attr_reader :turn_base
+      attr_reader :force_location
 
       cattr_accessor(:system_comment_char) { "#" }
 
@@ -65,8 +66,17 @@ module Bioshogi
         end
 
         # BOD風の指定があれば取り込む
-        if md = source.match(/^手数＝(?<turn_base>\d+)/)
+        if md = source.match(/^手数(＝|=)(?<turn_base>\d+)/)
           @turn_base = md[:turn_base].to_i
+        end
+
+        # 「後手番」の指定があれば @force_location = Location(:white)
+        Location.each do |e|
+          e.call_names.each do |e|
+            if source.match?(/^#{e}番/)
+              @force_location = Location.fetch(e)
+            end
+          end
         end
       end
 

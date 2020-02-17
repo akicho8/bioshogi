@@ -112,7 +112,7 @@ EOT
       end
     end
 
-    describe "2手目から始まる棋譜が読めて正しく変換できる" do
+    describe "2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい" do
       before do
         @info = Parser.parse(<<~EOT)
         後手の持駒：なし
@@ -163,17 +163,17 @@ EOT
       it "to_kif" do
         assert { @info.to_kif(header_skip: true) == <<~EOT }
 手数----指手---------消費時間--
-   2 ５四歩(53)   (00:00/00:00:00)
-   3 ３六歩(37)   (00:00/00:00:00)
-   4 投了
-まで3手で先手の勝ち
+   1 ５四歩(53)   (00:00/00:00:00)
+   2 ３六歩(37)   (00:00/00:00:00)
+   3 投了
+まで2手で先手の勝ち
 EOT
       end
 
       it "to_ki2" do
         assert { @info.to_ki2(header_skip: true) == <<~EOT }
 △５四歩 ▲３六歩
-まで3手で先手の勝ち
+まで2手で先手の勝ち
 EOT
       end
 

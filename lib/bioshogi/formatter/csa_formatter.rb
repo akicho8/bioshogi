@@ -52,7 +52,7 @@ module Bioshogi
         end
 
         obj = Mediator.new
-        board_setup(obj)
+        mediator_board_setup(obj)
         out << obj.to_csa(options)
 
         if options[:compact]

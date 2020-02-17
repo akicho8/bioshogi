@@ -23,7 +23,7 @@ module Bioshogi
       attr_accessor :sfen
 
       # mediator 側に sfen を受け取るメソッドを入れる方法も検討
-      def board_setup(mediator)
+      def mediator_board_setup(mediator)
         sfen.soldiers.each do |soldier|
           player = mediator.player_at(soldier.location)
           player.board.place_on(soldier, validate: true)
@@ -50,7 +50,7 @@ module Bioshogi
         @sfen = Sfen.parse(source)
 
         @mediator = Mediator.new
-        board_setup(@mediator)
+        mediator_board_setup(@mediator)
         execute_moves(@mediator)
       end
     end

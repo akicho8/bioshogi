@@ -7,6 +7,8 @@ require_relative "sfen_formatter"
 require_relative "bod_formatter"
 require_relative "png_formatter"
 
+require_relative "header_builder"
+
 module Bioshogi
   module Formatter
     concern :Anything do
@@ -16,6 +18,8 @@ module Bioshogi
       include SfenFormatter
       include BodFormatter
       include PngFormatter
+
+      include HeaderBuilder
 
       def mediator_run
         mediator
@@ -34,12 +38,18 @@ module Bioshogi
 
       def mediator
         @mediator ||= mediator_new.tap do |e|
-          board_setup(e)
+          mediator_board_setup(e)
           mediator_run_all(e)
         end
       end
 
-      def board_setup(mediator)
+      def initial_mediator
+        mediator_new.tap do |e|
+          mediator_board_setup(e)
+        end
+      end
+
+      def mediator_board_setup(mediator)
         Location.each do |e|
           e.call_names.each do |e|
             if v = header["#{e}の持駒"]
@@ -47,6 +57,9 @@ module Bioshogi
             end
           end
         end
+
+        # puts @board_source
+        # exit
 
         if @board_source
           mediator.board.placement_from_shape(@board_source)
@@ -56,52 +69,74 @@ module Bioshogi
 
         mediator.turn_info.handicap = handicap?
 
-        # 手数＝xxx の読み取り
-        if header.turn_base
-          mediator.turn_info.turn_base = header.turn_base
+        turn_base_set_p = false
+
+        # 手数＝xxx の読み取り。ぴよ将棋では読み込まれるけどこの部分がエラー表示される
+        unless turn_base_set_p
+          if header.turn_base
+            mediator.turn_info.turn_base = header.turn_base
+            turn_base_set_p = true
+          end
+        end
+
+        # 「後手番」だけ書いた行がある場合
+        unless turn_base_set_p
+          if v = header.force_location
+            if v.key == :white
+              mediator.turn_info.turn_base = 1
+              turn_base_set_p = true
+            end
+          end
         end
 
         # KIFに手数の表記があって2手目から始まっているなら2手目までカウンタを進める
+        # KIFはかならず1から始まるルールらしいのでこれは間違った解釈
         #
         # 手数----指手---------消費時間--
         #   3 76歩
         #
         # であれば 2 を設定
-
-        if e = move_infos.first
-          if v = e[:turn_number]
-            mediator.turn_info.turn_base = v.to_i.pred
+        unless turn_base_set_p
+          if e = move_infos.first
+            if v = e[:turn_number]
+              mediator.turn_info.turn_base = v.to_i.pred
+              turn_base_set_p = true
+            end
           end
         end
 
-        # これに対応
-        #
-        # 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
-        # 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
-        # 後手の持駒：銀 歩三
-        #   ９ ８ ７ ６ ５ ４ ３ ２ １
-        # +---------------------------+
-        # |v香v飛 ・ ・ ・ ・v玉v桂v香|一
-        # | ・ ・ ・v金 ・ ・v金v銀 ・|二
-        # | ・ ・ ・ ・v歩v歩 歩 ・ ・|三
-        # |v歩 ・ ・ ・ ・v角 桂v歩v歩|四
-        # | ・ ・v歩 銀v銀 桂 ・ ・ ・|五
-        # | 歩 歩 歩 歩 ・ 歩 ・ ・ 歩|六
-        # | ・ ・ 桂 ・ 歩 ・ 金 ・ ・|七
-        # | ・ ・ 金 ・ ・ ・ ・ ・ ・|八
-        # | 香 ・ 玉 ・ ・ ・ ・ 飛 香|九
-        # +---------------------------+
-        # 先手の持駒：角 歩
-        # 手数----指手---------消費時間--
-        #   72 投了
-        # まで71手で先手の勝ち
-        #
-        # 72 で投了ということは 71 まで進める
-        #
-        if move_infos.empty?
-          if @last_status_params
-            if v = @last_status_params[:turn_number]
-              mediator.turn_info.turn_base = v.to_i.pred
+        # こちらも間違った解釈
+        # 手数が2以上から始まるKIFはないけど一応対応しとこう
+        unless turn_base_set_p
+          #
+          # 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
+          # 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
+          # 後手の持駒：銀 歩三
+          #   ９ ８ ７ ６ ５ ４ ３ ２ １
+          # +---------------------------+
+          # |v香v飛 ・ ・ ・ ・v玉v桂v香|一
+          # | ・ ・ ・v金 ・ ・v金v銀 ・|二
+          # | ・ ・ ・ ・v歩v歩 歩 ・ ・|三
+          # |v歩 ・ ・ ・ ・v角 桂v歩v歩|四
+          # | ・ ・v歩 銀v銀 桂 ・ ・ ・|五
+          # | 歩 歩 歩 歩 ・ 歩 ・ ・ 歩|六
+          # | ・ ・ 桂 ・ 歩 ・ 金 ・ ・|七
+          # | ・ ・ 金 ・ ・ ・ ・ ・ ・|八
+          # | 香 ・ 玉 ・ ・ ・ ・ 飛 香|九
+          # +---------------------------+
+          # 先手の持駒：角 歩
+          # 手数----指手---------消費時間--
+          #   72 投了
+          # まで71手で先手の勝ち
+          #
+          # 72 で投了ということは 71 まで進める
+          #
+          if move_infos.empty?
+            if @last_status_params
+              if v = @last_status_params[:turn_number]
+                mediator.turn_info.turn_base = v.to_i.pred
+                turn_base_set_p = true
+              end
             end
           end
         end
@@ -110,6 +145,8 @@ module Bioshogi
         # "まで71手で先手の勝ち"
         # の部分を見てカウンタをセットすることもできるけど
         # まだ必要になってないのでやらない
+        #
+        # 71手目からはじまるKIFはないのでこれも間違った解釈
 
         mediator.before_run_process # 最初の状態を記録
       end
@@ -274,10 +311,6 @@ module Bioshogi
         @skill_set_hash ||= {}
       end
 
-      def header_part_string
-        @header_part_string ||= __header_part_string
-      end
-
       def judgment_message
         mediator_run
 
@@ -335,68 +368,6 @@ module Bioshogi
       end
 
       private
-
-      def __header_part_string
-        mediator_run
-
-        obj = Mediator.new
-        board_setup(obj)
-
-        if e = obj.board.preset_info
-          header["手合割"] = e.name
-
-          # 手合割がわかるとき持駒が空なら消す
-          Location.each do |e|
-            e.call_names.each do |e|
-              key = "#{e}の持駒"
-              if v = header[key]
-                if v.blank?
-                  header.delete(key)
-                end
-              end
-            end
-          end
-
-          raw_header_part_string
-        else
-          # 手合がわからないので図を出す場合
-          # 2つヘッダー行に挟む形になっている仕様が特殊でデータの扱いが難しい
-
-          # header["手合割"] ||= "その他"
-
-          # 「なし」を埋める
-          Location.each do |location|
-            key = "#{location.call_name(obj.turn_info.handicap?)}の持駒"
-            v = header[key]
-            if v.blank?
-              header[key] = "なし"
-            end
-          end
-
-          # 駒落ちの場合は「上手」「下手」の順に並べる (盤面をその間に入れるため)
-          Location.reverse_each do |e|
-            key = "#{e.call_name(obj.turn_info.handicap?)}の持駒"
-            if v = header.delete(key)
-              header[key] = v
-            end
-          end
-
-          s = raw_header_part_string
-          key = "#{Location[:white].call_name(obj.turn_info.handicap?)}の持駒"
-          s.gsub(/(#{key}：.*\n)/, '\1' + obj.board.to_s)
-        end
-      end
-
-      def raw_header_part_string
-        s = raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
-
-        if @parser_options[:support_for_piyo_shogi_v4_1_5]
-          s = s.gsub(/(の持駒：.*)$/, '\1 ')
-        end
-
-        s
-
-      end
 
       # mb_ljust("あ", 3)               # => "あ "
       # mb_ljust("1", 3)                # => "1  "

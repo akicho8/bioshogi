@@ -7,7 +7,7 @@ module Bioshogi
       assert { info.mediator.turn_info.turn_offset == 0               } # 内部的には0手目
       assert { info.mediator.turn_info.display_turn == 71             } # 表示するなら現在71手目
       assert { info.mediator.turn_info.current_location.key == :white } # 手番は△
-      assert { info.to_kif.include?("72 投了")                        } # KIFにしたとき復元している
+      assert { info.to_kif.include?("1 投了")                         } # KIFにしたとき復元している→しないのが正しい
     end
 
     it "移動元を明示したのに駒がなかったときの例外に指し手の情報が含まれている" do

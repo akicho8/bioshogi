@@ -25,10 +25,10 @@ module Bioshogi
         @sfen.handicap?
       end
 
-      def board_setup(mediator)
+      def mediator_board_setup(mediator)
         e = SfenFacade::Setup.new
         e.sfen = @sfen
-        e.board_setup(mediator)
+        e.mediator_board_setup(mediator)
       end
     end
   end

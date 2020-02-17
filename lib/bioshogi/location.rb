@@ -46,6 +46,10 @@ module Bioshogi
           self[:white]
         end
       end
+
+      # def call_names
+      #   @call_names ||= flat_map(&:call_names)
+      # end
     end
 
     def call_names

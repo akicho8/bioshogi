@@ -109,7 +109,6 @@ module Bioshogi
         @move_infos.last[:comments] ||= []
         @move_infos.last[:comments] << comment
       end
-
     end
   end
 end

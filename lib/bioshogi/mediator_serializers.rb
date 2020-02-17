@@ -22,12 +22,18 @@ module Bioshogi
           end
         end
 
-        s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
+        if options[:display_turn_skip]
+        else
+          s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
+        end
 
-        # if current_player.location.key == :white
-        s << "\n"
-        s << "#{current_player.call_name}番\n"
-        # end
+        if current_player.location.key == :white || true
+          if options[:compact]
+          else
+            s << "\n"
+          end
+          s << "#{current_player.call_name}番\n"
+        end
 
         s.join
       end
