@@ -13,7 +13,7 @@ module Bioshogi
       include KifFormatter
       include Ki2Formatter
       include CsaFormatter
-      include SafenFormatter
+      include SfenFormatter
       include BodFormatter
       include PngFormatter
 

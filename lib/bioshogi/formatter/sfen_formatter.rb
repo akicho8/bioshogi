@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :SafenFormatter do
+    concern :SfenFormatter do
       def to_sfen(**options)
         mediator.to_sfen(options)
       end
