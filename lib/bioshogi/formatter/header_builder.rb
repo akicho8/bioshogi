@@ -40,8 +40,11 @@ module Bioshogi
           # >> 後手の持駒：銀 歩三
           # >> 先手の持駒：角 歩
           # を削除する
+          # また駒落ちなのに「先手」の名前の場合もあるので区別せずに削除する
           Location.each do |e|
-            header.delete("#{e.call_name(m.turn_info.handicap?)}の持駒")
+            e.call_names.each do |e|
+              header.delete("#{e}の持駒")
+            end
           end
 
           # Location.reverse_each do |e|

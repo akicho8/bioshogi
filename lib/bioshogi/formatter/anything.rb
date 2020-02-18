@@ -50,6 +50,7 @@ module Bioshogi
       end
 
       def mediator_board_setup(mediator)
+        # 持駒を反映する
         Location.each do |e|
           e.call_names.each do |e|
             if v = header["#{e}の持駒"]
