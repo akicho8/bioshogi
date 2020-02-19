@@ -133,9 +133,9 @@ module Bioshogi
         end
       end
 
-      def move_list(soldier, **options)
-        Movabler.move_list(self, soldier, options)
-      end
+      # def move_list(soldier, **options)
+      #   Movabler.move_list(self, soldier, options)
+      # end
 
       def to_s_soldiers
         surface.values.collect(&:name_without_location).sort.join(" ")
