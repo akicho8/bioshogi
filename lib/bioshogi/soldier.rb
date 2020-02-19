@@ -321,7 +321,7 @@ module Bioshogi
     #
     def legal_move?(mediator)
       sandbox_execute(mediator) do
-        !mediator.player_at(soldier.location).mate_danger?
+        !mediator.player_at(soldier.location).mate_danger? # 「自玉に詰みがある」の反対
       end
     end
   end

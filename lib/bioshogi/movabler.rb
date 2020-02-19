@@ -24,7 +24,7 @@ module Bioshogi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def move_list(board, soldier, **options)
+    def move_list(mediator, soldier, **options)
       Enumerator.new do |yielder|
         soldier.all_vectors.each do |vector|
           place = soldier.place
@@ -36,7 +36,7 @@ module Bioshogi
               break
             end
 
-            captured_soldier = board.surface[place]
+            captured_soldier = mediator.board.surface[place]
 
             # 自分の駒に衝突したら終わり
             if captured_soldier && captured_soldier.location == soldier.location
@@ -73,6 +73,14 @@ module Bioshogi
           return
         end
       end
+
+      # if options[:legal_only]
+      #   if move_hand.legal_move?(mediator)
+      #     y << move_hand
+      #   end
+      # else
+      #   y << move_hand
+      # end
 
       # 死に駒にならないのであれば有効
       soldier = origin_soldier.merge(place: place)

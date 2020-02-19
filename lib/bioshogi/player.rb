@@ -64,9 +64,9 @@ module Bioshogi
       piece_key = piece.key
       soldiers.find_all do |e|
         true &&
-          e.promoted == promoted &&                                   # 成っているかどうかで絞る
-          e.piece.key == piece_key &&                                 # 同じ種類に絞る
-          e.move_list(board).any? { |e| e.soldier.place == place } && # 目的地に来れる
+          e.promoted == promoted &&                                      # 成っているかどうかで絞る
+          e.piece.key == piece_key &&                                    # 同じ種類に絞る
+          e.move_list(mediator).any? { |e| e.soldier.place == place } && # 目的地に来れる
           true
       end
     end
@@ -191,10 +191,8 @@ module Bioshogi
       #
       def legal_all_hands
         Enumerator.new do |y|
-          move_hands.each do |e|
-            if e.legal_move?(mediator)
-              y << e
-            end
+          move_hands(legal_only: true).each do |e|
+            y << e
           end
           drop_hands.each do |e|
             if e.legal_move?(mediator)
@@ -209,12 +207,19 @@ module Bioshogi
         options = {
           promoted_preferred: true,  # 成と不成は成だけ生成する？
           king_captured_only: false, # 玉を取る手だけ生成する？
+          legal_only: false,         # 合法手のみ生成する？ (自玉が取らない手のこと)
         }.merge(options)
 
         Enumerator.new do |y|
           soldiers.each do |soldier|
-            soldier.move_list(board, options).each do |move_hand|
-              y << move_hand
+            soldier.move_list(mediator, options).each do |move_hand|
+              if options[:legal_only]
+                if move_hand.legal_move?(mediator)
+                  y << move_hand
+                end
+              else
+                y << move_hand
+              end
             end
           end
         end
@@ -257,7 +262,7 @@ module Bioshogi
       private
 
       def move_list(soldier, **options)
-        Movabler.move_list(board, soldier, options)
+        Movabler.move_list(mediator, soldier, options)
       end
     end
 

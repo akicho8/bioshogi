@@ -17,15 +17,16 @@ module Bioshogi
       +------+
         EOT
       soldier = mediator.board["13"]
-      assert { soldier.move_list(mediator.board).collect(&:to_kif) == ["▲２二銀成(13)", "▲２二銀(13)", "▲２四銀成(13)", "▲２四銀(13)"] }
-      assert { soldier.move_list(mediator.board, promoted_preferred: true).collect(&:to_kif) == ["▲２二銀成(13)", "▲２四銀成(13)"] }
+      assert { soldier.move_list(mediator).collect(&:to_kif) == ["▲２二銀成(13)", "▲２二銀(13)", "▲２四銀成(13)", "▲２四銀(13)"] }
+      assert { soldier.move_list(mediator, promoted_preferred: true).collect(&:to_kif) == ["▲２二銀成(13)", "▲２四銀成(13)"] }
     end
 
     it "移動可能な筋の取得(超重要なテスト)" do
+      mediator = Mediator.new
       Board.dimensiton_change([1, 5]) do
         test = -> s {
           soldier = Soldier.from_str(s)
-          soldier.move_list(Board.new).collect(&:to_kif).sort
+          soldier.move_list(mediator).collect(&:to_kif).sort
         }
         assert { test["▲１五香"] == ["▲１一香成(15)", "▲１三香(15)", "▲１三香成(15)", "▲１二香(15)", "▲１二香成(15)", "▲１四香(15)"] }
         assert { test["▲１五杏"] == ["▲１四杏(15)"] }
@@ -35,13 +36,13 @@ module Bioshogi
     it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
       Board.dimensiton_change([1, 5]) do
         mediator = Mediator.facade(init: "▲１五香 △１三歩")
-        assert { mediator.board["１五"].move_list(mediator.board).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１三香(15)"] }
+        assert { mediator.board["１五"].move_list(mediator).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１三香(15)"] }
       end
     end
 
     it "初期配置での移動可能な座標" do
       mediator = Mediator.start
-      test = -> place { mediator.board[place].move_list(mediator.board).collect(&:to_kif) }
+      test = -> place { mediator.board[place].move_list(mediator).collect(&:to_kif) }
       assert { test["７七"] == ["▲７六歩(77)"]                                                                                 } # 歩
       assert { test["９九"] == ["▲９八香(99)"]                                                                                 } # 香
       assert { test["８九"] == []                                                                                               } # 桂
