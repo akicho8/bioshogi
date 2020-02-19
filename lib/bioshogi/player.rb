@@ -213,13 +213,7 @@ module Bioshogi
         Enumerator.new do |y|
           soldiers.each do |soldier|
             soldier.move_list(mediator, options).each do |move_hand|
-              if options[:legal_only]
-                if move_hand.legal_move?(mediator)
-                  y << move_hand
-                end
-              else
-                y << move_hand
-              end
+              y << move_hand
             end
           end
         end

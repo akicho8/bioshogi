@@ -44,7 +44,7 @@ module Bioshogi
             end
 
             # 空または相手駒の升には行ける(取れる)
-            piece_store(soldier, place, captured_soldier, yielder, options)
+            piece_store(mediator, soldier, place, captured_soldier, yielder, options)
 
             # 相手駒があるのでこれ以上は進めない
             if captured_soldier
@@ -66,7 +66,7 @@ module Bioshogi
     # でも place に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(origin_soldier, place, captured_soldier, yielder, options)
+    def piece_store(mediator, origin_soldier, place, captured_soldier, yielder, options)
       if options[:king_captured_only]
         if captured_soldier && captured_soldier.piece.key == :king
         else
@@ -74,32 +74,43 @@ module Bioshogi
         end
       end
 
-      # if options[:legal_only]
-      #   if move_hand.legal_move?(mediator)
-      #     y << move_hand
-      #   end
-      # else
-      #   y << move_hand
-      # end
-
       # 死に駒にならないのであれば有効
       soldier = origin_soldier.merge(place: place)
 
       # 成れるなら成る
       if origin_soldier.next_promotable?(soldier.place)
-        yielder << MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+        move_hand = MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
 
-        if options[:promoted_preferred]
-          # 成と不成の両方がある(かもしれない)場合は成の方だけ生成する
-          # これは本当はよくない
-          # 暫定的な対処
-          # 探索があまりに重いのでこうしている
-          return
+        # 自玉に王手がかかる手は除外するか？
+        if options[:legal_only] && !move_hand.legal_move?(mediator)
+          move_hand = nil
+        end
+
+        if move_hand
+          yielder << move_hand
+
+          if options[:promoted_preferred]
+            # 成と不成の両方がある(かもしれない)場合は成の方だけ生成する
+            # これは本当はよくない
+            # 暫定的な対処
+            # 探索があまりに重いのでこうしている
+            return
+          end
         end
       end
 
       if soldier.alive?
-        yielder << MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+        # すでに成っている(または成らない)手を生成
+        move_hand = MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+
+        # 自玉に王手がかかる手は除外するか？
+        if options[:legal_only] && !move_hand.legal_move?(mediator)
+          move_hand = nil
+        end
+
+        if move_hand
+          yielder << move_hand
+        end
       end
     end
   end
