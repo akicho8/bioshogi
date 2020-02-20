@@ -57,7 +57,7 @@ info[:piece].name # => "歩"
 #+BEGIN_SRC ruby
 mediator = Mediator.start
 loop do
-  hand = mediator.current_player.brain.normal_all_hands.sample
+  hand = mediator.current_player.brain.create_all_hands.sample
   mediator.execute(hand)
   captured_soldier = mediator.opponent_player.executor.captured_soldier
   if executor.captured_soldier && executor.captured_soldier.piece.key == :king

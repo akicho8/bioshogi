@@ -326,7 +326,7 @@ module Bioshogi
     end
 
     # 王手か？
-    def oute_move?(mediator)
+    def mate_hand?(mediator)
       sandbox_execute(mediator) do
         mediator.player_at(soldier.location.flip).mate_danger?
       end

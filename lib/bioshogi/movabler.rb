@@ -109,7 +109,7 @@ module Bioshogi
 
       # 相手に王手がかかる手だけにする
       if options[:mate_only]
-        if !move_hand.oute_move?(mediator)
+        if !move_hand.mate_hand?(mediator)
           return
         end
       end

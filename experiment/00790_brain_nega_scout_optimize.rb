@@ -82,5 +82,5 @@ system "stackprof stackprof.dump"
 # >>        106   (3.2%)          20   (0.6%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>         13   (0.4%)          13   (0.4%)     Bioshogi::Board::UpdateMethods#soldier_counts_surface
 # >>         82   (2.5%)          11   (0.3%)     Bioshogi::Board::PillerMethods#place_on
-# >>        592  (17.8%)          10   (0.3%)     Bioshogi::Player::BrainMethods#normal_all_hands
+# >>        592  (17.8%)          10   (0.3%)     Bioshogi::Player::BrainMethods#create_all_hands
 # >>        236   (7.1%)          10   (0.3%)     Bioshogi::Place#invalid?

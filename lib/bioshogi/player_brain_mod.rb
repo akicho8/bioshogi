@@ -9,7 +9,7 @@ module Bioshogi
     end
 
     # 非合法手を含む(ピンを考慮しない)すべての指し手の生成
-    def normal_all_hands(**options)
+    def create_all_hands(**options)
       Enumerator.new do |y|
         move_hands(options).each do |e|
           y << e
@@ -31,7 +31,7 @@ module Bioshogi
     # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
     #
     def legal_all_hands(**options)
-      normal_all_hands(legal_only: true)
+      create_all_hands(legal_only: true)
     end
 
     # 盤上の駒の全手筋
@@ -87,7 +87,7 @@ module Bioshogi
 
             if options[:mate_only]
               # 王手がかからない手を除外
-              if !drop_hand.oute_move?(mediator)
+              if !drop_hand.mate_hand?(mediator)
                 next
               end
             end

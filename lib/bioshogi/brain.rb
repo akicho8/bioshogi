@@ -16,13 +16,14 @@ module Bioshogi
           "▲形勢"     => e[:score2], # 先手視点の評価値
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
+          "他の手"     => e[:other].collect { |a| a.collect(&:to_s).join(" ") }.join(", ")
         }
       end
     end
 
     attr_accessor :player, :params
 
-    delegate :mediator, :normal_all_hands, to: :player
+    delegate :mediator, :create_all_hands, to: :player
     delegate :logger, :to => "Bioshogi", allow_nil: true
 
     def initialize(player, **params)
@@ -61,10 +62,10 @@ module Bioshogi
         params[:out_of_time] ||= Time.now + params[:time_limit]
       end
 
-      if params[:oute_mode]
-        children = player.normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
+      if params[:mate_mode]
+        children = player.create_all_hands(promoted_only: false, legal_only: true, mate_only: true) # 王手になる手だけを生成
       else
-        children = player.normal_all_hands(legal_only: true)
+        children = player.create_all_hands(legal_only: true)
       end
 
       # if true
@@ -100,9 +101,9 @@ module Bioshogi
 
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv = diver.dive # ここで TLE 発生
+              v, pv, other = diver.dive # ここで TLE 発生
               v = -v
-              tmp_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+              tmp_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time, other: other || []}
               # 1手詰: (v >= INF_MAX - 0)
               # 3手詰: (v >= INF_MAX - 2)
               # 5手詰: (v >= INF_MAX - 4)
@@ -168,7 +169,7 @@ module Bioshogi
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)
-      normal_all_hands.collect { |hand|
+      create_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v, pv = diver.dive
@@ -179,7 +180,7 @@ module Bioshogi
 
     def fast_score_list(**params)
       evaluator = player.evaluator(params.merge(params))
-      normal_all_hands.collect { |hand|
+      create_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v = evaluator.score
@@ -260,16 +261,16 @@ module Bioshogi
 
     # 手を生成
     def collect_children(player)
-      if params[:oute_mode]
+      if params[:mate_mode]
         if params[:base_player] == player
           # 詰将棋モードなら自分だけ王手のみを生成する
-          player.normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
+          player.create_all_hands(promoted_only: false, legal_only: true, mate_only: true)
         else
           # 王手を外す手だけを生成する
-          player.normal_all_hands(promoted_only: false, legal_only: true)
+          player.create_all_hands(promoted_only: false, legal_only: true)
         end
       else
-        player.normal_all_hands
+        player.create_all_hands
       end
     end
   end
@@ -292,7 +293,7 @@ module Bioshogi
         @eval_counter += 1
         score = player.evaluator(params).score
         log.call("%+d" % score) if log
-        return [score, []]
+        return [score, [], []]
       end
 
       children = collect_children(player)
@@ -302,12 +303,13 @@ module Bioshogi
       best_pv = []
       best_hand = nil
       children_exist = false
+      onajino = []
 
       children.each do |hand|
-        unless hand.legal_hand?(mediator)
-          # log.call "skip: #{hand}" if log
-          next
-        end
+        # unless hand.legal_hand?(mediator)
+        #   # log.call "skip: #{hand}" if log
+        #   next
+        # end
         children_exist = true
 
         log.call "#{hand}" if log
@@ -327,7 +329,7 @@ module Bioshogi
         v = nil
         pv = nil
         hand.sandbox_execute(mediator) do
-          v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
+          v, pv, other = dive(player.opponent_player, depth + 1, -beta, -alpha)
           v = -v
         end
         # p [alpha, v]
@@ -337,6 +339,11 @@ module Bioshogi
           best_pv = [hand, *pv]
           # best_pv = foo + [hand]
         end
+
+        # if pv.include?("(詰み)")
+        #   onajino << [hand, *pv]
+        # end
+
         if alpha >= beta
           break
           # end
@@ -348,6 +355,10 @@ module Bioshogi
           # 手が一つも生成できなかった場合は詰んでいる
           alpha = -score_max_for(depth)
           best_pv = ["(詰み)"] # 注意。-INF_MAX を返すと alpha < v が成立しないため読み筋が返せない。
+
+          # if f = params[:mate_proc]
+          #   f.call(1)
+          # end
         end
       end
 
@@ -360,12 +371,12 @@ module Bioshogi
       end
 
       # p [alpha, best_pv]
-      [alpha, best_pv]
+      [alpha, best_pv, onajino]
     end
   end
 
-  class NegaScoutDiver < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+  class NegaAlphaDiver2 < Diver
+    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, te_list = [])
       out_of_time_check
 
       mediator = player.mediator
@@ -382,7 +393,74 @@ module Bioshogi
         @eval_counter += 1
         score = player.evaluator(params).score
         log.call("%+d" % score) if log
-        return [score, []]
+        return [score, [], []]
+      end
+
+      children = collect_children(player)
+
+      best_pv = []
+      best_hand = nil
+      children_exist = false
+      onajino = []
+
+      children.each do |hand|
+        children_exist = true
+        log.call "#{hand}" if log
+        v = nil
+        pv = nil
+        hand.sandbox_execute(mediator) do
+          v, pv, other = dive(player.opponent_player, depth + 1, -beta, -alpha, te_list + [hand])
+          v = -v
+        end
+        if alpha < v
+          alpha = v
+          best_hand = hand
+          best_pv = [hand, *pv]
+        end
+        if alpha >= beta
+          break
+        end
+      end
+
+      if true
+        unless children_exist
+          alpha = -score_max_for(depth)
+          best_pv = ["(詰み)"] # 注意。-INF_MAX を返すと alpha < v が成立しないため読み筋が返せない。
+          if f = params[:mate_proc]
+            f.call(te_list)
+          end
+        end
+      end
+
+      if best_hand
+        log.call "★確 #{best_hand} (#{alpha})" if log
+      end
+
+      [alpha, best_pv, onajino]
+    end
+  end
+
+  # https://ja.wikipedia.org/wiki/Negascout
+  class NegaScoutDiver < Diver
+    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+      out_of_time_check
+
+      mediator = player.mediator
+
+      if depth == 0
+        @eval_counter = 0
+      end
+
+      if logger
+        log = -> s { logger_info(s, player: player, depth: depth) }
+      end
+
+      # 一番深く潜ったところで局面を評価する
+      if depth_max <= depth
+        @eval_counter += 1
+        score = player.evaluator(params).score
+        log.call("%+d" % score) if log
+        return [score, [], []]
       end
 
       children = collect_children(player)
@@ -416,9 +494,9 @@ module Bioshogi
         else
           log.call "#{hand}" if log
           hand.sandbox_execute(mediator) do
-            v, pv = dive(player.opponent_player, depth + 1, alpha2, beta2)
+            v, pv, other = dive(player.opponent_player, depth + 1, alpha2, beta2)
             v = -v
-            [v, pv]
+            [v, pv, other]
             # end
           end
         end
@@ -429,6 +507,7 @@ module Bioshogi
       # max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする
       best_pv = ["(詰み)"]      # 一度も更新されなかったら手がないということなので詰んでいる
 
+      # ここはなくてもいいけどベストな手から始めることで枝が減る
       if true
         # 効果的なもの順に並び換える→どうやって？？？
         # children = mediator.move_ordering(player, children)
@@ -451,11 +530,11 @@ module Bioshogi
         if hand
           # mate_check.call(hand)
 
-          v, pv = recursive.(hand, -beta, -alpha)
+          v, pv, other = recursive.(hand, -beta, -alpha)
           max_v = v
           best_pv = [hand, *pv]
           if beta <= v
-            return [v, [hand, *pv]]
+            return [v, [hand, *pv], other]
           end
           if alpha < v
             alpha = v
@@ -463,37 +542,42 @@ module Bioshogi
         end
       end
 
+      onajino = []
       children.each do |hand|
         unless hand.legal_hand?(mediator)
           next
         end
 
         # mate_check.call(hand)
-        v, pv = recursive.(hand, -(alpha + 1), -alpha) # null window search
+        v, pv, other = recursive.(hand, -(alpha + 1), -alpha) # null window search
         if beta <= v
-          return [v, [hand, *pv]]
+          return [v, [hand, *pv], other]
         end
         if alpha < v
           alpha = v
-          v, pv = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
+          v, pv, other = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
           if beta <= v
-            return [v, [hand, *pv]]
+            return [v, [hand, *pv], other]
           end
           if alpha < v
             alpha = v
           end
         end
 
-        log[[hand, *pv].inspect]
-
         if max_v < v            # "<=" のなら評価値が同じ場合、後の方を優先する
           max_v = v
           best_pv = [hand, *pv]
         end
+
+        # if max_v == v           # 同じ評価の手を収集する
+        if pv.include?("(詰み)")
+          p ["#{__FILE__}:#{__LINE__}", __method__, pv]
+          onajino << [hand, *pv]
+        end
       end
 
       log.call "★確 #{best_pv.first || '?'}" if log
-      [max_v, best_pv]
+      [max_v, best_pv, onajino]
     end
   end
 end

@@ -17,7 +17,7 @@ mediator.board.placement_from_shape <<~EOT
 +------------+
 EOT
 # puts mediator.to_bod
-tp mediator.player_at(:black).normal_all_hands
+tp mediator.player_at(:black).create_all_hands
 
 # brain = mediator.player_at(:black).brain(diver_class: NegaScoutDiver)
 # brain.diver_dive(depth_max: 1) # => [-37540, [<▲３三金(24)>]]
