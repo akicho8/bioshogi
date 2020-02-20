@@ -6,7 +6,7 @@ Board.promotable_disable
 Board.dimensiton_change([4, 4])
 
 mediator = Mediator.new
-mediator.player_at(:white).pieces_add("金")
+# mediator.player_at(:white).pieces_add("金")
 mediator.player_at(:black).pieces_add("金金")
 mediator.board.placement_from_shape <<~EOT
 +------------+
@@ -30,18 +30,6 @@ tp mediator.player_at(:black).normal_all_hands
 # brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]
 # brain.diver_dive(depth_max: 3) # => [105, [<▲１三飛(14)>, <△１三飛(12)>, <▲１三香(15)>]]
 # brain.diver_dive(depth_max: 4) # => [-100, [<▲２四飛(14)>, <△１四歩(13)>, <▲２三飛(24)>, <△１三飛(12)>]]
-# >> 後手の持駒：金
-# >>   ４ ３ ２ １
-# >> +------------+
-# >> | ・ ・ ・ ・|一
-# >> | ・ ・v玉 ・|二
-# >> | ・ ・ ・ ・|三
-# >> | ・ ・ 金 ・|四
-# >> +------------+
-# >> 先手の持駒：金二
-# >> 手数＝0 まで
-# >> 
-# >> 先手番
 # >> |--------------|
 # >> | ▲３三金(24) |
 # >> | ▲２三金(24) |

@@ -20,19 +20,20 @@ module Bioshogi
       end
     end
 
-    attr_accessor :player, :iparams
+    attr_accessor :player, :params
 
     delegate :mediator, :normal_all_hands, to: :player
+    delegate :logger, :to => "Bioshogi", allow_nil: true
 
-    def initialize(player, **iparams)
+    def initialize(player, **params)
       @player = player
-      @iparams = {
+      @params = {
         diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
         evaluator_class: Evaluator::Level1, # [Evaluator::Base, Evaluator::Level1, Evaluator::Level2, Evaluator::Level3]
 
         # legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
         # legal_moves_first_only: true,   # 最初の手だけ合法手に絞る
-      }.merge(iparams)
+      }.merge(params)
     end
 
     # ショートカット用
@@ -46,23 +47,32 @@ module Bioshogi
     # > 最も深い探索でのスコアの推定値がより正確になるという利点がある。また、探索順序を改善することができるため、
     # > 探索をより高速に行えるという利点もある（前の反復で最善とされた手を次の反復で最初に調べることでアルファ・ベータ法の効率が良くなる）。
     def iterative_deepening(**params)
+      # このパラメータはそのまま Diver に渡している
       params = {
         depth_max_range: 1..1,
         time_limit: nil,        # nil: 時間制限なし
+
+        # 常に diver_instance に渡すもの
+        base_player: player,
+        current_player: player.opponent_player,
       }.merge(params)
 
       if params[:time_limit]
         params[:out_of_time] ||= Time.now + params[:time_limit]
       end
 
-      children = normal_all_hands
-
-      if true
-        # あまりに重いので読みの最初の手を合法手に絞る
-        children = children.find_all { |e| e.legal_move?(mediator) }
+      if params[:oute_mode]
+        children = player.normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
       else
-        children = children.to_a # 何度も実行するためあえて配列化しておくの重要
+        children = player.normal_all_hands(legal_only: true)
       end
+
+      # if true
+      #   # あまりに重いので読みの最初の手を合法手に絞る
+      #   children = children.find_all { |e| e.legal_hand?(mediator) }
+      # else
+      #   children = children.to_a # 何度も実行するためあえて配列化しておくの重要
+      # end
 
       # ordered_children = children # 前の反復で最善とされた順に並んでいる手
 
@@ -71,11 +81,11 @@ module Bioshogi
       mate = false
       finished = catch :out_of_time do
         params[:depth_max_range].each do |depth_max|
-          diver = diver_instance(params.merge(current_player: player.opponent_player, depth_max: depth_max))
+          diver = diver_instance(params.merge(depth_max: depth_max))
           tmp_hands = []
           mate = false
           children.each do |hand|
-            Bioshogi.logger.debug "#ROOT #{hand}" if Bioshogi.logger
+            logger.debug "#ROOT #{hand}" if logger
 
             # 即詰があれば探索を速攻打ち切る場合
             # 無効にしてもいいけど他の探索で時間がかかったら、この深さの探索全体がTLEでキャンセルされる可能性がある
@@ -105,6 +115,7 @@ module Bioshogi
             # end
           end
           hands = tmp_hands
+
           if true
             hands = hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用(途中でbreakするのは詰みがあったときぐらいなのであんまり効果ないかも)
           end
@@ -138,7 +149,7 @@ module Bioshogi
     end
 
     def diver_instance(args)
-      iparams[:diver_class].new(iparams.merge(args))
+      params[:diver_class].new(params.merge(args))
     end
 
     # Board.promotable_disable
@@ -167,7 +178,7 @@ module Bioshogi
     end
 
     def fast_score_list(**params)
-      evaluator = player.evaluator(iparams.merge(params))
+      evaluator = player.evaluator(params.merge(params))
       normal_all_hands.collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
@@ -185,18 +196,20 @@ module Bioshogi
   end
 
   class Diver
-    attr_accessor :iparams
+    attr_accessor :params
     attr_accessor :eval_counter
 
     # delegate :mediator, to: :player
     # delegate :evaluate, to: :mediator
     # delegate :place_on, to: :mediator
+    delegate :logger, :to => "Bioshogi", allow_nil: true
 
-    def initialize(iparams)
-      @iparams = {
+    # iterative_deepening のパラメータがそのまま来ている
+    def initialize(params)
+      @params = {
         depth_max: 0,           # 最大の深さ
         log_skip_depth: nil,
-      }.merge(iparams)
+      }.merge(params)
 
       @eval_counter = 0
       # @hands_memo = {}
@@ -207,7 +220,7 @@ module Bioshogi
     def logger_info(str, context)
       return unless logger
 
-      if v = iparams[:log_skip_depth]
+      if v = params[:log_skip_depth]
         if context[:depth] >= v
           return
         end
@@ -221,19 +234,15 @@ module Bioshogi
         str = "\n" + str
       end
 
-      Bioshogi.logger.info "    %d %s %s" % [
+      logger.info "    %d %s %s" % [
         context[:depth],
         context[:player].location,
         str,
       ]
     end
 
-    def logger
-      Bioshogi.logger
-    end
-
     def out_of_time_check
-      if time = iparams[:out_of_time]
+      if time = params[:out_of_time]
         if time && time <= Time.now
           throw :out_of_time
         end
@@ -241,17 +250,32 @@ module Bioshogi
     end
 
     def depth_max
-      iparams[:depth_max]
+      params[:depth_max]
     end
 
     # 深いほど手がかかるので最大の評価値を下げる
     def score_max_for(depth)
       INF_MAX - depth
     end
+
+    # 手を生成
+    def collect_children(player)
+      if params[:oute_mode]
+        if params[:base_player] == player
+          # 詰将棋モードなら自分だけ王手のみを生成する
+          player.normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
+        else
+          # 王手を外す手だけを生成する
+          player.normal_all_hands(promoted_only: false, legal_only: true)
+        end
+      else
+        player.normal_all_hands
+      end
+    end
   end
 
   class NegaAlphaDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
@@ -266,24 +290,21 @@ module Bioshogi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator(iparams).score
+        score = player.evaluator(params).score
         log.call("%+d" % score) if log
         return [score, []]
       end
 
-      if true
-        children = player.normal_all_hands
-      else
-        # @hands_memo[depth] ||= player.normal_all_hands.to_a
-        # children = @hands_memo[depth]
-      end
+      children = collect_children(player)
+      # @hands_memo[depth] ||= children
+      # children = @hands_memo[depth]
 
       best_pv = []
       best_hand = nil
       children_exist = false
 
       children.each do |hand|
-        unless hand.legal_move?(mediator)
+        unless hand.legal_hand?(mediator)
           # log.call "skip: #{hand}" if log
           next
         end
@@ -344,7 +365,7 @@ module Bioshogi
   end
 
   class NegaScoutDiver < Diver
-    def dive(player = iparams[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
+    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
       out_of_time_check
 
       mediator = player.mediator
@@ -359,12 +380,12 @@ module Bioshogi
 
       if depth_max <= depth
         @eval_counter += 1
-        score = player.evaluator(iparams).score
+        score = player.evaluator(params).score
         log.call("%+d" % score) if log
         return [score, []]
       end
 
-      children = player.normal_all_hands
+      children = collect_children(player)
 
       # log.call "指し手 #{children.to_a}" if log
 
@@ -422,7 +443,7 @@ module Bioshogi
           if hand.nil?
             break
           end
-          if hand.legal_move?(mediator)
+          if hand.legal_hand?(mediator)
             break
           end
         end
@@ -443,7 +464,7 @@ module Bioshogi
       end
 
       children.each do |hand|
-        unless hand.legal_move?(mediator)
+        unless hand.legal_hand?(mediator)
           next
         end
 
@@ -462,7 +483,10 @@ module Bioshogi
             alpha = v
           end
         end
-        if max_v < v
+
+        log[[hand, *pv].inspect]
+
+        if max_v < v            # "<=" のなら評価値が同じ場合、後の方を優先する
           max_v = v
           best_pv = [hand, *pv]
         end

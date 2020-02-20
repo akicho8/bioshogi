@@ -80,16 +80,9 @@ module Bioshogi
       # 成れるなら成る
       if origin_soldier.next_promotable?(soldier.place)
         move_hand = MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
-
-        # 自玉に王手がかかる手は除外するか？
-        if options[:legal_only] && !move_hand.legal_move?(mediator)
-          move_hand = nil
-        end
-
-        if move_hand
-          yielder << move_hand
-
-          if options[:promoted_preferred]
+        success = piece_store_core(mediator, move_hand, yielder, options)
+        if success
+          if options[:promoted_only]
             # 成と不成の両方がある(かもしれない)場合は成の方だけ生成する
             # これは本当はよくない
             # 暫定的な対処
@@ -102,16 +95,28 @@ module Bioshogi
       if soldier.alive?
         # すでに成っている(または成らない)手を生成
         move_hand = MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+        piece_store_core(mediator, move_hand, yielder, options)
+      end
+    end
 
-        # 自玉に王手がかかる手は除外するか？
-        if options[:legal_only] && !move_hand.legal_move?(mediator)
-          move_hand = nil
-        end
-
-        if move_hand
-          yielder << move_hand
+    def piece_store_core(mediator, move_hand, yielder, options)
+      # 自玉に王手がかかる手は除外するか？
+      if options[:legal_only]
+        if !move_hand.legal_hand?(mediator)
+          return
         end
       end
+
+      # 相手に王手がかかる手だけにする
+      if options[:mate_only]
+        if !move_hand.oute_move?(mediator)
+          return
+        end
+      end
+
+      yielder << move_hand
+
+      move_hand
     end
   end
 end

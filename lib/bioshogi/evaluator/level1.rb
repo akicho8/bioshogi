@@ -6,6 +6,7 @@ module Bioshogi
   module Evaluator
     # 評価すること
     # ・盤上の駒の価値
+    # ・詰将棋モードの場合はYの位置を考慮したら逆に面倒なことになるのでこの評価方法でよい
     class Level1 < Base
       private
 

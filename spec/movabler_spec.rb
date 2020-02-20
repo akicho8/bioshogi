@@ -18,7 +18,7 @@ module Bioshogi
         EOT
       soldier = mediator.board["13"]
       assert { soldier.move_list(mediator).collect(&:to_kif) == ["▲２二銀成(13)", "▲２二銀(13)", "▲２四銀成(13)", "▲２四銀(13)"] }
-      assert { soldier.move_list(mediator, promoted_preferred: true).collect(&:to_kif) == ["▲２二銀成(13)", "▲２四銀成(13)"] }
+      assert { soldier.move_list(mediator, promoted_only: true).collect(&:to_kif) == ["▲２二銀成(13)", "▲２四銀成(13)"] }
     end
 
     it "移動可能な筋の取得(超重要なテスト)" do

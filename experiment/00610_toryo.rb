@@ -37,7 +37,7 @@ EOT
 
 # player = mediator.current_player
 # soldier = player.soldiers.first                                   # => <Bioshogi::Soldier "▲２四桂">
-# soldier.move_list(mediator.board, promoted_preferred: false).to_a # => [<▲１二桂成(24)>]
+# soldier.move_list(mediator.board, promoted_only: false).to_a # => [<▲１二桂成(24)>]
 # exit
 #
 # mediator.current_player.soldiers # =>

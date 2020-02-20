@@ -147,7 +147,7 @@ module Bioshogi
       end
     end
 
-    # この駒の状態で board に置いても「二歩」いも「死に駒」にもならない？
+    # いまの状態で board に置いたとき「二歩」にも「死に駒」にもならないか？
     def rule_valid?(board)
       !collision_pawn(board) && alive?
     end
@@ -319,9 +319,16 @@ module Bioshogi
     # 2. 王手の状態を回避したこと
     # の両方チェックするので↓この一つでよい。
     #
-    def legal_move?(mediator)
+    def legal_hand?(mediator)
       sandbox_execute(mediator) do
         !mediator.player_at(soldier.location).mate_danger? # 「自玉に詰みがある」の反対
+      end
+    end
+
+    # 王手か？
+    def oute_move?(mediator)
+      sandbox_execute(mediator) do
+        mediator.player_at(soldier.location.flip).mate_danger?
       end
     end
   end
@@ -377,7 +384,7 @@ module Bioshogi
       ].join
     end
 
-    # def legal_move?(mediator)
+    # def legal_hand?(mediator)
     #   true
     # end
   end
