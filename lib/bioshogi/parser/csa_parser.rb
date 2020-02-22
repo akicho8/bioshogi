@@ -153,7 +153,7 @@ module Bioshogi
         # 指し手
         @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:#{time_regexp})?/o).collect do |input, used_seconds|
           if used_seconds
-            used_seconds = used_seconds.to_i
+            used_seconds = used_seconds.to_i.seconds
           end
           {input: input, used_seconds: used_seconds}
         end

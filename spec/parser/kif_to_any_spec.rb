@@ -2,6 +2,21 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::Base do
+    it "時間が空なら時間を出力しないオプション" do
+      info = Parser.parse(<<~EOT)
+      手数----指手---------消費時間--
+        1 ７六歩(77)  (00:00/00:00:00)
+        2 投了        (00:00/00:00:00)
+      EOT
+      assert { info.to_kif(no_embed_if_time_blank: true) == <<~EOT }
+手合割：平手
+手数----指手---------消費時間--
+   1 ７六歩(77)
+   2 投了
+まで1手で先手の勝ち
+EOT
+    end
+
     it "24棋譜の「反則勝ち」問題" do
       info = Parser.parse(<<~EOT)
       手数----指手---------消費時間--

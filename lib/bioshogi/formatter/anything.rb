@@ -382,9 +382,9 @@ module Bioshogi
       end
 
       def clock_exist?
-        if e = @move_infos.last
-          e[:used_seconds].to_i >= 1
-        end
+        return @clock_exist if instance_variable_defined?(:@clock_exist)
+
+        @clock_exist = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
       end
 
       def used_seconds_at(index)
