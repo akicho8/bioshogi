@@ -12,7 +12,7 @@ mediator.board.placement_from_shape <<~EOT
 | ・ 歩|
 +------+
 EOT
-tp mediator.player_at(:white).create_all_hands(promoted_only: false, legal_only: true)
+tp mediator.player_at(:white).create_all_hands(legal_only: true)
 # >> |--------------|
 # >> | △２二玉(11) |
 # >> |--------------|

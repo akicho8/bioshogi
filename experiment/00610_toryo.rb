@@ -37,15 +37,15 @@ EOT
 
 # player = mediator.current_player
 # soldier = player.soldiers.first                                   # => <Bioshogi::Soldier "▲２四桂">
-# soldier.move_list(mediator.board, promoted_only: false).to_a # => [<▲１二桂成(24)>]
+# soldier.move_list(mediator.board).to_a # => [<▲１二桂成(24)>]
 # exit
 #
 # mediator.current_player.soldiers # =>
 #
-# mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).move_hands.to_a # =>
+# mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).move_hands(promoted_only: true).to_a # =>
 # exit
 
-mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).create_all_hands.to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
+mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).create_all_hands(promoted_only: true).to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
 records = mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record

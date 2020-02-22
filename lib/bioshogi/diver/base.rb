@@ -92,17 +92,17 @@ module Bioshogi
           end
           if params[:base_player] == player
             # 詰将棋モードなら自分だけ王手のみを生成する
-            v = player.create_all_hands(promoted_only: false, legal_only: true, mate_only: true).entries
+            v = player.create_all_hands(legal_only: true, mate_only: true).entries
             log["王手のみの手を生成: #{v.collect(&:to_s).join(', ')}"] if log
             v
           else
             # 王手を外す手だけを生成する
-            v = player.create_all_hands(promoted_only: false, legal_only: true).entries
+            v = player.create_all_hands(legal_only: true).entries
             log["王手解除の手を生成: #{v.collect(&:to_s).join(', ')}"] if log
             v
           end
         else
-          player.create_all_hands.entries
+          player.create_all_hands(promoted_only: true).entries
         end
       end
     end

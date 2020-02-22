@@ -2,7 +2,7 @@ require "./example_helper"
 
 mediator = Mediator.start
 loop do
-  hand = mediator.current_player.brain.create_all_hands.to_a.sample
+  hand = mediator.current_player.brain.create_all_hands(promoted_only: true).to_a.sample
   mediator.execute(hand)
   captured_soldier = mediator.opponent_player.executor.captured_soldier
   if captured_soldier && captured_soldier.piece.key == :king

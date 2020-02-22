@@ -31,13 +31,13 @@ module Bioshogi
     # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
     #
     def legal_all_hands(**options)
-      create_all_hands(legal_only: true)
+      create_all_hands(options.merge(legal_only: true))
     end
 
     # 盤上の駒の全手筋
     def move_hands(**options)
       options = {
-        promoted_only: true,       # 成と不成がある場合は成だけを生成する？
+        promoted_only: false,      # 成と不成がある場合は成だけを生成する？
         king_captured_only: false, # 玉を取る手だけ生成する？
         legal_only: false,         # 合法手のみ生成する？ (移動することで自玉に利きが通ってしまう手を除くか？)
         mate_only: false,          # 王手だけに絞る？
@@ -101,6 +101,7 @@ module Bioshogi
     # 相手に対して王手をしている手の取得
     # Enumerator なので mate_move_hands.first で最初の1件の処理だけになる
     def mate_move_hands
+      # move_hands(promoted_only: true, king_captured_only: true, legal_only: true)
       move_hands(promoted_only: true, king_captured_only: true)
     end
 

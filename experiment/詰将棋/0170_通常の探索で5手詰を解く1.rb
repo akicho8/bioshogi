@@ -16,7 +16,7 @@ mediator.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-# tp mediator.player_at(:black).normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
+# tp mediator.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
 mate_records = []
 mate_proc = proc do |player, score, hand_route|

@@ -15,7 +15,7 @@ mediator.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-# tp mediator.player_at(:black).normal_all_hands(promoted_only: false, legal_only: true, mate_only: true)
+# tp mediator.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
 brain = mediator.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
 records = brain.iterative_deepening(depth_max_range: 3..3, mate_mode: true)
