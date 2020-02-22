@@ -8,12 +8,12 @@ class DirtyMinimax
   attr_accessor :mediator
   attr_accessor :params
   attr_accessor :current_turn
-  attr_accessor :out_of_time
+  attr_accessor :time_limit_exceeded
 
   def initialize(**params)
     self.params.update(params)
 
-    @out_of_time = nil
+    @time_limit_exceeded = nil
   end
 
   def params
@@ -110,13 +110,13 @@ class DirtyMinimax
   def iterative_deepening(turn)
     player = mediator.player_at(turn)
 
-    @out_of_time = nil
+    @time_limit_exceeded = nil
     if v = params[:time_limit]
-      @out_of_time = Time.now + v
+      @time_limit_exceeded = Time.now + v
     end
 
     infos = []
-    all_finished = catch @out_of_time do
+    all_finished = catch @time_limit_exceeded do
       params[:depth_max_range].each do |depth_max|
         infos = mediator.available_places(player).collect do |e|
           mediator.place_on(player, e) do
@@ -139,10 +139,10 @@ class DirtyMinimax
     infos.sort_by { |e| -e[:score] }
   end
 
-  def perform_out_of_time_check
-    if @out_of_time
-      if @out_of_time < Time.now
-        throw @out_of_time
+  def tle_verify
+    if t = @time_limit_exceeded
+      if t < Time.now
+        throw t
       end
     end
   end
@@ -160,7 +160,7 @@ class DirtyMinimax
   end
 
   def primitive_mini_max(turn:, depth_max:, depth: 0)
-    perform_out_of_time_check   # 深さ6ぐらいになると一手で数秒かかるためここに入れた方がいい
+    tle_verify   # 深さ6ぐらいになると一手で数秒かかるためここに入れた方がいい
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
@@ -215,21 +215,21 @@ if $0 == __FILE__
   # DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 1..8, time_limit: 1.0).run # => {:o=>4, :x=>1}
   DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 0..7, time_limit: 1.0).run # => {:o=>4, :x=>1}
 end
-# >> ------------------------------------------------------------ [0] o 実行速度:1.000247
+# >> ------------------------------------------------------------ [0] o 実行速度:1.00004
 # >> ・・・・・・
 # >> ・・○・・・
 # >> ・・○○・・
 # >> ・・○×・・
 # >> ・・・・・・
 # >> ・・・・・・
-# >> |------+--------+-----------------------------+--------+----------|
-# >> | 順位 | 候補手 | 読み筋                      | 評価値 | 時間     |
-# >> |------+--------+-----------------------------+--------+----------|
-# >> |    1 | [2, 1] | [1, 1] [0, 1] [0, 0] [1, 2] |      3 | 0.089578 |
-# >> |    2 | [1, 2] | [1, 1] [1, 0] [0, 0] [2, 1] |      3 | 0.095365 |
-# >> |    3 | [4, 3] | [2, 4] [1, 1] [2, 1] [1, 0] |      3 | 0.090193 |
-# >> |    4 | [3, 4] | [4, 2] [1, 1] [1, 2] [0, 1] |      3 | 0.088944 |
-# >> |------+--------+-----------------------------+--------+----------|
+# >> |------+--------+-----------------------------+--------+--------+----------|
+# >> | 順位 | 候補手 | 読み筋                      | 評価値 | ▲形勢 | 時間     |
+# >> |------+--------+-----------------------------+--------+--------+----------|
+# >> |    1 | [2, 1] | [1, 1] [0, 1] [0, 0] [1, 2] |      3 |      3 |  0.08797 |
+# >> |    2 | [1, 2] | [1, 1] [1, 0] [0, 0] [2, 1] |      3 |      3 | 0.086983 |
+# >> |    3 | [4, 3] | [2, 4] [1, 1] [2, 1] [1, 0] |      3 |      3 | 0.087413 |
+# >> |    4 | [3, 4] | [4, 2] [1, 1] [1, 2] [0, 1] |      3 |      3 | 0.087444 |
+# >> |------+--------+-----------------------------+--------+--------+----------|
 # >> |---+---|
 # >> | o | 4 |
 # >> | x | 1 |

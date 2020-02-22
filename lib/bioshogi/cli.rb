@@ -23,8 +23,8 @@ if $0 == __FILE__
   Bioshogi::Cli.start
 end
 # >> |------------------------|
-# >> | Bioshogi::NegaAlphaDiver |
-# >> | Bioshogi::NegaScoutDiver |
+# >> | Bioshogi::Diver::NegaAlphaDiver |
+# >> | Bioshogi::Diver::NegaScoutDiver |
 # >> |------------------------|
 # >> {"depth_max"=>3,
 # >>  "times"=>1,
@@ -32,8 +32,8 @@ end
 # >>  "round"=>1,
 # >>  "logging"=>false,
 # >>  "log_file"=>"brain.log",
-# >>  "black_diver"=>"NegaAlphaDiver",
-# >>  "white_diver"=>"NegaScoutDiver"}
+# >>  "black_diver"=>"Diver::NegaAlphaDiver",
+# >>  "white_diver"=>"Diver::NegaScoutDiver"}
 # >> |-------------+----------------|
 # >> |   depth_max | 3              |
 # >> |       times | 1              |
@@ -41,10 +41,10 @@ end
 # >> |       round | 1              |
 # >> |     logging | false          |
 # >> |    log_file | brain.log      |
-# >> | black_diver | NegaAlphaDiver |
-# >> | white_diver | NegaScoutDiver |
+# >> | black_diver | Diver::NegaAlphaDiver |
+# >> | white_diver | Diver::NegaScoutDiver |
 # >> |-------------+----------------|
-# >> ---------------------------------------- [1] ▲７六歩(77) (Bioshogi::NegaAlphaDiver)
+# >> ---------------------------------------- [1] ▲７六歩(77) (Bioshogi::Diver::NegaAlphaDiver)
 # >> |-----------------+------|
 # >> |      time_limit | 3    |
 # >> | depth_max_range | 0..3 |

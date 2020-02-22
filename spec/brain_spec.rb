@@ -28,7 +28,7 @@ module Bioshogi
     end
 
     it do
-      [NegaAlphaDiver, NegaScoutDiver].each do |diver_class|
+      [Diver::NegaAlphaDiver, Diver::NegaScoutDiver].each do |diver_class|
         Board.promotable_disable do
           Board.dimensiton_change([2, 5]) do
             mediator = MediatorSimple.new

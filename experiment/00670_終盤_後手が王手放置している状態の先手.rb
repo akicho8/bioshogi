@@ -15,10 +15,10 @@ Board.dimensiton_change([2, 4]) do
 手数＝0
   EOT
   [
-    NegaAlphaDiver,
-    NegaScoutDiver,
+    Diver::NegaAlphaDiver,
+    Diver::NegaScoutDiver,
   ].each do |diver_class|
-    brain = mediator.current_player.brain(diver_class: diver_class) # NegaAlphaDiver
+    brain = mediator.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
     records = brain.iterative_deepening(depth_max_range: 4..4)
     tp Brain.human_format(records)
   end

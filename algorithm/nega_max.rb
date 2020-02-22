@@ -6,7 +6,7 @@ class NegaMax < Minimax
   end
 
   def nega_max(turn:, depth_max:, depth: 0)
-    perform_out_of_time_check
+    tle_verify
 
     player = mediator.player_at(turn)
 

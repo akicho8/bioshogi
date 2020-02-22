@@ -42,15 +42,15 @@ EOT
 #
 # mediator.current_player.soldiers # =>
 #
-# mediator.current_player.brain(diver_class: NegaScoutDiver).move_hands.to_a # =>
+# mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).move_hands.to_a # =>
 # exit
 
-mediator.current_player.brain(diver_class: NegaScoutDiver).create_all_hands.to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
-records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
+mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).create_all_hands.to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
+records = mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record
 hand = record[:hand]
-if record[:score] <= -(Bioshogi::INF_MAX - 1)
+if record[:score] <= -(Bioshogi::SCORE_MAX - 1)
   p "投了"
 end
 tp Brain.human_format(records)
@@ -60,7 +60,7 @@ tp Brain.human_format(records)
 # puts mediator
 #
 # # 先手の手番でその玉を取る
-# records = mediator.current_player.brain(diver_class: NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
+# records = mediator.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
 # record = records.first
 # tp record
 # tp Brain.human_format(records)
@@ -74,7 +74,7 @@ tp Brain.human_format(records)
 # >> |       hand | △２三歩成(22) |
 # >> |      score | 999999         |
 # >> |     score2 | -999999        |
-# >> |    best_pv | ["(詰み)"]     |
+# >> |    best_pv | [MATE]     |
 # >> | eval_times | 0              |
 # >> |        sec | 0.003939       |
 # >> |------------+----------------|

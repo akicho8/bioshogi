@@ -4,7 +4,7 @@ require "./dirty_minimax"
 
 class Minimax < DirtyMinimax
   def mini_max(turn:, depth_max:, depth: 0)
-    perform_out_of_time_check
+    tle_verify
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth

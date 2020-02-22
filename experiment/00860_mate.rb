@@ -17,7 +17,7 @@ mediator.placement_from_bod <<~EOT
 EOT
 puts mediator
 
-brain = mediator.player_at(:black).brain(diver_class: NegaAlphaDiver)
+brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver)
 # brain.diver_dive(depth_max: 0) # => [60, []]
 # brain.diver_dive(depth_max: 1) # => [2520, [<▲１二玉(13)>]]
 # brain.diver_dive(depth_max: 2) # => [60, [<▲２四玉(13)>, <△２二玉(11)>]]

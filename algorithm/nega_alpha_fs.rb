@@ -21,7 +21,7 @@ class NegaAlphaFs < NegaAlpha
   end
 
   def nega_alpha_fs(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
-    perform_out_of_time_check
+    tle_verify
 
     player = mediator.player_at(turn)
 

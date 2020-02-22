@@ -6,7 +6,7 @@ class NegaScout < NegaMax
   end
 
   def nega_scout(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
-    perform_out_of_time_check
+    tle_verify
 
     player = mediator.player_at(turn)
     children = mediator.available_places(player)

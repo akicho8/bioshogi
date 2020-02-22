@@ -4,8 +4,10 @@
 require "timeout"
 
 module Bioshogi
-  INF_MAX = 999999      # Float::INFINITY を使うとおかしくなるので注意
+  SCORE_MAX = 999999      # Float::INFINITY を使うとおかしくなるので注意
+  MATE = "(詰み)"
 
+  # 指定の Diver を使って簡単に反復探索するためのクラス
   class Brain
     def self.human_format(infos)
       infos.collect.with_index do |e, i|
@@ -29,7 +31,7 @@ module Bioshogi
     def initialize(player, **params)
       @player = player
       @params = {
-        diver_class: NegaAlphaDiver,    # [NegaAlphaDiver, NegaScoutDiver]
+        diver_class: Diver::NegaAlphaDiver,    # [Diver::NegaAlphaDiver, Diver::NegaScoutDiver]
         evaluator_class: Evaluator::Level1, # [Evaluator::Base, Evaluator::Level1, Evaluator::Level2, Evaluator::Level3]
 
         # legal_moves_all: false,         # すべての手を合法手に絞る(重い！)
@@ -50,16 +52,17 @@ module Bioshogi
     def iterative_deepening(**params)
       # このパラメータはそのまま Diver に渡している
       params = {
-        depth_max_range: 1..1,
-        time_limit: nil,        # nil: 時間制限なし
+        depth_max_range: 1..1,  # 1..3 なら時間がある限り1→2→3手と読み進めていく。3手詰限定なら 3..3 とする
+        time_limit: nil,        # nil なら時間制限なし。時間指定なしなら 深度を を 1..3 のようにする意味はなくて最初から 3..3 とすればよい
+        mate_mode: false,       # 王手になる手と、王手をかわす手だけを生成するか？
 
         # 常に diver_instance に渡すもの
-        base_player: player,
-        current_player: player.opponent_player,
+        base_player: player,    # どちらのプレイヤーから開始したか。詰将棋のときなど先後で指し手の方針を明確に分ける必要があるため。
+        current_player: player.opponent_player, # Diver#dive の最初の player として使うため
       }.merge(params)
 
       if params[:time_limit]
-        params[:out_of_time] ||= Time.now + params[:time_limit]
+        params[:time_limit_exceeded] ||= Time.now + params[:time_limit]
       end
 
       if params[:mate_mode]
@@ -78,12 +81,13 @@ module Bioshogi
       # ordered_children = children # 前の反復で最善とされた順に並んでいる手
 
       hands = []
-      tmp_hands = []
+      provisional_hands = []
       mate = false
-      finished = catch :out_of_time do
+      finished = catch :time_limit_exceeded do
         params[:depth_max_range].each do |depth_max|
           diver = diver_instance(params.merge(depth_max: depth_max))
-          tmp_hands = []
+
+          provisional_hands = []
           mate = false
           children.each do |hand|
             logger.debug "#ROOT #{hand}" if logger
@@ -92,8 +96,8 @@ module Bioshogi
             # 無効にしてもいいけど他の探索で時間がかかったら、この深さの探索全体がTLEでキャンセルされる可能性がある
             # if true
             #   if hand.king_captured?
-            #     v = -INF_MAX
-            #     tmp_hands << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
+            #     v = -SCORE_MAX
+            #     provisional_hands << {hand: hand, score: -v, score2: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
             #     mate = true
             #     break
             #   end
@@ -101,13 +105,15 @@ module Bioshogi
 
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv, other = diver.dive # ここで TLE 発生
-              v = -v
-              tmp_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time, other: other || []}
-              # 1手詰: (v >= INF_MAX - 0)
-              # 3手詰: (v >= INF_MAX - 2)
-              # 5手詰: (v >= INF_MAX - 4)
-              if v >= INF_MAX
+              v, pv, other = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
+              v = -v                                        # 相手の良い手は自分のマイナス
+              provisional_hands << {hand: hand, score: v, score2: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time, other: other || []}
+              # 1手詰: (v >= SCORE_MAX - 0) 自分勝ち
+              # 2手詰: (v >= SCORE_MAX - 1) 相手勝ち
+              # 3手詰: (v >= SCORE_MAX - 2) 自分勝ち
+              # 4手詰: (v >= SCORE_MAX - 3) 相手勝ち
+              # 5手詰: (v >= SCORE_MAX - 4) 自分勝ち
+              if v >= SCORE_MAX
                 mate = true     # 1手詰があった
               end
             end
@@ -115,7 +121,7 @@ module Bioshogi
             #   mate = true       # 即詰がある
             # end
           end
-          hands = tmp_hands
+          hands = provisional_hands
 
           if true
             hands = hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用(途中でbreakするのは詰みがあったときぐらいなのであんまり効果ないかも)
@@ -136,12 +142,14 @@ module Bioshogi
       else
         # タイムアウトしてきた
 
-        # 詰みがあった場合は最後の tmp_hands を採用する
+        # 詰みがあった場合は最後の provisional_hands を採用する
         if mate
-          hands = tmp_hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用
+          hands = provisional_hands.sort_by { |e| -e[:score] } # 最善手順に並び換えて採用
         end
       end
 
+      # 自分の合法手があるのに相手の手を1手も見つけられない状況
+      # TLEが早過ぎる場合に起きる
       if !children.empty? && hands.empty?
         raise BrainProcessingHeavy, "合法手を生成したにもかかわらず、指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
       end
@@ -167,6 +175,8 @@ module Bioshogi
     # EOT
     # brain = mediator.player_at(:black).brain(evaluator_class: Evaluator::Level2)
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
+    #
+    # 探索するけど探索の深さを延していかない
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)
       create_all_hands.collect { |hand|
@@ -178,6 +188,7 @@ module Bioshogi
       }.sort_by { |e| -e[:score] }
     end
 
+    # すべての手を指してみて評価する (探索しない)
     def fast_score_list(**params)
       evaluator = player.evaluator(params.merge(params))
       create_all_hands.collect { |hand|
@@ -187,397 +198,6 @@ module Bioshogi
           {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
-    end
-  end
-
-  class HandInfo < Hash
-    def to_s
-      "#{self[:hand]} => #{self[:score]}"
-    end
-  end
-
-  class Diver
-    attr_accessor :params
-    attr_accessor :eval_counter
-
-    # delegate :mediator, to: :player
-    # delegate :evaluate, to: :mediator
-    # delegate :place_on, to: :mediator
-    delegate :logger, :to => "Bioshogi", allow_nil: true
-
-    # iterative_deepening のパラメータがそのまま来ている
-    def initialize(params)
-      @params = {
-        depth_max: 0,           # 最大の深さ
-        log_skip_depth: nil,
-      }.merge(params)
-
-      @eval_counter = 0
-      # @hands_memo = {}
-    end
-
-    private
-
-    def logger_info(str, context)
-      return unless logger
-
-      if v = params[:log_skip_depth]
-        if context[:depth] >= v
-          return
-        end
-      end
-
-      str = str.lines.collect { |e|
-        (" " * 4 * context[:depth]) + e
-      }.join.rstrip
-
-      if str.match?(/\n/)
-        str = "\n" + str
-      end
-
-      logger.info "    %d %s %s" % [
-        context[:depth],
-        context[:player].location,
-        str,
-      ]
-    end
-
-    def out_of_time_check
-      if time = params[:out_of_time]
-        if time && time <= Time.now
-          throw :out_of_time
-        end
-      end
-    end
-
-    def depth_max
-      params[:depth_max]
-    end
-
-    # 深いほど手がかかるので最大の評価値を下げる
-    def score_max_for(depth)
-      INF_MAX - depth
-    end
-
-    # 手を生成
-    def collect_children(player)
-      if params[:mate_mode]
-        if params[:base_player] == player
-          # 詰将棋モードなら自分だけ王手のみを生成する
-          player.create_all_hands(promoted_only: false, legal_only: true, mate_only: true)
-        else
-          # 王手を外す手だけを生成する
-          player.create_all_hands(promoted_only: false, legal_only: true)
-        end
-      else
-        player.create_all_hands
-      end
-    end
-  end
-
-  class NegaAlphaDiver < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
-      out_of_time_check
-
-      mediator = player.mediator
-
-      if depth == 0
-        @eval_counter = 0
-      end
-
-      if logger
-        log = -> s { logger_info(s, player: player, depth: depth) }
-      end
-
-      if depth_max <= depth
-        @eval_counter += 1
-        score = player.evaluator(params).score
-        log.call("%+d" % score) if log
-        return [score, [], []]
-      end
-
-      children = collect_children(player)
-      # @hands_memo[depth] ||= children
-      # children = @hands_memo[depth]
-
-      best_pv = []
-      best_hand = nil
-      children_exist = false
-      onajino = []
-
-      children.each do |hand|
-        # unless hand.legal_hand?(mediator)
-        #   # log.call "skip: #{hand}" if log
-        #   next
-        # end
-        children_exist = true
-
-        log.call "#{hand}" if log
-
-        # 玉が取られても相手の玉を取り返せば形勢は互角になる。
-        # そうなるとピンチであることに気づかない。
-        # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
-
-        # 非合法手が混っている場合はこのチェックが重要になってくる
-        # if hand.king_captured?
-        #   raise
-        #   # alpha = INF_MAX - depth
-        #   # best_hand = hand
-        #   # best_pv = [best_hand]
-        #   return [INF_MAX, [hand]]
-        # else
-        v = nil
-        pv = nil
-        hand.sandbox_execute(mediator) do
-          v, pv, other = dive(player.opponent_player, depth + 1, -beta, -alpha)
-          v = -v
-        end
-        # p [alpha, v]
-        if alpha < v
-          alpha = v
-          best_hand = hand
-          best_pv = [hand, *pv]
-          # best_pv = foo + [hand]
-        end
-
-        # if pv.include?("(詰み)")
-        #   onajino << [hand, *pv]
-        # end
-
-        if alpha >= beta
-          break
-          # end
-        end
-      end
-
-      if true
-        unless children_exist
-          # 手が一つも生成できなかった場合は詰んでいる
-          alpha = -score_max_for(depth)
-          best_pv = ["(詰み)"] # 注意。-INF_MAX を返すと alpha < v が成立しないため読み筋が返せない。
-
-          # if f = params[:mate_proc]
-          #   f.call(1)
-          # end
-        end
-      end
-
-      # unless children_exist
-      #   raise BioshogiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{mediator.to_bod}"
-      # end
-
-      if best_hand
-        log.call "★確 #{best_hand} (#{alpha})" if log
-      end
-
-      # p [alpha, best_pv]
-      [alpha, best_pv, onajino]
-    end
-  end
-
-  class NegaAlphaDiver2 < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX, te_list = [])
-      out_of_time_check
-
-      mediator = player.mediator
-
-      if depth == 0
-        @eval_counter = 0
-      end
-
-      if logger
-        log = -> s { logger_info(s, player: player, depth: depth) }
-      end
-
-      if depth_max <= depth
-        @eval_counter += 1
-        score = player.evaluator(params).score
-        log.call("%+d" % score) if log
-        return [score, [], []]
-      end
-
-      children = collect_children(player)
-
-      best_pv = []
-      best_hand = nil
-      children_exist = false
-      onajino = []
-
-      children.each do |hand|
-        children_exist = true
-        log.call "#{hand}" if log
-        v = nil
-        pv = nil
-        hand.sandbox_execute(mediator) do
-          v, pv, other = dive(player.opponent_player, depth + 1, -beta, -alpha, te_list + [hand])
-          v = -v
-        end
-        if alpha < v
-          alpha = v
-          best_hand = hand
-          best_pv = [hand, *pv]
-        end
-        if alpha >= beta
-          break
-        end
-      end
-
-      if true
-        unless children_exist
-          alpha = -score_max_for(depth)
-          best_pv = ["(詰み)"] # 注意。-INF_MAX を返すと alpha < v が成立しないため読み筋が返せない。
-          if f = params[:mate_proc]
-            f.call(te_list)
-          end
-        end
-      end
-
-      if best_hand
-        log.call "★確 #{best_hand} (#{alpha})" if log
-      end
-
-      [alpha, best_pv, onajino]
-    end
-  end
-
-  # https://ja.wikipedia.org/wiki/Negascout
-  class NegaScoutDiver < Diver
-    def dive(player = params[:current_player], depth = 0, alpha = -INF_MAX, beta = INF_MAX)
-      out_of_time_check
-
-      mediator = player.mediator
-
-      if depth == 0
-        @eval_counter = 0
-      end
-
-      if logger
-        log = -> s { logger_info(s, player: player, depth: depth) }
-      end
-
-      # 一番深く潜ったところで局面を評価する
-      if depth_max <= depth
-        @eval_counter += 1
-        score = player.evaluator(params).score
-        log.call("%+d" % score) if log
-        return [score, [], []]
-      end
-
-      children = collect_children(player)
-
-      # log.call "指し手 #{children.to_a}" if log
-
-      # # 合法手がない場合はパスして相手に手番を渡す
-      # if children.empty?
-      #   v, pv = dive(player.opponent_player, depth + 1, -beta, -alpha)
-      #   v = -v
-      #   return [v, [:pass, *pv]]
-      # end
-
-      # mate_check = Proc.new { |hand|
-      #   # if hand.king_captured?
-      #   #   return [INF_MAX, [hand]]
-      #   # end
-      # }
-
-      # 再帰を簡潔に記述するため
-      recursive = Proc.new { |hand, alpha2, beta2|
-        # # 玉が取られても相手の玉を取り返せば形勢は互角になる。
-        # # そうなるとピンチであることに気づかない。
-        # # だかから玉を取ったかどうかの判定を入れて玉を取った時点で最大の評価値にして探索を打ち切る
-        if hand.king_captured?
-          raise
-          # v = INF_MAX - depth
-          v = INF_MAX
-          log.call "#{hand} -> #{v} #{player.location}勝" if log
-          return [v, [hand]]
-        else
-          log.call "#{hand}" if log
-          hand.sandbox_execute(mediator) do
-            v, pv, other = dive(player.opponent_player, depth + 1, alpha2, beta2)
-            v = -v
-            [v, pv, other]
-            # end
-          end
-        end
-      }
-
-      # children が空の場合を考慮して初期値を投了級にしておく
-      max_v = -score_max_for(depth) # 浅いほど評価値を高くして最短で詰ますようにする
-      # max_v = -INF_MAX # 浅いほど評価値を高くして最短で詰ますようにする
-      best_pv = ["(詰み)"]      # 一度も更新されなかったら手がないということなので詰んでいる
-
-      # ここはなくてもいいけどベストな手から始めることで枝が減る
-      if true
-        # 効果的なもの順に並び換える→どうやって？？？
-        # children = mediator.move_ordering(player, children)
-        children = children.to_a # FIXME: 並び返るために全取得すると遅延評価にした意味がない
-
-        # 最善候補を通常の窓で探索
-
-        # ベストな「合法手」を取得
-        hand = nil
-        loop do
-          hand = children.shift # FIXME: 配列として扱わなければ速くなるかも
-          if hand.nil?
-            break
-          end
-          if hand.legal_hand?(mediator)
-            break
-          end
-        end
-
-        if hand
-          # mate_check.call(hand)
-
-          v, pv, other = recursive.(hand, -beta, -alpha)
-          max_v = v
-          best_pv = [hand, *pv]
-          if beta <= v
-            return [v, [hand, *pv], other]
-          end
-          if alpha < v
-            alpha = v
-          end
-        end
-      end
-
-      onajino = []
-      children.each do |hand|
-        unless hand.legal_hand?(mediator)
-          next
-        end
-
-        # mate_check.call(hand)
-        v, pv, other = recursive.(hand, -(alpha + 1), -alpha) # null window search
-        if beta <= v
-          return [v, [hand, *pv], other]
-        end
-        if alpha < v
-          alpha = v
-          v, pv, other = recursive.(hand, -beta, -alpha) # 通常の窓で再探索
-          if beta <= v
-            return [v, [hand, *pv], other]
-          end
-          if alpha < v
-            alpha = v
-          end
-        end
-
-        if max_v < v            # "<=" のなら評価値が同じ場合、後の方を優先する
-          max_v = v
-          best_pv = [hand, *pv]
-        end
-
-        # if max_v == v           # 同じ評価の手を収集する
-        if pv.include?("(詰み)")
-          p ["#{__FILE__}:#{__LINE__}", __method__, pv]
-          onajino << [hand, *pv]
-        end
-      end
-
-      log.call "★確 #{best_pv.first || '?'}" if log
-      [max_v, best_pv, onajino]
     end
   end
 end

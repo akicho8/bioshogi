@@ -97,8 +97,9 @@ require_relative "bioshogi/preset_info"
 require_relative "bioshogi/sect_info"
 require_relative "bioshogi/defense_group_info"
 
-require_relative "bioshogi/brain"
 require_relative "bioshogi/evaluator"
+require_relative "bioshogi/diver"
+require_relative "bioshogi/brain"
 
 require_relative "bioshogi/csa_header_info"
 require_relative "bioshogi/last_action_info"

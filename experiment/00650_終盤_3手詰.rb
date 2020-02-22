@@ -17,11 +17,11 @@ mediator.placement_from_bod <<~EOT
 手数＝0
 EOT
 [
-  NegaAlphaDiver,
-  NegaScoutDiver,
+  Diver::NegaAlphaDiver,
+  Diver::NegaScoutDiver,
 ].each do |diver_class|
   tp Bioshogi.run_counts.clear
-  brain = mediator.current_player.brain(diver_class: diver_class) # NegaAlphaDiver
+  brain = mediator.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
   tp Brain.human_format(records)
