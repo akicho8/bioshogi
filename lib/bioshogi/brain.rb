@@ -18,7 +18,7 @@ module Bioshogi
           "▲形勢"     => e[:block_side_score], # 先手視点の評価値
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
-          "他の手"     => e[:other].collect { |a| a.collect(&:to_s).join(" ") }.join(", ")
+          # "他の手"     => e[:other].collect { |a| a.collect(&:to_s).join(" ") }.join(", ")
         }
       end
     end
@@ -105,9 +105,9 @@ module Bioshogi
 
             hand.sandbox_execute(mediator) do
               start_time = Time.now
-              v, pv, other = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
+              v, pv = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
               v = -v                                        # 相手の良い手は自分のマイナス
-              provisional_hands << {hand: hand, score: v, black_side_score: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time, other: other || []}
+              provisional_hands << {hand: hand, score: v, black_side_score: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
               # 1手詰: (v >= SCORE_MAX - 0) 自分勝ち
               # 2手詰: (v >= SCORE_MAX - 1) 相手勝ち
               # 3手詰: (v >= SCORE_MAX - 2) 自分勝ち
