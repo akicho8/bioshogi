@@ -82,7 +82,7 @@ module Bioshogi
         move_hand = MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
         success = piece_store_core(mediator, move_hand, yielder, options)
         if success
-          if options[:promoted_only]
+          if options[:with_no_promoted]
             # 成と不成の両方がある(かもしれない)場合は成の方だけ生成する
             # これは本当はよくない
             # 暫定的な対処

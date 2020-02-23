@@ -134,8 +134,8 @@ module Bioshogi
     end
 
     # 移動可能な座標を取得
-    def move_list(board, **options)
-      Movabler.move_list(board, self, options)
+    def move_list(mediator, **options)
+      Movabler.move_list(mediator, self, options)
     end
 
     # 二歩？
