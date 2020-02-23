@@ -12,7 +12,7 @@ mediator.board.placement_from_shape <<~EOT
 | ・ 歩|
 +------+
 EOT
-tp mediator.player_at(:black).create_all_hands(with_no_promoted: true, legal_only: true, mate_only: true)
+tp mediator.player_at(:black).create_all_hands(promoted_only: true, legal_only: true, mate_only: true)
 # >> |----------------|
 # >> | ▲１二歩成(13) |
 # >> | ▲１二歩(13)   |

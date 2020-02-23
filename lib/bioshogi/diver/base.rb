@@ -102,7 +102,7 @@ module Bioshogi
             v
           end
         else
-          player.create_all_hands(with_no_promoted: true).entries
+          player.create_all_hands(promoted_only: true).entries
         end
       end
     end

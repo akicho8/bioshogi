@@ -179,7 +179,7 @@ module Bioshogi
     # 探索するけど探索の深さを延していかない
     def smart_score_list(**params)
       diver = diver_instance(current_player: player.opponent_player)
-      create_all_hands(with_no_promoted: true).collect { |hand|
+      create_all_hands(promoted_only: true).collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v, pv = diver.dive
@@ -191,7 +191,7 @@ module Bioshogi
     # すべての手を指してみて評価する (探索しない)
     def fast_score_list(**params)
       evaluator = player.evaluator(params.merge(params))
-      create_all_hands(with_no_promoted: true).collect { |hand|
+      create_all_hands(promoted_only: true).collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v = evaluator.score
