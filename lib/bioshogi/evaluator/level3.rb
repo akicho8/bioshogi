@@ -12,8 +12,8 @@ module Bioshogi
           {
             "先後"           => "#{player.location} #{player == self.player ? "自分" : ''}",
             "駒箱(常時加算)" => player.piece_box.score,
-            "序盤"           => "#{score1(player)} * #{(1.0 - pressure[player]).round(1)} = #{score1(player) * (1.0 - pressure[player])}",
-            "終盤"           => "#{score2(player)} * #{pressure[player].round(1)} = #{score2(player) * pressure[player]}",
+            "序盤"           => "#{opening_score(player)} * #{(1.0 - pressure[player]).round(1)} = #{opening_score(player) * (1.0 - pressure[player])}",
+            "終盤"           => "#{final_stage_score(player)} * #{pressure[player].round(1)} = #{final_stage_score(player) * pressure[player]}",
             "序終盤合計"     => total_score(player),
           }
         end
@@ -37,13 +37,13 @@ module Bioshogi
       def total_score(player)
         w = 0
         w += player.piece_box.score
-        w += score1(player) * (1.0 - pressure[player]) # 序盤 * 序盤の重み
-        w += score2(player) * (0.0 + pressure[player]) # 終盤 * 終盤の重み
+        w += opening_score(player) * (1.0 - pressure[player]) # 序盤 * 序盤の重み
+        w += final_stage_score(player) * (0.0 + pressure[player]) # 終盤 * 終盤の重み
         w
       end
 
       # 序盤評価値
-      def score1(player)
+      def opening_score(player)
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight
@@ -61,7 +61,7 @@ module Bioshogi
       end
 
       # 終盤評価値
-      def score2(player)
+      def final_stage_score(player)
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight

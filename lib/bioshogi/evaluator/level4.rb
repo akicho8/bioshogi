@@ -10,8 +10,8 @@ module Bioshogi
           {
             "先後"           => "#{player.location} #{player == self.player ? "自分" : ''}",
             "駒箱(常時加算)" => player.piece_box.score,
-            "駒組み"         => score1(player),
-            "終盤"           => score2(player),
+            "駒組み"         => opening_score(player),
+            "終盤"           => final_stage_score(player),
             "合計"           => total_score(player),
           }
         end
@@ -23,13 +23,13 @@ module Bioshogi
       def total_score(player)
         w = 0
         w += player.piece_box.score
-        w += score1(player) # 駒組み
-        w += score2(player) # 中終盤
+        w += opening_score(player) # 駒組み
+        w += final_stage_score(player) # 中終盤
         w
       end
 
       # 中終盤スコア
-      def score2(player)
+      def final_stage_score(player)
         a = a_d_score_of(player, player.op, :attack)  # 敵玉の近くにいるスコア
         d = a_d_score_of(player, player.my, :defense) # 自玉の近くにいるスコア
 

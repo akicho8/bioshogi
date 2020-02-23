@@ -56,7 +56,7 @@ module Bioshogi
           tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
           puts mediator
           puts
-          puts "#{hand} #{record[:score2]}"
+          puts "#{hand} #{record[:block_side_score]}"
           puts
           puts mediator.to_kif_oneline
 
