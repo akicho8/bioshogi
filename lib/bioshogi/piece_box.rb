@@ -19,13 +19,10 @@ module Bioshogi
 
     def pick_out(piece)
       piece = Piece.fetch(piece)
-      if (object[piece.key] || 0) <= 0
+      unless exist?(piece)
         raise HoldPieceNotFound, "#{piece.name}を持っていません : #{to_h}"
       end
-      object[piece.key] -= 1
-      if object[piece.key] <= 0
-        object.delete(piece.key)
-      end
+      add(piece => -1)
       piece
     end
 
@@ -39,11 +36,22 @@ module Bioshogi
 
     def exist?(piece)
       piece = Piece.fetch(piece)
-      object.has_key?(piece.key)
+      (object[piece.key] || 0).positive?
     end
 
     def add(hash)
-      object.update(hash) { |_, *c| c.sum }
+      hash.each do |key, c|
+        piece = Piece.fetch(key)
+        n = object[piece.key] || 0
+        new_c = n + c
+        if new_c.positive?
+          object[piece.key] = new_c
+        elsif new_c.negative?
+          raise HoldPieceNotFound, "#{piece.name}は#{n}しかないのに#{c}したので#{new_c}になりました : #{to_h}"
+        else
+          object.delete(piece.key)
+        end
+      end
     end
 
     def set(hash)
