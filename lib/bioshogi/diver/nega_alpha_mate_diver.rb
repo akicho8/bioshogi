@@ -79,12 +79,22 @@ module Bioshogi
 
           log["#{hand_route.collect(&:to_s).join(' ')} のあとで合法手がない(=詰み)"] if log
 
-          # # これで詰みが生じた指し手を収集できる
-          if f = params[:mate_proc]
-            f[player, -1, hand_route]
+          score = -1
+
+          if params[:motigoma_zero_denaito_dame]
+            if player.op.piece_box.count >= 1
+              score = 1
+            end
           end
 
-          return [-1, [MATE]]
+          if score == -1
+            # # これで詰みが生じた指し手を収集できる
+            if f = params[:mate_proc]
+              f[player, score, hand_route]
+            end
+          end
+
+          return [score, [MATE]]
         end
 
         best_pv = []

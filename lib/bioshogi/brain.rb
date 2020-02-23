@@ -14,7 +14,7 @@ module Bioshogi
         {
           "順位"       => i.next,
           "候補手"     => e[:hand],
-          "読み筋"     => e[:best_pv].collect { |e| e.to_s }.join(" "),
+          "読み筋"     => e[:best_pv].collect(&:to_s).join(" "),
           "▲形勢"     => e[:black_side_score], # 先手視点の評価値
           "評価局面数" => e[:eval_times],
           "処理時間"   => e[:sec],
