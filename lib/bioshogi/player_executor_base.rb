@@ -127,7 +127,7 @@ module Bioshogi
       case
       when md[:kif_place_from]
         InputAdapter::KifAdapter
-      when md[:usi_to]
+      when md[:sfen_to]
         InputAdapter::UsiAdapter
       when md[:csa_piece]
         InputAdapter::CsaAdapter

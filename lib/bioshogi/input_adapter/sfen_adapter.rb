@@ -8,7 +8,7 @@ module Bioshogi
 
       def piece
         if drop_trigger
-          Piece.fetch(input[:usi_drop_piece])
+          Piece.fetch(input[:sfen_drop_piece])
         else
           origin_soldier.piece
         end
@@ -23,21 +23,21 @@ module Bioshogi
       end
 
       def place_from
-        if v = input[:usi_from]
+        if v = input[:sfen_from]
           Place.fetch(alpha_to_digit(v))
         end
       end
 
       def place
-        Place.fetch(alpha_to_digit(input[:usi_to]))
+        Place.fetch(alpha_to_digit(input[:sfen_to]))
       end
 
       def drop_trigger
-        !!input[:usi_drop_trigger]
+        !!input[:sfen_drop_trigger]
       end
 
       def promote_trigger
-        !!input[:usi_promote_trigger]
+        !!input[:sfen_promote_trigger]
       end
 
       def hard_validations

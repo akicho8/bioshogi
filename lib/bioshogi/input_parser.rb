@@ -21,7 +21,7 @@ module Bioshogi
     end
 
     def regexp
-      @regexp ||= Regexp.union(kif_or_ki2_regexp, csa_regexp, usi_regexp)
+      @regexp ||= Regexp.union(kif_or_ki2_regexp, csa_regexp, sfen_regexp)
     end
 
     private
@@ -61,12 +61,12 @@ module Bioshogi
       /ox
     end
 
-    def usi_regexp
-      usi_drop_piece = Piece.collect(&:sfen_char).compact.join
-      usi_to = /[1-9][[:lower:]]/
+    def sfen_regexp
+      sfen_drop_piece = Piece.collect(&:sfen_char).compact.join
+      sfen_to = /[1-9][[:lower:]]/
 
-      drop_part = /(?<usi_drop_piece>[#{usi_drop_piece}])(?<usi_drop_trigger>\*)(?<usi_to>#{usi_to})/o
-      move_part = /(?<usi_from>#{usi_to})(?<usi_to>#{usi_to})(?<usi_promote_trigger>\+)?/o
+      drop_part = /(?<sfen_drop_piece>[#{sfen_drop_piece}])(?<sfen_drop_trigger>\*)(?<sfen_to>#{sfen_to})/o
+      move_part = /(?<sfen_from>#{sfen_to})(?<sfen_to>#{sfen_to})(?<sfen_promote_trigger>\+)?/o
 
       /((#{drop_part})|(#{move_part}))/o
     end
