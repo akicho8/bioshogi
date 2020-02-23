@@ -144,7 +144,10 @@ module Bioshogi
           # 詰将棋のときはすべての手を探すため break してはいけない
           if alpha >= beta
             log["break if #{alpha} >= #{beta}"] if log
-            break
+            if params[:no_break]
+            else
+              break
+            end
           end
         end
 
