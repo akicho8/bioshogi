@@ -73,8 +73,11 @@ module Bioshogi
     end
 
     def kento_app_url
-      query = { initpos: board_and_b_or_w_and_piece_box_and_turn, moves: moves.join(".") }.to_query
-      "https://www.kento-shogi.com/?#{query}"
+      "https://www.kento-shogi.com/?#{kento_app_query_hash.to_query}"
+    end
+
+    def kento_app_query_hash
+      { initpos: board_and_b_or_w_and_piece_box_and_turn, moves: moves.join(".") }
     end
   end
 end
