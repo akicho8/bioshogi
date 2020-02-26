@@ -12,3 +12,8 @@ sfen.attributes                        # => {:board=>"lnsgkgsnl/1r5b1/ppppppppp/
 sfen = Sfen.parse("position startpos")
 sfen.attributes # => {:board=>"lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL", :b_or_w=>"b", :hold_pieces=>"-", :turn_counter_next=>"1", :moves=>nil}
 sfen.soldiers.collect(&:to_s)
+
+sfen = Sfen.parse("position startpos moves 5g5f 8c8d")
+sfen.moves # => ["5g5f", "8c8d"]
+sfen.board_and_piece_box_and_turn # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+sfen.kento_app_url # => "https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=5g5f.8c8d"

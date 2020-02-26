@@ -59,9 +59,22 @@ module Bioshogi
     end
 
     def move_infos
-      attributes[:moves].to_s.split.collect do |e|
-        {input: e}
-      end
+      moves.collect { |e| { input: e } }
+    end
+
+    ################################################################################ 簡単にアクセスするためのメソッド
+
+    def moves
+      attributes[:moves].to_s.split
+    end
+
+    def board_and_piece_box_and_turn
+      attributes.fetch_values(:board, :b_or_w, :hold_pieces, :turn_counter_next).join(" ")
+    end
+
+    def kento_app_url
+      query = { initpos: board_and_piece_box_and_turn, moves: moves.join(".") }.to_query
+      "https://www.kento-shogi.com/?#{query}"
     end
   end
 end
