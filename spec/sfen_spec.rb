@@ -20,7 +20,7 @@ module Bioshogi
     it "主にKENTO用" do
       sfen = Sfen.parse("position startpos moves 5g5f 8c8d")
       assert { sfen.moves == ["5g5f", "8c8d"] }
-      assert { sfen.board_and_piece_box_and_turn == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { sfen.board_and_b_or_w_and_piece_box_and_turn == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
       assert { sfen.kento_app_url == "https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=5g5f.8c8d" }
     end
   end

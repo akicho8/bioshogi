@@ -68,12 +68,12 @@ module Bioshogi
       attributes[:moves].to_s.split
     end
 
-    def board_and_piece_box_and_turn
+    def board_and_b_or_w_and_piece_box_and_turn
       attributes.fetch_values(:board, :b_or_w, :hold_pieces, :turn_counter_next).join(" ")
     end
 
     def kento_app_url
-      query = { initpos: board_and_piece_box_and_turn, moves: moves.join(".") }.to_query
+      query = { initpos: board_and_b_or_w_and_piece_box_and_turn, moves: moves.join(".") }.to_query
       "https://www.kento-shogi.com/?#{query}"
     end
   end
