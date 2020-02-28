@@ -6,7 +6,7 @@ module Bioshogi
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
-          source.match?(/^position\s+/)
+          source.match?(/^(?:position|sfen)\b/i) || (source.lines.one? && Sfen.accept?(source))
         end
       end
 

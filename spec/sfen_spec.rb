@@ -24,5 +24,14 @@ module Bioshogi
       assert { sfen.kento_app_url == "https://www.kento-shogi.com/?initpos=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=5g5f.8c8d" }
       assert { sfen.kento_app_query_hash == { initpos: "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", moves: "5g5f.8c8d" } }
     end
+
+    it "to_h" do
+      assert { Sfen.parse("position startpos moves 5g5f 8c8d").to_h }
+    end
+
+    it "position も sfen も省略できる" do
+      assert { Sfen.accept?("sfen lnsgkgsnl/1r5b1/+ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d") }
+      assert { Sfen.accept?("lnsgkgsnl/1r5b1/+ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d") }
+    end
   end
 end

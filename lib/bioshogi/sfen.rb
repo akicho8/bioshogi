@@ -3,9 +3,16 @@
 module Bioshogi
   class Sfen
     STARTPOS_EXPANSION = "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+    BOARD_REGEXP       = "[#{Piece.collect(&:sfen_char).join}1-9+\/]+"
+    LOCATION_REGEXP    = "[#{Location.collect(&:to_sfen).join}]"
+    SFEN_REGEXP        = /(?:position\s+)?(?:sfen\s+)?(?<board>#{BOARD_REGEXP})\s+(?<b_or_w>#{LOCATION_REGEXP})\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/i
 
     attr_reader :attributes
     attr_reader :source
+
+    def self.accept?(source)
+      source.sub(/startpos/, STARTPOS_EXPANSION).match?(SFEN_REGEXP)
+    end
 
     def self.parse(source)
       new(source).tap(&:parse)
@@ -17,7 +24,7 @@ module Bioshogi
 
     def parse
       s = source.sub(/startpos/, STARTPOS_EXPANSION)
-      md = s.match(/position\s+sfen\s+(?<board>\S+)\s+(?<b_or_w>\S+)\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/)
+      md = s.match(SFEN_REGEXP)
       unless md
         raise SyntaxDefact, "構文が不正です : #{source.inspect}"
       end
@@ -78,6 +85,15 @@ module Bioshogi
 
     def kento_app_query_hash
       { initpos: board_and_b_or_w_and_piece_box_and_turn, moves: moves.join(".") }
+    end
+
+    def to_h
+      {
+        soldiers: soldiers,
+        piece_counts: piece_counts,
+        location: location,
+        moves: moves,
+      }
     end
   end
 end

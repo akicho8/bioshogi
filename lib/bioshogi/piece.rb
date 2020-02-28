@@ -163,6 +163,10 @@ module Bioshogi
         end
       end
 
+      # http://shogidokoro.starfree.jp/usi.html
+      # "S"  先手の銀
+      # "s"  後手の銀
+      # "+s" 後手の成銀
       def to_sfen(promoted: false, location: :black)
         [
           promoted ? "+" : nil,

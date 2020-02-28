@@ -19,6 +19,11 @@ puts mediator.board
 mediator.to_current_sfen        # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
 mediator.hand_logs.collect(&:to_sfen) # => ["7i6h", "S*2d"]
 
+mediator.execute("▲52銀打")
+mediator.execute("△94歩")
+mediator.execute("▲43銀成")
+mediator.to_current_sfen        # => "sfen lnsgkgsnl/1r5b1/1pppp+Sppp/p6s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w Ps 6"
+
 # >> 後手の持駒：銀二
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
