@@ -66,7 +66,7 @@ module Bioshogi
       # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
       def a_to_s(pieces, **options)
         pieces = pieces.collect { |e| Piece.fetch(e) }
-        h_to_s(pieces.group_by(&:key).transform_values(&:size), **options)
+        h_to_s(pieces.group_by(&:key).transform_values(&:size), options)
       end
 
       # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}

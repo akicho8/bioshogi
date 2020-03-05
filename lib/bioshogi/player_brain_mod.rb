@@ -1,7 +1,7 @@
 module Bioshogi
   concern :PlayerBrainMod do
     def evaluator(**options)
-      (options[:evaluator_class] || Evaluator::Level1).new(self, **options)
+      (options[:evaluator_class] || Evaluator::Level1).new(self, options)
     end
 
     def brain(**params)
@@ -11,10 +11,10 @@ module Bioshogi
     # 非合法手を含む(ピンを考慮しない)すべての指し手の生成
     def create_all_hands(**options)
       Enumerator.new do |y|
-        move_hands(**options).each do |e|
+        move_hands(options).each do |e|
           y << e
         end
-        drop_hands(**options).each do |e|
+        drop_hands(options).each do |e|
           y << e
         end
       end
@@ -31,7 +31,7 @@ module Bioshogi
     # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
     #
     def legal_all_hands(**options)
-      create_all_hands(**options.merge(legal_only: true))
+      create_all_hands(options.merge(legal_only: true))
     end
 
     # 盤上の駒の全手筋
@@ -45,7 +45,7 @@ module Bioshogi
 
       Enumerator.new do |y|
         soldiers.each do |soldier|
-          soldier.move_list(mediator, **options).each do |move_hand|
+          soldier.move_list(mediator, options).each do |move_hand|
             y << move_hand
           end
         end
@@ -117,7 +117,7 @@ module Bioshogi
     private
 
     def move_list(soldier, **options)
-      Movabler.move_list(mediator, soldier, **options)
+      Movabler.move_list(mediator, soldier, options)
     end
   end
 end

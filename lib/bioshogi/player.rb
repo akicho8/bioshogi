@@ -19,7 +19,7 @@ module Bioshogi
     end
 
     def execute(str, **options)
-      @executor = (options[:executor_class] || PlayerExecutorHuman).new(self, str, **options)
+      @executor = (options[:executor_class] || PlayerExecutorHuman).new(self, str, options)
       @executor.execute
     end
 
@@ -43,7 +43,7 @@ module Bioshogi
     def soldier_create(object, **options)
       if object.kind_of?(Array)
         object.each do |e|
-          soldier_create(e, **options)
+          soldier_create(e, options)
         end
       else
         if object.kind_of?(String)

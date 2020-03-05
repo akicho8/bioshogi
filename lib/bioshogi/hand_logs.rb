@@ -7,7 +7,7 @@ module Bioshogi
         with_location: false,
       }.merge(options)
 
-      collect { |e| e.to_kif(**options) }
+      collect { |e| e.to_kif(options) }
     end
 
     def to_ki2_a

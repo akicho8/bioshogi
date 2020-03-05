@@ -12,11 +12,11 @@ module Bioshogi
 
       class << self
         def parse(source, **options)
-          new(source, **options).tap(&:parse)
+          new(source, options).tap(&:parse)
         end
 
         def file_parse(file, **options)
-          parse(Pathname(file).expand_path.read, **options)
+          parse(Pathname(file).expand_path.read, options)
         end
 
         def accept?(source)

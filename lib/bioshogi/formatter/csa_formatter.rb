@@ -53,7 +53,7 @@ module Bioshogi
 
         obj = Mediator.new
         mediator_board_setup(obj)
-        out << obj.to_csa(**options)
+        out << obj.to_csa(options)
 
         if options[:compact]
           sep = ","

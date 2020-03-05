@@ -34,9 +34,9 @@ module Bioshogi
           #     end
           #   end
           # else
-          #   score = player.evaluator(**params).score
+          #   score = player.evaluator(params).score
           # end
-          score = player.evaluator(**params).score
+          score = player.evaluator(params).score
 
           log["%+d" % score] if log
           return [score, []]

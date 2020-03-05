@@ -20,23 +20,23 @@ module Bioshogi
         char_type: :formal_sheet,
       }.merge(options)
 
-      hand.to_kif(**options)
+      hand.to_kif(options)
     end
 
     def to_ki2(**options)
-      official_formatter(**options).to_s
+      official_formatter(options).to_s
     end
 
     def yomiage(**options)
-      yomiage_formatter(**options).to_s
+      yomiage_formatter(options).to_s
     end
 
     def to_csa(**options)
-      hand.to_csa(**options)
+      hand.to_csa(options)
     end
 
     def to_sfen(**options)
-      hand.to_sfen(**options)
+      hand.to_sfen(options)
     end
 
     def to_kif_ki2
@@ -60,11 +60,11 @@ module Bioshogi
     end
 
     def official_formatter(**options)
-      OfficialFormatter.new(self, **options)
+      OfficialFormatter.new(self, options)
     end
 
     def yomiage_formatter(**options)
-      YomiageFormatter.new(self, **options)
+      YomiageFormatter.new(self, options)
     end
   end
 end

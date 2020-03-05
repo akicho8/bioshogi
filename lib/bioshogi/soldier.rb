@@ -20,7 +20,7 @@ module Bioshogi
           location = Location[v]
         end
         attrs = {place: Place.fetch(md[:place]), location: location}
-        new_with_promoted(md[:piece], **attrs)
+        new_with_promoted(md[:piece], attrs)
       end
 
       def piece_and_promoted(object)
@@ -135,7 +135,7 @@ module Bioshogi
 
     # 移動可能な座標を取得
     def move_list(board, **options)
-      Movabler.move_list(board, self, **options)
+      Movabler.move_list(board, self, options)
     end
 
     # 二歩？
@@ -226,15 +226,15 @@ module Bioshogi
     end
 
     def name(**options)
-      location.name + place.name + any_name(**options)
+      location.name + place.name + any_name(options)
     end
 
     def name_without_location(**options)
-      place.name + any_name(**options)
+      place.name + any_name(options)
     end
 
     def any_name(**options)
-      piece.any_name(promoted, **options)
+      piece.any_name(promoted, options)
     end
 
     def yomiage
@@ -297,7 +297,7 @@ module Bioshogi
     end
 
     def to_s(**options)
-      to_kif(**options)
+      to_kif(options)
     end
 
     def king_captured?
@@ -360,9 +360,9 @@ module Bioshogi
       }.merge(options)
 
       if options[:with_location]
-        s = soldier.name(**options)
+        s = soldier.name(options)
       else
-        s = soldier.name_without_location(**options)
+        s = soldier.name_without_location(options)
       end
       s + "打"
     end
@@ -428,7 +428,7 @@ module Bioshogi
       [
         options[:with_location] ? soldier.location.name : nil,
         soldier.place.name,
-        origin_soldier.any_name(**options),
+        origin_soldier.any_name(options),
         promote_trigger? ? "成" : "",
         "(", origin_soldier.place.hankaku_number, ")",
       ].join

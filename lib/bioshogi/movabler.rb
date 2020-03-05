@@ -44,7 +44,7 @@ module Bioshogi
             end
 
             # 空または相手駒の升には行ける(取れる)
-            piece_store(mediator, soldier, place, captured_soldier, yielder, **options)
+            piece_store(mediator, soldier, place, captured_soldier, yielder, options)
 
             # 相手駒があるのでこれ以上は進めない
             if captured_soldier
@@ -66,7 +66,7 @@ module Bioshogi
     # でも place に置いてそれ以上動けなかったら反則になるので
     # 1. それ以上動けるなら置く
     # 2. 成れるなら成ってみて、それ以上動けるなら置く
-    def piece_store(mediator, origin_soldier, place, captured_soldier, yielder, **options)
+    def piece_store(mediator, origin_soldier, place, captured_soldier, yielder, options)
       if options[:king_captured_only]
         if captured_soldier && captured_soldier.piece.key == :king
         else
@@ -80,7 +80,7 @@ module Bioshogi
       # 成れるなら成る
       if origin_soldier.next_promotable?(soldier.place)
         move_hand = MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
-        success = piece_store_core(mediator, move_hand, yielder, **options)
+        success = piece_store_core(mediator, move_hand, yielder, options)
         if success
           if options[:promoted_only]
             # 成と不成の両方がある(かもしれない)場合は成の方だけ生成する
@@ -95,11 +95,11 @@ module Bioshogi
       if soldier.alive?
         # すでに成っている(または成らない)手を生成
         move_hand = MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
-        piece_store_core(mediator, move_hand, yielder, **options)
+        piece_store_core(mediator, move_hand, yielder, options)
       end
     end
 
-    def piece_store_core(mediator, move_hand, yielder, **options)
+    def piece_store_core(mediator, move_hand, yielder, options)
       # 自玉に王手がかかる手は除外するか？
       if options[:legal_only]
         if !move_hand.legal_hand?(mediator)

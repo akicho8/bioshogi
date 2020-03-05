@@ -69,8 +69,8 @@ module Bioshogi
         placement_from_soldiers(BoardParser.parse(str).soldier_box)
       end
 
-      def placement_from_hash(**hash)
-        placement_from_soldiers(Soldier.preset_soldiers(**hash))
+      def placement_from_hash(hash)
+        placement_from_soldiers(Soldier.preset_soldiers(hash))
       end
 
       def placement_from_human(str)
@@ -134,7 +134,7 @@ module Bioshogi
       end
 
       # def move_list(soldier, **options)
-      #   Movabler.move_list(self, soldier, **options)
+      #   Movabler.move_list(self, soldier, options)
       # end
 
       def to_s_soldiers
