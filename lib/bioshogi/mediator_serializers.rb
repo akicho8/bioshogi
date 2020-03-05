@@ -9,7 +9,7 @@ module Bioshogi
     end
 
     concerning :KifMethods do
-      def to_bod(**options)
+      def to_bod(options = {})
         s = []
         s << player_at(:white).piece_box_as_header + "\n"
         s << board.to_s
@@ -49,7 +49,7 @@ module Bioshogi
     end
 
     concerning :CsaMethods do
-      def to_csa(**options)
+      def to_csa(options = {})
         s = []
 
         preset_info = board.preset_info
@@ -129,7 +129,7 @@ module Bioshogi
       end
 
       # 最初から現在までの局面
-      def to_sfen(**options)
+      def to_sfen(options = {})
         s = []
         s << "position"
         s << @initial_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする

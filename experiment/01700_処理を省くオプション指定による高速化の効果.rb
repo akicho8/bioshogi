@@ -1,7 +1,7 @@
 require "./example_helper"
 require 'active_support/core_ext/benchmark'
 
-def f(**options)
+def f(options = {})
   Benchmark.ms { 20.times { Parser.file_parse("katomomo.csa", options).to_kif } }
 end
 

@@ -13,7 +13,7 @@ class ReversiApp
   attr_accessor :params
   attr_accessor :pass_count
 
-  def initialize(**params)
+  def initialize(params = {})
     @params = {
       dimension: 4 * 2,
     }.merge(params)

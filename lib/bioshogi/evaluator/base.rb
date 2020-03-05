@@ -13,7 +13,7 @@ module Bioshogi
         {}
       end
 
-      def initialize(player, **params)
+      def initialize(player, params = {})
         @player = player
         @params = self.class.default_params.merge(params)
       end

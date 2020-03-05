@@ -17,7 +17,7 @@ module Bioshogi
     end
 
     # 棋譜ファイルのコンテンツを読み込む
-    def parse(source, **options)
+    def parse(source, options = {})
       parser = accepted_class(source)
       unless parser
         raise FileFormatError, "棋譜のフォーマットが不明です : #{source}"
@@ -26,7 +26,7 @@ module Bioshogi
     end
 
     # 棋譜ファイル自体を読み込む
-    def file_parse(file, **options)
+    def file_parse(file, options = {})
       parse(Pathname(file).expand_path.read, options)
     end
 

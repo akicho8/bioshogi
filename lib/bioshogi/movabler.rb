@@ -24,7 +24,7 @@ module Bioshogi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def move_list(mediator, soldier, **options)
+    def move_list(mediator, soldier, options = {})
       Enumerator.new do |yielder|
         soldier.all_vectors.each do |vector|
           place = soldier.place

@@ -27,7 +27,7 @@ module Bioshogi
       #   -3334FU
       #   %TORYO
       #
-      def to_csa(**options)
+      def to_csa(options = {})
         options = {
           board_expansion: false, # 平手であっても P1 形式で表示
           compact: false,         # 指し手の部分だけ一行にする

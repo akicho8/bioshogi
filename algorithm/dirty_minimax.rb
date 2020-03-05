@@ -10,7 +10,7 @@ class DirtyMinimax
   attr_accessor :current_turn
   attr_accessor :time_limit_exceeded
 
-  def initialize(**params)
+  def initialize(params = {})
     self.params.update(params)
 
     @time_limit_exceeded = nil

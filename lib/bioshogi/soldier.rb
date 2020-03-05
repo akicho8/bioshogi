@@ -4,7 +4,7 @@
 module Bioshogi
   class Soldier
     class << self
-      def from_str(str, **attributes)
+      def from_str(str, attributes = {})
         if str.kind_of?(self)
           return str
         end
@@ -35,7 +35,7 @@ module Bioshogi
         {piece: piece, promoted: promoted}
       end
 
-      def new_with_promoted(object, **attributes)
+      def new_with_promoted(object, attributes = {})
         create(piece_and_promoted(object).merge(attributes))
       end
 
@@ -44,7 +44,7 @@ module Bioshogi
         PresetInfo.fetch(preset_key).board_parser.location_adjust[location.key]
       end
 
-      def preset_soldiers(**params)
+      def preset_soldiers(params = {})
         Location.flat_map do |location|
           PresetInfo.fetch(params[location.key] || :"平手").board_parser.location_adjust[location.key]
         end
@@ -134,7 +134,7 @@ module Bioshogi
     end
 
     # 移動可能な座標を取得
-    def move_list(board, **options)
+    def move_list(board, options = {})
       Movabler.move_list(board, self, options)
     end
 
@@ -225,15 +225,15 @@ module Bioshogi
       name
     end
 
-    def name(**options)
+    def name(options = {})
       location.name + place.name + any_name(options)
     end
 
-    def name_without_location(**options)
+    def name_without_location(options = {})
       place.name + any_name(options)
     end
 
-    def any_name(**options)
+    def any_name(options = {})
       piece.any_name(promoted, options)
     end
 
@@ -296,7 +296,7 @@ module Bioshogi
       "<#{self}>"
     end
 
-    def to_s(**options)
+    def to_s(options = {})
       to_kif(options)
     end
 
@@ -354,7 +354,7 @@ module Bioshogi
       player.piece_box.add(soldier.piece.key => 1)
     end
 
-    def to_kif(**options)
+    def to_kif(options = {})
       options = {
         with_location: true,
       }.merge(options)
@@ -367,7 +367,7 @@ module Bioshogi
       s + "打"
     end
 
-    def to_csa(**options)
+    def to_csa(options = {})
       [
         soldier.location.csa_sign,
         "00",
@@ -376,7 +376,7 @@ module Bioshogi
       ].join
     end
 
-    def to_sfen(**options)
+    def to_sfen(options = {})
       [
         soldier.piece.to_sfen,
         "*",
@@ -420,7 +420,7 @@ module Bioshogi
       !origin_soldier.promoted && soldier.promoted
     end
 
-    def to_kif(**options)
+    def to_kif(options = {})
       options = {
         with_location: true,
       }.merge(options)
@@ -434,7 +434,7 @@ module Bioshogi
       ].join
     end
 
-    def to_csa(**options)
+    def to_csa(options = {})
       [
         soldier.location.csa_sign,
         origin_soldier.place.hankaku_number,
@@ -443,7 +443,7 @@ module Bioshogi
       ].join
     end
 
-    def to_sfen(**options)
+    def to_sfen(options = {})
       [
         origin_soldier.place.to_sfen,
         soldier.place.to_sfen,

@@ -28,7 +28,7 @@ module Bioshogi
     delegate :mediator, :create_all_hands, to: :player
     delegate :logger, :to => "Bioshogi", allow_nil: true
 
-    def initialize(player, **params)
+    def initialize(player, params = {})
       @player = player
       @params = {
         diver_class: Diver::NegaAlphaDiver,    # [Diver::NegaAlphaDiver, Diver::NegaScoutDiver]
@@ -40,7 +40,7 @@ module Bioshogi
     end
 
     # ショートカット用
-    def diver_dive(**params)
+    def diver_dive(params = {})
       diver_instance(params.merge(current_player: player)).dive
     end
 
@@ -49,7 +49,7 @@ module Bioshogi
     # > ゲーム木でIDDFSを使う場合、アルファ・ベータ枝刈りなどのヒューリスティックが反復によって改善されていき、
     # > 最も深い探索でのスコアの推定値がより正確になるという利点がある。また、探索順序を改善することができるため、
     # > 探索をより高速に行えるという利点もある（前の反復で最善とされた手を次の反復で最初に調べることでアルファ・ベータ法の効率が良くなる）。
-    def iterative_deepening(**params)
+    def iterative_deepening(params = {})
       # このパラメータはそのまま Diver に渡している
       params = {
         depth_max_range: 1..1,  # 1..3 なら時間がある限り1→2→3手と読み進めていく。3手詰限定なら 3..3 とする
@@ -177,7 +177,7 @@ module Bioshogi
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     #
     # 探索するけど探索の深さを延していかない
-    def smart_score_list(**params)
+    def smart_score_list(params = {})
       diver = diver_instance(current_player: player.opponent_player)
       create_all_hands(promoted_only: true).collect { |hand|
         hand.sandbox_execute(mediator) do
@@ -189,7 +189,7 @@ module Bioshogi
     end
 
     # すべての手を指してみて評価する (探索しない)
-    def fast_score_list(**params)
+    def fast_score_list(params = {})
       evaluator = player.evaluator(params.merge(params))
       create_all_hands(promoted_only: true).collect { |hand|
         hand.sandbox_execute(mediator) do

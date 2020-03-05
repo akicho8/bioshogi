@@ -71,7 +71,7 @@ module Bioshogi
     attr_accessor :parser
     attr_accessor :params
 
-    def initialize(parser, **params)
+    def initialize(parser, params = {})
       require "rmagick"
 
       @parser = parser

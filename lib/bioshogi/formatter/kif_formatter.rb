@@ -1,7 +1,7 @@
 module Bioshogi
   module Formatter
     concern :KifFormatter do
-      def to_kif(**options)
+      def to_kif(options = {})
         options = {
           length: 12,
           number_width: 4,

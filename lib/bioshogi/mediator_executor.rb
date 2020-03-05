@@ -20,7 +20,7 @@ module Bioshogi
       end
     end
 
-    def execute(str, **options)
+    def execute(str, options = {})
       options = {
         executor_class: executor_class,
       }.merge(options)

@@ -14,7 +14,7 @@ module Bioshogi
     delegate :origin_soldier, :captured_soldier, to: :move_hand, allow_nil: true
     delegate :soldier, to: :hand
 
-    def initialize(player, source, **params)
+    def initialize(player, source, params = {})
       @player = player
       @source = source
       @params = {}.merge(params)

@@ -1,15 +1,15 @@
 module Bioshogi
   concern :PlayerBrainMod do
-    def evaluator(**options)
+    def evaluator(options = {})
       (options[:evaluator_class] || Evaluator::Level1).new(self, options)
     end
 
-    def brain(**params)
-      Brain.new(self, **params)
+    def brain(params = {})
+      Brain.new(self, params = {})
     end
 
     # 非合法手を含む(ピンを考慮しない)すべての指し手の生成
-    def create_all_hands(**options)
+    def create_all_hands(options = {})
       Enumerator.new do |y|
         move_hands(options).each do |e|
           y << e
@@ -30,12 +30,12 @@ module Bioshogi
     #
     # 枝刈りされる前の状態でピンを考慮すると重すぎて動かないのでどこにこのチェックを入れるかが難しい
     #
-    def legal_all_hands(**options)
+    def legal_all_hands(options = {})
       create_all_hands(options.merge(legal_only: true))
     end
 
     # 盤上の駒の全手筋
-    def move_hands(**options)
+    def move_hands(options = {})
       options = {
         promoted_only: false,      # 成と不成がある場合は成だけを生成する？
         king_captured_only: false, # 玉を取る手だけ生成する？
@@ -53,7 +53,7 @@ module Bioshogi
     end
 
     # 持駒の全打筋
-    def drop_hands(**options)
+    def drop_hands(options = {})
       options = {
         rule_valid: true,         # 合法手のみ(二歩と死に駒以外)生成する？
         legal_only: false,        # 合法手のみ生成する？ (打つことで自玉が死ぬ手を除く。そんな手ある？)
@@ -116,7 +116,7 @@ module Bioshogi
 
     private
 
-    def move_list(soldier, **options)
+    def move_list(soldier, options = {})
       Movabler.move_list(mediator, soldier, options)
     end
   end

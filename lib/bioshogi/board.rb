@@ -13,7 +13,7 @@ module Bioshogi
     end
 
     concerning :UpdateMethods do
-      def place_on(soldier, **options)
+      def place_on(soldier, options = {})
         options = {
           validate: false,
         }.merge(options)
@@ -133,7 +133,7 @@ module Bioshogi
         end
       end
 
-      # def move_list(soldier, **options)
+      # def move_list(soldier, options = {})
       #   Movabler.move_list(self, soldier, options)
       # end
 
@@ -229,7 +229,7 @@ module Bioshogi
     concerning :PillerMethods do
       attr_accessor :piece_piller_by_latest_piece
 
-      def place_on(soldier, **options)
+      def place_on(soldier, options = {})
         super
 
         c = (piller_counts[soldier.place.x.value] += 1)

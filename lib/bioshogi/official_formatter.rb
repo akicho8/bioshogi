@@ -5,7 +5,7 @@ module Bioshogi
     attr_reader :hand_log
     attr_reader :options
 
-    def initialize(hand_log, **options)
+    def initialize(hand_log, options = {})
       @options = {
         with_location: false,     # 先手後手のマークを入れる？
         force_drop: false,        # 「打」を省略できるときでも「打」を明示する？

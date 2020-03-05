@@ -2,7 +2,7 @@
 
 module Bioshogi
   class HandLogs < SimpleDelegator
-    def to_kif_a(**options)
+    def to_kif_a(options = {})
       options = {
         with_location: false,
       }.merge(options)

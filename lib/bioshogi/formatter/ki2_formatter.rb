@@ -1,7 +1,7 @@
 module Bioshogi
   module Formatter
     concern :Ki2Formatter do
-      def to_ki2(**options)
+      def to_ki2(options = {})
         options = {
           cols: 10,
           fixed_width: nil,

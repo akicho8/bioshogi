@@ -7,7 +7,7 @@ module Bioshogi
         !!parser_class_for(source)
       end
 
-      def parse(source, **options)
+      def parse(source, options = {})
         parser = parser_class_for(source)
         unless parser
           raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
@@ -36,12 +36,12 @@ module Bioshogi
           raise NotImplementedError, "#{__method__} is not implemented"
         end
 
-        def parse(source, **options)
+        def parse(source, options = {})
           new(source, options).tap(&:parse)
         end
       end
 
-      def initialize(source, **options)
+      def initialize(source, options = {})
         @source = source
         @options = options
       end

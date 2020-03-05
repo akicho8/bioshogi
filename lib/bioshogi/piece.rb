@@ -40,7 +40,7 @@ module Bioshogi
       end
 
       # Piece.h_to_s(bishop: 1, rook: 2) # => "飛二 角"
-      def h_to_s(hash, **options)
+      def h_to_s(hash, options = {})
         options = {
           ordered: true,      # 価値のある駒順に並べる
           separator: " ",
@@ -64,7 +64,7 @@ module Bioshogi
       end
 
       # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
-      def a_to_s(pieces, **options)
+      def a_to_s(pieces, options = {})
         pieces = pieces.collect { |e| Piece.fetch(e) }
         h_to_s(pieces.group_by(&:key).transform_values(&:size), options)
       end
@@ -131,7 +131,7 @@ module Bioshogi
         end
       end
 
-      def any_name(promoted, **options)
+      def any_name(promoted, options = {})
         if promoted
           if options[:char_type] == :formal_sheet
             promoted_formal_sheet_name || promoted_name

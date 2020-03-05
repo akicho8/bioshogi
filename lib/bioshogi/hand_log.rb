@@ -14,7 +14,7 @@ module Bioshogi
 
     attr_accessor :personal_clock
 
-    def to_kif(**options)
+    def to_kif(options = {})
       options = {
         with_location: false,
         char_type: :formal_sheet,
@@ -23,19 +23,19 @@ module Bioshogi
       hand.to_kif(options)
     end
 
-    def to_ki2(**options)
+    def to_ki2(options = {})
       official_formatter(options).to_s
     end
 
-    def yomiage(**options)
+    def yomiage(options = {})
       yomiage_formatter(options).to_s
     end
 
-    def to_csa(**options)
+    def to_csa(options = {})
       hand.to_csa(options)
     end
 
-    def to_sfen(**options)
+    def to_sfen(options = {})
       hand.to_sfen(options)
     end
 
@@ -47,7 +47,7 @@ module Bioshogi
       [to_kif, to_ki2, to_csa]
     end
 
-    def to_skill_set_kif_comment(**options)
+    def to_skill_set_kif_comment(options = {})
       skill_set.kif_comment(soldier.location)
     end
 
@@ -59,11 +59,11 @@ module Bioshogi
       move_hand || drop_hand
     end
 
-    def official_formatter(**options)
+    def official_formatter(options = {})
       OfficialFormatter.new(self, options)
     end
 
-    def yomiage_formatter(**options)
+    def yomiage_formatter(options = {})
       YomiageFormatter.new(self, options)
     end
   end

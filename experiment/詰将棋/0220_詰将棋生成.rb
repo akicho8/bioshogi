@@ -23,7 +23,7 @@ class App
     attr_accessor :params
     attr_accessor :mediator
 
-    def initialize(**params)
+    def initialize(params = {})
       @params = params
     end
 

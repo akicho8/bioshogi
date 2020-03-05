@@ -11,11 +11,11 @@ module Bioshogi
       cattr_accessor(:header_sep) { "：" }
 
       class << self
-        def parse(source, **options)
+        def parse(source, options = {})
           new(source, options).tap(&:parse)
         end
 
-        def file_parse(file, **options)
+        def file_parse(file, options = {})
           parse(Pathname(file).expand_path.read, options)
         end
 
@@ -26,7 +26,7 @@ module Bioshogi
 
       attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
-      def initialize(source, **parser_options)
+      def initialize(source, parser_options = {})
         @source = source
         @parser_options = default_parser_options.merge(parser_options)
 
