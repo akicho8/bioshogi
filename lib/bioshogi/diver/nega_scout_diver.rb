@@ -18,7 +18,7 @@ module Bioshogi
         # 一番深く潜ったところで局面を評価する
         if depth_max <= depth
           @eval_counter += 1
-          score = player.evaluator(params).score
+          score = player.evaluator(**params).score
           log["%+d" % score] if log
           return [score, []]
         end

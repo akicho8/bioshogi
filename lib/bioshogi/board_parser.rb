@@ -12,7 +12,7 @@ module Bioshogi
         unless parser
           raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
         end
-        parser.parse(source, options)
+        parser.parse(source, **options)
       end
 
       private
@@ -37,7 +37,7 @@ module Bioshogi
         end
 
         def parse(source, **options)
-          new(source, options).tap(&:parse)
+          new(source, **options).tap(&:parse)
         end
       end
 

@@ -13,8 +13,8 @@ module Bioshogi
       new(default_pieces)
     end
 
-    def initialize(**)
-      super
+    def initialize(value = {})
+      super(value.dup)
     end
 
     def pick_out(piece)
@@ -82,7 +82,7 @@ module Bioshogi
     ################################################################################ formatter
 
     def to_s(**options)
-      Piece.h_to_s(object, options)
+      Piece.h_to_s(object, **options)
     end
 
     def to_sfen(location)

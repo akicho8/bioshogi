@@ -50,7 +50,7 @@ module Bioshogi
         player_test(*args).soldiers.collect(&:name).sort
       end
 
-      def read_spec(params)
+      def read_spec(**params)
         mediator = new
         player = mediator.player_at(:black)
         player.pieces_add("歩9角飛香2桂2銀2金2玉")

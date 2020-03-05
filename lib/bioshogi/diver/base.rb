@@ -10,7 +10,7 @@ module Bioshogi
       delegate :logger, :to => "Bioshogi", allow_nil: true
 
       # iterative_deepening のパラメータがそのまま来ている
-      def initialize(params)
+      def initialize(**params)
         @params = {
           depth_max: 0,         # 深度
           log_take: nil,        # 2 なら最初の2階層までを表示

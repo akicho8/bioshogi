@@ -26,7 +26,7 @@ module Bioshogi
       }.merge(options)
 
       InputParser.scan(str).each do |str|
-        current_player.execute(str, options)
+        current_player.execute(str, **options)
       end
     end
 

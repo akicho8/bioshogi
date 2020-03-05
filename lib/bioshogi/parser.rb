@@ -22,12 +22,12 @@ module Bioshogi
       unless parser
         raise FileFormatError, "棋譜のフォーマットが不明です : #{source}"
       end
-      parser.parse(source, options)
+      parser.parse(source, **options)
     end
 
     # 棋譜ファイル自体を読み込む
     def file_parse(file, **options)
-      parse(Pathname(file).expand_path.read, options)
+      parse(Pathname(file).expand_path.read, **options)
     end
 
     # source が Pathname ならそのファイルから読み込み、文字列なら何もしない

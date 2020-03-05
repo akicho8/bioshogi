@@ -158,7 +158,7 @@ module Bioshogi
     end
 
     def diver_instance(args)
-      params[:diver_class].new(params.merge(args))
+      params[:diver_class].new(**params.merge(args))
     end
 
     # Board.promotable_disable
@@ -190,7 +190,7 @@ module Bioshogi
 
     # すべての手を指してみて評価する (探索しない)
     def fast_score_list(**params)
-      evaluator = player.evaluator(params.merge(params))
+      evaluator = player.evaluator(**params.merge(params))
       create_all_hands(promoted_only: true).collect { |hand|
         hand.sandbox_execute(mediator) do
           start_time = Time.now
