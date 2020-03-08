@@ -9,7 +9,7 @@ Bioshogi::XtraPattern.reload_all
 # for /swars_skills
 # require 'active_support'
 # require 'active_support/core_ext/object/to_json'
-require "bioshogi/contrib/other_files/swars_skills"
+# require "bioshogi/contrib/other_files/swars_skills"
 
 require "sinatra/json"
 require "open-uri"
