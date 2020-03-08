@@ -4,6 +4,9 @@ module Bioshogi
   concern :MediatorBase do
     attr_writer :board
 
+    def before_run_process
+    end
+
     def params
       @params ||= {
         skill_monitor_enable: false,

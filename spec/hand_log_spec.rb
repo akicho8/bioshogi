@@ -56,6 +56,7 @@ module Bioshogi
 5 ７六歩(77) (00:03/00:00:00)
 6 ４二銀(31) (03:00/00:00:00)
       EOT
+
       assert { parser.mediator.hand_logs.last.personal_clock.to_s == "(03:00/00:06:00)" }
     end
   end

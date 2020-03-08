@@ -54,7 +54,7 @@ end
 tp Brain.human_format(records)
 
 # # 後手は王手してきた金を取った状態
-# mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
+# mediator.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 # puts mediator
 #
 # # 先手の手番でその玉を取る
@@ -62,7 +62,7 @@ tp Brain.human_format(records)
 # record = records.first
 # tp record
 # tp Brain.human_format(records)
-# mediator.execute(record[:hand].to_sfen, executor_class: PlayerExecutorCpu)
+# mediator.execute(record[:hand].to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 
 #   if captured_soldier && captured_soldier.piece.key == :king
 #     break

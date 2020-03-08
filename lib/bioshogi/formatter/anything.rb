@@ -25,8 +25,12 @@ module Bioshogi
         mediator
       end
 
+      def mediator_class
+        @parser_options[:mediator_class] || Mediator
+      end
+
       def mediator_new
-        Mediator.new.tap do |e|
+        mediator_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
                 :skill_monitor_enable,
                 :skill_monitor_technique_enable,

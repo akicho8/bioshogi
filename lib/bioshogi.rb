@@ -69,10 +69,12 @@ require_relative "bioshogi/input_parser"
 require_relative "bioshogi/input"
 require_relative "bioshogi/input_adapter"
 
+require_relative "bioshogi/monitor_mod"
+require_relative "bioshogi/hand_logs_mod"
 require_relative "bioshogi/player_executor_base"
 require_relative "bioshogi/player_executor_brain"
 require_relative "bioshogi/player_executor_human"
-require_relative "bioshogi/player_executor_cpu"
+require_relative "bioshogi/player_executor_without_monitor"
 
 require_relative "bioshogi/movabler"
 
@@ -85,6 +87,7 @@ require_relative "bioshogi/mediator_serializers"
 require_relative "bioshogi/mediator_players"
 require_relative "bioshogi/mediator_stack"
 require_relative "bioshogi/mediator_simple"
+require_relative "bioshogi/mediator_fast"
 require_relative "bioshogi/mediator"
 
 require_relative "bioshogi/notation_dsl"

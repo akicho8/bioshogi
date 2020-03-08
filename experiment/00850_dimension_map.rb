@@ -19,14 +19,14 @@ mediator.board.placement_from_shape <<~EOT
 +------+
   EOT
 
-mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
+mediator.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
 mediator.player_at(:black).evaluator.score  # => 0
 mediator.player_at(:black).evaluator.score2 # => 
 
-mediator.execute("△23飛", executor_class: PlayerExecutorCpu)
-mediator.execute("▲19飛", executor_class: PlayerExecutorCpu)
-mediator.execute("△21飛", executor_class: PlayerExecutorCpu)
-mediator.execute("▲17飛", executor_class: PlayerExecutorCpu)
+mediator.execute("△23飛", executor_class: PlayerExecutorWithoutMonitor)
+mediator.execute("▲19飛", executor_class: PlayerExecutorWithoutMonitor)
+mediator.execute("△21飛", executor_class: PlayerExecutorWithoutMonitor)
+mediator.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
 tp mediator.one_place_map
 
 mediator.player_at(:black).evaluator.score  # => 

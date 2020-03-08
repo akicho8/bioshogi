@@ -1,13 +1,10 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class MediatorSimple
+  class MediatorFast
     include MediatorBase
     include MediatorPlayers
     include MediatorExecutor
-    include MediatorSerializers
-    include MediatorMemento
-    include MediatorTest
 
     def executor_class
       PlayerExecutorWithoutMonitor

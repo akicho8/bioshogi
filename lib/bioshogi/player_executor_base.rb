@@ -47,7 +47,8 @@ module Bioshogi
       @drop_hand          = input.drop_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = nil
-      unless mediator.params[:candidate_skip]
+      if mediator.params[:candidate_skip]
+      else
         @candidate_soldiers = input.candidate_soldiers
       end
 
@@ -62,6 +63,7 @@ module Bioshogi
 
       perform_skill_monitor
 
+      clock_add_process
       turn_ended_process
 
       mediator.turn_info.turn_offset += 1
@@ -78,6 +80,9 @@ module Bioshogi
       if move_hand.soldier.piece.key == :king
         player.king_place = move_hand.soldier.place
       end
+    end
+
+    def clock_add_process
     end
 
     def turn_ended_process
@@ -134,6 +139,9 @@ module Bioshogi
       else
         InputAdapter::Ki2Adapter
       end
+    end
+
+    def skill_set
     end
   end
 end

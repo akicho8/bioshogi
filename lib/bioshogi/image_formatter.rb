@@ -281,7 +281,7 @@ module Bioshogi
     end
 
     def hand_log
-      @hand_log ||= parser.mediator.hand_logs.last
+      @hand_log ||= parser.mediator.hand_logs.last # FIXME: hand_logs を使わないで動くようにする
     end
 
     def current_place

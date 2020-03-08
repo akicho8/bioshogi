@@ -46,7 +46,7 @@ module Bioshogi
           records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level3).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
-          mediator.execute(hand.to_sfen, executor_class: PlayerExecutorCpu)
+          mediator.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 
           puts "---------------------------------------- [#{mediator.turn_info.turn_offset}] #{hand} (#{diver_class})"
           # mediator.players.each { |e| tp e.pressure_report }
