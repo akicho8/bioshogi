@@ -104,13 +104,25 @@ EOT
       end
     end
 
-    it "開戦前の手数を得る" do
-      info = Mediator.start
-      info.execute("26歩")
-      info.execute("24歩")
-      info.execute("25歩")
-      info.execute("25歩")
-      assert { info.critical_turn == 3 }
+    describe "手数を得る" do
+      before do
+        @info = Mediator.start
+        @info.execute("76歩")
+        @info.execute("34歩")
+        @info.execute("22角成")
+        @info.execute("同銀")
+        @info.execute("55角")
+        @info.execute("54歩")
+        @info.execute("22角成")
+      end
+
+      it "駒が取られる直前の手数" do
+        assert { @info.critical_turn == 2 }
+      end
+
+      it "「角と歩」以外の駒が取られる直前の手数" do
+        assert { @info.outbreak_turn == 6 }
+      end
     end
   end
 end

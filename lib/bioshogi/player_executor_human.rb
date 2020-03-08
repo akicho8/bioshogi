@@ -12,8 +12,19 @@ module Bioshogi
 
     # 大駒コンプリートチェック用にしか使ってない
     def piece_box_added(captured_soldier)
+      # 駒を取った回数の記録
       mediator.kill_counter += 1
-      mediator.critical_turn ||= mediator.turn_info.turn_offset # 開戦前手数
+
+      # 駒が取られる最初の手数の記録
+      mediator.critical_turn ||= mediator.turn_info.turn_offset
+
+      # 「歩と角」を除く駒が取られる最初の手数の記録
+      unless mediator.outbreak_turn
+        key = captured_soldier.piece.key
+        if key != :pawn && key != :bishop
+          mediator.outbreak_turn = mediator.turn_info.turn_offset
+        end
+      end
 
       if perform_skill_monitor_enable?
         TacticInfo.piece_box_added_proc_list.each do |e|
