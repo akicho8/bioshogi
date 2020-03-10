@@ -2,6 +2,14 @@ require_relative "spec_helper"
 
 module Bioshogi
   describe Brain do
+    it "初手が嬉野流になるよう誘導される" do
+      mediator = Mediator.start
+      player = mediator.player_at(:black)
+      brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver, evaluator_class: Evaluator::Level3)
+      @records = brain.iterative_deepening(depth_max_range: 0..0)
+      assert { @records.first[:hand].to_s == "▲６八銀(79)" }
+    end
+
     it do
       Board.dimensiton_change([3, 3]) do
         mediator = MediatorSimple.new

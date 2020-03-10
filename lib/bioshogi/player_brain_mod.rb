@@ -5,7 +5,7 @@ module Bioshogi
     end
 
     def brain(params = {})
-      Brain.new(self, params = {})
+      Brain.new(self, params)
     end
 
     # 非合法手を含む(ピンを考慮しない)すべての指し手の生成
