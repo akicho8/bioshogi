@@ -5,7 +5,10 @@ module Bioshogi
   describe "ミクロコスモス" do
     it do
       bod = nil
+      GC.start
+      GC.disable
       ms = Benchmark.ms { bod = Parser.file_parse(Pathname(__dir__).join("../experiment/microcosmos.kif")).to_bod }
+      GC.enable
       assert { ms < 1130 }
       assert { bod == <<~EOT }
 後手の持駒：飛二 角 銀 桂二 香 歩三
