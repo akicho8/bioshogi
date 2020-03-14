@@ -269,6 +269,28 @@ module Bioshogi
           # mediator_run の方で、最後にチェックしている
         },
       },
+
+      {
+        key: "角不成",
+        logic_desc: "角不成",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+          if soldier.top_spaces >= Dimension::Yplace._promotable_size
+            throw :skip
+          end
+        },
+      },
+
+      {
+        key: "飛車不成",
+        logic_desc: "飛車不成",
+        verify_process: proc {
+          soldier = executor.hand.soldier
+          if soldier.top_spaces >= Dimension::Yplace._promotable_size
+            throw :skip
+          end
+        },
+      },
     ]
   end
 end
