@@ -272,10 +272,9 @@ module Bioshogi
 
       {
         key: "角不成",
-        logic_desc: "角不成",
+        logic_desc: "相手陣地に入るときと出るときの両方チェックする",
         verify_process: proc {
-          soldier = executor.hand.soldier
-          if soldier.top_spaces >= Dimension::Yplace._promotable_size
+          unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
             throw :skip
           end
         },
@@ -283,10 +282,9 @@ module Bioshogi
 
       {
         key: "飛車不成",
-        logic_desc: "飛車不成",
+        logic_desc: "角不成と同じ方法でよい",
         verify_process: proc {
-          soldier = executor.hand.soldier
-          if soldier.top_spaces >= Dimension::Yplace._promotable_size
+          unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
             throw :skip
           end
         },
