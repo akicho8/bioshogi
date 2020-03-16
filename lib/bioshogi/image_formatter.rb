@@ -56,11 +56,13 @@ module Bioshogi
         lattice_color: "#888",         # *格子の色(nilなら piece_color を代用)
         promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
         frame_stroke_width: 2,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
-        moving_color: "#f0f0f0",       # 移動元と移動先のセルの背景色(nilなら描画ない)
+        moving_color: "#f0f0f0",       # 移動元と移動先のセルの背景色(nilなら描画しない)
+        format: "png",                 # 出力する画像タイプ
+        flip: false,                   # 180度回転する？
       }
     end
 
-    cattr_accessor(:star_step) { 3 }
+    cattr_accessor(:star_step) { 3 } # 星はnセルごとに書く
 
     class << self
       def render(*args)
@@ -91,11 +93,15 @@ module Bioshogi
       frame_draw
       stand_draw
 
+      if params[:flip]
+        canvas.rotate!(180)
+      end
+
       @rendered = true
     end
 
     def to_png
-      canvas.format = "png"
+      canvas.format = params[:format]
       canvas.to_blob
     end
 
@@ -115,13 +121,14 @@ module Bioshogi
         # canvas.background_color = "blue"
         # canvas
 
+        # PR したけど放置されている
         # https://github.com/rmagick/rmagick/issues/699
-        canvas = Magick::ImageList.new
+        # https://github.com/rmagick/rmagick/pull/701
+        list = Magick::ImageList.new
         params = self.params   # FIXME: new_image のブロック内スコープが Image.new のなかなので params が参照できないため
-        canvas.new_image(*image_rect) do |e|
+        list.new_image(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end
-        canvas
 
         # list = Magick::ImageList.new
         # list.new_image(*image_rect)
@@ -132,6 +139,7 @@ module Bioshogi
 
     private
 
+    # 格子色
     def lattice_color
       params[:lattice_color] || params[:piece_color]
     end

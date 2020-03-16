@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "stackprof"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "rmagick"
 
   spec.add_dependency "activesupport"
   spec.add_dependency "actionview"
