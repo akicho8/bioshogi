@@ -3,6 +3,8 @@
 require_relative "preset_info"
 require "tree_support"
 
+require_relative "tactic_hit_turn_table"
+
 module Bioshogi
   class DefenseInfo
     include ApplicationMemoryRecord
@@ -190,6 +192,14 @@ module Bioshogi
         if respond_to?(:skip_if_exist_keys)
           @skip_elements = Array(skip_if_exist_keys).collect { |e| TacticInfo.flat_lookup(e) }
         end
+      end
+
+      def hit_turn
+        TacticHitTurnTable[key.to_s]
+      end
+
+      def sample_kif_file
+        Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
       end
     end
   end

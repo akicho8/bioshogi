@@ -22,7 +22,15 @@ module Bioshogi
     end
 
     it "urls" do
-     assert { AttackInfo["UFO銀"].urls }
+      assert { AttackInfo["UFO銀"].urls }
+    end
+
+    it "sample_kif_file" do
+      assert { AttackInfo["UFO銀"].sample_kif_file.exist? }
+    end
+
+    it "hit_turn" do
+      assert { AttackInfo["UFO銀"].hit_turn == 23 }
     end
   end
 end
