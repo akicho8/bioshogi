@@ -4,6 +4,7 @@ require_relative "preset_info"
 require "tree_support"
 
 require_relative "tactic_hit_turn_table"
+require_relative "distribution_ratio"
 
 module Bioshogi
   class DefenseInfo
@@ -196,6 +197,10 @@ module Bioshogi
 
       def hit_turn
         TacticHitTurnTable[key.to_s]
+      end
+
+      def distribution_ratio
+        DistributionRatio[key.to_s]
       end
 
       def sample_kif_file

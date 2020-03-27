@@ -32,5 +32,9 @@ module Bioshogi
     it "hit_turn" do
       assert { AttackInfo["UFO銀"].hit_turn == 23 }
     end
+
+    it "distribution_ratio" do
+      assert { AttackInfo["UFO銀"].distribution_ratio == 1.314 }
+    end
   end
 end
