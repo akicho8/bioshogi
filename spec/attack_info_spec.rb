@@ -34,7 +34,7 @@ module Bioshogi
     end
 
     it "distribution_ratio" do
-      assert { AttackInfo["UFO銀"].distribution_ratio == 1.314 }
+      assert { AttackInfo["UFO銀"].distribution_ratio }
     end
   end
 end
