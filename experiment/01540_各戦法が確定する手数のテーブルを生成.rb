@@ -4,11 +4,14 @@ table = {}
 TacticInfo.all_elements.each do |e|
   file = Pathname("#{e.tactic_info.name}/#{e.key}.kif")
   info = Parser.file_parse(file)
-  info.mediator.hand_logs.each.with_index do |hand_log, i|
+  hit = info.mediator.hand_logs.each.with_index do |hand_log, i|
     if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
       table[e.key.to_s] = i.next
-      break
+      break true
     end
+  end
+  unless hit
+    raise e.key
   end
 end
 
@@ -97,6 +100,7 @@ Pathname("../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_
 # >> |               雀刺し | 27 |
 # >> |       米長流急戦矢倉 | 25 |
 # >> |           カニカニ銀 | 21 |
+# >> |           カニカニ金 | 19 |
 # >> |       中原流急戦矢倉 | 28 |
 # >> |     阿久津流急戦矢倉 | 26 |
 # >> |           矢倉中飛車 | 20 |
@@ -143,7 +147,7 @@ Pathname("../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_
 # >> |     英ちゃん流中飛車 | 10 |
 # >> |           原始中飛車 | 35 |
 # >> |         加藤流袖飛車 | 26 |
-# >> |           ５七金戦法 | 24 |
+# >> |           ５七金戦法 | 21 |
 # >> |               超急戦 | 13 |
 # >> |         中飛車左穴熊 | 52 |
 # >> |               遠山流 | 17 |
