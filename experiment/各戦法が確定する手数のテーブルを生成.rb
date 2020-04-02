@@ -20,10 +20,7 @@ tp table
 body = table.inspect
 body.gsub!(",", ",\n")
 body.gsub!("=>", " => ")
-Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
-# ~> -:23:in `write': No such file or directory @ rb_sysopen - /../lib/bioshogi/tactic_hit_turn_table.rb (Errno::ENOENT)
-# ~> 	from -:23:in `write'
-# ~> 	from -:23:in `<main>'
+Pathname("../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
 # >> |----------------------+----|
 # >> |             カニ囲い | 12 |
 # >> |           カブト囲い | 15 |

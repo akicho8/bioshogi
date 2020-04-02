@@ -10,7 +10,7 @@ module Bioshogi
         matches = info.mediator.players.collect { |player|
           player.skill_set.list_of(e).normalize.collect(&:key)
         }.flatten
-        if ["居玉", "相居玉", "相居飛車", "相居飛車", "対振り", "相振り", "対抗型"].include?(e.key.to_s)
+        if ["居玉", "相居玉", "相居飛車", "相居飛車", "対振り", "相振り", "対抗型", "背水の陣"].include?(e.key.to_s)
           next
         end
         assert { matches.include?(e.key) }

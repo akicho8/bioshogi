@@ -274,6 +274,15 @@ module Bioshogi
                     end
                   end
                 end
+
+                # 大駒がない状態で勝ったら「背水の陣」
+                mediator.players.each do |player|
+                  if player == mediator.win_player
+                    if player.stronger_piece_have_count.zero?
+                      player.skill_set.list_push(NoteInfo["背水の陣"])
+                    end
+                  end
+                end
               end
 
               # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }

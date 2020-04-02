@@ -153,6 +153,22 @@ module Bioshogi
       def king_place_update
         @king_place = king_soldier&.place
       end
+
+      # 大駒コンプリートしている？
+      def stronger_piece_completed?
+        stronger_piece_have_count >= 4
+      end
+
+      def stronger_piece_have_count
+        c = 0
+        c += piece_box[:rook] || 0
+        c += piece_box[:bishop] || 0
+
+        key = location.key
+        c += board.piece_counts(key, :rook)
+        c += board.piece_counts(key, :bishop)
+        c
+      end
     end
 
     concerning :MiniClockMethods do
