@@ -2,7 +2,7 @@ require "./example_helper"
 
 table = {}
 TacticInfo.all_elements.each do |e|
-  file = Pathname("#{__dir__}/#{e.tactic_info.name}/#{e.key}.kif")
+  file = Pathname("#{e.tactic_info.name}/#{e.key}.kif")
   info = Parser.file_parse(file)
   hit = info.mediator.hand_logs.each.with_index do |hand_log, i|
     if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
@@ -21,6 +21,9 @@ body = table.inspect
 body.gsub!(",", ",\n")
 body.gsub!("=>", " => ")
 Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
+# ~> -:23:in `write': No such file or directory @ rb_sysopen - /../lib/bioshogi/tactic_hit_turn_table.rb (Errno::ENOENT)
+# ~> 	from -:23:in `write'
+# ~> 	from -:23:in `<main>'
 # >> |----------------------+----|
 # >> |             カニ囲い | 12 |
 # >> |           カブト囲い | 15 |
@@ -77,7 +80,7 @@ Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- fro
 # >> |           アヒル囲い | 77 |
 # >> |         裏アヒル囲い | 15 |
 # >> |           いちご囲い | 27 |
-# >> |             無敵囲い | 16 |
+# >> |             無敵囲い | 14 |
 # >> |             elmo囲い | 11 |
 # >> |             左山囲い | 13 |
 # >> |           無責任矢倉 | 31 |
@@ -108,6 +111,7 @@ Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- fro
 # >> |             原始棒銀 | 7  |
 # >> |                 右玉 | 32 |
 # >> |       かまいたち戦法 | 20 |
+# >> |     英春流カメレオン | 33 |
 # >> |       パックマン戦法 | 2  |
 # >> |             新米長玉 | 1  |
 # >> |             稲庭戦法 | 19 |
@@ -201,6 +205,7 @@ Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- fro
 # >> |               嬉野流 | 1  |
 # >> |       メイドシステム | 3  |
 # >> |                 棒金 | 24 |
+# >> |                 棒玉 | 59 |
 # >> |                 超速 | 15 |
 # >> |         対振り持久戦 | 21 |
 # >> |           高田流左玉 | 37 |

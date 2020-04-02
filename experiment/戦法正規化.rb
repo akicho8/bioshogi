@@ -1,7 +1,7 @@
 require "./example_helper"
 
 TacticInfo.all_elements.each do |e|
-  dir = Pathname("#{__dir__}/#{e.tactic_info.name}")
+  dir = Pathname("#{e.tactic_info.name}")
   file = dir.glob("#{e.key}.{kif,ki2}").first
   file = file.expand_path
   if file
@@ -97,6 +97,7 @@ end
 # >> 戦型/原始棒銀.kif
 # >> 戦型/右玉.kif
 # >> 戦型/かまいたち戦法.kif
+# >> 戦型/英春流カメレオン.kif
 # >> 戦型/パックマン戦法.kif
 # >> 戦型/新米長玉.kif
 # >> 戦型/稲庭戦法.kif
@@ -190,6 +191,7 @@ end
 # >> 戦型/嬉野流.kif
 # >> 戦型/メイドシステム.kif
 # >> 戦型/棒金.kif
+# >> 戦型/棒玉.kif
 # >> 戦型/超速.kif
 # >> 戦型/対振り持久戦.kif
 # >> 戦型/高田流左玉.kif
