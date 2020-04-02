@@ -1,7 +1,7 @@
 require "./example_helper"
 
 TacticInfo.all_elements.each do |e|
-  dir = Pathname("#{e.tactic_info.name}")
+  dir = Pathname("#{__dir__}/#{e.tactic_info.name}")
   file = dir.glob("#{e.key}.{kif,ki2}").first
   file = file.expand_path
   if file

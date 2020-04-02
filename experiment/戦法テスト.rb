@@ -1,7 +1,7 @@
 require "./example_helper"
 
 rows = TacticInfo.all_elements.collect do |e|
-  file = Pathname.glob("#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
+  file = Pathname.glob("#{__dir__}/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
   row = { key: e.key, file: file.to_s}
   if file
     str = file.read
@@ -14,8 +14,9 @@ rows = TacticInfo.all_elements.collect do |e|
   end
   row
 end
-rows.all? { |e| e[:status] }      # => true
+p rows.all? { |e| e[:status] }      # => true
 tp rows
+# >> true
 # >> |----------------------+-------------------------------+----------------------------------------------------------------------------------------+--------|
 # >> | key                  | file                          | matches                                                                                | status |
 # >> |----------------------+-------------------------------+----------------------------------------------------------------------------------------+--------|
@@ -74,7 +75,7 @@ tp rows
 # >> | アヒル囲い           | 囲い/アヒル囲い.kif           | [:中住まい, :アヒル囲い, :中原玉]                                                      | true   |
 # >> | 裏アヒル囲い         | 囲い/裏アヒル囲い.kif         | [:裏アヒル囲い]                                                                        | true   |
 # >> | いちご囲い           | 囲い/いちご囲い.kif           | [:いちご囲い]                                                                          | true   |
-# >> | 無敵囲い             | 囲い/無敵囲い.kif             | [:舟囲い, :無敵囲い]                                                                   | true   |
+# >> | 無敵囲い             | 囲い/無敵囲い.kif             | [:無敵囲い, :elmo囲い]                                                                 | true   |
 # >> | elmo囲い             | 囲い/elmo囲い.kif             | [:elmo囲い]                                                                            | true   |
 # >> | 左山囲い             | 囲い/左山囲い.kif             | [:左山囲い]                                                                            | true   |
 # >> | 無責任矢倉           | 囲い/無責任矢倉.kif           | [:無責任矢倉]                                                                          | true   |

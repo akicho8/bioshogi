@@ -2,7 +2,7 @@ require "./example_helper"
 
 table = {}
 TacticInfo.all_elements.each do |e|
-  file = Pathname("#{e.tactic_info.name}/#{e.key}.kif")
+  file = Pathname("#{__dir__}/#{e.tactic_info.name}/#{e.key}.kif")
   info = Parser.file_parse(file)
   hit = info.mediator.hand_logs.each.with_index do |hand_log, i|
     if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
@@ -20,7 +20,7 @@ tp table
 body = table.inspect
 body.gsub!(",", ",\n")
 body.gsub!("=>", " => ")
-Pathname("../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
+Pathname("#{__dir__}/../lib/bioshogi/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
 # >> |----------------------+----|
 # >> |             カニ囲い | 12 |
 # >> |           カブト囲い | 15 |
