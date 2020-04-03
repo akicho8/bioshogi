@@ -6,7 +6,7 @@ TacticInfo.all_elements.each do |e|
   file = file.expand_path
   if file
     info = Parser.parse(file.read)
-    new_file = dir.join("#{file.basename('.*')}.kif")
+    new_file = dir.join(file.sub_ext(".kif"))
     new_file.write(info.to_kif)
     puts new_file
   end
@@ -39,6 +39,7 @@ end
 # >> 囲い/銀美濃.kif
 # >> 囲い/ダイヤモンド美濃.kif
 # >> 囲い/木村美濃.kif
+# >> 囲い/大山美濃.kif
 # >> 囲い/裾固め.kif
 # >> 囲い/片美濃囲い.kif
 # >> 囲い/ちょんまげ美濃.kif
@@ -217,6 +218,7 @@ end
 # >> 戦型/目くらまし戦法.kif
 # >> 戦型/端棒銀.kif
 # >> 戦型/金銀橋.kif
+# >> 戦型/カメレオン戦法.kif
 # >> 手筋/金底の歩.kif
 # >> 手筋/パンツを脱ぐ.kif
 # >> 手筋/腹銀.kif
