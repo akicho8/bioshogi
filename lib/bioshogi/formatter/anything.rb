@@ -246,7 +246,7 @@ module Bioshogi
               if preset_info.special_piece
                 mediator.players.each do |player|
                   if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
-                    !player.skill_set.list_push(NoteInfo["居飛車"])
+                    player.skill_set.list_push(NoteInfo["居飛車"])
                   end
                 end
 
