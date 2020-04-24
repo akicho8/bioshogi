@@ -3,6 +3,11 @@ require_relative "../spec_helper"
 module Bioshogi
   describe Parser::Base do
     describe "sfen から変換" do
+      it "手合割がわかる" do
+        info = Parser.parse("position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
+        assert { info.preset_info.key == :"角落ち" }
+      end
+
       it "startpos の状態から" do
         info = Parser.parse("position startpos moves 7i6h")
         assert { info.to_sfen == "position startpos moves 7i6h" }

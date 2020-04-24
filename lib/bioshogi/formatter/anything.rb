@@ -48,7 +48,7 @@ module Bioshogi
       end
 
       def initial_mediator
-        mediator_new.tap do |e|
+        @initial_mediator ||= mediator_new.tap do |e|
           mediator_board_setup(e)
         end
       end
@@ -189,7 +189,7 @@ module Bioshogi
 
       # 手合割
       def preset_info
-        @preset_info ||= board_preset_info || PresetInfo.fetch(header["手合割"] || "平手")
+        @preset_info ||= initial_mediator.board.preset_info || board_preset_info || PresetInfo.fetch(header["手合割"] || "平手")
       end
 
       # names_set(black: "alice", white: "bob")
