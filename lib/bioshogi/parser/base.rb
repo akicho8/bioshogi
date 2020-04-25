@@ -48,7 +48,7 @@ module Bioshogi
           skill_monitor_technique_enable: true,
 
           validate_enable: true,           # 将棋ウォーズの棋譜なら指定すると少し速くなる
-          candidate_skip: false, # ki2にしないのであれば指定するとかなり速くなる
+          candidate_enable: true, # ki2にしないのであれば指定するとかなり速くなる
 
           support_for_piyo_shogi_v4_1_5: false, # ぴよ将棋でKIFが読めるようにする
         }

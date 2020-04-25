@@ -13,7 +13,7 @@ def test2
       :turn_limit                     => @turn_limit,
       # :skill_monitor_enable           => false,
       # :skill_monitor_technique_enable => false,
-      :candidate_skip                 => true,
+      :candidate_enable                 => false,
       :validate_enable                  => false,
       :mediator_class                 => MediatorFast,
     })

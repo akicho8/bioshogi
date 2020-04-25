@@ -11,7 +11,7 @@ module Bioshogi
       @params ||= {
         skill_monitor_enable: false,
         skill_monitor_technique_enable: false,
-        candidate_skip: false,
+        candidate_enable: true,
         validate_enable: true,
         board_class: Board,
       }

@@ -47,8 +47,7 @@ module Bioshogi
       @drop_hand          = input.drop_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = nil
-      if mediator.params[:candidate_skip]
-      else
+      if mediator.params[:candidate_enable]
         @candidate_soldiers = input.candidate_soldiers
       end
 

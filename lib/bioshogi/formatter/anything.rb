@@ -34,7 +34,7 @@ module Bioshogi
           e.params.update(@parser_options.slice(*[
                 :skill_monitor_enable,
                 :skill_monitor_technique_enable,
-                :candidate_skip,
+                :candidate_enable,
                 :validate_enable,
               ]))
         end

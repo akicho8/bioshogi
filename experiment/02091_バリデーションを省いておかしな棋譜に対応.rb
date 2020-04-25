@@ -3,7 +3,7 @@ require "./example_helper"
 mediator_options = {
   skill_monitor_enable: false,
   skill_monitor_technique_enable: false,
-  candidate_skip: true,
+  candidate_enable: false,
   validate_enable: false,
 }
 
