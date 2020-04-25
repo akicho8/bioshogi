@@ -63,6 +63,10 @@ module Bioshogi
       @declined_soldiers ||= self.class.fetch("平手").sorted_soldiers - sorted_soldiers
     end
 
+    def handicap_shift
+      handicap ? 1 : 0
+    end
+
     concerning :DelegateToShapeInfoMethods do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info

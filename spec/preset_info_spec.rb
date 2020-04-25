@@ -88,5 +88,10 @@ EOT
     it "declined_soldiers" do
       assert { PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) == ["▲８八角", "▲２八飛"] }
     end
+
+    it "handicap_shift" do
+      assert { PresetInfo["平手"].handicap_shift   == 0 }
+      assert { PresetInfo["角落ち"].handicap_shift == 1 }
+    end
   end
 end
