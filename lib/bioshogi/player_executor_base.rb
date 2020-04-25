@@ -28,7 +28,7 @@ module Bioshogi
     end
 
     def perform_validations
-      if mediator.params[:validate_skip]
+      if !mediator.params[:validate_enable]
         return
       end
 

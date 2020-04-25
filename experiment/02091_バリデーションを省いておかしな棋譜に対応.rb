@@ -4,7 +4,7 @@ mediator_options = {
   skill_monitor_enable: false,
   skill_monitor_technique_enable: false,
   candidate_skip: true,
-  validate_skip: true,
+  validate_enable: false,
 }
 
 body = "51玉(59)"

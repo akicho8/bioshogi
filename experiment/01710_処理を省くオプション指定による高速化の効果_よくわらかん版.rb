@@ -4,21 +4,21 @@ require "benchmark/ips"
 n = 10
 Benchmark.ips do |x|
   x.report("default")        { n.times { Parser.file_parse("katomomo.csa").to_kif } }
-  x.report("validate_skip")  { n.times { Parser.file_parse("katomomo.csa", validate_skip: true).to_kif } }
+  x.report("validate_enable")  { n.times { Parser.file_parse("katomomo.csa", validate_enable: false).to_kif } }
   x.report("candidate_skip") { n.times { Parser.file_parse("katomomo.csa", candidate_skip: true).to_kif } }
   x.compare!
 end
 # >> Warming up --------------------------------------
 # >>              default     1.000  i/100ms
-# >>        validate_skip     1.000  i/100ms
+# >>        validate_enable     1.000  i/100ms
 # >>       candidate_skip     1.000  i/100ms
 # >> Calculating -------------------------------------
 # >>              default      1.644  (± 0.0%) i/s -      9.000  in   5.474478s
-# >>        validate_skip      1.735  (± 0.0%) i/s -      9.000  in   5.188338s
+# >>        validate_enable      1.735  (± 0.0%) i/s -      9.000  in   5.188338s
 # >>       candidate_skip      1.711  (± 0.0%) i/s -      9.000  in   5.260716s
 # >> 
 # >> Comparison:
-# >>        validate_skip:        1.7 i/s
+# >>        validate_enable:        1.7 i/s
 # >>       candidate_skip:        1.7 i/s - 1.01x  slower
 # >>              default:        1.6 i/s - 1.06x  slower
 # >> 

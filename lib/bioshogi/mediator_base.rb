@@ -12,7 +12,7 @@ module Bioshogi
         skill_monitor_enable: false,
         skill_monitor_technique_enable: false,
         candidate_skip: false,
-        validate_skip: false,
+        validate_enable: true,
         board_class: Board,
       }
     end

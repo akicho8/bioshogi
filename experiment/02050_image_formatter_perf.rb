@@ -14,7 +14,7 @@ def test2
       # :skill_monitor_enable           => false,
       # :skill_monitor_technique_enable => false,
       :candidate_skip                 => true,
-      :validate_skip                  => true,
+      :validate_enable                  => false,
       :mediator_class                 => MediatorFast,
     })
   object = info.image_formatter({width: 100, height: 100})

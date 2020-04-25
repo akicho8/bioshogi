@@ -35,7 +35,7 @@ module Bioshogi
                 :skill_monitor_enable,
                 :skill_monitor_technique_enable,
                 :candidate_skip,
-                :validate_skip,
+                :validate_enable,
               ]))
         end
       end
