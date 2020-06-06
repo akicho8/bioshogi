@@ -137,7 +137,13 @@ module Bioshogi
           s << "moves"
           s.concat(hand_logs.collect(&:to_sfen))
         end
-        s.join(" ")
+        s = s.join(" ")
+
+        if options[:position_startpos_disabled]
+          s = Sfen.startpos_style_remove(s)
+        end
+
+        s
       end
     end
   end

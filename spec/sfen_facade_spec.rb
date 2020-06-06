@@ -21,6 +21,7 @@ module Bioshogi
       assert { mediator.initial_state_board_sfen == "startpos" }
       # puts mediator.board
       assert { mediator.to_sfen == "position startpos moves 7i6h S*2d" }
+      assert { mediator.to_sfen(position_startpos_disabled: true) == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h S*2d" }
     end
 
     it "入力" do
@@ -36,3 +37,5 @@ module Bioshogi
     end
   end
 end
+# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:1:in `<main>'
