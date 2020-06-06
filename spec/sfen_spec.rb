@@ -33,5 +33,10 @@ module Bioshogi
       assert { Sfen.accept?("sfen lnsgkgsnl/1r5b1/+ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d") }
       assert { Sfen.accept?("lnsgkgsnl/1r5b1/+ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d") }
     end
+
+    it "startposを外す・つける" do
+      assert { Sfen.startpos_style_remove("position startpos") == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { Sfen.startpos_style_add("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1") == "position startpos" }
+    end
   end
 end

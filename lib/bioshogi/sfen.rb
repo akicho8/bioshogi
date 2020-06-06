@@ -10,12 +10,24 @@ module Bioshogi
     attr_reader :attributes
     attr_reader :source
 
-    def self.accept?(source)
-      source.sub(/startpos/, STARTPOS_EXPANSION).match?(SFEN_REGEXP)
-    end
+    class << self
+      def accept?(source)
+        source.sub(/startpos/, STARTPOS_EXPANSION).match?(SFEN_REGEXP)
+      end
 
-    def self.parse(source)
-      new(source).tap(&:parse)
+      def parse(source)
+        new(source).tap(&:parse)
+      end
+
+      # position startpos を逆に position sfen ... 形式に変換
+      def startpos_style_remove(s)
+        s.sub(/startpos/, STARTPOS_EXPANSION)
+      end
+
+      # startpos スタイルに変更
+      def startpos_style_add(s)
+        s.sub(STARTPOS_EXPANSION, "startpos")
+      end
     end
 
     def initialize(source)
@@ -23,7 +35,7 @@ module Bioshogi
     end
 
     def parse
-      s = source.sub(/startpos/, STARTPOS_EXPANSION)
+      s = self.class.startpos_style_remove(source)
       md = s.match(SFEN_REGEXP)
       unless md
         raise SyntaxDefact, "構文が不正です : #{source.inspect}"
