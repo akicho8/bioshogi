@@ -161,7 +161,7 @@ module Bioshogi
     concerning :TechniqueMatcherMethods do
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
       def bottom_spaces
-        Dimension::Xplace.dimension - 1 - top_spaces
+        Dimension::Yplace.dimension - 1 - top_spaces
       end
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
