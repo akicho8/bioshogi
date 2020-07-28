@@ -82,6 +82,11 @@ module Bioshogi
         header.normalize_all
       end
 
+      # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
+      def henka_delete(s)
+        s.sub(/^\p{blank}*変化：.*/m, "")
+      end
+
       # for KIF, KI2
       def board_read
         if md = normalized_source.match(/(?<board>^\+\-.*\-\+$)/m)

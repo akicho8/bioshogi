@@ -15,7 +15,8 @@ module Bioshogi
         header_normalize
         board_read
 
-        normalized_source.lines.each do |line|
+        s = henka_delete(normalized_source)
+        s.lines.each do |line|
           comment_read(line)
           s = /\p{blank}*/
           i = InputParser.regexp

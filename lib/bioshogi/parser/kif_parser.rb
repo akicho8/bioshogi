@@ -43,15 +43,8 @@ module Bioshogi
         header_normalize
         board_read
 
-        normalized_source.lines.each do |line|
-
-          # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
-          if henka_reject
-            if line.match?(/^\p{blank}*変化：/)
-              break
-            end
-          end
-
+        s = henka_delete(normalized_source)
+        s.lines.each do |line|
           comment_read(line)
           if md = line.match(line_regexp1)
             input = md[:input].remove(/\p{blank}/)
