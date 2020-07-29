@@ -131,12 +131,16 @@ module Bioshogi
         end
       end
 
+      # options[:char_type] が :formal_sheet のときは「全」より「成銀」を使う
       def any_name(promoted, options = {})
         if promoted
-          if options[:char_type] == :formal_sheet
-            promoted_formal_sheet_name || promoted_name
+          case options[:char_type]
+          when :formal_sheet
+            promoted_formal_sheet_name || promoted_name # "成銀" || "全"
+          when :single
+            promoted_name # "全"
           else
-            promoted_name
+            raise ArgumentError, options[:char_type].inspect
           end
         else
           name
