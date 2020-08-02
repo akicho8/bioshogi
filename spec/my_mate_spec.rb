@@ -25,7 +25,7 @@ module Bioshogi
 
       # でも詰まない場合の処理は早い
       ms = Benchmark.ms { mediator.player_at(:black).my_mate? }
-      assert { ms < 0.1 }
+      assert { ms < 0.2 }
     end
   end
 end
