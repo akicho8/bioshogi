@@ -52,6 +52,8 @@ module Bioshogi
           hash = hash.sort_by { |piece, _| -piece.basic_weight }
         end
 
+        hash = hash.reject { |piece, count| count.zero? }
+
         hash.map { |piece, count|
           raise MustNotHappen if count < 0
           if count >= 2
