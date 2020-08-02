@@ -2,6 +2,33 @@ require_relative "spec_helper"
 
 module Bioshogi
   describe Mediator do
+    it "not_enough_piece_box" do
+      mediator = Mediator.new
+      mediator.placement_from_bod <<~EOT
+後手の持駒：香
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ ・ ・|八
+| 香 桂 銀 金 ・ 金 銀 桂 ・|九
++---------------------------+
+先手の持駒：飛
+EOT
+
+      assert { mediator.to_piece_box == {:rook=>2, :lance=>3, :knight=>4, :silver=>4, :gold=>4, :king=>1, :bishop=>2, :pawn=>18} }
+      assert { mediator.not_enough_piece_box.to_s == "玉 香" }
+
+      piece_box = mediator.not_enough_piece_box
+      piece_box.delete(:king)
+      assert { piece_box.to_s == "香" }
+    end
+
     it "placement_from_preset は手番も反映する" do
       mediator = Mediator.new
       mediator.placement_from_preset("香落ち")

@@ -70,5 +70,20 @@ module Bioshogi
         @turn_info ||= TurnInfo.new
       end
     end
+
+    concerning :PieceCountCheckMethods do
+      # 全体の駒を一つに集める
+      def to_piece_box
+        piece_box = PieceBox.new
+        piece_box = players.inject(piece_box) { |a, e| a.add(e.piece_box) }
+        piece_box.add(board.to_piece_box)
+      end
+
+      # 足りない駒が入っている箱を返す
+      def not_enough_piece_box
+        all = PieceBox.all_in_create
+        all.safe_sub(to_piece_box)
+      end
+    end
   end
 end

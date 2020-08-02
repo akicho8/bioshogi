@@ -137,8 +137,17 @@ module Bioshogi
       #   Movabler.move_list(self, soldier, options)
       # end
 
+      def soldiers
+        surface.values
+      end
+
+      # 盤上に「歩」と「と」があるなら {p: 2} を返す
+      def to_piece_box
+        soldiers.inject(PieceBox.new) { |a, e| a.merge(e.piece.key => 1) { |k, a, b| a + b } }
+      end
+
       def to_s_soldiers
-        surface.values.collect(&:name_without_location).sort.join(" ")
+        soldiers.collect(&:name_without_location).sort.join(" ")
       end
 
       def to_kif

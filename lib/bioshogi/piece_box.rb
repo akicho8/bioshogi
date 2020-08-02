@@ -52,6 +52,21 @@ module Bioshogi
           object.delete(piece.key)
         end
       end
+      self
+    end
+
+    def safe_add(hash)
+      hash.each do |key, count|
+        object[key] = (object[key] || 0) + count
+      end
+      self
+    end
+
+    def safe_sub(hash)
+      hash.each do |key, count|
+        object[key] = (object[key] || 0) - count
+      end
+      self
     end
 
     def set(hash)
