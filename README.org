@@ -436,6 +436,19 @@ puts Parser.file_parse("microcosmos.kif").to_bod
 # >> 後手番
 #+END_SRC
 
+*** 詰みチェック
+
+#+BEGIN_EXAMPLE
+mediator = Mediator.new
+mediator.placement_from_preset("平手")
+brain = mediator.opponent_player.brain
+
+require 'active_support/core_ext/benchmark'
+Benchmark.ms { brain.iterative_deepening(depth_max_range: 0..0).none? }           # => 18.85599992237985
+Benchmark.ms { mediator.opponent_player.create_all_hands(legal_only: true).any? } # => 0.674000009894371
+Benchmark.ms { mediator.opponent_player.create_all_hands(legal_only: true).to_a } # => 19.73800011910498
+#+END_EXAMPLE
+
 ** 仕様
 
 *** 棋譜サフィックス語の解釈

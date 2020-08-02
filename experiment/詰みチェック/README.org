@@ -1,0 +1,14 @@
+* 不完全な詰みチェック方法
+
+  # (1) 先手が王手をかけている？
+  if mediator.current_player.mate_advantage?
+    # (2) 後手に合法手が生成できない？
+    if mediator.opponent_player.create_all_hands(legal_only: true).none?
+      # 後手は詰んでいる
+    end
+  end
+
+  ↓メソッド化
+
+  my_mate?
+  op_mate?

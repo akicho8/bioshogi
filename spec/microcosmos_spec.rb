@@ -1,5 +1,4 @@
 require_relative "spec_helper"
-require "active_support/core_ext/benchmark"
 
 module Bioshogi
   describe "ミクロコスモス" do

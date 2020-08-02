@@ -114,6 +114,23 @@ module Bioshogi
       opponent_player.mate_advantage?
     end
 
+    # 自分が(完全に)詰んだか？
+    #
+    #  (1) 相手に王手をかけられている？ かつ
+    #  (2) 自分が合法手が生成できない？
+    # (2) だけでも動くけど先に (1) のチェックを入れた方が詰まない場合に速く終われる
+    #
+    # 1手しか読んでないため完全じゃない場合、つまり無駄合での詰みは判定できてない
+    # 無駄合は相手の駒がなくなるまで可能なので3手読めば済むってもんじゃないので大変
+    def my_mate?
+      mate_danger? && legal_all_hands.none?
+    end
+
+    # 相手を詰ませたか？
+    def op_mate?
+      opponent_player.my_mate?
+    end
+
     private
 
     def move_list(soldier, options = {})

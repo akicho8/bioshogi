@@ -22,7 +22,7 @@ module Bioshogi
         assert { mediator.current_player.legal_all_hands.collect(&:to_s)                                           == ["△２一玉(11)"]                                                                                     }
         assert { mediator.current_player.mate_danger?                                                              == false                                                                                                }
         assert { mediator.current_player.mate_advantage?                                                           == true                                                                                                 }
-        assert { mediator.current_player.king_capture_move_hands.collect(&:to_s)                                           == ["△２三角成(12)"]                                                                                   }
+        assert { mediator.current_player.king_capture_move_hands.collect(&:to_s)                                   == ["△２三角成(12)"]                                                                                   }
       end
     end
   end
