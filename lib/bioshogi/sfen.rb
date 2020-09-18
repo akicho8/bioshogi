@@ -101,10 +101,10 @@ module Bioshogi
 
     def to_h
       {
-        soldiers: soldiers,
-        piece_counts: piece_counts,
-        location: location,
-        moves: moves,
+        :soldiers     => soldiers,
+        :piece_counts => piece_counts,
+        :location     => location,
+        :moves        => moves,
       }
     end
   end
