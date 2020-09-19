@@ -72,9 +72,19 @@ module Bioshogi
           mediator.placement_from_preset(header["手合割"] || "平手")
         end
 
-        mediator.turn_info.handicap = handicap?
+        handicap_p = handicap?
+
+        mediator.turn_info.handicap = handicap_p
 
         turn_base_set_p = false
+
+        # unless turn_base_set_p
+        #   if handicap?
+        #     mediator.turn_info.handicap = true
+        #     mediator.turn_info.turn_base = 1
+        #     turn_base_set_p = true
+        #   end
+        # end
 
         # 手数＝xxx の読み取り。ぴよ将棋では読み込まれるけどこの部分がエラー表示される
         unless turn_base_set_p
@@ -84,12 +94,15 @@ module Bioshogi
           end
         end
 
-        # 「後手番」だけ書いた行がある場合
+        # 「後手番」または「上手番」だけ書いた行がある場合
+        # ただしすでに駒落ちの場合は無視する(そうしないと反転の反転で▲から始まってしまう)
         unless turn_base_set_p
-          if v = header.force_location
-            if v.key == :white
-              mediator.turn_info.turn_base = 1
-              turn_base_set_p = true
+          if !handicap_p
+            if v = header.force_location
+              if v.key == :white
+                mediator.turn_info.turn_base = 1
+                turn_base_set_p = true
+              end
             end
           end
         end
