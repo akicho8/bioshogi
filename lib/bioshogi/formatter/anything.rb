@@ -146,13 +146,18 @@ module Bioshogi
           end
         end
 
+        # 「駒落ち判定」と「手番判定」が重複すると反対の反対で駒落ちなのに▲から始まってしまう
+        # それを防ぐために「手番判定」がなかったときのみ handicap 指定とする
+        # unless turn_base_set_p
+        #   mediator.turn_info.handicap = handicap?
+        # end
+
         # さらに
         # "まで71手で先手の勝ち"
         # の部分を見てカウンタをセットすることもできるけど
         # まだ必要になってないのでやらない
         #
         # 71手目からはじまるKIFはないのでこれも間違った解釈
-
         mediator.before_run_process # 最初の状態を記録
       end
 
@@ -213,7 +218,6 @@ module Bioshogi
             if @parser_options[:turn_limit] && mediator.turn_info.display_turn >= @parser_options[:turn_limit]
               break
             end
-
             mediator.execute(info[:input], used_seconds: used_seconds_at(i))
           end
         rescue CommonError => error
