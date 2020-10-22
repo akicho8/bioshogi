@@ -34,6 +34,14 @@ module Bioshogi
         input[:csa_from] == "00"
       end
 
+      def hard_validations
+        super
+
+        if drop_trigger && !player.piece_box.exist?(piece)
+          errors_add HoldPieceNotFound, "#{piece}を打とうとしましたが#{piece}を持っていません"
+        end
+      end
+
       private
 
       def location_key

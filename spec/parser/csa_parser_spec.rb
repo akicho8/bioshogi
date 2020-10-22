@@ -2,6 +2,12 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::CsaParser do
+    it "打のとき持駒がなければ盤面の情報を含むエラーを出す" do
+      error = Parser::CsaParser.parse("P1 *,+0093KA").mediator rescue $!
+      assert { error.message.include?("角を打とうとしましたが角を持っていません") }
+      assert { error.message.include?("先手の持駒：なし")                         } # 盤面があるということ
+    end
+
     it "ヘッダーのコメント内バージョンをCSAと間違わない" do
       assert { Parser::CsaParser.accept?("# Kifu for iPhone V4.01 棋譜ファイル") == false }
     end
