@@ -1,7 +1,7 @@
 require "../example_helper"
 
 Parser.parse("V2,P1 *,+0093KA,T1").to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': 角を打とうとしましたが角を持っていません (Bioshogi::HoldPieceNotFound)
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': 先手は角を９三に打とうとしましたが角を持っていません (Bioshogi::HoldPieceNotFound)
 # ~> 手番: 先手
 # ~> 指し手: +0093KA
 # ~> 棋譜:
