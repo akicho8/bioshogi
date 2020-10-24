@@ -32,11 +32,16 @@ module Bioshogi
         width: 1200,                   # 画像横幅
         height: 630,                   # 画像縦幅
         board_rate: 0.96,              # 縦横幅の小さい方に対する盤の寸法の割合
-        font_size: 0.75,               # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
-        stand_piece_line_height: 0.95, # 持駒と持駒の間隔割合
+
+        :piece_font_size      => 0.75, # 文字の大きさの割合(盤上の駒) ※割合はすべてセルの大きさを1.0とする
+        :hold_piece_font_size => 0.80, # 文字の大きさの割合(持駒▲△)
+        :digit_font_size      => 0.6,  # 文字の大きさの割合(持駒数)
+
+        piece_stand_margin: 0.2,       # 持駒と盤面の隙間割合
+        stand_piece_line_height: 0.98, # 持駒と持駒の間隔割合
         stand_piece_count_gap: {
           single: 0.6,                 # 駒数1桁ときの持駒との間隔の割合
-          double: 0.75,                # 駒数2桁ときの持駒との間隔の割合
+          double: 0.7,                 # 駒数2桁ときの持駒との間隔の割合
         },
         piece_pull_down_rate: {        # 盤上の駒の位置を下げる割合
           black: 0.06,
@@ -55,8 +60,9 @@ module Bioshogi
         bold_font: "#{__dir__}/RictyDiminished-Bold.ttf",      # 駒のフォント(太字) (nilなら normal_font を代用)
 
         # optional
-        piece_count_color: "#999",     # *駒数の色(nilなら piece_color を代用)
+        piece_count_color: "#888",     # *駒数の色(nilなら piece_color を代用)
         lattice_color: "#999",         # *格子の色(nilなら piece_color を代用)
+        frame_color: "#777",           # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
         promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
         frame_stroke_width: 3,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
         frame_bg_color: "transparent", # 盤の色
@@ -148,6 +154,10 @@ module Bioshogi
       params[:lattice_color] || params[:piece_color]
     end
 
+    def frame_color
+      params[:frame_color] || params[:piece_color]
+    end
+
     def lattice_draw
       draw_context do |c|
         c.stroke(lattice_color)
@@ -166,7 +176,7 @@ module Bioshogi
     def frame_draw
       if frame_stroke_width
         draw_context do |c|
-          c.stroke(lattice_color)
+          c.stroke(frame_color)
           c.stroke_width(frame_stroke_width)
           c.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
           c.fill = params[:frame_bg_color]
@@ -218,7 +228,7 @@ module Bioshogi
             v2 = v
             v2 += V[0, 1] * params[:piece_pull_down_rate][soldier.location.key]  * soldier.location.value_sign # 下に少し下げる
             v2 += V[1, 0] * params[:piece_pull_right_rate][soldier.location.key] * soldier.location.value_sign # 右に少し寄せる
-            char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold)
+            char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold, font_size: params[:piece_font_size])
           end
         end
       end
@@ -244,11 +254,11 @@ module Bioshogi
       end
     end
 
-    def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false)
+    def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false, font_size: params[:hold_piece_font_size])
       c = Magick::Draw.new
       c.rotation = rotation
       # c.font_weight = Magick::BoldWeight # 効かない
-      c.pointsize = real_pointsize
+      c.pointsize = cell_size * font_size
       if bold
         c.font = params[:bold_font] || params[:normal_font]
       else
@@ -274,8 +284,9 @@ module Bioshogi
           v = v_top_left_outer
         end
 
-        h = V[0, player.piece_box.count] * g # 駒数に対応した高さ
-        v -= h * s                           # 右下から右端中央にずらす
+        h = V[0, player.piece_box.count] * g       # 駒数に対応した高さ
+        v -= h * s                                 # 右下から右端中央にずらす
+        v += V[params[:piece_stand_margin], 0] * s # 盤から持駒を少し離す
 
         char_draw(pos: v, text: location.hexagon_mark, rotation: location.angle) # ▲
         v += V[0, 1] * g * s
@@ -290,7 +301,7 @@ module Bioshogi
               w = :double
             end
             pos = v + V[params[:stand_piece_count_gap][w], 0] * s
-            char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color]) # 駒数
+            char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color], font_size: params[:digit_font_size]) # 駒数
           end
           v += V[0, 1] * g * s
         end
@@ -314,10 +325,6 @@ module Bioshogi
           V[*hand_log.hand.origin_soldier.place.to_xy]
         end
       end
-    end
-
-    def real_pointsize
-      @real_pointsize ||= cell_size * params[:font_size]
     end
 
     def image_rect

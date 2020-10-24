@@ -14,7 +14,7 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-先手の持駒：角 金四 銀二 歩九九
+先手の持駒：飛 角 金四 銀二 桂 香 玉 歩九九
 EOT
 
 object = parser.image_formatter
