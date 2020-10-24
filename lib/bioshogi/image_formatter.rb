@@ -58,7 +58,7 @@ module Bioshogi
         piece_count_color: "#999",     # *駒数の色(nilなら piece_color を代用)
         lattice_color: "#999",         # *格子の色(nilなら piece_color を代用)
         promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
-        frame_stroke_width: 2,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
+        frame_stroke_width: 3,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
         frame_bg_color: "transparent", # 盤の色
         moving_color: "#f0f0f0",       # 移動元と移動先のセルの背景色(nilなら描画しない)
         format: "png",                 # 出力する画像タイプ
