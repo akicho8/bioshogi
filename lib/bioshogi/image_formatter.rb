@@ -34,7 +34,10 @@ module Bioshogi
         board_rate: 0.96,              # 縦横幅の小さい方に対する盤の寸法の割合
         font_size: 0.75,               # 文字の大きさの割合(割合はすべてセルの大きさを1.0とする)
         stand_piece_line_height: 0.95, # 持駒と持駒の間隔割合
-        stand_piece_count_gap: 0.6,    # 持駒と駒数の間隔の割合
+        stand_piece_count_gap: {
+          single: 0.6,                 # 駒数1桁ときの持駒との間隔の割合
+          double: 0.75,                # 駒数2桁ときの持駒との間隔の割合
+        },
         piece_pull_down_rate: {        # 盤上の駒の位置を下げる割合
           black: 0.06,
           white: 0.01,
@@ -279,8 +282,13 @@ module Bioshogi
         player.piece_box.each.with_index do |(piece_key, count), i|
           piece = Bioshogi::Piece.fetch(piece_key)
           char_draw(pos: v, text: piece.name, rotation: location.angle)  # 駒
-          if count > 1
-            pos = v + V[params[:stand_piece_count_gap], 0] * s
+          if count >= 2
+            if count <= 9
+              w = :single
+            else
+              w = :double
+            end
+            pos = v + V[params[:stand_piece_count_gap][w], 0] * s
             char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color]) # 駒数
           end
           v += V[0, 1] * g * s

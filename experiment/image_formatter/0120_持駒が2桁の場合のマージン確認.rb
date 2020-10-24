@@ -1,7 +1,7 @@
-require "./example_helper"
+require "../example_helper"
 
 parser = Parser.parse(<<~EOT, turn_limit: 10)
-後手の持駒：飛二 角 銀二 桂四 香四 歩九
+後手の持駒：飛二 角 銀二 桂四 香四 歩九九
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -14,9 +14,8 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
-先手の持駒：角 金四 銀二 歩九
+先手の持駒：角 金四 銀二 歩九九
 EOT
 
-object = parser.image_formatter({width: 100, height: 100, flip: true})
-object.to_png[0..5]             # => "\x89PNG\r\n"
+object = parser.image_formatter
 object.display

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 @turn_limit = 100
 
@@ -9,7 +9,7 @@ def test1
 end
 
 def test2
-  info = Parser.parse(Pathname("katomomo.kif").read, {
+  info = Parser.parse(Pathname("../katomomo.kif").read, {
       :turn_limit                     => @turn_limit,
       # :skill_monitor_enable           => false,
       # :skill_monitor_technique_enable => false,
