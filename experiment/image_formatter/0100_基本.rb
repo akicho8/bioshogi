@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 parser = Parser.parse(<<~EOT, turn_limit: 10)
 後手の持駒：飛二 角 銀二 桂四 香四 歩九

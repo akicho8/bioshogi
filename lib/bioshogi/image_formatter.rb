@@ -59,6 +59,7 @@ module Bioshogi
         lattice_color: "#888",         # *格子の色(nilなら piece_color を代用)
         promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
         frame_stroke_width: 2,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
+        frame_bg_color: "transparent", # 盤の色
         moving_color: "#f0f0f0",       # 移動元と移動先のセルの背景色(nilなら描画しない)
         format: "png",                 # 出力する画像タイプ
         flip: false,                   # 180度回転する？
@@ -89,11 +90,11 @@ module Bioshogi
         return
       end
 
+      frame_draw
+      lattice_draw
       moving_draw
       piece_draw
-      lattice_draw
       star_draw
-      frame_draw
       stand_draw
 
       if params[:flip]
@@ -167,8 +168,8 @@ module Bioshogi
         draw_context do |c|
           c.stroke(lattice_color)
           c.stroke_width(frame_stroke_width)
-          c.stroke_linejoin("round") # 曲がり角を丸める
-          c.fill = "transparent"
+          c.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
+          c.fill = params[:frame_bg_color]
           c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h]))
         end
       end
