@@ -29,46 +29,58 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         # required
-        width: 1200,                   # 画像横幅
-        height: 630,                   # 画像縦幅
-        board_rate: 0.96,              # 縦横幅の小さい方に対する盤の寸法の割合
+        :width  => 1200, # 画像横幅
+        :height => 630,  # 画像縦幅
 
-        :piece_font_size      => 0.75, # 文字の大きさの割合(盤上の駒) ※割合はすべてセルの大きさを1.0とする
-        :hold_piece_font_size => 0.80, # 文字の大きさの割合(持駒▲△)
-        :digit_font_size      => 0.6,  # 文字の大きさの割合(持駒数)
+        :board_rate => 0.96,  # 縦横幅の小さい方に対する盤の寸法の割合
 
-        piece_stand_margin: 0.2,       # 持駒と盤面の隙間割合
-        stand_piece_line_height: 0.98, # 持駒と持駒の間隔割合
-        stand_piece_count_gap: {
-          single: 0.6,                 # 駒数1桁ときの持駒との間隔の割合
-          double: 0.7,                 # 駒数2桁ときの持駒との間隔の割合
-        },
-        piece_pull_down_rate: {        # 盤上の駒の位置を下げる割合
-          black: 0.06,
-          white: 0.01,
-        },
-        piece_pull_right_rate: {       # 盤上の駒の位置を右に寄せる割合(これは理論的には不要だけど拡大すると気になるので少し右に寄せる)
-          black: 0.05,
-          white: 0.0,
-        },
-        star_size: 0.03,               # 星のサイズ(割合)
-        canvas_color: "white",         # 下地の色(必須)
-        piece_color: "black",          # 駒の色(必須)
-        lattice_stroke_width: 1,       # 格子の線のドット数
+        # 文字の大きさの割合
+        # ※割合はすべてセルの大きさを1.0とする
+        :font_size_piece => 0.75, # 盤上の駒
+        :font_size_hold  => 0.80, # 持駒▲△
+        :font_size_digit => 0.6,  # 持駒数
 
-        normal_font: "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
-        bold_font: "#{__dir__}/RictyDiminished-Bold.ttf",      # 駒のフォント(太字) (nilなら normal_font を代用)
+        # 隙間割合
+        :piece_stand_margin      => 0.2,  # 持駒と盤面
+        :stand_piece_line_height => 0.98, # 持駒と持駒
+        :stand_piece_count_gap => {       # 持駒と駒数の間隔の割合
+          :single => 0.6,                 # 駒数1桁のとき
+          :double => 0.7,                 # 駒数2桁のとき
+        },
+
+        # 本当はやりたくない微調整
+        # 盤上の駒の位置を下げる割合
+        :piece_pull_down_rate => {
+          :black => 0.06,
+          :white => 0.01,
+        },
+        # 盤上の駒の位置を右に寄せる割合(これは理論的には不要だけど拡大すると気になるので少し右に寄せる)
+        :piece_pull_right_rate => {
+          :black => 0.05,
+          :white => 0.0,
+        },
+
+        # 盤
+        :canvas_color         => "white",   # 下地の色(必須)
+        :piece_color          => "black",   # 駒の色(必須)
+        :star_size            => 0.03,      # 星のサイズ(割合)
+        :lattice_stroke_width => 1,         # 格子の線の太さ
+        :frame_stroke_width   => 3,         # 枠の線お太さ(nil なら lattice_stroke_width を代用)
 
         # optional
-        piece_count_color: "#888",     # *駒数の色(nilなら piece_color を代用)
-        lattice_color: "#999",         # *格子の色(nilなら piece_color を代用)
-        frame_color: "#777",           # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
-        promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
-        frame_stroke_width: 3,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
-        frame_bg_color: "transparent", # 盤の色
-        moving_color: "#f0f0f0",       # 移動元と移動先のセルの背景色(nilなら描画しない)
-        format: "png",                 # 出力する画像タイプ
-        flip: false,                   # 180度回転する？
+        :piece_count_color  => "#888",         # *駒数の色(nilなら piece_color を代用)
+        :lattice_color      => "#999",         # *格子の色(nilなら piece_color を代用)
+        :frame_color        => "#777",         # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
+        :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
+        :frame_bg_color     => "transparent",  # 盤の色
+        :moving_color       => "#f0f0f0",      # 移動元と移動先のセルの背景色(nilなら描画しない)
+
+        :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
+        :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
+
+        # other
+        :flip   => false, # 180度回転する？
+        :format => "png", # 出力する画像タイプ
       }
     end
 
@@ -228,7 +240,7 @@ module Bioshogi
             v2 = v
             v2 += V[0, 1] * params[:piece_pull_down_rate][soldier.location.key]  * soldier.location.value_sign # 下に少し下げる
             v2 += V[1, 0] * params[:piece_pull_right_rate][soldier.location.key] * soldier.location.value_sign # 右に少し寄せる
-            char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold, font_size: params[:piece_font_size])
+            char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold, font_size: params[:font_size_piece])
           end
         end
       end
@@ -254,7 +266,7 @@ module Bioshogi
       end
     end
 
-    def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false, font_size: params[:hold_piece_font_size])
+    def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false, font_size: params[:font_size_hold])
       c = Magick::Draw.new
       c.rotation = rotation
       # c.font_weight = Magick::BoldWeight # 効かない
@@ -301,7 +313,7 @@ module Bioshogi
               w = :double
             end
             pos = v + V[params[:stand_piece_count_gap][w], 0] * s
-            char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color], font_size: params[:digit_font_size]) # 駒数
+            char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color], font_size: params[:font_size_digit]) # 駒数
           end
           v += V[0, 1] * g * s
         end
