@@ -55,8 +55,8 @@ module Bioshogi
         bold_font: "#{__dir__}/RictyDiminished-Bold.ttf",      # 駒のフォント(太字) (nilなら normal_font を代用)
 
         # optional
-        piece_count_color: "#888",     # *駒数の色(nilなら piece_color を代用)
-        lattice_color: "#888",         # *格子の色(nilなら piece_color を代用)
+        piece_count_color: "#999",     # *駒数の色(nilなら piece_color を代用)
+        lattice_color: "#999",         # *格子の色(nilなら piece_color を代用)
         promoted_color: "red",         # *成駒の色(nilなら piece_color を代用)
         frame_stroke_width: 2,         # 格子の外枠の線のドット数(nil なら lattice_stroke_width を代用)
         frame_bg_color: "transparent", # 盤の色
