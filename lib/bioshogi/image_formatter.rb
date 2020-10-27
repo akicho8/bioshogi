@@ -108,6 +108,7 @@ module Bioshogi
         return
       end
 
+      frame_bg_draw
       moving_draw
       piece_draw
       star_draw
@@ -191,9 +192,16 @@ module Bioshogi
           c.stroke(frame_color)
           c.stroke_width(frame_stroke_width)
           c.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
-          c.fill = params[:frame_bg_color]
-          c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h]))
+          c.fill = "transparent"
+          c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
         end
+      end
+    end
+
+    def frame_bg_draw
+      draw_context do |c|
+        c.fill = params[:frame_bg_color]
+        c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
       end
     end
 
