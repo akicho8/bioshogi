@@ -108,12 +108,12 @@ module Bioshogi
         return
       end
 
-      frame_draw
-      lattice_draw
       moving_draw
       piece_draw
       star_draw
       stand_draw
+      lattice_draw
+      frame_draw
 
       if params[:flip]
         canvas.rotate!(180)
