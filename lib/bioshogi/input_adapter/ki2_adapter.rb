@@ -41,7 +41,7 @@ module Bioshogi
         end
 
         if drop_abbreviation? && !player.piece_box.exist?(piece)
-          errors_add HoldPieceNotFound2, "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません"
+          errors_add HoldPieceNotFound2, "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません。手番が間違っているのかもしれません"
         end
 
         if !drop_trigger && candidate_soldiers.empty?
