@@ -47,7 +47,7 @@ module Bioshogi
         w = 0
         player.soldiers.each do |e|
           w += e.abs_weight
-          unless e.promoted
+          unless e.promoted # ← これを入れると序盤の「33角成」をダメな手だと教えられない、けどやっぱり成ってない駒だけを序盤駒とした方がいいか
             if t = opening_basic_table[:field][e.piece.key]
               x, y = e.normalized_place.to_xy
               w += t[y][x]
