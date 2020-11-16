@@ -2,6 +2,10 @@ require_relative "../spec_helper"
 
 module Bioshogi
   describe Parser::KifParser do
+    it "アスタリスクで始まるヘッダーはそのまま取り込む" do
+      assert { Parser.parse("*KEY1：value1").header.to_h == {"*KEY1" => "value1"} }
+    end
+
     it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている" do
       info = Parser.parse("72 投了")
       assert { info.mediator.turn_info.turn_offset == 0               } # 内部的には0手目
@@ -56,8 +60,8 @@ EOT
             "終了日時" => "2000/01/01 01:00:00",
             "棋戦"     => "(棋戦)",
             "持ち時間" => "(持ち時間)",
-            "放映日"   => "2003/09/07",
-            "棋戦詳細" => "第53回NHK杯戦2回戦第5局",
+            "*放映日"   => "2003/09/07",
+            "*棋戦詳細" => "第53回NHK杯戦2回戦第5局",
             "手合割"   => "平手",
             "先手"     => "(先  手)",
             "先手詳細" => "(先 手)七段",

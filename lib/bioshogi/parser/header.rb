@@ -44,12 +44,12 @@ module Bioshogi
 
         # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがあるらしく、
         # "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
-        # そのため * を外して取り込んでいる
+        # そのため * を外して取り込んでいる → そのまま取り込むことにする(2020-11-16)
         #
         # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
         #
         source.scan(/^\s*([^#{Base.header_sep}\n]+)#{Base.header_sep}(.*)$/o).each do |key, value|
-          key = key.remove(/^\*+/)
+          # key = key.remove(/^\*+/)
           self[key.strip] = value.strip
         end
 
