@@ -19,7 +19,7 @@ module Bioshogi
           puts str
         else
           dir = Pathname(options[:output_dir]).expand_path
-          out_file = dir.join(in_file.sub_ext([".", options[:format]].join))
+          out_file = dir.join(in_file.basename.sub_ext([".", options[:format]].join))
           FileUtils.mkdir_p(dir)
           out_file.write(str)
           puts "#{in_file} => #{out_file}"
