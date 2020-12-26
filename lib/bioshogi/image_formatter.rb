@@ -79,7 +79,7 @@ module Bioshogi
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
 
         # other
-        :vpoint => "black", # 視点
+        :viewpoint => "black", # 視点
         :format => "png",   # 出力する画像タイプ
       }
     end
@@ -116,7 +116,7 @@ module Bioshogi
       lattice_draw
       frame_draw
 
-      if params[:vpoint].to_s == "white"
+      if params[:viewpoint].to_s == "white"
         canvas.rotate!(180)
       end
 
