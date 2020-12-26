@@ -79,8 +79,8 @@ module Bioshogi
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
 
         # other
-        :flip   => false, # 180度回転する？
-        :format => "png", # 出力する画像タイプ
+        :vpoint => "black", # 視点
+        :format => "png",   # 出力する画像タイプ
       }
     end
 
@@ -116,7 +116,7 @@ module Bioshogi
       lattice_draw
       frame_draw
 
-      if params[:flip]
+      if params[:vpoint] == "white"
         canvas.rotate!(180)
       end
 
