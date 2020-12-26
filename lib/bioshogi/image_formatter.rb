@@ -116,7 +116,7 @@ module Bioshogi
       lattice_draw
       frame_draw
 
-      if params[:vpoint] == "white"
+      if params[:vpoint].to_s == "white"
         canvas.rotate!(180)
       end
 
