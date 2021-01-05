@@ -1,3 +1,4 @@
+
 # frozen-string-literal: true
 #
 # 上下のみを表わす
@@ -12,8 +13,8 @@ module Bioshogi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      { key: :black, name: "▲", hexagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1 },
-      { key: :white, name: "△", hexagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1 },
+      { key: :black, name: "▲", hexagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1, checkmate_yomiage: "gyokugata", },
+      { key: :white, name: "△", hexagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1, checkmate_yomiage: "せめかた",   },
     ]
 
     class << self

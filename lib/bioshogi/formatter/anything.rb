@@ -6,6 +6,7 @@ require_relative "csa_formatter"
 require_relative "sfen_formatter"
 require_relative "bod_formatter"
 require_relative "png_formatter"
+require_relative "yomiage_formatter"
 
 require_relative "header_builder"
 
@@ -18,6 +19,7 @@ module Bioshogi
       include SfenFormatter
       include BodFormatter
       include PngFormatter
+      include YomiageFormatter
 
       include HeaderBuilder
 

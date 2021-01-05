@@ -146,5 +146,11 @@ module Bioshogi
         s
       end
     end
+
+    concerning :MediatorSerializerCheckmateYomiageMethods do
+      def to_yomiage(options = {})
+        MediatorSerializerCheckmateYomiage.new(self, options).to_s
+      end
+    end
   end
 end
