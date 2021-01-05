@@ -5,7 +5,7 @@ module Bioshogi
     class YomiagePieceInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :king,   name: "ぎょく", promoted_name: nil,          },
+        { key: :king,   name: "gyoku",  promoted_name: nil,          },
         { key: :rook,   name: "ひしゃ", promoted_name: "りゅう",     }, # 「飛車」だと発音がおかしいため
         { key: :bishop, name: "かく",   promoted_name: "うま",       }, # 「角」は「かど」、「馬」は「ば」と読まれてしまうため
         { key: :gold,   name: "きん",   promoted_name: nil,          },

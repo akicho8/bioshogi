@@ -23,7 +23,7 @@ module Bioshogi
       group = group.transform_values do |soldiers|
         soldiers = soldiers.sort_by { |e| -e.abs_weight }
         soldiers.collect { |e|
-          [e.place.yomiage, e.yomiage].join("").squish + "。"
+          [e.place.yomiage, e.yomiage].join("。").squish + "。"
         }.join
       end
       Location.collect { |e|
