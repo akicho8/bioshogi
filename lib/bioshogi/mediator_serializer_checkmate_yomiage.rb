@@ -26,12 +26,12 @@ module Bioshogi
           [e.place.yomiage, e.yomiage].join("").squish + "。"
         }.join
       end
-      Location.collect do |e|
+      Location.collect { |e|
         [
           e.checkmate_yomiage + "。",
           group[e] || "なし。",
         ].join
-      end
+      }.reverse
     end
 
     def piece_box
