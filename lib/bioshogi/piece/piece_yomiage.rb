@@ -5,14 +5,14 @@ module Bioshogi
     class YomiagePieceInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :king,   name: "gyoku",  promoted_name: nil,          },
-        { key: :rook,   name: "ひしゃ", promoted_name: "りゅう",     }, # 「飛車」だと発音がおかしいため
-        { key: :bishop, name: "かく",   promoted_name: "うま",       }, # 「角」は「かど」、「馬」は「ば」と読まれてしまうため
-        { key: :gold,   name: "きん",   promoted_name: nil,          },
-        { key: :silver, name: "ぎん",   promoted_name: "なりぎん",   },
-        { key: :knight, name: "けいま", promoted_name: "なりけい",   },
-        { key: :lance,  name: "きょう", promoted_name: "なりきょう", },
-        { key: :pawn,   name: "ふ",     promoted_name: "と",         },
+        { key: :king,   name: "gyoku",  promoted_name: nil,         },
+        { key: :rook,   name: "hisha",  promoted_name: "ryu",       }, # 「飛車」だと発音がおかしいため
+        { key: :bishop, name: "kaku",   promoted_name: "うま",      }, # 「角」は「かど」、「馬」は「ば」と読まれてしまうため
+        { key: :gold,   name: "kin",    promoted_name: nil,         },
+        { key: :silver, name: "gin",    promoted_name: "なりgin",   },
+        { key: :knight, name: "keima",  promoted_name: "なりkei",   },
+        { key: :lance,  name: "kyo",    promoted_name: "なりkyo",   },
+        { key: :pawn,   name: "hu",     promoted_name: "「と」",    },
       ]
 
       def piece
