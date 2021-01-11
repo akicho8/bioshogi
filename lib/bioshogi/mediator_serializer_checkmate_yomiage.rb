@@ -21,7 +21,9 @@ module Bioshogi
       soldiers = mediator.board.soldiers
       group = soldiers.group_by(&:location)
       group = group.transform_values do |soldiers|
-        soldiers = soldiers.sort_by { |e| e.place.to_sfen } # 右上から横に走査する順
+        soldiers = soldiers.sort_by { |e|
+          [e.place.y.to_sfen, e.place.x.to_sfen]
+        } # 右上から横に走査する順
         soldiers.collect { |e|
           [e.place.yomiage, e.yomiage].join("").squish + "。"
         }.join
