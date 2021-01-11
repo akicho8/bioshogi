@@ -37,7 +37,11 @@ module Bioshogi
     def piece_box
       piece_box = mediator.player_at(:black).piece_box
       piece_counts = piece_box.sort_by { |e, count| -Piece.fetch(e).basic_weight }
-      "もちごま。" + piece_counts.collect { |e, count| (Piece.fetch(e).yomiage(false) + "。") * count }.join.presence || "なし。"
+      v = piece_counts.collect { |e, count|
+        (Piece.fetch(e).yomiage(false) + "。") * count
+      }.join
+      v = v.presence || "なし。"
+      "もちごま。" + v
     end
   end
 end
