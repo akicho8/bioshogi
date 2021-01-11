@@ -21,7 +21,7 @@ module Bioshogi
       soldiers = mediator.board.soldiers
       group = soldiers.group_by(&:location)
       group = group.transform_values do |soldiers|
-        soldiers = soldiers.sort_by { |e| -e.abs_weight }
+        soldiers = soldiers.sort_by { |e| e.place.to_sfen } # 右上から横に走査する順
         soldiers.collect { |e|
           [e.place.yomiage, e.yomiage].join("").squish + "。"
         }.join
@@ -39,8 +39,7 @@ module Bioshogi
       piece_counts = piece_box.sort_by { |e, count| -Piece.fetch(e).basic_weight }
       v = piece_counts.collect { |e, count|
         (Piece.fetch(e).yomiage(false) + "。") * count
-      }.join
-      v = v.presence || "なし。"
+      }.join.presence || "なし。"
       "もちごま。" + v
     end
   end
