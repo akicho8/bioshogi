@@ -137,26 +137,12 @@ module Bioshogi
 
     def canvas
       @canvas ||= -> {
-        # canvas = Magick::Image.new(*image_rect)
-        # if params[:canvas_color]
-        #   canvas.background_color = params[:canvas_color]
-        # end
-        # canvas.background_color = "blue"
-        # canvas
-
-        # PR したけど放置されている
         # https://github.com/rmagick/rmagick/issues/699
         # https://github.com/rmagick/rmagick/pull/701
         list = Magick::ImageList.new
-        params = self.params   # FIXME: new_image のブロック内スコープが Image.new のなかなので params が参照できないため
         list.new_image(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end
-
-        # list = Magick::ImageList.new
-        # list.new_image(*image_rect)
-        # list.last.background_color = "red" # params[:canvas_color]
-        # list
       }.call
     end
 
