@@ -100,10 +100,13 @@ module Bioshogi
       Piece.h_to_s(object, options)
     end
 
+    # http://yaneuraou.yaneu.com/2016/07/15/sfen%E6%96%87%E5%AD%97%E5%88%97%E3%81%AF%E4%B8%80%E6%84%8F%E3%81%AB%E5%AE%9A%E3%81%BE%E3%82%89%E3%81%AA%E3%81%84%E4%BB%B6/#:~:text=%E2%86%92%202016%2F7%2F15%2024,%E6%AD%A9%E3%80%8D%E3%81%AE%E9%A0%86%E7%95%AA%E3%81%A8%E3%81%97%E3%81%BE%E3%81%99%E3%80%82
     def to_sfen(location)
       location = Location[location]
-      object.flat_map { |key, count|
-        [(count >= 2 ? count : nil), Piece.fetch(key).to_sfen(location: location)]
+      sorted_piece_objects_hash.sort_by { |piece, _|
+        -piece.basic_weight
+      }.flat_map { |piece, count|
+        [(count >= 2 ? count : ""), piece.to_sfen(location: location)]
       }.join
     end
 
@@ -112,12 +115,24 @@ module Bioshogi
         return ""
       end
       location = Location[location]
-      c = object.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
-      c = c.sort_by { |piece, _| -piece.basic_weight }
-      ["P", location.csa_sign, c.flat_map { |piece, count| ["00", piece.csa.basic_name] * count }].join
+      [
+        "P",
+        location.csa_sign,
+        sorted_piece_objects_hash.flat_map { |piece, count|
+          ["00", piece.csa.basic_name] * count
+        },
+      ].join
     end
 
     private
+
+    def sorted_piece_objects_hash
+      object.collect { |key, count|
+        [Piece.fetch(key), count]
+      }.sort_by { |piece, _|
+        -piece.basic_weight
+      }
+    end
 
     def object
       __getobj__

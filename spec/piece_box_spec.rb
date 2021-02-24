@@ -4,10 +4,15 @@ module Bioshogi
   describe PieceBox do
     it "いろんなものに変換" do
       piece_box = PieceBox.new(Piece.s_to_h("飛玉角角"))
-      assert { piece_box.to_sfen(:black) == "RK2B" }
+      assert { piece_box.to_sfen(:black) == "KR2B" }
       assert { piece_box.to_csa(:black) == "P+00OU00HI00KA00KA" }
       assert { piece_box.to_s(separator: "/") == "玉/飛/角二" }
       assert { piece_box.score == 45880 }
+    end
+
+    it "to_sfen は順序を固定する" do
+      assert { PieceBox.new(Piece.s_to_h("玉飛角金銀桂香歩")).to_sfen(:black) == "KRBGSNLP" }
+      assert { PieceBox.new(Piece.s_to_h("歩香桂銀金角飛玉")).to_sfen(:black) == "KRBGSNLP" }
     end
 
     it "内容が同じなら同じオブジェクトする" do
