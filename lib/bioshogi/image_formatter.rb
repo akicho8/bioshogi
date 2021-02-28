@@ -124,6 +124,10 @@ module Bioshogi
     end
 
     def to_png
+      to_blob
+    end
+
+    def to_blob
       canvas.format = params[:format]
       canvas.to_blob
     end
