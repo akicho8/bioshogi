@@ -376,7 +376,7 @@ module Bioshogi
         ],
       },
       {
-        key: "elmo囲い",
+        key: "エルモ囲い",
         urls: [
           "http://blog.livedoor.jp/amayaryouma/archives/18016007.html",
         ],

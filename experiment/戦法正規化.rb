@@ -69,7 +69,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/裏アヒル囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/いちご囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/無敵囲い.kif
-# >> /Users/ikeda/src/bioshogi/experiment/囲い/elmo囲い.kif
+# >> /Users/ikeda/src/bioshogi/experiment/囲い/エルモ囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/左山囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/無責任矢倉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/ツノ銀雁木.kif
