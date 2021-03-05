@@ -34,11 +34,11 @@ module Bioshogi
       def mediator_new
         mediator_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
-                :skill_monitor_enable,
-                :skill_monitor_technique_enable,
-                :candidate_enable,
-                :validate_enable,
-              ]))
+                                                  :skill_monitor_enable,
+                                                  :skill_monitor_technique_enable,
+                                                  :candidate_enable,
+                                                  :validate_enable,
+                                                ]))
         end
       end
 
@@ -252,76 +252,78 @@ module Bioshogi
         if @parser_options[:skill_monitor_enable]
           # 両方が入玉していれば「相入玉」タグを追加する
           # この場合、両方同時に入玉しているかどうかは判定できない
-          if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["入玉"]) }
-            mediator.players.each do |player|
-              player.skill_set.list_push(NoteInfo["相入玉"])
+          if NoteInfo.values.present?
+            if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["入玉"]) }
+              mediator.players.each do |player|
+                player.skill_set.list_push(NoteInfo["相入玉"])
+              end
             end
-          end
 
-          if ENV["BIOSHOGI_ENV"] != "test"
-            # 1. 最初に設定
-            # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
-            if preset_info
-              if preset_info.special_piece
-                mediator.players.each do |player|
-                  if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
-                    player.skill_set.list_push(NoteInfo["居飛車"])
+            if ENV["BIOSHOGI_ENV"] != "test"
+              # 1. 最初に設定
+              # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
+              if preset_info
+                if preset_info.special_piece
+                  mediator.players.each do |player|
+                    if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
+                      player.skill_set.list_push(NoteInfo["居飛車"])
+                    end
+                  end
+
+                  if true
+                    # 両方居飛車なら相居飛車
+                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
+                      mediator.players.each do |player|
+                        player.skill_set.list_push(NoteInfo["相居飛車"])
+                      end
+                    end
+
+                    # 両方振り飛車なら相振り
+                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      mediator.players.each do |player|
+                        player.skill_set.list_push(NoteInfo["相振り"])
+                      end
+                    end
+
+                    # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+                    if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      others = mediator.players - [player]
+                      if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                        others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
+                        mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
+                      end
+                    end
+                  end
+
+                  # 大駒がない状態で勝ったら「背水の陣」
+                  mediator.players.each do |player|
+                    if player == mediator.win_player
+                      if player.stronger_piece_have_count.zero?
+                        player.skill_set.list_push(NoteInfo["背水の陣"])
+                      end
+                    end
                   end
                 end
+
+                # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
+                #   mediator.players.each do |player|
+                #     player.skill_set.list_push(NoteInfo["相振り飛車"])
+                #   end
+                # end
 
                 if true
-                  # 両方居飛車なら相居飛車
-                  if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
-                    mediator.players.each do |player|
-                      player.skill_set.list_push(NoteInfo["相居飛車"])
-                    end
-                  end
-
-                  # 両方振り飛車なら相振り
-                  if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                    mediator.players.each do |player|
-                      player.skill_set.list_push(NoteInfo["相振り"])
-                    end
-                  end
-
-                  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-                  if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                    others = mediator.players - [player]
-                    if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                      others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
-                      mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
-                    end
-                  end
-                end
-
-                # 大駒がない状態で勝ったら「背水の陣」
-                mediator.players.each do |player|
-                  if player == mediator.win_player
-                    if player.stronger_piece_have_count.zero?
-                      player.skill_set.list_push(NoteInfo["背水の陣"])
-                    end
-                  end
-                end
-              end
-
-              # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
-              #   mediator.players.each do |player|
-              #     player.skill_set.list_push(NoteInfo["相振り飛車"])
-              #   end
-              # end
-
-              if true
-                # どれかの手合割に該当すれば玉は定位置から始まっていることがかある
-                # 居玉チェック
-                mediator.players.each do |e|
-                  if e.king_moved_counter.zero?
-                    e.skill_set.list_push(NoteInfo["居玉"])
-                  end
-                end
-
-                if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                  # どれかの手合割に該当すれば玉は定位置から始まっていることがかある
+                  # 居玉チェック
                   mediator.players.each do |e|
-                    e.skill_set.list_push(NoteInfo["相居玉"])
+                    if e.king_moved_counter.zero?
+                      e.skill_set.list_push(NoteInfo["居玉"])
+                    end
+                  end
+
+                  if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                    mediator.players.each do |e|
+                      e.skill_set.list_push(NoteInfo["相居玉"])
+                    end
                   end
                 end
               end
