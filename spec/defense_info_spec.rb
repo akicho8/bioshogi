@@ -24,17 +24,17 @@ module Bioshogi
       end
 
       it "子供" do
-        assert { DefenseInfo["片美濃囲い"].children.collect(&:name) == ["美濃囲い", "銀美濃", "ちょんまげ美濃"] }
+        assert { DefenseInfo["片美濃囲い"].children.collect(&:name) == ["美濃囲い", "片銀冠", "銀美濃", "木村美濃", "大山美濃", "ちょんまげ美濃"] }
       end
 
       it "子孫" do
-        assert { DefenseInfo["片美濃囲い"].descendants.collect(&:name) == ["美濃囲い", "高美濃囲い", "ダイヤモンド美濃", "銀美濃", "ちょんまげ美濃", "坊主美濃"] }
+        assert { DefenseInfo["片美濃囲い"].descendants.collect(&:name) == ["美濃囲い", "高美濃囲い", "振り飛車四枚美濃", "ダイヤモンド美濃", "片銀冠", "銀冠", "銀美濃", "木村美濃", "大山美濃", "ちょんまげ美濃", "坊主美濃"] }
       end
     end
 
     describe "囲い" do
       it "囲いチェック", :if => Bioshogi.config.skill_monitor_enable do
-        info = Parser.file_parse("#{__dir__}/yagura.kif")
+        info = Parser.file_parse("#{__dir__}/files/矢倉.kif")
         info.mediator_run
         # puts info.header_part_string
         assert { info.header_part_string == <<~EOT }
@@ -45,14 +45,14 @@ module Bioshogi
 先手：加藤一二三
 後手：原田泰夫
 戦型：矢倉
-先手の囲い：総矢倉, 菱矢倉
-後手の囲い：雁木囲い
+先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
+後手の囲い：オールド雁木
 先手の戦型：四手角
 後手の戦型：四手角
 先手の手筋：垂れ歩, 継ぎ桂, ふんどしの桂
 先手の備考：居飛車
 後手の備考：居飛車
-             EOT
+  EOT
       end
     end
   end

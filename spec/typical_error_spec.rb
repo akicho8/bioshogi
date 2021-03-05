@@ -4,7 +4,7 @@ module Bioshogi
   describe CommonError do
     describe "二歩の反則負け" do
       before do
-        @file = "#{__dir__}/double_pawn.ki2"
+        @file = "#{__dir__}/files/反則二歩.ki2"
       end
 
       it "読み込むことはできる" do
