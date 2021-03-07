@@ -25,7 +25,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/一文字矢倉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/富士見矢倉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/土居矢倉.kif
-# >> /Users/ikeda/src/bioshogi/experiment/囲い/蟹罐囲い.kif
+# >> /Users/ikeda/src/bioshogi/experiment/囲い/カニ缶囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/雁木囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/ボナンザ囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/矢倉早囲い.kif
