@@ -8,7 +8,7 @@ module Bioshogi
         Parser.file_parse(Pathname(__FILE__).dirname.join("files/sample1.ki2"))
       end
       it "できない" do
-        expect { Parser.file_parse(Pathname(__FILE__).dirname.join("sample1.bin")) }.to raise_error(Errno::ENOENT)
+        assert_raises { Parser.file_parse(Pathname(__FILE__).dirname.join("unknown.bin")) }
       end
     end
   end

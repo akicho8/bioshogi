@@ -316,7 +316,7 @@ module Bioshogi
                   # 居玉チェック
                   mediator.players.each do |e|
                     if e.king_moved_counter.zero?
-                      e.skill_set.list_push(NoteInfo["居玉"])
+                      e.skill_set.list_push(DefenseInfo["居玉"])
                     end
                   end
 
