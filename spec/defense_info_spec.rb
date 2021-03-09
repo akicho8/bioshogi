@@ -46,7 +46,6 @@ module Bioshogi
 後手：原田泰夫
 戦型：矢倉
 先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
-後手の囲い：オールド雁木
 先手の戦型：四手角
 後手の戦型：四手角
 先手の手筋：垂れ歩, 継ぎ桂, ふんどしの桂
@@ -57,3 +56,5 @@ module Bioshogi
     end
   end
 end
+# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> 	from -:1:in `<main>'
