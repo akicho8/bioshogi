@@ -18,6 +18,13 @@ module Bioshogi
       ].each(&block)
     end
 
+    # # 結果が決まってからの処理
+    def rikisen_check_process
+      if attack_infos.empty? && defense_infos.empty?
+        list_push(AttackInfo["力戦"])
+      end
+    end
+
     def attack_infos
       @attack_infos ||= List.new
     end

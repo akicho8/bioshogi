@@ -13,6 +13,8 @@ require_relative "header_builder"
 module Bioshogi
   module Formatter
     concern :Anything do
+      MIN_TURN = 14
+
       include KifFormatter
       include Ki2Formatter
       include CsaFormatter
@@ -250,6 +252,17 @@ module Bioshogi
         end
 
         if @parser_options[:skill_monitor_enable]
+
+          # 力戦判定(適当)
+          if ENV["BIOSHOGI_ENV"] != "test"
+            if mediator.turn_info.display_turn >= MIN_TURN
+              mediator.players.each do |e|
+                e.skill_set.rikisen_check_process
+              end
+              # end
+            end
+          end
+
           # 両方が入玉していれば「相入玉」タグを追加する
           # この場合、両方同時に入玉しているかどうかは判定できない
           if NoteInfo.values.present?
@@ -311,7 +324,7 @@ module Bioshogi
                 #   end
                 # end
 
-                if true
+                if mediator.turn_info.display_turn >= MIN_TURN
                   # どれかの手合割に該当すれば玉は定位置から始まっていることがかある
                   # 居玉チェック
                   mediator.players.each do |e|

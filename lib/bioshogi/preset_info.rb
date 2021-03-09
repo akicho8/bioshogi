@@ -2,6 +2,7 @@
 module Bioshogi
   class PresetInfo
     include ApplicationMemoryRecord
+    # special_piece: 大駒があるか？
     memory_record [
       { key: "平手",       handicap: false, special_piece: true,  },
       { key: "香落ち",     handicap: true,  special_piece: true,  },
