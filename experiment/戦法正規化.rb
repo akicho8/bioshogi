@@ -84,7 +84,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/チョコレート囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/四段端玉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/空中楼閣.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/３七銀戦法.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲３七銀戦法.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/脇システム.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/矢倉棒銀.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/森下システム.kif
@@ -106,7 +106,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/四手角.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/一間飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/一間飛車穴熊.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/都成流.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/都成流△３一金.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/右四間飛車左美濃.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/角換わり.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/角換わり腰掛け銀.kif
@@ -123,7 +123,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/中原飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/腰掛け銀.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/鎖鎌銀.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/８五飛車戦法.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲８五飛車戦法.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/UFO銀.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/横歩取り.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/△３三角型空中戦法.kif
@@ -182,11 +182,11 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/飯島流引き角戦法.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/丸山ワクチン.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/新丸山ワクチン.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/４六銀左急戦.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/４五歩早仕掛け.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲４六銀左急戦.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲４五歩早仕掛け.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/鷺宮定跡.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/棒銀.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/４六銀右急戦.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲４六銀右急戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/左美濃急戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/右四間飛車急戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/鳥刺し.kif
@@ -197,7 +197,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/超速.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/対振り持久戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/高田流左玉.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/７二飛亜急戦.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲７二飛亜急戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/袖飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/一直線穴熊.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/穴角戦法.kif

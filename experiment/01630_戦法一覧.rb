@@ -59,7 +59,7 @@ tp rows
 # >> | Bioshogi::DefenseInfo | アヒル囲い           |                  |                                                |        5 |
 # >> | Bioshogi::DefenseInfo | いちご囲い           |                  |                                                |        5 |
 # >> | Bioshogi::DefenseInfo | 無敵囲い             |                  |                                                |        6 |
-# >> | Bioshogi::AttackInfo  | ３七銀戦法           |                  |                                                |        4 |
+# >> | Bioshogi::AttackInfo  | ▲３七銀戦法           |                  |                                                |        4 |
 # >> | Bioshogi::AttackInfo  | 脇システム           |                  |                                                |       17 |
 # >> | Bioshogi::AttackInfo  | 矢倉棒銀             |                  |                                                |        6 |
 # >> | Bioshogi::AttackInfo  | 森下システム         |                  |                                                |        5 |
@@ -79,7 +79,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 四手角               |                  |                                                |        1 |
 # >> | Bioshogi::AttackInfo  | 一間飛車             |                  | 一間飛車穴熊                                   |        2 |
 # >> | Bioshogi::AttackInfo  | 一間飛車穴熊         | 一間飛車         |                                                |        2 |
-# >> | Bioshogi::AttackInfo  | 都成流               |                  |                                                |        5 |
+# >> | Bioshogi::AttackInfo  | 都成流△３一金               |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 右四間飛車左美濃     |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 角換わり             |                  | 角換わり腰掛け銀 角換わり棒銀 角換わり早繰り銀 |        2 |
 # >> | Bioshogi::AttackInfo  | 角換わり腰掛け銀     | 角換わり         | 木村定跡                                       |        2 |
@@ -95,7 +95,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 中原飛車             |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 腰掛け銀             |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 鎖鎌銀               |                  |                                                |        3 |
-# >> | Bioshogi::AttackInfo  | ８五飛車戦法         |                  |                                                |        9 |
+# >> | Bioshogi::AttackInfo  | ▲８五飛車戦法         |                  |                                                |        9 |
 # >> | Bioshogi::AttackInfo  | UFO銀                |                  |                                                |        2 |
 # >> | Bioshogi::AttackInfo  | 横歩取り             |                  |                                                |        8 |
 # >> | Bioshogi::AttackInfo  | △３三角型空中戦法   |                  |                                                |       10 |
@@ -152,11 +152,11 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 飯島流引き角戦法     |                  |                                                |        2 |
 # >> | Bioshogi::AttackInfo  | 丸山ワクチン         |                  | 新丸山ワクチン                                 |        7 |
 # >> | Bioshogi::AttackInfo  | 新丸山ワクチン       | 丸山ワクチン     |                                                |        8 |
-# >> | Bioshogi::AttackInfo  | ４六銀左急戦         |                  |                                                |        4 |
-# >> | Bioshogi::AttackInfo  | ４五歩早仕掛け       |                  |                                                |        5 |
+# >> | Bioshogi::AttackInfo  | ▲４六銀左急戦         |                  |                                                |        4 |
+# >> | Bioshogi::AttackInfo  | ▲４五歩早仕掛け       |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 鷺宮定跡             |                  |                                                |        6 |
 # >> | Bioshogi::AttackInfo  | 棒銀                 |                  |                                                |        1 |
-# >> | Bioshogi::AttackInfo  | ４六銀右急戦         |                  |                                                |        3 |
+# >> | Bioshogi::AttackInfo  | ▲４六銀右急戦         |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 左美濃急戦           |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 右四間飛車急戦       |                  |                                                |        4 |
 # >> | Bioshogi::AttackInfo  | 鳥刺し               |                  |                                                |        3 |
@@ -165,7 +165,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 超速                 |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 対振り持久戦         |                  |                                                |        1 |
 # >> | Bioshogi::AttackInfo  | 高田流左玉           |                  |                                                |        3 |
-# >> | Bioshogi::AttackInfo  | ７二飛亜急戦         |                  |                                                |        7 |
+# >> | Bioshogi::AttackInfo  | ▲７二飛亜急戦         |                  |                                                |        7 |
 # >> | Bioshogi::AttackInfo  | 袖飛車               |                  |                                                |        0 |
 # >> | Bioshogi::AttackInfo  | 一直線穴熊           |                  |                                                |        8 |
 # >> | Bioshogi::AttackInfo  | 穴角戦法             |                  | 穴角向かい飛車                                 |        0 |

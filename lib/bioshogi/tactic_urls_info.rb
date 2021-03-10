@@ -400,7 +400,7 @@ module Bioshogi
         ],
       },
       {
-        key: "３七銀戦法",
+        key: "▲３七銀戦法",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-139.html",
           "https://ja.wikipedia.org/wiki/%E7%9F%A2%E5%80%893%E4%B8%83%E9%8A%80",
@@ -535,7 +535,7 @@ module Bioshogi
         urls: [
         ]},
       {
-        key: "都成流",
+        key: "都成流△３一金",
         urls: [
           "http://syogikagaku.tokyo/162",
         ],
@@ -645,7 +645,7 @@ module Bioshogi
         ],
       },
       {
-        key: "８五飛車戦法",
+        key: "▲８五飛車戦法",
         urls: [
           "http://mudasure.com/blog-entry-80.html",
           "https://ja.wikipedia.org/wiki/%E6%A8%AA%E6%AD%A9%E5%8F%96%E3%82%8A8%E4%BA%94%E9%A3%9B",
@@ -1032,14 +1032,14 @@ module Bioshogi
         ],
       },
       {
-        key: "４六銀左急戦",
+        key: "▲４六銀左急戦",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-175.html",
           "https://ja.wikipedia.org/wiki/4%E5%85%AD%E9%8A%80%E5%B7%A6%E6%88%A6%E6%B3%95",
         ],
       },
       {
-        key: "４五歩早仕掛け",
+        key: "▲４五歩早仕掛け",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-171.html",
           "https://ja.wikipedia.org/wiki/4%E4%BA%94%E6%AD%A9%E6%97%A9%E4%BB%95%E6%8E%9B%E3%81%91",
@@ -1059,7 +1059,7 @@ module Bioshogi
         ],
       },
       {
-        key: "４六銀右急戦",
+        key: "▲４六銀右急戦",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-177.html",
           "https://ja.wikipedia.org/wiki/4%E5%85%AD%E9%8A%80%E5%8F%B3%E6%88%A6%E6%B3%95",
@@ -1125,7 +1125,7 @@ module Bioshogi
         ],
       },
       {
-        key: "７二飛亜急戦",
+        key: "▲７二飛亜急戦",
         urls: [
           "https://www.youtube.com/watch?v=76nChig4kkc",
         ],
