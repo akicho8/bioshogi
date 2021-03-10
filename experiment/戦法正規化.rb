@@ -139,7 +139,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/英ちゃん流中飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/原始中飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/加藤流袖飛車.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/５七金戦法.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/▲５七金戦法.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/超急戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/中飛車左穴熊.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/遠山流.kif

@@ -111,7 +111,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 英ちゃん流中飛車     |                  |                                                |        2 |
 # >> | Bioshogi::AttackInfo  | 原始中飛車           |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 加藤流袖飛車         |                  |                                                |        6 |
-# >> | Bioshogi::AttackInfo  | ５七金戦法           |                  |                                                |        4 |
+# >> | Bioshogi::AttackInfo  | ▲５七金戦法           |                  |                                                |        4 |
 # >> | Bioshogi::AttackInfo  | 超急戦               |                  |                                                |        7 |
 # >> | Bioshogi::AttackInfo  | 中飛車左穴熊         |                  |                                                |        2 |
 # >> | Bioshogi::AttackInfo  | 遠山流               |                  |                                                |        1 |

@@ -754,7 +754,7 @@ module Bioshogi
         ],
       },
       {
-        key: "５七金戦法",
+        key: "▲５七金戦法",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-162.html",
           "https://ja.wikipedia.org/wiki/4%E5%85%AD%E9%87%91%E6%88%A6%E6%B3%95",
