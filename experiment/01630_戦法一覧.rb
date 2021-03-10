@@ -117,7 +117,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 遠山流               |                  |                                                |        1 |
 # >> | Bioshogi::AttackInfo  | 四間飛車             |                  |                                                |        1 |
 # >> | Bioshogi::AttackInfo  | 藤井システム         |                  |                                                |        6 |
-# >> | Bioshogi::AttackInfo  | 立石流               |                  |                                                |        4 |
+# >> | Bioshogi::AttackInfo  | 立石流四間飛車               |                  |                                                |        4 |
 # >> | Bioshogi::AttackInfo  | レグスペ             |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 三間飛車             |                  | 石田流 早石田 中田功XP                         |        0 |
 # >> | Bioshogi::AttackInfo  | 石田流               | 三間飛車         |                                                |        3 |

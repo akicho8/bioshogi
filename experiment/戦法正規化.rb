@@ -146,7 +146,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/四間飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/耀龍四間飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/藤井システム.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/立石流.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/立石流四間飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/レグスペ.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/三間飛車.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/石田流.kif

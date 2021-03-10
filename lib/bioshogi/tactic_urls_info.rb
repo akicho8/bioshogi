@@ -792,7 +792,7 @@ module Bioshogi
         ],
       },
       {
-        key: "立石流",
+        key: "立石流四間飛車",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-131.html",
           "https://ja.wikipedia.org/wiki/%E7%AB%8B%E7%9F%B3%E6%B5%81%E5%9B%9B%E9%96%93%E9%A3%9B%E8%BB%8A",
