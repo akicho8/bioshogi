@@ -256,15 +256,15 @@ module Bioshogi
           # 力戦判定(適当)
           if ENV["BIOSHOGI_ENV"] != "test"
             if mediator.turn_info.display_turn >= MIN_TURN
-              if mediator.players.all? { |e| e.skill_set.power_battle? }
-                mediator.players.each do |e|
-                  e.skill_set.push(AttackInfo["乱戦"])
-                end
-              else
-                mediator.players.each do |e|
-                  e.skill_set.rikisen_check_process
-                end
+              # if mediator.players.all? { |e| e.skill_set.power_battle? }
+              #   mediator.players.each do |e|
+              #     e.skill_set.push(AttackInfo["乱戦"])
+              #   end
+              # else
+              mediator.players.each do |e|
+                e.skill_set.rikisen_check_process
               end
+              # end
             end
           end
 
