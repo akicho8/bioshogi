@@ -18,9 +18,14 @@ module Bioshogi
       ].each(&block)
     end
 
+    # 力戦条件
+    def power_battle?
+      attack_infos.empty? && defense_infos.empty?
+    end
+
     # # 結果が決まってからの処理
     def rikisen_check_process
-      if attack_infos.empty? && defense_infos.empty?
+      if power_battle?
         list_push(AttackInfo["力戦"])
       end
     end
