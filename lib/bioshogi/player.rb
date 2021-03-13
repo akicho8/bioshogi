@@ -141,6 +141,7 @@ module Bioshogi
     concerning :OtherMethods do
       attr_writer :king_moved_counter
       attr_accessor :king_place
+      attr_accessor :king_first_moved_turn # 玉が最初に動いた手数
 
       def king_moved_counter
         @king_moved_counter ||= 0

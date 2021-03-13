@@ -7,6 +7,7 @@ module Bioshogi
 
       if move_hand.soldier.piece.key == :king
         player.king_moved_counter += 1 # 居玉判定用
+        player.king_first_moved_turn ||= mediator.turn_info.turn_offset # 本当の居玉判定用
       end
     end
 

@@ -329,16 +329,30 @@ module Bioshogi
                 #   end
                 # end
 
-                if mediator.turn_info.display_turn >= MIN_TURN
-                  # どれかの手合割に該当すれば玉は定位置から始まっていることがかある
-                  # 居玉チェック
+                # 居玉判定
+                if true
                   mediator.players.each do |e|
-                    if e.king_moved_counter.zero?
+                    # 14手以上の対局で一度も動かずに終了した
+                    done = false
+                    if !done
+                      if mediator.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
+                        done = true
+                      end
+                    end
+                    if !done
+                      if mediator.outbreak_turn # 歩と角以外の交換があったか？
+                        v = e.king_first_moved_turn
+                        if v.nil? || v >= mediator.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
+                          done = true
+                        end
+                      end
+                    end
+                    if done
                       e.skill_set.list_push(DefenseInfo["居玉"])
                     end
                   end
-
-                  if mediator.players.all? { |e| e.king_moved_counter.zero? }
+                  # 両方居玉だったら備考に相居玉
+                  if mediator.players.all? { |e| e.skill_set.has_skill?(DefenseInfo["居玉"]) }
                     mediator.players.each do |e|
                       e.skill_set.list_push(NoteInfo["相居玉"])
                     end
