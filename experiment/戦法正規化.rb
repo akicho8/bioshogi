@@ -153,7 +153,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/早石田.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/升田式石田流.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/鬼殺し.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/△３ニ飛戦法.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/2手目△３ニ飛戦法.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/中田功XP.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/真部流.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/▲７八飛戦法.kif

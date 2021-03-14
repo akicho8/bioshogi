@@ -841,7 +841,7 @@ module Bioshogi
         ],
       },
       {
-        key: "△３ニ飛戦法",
+        key: "2手目△３ニ飛戦法",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-142.html",
           "https://ja.wikipedia.org/wiki/2%E6%89%8B%E7%9B%AE%E2%96%B33%E4%BA%8C%E9%A3%9B",
