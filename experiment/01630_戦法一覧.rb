@@ -162,7 +162,7 @@ tp rows
 # >> | Bioshogi::AttackInfo  | 鳥刺し               |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | 嬉野流               |                  |                                                |        0 |
 # >> | Bioshogi::AttackInfo  | 棒金                 |                  |                                                |        1 |
-# >> | Bioshogi::AttackInfo  | 超速                 |                  |                                                |        5 |
+# >> | Bioshogi::AttackInfo  | 超速▲３七銀                 |                  |                                                |        5 |
 # >> | Bioshogi::AttackInfo  | 対振り持久戦         |                  |                                                |        1 |
 # >> | Bioshogi::AttackInfo  | 高田流左玉           |                  |                                                |        3 |
 # >> | Bioshogi::AttackInfo  | ▲７二飛亜急戦         |                  |                                                |        7 |

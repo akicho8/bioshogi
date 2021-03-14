@@ -1106,7 +1106,7 @@ module Bioshogi
         ],
       },
       {
-        key: "超速",
+        key: "超速▲３七銀",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-187.html",
           "https://ja.wikipedia.org/wiki/%E3%82%B4%E3%82%AD%E3%82%B2%E3%83%B3%E4%B8%AD%E9%A3%9B%E8%BB%8A#.E8.B6.85.E9.80.9F.E2.96.B23.E4.B8.83.E9.8A.80",

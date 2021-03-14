@@ -194,7 +194,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/メイドシステム.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/棒金.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/棒玉.kif
-# >> /Users/ikeda/src/bioshogi/experiment/戦型/超速.kif
+# >> /Users/ikeda/src/bioshogi/experiment/戦型/超速▲３七銀.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/対振り持久戦.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/高田流左玉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/戦型/▲７二飛亜急戦.kif
