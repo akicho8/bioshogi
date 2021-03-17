@@ -1320,7 +1320,7 @@ module Bioshogi
       },
 
       {
-        key: "音無しの構え",
+        key: "居飛穴音無しの構え",
         urls: [
           "https://youtu.be/v5t8ZxzxO3U?t=25",
           "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/ibianaotonasinokamae.html",

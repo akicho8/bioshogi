@@ -73,7 +73,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/左山囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/無責任矢倉.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/ツノ銀雁木.kif
-# >> /Users/ikeda/src/bioshogi/experiment/囲い/音無しの構え.kif
+# >> /Users/ikeda/src/bioshogi/experiment/囲い/居飛穴音無しの構え.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/銀雲雀.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/あずまや囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/セメント囲い.kif
