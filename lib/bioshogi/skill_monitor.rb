@@ -121,7 +121,7 @@ module Bioshogi
           end
         end
 
-        # 所持駒数一致制限。異なっていたらskip
+        # 駒を持っていないこと。異なっていたらskip
         if v = e.hold_piece_empty
           if !player.piece_box.empty?
             throw :skip
