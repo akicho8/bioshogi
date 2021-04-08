@@ -110,7 +110,6 @@ EOT
 
       it "to_kif" do
         assert { @info.to_kif == <<~EOT }
-手合割：その他
 上手の備考：居飛車
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
