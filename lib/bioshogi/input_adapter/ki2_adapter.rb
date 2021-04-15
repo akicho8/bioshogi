@@ -45,7 +45,10 @@ module Bioshogi
         end
 
         if !drop_trigger && candidate_soldiers.empty?
-          errors_add MovableBattlerNotFound, "#{player.call_name}の手番で#{place}に移動できる駒がありません"
+          errors_add MovableBattlerNotFound, [
+            "#{player.call_name}の手番で#{place}に移動できる#{input[:kif_piece]}が見つかりません",
+            promoted ? "「#{place}#{piece}成」の間違いかもしれません" : nil,
+          ].compact.join("。")
         end
 
         if drop_trigger && promoted
@@ -123,10 +126,14 @@ module Bioshogi
         }.call
       end
 
-      # 「打」の省略形か？
-      # 「同」も「左右や打」も移動候補もないとき「打」の省略形
+      # 「打」の省略形かを推測する
+      #
+      #  1. 駒が成っていないこと
+      #  2. 同・左右・打などのサフィックスがないこと
+      #  3. 指定の位置に来れる駒がないこと
+      #
       def drop_abbreviation?
-        !suffix_exist? && candidate_soldiers.empty?
+        !promoted && !suffix_exist? && candidate_soldiers.empty?
       end
 
       def flip_if_white(key)

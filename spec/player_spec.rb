@@ -87,6 +87,10 @@ EOT
           assert { Mediator.player_test_soldier_names(init: "４二龍", execute: "３二龍") == ["▲３二龍"] }
         end
 
+        it "「11飛成」が正しいのにすでに成って「11龍」をしてしまった場合" do
+          expect { Mediator.player_test_soldier_names(init: "21飛", execute: "11龍") }.to raise_error(Bioshogi::MovableBattlerNotFound)
+        end
+
         it "推測結果が複数パターンあるけど移動元が明確であれば推測しないのでエラーにならない" do
           assert { Mediator.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５九金(49)") == ["▲５九金", "▲６九金"] }
         end
