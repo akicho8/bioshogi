@@ -4,7 +4,7 @@ module Bioshogi
   describe TacticInfo do
     it "すべての戦法の判定" do
       TacticInfo.all_elements.each do |e|
-        # if ["一手得角換わり"].include?(e.key.to_s)
+        # if ["手得角交換型"].include?(e.key.to_s)
         #   next
         # end
         file = Pathname.glob("#{__dir__}/../experiment/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first # 拡張子を "*" とすると ruby 2.5.1 から(？) 動かない
