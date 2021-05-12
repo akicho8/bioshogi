@@ -62,6 +62,17 @@ module Bioshogi
     def skill_push(skill)
       player.skill_set.list_push(skill)   # プレイヤーの個別設定
       executor.skill_set.list_push(skill) # executor の方にも設定(これいる？)
+
+      # p skill
+      # p skill.add_to_opponent
+      if v = skill.add_to_opponent
+        # p v
+        # # if skill.key == :"ただの手損角交換型"
+        # # player.opponent_player.skill_set.list_push(AttackInfo.fetch("角換わり"))
+        # p e
+        # p v
+        player.opponent_player.skill_set.list_push(v)
+      end
     end
 
     def execute_one(e)

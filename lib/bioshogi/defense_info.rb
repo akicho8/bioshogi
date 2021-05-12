@@ -210,6 +210,13 @@ module Bioshogi
         TacticInfo.fetch(tactic_key)
       end
 
+      def add_to_opponent
+        return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
+        if defined?(super) && v = super
+          @add_to_opponent ||= TacticInfo.flat_lookup(v)
+        end
+      end
+
       def technique_matcher_info
         @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
       end
