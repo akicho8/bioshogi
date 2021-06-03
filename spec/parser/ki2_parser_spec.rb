@@ -15,7 +15,7 @@ module Bioshogi
       # puts info.to_ki2
       assert { info.to_ki2 == <<~EOT }
 手合割：平手
-後手の戦型：嬉野流
+後手の戦型：新嬉野流
 先手の手筋：垂れ歩, 腹銀
 先手の備考：居飛車
 後手の備考：居飛車
