@@ -1,4 +1,5 @@
 require "matrix"
+require "securerandom"
 
 # parser = Parser.parse(<<~EOT, turn_limit: 10)
 # 後手の持駒：飛二 角 銀二 桂四 香四 歩九
@@ -92,13 +93,13 @@ module Bioshogi
       end
     end
 
-    attr_accessor :parser
+    attr_accessor :mediator
     attr_accessor :params
 
-    def initialize(parser, params = {})
+    def initialize(mediator, params = {})
       require "rmagick"
 
-      @parser = parser
+      @mediator = mediator
       @params = default_params.merge(params)
       @rendered = false
     end
@@ -227,7 +228,7 @@ module Bioshogi
       lattice.h.times do |y|
         lattice.w.times do |x|
           v = V[x, y]
-          if soldier = parser.mediator.board.lookup(v)
+          if soldier = mediator.board.lookup(v)
             if soldier.promoted
               color = params[:promoted_color] || params[:piece_color]
             else
@@ -284,7 +285,7 @@ module Bioshogi
     def stand_draw
       g = params[:stand_piece_line_height]
 
-      parser.mediator.players.each do |player|
+      mediator.players.each do |player|
         location = player.location
         s = location.value_sign
 
@@ -319,7 +320,7 @@ module Bioshogi
     end
 
     def hand_log
-      @hand_log ||= parser.mediator.hand_logs.last # FIXME: hand_logs を使わないで動くようにする
+      @hand_log ||= mediator.hand_logs.last # FIXME: hand_logs を使わないで動くようにする
     end
 
     def current_place

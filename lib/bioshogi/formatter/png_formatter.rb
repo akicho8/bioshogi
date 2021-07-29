@@ -10,7 +10,7 @@ module Bioshogi
       end
 
       def image_formatter(options = {})
-        ImageFormatter.render(self, options)
+        ImageFormatter.render(mediator, options)
       end
     end
   end
