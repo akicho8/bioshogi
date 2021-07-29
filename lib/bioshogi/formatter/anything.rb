@@ -36,11 +36,11 @@ module Bioshogi
       def mediator_new
         mediator_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
-                                                  :skill_monitor_enable,
-                                                  :skill_monitor_technique_enable,
-                                                  :candidate_enable,
-                                                  :validate_enable,
-                                                ]))
+                :skill_monitor_enable,
+                :skill_monitor_technique_enable,
+                :candidate_enable,
+                :validate_enable,
+              ]))
         end
       end
 
