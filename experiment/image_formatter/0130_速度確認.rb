@@ -24,4 +24,4 @@ end
 require "active_support/core_ext/benchmark"
 def _; "%7.2f ms" % Benchmark.ms { 5.times { yield } } end
 _ { test1 } # => "   0.01 ms"
-_ { test2 } # => " 391.99 ms"
+_ { test2 } # => " 547.83 ms"

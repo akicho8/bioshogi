@@ -1,4 +1,4 @@
-require "./example_helper"
+require "../example_helper"
 
 parser = Parser.parse(<<~EOT, turn_limit: 10)
 後手の持駒：飛二 角 銀二 桂四 香四 歩九
@@ -18,5 +18,8 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 EOT
 
 object = parser.image_formatter({width: 100, height: 100, flip: true})
-object.to_png[0..5]             # => "\x89PNG\r\n"
+object.to_png[0..5]             # => 
 object.display
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/site_ruby/2.6.0/rubygems/core_ext/kernel_require.rb:85:in `require': cannot load such file -- ./example_helper (LoadError)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/site_ruby/2.6.0/rubygems/core_ext/kernel_require.rb:85:in `require'
+# ~> 	from -:1:in `<main>'
