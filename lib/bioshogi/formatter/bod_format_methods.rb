@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Formatter
-    concern :BodFormatter do
+    concern :BodFormatMethods do
       def to_bod(options = {})
         mediator.to_bod(options)
       end

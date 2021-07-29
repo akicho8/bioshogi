@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class YomiageFormatter < OfficialFormatter
+  class YomiageFormatMethods < OfficialFormatter
     def str_compact(str)
       str
     end

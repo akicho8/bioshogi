@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :PngFormatter do
+    concern :PngFormatMethods do
       def to_png(options = {})
         image_formatter(options).to_png
       end

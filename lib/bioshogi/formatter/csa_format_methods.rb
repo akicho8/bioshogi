@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :CsaFormatter do
+    concern :CsaFormatMethods do
       # CSA標準棋譜ファイル形式
       # http://www.computer-shogi.org/protocol/record_v22.html ← 見れなくなった
       # http://www2.computer-shogi.org/protocol/tcp_ip_server_121.html

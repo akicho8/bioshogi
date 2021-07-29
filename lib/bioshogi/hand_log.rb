@@ -28,7 +28,7 @@ module Bioshogi
     end
 
     def yomiage(options = {})
-      yomiage_formatter(options).to_s
+      yomiage_format_methods(options).to_s
     end
 
     def to_csa(options = {})
@@ -63,8 +63,8 @@ module Bioshogi
       OfficialFormatter.new(self, options)
     end
 
-    def yomiage_formatter(options = {})
-      YomiageFormatter.new(self, options)
+    def yomiage_format_methods(options = {})
+      YomiageFormatMethods.new(self, options)
     end
   end
 end

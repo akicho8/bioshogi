@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :YomiageFormatter do
+    concern :YomiageFormatMethods do
       def to_yomiage(options = {})
         mediator.to_yomiage(options)
       end

@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :Ki2Formatter do
+    concern :Ki2FormatMethods do
       def to_ki2(options = {})
         options = {
           cols: 10,

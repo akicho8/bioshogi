@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    concern :KifFormatter do
+    concern :KifFormatMethods do
       def to_kif(options = {})
         options = {
           length: 12,

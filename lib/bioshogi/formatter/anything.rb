@@ -1,12 +1,12 @@
 # frozen-string-literal: true
 
-require_relative "kif_formatter"
-require_relative "ki2_formatter"
-require_relative "csa_formatter"
-require_relative "sfen_formatter"
-require_relative "bod_formatter"
-require_relative "png_formatter"
-require_relative "yomiage_formatter"
+require_relative "kif_format_methods"
+require_relative "ki2_format_methods"
+require_relative "csa_format_methods"
+require_relative "sfen_format_methods"
+require_relative "bod_format_methods"
+require_relative "png_format_methods"
+require_relative "yomiage_format_methods"
 
 require_relative "header_builder"
 
@@ -15,13 +15,13 @@ module Bioshogi
     concern :Anything do
       MIN_TURN = 14
 
-      include KifFormatter
-      include Ki2Formatter
-      include CsaFormatter
-      include SfenFormatter
-      include BodFormatter
-      include PngFormatter
-      include YomiageFormatter
+      include KifFormatMethods
+      include Ki2FormatMethods
+      include CsaFormatMethods
+      include SfenFormatMethods
+      include BodFormatMethods
+      include PngFormatMethods
+      include YomiageFormatMethods
 
       include HeaderBuilder
 

@@ -37,5 +37,5 @@ Parser.parse("V2,P1 *,+0093KA,T1").to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:44:in `tap'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:44:in `mediator'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:25:in `mediator_run'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_formatter.rb:12:in `to_kif'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:3:in `<main>'
