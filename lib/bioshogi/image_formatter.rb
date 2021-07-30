@@ -74,7 +74,8 @@ module Bioshogi
         :frame_color        => "#777",         # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
         :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
         :frame_bg_color     => "transparent",  # 盤の色
-        :moving_color       => "#f0f0f0",      # 移動元と移動先のセルの背景色(nilなら描画しない)
+        :moving_color       => "#f0f0f0",    # 移動元と移動先のセルの背景色(nilなら描画しない)
+        # :moving_color       => nil,            # 移動元と移動先のセルの背景色(nilなら描画しない)
 
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
@@ -95,6 +96,8 @@ module Bioshogi
 
     attr_accessor :mediator
     attr_accessor :params
+    attr_accessor :canvas
+    attr_accessor :hand_log
 
     def initialize(mediator, params = {})
       require "rmagick"
@@ -105,23 +108,47 @@ module Bioshogi
     end
 
     def render
-      if @rendered
-        return
+      @hand_log = mediator.hand_logs.last
+
+      # 将棋盤の静的な部分を使いまわす
+      # しかしたいして速度が変わらなかった
+      # 46秒が45秒になった程度
+      # しかも moving_draw によって格子が上書きされてしまうため moving_color を nil にしないとダメ
+      # それならば元の方法にする
+      #
+      # if @templete_bg
+      #   @canvas = @templete_bg.clone
+      # else
+      #   canvas_create
+      #   static_draw
+      #   if params[:use_templete]
+      #     @templete_bg = @canvas.clone
+      #   end
+      # end
+
+      canvas_create
+
+      if true
+        moving_draw
+        piece_draw
+        star_draw
+        stand_draw
       end
 
-      frame_bg_draw
-      moving_draw
-      piece_draw
-      star_draw
-      stand_draw
-      lattice_draw
-      frame_draw
+      static_draw               # 静的な部分だけど moving_draw の部分と重なる
 
       if params[:viewpoint].to_s == "white"
         canvas.rotate!(180)
       end
 
       @rendered = true
+    end
+
+    def render_once
+      if @rendered
+        return
+      end
+      render
     end
 
     def to_png
@@ -134,24 +161,39 @@ module Bioshogi
     end
 
     def display
-      require "tmpdir"
-      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.png"
-      canvas.write(file)
-      system "open #{file}"
+      system "open #{write_to_tempfile}"
     end
 
-    def canvas
-      @canvas ||= -> {
-        # https://github.com/rmagick/rmagick/issues/699
-        # https://github.com/rmagick/rmagick/pull/701
-        list = Magick::ImageList.new
-        list.new_image(*image_rect) do |e|
-          e.background_color = params[:canvas_color]
-        end
-      }.call
+    def write_to_tempfile
+      require "tmpdir"
+      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.#{params[:format]}"
+      canvas.write(file)
+      file
     end
 
     private
+
+    def canvas_create
+      # https://github.com/rmagick/rmagick/issues/699
+      # https://github.com/rmagick/rmagick/pull/701
+      if false
+        @canvas = Magick::ImageList.new
+        @canvas.new_image(*image_rect) do |e|
+          e.background_color = params[:canvas_color]
+        end
+      else
+        @canvas = Magick::Image.new(*image_rect) do |e|
+          e.background_color = params[:canvas_color]
+        end
+      end
+    end
+
+    # 変化がない部分
+    def static_draw
+      frame_bg_draw
+      lattice_draw
+      frame_draw
+    end
 
     # 格子色
     def lattice_color
@@ -211,9 +253,10 @@ module Bioshogi
       end
     end
 
+    # 格子を消してしまうので使わないことにする
     def moving_draw
-      if hand_log
-        if params[:moving_color]
+      if params[:moving_color]
+        if hand_log
           draw_context do |c|
             c.stroke("transparent")
             c.fill = params[:moving_color]
@@ -317,10 +360,6 @@ module Bioshogi
           v += V[0, 1] * g * s
         end
       end
-    end
-
-    def hand_log
-      @hand_log ||= mediator.hand_logs.last # FIXME: hand_logs を使わないで動くようにする
     end
 
     def current_place

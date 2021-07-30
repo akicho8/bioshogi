@@ -6,6 +6,7 @@ require_relative "csa_format_methods"
 require_relative "sfen_format_methods"
 require_relative "bod_format_methods"
 require_relative "png_format_methods"
+require_relative "gif_format_methods"
 require_relative "yomiage_format_methods"
 
 require_relative "header_builder"
@@ -21,6 +22,7 @@ module Bioshogi
       include SfenFormatMethods
       include BodFormatMethods
       include PngFormatMethods
+      include GifFormatMethods
       include YomiageFormatMethods
 
       include HeaderBuilder
