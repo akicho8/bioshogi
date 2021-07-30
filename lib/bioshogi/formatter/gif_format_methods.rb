@@ -8,7 +8,7 @@ module Bioshogi
           :loop          => false, # ループするか？
         }.merge(options)
 
-        mediator = Mediator.new         # MediatorFast にする
+        mediator = Mediator.new         # MediatorFast にしても45秒が44秒になる程度
         mediator.params.update({
             :skill_monitor_enable           => false,
             :skill_monitor_technique_enable => false,
@@ -35,7 +35,7 @@ module Bioshogi
         list.ticks_per_second           # => 100
         list.delay = list.ticks_per_second * options[:delay_per_one]
 
-        list = list.coalesce            # 意味を調べる
+        list = list.coalesce            # これを外すと 45 が 41 になった
         list = list.optimize_layers(Magick::OptimizeLayer)
 
         list.format = options[:format]
