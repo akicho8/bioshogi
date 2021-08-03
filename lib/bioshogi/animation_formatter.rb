@@ -27,6 +27,8 @@ module Bioshogi
     end
 
     def render
+      require "rmagick"
+
       mediator = Mediator.new         # MediatorFast にしても45秒が44秒になる程度
       mediator.params.update({
           :skill_monitor_enable           => false,

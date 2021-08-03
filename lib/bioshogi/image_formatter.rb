@@ -110,6 +110,8 @@ module Bioshogi
     end
 
     def render
+      require "rmagick"
+
       @hand_log = mediator.hand_logs.last
 
       # 将棋盤の静的な部分を使いまわす
