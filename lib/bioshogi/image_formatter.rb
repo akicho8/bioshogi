@@ -102,7 +102,7 @@ module Bioshogi
     attr_accessor :hand_log
 
     def initialize(mediator, params = {})
-      params.assert_valid_keys(default_params.keys)
+      # params.assert_valid_keys(default_params.keys)
 
       @mediator = mediator
       @params = default_params.merge(params)

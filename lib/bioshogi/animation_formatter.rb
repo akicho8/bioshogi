@@ -15,7 +15,7 @@ module Bioshogi
     attr_accessor :hand_log
 
     def initialize(parser, params = {})
-      params.assert_valid_keys(default_params.keys + ImageFormatter.default_params.keys)
+      # params.assert_valid_keys(default_params.keys + ImageFormatter.default_params.keys)
 
       @parser = parser
       @params = default_params.merge(params)
