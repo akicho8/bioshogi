@@ -61,6 +61,8 @@ module Bioshogi
       @list = @list.optimize_layers(Magick::OptimizeLayer)
       @list.iterations = gif_iterations  # 繰り返し回数
 
+      # @list = @list.negate
+
       # @list.start_loop = false
       # @list.scene = 1
 

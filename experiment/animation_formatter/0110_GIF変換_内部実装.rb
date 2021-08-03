@@ -6,21 +6,21 @@ sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w 
 sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e 8h7g"
 info = Parser.parse(sfen)
 bin = nil
-format = "webp"
-p Benchmark.ms { bin = info.to_animation(animation_format: format) } # => 1809.743999998318
+format = "png"
+p Benchmark.ms { bin = info.to_animation(animation_format: format) } # => 1859.0390000026673
 bin[0...3]                           # => "RIF"
-bin.size                             # => 22290
-Pathname("_output.#{format}").write(bin)   # => 22290
+bin.size                             # => 22078
+Pathname("_output.#{format}").write(bin)   # => 22078
 puts `exiftool _output.#{format}`
 # 45492
-# >> 1809.743999998318
+# >> 1859.0390000026673
 # >> ExifTool Version Number         : 12.26
 # >> File Name                       : _output.webp
 # >> Directory                       : .
 # >> File Size                       : 22 KiB
-# >> File Modification Date/Time     : 2021:08:03 15:52:43+09:00
-# >> File Access Date/Time           : 2021:08:03 15:45:38+09:00
-# >> File Inode Change Date/Time     : 2021:08:03 15:52:43+09:00
+# >> File Modification Date/Time     : 2021:08:03 23:09:03+09:00
+# >> File Access Date/Time           : 2021:08:03 20:06:11+09:00
+# >> File Inode Change Date/Time     : 2021:08:03 23:09:03+09:00
 # >> File Permissions                : -rw-r--r--
 # >> File Type                       : WEBP
 # >> File Type Extension             : webp
