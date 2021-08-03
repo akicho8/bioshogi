@@ -85,6 +85,7 @@ module Bioshogi
         # other
         :viewpoint => "black", # 視点
         :image_format => "png",   # 出力する画像タイプ
+        :negate => false,      # 反転
       }
     end
 
@@ -131,6 +132,7 @@ module Bioshogi
       # end
 
       canvas_create
+      frame_bg_draw
 
       if true
         moving_draw
@@ -139,10 +141,15 @@ module Bioshogi
         stand_draw
       end
 
-      static_draw               # 静的な部分だけど moving_draw の部分と重なる
+      lattice_draw
+      frame_draw
 
       if params[:viewpoint].to_s == "white"
         canvas.rotate!(180)
+      end
+
+      if params[:negate]
+        @canvas = canvas.negate
       end
 
       @rendered = true
@@ -179,7 +186,6 @@ module Bioshogi
     private
 
     def canvas_create
-      require "rmagick"
       # https://github.com/rmagick/rmagick/issues/699
       # https://github.com/rmagick/rmagick/pull/701
       if false
@@ -194,12 +200,12 @@ module Bioshogi
       end
     end
 
-    # 変化がない部分
-    def static_draw
-      frame_bg_draw
-      lattice_draw
-      frame_draw
-    end
+    # # 変化がない部分
+    # def static_draw
+    #   frame_bg_draw
+    #   lattice_draw
+    #   frame_draw
+    # end
 
     # 格子色
     def lattice_color
