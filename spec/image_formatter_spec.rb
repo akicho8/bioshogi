@@ -20,8 +20,8 @@ module Bioshogi
         先手の持駒：角 金四 銀二 歩九
       EOT
 
-      object = parser.image_formatter(width: 100, height: 100, flip: true)
-      assert object.to_png[1..3] == "PNG"
+      object = parser.image_formatter(width: 100, height: 100, viewpoint: "black", image_format: "png")
+      assert object.to_blob[1..3] == "PNG"
     end
 
     # it do

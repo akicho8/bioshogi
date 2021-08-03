@@ -1,3 +1,5 @@
+# ・PNGに限定させてはいけない
+
 require "matrix"
 require "securerandom"
 
@@ -26,7 +28,7 @@ require "securerandom"
 # object.display
 
 module Bioshogi
-  class ImageFormatter
+  class ImageFormatter < BinaryFormatter
     cattr_accessor :default_params do
       {
         # required
@@ -82,7 +84,7 @@ module Bioshogi
 
         # other
         :viewpoint => "black", # 視点
-        :format => "png",   # 出力する画像タイプ
+        :image_format => "png",   # 出力する画像タイプ
       }
     end
 
@@ -100,7 +102,7 @@ module Bioshogi
     attr_accessor :hand_log
 
     def initialize(mediator, params = {})
-      require "rmagick"
+      params.assert_valid_keys(default_params.keys)
 
       @mediator = mediator
       @params = default_params.merge(params)
@@ -151,12 +153,13 @@ module Bioshogi
       render
     end
 
-    def to_png
-      to_blob
-    end
+    # def to_png
+    #   to_blob
+    # end
 
+    # PNGに限定させてはいけない
     def to_blob
-      canvas.format = params[:format]
+      canvas.format = image_format
       canvas.to_blob
     end
 
@@ -166,7 +169,7 @@ module Bioshogi
 
     def write_to_tempfile
       require "tmpdir"
-      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.#{params[:format]}"
+      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.#{image_format}"
       canvas.write(file)
       file
     end
@@ -174,6 +177,7 @@ module Bioshogi
     private
 
     def canvas_create
+      require "rmagick"
       # https://github.com/rmagick/rmagick/issues/699
       # https://github.com/rmagick/rmagick/pull/701
       if false
@@ -443,6 +447,10 @@ module Bioshogi
       def h
         self[1]
       end
+    end
+
+    def image_format
+      params[:image_format].presence or raise ArgumentError, "params[:image_format] is blank"
     end
   end
 end

@@ -17,9 +17,6 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 先手の持駒：角 金四 銀二 歩九九
 EOT
 
-object = parser.image_formatter({width: 100, height: 100, flip: true})
-object.to_png[0..5]             # => 
+object = parser.image_formatter({width: 100, height: 100, viewpoint: :black})
+object.to_blob[0...4]           # => "\x89PNG"
 object.display
-# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/site_ruby/2.6.0/rubygems/core_ext/kernel_require.rb:85:in `require': cannot load such file -- ./example_helper (LoadError)
-# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/site_ruby/2.6.0/rubygems/core_ext/kernel_require.rb:85:in `require'
-# ~> 	from -:1:in `<main>'

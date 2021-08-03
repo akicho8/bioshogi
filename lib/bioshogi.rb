@@ -112,7 +112,9 @@ require_relative "bioshogi/chess_clock"
 
 require_relative "bioshogi/formatter/anything"
 
+require_relative "bioshogi/binary_formatter"
 require_relative "bioshogi/image_formatter"
+require_relative "bioshogi/animation_formatter"
 require_relative "bioshogi/parser"
 
 require_relative "bioshogi/sfen"

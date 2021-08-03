@@ -7,7 +7,7 @@ module Bioshogi
         # if ["手得角交換型"].include?(e.key.to_s)
         #   next
         # end
-        file = Pathname.glob("#{__dir__}/../experiment/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first # 拡張子を "*" とすると ruby 2.5.1 から(？) 動かない
+        file = Pathname.glob("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first # 拡張子を "*" とすると ruby 2.5.1 から(？) 動かない
         info = Parser.file_parse(file)
         info.mediator_run
         matches = info.mediator.players.collect { |player|

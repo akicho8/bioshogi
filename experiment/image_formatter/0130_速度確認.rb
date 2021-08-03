@@ -18,10 +18,10 @@ def test2
       :mediator_class                 => MediatorFast,
     })
   object = info.image_formatter({width: 100, height: 100})
-  object.to_png[0..3]           # => "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG"
+  object.to_blob[0..3]           # => "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG"
 end
 
 require "active_support/core_ext/benchmark"
 def _; "%7.2f ms" % Benchmark.ms { 5.times { yield } } end
-_ { test1 } # => "   0.01 ms"
-_ { test2 } # => " 547.83 ms"
+_ { test1 } # => "   0.00 ms"
+_ { test2 } # => " 426.28 ms"
