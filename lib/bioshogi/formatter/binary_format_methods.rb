@@ -6,7 +6,7 @@ module Bioshogi
       end
 
       def to_image(options = {})
-        image_formatter(options).to_blob
+        image_formatter(options).to_blob_binary
       end
 
       def animation_formatter(options = {})
@@ -14,7 +14,7 @@ module Bioshogi
       end
 
       def to_animation(options = {})
-        animation_formatter(options).to_blob
+        animation_formatter(options).to_blob_binary
       end
     end
   end

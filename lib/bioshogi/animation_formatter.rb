@@ -9,21 +9,13 @@ module Bioshogi
     end
 
     attr_accessor :parser
-    attr_accessor :mediator
     attr_accessor :params
-    attr_accessor :list
-    attr_accessor :hand_log
 
     def initialize(parser, params = {})
       # params.assert_valid_keys(default_params.keys + ImageFormatter.default_params.keys)
 
       @parser = parser
       @params = default_params.merge(params)
-    end
-
-    def to_blob
-      @list.format = animation_format
-      @list.to_blob
     end
 
     def render
@@ -81,6 +73,10 @@ module Bioshogi
       # >> scene=0
     end
 
+    def main_canvas
+      @list
+    end
+
     private
 
     # 繰り返し回数
@@ -107,10 +103,6 @@ module Bioshogi
 
     def ext_name
       animation_format
-    end
-
-    def main_canvas
-      @list
     end
   end
 end

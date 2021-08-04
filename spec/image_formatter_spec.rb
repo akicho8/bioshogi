@@ -21,7 +21,8 @@ module Bioshogi
       EOT
 
       object = parser.image_formatter(width: 100, height: 100, viewpoint: "black", image_format: "png")
-      assert object.to_blob[1..3] == "PNG"
+      assert object.to_blob_binary[1..3] == "PNG"
+      assert object.to_write_binary[1..3] == "PNG"
     end
 
     # it do

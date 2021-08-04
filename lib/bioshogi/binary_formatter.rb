@@ -1,3 +1,7 @@
+require "tempfile"
+require "tmpdir"
+require "securerandom"
+
 module Bioshogi
   class BinaryFormatter
     class << self
@@ -11,6 +15,23 @@ module Bioshogi
 
       def render(*args)
         new(*args).tap(&:render)
+      end
+    end
+
+    # png や gif は問題ないが apng や mp4 の場合に失敗する(悲)
+    # そもそも画像リストを write("foo.png") にすると foo-0.png foo-1.png などと複数生成されるのだから
+    # write は拡張に合わせて format を設定して to_blob の結果を write しているのではないことがわかる
+    def to_blob_binary
+      main_canvas.format = ext_name
+      main_canvas.to_blob
+    end
+
+    # いったんファイル出力してから戻している時点で相当無駄があるが
+    # apng や mp4 の場合でも失敗しない
+    def to_write_binary
+      Tempfile.open(["", ".#{ext_name}"]) do |t|
+        main_canvas.write(t.path)
+        File.binread(t.path)
       end
     end
 
@@ -28,8 +49,6 @@ module Bioshogi
     end
 
     def to_tempfile
-      require "tmpdir"
-      require "securerandom"
       write("#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.#{ext_name}")
     end
   end

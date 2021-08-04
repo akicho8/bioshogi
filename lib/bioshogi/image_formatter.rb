@@ -161,14 +161,8 @@ module Bioshogi
       render
     end
 
-    # def to_png
-    #   to_blob
-    # end
-
-    # PNGに限定させてはいけない
-    def to_blob
-      @canvas.format = image_format
-      @canvas.to_blob
+    def main_canvas
+      @canvas
     end
 
     private
@@ -451,10 +445,6 @@ module Bioshogi
 
     def ext_name
       image_format
-    end
-
-    def main_canvas
-      @canvas
     end
   end
 end
