@@ -25,7 +25,7 @@ info.move_infos.each.with_index(1) do |e, i|
   mediator.execute(e[:input])
   image_formatter.render
   list.concat([image_formatter.canvas])
-  # puts image_formatter.write_to_tempfile
+  # puts image_formatter.to_tempfile
   # image_formatter.canvas.write("#{i}.gif")
 end
 @delay_per_one = 0.5            # 1枚を何秒で表示するか？

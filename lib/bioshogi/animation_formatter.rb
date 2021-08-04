@@ -51,7 +51,7 @@ module Bioshogi
         mediator.execute(e[:input])
         image_formatter.render
         @list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
-        # puts image_formatter.write_to_tempfile
+        # puts image_formatter.to_tempfile
         # image_formatter.canvas.write("#{i}.gif")
       end
       @list.ticks_per_second           # => 100
@@ -103,6 +103,14 @@ module Bioshogi
 
     def animation_format
       params[:animation_format] or raise ArgumentError, "params[:animation_format] is blank"
+    end
+
+    def ext_name
+      animation_format
+    end
+
+    def main_canvas
+      @list
     end
   end
 end

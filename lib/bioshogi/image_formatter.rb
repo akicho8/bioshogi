@@ -1,7 +1,6 @@
 # ・PNGに限定させてはいけない
 
 require "matrix"
-require "securerandom"
 
 # parser = Parser.parse(<<~EOT, turn_limit: 10)
 # 後手の持駒：飛二 角 銀二 桂四 香四 歩九
@@ -168,19 +167,8 @@ module Bioshogi
 
     # PNGに限定させてはいけない
     def to_blob
-      canvas.format = image_format
-      canvas.to_blob
-    end
-
-    def display
-      system "open #{write_to_tempfile}"
-    end
-
-    def write_to_tempfile
-      require "tmpdir"
-      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.#{image_format}"
-      canvas.write(file)
-      file
+      @canvas.format = image_format
+      @canvas.to_blob
     end
 
     private
@@ -303,7 +291,7 @@ module Bioshogi
     def draw_context
       c = Magick::Draw.new
       yield c
-      c.draw(canvas)
+      c.draw(@canvas)
     end
 
     def px(v)
@@ -334,7 +322,7 @@ module Bioshogi
       # c.stroke_antialias(false) # 効かない？
       c.fill = color
       c.gravity = Magick::CenterGravity
-      c.annotate(canvas, *cell_size_rect, *px(pos), text)
+      c.annotate(@canvas, *cell_size_rect, *px(pos), text)
     end
 
     def stand_draw
@@ -410,7 +398,7 @@ module Bioshogi
     end
 
     def center
-      @center ||= V[canvas.columns / 2, canvas.rows / 2]
+      @center ||= V[@canvas.columns / 2, @canvas.rows / 2]
     end
 
     def top_left
@@ -459,6 +447,14 @@ module Bioshogi
 
     def image_format
       params[:image_format].presence or raise ArgumentError, "params[:image_format] is blank"
+    end
+
+    def ext_name
+      image_format
+    end
+
+    def main_canvas
+      @canvas
     end
   end
 end
