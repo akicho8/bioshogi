@@ -24,19 +24,19 @@ module Bioshogi
       assert { KanjiNumber.kanji_to_number_string("歩1憶") == "歩100000" }
       assert { KanjiNumber.kanji_to_number_string("歩1兆") == "歩1000000" }
 
-      assert { KanjiNumber.integer_to_kanji(0) == "〇" }
-      assert { KanjiNumber.integer_to_kanji(1) == "一" }
-      assert { KanjiNumber.integer_to_kanji(10) == "十" }
-      assert { KanjiNumber.integer_to_kanji(12) == "十二" }
-      assert { KanjiNumber.integer_to_kanji(2) == "二" }
-      assert { KanjiNumber.integer_to_kanji(23) == "二十三" }
-      assert { KanjiNumber.integer_to_kanji(123) == "百二十三" }
-      assert { KanjiNumber.integer_to_kanji(120) == "百二十" }
-      assert { KanjiNumber.integer_to_kanji(100) == "百" }
-      assert { KanjiNumber.integer_to_kanji(1000) == "千" }
-      assert { KanjiNumber.integer_to_kanji(10000) == "一万" }
-      assert { KanjiNumber.integer_to_kanji(100000) == "一憶" }
-      assert { KanjiNumber.integer_to_kanji(1000000) == "一兆" }
+      assert { KanjiNumber.number_to_kanji(0) == "〇" }
+      assert { KanjiNumber.number_to_kanji(1) == "一" }
+      assert { KanjiNumber.number_to_kanji(10) == "十" }
+      assert { KanjiNumber.number_to_kanji(12) == "十二" }
+      assert { KanjiNumber.number_to_kanji(2) == "二" }
+      assert { KanjiNumber.number_to_kanji(23) == "二十三" }
+      assert { KanjiNumber.number_to_kanji(123) == "百二十三" }
+      assert { KanjiNumber.number_to_kanji(120) == "百二十" }
+      assert { KanjiNumber.number_to_kanji(100) == "百" }
+      assert { KanjiNumber.number_to_kanji(1000) == "千" }
+      assert { KanjiNumber.number_to_kanji(10000) == "一万" }
+      assert { KanjiNumber.number_to_kanji(100000) == "一憶" }
+      assert { KanjiNumber.number_to_kanji(1000000) == "一兆" }
     end
   end
 end

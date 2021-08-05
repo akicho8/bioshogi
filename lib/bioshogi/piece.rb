@@ -57,7 +57,7 @@ module Bioshogi
         hash.map { |piece, count|
           raise MustNotHappen if count < 0
           if count >= 2
-            count = KanjiNumber.integer_to_kanji(count)
+            count = KanjiNumber.number_to_kanji(count)
           else
             count = ""
           end
