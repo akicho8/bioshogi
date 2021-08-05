@@ -7,17 +7,17 @@ require "../example_helper"
 # puts @info.animation_formatter.write("~/Desktop/direct_out.mp4")
 # puts @info.animation_formatter.write("~/Desktop/direct_out.mov")
 
-@info.animation_formatter.main_canvas.write("direct_out.png")
+# @info.animation_formatter.main_canvas.write("direct_out.png")
 
 def test(animation_format)
   bin = @info.animation_formatter(animation_format: animation_format).to_write_binary
-  file = Pathname("blob_out.#{animation_format}")
+  file = Pathname("out.#{animation_format}")
   file.binwrite(bin)
   puts file
 end
 
-test("apng")                      # => nil
+test("png")                      # => nil
 
 # test("mp4")                     # =>
 # test("mov")                     # =>
-# >> blob_out.apng
+# >> out.png
