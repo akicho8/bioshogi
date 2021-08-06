@@ -37,6 +37,10 @@ module Bioshogi
       assert { KanjiNumber.number_to_kanji(10000) == "一万" }
       assert { KanjiNumber.number_to_kanji(100000) == "一憶" }
       assert { KanjiNumber.number_to_kanji(1000000) == "一兆" }
+      assert { KanjiNumber.number_to_kanji(1234.5678) == "千二百三十四" }
+
+      assert { KanjiNumber.extract("歩百二十三") == ["百二十三"] }
+      assert { KanjiNumber.regexp }
     end
   end
 end

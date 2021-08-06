@@ -73,6 +73,14 @@ module Bioshogi
       end
       out.join
     end
+
+    def regexp
+      /[#{UNIT_TABLE}#{KANJI_TABLE}]+/o
+    end
+
+    def extract(s, &block)
+      s.scan(regexp, &block)
+    end
   end
 
   if $0 == __FILE__
@@ -110,5 +118,9 @@ module Bioshogi
     KanjiNumber.number_to_kanji(10000)                  # => "一万"
     KanjiNumber.number_to_kanji(100000)                 # => "一憶"
     KanjiNumber.number_to_kanji(1000000)                # => "一兆"
+    KanjiNumber.number_to_kanji(1234.5678)              # => "千二百三十四"
+
+    KanjiNumber.extract("歩百二十三") # => ["百二十三"]
+    KanjiNumber.regexp                # => /[十百千万憶兆〇一二三四五六七八九]+/
   end
 end
