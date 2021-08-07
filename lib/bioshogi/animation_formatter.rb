@@ -2,9 +2,10 @@ module Bioshogi
   class AnimationFormatter < BinaryFormatter
     cattr_accessor :default_params do
       {
-        :delay_per_one    => 1.0,   # 1枚をN秒で表示する
-        :animation_format => "gif", # 出力フォーマット
-        :loop             => false, # ループするか？
+        :delay_per_one    => 1.0,                # 1枚をN秒で表示する
+        :end_frames   => 1,                  # 終了図だけ指定フレーム数停止
+        :animation_format => "gif",              # 出力フォーマット
+        :loop_key         => "is_loop_infinite", # ループモード
       }
     end
 
@@ -46,12 +47,14 @@ module Bioshogi
         # puts image_formatter.to_tempfile
         # image_formatter.canvas.write("#{i}.gif")
       end
-      @list.ticks_per_second           # => 100
+      @list.concat([image_formatter.canvas] * params[:end_frames])
+
+      # @list.ticks_per_second           # => 100
       @list.delay = @list.ticks_per_second * params[:delay_per_one]
 
       @list = @list.coalesce            # これを外すと 45 が 41 になった
       @list = @list.optimize_layers(Magick::OptimizeLayer)
-      @list.iterations = gif_iterations  # 繰り返し回数
+      @list.iterations = iterations_number  # 繰り返し回数
 
       # @list = @list.negate
 
@@ -89,8 +92,8 @@ module Bioshogi
     # exiftool では「繰り返す回数」つまり「戻る回数」なので1なら戻らないので0で、なぜか0は表示されない
     # 0なら無限と表示され、2なら1回(戻る)と表示される
     #
-    def gif_iterations
-      if params[:loop]
+    def iterations_number
+      if params[:loop_key] == "is_loop_infinite"
         0
       else
         1
