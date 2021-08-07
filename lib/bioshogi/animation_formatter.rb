@@ -31,7 +31,7 @@ module Bioshogi
         })
       parser.mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
 
-      image_formatter = ImageFormatter.new(mediator, params.slice(ImageFormatter.default_params.keys))
+      image_formatter = ImageFormatter.new(mediator, params.slice(*ImageFormatter.default_params.keys))
       # puts mediator
 
       @list = Magick::ImageList.new
