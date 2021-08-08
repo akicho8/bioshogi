@@ -32,15 +32,15 @@ end
 list.ticks_per_second           # => 100
 list.delay = list.ticks_per_second * @delay_per_one
 
-list = list.coalesce            # 意味を調べる
-list = list.optimize_layers(Magick::OptimizeLayer)
+# list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする
+# list = list.optimize_layers(Magick::OptimizeLayer) # 最小単位にする
 
-list.start_loop                 # => false
-list.start_loop = true          # => true
-list.start_loop                 # => true
+# list.start_loop                 # => false
+# list.start_loop = true          # => true
+# list.start_loop                 # => true
 
-list.format = "gif"
-list.to_blob[0...3]              # => "GIF"
+# list.format = "png"
+# list.to_blob[0...3]              # => 
 
 list.write("_output.gif")
 
@@ -50,8 +50,8 @@ end
 puts list.inspect # => nil
 
 # puts mediator
-# >> [_0.png GIF 1200x630 1200x630+0+0 PseudoClass 33c 16-bit 25kb,
-# >> _1.png  68x135 1200x630+433+348 PseudoClass 33c 16-bit 1kb,
-# >> _2.png  124x324 1200x630+364+148 PseudoClass 34c 16-bit 2kb,
-# >> _3.png  460x324 1200x630+377+159 PseudoClass 34c 16-bit 4kb]
-# >> scene=0
+# >> [_0.png  1200x630 PseudoClass 32c 16-bit 25kb,
+# >> _1.png  1200x630 PseudoClass 32c 16-bit 29kb,
+# >> _2.png  1200x630 PseudoClass 32c 16-bit 30kb,
+# >> _3.png  1200x630 PseudoClass 32c 16-bit 31kb]
+# >> scene=3

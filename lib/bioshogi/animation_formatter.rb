@@ -3,9 +3,10 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         :delay_per_one    => 1.0,                # 1枚をN秒で表示する
-        :end_frames   => 1,                  # 終了図だけ指定フレーム数停止
+        :end_frames       => 1,                  # 終了図だけ指定フレーム数停止
         :animation_format => "gif",              # 出力フォーマット
         :loop_key         => "is_loop_infinite", # ループモード
+        :optimize_layer   => true,               # 各ページを最小枠にして無駄をなくす
       }
     end
 
@@ -40,7 +41,7 @@ module Bioshogi
       # list.start_loop               # =>
       image_formatter.render
       @list.concat([image_formatter.canvas])
-      parser.move_infos.each.with_index(1) do |e, i|
+      parser.move_infos.each do |e|
         mediator.execute(e[:input])
         image_formatter.render
         @list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
@@ -52,8 +53,11 @@ module Bioshogi
       # @list.ticks_per_second           # => 100
       @list.delay = @list.ticks_per_second * params[:delay_per_one]
 
-      @list = @list.coalesce            # これを外すと 45 が 41 になった
-      @list = @list.optimize_layers(Magick::OptimizeLayer)
+      # @list = @list.coalesce                               # 全ページを1ページ目のフレームサイズにする
+      if params[:optimize_layer]
+        @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする
+      end
+
       @list.iterations = iterations_number  # 繰り返し回数
 
       # @list = @list.negate
