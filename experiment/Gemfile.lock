@@ -26,6 +26,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     benchmark-ips (2.9.1)
     builder (3.2.4)
+    color (1.8)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
     crass (1.0.6)
@@ -113,6 +114,7 @@ PLATFORMS
 DEPENDENCIES
   benchmark-ips
   bioshogi!
+  color
   diff-lcs
   faraday
   mechanize

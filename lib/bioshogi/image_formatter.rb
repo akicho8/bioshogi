@@ -63,28 +63,56 @@ module Bioshogi
         },
 
         # 盤
-        :canvas_color         => "white",   # 下地の色(必須)
+        :canvas_color         => "white",   # 部屋の色(必須)
         :piece_color          => "black",   # 駒の色(必須)
         :star_size            => 0.03,      # 星のサイズ(割合)
         :lattice_stroke_width => 1,         # 格子の線の太さ
         :frame_stroke_width   => 3,         # 枠の線お太さ(nil なら lattice_stroke_width を代用)
 
         # optional
+        :stand_piece_color  => nil,            # *持駒の色(nilなら piece_color を代用)
         :piece_count_color  => "#888",         # *駒数の色(nilなら piece_color を代用)
         :lattice_color      => "#999",         # *格子の色(nilなら piece_color を代用)
         :frame_color        => "#777",         # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
         :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
         :frame_bg_color     => "transparent",  # 盤の色
-        :moving_color       => "#f0f0f0",    # 移動元と移動先のセルの背景色(nilなら描画しない)
+        :moving_color       => "#f0f0f0",      # 移動元と移動先のセルの背景色(nilなら描画しない)
         # :moving_color       => nil,            # 移動元と移動先のセルの背景色(nilなら描画しない)
 
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
 
         # other
-        :viewpoint => "black", # 視点
-        :image_format => "png",   # 出力する画像タイプ
-        :negate => false,      # 反転
+        :viewpoint    => "black",  # 視点
+        :image_format => "png",    # 出力する画像タイプ
+        :negate       => false,    # 反転
+
+        :hexagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
+        :hexagon_color => {
+          :black => "#000",        # ☗を白と黒で塗り分けるときの先手の色
+          :white => "#fff",        # ☗を白と黒で塗り分けるときの後手の色
+        },
+        :theme => "light_mode",
+      }
+    end
+
+    cattr_accessor :theme_pack do
+      {
+        "light_mode" => {
+        },
+        "dark_mode" => {
+          :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
+          :hexagon_color     => { black: "#000", white: "#666", },
+          :canvas_color      => "#222",         # 部屋の色
+          :frame_bg_color    => "#333",         # 盤の色
+          :piece_color       => "#BBB",         # 駒の色
+          :stand_piece_color => "#666",         # 駒の色(持駒)
+          :piece_count_color => "#555",         # 駒の色(持駒数)
+          :moving_color      => "#444",         # 移動元と移動先のセルの背景色(nilなら描画しない)
+          :lattice_color     => "#555",         # 格子の色
+          :frame_color       => "#585858",      # 格子の外枠色
+          :promoted_color    => "#3c3",         # 成駒の色
+        },
       }
     end
 
@@ -106,6 +134,8 @@ module Bioshogi
 
       @mediator = mediator
       @params = default_params.merge(params)
+      @params.update(theme_pack[@params[:theme]])
+
       @rendered = false
     end
 
@@ -336,12 +366,18 @@ module Bioshogi
         v -= h * s                                 # 右下から右端中央にずらす
         v += V[params[:piece_stand_margin], 0] * s # 盤から持駒を少し離す
 
-        char_draw(pos: v, text: location.hexagon_mark, rotation: location.angle) # ▲
+        hexagon_mark = location.hexagon_mark
+        if params[:hexagon_fill]
+          # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
+          char_draw(pos: v, text: "☗", rotation: location.angle, color: params[:hexagon_color][location.key]) # ▲
+        else
+          char_draw(pos: v, text: hexagon_mark, rotation: location.angle) # ▲
+        end
         v += V[0, 1] * g * s
 
         player.piece_box.each.with_index do |(piece_key, count), i|
           piece = Bioshogi::Piece.fetch(piece_key)
-          char_draw(pos: v, text: piece.name, rotation: location.angle)  # 駒
+          char_draw(pos: v, text: piece.name, rotation: location.angle, color: params[:stand_piece_color] || params[:piece_color])
           if count >= 2
             if count <= 9
               w = :single

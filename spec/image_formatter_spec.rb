@@ -25,6 +25,12 @@ module Bioshogi
       assert object.to_write_binary[1..3] == "PNG"
     end
 
+    it "theme" do
+      parser = Parser.parse("68S")
+      object = parser.image_formatter(theme: "dark_mode")
+      assert { object.to_blob_binary }
+    end
+
     # it do
     #   parser = Parser.file_parse("#{__dir__}/yagura.kif")
     #   turn_offset = parser.mediator.turn_info.turn_offset
