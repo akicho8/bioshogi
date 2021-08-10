@@ -42,16 +42,12 @@ list.delay = list.ticks_per_second * @delay_per_one
 # list.format = "png"
 # list.to_blob[0...3]              # => 
 
-list.write("_output.mov")       # => [_output.mov  1200x630 DirectClass 16-bit,
+list.write("_output.jpg")       # => [_output-0.jpg  1200x630 DirectClass 16-bit 72kb,
+exit
 
 list.each.with_index do |e, i|
   e.write("_#{i}.png")
 end
-puts list.inspect # => nil
+puts list.inspect # => 
 
 # puts mediator
-# >> [_0.png  1200x630 DirectClass 16-bit 29kb,
-# >> _1.png  1200x630 DirectClass 16-bit 30kb,
-# >> _2.png  1200x630 DirectClass 16-bit 31kb,
-# >> _3.png  1200x630 DirectClass 16-bit 33kb]
-# >> scene=3
