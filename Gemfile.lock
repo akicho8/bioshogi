@@ -32,14 +32,16 @@ GEM
     erubi (1.10.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
-    loofah (2.11.0)
+    loofah (2.10.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     memory_record (0.0.18)
       activesupport
     method_source (1.0.0)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
-    nokogiri (1.12.3-x86_64-darwin)
+    nokogiri (1.11.7)
+      mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     power_assert (2.0.0)
     pry (0.14.1)
@@ -84,7 +86,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
-  x86_64-darwin-17
+  ruby
 
 DEPENDENCIES
   bioshogi!
