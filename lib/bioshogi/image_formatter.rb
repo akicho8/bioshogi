@@ -323,22 +323,20 @@ module Bioshogi
     end
 
     def px(v)
-      @px ||= {}
-      @px[v] ||= -> {
-        # もともとセルは正方形だった
-        # だから「top_left + v * cell_size_w」でよかった
-        # これは w, h を同じ値で乗算する
-        # するとセルが正方形になる
-        # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
-        # なので w * 90, h * 100 のような感じにしないといけない
-        # [90, 100] みたいなのは cell_size_rect に入っている
-        # ベクトルのそれぞれの位置を掛け算するには map2 を使う
-        # https://docs.ruby-lang.org/ja/latest/class/Vector.html
-        # collect2 だと Array になってしまうので注意
-        # map2 を使わないのなら top_left + V[v.x * cell_size_w, v.y * cell_size_h] で良い
-        # 
-        top_left + v.map2(cell_size_rect) { |a, b| a * b }
-      }.call
+      # もともとセルは正方形だった
+      # だから「top_left + v * cell_size_w」でよかった
+      # これは w, h を同じ値で乗算する
+      # するとセルが正方形になる
+      # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
+      # なので w * 90, h * 100 のような感じにしないといけない
+      # [90, 100] みたいなのは cell_size_rect に入っている
+      # ベクトルのそれぞれの位置を掛け算するには map2 を使う
+      # https://docs.ruby-lang.org/ja/latest/class/Vector.html
+      # collect2 だと Array になってしまうので注意
+      # map2 を使わないのなら top_left + V[v.x * cell_size_w, v.y * cell_size_h] で良い
+      # ベタな書き方をしてみたけど速度に影響なし
+      # また v でメモ化してみたけどこれも影響なし
+      top_left + v.map2(cell_size_rect) { |a, b| a * b }
     end
 
     def line_draw(c, v1, v2)
@@ -455,9 +453,6 @@ module Bioshogi
     end
 
     def top_left
-      # lattice = Rect[*Bioshogi::Dimension.dimension_wh]
-      # @top_left ||= center - lattice * cell_size / 2
-      # @top_left ||= center - Rect[cell_size_w, cell_size_h] / 2
       @top_left ||= center - cell_size_rect * lattice.w / 2
     end
 
