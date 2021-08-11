@@ -25,6 +25,7 @@ require "matrix"
 #
 # object = parser.image_formatter
 # object.display
+#
 
 module Bioshogi
   class ImageFormatter < BinaryFormatter
@@ -34,7 +35,10 @@ module Bioshogi
         :width  => 1200, # 画像横幅
         :height => 630,  # 画像縦幅
 
-        :board_rate => 0.96,  # 縦横幅の小さい方に対する盤の寸法の割合
+        # 将棋盤の比率は先に 0.96 を適当に決めてそこから横幅の比率を出している
+        # 0.96 * (33.3 / 36.4) = 0.87824175824
+        :aspect_ratio_w => 0.87824175824, # 縦横幅の小さい方に対する盤の横幅の割合(横長の場合縦比率より小さめにする)
+        :aspect_ratio_h => 0.96,          # 縦横幅の小さい方に対する盤の縦幅の割合(横長の場合1.0にすると縦の隙間がなくなる)
 
         # 文字の大きさの割合
         # ※割合はすべてセルの大きさを1.0とする
@@ -318,8 +322,20 @@ module Bioshogi
       c.draw(@canvas)
     end
 
+    # TODO: キャッシュする
     def px(v)
-      top_left + v * cell_size
+      # もともとセルは正方形だった
+      # だから「top_left + v * cell_size_w」でよかった
+      # これは w, h を同じ値で乗算する
+      # するとセルが正方形になる
+      # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
+      # なので w * 90, h * 100 のような感じにしないといけない
+      # [90, 100] みたいなのは cell_size_rect に入っている
+      # ベクトルのそれぞれの位置を掛け算するには map2 を使う
+      # https://docs.ruby-lang.org/ja/latest/class/Vector.html
+      # collect2 だと Array になってしまうので注意
+      # map2 を使わないのなら top_left + V[v.x * cell_size_w, v.y * cell_size_h] で良い
+      top_left + v.map2(cell_size_rect) { |a, b| a * b }
     end
 
     def line_draw(c, v1, v2)
@@ -336,7 +352,7 @@ module Bioshogi
       c = Magick::Draw.new
       c.rotation = rotation
       # c.font_weight = Magick::BoldWeight # 効かない
-      c.pointsize = cell_size * font_size
+      c.pointsize = cell_size_w * font_size
       if bold
         c.font = params[:bold_font] || params[:normal_font]
       else
@@ -415,8 +431,12 @@ module Bioshogi
       @lattice ||= Rect[*Bioshogi::Dimension.dimension_wh]
     end
 
-    def cell_size
-      @cell_size ||= (vmin * params[:board_rate]) / lattice.h
+    def cell_size_w
+      @cell_size_w ||= (vmin * params[:aspect_ratio_w]) / lattice.w
+    end
+
+    def cell_size_h
+      @cell_size_h ||= (vmin * params[:aspect_ratio_h]) / lattice.h
     end
 
     def vmin
@@ -424,7 +444,7 @@ module Bioshogi
     end
 
     def cell_size_rect
-      @cell_size_rect ||= Rect[cell_size, cell_size]
+      @cell_size_rect ||= Rect[cell_size_w, cell_size_h]
     end
 
     def center
@@ -432,7 +452,10 @@ module Bioshogi
     end
 
     def top_left
-      @top_left ||= center - lattice * cell_size / 2
+      # lattice = Rect[*Bioshogi::Dimension.dimension_wh]
+      # @top_left ||= center - lattice * cell_size / 2
+      # @top_left ||= center - Rect[cell_size_w, cell_size_h] / 2
+      @top_left ||= center - cell_size_rect * lattice.w / 2
     end
 
     def v_bottom_right_outer
