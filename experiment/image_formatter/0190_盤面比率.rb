@@ -21,5 +21,5 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-object = parser.image_formatter()
+object = parser.image_formatter(aspect_ratio_w: 1.3, aspect_ratio_h: 1.0)
 object.display

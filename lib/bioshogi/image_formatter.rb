@@ -72,6 +72,8 @@ module Bioshogi
         :star_size            => 0.03,      # 星のサイズ(割合)
         :lattice_stroke_width => 1,         # 格子の線の太さ
         :frame_stroke_width   => 3,         # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+        :dimension_w          => Dimension::Xplace.dimension, # 横のセル数
+        :dimension_h          => Dimension::Yplace.dimension, # 縦のセル数
 
         # optional
         :stand_piece_color  => nil,            # *持駒の色(nilなら piece_color を代用)
@@ -393,7 +395,7 @@ module Bioshogi
         v += V[0, 1] * g * s
 
         player.piece_box.each.with_index do |(piece_key, count), i|
-          piece = Bioshogi::Piece.fetch(piece_key)
+          piece = Piece.fetch(piece_key)
           char_draw(pos: v, text: piece.name, rotation: location.angle, color: params[:stand_piece_color] || params[:piece_color])
           if count >= 2
             if count <= 9
@@ -418,7 +420,7 @@ module Bioshogi
 
     def origin_place
       if hand_log
-        if hand_log.hand.kind_of?(Bioshogi::MoveHand)
+        if hand_log.hand.kind_of?(MoveHand)
           V[*hand_log.hand.origin_soldier.place.to_xy]
         end
       end
@@ -429,7 +431,7 @@ module Bioshogi
     end
 
     def lattice
-      @lattice ||= Rect[*Bioshogi::Dimension.dimension_wh]
+      @lattice ||= Rect[params[:dimension_w], params[:dimension_h]]
     end
 
     def cell_size_w
@@ -453,7 +455,7 @@ module Bioshogi
     end
 
     def top_left
-      @top_left ||= center - cell_size_rect * lattice.w / 2
+      @top_left ||= center - cell_size_rect.map2(lattice) { |a, b| a * b } / 2
     end
 
     def v_bottom_right_outer
@@ -505,3 +507,5 @@ module Bioshogi
     end
   end
 end
+# ~> -:31:in `<module:Bioshogi>': uninitialized constant Bioshogi::BinaryFormatter (NameError)
+# ~> 	from -:30:in `<main>'
