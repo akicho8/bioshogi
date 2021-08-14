@@ -117,6 +117,7 @@ require_relative "bioshogi/image_formatter"
 require_relative "bioshogi/animation_formatter"
 require_relative "bioshogi/mp4_formatter"
 require_relative "bioshogi/animation_gif_formatter"
+require_relative "bioshogi/animation_png_formatter"
 require_relative "bioshogi/parser"
 
 require_relative "bioshogi/sfen"

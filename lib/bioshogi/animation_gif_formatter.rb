@@ -1,5 +1,3 @@
-require "systemu"
-
 module Bioshogi
   class AnimationGifFormatter
     cattr_accessor :default_params do
@@ -46,7 +44,7 @@ module Bioshogi
       # end
       @list.iterations = iterations_number  # 繰り返し回数
 
-      Tempfile.create(["", ".gif"]) do |t|
+      Tempfile.create(["", ".#{ext_name}"]) do |t|
         @list.write(t.path)
         @list.destroy!
         File.read(t.path)
@@ -54,6 +52,10 @@ module Bioshogi
     end
 
     private
+
+    def ext_name
+      "gif"
+    end
 
     # 繰り返し回数
     #
