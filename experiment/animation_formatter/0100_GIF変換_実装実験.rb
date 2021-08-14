@@ -28,21 +28,27 @@ info.move_infos.each.with_index(1) do |e, i|
   # puts image_formatter.to_tempfile
   # image_formatter.canvas.write("#{i}.gif")
 end
-@delay_per_one = 0.5            # 1枚を何秒で表示するか？
-list.ticks_per_second           # => 100
-list.delay = list.ticks_per_second * @delay_per_one
 
-# list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする
-# list = list.optimize_layers(Magick::OptimizeLayer) # 最小単位にする
+list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする
+list = list.optimize_layers(Magick::OptimizeLayer) # 最小単位にする
+
+@delay_per_one = 0.5            # 1枚を何秒で表示するか？
+# list.ticks_per_second = 2          # => 2
+list.ticks_per_second              # => 100
+list.delay                      # => 0
+list.delay = list.ticks_per_second * @delay_per_one
+list.delay = 0
 
 # list.start_loop                 # => false
 # list.start_loop = true          # => true
 # list.start_loop                 # => true
 
 # list.format = "png"
-# list.to_blob[0...3]              # => 
+# list.ticks_per_second           # => 100
+# list.to_blob[0...3]              # =>
 
-list.write("_output.jpg")       # => [_output-0.jpg  1200x630 DirectClass 16-bit 72kb,
+list.write("_output.mp4")       # => [_output.mp4  1200x630 1200x630+0+0 PseudoClass 33c 16-bit,
+list.write("_output.gif")       # => [_output.gif  1200x630 1200x630+0+0 PseudoClass 33c 16-bit 35kb,
 exit
 
 list.each.with_index do |e, i|

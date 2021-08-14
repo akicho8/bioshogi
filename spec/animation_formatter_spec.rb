@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require "spec_helper"
 require "rmagick"
 
 module Bioshogi
@@ -26,3 +26,8 @@ module Bioshogi
     end
   end
 end
+# >> ...
+# >> 
+# >> Finished in 6.39 seconds (files took 1.79 seconds to load)
+# >> 3 examples, 0 failures
+# >> 
