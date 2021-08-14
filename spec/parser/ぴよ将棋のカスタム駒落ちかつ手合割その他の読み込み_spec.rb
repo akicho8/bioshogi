@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "ぴよ将棋のカスタム駒落ちかつ手合割その他の読み込み" do

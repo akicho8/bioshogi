@@ -82,7 +82,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # assert { >>         it("６３の馬が８１に動く場合「８１馬左」") { test1("８１馬左") == ["８一馬(63)", "８一馬左", "-6381UM"] } }
 # assert { >>         it("９２の馬が８１に動く場合「８１馬右」") { test1("８１馬右") == ["８一馬(92)", "８一馬右", "-9281UM"] } }
 # >> # - から生成するファイルなので変更禁止
-# >> require_relative "../spec_helper"
+# >> require "spec_helper"
 # >> 
 # >> module Bioshogi
 # >>   describe "将棋連盟が定めている人間向け棋譜入力" do

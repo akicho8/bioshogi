@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "usi" do
@@ -37,5 +37,5 @@ module Bioshogi
     end
   end
 end
-# ~> -:1:in `require_relative': cannot infer basepath (LoadError)
+# ~> -:1:in `require': cannot infer basepath (LoadError)
 # ~> 	from -:1:in `<main>'

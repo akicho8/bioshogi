@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "将棋連盟が定めている人間向け棋譜入力" do

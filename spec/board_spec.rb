@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe Board do
@@ -50,3 +50,8 @@ module Bioshogi
     end
   end
 end
+# >> ...
+# >> 
+# >> Finished in 0.02617 seconds (files took 1.46 seconds to load)
+# >> 3 examples, 0 failures
+# >> 

@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "駒落ちCSA棋譜からの変換" do

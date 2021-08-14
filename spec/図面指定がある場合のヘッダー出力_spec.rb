@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do

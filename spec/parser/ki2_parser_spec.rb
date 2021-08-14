@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe Parser::Ki2Parser do
@@ -127,3 +127,34 @@ EOT
     end
   end
 end
+# >> .F....F
+# >> 
+# >> Failures:
+# >> 
+# >>   1) Bioshogi::Parser::Ki2Parser 激指定跡道場4のクリップボード書き出し結果が読める
+# >>      Failure/Error: parse(Pathname(file).expand_path.read, options)
+# >> 
+# >>      Errno::ENOENT:
+# >>        No such file or directory @ rb_sysopen - /files/激指定跡道場4のクリップボード書き出し結果.ki2
+# >>      # ./lib/bioshogi/parser/base.rb:19:in `read'
+# >>      # ./lib/bioshogi/parser/base.rb:19:in `read'
+# >>      # ./lib/bioshogi/parser/base.rb:19:in `file_parse'
+# >>      # -:14:in `block (2 levels) in <module:Bioshogi>'
+# >> 
+# >>   2) Bioshogi::Parser::Ki2Parser 読み込み練習 
+# >>      Failure/Error: Unable to find - to read failed line
+# >> 
+# >>      Errno::ENOENT:
+# >>        No such file or directory @ rb_sysopen - ../../resources/竜王戦_ki2/龍王戦2002-15 羽生阿部-3.ki2
+# >>      # -:117:in `read'
+# >>      # -:117:in `read'
+# >>      # -:117:in `block (3 levels) in <module:Bioshogi>'
+# >> 
+# >> Finished in 0.02764 seconds (files took 1.29 seconds to load)
+# >> 7 examples, 2 failures
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:13 # Bioshogi::Parser::Ki2Parser 激指定跡道場4のクリップボード書き出し結果が読める
+# >> rspec -:116 # Bioshogi::Parser::Ki2Parser 読み込み練習 
+# >> 

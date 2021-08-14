@@ -1,4 +1,4 @@
-require_relative "../spec_helper"
+require "spec_helper"
 
 module Bioshogi
   describe "ウィキペディアにある表記通りの解釈ができる" do
