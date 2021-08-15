@@ -5,7 +5,6 @@ PATH
       actionview
       activesupport
       memory_record
-      systemu
       table_format
       tree_support
 
@@ -69,6 +68,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
+    rubyzip (2.3.2)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -97,8 +97,10 @@ DEPENDENCIES
   rake
   rmagick
   rspec
+  rubyzip
   simplecov
   stackprof
+  systemu
   test-unit
 
 BUNDLED WITH

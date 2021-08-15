@@ -46,6 +46,10 @@ module Bioshogi
       def to_animation_png(options = {})
         AnimationPngFormatter.new(self, options).to_binary
       end
+
+      def to_animation_zip(options = {})
+        AnimationZipFormatter.new(self, options).to_binary
+      end
     end
   end
 end
