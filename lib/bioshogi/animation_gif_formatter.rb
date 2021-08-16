@@ -19,15 +19,7 @@ module Bioshogi
     def to_binary
       require "rmagick"
 
-      mediator = Mediator.new         # MediatorFast にしても45秒が44秒になる程度
-      mediator.params.update({
-          :skill_monitor_enable           => false,
-          :skill_monitor_technique_enable => false,
-          :candidate_enable               => false,
-          :validate_enable                => false,
-        })
-      parser.mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
-
+      mediator = parser.mediator_for_image
       image_formatter = ImageFormatter.new(mediator, params)
       @list = Magick::ImageList.new
       image_formatter.render
@@ -40,7 +32,10 @@ module Bioshogi
       @list.concat([image_formatter.canvas] * params[:end_frames])
       @list.delay = @list.ticks_per_second * video_speed
       # if params[:optimize_layer]
-      @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする
+
+      # 46s 5.5M optimize_layers なし
+      # 43s 544K optimize_layers あり
+      @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする (重要)
       # end
       @list.iterations = iterations_number  # 繰り返し回数
 

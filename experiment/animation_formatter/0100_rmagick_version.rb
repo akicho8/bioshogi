@@ -32,11 +32,11 @@ end
 list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする
 list = list.optimize_layers(Magick::OptimizeLayer) # 最小単位にする
 
-@delay_per_one = 0.5            # 1枚を何秒で表示するか？
+@video_speed = 0.5            # 1枚を何秒で表示するか？
 # list.ticks_per_second = 2          # => 2
 list.ticks_per_second              # => 100
 list.delay                      # => 0
-list.delay = list.ticks_per_second * @delay_per_one
+list.delay = list.ticks_per_second * @video_speed
 list.delay = 0
 
 # list.start_loop                 # => false

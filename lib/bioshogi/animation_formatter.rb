@@ -23,15 +23,7 @@ module Bioshogi
     def render
       require "rmagick"
 
-      mediator = Mediator.new         # MediatorFast にしても45秒が44秒になる程度
-      mediator.params.update({
-          :skill_monitor_enable           => false,
-          :skill_monitor_technique_enable => false,
-          :candidate_enable               => false,
-          :validate_enable                => false,
-        })
-      parser.mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
-
+      mediator = params.mediator_for_image
       image_formatter = ImageFormatter.new(mediator, params.slice(*ImageFormatter.default_params.keys))
       # puts mediator
 

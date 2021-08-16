@@ -16,7 +16,7 @@ module Bioshogi
 
     def to_binary
       require "zip"
-      mediator = mediator_setup
+      mediator = parser.mediator_for_image
       f = ImageFormatter.new(mediator, params.merge(image_format: "png"))
       dos_time = Zip::DOSTime.from_time(Time.now)
       zos = Zip::OutputStream.write_buffer do |z|
@@ -30,19 +30,6 @@ module Bioshogi
     end
 
     private
-
-    # TODO
-    def mediator_setup
-      mediator = Mediator.new
-      mediator.params.update({
-          :skill_monitor_enable           => false,
-          :skill_monitor_technique_enable => false,
-          :candidate_enable               => false,
-          :validate_enable                => false,
-        })
-      parser.mediator_board_setup(mediator)
-      mediator
-    end
 
     def filename_for(index)
       (params[:basename_format] % index) + ".png"

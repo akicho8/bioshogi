@@ -12,7 +12,7 @@ require_relative "header_builder"
 
 module Bioshogi
   module Formatter
-    concern :Anything do
+    concern :Anything do        # FIXME: parser に埋めるんじゃなくて parser を引数にした専用クラスで処理する。AnimationZipFormatter のように。
       MIN_TURN = 14
 
       include KifFormatMethods
@@ -42,6 +42,19 @@ module Bioshogi
                 :validate_enable,
               ]))
         end
+      end
+
+      # 画像生成のための mediator の初期状態を返す
+      def mediator_for_image
+        mediator = Mediator.new
+        mediator.params.update({
+            :skill_monitor_enable           => false,
+            :skill_monitor_technique_enable => false,
+            :candidate_enable               => false,
+            :validate_enable                => false,
+          })
+        mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
+        mediator
       end
 
       def mediator

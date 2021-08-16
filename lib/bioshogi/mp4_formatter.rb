@@ -36,15 +36,7 @@ module Bioshogi
     def rmagick_mp4
       require "rmagick"
 
-      mediator = Mediator.new         # MediatorFast にしても45秒が44秒になる程度
-      mediator.params.update({
-          :skill_monitor_enable           => false,
-          :skill_monitor_technique_enable => false,
-          :candidate_enable               => false,
-          :validate_enable                => false,
-        })
-      parser.mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
-
+      mediator = parser.mediator_for_image
       image_formatter = ImageFormatter.new(mediator, params)
 
       @list = Magick::ImageList.new
@@ -72,7 +64,7 @@ module Bioshogi
 
     # fps_option (-r) は -i より前
     def ffmpeg_command(in_file, out_file)
-      "ffmpeg -v warning -hide_banner #{fps_option} -y -i #{in_file} -vcodec libx264 -pix_fmt yuv420p #{out_file}"
+      "ffmpeg -v warning -hide_banner #{fps_option} -y -i #{in_file} -c:v libx264 -pix_fmt yuv420p -y #{out_file}"
     end
 
     # def fps_option
@@ -99,7 +91,7 @@ module Bioshogi
     def fps_option
       if v = params[:video_speed].presence
         v = (one_second * v.to_f).to_i
-        "-r #{one_second}/#{v}"
+        "-r #{one_second}/#{v}" # FIXME: -framerate をつかうべき？
       end
     end
 
