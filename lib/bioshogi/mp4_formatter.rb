@@ -20,10 +20,14 @@ module Bioshogi
 
     cattr_accessor :default_params do
       {
-        :end_frames     => 0,   # 終了図だけ指定フレーム数停止
-        :video_speed    => 1.0, # 1手N秒
-        :audio_file     => "#{__dir__}/assets/audios/loop_bgm1.m4a",
-        :fadeout_second => 3,   # audio_file の最後のファイドアウト秒数
+        :end_frames       => 0,   # 終了図だけ指定フレーム数停止
+        :video_speed      => 1.0, # 1手N秒
+        :audio_enable     => true,
+        :audio_file1      => "#{__dir__}/assets/audios/loop_bgm1.m4a",
+        :audio_file2      => "#{__dir__}/assets/audios/loop_bgm2.m4a",
+        :fadeout_duration => 3,   # audio_file1 の最後のファイドアウト秒数
+        :tmpdir_remove    => true, # 作業ディレクトリを最後に削除する
+        :acrossfade_duration   => 2.0,  # 0なら結合
       }
     end
 
@@ -50,37 +54,50 @@ module Bioshogi
           list = Magick::ImageList.new
           image_formatter.render
           list.concat([image_formatter.canvas])
-          parser.move_infos.each do |e|
+          parser.move_infos.each.with_index do |e, i|
             mediator.execute(e[:input])
             image_formatter.render
             list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
+            logger&.debug("move: #{i.next} / #{parser.move_infos.size}") if i.modulo(10).zero?
           end
           list.concat([image_formatter.canvas] * params[:end_frames])
-          frame_count = list.count
           list.write("_output0.mp4")
+          logger&.debug("_output0.mp4: #{Media.duration('_output0.mp4')}") if false
+          @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+          @frame_count = list.count
         ensure
           list.destroy!       # 恐いので明示的に解放しとこう
         end
 
+        logger&.debug("frame_count: #{@frame_count}")
+        logger&.debug("video_speed: #{video_speed}")
+        logger&.debug("total_d: #{total_d}")
+        logger&.debug("switch_turn: #{@switch_turn}")
+
         # 1. YUV420化
         strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -y _output1.mp4)
-        if !audio_file
+        if !params[:audio_enable]
           return Pathname("_output1.mp4").read
         end
 
         # 2. BGM準備
-        # ffmpeg -v warning -stream_loop -1 -i #{audio_file} -t #{total} -c copy -y _long.m4a
+        # ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} -c copy -y _long.m4a
         # ffmpeg -v warning -i _long.m4a -af "afade=t=out:st=6:d=2" -y _same_lengh.m4a
-        logger&.debug("audio_file: #{audio_file}")
-        total = frame_count * video_speed
-        if fadeout_second > 0
-          start = total - fadeout_second
-          audio_filter = %(-af "afade=t=out:st=#{start}:d=#{fadeout_second}")
+
+        if @switch_turn
+          part1 = @switch_turn * video_speed + acrossfade_duration # audio1 側を伸ばす
+          part2 = (@frame_count - @switch_turn) * video_speed # audio2 側の長さは同じ
+          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
+          logger&.debug("_part1.m4a: #{Media.duration('_part1.m4a')}")
+          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
+          logger&.debug("_part2.m4a: #{Media.duration('_part2.m4a')}")
+          strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{filter_complex_value} _concat.m4a)
+          strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filter} _same_lengh.m4a)
         else
-          audio_filter = ""
+          logger&.debug("audio_file1: #{audio_file1}")
+          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} #{audio_filter} -y _same_lengh.m4a)
+          logger&.debug("#{audio_file1.basename}: #{Media.duration(audio_file1)}")
         end
-        strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file} -t #{total} #{audio_filter} -y _same_lengh.m4a)
-        logger&.debug("#{audio_file.basename}: #{Media.duration(audio_file)}")
         logger&.debug("_same_lengh.m4a: #{Media.duration('_same_lengh.m4a')}")
 
         # 3. 結合
@@ -89,8 +106,10 @@ module Bioshogi
       end
     ensure
       if dir
-        logger&.debug("rm -fr #{dir}")
-        FileUtils.remove_entry_secure(dir)
+        if params[:tmpdir_remove]
+          logger&.debug("rm -fr #{dir}")
+          FileUtils.remove_entry_secure(dir)
+        end
       end
     end
 
@@ -108,23 +127,52 @@ module Bioshogi
       params[:video_speed].to_f
     end
 
-    def fadeout_second
-      params[:fadeout_second].to_f
+    def fadeout_duration
+      params[:fadeout_duration].to_f
     end
 
-    def audio_file
-      if v = params[:audio_file]
+    def audio_file1
+      if v = params[:audio_file1]
         Pathname(v).expand_path
+      end
+    end
+
+    def audio_file2
+      if v = params[:audio_file2]
+        Pathname(v).expand_path
+      end
+    end
+
+    def acrossfade_duration
+      params[:acrossfade_duration].to_f
+    end
+
+    def total_d
+      @frame_count * video_speed
+    end
+
+    def audio_filter
+      if fadeout_duration > 0
+        %(-af "afade=t=out:start_time=#{total_d - fadeout_duration}:duration=#{fadeout_duration}")
+      end
+    end
+
+    # 長さ d=0 にしてもクロスフェイド効果があるっぽいので 0 なら単に結合する
+    def filter_complex_value
+      if acrossfade_duration > 0
+        %("acrossfade=duration=#{acrossfade_duration}")
+      else
+        %("concat=n=2:v=0:a=1")
       end
     end
 
     def strict_system(command)
       require "systemu"
       time = Time.now
-      logger&.debug(command)
+      logger&.debug("run: #{command}")
       status, stdout, stderr = systemu(command) # 例外は出ないのでensure不要
-      logger&.debug("#{status}")
-      logger&.debug("#{(Time.now - time).round}s")
+      logger&.debug("status: #{status}") if !status.success?
+      logger&.debug("elapsed: #{(Time.now - time).round}s")
       logger&.debug("stderr: #{stderr}") if stderr.present?
       logger&.debug("stdout: #{stdout}") if stdout.present?
       if !status.success?
