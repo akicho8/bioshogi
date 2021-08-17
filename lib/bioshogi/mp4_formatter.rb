@@ -69,7 +69,9 @@ module Bioshogi
           list.concat([image_formatter.canvas] * params[:end_frames])
           list.write("_output0.mp4")
           logger&.debug("_output0.mp4: #{Media.duration('_output0.mp4')}") if false
-          @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+          if mediator.outbreak_turn
+            @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+          end
           @frame_count = list.count
         ensure
           list.destroy!       # 恐いので明示的に解放しとこう
