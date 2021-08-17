@@ -28,6 +28,7 @@ def case1
   list.delay = 0
   outfile = "_output0.mp4"
   list.write(outfile)
+  # `ffmpeg -v warning -hide_banner -r #{fps_option} -i #{outfile} -c:v libx264 -pix_fmt yuv420p -tune stillimage -y _output1_1.mp4`
   `ffmpeg -v warning -hide_banner -r #{fps_option} -i #{outfile} -c:v libx264 -pix_fmt yuv420p -y _output1_1.mp4`
 end
 
@@ -46,5 +47,5 @@ end
 
 `rm -f _*`
 p Benchmark.ms { case1 }
-p Benchmark.ms { case2 }
+# p Benchmark.ms { case2 }
 puts `ls -alh _output*`

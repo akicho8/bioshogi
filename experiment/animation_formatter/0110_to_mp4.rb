@@ -8,17 +8,17 @@ Pathname("_output.mp4").write(bin) # => 85330
 Media.duration("_output.mp4")      # => 13.0
 Media.p("_output.mp4")
 tp Media.format("_output.mp4")
-# `open -a 'google chrome' _output.mp4`
-# >> cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210817-3340-v23b5p
+`open -a 'google chrome' _output.mp4`
+# >> cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210817-13222-buygik
 # >> move: 1 / 12
 # >> move: 11 / 12
 # >> frame_count: 13
 # >> one_frame_duration: 1.0
 # >> total_d: 13.0
 # >> switch_turn: 5
-# >> run: ffmpeg -v warning -hide_banner -r 1000/1000 -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -y _output1.mp4
+# >> run: ffmpeg -v warning -hide_banner -r 1000/1000 -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart -y _output1.mp4
 # >> elapsed: 2s
-# >> rm -fr /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210817-3340-v23b5p
+# >> rm -fr /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210817-13222-buygik
 # >>   Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1200x630, 51 kb/s, 1 fps, 1 tbr, 16384 tbn, 2 tbc (default)
 # >> |------------------+----------------------------------------------------------------------------------------------------------------------|
 # >> |         filename | _output.mp4                                                                                                          |

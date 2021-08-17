@@ -20,14 +20,20 @@ module Bioshogi
 
     cattr_accessor :default_params do
       {
-        :end_frames          => 0,   # 終了図だけ指定フレーム数停止
-        :one_frame_duration         => 1.0, # 1手N秒
-        :audio_enable        => true,
-        :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a",
-        :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a",
-        :fadeout_duration    => 3,   # audio_file1 の最後のファイドアウト秒数
+        # 全体
+        :one_frame_duration  => 1.0,  # 1手N秒
+        :end_frames          => 0,    # 終了図だけ指定フレーム数停止
         :tmpdir_remove       => true, # 作業ディレクトリを最後に削除する
-        :acrossfade_duration => 2.0,  # 0なら結合
+
+        # Video
+        :crf                 => 23, # 画質
+
+        # Audio関連
+        :audio_enable        => true, # 音を結合するか？
+        :fadeout_duration    => 3,    # ファイドアウト秒数 (end_frames * one_frame_duration ぐらいが丁度よいかな)
+        :acrossfade_duration => 2.0,  # 0なら単純な連結
+        :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
+        :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
       }
     end
 
@@ -75,7 +81,8 @@ module Bioshogi
         logger&.debug("switch_turn: #{@switch_turn}")
 
         # 1. YUV420化
-        strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -y _output1.mp4)
+        # -vsync 1
+        strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart -crf #{crf} -y _output1.mp4)
         if !params[:audio_enable]
           return Pathname("_output1.mp4").read
         end
@@ -121,6 +128,10 @@ module Bioshogi
     def fps_option
       v = (one_second * one_frame_duration).to_i
       "-r #{one_second}/#{v}" # -framerate だと動かない。-framerate は連番のとき用っぽい
+    end
+
+    def crf
+      (params[:crf].presence || 23).to_i
     end
 
     def one_frame_duration
