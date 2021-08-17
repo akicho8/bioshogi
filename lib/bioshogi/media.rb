@@ -26,4 +26,15 @@ module Media
   def format(file)
     JSON.parse(`ffprobe -v warning -pretty -print_format json -show_format #{file}`)["format"]
   end
+
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] n_samples: 423808
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] mean_volume: -16.1 dB
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] max_volume: -0.1 dB
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_0db: 44
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_1db: 71
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_2db: 71
+  # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_3db: 242
+  def volume_info(file)
+    `ffmpeg -hide_banner -i #{file} -vn -af volumedetect -f null -`
+  end
 end
