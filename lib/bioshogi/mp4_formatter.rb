@@ -27,7 +27,7 @@ module Bioshogi
 
         # Audio関連
         :audio_enable        => true, # 音を結合するか？
-        :fadeout_duration    => 3,    # ファイドアウト秒数 (end_frames * one_frame_duration ぐらいが丁度よいかな)
+        :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration
         :acrossfade_duration => 2.0,  # 0なら単純な連結
         :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
         :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
@@ -107,6 +107,7 @@ module Bioshogi
           strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} #{audio_filter} -y _same_length1.m4a)
           logger&.debug("#{audio_file1.basename}: #{Media.duration(audio_file1)}")
         end
+        logger&.debug("fadeout_duration: #{fadeout_duration}")
 
         # 3. 音量調整
         strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
@@ -144,7 +145,7 @@ module Bioshogi
     end
 
     def fadeout_duration
-      params[:fadeout_duration].to_f
+      (params[:fadeout_duration].presence || (one_frame_duration * params[:end_frames])).to_f
     end
 
     def audio_file1
