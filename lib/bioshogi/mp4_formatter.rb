@@ -25,15 +25,15 @@ module Bioshogi
         :end_frames          => 0,    # 終了図だけ指定フレーム数停止
         :tmpdir_remove       => true, # 作業ディレクトリを最後に削除する
 
-        # Video
-        :crf                 => 23, # 画質
-
         # Audio関連
         :audio_enable        => true, # 音を結合するか？
         :fadeout_duration    => 3,    # ファイドアウト秒数 (end_frames * one_frame_duration ぐらいが丁度よいかな)
         :acrossfade_duration => 2.0,  # 0なら単純な連結
         :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
         :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
+
+        # 他
+        :after_embed         => nil, # 引数に埋める
       }
     end
 
@@ -84,7 +84,7 @@ module Bioshogi
 
         # 1. YUV420化
         # -vsync 1
-        strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart -crf #{crf} -y _output1.mp4)
+        strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{after_embed} -y _output1.mp4)
         if !params[:audio_enable]
           return Pathname("_output1.mp4").read
         end
@@ -132,8 +132,8 @@ module Bioshogi
       "-r #{one_second}/#{v}" # -framerate だと動かない。-framerate は連番のとき用っぽい
     end
 
-    def crf
-      (params[:crf].presence || 23).to_i
+    def after_embed
+      params[:after_embed]
     end
 
     def one_frame_duration
