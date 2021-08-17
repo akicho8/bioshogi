@@ -3,7 +3,7 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         :end_frames  => 0,                  # 終了図だけ指定フレーム数停止
-        :video_speed => 1.0,                # 1手N秒
+        :one_frame_duration => 1.0,                # 1手N秒
         :loop_key    => "is_loop_infinite", # ループモード
       }
     end
@@ -30,7 +30,7 @@ module Bioshogi
         @list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
       end
       @list.concat([image_formatter.canvas] * params[:end_frames])
-      @list.delay = @list.ticks_per_second * video_speed
+      @list.delay = @list.ticks_per_second * one_frame_duration
       # if params[:optimize_layer]
 
       # 46s 5.5M optimize_layers なし
@@ -70,8 +70,8 @@ module Bioshogi
       end
     end
 
-    def video_speed
-      params[:video_speed]
+    def one_frame_duration
+      params[:one_frame_duration]
     end
   end
 end

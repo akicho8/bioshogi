@@ -4,7 +4,7 @@ module Bioshogi
   describe Mp4Formatter do
     it "works" do
       info = Parser.parse("position startpos moves 7g7f 8c8d")
-      bin = info.to_mp4(video_speed: 0.5, end_frames: 0)
+      bin = info.to_mp4(one_frame_duration: 0.5, end_frames: 0)
       File.write("_outout.mp4", bin)
       attrs = JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner -i _outout.mp4`)
       pp attrs if $0 == "-"

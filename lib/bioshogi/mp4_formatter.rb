@@ -20,14 +20,14 @@ module Bioshogi
 
     cattr_accessor :default_params do
       {
-        :end_frames       => 0,   # 終了図だけ指定フレーム数停止
-        :video_speed      => 1.0, # 1手N秒
-        :audio_enable     => true,
-        :audio_file1      => "#{__dir__}/assets/audios/loop_bgm1.m4a",
-        :audio_file2      => "#{__dir__}/assets/audios/loop_bgm2.m4a",
-        :fadeout_duration => 3,   # audio_file1 の最後のファイドアウト秒数
-        :tmpdir_remove    => true, # 作業ディレクトリを最後に削除する
-        :acrossfade_duration   => 2.0,  # 0なら結合
+        :end_frames          => 0,   # 終了図だけ指定フレーム数停止
+        :one_frame_duration         => 1.0, # 1手N秒
+        :audio_enable        => true,
+        :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a",
+        :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a",
+        :fadeout_duration    => 3,   # audio_file1 の最後のファイドアウト秒数
+        :tmpdir_remove       => true, # 作業ディレクトリを最後に削除する
+        :acrossfade_duration => 2.0,  # 0なら結合
       }
     end
 
@@ -70,7 +70,7 @@ module Bioshogi
         end
 
         logger&.debug("frame_count: #{@frame_count}")
-        logger&.debug("video_speed: #{video_speed}")
+        logger&.debug("one_frame_duration: #{one_frame_duration}")
         logger&.debug("total_d: #{total_d}")
         logger&.debug("switch_turn: #{@switch_turn}")
 
@@ -85,8 +85,8 @@ module Bioshogi
         # ffmpeg -v warning -i _long.m4a -af "afade=t=out:st=6:d=2" -y _same_lengh.m4a
 
         if @switch_turn
-          part1 = @switch_turn * video_speed + acrossfade_duration # audio1 側を伸ばす
-          part2 = (@frame_count - @switch_turn) * video_speed # audio2 側の長さは同じ
+          part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
+          part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
           strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
           logger&.debug("_part1.m4a: #{Media.duration('_part1.m4a')}")
           strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
@@ -119,12 +119,12 @@ module Bioshogi
     # 1手 1.0 秒 → "-r 60/60"
     # 1手 1.5 秒 → "-r 60/90"
     def fps_option
-      v = (one_second * video_speed).to_i
+      v = (one_second * one_frame_duration).to_i
       "-r #{one_second}/#{v}" # -framerate だと動かない。-framerate は連番のとき用っぽい
     end
 
-    def video_speed
-      params[:video_speed].to_f
+    def one_frame_duration
+      params[:one_frame_duration].to_f
     end
 
     def fadeout_duration
@@ -148,7 +148,7 @@ module Bioshogi
     end
 
     def total_d
-      @frame_count * video_speed
+      @frame_count * one_frame_duration
     end
 
     def audio_filter
