@@ -31,6 +31,7 @@ module Bioshogi
         :acrossfade_duration => 2.0,  # 0なら単純な連結
         :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
         :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
+        :main_volume         => 1.0,  # 音量
 
         # 他
         :after_embed         => nil, # 引数に埋める
@@ -90,10 +91,8 @@ module Bioshogi
         end
 
         # 2. BGM準備
-        # ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} -c copy -y _long.m4a
-        # ffmpeg -v warning -i _long.m4a -af "afade=t=out:st=6:d=2" -y _same_lengh.m4a
-
         if @switch_turn
+          # 開戦前後で分ける
           part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
           part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
           strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
@@ -101,16 +100,20 @@ module Bioshogi
           strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
           logger&.debug("_part2.m4a: #{Media.duration('_part2.m4a')}")
           strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{filter_complex_value} _concat.m4a)
-          strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filter} _same_lengh.m4a)
+          strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filter} _same_length1.m4a)
         else
+          # 開戦前のみ
           logger&.debug("audio_file1: #{audio_file1}")
-          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} #{audio_filter} -y _same_lengh.m4a)
+          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} #{audio_filter} -y _same_length1.m4a)
           logger&.debug("#{audio_file1.basename}: #{Media.duration(audio_file1)}")
         end
-        logger&.debug("_same_lengh.m4a: #{Media.duration('_same_lengh.m4a')}")
 
-        # 3. 結合
-        strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_lengh.m4a -c copy -y _output2.mp4)
+        # 3. 音量調整
+        strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
+        logger&.debug("_same_length2.m4a: #{Media.duration('_same_length2.m4a')}")
+
+        # 4. 結合
+        strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length2.m4a -c copy -y _output2.mp4)
         Pathname("_output2.mp4").read
       end
     ensure
@@ -158,6 +161,10 @@ module Bioshogi
 
     def acrossfade_duration
       params[:acrossfade_duration].to_f
+    end
+
+    def main_volume
+      params[:main_volume].to_f
     end
 
     def total_d
