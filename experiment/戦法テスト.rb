@@ -2,8 +2,8 @@ require "./example_helper"
 
 rows = []
 TacticInfo.all_elements.each do |e|
-  file = Pathname.glob("#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
-  row = { "合致" => "", key: e.key, file: file.to_s }
+  file = Pathname.glob("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
+  row = { "合致" => "", key: e.key, file: file.basename.to_s }
   if e.tactic_info.key == :attack || true
     if file
       str = file.read

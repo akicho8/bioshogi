@@ -2,7 +2,7 @@ require "./example_helper"
 
 table = {}
 TacticInfo.all_elements.each do |e|
-  file = Pathname("#{e.tactic_info.name}/#{e.key}.kif")
+  file = Pathname("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}/#{e.key}.kif")
   info = Parser.file_parse(file)
   hit = info.mediator.hand_logs.each.with_index do |hand_log, i|
     if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)

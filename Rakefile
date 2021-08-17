@@ -6,10 +6,13 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 task :clean do
-  system %(find #{__dir__} -name "_*" -exec echo {} \\;)
-  puts "本当に実行するには rake clean_run としてください"
+  system %(find #{__dir__} -name "_*" -exec rm -f {} \\;)
 end
 
-task :clean_run do
-  system %(find #{__dir__} -name "_*" -exec rm -f {} \\;)
+task :validate do
+  Dir.chdir("#{__dir__}/experiment") do
+    system "ruby 戦法テスト.rb"
+    system "ruby 各戦法が確定する手数のテーブルを生成.rb"
+    system "ruby 戦法正規化.rb"
+  end
 end
