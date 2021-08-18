@@ -1,3 +1,5 @@
+# frozen-string-literal: true
+#
 # フレームレートを指定値に変換する。指定しない場合は入力ファイルの値を継承
 # http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%A4%CE%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3%A4%DE%A4%C8%A4%E1
 # 小数で指定してはいけない
@@ -29,13 +31,13 @@ module Bioshogi
         :audio_enable        => true, # 音を結合するか？
         :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration
         :acrossfade_duration => 2.0,  # 0なら単純な連結
-        :audio_file1         => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
-        :audio_file2         => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
+        :audio_part_a        => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
+        :audio_part_b        => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
         :main_volume         => 1.0,  # 音量
+        :audio_theme_key     => nil,
 
         # 他
         :after_embed         => nil, # 引数に埋める
-        :audio_theme_key     => :default,
       }
     end
 
@@ -48,6 +50,9 @@ module Bioshogi
     def initialize(parser, params = {})
       @parser = parser
       @params = default_params.merge(params)
+      if audio_theme_info
+        @params.update(audio_theme_info.to_params)
+      end
     end
 
     # リファクタリングで解体してはいけない
@@ -99,21 +104,21 @@ module Bioshogi
 
             # 2. BGM準備
             logger.tagged("audio") do
-              if @switch_turn
+              if @switch_turn && audio_part_b
                 # 開戦前後で分ける
                 part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
                 part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -c copy -y _part1.m4a)
                 logger.debug { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -c copy -y _part2.m4a)
                 logger.debug { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
                 strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
                 strict_system %(ffmpeg -v warning -i _concat.m4a #{fadeout_option} _same_length1.m4a)
               else
                 # 開戦前のみ
-                logger.debug { "audio_file1: #{audio_file1}" }
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_duration} #{fadeout_option} -y _same_length1.m4a)
-                logger.debug { "#{audio_file1.basename}: #{Media.duration(audio_file1)}" }
+                logger.debug { "audio_part_a: #{audio_part_a}" }
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{total_duration} #{fadeout_option} -y _same_length1.m4a)
+                logger.debug { "#{audio_part_a.basename}: #{Media.duration(audio_part_a)}" }
               end
               logger.debug { "fadeout_duration: #{fadeout_duration}" }
 
@@ -157,14 +162,14 @@ module Bioshogi
       (params[:fadeout_duration].presence || (one_frame_duration * params[:end_frames])).to_f
     end
 
-    def audio_file1
-      if v = params[:audio_file1]
+    def audio_part_a
+      if v = params[:audio_part_a]
         Pathname(v).expand_path
       end
     end
 
-    def audio_file2
-      if v = params[:audio_file2]
+    def audio_part_b
+      if v = params[:audio_part_b]
         Pathname(v).expand_path
       end
     end
@@ -194,6 +199,10 @@ module Bioshogi
       else
         %("concat=n=2:v=0:a=1")
       end
+    end
+
+    def audio_theme_info
+      AudioThemeInfo.fetch_if(params[:audio_theme_key])
     end
 
     def strict_system(command)
