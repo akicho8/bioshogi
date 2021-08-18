@@ -20,7 +20,7 @@ module Bioshogi
       if options[:logging]
         log_file = Pathname(options[:log_file])
         FileUtils.rm_rf(log_file)
-        Bioshogi.logger = ActiveSupport::Logger.new(log_file)
+        Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log_file))
       end
 
       divers = [

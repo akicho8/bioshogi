@@ -10,7 +10,7 @@ ENV["BIOSHOGI_ENV"] = "test"
 
 log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
 FileUtils.makedirs(log_file.dirname)
-Bioshogi.logger = ActiveSupport::Logger.new(log_file)
+Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log_file))
 
 # Traceback (most recent call last):
 #       11: from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/simplecov-0.16.1/lib/simplecov/defaults.rb:27:in `block in <top (required)>'

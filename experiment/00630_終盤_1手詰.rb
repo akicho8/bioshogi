@@ -1,6 +1,6 @@
 require "./example_helper"
 
-# Board.logger = ActiveSupport::Logger.new(STDOUT)
+# Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([2, 4]) do
   mediator = Mediator.new
   mediator.placement_from_bod <<~EOT

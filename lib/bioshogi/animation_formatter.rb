@@ -23,7 +23,7 @@ module Bioshogi
     def render
       require "rmagick"
 
-      mediator = params.mediator_for_image
+      mediator = parser.mediator_for_image
       image_formatter = ImageFormatter.new(mediator, params.slice(*ImageFormatter.default_params.keys))
       # puts mediator
 

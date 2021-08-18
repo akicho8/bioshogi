@@ -35,6 +35,7 @@ module Bioshogi
 
         # 他
         :after_embed         => nil, # 引数に埋める
+        :audio_theme_key     => :default,
       }
     end
 
@@ -200,5 +201,10 @@ module Bioshogi
         raise StandardError, stderr.strip
       end
     end
+
+    # def logger(&block)
+    #   logger.tagged("foo") do
+    #   end
+    # end
   end
 end

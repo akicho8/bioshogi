@@ -1,6 +1,6 @@
 require "./example_helper"
 
-# Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
+# Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 # Board.promotable_disable
 # Board.dimensiton_change([2, 5])

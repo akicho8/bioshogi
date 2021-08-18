@@ -3,7 +3,7 @@ require "../example_helper"
 # 失敗
 # 勝手読みの詰みを収集するだけになっている
 
-# Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
+# Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 Board.dimensiton_change([2, 5])
 

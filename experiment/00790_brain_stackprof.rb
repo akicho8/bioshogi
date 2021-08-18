@@ -8,7 +8,7 @@ require "./example_helper"
 # mediator.execute("▲６八銀")
 # mediator.instance_variables     # => 
 
-# Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
+# Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 mediator = Mediator.start
 

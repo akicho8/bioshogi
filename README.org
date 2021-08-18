@@ -368,7 +368,7 @@ p mediator
     3x3の盤面で対角線上に歩がある場合の駆け引き
 
 #+BEGIN_SRC ruby
-Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
+Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do
   mediator = Mediator.new
   mediator.board.placement_from_human("▲３三歩 △１一歩")

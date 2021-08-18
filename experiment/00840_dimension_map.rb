@@ -1,7 +1,7 @@
 require "./example_helper"
 require "stackprof"
 
-# Bioshogi.logger = ActiveSupport::Logger.new(STDOUT)
+# Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 mediator = Mediator.new
 mediator.pieces_set("▲歩△歩")
