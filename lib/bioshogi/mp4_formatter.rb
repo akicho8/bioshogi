@@ -41,6 +41,7 @@ module Bioshogi
 
     attr_accessor :parser
     attr_accessor :params
+    attr_accessor :logger
 
     delegate :logger, to: "Bioshogi"
 
@@ -49,80 +50,87 @@ module Bioshogi
       @params = default_params.merge(params)
     end
 
+    # リファクタリングで解体してはいけない
     def to_binary
-      require "rmagick"
-      dir = Dir.mktmpdir
-      logger&.debug("cd #{dir}")
-
-      Dir.chdir(dir) do
-        mediator = parser.mediator_for_image
-        image_formatter = ImageFormatter.new(mediator, params)
-
+      logger.tagged("mp4_formatter") do
         begin
-          list = Magick::ImageList.new
-          image_formatter.render
-          list.concat([image_formatter.canvas])
-          parser.move_infos.each.with_index do |e, i|
-            mediator.execute(e[:input])
-            image_formatter.render
-            list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
-            logger&.debug("move: #{i.next} / #{parser.move_infos.size}") if i.modulo(10).zero?
+          dir = Dir.mktmpdir
+          require "rmagick"
+          logger.debug { "cd #{dir}" }
+
+          Dir.chdir(dir) do
+            logger.tagged("video") do
+              mediator = parser.mediator_for_image
+              image_formatter = ImageFormatter.new(mediator, params)
+
+              begin
+                list = Magick::ImageList.new
+                image_formatter.render
+                list.concat([image_formatter.canvas])
+                parser.move_infos.each.with_index do |e, i|
+                  mediator.execute(e[:input])
+                  image_formatter.render
+                  list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
+                  logger.debug { "move: #{i.next} / #{parser.move_infos.size}" } if i.modulo(10).zero?
+                end
+                list.concat([image_formatter.canvas] * params[:end_frames])
+                list.write("_output0.mp4")
+                logger.debug { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
+                if mediator.outbreak_turn
+                  @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+                end
+                @frame_count = list.count
+              ensure
+                list.destroy!       # 恐いので明示的に解放しとこう
+              end
+
+              logger.debug { "フレーム数(frame_count): #{@frame_count}" }
+              logger.debug { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
+              logger.debug { "予測した全体の秒数(total_duration): #{total_duration}" }
+              logger.debug { "BGMが切り替わるフレーム(switch_turn): #{@switch_turn}" }
+
+              # 1. YUV420化
+              # -vsync 1
+              strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{after_embed} -y _output1.mp4)
+              if !params[:audio_enable]
+                return Pathname("_output1.mp4").read
+              end
+            end
+
+            # 2. BGM準備
+            logger.tagged("audio") do
+              if @switch_turn
+                # 開戦前後で分ける
+                part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
+                part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
+                logger.debug { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
+                logger.debug { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
+                strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
+                strict_system %(ffmpeg -v warning -i _concat.m4a #{fadeout_option} _same_length1.m4a)
+              else
+                # 開戦前のみ
+                logger.debug { "audio_file1: #{audio_file1}" }
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_duration} #{fadeout_option} -y _same_length1.m4a)
+                logger.debug { "#{audio_file1.basename}: #{Media.duration(audio_file1)}" }
+              end
+              logger.debug { "fadeout_duration: #{fadeout_duration}" }
+
+              # 3. 音量調整
+              strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
+              logger.debug { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
+            end
+
+            # 4. 結合
+            strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length2.m4a -c copy -y _output2.mp4)
+            Pathname("_output2.mp4").read
           end
-          list.concat([image_formatter.canvas] * params[:end_frames])
-          list.write("_output0.mp4")
-          logger&.debug("_output0.mp4: #{Media.duration('_output0.mp4')}") if false
-          if mediator.outbreak_turn
-            @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
-          end
-          @frame_count = list.count
         ensure
-          list.destroy!       # 恐いので明示的に解放しとこう
-        end
-
-        logger&.debug("frame_count: #{@frame_count}")
-        logger&.debug("one_frame_duration: #{one_frame_duration}")
-        logger&.debug("total_d: #{total_d}")
-        logger&.debug("switch_turn: #{@switch_turn}")
-
-        # 1. YUV420化
-        # -vsync 1
-        strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{after_embed} -y _output1.mp4)
-        if !params[:audio_enable]
-          return Pathname("_output1.mp4").read
-        end
-
-        # 2. BGM準備
-        if @switch_turn
-          # 開戦前後で分ける
-          part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
-          part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
-          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{part1} -c copy -y _part1.m4a)
-          logger&.debug("_part1.m4a: #{Media.duration('_part1.m4a')}")
-          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file2} -t #{part2} -c copy -y _part2.m4a)
-          logger&.debug("_part2.m4a: #{Media.duration('_part2.m4a')}")
-          strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{filter_complex_value} _concat.m4a)
-          strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filter} _same_length1.m4a)
-        else
-          # 開戦前のみ
-          logger&.debug("audio_file1: #{audio_file1}")
-          strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_file1} -t #{total_d} #{audio_filter} -y _same_length1.m4a)
-          logger&.debug("#{audio_file1.basename}: #{Media.duration(audio_file1)}")
-        end
-        logger&.debug("fadeout_duration: #{fadeout_duration}")
-
-        # 3. 音量調整
-        strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
-        logger&.debug("_same_length2.m4a: #{Media.duration('_same_length2.m4a')}")
-
-        # 4. 結合
-        strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length2.m4a -c copy -y _output2.mp4)
-        Pathname("_output2.mp4").read
-      end
-    ensure
-      if dir
-        if params[:tmpdir_remove]
-          logger&.debug("rm -fr #{dir}")
-          FileUtils.remove_entry_secure(dir)
+          if params[:tmpdir_remove]
+            logger.debug { "rm -fr #{dir}" }
+            FileUtils.remove_entry_secure(dir)
+          end
         end
       end
     end
@@ -169,18 +177,18 @@ module Bioshogi
       params[:main_volume].to_f
     end
 
-    def total_d
+    def total_duration
       @frame_count * one_frame_duration
     end
 
-    def audio_filter
+    def fadeout_option
       if fadeout_duration > 0
-        %(-af "afade=t=out:start_time=#{total_d - fadeout_duration}:duration=#{fadeout_duration}")
+        %(-af "afade=t=out:start_time=#{total_duration - fadeout_duration}:duration=#{fadeout_duration}")
       end
     end
 
     # 長さ d=0 にしてもクロスフェイド効果があるっぽいので 0 なら単に結合する
-    def filter_complex_value
+    def cross_fade_option
       if acrossfade_duration > 0
         %("acrossfade=duration=#{acrossfade_duration}")
       else
@@ -189,22 +197,19 @@ module Bioshogi
     end
 
     def strict_system(command)
-      require "systemu"
-      time = Time.now
-      logger&.debug("run: #{command}")
-      status, stdout, stderr = systemu(command) # 例外は出ないのでensure不要
-      logger&.debug("status: #{status}") if !status.success?
-      logger&.debug("elapsed: #{(Time.now - time).round}s")
-      logger&.debug("stderr: #{stderr}") if stderr.present?
-      logger&.debug("stdout: #{stdout}") if stdout.present?
-      if !status.success?
-        raise StandardError, stderr.strip
+      logger.tagged("execute") do
+        require "systemu"
+        time = Time.now
+        logger.debug { command }
+        status, stdout, stderr = systemu(command) # 例外は出ないのでensure不要
+        logger.debug { "status: #{status}" } if !status.success?
+        logger.debug { "elapsed: #{(Time.now - time).round}s" }
+        logger.debug { "stderr: #{stderr}" } if stderr.present?
+        logger.debug { "stdout: #{stdout}" } if stdout.present?
+        if !status.success?
+          raise StandardError, stderr.strip
+        end
       end
     end
-
-    # def logger(&block)
-    #   logger.tagged("foo") do
-    #   end
-    # end
   end
 end
