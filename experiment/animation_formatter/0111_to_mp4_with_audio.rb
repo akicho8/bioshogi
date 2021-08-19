@@ -8,7 +8,7 @@ Pathname("_output.mp4").write(bin) # =>
 Media.duration("_output.mp4")      # => 
 Media.p("_output.mp4")
 tp Media.format("_output.mp4")
-`open -a 'google chrome' _output.mp4`
+# `open -a 'google chrome' _output.mp4`
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/mp4_formatter.rb:254:in `block in strict_system': -t: No such file or directory (StandardError)
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/tagged_logging.rb:99:in `block in tagged'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/tagged_logging.rb:37:in `tagged'

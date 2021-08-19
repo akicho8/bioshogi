@@ -86,7 +86,9 @@ module Bioshogi
                   logger.info { "move: #{i.next} / #{parser.move_infos.size}" } if i.modulo(10).zero?
                 end
                 list.concat([image_formatter.canvas] * end_frames)
+                logger.info { "write: _output0.mp4" }
                 list.write("_output0.mp4")
+                logger.info { `ls -alh _output0.mp4`.strip }
                 logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
                 if mediator.outbreak_turn
                   @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
