@@ -8,9 +8,9 @@ module Bioshogi
       { key: :audio_theme_c, audio_part_a: :loop_bgm_ca, audio_part_b: :loop_bgm_cb, },
       { key: :audio_theme_d, audio_part_a: :loop_bgm_da, audio_part_b: nil,          },
       { key: :audio_theme_e, audio_part_a: :breakbeat_long, audio_part_b: nil,          },
-      { key: :audio_theme_f, audio_part_a: :loop_bgm_fa, audio_part_b: nil,          },
+      { key: :audio_theme_f, audio_part_a: :headspin_long, audio_part_b: nil,          },
       { key: :audio_theme_g, audio_part_a: :loop_bgm_ga, audio_part_b: nil,          },
-      { key: :audio_theme_h, audio_part_a: :loop_bgm_fa, audio_part_b: :breakbeat_long_trim, },
+      { key: :audio_theme_h, audio_part_a: :headspin_long, audio_part_b: :breakbeat_long_strip, },
     ]
 
     def to_params
