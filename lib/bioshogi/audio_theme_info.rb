@@ -3,20 +3,19 @@ module Bioshogi
     include ApplicationMemoryRecord
     memory_record [
       # assets/audios
-      { key: :audio_theme_a, audio_part_a: :loop_bgm_aa, audio_part_b: :loop_bgm_ab, },
-      { key: :audio_theme_b, audio_part_a: :loop_bgm_ba, audio_part_b: :loop_bgm_bb, },
-      { key: :audio_theme_c, audio_part_a: :loop_bgm_ca, audio_part_b: :loop_bgm_cb, },
-      { key: :audio_theme_d, audio_part_a: :loop_bgm_da, audio_part_b: nil,          },
-      { key: :audio_theme_e, audio_part_a: :breakbeat_long, audio_part_b: nil,          },
-      { key: :audio_theme_f, audio_part_a: :headspin_long, audio_part_b: nil,          },
-      { key: :audio_theme_g, audio_part_a: :loop_bgm_ga, audio_part_b: nil,          },
-      { key: :audio_theme_h, audio_part_a: :headspin_long, audio_part_b: :breakbeat_long_strip, },
+      { key: :audio_theme_none,           name: "無音",               audio_part_a: nil,              audio_part_b: nil,                   acrossfade_duration: nil, },
+      { key: :audio_theme_dance,          name: "ダンス系",           audio_part_a: :headspin_long,   audio_part_b: :breakbeat_long_strip, acrossfade_duration: 1,   },
+      { key: :audio_theme_war,            name: "戦争系",             audio_part_a: :mastermind,      audio_part_b: :strategy,             acrossfade_duration: 0,   },
+      { key: :audio_theme_stg,            name: "STG系(いまいち)",    audio_part_a: :stg_like_type1a, audio_part_b: :stg_like_type1b,      acrossfade_duration: 1,   },
+      { key: :audio_theme_breakbeat_only, name: "ブレイクビートのみ", audio_part_a: :breakbeat_long,  audio_part_b: nil,                   acrossfade_duration: nil, },
+      { key: :audio_theme_headspin_only,  name: "ヘッドスピンのみ",   audio_part_a: :headspin_long,   audio_part_b: nil,                   acrossfade_duration: nil, },
     ]
 
     def to_params
       {
         audio_part_a: real_path(audio_part_a),
         audio_part_b: real_path(audio_part_b),
+        acrossfade_duration: acrossfade_duration,
       }
     end
 

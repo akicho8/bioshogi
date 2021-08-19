@@ -25,20 +25,22 @@ module Bioshogi
         # 全体
         :one_frame_duration  => 1.0,  # 1手N秒
         :end_duration        => 0,    # 終了図をN秒表示する
-        :end_frames          => nil,  # 終了図だけ指定フレーム数停止 (nil なら end_duration から自動的に計算する)
+        :end_frames          => nil,  # 終了図追加フレーム数。空なら end_duration / one_frame_duration
 
         # Audio関連
         :audio_enable        => true, # 音を結合するか？
         :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration
-        :acrossfade_duration => 2.0,  # 0なら単純な連結
-        :audio_part_a        => "#{__dir__}/assets/audios/loop_bgm1.m4a", # 序盤
-        :audio_part_b        => "#{__dir__}/assets/audios/loop_bgm2.m4a", # 中盤移行
-        :main_volume         => 1.0,  # 音量(中央1.0)
+        :main_volume         => 1.0,  # 音量
+
+        # テーマ関連
         :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー
+        :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
+        :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
+        :acrossfade_duration => 2.0,  # 0なら単純な連結
 
         # 他
-        :ffmpeg_after_embed_options => nil, # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
-        :tmpdir_remove       => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+        :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
+        :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
       }
     end
 
@@ -53,6 +55,10 @@ module Bioshogi
       @params = default_params.merge(params)
       if audio_theme_info
         @params.update(audio_theme_info.to_params)
+      end
+      # theme を上書きする用
+      if v = params[:theme_override_params]
+        @params.update(v)
       end
     end
 
@@ -99,7 +105,7 @@ module Bioshogi
               # 1. YUV420化
               # -vsync 1
               strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
-              if !params[:audio_enable]
+              if !audio_part_a
                 return Pathname("_output1.mp4").read
               end
             end
