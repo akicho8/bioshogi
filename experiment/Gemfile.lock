@@ -4,6 +4,7 @@ PATH
     bioshogi (0.0.1)
       actionview
       activesupport
+      color
       memory_record
       table_format
       tree_support

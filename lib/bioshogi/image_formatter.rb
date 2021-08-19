@@ -76,6 +76,7 @@ module Bioshogi
         :dimension_h          => Dimension::Yplace.dimension, # 縦のセル数
 
         # optional
+        :last_soldier_color => nil,            # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
         :stand_piece_color  => nil,            # *持駒の色(nilなら piece_color を代用)
         :piece_count_color  => "#888",         # *駒数の色(nilなら piece_color を代用)
         :lattice_color      => "#999",         # *格子の色(nilなら piece_color を代用)
@@ -83,7 +84,8 @@ module Bioshogi
         :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
         :frame_bg_color     => "transparent",  # 盤の色
         :moving_color       => "#f0f0f0",      # 移動元と移動先のセルの背景色(nilなら描画しない)
-        # :moving_color       => nil,            # 移動元と移動先のセルの背景色(nilなら描画しない)
+        # :moving_color       => nil,          # 移動元と移動先のセルの背景色(nilなら描画しない)
+        :normal_piece_color_map => {},         # 成ってない駒それぞれの色(nilなら piece_color を代用)
 
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
@@ -98,27 +100,7 @@ module Bioshogi
           :black => "#000",        # ☗を白と黒で塗り分けるときの先手の色
           :white => "#fff",        # ☗を白と黒で塗り分けるときの後手の色
         },
-        :theme => "light_mode",
-      }
-    end
-
-    cattr_accessor :theme_pack do
-      {
-        "light_mode" => {
-        },
-        "dark_mode" => {
-          :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-          :hexagon_color     => { black: "#000", white: "#666", },
-          :canvas_color      => "#222",         # 部屋の色
-          :frame_bg_color    => "#333",         # 盤の色
-          :piece_color       => "#BBB",         # 駒の色
-          :stand_piece_color => "#666",         # 駒の色(持駒)
-          :piece_count_color => "#555",         # 駒の色(持駒数)
-          :moving_color      => "#444",         # 移動元と移動先のセルの背景色(nilなら描画しない)
-          :lattice_color     => "#555",         # 格子の色
-          :frame_color       => "#585858",      # 格子の外枠色
-          :promoted_color    => "#3c3",         # 成駒の色
-        },
+        :color_theme_key => "light_mode",
       }
     end
 
@@ -140,7 +122,7 @@ module Bioshogi
 
       @mediator = mediator
       @params = default_params.merge(params)
-      @params.update(theme_pack[@params[:theme]])
+      @params.update(ColorThemeInfo.fetch(@params[:color_theme_key]).to_params)
 
       @rendered = false
     end
@@ -302,13 +284,17 @@ module Bioshogi
         lattice.w.times do |x|
           v = V[x, y]
           if soldier = mediator.board.lookup(v)
-            if soldier.promoted
-              color = params[:promoted_color] || params[:piece_color]
+            color = nil
+            if hand_log && soldier == hand_log.soldier
+              color ||= params[:last_soldier_color]
+              bold = true
             else
-              color = params[:piece_color]
+              bold = false
             end
-            bold = hand_log && soldier == hand_log.soldier
-
+            if soldier.promoted
+              color ||= params[:promoted_color]
+            end
+            color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
             v2 = v
             v2 += V[0, 1] * params[:piece_pull_down_rate][soldier.location.key]  * soldier.location.value_sign # 下に少し下げる
             v2 += V[1, 0] * params[:piece_pull_right_rate][soldier.location.key] * soldier.location.value_sign # 右に少し寄せる
@@ -508,4 +494,4 @@ module Bioshogi
   end
 end
 # ~> -:31:in `<module:Bioshogi>': uninitialized constant Bioshogi::BinaryFormatter (NameError)
-# ~> 	from -:30:in `<main>'
+# ~>    from -:30:in `<main>'
