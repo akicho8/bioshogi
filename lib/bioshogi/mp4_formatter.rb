@@ -41,6 +41,7 @@ module Bioshogi
         # 他
         :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
         :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+        :mp4_generate_by            => "ffmpeg", # rmagick or ffmpeg
       }
     end
 
@@ -72,48 +73,78 @@ module Bioshogi
 
           Dir.chdir(dir) do
             logger.tagged("video") do
-              mediator = parser.mediator_for_image
-              image_formatter = ImageFormatter.new(mediator, params)
-
-              begin
-                list = Magick::ImageList.new
-                image_formatter.render
-                list.concat([image_formatter.canvas])
-                parser.move_infos.each.with_index do |e, i|
-                  mediator.execute(e[:input])
-                  image_formatter.render
-                  list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
-                  logger.info { "move: #{i.next} / #{parser.move_infos.size}" } if i.modulo(10).zero?
-                end
-                list.concat([image_formatter.canvas] * end_frames)
-                logger.info { "write: _output0.mp4" }
-                list.write("_output0.mp4")
-                logger.info { `ls -alh _output0.mp4`.strip }
-                logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
-                if mediator.outbreak_turn
-                  @switch_turn = mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
-                end
-                @frame_count = list.count
-              ensure
-                list.destroy!       # 恐いので明示的に解放しとこう
-              end
-
-              logger.info { "最後に追加したフレーム数(end_frames): #{end_frames}" }
-              logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+              logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
               logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
-              logger.info { "予測した全体の秒数(total_duration): #{total_duration}" }
-              logger.info { "BGMが切り替わるフレーム(switch_turn): #{@switch_turn}" }
 
-              # 1. YUV420化
-              # -vsync 1
-              strict_system %(ffmpeg -v warning -hide_banner #{fps_option} -y -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
-              if !audio_part_a
-                return Pathname("_output1.mp4").read
+              @mediator = @parser.mediator_for_image
+              @image_formatter = ImageFormatter.new(@mediator, params)
+
+              if mp4_generate_by == "rmagick"
+                begin
+                  list = Magick::ImageList.new
+                  @image_formatter.render
+                  list.concat([@image_formatter.canvas])
+                  @parser.move_infos.each.with_index do |e, i|
+                    @mediator.execute(e[:input])
+                    @image_formatter.render
+                    list.concat([@image_formatter.canvas]) # canvas は Magick::Image のインスタンス
+                    logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
+                  end
+                  list.concat([@image_formatter.canvas] * end_frames)
+                  logger.info { "write: _output0.mp4" }
+                  list.write("_output0.mp4")
+                  logger.info { `ls -alh _output0.mp4`.strip }
+                  logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
+                  @frame_count = list.count
+                ensure
+                  list.destroy!       # 恐いので明示的に解放しとこう
+                end
+
+                debug_log
+
+                # 1. YUV420化
+                # -vsync 1
+                strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               end
+
+              if mp4_generate_by == "ffmpeg"
+                @frame_count = 0
+                @image_formatter.render
+                @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+                @frame_count += 1
+                @parser.move_infos.each.with_index do |e, i|
+                  @mediator.execute(e[:input])
+                  @image_formatter.render
+                  @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+                  @frame_count += 1
+                  logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
+                end
+                end_frames.times do
+                  @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+                  @frame_count += 1
+                end
+                debug_log
+                logger.info { `ls -alh _input*.png`.strip }
+                logger.info { "write[begin]: _output1.mp4 (ffmpeg)" }
+                strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%03d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
+                logger.info { "write[end]: _output1.mp4 (ffmpeg)" }
+                logger.info { `ls -alh _output1.mp4`.strip }
+              end
+            end
+
+            if !audio_part_a
+              return Pathname("_output1.mp4").read
             end
 
             # 2. BGM準備
             logger.tagged("audio") do
+              if @mediator.outbreak_turn
+                @switch_turn = @mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+                logger.info { "BGMが切り替わるフレーム(switch_turn): #{@switch_turn}" }
+              end
+
+              logger.info { "予測した全体の秒数(total_duration): #{total_duration}" }
+
               if @switch_turn && audio_part_b
                 # 開戦前後で分ける
                 part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
@@ -155,9 +186,13 @@ module Bioshogi
     # 1手 0.5 秒 → "-r 60/30"
     # 1手 1.0 秒 → "-r 60/60"
     # 1手 1.5 秒 → "-r 60/90"
-    def fps_option
+    # def fps_value
+    #   v = (one_second * one_frame_duration).to_i
+    #   "-r #{fps_value2}" # -framerate だと動かない。-framerate は連番のとき用っぽい
+    # end
+    def fps_value
       v = (one_second * one_frame_duration).to_i
-      "-r #{one_second}/#{v}" # -framerate だと動かない。-framerate は連番のとき用っぽい
+      "#{one_second}/#{v}"
     end
 
     def ffmpeg_after_embed_options
@@ -243,6 +278,24 @@ module Bioshogi
     def audio_theme_info
       AudioThemeInfo.fetch_if(params[:audio_theme_key])
     end
+
+    def mp4_generate_by
+      params.fetch(:mp4_generate_by).to_s
+    end
+
+    def debug_log
+      logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+    end
+
+    # def to_h
+    #   {
+    #     "最後に追加したフレーム数(end_frames)" => end_frames,
+    #     "合計フレーム数(frame_count)"          => @frame_count,
+    #     "1手当たりの秒数(one_frame_duration)"  => one_frame_duration,
+    #     "予測した全体の秒数(total_duration)"   => total_duration,
+    #     "BGMが切り替わるフレーム(switch_turn)" => @switch_turn,
+    #   }
+    # end
 
     def strict_system(command)
       logger.tagged("execute") do
