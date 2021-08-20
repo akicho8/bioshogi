@@ -30,12 +30,14 @@ module Bioshogi
         # Audio関連
         :audio_enable        => true, # 音を結合するか？
         :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration
-        :main_volume         => 1.0,  # 音量
+        # :main_volume         => 1.0,  # 音量
 
         # テーマ関連
         :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー
         :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
         :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
+        :audio_part_a_volume => 1.0,
+        :audio_part_b_volume => 1.0,
         :acrossfade_duration => 2.0,  # 0なら単純な連結
 
         # 他
@@ -158,27 +160,32 @@ module Bioshogi
                 logger.info { "開戦前後で分ける" }
                 part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
                 part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -c copy -y _part1.m4a)
+
+                # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
                 logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -af volume=0.2 -y _part2.m4a)
+
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
                 logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
+
                 strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
-                strict_system %(ffmpeg -v warning -i _concat.m4a #{fadeout_option} _same_length1.m4a)
+                strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filters(fadeout_value)} _same_length1.m4a)
               else
                 logger.info { "開戦前のみ" }
                 logger.info { "audio_part_a: #{audio_part_a}" }
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{total_duration} #{fadeout_option} -y _same_length1.m4a)
+                af = audio_filters("volume=#{params[:audio_part_a_volume]}", fadeout_value) # ボリューム調整 + ファイドアウト
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{total_duration} #{af} -y _same_length1.m4a)
                 logger.info { "#{audio_part_a.basename}: #{Media.duration(audio_part_a)}" }
               end
               logger.info { "fadeout_duration: #{fadeout_duration}" }
 
-              logger.info { "全体の音量調整" }
-              strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
-              logger.info { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
+              # logger.info { "全体の音量調整(しない)" }
+              # strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
+              # logger.info { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
             end
 
             logger.info { "3. 結合" }
-            strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length2.m4a -c copy -y _output2.mp4)
+            strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length1.m4a -c copy -y _output2.mp4)
             Pathname("_output2.mp4").read
           end
         ensure
@@ -233,7 +240,7 @@ module Bioshogi
     end
 
     def main_volume
-      params[:main_volume].to_f
+      params[:main_volume]
     end
 
     # 最後の局面を追加で足す回数
@@ -269,9 +276,17 @@ module Bioshogi
       @frame_count * one_frame_duration
     end
 
-    def fadeout_option
+    def fadeout_value
       if fadeout_duration > 0
-        %(-af "afade=t=out:start_time=#{total_duration - fadeout_duration}:duration=#{fadeout_duration}")
+        start_time = total_duration - fadeout_duration
+        "afade=t=out:start_time=#{start_time}:duration=#{fadeout_duration}"
+      end
+    end
+
+    def audio_filters(*args)
+      args = args.compact
+      if args.present?
+        "-af " + args.join(",")
       end
     end
 
