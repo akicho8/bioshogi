@@ -41,7 +41,7 @@ module Bioshogi
         # 他
         :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
         :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-        :mp4_generate_key            => "ffmpeg", # rmagick or ffmpeg
+        :mp4_create_method_key            => "ffmpeg", # rmagick or ffmpeg
       }
     end
 
@@ -63,7 +63,7 @@ module Bioshogi
       end
     end
 
-    # リファクタリングで解体してはいけない
+    # リファクタリングしたくなる気持ちを抑えよう(重要)
     def to_binary
       logger.tagged("mp4_formatter") do
         begin
@@ -73,13 +73,16 @@ module Bioshogi
 
           Dir.chdir(dir) do
             logger.tagged("video") do
+              logger.info { "1. 動画準備" }
+
+              logger.info { "MP4生成に使うもの: #{mp4_create_method_key}" }
               logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
               logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
 
               @mediator = @parser.mediator_for_image
               @image_formatter = ImageFormatter.new(@mediator, params)
 
-              if mp4_generate_key == "rmagick"
+              if mp4_create_method_key == "rmagick"
                 begin
                   list = Magick::ImageList.new
                   @image_formatter.render
@@ -91,8 +94,14 @@ module Bioshogi
                     logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                   end
                   list.concat([@image_formatter.canvas] * end_frames)
-                  logger.info { "write: _output0.mp4" }
-                  list.write("_output0.mp4")
+                  logger.info { "write[begin]: _output0.mp4" }
+                  begin
+                    list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
+                  rescue Exception => error
+                    logger.info { "error: #{error}" }
+                    raise error
+                  end
+                  logger.info { "write[end]: _output0.mp4" }
                   logger.info { `ls -alh _output0.mp4`.strip }
                   logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
                   @frame_count = list.count
@@ -100,14 +109,13 @@ module Bioshogi
                   list.destroy!       # 恐いので明示的に解放しとこう
                 end
 
-                debug_log
+                logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
 
-                # 1. YUV420化
-                # -vsync 1
+                logger.info { "1. YUV420化" }
                 strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               end
 
-              if mp4_generate_key == "ffmpeg"
+              if mp4_create_method_key == "ffmpeg"
                 @frame_count = 0
                 @image_formatter.render
                 @image_formatter.canvas.write("_input%03d.png" % @frame_count)
@@ -123,11 +131,11 @@ module Bioshogi
                   @image_formatter.canvas.write("_input%03d.png" % @frame_count)
                   @frame_count += 1
                 end
-                debug_log
-                logger.info { `ls -alh _input*.png`.strip }
-                logger.info { "write[begin]: _output1.mp4 (ffmpeg)" }
+                logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+                logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
+                logger.info { "write[begin]: _output1.mp4" }
                 strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%03d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
-                logger.info { "write[end]: _output1.mp4 (ffmpeg)" }
+                logger.info { "write[end]: _output1.mp4" }
                 logger.info { `ls -alh _output1.mp4`.strip }
               end
             end
@@ -136,8 +144,9 @@ module Bioshogi
               return Pathname("_output1.mp4").read
             end
 
-            # 2. BGM準備
             logger.tagged("audio") do
+              logger.info { "2. BGM準備" }
+
               if @mediator.outbreak_turn
                 @switch_turn = @mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
                 logger.info { "BGMが切り替わるフレーム(switch_turn): #{@switch_turn}" }
@@ -146,29 +155,29 @@ module Bioshogi
               logger.info { "予測した全体の秒数(total_duration): #{total_duration}" }
 
               if @switch_turn && audio_part_b
-                # 開戦前後で分ける
+                logger.info { "開戦前後で分ける" }
                 part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
                 part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
                 strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -c copy -y _part1.m4a)
                 logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
-                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -c copy -y _part2.m4a)
+                strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -af volume=0.2 -y _part2.m4a)
                 logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
                 strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
                 strict_system %(ffmpeg -v warning -i _concat.m4a #{fadeout_option} _same_length1.m4a)
               else
-                # 開戦前のみ
+                logger.info { "開戦前のみ" }
                 logger.info { "audio_part_a: #{audio_part_a}" }
                 strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{total_duration} #{fadeout_option} -y _same_length1.m4a)
                 logger.info { "#{audio_part_a.basename}: #{Media.duration(audio_part_a)}" }
               end
               logger.info { "fadeout_duration: #{fadeout_duration}" }
 
-              # 3. 音量調整
+              logger.info { "全体の音量調整" }
               strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
               logger.info { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
             end
 
-            # 4. 結合
+            logger.info { "3. 結合" }
             strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length2.m4a -c copy -y _output2.mp4)
             Pathname("_output2.mp4").read
           end
@@ -279,12 +288,8 @@ module Bioshogi
       AudioThemeInfo.fetch_if(params[:audio_theme_key])
     end
 
-    def mp4_generate_key
-      params.fetch(:mp4_generate_key).to_s
-    end
-
-    def debug_log
-      logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+    def mp4_create_method_key
+      params.fetch(:mp4_create_method_key).to_s
     end
 
     # def to_h
