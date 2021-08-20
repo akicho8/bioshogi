@@ -41,7 +41,7 @@ module Bioshogi
         # 他
         :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
         :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-        :mp4_generate_by            => "ffmpeg", # rmagick or ffmpeg
+        :mp4_generate_key            => "ffmpeg", # rmagick or ffmpeg
       }
     end
 
@@ -79,7 +79,7 @@ module Bioshogi
               @mediator = @parser.mediator_for_image
               @image_formatter = ImageFormatter.new(@mediator, params)
 
-              if mp4_generate_by == "rmagick"
+              if mp4_generate_key == "rmagick"
                 begin
                   list = Magick::ImageList.new
                   @image_formatter.render
@@ -107,7 +107,7 @@ module Bioshogi
                 strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               end
 
-              if mp4_generate_by == "ffmpeg"
+              if mp4_generate_key == "ffmpeg"
                 @frame_count = 0
                 @image_formatter.render
                 @image_formatter.canvas.write("_input%03d.png" % @frame_count)
@@ -279,8 +279,8 @@ module Bioshogi
       AudioThemeInfo.fetch_if(params[:audio_theme_key])
     end
 
-    def mp4_generate_by
-      params.fetch(:mp4_generate_by).to_s
+    def mp4_generate_key
+      params.fetch(:mp4_generate_key).to_s
     end
 
     def debug_log
