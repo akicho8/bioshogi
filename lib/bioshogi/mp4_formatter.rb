@@ -43,7 +43,7 @@ module Bioshogi
         # 他
         :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
         :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-        :mp4_create_method_key            => "ffmpeg", # rmagick or ffmpeg
+        :mp4_factory_key            => "ffmpeg", # rmagick or ffmpeg
       }
     end
 
@@ -77,14 +77,14 @@ module Bioshogi
             logger.tagged("video") do
               logger.info { "1. 動画準備" }
 
-              logger.info { "MP4生成に使うもの: #{mp4_create_method_key}" }
+              logger.info { "MP4生成に使うもの: #{mp4_factory_key}" }
               logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
               logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
 
               @mediator = @parser.mediator_for_image
               @image_formatter = ImageFormatter.new(@mediator, params)
 
-              if mp4_create_method_key == "rmagick"
+              if mp4_factory_key == "rmagick"
                 begin
                   list = Magick::ImageList.new
                   @image_formatter.render
@@ -117,7 +117,7 @@ module Bioshogi
                 strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               end
 
-              if mp4_create_method_key == "ffmpeg"
+              if mp4_factory_key == "ffmpeg"
                 @frame_count = 0
                 @image_formatter.render
                 @image_formatter.canvas.write("_input%03d.png" % @frame_count)
@@ -303,8 +303,8 @@ module Bioshogi
       AudioThemeInfo.fetch_if(params[:audio_theme_key])
     end
 
-    def mp4_create_method_key
-      params.fetch(:mp4_create_method_key).to_s
+    def mp4_factory_key
+      params.fetch(:mp4_factory_key).to_s
     end
 
     # def to_h
