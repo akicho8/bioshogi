@@ -94,6 +94,7 @@ module Bioshogi
         :viewpoint    => "black",  # 視点
         :image_format => "png",    # 出力する画像タイプ
         :negate       => false,    # 反転
+        :bg_file      => nil,      # 背景ファイル
 
         :hexagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
         :hexagon_color => {
@@ -186,6 +187,11 @@ module Bioshogi
     private
 
     def canvas_create
+      if v = params[:bg_file]
+        @canvas = Magick::Image.read(v).first
+        @canvas.resize!(*image_rect)
+      end
+
       # https://github.com/rmagick/rmagick/issues/699
       # https://github.com/rmagick/rmagick/pull/701
       if false
@@ -193,7 +199,9 @@ module Bioshogi
         @canvas.new_image(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end
-      else
+      end
+
+      unless @canvas
         @canvas = Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end
