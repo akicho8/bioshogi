@@ -1,11 +1,12 @@
 require "../example_helper"
+
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 info = Parser.parse("position startpos moves 7g7f 8c8d")
 bin = info.to_animation_gif(one_frame_duration: 0.5, mp4_factory_key: "rmagick", tmpdir_remove: false)
 Pathname("_output.gif").write(bin) # => 33719
 puts `identify _output.gif`
-`open -a 'Google Chrome' _output.gif`
+# `open -a 'Google Chrome' _output.gif`
 # >> [mp4_formatter] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210823-13608-ayuyyt
 # >> [mp4_formatter] one_frame_duration: 0.5
 # >> [mp4_formatter] ticks_per_second: 100

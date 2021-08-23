@@ -51,7 +51,6 @@ module Bioshogi
 
     attr_accessor :parser
     attr_accessor :params
-    attr_accessor :logger
 
     delegate :logger, to: "Bioshogi"
 

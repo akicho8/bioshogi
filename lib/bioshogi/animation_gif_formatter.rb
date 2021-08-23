@@ -22,7 +22,7 @@ module Bioshogi
     end
 
     def to_binary
-      logger.tagged("mp4_formatter") do
+      logger.tagged("animation_gif_formatter") do
         in_work_directory do
           @mediator = parser.mediator_for_image
           @image_formatter = ImageFormatter.new(@mediator, params)

@@ -1,5 +1,7 @@
 module Bioshogi
   module FormatterUtils
+    delegate :logger, to: "Bioshogi"
+
     def in_work_directory
       begin
         require "rmagick"
