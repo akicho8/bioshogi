@@ -190,7 +190,12 @@ module Bioshogi
     def canvas_create
       if v = params[:bg_file]
         @canvas = Magick::Image.read(v).first
+        # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
+        # @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
         @canvas.resize!(*image_rect)
+        if params[:viewpoint].to_s == "white"
+          @canvas.rotate!(180) # 全体を反転するので背景だけ反転しておくことで元に戻る
+        end
       else
         @canvas = Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:canvas_color]
