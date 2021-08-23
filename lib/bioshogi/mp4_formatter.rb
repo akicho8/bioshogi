@@ -78,7 +78,7 @@ module Bioshogi
             logger.tagged("video") do
               logger.info { "1. 動画準備" }
 
-              logger.info { "MP4生成に使うもの: #{mp4_factory_key}" }
+              logger.info { "生成に使うもの: #{mp4_factory_key}" }
               logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
               logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
 
@@ -198,7 +198,6 @@ module Bioshogi
       end
     end
 
-    
     private
 
     # 1手 0.5 秒 → "-r 60/30"
@@ -212,7 +211,6 @@ module Bioshogi
       v = (one_second * one_frame_duration).to_i
       "#{one_second}/#{v}"
     end
-
     def ffmpeg_after_embed_options
       params[:ffmpeg_after_embed_options]
     end
