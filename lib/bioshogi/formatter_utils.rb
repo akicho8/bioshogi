@@ -21,5 +21,9 @@ module Bioshogi
     def mp4_factory_key
       params.fetch(:mp4_factory_key).to_s
     end
+
+    def one_frame_duration
+      params[:one_frame_duration].to_f
+    end
   end
 end

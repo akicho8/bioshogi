@@ -9,7 +9,7 @@ module Bioshogi
         :loop_key           => "is_loop_infinite", # ループモード
 
         :tmpdir_remove      => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-        :mp4_factory_key    => "ffmpeg", # rmagick or ffmpeg
+        :mp4_factory_key    => "rmagick", # rmagick or ffmpeg
       }
     end
 
@@ -46,12 +46,16 @@ module Bioshogi
           logger.info { "one_frame_duration: #{one_frame_duration}" }
           logger.info { "ticks_per_second: #{@list.ticks_per_second}" }
           logger.info { "delay: #{@list.delay}" }
+          logger.info { "mp4_factory_key: #{mp4_factory_key}" }
 
           # if params[:optimize_layer]
 
           # 46s 5.5M optimize_layers なし
           # 43s 544K optimize_layers あり
+          logger.info { "optimize_layers[begin]" }
           @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする (重要)
+          logger.info { "optimize_layers[end]" }
+
           # end
           @list.iterations = iterations_number  # 繰り返し回数
 
@@ -93,10 +97,6 @@ module Bioshogi
       else
         1
       end
-    end
-
-    def one_frame_duration
-      params[:one_frame_duration]
     end
   end
 end
