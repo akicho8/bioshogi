@@ -6,8 +6,7 @@ module Bioshogi
       }
     end
 
-    attr_accessor :parser
-    attr_accessor :params
+    attr_reader :params
 
     def initialize(parser, params = {})
       @parser = parser
@@ -16,12 +15,12 @@ module Bioshogi
 
     def to_binary
       require "zip"
-      mediator = parser.mediator_for_image
+      mediator = @parser.mediator_for_image
       f = ImageFormatter.new(mediator, params.merge(image_format: "png"))
       dos_time = Zip::DOSTime.from_time(Time.now)
       zos = Zip::OutputStream.write_buffer do |z|
         zip_write(z, f, dos_time, 0)
-        parser.move_infos.each.with_index(1) do |e, i|
+        @parser.move_infos.each.with_index(1) do |e, i|
           mediator.execute(e[:input])
           zip_write(z, f, dos_time, i)
         end

@@ -10,7 +10,7 @@ module Bioshogi
       pp attrs if $0 == "-"
       video = attrs["streams"][0]
       assert { video["codec_name"] == "apng"  }
-      assert { video["r_frame_rate"] == "25/1"  } # どゆこと？？？
+      assert { video["r_frame_rate"] == "2/1"  }
       FileUtils.rm_f("_outout.apng")
     end
   end

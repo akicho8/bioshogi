@@ -1,3 +1,5 @@
+# DEPRECATION
+
 module Bioshogi
   class AnimationFormatter < BinaryFormatter
     cattr_accessor :default_params do

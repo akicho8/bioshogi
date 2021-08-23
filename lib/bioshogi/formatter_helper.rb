@@ -1,10 +1,30 @@
 module Bioshogi
-  concern :FormatterUtils do
+  concern :FormatterHelper do
     included do
       cattr_accessor(:one_second) { 1000 } # ffmpeg の -r x/y の x の部分
     end
 
+    class_methods do
+      def default_params
+        {
+          # 全体
+          :one_frame_duration         => 1.0,  # 1手N秒
+          :end_duration               => 0,    # 終了図をN秒表示する
+          :end_frames                 => nil,  # 終了図追加フレーム数。空なら end_duration / one_frame_duration
+
+          # 他
+          :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
+          :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+          :mp4_factory_key            => "ffmpeg", # rmagick or ffmpeg
+        }
+      end
+    end
+
     delegate :logger, to: "Bioshogi"
+
+    attr_reader :params
+
+    private
 
     def in_work_directory
       begin
@@ -28,6 +48,10 @@ module Bioshogi
 
     def one_frame_duration
       params[:one_frame_duration].to_f
+    end
+
+    def ffmpeg_after_embed_options
+      params[:ffmpeg_after_embed_options]
     end
 
     # 最後の局面を追加で足す回数
@@ -70,16 +94,26 @@ module Bioshogi
     def strict_system(command)
       logger.tagged("execute") do
         require "systemu"
-        time = Time.now
+        t = Time.now
         logger.info { command }
         status, stdout, stderr = systemu(command) # 例外は出ないのでensure不要
         logger.info { "status: #{status}" } if !status.success?
-        logger.info { "elapsed: #{(Time.now - time).round}s" }
+        logger.info { "elapsed: #{(Time.now - t).round}s" }
         logger.info { "stderr: #{stderr}" } if stderr.present?
         logger.info { "stdout: #{stdout}" } if stdout.present?
         if !status.success?
           raise StandardError, stderr.strip
         end
+      end
+    end
+
+    def may_die(name, argv = "", &block)
+      begin
+        t = Time.now
+        logger.info { "#{name}[begin]: #{argv}" }
+        yield
+      ensure
+        logger.info { "#{name}[end #{(Time.now - t).round}s]: #{argv}" }
       end
     end
   end

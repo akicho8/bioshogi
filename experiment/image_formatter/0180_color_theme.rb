@@ -21,21 +21,19 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-ColorThemeInfo.each do |e|
-  p e
-  parser.image_formatter(color_theme_key: e.key).display
-end
+# ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
 # parser.image_formatter(color_theme_key: "light_mode").display
 # parser.image_formatter(color_theme_key: "dark_mode").display
-parser.image_formatter(color_theme_key: "matrix_mode").display
+# parser.image_formatter(color_theme_key: "matrix_mode").display
+parser.image_formatter(color_theme_key: "matrix_mode", viewpoint: "white").display
 # parser.image_formatter(color_theme_key: "orange_lcd_mode").display
 
 # require 'active_support/core_ext/benchmark'
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1572.6509999949485
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1184.6170000499114
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1225.711999926716
-# 
+#
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1210.1249999832362
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1008.8139999425039

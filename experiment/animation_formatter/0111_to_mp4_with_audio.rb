@@ -26,9 +26,9 @@ tp Media.format("_output.mp4")
 # >> [mp4_formatter] [video] move: 10 / 12
 # >> [mp4_formatter] [video] 合計フレーム数(frame_count): 23
 # >> [mp4_formatter] [video] ソース画像生成数: 23
-# >> [mp4_formatter] [video] write[begin]: _output1.mp4
+# >> [mp4_formatter] [video] write[begin]: _output1.mp4 {
 # >> [mp4_formatter] [video] [execute] ffmpeg -v warning -hide_banner -framerate 1000/500 -i _input%03d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart  -y _output1.mp4
-# >> [mp4_formatter] [video] [execute] elapsed: 2s
+# >> [mp4_formatter] [video] [execute] elapsed: 2s }
 # >> [mp4_formatter] [video] write[end]: _output1.mp4
 # >> [mp4_formatter] [video] -rw-r--r-- 1 ikeda staff 170K  8 23 13:57 _output1.mp4
 # >> [mp4_formatter] [audio] 2. BGM準備
