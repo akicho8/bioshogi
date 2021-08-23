@@ -186,22 +186,12 @@ module Bioshogi
 
     private
 
+    # 必ず新しく作ること
     def canvas_create
       if v = params[:bg_file]
         @canvas = Magick::Image.read(v).first
         @canvas.resize!(*image_rect)
-      end
-
-      # https://github.com/rmagick/rmagick/issues/699
-      # https://github.com/rmagick/rmagick/pull/701
-      if false
-        @canvas = Magick::ImageList.new
-        @canvas.new_image(*image_rect) do |e|
-          e.background_color = params[:canvas_color]
-        end
-      end
-
-      unless @canvas
+      else
         @canvas = Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end

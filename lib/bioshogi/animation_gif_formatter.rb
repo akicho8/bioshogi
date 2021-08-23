@@ -1,10 +1,15 @@
 module Bioshogi
   class AnimationGifFormatter
+    include FormatterUtils
+
     cattr_accessor :default_params do
       {
-        :end_frames  => 0,                  # 終了図だけ指定フレーム数停止
+        :end_frames         => 0,                  # 終了図だけ指定フレーム数停止
         :one_frame_duration => 1.0,                # 1手N秒
-        :loop_key    => "is_loop_infinite", # ループモード
+        :loop_key           => "is_loop_infinite", # ループモード
+
+        :tmpdir_remove      => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+        :mp4_factory_key    => "ffmpeg", # rmagick or ffmpeg
       }
     end
 
@@ -17,32 +22,52 @@ module Bioshogi
     end
 
     def to_binary
-      require "rmagick"
+      logger.tagged("mp4_formatter") do
+        in_work_directory do
+          @mediator = parser.mediator_for_image
+          @image_formatter = ImageFormatter.new(@mediator, params)
+          @list = Magick::ImageList.new
+          @image_formatter.render
+          @list.concat([@image_formatter.canvas])
+          parser.move_infos.each.with_index do |e, i|
+            @mediator.execute(e[:input])
+            # puts @mediator
+            @image_formatter.render
+            # @image_formatter.canvas.write("_#{i}.gif")
+            @list.concat([@image_formatter.canvas]) # canvas は Magick::Image のインスタンス
+          end
+          @list.concat([@image_formatter.canvas] * params[:end_frames])
+          @list.delay = @list.ticks_per_second * one_frame_duration
 
-      mediator = parser.mediator_for_image
-      image_formatter = ImageFormatter.new(mediator, params)
-      @list = Magick::ImageList.new
-      image_formatter.render
-      @list.concat([image_formatter.canvas])
-      parser.move_infos.each do |e|
-        mediator.execute(e[:input])
-        image_formatter.render
-        @list.concat([image_formatter.canvas]) # canvas は Magick::Image のインスタンス
-      end
-      @list.concat([image_formatter.canvas] * params[:end_frames])
-      @list.delay = @list.ticks_per_second * one_frame_duration
-      # if params[:optimize_layer]
+          # @list.each.with_index do |e, i|
+          #   e.write("_#{i}.gif")
+          # end
 
-      # 46s 5.5M optimize_layers なし
-      # 43s 544K optimize_layers あり
-      @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする (重要)
-      # end
-      @list.iterations = iterations_number  # 繰り返し回数
+          logger.info { "one_frame_duration: #{one_frame_duration}" }
+          logger.info { "ticks_per_second: #{@list.ticks_per_second}" }
+          logger.info { "delay: #{@list.delay}" }
 
-      Tempfile.create(["", ".#{ext_name}"]) do |t|
-        @list.write(t.path)
-        @list.destroy!
-        File.read(t.path)
+          # if params[:optimize_layer]
+
+          # 46s 5.5M optimize_layers なし
+          # 43s 544K optimize_layers あり
+          @list = @list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする (重要)
+          # end
+          @list.iterations = iterations_number  # 繰り返し回数
+
+          if mp4_factory_key == "rmagick"
+            logger.info { "write[begin]: _output1.#{ext_name}" }
+            @list.write("_output1.#{ext_name}")
+            logger.info { "write[end]: _output1.#{ext_name}" }
+          end
+
+          if mp4_factory_key == "ffmpeg"
+            raise
+          end
+
+          @list.destroy!
+          File.binread("_output1.#{ext_name}")
+        end
       end
     end
 

@@ -18,6 +18,8 @@
 
 module Bioshogi
   class Mp4Formatter
+    include FormatterUtils
+
     cattr_accessor(:one_second) { 1000 } # ffmpeg の -r x/y の x の部分
 
     cattr_accessor :default_params do
@@ -197,6 +199,7 @@ module Bioshogi
       end
     end
 
+    
     private
 
     # 1手 0.5 秒 → "-r 60/30"

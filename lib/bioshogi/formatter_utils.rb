@@ -1,0 +1,23 @@
+module Bioshogi
+  module FormatterUtils
+    def in_work_directory
+      begin
+        require "rmagick"
+        dir = Dir.mktmpdir
+        logger.info { "cd #{dir}" }
+        Dir.chdir(dir) do
+          yield
+        end
+      ensure
+        if params[:tmpdir_remove]
+          logger.info { "rm -fr #{dir}" }
+          FileUtils.remove_entry_secure(dir)
+        end
+      end
+    end
+
+    def mp4_factory_key
+      params.fetch(:mp4_factory_key).to_s
+    end
+  end
+end
