@@ -50,6 +50,6 @@ end
 # >>       "timed_thumbnails"=>0}}]}
 # >> .
 # >> 
-# >> Finished in 3.16 seconds (files took 1.41 seconds to load)
+# >> Finished in 3.08 seconds (files took 1.32 seconds to load)
 # >> 1 example, 0 failures
 # >> 

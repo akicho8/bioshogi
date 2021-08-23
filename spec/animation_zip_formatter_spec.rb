@@ -18,13 +18,13 @@ end
 # >> Archive:  _outout.zip
 # >>   Length      Date    Time    Name
 # >> ---------  ---------- -----   ----
-# >>     29150  08-15-2021 16:18   xxx0.png
-# >>     30412  08-15-2021 16:18   xxx1.png
-# >>     31763  08-15-2021 16:18   xxx2.png
+# >>     29150  08-23-2021 13:16   xxx0.png
+# >>     32724  08-23-2021 13:16   xxx1.png
+# >>     33344  08-23-2021 13:16   xxx2.png
 # >> ---------                     -------
-# >>     91325                     3 files
+# >>     95218                     3 files
 # >> .
 # >> 
-# >> Finished in 0.76117 seconds (files took 1.22 seconds to load)
+# >> Finished in 0.63957 seconds (files took 1.29 seconds to load)
 # >> 1 example, 0 failures
 # >> 

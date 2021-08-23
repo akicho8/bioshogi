@@ -44,7 +44,7 @@ end
 # >>     "start_time"=>"0.000000",
 # >>     "duration_ts"=>24576,
 # >>     "duration"=>"1.500000",
-# >>     "bit_rate"=>"199424",
+# >>     "bit_rate"=>"298112",
 # >>     "bits_per_raw_sample"=>"8",
 # >>     "nb_frames"=>"3",
 # >>     "disposition"=>
@@ -63,9 +63,47 @@ end
 # >>     "tags"=>
 # >>      {"language"=>"und",
 # >>       "handler_name"=>"VideoHandler",
+# >>       "vendor_id"=>"[0][0][0][0]"}},
+# >>    {"index"=>1,
+# >>     "codec_name"=>"aac",
+# >>     "codec_long_name"=>"AAC (Advanced Audio Coding)",
+# >>     "profile"=>"LC",
+# >>     "codec_type"=>"audio",
+# >>     "codec_tag_string"=>"mp4a",
+# >>     "codec_tag"=>"0x6134706d",
+# >>     "sample_fmt"=>"fltp",
+# >>     "sample_rate"=>"44100",
+# >>     "channels"=>2,
+# >>     "channel_layout"=>"stereo",
+# >>     "bits_per_sample"=>0,
+# >>     "r_frame_rate"=>"0/0",
+# >>     "avg_frame_rate"=>"0/0",
+# >>     "time_base"=>"1/44100",
+# >>     "start_pts"=>0,
+# >>     "start_time"=>"0.000000",
+# >>     "duration_ts"=>66150,
+# >>     "duration"=>"1.500000",
+# >>     "bit_rate"=>"126384",
+# >>     "nb_frames"=>"66",
+# >>     "disposition"=>
+# >>      {"default"=>1,
+# >>       "dub"=>0,
+# >>       "original"=>0,
+# >>       "comment"=>0,
+# >>       "lyrics"=>0,
+# >>       "karaoke"=>0,
+# >>       "forced"=>0,
+# >>       "hearing_impaired"=>0,
+# >>       "visual_impaired"=>0,
+# >>       "clean_effects"=>0,
+# >>       "attached_pic"=>0,
+# >>       "timed_thumbnails"=>0},
+# >>     "tags"=>
+# >>      {"language"=>"eng",
+# >>       "handler_name"=>"SoundHandler",
 # >>       "vendor_id"=>"[0][0][0][0]"}}]}
 # >> .
 # >> 
-# >> Finished in 3 seconds (files took 1.32 seconds to load)
+# >> Finished in 4.43 seconds (files took 1.32 seconds to load)
 # >> 1 example, 0 failures
 # >> 
