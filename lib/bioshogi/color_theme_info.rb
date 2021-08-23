@@ -42,7 +42,8 @@ module Bioshogi
           c = Color::RGB::Green.to_hsl
           c.s = 1.0
           c.l = 0.6
-          e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/assets/images/matrix.png")
+          # e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/assets/images/matrix_1600x1200.png")
+          e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/assets/images/matrix_1024x768.png")
         },
       },
       {

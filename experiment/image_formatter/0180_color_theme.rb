@@ -28,26 +28,14 @@ end
 
 # parser.image_formatter(color_theme_key: "light_mode").display
 # parser.image_formatter(color_theme_key: "dark_mode").display
-# parser.image_formatter(color_theme_key: "matrix_mode").display
+parser.image_formatter(color_theme_key: "matrix_mode").display
 # parser.image_formatter(color_theme_key: "orange_lcd_mode").display
 
-tp ColorThemeInfo.fetch(:matrix_mode).to_params
-# >> <light_mode>
-# >> <dark_mode>
-# >> <matrix_mode>
-# >> <orange_lcd_mode>
-# >> |------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |           hexagon_fill | true                                                                                                                                                    |
-# >> |          hexagon_color | {:black=>"#003d00", :white=>"#00f500"}                                                                                                                  |
-# >> |           canvas_color | #001000                                                                                                                                                 |
-# >> |         frame_bg_color | #002100                                                                                                                                                 |
-# >> |           moving_color | #003d00                                                                                                                                                 |
-# >> |          lattice_color | #007a00                                                                                                                                                 |
-# >> |            frame_color | #008f00                                                                                                                                                 |
-# >> |      stand_piece_color | #008f00                                                                                                                                                 |
-# >> |      piece_count_color | #006600                                                                                                                                                 |
-# >> |            piece_color | #00cc00                                                                                                                                                 |
-# >> |     last_soldier_color | #5cff5c                                                                                                                                                 |
-# >> |         promoted_color | #47ff47                                                                                                                                                 |
-# >> | normal_piece_color_map | {:king=>"#33ff33", :rook=>"#33ff33", :bishop=>"#33ff33", :gold=>"#00ab00", :silver=>"#00a900", :knight=>"#00a700", :lance=>"#00a500", :pawn=>"#00a300"} |
-# >> |------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------|
+# require 'active_support/core_ext/benchmark'
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1572.6509999949485
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1184.6170000499114
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1225.711999926716
+# 
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1210.1249999832362
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 882.0249999407679
+# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1008.8139999425039

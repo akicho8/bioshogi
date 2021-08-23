@@ -1,0 +1,50 @@
+<body style="margin:0">
+  <!-- <canvas id="c" width="1024" height="768"></canvas> -->
+  <canvas id="c" width="1600" height="1200"></canvas>
+  <script>
+    // const s = window.screen
+    const c = document.getElementById("c")
+    const ctx = c.getContext("2d")
+
+    // ctx.globalAlpha = 0.01
+    // ctx.globalCompositeOperation = "screen"
+
+    // const width = c.width = s.width
+    // const height = c.height = s.height
+    const width = c.width
+    const height = c.height
+
+    // let matrix = "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９＃＄％＾＆＊（）＊＆＾％アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン"
+    let matrix = "天守閣囲い居玉カニブト金矢倉銀角豆腐隅右流れ四へこみタ悪形野総門穴熊菊水立ち菱一文字富士見早土高缶オリジナル雁木ードツノ新型糸谷羽生換わり三段ギボンザ美濃連盟手ず振飛車エモ冠片枚ダイヤ村大山裾固めょんまげ坊主左道不突き升田端串舟ＤＸ松尾神吉紙ビッグ４鎮箱入娘盾ミレアム無双離中住原桐ヒ裏ご敵責任音しの構えあやセメ多伝チョコ空楼力戦花名古屋法清岐阜ＧＡＶ▲５五龍ガ３七脇システウソ棒森下雀刺米長急阿久津藤間始かた英春パクマ稲庭都成△損得交腰掛け繰筋違相定跡塚ペャ鎖鎌８ＵＦＯ横歩取桂２先ゴキゲ５位ゃ平目風加袖超遠プ耀井石式鬼殺２功Ｐ真部７八→楠本向ケ阪頭陽動つくぼうひねは幻想ラュ夢ｍポ雲６地鉄飯島引丸ワ六仕鷺宮鳥嬉速対持二亜直線っ菅青勇気極限３ホ初７４と魔界ら橋ｘａｂｙ底を脱ぐ腹垂割打ロふど継ぎ小駒全消失背陣抗柱　天守閣囲い居玉カニブト金矢倉銀角豆腐隅右流れ四へこみタ悪形野総門穴熊菊水立ち菱一文字富士見早土高缶オリジナル雁木ードツノ新型糸谷羽生換わり三段ギボンザ美濃連盟手ず振飛車エモ冠片枚ダイヤ村大山裾固めょんまげ坊主左道不突き升田端串舟ＤＸ松尾神吉紙ビッグ４鎮箱入娘盾ミレアム無双離中住原桐ヒ裏ご敵責任音しの構えあやセメ多伝チョコ空楼力戦花名古屋法清岐阜ＧＡＶ"
+
+    matrix = matrix.split("")
+
+    const font_size = 10
+    const columns = c.width / font_size
+    const drops = []
+    for(let x = 0; x < columns; x++) {
+      drops[x] = 0
+    }
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.06)"
+      // ctx.fillStyle = "hsl(200,50%,0%)"
+      // ctx.globalAlpha = 0.04
+      // ctx.fillStyle = "rgb(0,0,0)"
+      ctx.fillRect(0, 0, c.width, c.height)
+
+      ctx.globalAlpha = 1.0
+      ctx.fillStyle = "#0F0"
+      ctx.font = font_size + "px YuGothic"
+
+      for( let i = 0; i < drops.length; i++ ) {
+        const ch = matrix[ Math.floor( Math.random() * matrix.length ) ]
+        ctx.fillText(ch, i * font_size, drops[i] * font_size)
+        if( drops[i] * font_size > c.height && Math.random() > 0.975 ) {
+          drops[i] = 0
+        }
+        drops[i]++
+      }
+    }
+    setInterval(draw, 35)
+  </script>
+</body>
