@@ -60,22 +60,22 @@ module Bioshogi
           if mp4_factory_key == "ffmpeg"
             @frame_count = 0
             @image_formatter.render
-            @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+            @image_formatter.canvas.write("_input%04d.png" % @frame_count)
             @frame_count += 1
             @parser.move_infos.each.with_index do |e, i|
               @mediator.execute(e[:input])
               @image_formatter.render
-              @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+              @image_formatter.canvas.write("_input%04d.png" % @frame_count)
               @frame_count += 1
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
             end_frames.times do
-              @image_formatter.canvas.write("_input%03d.png" % @frame_count)
+              @image_formatter.canvas.write("_input%04d.png" % @frame_count)
               @frame_count += 1
             end
             logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
             logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
-            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%03d.png #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
+            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%04d.png #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 
