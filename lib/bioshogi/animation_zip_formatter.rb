@@ -8,6 +8,8 @@ module Bioshogi
 
     attr_reader :params
 
+    delegate :logger, to: "Bioshogi"
+
     def initialize(parser, params = {})
       @parser = parser
       @params = default_params.merge(params)
@@ -40,6 +42,7 @@ module Bioshogi
       z.put_next_entry(entry)
       f.render
       z.write(f.to_blob_binary)
+      logger.info { "move: #{index} / #{@parser.move_infos.size}" } if index.modulo(10).zero?
     end
   end
 end
