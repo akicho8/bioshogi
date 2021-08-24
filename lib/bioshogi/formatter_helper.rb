@@ -15,7 +15,7 @@ module Bioshogi
           # 他
           :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
           :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-          :mp4_factory_key            => "ffmpeg", # rmagick or ffmpeg
+          :media_factory_key            => "ffmpeg", # rmagick or ffmpeg
         }
       end
     end
@@ -42,8 +42,8 @@ module Bioshogi
       end
     end
 
-    def mp4_factory_key
-      params.fetch(:mp4_factory_key).to_s
+    def media_factory_key
+      params.fetch(:media_factory_key).to_s
     end
 
     def one_frame_duration

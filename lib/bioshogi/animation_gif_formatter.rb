@@ -19,14 +19,14 @@ module Bioshogi
     def to_binary
       logger.tagged(self.class.name.demodulize) do
         in_work_directory do
-          logger.info { "生成に使うもの: #{mp4_factory_key}" }
+          logger.info { "生成に使うもの: #{media_factory_key}" }
           logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
           logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
 
           @mediator = @parser.mediator_for_image
           @image_formatter = ImageFormatter.new(@mediator, params)
 
-          if mp4_factory_key == "rmagick"
+          if media_factory_key == "rmagick"
             begin
               list = Magick::ImageList.new
               @image_formatter.render
@@ -57,7 +57,7 @@ module Bioshogi
             end
           end
 
-          if mp4_factory_key == "ffmpeg"
+          if media_factory_key == "ffmpeg"
             @frame_count = 0
             @image_formatter.render
             @image_formatter.canvas.write("_input%04d.png" % @frame_count)
