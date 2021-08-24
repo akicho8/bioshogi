@@ -166,7 +166,7 @@ module Bioshogi
       frame_draw
 
       if params[:viewpoint].to_s == "white"
-        canvas.rotate!(180)
+        @canvas.rotate!(180)
       end
 
       if params[:negate]
@@ -353,7 +353,7 @@ module Bioshogi
       else
         c.font = params[:normal_font]
       end
-      c.stroke = "transparent"
+      c.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
       # c.stroke_antialias(false) # 効かない？
       c.fill = color
       c.gravity = Magick::CenterGravity
@@ -466,6 +466,14 @@ module Bioshogi
       params[:frame_stroke_width] || lattice_stroke_width
     end
 
+    def image_format
+      params[:image_format].presence or raise ArgumentError, "params[:image_format] is blank"
+    end
+
+    def ext_name
+      image_format
+    end
+
     class V < Vector
       def self.one
         self[1, 1]
@@ -489,15 +497,5 @@ module Bioshogi
         self[1]
       end
     end
-
-    def image_format
-      params[:image_format].presence or raise ArgumentError, "params[:image_format] is blank"
-    end
-
-    def ext_name
-      image_format
-    end
   end
 end
-# ~> -:31:in `<module:Bioshogi>': uninitialized constant Bioshogi::BinaryFormatter (NameError)
-# ~>    from -:30:in `<main>'
