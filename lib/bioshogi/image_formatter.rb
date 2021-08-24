@@ -123,7 +123,10 @@ module Bioshogi
 
       @mediator = mediator
       @params = default_params.merge(params)
-      @params.update(ColorThemeInfo.fetch(@params[:color_theme_key]).to_params)
+
+      if v = @params[:color_theme_key]
+        @params.update(ColorThemeInfo.fetch(v).to_params)
+      end
 
       @rendered = false
     end
