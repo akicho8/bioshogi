@@ -158,12 +158,12 @@ module Bioshogi
       if true
         moving_draw
         piece_draw
-        star_draw
         stand_draw
       end
 
       lattice_draw
       frame_draw
+      star_draw                 # 星は必ず最後
 
       if params[:viewpoint].to_s == "white"
         @canvas.rotate!(180)
