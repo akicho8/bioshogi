@@ -9,6 +9,7 @@ module Bioshogi
         :animation_format => "gif",              # 出力フォーマット
         :loop_key         => "is_loop_infinite", # ループモード
         :optimize_layer   => true,               # 各ページを最小枠にして無駄をなくす
+        :canvas_cache     => true,               # canvasをキャッシュする
       }
     end
 
@@ -26,8 +27,7 @@ module Bioshogi
       require "rmagick"
 
       mediator = parser.mediator_for_image
-      image_formatter = ImageFormatter.new(mediator, params.slice(*ImageFormatter.default_params.keys))
-      # puts mediator
+      image_formatter = ImageFormatter.new(mediator, params)
 
       @list = Magick::ImageList.new
       # @list.ticks_per_second           # =>

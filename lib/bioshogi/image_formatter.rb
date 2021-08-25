@@ -91,11 +91,14 @@ module Bioshogi
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
 
+        # :normal_font => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
+
         # other
         :viewpoint    => "black",  # 視点
         :image_format => "png",    # 出力する画像タイプ
         :negate       => false,    # 反転
         :bg_file      => nil,      # 背景ファイル
+        :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
         :hexagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
         :hexagon_color => {
@@ -192,18 +195,27 @@ module Bioshogi
 
     # 必ず新しく作ること
     def canvas_create
+      if @canvas_cache
+        @canvas = @canvas_cache.copy
+        return
+      end
+
       if v = params[:bg_file]
         @canvas = Magick::Image.read(v).first
         # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
         # @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
-        @canvas.resize!(*image_rect)
+        @canvas.resize!(*image_rect) # 200 ms
         if params[:viewpoint].to_s == "white"
-          @canvas.rotate!(180) # 全体を反転するので背景だけ反転しておくことで元に戻る
+          @canvas.rotate!(180) # 5 ms 全体を反転するので背景だけ反転しておくことで元に戻る
         end
       else
         @canvas = Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:canvas_color]
         end
+      end
+
+      if params[:canvas_cache]
+        @canvas_cache = @canvas.copy
       end
     end
 

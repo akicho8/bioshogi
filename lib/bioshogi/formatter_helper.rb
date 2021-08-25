@@ -13,9 +13,10 @@ module Bioshogi
           :end_frames                 => nil,  # 終了図追加フレーム数。空なら end_duration / one_frame_duration
 
           # 他
-          :ffmpeg_after_embed_options => nil,  # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
-          :tmpdir_remove              => true, # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-          :media_factory_key            => "ffmpeg", # rmagick or ffmpeg
+          :ffmpeg_after_embed_options => nil,      # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
+          :tmpdir_remove              => true,     # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+          :media_factory_key          => "ffmpeg", # rmagick or ffmpeg
+          :canvas_cache               => true,     # canvasを一度作成したらそのコピーを使い回す
         }
       end
     end

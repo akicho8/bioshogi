@@ -3,6 +3,7 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         basename_format: "%04d",
+        canvas_cache: true, # canvasをキャッシュする
       }
     end
 
@@ -18,7 +19,7 @@ module Bioshogi
     def to_binary
       require "zip"
       mediator = @parser.mediator_for_image
-      f = ImageFormatter.new(mediator, params.merge(image_format: "png"))
+      f = ImageFormatter.new(mediator, params)
       dos_time = Zip::DOSTime.from_time(Time.now)
       zos = Zip::OutputStream.write_buffer do |z|
         zip_write(z, f, dos_time, 0)

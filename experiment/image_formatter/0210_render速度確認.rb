@@ -21,8 +21,7 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-object = parser.image_formatter()
-
+object = parser.image_formatter(bg_file: "../../lib/bioshogi/assets/images/matrix_1024x768.png")
 require "active_support/core_ext/benchmark"
 def _; "%7.2f ms" % Benchmark.ms { 20.times { yield } } end
-_ { object.render } # => "3125.42 ms"
+_ { object.render } # => "8551.17 ms"
