@@ -21,13 +21,15 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-# ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
 # parser.image_formatter(color_theme_key: "light_mode").display
 # parser.image_formatter(color_theme_key: "dark_mode").display
 # parser.image_formatter(color_theme_key: "matrix_mode").display
-parser.image_formatter(color_theme_key: "matrix_mode", viewpoint: "white").display
+# parser.image_formatter(color_theme_key: "matrix_mode", viewpoint: "white").display
 # parser.image_formatter(color_theme_key: "orange_lcd_mode").display
+# parser.image_formatter(color_theme_key: "flip_violet_red_mode").display
+# parser.image_formatter(color_theme_key: "flip_green_mode").display
 
 # require 'active_support/core_ext/benchmark'
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_mode").to_blob_binary } # => 1572.6509999949485

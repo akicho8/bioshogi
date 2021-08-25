@@ -64,6 +64,22 @@ module Bioshogi
           e.bright_palette_for(c)
         },
       },
+
+      {
+        :key => :flip_violet_red_mode,
+        :func => -> e {
+          c2 = Color::MediumVioletRed.to_rgb.adjust_saturation(50)
+          e.flip_cell_type_for(c2)
+        },
+      },
+
+      {
+        :key => :flip_green_mode,
+        :func => -> e {
+          c2 = Color::Green.to_rgb.adjust_saturation(50)
+          e.flip_cell_type_for(c2)
+        },
+      },
     ]
 
     # 輝度だけを変化させた設定を返す
@@ -100,6 +116,51 @@ module Bioshogi
           :knight => f[-18],
           :lance  => f[-19],
           :pawn   => f[-20],
+        },
+      }
+    end
+
+    def flip_cell_type_for(c2)
+      c1 = Color::GreyScale.from_fraction(0.7).to_rgb
+      f = -> v { c1.adjust_brightness(v).css_rgba(1.0) }
+
+      # c2 = Color::IndianRed.to_rgb
+      # c2 = Color::HotPink.to_rgb
+      # c2 = Color::SeaGreen.to_rgb
+      # c2 = Color::Green.to_rgb
+      # c2 = Color::MediumVioletRed.to_rgb.adjust_saturation(50)
+      r = -> v { c2.adjust_brightness(v).css_rgba(1.0) }
+
+      {
+        :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
+        :hexagon_color     => {
+          black: f[-70],  # ☗
+          white: f[20],   # ☖
+        },
+        :canvas_color       => f[-84],  # 部屋の色
+        :frame_bg_color     => [f[-84], f[-78]],  # 盤の色
+        :moving_color       => f[-68],  # 移動元と移動先のセルの背景色
+        :stand_piece_color  => f[-30],  # 駒の色(持駒)
+        :piece_count_color  => f[-50],  # 駒の色(持駒数)
+        # :frame_stroke_width => 3,
+
+        :lattice_color      => r[-30],  # 格子の色
+        :star_color         => r[  0],  # 星の色
+        :frame_color        => r[-30],  # 格子の外枠色
+
+        # 駒
+        :piece_color        => f[0],    # 駒の色
+        :promoted_color     => f[30],   # 成駒の色
+        :last_soldier_color => f[60],   # 最後に動いた駒
+        :normal_piece_color_map => {
+          :king   => f[50],
+          :rook   => f[50],
+          :bishop => f[50],
+          :gold   => f[-10],
+          :silver => f[-11],
+          :knight => f[-12],
+          :lance  => f[-13],
+          :pawn   => f[-14],
         },
       }
     end

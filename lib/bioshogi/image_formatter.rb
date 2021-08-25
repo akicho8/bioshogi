@@ -80,6 +80,7 @@ module Bioshogi
         :stand_piece_color  => nil,            # *持駒の色(nilなら piece_color を代用)
         :piece_count_color  => "#888",         # *駒数の色(nilなら piece_color を代用)
         :lattice_color      => "#999",         # *格子の色(nilなら piece_color を代用)
+        :star_color         => nil,            # *星の色(nilなら lattice_color を代用)
         :frame_color        => "#777",         # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
         :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
         :frame_bg_color     => "transparent",  # 盤の色
@@ -218,6 +219,10 @@ module Bioshogi
       params[:lattice_color] || params[:piece_color]
     end
 
+    def star_color
+      params[:star_color] || lattice_color
+    end
+
     def frame_color
       params[:frame_color] || params[:piece_color]
     end
@@ -250,16 +255,29 @@ module Bioshogi
     end
 
     def frame_bg_draw
-      draw_context do |c|
-        c.fill = params[:frame_bg_color]
-        c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
+      if params[:frame_bg_color].kind_of?(Array)
+        colors = params[:frame_bg_color].cycle
+        lattice.h.times do |y|
+          lattice.w.times do |x|
+            draw_context do |c|
+              v = V[x, y]
+              c.fill = colors.next
+              c.rectangle(*px(v), *px(v + V.one))
+            end
+          end
+        end
+      else
+        draw_context do |c|
+          c.fill = params[:frame_bg_color]
+          c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
+        end
       end
     end
 
     def star_draw
       draw_context do |c|
         c.stroke("transparent")
-        c.fill(lattice_color)
+        c.fill(star_color)
 
         i = star_step
         (i...lattice.w).step(i) do |x|
@@ -310,6 +328,7 @@ module Bioshogi
       end
     end
 
+    # draw の時点で最後に指定した fill が使われる
     def draw_context
       c = Magick::Draw.new
       yield c
