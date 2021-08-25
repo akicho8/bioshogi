@@ -26,7 +26,7 @@ ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display
 # parser.image_formatter(color_theme_key: "light_mode").display
 # parser.image_formatter(color_theme_key: "dark_mode").display
 # parser.image_formatter(color_theme_key: "matrix_mode").display
-# parser.image_formatter(color_theme_key: "matrix_mode", viewpoint: "white").display
+parser.image_formatter(color_theme_key: "matrix_mode", viewpoint: "white").display
 # parser.image_formatter(color_theme_key: "orange_lcd_mode").display
 # parser.image_formatter(color_theme_key: "flip_violet_red_mode").display
 # parser.image_formatter(color_theme_key: "flip_green_mode").display
