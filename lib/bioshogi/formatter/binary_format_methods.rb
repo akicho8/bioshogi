@@ -47,6 +47,10 @@ module Bioshogi
         AnimationPngFormatter.new(self, options).to_binary
       end
 
+      def to_animation_webp(options = {})
+        AnimationWebpFormatter.new(self, options).to_binary
+      end
+
       def to_animation_zip(options = {})
         AnimationZipFormatter.new(self, options).to_binary
       end
