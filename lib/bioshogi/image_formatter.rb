@@ -29,6 +29,8 @@ require "matrix"
 
 module Bioshogi
   class ImageFormatter < BinaryFormatter
+    include Triangular
+
     cattr_accessor :default_params do
       {
         # required
@@ -47,8 +49,8 @@ module Bioshogi
         :font_size_digit => 0.6,  # 持駒数
 
         # 隙間割合
-        :piece_stand_margin      => 0.2,  # 持駒と盤面
-        :stand_piece_line_height => 0.98, # 持駒と持駒
+        :piece_stand_margin      => 0,   # 0.2,  # 持駒と盤面
+        :stand_piece_line_height => 1.0, # 0.98, # 持駒と持駒
         :stand_piece_count_gap => {       # 持駒と駒数の間隔の割合
           :single => 0.6,                 # 駒数1桁のとき
           :double => 0.7,                 # 駒数2桁のとき
@@ -90,6 +92,7 @@ module Bioshogi
 
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
+        :always_bold => false,  # 常に太字を使うか？
 
         # :normal_font => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
@@ -158,6 +161,8 @@ module Bioshogi
 
       canvas_create
       frame_bg_draw
+
+      ex_test
 
       if true
         moving_draw
@@ -320,6 +325,7 @@ module Bioshogi
         lattice.w.times do |x|
           v = V[x, y]
           if soldier = mediator.board.lookup(v)
+            location = soldier.location
             color = nil
             if hand_log && soldier == hand_log.soldier
               color ||= params[:last_soldier_color]
@@ -331,10 +337,8 @@ module Bioshogi
               color ||= params[:promoted_color]
             end
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
-            v2 = v
-            v2 += V[0, 1] * params[:piece_pull_down_rate][soldier.location.key]  * soldier.location.value_sign # 下に少し下げる
-            v2 += V[1, 0] * params[:piece_pull_right_rate][soldier.location.key] * soldier.location.value_sign # 右に少し寄せる
-            char_draw(pos: v2, text: soldier.any_name, rotation: soldier.location.angle, color: color, bold: bold, font_size: params[:font_size_piece])
+            ex_piece(v, sign: location.value_sign)
+            char_draw(pos: adjust(v, location), text: soldier.any_name, rotation: location.angle, color: color, bold: bold, font_size: params[:font_size_piece])
           end
         end
       end
@@ -379,7 +383,7 @@ module Bioshogi
       c.rotation = rotation
       # c.font_weight = Magick::BoldWeight # 効かない
       c.pointsize = cell_size_w * font_size
-      if bold
+      if params[:always_bold] || bold
         c.font = params[:bold_font] || params[:normal_font]
       else
         c.font = params[:normal_font]
@@ -411,15 +415,16 @@ module Bioshogi
         hexagon_mark = location.hexagon_mark
         if params[:hexagon_fill]
           # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
-          char_draw(pos: v, text: "☗", rotation: location.angle, color: params[:hexagon_color][location.key]) # ▲
+          char_draw(pos: adjust(v, location), text: "☗", rotation: location.angle, color: params[:hexagon_color][location.key]) # ▲
         else
-          char_draw(pos: v, text: hexagon_mark, rotation: location.angle) # ▲
+          char_draw(pos: adjust(v, location), text: hexagon_mark, rotation: location.angle) # ▲
         end
         v += V[0, 1] * g * s
 
         player.piece_box.each.with_index do |(piece_key, count), i|
           piece = Piece.fetch(piece_key)
-          char_draw(pos: v, text: piece.name, rotation: location.angle, color: params[:stand_piece_color] || params[:piece_color])
+          ex_piece(v, sign: location.value_sign)
+          char_draw(pos: adjust(v, location), text: piece.name, rotation: location.angle, color: params[:stand_piece_color] || params[:piece_color])
           if count >= 2
             if count <= 9
               w = :single
@@ -427,6 +432,7 @@ module Bioshogi
               w = :double
             end
             pos = v + V[params[:stand_piece_count_gap][w], 0] * s
+
             char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color], font_size: params[:font_size_digit]) # 駒数
           end
           v += V[0, 1] * g * s
@@ -510,6 +516,10 @@ module Bioshogi
         self[1, 1]
       end
 
+      def self.half
+        self[0.5, 0.5]
+      end
+
       def x
         self[0]
       end
@@ -527,6 +537,90 @@ module Bioshogi
       def h
         self[1]
       end
+    end
+
+    # def run
+    #   @canvas = Magick::Image.read("netscape:").first
+    #   @canvas.resize!(800, 600)
+    #
+    #   sw = @canvas.columns
+    #   sh = @canvas.rows
+    #
+    #   w = 300
+    #   h = 360
+    #
+    #   ex_piece(sw * 0.25, sh * 0.5, w, h, sign: +1.0, scale: 0.8)
+    #   ex_piece_draw2(sw * 0.25, sh * 0.5, w, h)
+    #   ex_piece(sw * 0.75, sh * 0.5, w, h, sign: -1.0, scale: 0.8)
+    #   ex_piece_draw2(sw * 0.75, sh * 0.5, w, h)
+    #
+    #   @canvas.write("_output1.png")
+    #   `open _output1.png`
+    # end
+
+    def ex_test
+      # draw_context do |c|
+      #   v = V[0, 0]
+      #   c.fill = "red"
+      #   c.rectangle(*px(v), *px(v + V.one))
+      # end
+      # v = V[0, 0]
+      # ex_piece_draw2(v)
+
+      # v = V[0, 0]
+      # ex_piece(v)
+    end
+
+    def ex_piece_scale
+      0.85
+    end
+
+    def ex_piece(v, sign: 1.0)
+      cx, cy = *px(v + V.half)
+      points = ex_points.collect do |x, y|
+        [
+          cx + x * ex_piece_scale * cell_size_w * 0.5 * sign,
+          cy + y * ex_piece_scale * cell_size_h * 0.5 * sign,
+        ]
+      end
+      draw_context do |c|
+        c.stroke_width(2)
+        c.stroke("#000")
+        c.fill("#FFF")
+        c.polygon(*points.flatten)
+      end
+    end
+
+    def ex_piece_draw2(v)
+      draw_context do |c|
+        c.stroke_width(3)
+        c.stroke("#000")
+        c.fill("#0004")
+        c.rectangle(*px(v), *px(v + V.one))
+      end
+    end
+
+    def ex_points
+      munenaga = 0.7 # 胸長
+      katahaba = 0.8 # 肩幅
+      asinaga  = 1.0 # 臍下
+      hunbari  = 1.0 # ふんばり片幅
+      kaonaga  = 1.0 # 顔の長さ
+      points = []
+      points << [0.0,        -kaonaga] # 頂点
+      points << [-katahaba, -munenaga] # 左肩
+      points << [-hunbari,   +asinaga] # 左後
+      points << [+hunbari,   +asinaga] # 右後
+      points << [+katahaba, -munenaga] # 右肩
+      points
+    end
+
+    # フォントの位置を微調整
+    # OPTIMIZE: この2行は map2 でいいのか？
+    def adjust(v, location)
+      v += V[0, 1] * params[:piece_pull_down_rate][location.key]  * location.value_sign # 下に少し下げる
+      v += V[1, 0] * params[:piece_pull_right_rate][location.key] * location.value_sign # 右に少し寄せる
+      v
     end
   end
 end
