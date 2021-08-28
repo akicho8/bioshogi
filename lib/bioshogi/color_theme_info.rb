@@ -24,8 +24,14 @@ module Bioshogi
           e.pentagon_default.merge({
               :piece_color           => "rgb(64,64,64)",
               :promoted_color        => "rgb(239,69,74)",
-              :frame_bg_color        => "rgba(0,0,0,0.2)",
+              :frame_bg_color        => "rgba(0,0,0,0.3)",
               :moving_color          => "rgba(0,0,0,0.1)",
+              :cell_colors           => ["rgba(255,255,255,0.1)", nil],
+
+              # 枠
+              :outer_frame_padding      => 0.1,
+              :inner_frame_stroke_width => 1,
+              :inner_frame_color        => "rgba(0,0,0,0.4)",
 
               # 駒用
               :piece_pentagon_draw         => true,    # 駒の形を描画するか？
@@ -73,7 +79,7 @@ module Bioshogi
       #       :piece_count_color => "#555",         # 駒の色(持駒数)
       #       :moving_color      => "#444",         # 移動元と移動先のセルの背景色(nilなら描画しない)
       #       :lattice_color     => "#555",         # 格子の色
-      #       :frame_color       => "#585858",      # 格子の外枠色
+      #       :inner_frame_color       => "#585858",      # 格子の外枠色
       #       :promoted_color    => "#3c3",         # 成駒の色
       #     }
       #   },
@@ -148,7 +154,7 @@ module Bioshogi
         :frame_bg_color     => f[-84],  # 盤の色
         :moving_color       => f[-70],  # 移動元と移動先のセルの背景色
         :lattice_color      => f[-40],  # 格子の色
-        :frame_color        => f[-30],  # 格子の外枠色
+        :inner_frame_color        => f[-30],  # 格子の外枠色
         :stand_piece_color  => f[-30],  # 駒の色(持駒)
         :piece_count_color  => f[-50],  # 駒の色(持駒数)
 
@@ -187,15 +193,16 @@ module Bioshogi
           white: f[20],   # ☖
         },
         :canvas_color       => f[-84],  # 部屋の色
-        :frame_bg_color     => [f[-84], f[-78]],  # 盤の色
+        :frame_bg_color     => f[-78],  # 盤の色
+        :cell_colors        => [f[-84], "transparent"],  # セルの色
         :moving_color       => f[-68],  # 移動元と移動先のセルの背景色
         :stand_piece_color  => f[-30],  # 駒の色(持駒)
         :piece_count_color  => f[-50],  # 駒の色(持駒数)
-        # :frame_stroke_width => 3,
+        # :inner_frame_stroke_width => 3,
 
         :lattice_color      => r[-30],  # 格子の色
         :star_color         => r[  0],  # 星の色
-        :frame_color        => r[-30],  # 格子の外枠色
+        :inner_frame_color        => r[-30],  # 格子の外枠色
 
         # 駒
         :piece_color        => f[0],    # 駒の色
