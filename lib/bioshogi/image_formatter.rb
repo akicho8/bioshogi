@@ -1,7 +1,5 @@
 # ・PNGに限定させてはいけない
 
-require "matrix"
-
 # parser = Parser.parse(<<~EOT, turn_limit: 10)
 # 後手の持駒：飛二 角 銀二 桂四 香四 歩九
 #   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -29,8 +27,6 @@ require "matrix"
 
 module Bioshogi
   class ImageFormatter < BinaryFormatter
-    include Triangular
-
     cattr_accessor :default_params do
       {
         # required
@@ -44,55 +40,56 @@ module Bioshogi
 
         # 文字の大きさの割合
         # ※割合はすべてセルの大きさを1.0とする
-        :font_size_piece => 0.75, # 盤上の駒
-        :font_size_hold  => 0.80, # 持駒▲△
-        :font_size_digit => 0.6,  # 持駒数
+        :piece_char_scale         => 0.85, # 盤上駒
+        :stand_piece_char_scale   => nil,  # 持駒(nil なら piece_char_scale を代用)
+
+        # 持駒
+        :piece_count_scale        => 0.6,  # 持駒数の大きさ
+        :piece_count_stroke_color => nil,  # 持駒数の縁取り色
+        :piece_count_stroke_width => nil,  # 持駒数の縁取り太さ
 
         # 隙間割合
-        :piece_stand_margin      => 0,   # 0.2,  # 持駒と盤面
-        :stand_piece_line_height => 1.0, # 0.98, # 持駒と持駒
-        :stand_piece_count_gap => {       # 持駒と駒数の間隔の割合
-          :single => 0.6,                 # 駒数1桁のとき
-          :double => 0.7,                 # 駒数2桁のとき
+        :piece_stand_margin      => 0.25, # 持駒と盤面
+        :stand_piece_line_height => 1.0,  # 持駒と持駒
+        :piece_count_position_adjust => { # 駒数の位置
+          :single => [0.7, 0.1],          # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+          :double => [0.8, 0.1],          # 駒数2桁のとき
         },
 
+        ################################################################################
+        # REVIEW: 見直す必要がある
         # 本当はやりたくない微調整
         # 盤上の駒の位置を下げる割合
-        :piece_pull_down_rate => {
-          :black => 0.06,
-          :white => 0.01,
+        :piece_char_adjust => {
+          :black => [0.0425, 0.07],
+          :white => [0.0,    0.01],
         },
-        # 盤上の駒の位置を右に寄せる割合(これは理論的には不要だけど拡大すると気になるので少し右に寄せる)
-        :piece_pull_right_rate => {
-          :black => 0.05,
-          :white => 0.0,
-        },
+        ################################################################################
 
         # 盤
-        :canvas_color         => "white",   # 部屋の色(必須)
-        :piece_color          => "black",   # 駒の色(必須)
-        :star_size            => 0.03,      # 星のサイズ(割合)
-        :lattice_stroke_width => 1,         # 格子の線の太さ
-        :frame_stroke_width   => 3,         # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+        :canvas_color         => "white",           # 部屋の色(必須)
+        :piece_color          => "rgba(0,0,0,0.8)", # 駒の色(必須)
+        :star_size            => 0.03,              # 星のサイズ(割合)
+        :lattice_stroke_width => 1,                 # 格子の線の太さ
+        :frame_stroke_width   => 3,                 # 枠の線お太さ(nil なら lattice_stroke_width を代用)
         :dimension_w          => Dimension::Xplace.dimension, # 横のセル数
         :dimension_h          => Dimension::Yplace.dimension, # 縦のセル数
 
         # optional
-        :last_soldier_color => nil,            # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
-        :stand_piece_color  => nil,            # *持駒の色(nilなら piece_color を代用)
-        :piece_count_color  => "#888",         # *駒数の色(nilなら piece_color を代用)
-        :lattice_color      => "#999",         # *格子の色(nilなら piece_color を代用)
-        :star_color         => nil,            # *星の色(nilなら lattice_color を代用)
-        :frame_color        => "#777",         # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
-        :promoted_color     => "red",          # *成駒の色(nilなら piece_color を代用)
-        :frame_bg_color     => "transparent",  # 盤の色
-        :moving_color       => "#f0f0f0",      # 移動元と移動先のセルの背景色(nilなら描画しない)
-        # :moving_color       => nil,          # 移動元と移動先のセルの背景色(nilなら描画しない)
-        :normal_piece_color_map => {},         # 成ってない駒それぞれの色(nilなら piece_color を代用)
+        :last_soldier_color => nil,                 # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
+        :stand_piece_color  => nil,                 # *持駒の色(nilなら piece_color を代用)
+        :piece_count_color  => "rgba(0,0,0,0.8)",   # *駒数の色(nilなら piece_color を代用)
+        :lattice_color      => "rgba(0,0,0,0.3)",   # *格子の色(nilなら piece_color を代用)
+        :star_color         => nil,                 # *星の色(nilなら lattice_color を代用)
+        :frame_color        => "rgba(0,0,0,0.3)",   # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
+        :promoted_color     => "rgba(255,0,0,0.8)", # *成駒の色(nilなら piece_color を代用)
+        :frame_bg_color     => "transparent",       # 盤の色
+        :moving_color       => "rgba(0,0,0,0.05)",  # 移動元と移動先のセルの背景色(nilなら描画しない)
+        :normal_piece_color_map => {},              # 成ってない駒それぞれの色(nilなら piece_color を代用)
 
         :normal_font => "#{__dir__}/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
         :bold_font   => "#{__dir__}/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
-        :always_bold => false,  # 常に太字を使うか？
+        :force_bold => false,  # 常に太字を使うか？
 
         # :normal_font => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
@@ -103,10 +100,10 @@ module Bioshogi
         :bg_file      => nil,      # 背景ファイル
         :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
-        :hexagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
-        :hexagon_color => {
-          :black => "#000",        # ☗を白と黒で塗り分けるときの先手の色
-          :white => "#fff",        # ☗を白と黒で塗り分けるときの後手の色
+        # :pentagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
+        :pentagon_color => {
+          :black => "rgba(  0,  0,  0,0.6)",        # ☗を白と黒で塗り分けるときの先手の色
+          :white => "rgba(255,255,255,0.6)",  # ☗を白と黒で塗り分けるときの後手の色
         },
         :color_theme_key => "light_mode",
       }
@@ -162,8 +159,6 @@ module Bioshogi
       canvas_create
       frame_bg_draw
 
-      ex_test
-
       if true
         moving_draw
         piece_draw
@@ -174,9 +169,7 @@ module Bioshogi
       frame_draw
       star_draw                 # 星は必ず最後
 
-      if params[:viewpoint].to_s == "white"
-        @canvas.rotate!(180)
-      end
+      canvas_flip_if_viewpoint_is_white
 
       if params[:negate]
         @canvas = canvas.negate
@@ -205,14 +198,21 @@ module Bioshogi
         return
       end
 
-      if v = params[:bg_file]
+      case
+      when false
+        # @canvas = Magick::Image.read("logo:").first
+        @canvas = Magick::Image.read(Pathname("#{__dir__}/assets/images/matrix_1024x768.png")).first
+        @canvas = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
+        @canvas.resize!(*image_rect) # 200 ms
+        # @canvas.blur_image(20.0, 10.0)
+        # @canvas = @canvas.emboss
+        canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
+      when v = params[:bg_file]
         @canvas = Magick::Image.read(v).first
         # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
         # @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
         @canvas.resize!(*image_rect) # 200 ms
-        if params[:viewpoint].to_s == "white"
-          @canvas.rotate!(180) # 5 ms 全体を反転するので背景だけ反転しておくことで元に戻る
-        end
+        canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
       else
         @canvas = Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:canvas_color]
@@ -244,10 +244,15 @@ module Bioshogi
       params[:frame_color] || params[:piece_color]
     end
 
+    # line で stroke を使うと fill + stroke で二重に同じところを塗るっぽい
+    # だから半透明にしても濃くなる
+    # なので fill だけにする
     def lattice_draw
       draw_context do |c|
-        c.stroke(lattice_color)
-        c.stroke_width(lattice_stroke_width)
+        c.fill(lattice_color)
+
+        # c.stroke(lattice_color)
+        # c.stroke_width(lattice_stroke_width)
 
         (1...lattice.w).each do |x|
           line_draw(c, V[x, 0], V[x, lattice.h])
@@ -306,7 +311,6 @@ module Bioshogi
       end
     end
 
-    # 格子を消してしまうので使わないことにする
     def moving_draw
       if params[:moving_color]
         if hand_log
@@ -337,10 +341,16 @@ module Bioshogi
               color ||= params[:promoted_color]
             end
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
-            ex_piece(v, sign: location.value_sign)
-            char_draw(pos: adjust(v, location), text: soldier.any_name, rotation: location.angle, color: color, bold: bold, font_size: params[:font_size_piece])
+            piece_pentagon_draw(v: v, location: location)
+            char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: params[:piece_char_scale])
           end
         end
+      end
+    end
+
+    def canvas_flip_if_viewpoint_is_white
+      if params[:viewpoint].to_s == "white"
+        @canvas.rotate!(180) # 5 ms
       end
     end
 
@@ -378,21 +388,33 @@ module Bioshogi
       end
     end
 
-    def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false, font_size: params[:font_size_hold])
+    def char_draw(v:, text:, location:, font_size:, color: params[:piece_color], bold: false, stroke_width: nil, stroke_color: nil, gravity: Magick::CenterGravity)
       c = Magick::Draw.new
-      c.rotation = rotation
+      c.rotation = location.angle
       # c.font_weight = Magick::BoldWeight # 効かない
       c.pointsize = cell_size_w * font_size
-      if params[:always_bold] || bold
+      if params[:force_bold] || bold
         c.font = params[:bold_font] || params[:normal_font]
       else
         c.font = params[:normal_font]
       end
-      c.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
-      # c.stroke_antialias(false) # 効かない？
+
+      # c.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
+      # c.stroke_antialias = false # 効いてない
+
+      if stroke_width && stroke_color
+        c.stroke_width = stroke_width
+        c.stroke       = stroke_color
+      end
+
+      # c.stroke = "rgba(255,255,255,0.9)"
+      # c.stroke_width = 3
+
       c.fill = color
-      c.gravity = Magick::CenterGravity
-      c.annotate(@canvas, *cell_size_rect, *px(pos), text)
+
+      # c.text_antialias(true)          # 効いてない
+      c.gravity = gravity # annotate で指定した w, h の中心に描画する
+      c.annotate(@canvas, *cell_size_rect, *px(v), text) # annotate(image, w, h, x, y, text)
     end
 
     def stand_draw
@@ -410,33 +432,59 @@ module Bioshogi
 
         h = V[0, player.piece_box.count] * g       # 駒数に対応した高さ
         v -= h * s                                 # 右下から右端中央にずらす
-        v += V[params[:piece_stand_margin], 0] * s # 盤から持駒を少し離す
+        v += V[params[:piece_stand_margin], 0] * s # 盤と持駒の隙間を開ける
 
-        hexagon_mark = location.hexagon_mark
-        if params[:hexagon_fill]
-          # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
-          char_draw(pos: adjust(v, location), text: "☗", rotation: location.angle, color: params[:hexagon_color][location.key]) # ▲
+        pentagon_mark = location.pentagon_mark
+
+        if false
+          if params[:pentagon_fill]
+            # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
+            char_draw(v: adjust(v, location), text: "☗", location: location, color: params[:pentagon_color][location.key]) # ▲
+          else
+            char_draw(v: adjust(v, location), text: pentagon_mark, location: location) # ▲
+          end
         else
-          char_draw(pos: adjust(v, location), text: hexagon_mark, rotation: location.angle) # ▲
+          turn_pentagon_draw(v: v, location: location)
         end
+
         v += V[0, 1] * g * s
 
         player.piece_box.each.with_index do |(piece_key, count), i|
           piece = Piece.fetch(piece_key)
-          ex_piece(v, sign: location.value_sign)
-          char_draw(pos: adjust(v, location), text: piece.name, rotation: location.angle, color: params[:stand_piece_color] || params[:piece_color])
+          # 持駒の影
+          piece_pentagon_draw(v: v, location: location)
+          # 持駒
+          char_draw({
+              :v         => adjust(v, location),
+              :text      => piece.name,
+              :location  => location,
+              :color     => params[:stand_piece_color] || params[:piece_color],
+              :font_size => params[:stand_piece_char_scale] || params[:piece_char_scale],
+            })
+          # 持駒数
           if count >= 2
-            if count <= 9
-              w = :single
-            else
-              w = :double
-            end
-            pos = v + V[params[:stand_piece_count_gap][w], 0] * s
-
-            char_draw(pos: pos, text: count.to_s, rotation: location.angle, color: params[:piece_count_color] || params[:piece_color], font_size: params[:font_size_digit]) # 駒数
+            w = count <= 9 ? :single : :double
+            char_draw({
+                :v            => v + V[*params[:piece_count_position_adjust][w]] * s,
+                :text         => count.to_s,
+                :location     => location,
+                :color        => params[:piece_count_color] || params[:piece_color],
+                :font_size    => params[:piece_count_scale],
+                :stroke_color => params[:piece_count_stroke_color],
+                :stroke_width => params[:piece_count_stroke_width],
+                # :gravity      => Magick::WestGravity,
+              })
           end
           v += V[0, 1] * g * s
         end
+      end
+    end
+
+    def soldier_name(soldier)
+      if soldier.piece.key == :king && soldier.location.key == :black
+        "王"
+      else
+        soldier.any_name
       end
     end
 
@@ -511,116 +559,11 @@ module Bioshogi
       image_format
     end
 
-    class V < Vector
-      def self.one
-        self[1, 1]
-      end
-
-      def self.half
-        self[0.5, 0.5]
-      end
-
-      def x
-        self[0]
-      end
-
-      def y
-        self[1]
-      end
-    end
-
-    class Rect < Vector
-      def w
-        self[0]
-      end
-
-      def h
-        self[1]
-      end
-    end
-
-    # def run
-    #   @canvas = Magick::Image.read("netscape:").first
-    #   @canvas.resize!(800, 600)
-    #
-    #   sw = @canvas.columns
-    #   sh = @canvas.rows
-    #
-    #   w = 300
-    #   h = 360
-    #
-    #   ex_piece(sw * 0.25, sh * 0.5, w, h, sign: +1.0, scale: 0.8)
-    #   ex_piece_draw2(sw * 0.25, sh * 0.5, w, h)
-    #   ex_piece(sw * 0.75, sh * 0.5, w, h, sign: -1.0, scale: 0.8)
-    #   ex_piece_draw2(sw * 0.75, sh * 0.5, w, h)
-    #
-    #   @canvas.write("_output1.png")
-    #   `open _output1.png`
-    # end
-
-    def ex_test
-      # draw_context do |c|
-      #   v = V[0, 0]
-      #   c.fill = "red"
-      #   c.rectangle(*px(v), *px(v + V.one))
-      # end
-      # v = V[0, 0]
-      # ex_piece_draw2(v)
-
-      # v = V[0, 0]
-      # ex_piece(v)
-    end
-
-    def ex_piece_scale
-      0.85
-    end
-
-    def ex_piece(v, sign: 1.0)
-      cx, cy = *px(v + V.half)
-      points = ex_points.collect do |x, y|
-        [
-          cx + x * ex_piece_scale * cell_size_w * 0.5 * sign,
-          cy + y * ex_piece_scale * cell_size_h * 0.5 * sign,
-        ]
-      end
-      draw_context do |c|
-        c.stroke_width(2)
-        c.stroke("#000")
-        c.fill("#FFF")
-        c.polygon(*points.flatten)
-      end
-    end
-
-    def ex_piece_draw2(v)
-      draw_context do |c|
-        c.stroke_width(3)
-        c.stroke("#000")
-        c.fill("#0004")
-        c.rectangle(*px(v), *px(v + V.one))
-      end
-    end
-
-    def ex_points
-      munenaga = 0.7 # 胸長
-      katahaba = 0.8 # 肩幅
-      asinaga  = 1.0 # 臍下
-      hunbari  = 1.0 # ふんばり片幅
-      kaonaga  = 1.0 # 顔の長さ
-      points = []
-      points << [0.0,        -kaonaga] # 頂点
-      points << [-katahaba, -munenaga] # 左肩
-      points << [-hunbari,   +asinaga] # 左後
-      points << [+hunbari,   +asinaga] # 右後
-      points << [+katahaba, -munenaga] # 右肩
-      points
-    end
-
     # フォントの位置を微調整
-    # OPTIMIZE: この2行は map2 でいいのか？
     def adjust(v, location)
-      v += V[0, 1] * params[:piece_pull_down_rate][location.key]  * location.value_sign # 下に少し下げる
-      v += V[1, 0] * params[:piece_pull_right_rate][location.key] * location.value_sign # 右に少し寄せる
-      v
+      v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
     end
+
+    prepend Pentagon
   end
 end

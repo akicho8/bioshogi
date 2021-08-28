@@ -11,12 +11,61 @@ module Bioshogi
           }
         },
       },
+      {
+        :key => :pentagon_white_mode,
+        :func => -> e {
+          e.pentagon_default
+        },
+      },
+
+      {
+        :key => :pentagon_basic_mode,
+        :func => -> e {
+          e.pentagon_default.merge({
+              :piece_color           => "rgb(64,64,64)",
+              :promoted_color        => "rgb(239,69,74)",
+              :frame_bg_color        => "rgba(0,0,0,0.2)",
+              :moving_color          => "rgba(0,0,0,0.1)",
+
+              # 駒用
+              :piece_pentagon_draw         => true,    # 駒の形を描画するか？
+              :piece_pentagon_fill_color   => "rgb(255,227,156)", # ☗の色(黄色)
+              :piece_pentagon_stroke_color => 0,       # ☗の縁取り色(nilなら lattice_color を代用)
+              :piece_pentagon_stroke_width => 0,       # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
+              :piece_pentagon_scale        => 0.85,    # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+              :turn_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+
+              :piece_char_scale      => 0.70,    # 盤上駒(piece_pentagon_scale より小さくする)
+              :force_bold            => true,    # 常に太字を使うか？
+
+              :piece_count_scale        => 0.6,  # 持駒数の大きさ
+              :piece_count_color        => nil,
+              # :piece_count_stroke_color => "rgb(255,227,156)",  # 持駒数の縁取り色
+              :piece_count_stroke_color => "rgba(255,255,255,1.0)",  # 持駒数の縁取り色
+              :piece_count_stroke_width => 2,  # 持駒数の縁取り太さ
+
+              # 影を入れるので☗を半透明にしない
+              :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
+              :pentagon_color => {
+                :black => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
+                :white => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
+              },
+
+              # 駒の中での文字の位置を調整する(少し下げないと違和感がある)
+              :piece_char_adjust => {
+                :black => [ 0.0425, 0.08],
+                :white => [-0.015,  0.03],
+              },
+            })
+        },
+      },
+
       # {
       #   :key => :dark_mode,
       #   :func => -> e {
       #     {
-      #       :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-      #       :hexagon_color     => { black: "#000", white: "#666", },
+      #       :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
+      #       :pentagon_color     => { black: "#000", white: "#666", },
       #       :canvas_color      => "#222",         # 部屋の色
       #       :frame_bg_color    => "#333",         # 盤の色
       #       :piece_color       => "#BBB",         # 駒の色
@@ -90,8 +139,8 @@ module Bioshogi
 
     def bright_palette_for2(f)
       {
-        :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :hexagon_color     => {
+        # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
+        :pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
@@ -132,8 +181,8 @@ module Bioshogi
       r = -> v { c2.adjust_brightness(v).css_rgba(1.0) }
 
       {
-        :hexagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :hexagon_color     => {
+        # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
+        :pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
@@ -161,6 +210,27 @@ module Bioshogi
           :knight => f[-12],
           :lance  => f[-13],
           :pawn   => f[-14],
+        },
+      }
+    end
+
+    def pentagon_default
+      {
+        # 駒用
+        :piece_pentagon_draw         => true,    # 駒の形を描画するか？
+        :piece_pentagon_fill_color   => "white", # ☗の色
+        :piece_pentagon_stroke_color => "#888",  # ☗の縁取り色(nilなら lattice_color を代用)
+        :piece_pentagon_stroke_width => 2,       # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
+        :piece_pentagon_scale        => 0.85,    # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+        :turn_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+
+        :piece_char_scale      => 0.75,    # 盤上駒(piece_pentagon_scale より小さくする)
+        :force_bold            => true,    # 常に太字を使うか？
+
+        # 駒の中での文字の位置を調整する(少し下げないと違和感がある)
+        :piece_char_adjust => {
+          :black => [ 0.0425, 0.08],
+          :white => [-0.015,  0.03],
         },
       }
     end

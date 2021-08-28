@@ -13,8 +13,8 @@ module Bioshogi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      { key: :black, name: "▲", hexagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1, checkmate_yomiage: "せめかた",  },
-      { key: :white, name: "△", hexagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1, checkmate_yomiage: "gyokugata", },
+      { key: :black, name: "▲", pentagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1, checkmate_yomiage: "せめかた",  },
+      { key: :white, name: "△", pentagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   value_sign: -1, checkmate_yomiage: "gyokugata", },
     ]
 
     class << self
@@ -35,7 +35,7 @@ module Bioshogi
       end
 
       def polygon_chars_str
-        @polygon_chars_str ||= flat_map { |e| [e.mark, e.flip_mark, e.hexagon_mark] }.join
+        @polygon_chars_str ||= flat_map { |e| [e.mark, e.flip_mark, e.pentagon_mark] }.join
       end
 
       # b w とかではなく sfen の駒の文字の大文字小文字で判断する
@@ -96,7 +96,7 @@ module Bioshogi
         key,
         mark,
         flip_mark,
-        hexagon_mark,
+        pentagon_mark,
         other_match_chars,
         to_sfen,
         name,

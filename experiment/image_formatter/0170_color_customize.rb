@@ -5,8 +5,8 @@ params = {
   # canvas_color: "#c5e1b7",
   # frame_bg_color: "#91a687",
 
-  :hexagon_fill      => true,
-  :hexagon_color     => { :black => "#000", :white => "#666", },
+  # :pentagon_fill      => true,
+  :pentagon_color     => { :black => "#000", :white => "#666", },
   :canvas_color      => "#22A",         # 部屋の色
   :frame_bg_color    => "#33A",         # 盤の色
   :piece_color       => "#BBA",         # 駒の色
