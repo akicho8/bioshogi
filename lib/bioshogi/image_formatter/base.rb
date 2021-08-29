@@ -49,11 +49,13 @@ module Bioshogi
             :piece_move_bg_color       => "rgba(0,0,0,0.05)",  # 移動元と移動先のセルの背景色(nilなら描画しない)
             :normal_piece_color_map => {},              # 成ってない駒それぞれの色(nilなら piece_color を代用)
 
-            :normal_font => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
-            :bold_font   => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
+            # font
+            :font_regular => nil, # 駒のフォント(普通)
+            :font_bold    => nil,    # 駒のフォント(太字) (nilなら font_regular を代用)
+            :font_theme_key   => :mincho_type1, # フォントの種類
             :piece_force_bold => false,  # 常に太字を使うか？
 
-            # :normal_font => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
+            # :font_regular => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
             # other
             :viewpoint    => "black",  # 視点
@@ -88,6 +90,10 @@ module Bioshogi
 
         if v = @params[:color_theme_key]
           @params.update(ColorThemeInfo.fetch(v).to_params)
+        end
+
+        if v = @params[:font_theme_key]
+          @params.update(FontThemeInfo.fetch(v).to_params)
         end
 
         @rendered = false
@@ -365,9 +371,9 @@ module Bioshogi
         # g.font_weight = Magick::BoldWeight # 効かない
         g.pointsize = cell_size_w * font_size
         if bold
-          g.font = params[:bold_font] || params[:normal_font]
+          g.font = params[:font_bold] || params[:font_regular]
         else
-          g.font = params[:normal_font]
+          g.font = params[:font_regular]
         end
 
         # g.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
@@ -474,6 +480,10 @@ module Bioshogi
       def adjust(v, location)
         v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
+
+      # def font_theme_info
+      #   FontThemeInfo.fetch(font_theme_key)
+      # end
     end
   end
 end

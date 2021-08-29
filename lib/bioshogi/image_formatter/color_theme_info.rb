@@ -208,11 +208,11 @@ module Bioshogi
         {
           # :canvas_pattern_key      => :pattern_checker_light,
 
-          :piece_color         => "rgb(64,64,64)",
-          :soldier_promoted_color      => "rgb(239,69,74)",
-          :frame_bg_color      => "rgba(0,0,0,0.3)",
-          :piece_move_bg_color => "rgba(0,0,0,0.1)",
-          :cell_colors         => ["rgba(255,255,255,0.1)", nil],
+          :piece_color            => "rgb(64,64,64)",
+          :soldier_promoted_color => "rgb(239,69,74)",
+          :frame_bg_color         => "rgba(0,0,0,0.3)",
+          :piece_move_bg_color    => "rgba(0,0,0,0.1)",
+          :cell_colors            => ["rgba(255,255,255,0.1)", nil],
 
           # 枠
           :outer_frame_padding      => 0.1,
