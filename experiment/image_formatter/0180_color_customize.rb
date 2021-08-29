@@ -14,7 +14,7 @@ params = {
   :piece_count_color => "#55A",         # 駒の色(持駒数)
   :moving_color      => "#44A",         # 移動元と移動先のセルの背景色(nilなら描画しない)
   :lattice_color     => "#55A",         # 格子の色
-  :inner_frame_color       => "#5858AA",      # 格子の外枠色
+  :inner_frame_color => "#5858AA",      # 格子の外枠色
   :promoted_color    => "#3cA",         # 成駒の色
 }
 

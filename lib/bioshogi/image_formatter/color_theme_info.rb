@@ -6,23 +6,25 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
-          :key => :light_mode,
+          :key => :first_light_theme,
           :func => -> e {
             {
             }
           },
         },
         {
-          :key => :pentagon_white_mode,
+          :key => :pentagon_white_theme,
           :func => -> e {
             e.pentagon_default
           },
         },
 
         {
-          :key => :pentagon_basic_mode,
+          :key => :pentagon_basic_theme,
           :func => -> e {
             e.pentagon_default.merge({
+                # :canvas_pattern_key      => :pattern_checker_light,
+
                 :piece_color           => "rgb(64,64,64)",
                 :promoted_color        => "rgb(239,69,74)",
                 :frame_bg_color        => "rgba(0,0,0,0.3)",
@@ -43,13 +45,14 @@ module Bioshogi
                 :face_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
                 :piece_char_scale      => 0.70,    # 盤上駒(piece_pentagon_scale より小さくする)
-                :force_bold            => true,    # 常に太字を使うか？
+                :force_bold            => false,    # 常に太字を使うか？
 
                 :piece_count_scale        => 0.6,  # 持駒数の大きさ
-                :piece_count_color        => nil,
+                :piece_count_color        => "rgba(0,0,0,0.4)",
+
                 # :piece_count_stroke_color => "rgb(255,227,156)",  # 持駒数の縁取り色
-                :piece_count_stroke_color => "rgba(255,255,255,1.0)",  # 持駒数の縁取り色
-                :piece_count_stroke_width => 2,  # 持駒数の縁取り太さ
+                # :piece_count_stroke_color => "rgba(255,255,255,1.0)",  # 持駒数の縁取り色
+                # :piece_count_stroke_width => 2,  # 持駒数の縁取り太さ
 
                 # 影を入れるので☗を半透明にしない
                 :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
@@ -60,15 +63,15 @@ module Bioshogi
 
                 # 駒の中での文字の位置を調整する(少し下げないと違和感がある)
                 :piece_char_adjust => {
-                  :black => [ 0.0425, 0.08],
-                  :white => [-0.015,  0.03],
+                  :black => [ 0.05,  0.08],
+                  :white => [-0.015, 0.03],
                 },
               })
           },
         },
 
         # {
-        #   :key => :dark_mode,
+        #   :key => :dark_theme,
         #   :func => -> e {
         #     {
         #       :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
@@ -86,24 +89,24 @@ module Bioshogi
         #   },
         # },
         {
-          :key => :dark_mode,
+          :key => :dark_theme,
           :func => -> e {
             c = Color::GreyScale.from_fraction(0.7)
             e.bright_palette_for(c)
           },
         },
         {
-          :key  => :matrix_mode,
+          :key  => :matrix_theme,
           :func => -> e {
             c = Color::RGB::Green.to_hsl
             c.s = 1.0
             c.l = 0.6
             # e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/assets/images/matrix_1600x1200.png")
-            e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/assets/images/matrix_1024x768.png")
+            e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/../assets/images/matrix_1024x768.png")
           },
         },
         {
-          :key  => :green_lcd_mode,
+          :key  => :green_lcd_theme,
           :func => -> e {
             c = Color::RGB::Green.to_hsl
             c.s = 1.0
@@ -112,7 +115,7 @@ module Bioshogi
           },
         },
         {
-          :key => :orange_lcd_mode,
+          :key => :orange_lcd_theme,
           :func => -> e {
             c = Color::RGB::Orange.to_hsl
             c.s = 1.0
@@ -122,17 +125,17 @@ module Bioshogi
         },
 
         {
-          :key => :flip_violet_red_mode,
+          :key => :flip_violet_red_theme,
           :func => -> e {
-            c2 = Color::MediumVioletRed.to_rgb.adjust_saturation(50)
+            c2 = Color::RGB::MediumVioletRed.adjust_saturation(50)
             e.flip_cell_type_for(c2)
           },
         },
 
         {
-          :key => :flip_green_mode,
+          :key => :flip_green_theme,
           :func => -> e {
-            c2 = Color::Green.to_rgb.adjust_saturation(50)
+            c2 = Color::RGB::Green.adjust_saturation(50)
             e.flip_cell_type_for(c2)
           },
         },
@@ -180,11 +183,11 @@ module Bioshogi
         c1 = Color::GreyScale.from_fraction(0.7).to_rgb
         f = -> v { c1.adjust_brightness(v).css_rgba(1.0) }
 
-        # c2 = Color::IndianRed.to_rgb
-        # c2 = Color::HotPink.to_rgb
-        # c2 = Color::SeaGreen.to_rgb
-        # c2 = Color::Green.to_rgb
-        # c2 = Color::MediumVioletRed.to_rgb.adjust_saturation(50)
+        # c2 = Color::RGB::IndianRed
+        # c2 = Color::RGB::HotPink
+        # c2 = Color::RGB::SeaGreen
+        # c2 = Color::RGB::Green
+        # c2 = Color::RGB::MediumVioletRed.adjust_saturation(50)
         r = -> v { c2.adjust_brightness(v).css_rgba(1.0) }
 
         {

@@ -11,12 +11,13 @@ module Bioshogi
             :stand_piece_char_scale  => nil,   # 持駒(nil なら piece_char_scale を代用)
 
             # 持駒数
+            :piece_count_color        => "rgba(0,0,0,0.8)",   # *駒数の色(nilなら piece_color を代用)
             :piece_count_scale        => 0.6,  # 持駒数の大きさ
             :piece_count_stroke_color => nil,  # 持駒数の縁取り色
             :piece_count_stroke_width => nil,  # 持駒数の縁取り太さ
             :piece_count_position_adjust => {  # 駒数の位置
-              :single => [0.7, 0.1],           # 駒数1桁のとき。[0, 0] なら該当の駒の中央
-              :double => [0.8, 0.1],           # 駒数2桁のとき
+              :single => [0.7, 0.05],          # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+              :double => [0.8, 0.05],          # 駒数2桁のとき
             },
           })
       end

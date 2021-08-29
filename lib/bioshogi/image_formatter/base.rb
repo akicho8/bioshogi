@@ -28,7 +28,7 @@ module Bioshogi
             ################################################################################
 
             # 盤
-            :canvas_color         => "white",           # 部屋の色(必須)
+            :canvas_color         => "rgba(255,255,255,1.0)", # 部屋の色(必須)
             :piece_color          => "rgba(0,0,0,0.8)", # 駒の色(必須)
             :star_size            => 0.03,              # 星のサイズ(割合)
             :outer_frame_padding  => 0,                 # 盤の余白
@@ -40,10 +40,9 @@ module Bioshogi
             # optional
             :last_soldier_color => nil,                 # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
             :stand_piece_color  => nil,                 # *持駒の色(nilなら piece_color を代用)
-            :piece_count_color  => "rgba(0,0,0,0.8)",   # *駒数の色(nilなら piece_color を代用)
-            :lattice_color      => "rgba(0,0,0,0.3)",   # *格子の色(nilなら piece_color を代用)
+            :lattice_color      => "rgba(0,0,0,0.4)",   # *格子の色(nilなら piece_color を代用)
             :star_color         => nil,                 # *星の色(nilなら lattice_color を代用)
-            :inner_frame_color  => "rgba(0,0,0,0.3)",   # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
+            :inner_frame_color  => "rgba(0,0,0,0.4)",   # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
             :promoted_color     => "rgba(255,0,0,0.8)", # *成駒の色(nilなら piece_color を代用)
             :frame_bg_color     => "transparent",       # 盤の色
             :cell_colors        => nil,                 # セルの色 複数指定可
@@ -61,6 +60,7 @@ module Bioshogi
             :image_format => "png",    # 出力する画像タイプ
             :negate       => false,    # 反転
             :bg_file      => nil,      # 背景ファイル
+            :canvas_pattern_key => nil,  # 背景パターン
             :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
             # :pentagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
@@ -68,7 +68,7 @@ module Bioshogi
               :black => "rgba(  0,  0,  0,0.6)", # ☗を白と黒で塗り分けるときの先手の色
               :white => "rgba(255,255,255,0.6)", # ☗を白と黒で塗り分けるときの後手の色
             },
-            :color_theme_key => "light_mode",
+            :color_theme_key => "first_light_theme",
           }
         end
 
@@ -157,14 +157,17 @@ module Bioshogi
         end
 
         case
-        when true
+        when false
           # @canvas = Magick::Image.read("logo:").first
-          # @canvas = Magick::Image.read(Pathname("#{__dir__}/assets/images/matrix_1024x768.png")).first
+          @canvas = Magick::Image.read(Pathname("#{__dir__}/../assets/images/matrix_1024x768.png")).first
           @canvas = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
+          @canvas = CanvasPattern.fetch(:pattern_checker_dark).func(self).copy
           @canvas.resize!(*image_rect) # 200 ms
           # @canvas.blur_image(20.0, 10.0)
           # @canvas = @canvas.emboss
           canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
+        when v = params[:canvas_pattern_key]
+          @canvas = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
           @canvas = Magick::Image.read(v).first
           # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる

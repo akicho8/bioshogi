@@ -75,19 +75,19 @@ module Bioshogi
       end
 
       def shadow_pentagon_draw(v:, location:, scale:)
-        # if params[:piece_pentagon_draw]
-        # pentagon_box_debug(v)
-        draw_context do |g|
-          w = params[:shadow_pentagon_stroke_width]
-          if w && w.nonzero?
-            g.stroke(shadow_pentagon_stroke_color)
-            g.stroke_width(w)
+        if params[:piece_pentagon_draw]
+          # pentagon_box_debug(v)
+          draw_context do |g|
+            w = params[:shadow_pentagon_stroke_width]
+            if w && w.nonzero?
+              g.stroke(shadow_pentagon_stroke_color)
+              g.stroke_width(w)
+            end
+            g.fill(params[:shadow_pentagon_fill_color])
+            g.translate(*(cell_rect * params[:shadow_pentagon_level]))
+            g.polygon(*pentagon_real_points(v: v, location: location, scale: scale))
           end
-          g.fill(params[:shadow_pentagon_fill_color])
-          g.translate(*(cell_rect * params[:shadow_pentagon_level]))
-          g.polygon(*pentagon_real_points(v: v, location: location, scale: scale))
         end
-        # end
       end
 
       # ☗を白黒で塗り分ける
