@@ -103,7 +103,7 @@ module Bioshogi
         :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
         # :pentagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
-        :turn_pentagon_color => {
+        :player_pentagon_color => {
           :black => "rgba(  0,  0,  0,0.6)", # ☗を白と黒で塗り分けるときの先手の色
           :white => "rgba(255,255,255,0.6)", # ☗を白と黒で塗り分けるときの後手の色
         },
@@ -451,16 +451,7 @@ module Bioshogi
 
         pentagon_mark = location.pentagon_mark
 
-        if false
-          if params[:pentagon_fill]
-            # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
-            char_draw(v: adjust(v, location), text: "☗", location: location, color: params[:turn_pentagon_color][location.key]) # ▲
-          else
-            char_draw(v: adjust(v, location), text: pentagon_mark, location: location) # ▲
-          end
-        else
-          turn_pentagon_draw(v: v, location: location)
-        end
+        player_pentagon_draw(v: v, location: location)
 
         v += V[0, 1] * g * s
 
