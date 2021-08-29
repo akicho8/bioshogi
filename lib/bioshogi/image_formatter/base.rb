@@ -43,15 +43,15 @@ module Bioshogi
             :lattice_color      => "rgba(0,0,0,0.4)",   # *格子の色(nilなら piece_color を代用)
             :star_color         => nil,                 # *星の色(nilなら lattice_color を代用)
             :inner_frame_color  => "rgba(0,0,0,0.4)",   # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
-            :promoted_color     => "rgba(255,0,0,0.8)", # *成駒の色(nilなら piece_color を代用)
+            :soldier_promoted_color     => "rgba(255,0,0,0.8)", # *成駒の色(nilなら piece_color を代用)
             :frame_bg_color     => "transparent",       # 盤の色
             :cell_colors        => nil,                 # セルの色 複数指定可
-            :moving_color       => "rgba(0,0,0,0.05)",  # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :piece_move_bg_color       => "rgba(0,0,0,0.05)",  # 移動元と移動先のセルの背景色(nilなら描画しない)
             :normal_piece_color_map => {},              # 成ってない駒それぞれの色(nilなら piece_color を代用)
 
             :normal_font => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
             :bold_font   => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら normal_font を代用)
-            :force_bold => false,  # 常に太字を使うか？
+            :piece_force_bold => false,  # 常に太字を使うか？
 
             # :normal_font => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
@@ -101,7 +101,7 @@ module Bioshogi
         # 将棋盤の静的な部分を使いまわす
         # しかしたいして速度が変わらなかった
         # 46秒が45秒になった程度
-        # しかも moving_draw によって格子が上書きされてしまうため moving_color を nil にしないとダメ
+        # しかも moving_draw によって格子が上書きされてしまうため piece_move_bg_color を nil にしないとダメ
         # それならば元の方法にする
         #
         # if @templete_bg
@@ -278,11 +278,11 @@ module Bioshogi
       end
 
       def moving_draw
-        if params[:moving_color]
+        if params[:piece_move_bg_color]
           if hand_log
             draw_context do |g|
               g.stroke("transparent")
-              g.fill = params[:moving_color]
+              g.fill = params[:piece_move_bg_color]
               cell_draw(g, current_place)
               cell_draw(g, origin_place)
             end
@@ -295,17 +295,17 @@ module Bioshogi
           if soldier = mediator.board.lookup(v)
             location = soldier.location
             color = nil
+            bold = false
             if hand_log && soldier == hand_log.soldier
               color ||= params[:last_soldier_color]
               bold = true
-            else
-              bold = false
             end
             if soldier.promoted
-              color ||= params[:promoted_color]
+              color ||= params[:soldier_promoted_color]
             end
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
             piece_pentagon_draw(v: v, location: location)
+            bold ||= params[:piece_force_bold]
             char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: params[:piece_char_scale])
           end
         end
@@ -364,7 +364,7 @@ module Bioshogi
         g.rotation = location.angle
         # g.font_weight = Magick::BoldWeight # 効かない
         g.pointsize = cell_size_w * font_size
-        if params[:force_bold] || bold
+        if bold
           g.font = params[:bold_font] || params[:normal_font]
         else
           g.font = params[:normal_font]
@@ -392,7 +392,7 @@ module Bioshogi
       end
 
       def soldier_name(soldier)
-        if soldier.piece.key == :king && soldier.location.key == :black
+        if soldier.piece.key == :king && soldier.location.key == :white
           "王"
         else
           soldier.any_name

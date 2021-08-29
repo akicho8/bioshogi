@@ -21,10 +21,14 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
+tp ImageFormatter::ColorThemeInfo.keys
+
 # ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
 # parser.image_formatter(color_theme_key: "first_light_theme").display
+# parser.image_formatter(color_theme_key: "pentagon_white_theme").display
 parser.image_formatter(color_theme_key: "pentagon_basic_theme").display
+
 # parser.image_formatter(color_theme_key: "dark_theme").display
 # parser.image_formatter(color_theme_key: "matrix_theme").display
 # parser.image_formatter(color_theme_key: "matrix_theme", viewpoint: "white").display
@@ -40,3 +44,14 @@ parser.image_formatter(color_theme_key: "pentagon_basic_theme").display
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1210.1249999832362
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1008.8139999425039
+# >> |-----------------------|
+# >> | first_light_theme     |
+# >> | pentagon_white_theme  |
+# >> | pentagon_basic_theme  |
+# >> | dark_theme            |
+# >> | matrix_theme          |
+# >> | green_lcd_theme       |
+# >> | orange_lcd_theme      |
+# >> | flip_violet_red_theme |
+# >> | flip_green_theme      |
+# >> |-----------------------|
