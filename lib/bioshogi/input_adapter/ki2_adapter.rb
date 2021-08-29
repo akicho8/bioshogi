@@ -41,7 +41,13 @@ module Bioshogi
         end
 
         if drop_abbreviation? && !player.piece_box.exist?(piece)
-          errors_add HoldPieceNotFound2, "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません。手番が間違っているのかもしれません"
+          messages = []
+          messages << "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません"
+          messages << "手番が間違っているのかもしれません"
+          if player.mediator.turn_info.display_turn == 0
+            messages << "もし平手で手番のハンデを貰っているなら☗側を下手として初手を指してください"
+          end
+          errors_add HoldPieceNotFound2, messages.join("。")
         end
 
         if !drop_trigger && candidate_soldiers.empty?
