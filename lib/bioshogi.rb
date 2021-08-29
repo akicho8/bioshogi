@@ -114,8 +114,6 @@ require_relative "bioshogi/formatter/anything"
 
 require_relative "bioshogi/media"
 require_relative "bioshogi/binary_formatter"
-require_relative "bioshogi/color_theme_info"
-require_relative "bioshogi/pentagon"
 require_relative "bioshogi/image_formatter"
 require_relative "bioshogi/animation_formatter"
 require_relative "bioshogi/audio_theme_info"
