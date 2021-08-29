@@ -103,9 +103,9 @@ module Bioshogi
         :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
         # :pentagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
-        :pentagon_color => {
-          :black => "rgba(  0,  0,  0,0.6)",        # ☗を白と黒で塗り分けるときの先手の色
-          :white => "rgba(255,255,255,0.6)",  # ☗を白と黒で塗り分けるときの後手の色
+        :turn_pentagon_color => {
+          :black => "rgba(  0,  0,  0,0.6)", # ☗を白と黒で塗り分けるときの先手の色
+          :white => "rgba(255,255,255,0.6)", # ☗を白と黒で塗り分けるときの後手の色
         },
         :color_theme_key => "light_mode",
       }
@@ -250,43 +250,43 @@ module Bioshogi
     # だから半透明にしても濃くなる
     # なので fill だけにする
     def lattice_draw
-      draw_context do |c|
-        c.fill(lattice_color)
+      draw_context do |g|
+        g.fill(lattice_color)
 
-        # c.stroke(lattice_color)
-        # c.stroke_width(lattice_stroke_width)
+        # g.stroke(lattice_color)
+        # g.stroke_width(lattice_stroke_width)
 
         (1...lattice.w).each do |x|
-          line_draw(c, V[x, 0], V[x, lattice.h])
+          line_draw(g, V[x, 0], V[x, lattice.h])
         end
 
         (1...lattice.h).each do |y|
-          line_draw(c, V[0, y], V[lattice.w, y])
+          line_draw(g, V[0, y], V[lattice.w, y])
         end
       end
     end
 
     def inner_frame_draw
       if inner_frame_stroke_width
-        draw_context do |c|
-          c.stroke(inner_frame_color)
-          c.stroke_width(inner_frame_stroke_width)
-          c.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
-          c.fill = "transparent"
-          c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
+        draw_context do |g|
+          g.stroke(inner_frame_color)
+          g.stroke_width(inner_frame_stroke_width)
+          g.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
+          g.fill = "transparent"
+          g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
         end
       end
     end
 
     def frame_bg_draw
-      draw_context do |c|
+      draw_context do |g|
         if false
-          c.stroke(inner_frame_color)
-          c.stroke_width(inner_frame_stroke_width)
+          g.stroke(inner_frame_color)
+          g.stroke_width(inner_frame_stroke_width)
         end
-        c.fill = params[:frame_bg_color]
+        g.fill = params[:frame_bg_color]
         d = V.one * params[:outer_frame_padding]
-        c.rectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d)) # stroke_width に応じてずれる心配なし
+        g.rectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d)) # stroke_width に応じてずれる心配なし
       end
 
       if v = params[:cell_colors].presence
@@ -294,9 +294,9 @@ module Bioshogi
         cell_walker do |v|
           color = colors.next
           if color
-            draw_context do |c|
-              c.fill = color
-              c.rectangle(*px(v), *px(v + V.one))
+            draw_context do |g|
+              g.fill = color
+              g.rectangle(*px(v), *px(v + V.one))
             end
           end
         end
@@ -304,15 +304,15 @@ module Bioshogi
     end
 
     def star_draw
-      draw_context do |c|
-        c.stroke("transparent")
-        c.fill(star_color)
+      draw_context do |g|
+        g.stroke("transparent")
+        g.fill(star_color)
 
         i = star_step
         (i...lattice.w).step(i) do |x|
           (i...lattice.h).step(i) do |y|
             v = V[x, y]
-            c.circle(*px(v), *px(v + V.one * params[:star_size]))
+            g.circle(*px(v), *px(v + V.one * params[:star_size]))
           end
         end
       end
@@ -321,11 +321,11 @@ module Bioshogi
     def moving_draw
       if params[:moving_color]
         if hand_log
-          draw_context do |c|
-            c.stroke("transparent")
-            c.fill = params[:moving_color]
-            cell_draw(c, current_place)
-            cell_draw(c, origin_place)
+          draw_context do |g|
+            g.stroke("transparent")
+            g.fill = params[:moving_color]
+            cell_draw(g, current_place)
+            cell_draw(g, origin_place)
           end
         end
       end
@@ -360,9 +360,9 @@ module Bioshogi
 
     # draw の時点で最後に指定した fill が使われる
     def draw_context
-      c = Magick::Draw.new
-      yield c
-      c.draw(@canvas)
+      g = Magick::Draw.new
+      yield g
+      g.draw(@canvas)
     end
 
     def cell_walker
@@ -380,56 +380,56 @@ module Bioshogi
       # するとセルが正方形になる
       # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
       # なので w * 90, h * 100 のような感じにしないといけない
-      # [90, 100] みたいなのは cell_size_rect に入っている
+      # [90, 100] みたいなのは cell_rect に入っている
       # ベクトルのそれぞれの位置を掛け算するには map2 を使う
       # https://docs.ruby-lang.org/ja/latest/class/Vector.html
       # collect2 だと Array になってしまうので注意
       # map2 を使わないのなら top_left + V[v.x * cell_size_w, v.y * cell_size_h] で良い
       # ベタな書き方をしてみたけど速度に影響なし
       # また v でメモ化してみたけどこれも影響なし
-      top_left + v.map2(cell_size_rect) { |a, b| a * b }
+      top_left + v.map2(cell_rect) { |a, b| a * b }
     end
 
-    def line_draw(c, v1, v2)
-      c.line(*px(v1), *px(v2))
+    def line_draw(g, v1, v2)
+      g.line(*px(v1), *px(v2))
     end
 
-    def cell_draw(c, v)
+    def cell_draw(g, v)
       if v
-        c.rectangle(*px(v), *px(v + V.one))
+        g.rectangle(*px(v), *px(v + V.one))
       end
     end
 
     def char_draw(v:, text:, location:, font_size:, color: params[:piece_color], bold: false, stroke_width: nil, stroke_color: nil, gravity: Magick::CenterGravity)
-      c = Magick::Draw.new
-      c.rotation = location.angle
-      # c.font_weight = Magick::BoldWeight # 効かない
-      c.pointsize = cell_size_w * font_size
+      g = Magick::Draw.new
+      g.rotation = location.angle
+      # g.font_weight = Magick::BoldWeight # 効かない
+      g.pointsize = cell_size_w * font_size
       if params[:force_bold] || bold
-        c.font = params[:bold_font] || params[:normal_font]
+        g.font = params[:bold_font] || params[:normal_font]
       else
-        c.font = params[:normal_font]
+        g.font = params[:normal_font]
       end
 
-      # c.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
-      # c.stroke_antialias = false # 効いてない
+      # g.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる
+      # g.stroke_antialias = false # 効いてない
 
       if stroke_width && stroke_color
-        c.stroke_width = stroke_width
-        c.stroke       = stroke_color
-        # c.stroke_linejoin("miter") # round miter bevel
-        # c.stroke_linejoin("round") # round miter bevel
-        # c.stroke_linejoin("bevel") # round miter bevel
+        g.stroke_width = stroke_width
+        g.stroke       = stroke_color
+        # g.stroke_linejoin("miter") # round miter bevel
+        # g.stroke_linejoin("round") # round miter bevel
+        # g.stroke_linejoin("bevel") # round miter bevel
       end
 
-      # c.stroke = "rgba(255,255,255,0.9)"
-      # c.stroke_width = 3
+      # g.stroke = "rgba(255,255,255,0.9)"
+      # g.stroke_width = 3
 
-      c.fill = color
+      g.fill = color
 
-      # c.text_antialias(true)          # 効いてない
-      c.gravity = gravity # annotate で指定した w, h の中心に描画する
-      c.annotate(@canvas, *cell_size_rect, *px(v), text) # annotate(image, w, h, x, y, text)
+      # g.text_antialias(true)          # 効いてない
+      g.gravity = gravity # annotate で指定した w, h の中心に描画する
+      g.annotate(@canvas, *cell_rect, *px(v), text) # annotate(image, w, h, x, y, text)
     end
 
     def stand_draw
@@ -454,7 +454,7 @@ module Bioshogi
         if false
           if params[:pentagon_fill]
             # 背景が黒い場合に認識が逆になってしまうので☗を白と黒で塗り分ける場合
-            char_draw(v: adjust(v, location), text: "☗", location: location, color: params[:pentagon_color][location.key]) # ▲
+            char_draw(v: adjust(v, location), text: "☗", location: location, color: params[:turn_pentagon_color][location.key]) # ▲
           else
             char_draw(v: adjust(v, location), text: pentagon_mark, location: location) # ▲
           end
@@ -538,8 +538,8 @@ module Bioshogi
       @vmin ||= image_rect.to_a.min
     end
 
-    def cell_size_rect
-      @cell_size_rect ||= Rect[cell_size_w, cell_size_h]
+    def cell_rect
+      @cell_rect ||= Rect[cell_size_w, cell_size_h]
     end
 
     def center
@@ -547,7 +547,7 @@ module Bioshogi
     end
 
     def top_left
-      @top_left ||= center - cell_size_rect.map2(lattice) { |a, b| a * b } / 2
+      @top_left ||= center - cell_rect.map2(lattice) { |a, b| a * b } / 2
     end
 
     def v_bottom_right_outer

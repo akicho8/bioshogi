@@ -52,7 +52,7 @@ module Bioshogi
 
               # 影を入れるので☗を半透明にしない
               :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
-              :pentagon_color => {
+              :turn_pentagon_color => {
                 :black => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
                 :white => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
               },
@@ -71,7 +71,7 @@ module Bioshogi
       #   :func => -> e {
       #     {
       #       :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-      #       :pentagon_color     => { black: "#000", white: "#666", },
+      #       :turn_pentagon_color     => { black: "#000", white: "#666", },
       #       :canvas_color      => "#222",         # 部屋の色
       #       :frame_bg_color    => "#333",         # 盤の色
       #       :piece_color       => "#BBB",         # 駒の色
@@ -146,7 +146,7 @@ module Bioshogi
     def bright_palette_for2(f)
       {
         # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :pentagon_color     => {
+        :turn_pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
@@ -188,7 +188,7 @@ module Bioshogi
 
       {
         # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :pentagon_color     => {
+        :turn_pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
