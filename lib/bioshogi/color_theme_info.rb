@@ -39,7 +39,7 @@ module Bioshogi
               :piece_pentagon_stroke_color => 0,       # ☗の縁取り色(nilなら lattice_color を代用)
               :piece_pentagon_stroke_width => 0,       # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
               :piece_pentagon_scale        => 0.85,    # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-              :player_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+              :face_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
               :piece_char_scale      => 0.70,    # 盤上駒(piece_pentagon_scale より小さくする)
               :force_bold            => true,    # 常に太字を使うか？
@@ -52,7 +52,7 @@ module Bioshogi
 
               # 影を入れるので☗を半透明にしない
               :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
-              :player_pentagon_color => {
+              :face_pentagon_color => {
                 :black => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
                 :white => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
               },
@@ -71,7 +71,7 @@ module Bioshogi
       #   :func => -> e {
       #     {
       #       :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-      #       :player_pentagon_color     => { black: "#000", white: "#666", },
+      #       :face_pentagon_color     => { black: "#000", white: "#666", },
       #       :canvas_color      => "#222",         # 部屋の色
       #       :frame_bg_color    => "#333",         # 盤の色
       #       :piece_color       => "#BBB",         # 駒の色
@@ -146,7 +146,7 @@ module Bioshogi
     def bright_palette_for2(f)
       {
         # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :player_pentagon_color     => {
+        :face_pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
@@ -188,7 +188,7 @@ module Bioshogi
 
       {
         # :pentagon_fill      => true,           # ☗を塗り潰して後手を表現するか？
-        :player_pentagon_color     => {
+        :face_pentagon_color     => {
           black: f[-70],  # ☗
           white: f[20],   # ☖
         },
@@ -229,7 +229,7 @@ module Bioshogi
         :piece_pentagon_stroke_color => "#888",  # ☗の縁取り色(nilなら lattice_color を代用)
         :piece_pentagon_stroke_width => 2,       # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
         :piece_pentagon_scale        => 0.85,    # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-        :player_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+        :face_pentagon_scale       => 0.8,     # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
         :piece_char_scale      => 0.75,    # 盤上駒(piece_pentagon_scale より小さくする)
         :force_bold            => true,    # 常に太字を使うか？

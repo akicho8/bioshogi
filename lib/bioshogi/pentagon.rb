@@ -20,9 +20,9 @@ module Bioshogi
           :shadow_pentagon_level        => 0.03,              # 影の大きさ。右下方向にずらす度合い
 
           # 先後
-          :player_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら lattice_color を代用)
-          :player_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
-          :player_pentagon_scale          => 0.6,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+          :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら lattice_color を代用)
+          :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
+          :face_pentagon_scale          => 0.6,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
           # 六角形のスタイル
           #
@@ -90,13 +90,13 @@ module Bioshogi
     end
 
     # ☗を白黒で塗り分ける
-    def player_pentagon_draw(v:, location:)
-      shadow_pentagon_draw(v: v, location: location, scale: player_pentagon_scale)
+    def face_pentagon_draw(v:, location:)
+      shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
       draw_context do |g|
-        g.stroke(player_pentagon_stroke_color)
-        g.stroke_width(player_pentagon_stroke_width)
-        g.fill(player_pentagon_color(location))
-        g.polygon(*pentagon_real_points(v: v, location: location, scale: player_pentagon_scale))
+        g.stroke(face_pentagon_stroke_color)
+        g.stroke_width(face_pentagon_stroke_width)
+        g.fill(face_pentagon_color(location))
+        g.polygon(*pentagon_real_points(v: v, location: location, scale: face_pentagon_scale))
       end
     end
 
@@ -149,20 +149,20 @@ module Bioshogi
 
     ################################################################################ turn
 
-    def player_pentagon_scale
-      params[:player_pentagon_scale] || piece_pentagon_scale
+    def face_pentagon_scale
+      params[:face_pentagon_scale] || piece_pentagon_scale
     end
 
-    def player_pentagon_stroke_color
-      params[:player_pentagon_stroke_color] || lattice_color
+    def face_pentagon_stroke_color
+      params[:face_pentagon_stroke_color] || lattice_color
     end
 
-    def player_pentagon_stroke_width
-      params[:player_pentagon_stroke_width] || lattice_stroke_width
+    def face_pentagon_stroke_width
+      params[:face_pentagon_stroke_width] || lattice_stroke_width
     end
 
-    def player_pentagon_color(location)
-      params[:player_pentagon_color][location.key]
+    def face_pentagon_color(location)
+      params[:face_pentagon_color][location.key]
     end
 
     ################################################################################ shadow
