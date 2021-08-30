@@ -15,62 +15,53 @@ module Bioshogi
 
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
-            :piece_char_scale         => 0.85, # 盤上駒
+            :piece_char_scale => 0.85, # 盤上駒
 
-            ################################################################################
-            # REVIEW: 見直す必要がある
-            # 本当はやりたくない微調整
-            # 盤上の駒の位置を下げる割合
+            # 駒(文字)の位置調整
             :piece_char_adjust => {
               :black => [0.0425, 0.07],
               :white => [0.0,    0.01],
             },
-            ################################################################################
+                                                                      # 盤
+            :canvas_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
+            :piece_color              => "rgba(0,0,0,0.8)",           # 駒の色(必須)
+            :star_size                => 0.03,                        # 星のサイズ(割合)
+            :outer_frame_padding      => 0,                           # 盤の余白
+            :outer_frame_radius                      => 0.05,                        # 盤の角の丸め
+            :lattice_stroke_width     => 1,                           # 格子の線の太さ
+            :inner_frame_stroke_width => 3,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+            :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
+            :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
 
-            # 盤
-            :canvas_color         => "rgba(255,255,255,1.0)", # 部屋の色(必須)
-            :piece_color          => "rgba(0,0,0,0.8)", # 駒の色(必須)
-            :star_size            => 0.03,              # 星のサイズ(割合)
-            :outer_frame_padding  => 0,                 # 盤の余白
-            :lattice_stroke_width => 1,                 # 格子の線の太さ
-            :inner_frame_stroke_width   => 3,                 # 枠の線お太さ(nil なら lattice_stroke_width を代用)
-            :dimension_w          => Dimension::Xplace.dimension, # 横のセル数
-            :dimension_h          => Dimension::Yplace.dimension, # 縦のセル数
+                                                                      # optional
+            :last_soldier_color       => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
+            :stand_piece_color        => nil,                         # *持駒の色(nilなら piece_color を代用)
+            :lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_color を代用)
+            :star_color               => nil,                         # *星の色(nilなら lattice_color を代用)
+            :inner_frame_color        => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
+            :promoted_font_color      => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_color を代用)
+            :outer_frame_bg_color     => "transparent",               # 盤の色
+            :cell_colors              => nil,                         # セルの色 複数指定可
+            :piece_move_bg_color      => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_color を代用)
 
-            # optional
-            :last_soldier_color => nil,                 # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
-            :stand_piece_color  => nil,                 # *持駒の色(nilなら piece_color を代用)
-            :lattice_color      => "rgba(0,0,0,0.4)",   # *格子の色(nilなら piece_color を代用)
-            :star_color         => nil,                 # *星の色(nilなら lattice_color を代用)
-            :inner_frame_color  => "rgba(0,0,0,0.4)",   # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
-            :soldier_promoted_color     => "rgba(255,0,0,0.8)", # *成駒の色(nilなら piece_color を代用)
-            :frame_bg_color     => "transparent",       # 盤の色
-            :cell_colors        => nil,                 # セルの色 複数指定可
-            :piece_move_bg_color       => "rgba(0,0,0,0.05)",  # 移動元と移動先のセルの背景色(nilなら描画しない)
-            :normal_piece_color_map => {},              # 成ってない駒それぞれの色(nilなら piece_color を代用)
+                                                                      # font
+            :font_regular             => nil,                         # 駒のフォント(普通)
+            :font_bold                => nil,                         # 駒のフォント(太字) (nilなら font_regular を代用)
+            :font_theme_key           => :gothic_type1,               # フォントの種類 mincho_type1
+            :font_board_piece_bold         => false,                       # 常に太字を使うか？
 
-            # font
-            :font_regular => nil, # 駒のフォント(普通)
-            :font_bold    => nil,    # 駒のフォント(太字) (nilなら font_regular を代用)
-            :font_theme_key   => :mincho_type1, # フォントの種類
-            :piece_force_bold => false,  # 常に太字を使うか？
+                                                                      # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
-            # :font_regular => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
+                                                                      # other
+            :viewpoint                => "black",                     # 視点
+            :image_format             => "png",                       # 出力する画像タイプ
+            :negate                   => false,                       # 反転
+            :bg_file                  => nil,                         # 背景ファイル
+            :canvas_pattern_key       => nil,                         # 背景パターン
+            :canvas_cache             => false,                       # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
-            # other
-            :viewpoint    => "black",  # 視点
-            :image_format => "png",    # 出力する画像タイプ
-            :negate       => false,    # 反転
-            :bg_file      => nil,      # 背景ファイル
-            :canvas_pattern_key => nil,  # 背景パターン
-            :canvas_cache => false,    # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
-
-            # :pentagon_fill => false,    # ☗を塗り潰して後手を表現するか？ (背景が黒い場合に認識が逆になってしまう対策だけど微妙)
-            :face_pentagon_color => {
-              :black => "rgba(  0,  0,  0,0.6)", # ☗を白と黒で塗り分けるときの先手の色
-              :white => "rgba(255,255,255,0.6)", # ☗を白と黒で塗り分けるときの後手の色
-            },
-            :color_theme_key => "first_light_theme",
+            :color_theme_key          => "first_light_theme",
           }
         end
 
@@ -249,9 +240,9 @@ module Bioshogi
             g.stroke(inner_frame_color)
             g.stroke_width(inner_frame_stroke_width)
           end
-          g.fill = params[:frame_bg_color]
+          g.fill = params[:outer_frame_bg_color]
           d = V.one * params[:outer_frame_padding]
-          g.rectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d)) # stroke_width に応じてずれる心配なし
+          g.roundrectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d), *(cell_rect * outer_frame_radius)) # stroke_width に応じてずれる心配なし
         end
 
         if v = params[:cell_colors].presence
@@ -307,11 +298,11 @@ module Bioshogi
               bold = true
             end
             if soldier.promoted
-              color ||= params[:soldier_promoted_color]
+              color ||= params[:promoted_font_color]
             end
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
             piece_pentagon_draw(v: v, location: location)
-            bold ||= params[:piece_force_bold]
+            bold ||= params[:font_board_piece_bold]
             char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: params[:piece_char_scale])
           end
         end
@@ -340,7 +331,7 @@ module Bioshogi
 
       def px(v)
         # もともとセルは正方形だった
-        # だから「top_left + v * cell_size_w」でよかった
+        # だから「top_left + v * cell_w」でよかった
         # これは w, h を同じ値で乗算する
         # するとセルが正方形になる
         # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
@@ -349,7 +340,7 @@ module Bioshogi
         # ベクトルのそれぞれの位置を掛け算するには map2 を使う
         # https://docs.ruby-lang.org/ja/latest/class/Vector.html
         # collect2 だと Array になってしまうので注意
-        # map2 を使わないのなら top_left + V[v.x * cell_size_w, v.y * cell_size_h] で良い
+        # map2 を使わないのなら top_left + V[v.x * cell_w, v.y * cell_h] で良い
         # ベタな書き方をしてみたけど速度に影響なし
         # また v でメモ化してみたけどこれも影響なし
         top_left + v.map2(cell_rect) { |a, b| a * b }
@@ -369,7 +360,7 @@ module Bioshogi
         g = Magick::Draw.new
         g.rotation = location.angle
         # g.font_weight = Magick::BoldWeight # 効かない
-        g.pointsize = cell_size_w * font_size
+        g.pointsize = cell_w * font_size
         if bold
           g.font = params[:font_bold] || params[:font_regular]
         else
@@ -428,12 +419,12 @@ module Bioshogi
         @lattice ||= Rect[params[:dimension_w], params[:dimension_h]]
       end
 
-      def cell_size_w
-        @cell_size_w ||= (vmin * params[:aspect_ratio_w]) / lattice.w
+      def cell_w
+        @cell_w ||= (vmin * params[:aspect_ratio_w]) / lattice.w
       end
 
-      def cell_size_h
-        @cell_size_h ||= (vmin * params[:aspect_ratio_h]) / lattice.h
+      def cell_h
+        @cell_h ||= (vmin * params[:aspect_ratio_h]) / lattice.h
       end
 
       def vmin
@@ -441,7 +432,7 @@ module Bioshogi
       end
 
       def cell_rect
-        @cell_rect ||= Rect[cell_size_w, cell_size_h]
+        @cell_rect ||= Rect[cell_w, cell_h]
       end
 
       def center
@@ -484,6 +475,14 @@ module Bioshogi
       # def font_theme_info
       #   FontThemeInfo.fetch(font_theme_key)
       # end
+
+      def outer_frame_radius
+        if params[:outer_frame_padding].zero?
+          0
+        else
+          params[:outer_frame_radius]
+        end
+      end
     end
   end
 end

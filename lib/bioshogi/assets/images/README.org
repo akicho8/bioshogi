@@ -1,0 +1,1 @@
+* ../../../../../rmagick-examples/0150_matrix.rb で生成したものをコピー

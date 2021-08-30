@@ -21,7 +21,7 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-tp ImageFormatter::ColorThemeInfo.keys
+# tp ImageFormatter::ColorThemeInfo.keys
 
 # ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
@@ -32,6 +32,7 @@ parser.image_formatter(color_theme_key: "pentagon_basic_theme").display
 # parser.image_formatter(color_theme_key: "dark_theme").display
 # parser.image_formatter(color_theme_key: "matrix_theme").display
 # parser.image_formatter(color_theme_key: "matrix_theme", viewpoint: "white").display
+# parser.image_formatter(color_theme_key: "green_lcd_theme").display
 # parser.image_formatter(color_theme_key: "orange_lcd_theme").display
 # parser.image_formatter(color_theme_key: "flip_violet_red_theme").display
 # parser.image_formatter(color_theme_key: "flip_green_theme").display

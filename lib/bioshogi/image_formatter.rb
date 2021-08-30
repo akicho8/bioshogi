@@ -12,7 +12,8 @@ module Bioshogi
   require "bioshogi/image_formatter/board"
   require "bioshogi/image_formatter/stand"
   require "bioshogi/image_formatter/pentagon"
-  
+  require "bioshogi/image_formatter/helper"
+
   require "bioshogi/image_formatter/color_theme_info"
   require "bioshogi/image_formatter/canvas_pattern_info"
   require "bioshogi/image_formatter/font_theme_info"

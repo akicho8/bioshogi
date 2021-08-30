@@ -8,15 +8,15 @@ module Bioshogi
             # 駒用
             :piece_pentagon_draw          => false,             # 駒の形を描画するか？
             :piece_pentagon_fill_color    => "transparent",     # ☗の色
-            :piece_pentagon_stroke_color  => nil,               # ☗の縁取り色(nilなら lattice_color を代用)
-            :piece_pentagon_stroke_width  => nil,               # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
+            :piece_pentagon_stroke_color  => nil,               # ☗の縁取り色
+            :piece_pentagon_stroke_width  => nil,               # ☗の縁取り幅
             :piece_pentagon_scale         => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
             # 影
             :shadow_pentagon_draw         => false,             # ☗の影を描画するか？
-            :shadow_pentagon_fill_color   => "rgba(0,0,0,0.1)", # ☗の影の色
-            :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
-            :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
+            :shadow_pentagon_fill_color   => "rgba(0,0,0,0.3)", # ☗の影の色
+            # :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
+            # :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
             :shadow_pentagon_scale        => nil,               # ☗の影の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
             :shadow_pentagon_level        => 0.03,              # 影の大きさ。右下方向にずらす度合い
 
@@ -24,6 +24,10 @@ module Bioshogi
             :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら lattice_color を代用)
             :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
             :face_pentagon_scale          => 0.6,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+            :face_pentagon_color          => {
+              :black                      => "rgba(  0,  0,  0,0.6)",     # ☗を白と黒で塗り分けるときの先手の色
+              :white                      => "rgba(255,255,255,0.6)",     # ☗を白と黒で塗り分けるときの後手の色
+            },
 
             # 六角形のスタイル
             #
@@ -63,9 +67,9 @@ module Bioshogi
 
           # pentagon_box_debug(v)
           draw_context do |g|
-            w = params[:piece_pentagon_stroke_width] || lattice_stroke_width
+            w = params[:piece_pentagon_stroke_width]
             if w && w.nonzero?
-              g.stroke(params[:piece_pentagon_stroke_color] || lattice_color)
+              g.stroke(params[:piece_pentagon_stroke_color])
               g.stroke_width(w)
             end
             g.fill(params[:piece_pentagon_fill_color])
@@ -75,14 +79,17 @@ module Bioshogi
       end
 
       def shadow_pentagon_draw(v:, location:, scale:)
-        if params[:piece_pentagon_draw]
+        if params[:shadow_pentagon_draw]
           # pentagon_box_debug(v)
           draw_context do |g|
-            w = params[:shadow_pentagon_stroke_width]
-            if w && w.nonzero?
-              g.stroke(shadow_pentagon_stroke_color)
-              g.stroke_width(w)
-            end
+            # NOTE: stroke すると fill した端を縁取って予想より濃くなり調整が難しくなるため取る
+            # if false
+            #   w = params[:shadow_pentagon_stroke_width]
+            #   if w && w.nonzero?
+            #     g.stroke(shadow_pentagon_stroke_color)
+            #     g.stroke_width(w)
+            #   end
+            # end
             g.fill(params[:shadow_pentagon_fill_color])
             g.translate(*(cell_rect * params[:shadow_pentagon_level]))
             g.polygon(*pentagon_real_points(v: v, location: location, scale: scale))
@@ -135,8 +142,8 @@ module Bioshogi
             [+e[:katahaba],  -e[:munenaga]], # 右肩
           ].collect do |x, y|
             [
-              x * cell_size_w * 0.5,
-              y * cell_size_h * 0.5,
+              x * cell_w * 0.5,
+              y * cell_h * 0.5,
             ]
           end
         }.call
@@ -168,9 +175,9 @@ module Bioshogi
 
       ################################################################################ shadow
 
-      def shadow_pentagon_stroke_color
-        params[:shadow_pentagon_stroke_color] || params[:shadow_pentagon_fill_color]
-      end
+      # def shadow_pentagon_stroke_color
+      #   params[:shadow_pentagon_stroke_color] || params[:shadow_pentagon_fill_color]
+      # end
 
       def shadow_pentagon_scale
         params[:shadow_pentagon_scale] || piece_pentagon_scale
