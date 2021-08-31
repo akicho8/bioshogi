@@ -54,14 +54,14 @@ module Bioshogi
           player.piece_box.each.with_index do |(piece_key, count), i|
             piece = Piece.fetch(piece_key)
             # 持駒の影
-            piece_pentagon_draw(v: v, location: location)
+            piece_pentagon_draw(v: v, location: location, piece: piece)
             # 持駒
             char_draw({
                 :v         => adjust(v, location),
                 :text      => piece.name,
                 :location  => location,
                 :color     => params[:stand_piece_color] || params[:piece_font_color],
-                :font_size => params[:stand_piece_char_scale] || params[:piece_char_scale],
+                :font_size => (params[:stand_piece_char_scale] || params[:piece_char_scale]) * bairitu(piece),
                 :bold      => params[:font_stand_piece_bold]
               })
 

@@ -6,11 +6,21 @@ module Bioshogi
       included do
         default_params.update({
             # 駒用
-            :piece_pentagon_draw          => false,             # 駒の形を描画するか？
+            :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_char_scaleを調整すること)
             :piece_pentagon_fill_color    => "transparent",     # ☗の色
             :piece_pentagon_stroke_color  => "transparent",     # ☗の縁取り色
             :piece_pentagon_stroke_width  => nil,               # ☗の縁取り幅
             :piece_pentagon_scale         => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+            # :piece_pentagon_scale_map     => {
+            #   :king    => 0.85,
+            #   :rook    => 0.85,
+            #   :bishop  => 0.85,
+            #   :gold    => 0.85,
+            #   :silver  => 0.85,
+            #   :knight  => 0.85,
+            #   :lance   => 0.85,
+            #   :pawn    => 0.50,
+            # },
 
             # 影
             :shadow_pentagon_draw         => false,             # ☗の影を描画するか？
@@ -23,7 +33,7 @@ module Bioshogi
             # 先後
             :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
             :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
-            :face_pentagon_scale          => 0.6,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+            :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
             :face_pentagon_color          => {
               :black                      => "rgba(  0,  0,  0,0.6)",     # ☗を白と黒で塗り分けるときの先手の色
               :white                      => "rgba(255,255,255,0.6)",     # ☗を白と黒で塗り分けるときの後手の色
@@ -61,9 +71,9 @@ module Bioshogi
           })
       end
 
-      def piece_pentagon_draw(v:, location:)
+      def piece_pentagon_draw(v:, location:, piece: nil)
         if params[:piece_pentagon_draw]
-          shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale)
+          shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale(piece))
 
           # pentagon_box_debug(v)
           draw_context do |g|
@@ -73,7 +83,7 @@ module Bioshogi
               g.stroke_width(w)
             end
             g.fill(params[:piece_pentagon_fill_color])
-            g.polygon(*pentagon_real_points(v: v, location: location, scale: piece_pentagon_scale))
+            g.polygon(*pentagon_real_points(v: v, location: location, scale: piece_pentagon_scale(piece)))
           end
         end
       end
@@ -153,8 +163,9 @@ module Bioshogi
 
       ################################################################################ piece
 
-      def piece_pentagon_scale
-        params[:piece_pentagon_scale]
+      def piece_pentagon_scale(piece)
+        params[:piece_pentagon_scale] * bairitu(piece)
+        # params[:piece_pentagon_scale_map].fetch(piece.key, )
       end
 
       ################################################################################ turn

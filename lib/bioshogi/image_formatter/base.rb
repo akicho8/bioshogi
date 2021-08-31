@@ -16,13 +16,23 @@ module Bioshogi
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
             :piece_char_scale => 0.85, # 盤上駒
+            :piece_scale_mag => {
+              :king    => 1.00,
+              :rook    => 1.00,
+              :bishop  => 1.00,
+              :gold    => 0.97,
+              :silver  => 0.94,
+              :knight  => 0.91,
+              :lance   => 0.88,
+              :pawn    => 0.85,
+            },
 
             # 駒(文字)の位置調整
             :piece_char_adjust => {
               :black => [0.0425, 0.07],
               :white => [0.0,    0.01],
             },
-                                                                      # 盤
+            # 盤
             :canvas_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
             :piece_font_color              => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
@@ -32,11 +42,11 @@ module Bioshogi
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
 
-                                                                      # optional
+            # optional
             :last_soldier_font_color       => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
             :stand_piece_color        => nil,                         # *持駒の色(nilなら piece_font_color を代用)
-            :lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
-            :star_color               => nil,                         # *星の色(nilなら lattice_color を代用)
+            :inner_frame_lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
+            :star_color               => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
             :inner_frame_stroke_color        => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
             :promoted_font_color      => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
 
@@ -50,15 +60,15 @@ module Bioshogi
             :piece_move_cell_fill_color      => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
             :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
-                                                                      # font
+            # font
             :font_regular             => nil,                         # 駒のフォント(普通)
             :font_bold                => nil,                         # 駒のフォント(太字) (nilなら font_regular を代用)
             :font_theme_key           => :gothic_type1,               # フォントの種類 mincho_type1
             :font_board_piece_bold         => false,                       # 常に太字を使うか？
 
-                                                                      # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
+            # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
-                                                                      # other
+            # other
             :viewpoint                => "black",                     # 視点
             :image_format             => "png",                       # 出力する画像タイプ
             :negate                   => false,                       # 反転
@@ -195,12 +205,12 @@ module Bioshogi
       # end
 
       # 格子色
-      def lattice_color
-        params[:lattice_color] || params[:piece_font_color]
+      def inner_frame_lattice_color
+        params[:inner_frame_lattice_color] || params[:piece_font_color]
       end
 
       def star_color
-        params[:star_color] || lattice_color
+        params[:star_color] || inner_frame_lattice_color
       end
 
       def inner_frame_stroke_color
@@ -212,9 +222,9 @@ module Bioshogi
       # なので fill だけにする
       def lattice_draw
         draw_context do |g|
-          g.fill(lattice_color)
+          g.fill(inner_frame_lattice_color)
 
-          # g.stroke(lattice_color)
+          # g.stroke(inner_frame_lattice_color)
           # g.stroke_width(lattice_stroke_width)
 
           (1...lattice.w).each do |x|
@@ -312,11 +322,19 @@ module Bioshogi
               color ||= params[:promoted_font_color]
             end
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color]
-            piece_pentagon_draw(v: v, location: location)
+            piece_pentagon_draw(v: v, location: location, piece: soldier.piece)
             bold ||= params[:font_board_piece_bold]
-            char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: params[:piece_char_scale])
+            char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: piece_char_scale(soldier.piece))
           end
         end
+      end
+
+      def piece_char_scale(piece)
+        params[:piece_char_scale] * bairitu(piece)
+      end
+
+      def bairitu(piece)
+        params[:piece_scale_mag].fetch(piece.key, 1.0)
       end
 
       def canvas_flip_if_viewpoint_is_white

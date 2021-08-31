@@ -9,7 +9,7 @@ module Bioshogi
         { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
         { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
         { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; s.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1600x1200.png" }, },
+        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1600x1200.png" }, },
         { :key => :brightness_green_theme,  :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { :key => :brightness_orange_theme, :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { :key => :kimetsu_red_theme,       :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
@@ -28,38 +28,25 @@ module Bioshogi
 
           **{
             **pentagon_enabled,
-            :piece_pentagon_fill_color   => f[-80],
-            :piece_pentagon_stroke_color => f[-50],
+            :piece_pentagon_fill_color   => f[-70],
+            :piece_pentagon_stroke_color => f[-55],
             :piece_pentagon_stroke_width => 2,
           },
-
-          :face_pentagon_color           => {
-            black: f[-70],                                 # ☗
-            white: f[20],                                  # ☖
-          },
-          :canvas_color                  => f[-92],        # 部屋の色
+          :canvas_color                  => f[-88],        # 部屋の色
           :outer_frame_fill_color        => f[-84],        # 盤の色
-          :cell_colors                   => [f[-84], nil], # セルの色
-          :piece_move_cell_fill_color    => f[-70],        # 移動元と移動先のセルの背景色
-          :lattice_color                 => f[-40],        # 格子の色
+          :piece_move_cell_fill_color    => f[-81],        # 移動元と移動先のセルの背景色
+          :inner_frame_lattice_color                 => f[-40],        # 格子の色
           :inner_frame_stroke_color      => f[-30],        # 格子の外枠色
-          :stand_piece_color             => f[-0],         # 駒の色(持駒)
 
-                                                           # 駒
-                                                           # :font_board_piece_bold       => true,              # 駒は常に太字を使うか？
-          :piece_font_color              => f[30],         # 駒の色
+          # 駒
+          :piece_font_color              => f[20],         # 駒の色
           :last_soldier_font_color       => f[70],         # 最後に動いた駒
           :promoted_font_color           => f[50],         # 成駒の色
-                                                           # :normal_piece_color_map      => {
-                                                           #   # :king                    => f[50],
-                                                           #   # :rook                    => f[50],
-                                                           #   # :bishop                  => f[50],
-                                                           #   # :gold                    => f[-16],
-                                                           #   # :silver                  => f[-17],
-                                                           #   # :knight                  => f[-18],
-                                                           #   # :lance                   => f[-19],
-                                                           #   # :pawn                    => f[-20],
-                                                           # },
+
+          :face_pentagon_color           => {
+            black: f[-70],      # ☗
+            white: f[20],       # ☖
+          },
         }
       end
 
@@ -108,7 +95,7 @@ module Bioshogi
           :piece_font_color              => f[-75],             # 駒の色
           :promoted_font_color           => syuiro.html,
 
-          :lattice_color                 => r[-20],             # 格子の色
+          :inner_frame_lattice_color                 => r[-20],             # 格子の色
           :star_color                    => r[  0],             # 星の色
           :inner_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_color      => r[-20],             # 格子の外枠色
@@ -142,7 +129,7 @@ module Bioshogi
 
           # 駒用
           :piece_pentagon_fill_color   => komairo.html,
-          # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら lattice_color を代用)
+          # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら inner_frame_lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
 
           # :font_board_piece_bold       => false,              # 駒は常に太字を使うか？
@@ -166,9 +153,7 @@ module Bioshogi
       def pentagon_enabled
         {
           :piece_pentagon_draw => true,
-          :face_pentagon_scale  => 0.80,
-          :piece_pentagon_scale => 0.85,
-          :piece_char_scale     => 0.64,
+          :piece_char_scale => 0.64,
           :piece_char_adjust => {
             :black => [ 0.0425, 0.08],
             :white => [-0.01,   0.05],
