@@ -12,7 +12,7 @@ module Bioshogi
             :font_stand_piece_bold      => false,             # 持駒を太くする？
 
             # 持駒数
-            :piece_count_color           => "rgba(0,0,0,0.8)", # *駒数の色(nilなら piece_color を代用)
+            :piece_count_color           => "rgba(0,0,0,0.8)", # *駒数の色(nilなら piece_font_color を代用)
             :piece_count_scale           => 0.6,               # 持駒数の大きさ
             :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
             :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ
@@ -60,7 +60,7 @@ module Bioshogi
                 :v         => adjust(v, location),
                 :text      => piece.name,
                 :location  => location,
-                :color     => params[:stand_piece_color] || params[:piece_color],
+                :color     => params[:stand_piece_color] || params[:piece_font_color],
                 :font_size => params[:stand_piece_char_scale] || params[:piece_char_scale],
                 :bold      => params[:font_stand_piece_bold]
               })
@@ -81,7 +81,7 @@ module Bioshogi
               :v            => v,
               :text         => count.to_s,
               :location     => location,
-              :color        => params[:piece_count_color] || params[:piece_color], # 地べたに描画するのでコントラスト比を下げるの重要
+              :color        => params[:piece_count_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
               :font_size    => params[:piece_count_scale],
               :stroke_color => params[:piece_count_stroke_color],
               :stroke_width => params[:piece_count_stroke_width],

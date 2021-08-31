@@ -20,6 +20,6 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-parser.image_formatter(color_theme_key: "first_light_theme", font_theme_key: "gothic_type1").display
-parser.image_formatter(color_theme_key: "first_light_theme", font_theme_key: "gothic_type1", font_board_piece_bold: true).display
-parser.image_formatter(color_theme_key: "first_light_theme", font_theme_key: "mincho_type1", font_board_piece_bold: true).display
+parser.image_formatter(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1").display
+parser.image_formatter(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1", font_board_piece_bold: true).display
+parser.image_formatter(color_theme_key: "paper_simple_theme", font_theme_key: "mincho_type1", font_board_piece_bold: true).display

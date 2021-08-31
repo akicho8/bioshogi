@@ -19,14 +19,14 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-bin = parser.to_png(color_theme_key: "first_light_theme")
+bin = parser.to_png(color_theme_key: "paper_simple_theme")
 Pathname("_output1.png").write(bin)
 `open _output1.png`
 
-# bin = parser.to_png(color_theme_key: "pentagon_white_theme")
+# bin = parser.to_png(color_theme_key: "paper_shape_theme")
 # Pathname("_output1.png").write(bin)
 # `open _output1.png`
 
-# bin = parser.to_png(color_theme_key: "pentagon_basic_theme")
+# bin = parser.to_png(color_theme_key: "shogi_extend_theme")
 # Pathname("_output1.png").write(bin)
 # `open _output1.png`

@@ -3,17 +3,17 @@ require "color"
 
 params = {
   # canvas_color: "#c5e1b7",
-  # outer_frame_bg_color: "#91a687",
+  # outer_frame_fill_color: "#91a687",
 
   :pentagon_color     => { :black => "#000", :white => "#666", },
   :canvas_color      => "#22A",         # 部屋の色
-  :outer_frame_bg_color    => "#33A",         # 盤の色
-  :piece_color       => "#BBA",         # 駒の色
+  :outer_frame_fill_color    => "#33A",         # 盤の色
+  :piece_font_color       => "#BBA",         # 駒の色
   :stand_piece_color => "#66A",         # 駒の色(持駒)
   :piece_count_color => "#55A",         # 駒の色(持駒数)
-  :piece_move_bg_color      => "#44A",         # 移動元と移動先のセルの背景色(nilなら描画しない)
+  :piece_move_cell_fill_color      => "#44A",         # 移動元と移動先のセルの背景色(nilなら描画しない)
   :lattice_color     => "#55A",         # 格子の色
-  :inner_frame_color => "#5858AA",      # 格子の外枠色
+  :inner_frame_stroke_color => "#5858AA",      # 格子の外枠色
   :promoted_font_color    => "#3cA",         # 成駒の色
 }
 

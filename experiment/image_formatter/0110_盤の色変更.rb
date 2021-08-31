@@ -20,5 +20,5 @@ parser = Parser.parse(<<~EOT, turn_limit: 10)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-object = parser.image_formatter(outer_frame_bg_color: "#aaf")
+object = parser.image_formatter(outer_frame_fill_color: "#aaf")
 object.display

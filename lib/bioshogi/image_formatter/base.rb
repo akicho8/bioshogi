@@ -24,26 +24,31 @@ module Bioshogi
             },
                                                                       # 盤
             :canvas_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
-            :piece_color              => "rgba(0,0,0,0.8)",           # 駒の色(必須)
+            :piece_font_color              => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
-            :outer_frame_padding      => 0,                           # 盤の余白
-            :outer_frame_radius                      => 0.05,                        # 盤の角の丸め
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
             :inner_frame_stroke_width => 3,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+            :inner_frame_fill_color   => "transparent",               # 基本透明とする(nil にしてはいけない)
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
 
                                                                       # optional
-            :last_soldier_color       => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_color を代用)
-            :stand_piece_color        => nil,                         # *持駒の色(nilなら piece_color を代用)
-            :lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_color を代用)
+            :last_soldier_font_color       => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
+            :stand_piece_color        => nil,                         # *持駒の色(nilなら piece_font_color を代用)
+            :lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
             :star_color               => nil,                         # *星の色(nilなら lattice_color を代用)
-            :inner_frame_color        => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_color を代用) これだけで全体イメージが変わる超重要色
-            :promoted_font_color      => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_color を代用)
-            :outer_frame_bg_color     => "transparent",               # 盤の色
+            :inner_frame_stroke_color        => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
+            :promoted_font_color      => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
+
+            :outer_frame_padding      => 0,                           # 盤の余白
+            :outer_frame_radius       => 0.05,                        # 盤の角の丸め
+            :outer_frame_fill_color   => "transparent",               # 盤の色
+            :outer_frame_stroke_color => "transparent",
+            :outer_frame_stroke_width => 0,
+
             :cell_colors              => nil,                         # セルの色 複数指定可
-            :piece_move_bg_color      => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
-            :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_color を代用)
+            :piece_move_cell_fill_color      => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
                                                                       # font
             :font_regular             => nil,                         # 駒のフォント(普通)
@@ -61,7 +66,7 @@ module Bioshogi
             :canvas_pattern_key       => nil,                         # 背景パターン
             :canvas_cache             => false,                       # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
-            :color_theme_key          => "first_light_theme",
+            :color_theme_key          => "paper_simple_theme",
           }
         end
 
@@ -98,7 +103,7 @@ module Bioshogi
         # 将棋盤の静的な部分を使いまわす
         # しかしたいして速度が変わらなかった
         # 46秒が45秒になった程度
-        # しかも moving_draw によって格子が上書きされてしまうため piece_move_bg_color を nil にしないとダメ
+        # しかも moving_draw によって格子が上書きされてしまうため piece_move_cell_fill_color を nil にしないとダメ
         # それならば元の方法にする
         #
         # if @templete_bg
@@ -168,8 +173,8 @@ module Bioshogi
         when v = params[:bg_file]
           @canvas = Magick::Image.read(v).first
           # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
-          # @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
-          @canvas.resize!(*image_rect) # 200 ms
+          @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
+          # @canvas.resize!(*image_rect) # 200 ms
           canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
         else
           @canvas = Magick::Image.new(*image_rect) do |e|
@@ -191,15 +196,15 @@ module Bioshogi
 
       # 格子色
       def lattice_color
-        params[:lattice_color] || params[:piece_color]
+        params[:lattice_color] || params[:piece_font_color]
       end
 
       def star_color
         params[:star_color] || lattice_color
       end
 
-      def inner_frame_color
-        params[:inner_frame_color] || params[:piece_color]
+      def inner_frame_stroke_color
+        params[:inner_frame_stroke_color] || params[:piece_font_color]
       end
 
       # line で stroke を使うと fill + stroke で二重に同じところを塗るっぽい
@@ -222,25 +227,26 @@ module Bioshogi
         end
       end
 
+      # 内側なので基本透明で枠だけを描画する
       def inner_frame_draw
         if inner_frame_stroke_width
           draw_context do |g|
-            g.stroke(inner_frame_color)
+            g.stroke(inner_frame_stroke_color)
             g.stroke_width(inner_frame_stroke_width)
-            g.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
-            g.fill = "transparent"
-            g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
+            g.fill = params[:inner_frame_fill_color]
+            g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # QUESTION: 右下は -1, -1 するべきか？
           end
         end
       end
 
+      # 盤 padding を入れる場合
       def frame_bg_draw
         draw_context do |g|
-          if false
-            g.stroke(inner_frame_color)
-            g.stroke_width(inner_frame_stroke_width)
+          if params[:outer_frame_stroke_width].nonzero?
+            g.stroke(params[:outer_frame_stroke_color])
+            g.stroke_width(params[:outer_frame_stroke_width])
           end
-          g.fill = params[:outer_frame_bg_color]
+          g.fill = params[:outer_frame_fill_color]
           d = V.one * params[:outer_frame_padding]
           g.roundrectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d), *(cell_rect * outer_frame_radius)) # stroke_width に応じてずれる心配なし
         end
@@ -252,7 +258,12 @@ module Bioshogi
             if color
               draw_context do |g|
                 g.fill = color
-                g.rectangle(*px(v), *px(v + V.one))
+                # NOTE: 格子が1pxの場合に隙間ができるため minus_one しない方がよさそう
+                if false
+                  g.rectangle(*px(v), *minus_one(*px(v + V.one))) # 隙間ができる
+                else
+                  g.rectangle(*px(v), *px(v + V.one)) # 正確ではないが隙間ができない
+                end
               end
             end
           end
@@ -275,11 +286,11 @@ module Bioshogi
       end
 
       def moving_draw
-        if params[:piece_move_bg_color]
+        if params[:piece_move_cell_fill_color]
           if hand_log
             draw_context do |g|
               g.stroke("transparent")
-              g.fill = params[:piece_move_bg_color]
+              g.fill = params[:piece_move_cell_fill_color]
               cell_draw(g, current_place)
               cell_draw(g, origin_place)
             end
@@ -294,13 +305,13 @@ module Bioshogi
             color = nil
             bold = false
             if hand_log && soldier == hand_log.soldier
-              color ||= params[:last_soldier_color]
+              color ||= params[:last_soldier_font_color]
               bold = true
             end
             if soldier.promoted
               color ||= params[:promoted_font_color]
             end
-            color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_color]
+            color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color]
             piece_pentagon_draw(v: v, location: location)
             bold ||= params[:font_board_piece_bold]
             char_draw(v: adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: params[:piece_char_scale])
@@ -346,6 +357,10 @@ module Bioshogi
         top_left + v.map2(cell_rect) { |a, b| a * b }
       end
 
+      def minus_one(x, y)
+        [x - 1, y - 1]
+      end
+
       def line_draw(g, v1, v2)
         g.line(*px(v1), *px(v2))
       end
@@ -356,7 +371,7 @@ module Bioshogi
         end
       end
 
-      def char_draw(v:, text:, location:, font_size:, color: params[:piece_color], bold: false, stroke_width: nil, stroke_color: nil, gravity: Magick::CenterGravity)
+      def char_draw(v:, text:, location:, font_size:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil, gravity: Magick::CenterGravity)
         g = Magick::Draw.new
         g.rotation = location.angle
         # g.font_weight = Magick::BoldWeight # 効かない

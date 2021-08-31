@@ -5,189 +5,118 @@ module Bioshogi
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [
-        {
-          :key => :first_light_theme,
-          :func => -> e {
-            {
-            }
-          },
-        },
-        {
-          :key => :pentagon_white_theme,
-          :func => -> e {
-            e.pentagon_white_theme
-          },
-        },
-
-        {
-          :key => :pentagon_basic_theme,
-          :func => -> e {
-            # e.pentagon_white_theme.merge({
-            e.pentagon_basic_theme
-          },
-        },
-
-        # {
-        #   :key => :dark_theme,
-        #   :func => -> e {
-        #     {
-        #       :face_pentagon_color     => { black: "#000", white: "#666", },
-        #       :canvas_color      => "#222",         # 部屋の色
-        #       :outer_frame_bg_color    => "#333",         # 盤の色
-        #       :piece_color       => "#BBB",         # 駒の色
-        #       :stand_piece_color => "#666",         # 駒の色(持駒)
-        #       :piece_count_color => "#555",         # 駒の色(持駒数)
-        #       :piece_move_bg_color      => "#444",         # 移動元と移動先のセルの背景色(nilなら描画しない)
-        #       :lattice_color     => "#555",         # 格子の色
-        #       :inner_frame_color       => "#585858",      # 格子の外枠色
-        #       :promoted_font_color    => "#3c3",         # 成駒の色
-        #     }
-        #   },
-        # },
-        {
-          :key => :dark_theme,
-          :func => -> e {
-            c = Color::GreyScale.from_fraction(0.7)
-            e.bright_palette_for(c)
-          },
-        },
-        {
-          :key  => :matrix_theme,
-          :func => -> e {
-            c = Color::RGB::Green.to_hsl
-            c.s = 1.0
-            c.l = 0.6
-            e.bright_palette_for(c, alpha: 0.7).merge(bg_file: "#{__dir__}/../assets/images/matrix_1024x768.png")
-          },
-        },
-        {
-          :key  => :green_lcd_theme,
-          :func => -> e {
-            c = Color::RGB::Green.to_hsl
-            c.s = 1.0
-            c.l = 0.4
-            e.bright_palette_for(c)
-          },
-        },
-        {
-          :key => :orange_lcd_theme,
-          :func => -> e {
-            c = Color::RGB::Orange.to_hsl
-            c.s = 1.0
-            c.l = 0.4
-            e.bright_palette_for(c)
-          },
-        },
-
-        {
-          :key => :flip_violet_red_theme,
-          :func => -> e {
-            c2 = Color::RGB::MediumVioletRed.adjust_saturation(50)
-            e.flip_cell_type_for(c2)
-          },
-        },
-
-        {
-          :key => :flip_green_theme,
-          :func => -> e {
-            c2 = Color::RGB::Green.adjust_saturation(50)
-            e.flip_cell_type_for(c2)
-          },
-        },
+        { :key => :paper_simple_theme,      :func => -> e { { } }, },
+        { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
+        { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
+        { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
+        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; s.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1600x1200.png" }, },
+        { :key => :brightness_green_theme,  :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { :key => :brightness_orange_theme, :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { :key => :kimetsu_red_theme,       :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
+        { :key => :kimetsu_blue_theme,      :func => -> e { e.kimetsu_build(Color::RGB::LightSkyBlue.adjust_saturation(0))     }, },
       ]
 
       # 輝度だけを変化させた設定を返す
-      def bright_palette_for(color, alpha: 1.0)
+      def brightness_only_build(color, alpha: 1.0)
         base_color = color.to_rgb
-        bright_palette_for2(-> v { base_color.adjust_brightness(v).css_rgba(alpha) })
-      end
-
-      def bright_palette_for2(f)
+        f = -> v { base_color.adjust_brightness(v).css_rgba(alpha) }
         {
-          **pentagon_enabled,
           **piece_count_on_shadow(f),
           **outer_frame_padding_enabled,
 
-          :piece_pentagon_fill_color   => f[-80],
-          :piece_pentagon_stroke_color => f[-50],
-          :piece_pentagon_stroke_width => 2,
+          # :bg_file => "#{__dir__}/../assets/images/checker_dark.png",
 
-          :face_pentagon_color     => {
-            black: f[-70],  # ☗
-            white: f[20],   # ☖
+          **{
+            **pentagon_enabled,
+            :piece_pentagon_fill_color   => f[-80],
+            :piece_pentagon_stroke_color => f[-50],
+            :piece_pentagon_stroke_width => 2,
           },
-          :canvas_color        => f[-92],  # 部屋の色
-          :outer_frame_bg_color => f[-84],  # 盤の色
-          :cell_colors         => [f[-84], nil],  # セルの色
-          :piece_move_bg_color => f[-70],  # 移動元と移動先のセルの背景色
-          :lattice_color       => f[-40],  # 格子の色
-          :inner_frame_color   => f[-30],  # 格子の外枠色
-          :stand_piece_color   => f[-0],  # 駒の色(持駒)
 
-          # 駒
-          # :font_board_piece_bold => true,              # 駒は常に太字を使うか？
-          :piece_color         => f[30],   # 駒の色
-          :last_soldier_color  => f[70],   # 最後に動いた駒
-          :promoted_font_color => f[50],   # 成駒の色
-          # :normal_piece_color_map => {
-          #   # :king   => f[50],
-          #   # :rook   => f[50],
-          #   # :bishop => f[50],
-          #   # :gold   => f[-16],
-          #   # :silver => f[-17],
-          #   # :knight => f[-18],
-          #   # :lance  => f[-19],
-          #   # :pawn   => f[-20],
-          # },
+          :face_pentagon_color           => {
+            black: f[-70],                                 # ☗
+            white: f[20],                                  # ☖
+          },
+          :canvas_color                  => f[-92],        # 部屋の色
+          :outer_frame_fill_color        => f[-84],        # 盤の色
+          :cell_colors                   => [f[-84], nil], # セルの色
+          :piece_move_cell_fill_color    => f[-70],        # 移動元と移動先のセルの背景色
+          :lattice_color                 => f[-40],        # 格子の色
+          :inner_frame_stroke_color      => f[-30],        # 格子の外枠色
+          :stand_piece_color             => f[-0],         # 駒の色(持駒)
+
+                                                           # 駒
+                                                           # :font_board_piece_bold       => true,              # 駒は常に太字を使うか？
+          :piece_font_color              => f[30],         # 駒の色
+          :last_soldier_font_color       => f[70],         # 最後に動いた駒
+          :promoted_font_color           => f[50],         # 成駒の色
+                                                           # :normal_piece_color_map      => {
+                                                           #   # :king                    => f[50],
+                                                           #   # :rook                    => f[50],
+                                                           #   # :bishop                  => f[50],
+                                                           #   # :gold                    => f[-16],
+                                                           #   # :silver                  => f[-17],
+                                                           #   # :knight                  => f[-18],
+                                                           #   # :lance                   => f[-19],
+                                                           #   # :pawn                    => f[-20],
+                                                           # },
         }
       end
 
-      def flip_cell_type_for(c2)
-        c1 = Color::GreyScale.from_fraction(0.7).to_rgb
+      def kimetsu_build(accent_color)
+        c1 = Color::GreyScale.from_fraction(0.8).to_rgb
         f = -> v { c1.adjust_brightness(v).css_rgba(1.0) }
 
-        # c2 = Color::RGB::IndianRed
-        # c2 = Color::RGB::HotPink
-        # c2 = Color::RGB::SeaGreen
-        # c2 = Color::RGB::Green
-        # c2 = Color::RGB::MediumVioletRed.adjust_saturation(50)
-        r = -> v { c2.adjust_brightness(v).css_rgba(1.0) }
+        # accent_color = Color::RGB::IndianRed
+        # accent_color = Color::RGB::HotPink
+        # accent_color = Color::RGB::SeaGreen
+        # accent_color = Color::RGB::Green
+        # accent_color = Color::RGB::MediumVioletRed.adjust_saturation(50)
+        r = -> v { accent_color.adjust_brightness(v).css_rgba(1.0) }
 
         {
-          :face_pentagon_color     => {
-            black: f[-70],  # ☗
-            white: f[20],   # ☖
-          },
-          :canvas_color       => f[-84],  # 部屋の色
-          :outer_frame_bg_color     => f[-78],  # 盤の色
-          :cell_colors        => [f[-84], "transparent"],  # セルの色
-          :piece_move_bg_color       => f[-68],  # 移動元と移動先のセルの背景色
-          :stand_piece_color  => f[-30],  # 駒の色(持駒)
-          :piece_count_color  => f[-50],  # 駒の色(持駒数)
-          # :inner_frame_stroke_width => 3,
+          **piece_count_on_shadow(f),
 
-          :lattice_color      => r[-30],  # 格子の色
-          :star_color         => r[  0],  # 星の色
-          :inner_frame_color        => r[-30],  # 格子の外枠色
+          **{
+            **outer_frame_padding_enabled,
+            :outer_frame_padding => 0.05,
+          },
+
+          # :canvas_pattern_key      => :pattern_checker_dark,
+          :bg_file => "#{__dir__}/../assets/images/checker_dark.png",
+
+          **{
+            **pentagon_enabled,
+            :piece_pentagon_fill_color   => komairo.adjust_saturation(0).html, # ☗の色(黄色)
+            :piece_pentagon_stroke_color => "transparent",
+            :piece_pentagon_stroke_width => 0,
+            :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
+          },
+
+          :face_pentagon_color           => {
+            black: f[-65],                                      # ☗
+            white: f[-30],                                      # ☖
+          },
+          :canvas_color                  => f[-75],             # 部屋の色
+          :outer_frame_fill_color        => f[-65],             # 盤の色
+          :cell_colors                   => [nil, f[-75]],      # セルの色
+          :piece_move_cell_fill_color    => r[-60],             # 移動元と移動先のセルの背景色
+
+          :piece_count_color             => f[-40],             # 駒の色(持駒数)
 
           # 駒
-          :piece_color        => f[0],    # 駒の色
-          :promoted_font_color     => f[30],   # 成駒の色
-          :last_soldier_color => f[60],   # 最後に動いた駒
-          :normal_piece_color_map => {
-            :king   => f[50],
-            :rook   => f[50],
-            :bishop => f[50],
-            :gold   => f[-10],
-            :silver => f[-11],
-            :knight => f[-12],
-            :lance  => f[-13],
-            :pawn   => f[-14],
-          },
+          :piece_font_color              => f[-75],             # 駒の色
+          :promoted_font_color           => syuiro.html,
+
+          :lattice_color                 => r[-20],             # 格子の色
+          :star_color                    => r[  0],             # 星の色
+          :inner_frame_stroke_color      => r[-20],             # 格子の外枠色
+          :outer_frame_stroke_color      => r[-20],             # 格子の外枠色
+          :outer_frame_stroke_width      => 1,
         }
       end
 
-      def pentagon_white_theme
+      def paper_shape_theme
         {
           **pentagon_enabled,
           :piece_pentagon_fill_color   => "#fff",
@@ -196,21 +125,23 @@ module Bioshogi
         }
       end
 
-      def pentagon_basic_theme
+      def shogi_extend_theme
         {
           **pentagon_enabled,
           **outer_frame_padding_enabled,
 
+          :bg_file => "#{__dir__}/../assets/images/checker_light.png",
+
           # :canvas_pattern_key      => :pattern_checker_light,
 
-          :piece_color            => "rgb(64,64,64)",
-          :promoted_font_color    => "rgb(239,69,74)", # 朱色
-          :outer_frame_bg_color         => "rgba(0,0,0,0.2)",
-          :piece_move_bg_color    => "rgba(0,0,0,0.1)",
+          :piece_font_color            => "rgb(64,64,64)",
+          :promoted_font_color         => syuiro.html,
+          :outer_frame_fill_color         => "rgba(0,0,0,0.2)",
+          :piece_move_cell_fill_color    => "rgba(0,0,0,0.1)",
           # :cell_colors            => ["rgba(255,255,255,0.1)", nil],
 
           # 駒用
-          :piece_pentagon_fill_color   => "rgb(255,227,156)", # ☗の色(黄色)
+          :piece_pentagon_fill_color   => komairo.html,
           # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
 
@@ -237,7 +168,7 @@ module Bioshogi
           :piece_pentagon_draw => true,
           :face_pentagon_scale  => 0.80,
           :piece_pentagon_scale => 0.85,
-          :piece_char_scale     => 0.68,
+          :piece_char_scale     => 0.64,
           :piece_char_adjust => {
             :black => [ 0.0425, 0.08],
             :white => [-0.01,   0.05],
@@ -269,8 +200,18 @@ module Bioshogi
         }
       end
 
+      def komairo
+        Color::RGB.new(255, 227, 156)
+      end
+
+      def syuiro
+        Color::RGB.new(239, 69, 74)
+      end
+
       def to_params
-        @to_params ||= func.call(self)
+        @to_params ||= -> {
+          func.call(self).merge(merge_params || {})
+        }.call
       end
     end
   end

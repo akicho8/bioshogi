@@ -3,8 +3,8 @@ module Bioshogi
     class CanvasPatternInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :pattern_checker_light, command: :checker1, default_params: { base_color: "#fff", accent_color: "rgba(  0,  0,  0,0.04)", }, },
-        { key: :pattern_checker_dark,  command: :checker1, default_params: { base_color: "#333", accent_color: "rgba(255,255,255, 0.2)", }, },
+        { key: :pattern_checker_light, command: :checker1, default_params: { base_color: "#fff", accent_color: "rgba(  0,  0,  0, 0.04)", }, },
+        { key: :pattern_checker_dark,  command: :checker1, default_params: { base_color: "#333", accent_color: "rgba(255,255,255, 0.04)", }, },
       ]
 
       def execute(params = {})
@@ -19,7 +19,7 @@ module Bioshogi
 
       private
 
-      def checker1(rect: Rect[800, 600], base_color: "#fff", accent_color: "rgba(0,0,0,0.03)", w: 32, h: 32)
+      def checker1(rect: Rect[800, 600], base_color: "#fff", accent_color: "rgba(0,0,0,0.03)", w: 16, h: 16)
         require "rmagick"
         Magick::Image.new(*rect) { |e| e.background_color = base_color }.tap do |canvas|
           (canvas.rows.fdiv(h)).ceil.times do |y|

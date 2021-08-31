@@ -23,36 +23,35 @@ EOT
 
 # tp ImageFormatter::ColorThemeInfo.keys
 
-# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
-# parser.image_formatter(color_theme_key: "first_light_theme").display
-# parser.image_formatter(color_theme_key: "pentagon_white_theme").display
-parser.image_formatter(color_theme_key: "pentagon_basic_theme").display
-
-# parser.image_formatter(color_theme_key: "dark_theme").display
-# parser.image_formatter(color_theme_key: "matrix_theme").display
-# parser.image_formatter(color_theme_key: "matrix_theme", viewpoint: "white").display
-# parser.image_formatter(color_theme_key: "green_lcd_theme").display
-# parser.image_formatter(color_theme_key: "orange_lcd_theme").display
-# parser.image_formatter(color_theme_key: "flip_violet_red_theme").display
-# parser.image_formatter(color_theme_key: "flip_green_theme").display
+# parser.image_formatter(color_theme_key: "paper_simple_theme").display
+# parser.image_formatter(color_theme_key: "paper_shape_theme").display
+# parser.image_formatter(color_theme_key: "shogi_extend_theme").display
+# parser.image_formatter(color_theme_key: "brightness_grey_theme").display
+# parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
+# parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
+# parser.image_formatter(color_theme_key: "brightness_green_theme").display
+# parser.image_formatter(color_theme_key: "brightness_orange_theme").display
+# parser.image_formatter(color_theme_key: "kimetsu_red_theme").display
+# parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
 
 # require 'active_support/core_ext/benchmark'
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1572.6509999949485
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1184.6170000499114
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1225.711999926716
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1572.6509999949485
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1184.6170000499114
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1225.711999926716
 #
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1210.1249999832362
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 882.0249999407679
-# Benchmark.ms { parser.image_formatter(color_theme_key: "matrix_theme").to_blob_binary } # => 1008.8139999425039
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1210.1249999832362
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 882.0249999407679
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1008.8139999425039
 # >> |-----------------------|
-# >> | first_light_theme     |
-# >> | pentagon_white_theme  |
-# >> | pentagon_basic_theme  |
-# >> | dark_theme            |
-# >> | matrix_theme          |
-# >> | green_lcd_theme       |
-# >> | orange_lcd_theme      |
-# >> | flip_violet_red_theme |
-# >> | flip_green_theme      |
+# >> | paper_simple_theme     |
+# >> | paper_shape_theme  |
+# >> | shogi_extend_theme  |
+# >> | brightness_grey_theme            |
+# >> | brightness_matrix_theme          |
+# >> | brightness_green_theme       |
+# >> | brightness_orange_theme      |
+# >> | kimetsu_red_theme |
+# >> | kimetsu_blue_theme      |
 # >> |-----------------------|
