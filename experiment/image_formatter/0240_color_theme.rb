@@ -25,19 +25,19 @@ bg_file = Pathname("~/src/shogi-extend/tmp/media_file/20210901/4c69dcbf5d9d23e64
 
 # tp ImageFormatter::ColorThemeInfo.keys
 
-# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key, override_params: {bg_file: bg_file}).display }
 
 # parser.image_formatter(color_theme_key: "paper_simple_theme").display
 # parser.image_formatter(color_theme_key: "paper_shape_theme").display
-parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
 
-
-# parser.image_formatter(color_theme_key: "brightness_grey_theme").display
+# parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
+# parser.image_formatter(color_theme_key: "brightness_grey_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
 # parser.image_formatter(color_theme_key: "brightness_green_theme").display
 # parser.image_formatter(color_theme_key: "brightness_orange_theme").display
-# parser.image_formatter(color_theme_key: "kimetsu_red_theme").display
+# parser.image_formatter(color_theme_key: "kimetsu_red_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
 
 # require 'active_support/core_ext/benchmark'

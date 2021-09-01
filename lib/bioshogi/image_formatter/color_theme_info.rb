@@ -17,7 +17,7 @@ module Bioshogi
       ]
 
       # 輝度だけを変化させた設定を返す
-      def brightness_only_build(color, alpha: 1.0)
+      def brightness_only_build(color, alpha: 0.92)
         base_color = color.to_rgb
         f = -> v { base_color.adjust_brightness(v).css_rgba(alpha) }
         {
@@ -52,7 +52,7 @@ module Bioshogi
 
       def kimetsu_build(accent_color)
         c1 = Color::GreyScale.from_fraction(0.8).to_rgb
-        f = -> v { c1.adjust_brightness(v).css_rgba(1.0) }
+        f = -> v { c1.adjust_brightness(v).css_rgba(0.92) }
 
         # accent_color = Color::RGB::IndianRed
         # accent_color = Color::RGB::HotPink
