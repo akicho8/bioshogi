@@ -63,6 +63,8 @@ module Bioshogi
             logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
             logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
 
+            command_required :ffmpeg
+
             @mediator = @parser.mediator_for_image
             @image_formatter = ImageFormatter.new(@mediator, params)
 

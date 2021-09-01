@@ -117,5 +117,12 @@ module Bioshogi
         logger.info { "#{name}[end #{(Time.now - t).round}s]: #{argv}" }
       end
     end
+
+    def command_required!(command)
+      status, _, _ = systemu("which #{command}")
+      if !status.success?
+        raise StandardError, "no #{command} in path"
+      end
+    end
   end
 end
