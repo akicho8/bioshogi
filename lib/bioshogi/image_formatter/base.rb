@@ -34,7 +34,7 @@ module Bioshogi
             },
             # 盤
             :canvas_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
-            :piece_font_color              => "rgba(0,0,0,0.8)",           # 駒の色(必須)
+            :piece_font_color         => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
             :inner_frame_stroke_width => 3,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
@@ -43,30 +43,28 @@ module Bioshogi
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
 
             # optional
-            :last_soldier_font_color       => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
-            :stand_piece_color        => nil,                         # *持駒の色(nilなら piece_font_color を代用)
-            :inner_frame_lattice_color            => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
-            :star_color               => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
-            :inner_frame_stroke_color        => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
-            :promoted_font_color      => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
+            :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
+            :stand_piece_color          => nil,                         # *持駒の色(nilなら piece_font_color を代用)
+            :inner_frame_lattice_color  => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
+            :star_color                 => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
+            :inner_frame_stroke_color   => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
+            :promoted_font_color        => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
 
-            :outer_frame_padding      => 0,                           # 盤の余白
-            :outer_frame_radius       => 0.05,                        # 盤の角の丸め
-            :outer_frame_fill_color   => "transparent",               # 盤の色
-            :outer_frame_stroke_color => "transparent",
-            :outer_frame_stroke_width => 0,
+            :outer_frame_padding        => 0,                           # 盤の余白
+            :outer_frame_radius         => 0.05,                        # 盤の角の丸め
+            :outer_frame_fill_color     => "transparent",               # 盤の色
+            :outer_frame_stroke_color   => "transparent",
+            :outer_frame_stroke_width   => 0,
 
-            :cell_colors              => nil,                         # セルの色 複数指定可
-            :piece_move_cell_fill_color      => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
-            :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
+            :cell_colors                => nil,                         # セルの色 複数指定可
+            :piece_move_cell_fill_color => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
             # font
-            :font_theme_key           => :gothic_type1,               # フォントの種類 mincho_type1
-            :font_regular => nil, # 駒のフォント(普通)
-            :font_bold    => nil, # 駒のフォント(太字) (nilなら font_regular を代用)
-            # :font_regular => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
-            # :font_bold    => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら font_regular を代用)
-            :font_board_piece_bold         => false,                       # 常に太字を使うか？
+            :font_theme_key        => nil,                         # フォントの種類 mincho_type1
+            :font_regular          => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
+            :font_bold             => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
+            :font_board_piece_bold => false,                       # 常に太字を使うか？
 
             # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
