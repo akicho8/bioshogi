@@ -61,9 +61,11 @@ module Bioshogi
             :normal_piece_color_map   => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
             # font
-            :font_regular             => nil,                         # 駒のフォント(普通)
-            :font_bold                => nil,                         # 駒のフォント(太字) (nilなら font_regular を代用)
             :font_theme_key           => :gothic_type1,               # フォントの種類 mincho_type1
+            :font_regular => nil, # 駒のフォント(普通)
+            :font_bold    => nil, # 駒のフォント(太字) (nilなら font_regular を代用)
+            # :font_regular => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
+            # :font_bold    => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (nilなら font_regular を代用)
             :font_board_piece_bold         => false,                       # 常に太字を使うか？
 
             # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
@@ -77,6 +79,7 @@ module Bioshogi
             :canvas_cache             => false,                       # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
             :color_theme_key          => "paper_simple_theme",
+            :override_params          => {},
           }
         end
 
@@ -100,6 +103,10 @@ module Bioshogi
 
         if v = @params[:font_theme_key]
           @params.update(FontThemeInfo.fetch(v).to_params)
+        end
+
+        if v = @params[:override_params]
+          @params.update(v)
         end
 
         @rendered = false
@@ -394,10 +401,15 @@ module Bioshogi
         g.rotation = location.angle
         # g.font_weight = Magick::BoldWeight # 効かない
         g.pointsize = cell_w * font_size
+
         if bold
-          g.font = params[:font_bold] || params[:font_regular]
+          font = params[:font_bold] || params[:font_regular]
         else
-          g.font = params[:font_regular]
+          font = params[:font_regular]
+        end
+
+        if font
+          g.font = font
         end
 
         # g.stroke = "transparent"  # 下手に縁取り色をつけると汚くなる

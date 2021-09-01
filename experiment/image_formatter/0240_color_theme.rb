@@ -21,13 +21,17 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
+bg_file = Pathname("~/src/shogi-extend/tmp/media_file/20210901/4c69dcbf5d9d23e6409057b5a017ddcd_IS107112702_TP_V.jpg").expand_path.to_s
+
 # tp ImageFormatter::ColorThemeInfo.keys
 
-ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 
 # parser.image_formatter(color_theme_key: "paper_simple_theme").display
 # parser.image_formatter(color_theme_key: "paper_shape_theme").display
-# parser.image_formatter(color_theme_key: "shogi_extend_theme").display
+parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
+
+
 # parser.image_formatter(color_theme_key: "brightness_grey_theme").display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
