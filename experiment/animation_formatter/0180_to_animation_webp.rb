@@ -1,14 +1,14 @@
 require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 8c8d")
-bin = info.to_animation_webp(one_frame_duration: 0.5)
+bin = info.to_animation_webp(one_frame_duration_sec: 0.5)
 Pathname("_output.webp").write(bin) # => 22522
 puts `identify _output.webp`
 `open -a 'Google Chrome' _output.webp`
 # >> [AnimationWebpFormatter] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210825-85804-1iibgt4
 # >> [AnimationWebpFormatter] 生成に使うもの: ffmpeg
 # >> [AnimationWebpFormatter] 最後に追加するフレーム数(end_frames): 0
-# >> [AnimationWebpFormatter] 1手当たりの秒数(one_frame_duration): 0.5
+# >> [AnimationWebpFormatter] 1手当たりの秒数(one_frame_duration_sec): 0.5
 # >> [AnimationWebpFormatter] move: 0 / 2
 # >> [AnimationWebpFormatter] 合計フレーム数(frame_count): 3
 # >> [AnimationWebpFormatter] ソース画像生成数: 3

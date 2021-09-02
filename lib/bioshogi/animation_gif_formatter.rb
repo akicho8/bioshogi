@@ -21,7 +21,7 @@ module Bioshogi
         in_work_directory do
           logger.info { "生成に使うもの: #{media_factory_key}" }
           logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
-          logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
+          logger.info { "1手当たりの秒数(one_frame_duration_sec): #{one_frame_duration_sec}" }
 
           @mediator = @parser.mediator_for_image
           @image_formatter = ImageFormatter.new(@mediator, params)
@@ -38,7 +38,7 @@ module Bioshogi
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               list.concat([@image_formatter.canvas] * end_frames)
-              list.delay = list.ticks_per_second * one_frame_duration
+              list.delay = list.ticks_per_second * one_frame_duration_sec
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
               logger.info { "delay: #{list.delay}" }

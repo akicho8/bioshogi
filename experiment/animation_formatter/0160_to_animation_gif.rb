@@ -2,11 +2,11 @@ require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 8c8d")
 
-bin = info.to_animation_gif(one_frame_duration: 0.5, media_factory_key: "rmagick", tmpdir_remove: false)
+bin = info.to_animation_gif(one_frame_duration_sec: 0.5, media_factory_key: "rmagick", tmpdir_remove: false)
 Pathname("_output_rmagick.gif").write(bin) # => 33701
 puts `identify _output_rmagick.gif`
 
-bin = info.to_animation_gif(one_frame_duration: 0.5, media_factory_key: "ffmpeg", tmpdir_remove: false)
+bin = info.to_animation_gif(one_frame_duration_sec: 0.5, media_factory_key: "ffmpeg", tmpdir_remove: false)
 Pathname("_output.gif").write(bin) # => 44549
 puts `identify _output.gif`
 
@@ -15,7 +15,7 @@ puts `identify _output.gif`
 # >> [AnimationGifFormatter] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210825-85059-75npfc
 # >> [AnimationGifFormatter] 生成に使うもの: rmagick
 # >> [AnimationGifFormatter] 最後に追加するフレーム数(end_frames): 0
-# >> [AnimationGifFormatter] 1手当たりの秒数(one_frame_duration): 0.5
+# >> [AnimationGifFormatter] 1手当たりの秒数(one_frame_duration_sec): 0.5
 # >> [AnimationGifFormatter] move: 0 / 2
 # >> [AnimationGifFormatter] ticks_per_second: 100
 # >> [AnimationGifFormatter] delay: 50
@@ -29,7 +29,7 @@ puts `identify _output.gif`
 # >> [AnimationGifFormatter] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210825-85059-1hknfsr
 # >> [AnimationGifFormatter] 生成に使うもの: ffmpeg
 # >> [AnimationGifFormatter] 最後に追加するフレーム数(end_frames): 0
-# >> [AnimationGifFormatter] 1手当たりの秒数(one_frame_duration): 0.5
+# >> [AnimationGifFormatter] 1手当たりの秒数(one_frame_duration_sec): 0.5
 # >> [AnimationGifFormatter] move: 0 / 2
 # >> [AnimationGifFormatter] 合計フレーム数(frame_count): 3
 # >> [AnimationGifFormatter] ソース画像生成数: 3

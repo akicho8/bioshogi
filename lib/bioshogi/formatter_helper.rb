@@ -8,9 +8,9 @@ module Bioshogi
       def default_params
         {
           # 全体
-          :one_frame_duration         => 1.0,  # 1手N秒
-          :end_duration               => 0,    # 終了図をN秒表示する
-          :end_frames                 => nil,  # 終了図追加フレーム数。空なら end_duration / one_frame_duration
+          :one_frame_duration_sec         => 1.0,  # 1手N秒
+          :end_duration_sec               => 0,    # 終了図をN秒表示する
+          :end_frames                 => nil,  # 終了図追加フレーム数。空なら end_duration_sec / one_frame_duration_sec
 
           # 他
           :ffmpeg_after_embed_options => nil,      # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
@@ -47,8 +47,8 @@ module Bioshogi
       params.fetch(:media_factory_key).to_s
     end
 
-    def one_frame_duration
-      params[:one_frame_duration].to_f
+    def one_frame_duration_sec
+      params[:one_frame_duration_sec].to_f
     end
 
     def ffmpeg_after_embed_options
@@ -56,10 +56,10 @@ module Bioshogi
     end
 
     # 最後の局面を追加で足す回数
-    # これを設定しても最終的な秒数は不明なため基本指定せず、指定した end_duration から算出した方がよい
+    # これを設定しても最終的な秒数は不明なため基本指定せず、指定した end_duration_sec から算出した方がよい
     # |----------------+--------------------+-----------+-----+----------------|
     # | 伸ばしたい秒数 |             1手N秒 |           |     | 追加フレーム数 |
-    # |   end_duration | one_frame_duration |           |     |     end_frames |
+    # |   end_duration_sec | one_frame_duration_sec |           |     |     end_frames |
     # |----------------+--------------------+-----------+-----+----------------|
     # |            2.0 |                0.4 | 2.0 / 0.4 | 5.0 |              5 |
     # |            2.0 |                0.5 | 2.0 / 0.5 | 4.0 |              4 |
@@ -80,7 +80,7 @@ module Bioshogi
       if v = params[:end_frames]
         v.to_i
       else
-        params[:end_duration].fdiv(one_frame_duration).ceil
+        params[:end_duration_sec].fdiv(one_frame_duration_sec).ceil
       end
     end
 
@@ -88,7 +88,7 @@ module Bioshogi
     # 1手 1.0 秒 → "-r 60/60"
     # 1手 1.5 秒 → "-r 60/90"
     def fps_value
-      v = (one_second * one_frame_duration).to_i
+      v = (one_second * one_frame_duration_sec).to_i
       "#{one_second}/#{v}"
     end
 

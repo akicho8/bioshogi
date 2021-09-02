@@ -13,11 +13,11 @@ list.each.with_index do |e, i|
   image_formatter.canvas.write("_#{i}.png")
 end
 
-one_frame_duration = 2.0
+one_frame_duration_sec = 2.0
 base = 1000
-framerate = "#{base}/#{(base * one_frame_duration).to_i}"
+framerate = "#{base}/#{(base * one_frame_duration_sec).to_i}"
 
-total = list.size * one_frame_duration         # => 8.0
+total = list.size * one_frame_duration_sec         # => 8.0
 framerate                       # => "1000/2000"
 
 `ffmpeg -v warning -hide_banner -framerate #{framerate} -i _%d.png -c:v libx264 -pix_fmt yuv420p -y _output1.mp4`

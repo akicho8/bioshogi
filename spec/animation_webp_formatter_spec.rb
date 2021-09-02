@@ -4,7 +4,7 @@ module Bioshogi
   describe AnimationWebpFormatter do
     it "works" do
       info = Parser.parse("position startpos moves 7g7f 8c8d")
-      bin = info.to_animation_webp(one_frame_duration: 0.5, end_frames: 0)
+      bin = info.to_animation_webp(one_frame_duration_sec: 0.5, end_frames: 0)
       File.write("_outout.webp", bin)
       attrs = JSON.parse(`ffprobe -v quiet -print_format json -show_streams -hide_banner -i _outout.webp`) # XXX: -v quiet をつけないとエラーがでている
       pp attrs if $0 == "-"

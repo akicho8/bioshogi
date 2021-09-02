@@ -4,9 +4,9 @@ sfen = "position startpos moves 7g7f 8c8d 2g2f 4a3b 6i7h 8d8e 8h7g 3c3d 7i6h 2b7
 sfen = "position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a2a 8e8f 2a1a 8f8g+ 1a2a 8g8h"
 info = Parser.parse(sfen)
 bin = info.to_mp4({
-    one_frame_duration: 0.5,
+    one_frame_duration_sec: 0.5,
     tmpdir_remove: false,
-    end_duration: 5,
+    end_duration_sec: 5,
     audio_theme_key: "audio_theme_dance",
     theme_override_params: {
       acrossfade_duration: 0,
@@ -21,7 +21,7 @@ tp Media.format("_output.mp4")
 # >> [mp4_formatter] [video] 1. 動画準備
 # >> [mp4_formatter] [video] MP4生成に使うもの: ffmpeg
 # >> [mp4_formatter] [video] 最後に追加するフレーム数(end_frames): 10
-# >> [mp4_formatter] [video] 1手当たりの秒数(one_frame_duration): 0.5
+# >> [mp4_formatter] [video] 1手当たりの秒数(one_frame_duration_sec): 0.5
 # >> [mp4_formatter] [video] move: 0 / 12
 # >> [mp4_formatter] [video] move: 10 / 12
 # >> [mp4_formatter] [video] 合計フレーム数(frame_count): 23

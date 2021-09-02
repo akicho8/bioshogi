@@ -24,7 +24,7 @@ module Bioshogi
       super.merge({
           # Audio関連
           :audio_enable        => true, # 音を結合するか？
-          :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration
+          :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration_sec
           # :main_volume         => 1.0,  # 音量
 
           # テーマ関連
@@ -61,7 +61,7 @@ module Bioshogi
 
             logger.info { "生成に使うもの: #{media_factory_key}" }
             logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
-            logger.info { "1手当たりの秒数(one_frame_duration): #{one_frame_duration}" }
+            logger.info { "1手当たりの秒数(one_frame_duration_sec): #{one_frame_duration_sec}" }
 
             command_required! :ffmpeg
 
@@ -136,8 +136,8 @@ module Bioshogi
 
             if @switch_turn && audio_part_b
               logger.info { "開戦前後で分ける" }
-              part1 = @switch_turn * one_frame_duration + acrossfade_duration # audio1 側を伸ばす
-              part2 = (@frame_count - @switch_turn) * one_frame_duration # audio2 側の長さは同じ
+              part1 = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
+              part2 = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
 
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
@@ -172,7 +172,7 @@ module Bioshogi
     private
 
     def fadeout_duration
-      (params[:fadeout_duration].presence || (one_frame_duration * end_frames)).to_f
+      (params[:fadeout_duration].presence || (one_frame_duration_sec * end_frames)).to_f
     end
 
     def audio_part_a
@@ -196,7 +196,7 @@ module Bioshogi
     end
 
     def total_duration
-      @frame_count * one_frame_duration
+      @frame_count * one_frame_duration_sec
     end
 
     def fadeout_value
@@ -230,7 +230,7 @@ module Bioshogi
     #   {
     #     "最後に追加したフレーム数(end_frames)" => end_frames,
     #     "合計フレーム数(frame_count)"          => @frame_count,
-    #     "1手当たりの秒数(one_frame_duration)"  => one_frame_duration,
+    #     "1手当たりの秒数(one_frame_duration_sec)"  => one_frame_duration_sec,
     #     "予測した全体の秒数(total_duration)"   => total_duration,
     #     "BGMが切り替わるフレーム(switch_turn)" => @switch_turn,
     #   }
