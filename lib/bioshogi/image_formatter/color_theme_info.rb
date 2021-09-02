@@ -8,6 +8,7 @@ module Bioshogi
         { :key => :paper_simple_theme,      :func => -> e { { } }, },
         { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
         { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
+        { :key => :real_wood_theme,         :func => -> e { e.real_wood_theme }, },
         { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1600x1200.png" }, },
         { :key => :brightness_green_theme,  :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -118,6 +119,7 @@ module Bioshogi
           **outer_frame_padding_enabled,
 
           :bg_file => "#{__dir__}/../assets/images/checker_light.png",
+          # :bg_file => "#{__dir__}/../assets/images/matrix_1600x1200.png",
 
           # :canvas_pattern_key      => :pattern_checker_light,
 
@@ -148,6 +150,12 @@ module Bioshogi
             :white => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
           },
         }
+      end
+
+      def real_wood_theme
+        shogi_extend_theme.merge({
+            :battle_field_texture => "#{__dir__}/../assets/images/wood1.png",
+          })
       end
 
       def pentagon_enabled

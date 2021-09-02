@@ -1,3 +1,5 @@
+source "https://rubygems.org"
+
 gem "bioshogi", path: ".."
 gem "mechanize"
 gem "test-unit"

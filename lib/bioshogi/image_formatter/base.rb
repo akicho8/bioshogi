@@ -41,6 +41,7 @@ module Bioshogi
             :inner_frame_fill_color   => "transparent",               # 基本透明とする(nil にしてはいけない)
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
+            :battle_field_texture       => nil,                         # 盤テクスチャ
 
             # optional
             :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
@@ -182,6 +183,7 @@ module Bioshogi
           @canvas.resize!(*image_rect) # 200 ms
           # @canvas.blur_image(20.0, 10.0)
           # @canvas = @canvas.emboss
+          # @canvas = Magick::Image.read("netscape:").first.resize(*image_rect)
           canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
         when v = params[:canvas_pattern_key]
           @canvas = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
@@ -196,6 +198,9 @@ module Bioshogi
             e.background_color = params[:canvas_color]
           end
         end
+
+        # 背景画像が RGB8 の白黒の場合 GRAYColorspace になっていてこれに盤を重ねると白黒になってしまう、のを防ぐ
+        @canvas.colorspace = Magick::SRGBColorspace
 
         if params[:canvas_cache]
           @canvas_cache = @canvas.copy
@@ -254,16 +259,27 @@ module Bioshogi
         end
       end
 
-      # 盤 padding を入れる場合
+      # 盤 padding を入れる場合 or 盤画像
       def frame_bg_draw
-        draw_context do |g|
-          if params[:outer_frame_stroke_width].nonzero?
-            g.stroke(params[:outer_frame_stroke_color])
-            g.stroke_width(params[:outer_frame_stroke_width])
+        case
+        when params[:battle_field_texture]
+          if false
+            # 座標を見ずに画面中央に表示する場合
+            @canvas.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
+          else
+            # 自分で座標を指定すると1ドット左に寄っているように見えるので ceil で補正している
+            # https://rmagick.github.io/image1.html#composite
+            @canvas.composite!(texture_image, *px(outer_top_left).collect(&:ceil), Magick::OverCompositeOp)
           end
-          g.fill = params[:outer_frame_fill_color]
-          d = V.one * params[:outer_frame_padding]
-          g.roundrectangle(*px(V[0, 0] - d), *px(V[lattice.w, lattice.h] + d), *(cell_rect * outer_frame_radius)) # stroke_width に応じてずれる心配なし
+        else
+          draw_context do |g|
+            if params[:outer_frame_stroke_width].nonzero?
+              g.stroke(params[:outer_frame_stroke_color])
+              g.stroke_width(params[:outer_frame_stroke_width])
+            end
+            g.fill = params[:outer_frame_fill_color]
+            g.roundrectangle(*px(outer_top_left), *px(outer_bottom_right), *round_radious) # stroke_width に応じてずれる心配なし
+          end
         end
 
         if v = params[:cell_colors].presence
@@ -283,6 +299,33 @@ module Bioshogi
             end
           end
         end
+      end
+
+      # 盤テクスチャ
+      # 1. テクスチャと同じサイズの透明の画像を準備
+      # 2. 透明画像で表示したい部分を塗り潰す (このとき角だけ透明になっている)
+      # 3. その透明画像が金型なので元のテクスチャに押し当てる (CopyAlphaCompositeOp)
+      # 4. 角が取れたテクスチャが出来上がる
+      def texture_image
+        @texture_image ||= -> {
+          image = Magick::Image.read(params[:battle_field_texture].to_s).first
+          image.resize_to_fill!(*ps(outer_rect))
+
+          # 角を取る場合
+          if outer_frame_radius.nonzero?
+            mask = Magick::Image.new(image.columns, image.rows) { |e| e.background_color = "transparent" }
+            Magick::Draw.new.tap do |gc|
+              gc.stroke("none")
+              gc.stroke_width(0)
+              gc.fill("white") # 色がついていれば何でもよい
+              gc.roundrectangle(0, 0, mask.columns - 1, mask.rows - 1, *round_radious) # 見たい部分を塗る
+              gc.draw(mask)
+            end
+            image.composite!(mask, 0, 0, Magick::CopyAlphaCompositeOp) # 角が取れる
+          end
+
+          image
+        }.call
       end
 
       def star_draw
@@ -377,7 +420,12 @@ module Bioshogi
         # map2 を使わないのなら top_left + V[v.x * cell_w, v.y * cell_h] で良い
         # ベタな書き方をしてみたけど速度に影響なし
         # また v でメモ化してみたけどこれも影響なし
-        top_left + v.map2(cell_rect) { |a, b| a * b }
+        top_left + ps(v)
+      end
+
+      # pixel size
+      def ps(v)
+        v.map2(cell_rect) { |a, b| a * b }
       end
 
       def minus_one(x, y)
@@ -521,10 +569,35 @@ module Bioshogi
 
       def outer_frame_radius
         if params[:outer_frame_padding].zero?
-          0
+          0 # 隙間が無い場合は線だけの角なので丸めるとセルが削れる。なので強制的に0
         else
           params[:outer_frame_radius]
         end
+      end
+
+      # 盤の外側とセルの隙間
+      def outer_frame_padding
+        V.one * params[:outer_frame_padding]
+      end
+
+      # 角の丸め度合い
+      def round_radious
+        cell_rect * outer_frame_radius
+      end
+
+      # 外側の左上
+      def outer_top_left
+        V[0, 0] - outer_frame_padding
+      end
+
+      # 外側の左下
+      def outer_bottom_right
+        V[lattice.w, lattice.h] + outer_frame_padding
+      end
+
+      # 外側の領域
+      def outer_rect
+        outer_bottom_right - outer_top_left
       end
     end
   end

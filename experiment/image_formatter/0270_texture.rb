@@ -1,0 +1,54 @@
+require "../example_helper"
+require "color"
+
+parser = Parser.parse(<<~EOT)
+後手の持駒：飛二 角 銀二 桂四 香四 歩九
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・v竜 竜v馬 馬 ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+先手の持駒：飛 角 金四 銀二 桂 香 玉 歩九九
+
+手数----指手---------消費時間--
+1 ２六歩(27) (00:00/00:00:00)
+EOT
+
+# bg_file = Pathname("~/src/shogi-extend/tmp/media_file/20210901/4c69dcbf5d9d23e6409057b5a017ddcd_IS107112702_TP_V.jpg").expand_path.to_s
+# 
+# # tp ImageFormatter::ColorThemeInfo.keys
+# 
+# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key, override_params: {bg_file: bg_file}).display }
+
+# parser.image_formatter(color_theme_key: "paper_simple_theme").display
+# parser.image_formatter(color_theme_key: "paper_shape_theme").display
+
+# parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
+parser.image_formatter(color_theme_key: "real_wood_theme").display
+# parser.image_formatter(color_theme_key: "brightness_grey_theme", override_params: {bg_file: bg_file}).display
+# parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
+# parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
+# parser.image_formatter(color_theme_key: "brightness_green_theme").display
+# parser.image_formatter(color_theme_key: "brightness_orange_theme").display
+# parser.image_formatter(color_theme_key: "kimetsu_red_theme", override_params: {bg_file: bg_file}).display
+# parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
+
+# require 'active_support/core_ext/benchmark'
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1572.6509999949485
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1184.6170000499114
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1225.711999926716
+#
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1210.1249999832362
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 882.0249999407679
+# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1008.8139999425039
+
+# >> /Users/ikeda/src/bioshogi/lib/bioshogi/image_formatter/../assets/images/checker_light.png PNG24 1600x1200=>1200x630 DirectClass 16-bit
+# >> Vector[559.6961538461537, 611.8]
