@@ -10,7 +10,7 @@ module Bioshogi
         { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
         { :key => :real_wood_theme,         :func => -> e { e.real_wood_theme }, },
         { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1600x1200.png" }, },
+        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
         { :key => :brightness_green_theme,  :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { :key => :brightness_orange_theme, :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { :key => :kimetsu_red_theme,       :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
