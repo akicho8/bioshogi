@@ -154,7 +154,7 @@ module Bioshogi
 
       def real_wood_theme
         shogi_extend_theme.merge({
-            :battle_field_texture => "#{__dir__}/../assets/images/wood1.png",
+            :battle_field_texture => "#{__dir__}/../assets/images/wood_1080x1080.png",
           })
       end
 
