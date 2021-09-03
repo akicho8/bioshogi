@@ -104,8 +104,11 @@ module Bioshogi
               @frame_count += 1
               @parser.move_infos.each.with_index do |e, i|
                 @mediator.execute(e[:input])
+                logger.info("@mediator.execute OK")
                 @image_formatter.render
+                logger.info("@image_formatter.render OK")
                 @image_formatter.canvas.write("_input%04d.png" % @frame_count)
+                logger.info("@image_formatter.canvas.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
