@@ -61,7 +61,7 @@ module Bioshogi
                 :text      => piece.name,
                 :location  => location,
                 :color     => params[:stand_piece_color] || params[:piece_font_color],
-                :font_size => (params[:stand_piece_char_scale] || params[:piece_char_scale]) * bairitu(piece),
+                :font_size => (params[:stand_piece_char_scale] || params[:piece_char_scale]) * piece_scale_of(piece),
                 :bold      => params[:font_stand_piece_bold]
               })
 

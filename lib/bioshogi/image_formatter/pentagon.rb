@@ -9,8 +9,9 @@ module Bioshogi
             :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_char_scaleを調整すること)
             :piece_pentagon_fill_color    => "transparent",     # ☗の色
             :piece_pentagon_stroke_color  => "transparent",     # ☗の縁取り色
-            :piece_pentagon_stroke_width  => nil,               # ☗の縁取り幅
+            :piece_pentagon_stroke_width  => 1,                 # ☗の縁取り幅
             :piece_pentagon_scale         => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+
             # :piece_pentagon_scale_map     => {
             #   :king    => 0.85,
             #   :rook    => 0.85,
@@ -35,8 +36,8 @@ module Bioshogi
             :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
             :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
             :face_pentagon_color          => {
-              :black                      => "rgba(  0,  0,  0,0.6)",     # ☗を白と黒で塗り分けるときの先手の色
-              :white                      => "rgba(255,255,255,0.6)",     # ☗を白と黒で塗り分けるときの後手の色
+              :black                      => "rgba(  0,  0,  0,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
+              :white                      => "rgba(255,255,255,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
             },
 
             # 六角形のスタイル
@@ -164,7 +165,7 @@ module Bioshogi
       ################################################################################ piece
 
       def piece_pentagon_scale(piece)
-        params[:piece_pentagon_scale] * bairitu(piece)
+        params[:piece_pentagon_scale] * piece_scale_of(piece)
         # params[:piece_pentagon_scale_map].fetch(piece.key, )
       end
 

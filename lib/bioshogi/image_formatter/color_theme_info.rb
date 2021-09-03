@@ -5,7 +5,7 @@ module Bioshogi
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [
-        { :key => :paper_simple_theme,      :func => -> e { { } }, },
+        { :key => :paper_simple_theme,      :func => -> e { e.paper_simple_theme }, },
         { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
         { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
         { :key => :real_wood_theme,         :func => -> e { e.real_wood_theme }, },
@@ -22,7 +22,7 @@ module Bioshogi
         base_color = color.to_rgb
         f = -> v { base_color.adjust_brightness(v).css_rgba(alpha) }
         {
-          **piece_count_on_shadow(f),
+          **piece_count_on_shadow_white_on_black(f),
           **outer_frame_padding_enabled,
 
           # :bg_file => "#{__dir__}/../assets/images/checker_dark.png",
@@ -63,7 +63,9 @@ module Bioshogi
         r = -> v { accent_color.adjust_brightness(v).css_rgba(1.0) }
 
         {
-          **piece_count_on_shadow(f),
+          **{
+            **piece_count_on_shadow_white_on_black(f),
+          },
 
           **{
             **outer_frame_padding_enabled,
@@ -90,7 +92,6 @@ module Bioshogi
           :cell_colors                   => [nil, f[-75]],      # セルの色
           :piece_move_cell_fill_color    => r[-60],             # 移動元と移動先のセルの背景色
 
-          :piece_count_color             => f[-40],             # 駒の色(持駒数)
 
           # 駒
           :piece_font_color              => f[-75],             # 駒の色
@@ -101,6 +102,13 @@ module Bioshogi
           :inner_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_width      => 1,
+        }
+      end
+
+      def paper_simple_theme
+        {
+          :face_pentagon_stroke_color => "rgba(0,0,0,0.4)",
+          :face_pentagon_stroke_width => 1,
         }
       end
 
@@ -115,40 +123,44 @@ module Bioshogi
 
       def shogi_extend_theme
         {
-          **pentagon_enabled,
+          **piece_count_on_shadow_black_on_white,
           **outer_frame_padding_enabled,
 
-          :bg_file => "#{__dir__}/../assets/images/checker_light.png",
-          # :bg_file => "#{__dir__}/../assets/images/matrix_1600x1200.png",
+          **{
+            **pentagon_enabled,
+            :piece_pentagon_stroke_width => nil,
+          },
 
-          # :canvas_pattern_key      => :pattern_checker_light,
+          :bg_file                       => "#{__dir__}/../assets/images/checker_light.png",
+          # :bg_file                     => "#{__dir__}/../assets/images/matrix_1600x1200.png",
 
-          :piece_font_color            => "rgb(64,64,64)",
-          :promoted_font_color         => syuiro.html,
-          :outer_frame_fill_color         => "rgba(0,0,0,0.2)",
+          # :canvas_pattern_key          => :pattern_checker_light,
+
+          :piece_font_color              => "rgb(64,64,64)",
+          :promoted_font_color           => syuiro.html,
+          :outer_frame_fill_color        => "rgba(80,80,80,0.5)",
           :piece_move_cell_fill_color    => "rgba(0,0,0,0.1)",
-          # :cell_colors            => ["rgba(255,255,255,0.1)", nil],
+          # :cell_colors                 => ["rgba(255,255,255,0.1)", nil],
 
           # 駒用
-          :piece_pentagon_fill_color   => komairo.html,
+          :piece_pentagon_fill_color     => komairo.html,
           # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら inner_frame_lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
 
           # :font_board_piece_bold       => false,              # 駒は常に太字を使うか？
 
           # 持駒
-          :piece_count_color           => "rgba(0,0,0,0.4)",
 
-          # :piece_count_stroke_color => "rgb(255,227,156)",  # 持駒数の縁取り色
-          # :piece_count_stroke_color => "rgba(255,255,255,1.0)",  # 持駒数の縁取り色
-          # :piece_count_stroke_width => 2,  # 持駒数の縁取り太さ
+          # :piece_count_stroke_color    => "rgb(255,227,156)",  # 持駒数の縁取り色
+          # :piece_count_stroke_color    => "rgba(255,255,255,1.0)",  # 持駒数の縁取り色
+          # :piece_count_stroke_width    => 2,  # 持駒数の縁取り太さ
 
           # 影を入れるので☗を半透明にしない
-          :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
-          :face_pentagon_color => {
-            :black => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
-            :white => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
-          },
+          :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
+          # :face_pentagon_color         => {
+          #   :black                     => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
+          #   :white                     => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
+          # },
         }
       end
 
@@ -169,10 +181,16 @@ module Bioshogi
         }
       end
 
-      def piece_count_on_shadow(f)
+      def piece_count_on_shadow_white_on_black(f)
         {
-          :piece_count_bg_color        => f[-84],      # 駒数の背景
-          :piece_count_color           => f[-30],      # 駒の色(持駒数)
+          **piece_count_on_shadow_black_on_white,
+          :piece_count_bg_color => f[-84],      # 駒数の背景
+          :piece_count_color    => f[-20],      # 駒の色(持駒数)
+        }
+      end
+
+      def piece_count_on_shadow_black_on_white
+        {
           :piece_count_bg_scale        => 0.4,         # 駒数の背景の大きさ
           :piece_count_scale           => 0.35,        # 持駒数の大きさ
           :piece_count_position_adjust => {            # 駒数の位置

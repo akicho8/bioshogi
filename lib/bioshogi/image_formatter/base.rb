@@ -16,7 +16,7 @@ module Bioshogi
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
             :piece_char_scale => 0.85, # 盤上駒
-            :piece_scale_mag => {
+            :piece_scale_map => {
               :king    => 1.00,
               :rook    => 1.00,
               :bishop  => 1.00,
@@ -378,11 +378,11 @@ module Bioshogi
       end
 
       def piece_char_scale(piece)
-        params[:piece_char_scale] * bairitu(piece)
+        params[:piece_char_scale] * piece_scale_of(piece)
       end
 
-      def bairitu(piece)
-        params[:piece_scale_mag].fetch(piece.key, 1.0)
+      def piece_scale_of(piece)
+        params[:piece_scale_map].fetch(piece.key, 1.0)
       end
 
       def canvas_flip_if_viewpoint_is_white

@@ -21,16 +21,14 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-bg_file = Pathname("~/src/shogi-extend/tmp/media_file/20210901/4c69dcbf5d9d23e6409057b5a017ddcd_IS107112702_TP_V.jpg").expand_path.to_s
+bg_file = "../../lib/bioshogi/assets/images/checker_light.png"
+bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 
-# tp ImageFormatter::ColorThemeInfo.keys
-
-ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
+# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 # ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key, override_params: {bg_file: bg_file}).display }
 
-# parser.image_formatter(color_theme_key: "paper_simple_theme").display
-# parser.image_formatter(color_theme_key: "paper_shape_theme").display
-
+# parser.image_formatter(color_theme_key: "paper_simple_theme", override_params: {bg_file: bg_file}).display
+# parser.image_formatter(color_theme_key: "paper_shape_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "brightness_grey_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
@@ -38,7 +36,9 @@ ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key
 # parser.image_formatter(color_theme_key: "brightness_green_theme").display
 # parser.image_formatter(color_theme_key: "brightness_orange_theme").display
 # parser.image_formatter(color_theme_key: "kimetsu_red_theme", override_params: {bg_file: bg_file}).display
-# parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
+parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
+
+tp ImageFormatter::ColorThemeInfo.keys
 
 # require 'active_support/core_ext/benchmark'
 # Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1572.6509999949485
@@ -48,14 +48,15 @@ ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key
 # Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1210.1249999832362
 # Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1008.8139999425039
-# >> |-----------------------|
-# >> | paper_simple_theme     |
-# >> | paper_shape_theme  |
-# >> | shogi_extend_theme  |
-# >> | brightness_grey_theme            |
-# >> | brightness_matrix_theme          |
-# >> | brightness_green_theme       |
-# >> | brightness_orange_theme      |
-# >> | kimetsu_red_theme |
+# >> |-------------------------|
+# >> | paper_simple_theme      |
+# >> | paper_shape_theme       |
+# >> | shogi_extend_theme      |
+# >> | real_wood_theme         |
+# >> | brightness_grey_theme   |
+# >> | brightness_matrix_theme |
+# >> | brightness_green_theme  |
+# >> | brightness_orange_theme |
+# >> | kimetsu_red_theme       |
 # >> | kimetsu_blue_theme      |
-# >> |-----------------------|
+# >> |-------------------------|

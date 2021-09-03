@@ -21,34 +21,4 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-# bg_file = Pathname("~/src/shogi-extend/tmp/media_file/20210901/4c69dcbf5d9d23e6409057b5a017ddcd_IS107112702_TP_V.jpg").expand_path.to_s
-# 
-# # tp ImageFormatter::ColorThemeInfo.keys
-# 
-# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
-# ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key, override_params: {bg_file: bg_file}).display }
-
-# parser.image_formatter(color_theme_key: "paper_simple_theme").display
-# parser.image_formatter(color_theme_key: "paper_shape_theme").display
-
-# parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
 parser.image_formatter(color_theme_key: "real_wood_theme").display
-# parser.image_formatter(color_theme_key: "brightness_grey_theme", override_params: {bg_file: bg_file}).display
-# parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
-# parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
-# parser.image_formatter(color_theme_key: "brightness_green_theme").display
-# parser.image_formatter(color_theme_key: "brightness_orange_theme").display
-# parser.image_formatter(color_theme_key: "kimetsu_red_theme", override_params: {bg_file: bg_file}).display
-# parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
-
-# require 'active_support/core_ext/benchmark'
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1572.6509999949485
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1184.6170000499114
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1225.711999926716
-#
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1210.1249999832362
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 882.0249999407679
-# Benchmark.ms { parser.image_formatter(color_theme_key: "brightness_matrix_theme").to_blob_binary } # => 1008.8139999425039
-
-# >> /Users/ikeda/src/bioshogi/lib/bioshogi/image_formatter/../assets/images/checker_light.png PNG24 1600x1200=>1200x630 DirectClass 16-bit
-# >> Vector[559.6961538461537, 611.8]
