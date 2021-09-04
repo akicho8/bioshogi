@@ -98,7 +98,7 @@ module Bioshogi
           :promoted_font_color           => syuiro.html,
 
           :inner_frame_lattice_color                 => r[-20],             # 格子の色
-          :star_color                    => r[  0],             # 星の色
+          :star_fill_color                    => r[  0],             # 星の色
           :inner_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_width      => 1,

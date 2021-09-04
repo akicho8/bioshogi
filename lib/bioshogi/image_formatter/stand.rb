@@ -57,7 +57,7 @@ module Bioshogi
             piece_pentagon_draw(v: v, location: location, piece: piece)
             # 持駒
             char_draw({
-                :v         => adjust(v, location),
+                :v         => piece_char_adjust(v, location),
                 :text      => piece.name,
                 :location  => location,
                 :color     => params[:stand_piece_color] || params[:piece_font_color],
