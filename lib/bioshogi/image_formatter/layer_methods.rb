@@ -39,8 +39,10 @@ module Bioshogi
       end
 
       def transparent_layer(key)
-        logger.info { "transparent_layer create for #{key}" }
-        Magick::Image.new(*image_rect) { |e| e.background_color = "transparent" }
+        logger.info { "transparent_layer create for #{key} BEGIN" }
+        v = Magick::Image.new(*image_rect) { |e| e.background_color = "transparent" }
+        logger.info { "transparent_layer create for #{key} END" }
+        v
       end
 
       # 指定のレイヤーに影をつける
