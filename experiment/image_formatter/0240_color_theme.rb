@@ -23,15 +23,16 @@ EOT
 
 bg_file = "../../lib/bioshogi/assets/images/checker_light.png"
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
+bg_file = nil
 
 # ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key).display }
 # ImageFormatter::ColorThemeInfo.each { |e| parser.image_formatter(color_theme_key: e.key, override_params: {bg_file: bg_file}).display }
 
-parser.image_formatter(color_theme_key: "paper_simple_theme", override_params: {}).display
 # parser.image_formatter(color_theme_key: "paper_simple_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "paper_shape_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "shogi_extend_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "style_editor_theme").display
+# parser.image_formatter(color_theme_key: "style_editor_variant_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "brightness_grey_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme").display
 # parser.image_formatter(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
@@ -39,6 +40,8 @@ parser.image_formatter(color_theme_key: "paper_simple_theme", override_params: {
 # parser.image_formatter(color_theme_key: "brightness_orange_theme").display
 # parser.image_formatter(color_theme_key: "kimetsu_red_theme", override_params: {bg_file: bg_file}).display
 # parser.image_formatter(color_theme_key: "kimetsu_blue_theme").display
+# parser.image_formatter(color_theme_key: "real_wood_theme").display
+
 
 tp ImageFormatter::ColorThemeInfo.keys
 

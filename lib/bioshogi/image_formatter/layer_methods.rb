@@ -4,8 +4,8 @@ module Bioshogi
       included do
         default_params.update({
             # 共通の影
-            :real_shadow_offset  => 8,   # 影の長さ
-            :real_shadow_sigma   => 1.5, # 影の強さ
+            :real_shadow_offset  => -4,  # 影の長さ 効いてない
+            :real_shadow_sigma   => 1.5, # 影の強さ (0:影なし)
             :real_shadow_opacity => 0.4, # 不透明度
           })
       end
@@ -45,14 +45,16 @@ module Bioshogi
 
       # 指定のレイヤーに影をつける
       def with_shadow(layer)
-        s = layer.shadow( # https://rmagick.github.io/image3.html#shadow
-          params[:real_shadow_offset],
-          params[:real_shadow_offset],
-          params[:real_shadow_sigma],
-          params[:real_shadow_opacity])
-        s.composite(layer, 0, 0, Magick::OverCompositeOp) # 影の上に乗せる
-      ensure
-        s.destroy!
+        if params[:real_shadow_sigma].nonzero?
+          s = layer.shadow( # https://rmagick.github.io/image3.html#shadow
+            params[:real_shadow_offset],
+            params[:real_shadow_offset],
+            params[:real_shadow_sigma],
+            params[:real_shadow_opacity])
+          layer = s.composite(layer, 0, 0, Magick::OverCompositeOp) # 影の上に乗せる
+          s.destroy!
+        end
+        layer
       end
     end
   end

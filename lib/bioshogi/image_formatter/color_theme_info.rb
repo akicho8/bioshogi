@@ -5,17 +5,18 @@ module Bioshogi
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [
-        { :key => :paper_simple_theme,      :func => -> e { e.paper_simple_theme }, },
-        { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
-        { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
-        { :key => :style_editor_theme,      :func => -> e { e.style_editor_theme }, },
-        { :key => :real_wood_theme,         :func => -> e { e.real_wood_theme }, },
-        { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
-        { :key => :brightness_green_theme,  :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
-        { :key => :brightness_orange_theme, :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
-        { :key => :kimetsu_red_theme,       :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
-        { :key => :kimetsu_blue_theme,      :func => -> e { e.kimetsu_build(Color::RGB::LightSkyBlue.adjust_saturation(0))     }, },
+        { :key => :paper_simple_theme,         :func => -> e { e.paper_simple_theme }, },
+        { :key => :paper_shape_theme,          :func => -> e { e.paper_shape_theme }, },
+        { :key => :shogi_extend_theme,         :func => -> e { e.shogi_extend_theme }, },
+        { :key => :style_editor_theme,         :func => -> e { e.style_editor_theme }, },
+        { :key => :style_editor_variant_theme, :func => -> e { e.style_editor_variant_theme }, },
+        { :key => :real_wood_theme,            :func => -> e { e.real_wood_theme }, },
+        { :key => :brightness_grey_theme,      :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
+        { :key => :brightness_matrix_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
+        { :key => :brightness_green_theme,     :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { :key => :brightness_orange_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { :key => :kimetsu_red_theme,          :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
+        { :key => :kimetsu_blue_theme,         :func => -> e { e.kimetsu_build(Color::RGB::LightSkyBlue.adjust_saturation(0))     }, },
       ]
 
       # 輝度だけを変化させた設定を返す
@@ -81,7 +82,7 @@ module Bioshogi
             :piece_pentagon_fill_color   => komairo.adjust_saturation(0).html, # ☗の色(黄色)
             :piece_pentagon_stroke_color => "transparent",
             :piece_pentagon_stroke_width => 0,
-            :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
+            # :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
           },
 
           :face_pentagon_color           => {
@@ -110,8 +111,7 @@ module Bioshogi
           # 真っ白なので☖に枠をつける
           :face_pentagon_stroke_color => "rgba(0,0,0,0.4)",
           :face_pentagon_stroke_width => 1,
-          # 影を取る
-          
+          **shadow_off,
         }
       end
 
@@ -121,6 +121,7 @@ module Bioshogi
           :piece_pentagon_fill_color   => "#fff",
           :piece_pentagon_stroke_color => "rgba(0,0,0,0.4)",
           :piece_pentagon_stroke_width => 1,
+          **shadow_off,
         }
       end
 
@@ -134,14 +135,14 @@ module Bioshogi
             :piece_pentagon_stroke_width => nil,
           },
 
-          :bg_file                       => "#{__dir__}/../assets/images/checker_light.png",
+          # :bg_file                       => "#{__dir__}/../assets/images/checker_light.png",
           # :bg_file                     => "#{__dir__}/../assets/images/matrix_1600x1200.png",
 
           # :canvas_pattern_key          => :pattern_checker_light,
 
           :piece_font_color              => "rgb(64,64,64)",
           :promoted_font_color           => syuiro.html,
-          :outer_frame_fill_color        => "rgba(80,80,80,0.5)",
+          :outer_frame_fill_color        => "rgba(0,0,0,0.2)", # "rgba(120,120,120,0.5)",
           :piece_move_cell_fill_color    => "rgba(0,0,0,0.1)",
           # :cell_colors                 => ["rgba(255,255,255,0.1)", nil],
 
@@ -159,7 +160,7 @@ module Bioshogi
           # :piece_count_stroke_width    => 2,  # 持駒数の縁取り太さ
 
           # 影を入れるので☗を半透明にしない
-          :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
+          # :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
           # :face_pentagon_color         => {
           #   :black                     => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
           #   :white                     => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
@@ -169,9 +170,17 @@ module Bioshogi
 
       def style_editor_theme
         shogi_extend_theme.merge({
-            :bg_file                => nil,
+            # :bg_file                => nil,
             :canvas_bg_color        => "rgb(197,225,183)",
             :outer_frame_fill_color => "rgba(0,0,0,0.24)",
+          })
+      end
+
+      def style_editor_variant_theme
+        shogi_extend_theme.merge({
+            # :bg_file                => nil,
+            :canvas_bg_color        => "#ffc0e5",
+            :outer_frame_fill_color => "rgba(0,0,0,0.15)",
           })
       end
 
@@ -190,6 +199,13 @@ module Bioshogi
             :black => [ 0.0425, 0.08],
             :white => [-0.01,   0.05],
           },
+        }
+      end
+
+      def shadow_off
+        {
+          # 影を取る
+          :real_shadow_sigma => 0,
         }
       end
 
