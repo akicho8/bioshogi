@@ -8,7 +8,7 @@ module Bioshogi
 
             # 持駒
             :stand_piece_line_height     => 1.0,               # 持駒の高さ(1.0 = 1セル高)
-            :stand_piece_char_scale      => nil,               # 持駒(nil なら piece_char_scale を代用)
+            :stand_piece_char_scale      => nil,               # 持駒(nil なら soldier_char_scale を代用)
             :font_stand_piece_bold      => false,             # 持駒を太くする？
 
             # 持駒数
@@ -61,7 +61,7 @@ module Bioshogi
                 :text      => piece.name,
                 :location  => location,
                 :color     => params[:stand_piece_color] || params[:piece_font_color],
-                :font_size => (params[:stand_piece_char_scale] || params[:piece_char_scale]) * piece.scale,
+                :font_size => (params[:stand_piece_char_scale] || params[:soldier_char_scale]) * piece.scale,
                 :bold      => params[:font_stand_piece_bold]
               })
 

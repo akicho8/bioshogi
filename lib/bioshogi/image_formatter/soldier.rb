@@ -22,7 +22,7 @@ module Bioshogi
             color ||= params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color]
             piece_pentagon_draw(v: v, location: location, piece: soldier.piece)
             bold ||= params[:font_board_piece_bold]
-            char_draw(v: piece_char_adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: piece_char_scale(soldier.piece))
+            char_draw(v: piece_char_adjust(v, location), text: soldier_name(soldier), location: location, color: color, bold: bold, font_size: soldier_char_scale(soldier.piece))
           end
         end
       end
@@ -105,8 +105,8 @@ module Bioshogi
         v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
 
-      def piece_char_scale(piece)
-        params[:piece_char_scale] * piece.scale
+      def soldier_char_scale(piece)
+        params[:soldier_char_scale] * piece.scale
       end
     end
   end
