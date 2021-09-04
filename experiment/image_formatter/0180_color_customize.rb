@@ -2,11 +2,11 @@ require "../example_helper"
 require "color"
 
 params = {
-  # canvas_color: "#c5e1b7",
+  # canvas_bg_color: "#c5e1b7",
   # outer_frame_fill_color: "#91a687",
 
   :pentagon_color     => { :black => "#000", :white => "#666", },
-  :canvas_color      => "#22A",         # 部屋の色
+  :canvas_bg_color      => "#22A",         # 部屋の色
   :outer_frame_fill_color    => "#33A",         # 盤の色
   :piece_font_color       => "#BBA",         # 駒の色
   :stand_piece_color => "#66A",         # 駒の色(持駒)

@@ -33,7 +33,7 @@ module Bioshogi
               :white => [0.0,    0.01],
             },
             # 盤
-            :canvas_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
+            :canvas_bg_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
             :piece_font_color         => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
@@ -46,9 +46,9 @@ module Bioshogi
             # optional
             :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
             :stand_piece_color          => nil,                         # *持駒の色(nilなら piece_font_color を代用)
-            :inner_frame_lattice_color  => "rgba(0,0,0,0.4)",           # *格子の色(nilなら piece_font_color を代用)
+            :inner_frame_lattice_color  => "rgba(0,0,0,0.6)",           # *格子の色(nilなら piece_font_color を代用)
             :star_color                 => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
-            :inner_frame_stroke_color   => "rgba(0,0,0,0.4)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
+            :inner_frame_stroke_color   => "rgba(0,0,0,0.6)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
             :promoted_font_color        => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
 
             :outer_frame_padding        => 0,                           # 盤の余白
@@ -195,7 +195,7 @@ module Bioshogi
           canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
         else
           @canvas = Magick::Image.new(*image_rect) do |e|
-            e.background_color = params[:canvas_color]
+            e.background_color = params[:canvas_bg_color]
           end
         end
 

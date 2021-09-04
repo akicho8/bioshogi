@@ -8,6 +8,7 @@ module Bioshogi
         { :key => :paper_simple_theme,      :func => -> e { e.paper_simple_theme }, },
         { :key => :paper_shape_theme,       :func => -> e { e.paper_shape_theme }, },
         { :key => :shogi_extend_theme,      :func => -> e { e.shogi_extend_theme }, },
+        { :key => :style_editor_theme,      :func => -> e { e.style_editor_theme }, },
         { :key => :real_wood_theme,         :func => -> e { e.real_wood_theme }, },
         { :key => :brightness_grey_theme,   :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { :key => :brightness_matrix_theme, :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
@@ -33,7 +34,7 @@ module Bioshogi
             :piece_pentagon_stroke_color => f[-55],
             :piece_pentagon_stroke_width => 2,
           },
-          :canvas_color                  => f[-88],        # 部屋の色
+          :canvas_bg_color                  => f[-88],        # 部屋の色
           :outer_frame_fill_color        => f[-84],        # 盤の色
           :piece_move_cell_fill_color    => f[-81],        # 移動元と移動先のセルの背景色
           :inner_frame_lattice_color                 => f[-40],        # 格子の色
@@ -87,11 +88,10 @@ module Bioshogi
             black: f[-65],                                      # ☗
             white: f[-30],                                      # ☖
           },
-          :canvas_color                  => f[-75],             # 部屋の色
+          :canvas_bg_color                  => f[-75],             # 部屋の色
           :outer_frame_fill_color        => f[-65],             # 盤の色
           :cell_colors                   => [nil, f[-75]],      # セルの色
           :piece_move_cell_fill_color    => r[-60],             # 移動元と移動先のセルの背景色
-
 
           # 駒
           :piece_font_color              => f[-75],             # 駒の色
@@ -164,9 +164,18 @@ module Bioshogi
         }
       end
 
+      def style_editor_theme
+        shogi_extend_theme.merge({
+            :bg_file                => nil,
+            :canvas_bg_color        => "rgb(197,225,183)",
+            :outer_frame_fill_color => "rgba(0,0,0,0.24)",
+          })
+      end
+
       def real_wood_theme
         shogi_extend_theme.merge({
             :battle_field_texture => "#{__dir__}/../assets/images/wood_1080x1080.png",
+            # :battle_field_texture => "#{__dir__}/../assets/images/sozai_image1.png",
           })
       end
 

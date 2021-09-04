@@ -1,13 +1,6 @@
-* wood.png
-
-1. https://www.beiz.jp/%E7%B4%A0%E6%9D%90/%E6%9C%A8%E7%9B%AE/00018.html
-2. preview アプリで色とサイズ調整
-3. 1920 x 1920 で切り抜き
-
-* matrix*.png
-
-../../../../../rmagick-examples/*_matrix.rb の実行
-
-* checker*.png
-
-../../../../../rmagick-examples/*_checker.rb の実行
+|--------------------+----------------------------------------------------------------------+--------------------------------------------|
+| matrix*.png        | ../../../../../rmagick-examples/*_matrix.rb の実行                   |                                            |
+| checker*.png       | ../../../../../rmagick-examples/*_checker.rb の実行                  |                                            |
+| wood_1080x1080.png | https://www.beiz.jp/%E7%B4%A0%E6%9D%90/%E6%9C%A8%E7%9B%AE/00018.html | preview 色サイズ調整, 1920x1920 で切り抜き |
+| illust_wood.png    | https://www.illust-box.jp/sozai/72013/                               |                                            |
+|--------------------+----------------------------------------------------------------------+--------------------------------------------|
