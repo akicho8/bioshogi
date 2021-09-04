@@ -2,7 +2,7 @@ module Bioshogi
   module Formatter
     concern :BinaryFormatMethods do
       def image_formatter(options = {})
-        ImageFormatter.render(mediator, options)
+        ImageFormatter.new(mediator, options)
       end
 
       def to_image(options = {})
@@ -22,15 +22,15 @@ module Bioshogi
       ################################################################################
 
       def to_png(options = {})
-        ImageFormatter.render(mediator, options.merge(image_format: "png")).to_blob_binary
+        ImageFormatter.new(mediator, options.merge(image_format: "png")).to_blob_binary
       end
 
       def to_jpg(options = {})
-        ImageFormatter.render(mediator, options.merge(image_format: "jpg")).to_blob_binary
+        ImageFormatter.new(mediator, options.merge(image_format: "jpg")).to_blob_binary
       end
 
       def to_gif(options = {})
-        ImageFormatter.render(mediator, options.merge(image_format: "gif")).to_blob_binary
+        ImageFormatter.new(mediator, options.merge(image_format: "gif")).to_blob_binary
       end
 
       ################################################################################

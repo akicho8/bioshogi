@@ -6,11 +6,21 @@ module Bioshogi
           })
       end
 
+      private
+
+      def lattice_layer_create
+        transparent_layer(:s_lattice_layer).tap do |e|
+          lattice_draw(e)
+          inner_frame_draw(e)
+          star_draw(e)
+        end
+      end
+
       # line で stroke を使うと fill + stroke で二重に同じところを塗るっぽい
       # だから半透明にしても濃くなる
       # なので fill だけにする
-      def lattice_draw
-        draw_context(@lattice_layer) do |g|
+      def lattice_draw(layer)
+        draw_context(layer) do |g|
           g.fill(inner_frame_lattice_color)
           (1...lattice.w).each do |x|
             line_draw(g, V[x, 0], V[x, lattice.h])
@@ -22,31 +32,47 @@ module Bioshogi
       end
 
       # 内側なので基本透明で枠だけを描画する
-      def inner_frame_draw
+      def inner_frame_draw(layer)
         if inner_frame_stroke_width
-          draw_context(@lattice_layer) do |g|
+          draw_context(layer) do |g|
             g.stroke(inner_frame_stroke_color)
             g.stroke_width(inner_frame_stroke_width)
-            g.fill = params[:inner_frame_fill_color] # 塗り潰したいときは board_bg_draw の方で行う
+            g.fill = params[:inner_frame_fill_color] # 塗り潰したいときは board_layer_create の方で行う
             g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # QUESTION: 右下は -1, -1 するべきか？
           end
         end
       end
 
+      def star_draw(layer)
+        draw_context(layer) do |g|
+          g.stroke("transparent")
+          g.fill(star_fill_color)
+
+          i = star_step
+          (i...lattice.w).step(i) do |x|
+            (i...lattice.h).step(i) do |y|
+              v = V[x, y]
+              g.circle(*px(v), *px(v + V.one * params[:star_size]))
+            end
+          end
+        end
+      end
+
       # 盤 padding を入れる場合 or 盤画像
-      def board_bg_draw
+      def board_layer_create
+        layer = transparent_layer(:s_board_layer)
         case
         when params[:battle_field_texture]
           if false
             # 座標を見ずに画面中央に表示する場合
-            @board_layer.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
+            layer.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
           else
             # 自分で座標を指定すると1ドット左に寄っているように見えるので ceil で補正している
             # https://rmagick.github.io/image1.html#composite
-            @board_layer.composite!(texture_image, *px(outer_top_left).collect(&:ceil), Magick::OverCompositeOp)
+            layer.composite!(texture_image, *px(outer_top_left).collect(&:ceil), Magick::OverCompositeOp)
           end
         else
-          draw_context(@board_layer) do |g|
+          draw_context(layer) do |g|
             if params[:outer_frame_stroke_width].nonzero?
               g.stroke(params[:outer_frame_stroke_color])
               g.stroke_width(params[:outer_frame_stroke_width])
@@ -61,7 +87,7 @@ module Bioshogi
           cell_walker do |v|
             color = colors.next
             if color
-              draw_context(@board_layer) do |g|
+              draw_context(layer) do |g|
                 g.fill = color
                 # NOTE: 格子が1pxの場合に隙間ができるため minus_one しない方がよさそう
                 if false
@@ -73,6 +99,8 @@ module Bioshogi
             end
           end
         end
+
+        with_shadow(layer)
       end
 
       # 盤テクスチャ
@@ -102,21 +130,6 @@ module Bioshogi
 
           image
         }.call
-      end
-
-      def star_draw
-        draw_context(@lattice_layer) do |g|
-          g.stroke("transparent")
-          g.fill(star_fill_color)
-
-          i = star_step
-          (i...lattice.w).step(i) do |x|
-            (i...lattice.h).step(i) do |y|
-              v = V[x, y]
-              g.circle(*px(v), *px(v + V.one * params[:star_size]))
-            end
-          end
-        end
       end
 
       def inner_frame_lattice_color

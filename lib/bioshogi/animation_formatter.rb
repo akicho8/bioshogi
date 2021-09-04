@@ -7,7 +7,7 @@ module Bioshogi
     #     :animation_format => "gif",              # 出力フォーマット
     #     :loop_key         => "is_loop_infinite", # ループモード
     #     :optimize_layer   => true,               # 各ページを最小枠にして無駄をなくす
-    #     :canvas_cache     => true,               # canvasをキャッシュする
+    #     :continuous_build     => true,               # canvasをキャッシュする
     #   }
     # end
     #

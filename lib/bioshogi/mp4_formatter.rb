@@ -117,7 +117,7 @@ module Bioshogi
               logger.info { `ls -alh _output1.mp4`.strip }
             end
 
-            @image_formatter.destroy_all
+            @image_formatter.layer_destroy_all
           end
 
           if !audio_part_a

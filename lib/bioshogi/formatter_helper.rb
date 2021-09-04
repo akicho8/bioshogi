@@ -16,7 +16,7 @@ module Bioshogi
           :ffmpeg_after_embed_options => nil,      # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
           :tmpdir_remove              => true,     # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
           :media_factory_key          => "ffmpeg", # rmagick or ffmpeg
-          :canvas_cache               => true,     # canvasを一度作成したらそのコピーを使い回す
+          :continuous_build           => true,     # canvasを一度作成したらそのコピーを使い回す(昔はそうだった)
         }
       end
     end
@@ -119,6 +119,7 @@ module Bioshogi
     end
 
     def command_required!(command)
+      require "systemu"
       status, _, _ = systemu("which #{command}")
       if !status.success?
         raise StandardError, "no #{command} in path"

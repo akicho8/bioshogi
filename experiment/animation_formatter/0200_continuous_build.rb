@@ -4,5 +4,5 @@ require "active_support/core_ext/benchmark"
 def _; "%7.2f ms" % Benchmark.ms { 1.times { yield } } end
 bg_file = "../../lib/bioshogi/assets/images/matrix_1024x768.png"
 _ { info.to_animation_zip                                        } # => "2064.32 ms"
-_ { info.to_animation_zip(bg_file: bg_file, canvas_cache: false) } # => "10494.14 ms"
+_ { info.to_animation_zip(bg_file: bg_file, continuous_build: false) } # => "10494.14 ms"
 _ { info.to_animation_zip(bg_file: bg_file)                      } # => "7968.24 ms"

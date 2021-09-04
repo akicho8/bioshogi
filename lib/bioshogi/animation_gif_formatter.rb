@@ -75,6 +75,8 @@ module Bioshogi
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 
+          @image_formatter.layer_destroy_all
+
           File.binread("_output1.#{ext_name}")
         end
       end

@@ -58,7 +58,7 @@ module Bioshogi
 
             # 持駒
             char_draw({
-                :layer     => @piece_layer,
+                :layer     => @d_piece_layer,
                 :v         => piece_char_adjust(v, location),
                 :text      => piece.name,
                 :location  => location,
@@ -80,7 +80,7 @@ module Bioshogi
           v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
           piece_count_bg_draw(v: v, location: location)
           char_draw({
-              :layer        => @piece_count_layer,
+              :layer        => @d_piece_count_layer,
               :v            => v,
               :text         => count.to_s,
               :location     => location,
@@ -94,7 +94,7 @@ module Bioshogi
 
       def piece_count_bg_draw(v:, location:)
         if params[:piece_count_bg_color] && params[:piece_count_bg_scale].nonzero?
-          draw_context(@piece_count_layer) do |g|
+          draw_context(@d_piece_count_layer) do |g|
             g.fill(params[:piece_count_bg_color])
 
             # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location.value_sign

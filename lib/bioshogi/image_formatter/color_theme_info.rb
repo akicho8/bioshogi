@@ -107,8 +107,11 @@ module Bioshogi
 
       def paper_simple_theme
         {
+          # 真っ白なので☖に枠をつける
           :face_pentagon_stroke_color => "rgba(0,0,0,0.4)",
           :face_pentagon_stroke_width => 1,
+          # 影を取る
+          
         }
       end
 

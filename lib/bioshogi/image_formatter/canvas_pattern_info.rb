@@ -22,14 +22,14 @@ module Bioshogi
       # FIXME: 激重なので生成したものをディスクキャッシュする
       def checker1(rect: Rect[800, 600], base_color: "#fff", accent_color: "rgba(0,0,0,0.03)", w: 16, h: 16)
         require "rmagick"
-        Magick::Image.new(*rect) { |e| e.background_color = base_color }.tap do |canvas|
-          (canvas.rows.fdiv(h)).ceil.times do |y|
-            (canvas.columns.fdiv(w)).ceil.times do |x|
+        Magick::Image.new(*rect) { |e| e.background_color = base_color }.tap do |layer|
+          (layer.rows.fdiv(h)).ceil.times do |y|
+            (layer.columns.fdiv(w)).ceil.times do |x|
               if (x + y).even?
                 g = Magick::Draw.new
                 g.fill(accent_color)
                 g.rectangle(x * w, y * h, x * w + w - 1, y * h + h - 1)
-                g.draw(canvas)
+                g.draw(layer)
               end
             end
           end

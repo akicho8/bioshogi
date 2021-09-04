@@ -1,14 +1,3 @@
-# +-------------------+-------------------------------|
-# | レイヤー          | 用途                          |
-# +-------------------+-------------------------------|
-# | piece_count_layer | 駒数など                      |
-# | piece_layer      | 駒                            |
-# | shadow_layer      | piece_layer から一時的に作る |
-# | lattice_layer     | 格子                          |
-# | board_layer       | 盤                            |
-# | canvas            | 背景                          |
-# +-------------------+-------------------------------|
-
 module Bioshogi
   class ImageFormatter
     concerning :Base do
@@ -71,21 +60,20 @@ module Bioshogi
 
             # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
-            # 共通の影
-            :shadow2_offset  => 0,   # 影の長さ
-            :shadow2_sigma   => 1.5, # 影の強さ
-            :shadow2_opacity => 0.4, # 不透明度
-
             # other
             :viewpoint                => "black", # 視点
             :image_format             => "png",   # 出力する画像タイプ
             :negate                   => false,   # 反転
             :bg_file                  => nil,     # 背景ファイル
             :canvas_pattern_key       => nil,     # 背景パターン
-            :canvas_cache             => false,   # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
             :color_theme_key          => "paper_simple_theme",
             :override_params          => {},
+
+            # 連続で生成するか？
+            # 昔はリサイズ後の背景をキャッシュしたりしていたが
+            # レイヤー化してそもそも背景を破壊しないので必要になくなった
+            :continuous_build         => false,
           }
         end
 
@@ -96,6 +84,8 @@ module Bioshogi
       attr_accessor :params
       attr_accessor :rendered_image
       attr_accessor :hand_log
+
+      delegate :logger, to: "Bioshogi"
 
       def initialize(mediator, params = {})
         # params.assert_valid_keys(default_params.keys)
@@ -115,114 +105,94 @@ module Bioshogi
           @params.update(v)
         end
 
-        @rendered = false
+        @build_counter = 0
       end
 
       def build
-        require "rmagick"
+        logger.tagged(@build_counter) do
+          require "rmagick"
 
-        @hand_log = mediator.hand_logs.last
+          @hand_log = mediator.hand_logs.last
 
-        canvas_create
-        layer_setup
-        board_bg_draw           # to board_layer
+          # たまたまレイヤー単位でまとめられたけど本当はレイヤーを気にせずに「やりたいこと単位」でまとめるべき
+          logger.info "static layer"
+          @s_canvas_layer  ||= canvas_layer_create
+          @s_board_layer   ||= board_layer_create
+          @s_lattice_layer ||= lattice_layer_create
 
-        soldier_move_cell_draw  # to move_layer
+          # こちらの stand_draw を見ればレイヤー単位でまとめるのは難しいことがわかる
+          logger.info "dynamic layer"
+          dynamic_layer_setup
+          soldier_move_cell_draw  # to d_move_layer
+          soldier_draw_all        # to d_piece_layer
+          stand_draw              # to d_piece_layer, d_piece_count_layer
 
-        soldier_draw_all        # to piece_layer
-        stand_draw              # to piece_layer, piece_count_layer
+          logger.info "composite process"
+          current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+          current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+          current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+          current = current.composite(with_shadow(@d_piece_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+          current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
 
-        lattice_draw            # to lattice_layer
-        inner_frame_draw        # to lattice_layer
-        star_draw               # to lattice_layer
+          current = condition_then_flip(current)
+          current = condition_then_negate(current)
 
-        @current = @canvas.copy
-        @current = @current.composite(with_shadow(@board_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-        @current = @current.composite(@move_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-        @current = @current.composite(with_shadow(@piece_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-        @current = @current.composite(@lattice_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-        @current = @current.composite(@piece_count_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-
-        @current = condition_then_flip(@current)
-        @current = condition_then_negate(@current)
-
-        @rendered = true
-
-        @current
+          @build_counter += 1
+          current
+        end
       end
 
-      def render
-        @rendered_image ||= build
-      end
+      # def render
+      #   @rendered_image ||= build
+      # end
 
-      def rendered_image
-        @rendered_image ||= build
-      end
-
-      def destroy_all
-        # [
-        #   :canvas,
-        #   :canvas_cache,
-        #
-        #   :board_layer,
-        #   :move_layer,
-        #   :piece_layer,
-        #   :lattice_layer,
-        #   :piece_count_layer,
-        # ].each do |e|
-        #   if v = send("@#{e}")
-        #     v.destroy!
-        #     send("@#{e}=", nil)
-        #   end
-        # end
-      end
+      # def rendered_image
+      #   @rendered_image ||= build
+      # end
 
       private
 
-      # 必ず新しく作ること
-      def canvas_create
-        if @canvas_cache
-          @canvas.destroy!
-          @canvas = @canvas_cache.copy
-          return
-        end
-
+      def canvas_layer_create
         case
         when false
-          # @canvas = Magick::Image.read("logo:").first
-          @canvas = Magick::Image.read(Pathname("#{__dir__}/../assets/images/matrix_1024x768.png")).first
-          @canvas = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
-          @canvas = CanvasPattern.fetch(:pattern_checker_dark).func(self).copy
-          @canvas.resize!(*image_rect) # 200 ms
-          # @canvas.blur_image(20.0, 10.0)
-          # @canvas = @canvas.emboss
-          # @canvas = Magick::Image.read("netscape:").first.resize(*image_rect)
-          @canvas = condition_then_flip(@canvas) # 全体を反転するので背景だけ反転しておくことで元に戻る
+          # layer = Magick::Image.read("logo:").first
+          layer = Magick::Image.read(Pathname("#{__dir__}/../assets/images/matrix_1024x768.png")).first
+          layer = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
+          layer = CanvasPattern.fetch(:pattern_checker_dark).func(self).copy
+          layer.resize!(*image_rect) # 200 ms
+          # layer.blur_image(20.0, 10.0)
+          # layer = layer.emboss
+          # layer = Magick::Image.read("netscape:").first.resize(*image_rect)
+          layer = condition_then_flip(layer) # 全体を反転するので背景だけ反転しておくことで元に戻る
         when v = params[:canvas_pattern_key]
-          @canvas = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
+          layer = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
-          @canvas = Magick::Image.read(v).first
-          # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
-          @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
-          # @canvas.resize!(*image_rect) # 200 ms
-          @canvas = condition_then_flip(@canvas) # 全体を反転するので背景だけ反転しておくことで元に戻る
+          layer = Magick::Image.read(v).first
+          # layer.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
+          layer.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
+          # layer.resize!(*image_rect) # 200 ms
+          layer = condition_then_flip(layer) # 全体を反転するので背景だけ反転しておくことで元に戻る
         else
-          @canvas = Magick::Image.new(*image_rect) do |e|
+          layer = Magick::Image.new(*image_rect) do |e|
             e.background_color = params[:canvas_bg_color]
           end
         end
 
         # 背景画像が RGB8 の白黒の場合 GRAYColorspace になっていてこれに盤を重ねると白黒になってしまう、のを防ぐ
-        @canvas.colorspace = Magick::SRGBColorspace
+        layer.colorspace = Magick::SRGBColorspace
 
-        if params[:canvas_cache]
-          @canvas_cache = @canvas.copy
-        end
+        # if params[:continuous_build]
+        #   @continuous_build = layer.copy
+        # end
+
+        logger.info { "canvas_layer_create for s_canvas_layer" }
+
+        layer
       end
 
       # # 変化がない部分
       # def static_draw
-      #   board_bg_draw
+      #   board_layer_create
       #   lattice_draw
       #   inner_frame_draw
       # end
@@ -244,10 +214,10 @@ module Bioshogi
       end
 
       # draw の時点で最後に指定した fill が使われる
-      def draw_context(layer = nil)
+      def draw_context(layer)
         g = Magick::Draw.new
         yield g
-        g.draw(layer || @canvas)
+        g.draw(layer)
       end
 
       def cell_walker
@@ -319,7 +289,7 @@ module Bioshogi
       end
 
       def center
-        @center ||= V[@canvas.columns / 2, @canvas.rows / 2]
+        @center ||= V[@s_canvas_layer.columns / 2, @s_canvas_layer.rows / 2]
       end
 
       def top_left

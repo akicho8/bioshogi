@@ -28,7 +28,7 @@ module Bioshogi
         piece_pentagon_draw(v: v, location: location, piece: soldier.piece)
 
         char_draw({
-            :layer     => @piece_layer,
+            :layer     => @d_piece_layer,
             :v         => piece_char_adjust(v, location),
             :text      => soldier_name(soldier),
             :location  => location,
@@ -41,7 +41,7 @@ module Bioshogi
       def soldier_move_cell_draw
         if params[:piece_move_cell_fill_color]
           if hand_log
-            draw_context(@move_layer) do |g|
+            draw_context(@d_move_layer) do |g|
               g.stroke("transparent")
               g.fill = params[:piece_move_cell_fill_color]
               cell_draw(g, current_place)

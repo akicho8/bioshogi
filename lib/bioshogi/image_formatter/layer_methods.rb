@@ -3,34 +3,57 @@ module Bioshogi
     concerning :LayerMethods do
       included do
         default_params.update({
+            # 共通の影
+            :real_shadow_offset  => 8,   # 影の長さ
+            :real_shadow_sigma   => 1.5, # 影の強さ
+            :real_shadow_opacity => 0.4, # 不透明度
           })
       end
 
-      def layer_setup
-        @board_layer       = transparent_layer
-        @move_layer        = transparent_layer
-        @piece_layer       = transparent_layer
-        @lattice_layer     = transparent_layer
-        @piece_count_layer = transparent_layer
+      def layer_destroy_all
+        logger.tagged(:layer_destroy_all) do
+          [
+            :s_canvas_layer,
+            :s_board_layer,
+            :s_lattice_layer,
+
+            :d_move_layer,
+            :d_piece_layer,
+            :d_piece_count_layer,
+
+            :rendered_image,
+          ].each do |e|
+            if v = instance_variable_get("@#{e}")
+              v.destroy!
+              instance_variable_set("@#{e}", nil)
+              logger.info { "@#{e}.destroy!" }
+            end
+          end
+        end
       end
 
-      def transparent_layer
+      def dynamic_layer_setup
+        @d_move_layer        = transparent_layer(:d_move_layer)
+        @d_piece_layer       = transparent_layer(:d_piece_layer)
+        @d_piece_count_layer = transparent_layer(:d_piece_count_layer)
+      end
+
+      def transparent_layer(key)
+        logger.info { "transparent_layer create for #{key}" }
         Magick::Image.new(*image_rect) { |e| e.background_color = "transparent" }
       end
 
       # 指定のレイヤーに影をつける
       def with_shadow(layer)
         s = layer.shadow( # https://rmagick.github.io/image3.html#shadow
-          params[:shadow2_offset],
-          params[:shadow2_offset],
-          params[:shadow2_sigma],
-          params[:shadow2_opacity])
+          params[:real_shadow_offset],
+          params[:real_shadow_offset],
+          params[:real_shadow_sigma],
+          params[:real_shadow_opacity])
         s.composite(layer, 0, 0, Magick::OverCompositeOp) # 影の上に乗せる
       ensure
         s.destroy!
       end
-      
-      
     end
   end
 end
