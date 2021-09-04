@@ -110,7 +110,7 @@ module Bioshogi
         # 将棋盤の静的な部分を使いまわす
         # しかしたいして速度が変わらなかった
         # 46秒が45秒になった程度
-        # しかも moving_draw によって格子が上書きされてしまうため piece_move_cell_fill_color を nil にしないとダメ
+        # しかも soldier_move_cell_draw によって格子が上書きされてしまうため piece_move_cell_fill_color を nil にしないとダメ
         # それならば元の方法にする
         #
         # if @templete_bg
@@ -127,8 +127,8 @@ module Bioshogi
         frame_bg_draw
 
         if true
-          moving_draw
-          soldier_draw
+          soldier_move_cell_draw
+          soldier_all_draw
           stand_draw
         end
 

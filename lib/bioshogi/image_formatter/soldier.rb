@@ -6,7 +6,7 @@ module Bioshogi
           })
       end
 
-      def soldier_draw
+      def soldier_all_draw
         cell_walker do |v|
           if soldier = mediator.board.lookup(v)
             location = soldier.location
@@ -27,7 +27,7 @@ module Bioshogi
         end
       end
 
-      def moving_draw
+      def soldier_move_cell_draw
         if params[:piece_move_cell_fill_color]
           if hand_log
             draw_context do |g|
