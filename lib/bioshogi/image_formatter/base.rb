@@ -1,3 +1,14 @@
+# +-------------------+-------------------------------|
+# | レイヤー          | 用途                          |
+# +-------------------+-------------------------------|
+# | piece_count_layer | 駒数など                      |
+# | piece_layer      | 駒                            |
+# | shadow_layer      | piece_layer から一時的に作る |
+# | lattice_layer     | 格子                          |
+# | board_layer       | 盤                            |
+# | canvas            | 背景                          |
+# +-------------------+-------------------------------|
+
 module Bioshogi
   class ImageFormatter
     concerning :Base do
@@ -60,13 +71,18 @@ module Bioshogi
 
             # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
+            # 共通の影
+            :shadow2_offset  => 0,   # 影の長さ
+            :shadow2_sigma   => 1.5, # 影の強さ
+            :shadow2_opacity => 0.4, # 不透明度
+
             # other
-            :viewpoint                => "black",                     # 視点
-            :image_format             => "png",                       # 出力する画像タイプ
-            :negate                   => false,                       # 反転
-            :bg_file                  => nil,                         # 背景ファイル
-            :canvas_pattern_key       => nil,                         # 背景パターン
-            :canvas_cache             => false,                       # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
+            :viewpoint                => "black", # 視点
+            :image_format             => "png",   # 出力する画像タイプ
+            :negate                   => false,   # 反転
+            :bg_file                  => nil,     # 背景ファイル
+            :canvas_pattern_key       => nil,     # 背景パターン
+            :canvas_cache             => false,   # リサイズ後の背景をキャッシュするか？ (インスタンスを維持したまま連続で生成する場合に有用)
 
             :color_theme_key          => "paper_simple_theme",
             :override_params          => {},
@@ -78,7 +94,7 @@ module Bioshogi
 
       attr_accessor :mediator
       attr_accessor :params
-      attr_accessor :canvas
+      attr_accessor :rendered_image
       attr_accessor :hand_log
 
       def initialize(mediator, params = {})
@@ -102,58 +118,63 @@ module Bioshogi
         @rendered = false
       end
 
-      def render
+      def build
         require "rmagick"
 
         @hand_log = mediator.hand_logs.last
 
-        # 将棋盤の静的な部分を使いまわす
-        # しかしたいして速度が変わらなかった
-        # 46秒が45秒になった程度
-        # しかも soldier_move_cell_draw によって格子が上書きされてしまうため piece_move_cell_fill_color を nil にしないとダメ
-        # それならば元の方法にする
-        #
-        # if @templete_bg
-        #   @canvas = @templete_bg.clone
-        # else
-        #   canvas_create
-        #   static_draw
-        #   if params[:use_templete]
-        #     @templete_bg = @canvas.clone
-        #   end
-        # end
-
         canvas_create
-        frame_bg_draw
+        layer_setup
+        board_bg_draw           # to board_layer
 
-        if true
-          soldier_move_cell_draw
-          soldier_all_draw
-          stand_draw
-        end
+        soldier_move_cell_draw  # to move_layer
 
-        lattice_draw
-        inner_frame_draw
-        star_draw                 # 星は必ず最後
+        soldier_draw_all        # to piece_layer
+        stand_draw              # to piece_layer, piece_count_layer
 
-        canvas_flip_if_viewpoint_is_white
+        lattice_draw            # to lattice_layer
+        inner_frame_draw        # to lattice_layer
+        star_draw               # to lattice_layer
 
-        if params[:negate]
-          @canvas = canvas.negate
-        end
+        @current = @canvas.copy
+        @current = @current.composite(with_shadow(@board_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+        @current = @current.composite(@move_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+        @current = @current.composite(with_shadow(@piece_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+        @current = @current.composite(@lattice_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+        @current = @current.composite(@piece_count_layer, 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+
+        @current = condition_then_flip(@current)
+        @current = condition_then_negate(@current)
 
         @rendered = true
+
+        @current
       end
 
-      def render_once
-        if @rendered
-          return
-        end
-        render
+      def render
+        @rendered_image ||= build
       end
 
-      def main_canvas
-        @canvas
+      def rendered_image
+        @rendered_image ||= build
+      end
+
+      def destroy_all
+        # [
+        #   :canvas,
+        #   :canvas_cache,
+        #
+        #   :board_layer,
+        #   :move_layer,
+        #   :piece_layer,
+        #   :lattice_layer,
+        #   :piece_count_layer,
+        # ].each do |e|
+        #   if v = send("@#{e}")
+        #     v.destroy!
+        #     send("@#{e}=", nil)
+        #   end
+        # end
       end
 
       private
@@ -161,6 +182,7 @@ module Bioshogi
       # 必ず新しく作ること
       def canvas_create
         if @canvas_cache
+          @canvas.destroy!
           @canvas = @canvas_cache.copy
           return
         end
@@ -175,7 +197,7 @@ module Bioshogi
           # @canvas.blur_image(20.0, 10.0)
           # @canvas = @canvas.emboss
           # @canvas = Magick::Image.read("netscape:").first.resize(*image_rect)
-          canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
+          @canvas = condition_then_flip(@canvas) # 全体を反転するので背景だけ反転しておくことで元に戻る
         when v = params[:canvas_pattern_key]
           @canvas = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
@@ -183,7 +205,7 @@ module Bioshogi
           # @canvas.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
           @canvas.resize_to_fill!(*image_rect) # アス比を維持して中央を切り取る
           # @canvas.resize!(*image_rect) # 200 ms
-          canvas_flip_if_viewpoint_is_white # 全体を反転するので背景だけ反転しておくことで元に戻る
+          @canvas = condition_then_flip(@canvas) # 全体を反転するので背景だけ反転しておくことで元に戻る
         else
           @canvas = Magick::Image.new(*image_rect) do |e|
             e.background_color = params[:canvas_bg_color]
@@ -200,16 +222,32 @@ module Bioshogi
 
       # # 変化がない部分
       # def static_draw
-      #   frame_bg_draw
+      #   board_bg_draw
       #   lattice_draw
       #   inner_frame_draw
       # end
 
+      def condition_then_flip(layer)
+        if params[:viewpoint].to_s == "white"
+          layer.rotate(180) # 5 ms
+        else
+          layer
+        end
+      end
+
+      def condition_then_negate(layer)
+        if params[:negate]
+          layer.negate
+        else
+          layer
+        end
+      end
+
       # draw の時点で最後に指定した fill が使われる
-      def draw_context
+      def draw_context(layer = nil)
         g = Magick::Draw.new
         yield g
-        g.draw(@canvas)
+        g.draw(layer || @canvas)
       end
 
       def cell_walker
@@ -311,10 +349,6 @@ module Bioshogi
       def ext_name
         image_format
       end
-
-      # def font_theme_info
-      #   FontThemeInfo.fetch(font_theme_key)
-      # end
 
       def outer_frame_radius
         if params[:outer_frame_padding].zero?

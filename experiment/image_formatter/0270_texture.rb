@@ -21,4 +21,7 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-parser.image_formatter(color_theme_key: "real_wood_theme").display
+ms = Benchmark.ms do
+  parser.image_formatter(color_theme_key: "real_wood_theme").display
+end
+"%.1f ms" % ms                  # => "1570.5 ms"

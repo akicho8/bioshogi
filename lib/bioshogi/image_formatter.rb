@@ -9,8 +9,9 @@ module Bioshogi
   end
 
   require "bioshogi/image_formatter/base"
-  require "bioshogi/image_formatter/board"
-  require "bioshogi/image_formatter/soldier"
+  require "bioshogi/image_formatter/layer_methods"
+  require "bioshogi/image_formatter/board_methods"
+  require "bioshogi/image_formatter/soldier_methods"
   require "bioshogi/image_formatter/stand"
   require "bioshogi/image_formatter/pentagon"
   require "bioshogi/image_formatter/helper"

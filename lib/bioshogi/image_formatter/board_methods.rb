@@ -1,6 +1,6 @@
 module Bioshogi
   class ImageFormatter
-    concerning :Board do
+    concerning :BoardMethods do
       included do
         default_params.update({
           })
@@ -10,16 +10,11 @@ module Bioshogi
       # だから半透明にしても濃くなる
       # なので fill だけにする
       def lattice_draw
-        draw_context do |g|
+        draw_context(@lattice_layer) do |g|
           g.fill(inner_frame_lattice_color)
-
-          # g.stroke(inner_frame_lattice_color)
-          # g.stroke_width(lattice_stroke_width)
-
           (1...lattice.w).each do |x|
             line_draw(g, V[x, 0], V[x, lattice.h])
           end
-
           (1...lattice.h).each do |y|
             line_draw(g, V[0, y], V[lattice.w, y])
           end
@@ -29,29 +24,29 @@ module Bioshogi
       # 内側なので基本透明で枠だけを描画する
       def inner_frame_draw
         if inner_frame_stroke_width
-          draw_context do |g|
+          draw_context(@lattice_layer) do |g|
             g.stroke(inner_frame_stroke_color)
             g.stroke_width(inner_frame_stroke_width)
-            g.fill = params[:inner_frame_fill_color]
+            g.fill = params[:inner_frame_fill_color] # 塗り潰したいときは board_bg_draw の方で行う
             g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # QUESTION: 右下は -1, -1 するべきか？
           end
         end
       end
 
       # 盤 padding を入れる場合 or 盤画像
-      def frame_bg_draw
+      def board_bg_draw
         case
         when params[:battle_field_texture]
           if false
             # 座標を見ずに画面中央に表示する場合
-            @canvas.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
+            @board_layer.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
           else
             # 自分で座標を指定すると1ドット左に寄っているように見えるので ceil で補正している
             # https://rmagick.github.io/image1.html#composite
-            @canvas.composite!(texture_image, *px(outer_top_left).collect(&:ceil), Magick::OverCompositeOp)
+            @board_layer.composite!(texture_image, *px(outer_top_left).collect(&:ceil), Magick::OverCompositeOp)
           end
         else
-          draw_context do |g|
+          draw_context(@board_layer) do |g|
             if params[:outer_frame_stroke_width].nonzero?
               g.stroke(params[:outer_frame_stroke_color])
               g.stroke_width(params[:outer_frame_stroke_width])
@@ -66,7 +61,7 @@ module Bioshogi
           cell_walker do |v|
             color = colors.next
             if color
-              draw_context do |g|
+              draw_context(@board_layer) do |g|
                 g.fill = color
                 # NOTE: 格子が1pxの場合に隙間ができるため minus_one しない方がよさそう
                 if false
@@ -110,7 +105,7 @@ module Bioshogi
       end
 
       def star_draw
-        draw_context do |g|
+        draw_context(@lattice_layer) do |g|
           g.stroke("transparent")
           g.fill(star_fill_color)
 
@@ -121,12 +116,6 @@ module Bioshogi
               g.circle(*px(v), *px(v + V.one * params[:star_size]))
             end
           end
-        end
-      end
-
-      def canvas_flip_if_viewpoint_is_white
-        if params[:viewpoint].to_s == "white"
-          @canvas.rotate!(180) # 5 ms
         end
       end
 

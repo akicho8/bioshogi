@@ -74,10 +74,10 @@ module Bioshogi
 
       def piece_pentagon_draw(v:, location:, piece: nil)
         if params[:piece_pentagon_draw]
-          shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale(piece))
+          # shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale(piece))
 
           # pentagon_box_debug(v)
-          draw_context do |g|
+          draw_context(@piece_layer) do |g|
             w = params[:piece_pentagon_stroke_width]
             if w && w.nonzero?
               g.stroke(params[:piece_pentagon_stroke_color])
@@ -91,6 +91,8 @@ module Bioshogi
 
       def shadow_pentagon_draw(v:, location:, scale:)
         if params[:shadow_pentagon_draw]
+          raise "使用禁止"
+
           # pentagon_box_debug(v)
           draw_context do |g|
             # NOTE: stroke すると fill した端を縁取って予想より濃くなり調整が難しくなるため取る
@@ -110,8 +112,8 @@ module Bioshogi
 
       # ☗を白黒で塗り分ける
       def face_pentagon_draw(v:, location:)
-        shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
-        draw_context do |g|
+        # shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
+        draw_context(@piece_layer) do |g|
           if face_pentagon_stroke_width
             g.stroke(face_pentagon_stroke_color)
             g.stroke_width(face_pentagon_stroke_width)

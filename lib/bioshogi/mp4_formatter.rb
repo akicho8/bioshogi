@@ -71,15 +71,13 @@ module Bioshogi
             if media_factory_key == "rmagick"
               begin
                 list = Magick::ImageList.new
-                @image_formatter.render
-                list.concat([@image_formatter.canvas])
+                list.concat([@image_formatter.build])
                 @parser.move_infos.each.with_index do |e, i|
                   @mediator.execute(e[:input])
-                  @image_formatter.render
-                  list.concat([@image_formatter.canvas]) # canvas は Magick::Image のインスタンス
+                  list.concat([@image_formatter.build]) # canvas は Magick::Image のインスタンス
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
-                list.concat([@image_formatter.canvas] * end_frames)
+                list.concat([@image_formatter.build] * end_frames)
                 may_die(:write) do
                   list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
                 end
@@ -99,21 +97,18 @@ module Bioshogi
 
             if media_factory_key == "ffmpeg"
               @frame_count = 0
-              @image_formatter.render
-              @image_formatter.canvas.write("_input%04d.png" % @frame_count)
+              @image_formatter.build.write("_input%04d.png" % @frame_count)
               @frame_count += 1
               @parser.move_infos.each.with_index do |e, i|
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                @image_formatter.render
-                logger.info("@image_formatter.render OK")
-                @image_formatter.canvas.write("_input%04d.png" % @frame_count)
-                logger.info("@image_formatter.canvas.write OK")
+                @image_formatter.build.write("_input%04d.png" % @frame_count)
+                logger.info("@image_formatter.build.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do
-                @image_formatter.canvas.write("_input%04d.png" % @frame_count)
+                @image_formatter.build.write("_input%04d.png" % @frame_count)
                 @frame_count += 1
               end
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
@@ -121,6 +116,8 @@ module Bioshogi
               strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
             end
+
+            @image_formatter.destroy_all
           end
 
           if !audio_part_a

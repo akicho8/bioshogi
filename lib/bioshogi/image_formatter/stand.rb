@@ -55,8 +55,10 @@ module Bioshogi
             piece = Piece.fetch(piece_key)
             # 持駒の影
             piece_pentagon_draw(v: v, location: location, piece: piece)
+
             # 持駒
             char_draw({
+                :layer     => @piece_layer,
                 :v         => piece_char_adjust(v, location),
                 :text      => piece.name,
                 :location  => location,
@@ -78,6 +80,7 @@ module Bioshogi
           v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
           piece_count_bg_draw(v: v, location: location)
           char_draw({
+              :layer        => @piece_count_layer,
               :v            => v,
               :text         => count.to_s,
               :location     => location,
@@ -91,7 +94,7 @@ module Bioshogi
 
       def piece_count_bg_draw(v:, location:)
         if params[:piece_count_bg_color] && params[:piece_count_bg_scale].nonzero?
-          draw_context do |g|
+          draw_context(@piece_count_layer) do |g|
             g.fill(params[:piece_count_bg_color])
 
             # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location.value_sign
@@ -104,7 +107,7 @@ module Bioshogi
             a += V[*params[:piece_count_bg_adjust][location.key]] # 微調整
             # aを基点として大きさを決める
             b = a + V.half * params[:piece_count_bg_scale]
-            g.circle(*px(a), *px(b)) # (x1, y1) - (x2, y2)
+            g.circle(*px(a), *px(b)) # (x1, y1) と (x2, y2) の2点を通る円
 
             # roundrectangle でも円風にできるけど原点が左上なので半径の調整が難しい
 
