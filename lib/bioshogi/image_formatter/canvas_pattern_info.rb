@@ -19,6 +19,7 @@ module Bioshogi
 
       private
 
+      # FIXME: 激重なので生成したものをディスクキャッシュする
       def checker1(rect: Rect[800, 600], base_color: "#fff", accent_color: "rgba(0,0,0,0.03)", w: 16, h: 16)
         require "rmagick"
         Magick::Image.new(*rect) { |e| e.background_color = base_color }.tap do |canvas|

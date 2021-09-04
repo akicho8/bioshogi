@@ -5,7 +5,7 @@ module Bioshogi
         default_params.update({
           })
       end
-      
+
       def soldier_draw
         cell_walker do |v|
           if soldier = mediator.board.lookup(v)
@@ -27,14 +27,6 @@ module Bioshogi
         end
       end
 
-      def piece_char_scale(piece)
-        params[:piece_char_scale] * piece_scale_of(piece)
-      end
-
-      def piece_scale_of(piece)
-        params[:piece_scale_map].fetch(piece.key, 1.0)
-      end
-
       def moving_draw
         if params[:piece_move_cell_fill_color]
           if hand_log
@@ -47,7 +39,7 @@ module Bioshogi
           end
         end
       end
-      
+
       def char_draw(v:, text:, location:, font_size:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil, gravity: Magick::CenterGravity)
         g = Magick::Draw.new
         g.rotation = location.angle
@@ -107,14 +99,15 @@ module Bioshogi
           end
         end
       end
-      
+
       # フォントの位置を微調整
       def piece_char_adjust(v, location)
         v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
-      
 
-      
+      def piece_char_scale(piece)
+        params[:piece_char_scale] * piece.scale
+      end
     end
   end
 end

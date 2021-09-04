@@ -165,7 +165,7 @@ module Bioshogi
       ################################################################################ piece
 
       def piece_pentagon_scale(piece)
-        params[:piece_pentagon_scale] * piece_scale_of(piece)
+        params[:piece_pentagon_scale] * piece.scale
         # params[:piece_pentagon_scale_map].fetch(piece.key, )
       end
 

@@ -16,16 +16,7 @@ module Bioshogi
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
             :piece_char_scale => 0.85, # 盤上駒
-            :piece_scale_map => {
-              :king    => 1.00,
-              :rook    => 1.00,
-              :bishop  => 1.00,
-              :gold    => 0.97,
-              :silver  => 0.94,
-              :knight  => 0.91,
-              :lance   => 0.88,
-              :pawn    => 0.85,
-            },
+            :piece_scale_map => {},
 
             # 駒(文字)の位置調整
             :piece_char_adjust => {

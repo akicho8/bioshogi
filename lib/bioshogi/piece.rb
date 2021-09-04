@@ -3,6 +3,7 @@
 
 require "bioshogi/piece/piece_csa"
 require "bioshogi/piece/piece_vector"
+require "bioshogi/piece/piece_scale"
 require "bioshogi/piece/piece_score"
 require "bioshogi/piece/piece_yomiage"
 require "bioshogi/piece/piece_pressure"
@@ -196,6 +197,16 @@ module Bioshogi
 
       def piece_vector
         @piece_vector ||= PieceVector[key]
+      end
+    end
+
+    concerning :ScaleMethods do
+      included do
+        delegate :scale, to: :piece_scale
+      end
+
+      def piece_scale
+        @piece_scale ||= PieceScale[key]
       end
     end
 
