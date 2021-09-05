@@ -33,7 +33,7 @@ module Bioshogi
             :text      => soldier_name(soldier),
             :location  => location,
             :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
-            :bold      => bold || params[:font_board_piece_bold],
+            :bold      => bold || params[:soldier_font_bold],
             :font_scale => soldier_font_scale(soldier.piece),
           })
       end

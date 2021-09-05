@@ -151,7 +151,7 @@ module Bioshogi
           # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら inner_frame_lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
 
-          # :font_board_piece_bold       => false,              # 駒は常に太字を使うか？
+          # :soldier_font_bold       => false,              # 駒は常に太字を使うか？
 
           # 持駒
 

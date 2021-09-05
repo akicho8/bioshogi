@@ -21,5 +21,5 @@ parser = Parser.parse(<<~EOT)
 EOT
 
 parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1").display
-parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1", font_board_piece_bold: true).display
-parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "mincho_type1", font_board_piece_bold: true).display
+parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1", soldier_font_bold: true).display
+parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "mincho_type1", soldier_font_bold: true).display
