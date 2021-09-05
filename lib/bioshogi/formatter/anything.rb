@@ -12,7 +12,7 @@ require_relative "header_builder"
 
 module Bioshogi
   module Formatter
-    concern :Anything do        # FIXME: parser に埋めるんじゃなくて parser を引数にした専用クラスで処理する。AnimationZipFormatter のように。
+    concern :Anything do        # FIXME: parser に埋めるんじゃなくて parser を引数にした専用クラスで処理する。AnimationZipBuilder のように。
       MIN_TURN = 14
 
       include KifFormatMethods
