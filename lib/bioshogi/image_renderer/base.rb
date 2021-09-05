@@ -15,7 +15,7 @@ module Bioshogi
 
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
-            :soldier_char_scale => 0.85, # 盤上駒
+            :soldier_font_scale => 0.85, # 盤上駒
             :piece_scale_map => {},
 
             # 駒(文字)の位置調整

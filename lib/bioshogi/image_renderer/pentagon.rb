@@ -6,7 +6,7 @@ module Bioshogi
       included do
         default_params.update({
             # 駒用
-            :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_char_scaleを調整すること)
+            :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
             :piece_pentagon_fill_color    => "transparent",     # ☗の色
             :piece_pentagon_stroke_color  => "transparent",     # ☗の縁取り色
             :piece_pentagon_stroke_width  => 1,                 # ☗の縁取り幅

@@ -34,7 +34,7 @@ module Bioshogi
             :location  => location,
             :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
             :bold      => bold || params[:font_board_piece_bold],
-            :font_size => soldier_char_scale(soldier.piece),
+            :font_scale => soldier_font_scale(soldier.piece),
           })
       end
 
@@ -51,10 +51,10 @@ module Bioshogi
         end
       end
 
-      def char_draw(layer: nil, v:, text:, location:, font_size:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil)
+      def char_draw(layer: nil, v:, text:, location:, font_scale:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil)
         g = Magick::Draw.new
         g.rotation = location.angle
-        g.pointsize = cell_w * font_size
+        g.pointsize = cell_w * font_scale
 
         font = nil
         if bold
@@ -104,8 +104,8 @@ module Bioshogi
         v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
 
-      def soldier_char_scale(piece)
-        params[:soldier_char_scale] * piece.scale
+      def soldier_font_scale(piece)
+        params[:soldier_font_scale] * piece.scale
       end
     end
   end

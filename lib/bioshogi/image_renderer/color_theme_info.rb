@@ -194,7 +194,7 @@ module Bioshogi
       def pentagon_enabled
         {
           :piece_pentagon_draw => true,
-          :soldier_char_scale => 0.64,
+          :soldier_font_scale => 0.64,
           :piece_char_adjust => {
             :black => [ 0.0425, 0.08],
             :white => [-0.01,   0.05],
