@@ -9,11 +9,11 @@ module Bioshogi
             # 持駒
             :stand_piece_line_height     => 1.0,               # 持駒の高さ(1.0 = 1セル高)
             :stand_piece_font_scale      => nil,               # 持駒(nil なら soldier_font_scale を代用)
-            :font_stand_piece_bold      => false,             # 持駒を太くする？
+            :font_stand_piece_bold       => false,             # 持駒を太くする？
 
             # 持駒数
-            :piece_count_color           => "rgba(0,0,0,0.8)", # *駒数の色(nilなら piece_font_color を代用)
-            :piece_count_scale           => 0.6,               # 持駒数の大きさ
+            :piece_count_font_color           => "rgba(0,0,0,0.8)", # *駒数の色(nilなら piece_font_color を代用)
+            :piece_count_font_scale           => 0.6,               # 持駒数の大きさ
             :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
             :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ
             :piece_count_position_adjust => {                  # 駒数の位置
@@ -84,8 +84,8 @@ module Bioshogi
               :v            => v,
               :text         => count.to_s,
               :location     => location,
-              :color        => params[:piece_count_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
-              :font_scale    => params[:piece_count_scale],
+              :color        => params[:piece_count_font_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
+              :font_scale   => params[:piece_count_font_scale],
               :stroke_color => params[:piece_count_stroke_color],
               :stroke_width => params[:piece_count_stroke_width],
             })

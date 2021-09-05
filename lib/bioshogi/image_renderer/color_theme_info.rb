@@ -213,14 +213,14 @@ module Bioshogi
         {
           **piece_count_on_shadow_black_on_white,
           :piece_count_bg_color => f[-84],      # 駒数の背景
-          :piece_count_color    => f[-20],      # 駒の色(持駒数)
+          :piece_count_font_color    => f[-20],      # 駒の色(持駒数)
         }
       end
 
       def piece_count_on_shadow_black_on_white
         {
           :piece_count_bg_scale        => 0.4,         # 駒数の背景の大きさ
-          :piece_count_scale           => 0.35,        # 持駒数の大きさ
+          :piece_count_font_scale           => 0.35,        # 持駒数の大きさ
           :piece_count_position_adjust => {            # 駒数の位置
             :single                    => [0.8, 0.05], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
             :double                    => [0.9, 0.05], # 駒数2桁のとき
