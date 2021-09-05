@@ -4,13 +4,13 @@ require "securerandom"
 module Bioshogi
   class ImageRenderer
     concerning :Helper do
-      # 最後の build の結果を保持するバージョン
+      # 最後の render の結果を保持するバージョン
       # mp4_builder, animation_gif_builder だけで使っている
       begin
-        attr_reader :last_build
+        attr_reader :last_rendered_image
 
         def next_build
-          @last_build = build
+          @last_rendered_image = render
         end
       end
 
@@ -18,7 +18,7 @@ module Bioshogi
       # そもそも画像リストを write("foo.png") にすると foo-0.png foo-1.png などと複数生成されるのだから
       # write は拡張子に合わせて format を設定して to_blob の結果を write しているのではないことがわかる
       def to_blob_binary
-        image = build
+        image = render
         image.format = ext_name
         image.to_blob
       end
@@ -26,7 +26,7 @@ module Bioshogi
       # いったんファイル出力してから戻している時点で相当無駄があるが apng や mp4 の場合でも失敗しない
       def to_write_binary
         Tempfile.open(["", ".#{ext_name}"]) do |t|
-          build.write(t.path)
+          render.write(t.path)
           File.binread(t.path)
         end
       end
@@ -34,7 +34,7 @@ module Bioshogi
       # ImageMagick側で書き出ししているため拡張子に合わせて変換される
       # def write(file)
       #   file = Pathname(file).expand_path.to_s
-      #   build.write(file)
+      #   render.write(file)
       #   file
       # end
 

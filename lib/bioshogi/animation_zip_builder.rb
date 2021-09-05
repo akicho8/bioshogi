@@ -3,7 +3,7 @@ module Bioshogi
     cattr_accessor :default_params do
       {
         basename_format: "%04d",
-        continuous_build: true, # 連続で処理する
+        continuous_render: true, # 連続で処理する
       }
     end
 
@@ -28,7 +28,7 @@ module Bioshogi
           zip_write(z, dos_time, i)
         end
       end
-      @image_renderer.layer_destroy_all
+      @image_renderer.clear_all
       zos.string
     end
 

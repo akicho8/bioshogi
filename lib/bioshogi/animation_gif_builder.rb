@@ -35,7 +35,7 @@ module Bioshogi
                 list.concat([@image_renderer.next_build])
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              list.concat([@image_renderer.last_build] * end_frames)
+              list.concat([@image_renderer.last_rendered_image] * end_frames)
               list.delay = list.ticks_per_second * one_frame_duration_sec
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
@@ -66,7 +66,7 @@ module Bioshogi
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
             end_frames.times do
-              @image_renderer.last_build.write("_input%04d.png" % @frame_count)
+              @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
               @frame_count += 1
             end
             logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
@@ -75,7 +75,7 @@ module Bioshogi
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 
-          @image_renderer.layer_destroy_all
+          @image_renderer.clear_all
 
           File.binread("_output1.#{ext_name}")
         end

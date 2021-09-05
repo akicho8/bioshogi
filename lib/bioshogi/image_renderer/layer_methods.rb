@@ -10,8 +10,9 @@ module Bioshogi
           })
       end
 
-      def layer_destroy_all
-        logger.tagged(:layer_destroy_all) do
+      # いらない？
+      def clear_all
+        logger.tagged(:clear_all) do
           [
             :s_canvas_layer,
             :s_board_layer,
@@ -21,7 +22,7 @@ module Bioshogi
             :d_piece_layer,
             :d_piece_count_layer,
 
-            :rendered_image,
+            :last_rendered_image,
           ].each do |e|
             if v = instance_variable_get("@#{e}")
               v.destroy!

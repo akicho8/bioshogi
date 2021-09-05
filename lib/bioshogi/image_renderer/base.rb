@@ -73,7 +73,7 @@ module Bioshogi
             # 連続で生成するか？
             # 昔はリサイズ後の背景をキャッシュしたりしていたが
             # レイヤー化してそもそも背景を破壊しないので必要になくなった
-            :continuous_build         => false,
+            :continuous_render         => false,
           }
         end
 
@@ -82,7 +82,6 @@ module Bioshogi
 
       attr_accessor :mediator
       attr_accessor :params
-      attr_accessor :rendered_image
       attr_accessor :hand_log
 
       delegate :logger, to: "Bioshogi"
@@ -108,7 +107,7 @@ module Bioshogi
         @build_counter = 0
       end
 
-      def build
+      def render
         logger.tagged(@build_counter) do
           require "rmagick"
 
@@ -142,14 +141,6 @@ module Bioshogi
         end
       end
 
-      # def render
-      #   @rendered_image ||= build
-      # end
-
-      # def rendered_image
-      #   @rendered_image ||= build
-      # end
-
       private
 
       def canvas_layer_create
@@ -178,24 +169,17 @@ module Bioshogi
           end
         end
 
-        # 背景画像が RGB8 の白黒の場合 GRAYColorspace になっていてこれに盤を重ねると白黒になってしまう、のを防ぐ
+        # 白黒の場合 GRAYColorspace になっていてこれに盤を重ねると白黒になってしまう、のを防ぐ
         layer.colorspace = Magick::SRGBColorspace
 
-        # if params[:continuous_build]
-        #   @continuous_build = layer.copy
+        # if params[:continuous_render]
+        #   @continuous_render = layer.copy
         # end
 
         logger.info { "canvas_layer_create for s_canvas_layer" }
 
-        layer
+        layer.freeze
       end
-
-      # # 変化がない部分
-      # def static_draw
-      #   board_layer_create
-      #   lattice_draw
-      #   inner_frame_draw
-      # end
 
       def condition_then_flip(layer)
         if params[:viewpoint].to_s == "white"
