@@ -14,6 +14,10 @@ module Bioshogi
         end
       end
 
+      def display
+        d(render)
+      end
+
       # png や gif は問題ないが apng や mp4 の場合に失敗する → ImageList#format に設定しているせいっぽい
       # そもそも画像リストを write("foo.png") にすると foo-0.png foo-1.png などと複数生成されるのだから
       # write は拡張子に合わせて format を設定して to_blob の結果を write しているのではないことがわかる

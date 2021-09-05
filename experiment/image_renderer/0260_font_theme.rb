@@ -1,6 +1,6 @@
 require "../example_helper"
 
-parser = Parser.parse(<<~EOT)
+info = Parser.parse(<<~EOT)
 後手の持駒：飛二 角 銀二 桂四 香四 歩九
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -20,6 +20,15 @@ parser = Parser.parse(<<~EOT)
 1 ２六歩(27) (00:00/00:00:00)
 EOT
 
-parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1").display
-parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "gothic_type1", soldier_font_bold: true).display
-parser.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "mincho_type1", soldier_font_bold: true).display
+# ImageRenderer::FontThemeInfo.each do |e|
+#   info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: e.key).display
+#   info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: e.key, soldier_font_bold: true).display
+# end
+
+info.image_renderer(color_theme_key: "real_wood_theme", font_theme_key: "mplus_rounded1c_sans", soldier_font_bold: true).display
+
+# info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "ricty_sans").display
+# info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "ricty_sans", soldier_font_bold: true).display
+# info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "noto_seif").display
+# info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "noto_seif", soldier_font_bold: true).display
+

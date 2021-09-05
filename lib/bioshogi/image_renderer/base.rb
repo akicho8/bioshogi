@@ -53,7 +53,7 @@ module Bioshogi
             :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
             # font
-            :font_theme_key        => nil,                         # フォントの種類 mincho_type1
+            :font_theme_key        => nil,                         # フォントの種類 noto_seif
             :font_regular          => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
             :font_bold             => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
             :soldier_font_bold => false,                       # 常に太字を使うか？
