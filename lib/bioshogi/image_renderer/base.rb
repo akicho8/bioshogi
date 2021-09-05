@@ -68,7 +68,7 @@ module Bioshogi
             :canvas_pattern_key       => nil,     # 背景パターン
 
             :color_theme_key          => "paper_simple_theme",
-            :override_params          => {},
+            :renderer_override_params          => {},
 
             # 連続で生成するか？
             # 昔はリサイズ後の背景をキャッシュしたりしていたが
@@ -100,7 +100,7 @@ module Bioshogi
           @params.update(FontThemeInfo.fetch(v).to_params)
         end
 
-        if v = @params[:override_params]
+        if v = @params[:renderer_override_params]
           @params.update(v)
         end
 
