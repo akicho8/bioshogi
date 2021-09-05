@@ -9,7 +9,8 @@ module Bioshogi
         { :key => :paper_shape_theme,          :func => -> e { e.paper_shape_theme }, },
         { :key => :shogi_extend_theme,         :func => -> e { e.shogi_extend_theme }, },
         { :key => :style_editor_theme,         :func => -> e { e.style_editor_theme }, },
-        { :key => :style_editor_variant_theme, :func => -> e { e.style_editor_variant_theme }, },
+        { :key => :style_editor_blue_theme,    :func => -> e { e.style_editor_blue_theme }, },
+        { :key => :style_editor_pink_theme, :func => -> e { e.style_editor_pink_theme }, },
         { :key => :real_wood_theme,            :func => -> e { e.real_wood_theme }, },
         { :key => :brightness_grey_theme,      :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { :key => :brightness_matrix_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
@@ -163,7 +164,7 @@ module Bioshogi
           # :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
           :face_pentagon_color         => {
             :black => "rgb( 60, 60, 60)",
-            :white => "rgb(240,240,240)",
+            :white => "rgb(248,248,248)",
           },
         }
       end
@@ -176,10 +177,23 @@ module Bioshogi
           })
       end
 
-      def style_editor_variant_theme
+      def style_editor_blue_theme
         shogi_extend_theme.merge({
             # :bg_file                => nil,
-            :canvas_bg_color        => "#ffc0e5",
+            :canvas_bg_color        => "#d9fffc",
+            :outer_frame_fill_color => "rgba(0,0,0,0.15)",
+
+            # ここだけ特別に薄い黒の上に黒文字
+            :piece_count_bg_color   => "rgba(0,0,0,0.1)",
+            :piece_count_font_color => "rgba(0,0,0,0.5)",
+
+          })
+      end
+
+      def style_editor_pink_theme
+        shogi_extend_theme.merge({
+            # :bg_file                => nil,
+            :canvas_bg_color        => "#ffd7ed",
             :outer_frame_fill_color => "rgba(0,0,0,0.15)",
           })
       end
@@ -188,6 +202,13 @@ module Bioshogi
         shogi_extend_theme.merge({
             :battle_field_texture => "#{__dir__}/../assets/images/wood_1080x1080.png",
             # :battle_field_texture => "#{__dir__}/../assets/images/sozai_image1.png",
+
+            # :canvas_bg_color        => "#fff5ca",
+            :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
+
+            # ここだけ特別に薄い黒の上に黒文字
+            :piece_count_bg_color   => "rgba(0,0,0,0.1)",
+            :piece_count_font_color => "rgba(0,0,0,0.5)",
           })
       end
 
@@ -208,6 +229,12 @@ module Bioshogi
           :real_shadow_sigma => 0,
         }
       end
+
+      # def piece_count_on_shadow_white_on_black2(fraction = 0.8, alpha = 0.92)
+      #   c = Color::GreyScale.from_fraction(fraction).to_rgb
+      #   f = -> v { c.adjust_brightness(v).css_rgba(alpha) }
+      #   piece_count_on_shadow_white_on_black(f)
+      # end
 
       def piece_count_on_shadow_white_on_black(f)
         {

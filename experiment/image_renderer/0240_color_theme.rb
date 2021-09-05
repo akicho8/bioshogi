@@ -28,11 +28,13 @@ bg_file = nil
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
+parser.image_renderer(color_theme_key: "real_wood_theme").display
 # parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "paper_shape_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "shogi_extend_theme", renderer_override_params: {bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "style_editor_theme").display
-# parser.image_renderer(color_theme_key: "style_editor_variant_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "style_editor_theme").display
+# parser.image_renderer(color_theme_key: "style_editor_blue_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "brightness_grey_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "brightness_matrix_theme").display
 # parser.image_renderer(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
@@ -40,7 +42,6 @@ parser.image_renderer(color_theme_key: "style_editor_theme").display
 # parser.image_renderer(color_theme_key: "brightness_orange_theme").display
 # parser.image_renderer(color_theme_key: "kimetsu_red_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "kimetsu_blue_theme").display
-# parser.image_renderer(color_theme_key: "real_wood_theme").display
 
 tp ImageRenderer::ColorThemeInfo.keys
 
