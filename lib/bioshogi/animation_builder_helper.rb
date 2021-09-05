@@ -1,5 +1,5 @@
 module Bioshogi
-  concern :FormatterHelper do
+  concern :AnimationBuilderHelper do
     included do
       cattr_accessor(:one_second) { 1000 } # ffmpeg の -r x/y の x の部分
     end

@@ -1,6 +1,6 @@
 module Bioshogi
   class AnimationGifBuilder
-    include FormatterHelper
+    include AnimationBuilderHelper
 
     def self.default_params
       super.merge({
