@@ -178,7 +178,7 @@ module Bioshogi
 
         logger.info { "canvas_layer_create for s_canvas_layer" }
 
-        layer.freeze
+        layer
       end
 
       def condition_then_flip(layer)
