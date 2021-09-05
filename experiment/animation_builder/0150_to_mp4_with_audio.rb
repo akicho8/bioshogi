@@ -8,7 +8,7 @@ bin = info.to_mp4({
     tmpdir_remove: false,
     end_duration_sec: 5,
     audio_theme_key: "audio_theme_dance",
-    theme_override_params: {
+    audio_theme_override_params: {
       acrossfade_duration: 0,
       audio_part_a_volume: 1.0,
     })

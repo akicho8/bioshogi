@@ -47,7 +47,7 @@ module Bioshogi
         @params.update(audio_theme_info.to_params)
       end
       # theme を上書きする用
-      if v = params[:theme_override_params]
+      if v = params[:audio_theme_override_params]
         @params.update(v)
       end
     end
