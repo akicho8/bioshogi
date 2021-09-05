@@ -161,10 +161,10 @@ module Bioshogi
 
           # 影を入れるので☗を半透明にしない
           # :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
-          # :face_pentagon_color         => {
-          #   :black                     => "rgba(  0,  0,  0)",  # ☗を白と黒で塗り分けるときの先手の色
-          #   :white                     => "rgba(255,255,255)",  # ☗を白と黒で塗り分けるときの後手の色
-          # },
+          :face_pentagon_color         => {
+            :black => "rgb( 60, 60, 60)",
+            :white => "rgb(240,240,240)",
+          },
         }
       end
 
