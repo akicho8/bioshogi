@@ -5,7 +5,7 @@
 #
 
 module Bioshogi
-  class ImageFormatter < BinaryFormatter
+  class ImageFormatter
   end
 
   require "bioshogi/image_formatter/base"

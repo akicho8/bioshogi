@@ -29,13 +29,13 @@ module Bioshogi
           if media_factory_key == "rmagick"
             begin
               list = Magick::ImageList.new
-              list.concat([@image_formatter.build])
+              list.concat([@image_formatter.next_build])
               @parser.move_infos.each.with_index do |e, i|
                 @mediator.execute(e[:input])
-                list.concat([@image_formatter.build])
+                list.concat([@image_formatter.next_build])
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              list.concat([@image_formatter.build] * end_frames)
+              list.concat([@image_formatter.last_build] * end_frames)
               list.delay = list.ticks_per_second * one_frame_duration_sec
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
@@ -57,16 +57,16 @@ module Bioshogi
 
           if media_factory_key == "ffmpeg"
             @frame_count = 0
-            @image_formatter.build.write("_input%04d.png" % @frame_count)
+            @image_formatter.next_build.write("_input%04d.png" % @frame_count)
             @frame_count += 1
             @parser.move_infos.each.with_index do |e, i|
               @mediator.execute(e[:input])
-              @image_formatter.build.write("_input%04d.png" % @frame_count)
+              @image_formatter.next_build.write("_input%04d.png" % @frame_count)
               @frame_count += 1
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
             end_frames.times do
-              @image_formatter.build.write("_input%04d.png" % @frame_count)
+              @image_formatter.last_build.write("_input%04d.png" % @frame_count)
               @frame_count += 1
             end
             logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
