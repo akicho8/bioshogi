@@ -243,8 +243,8 @@ module Bioshogi
           :piece_count_bg_scale        => 0.3,         # 駒数の背景の大きさ
           :piece_count_font_scale      => 0.25,        # 持駒数の大きさ
           :piece_count_position_adjust => {            # 駒数の位置
-            :single                    => [0.7, 0.05], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
-            :double                    => [0.7, 0.05], # 駒数2桁のとき
+            :single                    => [0.7, 0.08], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+            :double                    => [0.7, 0.08], # 駒数2桁のとき
           },
           :piece_count_bg_adjust => {
             :black => [-0.02, -0.02],

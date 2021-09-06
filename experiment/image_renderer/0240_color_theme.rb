@@ -8,7 +8,7 @@ bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_p
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil
 
-ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
+# ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
@@ -19,7 +19,7 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "paper_shape_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "shogi_extend_theme", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "style_editor_theme").display
+parser.image_renderer(color_theme_key: "style_editor_theme").display
 # parser.image_renderer(color_theme_key: "style_editor_blue_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_aiiro_theme", renderer_override_params: {bg_file: bg_file}).display
