@@ -10,8 +10,10 @@ module Bioshogi
         { :key => :shogi_extend_theme,         :func => -> e { e.shogi_extend_theme }, },
         { :key => :style_editor_theme,         :func => -> e { e.style_editor_theme }, },
         { :key => :style_editor_blue_theme,    :func => -> e { e.style_editor_blue_theme }, },
-        { :key => :style_editor_pink_theme, :func => -> e { e.style_editor_pink_theme }, },
-        { :key => :real_wood_theme,            :func => -> e { e.real_wood_theme }, },
+        { :key => :style_editor_pink_theme,    :func => -> e { e.style_editor_pink_theme }, },
+        { :key => :real_wood_theme1,           :func => -> e { e.real_wood_theme_core("pakutexture06210140") }, },
+        { :key => :real_wood_theme2,           :func => -> e { e.real_wood_theme_core("texture524_27_1080x1080") }, },
+        { :key => :real_wood_theme3,           :func => -> e { e.real_wood_theme_core("wood-texture_00018_1080x1080") }, },
         { :key => :brightness_grey_theme,      :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { :key => :brightness_matrix_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
         { :key => :brightness_green_theme,     :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -76,7 +78,7 @@ module Bioshogi
           },
 
           # :canvas_pattern_key      => :pattern_checker_dark,
-          :bg_file => "#{__dir__}/../assets/images/checker_dark.png",
+          :bg_file => img_path("checker_dark.png"),
 
           **{
             **pentagon_enabled,
@@ -198,10 +200,10 @@ module Bioshogi
           })
       end
 
-      def real_wood_theme
+      def real_wood_theme_core(name)
         shogi_extend_theme.merge({
-            :battle_field_texture => "#{__dir__}/../assets/images/wood_1080x1080.png",
-            # :battle_field_texture => "#{__dir__}/../assets/images/sozai_image1.png",
+            :battle_field_texture => "#{__dir__}/../assets/images/board/#{name}.png",
+            # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
 
             # :canvas_bg_color        => "#fff5ca",
             :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
@@ -272,6 +274,10 @@ module Bioshogi
 
       def syuiro
         Color::RGB.new(239, 69, 74)
+      end
+
+      def img_path(name)
+        "#{__dir__}/../assets/images/#{name}"
       end
 
       def to_params

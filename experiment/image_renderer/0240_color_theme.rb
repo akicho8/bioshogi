@@ -24,12 +24,16 @@ EOT
 bg_file = "../../lib/bioshogi/assets/images/checker_light.png"
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil
+bg_file = "../../lib/bioshogi/assets/images/board/original/pakutexture06210140.jpg"
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-# parser.image_renderer(color_theme_key: "real_wood_theme").display
-parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {battle_field_texture: bg_file, bg_file: bg_file}).display
+parser.image_renderer(color_theme_key: "real_wood_theme1").display
+# parser.image_renderer(color_theme_key: "real_wood_theme2").display
+# parser.image_renderer(color_theme_key: "real_wood_theme3").display
+# parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "paper_shape_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "shogi_extend_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_theme").display
@@ -57,7 +61,7 @@ tp ImageRenderer::ColorThemeInfo.keys
 # >> | paper_simple_theme      |
 # >> | paper_shape_theme       |
 # >> | shogi_extend_theme      |
-# >> | real_wood_theme         |
+# >> | real_wood_theme3         |
 # >> | brightness_grey_theme   |
 # >> | brightness_matrix_theme |
 # >> | brightness_green_theme  |

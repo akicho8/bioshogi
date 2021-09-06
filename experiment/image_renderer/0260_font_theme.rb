@@ -25,7 +25,7 @@ EOT
 #   info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: e.key, soldier_font_bold: true).display
 # end
 
-info.image_renderer(color_theme_key: "real_wood_theme", font_theme_key: "mplus_rounded1c_sans", soldier_font_bold: true).display
+info.image_renderer(color_theme_key: "real_wood_theme1", font_theme_key: "mplus_rounded1c_sans", soldier_font_bold: true).display
 
 # info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "ricty_sans").display
 # info.image_renderer(color_theme_key: "paper_simple_theme", font_theme_key: "ricty_sans", soldier_font_bold: true).display

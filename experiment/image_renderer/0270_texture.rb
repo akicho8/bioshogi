@@ -22,6 +22,6 @@ parser = Parser.parse(<<~EOT)
 EOT
 
 ms = Benchmark.ms do
-  parser.image_renderer(color_theme_key: "real_wood_theme").display
+  parser.image_renderer(color_theme_key: "real_wood_theme1").display
 end
 p "%.1f ms" % ms                  # => "1570.5 ms"
