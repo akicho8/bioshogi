@@ -16,12 +16,13 @@ module Bioshogi
         end
       end
 
+      # 外枠を含まない格子
       # line で stroke を使うと fill + stroke で二重に同じところを塗るっぽい
       # だから半透明にしても濃くなる
       # なので fill だけにする
       def lattice_draw(layer)
         draw_context(layer) do |g|
-          g.fill(inner_frame_lattice_color)
+          g.fill(inner_frame_lattice_color) # 塗り潰し色で line する (stroke と勘違いしがち)
           (1...lattice.w).each do |x|
             line_draw(g, V[x, 0], V[x, lattice.h])
           end
@@ -31,13 +32,17 @@ module Bioshogi
         end
       end
 
-      # 内側なので基本透明で枠だけを描画する
+      # 格子の外枠
+      # 盤から見れば内側
+      # 基本透明で枠だけを描画する
+      # 塗り潰したいときは board_layer_create の方で行うべき
+      # inner_frame_stroke_width が 0 または nil で inner_frame_fill_color も nil ならスキップ
       def inner_frame_draw(layer)
-        if inner_frame_stroke_width
+        if inner_frame_stroke_width > 0 || params[:inner_frame_fill_color]
           draw_context(layer) do |g|
             g.stroke(inner_frame_stroke_color)
             g.stroke_width(inner_frame_stroke_width)
-            g.fill = params[:inner_frame_fill_color] # 塗り潰したいときは board_layer_create の方で行う
+            g.fill = params[:inner_frame_fill_color] || "transparent"
             g.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # QUESTION: 右下は -1, -1 するべきか？
           end
         end

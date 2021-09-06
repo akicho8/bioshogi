@@ -28,8 +28,8 @@ module Bioshogi
             :piece_font_color         => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
-            :inner_frame_stroke_width => 3,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
-            :inner_frame_fill_color   => "transparent",               # 基本透明とする(nil にしてはいけない)
+            :inner_frame_stroke_width => 2,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+            :inner_frame_fill_color   => nil,                         # 基本透明とする(基本指定なしでよい)
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
             :battle_field_texture       => nil,                         # 盤テクスチャ
@@ -293,7 +293,7 @@ module Bioshogi
       end
 
       def inner_frame_stroke_width
-        params[:inner_frame_stroke_width] || lattice_stroke_width
+        params[:inner_frame_stroke_width] || lattice_stroke_width || 0
       end
 
       def image_format
