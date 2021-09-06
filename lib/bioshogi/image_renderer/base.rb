@@ -24,7 +24,7 @@ module Bioshogi
               :white => [0.0,    0.01],
             },
             # 盤
-            :canvas_bg_color             => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
+            :canvas_bg_color          => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
             :piece_font_color         => "rgba(0,0,0,0.8)",           # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ

@@ -18,6 +18,7 @@ module Bioshogi
 
     # 棋譜ファイルのコンテンツを読み込む
     def parse(source, options = {})
+      source = source_replace(source)
       parser = accepted_class(source)
       unless parser
         raise FileFormatError, "棋譜のフォーマットが不明です : #{source}"
@@ -41,6 +42,13 @@ module Bioshogi
     end
 
     private
+
+    def source_replace(source)
+      # if source
+      #   md = source.match(/^[盤面確認]/)
+      # end
+      source
+    end
 
     def support_parsers
       [SfenParser, KifParser, CsaParser, Ki2Parser, BodParser]

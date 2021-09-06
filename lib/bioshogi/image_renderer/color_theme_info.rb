@@ -12,8 +12,8 @@ module Bioshogi
         { :key => :style_editor_blue_theme,    :func => -> e { e.style_editor_blue_theme }, },
         { :key => :style_editor_pink_theme,    :func => -> e { e.style_editor_pink_theme }, },
         { :key => :real_wood_theme1,           :func => -> e { e.real_wood_theme_core("pakutexture06210140") }, },
-        { :key => :real_wood_theme2,           :func => -> e { e.real_wood_theme_core("texture524_27_1080x1080") }, },
-        { :key => :real_wood_theme3,           :func => -> e { e.real_wood_theme_core("wood-texture_00018_1080x1080") }, },
+        { :key => :real_wood_theme2,           :func => -> e { e.real_wood_theme_core("texture524_27") }, },
+        { :key => :real_wood_theme3,           :func => -> e { e.real_wood_theme_core("wood-texture_00018") }, },
         { :key => :brightness_grey_theme,      :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { :key => :brightness_matrix_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
         { :key => :brightness_green_theme,     :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -69,7 +69,8 @@ module Bioshogi
 
         {
           **{
-            **piece_count_on_shadow_white_on_black(f),
+            # **piece_count_on_shadow_white_on_black(f),
+            **piece_count_on_shadow_black_on_white,
           },
 
           **{
@@ -151,6 +152,7 @@ module Bioshogi
 
           # 駒用
           :piece_pentagon_fill_color     => komairo.html,
+
           # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら inner_frame_lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
 
@@ -186,8 +188,8 @@ module Bioshogi
             :outer_frame_fill_color => "rgba(0,0,0,0.15)",
 
             # ここだけ特別に薄い黒の上に黒文字
-            :piece_count_bg_color   => "rgba(0,0,0,0.1)",
-            :piece_count_font_color => "rgba(0,0,0,0.5)",
+            # :piece_count_bg_color   => "rgba(0,0,0,0.1)",
+            # :piece_count_font_color => "rgba(0,0,0,0.5)",
 
           })
       end
@@ -208,9 +210,9 @@ module Bioshogi
             # :canvas_bg_color        => "#fff5ca",
             :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
 
-            # ここだけ特別に薄い黒の上に黒文字
-            :piece_count_bg_color   => "rgba(0,0,0,0.1)",
-            :piece_count_font_color => "rgba(0,0,0,0.5)",
+            # # ここだけ特別に薄い黒の上に黒文字
+            # :piece_count_bg_color   => "rgba(0,0,0,0.1)",
+            # :piece_count_font_color => "rgba(0,0,0,0.5)",
           })
       end
 
@@ -241,22 +243,36 @@ module Bioshogi
       def piece_count_on_shadow_white_on_black(f)
         {
           **piece_count_on_shadow_black_on_white,
-          :piece_count_bg_color => f[-84],      # 駒数の背景
-          :piece_count_font_color    => f[-20],      # 駒の色(持駒数)
+          :piece_count_bg_color   => f[-88],      # 駒数の背景
+          :piece_count_font_color => f[-10],      # 駒の色(持駒数)
         }
       end
 
       def piece_count_on_shadow_black_on_white
+        # {
+        #   :piece_count_bg_scale        => 0.4,         # 駒数の背景の大きさ
+        #   :piece_count_font_scale      => 0.35,        # 持駒数の大きさ
+        #   :piece_count_position_adjust => {            # 駒数の位置
+        #     :single                    => [0.8, 0.05], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+        #     :double                    => [0.9, 0.05], # 駒数2桁のとき
+        #   },
+        #   :piece_count_bg_adjust => {
+        #     :black => [-0.02, -0.02],
+        #     :white => [-0.03, -0.01],
+        #   },
+        # }
+
+        # 小さめ
         {
-          :piece_count_bg_scale        => 0.4,         # 駒数の背景の大きさ
-          :piece_count_font_scale           => 0.35,        # 持駒数の大きさ
+          :piece_count_bg_scale        => 0.3,         # 駒数の背景の大きさ
+          :piece_count_font_scale      => 0.25,        # 持駒数の大きさ
           :piece_count_position_adjust => {            # 駒数の位置
-            :single                    => [0.8, 0.05], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
-            :double                    => [0.9, 0.05], # 駒数2桁のとき
+            :single                    => [0.7, 0.05], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+            :double                    => [0.7, 0.05], # 駒数2桁のとき
           },
           :piece_count_bg_adjust => {
             :black => [-0.02, -0.02],
-            :white => [-0.03, -0.01],
+            :white => [-0.03, -0.02],
           },
         }
       end

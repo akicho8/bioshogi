@@ -1,36 +1,19 @@
 require "../example_helper"
 require "color"
 
-parser = Parser.parse(<<~EOT)
-後手の持駒：飛二 角 銀二 桂四 香四 歩九
-  ９ ８ ７ ６ ５ ４ ３ ２ １
-+---------------------------+
-|v香v桂v銀v金v玉v金v銀v桂v香|一
-| ・v飛 ・ ・ ・ ・ ・v角 ・|二
-|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-| ・ ・ ・v竜 竜v馬 馬 ・ ・|五
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-| 香 桂 銀 金 玉 金 銀 桂 香|九
-+---------------------------+
-先手の持駒：飛 角 金四 銀二 桂 香 玉 歩九九
-
-手数----指手---------消費時間--
-1 ２六歩(27) (00:00/00:00:00)
-EOT
-
+parser = Parser.parse("position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1")
 bg_file = "../../lib/bioshogi/assets/images/checker_light.png"
-bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil
 bg_file = "../../lib/bioshogi/assets/images/board/original/pakutexture06210140.jpg"
+bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_path.to_s
+bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
+
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
 # parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {battle_field_texture: bg_file, bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "real_wood_theme1").display
+# parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "real_wood_theme2").display
 # parser.image_renderer(color_theme_key: "real_wood_theme3").display
 # parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
@@ -41,7 +24,7 @@ parser.image_renderer(color_theme_key: "real_wood_theme1").display
 # parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "brightness_grey_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "brightness_matrix_theme").display
-# parser.image_renderer(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
+parser.image_renderer(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
 # parser.image_renderer(color_theme_key: "brightness_green_theme").display
 # parser.image_renderer(color_theme_key: "brightness_orange_theme").display
 # parser.image_renderer(color_theme_key: "kimetsu_red_theme", renderer_override_params: {bg_file: bg_file}).display
