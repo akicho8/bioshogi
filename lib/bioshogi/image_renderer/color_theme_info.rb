@@ -5,26 +5,26 @@ module Bioshogi
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [
-        { :key => :paper_simple_theme,         :func => -> e { e.paper_simple_theme }, },
-        { :key => :paper_shape_theme,          :func => -> e { e.paper_shape_theme }, },
-        { :key => :shogi_extend_theme,         :func => -> e { e.shogi_extend_theme }, },
-        { :key => :style_editor_theme,         :func => -> e { e.style_editor_theme }, },
-        { :key => :style_editor_blue_theme,    :func => -> e { e.style_editor_blue_theme }, },
-        { :key => :style_editor_pink_theme,    :func => -> e { e.style_editor_pink_theme }, },
-        { :key => :style_editor_kon_theme,     :func => -> e { e.style_editor_kon_theme }, },
-        { :key => :youtube_red_theme,          :func => -> e { e.youtube_red_theme }, },
-        { :key => :mario_sky_theme,            :func => -> e { e.mario_sky_theme }, },
-        { :key => :splatoon_red_black_theme,   :func => -> e { e.splatoon_red_black_theme }, },
-        { :key => :splatoon_green_black_theme, :func => -> e { e.splatoon_green_black_theme }, },
-        { :key => :real_wood_theme1,           :func => -> e { e.real_wood_theme_core("pakutexture06210140") }, },
-        { :key => :real_wood_theme2,           :func => -> e { e.real_wood_theme_core("texture524_27") }, },
-        { :key => :real_wood_theme3,           :func => -> e { e.real_wood_theme_core("wood-texture_00018") }, },
-        { :key => :brightness_grey_theme,      :func => -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { :key => :brightness_matrix_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, :merge_params => { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
-        { :key => :brightness_green_theme,     :func => -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
-        { :key => :brightness_orange_theme,    :func => -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
-        { :key => :kimetsu_red_theme,          :func => -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
-        { :key => :kimetsu_blue_theme,         :func => -> e { e.kimetsu_build(Color::RGB::LightSkyBlue.adjust_saturation(0))     }, },
+        { key: :paper_simple_theme,         func: -> e { e.paper_simple_theme }, },
+        { key: :paper_shape_theme,          func: -> e { e.paper_shape_theme }, },
+        { key: :shogi_extend_theme,         func: -> e { e.shogi_extend_theme }, },
+        { key: :style_editor_theme,         func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(100,41%,80%)",  outer_frame_fill_color: "hsla(0,0,0%,0.24)")  }, },
+        { key: :style_editor_blue_theme,    func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(175,100%,93%)", outer_frame_fill_color: "hsla(0,0,0%,0.15)")  }, },
+        { key: :style_editor_pink_theme,    func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(327,100%,92%)", outer_frame_fill_color: "hsla(0,0,0%,0.15)")  }, },
+        { key: :style_editor_aiiro_theme,   func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(206,39%,28%)",  outer_frame_fill_color: "hsla(0,0,100%,0.5)") }, },
+        { key: :youtube_red_theme,          func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(356,81%,47%)",  outer_frame_fill_color: "hsla(0,0,0%,0.2)")   }, },
+        { key: :mario_sky_theme,            func: -> e { e.shogi_extend_theme.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0,0%,0.22)")  }, },
+        { key: :splatoon_red_black_theme,   func: -> e { e.shogi_extend_theme.merge(bg_file: "#{__dir__}/../assets/images/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0,0%,0.22)") }, },
+        { key: :splatoon_green_black_theme, func: -> e { e.shogi_extend_theme.merge(bg_file: "#{__dir__}/../assets/images/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0,0%,0.22)") }, },
+        { key: :real_wood_theme1,           func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
+        { key: :real_wood_theme2,           func: -> e { e.real_wood_theme_core("texture524_27") }, },
+        { key: :real_wood_theme3,           func: -> e { e.real_wood_theme_core("wood-texture_00018") }, },
+        { key: :brightness_grey_theme,      func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
+        { key: :brightness_matrix_theme,    func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
+        { key: :brightness_green_theme,     func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { key: :brightness_orange_theme,    func: -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
+        { key: :kimetsu_red_theme,          func: -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
+        { key: :kimetsu_blue_theme,         func: -> e { e.kimetsu_build(Color::RGB::LightSkyBlue.adjust_saturation(0))     }, },
       ]
 
       # 輝度だけを変化させた設定を返す
@@ -176,72 +176,6 @@ module Bioshogi
             :white => "rgb(248,248,248)",
           },
         }
-      end
-
-      def style_editor_theme
-        shogi_extend_theme.merge({
-            # :bg_file                => nil,
-            :canvas_bg_color        => "rgb(197,225,183)",
-            :outer_frame_fill_color => "rgba(0,0,0,0.24)",
-          })
-      end
-
-      def style_editor_blue_theme
-        shogi_extend_theme.merge({
-            # :bg_file                => nil,
-            :canvas_bg_color        => "#d9fffc",
-            :outer_frame_fill_color => "rgba(0,0,0,0.15)",
-
-            # ここだけ特別に薄い黒の上に黒文字
-            # :piece_count_bg_color   => "rgba(0,0,0,0.1)",
-            # :piece_count_font_color => "rgba(0,0,0,0.5)",
-
-          })
-      end
-
-      def style_editor_pink_theme
-        shogi_extend_theme.merge({
-            # :bg_file                => nil,
-            :canvas_bg_color        => "hsl(327,100%,92%)",
-            :outer_frame_fill_color => "rgba(0,0,0,0.15)",
-          })
-      end
-
-      def style_editor_kon_theme
-        shogi_extend_theme.merge({
-            :canvas_bg_color        => "hsl(221,62%,36%)",      # 紺色に
-            :outer_frame_fill_color => "hsla(0,0,100%,0.5)",
-          })
-      end
-
-      def youtube_red_theme
-        shogi_extend_theme.merge({
-            :canvas_bg_color        => "hsl(356,81%,47%)",
-            :outer_frame_fill_color => "hsla(0,0,0%,0.2)",
-          })
-      end
-
-      def mario_sky_theme
-        shogi_extend_theme.merge({
-            :canvas_bg_color        => "hsl(227,100%,71%)",
-            :outer_frame_fill_color => "hsla(0,0,0%,0.22)",
-          })
-      end
-
-      def splatoon_red_black_theme
-        shogi_extend_theme.merge({
-            :bg_file                => "#{__dir__}/../assets/images/splatoon_red_stripe.png",
-            # :canvas_bg_color        => "hsl(337,73%,51%)",   # 単色の場合
-            :outer_frame_fill_color => "hsla(0,0,0%,0.22)",
-          })
-      end
-
-      def splatoon_green_black_theme
-        shogi_extend_theme.merge({
-            :bg_file                => "#{__dir__}/../assets/images/splatoon_green_stripe.png",
-            # :canvas_bg_color        => "hsl(120,80%,43%)",   # 単色の場合
-            :outer_frame_fill_color => "hsla(0,0,0%,0.22)",
-          })
       end
 
       def real_wood_theme_core(name)

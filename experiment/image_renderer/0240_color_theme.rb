@@ -8,7 +8,7 @@ bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_p
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil
 
-# ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
+ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
@@ -22,8 +22,8 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "style_editor_theme").display
 # parser.image_renderer(color_theme_key: "style_editor_blue_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "style_editor_kon_theme", renderer_override_params: {bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "youtube_red_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "style_editor_aiiro_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "youtube_red_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "splatoon_red_black_theme").display
 # parser.image_renderer(color_theme_key: "splatoon_green_black_theme").display
 # parser.image_renderer(color_theme_key: "mario_sky_theme").display
