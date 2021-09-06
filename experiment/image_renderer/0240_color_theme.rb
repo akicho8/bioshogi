@@ -3,10 +3,10 @@ require "color"
 
 parser = Parser.parse("position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1")
 bg_file = "../../lib/bioshogi/assets/images/checker_light.png"
-bg_file = nil
 bg_file = "../../lib/bioshogi/assets/images/board/original/pakutexture06210140.jpg"
 bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_path.to_s
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
+bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
@@ -22,9 +22,14 @@ bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.t
 # parser.image_renderer(color_theme_key: "style_editor_theme").display
 # parser.image_renderer(color_theme_key: "style_editor_blue_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "style_editor_kon_theme", renderer_override_params: {bg_file: bg_file}).display
+parser.image_renderer(color_theme_key: "youtube_red_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "splatoon_red_black_theme").display
+# parser.image_renderer(color_theme_key: "splatoon_green_black_theme").display
+# parser.image_renderer(color_theme_key: "mario_sky_theme").display
 # parser.image_renderer(color_theme_key: "brightness_grey_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "brightness_matrix_theme").display
-parser.image_renderer(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
+# parser.image_renderer(color_theme_key: "brightness_matrix_theme", viewpoint: "white").display
 # parser.image_renderer(color_theme_key: "brightness_green_theme").display
 # parser.image_renderer(color_theme_key: "brightness_orange_theme").display
 # parser.image_renderer(color_theme_key: "kimetsu_red_theme", renderer_override_params: {bg_file: bg_file}).display
