@@ -12,7 +12,7 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-# parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {battle_field_texture: bg_file, bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "real_wood_theme2").display
 # parser.image_renderer(color_theme_key: "real_wood_theme3").display

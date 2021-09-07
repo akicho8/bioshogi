@@ -180,7 +180,7 @@ module Bioshogi
 
       def real_wood_theme_core(name)
         shogi_extend_theme.merge({
-            :battle_field_texture => "#{__dir__}/../assets/images/board/#{name}.png",
+            :fg_file => "#{__dir__}/../assets/images/board/#{name}.png",
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
 
             # :canvas_bg_color        => "#fff5ca",

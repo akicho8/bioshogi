@@ -32,7 +32,7 @@ module Bioshogi
             :inner_frame_fill_color   => nil,                         # 基本透明とする(基本指定なしでよい)
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
-            :battle_field_texture       => nil,                         # 盤テクスチャ
+            :fg_file       => nil,                         # 盤テクスチャ
 
             # optional
             :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)

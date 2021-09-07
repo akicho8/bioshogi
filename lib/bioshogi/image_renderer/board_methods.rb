@@ -67,7 +67,7 @@ module Bioshogi
       def board_layer_create
         layer = transparent_layer(:s_board_layer)
         case
-        when params[:battle_field_texture]
+        when params[:fg_file]
           if false
             # 座標を見ずに画面中央に表示する場合
             layer.composite!(texture_image, Magick::CenterGravity, 0, 0, Magick::OverCompositeOp)
@@ -117,7 +117,7 @@ module Bioshogi
       #
       def texture_image
         @texture_image ||= -> {
-          image = Magick::Image.read(params[:battle_field_texture].to_s).first
+          image = Magick::Image.read(params[:fg_file].to_s).first
           image.resize_to_fill!(*ps(outer_rect))
 
           # 角を取る場合
