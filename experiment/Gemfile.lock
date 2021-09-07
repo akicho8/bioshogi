@@ -103,7 +103,7 @@ GEM
     systemu (2.6.5)
     table_format (0.0.8)
       activesupport
-    test-unit (3.4.4)
+    test-unit (3.4.5)
       power_assert
     tree_support (0.1.9)
       activesupport
