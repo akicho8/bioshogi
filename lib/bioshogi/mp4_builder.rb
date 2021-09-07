@@ -120,7 +120,7 @@ module Bioshogi
             @image_renderer.clear_all
           end
 
-          if !audio_part_a
+          if !primary_audio_file
             return Pathname("_output1.mp4").read
           end
 
@@ -134,27 +134,37 @@ module Bioshogi
 
             logger.info { "予測した全体の秒数(total_duration): #{total_duration}" }
 
-            if @switch_turn && audio_part_b
+            if @switch_turn && audio_part_a && audio_part_b
               logger.info { "開戦前後で分ける" }
-              part1 = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
-              part2 = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
+              part1_t = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
+              part2_t = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
 
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
-              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
+              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1_t} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
 
-              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
+              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2_t} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
               logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
 
               strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
               strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filters(fadeout_value)} _same_length1.m4a)
             else
-              logger.info { "開戦前のみ" }
-              logger.info { "audio_part_a: #{audio_part_a}" }
-              af = audio_filters("volume=#{params[:audio_part_a_volume]}", fadeout_value) # ボリューム調整 + ファイドアウト
-              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{total_duration} #{af} -y _same_length1.m4a)
-              logger.info { "#{audio_part_a.basename}: #{Media.duration(audio_part_a)}" }
+              # 開戦しない場合は A, B パートの存在する方の曲を先頭から入れる
+              [
+                [audio_part_a, params[:audio_part_a_volume]],
+                [audio_part_b, params[:audio_part_b_volume]],
+              ].each do |audio_part_x, volume|
+                if audio_part_x
+                  logger.info { "開戦前のみ" }
+                  logger.info { "audio_part_x: #{audio_part_x}" }
+                  af = audio_filters("volume=#{volume}", fadeout_value) # ボリューム調整 + ファイドアウト
+                  strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -t #{total_duration} #{af} -y _same_length1.m4a)
+                  logger.info { "#{audio_part_x.basename}: #{Media.duration(audio_part_x)}" }
+                  break
+                end
+              end
             end
+
             logger.info { "fadeout_duration: #{fadeout_duration}" }
 
             # logger.info { "全体の音量調整(しない)" }
@@ -185,6 +195,10 @@ module Bioshogi
       if v = params[:audio_part_b]
         Pathname(v).expand_path
       end
+    end
+
+    def primary_audio_file
+      audio_part_a || audio_part_b
     end
 
     def acrossfade_duration

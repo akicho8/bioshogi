@@ -11,7 +11,7 @@ bin = info.to_mp4({
     audio_theme_override_params: {
       acrossfade_duration: 0,
       audio_part_a_volume: 1.0,
-    })
+    }})
 Pathname("_output.mp4").write(bin) # => 363897
 Media.duration("_output.mp4")      # => 11.518
 Media.p("_output.mp4")

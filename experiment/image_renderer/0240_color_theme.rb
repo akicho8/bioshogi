@@ -19,7 +19,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "paper_shape_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "shogi_extend_theme", renderer_override_params: {bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "style_editor_theme").display
+# parser.image_renderer(color_theme_key: "style_editor_theme").display
 # parser.image_renderer(color_theme_key: "style_editor_blue_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_pink_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_aiiro_theme", renderer_override_params: {bg_file: bg_file}).display

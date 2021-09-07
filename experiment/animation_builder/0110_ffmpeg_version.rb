@@ -9,8 +9,7 @@ image_renderer = ImageRenderer.new(mediator, viewpoint: "black")
 list = [nil, *info.move_infos]
 list.each.with_index do |e, i|
   mediator.execute(e[:input]) if e
-  image_renderer.render
-  image_renderer.canvas.write("_#{i}.png")
+  image_renderer.render.write("_#{i}.png")
 end
 
 one_frame_duration_sec = 2.0
