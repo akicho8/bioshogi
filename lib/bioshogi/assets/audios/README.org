@@ -1,21 +1,27 @@
-|----------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
-| key      | name                       | source                                         | Author               |                                           |
-|----------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
-| nc97718  | てってってー               | https://commons.nicovideo.jp/material/nc97718  | ターリー◆dtTARy/mt2 |                                           |
-| nc55257  | ３分クッキング             | https://commons.nicovideo.jp/material/nc55257  | ジェルバ             |                                           |
-| nc770    | 優しい風                   | https://commons.nicovideo.jp/material/nc770    | McCoy                |                                           |
-| nc768    | マーチ・マーチ             | https://commons.nicovideo.jp/material/nc768    | McCoy                |                                           |
-| nc43122  | 夜間航海                   | https://commons.nicovideo.jp/material/nc43122  | McCoy                |                                           |
-| nc35943  | 昼下がり                   | https://commons.nicovideo.jp/material/nc35943  | 369                  | loop                                      |
-| nc3366   | はてな                     | https://commons.nicovideo.jp/material/nc3366   | しましまP @shimakid  |                                           |
-| nc10812  | BGM026 Jazz                | https://commons.nicovideo.jp/material/nc10812  | sanche               | ニコ生の作品以外では要連絡                |
-| nc105702 | ぐだぐだな感じ             | https://commons.nicovideo.jp/material/nc105702 | yuki                 |                                           |
-| nc107860 | Shall we meet？            | https://commons.nicovideo.jp/material/nc107860 | MATSU                | loop                                      |
-| ds7615   | Winner                     | https://dova-s.jp/bgm/play7615.html            | FLASH☆BEAT          | loop                                      |
-| ds4712   | 昼下がり気分               | https://dova-s.jp/bgm/play4712.html            | KK                   | 作者の紹介でYoutube動画に適しているとある |
-|          |                            |                                                |                      |                                           |
-| ds3895   | 百花繚乱                   | https://dova-s.jp/bgm/play3895.html            | 天休ひさし           | loop                                      |
-| ds13037  | YouTube向けラグタイム      | https://dova-s.jp/bgm/play13037.html           | 天休ひさし           | loop                                      |
-| ds4000   | Space Town (Brand New Mix) | https://dova-s.jp/bgm/play4000.html            | Khaim                | loop                                      |
-| ds12450  | Somehow (Prod. Khaim)      | https://dova-s.jp/bgm/play12450.html           | Khaim                | loop                                      |
-|----------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
+|--------------------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
+| key                | name                       | source                                         | Author               |                                           |
+|--------------------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
+| nc97718            | てってってー               | https://commons.nicovideo.jp/material/nc97718  | ターリー◆dtTARy/mt2 |                                           |
+| nc55257            | ３分クッキング             | https://commons.nicovideo.jp/material/nc55257  | ジェルバ             |                                           |
+| nc770              | 優しい風                   | https://commons.nicovideo.jp/material/nc770    | McCoy                |                                           |
+| nc768              | マーチ・マーチ             | https://commons.nicovideo.jp/material/nc768    | McCoy                |                                           |
+| nc43122            | 夜間航海                   | https://commons.nicovideo.jp/material/nc43122  | McCoy                |                                           |
+| nc35943            | 昼下がり                   | https://commons.nicovideo.jp/material/nc35943  | 369                  | loop                                      |
+| nc3366             | はてな                     | https://commons.nicovideo.jp/material/nc3366   | しましまP @shimakid  |                                           |
+| nc10812            | BGM026 Jazz                | https://commons.nicovideo.jp/material/nc10812  | sanche               | ニコ生の作品以外では要連絡                |
+| nc105702           | ぐだぐだな感じ             | https://commons.nicovideo.jp/material/nc105702 | yuki                 |                                           |
+| nc107860           | Shall we meet？            | https://commons.nicovideo.jp/material/nc107860 | MATSU                | loop                                      |
+| ds7615             | Winner                     | https://dova-s.jp/bgm/play7615.html            | FLASH☆BEAT          | loop                                      |
+| ds4712             | 昼下がり気分               | https://dova-s.jp/bgm/play4712.html            | KK                   | 作者の紹介でYoutube動画に適しているとある |
+|                    |                            |                                                |                      |                                           |
+| ds3895             | 百花繚乱                   | https://dova-s.jp/bgm/play3895.html            | 天休ひさし           | loop                                      |
+| ds13037            | YouTube向けラグタイム      | https://dova-s.jp/bgm/play13037.html           | 天休ひさし           | loop                                      |
+| ds4000             | Space Town (Brand New Mix) | https://dova-s.jp/bgm/play4000.html            | Khaim                | loop                                      |
+| ds12450            | Somehow (Prod. Khaim)      | https://dova-s.jp/bgm/play12450.html           | Khaim                | loop                                      |
+|                    |                            |                                                |                      |                                           |
+| ds5837             | Taiko Warrior              | https://dova-s.jp/bgm/play5837.html            | MFP                  |                                           |
+| ds5616             | 漢祭り                     | https://dova-s.jp/bgm/play5616.html            | 山口 壮              |                                           |
+| nc142538           | 武蔵                       | https://commons.nicovideo.jp/material/nc142538 | yuki                 |                                           |
+| nc176917           | Neu Kabuki                 | https://commons.nicovideo.jp/material/nc176917 | MFP                  |                                           |
+| shw_akatsuki_japan | Akatsuki JAPAN             | http://shw.in/                                 | SHW                  |                                           |
+|--------------------+----------------------------+------------------------------------------------+----------------------+-------------------------------------------|
