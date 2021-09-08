@@ -1,5 +1,4 @@
 #!/bin/sh
-ffmpeg -hide_banner -i nc799.mp3    -c:a aac -strict experimental -vn -y nc799.m4a
 ffmpeg -hide_banner -i nc43122.mp3  -c:a aac -strict experimental -vn -y nc43122.m4a
 ffmpeg -hide_banner -i nc105702.mp3 -c:a aac -strict experimental -vn -y nc105702.m4a
 ffmpeg -hide_banner -i nc10812.mp3  -c:a aac -strict experimental -vn -y nc10812.m4a
@@ -12,3 +11,7 @@ ffmpeg -hide_banner -i nc162705.mp3 -c:a aac -strict experimental -vn -y nc16270
 ffmpeg -hide_banner -i nc55257.wav  -c:a aac -strict experimental -vn -y nc55257.m4a
 ffmpeg -hide_banner -i ds4712.mp3   -c:a aac -strict experimental -vn -y ds4712.m4a
 ffmpeg -hide_banner -i ds7615.mp3   -c:a aac -strict experimental -vn -y ds7615.m4a
+ffmpeg -hide_banner -i ds3895.mp3   -c:a aac -strict experimental -vn -y ds3895.m4a
+ffmpeg -hide_banner -i ds13037.mp3  -c:a aac -strict experimental -vn -y ds13037.m4a
+ffmpeg -hide_banner -i ds4000.mp3   -c:a aac -strict experimental -vn -y ds4000.m4a
+ffmpeg -hide_banner -i ds12450.mp3  -c:a aac -strict experimental -vn -y ds12450.m4a
