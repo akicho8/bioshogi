@@ -22,3 +22,18 @@ ffmpeg -hide_banner -i ds5616.mp3             -c:a aac -strict experimental -vn 
 ffmpeg -hide_banner -i nc142538.mp3           -c:a aac -strict experimental -vn -y nc142538.m4a
 ffmpeg -hide_banner -i nc176917.mp3           -c:a aac -strict experimental -vn -y nc176917.m4a
 ffmpeg -hide_banner -i shw_akatsuki_japan.mp3 -c:a aac -strict experimental -vn -y shw_akatsuki_japan.m4a
+
+ffmpeg -hide_banner -i ds3479.mp3              -c:a aac -strict experimental -vn -y ds3479.m4a
+ffmpeg -hide_banner -i ds6574.mp3              -c:a aac -strict experimental -vn -y ds6574.m4a
+ffmpeg -hide_banner -i ds11293.mp3             -c:a aac -strict experimental -vn -y ds11293.m4a
+ffmpeg -hide_banner -i ds11459.mp3             -c:a aac -strict experimental -vn -y ds11459.m4a
+ffmpeg -hide_banner -i ds6719.mp3              -c:a aac -strict experimental -vn -y ds6719.m4a
+ffmpeg -hide_banner -i ds11184.mp3             -c:a aac -strict experimental -vn -y ds11184.m4a
+ffmpeg -hide_banner -i ds3480.mp3              -c:a aac -strict experimental -vn -y ds3480.m4a
+ffmpeg -hide_banner -i ds14226.mp3             -c:a aac -strict experimental -vn -y ds14226.m4a
+ffmpeg -hide_banner -i ds3812.mp3              -c:a aac -strict experimental -vn -y ds3812.m4a
+ffmpeg -hide_banner -i ds7138.mp3              -c:a aac -strict experimental -vn -y ds7138.m4a
+ffmpeg -hide_banner -i ds2776.mp3              -c:a aac -strict experimental -vn -y ds2776.m4a
+ffmpeg -hide_banner -i ds1245.mp3              -c:a aac -strict experimental -vn -y ds1245.m4a
+ffmpeg -hide_banner -i nc145888.mp3            -c:a aac -strict experimental -vn -y -t 2:08 nc145888.m4a
+ffmpeg -hide_banner -i shw_tsudzumi_japan3.mp3 -c:a aac -strict experimental -vn -y shw_tsudzumi_japan3.m4a
