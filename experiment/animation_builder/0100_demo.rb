@@ -32,7 +32,8 @@ if true
       # audio_part_a
       # system "ffmpeg -v warning -i #{audio_part_a} -loo -c copy -y #{output_file}"
 
-      system "ffmpeg -v warning -i #{mp4_file} -stream_loop 1 -i #{e.audio_part_a} -c copy -y #{output_file}"
+      # -stream_loop 1
+      system "ffmpeg -v warning -i #{mp4_file} -i #{e.audio_part_a} -c copy -y #{output_file}"
       puts output_file
     end
   end

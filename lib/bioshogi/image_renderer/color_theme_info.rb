@@ -186,7 +186,8 @@ module Bioshogi
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
 
             # :canvas_bg_color        => "#fff5ca",
-            :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
+            # :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
+            :bg_file => img_path("checker_dark.png"),
 
             # # ここだけ特別に薄い黒の上に黒文字
             # :piece_count_bg_color   => "rgba(0,0,0,0.1)",

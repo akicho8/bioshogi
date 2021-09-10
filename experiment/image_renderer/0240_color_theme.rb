@@ -14,13 +14,13 @@ bg_file = nil
 
 # parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "real_wood_theme1", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "real_wood_theme2").display
+parser.image_renderer(color_theme_key: "real_wood_theme2").display
 # parser.image_renderer(color_theme_key: "real_wood_theme3").display
 # parser.image_renderer(color_theme_key: "paper_simple_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "paper_shape_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "shogi_extend_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_theme").display
-parser.image_renderer(color_theme_key: "style_editor_asahanada_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "style_editor_asahanada_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_usubudou_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_koiai_theme", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "style_editor_kuromidori_theme", renderer_override_params: {bg_file: bg_file}).display
