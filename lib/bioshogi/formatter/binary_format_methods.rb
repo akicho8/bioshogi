@@ -23,6 +23,10 @@ module Bioshogi
         ImageRenderer.new(mediator, options.merge(image_format: "gif")).to_blob_binary
       end
 
+      def to_webp(options = {})
+        ImageRenderer.new(mediator, options.merge(image_format: "webp")).to_blob_binary
+      end
+
       ################################################################################
 
       def to_mp4(options = {})

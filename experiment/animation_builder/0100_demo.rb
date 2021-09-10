@@ -15,10 +15,10 @@ if false
 end
 
 if true
-  # file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
-  # info = Parser.parse(file)
-  # bin = info.to_mp4(color_theme_key: :real_wood_theme1, one_frame_duration_sec: 1.0, end_duration_sec: 7, audio_part_a: nil, audio_part_b: nil)
-  # output(bin, "animation/no_audio.mp4")
+  file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
+  info = Parser.parse(file)
+  bin = info.to_mp4(color_theme_key: :real_wood_theme1, one_frame_duration_sec: 0.5, end_duration_sec: 7, audio_part_a: nil, audio_part_b: nil)
+  output(bin, "animation/no_audio.mp4")
 
   AudioThemeInfo.each do |e|
     if e.audio_part_a && e.audio_part_b.nil?
