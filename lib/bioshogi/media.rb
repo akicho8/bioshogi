@@ -28,6 +28,10 @@ module Bioshogi
       JSON.parse(`ffprobe -v warning -pretty -print_format json -show_format #{file}`)["format"]
     end
 
+    def tags(file)
+      format(file)["tags"]
+    end
+
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] n_samples: 423808
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] mean_volume: -16.1 dB
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] max_volume: -0.1 dB
@@ -36,7 +40,15 @@ module Bioshogi
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_2db: 71
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] histogram_3db: 242
     def volume_info(file)
-      `ffmpeg -hide_banner -i #{file} -vn -af volumedetect -f null -`
+      `ffmpeg -hide_banner -i #{file} -vn -af volumedetect -f null - 2>&1`
+    end
+
+    # あとどれだけボリュームを上げられるか
+    # [Parsed_volumedetect_0 @ 0x7fd26b623100] max_volume: -0.1 dB
+    # であれば 0.1 上げられる
+    def enough_volume(file)
+      md = volume_info(file).match(/max_volume:\s*(\S+)/)
+      md.captures.first.to_f * -1
     end
   end
 end

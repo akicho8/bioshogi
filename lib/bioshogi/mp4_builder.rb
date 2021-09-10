@@ -34,6 +34,10 @@ module Bioshogi
           :audio_part_a_volume => 1.0,
           :audio_part_b_volume => 1.0,
           :acrossfade_duration => 2.0,  # 0なら単純な連結
+
+          # 埋め込み
+          :metadata_title   => nil,
+          :metadata_comment => nil,
         })
     end
 
@@ -120,8 +124,14 @@ module Bioshogi
             @image_renderer.clear_all
           end
 
+          if true
+            title = params[:metadata_title].presence || "#{@mediator.turn_info.display_turn}手目までの棋譜"
+            comment = params[:metadata_comment].presence || @mediator.to_sfen
+            strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
+          end
+
           if !primary_audio_file
-            return Pathname("_output1.mp4").read
+            return Pathname("_output2.mp4").read
           end
 
           logger.tagged("audio") do
@@ -173,8 +183,8 @@ module Bioshogi
           end
 
           logger.info { "3. 結合" }
-          strict_system %(ffmpeg -v warning -i _output1.mp4 -i _same_length1.m4a -c copy -y _output2.mp4)
-          Pathname("_output2.mp4").read
+          strict_system %(ffmpeg -v warning -i _output2.mp4 -i _same_length1.m4a -c copy -y _output3.mp4)
+          Pathname("_output3.mp4").read
         end
       end
     end
