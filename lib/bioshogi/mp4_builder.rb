@@ -38,6 +38,9 @@ module Bioshogi
           # 埋め込み
           :metadata_title   => nil,
           :metadata_comment => nil,
+
+          # 状況通知
+          :progress_callback => nil,
         })
     end
 
@@ -72,6 +75,8 @@ module Bioshogi
             @mediator = @parser.mediator_for_image
             @image_renderer = ImageRenderer.new(@mediator, params)
 
+            @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + end_frames + 1 + 1, &params[:progress_callback])
+
             if media_factory_key == "rmagick"
               begin
                 list = Magick::ImageList.new
@@ -102,19 +107,23 @@ module Bioshogi
             if media_factory_key == "ffmpeg"
               @frame_count = 0
               @image_renderer.next_build.write("_input%04d.png" % @frame_count)
+              @progress_cop.next_step("初期配置 #{@frame_count}")
               @frame_count += 1
               @parser.move_infos.each.with_index do |e, i|
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
                 @image_renderer.next_build.write("_input%04d.png" % @frame_count)
+                @progress_cop.next_step("手数 #{@frame_count}")
                 logger.info("@image_renderer.next_build.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do
                 @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
+                @progress_cop.next_step("停止 #{@frame_count}")
                 @frame_count += 1
               end
+
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
               strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
@@ -128,6 +137,7 @@ module Bioshogi
             title = params[:metadata_title].presence || "#{@mediator.turn_info.display_turn}手目までの棋譜"
             comment = params[:metadata_comment].presence || @mediator.to_sfen
             strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
+            @progress_cop.next_step("メタデータ埋め込み")
           end
 
           if !primary_audio_file
