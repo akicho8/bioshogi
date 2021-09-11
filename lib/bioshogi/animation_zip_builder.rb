@@ -20,10 +20,13 @@ module Bioshogi
       require "zip"
       mediator = @parser.mediator_for_image
       @image_renderer = ImageRenderer.new(mediator, params)
+      @progress_cop = ProgressCop.new(1 + @parser.move_infos.size, &params[:progress_callback])
       dos_time = Zip::DOSTime.from_time(Time.now)
       zos = Zip::OutputStream.write_buffer do |z|
+        @progress_cop.next_step("初期配置")
         zip_write(z, dos_time, 0)
         @parser.move_infos.each.with_index(1) do |e, i|
+          @progress_cop.next_step("#{i}手目 #{e[:input]}")
           mediator.execute(e[:input])
           zip_write(z, dos_time, i)
         end

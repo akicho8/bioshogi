@@ -75,18 +75,22 @@ module Bioshogi
             @mediator = @parser.mediator_for_image
             @image_renderer = ImageRenderer.new(@mediator, params)
 
-            @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + end_frames + 1 + 1, &params[:progress_callback])
-
             if media_factory_key == "rmagick"
+              @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + 3 + 6, &params[:progress_callback])
+
               begin
                 list = Magick::ImageList.new
+                @progress_cop.next_step("初期配置")
                 list.concat([@image_renderer.next_build])
                 @parser.move_infos.each.with_index do |e, i|
+                  @progress_cop.next_step("#{i.next}手目のフレーム")
                   @mediator.execute(e[:input])
                   list.concat([@image_renderer.next_build]) # canvas は Magick::Image のインスタンス
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
+                @progress_cop.next_step("停止")
                 list.concat([@image_renderer.last_rendered_image] * end_frames)
+                @progress_cop.next_step("mp4 生成")
                 may_die(:write) do
                   list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
                 end
@@ -100,32 +104,36 @@ module Bioshogi
 
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
 
+              @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
               strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
             end
 
             if media_factory_key == "ffmpeg"
+              @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + end_frames + 1 + 6, &params[:progress_callback])
+
               @frame_count = 0
+              @progress_cop.next_step("初期配置")
               @image_renderer.next_build.write("_input%04d.png" % @frame_count)
-              @progress_cop.next_step("初期配置 #{@frame_count}")
               @frame_count += 1
               @parser.move_infos.each.with_index do |e, i|
+                @progress_cop.next_step("#{i.next}手目 #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
                 @image_renderer.next_build.write("_input%04d.png" % @frame_count)
-                @progress_cop.next_step("手数 #{@frame_count}")
                 logger.info("@image_renderer.next_build.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do
-                @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
                 @progress_cop.next_step("停止 #{@frame_count}")
+                @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
                 @frame_count += 1
               end
 
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
+              @progress_cop.next_step("mp4 生成")
               strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
             end
@@ -134,10 +142,10 @@ module Bioshogi
           end
 
           if true
+            @progress_cop.next_step("メタデータ埋め込み")
             title = params[:metadata_title].presence || "#{@mediator.turn_info.display_turn}手目までの棋譜"
             comment = params[:metadata_comment].presence || @mediator.to_sfen
             strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
-            @progress_cop.next_step("メタデータ埋め込み")
           end
 
           if !primary_audio_file
@@ -159,14 +167,19 @@ module Bioshogi
               part1_t = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
               part2_t = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
 
+              @progress_cop.next_step("序盤BGM時間・音量調整")
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1_t} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
 
+              @progress_cop.next_step("終盤BGM時間・音量調整")
               strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2_t} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
               logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
 
+              @progress_cop.next_step("クロスフェイド連結")
               strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
+
+              @progress_cop.next_step("フェイドアウト処理")
               strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filters(fadeout_value)} _same_length1.m4a)
             else
               # 開戦しない場合は A, B パートの存在する方の曲を先頭から入れる
@@ -177,7 +190,8 @@ module Bioshogi
                 if audio_part_x
                   logger.info { "開戦前のみ" }
                   logger.info { "audio_part_x: #{audio_part_x}" }
-                  af = audio_filters("volume=#{volume}", fadeout_value) # ボリューム調整 + ファイドアウト
+                  @progress_cop.next_step("フェイドアウトと音量調整")
+                  af = audio_filters("volume=#{volume}", fadeout_value)
                   strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -t #{total_duration} #{af} -y _same_length1.m4a)
                   logger.info { "#{audio_part_x.basename}: #{Media.duration(audio_part_x)}" }
                   break
@@ -193,6 +207,7 @@ module Bioshogi
           end
 
           logger.info { "3. 結合" }
+          @progress_cop.next_step("結合")
           strict_system %(ffmpeg -v warning -i _output2.mp4 -i _same_length1.m4a -c copy -y _output3.mp4)
           Pathname("_output3.mp4").read
         end

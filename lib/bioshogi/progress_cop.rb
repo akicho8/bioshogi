@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 #
-# 進捗
+# 進捗通知
 #
 #   progress_cop = ProgressCop.new(5) { |e| puts e }
 #   progress_cop.next_step("message1")
@@ -13,6 +13,7 @@
 #
 module Bioshogi
   class ProgressCop
+    attr_reader :timestamp
     attr_reader :total
     attr_reader :step
     attr_reader :message
@@ -21,31 +22,39 @@ module Bioshogi
       @total = total
 
       @params = {
-        throttle_interval: 1,  # trigger? は最低N秒間隔とする
+        throttle_interval: 1,  # trigger? は最低N秒間隔とする。指定したからといって callback の間隔が変わるわけではない
       }.merge(params)
 
       @callback = callback
 
       @step = 0
       @message = nil
-      @last_triggered = Time.now - @params[:throttle_interval] # 初回の trigger? を発生させるため
+
+      @timestamp = nil
+      @last_triggered = nil
     end
 
     def next_step(message = nil)
+      next_jump(1, message)
+    end
+
+    def next_jump(step_value, message = nil)
+      @timestamp = Time.now
       @message = message
-      @step += 1
+      @step += step_value
       if interval_passed?
         @trigger = true
-        @last_triggered = Time.now
+        @last_triggered = @timestamp
       else
         @trigger = false
       end
+      Bioshogi.logger&.debug { log }
       if @callback
         @callback.call(self)
       end
     end
 
-    def trigger?
+    def trigger?                # TODO: 名前がいまいち。「ユーザーに見せるタイミングになっている」の意
       @trigger
     end
 
@@ -59,7 +68,7 @@ module Bioshogi
 
     def to_s
       [
-        Time.now.strftime("%F %T"),
+        @timestamp.strftime("%F %T"),
         "#{@step}/#{@total}",
         "%6.2f %%" % percent,
         "T%d" % (@trigger ? 1 : 0),
@@ -75,11 +84,26 @@ module Bioshogi
       to_s
     end
 
+    def to_h
+      {
+        :timestamp => timestamp,
+        :total   => total,
+        :step    => step,
+        :percent => percent,
+        :message => message,
+        :log     => log,
+      }
+    end
+
     private
 
+    # 一定期間経過したか？
     def interval_passed?
+      unless @last_triggered
+        return true
+      end
       if v = @params[:throttle_interval]
-        (Time.now - @last_triggered) >= v
+        (@timestamp - @last_triggered) >= v
       end
     end
   end
