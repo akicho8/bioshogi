@@ -2,7 +2,7 @@
 #
 # 進捗
 #
-#   progress_cop = ProgressCop.new(5) { |e| puts e[:log] }
+#   progress_cop = ProgressCop.new(5) { |e| puts e }
 #   progress_cop.next_step("message1")
 #   progress_cop.next_step("message2")
 #   progress_cop.next_step("message3")
@@ -13,6 +13,10 @@
 #
 module Bioshogi
   class ProgressCop
+    attr_reader :total
+    attr_reader :step
+    attr_reader :message
+
     def initialize(total = 100, params = {}, &callback)
       @total = total
 
@@ -23,19 +27,21 @@ module Bioshogi
       @callback = callback
 
       @step = 0
+      @message = nil
       @last_triggered = Time.now - @params[:throttle_interval] # 初回の trigger? を発生させるため
     end
 
     def next_step(message = nil)
+      @message = message
       @step += 1
-      if some_time_passed?
+      if interval_passed?
         @trigger = true
         @last_triggered = Time.now
       else
         @trigger = false
       end
       if @callback
-        @callback.call(info: self, log: "#{to_s} #{message}".strip)
+        @callback.call(self)
       end
     end
 
@@ -43,7 +49,7 @@ module Bioshogi
       @trigger
     end
 
-    def progress_rate
+    def percent
       to_f * 100
     end
 
@@ -55,9 +61,14 @@ module Bioshogi
       [
         Time.now.strftime("%F %T"),
         "#{@step}/#{@total}",
-        "%6.2f %%" % progress_rate,
+        "%6.2f %%" % percent,
         "T%d" % (@trigger ? 1 : 0),
-      ].join(" ")
+        "#{message}"
+      ].join(" ").strip
+    end
+
+    def log
+      to_s
     end
 
     def inspect
@@ -66,7 +77,7 @@ module Bioshogi
 
     private
 
-    def some_time_passed?
+    def interval_passed?
       if v = @params[:throttle_interval]
         (Time.now - @last_triggered) >= v
       end
