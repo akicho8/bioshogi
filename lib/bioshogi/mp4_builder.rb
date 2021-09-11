@@ -83,12 +83,12 @@ module Bioshogi
                 @progress_cop.next_step("初期配置")
                 list.concat([@image_renderer.next_build])
                 @parser.move_infos.each.with_index do |e, i|
-                  @progress_cop.next_step("#{i.next}手目のフレーム")
+                  @progress_cop.next_step("#{i.next}: #{e[:input]}")
                   @mediator.execute(e[:input])
                   list.concat([@image_renderer.next_build]) # canvas は Magick::Image のインスタンス
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
-                @progress_cop.next_step("停止")
+                @progress_cop.next_step("終了図")
                 list.concat([@image_renderer.last_rendered_image] * end_frames)
                 @progress_cop.next_step("mp4 生成")
                 may_die(:write) do
@@ -117,7 +117,7 @@ module Bioshogi
               @image_renderer.next_build.write("_input%04d.png" % @frame_count)
               @frame_count += 1
               @parser.move_infos.each.with_index do |e, i|
-                @progress_cop.next_step("#{i.next}手目 #{e[:input]}")
+                @progress_cop.next_step("#{i.next}: #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
                 @image_renderer.next_build.write("_input%04d.png" % @frame_count)
@@ -126,7 +126,7 @@ module Bioshogi
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do
-                @progress_cop.next_step("停止 #{@frame_count}")
+                @progress_cop.next_step("終了図 #{@frame_count}")
                 @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
                 @frame_count += 1
               end
@@ -167,12 +167,12 @@ module Bioshogi
               part1_t = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
               part2_t = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
 
-              @progress_cop.next_step("序盤BGM時間・音量調整")
+              @progress_cop.next_step("序盤 BGM時間・音量調整")
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1_t} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
 
-              @progress_cop.next_step("終盤BGM時間・音量調整")
+              @progress_cop.next_step("終盤 BGM時間・音量調整")
               strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2_t} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
               logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
 
@@ -207,7 +207,7 @@ module Bioshogi
           end
 
           logger.info { "3. 結合" }
-          @progress_cop.next_step("結合")
+          @progress_cop.next_step("BGM結合")
           strict_system %(ffmpeg -v warning -i _output2.mp4 -i _same_length1.m4a -c copy -y _output3.mp4)
           Pathname("_output3.mp4").read
         end

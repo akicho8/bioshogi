@@ -34,19 +34,19 @@ module Bioshogi
               @progress_cop.next_step("初期配置")
               list.concat([@image_renderer.next_build])
               @parser.move_infos.each.with_index do |e, i|
-                @progress_cop.next_step("#{i.next}手目のフレーム")
+                @progress_cop.next_step("#{i.next}: #{e[:input]}")
                 @mediator.execute(e[:input])
                 list.concat([@image_renderer.next_build])
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              @progress_cop.next_step("停止")
+              @progress_cop.next_step("終了図")
               list.concat([@image_renderer.last_rendered_image] * end_frames)
               list.delay = list.ticks_per_second * one_frame_duration_sec
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
               logger.info { "delay: #{list.delay}" }
 
-              @progress_cop.next_step("最小枠化")
+              @progress_cop.next_step("最適化")
               # 46s 5.5M optimize_layers なし
               # 43s 544K optimize_layers あり
               may_die(:optimize_layers) do
@@ -70,14 +70,14 @@ module Bioshogi
             @image_renderer.next_build.write("_input%04d.png" % @frame_count)
             @frame_count += 1
             @parser.move_infos.each.with_index do |e, i|
-              @progress_cop.next_step("#{i.next}手目 #{e[:input]}")
+              @progress_cop.next_step("#{i}: #{e[:input]}")
               @mediator.execute(e[:input])
               @image_renderer.next_build.write("_input%04d.png" % @frame_count)
               @frame_count += 1
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
-            end_frames.times do
-              @progress_cop.next_step("停止 #{@frame_count}")
+            end_frames.times do |i|
+              @progress_cop.next_step("終了図追加 #{i}")
               @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
               @frame_count += 1
             end

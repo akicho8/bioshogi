@@ -25,10 +25,10 @@ module Bioshogi
       zos = Zip::OutputStream.write_buffer do |z|
         @progress_cop.next_step("初期配置")
         zip_write(z, dos_time, 0)
-        @parser.move_infos.each.with_index(1) do |e, i|
-          @progress_cop.next_step("#{i}手目 #{e[:input]}")
+        @parser.move_infos.each.with_index do |e, i|
+          @progress_cop.next_step("#{i}: #{e[:input]}")
           mediator.execute(e[:input])
-          zip_write(z, dos_time, i)
+          zip_write(z, dos_time, i.next)
         end
       end
       @image_renderer.clear_all
