@@ -4,6 +4,7 @@ module Bioshogi
       {
         basename_format: "%04d",
         continuous_render: true, # 連続で処理する
+        progress_callback: nil,  # 進捗通知用
       }
     end
 

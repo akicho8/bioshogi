@@ -38,9 +38,6 @@ module Bioshogi
           # 埋め込み
           :metadata_title   => nil,
           :metadata_comment => nil,
-
-          # 状況通知
-          :progress_callback => nil,
         })
     end
 
