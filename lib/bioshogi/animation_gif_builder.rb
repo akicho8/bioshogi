@@ -34,32 +34,39 @@ module Bioshogi
               list = Magick::ImageList.new
 
               if v = params[:cover_text].presence
-                @progress_cop.next_step("タイトル")
+                @progress_cop.next_step("表紙描画")
                 list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render
               end
 
               @progress_cop.next_step("初期配置")
               list << @image_renderer.next_build
+
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("#{i.next}: #{e[:input]}")
                 @mediator.execute(e[:input])
                 list << @image_renderer.next_build
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              @progress_cop.next_step("終了図")
-              list.concat([@image_renderer.last_rendered_image] * end_frames)
+
+              end_frames.times do |i|
+                @progress_cop.next_step("終了図 #{i}")
+                list << @image_renderer.last_rendered_image
+              end
+
               list.delay = list.ticks_per_second * one_frame_duration_sec
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
               logger.info { "delay: #{list.delay}" }
 
-              @progress_cop.next_step("最適化")
               # 46s 5.5M optimize_layers なし
               # 43s 544K optimize_layers あり
+              @progress_cop.next_step("最適化")
               may_die(:optimize_layers) do
                 list = list.optimize_layers(Magick::OptimizeLayer) # 各ページを最小枠にする (重要) ステージングではここで落ちる
               end
+
               list.iterations = iterations_number  # 繰り返し回数
+
               @progress_cop.next_step("#{ext_name} 生成")
               may_die(:write) do
                 list.write("_output1.#{ext_name}")
@@ -77,7 +84,7 @@ module Bioshogi
             @frame_count = 0
 
             if v = params[:cover_text].presence
-              @progress_cop.next_step("タイトル")
+              @progress_cop.next_step("表紙描画")
               CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
               @frame_count += 1
             end
@@ -93,15 +100,17 @@ module Bioshogi
               @frame_count += 1
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
+
             end_frames.times do |i|
               @progress_cop.next_step("終了図追加 #{i}")
               @image_renderer.last_rendered_image.write(number_file % @frame_count)
               @frame_count += 1
             end
+
             @progress_cop.next_step("#{ext_name} 生成")
             logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
             logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
-            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i _input%04d.png #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
+            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 

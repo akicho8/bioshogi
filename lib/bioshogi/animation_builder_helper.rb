@@ -12,7 +12,7 @@ module Bioshogi
           :end_duration_sec           => 0,    # 終了図をN秒表示する
           :end_frames                 => nil,  # 終了図追加フレーム数。空なら end_duration_sec / one_frame_duration_sec
           :progress_callback          => nil,  # 進捗通知用
-          :cover_text                 => nil,  # タイトル(あれば表紙画像を作る)
+          :cover_text                 => nil,  # 表紙(nilなら作らない)
 
           # 他
           :ffmpeg_after_embed_options => nil,      # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )

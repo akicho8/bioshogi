@@ -80,7 +80,7 @@ module Bioshogi
                 list = Magick::ImageList.new
 
                 if v = params[:cover_text].presence
-                  @progress_cop.next_step("タイトル")
+                  @progress_cop.next_step("表紙描画")
                   list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render
                 end
 
@@ -119,7 +119,7 @@ module Bioshogi
               @frame_count = 0
 
               if v = params[:cover_text].presence
-                @progress_cop.next_step("タイトル")
+                @progress_cop.next_step("表紙描画")
                 CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
                 @frame_count += 1
               end
