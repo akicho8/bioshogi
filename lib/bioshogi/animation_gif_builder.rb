@@ -1,5 +1,6 @@
 module Bioshogi
   class AnimationGifBuilder
+    include AnimationBuilderCore
     include AnimationBuilderHelper
 
     def self.default_params
@@ -27,16 +28,22 @@ module Bioshogi
           @image_renderer = ImageRenderer.new(@mediator, params)
 
           if media_factory_key == "rmagick"
-            @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + 3, &params[:progress_callback])
+            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3, &params[:progress_callback])
 
             begin
               list = Magick::ImageList.new
+
+              if v = params[:cover_text].presence
+                @progress_cop.next_step("タイトル")
+                list << CardGenerator.new(text: v, **params.slice(:width, :height)).render
+              end
+
               @progress_cop.next_step("初期配置")
-              list.concat([@image_renderer.next_build])
+              list << @image_renderer.next_build
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("#{i.next}: #{e[:input]}")
                 @mediator.execute(e[:input])
-                list.concat([@image_renderer.next_build])
+                list << @image_renderer.next_build
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               @progress_cop.next_step("終了図")
@@ -63,22 +70,32 @@ module Bioshogi
           end
 
           if media_factory_key == "ffmpeg"
-            @progress_cop = ProgressCop.new(1 + @parser.move_infos.size + 1, &params[:progress_callback])
+            command_required! :ffmpeg
+
+            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])
 
             @frame_count = 0
+
+            if v = params[:cover_text].presence
+              @progress_cop.next_step("タイトル")
+              CardGenerator.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
+              @frame_count += 1
+            end
+
             @progress_cop.next_step("初期配置")
-            @image_renderer.next_build.write("_input%04d.png" % @frame_count)
+            @image_renderer.next_build.write(number_file % @frame_count)
             @frame_count += 1
+
             @parser.move_infos.each.with_index do |e, i|
               @progress_cop.next_step("#{i}: #{e[:input]}")
               @mediator.execute(e[:input])
-              @image_renderer.next_build.write("_input%04d.png" % @frame_count)
+              @image_renderer.next_build.write(number_file % @frame_count)
               @frame_count += 1
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
             end_frames.times do |i|
               @progress_cop.next_step("終了図追加 #{i}")
-              @image_renderer.last_rendered_image.write("_input%04d.png" % @frame_count)
+              @image_renderer.last_rendered_image.write(number_file % @frame_count)
               @frame_count += 1
             end
             @progress_cop.next_step("#{ext_name} 生成")
