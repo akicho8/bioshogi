@@ -35,7 +35,7 @@ module Bioshogi
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("タイトル")
-                list << CardGenerator.new(text: v, **params.slice(:width, :height)).render
+                list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render
               end
 
               @progress_cop.next_step("初期配置")
@@ -78,7 +78,7 @@ module Bioshogi
 
             if v = params[:cover_text].presence
               @progress_cop.next_step("タイトル")
-              CardGenerator.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
+              CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
               @frame_count += 1
             end
 

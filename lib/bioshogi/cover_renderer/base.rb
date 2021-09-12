@@ -1,7 +1,7 @@
 require "kconv"
 
 module Bioshogi
-  class CardGenerator
+  class CoverRenderer
     concerning :Base do
       included do
         cattr_accessor :default_params do

@@ -27,7 +27,7 @@ module Bioshogi
       zos = Zip::OutputStream.write_buffer do |z|
         if v = params[:cover_text].presence
           @progress_cop.next_step("タイトル")
-          zip_write2(z, "title.png", CardGenerator.new(text: v, **params.slice(:width, :height)).render)
+          zip_write2(z, "title.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).render)
         end
         @progress_cop.next_step("初期配置")
         zip_write1(z, 0)
