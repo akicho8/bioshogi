@@ -14,6 +14,7 @@ module Bioshogi
             :font_color       => "hsl(0,0,100%)",
             :density          => "72x84", # xおよびy方向のテキスト密度。デフォルトは「72x72」
             # static
+            :pull_to_top      => 0.02, # 上にずらす割り合い (中央は下がって見えるため少し上に上げる)
             :image_format     => "png",
             :font_regular     => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
             :font_bold        => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字)
@@ -30,13 +31,13 @@ module Bioshogi
 
       def render
         @canvas_layer = canvas_layer_create
-        draw = Magick::Draw.new
-        draw.font           = params[:font_regular]
-        draw.fill           = params[:font_color]
-        draw.pointsize      = params[:font_size]
-        draw.gravity        = Magick::CenterGravity
-        draw.density        = params[:density]
-        draw.annotate(@canvas_layer, 0, 0, 0, 0, params[:text])
+        gc = Magick::Draw.new
+        gc.font           = params[:font_regular]
+        gc.fill           = params[:font_color]
+        gc.pointsize      = params[:font_size]
+        gc.density        = params[:density]
+        gc.gravity        = Magick::CenterGravity
+        gc.annotate(@canvas_layer, 0, 0, 0, @canvas_layer.rows * -1 * params[:pull_to_top], params[:text])
         @canvas_layer
       end
 
