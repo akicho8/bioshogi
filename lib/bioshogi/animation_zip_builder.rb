@@ -14,13 +14,13 @@ module Bioshogi
     delegate :logger, to: "Bioshogi"
 
     def initialize(parser, params = {})
+      require "zip"
       @parser = parser
       @params = default_params.merge(params)
       @dos_time = Zip::DOSTime.from_time(Time.now)
     end
 
     def to_binary
-      require "zip"
       mediator = @parser.mediator_for_image
       @image_renderer = ImageRenderer.new(mediator, params)
       @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size, &params[:progress_callback])
