@@ -67,7 +67,7 @@ module Bioshogi
             :bg_file                  => nil,     # 背景ファイル
             :canvas_pattern_key       => nil,     # 背景パターン
 
-            :color_theme_key          => "paper_simple_theme",
+            :color_theme_key          => "color_theme_is_paper_simple",
             :renderer_override_params          => {},
 
             # 連続で生成するか？

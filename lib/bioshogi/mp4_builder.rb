@@ -29,7 +29,7 @@ module Bioshogi
           # :main_volume         => 1.0,  # 音量
 
           # テーマ関連
-          :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
+          :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_is_none なら明示的にオーディオなしにするけど、nilなら何もしない
           :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
           :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
           :audio_part_a_volume => 1.0,
