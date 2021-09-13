@@ -31,7 +31,7 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_red_black").display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_green_black").display
 # parser.image_renderer(color_theme_key: "color_theme_is_mario_sky").display
-# parser.image_renderer(color_theme_key: "brightness_grey_theme", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "color_theme_is_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").display
 # parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix", viewpoint: "white").display
 # parser.image_renderer(color_theme_key: "color_theme_is_brightness_green").display
@@ -54,7 +54,7 @@ tp ImageRenderer::ColorThemeInfo.keys
 # >> | color_theme_is_paper_shape       |
 # >> | color_theme_is_shogi_extend      |
 # >> | color_theme_is_real_wood3         |
-# >> | brightness_grey_theme   |
+# >> | color_theme_is_brightness_grey   |
 # >> | color_theme_is_brightness_matrix |
 # >> | color_theme_is_brightness_green  |
 # >> | color_theme_is_brightness_orange |
