@@ -21,7 +21,10 @@ module Bioshogi
         { key: :real_wood_theme1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         { key: :real_wood_theme2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
         { key: :real_wood_theme3,              func: -> e { e.real_wood_theme_core("wood-texture_00018") }, },
-        { key: :brightness_grey_theme,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
+        { key: :real_wood_theme_cg1,           func: -> e { e.real_wood_theme_core("board_texture1") }, },
+        { key: :real_wood_theme_cg2,           func: -> e { e.real_wood_theme_core("board_texture2") }, },
+        { key: :real_wood_theme_cg3,           func: -> e { e.real_wood_theme_core("board_texture3") }, },
+        { key: :real_wood_theme_cg4,           func: -> e { e.real_wood_theme_core("board_texture4") }, },
         { key: :brightness_matrix_theme,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
         { key: :brightness_green_theme,        func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { key: :brightness_orange_theme,       func: -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -183,8 +186,8 @@ module Bioshogi
       def real_wood_theme_core(name)
         shogi_extend_theme.merge({
             :fg_file => "#{__dir__}/../assets/images/board/#{name}.png",
+            :pt_file => "#{__dir__}/../assets/images/piece/piece_texture1.png",
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
-
             # :canvas_bg_color        => "#fff5ca",
             # :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
             :bg_file => img_path("checker_dark.png"),

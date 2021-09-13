@@ -7,7 +7,8 @@ module Bioshogi
         default_params.update({
             # 駒用
             :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
-            :piece_pentagon_fill_color    => "transparent",     # ☗の色
+            :pt_file       => nil,               # ☗のテクスチャ(あれば piece_pentagon_fill_color より優先)
+            :piece_pentagon_fill_color    => "transparent",     # ☗の色 ()
             :piece_pentagon_stroke_color  => "transparent",     # ☗の縁取り色
             :piece_pentagon_stroke_width  => 1,                 # ☗の縁取り幅
             :piece_pentagon_scale         => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
@@ -83,6 +84,9 @@ module Bioshogi
               g.stroke(params[:piece_pentagon_stroke_color])
               g.stroke_width(w)
             end
+            if @s_pattern_layer
+              g.fill_pattern = @s_pattern_layer
+            end
             g.fill(params[:piece_pentagon_fill_color])
             g.polygon(*pentagon_real_points(v: v, location: location, scale: piece_pentagon_scale(piece)))
           end
@@ -92,7 +96,7 @@ module Bioshogi
       # def shadow_pentagon_draw(v:, location:, scale:)
       #   if params[:shadow_pentagon_draw]
       #     raise "使用禁止"
-      # 
+      #
       #     # pentagon_box_debug(v)
       #     draw_context do |g|
       #       # NOTE: stroke すると fill した端を縁取って予想より濃くなり調整が難しくなるため取る
@@ -198,6 +202,14 @@ module Bioshogi
       # def shadow_pentagon_scale
       #   params[:shadow_pentagon_scale] || piece_pentagon_scale
       # end
+
+      ################################################################################
+
+      def pattern_layer_create
+        if v = params[:pt_file].presence
+          Magick::Image.read(Pathname(v).expand_path).first
+        end
+      end
     end
   end
 end

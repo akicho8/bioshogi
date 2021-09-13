@@ -38,7 +38,7 @@ module Bioshogi
             :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
             :stand_piece_color          => nil,                         # *持駒の色(nilなら piece_font_color を代用)
             :inner_frame_lattice_color  => "rgba(0,0,0,0.6)",           # *格子の色(nilなら piece_font_color を代用)
-            :star_fill_color                 => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
+            :star_fill_color            => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
             :inner_frame_stroke_color   => "rgba(0,0,0,0.6)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
             :promoted_font_color        => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
 
@@ -118,6 +118,7 @@ module Bioshogi
           @s_canvas_layer  ||= canvas_layer_create
           @s_board_layer   ||= board_layer_create
           @s_lattice_layer ||= lattice_layer_create
+          @s_pattern_layer ||= pattern_layer_create
 
           # こちらの stand_draw を見ればレイヤー単位でまとめるのは難しいことがわかる
           logger.info "dynamic layer"
