@@ -10,6 +10,7 @@ ffmpeg -hide_banner -i nc768.mp3    -c:a aac -strict experimental -vn -y nc768.m
 ffmpeg -hide_banner -i nc770.mp3    -c:a aac -strict experimental -vn -y nc770.m4a
 ffmpeg -hide_banner -i nc162705.mp3 -c:a aac -strict experimental -vn -y nc162705.m4a
 ffmpeg -hide_banner -i nc55257.wav  -c:a aac -strict experimental -vn -y nc55257.m4a
+ffmpeg -hide_banner -i nc97718.wav  -c:a aac -strict experimental -vn -y nc97718.m4a
 ffmpeg -hide_banner -i ds4712.mp3   -c:a aac -strict experimental -vn -y ds4712.m4a
 ffmpeg -hide_banner -i ds7615.mp3   -c:a aac -strict experimental -vn -y ds7615.m4a
 ffmpeg -hide_banner -i ds3895.mp3   -c:a aac -strict experimental -vn -y ds3895.m4a
