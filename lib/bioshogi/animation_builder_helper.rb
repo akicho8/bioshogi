@@ -1,3 +1,5 @@
+require "shellwords"
+
 module Bioshogi
   concern :AnimationBuilderHelper do
     included do
@@ -54,7 +56,9 @@ module Bioshogi
     end
 
     def ffmpeg_after_embed_options
-      params[:ffmpeg_after_embed_options]
+      if v = params[:ffmpeg_after_embed_options].presence
+        Shellwords.join(Shellwords.split(v))
+      end
     end
 
     # 最後の局面を追加で足す回数

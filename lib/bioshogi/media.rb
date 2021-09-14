@@ -7,10 +7,10 @@ module Bioshogi
       info["format"]["duration"].to_f
     end
 
-    def bit_rate(file)
-      info = JSON.parse(`ffprobe -v warning -print_format json -show_entries format=bit_rate #{file}`)
-      info["format"]["bit_rate"].to_f
-    end
+    # def video_bit_rate(file)
+    #   info = JSON.parse(`ffprobe -v warning -print_format json -show_entries format=bit_rate #{file}`)
+    #   info["format"]["bit_rate"].to_f
+    # end
 
     def pretty_inspect(file)
       JSON.parse(`ffprobe -v warning -pretty -print_format json -show_streams #{file}`)
@@ -30,6 +30,28 @@ module Bioshogi
 
     def tags(file)
       format(file)["tags"]
+    end
+
+    def video_inspect(file)
+      info = pretty_inspect(file)
+      info["streams"].find { |e| e["codec_type"] == "video" }
+    end
+
+    def video_bit_rate(file)
+      if e = video_inspect(file)
+        e["bit_rate"]
+      end
+    end
+
+    def audio_inspect(file)
+      info = pretty_inspect(file)
+      info["streams"].find { |e| e["codec_type"] == "audio" }
+    end
+
+    def audio_bit_rate(file)
+      if e = audio_inspect(file)
+        e["bit_rate"]
+      end
     end
 
     # [Parsed_volumedetect_0 @ 0x7fd26b623100] n_samples: 423808

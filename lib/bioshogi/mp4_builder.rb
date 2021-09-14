@@ -29,12 +29,15 @@ module Bioshogi
           # :main_volume         => 1.0,  # 音量
 
           # テーマ関連
-          :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_is_none なら明示的にオーディオなしにするけど、nilなら何もしない
+          :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
           :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
           :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
           :audio_part_a_volume => 1.0,
           :audio_part_b_volume => 1.0,
           :acrossfade_duration => 2.0,  # 0なら単純な連結
+
+          :video_bit_rate      => nil,  # video ビットレート
+          :audio_bit_rate      => nil,  # audio ビットレート
 
           # 埋め込み
           :metadata_title   => nil,
@@ -80,7 +83,7 @@ module Bioshogi
                 list = Magick::ImageList.new
 
                 if v = params[:cover_text].presence
-                  @progress_cop.next_step("表紙描画")
+                  @progress_cop.next_step("タイトル")
                   list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render
                 end
 
@@ -110,7 +113,7 @@ module Bioshogi
 
               @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
-              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
             end
 
             if media_factory_key == "ffmpeg"
@@ -119,7 +122,7 @@ module Bioshogi
               @frame_count = 0
 
               if v = params[:cover_text].presence
-                @progress_cop.next_step("表紙描画")
+                @progress_cop.next_step("タイトル")
                 CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
                 @frame_count += 1
               end
@@ -146,7 +149,7 @@ module Bioshogi
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
               @progress_cop.next_step("mp4 生成")
-              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
             end
 
@@ -192,7 +195,7 @@ module Bioshogi
               strict_system %(ffmpeg -v warning -i _part1.m4a -i _part2.m4a -filter_complex #{cross_fade_option} _concat.m4a)
 
               @progress_cop.next_step("フェイドアウト処理")
-              strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filters(fadeout_value)} _same_length1.m4a)
+              strict_system %(ffmpeg -v warning -i _concat.m4a #{audio_filters(fadeout_value)} #{audio_bit_rate_o} _same_length1.m4a)
             else
               # 開戦しない場合は A, B パートの存在する方の曲を先頭から入れる
               [
@@ -204,7 +207,7 @@ module Bioshogi
                   logger.info { "audio_part_x: #{audio_part_x}" }
                   @progress_cop.next_step("フェイドアウトと音量調整")
                   af = audio_filters("volume=#{volume}", fadeout_value)
-                  strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -t #{total_duration} #{af} -y _same_length1.m4a)
+                  strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -t #{total_duration} #{af} #{audio_bit_rate_o} -y _same_length1.m4a)
                   logger.info { "#{audio_part_x.basename}: #{Media.duration(audio_part_x)}" }
                   break
                 end
@@ -280,6 +283,20 @@ module Bioshogi
         %("acrossfade=duration=#{acrossfade_duration}")
       else
         %("concat=n=2:v=0:a=1")
+      end
+    end
+
+    def audio_bit_rate_o
+      if v = params[:audio_bit_rate].presence
+        v = Shellwords.escape(v)
+        "-b:a #{v}"
+      end
+    end
+
+    def video_bit_rate_o
+      if v = params[:video_bit_rate].presence
+        v = Shellwords.escape(v)
+        "-b:v #{v}"
       end
     end
 
