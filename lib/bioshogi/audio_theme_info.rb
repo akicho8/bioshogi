@@ -23,7 +23,6 @@ module Bioshogi
       { key: :audio_theme_is_nc43122,             name: "夜間航海",                              source_url: "https://commons.nicovideo.jp/material/nc43122",  author: "McCoy",                audio_part_a: :nc43122,             audio_part_a_volume: 1.0, audio_part_a_duration: 277.14, audio_part_a_loop: false, audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "",                                          },
       { key: :audio_theme_is_ds12450,             name: "Somehow (Prod. Khaim)",                 source_url: "https://dova-s.jp/bgm/play12450.html",           author: "Khaim",                audio_part_a: :ds12450,             audio_part_a_volume: 1.0, audio_part_a_duration: 203.34, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
       { key: :audio_theme_is_ds13037,             name: "YouTube向けラグタイム",                 source_url: "https://dova-s.jp/bgm/play13037.html",           author: "天休ひさし",           audio_part_a: :ds13037,             audio_part_a_volume: 1.0, audio_part_a_duration:  96.02, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
-      { key: :audio_theme_is_nc10812,             name: "BGM026 Jazz",                           source_url: "https://commons.nicovideo.jp/material/nc10812",  author: "sanche",               audio_part_a: :nc10812,             audio_part_a_volume: 1.0, audio_part_a_duration: 144.04, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "ニコ生の作品以外では要連絡",                },
 
       { key: :audio_theme_is_ds4000,              name: "Space Town (Brand New Mix)",            source_url: "https://dova-s.jp/bgm/play4000.html",            author: "Khaim",                audio_part_a: :ds4000,              audio_part_a_volume: 1.0, audio_part_a_duration:  96.05, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
       { key: :audio_theme_is_nc107860,            name: "Shall we meet ?",                       source_url: "https://commons.nicovideo.jp/material/nc107860", author: "MATSU",                audio_part_a: :nc107860,            audio_part_a_volume: 1.0, audio_part_a_duration:  69.85, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
@@ -88,7 +87,6 @@ module Bioshogi
     # |             audio_theme_is_nc43122 | 277.14 |
     # |             audio_theme_is_ds12450 | 203.34 |
     # |             audio_theme_is_ds13037 | 96.02  |
-    # |             audio_theme_is_nc10812 | 144.04 |
     # |              audio_theme_is_ds4000 | 96.05  |
     # |            audio_theme_is_nc107860 | 69.85  |
     # |              audio_theme_is_ds7615 | 120.16 |

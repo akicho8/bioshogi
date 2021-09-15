@@ -8,7 +8,6 @@
 | nc43122            | 夜間航海                   | https://commons.nicovideo.jp/material/nc43122  | McCoy                |                                           |
 | nc35943            | 昼下がり                   | https://commons.nicovideo.jp/material/nc35943  | 369                  | loop                                      |
 | nc3366             | はてな                     | https://commons.nicovideo.jp/material/nc3366   | しましまP @shimakid  |                                           |
-| nc10812            | BGM026 Jazz                | https://commons.nicovideo.jp/material/nc10812  | sanche               | ニコ生の作品以外では要連絡                |
 | nc105702           | ぐだぐだな感じ             | https://commons.nicovideo.jp/material/nc105702 | yuki                 |                                           |
 | nc107860           | Shall we meet？            | https://commons.nicovideo.jp/material/nc107860 | MATSU                | loop                                      |
 | ds7615             | Winner                     | https://dova-s.jp/bgm/play7615.html            | FLASH☆BEAT          | loop                                      |
