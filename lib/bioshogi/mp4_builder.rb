@@ -160,6 +160,8 @@ module Bioshogi
             @progress_cop.next_step("メタデータ埋め込み")
             title = params[:metadata_title].presence || "#{@mediator.turn_info.display_turn}手目までの棋譜"
             comment = params[:metadata_comment].presence || @mediator.to_sfen
+            title = Shellwords.escape(title)
+            comment = Shellwords.escape(comment)
             strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
           end
 
