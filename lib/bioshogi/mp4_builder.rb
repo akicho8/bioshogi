@@ -123,26 +123,26 @@ module Bioshogi
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("タイトル")
-                CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count)
+                timeout_block { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count) }
                 @frame_count += 1
               end
 
               @progress_cop.next_step("初期配置")
-              @image_renderer.next_build.write(number_file % @frame_count)
+              timeout_block { @image_renderer.next_build.write(number_file % @frame_count) }
               @frame_count += 1
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("#{i.next}: #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                @image_renderer.next_build.write(number_file % @frame_count)
+                timeout_block { @image_renderer.next_build.write(number_file % @frame_count) }
                 logger.info("@image_renderer.next_build.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do
                 @progress_cop.next_step("終了図 #{@frame_count}")
-                @image_renderer.last_rendered_image.write(number_file % @frame_count)
+                timeout_block { @image_renderer.last_rendered_image.write(number_file % @frame_count) }
                 @frame_count += 1
               end
 

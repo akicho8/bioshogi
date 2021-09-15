@@ -1,4 +1,5 @@
 require "shellwords"
+require "timeout"
 
 module Bioshogi
   concern :AnimationBuilderHelper do
@@ -130,6 +131,10 @@ module Bioshogi
       if !status.success?
         raise StandardError, "no #{command} in path"
       end
+    end
+
+    def timeout_block(&block)
+      Timeout::timeout(10, &block)
     end
   end
 end
