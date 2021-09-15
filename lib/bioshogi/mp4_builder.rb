@@ -51,9 +51,10 @@ module Bioshogi
           :metadata_title   => nil,
           :metadata_comment => nil,
 
-          :video_crf           => 23,      # video 品質固定モード(こちらを指定する。初期値23で18..23推奨。24以上でモバイル向け)
-          :video_bit_rate      => nil,     # video ビットレート一定モード(基本指定しない)
-          :audio_bit_rate      => "128k",  # audio ビットレート
+          :video_crf           => 23,           # video 品質固定モード(基本こちらを指定する。初期値23で18..23推奨。24以上でモバイル向け)
+          :video_bit_rate      => nil,          # video ビットレート一定モード(基本指定しない)
+          :video_tune          => "stillimage", # video 最適化の種類 stillimage:動きの少ない動画用
+          :audio_bit_rate      => nil,          # audio ビットレート。ffmpegの初期値 128k
         })
     end
 
@@ -125,7 +126,7 @@ module Bioshogi
 
               @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
-              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} -tune stillimage #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
             end
 
             if media_factory_key == "ffmpeg"
@@ -161,7 +162,7 @@ module Bioshogi
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
               @progress_cop.next_step("mp4 生成")
-              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} -tune stillimage #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
             end
 
@@ -254,6 +255,12 @@ module Bioshogi
     def video_bit_rate_o
       if v = params[:video_bit_rate].presence
         ["-b:v", v].shelljoin
+      end
+    end
+
+    def video_tune_o
+      if v = params[:video_tune].presence
+        ["-tune", v].shelljoin
       end
     end
 
