@@ -1,5 +1,7 @@
 module Bioshogi
   class AnimationZipBuilder
+    include AnimationBuilderTimeout
+
     cattr_accessor :default_params do
       {
         :basename_format   => "%04d",
@@ -27,14 +29,14 @@ module Bioshogi
       zos = Zip::OutputStream.write_buffer do |z|
         if v = params[:cover_text].presence
           @progress_cop.next_step("表紙描画")
-          zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).render)
+          tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).to_blob_binary) }
         end
         @progress_cop.next_step("初期配置")
-        zip_write1(z, 0)
+        tob("初期配置") { zip_write1(z, 0) }
         @parser.move_infos.each.with_index do |e, i|
-          @progress_cop.next_step("#{i}: #{e[:input]}")
+          @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
           mediator.execute(e[:input])
-          zip_write1(z, i.next)
+          tob("#{i}/#{@parser.move_infos.size}") { zip_write1(z, i.next) }
           logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
         end
       end

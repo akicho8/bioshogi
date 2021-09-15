@@ -115,16 +115,6 @@ module Bioshogi
       end
     end
 
-    def may_die(name, argv = "", &block)
-      begin
-        t = Time.now
-        logger.info { "#{name}[begin]: #{argv}" }
-        yield
-      ensure
-        logger.info { "#{name}[end #{(Time.now - t).round}s]: #{argv}" }
-      end
-    end
-
     def command_required!(command)
       require "systemu"
       status, _, _ = systemu("which #{command}")
@@ -133,8 +123,8 @@ module Bioshogi
       end
     end
 
-    def timeout_block(&block)
-      Timeout::timeout(10, &block)
+    def number_file
+      "_input%04d.png"
     end
   end
 end

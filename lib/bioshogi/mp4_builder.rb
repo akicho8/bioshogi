@@ -29,7 +29,7 @@
 #
 module Bioshogi
   class Mp4Builder
-    include AnimationBuilderCore
+    include AnimationBuilderTimeout
     include AnimationBuilderHelper
 
     def self.default_params
@@ -96,22 +96,24 @@ module Bioshogi
                 list = Magick::ImageList.new
 
                 if v = params[:cover_text].presence
-                  @progress_cop.next_step("タイトル")
-                  list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render
+                  @progress_cop.next_step("表紙描画")
+                  tob("表紙描画") { list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render }
                 end
 
                 @progress_cop.next_step("初期配置")
                 list.concat([@image_renderer.next_build])
                 @parser.move_infos.each.with_index do |e, i|
-                  @progress_cop.next_step("#{i.next}: #{e[:input]}")
+                  @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                   @mediator.execute(e[:input])
                   list.concat([@image_renderer.next_build]) # canvas は Magick::Image のインスタンス
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
-                @progress_cop.next_step("終了図")
-                list.concat([@image_renderer.last_rendered_image] * end_frames)
+                end_frames.times do |i|
+                  @progress_cop.next_step("終了図 #{i}/#{end_frames}")
+                  tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image }
+                end
                 @progress_cop.next_step("mp4 生成")
-                may_die(:write) do
+                heavy_tob(:write) do
                   list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
                 end
                 logger.info { "write[end]: _output0.mp4" }
@@ -135,27 +137,27 @@ module Bioshogi
               @frame_count = 0
 
               if v = params[:cover_text].presence
-                @progress_cop.next_step("タイトル")
-                timeout_block { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count) }
+                @progress_cop.next_step("表紙描画")
+                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count) }
                 @frame_count += 1
               end
 
               @progress_cop.next_step("初期配置")
-              timeout_block { @image_renderer.next_build.write(number_file % @frame_count) }
+              tob("初期配置") { @image_renderer.next_build.write(number_file % @frame_count) }
               @frame_count += 1
 
               @parser.move_infos.each.with_index do |e, i|
-                @progress_cop.next_step("#{i.next}: #{e[:input]}")
+                @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                timeout_block { @image_renderer.next_build.write(number_file % @frame_count) }
+                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(number_file % @frame_count) }
                 logger.info("@image_renderer.next_build.write OK")
                 @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              end_frames.times do
-                @progress_cop.next_step("終了図 #{@frame_count}")
-                timeout_block { @image_renderer.last_rendered_image.write(number_file % @frame_count) }
+              end_frames.times do |i|
+                @progress_cop.next_step("終了図 #{i}/#{end_frames}")
+                tob("終了図 #{i}/#{end_frames}}") { @image_renderer.last_rendered_image.write(number_file % @frame_count) }
                 @frame_count += 1
               end
 
