@@ -19,7 +19,7 @@ tp Media.tags("_output.mp4")
 # >> |       major_brand | isom             |
 # >> |     minor_version | 512              |
 # >> | compatible_brands | isomiso2avc1mp41 |
-# >> |             title | (my title)       |
+# >> |             title | (my タイトル)    |
 # >> |           encoder | Lavf58.76.100    |
-# >> |           comment | (my\ncomment)    |
+# >> |           comment | (my\nコメント)   |
 # >> |-------------------+------------------|
