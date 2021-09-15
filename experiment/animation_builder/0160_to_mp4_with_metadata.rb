@@ -4,7 +4,7 @@ bin = info.to_mp4
 Pathname("_output.mp4").write(bin)
 tp Media.tags("_output.mp4")
 
-bin = info.to_mp4(metadata_title: "(my title)", metadata_comment: "(my\ncomment)")
+bin = info.to_mp4(metadata_title: "(my タイトル)", metadata_comment: "(my\nコメント)")
 Pathname("_output.mp4").write(bin)
 tp Media.tags("_output.mp4")
 # >> |-------------------+-----------------------------------|

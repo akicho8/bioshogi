@@ -8,14 +8,25 @@
 # https://nico-lab.net/setting_fps_with_ffmpeg/
 # 入力オプションとしての -r
 # 入力ファイルの前に指定する。総フレーム数はそのままに1秒あたりのフレームレートを指定するので、オリジナルよりフレームレートが少なければ動画時間が長く、多ければ動画時間が短くなる。
-
+#
 # ruby 0102_speed_compare.rb
 # 7819.15000002482
 # 9034.157999994932
 # -rw------- 1 ikeda staff  60K  8 16 19:16 _output0.mp4
 # -rw-r--r-- 1 ikeda staff 119K  8 16 19:16 _output1_1.mp4
 # -rw-r--r-- 1 ikeda staff 135K  8 16 19:17 _output1_2.mp4
-
+#
+# ▼ビデオビットレート関連オプション
+# https://tech.ckme.co.jp/ffmpeg_h264.shtml
+# |-------------+--------+--------------------------------------------------------------------------------------------------------|
+# | オプション  | 初期値 | 意味                                                                                                   |
+# |-------------+--------+--------------------------------------------------------------------------------------------------------|
+# | -crf 23     | 23     | 品質固定モード。18..23 推奨。保存用なら18未満、モバイルなら24以上もあり。6減るとビットレートが倍になる |
+# | -b:v XXXk   | なし   | ビットレート一定モード。FullHDで25M。4kで100Mは欲しい                                                  |
+# | -preset xxx | medium | crf のとき使える。placebo になるほど遅いがファイルサイズが減る                                         |
+# | -tune       | なし   | preset のとき使える。stillimage はスライドショー用                                                     |
+# |-------------+--------+--------------------------------------------------------------------------------------------------------|
+#
 module Bioshogi
   class Mp4Builder
     include AnimationBuilderCore
@@ -36,12 +47,13 @@ module Bioshogi
           :audio_part_b_volume => 1.0,
           :acrossfade_duration => 2.0,  # 0なら単純な連結
 
-          :video_bit_rate      => nil,  # video ビットレート
-          :audio_bit_rate      => nil,  # audio ビットレート
-
           # 埋め込み
           :metadata_title   => nil,
           :metadata_comment => nil,
+
+          :video_crf           => 23,      # video 品質固定モード(こちらを指定する。初期値23で18..23推奨。24以上でモバイル向け)
+          :video_bit_rate      => nil,     # video ビットレート一定モード(基本指定しない)
+          :audio_bit_rate      => "128k",  # audio ビットレート
         })
     end
 
@@ -113,7 +125,7 @@ module Bioshogi
 
               @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
-              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} -tune stillimage #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
             end
 
             if media_factory_key == "ffmpeg"
@@ -149,7 +161,7 @@ module Bioshogi
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
               @progress_cop.next_step("mp4 生成")
-              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} -tune stillimage #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
             end
 
@@ -233,6 +245,22 @@ module Bioshogi
 
     private
 
+    ################################################################################ Video
+
+    def video_crf_o
+      if v = params[:video_crf].presence
+        ["-crf", v].shelljoin
+      end
+    end
+
+    def video_bit_rate_o
+      if v = params[:video_bit_rate].presence
+        ["-b:v", v].shelljoin
+      end
+    end
+
+    ################################################################################ Audio
+
     def fadeout_duration
       (params[:fadeout_duration].presence || (one_frame_duration_sec * end_frames)).to_f
     end
@@ -290,15 +318,7 @@ module Bioshogi
 
     def audio_bit_rate_o
       if v = params[:audio_bit_rate].presence
-        v = Shellwords.escape(v)
-        "-b:a #{v}"
-      end
-    end
-
-    def video_bit_rate_o
-      if v = params[:video_bit_rate].presence
-        v = Shellwords.escape(v)
-        "-b:v #{v}"
+        ["-b:a", v].shelljoin
       end
     end
 
