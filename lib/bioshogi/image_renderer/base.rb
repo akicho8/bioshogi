@@ -24,8 +24,8 @@ module Bioshogi
               :white => [0.0,    0.01],
             },
             # 盤
-            :canvas_bg_color          => "rgba(255,255,255,1.0)",     # 部屋の色(必須)
-            :piece_font_color         => "rgba(0,0,0,0.8)",           # 駒の色(必須)
+            :canvas_bg_color          => "hsla(0,0%,100%,1.0)",        # 部屋の色(必須)
+            :piece_font_color         => "hsla(0,0%,0%,0.8)",          # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
             :inner_frame_stroke_width => 2,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
@@ -37,10 +37,10 @@ module Bioshogi
             # optional
             :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
             :stand_piece_color          => nil,                         # *持駒の色(nilなら piece_font_color を代用)
-            :inner_frame_lattice_color  => "rgba(0,0,0,0.6)",           # *格子の色(nilなら piece_font_color を代用)
+            :inner_frame_lattice_color  => "hsla(0,0%,0%,0.6)",           # *格子の色(nilなら piece_font_color を代用)
             :star_fill_color            => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
-            :inner_frame_stroke_color   => "rgba(0,0,0,0.6)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
-            :promoted_font_color        => "rgba(255,0,0,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
+            :inner_frame_stroke_color   => "hsla(0,0%,0%,0.6)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
+            :promoted_font_color        => "hsla(0,100%, 50%,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
 
             :outer_frame_padding        => 0,                           # 盤の余白
             :outer_frame_radius         => 0.05,                        # 盤の角の丸め
@@ -49,7 +49,7 @@ module Bioshogi
             :outer_frame_stroke_width   => 0,
 
             :cell_colors                => nil,                         # セルの色 複数指定可
-            :piece_move_cell_fill_color => "rgba(0,0,0,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :piece_move_cell_fill_color => "hsla(0,0%,0%,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
             :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
             # font

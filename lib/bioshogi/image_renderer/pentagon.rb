@@ -26,7 +26,7 @@ module Bioshogi
 
             # # 影
             # :shadow_pentagon_draw         => false,              # ☗の影を描画するか？
-            # :shadow_pentagon_fill_color   => "rgba(0,0,0,0.35)", # ☗の影の色
+            # :shadow_pentagon_fill_color   => "hsla(0,0%,0%,0.35)", # ☗の影の色
             # # :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
             # # :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
             # :shadow_pentagon_scale        => nil,               # ☗の影の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる

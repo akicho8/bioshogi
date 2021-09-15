@@ -8,16 +8,16 @@ module Bioshogi
         { key: :color_theme_is_paper_simple,            func: -> e { e.color_theme_is_paper_simple }, },
         { key: :color_theme_is_paper_shape,             func: -> e { e.color_theme_is_paper_shape }, },
         { key: :color_theme_is_shogi_extend,            func: -> e { e.color_theme_is_shogi_extend }, },
-        { key: :color_theme_is_style_editor,            func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(100,41%,80%)",  outer_frame_fill_color: "hsla(0,0,0%,0.24)")  }, },
-        { key: :color_theme_is_style_editor_asahanada,  func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(195,41%,66%)", outer_frame_fill_color: "hsla(0,0,0%,0.15)")  }, },
-        { key: :color_theme_is_style_editor_usubudou,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(289,25%,71%)", outer_frame_fill_color: "hsla(0,0,0%,0.15)")  }, },
-        { key: :color_theme_is_style_editor_koiai,      func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0,100%,0.5)") }, },
-        { key: :color_theme_is_style_editor_kuromidori, func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",   outer_frame_fill_color: "hsla(0,0,100%,0.5)") }, },
-        { key: :color_theme_is_style_editor_kurobeni,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",   outer_frame_fill_color: "hsla(0,0,100%,0.5)") }, },
-        { key: :color_theme_is_youtube_red,             func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(356,81%,47%)",  outer_frame_fill_color: "hsla(0,0,0%,0.2)")   }, },
-        { key: :color_theme_is_mario_sky,               func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0,0%,0.22)")  }, },
-        { key: :color_theme_is_splatoon_red_black,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0,0%,0.22)") }, },
-        { key: :color_theme_is_splatoon_green_black,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0,0%,0.22)") }, },
+        { key: :color_theme_is_style_editor,            func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(100,41%,80%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.24)")  }, },
+        { key: :color_theme_is_style_editor_asahanada,  func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(195,41%,66%)", outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
+        { key: :color_theme_is_style_editor_usubudou,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(289,25%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
+        { key: :color_theme_is_style_editor_koiai,      func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :color_theme_is_style_editor_kuromidori, func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",   outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :color_theme_is_style_editor_kurobeni,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",   outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :color_theme_is_youtube_red,             func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(356,81%,47%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.2)")   }, },
+        { key: :color_theme_is_mario_sky,               func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
+        { key: :color_theme_is_splatoon_red_black,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_splatoon_green_black,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_real_wood1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         { key: :color_theme_is_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
         { key: :color_theme_is_real_wood3,              func: -> e { e.real_wood_theme_core("wood-texture_00018") }, },
@@ -124,7 +124,7 @@ module Bioshogi
       def color_theme_is_paper_simple
         {
           # 真っ白なので☖に枠をつける
-          :face_pentagon_stroke_color => "rgba(0,0,0,0.4)",
+          :face_pentagon_stroke_color => "hsla(0,0%,0%,0.4)",
           :face_pentagon_stroke_width => 1,
           **shadow_off,
         }
@@ -133,8 +133,8 @@ module Bioshogi
       def color_theme_is_paper_shape
         {
           **pentagon_enabled,
-          :piece_pentagon_fill_color   => "#fff",
-          :piece_pentagon_stroke_color => "rgba(0,0,0,0.4)",
+          :piece_pentagon_fill_color   => "hsla(0,0%,100%,1.0)",
+          :piece_pentagon_stroke_color => "hsla(0,0%,0%,0.4)",
           :piece_pentagon_stroke_width => 1,
           **shadow_off,
         }
@@ -155,10 +155,10 @@ module Bioshogi
 
           # :canvas_pattern_key          => :pattern_checker_light,
 
-          :piece_font_color              => "rgb(64,64,64)",
+          :piece_font_color              => "hsla(0,0%,25%,1.0)",
           :promoted_font_color           => syuiro.html,
-          :outer_frame_fill_color        => "rgba(0,0,0,0.2)", # "rgba(120,120,120,0.5)",
-          :piece_move_cell_fill_color    => "rgba(0,0,0,0.1)",
+          :outer_frame_fill_color        => "hsla(0,0%,0%,0.2)", # "rgba(120,120,120,0.5)",
+          :piece_move_cell_fill_color    => "hsla(0,0%,0%,0.1)",
           # :cell_colors                 => ["rgba(255,255,255,0.1)", nil],
 
           # 駒用
@@ -178,8 +178,8 @@ module Bioshogi
           # 影を入れるので☗を半透明にしない
           # :shadow_pentagon_draw          => true,    # ☗の影を描画するか？
           :face_pentagon_color         => {
-            :black => "rgb( 60, 60, 60)",
-            :white => "rgb(248,248,248)",
+            :black => "hsla(0,0%,23%,1.0)",
+            :white => "hsla(0,0%,97%,1.0)",
           },
         }
       end
@@ -194,8 +194,8 @@ module Bioshogi
             :bg_file => img_path("checker_dark.png"),
 
             # # ここだけ特別に薄い黒の上に黒文字
-            # :piece_count_bg_color   => "rgba(0,0,0,0.1)",
-            # :piece_count_font_color => "rgba(0,0,0,0.5)",
+            # :piece_count_bg_color   => "hsla(0,0%,0%,0.1)",
+            # :piece_count_font_color => "hsla(0,0%,0%,0.5)",
           })
       end
 
