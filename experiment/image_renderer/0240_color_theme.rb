@@ -16,6 +16,9 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood1", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood2").display
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood3").display
+
+# parser.image_renderer(color_theme_key: "color_theme_is_metal1").display
+
 # parser.image_renderer(color_theme_key: "color_theme_is_paper_simple", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_paper_shape", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
@@ -25,7 +28,6 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
-
 
 # parser.image_renderer(color_theme_key: "color_theme_is_youtube_red", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_red_black").display

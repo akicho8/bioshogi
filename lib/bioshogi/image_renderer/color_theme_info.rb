@@ -25,6 +25,9 @@ module Bioshogi
         { key: :color_theme_is_cg_wood2,           func: -> e { e.real_wood_theme_core("board_texture2") }, },
         { key: :color_theme_is_cg_wood3,           func: -> e { e.real_wood_theme_core("board_texture3") }, },
         { key: :color_theme_is_cg_wood4,           func: -> e { e.real_wood_theme_core("board_texture4") }, },
+
+        { key: :color_theme_is_metal1,              func: -> e { e.tetsu_theme("metal_00005", "metal_00003") }, },
+
         { key: :color_theme_is_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { key: :color_theme_is_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/matrix_1920x1080.png" }, },
         { key: :color_theme_is_brightness_green,        func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -197,6 +200,14 @@ module Bioshogi
             # :piece_count_bg_color   => "hsla(0,0%,0%,0.1)",
             # :piece_count_font_color => "hsla(0,0%,0%,0.5)",
           })
+      end
+
+      def tetsu_theme(bg_key, fg_key)
+        color_theme_is_shogi_extend.merge({
+            :bg_file => "#{__dir__}/../assets/images/background/metal_00005.png",
+            :fg_file => "#{__dir__}/../assets/images/board/metal_00003.png",
+            :pt_file => "#{__dir__}/../assets/images/piece/piece_texture1.png",
+         })
       end
 
       def pentagon_enabled
