@@ -50,7 +50,7 @@ module Bioshogi
 
               end_frames.times do |i|
                 @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image }
+                tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image.copy }
               end
 
               list.delay = list.ticks_per_second * one_frame_duration_sec

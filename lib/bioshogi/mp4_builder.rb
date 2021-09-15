@@ -110,7 +110,7 @@ module Bioshogi
                 end
                 end_frames.times do |i|
                   @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                  tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image }
+                  tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image.copy }
                 end
                 @progress_cop.next_step("mp4 生成")
                 heavy_tob(:write) do
