@@ -15,7 +15,6 @@ module Bioshogi
         { key: :color_theme_is_style_editor_koiai,      func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :color_theme_is_style_editor_kuromidori, func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",    outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :color_theme_is_style_editor_kurobeni,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
-        { key: :color_theme_is_youtube_red,             func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(356,81%,47%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.2)")   }, },
         { key: :color_theme_is_mario_sky,               func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
 
         { key: :color_theme_is_gradiention1,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },

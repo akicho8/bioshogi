@@ -44,7 +44,6 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_youtube_red", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_red_black").display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_green_black").display
 # parser.image_renderer(color_theme_key: "color_theme_is_mario_sky").display
