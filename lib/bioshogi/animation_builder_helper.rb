@@ -126,5 +126,11 @@ module Bioshogi
     def number_file
       "_input%04d.png"
     end
+
+    def file_next
+      format(number_file, @frame_count).tap do
+        @frame_count += 1
+      end
+    end
   end
 end

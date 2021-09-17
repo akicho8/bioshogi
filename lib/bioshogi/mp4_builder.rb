@@ -138,27 +138,23 @@ module Bioshogi
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("表紙描画")
-                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(number_file % @frame_count) }
-                @frame_count += 1
+                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(file_next) }
               end
 
               @progress_cop.next_step("初期配置")
-              tob("初期配置") { @image_renderer.next_build.write(number_file % @frame_count) }
-              @frame_count += 1
+              tob("初期配置") { @image_renderer.next_build.write(file_next) }
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(number_file % @frame_count) }
+                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(file_next) }
                 logger.info("@image_renderer.next_build.write OK")
-                @frame_count += 1
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_frames.times do |i|
                 @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                tob("終了図 #{i}/#{end_frames}}") { @image_renderer.last_rendered_image.write(number_file % @frame_count) }
-                @frame_count += 1
+                tob("終了図 #{i}/#{end_frames}}") { @image_renderer.last_rendered_image.write(file_next) }
               end
 
               logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
