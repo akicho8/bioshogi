@@ -21,11 +21,22 @@ module Bioshogi
         { key: :color_theme_is_gradiention2,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_gradiention3,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention3.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_gradiention4,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention4.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_gradiention5,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_gradiention6,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+
+        { key: :color_theme_is_plasma_blur1,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_plasma_blur2,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_plasma_blur3,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur3.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_plasma_blur4,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur4.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_plasma_blur5,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_plasma_blur6,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
         { key: :color_theme_is_radial_gradiention1,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_radial_gradiention2,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_radial_gradiention3,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention3.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_radial_gradiention4,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention4.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention5,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention6,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
         { key: :color_theme_is_splatoon_red_black,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_splatoon_green_black,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
