@@ -4,9 +4,9 @@ module Bioshogi
   describe "アニメーション" do
     # カバー1p + 初期配置1p + 2手 + 終局図2p = 6p
     # 6ページ  * 1ページあたり0.5 = トータル3秒
-    def target1(ext_name, method)
+    def target1(ext_name, method, params = {})
       info = Parser.parse("position startpos moves 7g7f 8c8d")
-      bin = info.send(method, cover_text: "(cover_text)", page_duration: 0.5, end_duration: 1, width: 2, height: 2)
+      bin = info.send(method, cover_text: "(cover_text)", page_duration: 0.5, end_duration: 1, width: 2, height: 2, **params)
       filename = Pathname("_outout.#{ext_name}")
       filename.write(bin)
       Media.streams(filename).tap do |e|
@@ -18,26 +18,56 @@ module Bioshogi
       FileUtils.rm_f(Dir["_outout*"])
     end
 
-    it "mp4" do
-      video, audio = target1(:mp4, :to_mp4)
-      assert { video[:codec_name] == "h264" }
-      assert { video[:r_frame_rate] == "2/1" }
-      assert { video[:duration].to_f == 3.0 }
-      assert { video[:pix_fmt] == "yuv420p" }
+    context "mp4" do
+      def test1(params = {})
+        video, audio = target1(:mp4, :to_mp4, **params)
+        assert { video[:codec_name]       == "h264"    }
+        assert { video[:r_frame_rate]     == "2/1"     }
+        assert { video[:duration].to_f    == 3.0       }
+        assert { video[:pix_fmt]          == "yuv420p" }
 
-      assert { audio[:codec_name] == "aac" }
-      assert { audio[:sample_rate].to_f == 44100 }
-      assert { audio[:channels] == 2 }
-      assert { audio[:time_base] == "1/44100" }
-      assert { audio[:duration].to_f == 3 }
-      assert { (120..140).cover?(audio[:bit_rate].to_f.fdiv(1024)) } # 128k
+        assert { audio[:codec_name]       == "aac"     }
+        assert { audio[:sample_rate].to_f == 44100     }
+        assert { audio[:channels]         == 2         }
+        assert { audio[:time_base]        == "1/44100" }
+        assert { audio[:duration].to_f    == 3         }
+        assert { (120..140).cover?(audio[:bit_rate].to_f.fdiv(1024)) } # 128k
+      end
+
+      it "ffmpeg-version" do
+        test1(media_factory_key: "ffmpeg")
+      end
+
+      it "rmagick-version" do
+        test1(media_factory_key: "rmagick")
+      end
+
+      it "クロスフェイドあり" do
+        info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a4a 8e8f 4a5a")
+        bin = info.to_mp4(page_duration: 1.0, end_duration: 2, width: 2, height: 2)
+        filename = Pathname("_outout.zip")
+        filename.write(bin)
+        video, audio = Media.streams(filename)
+        pp audio if $0 == "-"
+        assert { audio[:duration].to_i == 1 + 9 + 2 } # ぴったり 12 秒にはならないため to_i している
+      end
     end
 
-    it "gif" do
-      video, audio = target1(:gif, :to_animation_gif)
-      assert { video[:codec_name] == "gif" }
-      assert { video[:duration].to_f == 3 }
-      assert { video[:r_frame_rate] == "2/1" }
+    context "gif" do
+      def test1(params = {})
+        video, audio = target1(:gif, :to_animation_gif, **params)
+        assert { video[:codec_name]    == "gif" }
+        assert { video[:duration].to_f == 3     }
+        assert { video[:r_frame_rate]  == "2/1" }
+      end
+
+      it "ffmpeg-version" do
+        test1(media_factory_key: "ffmpeg")
+      end
+
+      it "rmagick-version" do
+        test1(media_factory_key: "rmagick")
+      end
     end
 
     it "apng" do
@@ -63,16 +93,6 @@ module Bioshogi
         assert { zis.get_next_entry.name == "xxx0.png"  }
         assert { zis.get_next_entry.name == "xxx1.png"  }
       end
-    end
-
-    it "mp4 クロスフェイドあり" do
-      info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a4a 8e8f 4a5a")
-      bin = info.to_mp4(page_duration: 1.0, end_duration: 2, width: 2, height: 2)
-      filename = Pathname("_outout.zip")
-      filename.write(bin)
-      video, audio = Media.streams(filename)
-      pp audio if $0 == "-"
-      assert { audio[:duration].to_i == 1 + 9 + 2 } # ぴったり 12 秒にはならないため to_i している
     end
   end
 end
@@ -306,7 +326,7 @@ end
 # >>    :handler_name=>"SoundHandler",
 # >>    :vendor_id=>"[0][0][0][0]"}}
 # >> .
-# >> 
+# >>
 # >> Finished in 21.6 seconds (files took 1.88 seconds to load)
 # >> 6 examples, 0 failures
-# >> 
+# >>

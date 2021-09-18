@@ -17,20 +17,27 @@
 # -rw-r--r-- 1 ikeda staff 135K  8 16 19:17 _output1_2.mp4
 #
 # ▼ビデオビットレート関連オプション
-# https://tech.ckme.co.jp/ffmpeg_h264.shtml
-# |-------------+--------+--------------------------------------------------------------------------------------------------------|
-# | オプション  | 初期値 | 意味                                                                                                   |
-# |-------------+--------+--------------------------------------------------------------------------------------------------------|
-# | -crf 23     | 23     | 品質固定モード。18..23 推奨。保存用なら18未満、モバイルなら24以上もあり。6減るとビットレートが倍になる |
-# | -b:v XXXk   | なし   | ビットレート一定モード。FullHDで25M。4kで100Mは欲しい                                                  |
-# | -preset xxx | medium | crf のとき使える。placebo になるほど遅いがファイルサイズが減る                                         |
-# | -tune       | なし   | preset のとき使える。stillimage はスライドショー用                                                     |
-# |-------------+--------+--------------------------------------------------------------------------------------------------------|
+#
+#   https://tech.ckme.co.jp/ffmpeg_h264.shtml
+#   |-------------+--------+--------------------------------------------------------------------------------------------------------|
+#   | オプション  | 初期値 | 意味                                                                                                   |
+#   |-------------+--------+--------------------------------------------------------------------------------------------------------|
+#   | -crf 23     | 23     | 品質固定モード。18..23 推奨。保存用なら18未満、モバイルなら24以上もあり。6減るとビットレートが倍になる |
+#   | -b:v XXXk   | なし   | ビットレート一定モード。FullHDで25M。4kで100Mは欲しい                                                  |
+#   | -preset xxx | medium | crf のとき使える。placebo になるほど遅いがファイルサイズが減る                                         |
+#   | -tune       | なし   | preset のとき使える。stillimage はスライドショー用                                                     |
+#   |-------------+--------+--------------------------------------------------------------------------------------------------------|
+#
+# ▼確認
+#
+#   info = Bioshogi::Parser.parse("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
+#   bin = info.to_mp4(end_duration: 1, cover_text: "x", progress_callback: -> e { puts e.log })
+#   Pathname("_output.mp4").write(bin)
 #
 module Bioshogi
   class Mp4Builder
     include AnimationBuilderTimeout
-    include AnimationBuilderHelper
+    include FfmpegSupport
 
     def self.default_params
       super.merge({
@@ -85,6 +92,7 @@ module Bioshogi
             logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
             command_required! :ffmpeg
+            ffmpeg_version_required!
 
             @mediator = @parser.mediator_for_image
             @image_renderer = ImageRenderer.new(@mediator, params)
@@ -101,11 +109,11 @@ module Bioshogi
                 end
 
                 @progress_cop.next_step("初期配置")
-                list.concat([@image_renderer.next_build])
+                list << @image_renderer.next_build
                 @parser.move_infos.each.with_index do |e, i|
                   @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                   @mediator.execute(e[:input])
-                  list.concat([@image_renderer.next_build]) # canvas は Magick::Image のインスタンス
+                  list << @image_renderer.next_build
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
                 end_pages.times do |i|
@@ -124,7 +132,7 @@ module Bioshogi
                 list.destroy!       # 恐いので明示的に解放しとこう
               end
 
-              logger.info { "合計ページ数(page_count): #{@page_count}" }
+              logger.info { "合計ページ数: #{@page_count}" }
 
               @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
@@ -134,34 +142,33 @@ module Bioshogi
             if media_factory_key == "ffmpeg"
               @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
-              @page_count = 0
-
               if v = params[:cover_text].presence
                 @progress_cop.next_step("表紙描画")
-                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(file_next) }
+                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfile.next) }
               end
 
               @progress_cop.next_step("初期配置")
-              tob("初期配置") { @image_renderer.next_build.write(file_next) }
+              tob("初期配置") { @image_renderer.next_build.write(sfile.next) }
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(file_next) }
+                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfile.next) }
                 logger.info("@image_renderer.next_build.write OK")
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_pages.times do |i|
                 @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-                tob("終了図 #{i}/#{end_pages}}") { @image_renderer.last_rendered_image.write(file_next) }
+                tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfile.next) }
               end
 
-              logger.info { "合計ページ数(page_count): #{@page_count}" }
-              logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
-              @progress_cop.next_step("mp4 生成")
-              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              logger.info { sfile.inspect }
+              logger.info { "ソース画像確認\n#{sfile.shell_inspect}" }
+              @progress_cop.next_step("mp4 生成 #{sfile.index}p")
+              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
+              @page_count = sfile.index
             end
 
             @image_renderer.clear_all
@@ -169,9 +176,17 @@ module Bioshogi
 
           if true
             @progress_cop.next_step("メタデータ埋め込み")
-            title = params[:metadata_title].presence || "#{@mediator.turn_info.display_turn}手目までの棋譜"
+            title = params[:metadata_title].presence || "総手数#{@mediator.turn_info.display_turn}手"
             comment = params[:metadata_comment].presence || @mediator.to_sfen
+            before_duration = Media.duration("_output1.mp4")
             strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
+            after_duration = Media.duration("_output2.mp4")
+            if before_duration != after_duration
+              # ffmpeg 3.4.8 では1ページ目が消える不具合あり
+              # metadata に関係なく ffmpeg -i _output1.mp4 -codec copy -y _output2.mp4 で1ページが飛ぶ
+              # 長さも1秒減る
+              raise FfmpegError, "-codec copy しただけで長さが変わっている: #{before_duration} --> #{after_duration}"
+            end
           end
 
           if !primary_audio_file

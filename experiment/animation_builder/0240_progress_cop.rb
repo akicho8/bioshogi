@@ -1,6 +1,5 @@
 require "../example_helper"
-sfen = "position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g"
-info = Parser.parse(sfen)
+info = Parser.parse("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
 
 params = { end_duration: 1, cover_text: "x", progress_callback: -> e { puts e.log } }
 

@@ -1,7 +1,7 @@
 module Bioshogi
   class AnimationGifBuilder
     include AnimationBuilderTimeout
-    include AnimationBuilderHelper
+    include FfmpegSupport
 
     def self.default_params
       super.merge({
@@ -81,32 +81,30 @@ module Bioshogi
 
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])
 
-            @page_count = 0
-
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
-              tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(file_next) }
+              tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfile.next) }
             end
 
             @progress_cop.next_step("初期配置")
-            tob("初期配置") { @image_renderer.next_build.write(file_next) }
+            tob("初期配置") { @image_renderer.next_build.write(sfile.next) }
 
             @parser.move_infos.each.with_index do |e, i|
               @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
               @mediator.execute(e[:input])
-              tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(file_next) }
+              tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfile.next) }
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
 
             end_pages.times do |i|
               @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-              tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(file_next) }
+              tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfile.next) }
             end
 
-            @progress_cop.next_step("#{ext_name} 生成")
-            logger.info { "合計フレーム数(page_count): #{@page_count}" }
-            logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
-            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
+            @progress_cop.next_step("#{ext_name} 生成 #{sfile.index}p")
+            logger.info { sfile.inspect }
+            logger.info { "ソース画像確認\n#{sfile.shell_inspect}" }
+            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 

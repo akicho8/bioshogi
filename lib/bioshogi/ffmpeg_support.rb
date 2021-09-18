@@ -2,7 +2,10 @@ require "shellwords"
 require "timeout"
 
 module Bioshogi
-  concern :AnimationBuilderHelper do
+  class FfmpegError < StandardError; end
+  FFMPEG_CURRENT_VERSION_REQUIRED_GTEQ = "4.4"
+
+  concern :FfmpegSupport do
     included do
       cattr_accessor(:one_second) { 10000 } # ffmpeg の -r x/y の x の部分
     end
@@ -12,7 +15,7 @@ module Bioshogi
         {
           # 全体
           :page_duration     => 1.0,  # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
-          :end_duration  => 0,    # 終了図をN秒表示する
+          :end_duration      => 0,    # 終了図をN秒表示する
           :end_pages         => nil,  # 終了図追加フレーム数。空なら end_duration / page_duration
           :progress_callback => nil,  # 進捗通知用
           :cover_text        => nil,  # 表紙(nilなら作らない)
@@ -123,13 +126,22 @@ module Bioshogi
       end
     end
 
-    def number_file
-      "_input%04d.png"
+    def sfile
+      @sfile ||= SerialFile.new
     end
 
-    def file_next
-      format(number_file, @page_count).tap do
-        @page_count += 1
+    def ffmpeg_version_required!(need = FFMPEG_CURRENT_VERSION_REQUIRED_GTEQ)
+      if current = ffmpeg_current_version
+        need = Gem::Version.new(need)
+        if current < need
+          raise FfmpegError, "ffmpeg requires version #{need} or later, but provides version #{current}"
+        end
+      end
+    end
+
+    def ffmpeg_current_version
+      if md = `ffmpeg -version | head -1`.match(/version\s+(\S+)/i)
+        Gem::Version.create(md.captures.first)
       end
     end
   end
