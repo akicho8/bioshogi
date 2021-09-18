@@ -18,7 +18,7 @@ bg_file = nil
 #   parser.image_renderer(color_theme_key: "color_theme_is_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
 # end
 
-ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
+# ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
@@ -39,12 +39,12 @@ ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: 
 # parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention5").display
 # parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention6").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur1").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur2").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur3").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur4").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur5").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur6").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur1").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur2").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur3").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur4").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur5").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur6").display
 
 # parser.image_renderer(color_theme_key: "color_theme_is_metal1").display
 
