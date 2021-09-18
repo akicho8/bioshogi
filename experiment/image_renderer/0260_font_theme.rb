@@ -12,4 +12,3 @@ info.image_renderer(color_theme_key: "color_theme_is_real_wood1", font_theme_key
 # info.image_renderer(color_theme_key: "color_theme_is_paper_simple", font_theme_key: "ricty_sans", soldier_font_bold: true).display
 # info.image_renderer(color_theme_key: "color_theme_is_paper_simple", font_theme_key: "noto_seif").display
 # info.image_renderer(color_theme_key: "color_theme_is_paper_simple", font_theme_key: "noto_seif", soldier_font_bold: true).display
-

@@ -118,11 +118,22 @@ module Bioshogi
       end
     end
 
+    def valid?
+      errors = 0
+      if audio_part_a && !audio_part_a.exist?
+        errors += 1
+      end
+      if audio_part_b && !audio_part_b.exist?
+        errors += 1
+      end
+      errors == 0
+    end
+
     private
 
     def real_path(basename)
       if basename
-        "#{__dir__}/assets/audios/#{basename}.m4a"
+        Pathname("#{__dir__}/assets/audios/#{basename}.m4a")
       end
     end
   end

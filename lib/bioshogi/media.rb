@@ -12,6 +12,15 @@ module Bioshogi
     #   info["format"]["bit_rate"].to_f
     # end
 
+    def as_json(file)
+      JSON.parse(`ffprobe -v quiet -print_format json -show_streams #{file}`)
+    end
+
+    def streams(file)
+      attrs = as_json(file).deep_symbolize_keys
+      attrs[:streams]
+    end
+
     def pretty_inspect(file)
       JSON.parse(`ffprobe -v warning -pretty -print_format json -show_streams #{file}`)
     end
