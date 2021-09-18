@@ -36,7 +36,7 @@ module Bioshogi
       super.merge({
           # Audio関連
           :audio_enable        => true, # 音を結合するか？
-          :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_frames * one_frame_duration_sec
+          :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_pages * page_duration
           # :main_volume         => 1.0,  # 音量
 
           # テーマ関連
@@ -81,8 +81,8 @@ module Bioshogi
             logger.info { "1. 動画準備" }
 
             logger.info { "生成に使うもの: #{media_factory_key}" }
-            logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
-            logger.info { "1手当たりの秒数(one_frame_duration_sec): #{one_frame_duration_sec}" }
+            logger.info { "最後に追加するページ数(end_pages): #{end_pages}" }
+            logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
             command_required! :ffmpeg
 
@@ -108,9 +108,9 @@ module Bioshogi
                   list.concat([@image_renderer.next_build]) # canvas は Magick::Image のインスタンス
                   logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
                 end
-                end_frames.times do |i|
-                  @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                  tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image.copy }
+                end_pages.times do |i|
+                  @progress_cop.next_step("終了図 #{i}/#{end_pages}")
+                  tob("終了図 #{i}/#{end_pages}") { list << @image_renderer.last_rendered_image.copy }
                 end
                 @progress_cop.next_step("mp4 生成")
                 heavy_tob(:write) do
@@ -119,12 +119,12 @@ module Bioshogi
                 logger.info { "write[end]: _output0.mp4" }
                 logger.info { `ls -alh _output0.mp4`.strip }
                 logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
-                @frame_count = list.count
+                @page_count = list.count
               ensure
                 list.destroy!       # 恐いので明示的に解放しとこう
               end
 
-              logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+              logger.info { "合計ページ数(page_count): #{@page_count}" }
 
               @progress_cop.next_step("YUV420変換")
               logger.info { "1. YUV420化" }
@@ -132,9 +132,9 @@ module Bioshogi
             end
 
             if media_factory_key == "ffmpeg"
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_frames + 1 + 6, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
-              @frame_count = 0
+              @page_count = 0
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("表紙描画")
@@ -152,12 +152,12 @@ module Bioshogi
                 logger.info("@image_renderer.next_build.write OK")
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
-              end_frames.times do |i|
-                @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                tob("終了図 #{i}/#{end_frames}}") { @image_renderer.last_rendered_image.write(file_next) }
+              end_pages.times do |i|
+                @progress_cop.next_step("終了図 #{i}/#{end_pages}")
+                tob("終了図 #{i}/#{end_pages}}") { @image_renderer.last_rendered_image.write(file_next) }
               end
 
-              logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+              logger.info { "合計ページ数(page_count): #{@page_count}" }
               logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
               @progress_cop.next_step("mp4 生成")
               strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
@@ -183,15 +183,15 @@ module Bioshogi
 
             if @mediator.outbreak_turn
               @switch_turn = @mediator.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
-              logger.info { "BGMが切り替わるフレーム(switch_turn): #{@switch_turn}" }
+              logger.info { "BGMが切り替わるページ(switch_turn): #{@switch_turn}" }
             end
 
             logger.info { "予測した全体の秒数(total_duration): #{total_duration}" }
 
             if @switch_turn && audio_part_a && audio_part_b
               logger.info { "開戦前後で分ける" }
-              part1_t = @switch_turn * one_frame_duration_sec + acrossfade_duration # audio1 側を伸ばす
-              part2_t = (@frame_count - @switch_turn) * one_frame_duration_sec # audio2 側の長さは同じ
+              part1_t = @switch_turn * page_duration + acrossfade_duration # audio1 側を伸ばす
+              part2_t = (@page_count - @switch_turn) * page_duration # audio2 側の長さは同じ
 
               @progress_cop.next_step("序盤 BGM時間・音量調整")
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
@@ -265,7 +265,7 @@ module Bioshogi
     ################################################################################ Audio
 
     def fadeout_duration
-      (params[:fadeout_duration].presence || (one_frame_duration_sec * end_frames)).to_f
+      (params[:fadeout_duration].presence || (page_duration * end_pages)).to_f
     end
 
     def audio_part_a
@@ -293,7 +293,7 @@ module Bioshogi
     end
 
     def total_duration
-      @frame_count * one_frame_duration_sec
+      @page_count * page_duration
     end
 
     def fadeout_value
@@ -331,11 +331,11 @@ module Bioshogi
 
     # def to_h
     #   {
-    #     "最後に追加したフレーム数(end_frames)" => end_frames,
-    #     "合計フレーム数(frame_count)"          => @frame_count,
-    #     "1手当たりの秒数(one_frame_duration_sec)"  => one_frame_duration_sec,
+    #     "最後に追加したページ数(end_pages)" => end_pages,
+    #     "合計ページ数(page_count)"          => @page_count,
+    #     "1ページ当たりの秒数(page_duration)"  => page_duration,
     #     "予測した全体の秒数(total_duration)"   => total_duration,
-    #     "BGMが切り替わるフレーム(switch_turn)" => @switch_turn,
+    #     "BGMが切り替わるページ(switch_turn)" => @switch_turn,
     #   }
     # end
   end

@@ -21,8 +21,8 @@ module Bioshogi
       logger.tagged(self.class.name.demodulize) do
         in_work_directory do
           logger.info { "生成に使うもの: #{media_factory_key}" }
-          logger.info { "最後に追加するフレーム数(end_frames): #{end_frames}" }
-          logger.info { "1手当たりの秒数(one_frame_duration_sec): #{one_frame_duration_sec}" }
+          logger.info { "最後に追加するフレーム数(end_pages): #{end_pages}" }
+          logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
           @mediator = @parser.mediator_for_image
           @image_renderer = ImageRenderer.new(@mediator, params)
@@ -48,12 +48,12 @@ module Bioshogi
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
 
-              end_frames.times do |i|
-                @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-                tob("終了図 #{i}/#{end_frames}") { list << @image_renderer.last_rendered_image.copy }
+              end_pages.times do |i|
+                @progress_cop.next_step("終了図 #{i}/#{end_pages}")
+                tob("終了図 #{i}/#{end_pages}") { list << @image_renderer.last_rendered_image.copy }
               end
 
-              list.delay = list.ticks_per_second * one_frame_duration_sec
+              list.delay = list.ticks_per_second * page_duration
 
               logger.info { "ticks_per_second: #{list.ticks_per_second}" }
               logger.info { "delay: #{list.delay}" }
@@ -81,7 +81,7 @@ module Bioshogi
 
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])
 
-            @frame_count = 0
+            @page_count = 0
 
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
@@ -98,13 +98,13 @@ module Bioshogi
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
 
-            end_frames.times do |i|
-              @progress_cop.next_step("終了図 #{i}/#{end_frames}")
-              tob("終了図 #{i}/#{end_frames}") { @image_renderer.last_rendered_image.write(file_next) }
+            end_pages.times do |i|
+              @progress_cop.next_step("終了図 #{i}/#{end_pages}")
+              tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(file_next) }
             end
 
             @progress_cop.next_step("#{ext_name} 生成")
-            logger.info { "合計フレーム数(frame_count): #{@frame_count}" }
+            logger.info { "合計フレーム数(page_count): #{@page_count}" }
             logger.info { "ソース画像生成数: " + `ls -alh _input*.png | wc -l`.strip }
             strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{number_file} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }

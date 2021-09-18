@@ -3,9 +3,9 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STD
 sfen = "position startpos moves 7g7f 3c3d 8h2b+ 8c8d"
 info = Parser.parse(sfen)
 bin = info.to_mp4({
-    one_frame_duration_sec: 1.0,
+    page_duration: 1.0,
     tmpdir_remove: false,
-    end_duration_sec: 0,
+    end_duration: 0,
     audio_theme_key: nil,
     audio_part_a: nil,
     })
@@ -17,8 +17,8 @@ tp Media.format("_output.mp4")
 # >> [Mp4Builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210907-59099-jhjwec
 # >> [Mp4Builder] [video] 1. 動画準備
 # >> [Mp4Builder] [video] 生成に使うもの: ffmpeg
-# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_frames): 0
-# >> [Mp4Builder] [video] 1手当たりの秒数(one_frame_duration_sec): 1.0
+# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_pages): 0
+# >> [Mp4Builder] [video] 1手当たりの秒数(page_duration): 1.0
 # >> [Mp4Builder] [video] [0] static layer
 # >> [Mp4Builder] [video] [0] canvas_layer_create for s_canvas_layer
 # >> [Mp4Builder] [video] [0] transparent_layer create for s_board_layer BEGIN
@@ -167,7 +167,7 @@ tp Media.format("_output.mp4")
 # >> [Mp4Builder] [video] [12] transparent_layer create for d_piece_count_layer END
 # >> [Mp4Builder] [video] [12] composite process
 # >> [Mp4Builder] [video] @image_renderer.next_build.write OK
-# >> [Mp4Builder] [video] 合計フレーム数(frame_count): 13
+# >> [Mp4Builder] [video] 合計フレーム数(page_count): 13
 # >> [Mp4Builder] [video] ソース画像生成数: 13
 # >> [Mp4Builder] [video] [execute] ffmpeg -v warning -hide_banner -framerate 1000/1000 -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart  -y _output1.mp4
 # >> [Mp4Builder] [video] [execute] elapsed: 1s

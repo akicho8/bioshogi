@@ -6,7 +6,7 @@ module Bioshogi
     # 6ページ  * 1ページあたり0.5 = トータル3秒
     def target1(ext_name, method)
       info = Parser.parse("position startpos moves 7g7f 8c8d")
-      bin = info.send(method, cover_text: "(cover_text)", one_frame_duration_sec: 0.5, end_duration_sec: 1, width: 2, height: 2)
+      bin = info.send(method, cover_text: "(cover_text)", page_duration: 0.5, end_duration: 1, width: 2, height: 2)
       filename = Pathname("_outout.#{ext_name}")
       filename.write(bin)
       Media.streams(filename).tap do |e|
@@ -67,7 +67,7 @@ module Bioshogi
 
     it "mp4 クロスフェイドあり" do
       info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a4a 8e8f 4a5a")
-      bin = info.to_mp4(one_frame_duration_sec: 1.0, end_duration_sec: 2, width: 2, height: 2)
+      bin = info.to_mp4(page_duration: 1.0, end_duration: 2, width: 2, height: 2)
       filename = Pathname("_outout.zip")
       filename.write(bin)
       video, audio = Media.streams(filename)

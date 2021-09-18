@@ -29,11 +29,11 @@ info.move_infos.each.with_index(1) do |e, i|
   image_renderer.canvas.write("_#{i}.gif")
 end
 
-@one_frame_duration_sec = 0.5            # 1枚を何秒で表示するか？
+@page_duration = 0.5            # 1枚を何秒で表示するか？
 # list.ticks_per_second = 2          # => 2
 list.ticks_per_second              # => 100
 list.delay                      # => 0
-list.delay = list.ticks_per_second * @one_frame_duration_sec
+list.delay = list.ticks_per_second * @page_duration
 # list.delay = 0
 
 list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする

@@ -4,8 +4,8 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STD
 def test(video_crf, video_bit_rate, audio_bit_rate)
   info = Parser.parse("position startpos")
   bin = info.to_mp4({
-      :one_frame_duration_sec => 1,
-      :end_duration_sec       => 5,
+      :page_duration => 1,
+      :end_duration       => 5,
       :audio_theme_key        => "audio_theme_is_headspin_only",
       :video_crf              => video_crf,
       :video_bit_rate         => video_bit_rate, # default は 200k とネットにはあるが実際は 68k ぐらいじゃない？
@@ -25,8 +25,8 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [Mp4Builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210915-52373-1aqjjn6
 # >> [Mp4Builder] [video] 1. 動画準備
 # >> [Mp4Builder] [video] 生成に使うもの: ffmpeg
-# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_frames): 5
-# >> [Mp4Builder] [video] 1手当たりの秒数(one_frame_duration_sec): 1.0
+# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_pages): 5
+# >> [Mp4Builder] [video] 1手当たりの秒数(page_duration): 1.0
 # >> [Mp4Builder] [video] 2021-09-15 08:53:03 1/14   7.14 % T1 初期配置
 # >> [Mp4Builder] [video] [0] static layer
 # >> [Mp4Builder] [video] [0] canvas_layer_create for s_canvas_layer
@@ -47,7 +47,7 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [Mp4Builder] [video] 2021-09-15 08:53:04 4/14  28.57 % T0 終了図 3
 # >> [Mp4Builder] [video] 2021-09-15 08:53:04 5/14  35.71 % T0 終了図 4
 # >> [Mp4Builder] [video] 2021-09-15 08:53:04 6/14  42.86 % T0 終了図 5
-# >> [Mp4Builder] [video] 合計フレーム数(frame_count): 6
+# >> [Mp4Builder] [video] 合計フレーム数(page_count): 6
 # >> [Mp4Builder] [video] ソース画像生成数: 6
 # >> [Mp4Builder] [video] 2021-09-15 08:53:04 7/14  50.00 % T0 mp4 生成
 # >> [Mp4Builder] [video] [execute] ffmpeg -v warning -hide_banner -framerate 10000/10000.0 -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart  -tune stillimage   -y _output1.mp4
@@ -81,8 +81,8 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [Mp4Builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210915-52373-tlfzfz
 # >> [Mp4Builder] [video] 1. 動画準備
 # >> [Mp4Builder] [video] 生成に使うもの: ffmpeg
-# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_frames): 5
-# >> [Mp4Builder] [video] 1手当たりの秒数(one_frame_duration_sec): 1.0
+# >> [Mp4Builder] [video] 最後に追加するフレーム数(end_pages): 5
+# >> [Mp4Builder] [video] 1手当たりの秒数(page_duration): 1.0
 # >> [Mp4Builder] [video] 2021-09-15 08:53:09 1/14   7.14 % T1 初期配置
 # >> [Mp4Builder] [video] [0] static layer
 # >> [Mp4Builder] [video] [0] canvas_layer_create for s_canvas_layer
@@ -103,7 +103,7 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [Mp4Builder] [video] 2021-09-15 08:53:10 4/14  28.57 % T0 終了図 3
 # >> [Mp4Builder] [video] 2021-09-15 08:53:10 5/14  35.71 % T0 終了図 4
 # >> [Mp4Builder] [video] 2021-09-15 08:53:10 6/14  42.86 % T0 終了図 5
-# >> [Mp4Builder] [video] 合計フレーム数(frame_count): 6
+# >> [Mp4Builder] [video] 合計フレーム数(page_count): 6
 # >> [Mp4Builder] [video] ソース画像生成数: 6
 # >> [Mp4Builder] [video] 2021-09-15 08:53:10 7/14  50.00 % T0 mp4 生成
 # >> [Mp4Builder] [video] [execute] ffmpeg -v warning -hide_banner -framerate 10000/10000.0 -i _input%04d.png -c:v libx264 -pix_fmt yuv420p -movflags +faststart -crf 23 -tune stillimage   -y _output1.mp4

@@ -4,9 +4,9 @@ require "../example_helper"
 # sfen = "position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a2a 8e8f 2a1a 8f8g+ 1a2a 8g8h"
 # info = Parser.parse(sfen)
 # bin = info.to_mp4({
-#     one_frame_duration_sec: 0.5,
+#     page_duration: 0.5,
 #     tmpdir_remove: false,
-#     end_duration_sec: 5,
+#     end_duration: 5,
 #     audio_theme_key: "audio_theme_is_dance_chain",
 #     audio_bit_rate: "64k",
 #     audio_theme_override_params: {
