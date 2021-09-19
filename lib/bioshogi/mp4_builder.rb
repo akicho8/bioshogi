@@ -44,14 +44,14 @@ module Bioshogi
           # Audio関連
           :audio_enable        => true, # 音を結合するか？
           :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_pages * page_duration
-          # :main_volume         => 1.0,  # 音量
+          :main_volume         => 0.5,  # 音量
 
           # テーマ関連
           :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
           :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
           :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
-          :audio_part_a_volume => 1.0,
-          :audio_part_b_volume => 1.0,
+          :audio_part_a_volume => 1.0,  # DEPRECATION: 1.0 固定とする
+          :audio_part_b_volume => 1.0,  # DEPRECATION: 1.0 固定とする
           :acrossfade_duration => 2.0,  # 0なら単純な連結
 
           # 埋め込み
@@ -98,7 +98,7 @@ module Bioshogi
             @image_renderer = ImageRenderer.new(@mediator, params)
 
             if media_factory_key == "rmagick"
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3 + 6, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3 + 7, &params[:progress_callback])
 
               begin
                 list = Magick::ImageList.new
@@ -242,14 +242,14 @@ module Bioshogi
 
             logger.info { "fadeout_duration: #{fadeout_duration}" }
 
-            # logger.info { "全体の音量調整(しない)" }
-            # strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
-            # logger.info { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
+            @progress_cop.next_step("全体の音量調整")
+            strict_system %(ffmpeg -v warning -i _same_length1.m4a -af volume=#{main_volume} -y _same_length2.m4a)
+            logger.info { "_same_length2.m4a: #{Media.duration('_same_length2.m4a')}" }
           end
 
           logger.info { "3. 結合" }
           @progress_cop.next_step("BGM結合")
-          strict_system %(ffmpeg -v warning -i _output2.mp4 -i _same_length1.m4a -c copy -y _output3.mp4)
+          strict_system %(ffmpeg -v warning -i _output2.mp4 -i _same_length2.m4a -c copy -y _output3.mp4)
           Pathname("_output3.mp4").read
         end
       end
@@ -304,7 +304,7 @@ module Bioshogi
     end
 
     def main_volume
-      params[:main_volume]
+      params[:main_volume].to_f
     end
 
     def total_duration
