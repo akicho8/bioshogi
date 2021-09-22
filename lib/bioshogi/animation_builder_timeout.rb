@@ -2,7 +2,7 @@ module Bioshogi
   concern :AnimationBuilderTimeout do
     private
 
-    def tob(name, expires_in = 10, &block)
+    def tob(name, expires_in = 30, &block)
       begin
         t = Time.now
         logger.info { "[#{name}][begin]" }
