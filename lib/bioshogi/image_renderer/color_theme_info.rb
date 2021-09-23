@@ -16,6 +16,8 @@ module Bioshogi
         { key: :color_theme_is_style_editor_kuromidori, func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",    outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :color_theme_is_style_editor_kurobeni,   func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :color_theme_is_mario_sky,               func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
+        { key: :color_theme_is_club24,                  func: -> e { e.color_theme_is_shogi_extend.merge(canvas_bg_color: "hsl(84,62%,84%)",   outer_frame_fill_color: "hsl(40,66%,60%)")  }, },
+        { key: :color_theme_is_wars,                    func: -> e { e.color_theme_is_shogi_extend.merge(:fg_file => "#{__dir__}/../assets/images/board/board_texture4.png", bg_file: "#{__dir__}/../assets/images/background/the_scream.png", outer_frame_fill_color: "hsl(45,95%,67%)", :pt_file => "#{__dir__}/../assets/images/piece/piece_texture090.png") }, },
 
         { key: :color_theme_is_gradiention1,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_gradiention2,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
@@ -31,12 +33,12 @@ module Bioshogi
         { key: :color_theme_is_plasma_blur5,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_plasma_blur6,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/plasma_blur6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :color_theme_is_radial_gradiention1,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_radial_gradiention2,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_radial_gradiention3,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention3.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_radial_gradiention4,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention4.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_radial_gradiention5,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_radial_gradiention6,            func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention1,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention2,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention3,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention3.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention4,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention4.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention5,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_radial_gradiention6,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
         { key: :color_theme_is_splatoon_red_black,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_splatoon_green_black,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
@@ -44,12 +46,11 @@ module Bioshogi
         { key: :color_theme_is_real_wood1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         { key: :color_theme_is_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
         { key: :color_theme_is_real_wood3,              func: -> e { e.real_wood_theme_core("wood-texture_00018") }, },
-        { key: :color_theme_is_cg_wood1,           func: -> e { e.real_wood_theme_core("board_texture1") }, },
-        { key: :color_theme_is_cg_wood2,           func: -> e { e.real_wood_theme_core("board_texture2") }, },
-        { key: :color_theme_is_cg_wood3,           func: -> e { e.real_wood_theme_core("board_texture3") }, },
-        { key: :color_theme_is_cg_wood4,           func: -> e { e.real_wood_theme_core("board_texture4") }, },
-
-        { key: :color_theme_is_metal1,              func: -> e { e.tetsu_theme("metal_00005", "metal_00003") }, },
+        { key: :color_theme_is_cg_wood1,                func: -> e { e.real_wood_theme_core("board_texture1") }, },
+        { key: :color_theme_is_cg_wood2,                func: -> e { e.real_wood_theme_core("board_texture2") }, },
+        { key: :color_theme_is_cg_wood3,                func: -> e { e.real_wood_theme_core("board_texture3") }, },
+        { key: :color_theme_is_cg_wood4,                func: -> e { e.real_wood_theme_core("board_texture4") }, },
+        { key: :color_theme_is_metal1,                  func: -> e { e.metal_theme("metal_00005", "metal_00003") }, },
 
         { key: :color_theme_is_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { key: :color_theme_is_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix_1920x1080.png" }, },
@@ -225,11 +226,17 @@ module Bioshogi
           })
       end
 
-      def tetsu_theme(bg_key, fg_key)
+      def metal_theme(bg_key, fg_key)
         color_theme_is_shogi_extend.merge({
-            :bg_file => "#{__dir__}/../assets/images/background/metal_00005.png",
-            :fg_file => "#{__dir__}/../assets/images/board/metal_00003.png",
+            :bg_file => "#{__dir__}/../assets/images/background/#{bg_key}.png",
+            :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
             :pt_file => "#{__dir__}/../assets/images/piece/piece_texture1.png",
+         })
+      end
+
+      def foobar
+        color_theme_is_shogi_extend.merge({
+
          })
       end
 
