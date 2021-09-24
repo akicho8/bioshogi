@@ -20,14 +20,14 @@ module Bioshogi
     def to_binary
       logger.tagged(self.class.name.demodulize) do
         in_work_directory do
-          logger.info { "生成に使うもの: #{media_factory_key}" }
+          logger.info { "生成に使うもの: #{factory_method_key}" }
           logger.info { "最後に追加するフレーム数(end_pages): #{end_pages}" }
           logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
           @mediator = @parser.mediator_for_image
           @image_renderer = ImageRenderer.new(@mediator, params)
 
-          if media_factory_key == "rmagick"
+          if factory_method_key == "rmagick"
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3, &params[:progress_callback])
 
             begin
@@ -76,7 +76,7 @@ module Bioshogi
             end
           end
 
-          if media_factory_key == "ffmpeg"
+          if factory_method_key == "ffmpeg"
             command_required! :ffmpeg
 
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])

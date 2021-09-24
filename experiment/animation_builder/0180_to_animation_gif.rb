@@ -2,11 +2,11 @@ require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 8c8d")
 
-bin = info.to_animation_gif(page_duration: 0.5, media_factory_key: "rmagick", tmpdir_remove: false)
+bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "rmagick", tmpdir_remove: false)
 Pathname("_output_rmagick.gif").write(bin) # => 33701
 puts `identify _output_rmagick.gif`
 
-bin = info.to_animation_gif(page_duration: 0.5, media_factory_key: "ffmpeg", tmpdir_remove: false)
+bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "ffmpeg", tmpdir_remove: false)
 Pathname("_output.gif").write(bin) # => 44549
 puts `identify _output.gif`
 

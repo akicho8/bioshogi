@@ -87,7 +87,7 @@ module Bioshogi
           logger.tagged("video") do
             logger.info { "1. 動画準備" }
 
-            logger.info { "生成に使うもの: #{media_factory_key}" }
+            logger.info { "生成に使うもの: #{factory_method_key}" }
             logger.info { "最後に追加するページ数(end_pages): #{end_pages}" }
             logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
@@ -97,7 +97,7 @@ module Bioshogi
             @mediator = @parser.mediator_for_image
             @image_renderer = ImageRenderer.new(@mediator, params)
 
-            if media_factory_key == "rmagick"
+            if factory_method_key == "rmagick"
               @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3 + 7, &params[:progress_callback])
 
               begin
@@ -139,7 +139,7 @@ module Bioshogi
               strict_system %(ffmpeg -v warning -hide_banner -r #{fps_value} -i _output0.mp4 -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
             end
 
-            if media_factory_key == "ffmpeg"
+            if factory_method_key == "ffmpeg"
               @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
               if v = params[:cover_text].presence
