@@ -71,7 +71,7 @@ module Bioshogi
     end
 
     it "apng" do
-      video, audio = target1(:apng, :to_animation_png)
+      video, audio = target1(:apng, :to_animation_apng)
       assert { video[:codec_name] == "apng"  }
       assert { video[:r_frame_rate] == "2/1"  }
     end

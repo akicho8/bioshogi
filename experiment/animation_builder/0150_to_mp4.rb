@@ -8,7 +8,7 @@ Pathname("_output.mp4").write(bin) # => 91971
 Media.duration("_output.mp4")      # => 13.0
 Media.p("_output.mp4")
 tp Media.format("_output.mp4")
-`open -a 'google chrome' _output.mp4`
+`open -a 'Google Chrome' _output.mp4`
 # >> [mp4_builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210820-78451-x1y9ko
 # >> [mp4_builder] [video] 最後に追加するフレーム数(end_pages): 0
 # >> [mp4_builder] [video] 1手当たりの秒数(page_duration): 1.0

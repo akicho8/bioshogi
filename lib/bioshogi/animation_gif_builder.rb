@@ -104,7 +104,7 @@ module Bioshogi
             @progress_cop.next_step("#{ext_name} 生成 #{sfile.index}p")
             logger.info { sfile.inspect }
             logger.info { "ソース画像確認\n#{sfile.shell_inspect}" }
-            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
+            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} #{ffmpeg_option_fine_tune_for_each_file_type} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 
@@ -137,6 +137,25 @@ module Bioshogi
       else
         1
       end
+    end
+
+    # 「1枚目に白黒のタイトル画像があり、次に盤の画像が並ぶ場合、盤が白黒になってしまうのを防ぐ」ために
+    # 追加したオプションだったが、元凶は1枚目がグレースケールだったのでそれを PNG24: で保存すればグレー化問題は解決した
+    # だからこのオプションを外したら GIF が超汚ない
+    # グレー化問題にかかわらずこのオプションは付けておいた方がよさそうだ
+    #
+    # 具体的に何がなんだかわかってない
+    # とりあえず下のサイトから拝借してサイズやフレーム数を取った
+    # また stats_mode を single 以外にすると1枚目の画像がスキップされてしまうので注意
+    # これは ffmpeg のバグだろうか。これもよくわからない
+    #
+    # ffmpegでとにかく綺麗なGIFを作りたい
+    # https://qiita.com/yusuga/items/ba7b5c2cac3f2928f040
+    #
+    # FFMPEG で 256色を最適化する PALETTEGEN, PALETTEUSE
+    # https://nico-lab.net/optimized_256_colors_with_ffmpeg/
+    def ffmpeg_option_fine_tune_for_each_file_type
+      %(-filter_complex "[0:v] split [a][b];[a] palettegen=stats_mode=single:reserve_transparent=0 [p];[b][p] paletteuse=new=1")
     end
   end
 end

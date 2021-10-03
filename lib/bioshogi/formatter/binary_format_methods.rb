@@ -37,7 +37,7 @@ module Bioshogi
         AnimationGifBuilder.new(self, options).to_binary
       end
 
-      def to_animation_png(options = {})
+      def to_animation_apng(options = {})
         AnimationPngBuilder.new(self, options).to_binary
       end
 

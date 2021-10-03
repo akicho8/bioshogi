@@ -6,4 +6,4 @@ ffmpeg -v warning -hide_banner -i loop_bgm1.m4a -i loop_bgm2.m4a -filter_complex
 duration loop_bgm1.m4a
 duration loop_bgm2.m4a
 duration _output1.m4a
-# open -a 'google chrome' _output1.m4a
+# open -a 'Google Chrome' _output1.m4a

@@ -15,7 +15,7 @@ module Bioshogi
     end
 
     def next
-      format(name, @index).tap { @index += 1 }
+      format("PNG24:#{name}", @index).tap { @index += 1 }
     end
 
     def name

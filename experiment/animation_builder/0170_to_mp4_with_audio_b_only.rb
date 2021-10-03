@@ -13,7 +13,7 @@ Pathname("_output.mp4").write(bin) # => 89679
 Media.duration("_output.mp4")      # => 13.0
 Media.p("_output.mp4")
 tp Media.format("_output.mp4")
-`open -a 'google chrome' _output.mp4`
+`open -a 'Google Chrome' _output.mp4`
 # >> [Mp4Builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210907-59099-jhjwec
 # >> [Mp4Builder] [video] 1. 動画準備
 # >> [Mp4Builder] [video] 生成に使うもの: ffmpeg

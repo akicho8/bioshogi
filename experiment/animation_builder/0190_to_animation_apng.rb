@@ -1,7 +1,7 @@
 require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 8c8d")
-bin = info.to_animation_png(page_duration: 0.5)
+bin = info.to_animation_apng(page_duration: 0.5)
 Pathname("_output.apng").write(bin) # => 38007
 puts `identify _output.apng`
 `open -a 'Google Chrome' _output.apng`

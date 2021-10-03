@@ -43,6 +43,11 @@ module Bioshogi
       def canvas_layer_create
         Magick::Image.new(*image_rect) do |e|
           e.background_color = params[:bg_color]
+          if false
+            # 予想に反してこれを指定しても RGB で保存されない
+            # たまたま白黒だった画像をRGBで保存するには PNG24: としないといけない
+            e.colorspace = Magick::SRGBColorspace
+          end
         end
       end
 

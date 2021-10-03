@@ -20,4 +20,4 @@ require "../example_helper"
 Media.audio_bit_rate("_output.mp4") # => "64.436000 Kbit/s"
 
 
-# `open -a 'google chrome' _output.mp4`
+# `open -a 'Google Chrome' _output.mp4`

@@ -46,8 +46,8 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur5").display
 # parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur6").display
 
-parser.image_renderer(color_theme_key: "color_theme_is_club24").display
-parser.image_renderer(color_theme_key: "color_theme_is_wars").display
+# parser.image_renderer(color_theme_key: "color_theme_is_club24").display
+# parser.image_renderer(color_theme_key: "color_theme_is_wars").display
 
 # parser.image_renderer(color_theme_key: "color_theme_is_metal1").display
 

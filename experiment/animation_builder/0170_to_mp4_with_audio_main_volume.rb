@@ -4,7 +4,7 @@ info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d")
 bin = info.to_mp4(end_duration: 10, main_volume: 0.5)
 Pathname("_output.mp4").write(bin)   # => 344997
 Media.enough_volume("_output.mp4")   # => 20.9
-m`open -a 'google chrome' _output.mp4`
+m`open -a 'Google Chrome' _output.mp4`
 # >> [Mp4Builder] cd /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210919-62026-lzldt8
 # >> [Mp4Builder] [video] 1. 動画準備
 # >> [Mp4Builder] [video] 生成に使うもの: ffmpeg

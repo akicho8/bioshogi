@@ -123,7 +123,7 @@ require_relative "bioshogi/serial_file"
 require_relative "bioshogi/mp4_builder"
 require_relative "bioshogi/animation_zip_builder"
 require_relative "bioshogi/animation_gif_builder"
-require_relative "bioshogi/animation_png_builder"
+require_relative "bioshogi/animation_apng_builder"
 require_relative "bioshogi/animation_webp_builder"
 require_relative "bioshogi/parser"
 

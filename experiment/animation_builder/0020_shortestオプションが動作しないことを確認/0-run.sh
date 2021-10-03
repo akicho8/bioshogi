@@ -8,10 +8,10 @@ convert -background '#fff' -fill '#888' -bordercolor '#00F' -border 32x32 -size 
 
 # 1手0.5秒とする。つまり0.5秒x4=2秒
 ffmpeg -v warning -hide_banner -framerate 1000/500 -i _%d.png -c:v libx264 -pix_fmt yuv420p -y _output1.mp4
-# open -a 'google chrome' _output1.mp4
+# open -a 'Google Chrome' _output1.mp4
 
 # 動画が2秒でBGMが5秒なのでBGMは2秒ぶん鳴るはずだが0.5秒ぐらいで切れてしまう
 ffmpeg -v warning -i _output1.mp4 -i loop_bgm.m4a -c copy -shortest -y _output2.mp4
 
-open -a 'google chrome' _output2.mp4
+open -a 'Google Chrome' _output2.mp4
 
