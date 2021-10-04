@@ -2,6 +2,7 @@ require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 [
+  :mp4,
   :apng,
   :gif,
   :webp,
