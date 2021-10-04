@@ -29,7 +29,7 @@ module Bioshogi
       zos = Zip::OutputStream.write_buffer do |z|
         if v = params[:cover_text].presence
           @progress_cop.next_step("表紙描画")
-          tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).to_blob_binary) }
+          tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).to_png24_binary) }
         end
         @progress_cop.next_step("初期配置")
         tob("初期配置") { zip_write1(z, 0) }
@@ -51,7 +51,7 @@ module Bioshogi
     end
 
     def zip_write1(z, index)
-      zip_write2(z, filename_for(index), @image_renderer.to_blob_binary)
+      zip_write2(z, filename_for(index), @image_renderer.to_png24_binary)
     end
 
     def zip_write2(z, filename, bin)

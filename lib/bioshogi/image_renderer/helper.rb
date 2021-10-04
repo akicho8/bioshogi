@@ -35,6 +35,14 @@ module Bioshogi
         end
       end
 
+      # PNG24 を強制する (for zip)
+      def to_png24_binary
+        Tempfile.open(["", ".png"]) do |t|
+          render.write("PNG24:#{t.path}")
+          File.binread(t.path)
+        end
+      end
+
       # ImageMagick側で書き出ししているため拡張子に合わせて変換される
       # def write(file)
       #   file = Pathname(file).expand_path.to_s
