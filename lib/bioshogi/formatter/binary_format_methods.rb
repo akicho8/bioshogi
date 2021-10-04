@@ -29,8 +29,8 @@ module Bioshogi
 
       ################################################################################
 
-      def to_mp4(options = {})
-        Mp4Builder.new(self, options).to_binary
+      def to_animation_mp4(options = {})
+        AnimationMp4Builder.new(self, options).to_binary
       end
 
       def to_animation_gif(options = {})

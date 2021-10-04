@@ -31,11 +31,11 @@
 # ▼確認
 #
 #   info = Bioshogi::Parser.parse("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
-#   bin = info.to_mp4(end_duration: 1, cover_text: "x", progress_callback: -> e { puts e.log })
+#   bin = info.to_animation_mp4(end_duration: 1, cover_text: "x", progress_callback: -> e { puts e.log })
 #   Pathname("_output.mp4").write(bin)
 #
 module Bioshogi
-  class Mp4Builder
+  class AnimationMp4Builder
     include AnimationBuilderTimeout
     include FfmpegSupport
 
@@ -144,31 +144,31 @@ module Bioshogi
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("表紙描画")
-                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfile.next) }
+                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfg.next) }
               end
 
               @progress_cop.next_step("初期配置")
-              tob("初期配置") { @image_renderer.next_build.write(sfile.next) }
+              tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
                 @mediator.execute(e[:input])
                 logger.info("@mediator.execute OK")
-                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfile.next) }
+                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
                 logger.info("@image_renderer.next_build.write OK")
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
               end_pages.times do |i|
                 @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-                tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfile.next) }
+                tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfg.next) }
               end
 
-              logger.info { sfile.inspect }
-              logger.info { "ソース画像確認\n#{sfile.shell_inspect}" }
-              @progress_cop.next_step("mp4 生成 #{sfile.index}p")
-              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
+              logger.info { sfg.inspect }
+              logger.info { "ソース画像確認\n#{sfg.shell_inspect}" }
+              @progress_cop.next_step("mp4 生成 #{sfg.index}p")
+              strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfg.name} -c:v libx264 -pix_fmt yuv420p -movflags +faststart #{video_crf_o} #{video_tune_o} #{video_bit_rate_o} #{ffmpeg_after_embed_options} -y _output1.mp4)
               logger.info { `ls -alh _output1.mp4`.strip }
-              @page_count = sfile.index
+              @page_count = sfg.index
             end
 
             @image_renderer.clear_all

@@ -83,28 +83,28 @@ module Bioshogi
 
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
-              tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfile.next) }
+              tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfg.next) }
             end
 
             @progress_cop.next_step("初期配置")
-            tob("初期配置") { @image_renderer.next_build.write(sfile.next) }
+            tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
 
             @parser.move_infos.each.with_index do |e, i|
               @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
               @mediator.execute(e[:input])
-              tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfile.next) }
+              tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end
 
             end_pages.times do |i|
               @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-              tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfile.next) }
+              tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfg.next) }
             end
 
-            @progress_cop.next_step("#{ext_name} 生成 #{sfile.index}p")
-            logger.info { sfile.inspect }
-            logger.info { "ソース画像確認\n#{sfile.shell_inspect}" }
-            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfile.name} #{ffmpeg_option_fine_tune_for_each_file_type} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
+            @progress_cop.next_step("#{ext_name} 生成 #{sfg.index}p")
+            logger.info { sfg.inspect }
+            logger.info { "ソース画像確認\n#{sfg.shell_inspect}" }
+            strict_system %(ffmpeg -v warning -hide_banner -framerate #{fps_value} -i #{sfg.name} #{ffmpeg_option_fine_tune_for_each_file_type} #{ffmpeg_after_embed_options} -y _output1.#{ext_name})
             logger.info { `ls -alh _output1.#{ext_name}`.strip }
           end
 

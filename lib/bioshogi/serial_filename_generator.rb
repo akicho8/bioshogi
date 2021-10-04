@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class SerialFile
+  class SerialFilenameGenerator
     attr_accessor :index
     attr_accessor :prefix
     attr_accessor :ext_type

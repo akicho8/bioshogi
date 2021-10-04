@@ -5,7 +5,7 @@ module Bioshogi
   class ImageRenderer
     concerning :Helper do
       # 最後の render の結果を保持するバージョン
-      # mp4_builder, animation_gif_builder だけで使っている
+      # animation_mp4_builder, animation_gif_builder だけで使っている
       begin
         attr_reader :last_rendered_image
 
