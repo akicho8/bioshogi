@@ -4,9 +4,9 @@ module Bioshogi
       included do
         default_params.update({
             # 共通の影
-            :real_shadow_offset  => -4,  # 影の長さ 効いてない
-            :real_shadow_sigma   => 1.5, # 影の強さ (0:影なし)
-            :real_shadow_opacity => 0.4, # 不透明度
+            :real_shadow_offset  => 3,    # 影のズレ
+            :real_shadow_sigma   => 1.5,  # 影の広がり (0:影なし)
+            :real_shadow_opacity => 0.4,  # 不透明度
           })
       end
 
@@ -54,7 +54,18 @@ module Bioshogi
             params[:real_shadow_offset],
             params[:real_shadow_sigma],
             params[:real_shadow_opacity])
-          layer = s.composite(layer, 0, 0, Magick::OverCompositeOp) # 影の上に乗せる
+          if false
+            # 間違った方法
+            # 影のレイヤーは内部のオフセットがずれているだけなのでこの方法ではオフセットが効いてないように見える
+            layer = s.composite(layer, 0, 0, Magick::OverCompositeOp) # 影の上に乗せる
+          else
+            # 意図した通りに重ねる
+            list = Magick::ImageList.new
+            list.new_image(layer.columns, layer.rows, Magick::SolidFill.new("transparent"))
+            list << s
+            list << layer
+            layer = list.flatten_images
+          end
           s.destroy!
         end
         layer
