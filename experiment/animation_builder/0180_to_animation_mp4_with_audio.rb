@@ -7,7 +7,7 @@ require "../example_helper"
 #     page_duration: 0.5,
 #     tmpdir_remove: false,
 #     end_duration: 5,
-#     audio_theme_key: "audio_theme_is_dance_chain",
+#     audio_theme_key: "is_audio_theme_dance_chain",
 #     audio_bit_rate: "64k",
 #     audio_theme_override_params: {
 #       acrossfade_duration: 0,

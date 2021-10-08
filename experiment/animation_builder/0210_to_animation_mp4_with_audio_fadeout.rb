@@ -1,7 +1,7 @@
 require "../example_helper"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d")
-bin = info.to_animation_mp4(tmpdir_remove: false, end_duration: 7, audio_theme_key: "audio_theme_is_ds5616")
+bin = info.to_animation_mp4(tmpdir_remove: false, end_duration: 7, audio_theme_key: "is_audio_theme_ds5616")
 Pathname("_output.mp4").write(bin) # => 89679
 Media.duration("_output.mp4")      # => 13.0
 Media.p("_output.mp4")

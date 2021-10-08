@@ -6,7 +6,7 @@ def test(video_crf, video_bit_rate, audio_bit_rate)
   bin = info.to_animation_mp4({
       :page_duration => 1,
       :end_duration       => 5,
-      :audio_theme_key        => "audio_theme_is_headspin_only",
+      :audio_theme_key        => "is_audio_theme_headspin_only",
       :video_crf              => video_crf,
       :video_bit_rate         => video_bit_rate, # default は 200k とネットにはあるが実際は 68k ぐらいじゃない？
       :audio_bit_rate         => audio_bit_rate, # default: 128k

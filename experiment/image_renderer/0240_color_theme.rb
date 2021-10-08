@@ -15,78 +15,78 @@ bg_file = nil
 # 96.-Lake.jpg
 # ).each do |e|
 #   bg_file = Pathname("~/Downloads/#{e}").expand_path.to_s
-#   parser.image_renderer(color_theme_key: "color_theme_is_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
+#   parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
 # end
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-# parser.image_renderer(color_theme_key: "color_theme_is_real_wood1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_real_wood1", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_real_wood2").display
-# parser.image_renderer(color_theme_key: "color_theme_is_real_wood3").display
+# parser.image_renderer(color_theme_key: "is_color_theme_real_wood1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_real_wood1", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_real_wood2").display
+# parser.image_renderer(color_theme_key: "is_color_theme_real_wood3").display
 
-parser.image_renderer(color_theme_key: "color_theme_is_gradiention1").display
-parser.image_renderer(color_theme_key: "color_theme_is_gradiention2").display
-parser.image_renderer(color_theme_key: "color_theme_is_gradiention3").display
-parser.image_renderer(color_theme_key: "color_theme_is_gradiention4").display
+parser.image_renderer(color_theme_key: "is_color_theme_gradiention1").display
+parser.image_renderer(color_theme_key: "is_color_theme_gradiention2").display
+parser.image_renderer(color_theme_key: "is_color_theme_gradiention3").display
+parser.image_renderer(color_theme_key: "is_color_theme_gradiention4").display
 
-parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention1").display
-parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention2").display
-parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention3").display
-parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention4").display
+parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention1").display
+parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention2").display
+parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention3").display
+parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention4").display
 
-parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur1").display
-parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur2").display
-parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur3").display
-parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur4").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_club24").display
-# parser.image_renderer(color_theme_key: "color_theme_is_wars").display
+# parser.image_renderer(color_theme_key: "is_color_theme_club24").display
+# parser.image_renderer(color_theme_key: "is_color_theme_wars").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_metal1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_paper_simple", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_paper_shape", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor").display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor_usubudou", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_red").display
-# parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_green").display
-# parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_purple").display
-# parser.image_renderer(color_theme_key: "color_theme_is_mario_sky").display
-# parser.image_renderer(color_theme_key: "color_theme_is_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").display
-# parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix", viewpoint: "white").display
-# parser.image_renderer(color_theme_key: "color_theme_is_brightness_green").display
-# parser.image_renderer(color_theme_key: "color_theme_is_brightness_orange").display
-# parser.image_renderer(color_theme_key: "color_theme_is_kimetsu_red", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "color_theme_is_kimetsu_blue").display
+# parser.image_renderer(color_theme_key: "is_color_theme_paper_simple", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_paper_shape", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor").display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_usubudou", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_red").display
+# parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_green").display
+# parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_purple").display
+# parser.image_renderer(color_theme_key: "is_color_theme_mario_sky").display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix", viewpoint: "white").display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_green").display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_orange").display
+# parser.image_renderer(color_theme_key: "is_color_theme_kimetsu_red", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_kimetsu_blue").display
 
 tp ImageRenderer::ColorThemeInfo.keys
 
 # require 'active_support/core_ext/benchmark'
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 1572.6509999949485
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 1184.6170000499114
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 1225.711999926716
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1572.6509999949485
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1184.6170000499114
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1225.711999926716
 #
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 1210.1249999832362
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 882.0249999407679
-# Benchmark.ms { parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").to_blob_binary } # => 1008.8139999425039
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1210.1249999832362
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 882.0249999407679
+# Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1008.8139999425039
 # >> |-------------------------|
-# >> | color_theme_is_paper_simple      |
-# >> | color_theme_is_paper_shape       |
-# >> | color_theme_is_shogi_extend      |
-# >> | color_theme_is_real_wood3         |
-# >> | color_theme_is_brightness_grey   |
-# >> | color_theme_is_brightness_matrix |
-# >> | color_theme_is_brightness_green  |
-# >> | color_theme_is_brightness_orange |
-# >> | color_theme_is_kimetsu_red       |
-# >> | color_theme_is_kimetsu_blue      |
+# >> | is_color_theme_paper_simple      |
+# >> | is_color_theme_paper_shape       |
+# >> | is_color_theme_shogi_extend      |
+# >> | is_color_theme_real_wood3         |
+# >> | is_color_theme_brightness_grey   |
+# >> | is_color_theme_brightness_matrix |
+# >> | is_color_theme_brightness_green  |
+# >> | is_color_theme_brightness_orange |
+# >> | is_color_theme_kimetsu_red       |
+# >> | is_color_theme_kimetsu_blue      |
 # >> |-------------------------|

@@ -17,7 +17,7 @@ end
 if true
   file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
   info = Parser.parse(file)
-  bin = info.to_animation_mp4(color_theme_key: :color_theme_is_real_wood1, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
+  bin = info.to_animation_mp4(color_theme_key: :is_color_theme_real_wood1, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
   output(bin, "animation/no_audio.mp4")
 
   AudioThemeInfo.each do |e|
