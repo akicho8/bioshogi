@@ -28,23 +28,19 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood3").display
 
 parser.image_renderer(color_theme_key: "color_theme_is_gradiention1").display
-# parser.image_renderer(color_theme_key: "color_theme_is_gradiention2").display
-# parser.image_renderer(color_theme_key: "color_theme_is_gradiention3").display
-# parser.image_renderer(color_theme_key: "color_theme_is_gradiention4").display
+parser.image_renderer(color_theme_key: "color_theme_is_gradiention2").display
+parser.image_renderer(color_theme_key: "color_theme_is_gradiention3").display
+parser.image_renderer(color_theme_key: "color_theme_is_gradiention4").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention1").display
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention2").display
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention3").display
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention4").display
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention5").display
-# parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention6").display
+parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention1").display
+parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention2").display
+parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention3").display
+parser.image_renderer(color_theme_key: "color_theme_is_radial_gradiention4").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur1").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur2").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur3").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur4").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur5").display
-# parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur6").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur1").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur2").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur3").display
+parser.image_renderer(color_theme_key: "color_theme_is_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "color_theme_is_club24").display
 # parser.image_renderer(color_theme_key: "color_theme_is_wars").display
