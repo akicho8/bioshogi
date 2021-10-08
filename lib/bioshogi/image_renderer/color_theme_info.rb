@@ -40,8 +40,9 @@ module Bioshogi
         { key: :color_theme_is_radial_gradiention5,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :color_theme_is_radial_gradiention6,     func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :color_theme_is_splatoon_red_black,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_red_stripe.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :color_theme_is_splatoon_green_black,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_green_stripe.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_splatoon_stripe_red,      func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_red.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_splatoon_stripe_green,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :color_theme_is_splatoon_stripe_purple,    func: -> e { e.color_theme_is_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_purple.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
         { key: :color_theme_is_real_wood1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         { key: :color_theme_is_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
