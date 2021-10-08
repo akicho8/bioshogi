@@ -54,7 +54,7 @@ module Bioshogi
         { key: :color_theme_is_metal1,                  func: -> e { e.metal_theme("metal_00005", "metal_00003") }, },
 
         { key: :color_theme_is_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { key: :color_theme_is_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix_1920x1080.png" }, },
+        { key: :color_theme_is_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix.png" }, },
         { key: :color_theme_is_brightness_green,        func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { key: :color_theme_is_brightness_orange,       func: -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { key: :color_theme_is_kimetsu_red,             func: -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },

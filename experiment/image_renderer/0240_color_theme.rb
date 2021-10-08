@@ -27,7 +27,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood2").display
 # parser.image_renderer(color_theme_key: "color_theme_is_real_wood3").display
 
-# parser.image_renderer(color_theme_key: "color_theme_is_gradiention1").display
+parser.image_renderer(color_theme_key: "color_theme_is_gradiention1").display
 # parser.image_renderer(color_theme_key: "color_theme_is_gradiention2").display
 # parser.image_renderer(color_theme_key: "color_theme_is_gradiention3").display
 # parser.image_renderer(color_theme_key: "color_theme_is_gradiention4").display
@@ -62,7 +62,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "color_theme_is_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_red").display
 # parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_green").display
-parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_purple").display
+# parser.image_renderer(color_theme_key: "color_theme_is_splatoon_stripe_purple").display
 # parser.image_renderer(color_theme_key: "color_theme_is_mario_sky").display
 # parser.image_renderer(color_theme_key: "color_theme_is_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "color_theme_is_brightness_matrix").display
