@@ -28,7 +28,7 @@ module Bioshogi
           @image_renderer = ImageRenderer.new(@mediator, params)
 
           if factory_method_key == "is_factory_method_rmagick"
-            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3, &params[:progress_callback])
+            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
 
             begin
               list = Magick::ImageList.new
@@ -79,7 +79,7 @@ module Bioshogi
           if factory_method_key == "is_factory_method_ffmpeg"
             command_required! :ffmpeg
 
-            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])
+            @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1, &params[:progress_callback])
 
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
