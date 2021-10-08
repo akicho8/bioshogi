@@ -27,7 +27,7 @@ module Bioshogi
           @mediator = @parser.mediator_for_image
           @image_renderer = ImageRenderer.new(@mediator, params)
 
-          if factory_method_key == "rmagick"
+          if factory_method_key == "is_factory_method_rmagick"
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3, &params[:progress_callback])
 
             begin
@@ -76,7 +76,7 @@ module Bioshogi
             end
           end
 
-          if factory_method_key == "ffmpeg"
+          if factory_method_key == "is_factory_method_ffmpeg"
             command_required! :ffmpeg
 
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 1, &params[:progress_callback])

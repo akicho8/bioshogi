@@ -6,7 +6,7 @@ params = { end_duration: 1, cover_text: "x", progress_callback: -> e { puts e.lo
 info.to_animation_mp4(params)
 info.to_animation_gif(params)
 
-info.to_animation_mp4(params.merge(factory_method_key: "rmagick"))
-info.to_animation_gif(params.merge(factory_method_key: "rmagick"))
+info.to_animation_mp4(params.merge(factory_method_key: "is_factory_method_rmagick"))
+info.to_animation_gif(params.merge(factory_method_key: "is_factory_method_rmagick"))
 
 info.to_animation_zip(params)

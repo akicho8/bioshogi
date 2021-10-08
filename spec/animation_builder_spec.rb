@@ -35,11 +35,11 @@ module Bioshogi
       end
 
       it "ffmpeg-version" do
-        test1(factory_method_key: "ffmpeg")
+        test1(factory_method_key: "is_factory_method_ffmpeg")
       end
 
       it "rmagick-version" do
-        test1(factory_method_key: "rmagick")
+        test1(factory_method_key: "is_factory_method_rmagick")
       end
 
       it "クロスフェイドあり" do
@@ -62,11 +62,11 @@ module Bioshogi
       end
 
       it "ffmpeg-version" do
-        test1(factory_method_key: "ffmpeg")
+        test1(factory_method_key: "is_factory_method_ffmpeg")
       end
 
       it "rmagick-version" do
-        test1(factory_method_key: "rmagick")
+        test1(factory_method_key: "is_factory_method_rmagick")
       end
     end
 
