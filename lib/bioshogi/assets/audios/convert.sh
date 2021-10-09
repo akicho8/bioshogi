@@ -1,5 +1,12 @@
 #!/bin/sh
 
+ffmpeg -hide_banner -i ds14640.mp3  -c:a aac -strict experimental -vn -y ds14640.m4a
+ffmpeg -hide_banner -i ds4616.mp3   -c:a aac -strict experimental -vn -y ds4616.m4a
+ffmpeg -hide_banner -i ds8680.mp3   -c:a aac -strict experimental -vn -y ds8680.m4a
+ffmpeg -hide_banner -i ds2452.mp3   -c:a aac -strict experimental -vn -y ds2452.m4a
+ffmpeg -hide_banner -i ds1754.mp3   -c:a aac -strict experimental -vn -y ds1754.m4a
+# volume-normalize ds14640.m4a ds4616.m4a  ds8680.m4a  ds2452.m4a  ds1754.m4a
+
 ffmpeg -hide_banner -i nc43122.mp3  -c:a aac -strict experimental -vn -y nc43122.m4a
 ffmpeg -hide_banner -i nc105702.mp3 -c:a aac -strict experimental -vn -y nc105702.m4a
 ffmpeg -hide_banner -i nc107860.mp3 -c:a aac -strict experimental -vn -y nc107860.m4a
