@@ -48,7 +48,7 @@ end
 REDIS = Redis.new(redis_args)
 REDIS.flushdb
 
-class Brawser < Sinatra::Base
+class Browser < Sinatra::Base
   helpers Sinatra::JSON
   register Sinatra::MultiRoute
 

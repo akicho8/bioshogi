@@ -4,13 +4,13 @@
 
 # こっちにこうかいてもいい？
 # require "bundler"
-# Bundler.require(:default, :brawser_env)
+# Bundler.require(:default, :browser_env)
 
 # アプリ起動用
-require "./brawser/brawser"
+require "./browser/browser"
 
 require "rack/contrib"
 use Rack::Runtime
 use Rack::ProcTitle
 
-run Brawser
+run Browser
