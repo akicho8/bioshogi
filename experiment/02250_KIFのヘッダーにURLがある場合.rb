@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 *KEY1：value1

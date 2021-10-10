@@ -1,1 +1,1 @@
-require "./example_helper"
+require "./setup"

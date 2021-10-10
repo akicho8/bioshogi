@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.file_parse("必死道場/001.kif")
 puts info.to_kif

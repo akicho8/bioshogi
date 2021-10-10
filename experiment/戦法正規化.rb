@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 TacticInfo.all_elements.each do |e|
   dir = Pathname("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}")

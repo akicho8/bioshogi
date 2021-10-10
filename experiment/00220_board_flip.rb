@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 board = Board.new
 board.board_set_any(<<~EOT)

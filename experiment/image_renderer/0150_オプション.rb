@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 parser = Parser.parse(SFEN1)
 object = parser.image_renderer({width: 100, height: 100, viewpoint: :black})

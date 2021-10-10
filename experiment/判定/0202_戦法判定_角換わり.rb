@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 kif_str = "
 手数----指手---------消費時間--

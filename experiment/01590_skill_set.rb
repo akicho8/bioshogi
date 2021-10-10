@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 skill_set = SkillSet.new
 skill_set.defense_infos << DefenseInfo["片美濃囲い"]

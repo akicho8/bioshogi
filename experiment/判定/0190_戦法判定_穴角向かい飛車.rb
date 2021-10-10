@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse("▲９八香 △３四歩 ▲９九角 △８四歩 ▲８八飛")
 puts info.mediator

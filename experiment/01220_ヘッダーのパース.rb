@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 棋戦詳細：第44期王位戦七番勝負第5局

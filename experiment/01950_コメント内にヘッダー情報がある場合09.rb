@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 開始日時：2007/01/06 11:04:39

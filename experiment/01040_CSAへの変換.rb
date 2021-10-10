@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 puts Parser.parse("７六歩 ３四歩").to_csa(board_expansion: true, compact: true)
 puts Parser.parse("７六歩 ３四歩").to_csa(board_expansion: true, compact: false)

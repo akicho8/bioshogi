@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 parser = Parser.parse(SFEN1)
 bin = parser.to_png(color_theme_key: "is_color_theme_paper_simple")

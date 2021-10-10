@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.file_parse("../戦型/丸山ワクチン.kif", turn_limit: 6)
 puts info.mediator

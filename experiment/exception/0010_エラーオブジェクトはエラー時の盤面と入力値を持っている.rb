@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 error = Mediator.facade(init: "", execute: ["55飛"]) rescue $!
 error.input.input.values.join   # => "55飛"

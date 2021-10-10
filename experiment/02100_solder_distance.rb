@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Soldier.from_str("▲41歩").sign_to_goto_closer_side # => 1
 Soldier.from_str("△41歩").sign_to_goto_closer_side # => 1

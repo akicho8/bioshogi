@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse(SFEN1)
 # ImageRenderer::FontThemeInfo.each do |e|

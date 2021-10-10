@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT, typical_error_case: :embed)
 開始日時：2007/07/17 10:00

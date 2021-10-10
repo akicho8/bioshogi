@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 require 'active_support/core_ext/benchmark'
 
 # Bioshogi.config[:skill_monitor_enable] = false

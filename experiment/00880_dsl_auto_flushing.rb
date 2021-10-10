@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Sequencer.new
 mediator.pattern = NotationDsl.define do

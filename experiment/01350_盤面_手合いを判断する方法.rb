@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info1 = BoardParser.parse(<<~EOT)
 +---------------------------+

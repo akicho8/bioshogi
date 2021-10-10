@@ -1,5 +1,5 @@
 # すべての駒の移動可能なルートの確認
-require "./example_helper"
+require "./setup"
 
 Piece.each do |piece|
   mediator = Mediator.new

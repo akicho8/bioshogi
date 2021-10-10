@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.new
 mediator.board.placement_from_hash(black: "十枚落ち", white: "裸玉")

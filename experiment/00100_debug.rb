@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator_options = {
   skill_monitor_enable: false,

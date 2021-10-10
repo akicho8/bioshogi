@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 tp Soldier.from_str("▲７六と")
 

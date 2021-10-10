@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 def assert_equal(a, b)
   if a == b

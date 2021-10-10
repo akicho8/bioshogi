@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 InputParser.scan("▲４二銀 △４二銀")                  # => ["▲４二銀", "△４二銀"]
 InputParser.scan("▲５五歩△４四歩 push ▲３三歩 pop") # => ["▲５五歩", "△４四歩", "▲３三歩"]

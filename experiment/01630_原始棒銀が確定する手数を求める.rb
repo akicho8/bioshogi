@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 key = "原始棒銀"
 info = Parser.file_parse("戦型/#{key}.kif")

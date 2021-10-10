@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 move_hand = MoveHand.create(soldier: Soldier.from_str("▲６八銀"), origin_soldier: Soldier.from_str("▲７九銀"))
 object = HandLog.new(move_hand: move_hand, candidate: [])

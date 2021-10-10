@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.start
 loop do

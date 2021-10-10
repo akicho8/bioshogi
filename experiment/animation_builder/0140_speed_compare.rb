@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 require 'active_support/core_ext/benchmark'
 require "rmagick"
 # @sfen = "position startpos moves 7g7f 8c8d 2g2f"

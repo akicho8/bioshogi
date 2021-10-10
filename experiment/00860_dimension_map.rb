@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 require "stackprof"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 puts Parser.file_parse("microcosmos.kif").to_bod
 puts Parser.file_parse("microcosmos.kif").to_sfen

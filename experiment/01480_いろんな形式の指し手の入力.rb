@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 def f(v)
   mediator = Mediator.new

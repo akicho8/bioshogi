@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.file_parse("../戦型/新風車.ki2", turn_limit: 42)
 puts info.mediator

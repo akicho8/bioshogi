@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 Board.promotable_disable
 Board.dimensiton_change([2, 3])

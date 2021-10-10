@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Place["１一"].to_xy             # => [8, 0]
 Place["１一"] == Place["１一"]  # => true

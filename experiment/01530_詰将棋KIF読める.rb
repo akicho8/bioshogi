@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 # ----  柿木将棋VII V7.10 棋譜ファイル  ----

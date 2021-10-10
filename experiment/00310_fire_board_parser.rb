@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 board_parser = BoardParser::FireBoardParser.parse(<<~EOT)
 +------------+

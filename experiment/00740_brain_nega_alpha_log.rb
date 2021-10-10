@@ -1,6 +1,6 @@
 # NegaMaxのログ表示
 
-require "./example_helper"
+require "./setup"
 
 Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do

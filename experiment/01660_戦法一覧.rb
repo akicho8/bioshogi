@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 rows = TacticInfo.flat_map do |tactic_info|
   tactic_info.model.collect do |e|

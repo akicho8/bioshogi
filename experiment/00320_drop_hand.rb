@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 object = DropHand.create(soldier: Soldier.from_str("▲６八銀"))
 object.to_s    # => "▲６八銀打"

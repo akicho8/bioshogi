@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.file_parse("../戦型/木村定跡.kif", turn_limit: 42)
 puts info.mediator

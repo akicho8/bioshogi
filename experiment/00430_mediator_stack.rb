@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 object = MediatorStack.new
 object.mediator.placement_from_preset("平手")

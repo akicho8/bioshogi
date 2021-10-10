@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 # ----  激指 柿木形式棋譜ファイル  ----

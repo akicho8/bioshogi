@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 table = {}
 TacticInfo.all_elements.each do |e|

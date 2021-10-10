@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
 list = []

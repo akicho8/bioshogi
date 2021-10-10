@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.new
 mediator.pieces_set("▲銀")

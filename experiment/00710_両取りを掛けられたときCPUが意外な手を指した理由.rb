@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 # 両取りをかけられた状態で馬を切ったCPUの考え方
 #

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Mediator.start
 info.execute("76歩")

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 board = Board.new
 board.placement_from_preset("二枚落ち")

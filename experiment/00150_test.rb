@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
 puts mediator

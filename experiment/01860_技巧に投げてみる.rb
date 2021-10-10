@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 require "json"
 
 info = Parser.parse("position startpos moves 7i6h")

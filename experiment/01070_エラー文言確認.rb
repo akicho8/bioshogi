@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Parser.parse("５五飛").mediator rescue puts $!.message
 

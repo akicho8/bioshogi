@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 require "color"
 
 params = {

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 PresetInfo.each do |preset_info|
   mediator = Mediator.new

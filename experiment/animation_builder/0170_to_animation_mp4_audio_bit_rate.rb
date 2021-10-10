@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 def test(video_crf, video_bit_rate, audio_bit_rate)

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 sequencer = Sequencer.new NotationDsl.define { set :a, 1 }
 sequencer.evaluate

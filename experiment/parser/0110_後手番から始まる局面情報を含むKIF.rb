@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse(<<~EOT)
 先手の備考：居飛車, 相居飛車, 居玉, 相居玉

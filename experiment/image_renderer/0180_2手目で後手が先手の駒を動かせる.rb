@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse("position startpos moves 2g2f 3i4h", validate_enable: false)
 puts info.mediator.board

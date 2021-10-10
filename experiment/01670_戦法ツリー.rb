@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 TacticInfo.each do |e|
   puts "-" * 80 + " " + e.model.name

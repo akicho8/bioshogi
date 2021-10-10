@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.start
 mediator.params[:skill_monitor_enable] = true

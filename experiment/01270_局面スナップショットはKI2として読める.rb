@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 puts Parser.parse(<<~EOT).mediator
 後手の持駒：飛

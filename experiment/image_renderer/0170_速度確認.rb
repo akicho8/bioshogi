@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 @turn_limit = 100
 

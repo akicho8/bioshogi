@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.new
 mediator.players.collect { |e| e.evaluator.score } # => [0, 0]

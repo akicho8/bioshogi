@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Dimension::Xplace.units # => ["９", "８", "７", "６", "５", "４", "３", "２", "１"]
 Dimension::Xplace.units_set # => {"９"=>0, "８"=>1, "７"=>2, "６"=>3, "５"=>4, "４"=>5, "３"=>6, "２"=>7, "１"=>8}

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 parser = Parser.parse(<<~EOT)
 ▲７六歩    △３四歩    ▲２六歩    △３二金    ▲７八金    △８四歩

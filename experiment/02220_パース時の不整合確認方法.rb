@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 str = "
 N+manbowd 2級

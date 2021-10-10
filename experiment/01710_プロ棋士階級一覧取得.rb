@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 # Bioshogi.config[:skill_monitor_enable] = false
 
 tags = []

@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 sfen = "position startpos moves 7g7f"
 info = Parser.parse(sfen)

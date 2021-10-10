@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 info = Parser.parse("position startpos moves 7g7f 3c3d")
 bin = info.to_animation_mp4
 Pathname("_output.mp4").write(bin)

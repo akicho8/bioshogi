@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 tp AttackInfo["相横歩取り"].board_parser.other_objects_loc_ary
 

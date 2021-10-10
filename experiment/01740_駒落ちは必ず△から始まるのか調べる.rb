@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Pathname.glob("../../2chkifu/**/*.{ki2,KI2}") do |file|
   file = file.expand_path

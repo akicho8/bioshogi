@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 str = "
 手合割：その他

@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 def output(bin, name)
   file = Pathname("#{__dir__}/../../demo/#{name}").expand_path

@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 3c3d 8h2b+ 8c8d")
 bin = info.to_animation_mp4(end_duration: 10, main_volume: 0.5)

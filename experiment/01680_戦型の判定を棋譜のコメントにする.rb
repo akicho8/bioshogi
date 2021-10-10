@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.file_parse("bouzu_mino.ki2")
 puts info.to_kif

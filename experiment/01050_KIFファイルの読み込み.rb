@@ -1,5 +1,5 @@
 # KIFファイルの読み込み
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.header.to_h

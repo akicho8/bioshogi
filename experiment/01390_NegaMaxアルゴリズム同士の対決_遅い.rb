@@ -1,6 +1,6 @@
 # NegaMaxアルゴリズム同士の対決
 
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.start
 mediator.piece_plot

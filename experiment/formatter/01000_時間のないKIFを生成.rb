@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
 # >> 開始日時：2017/11/11 10:00:00

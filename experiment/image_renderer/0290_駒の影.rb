@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse(SFEN1)
 object = info.image_renderer({

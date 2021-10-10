@@ -1,5 +1,5 @@
 # 棋譜の入力とkif形式のログ確認
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.start
 [

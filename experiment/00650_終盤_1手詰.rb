@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([2, 4]) do

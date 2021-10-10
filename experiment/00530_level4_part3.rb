@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 mediator = Mediator.new
 mediator.placement_from_bod(<<~EOT)

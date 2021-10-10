@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 piece = Piece[:pawn]
 piece.any_weight(false)         # => 100

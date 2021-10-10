@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 str = "
 # ----  ぴよ将棋 棋譜ファイル  ----

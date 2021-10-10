@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse(<<~EOT, support_for_piyo_shogi_v4_1_5: true)
 後手の持駒：飛二

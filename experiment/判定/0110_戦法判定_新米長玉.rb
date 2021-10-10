@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse(<<~EOT)
 ▲７六歩 △６二玉

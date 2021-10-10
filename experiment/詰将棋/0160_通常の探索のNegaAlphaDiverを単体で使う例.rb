@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 # 失敗
 # 勝手読みの詰みを収集するだけになっている

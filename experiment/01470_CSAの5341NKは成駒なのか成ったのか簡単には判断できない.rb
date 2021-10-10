@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 # 5341NK だけでは判断が難しい例
 

@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 Parser.parse("V2,P1 *,+0093KA,T1").to_kif
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': 先手は角を９三に打とうとしましたが角を持っていません (Bioshogi::HoldPieceNotFound)

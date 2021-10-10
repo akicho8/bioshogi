@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 soldier_box = SoldierBox.new
 soldier_box << Soldier.from_str("△５一玉")

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.file_parse("yagura.kif")
 info.mediator.players.each do |player|

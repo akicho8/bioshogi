@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 s = MediatorStack.new
 s.context_new do

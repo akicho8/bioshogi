@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 PresetInfo["裸玉"].sorted_soldiers.collect(&:to_s)       # => ["▲５九玉"]
 PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["▲８八角", "▲２八飛"]

@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 info = Parser.parse("URL：http://example.net/")
 puts info.to_kif

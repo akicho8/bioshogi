@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 sequencer = Sequencer.new
 sequencer.pattern = NotationDsl.define do

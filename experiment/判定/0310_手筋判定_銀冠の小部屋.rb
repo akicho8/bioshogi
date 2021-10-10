@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 info = Parser.parse(Pathname("../手筋/銀冠の小部屋.kif"))
 puts info.to_kif

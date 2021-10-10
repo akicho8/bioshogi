@@ -1,7 +1,7 @@
 # 詰む場合は
 # mediator.opponent_player.create_all_hands(legal_only: true).none? が最速
 
-require "../example_helper"
+require "../setup"
 
 mediator = Mediator.new
 mediator.placement_from_bod <<~EOT

@@ -1,4 +1,4 @@
-require "../example_helper"
+require "../setup"
 
 parser = Parser.parse(SFEN1)
 object = parser.image_renderer(outer_frame_fill_color: "#aaf")

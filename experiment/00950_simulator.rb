@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 object = Simulator.run({
     title: "桂と金の交換または桂成",

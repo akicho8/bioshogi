@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 tp BoardParser.parse(<<~EOT).soldiers
 +---+

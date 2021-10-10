@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Parser::Daikon.split("花村元司")        # => ["花村元司"]
 Parser::Daikon.split("花村元司元名人")  # => ["花村元司", "元", "名人"]

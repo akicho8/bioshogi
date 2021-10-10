@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 piece_box = PieceBox.new(Piece.s_to_h("玉"))
 piece_box.to_h                                 # => {:king=>1}

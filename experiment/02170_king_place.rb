@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 # mediator = Mediator.new
 # mediator.player_at(:black).king_place # => nil

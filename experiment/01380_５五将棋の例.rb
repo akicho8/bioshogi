@@ -1,4 +1,4 @@
-require "./example_helper"
+require "./setup"
 
 Board.dimensiton_change([5, 5])
 mediator = Mediator.new
