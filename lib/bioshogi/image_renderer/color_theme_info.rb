@@ -11,6 +11,7 @@ module Bioshogi
         { key: :is_color_theme_shogi_extend,            func: -> e { e.is_color_theme_shogi_extend }, },
         { key: :is_color_theme_style_editor,            func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(100,41%,80%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.24)")  }, },
         { key: :is_color_theme_style_editor_asahanada,  func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(195,41%,66%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
+        { key: :is_color_theme_style_editor_asagi,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(188,100%,37%)", outer_frame_fill_color: "hsla(0,0%,0%,0.15)") }, },
         { key: :is_color_theme_style_editor_usubudou,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(289,25%,71%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
         { key: :is_color_theme_style_editor_koiai,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :is_color_theme_style_editor_kuromidori, func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",    outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
