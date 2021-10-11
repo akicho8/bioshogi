@@ -64,6 +64,10 @@ module Bioshogi
       end
     end
 
+    def normalized_names_with_alias
+      flat_map(&:normalized_names_with_alias)
+    end
+
     def kif_comment(location)
       TacticInfo.collect { |e|
         if v = public_send(e.list_key).normalize.presence
@@ -82,6 +86,11 @@ module Bioshogi
         # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが other_parents にある
         list -= list.flat_map { |e| e.other_parents.flat_map(&:self_and_ancestors) }
         list
+      end
+
+      # 重複しているように感じる囲いなどを整理したのち別名を追加した文字列リストを返す
+      def normalized_names_with_alias
+        normalize.flat_map { |e| [e.name, *e.alias_names] }
       end
     end
   end
