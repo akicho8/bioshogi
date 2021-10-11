@@ -48,7 +48,7 @@ module Bioshogi
       else
         @trigger = false
       end
-      Bioshogi.logger&.info { log }
+      Bioshogi.logger.info { log }
       if @callback
         @callback.call(self)
       end
