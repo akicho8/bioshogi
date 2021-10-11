@@ -296,8 +296,8 @@ module Bioshogi
             :double                    => [0.7, 0.08], # 駒数2桁のとき
           },
           :piece_count_bg_adjust => {
-            :black => [-0.02, -0.02],
-            :white => [-0.03, -0.02],
+            :black => [-0.01, -0.01],
+            :white => [-0.01, -0.01],
           },
         }
       end
