@@ -140,15 +140,23 @@ module Bioshogi
             end
 
             if factory_method_key == "is_factory_method_ffmpeg"
+              logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
+              logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               if v = params[:cover_text].presence
+                logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                 @progress_cop.next_step("表紙描画")
+                logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                 tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfg.next) }
+                logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               end
 
+              logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               @progress_cop.next_step("初期配置")
+              logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
+              logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")

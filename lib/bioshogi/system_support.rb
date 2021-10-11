@@ -27,7 +27,9 @@ module Bioshogi
 
     def command_required!(command)
       require "systemu"
+      logger.info { "which #{command}" }
       status, _, _ = systemu("which #{command}")
+      logger.info { "status: #{status}" }
       if !status.success?
         raise StandardError, "no #{command} in path"
       end
@@ -43,7 +45,11 @@ module Bioshogi
     end
 
     def ffmpeg_current_version
-      if md = `ffmpeg -version | head -1`.match(/version\s+(\S+)/i)
+      command = "ffmpeg -version | head -1"
+      logger.info { command }
+      s = `#{command}`
+      logger.info { s }
+      if md = s.match(/version\s+(\S+)/i)
         Gem::Version.create(md.captures.first)
       end
     end
