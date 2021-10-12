@@ -51,7 +51,7 @@ module Bioshogi
 
     # 両方のプレイヤーの駒台をクリア
     def piece_box_clear
-      players.collect { |e| e.piece_box.clear }
+      players.each { |e| e.piece_box.clear }
     end
 
     # 両者の(別名を含む)スキル名のリストを合わせてユニークにしたもの
