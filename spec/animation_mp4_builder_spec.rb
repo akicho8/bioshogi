@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe AnimationMp4Builder do
+  describe AnimationMp4Builder, animation: true do
     include AnimationSupport
 
     def test1(params = {})

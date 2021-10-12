@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe AnimationGifBuilder do
+  describe AnimationGifBuilder, animation: true do
     include AnimationSupport
 
     describe "gif" do

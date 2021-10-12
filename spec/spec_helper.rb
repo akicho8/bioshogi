@@ -1,5 +1,3 @@
-# $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-
 require "bundler/setup"
 require "bioshogi"
 require "active_support/core_ext/benchmark"
@@ -10,8 +8,6 @@ ENV["BIOSHOGI_ENV"] = "test"
 log_file = Pathname("#{__dir__}/../log/test.log")
 FileUtils.makedirs(log_file.dirname)
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log_file))
-
-Pathname.glob("")
 
 # Traceback (most recent call last):
 #       11: from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/simplecov-0.16.1/lib/simplecov/defaults.rb:27:in `block in <top (required)>'
@@ -29,17 +25,16 @@ Pathname.glob("")
 #
 # となるためコメントアウト
 #
-# require 'simplecov'
-# SimpleCov.start
+require 'simplecov'
+SimpleCov.start
 
 Pathname.glob("#{__dir__}/**/*_support.rb") { |e| require e.to_s }
+Pathname.glob("#{__dir__}/support/**/*.rb") { |e| require e.to_s }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
   config.expect_with :test_unit
-  config.example_status_persistence_file_path = "_test.txt"
+  config.example_status_persistence_file_path = "#{__dir__}/_test.txt"
 end
-
-SFEN1 = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
