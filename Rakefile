@@ -23,10 +23,12 @@ end
 
 ################################################################################
 
+desc "ダンダースコアで始まるファイルを全削除"
 task :clean do
   system %(find #{__dir__} -name "_*" -exec rm -f {} \\;)
 end
 
+desc "戦法テスト"
 task :validate do
   Dir.chdir("#{__dir__}/experiment") do
     system "ruby 戦法テスト.rb"
@@ -34,3 +36,12 @@ task :validate do
     system "ruby 戦法正規化.rb"
   end
 end
+
+desc "2chkifu読み込み変換テスト"
+task "test:kifu" do
+  Dir.chdir("#{__dir__}/experiment") do
+    system "ruby 2chkifu読み込み変換テスト.rb"
+  end
+end
+
+

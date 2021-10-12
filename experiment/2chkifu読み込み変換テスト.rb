@@ -1,5 +1,4 @@
 require "./setup"
-require 'active_support/core_ext/benchmark'
 
 # Bioshogi.config[:skill_monitor_enable] = false
 
@@ -22,7 +21,9 @@ def assert_equal(a, b)
       e.puts "-" * 80
       e.puts @current.expand_path
       e.puts caller
+      e.puts "◆a"
       e.puts a
+      e.puts "◆b"
       e.puts b
     end
   end
