@@ -202,6 +202,6 @@ puts info.to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:337:in `block in mediator'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:335:in `tap'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:335:in `mediator'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:325:in `mediator_run'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:325:in `mediator_run_once'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:228:in `to_kif'
 # ~> 	from -:195:in `<main>'

@@ -25,7 +25,7 @@ module Bioshogi
 
       include HeaderBuilder
 
-      def mediator_run
+      def mediator_run_once
         mediator
       end
 
@@ -392,7 +392,7 @@ module Bioshogi
       end
 
       def judgment_message
-        mediator_run
+        mediator_run_once
 
         # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
         if true

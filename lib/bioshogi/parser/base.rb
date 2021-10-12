@@ -56,7 +56,7 @@ module Bioshogi
 
       # def parse
       #   unless @parser_options[:run_and_build_skip]
-      #     mediator_run
+      #     mediator_run_once
       #   end
       # end
 

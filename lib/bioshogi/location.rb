@@ -18,6 +18,8 @@ module Bioshogi
     ]
 
     class << self
+      # lookup(-1).key     # => :white
+      # lookup(:white).key # => :white
       def lookup(value)
         v = super
 

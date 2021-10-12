@@ -1,9 +1,25 @@
 require "bundler/gem_tasks"
+
+################################################################################ rspec
+
 require "rspec/core/rake_task"
 
+desc "すべてのテスト"
 RSpec::Core::RakeTask.new(:spec)
-
 task :default => :spec
+
+desc "動画/画像変換のテスト"
+RSpec::Core::RakeTask.new("spec:animation") do |t|
+  t.pattern = "spec/**/{animation,image}*_spec.rb"
+  t.rspec_opts = "-f d --fail-fast"
+end
+
+desc "重要なところだけのテスト"
+RSpec::Core::RakeTask.new("spec:core") do |t|
+  t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"
+end
+
+################################################################################
 
 task :clean do
   system %(find #{__dir__} -name "_*" -exec rm -f {} \\;)

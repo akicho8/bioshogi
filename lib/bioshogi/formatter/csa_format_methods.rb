@@ -35,7 +35,7 @@ module Bioshogi
           header_skip: false,
         }.merge(options)
 
-        mediator_run
+        mediator_run_once
 
         out = []
         out << "V2.2\n"

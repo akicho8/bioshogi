@@ -10,7 +10,7 @@ module Bioshogi
       private
 
       def __header_part_string
-        mediator_run
+        mediator_run_once
 
         m = initial_mediator
 

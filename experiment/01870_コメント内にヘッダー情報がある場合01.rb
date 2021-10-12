@@ -24,7 +24,7 @@ tp info.header.__to_meta_h
 tp info.header.to_kisen_a
 tp info.header.__to_simple_names_h
 
-info.mediator_run
+info.mediator_run_once
 tp info.header.to_h
 tp info.skill_set_hash
 

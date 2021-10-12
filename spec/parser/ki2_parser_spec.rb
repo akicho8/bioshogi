@@ -121,7 +121,7 @@ EOT
 
     it "千日手" do
       info = Parser::Ki2Parser.parse(["*引き分け", "まで100手で千日手"].join("\n"))
-      info.mediator_run
+      info.mediator_run_once
       str = info.last_action_info.judgment_message(info.mediator)
       assert { str == "まで0手で千日手" }
     end

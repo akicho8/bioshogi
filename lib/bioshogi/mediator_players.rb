@@ -18,44 +18,59 @@ module Bioshogi
       end
     end
 
+    # player_at(-1) でも後手を取得できる
     def player_at(location)
       players[Location.fetch(location).code]
     end
 
+    # 現在の手番のプレイヤー
+    # 引数の数値だけ手番が入れ替わる
     def current_player(diff = 0)
       players[turn_info.current_location(diff).code]
     end
 
+    # 現在の手番の相手プレイヤー
     def opponent_player
       current_player(1)
     end
 
+    # 次のプレイヤー(つまり相手)
     def next_player
       opponent_player
     end
 
+    # 対局が終わった時点での勝者
     def win_player
       opponent_player
     end
 
+    # 対局が終わった時点での敗者
     def lose_player
       current_player
     end
 
+    # 両方のプレイヤーの駒台をクリア
     def piece_box_clear
       players.collect { |e| e.piece_box.clear }
+    end
+
+    # 両者の(別名を含む)スキル名のリストを合わせてユニークにしたもの
+    # つまりその対局に関連するすべてのタグに相当する
+    def normalized_names_with_alias
+      players.flat_map { |e| e.skill_set.normalized_names_with_alias }.uniq
     end
 
     # def basic_score
     #   evaluator.basic_score
     # end
 
-    # 互いに王手されている局面はありえない
+    # 互いに王手されている局面か？ (ありえない)
     def position_invalid?
       players.all?(&:mate_advantage?)
     end
 
-    concerning :Other do
+    concerning :OtherMethods do
+      # 文字列で両者に駒を配る
       def pieces_set(str)
         Piece.s_to_h2(str).each do |location_key, counts|
           player_at(location_key).piece_box.set(counts)
@@ -72,7 +87,7 @@ module Bioshogi
     end
 
     concerning :PieceCountCheckMethods do
-      # 全体の駒を一つに集める
+      # 両者の駒を一つに集める
       def to_piece_box
         piece_box = PieceBox.new
         piece_box = players.inject(piece_box) { |a, e| a.add(e.piece_box) }

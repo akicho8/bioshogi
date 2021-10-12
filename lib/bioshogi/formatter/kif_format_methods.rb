@@ -9,7 +9,7 @@ module Bioshogi
           no_embed_if_time_blank: false, # 時間がすべて0ならタイムを指定しない
         }.merge(options)
 
-        mediator_run
+        mediator_run_once
 
         out = []
         unless options[:header_skip]

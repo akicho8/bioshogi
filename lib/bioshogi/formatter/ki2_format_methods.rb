@@ -9,7 +9,7 @@ module Bioshogi
           header_skip: false,
         }.merge(options)
 
-        mediator_run
+        mediator_run_once
 
         out = []
         if header.present? && !options[:header_skip]

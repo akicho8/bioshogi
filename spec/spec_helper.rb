@@ -1,5 +1,4 @@
 # $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-# require 'bioshogi'
 
 require "bundler/setup"
 require "bioshogi"
@@ -8,9 +7,11 @@ require "fileutils"
 
 ENV["BIOSHOGI_ENV"] = "test"
 
-log_file = Pathname(__FILE__).dirname.join("../log/test.log").expand_path
+log_file = Pathname("#{__dir__}/../log/test.log")
 FileUtils.makedirs(log_file.dirname)
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log_file))
+
+Pathname.glob("")
 
 # Traceback (most recent call last):
 #       11: from /usr/local/var/rbenv/versions/2.5.0/lib/ruby/gems/2.5.0/gems/simplecov-0.16.1/lib/simplecov/defaults.rb:27:in `block in <top (required)>'
@@ -30,6 +31,8 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log
 #
 # require 'simplecov'
 # SimpleCov.start
+
+Pathname.glob("#{__dir__}/**/*_support.rb") { |e| require e.to_s }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

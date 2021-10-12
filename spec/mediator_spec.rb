@@ -2,6 +2,13 @@ require "spec_helper"
 
 module Bioshogi
   describe Mediator do
+    it "normalized_names_with_alias" do
+      mediator = Mediator.new
+      mediator.player_at(:black).skill_set.attack_infos << AttackInfo["中田功XP"]
+      mediator.player_at(:white).skill_set.defense_infos << DefenseInfo["美濃囲い"]
+      assert { mediator.normalized_names_with_alias == ["中田功XP", "コーヤン流", "美濃囲い"] }
+    end
+
     it "not_enough_piece_box" do
       mediator = Mediator.new
       mediator.placement_from_bod <<~EOT

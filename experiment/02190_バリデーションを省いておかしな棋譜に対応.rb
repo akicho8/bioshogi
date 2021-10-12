@@ -28,6 +28,6 @@ puts info.to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:50:in `block in mediator'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:48:in `tap'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:48:in `mediator'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:29:in `mediator_run'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/anything.rb:29:in `mediator_run_once'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:14:in `<main>'

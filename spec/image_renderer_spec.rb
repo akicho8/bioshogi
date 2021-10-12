@@ -20,16 +20,19 @@ module Bioshogi
       assert { renderer.render }
     end
 
-    it "全配色指定確認" do
+    describe "全配色指定確認" do
       ImageRenderer::ColorThemeInfo.each do |e|
-        assert { target1(color_theme_key: e.key).render }
+        it e.key do
+          assert { target1(color_theme_key: e.key).render }
+        end
       end
     end
 
-    it "全フォント指定確認" do
-      parser = Parser.parse(SFEN1)
+    describe "全フォント指定確認" do
       ImageRenderer::FontThemeInfo.each do |e|
-        assert { target1(font_theme_key: e.key).render }
+        it e.key do
+          assert { target1(font_theme_key: e.key).render }
+        end
       end
     end
   end

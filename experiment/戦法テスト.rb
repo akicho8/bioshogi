@@ -8,7 +8,7 @@ TacticInfo.all_elements.each do |e|
     if file
       str = file.read
       info = Parser.parse(str)
-      info.mediator_run
+      info.mediator_run_once
       info.mediator.players.each { |player|
         keys = player.skill_set.list_of(e).normalize.collect(&:key)
         row[player.location.key] = keys
