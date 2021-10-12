@@ -37,10 +37,10 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention3").display
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention4").display
 # 
-# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
-# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
+parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
 # parser.image_renderer(color_theme_key: "is_color_theme_wars").display
@@ -52,7 +52,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor").display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asagi", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asagi", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_usubudou", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
