@@ -54,7 +54,7 @@ module Bioshogi
         { key: :is_color_theme_cg_wood4,                func: -> e { e.real_wood_theme_core("board_texture4") }, },
         { key: :is_color_theme_metal1,                  func: -> e { e.metal_theme("metal_00005", "metal_00003") }, },
 
-        { key: :is_color_theme_groovy_board_texture01, func: -> e { e.real_wood_theme_core("groovy_board_texture01", "groovy_piece_texture02") }, },
+        { key: :is_color_theme_groovy_board_texture01, func: -> e { e.real_wood_theme_core("groovy_board_texture01", "groovy_piece_texture01") }, },
         { key: :is_color_theme_groovy_board_texture02, func: -> e { e.real_wood_theme_core("groovy_board_texture02", "groovy_piece_texture01") }, },
         { key: :is_color_theme_groovy_board_texture03, func: -> e { e.real_wood_theme_core("groovy_board_texture03", "groovy_piece_texture01") }, },
         { key: :is_color_theme_groovy_board_texture04, func: -> e { e.real_wood_theme_core("groovy_board_texture04", "groovy_piece_texture01") }, },
