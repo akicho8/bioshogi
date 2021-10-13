@@ -54,6 +54,22 @@ module Bioshogi
         { key: :is_color_theme_cg_wood4,                func: -> e { e.real_wood_theme_core("board_texture4") }, },
         { key: :is_color_theme_metal1,                  func: -> e { e.metal_theme("metal_00005", "metal_00003") }, },
 
+        { key: :is_color_theme_groovy_board_texture01, func: -> e { e.real_wood_theme_core("groovy_board_texture01", "groovy_piece_texture02") }, },
+        { key: :is_color_theme_groovy_board_texture02, func: -> e { e.real_wood_theme_core("groovy_board_texture02", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture03, func: -> e { e.real_wood_theme_core("groovy_board_texture03", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture04, func: -> e { e.real_wood_theme_core("groovy_board_texture04", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture05, func: -> e { e.real_wood_theme_core("groovy_board_texture05", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture06, func: -> e { e.real_wood_theme_core("groovy_board_texture06", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture07, func: -> e { e.real_wood_theme_core("groovy_board_texture07", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture08, func: -> e { e.real_wood_theme_core("groovy_board_texture08", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture09, func: -> e { e.real_wood_theme_core("groovy_board_texture09", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture10, func: -> e { e.real_wood_theme_core("groovy_board_texture10", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture11, func: -> e { e.real_wood_theme_core("groovy_board_texture11", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture12, func: -> e { e.real_wood_theme_core("groovy_board_texture12", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture13, func: -> e { e.real_wood_theme_core("groovy_board_texture13", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture14, func: -> e { e.real_wood_theme_core("groovy_board_texture14", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture15, func: -> e { e.real_wood_theme_core("groovy_board_texture15", "groovy_piece_texture01") }, },
+
         { key: :is_color_theme_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { key: :is_color_theme_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix.png" }, },
         { key: :is_color_theme_brightness_green,        func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
@@ -213,10 +229,10 @@ module Bioshogi
         }
       end
 
-      def real_wood_theme_core(name)
+      def real_wood_theme_core(fg_key, pt_key = "groovy_piece_texture1")
         is_color_theme_shogi_extend.merge({
-            :fg_file => "#{__dir__}/../assets/images/board/#{name}.png",
-            :pt_file => "#{__dir__}/../assets/images/piece/piece_texture1.png",
+            :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
+            :pt_file => "#{__dir__}/../assets/images/piece/#{pt_key}.png",
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
             # :canvas_bg_color        => "#fff5ca",
             # :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
@@ -232,7 +248,7 @@ module Bioshogi
         is_color_theme_shogi_extend.merge({
             :bg_file => "#{__dir__}/../assets/images/background/#{bg_key}.png",
             :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
-            :pt_file => "#{__dir__}/../assets/images/piece/piece_texture1.png",
+            :pt_file => "#{__dir__}/../assets/images/piece/groovy_piece_texture1.png",
          })
       end
 
