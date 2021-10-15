@@ -4,19 +4,21 @@ module Bioshogi
       included do
         cattr_accessor :default_params do
           {
-            # required
+            # 必須
             :width  => 1200, # 画像横幅
             :height => 630,  # 画像縦幅
 
-            # 将棋盤の比率は先に 0.96 を適当に決めてそこから横幅の比率を出している
-            # 0.95 * (33.3 / 36.4) = 0.8690934065934065
+            # 将棋盤の比率
+            # 実際の比率は 横:33.3 縦:36.4
+            # 高さ最大を1.0として隙間を考慮して 0.95 と仮に決めると
+            # 0.95 * (33.3 / 36.4) で横幅は 0.8690934065934065 になる
             :aspect_ratio_w => 0.8690934065934065, # 縦横幅の小さい方に対する盤の横幅の割合(横長の場合縦比率より小さめにする)
             :aspect_ratio_h => 0.95,               # 縦横幅の小さい方に対する盤の縦幅の割合(横長の場合1.0にすると縦の隙間がなくなる)
 
             # 文字の大きさの割合
             # ※割合はすべてセルの大きさを1.0とする
             :soldier_font_scale => 0.85, # 盤上駒
-            :piece_scale_map => {},
+            :piece_scale_map    => {},
 
             # 駒(文字)の位置調整
             :piece_char_adjust => {
@@ -24,32 +26,32 @@ module Bioshogi
               :white => [0.0,    0.01],
             },
             # 盤
-            :canvas_bg_color          => "hsla(0,0%,100%,1.0)",        # 部屋の色(必須)
-            :piece_font_color         => "hsla(0,0%,0%,0.8)",          # 駒の色(必須)
+            :canvas_bg_color          => "hsla(0,0%,100%,1.0)",       # 部屋の色(必須)
+            :piece_font_color         => "hsla(0,0%,0%,0.8)",         # 駒の色(必須)
             :star_size                => 0.03,                        # 星のサイズ(割合)
             :lattice_stroke_width     => 1,                           # 格子の線の太さ
             :inner_frame_stroke_width => 2,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
             :inner_frame_fill_color   => nil,                         # 基本透明とする(基本指定なしでよい)
             :dimension_w              => Dimension::Xplace.dimension, # 横のセル数
             :dimension_h              => Dimension::Yplace.dimension, # 縦のセル数
-            :fg_file       => nil,                         # 盤テクスチャ
+            :fg_file                  => nil,                         # 盤テクスチャ
 
             # optional
-            :last_soldier_font_color    => nil,                         # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
-            :stand_piece_color          => nil,                         # *持駒の色(nilなら piece_font_color を代用)
-            :inner_frame_lattice_color  => "hsla(0,0%,0%,0.6)",           # *格子の色(nilなら piece_font_color を代用)
-            :star_fill_color            => nil,                         # *星の色(nilなら inner_frame_lattice_color を代用)
-            :inner_frame_stroke_color   => "hsla(0,0%,0%,0.6)",           # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
-            :promoted_font_color        => "hsla(0,100%, 50%,0.8)",         # *成駒の色(nilなら piece_font_color を代用)
+            :last_soldier_font_color    => nil,                     # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
+            :stand_piece_color          => nil,                     # *持駒の色(nilなら piece_font_color を代用)
+            :inner_frame_lattice_color  => "hsla(0,0%,0%,0.6)",     # *格子の色(nilなら piece_font_color を代用)
+            :star_fill_color            => nil,                     # *星の色(nilなら inner_frame_lattice_color を代用)
+            :inner_frame_stroke_color   => "hsla(0,0%,0%,0.6)",     # *格子の外枠色(nilなら piece_font_color を代用) これだけで全体イメージが変わる超重要色
+            :promoted_font_color        => "hsla(0,100%, 50%,0.8)", # *成駒の色(nilなら piece_font_color を代用)
 
             :outer_frame_padding        => 0,                           # 盤の余白
             :outer_frame_radius         => 0.05,                        # 盤の角の丸め
             :outer_frame_fill_color     => "transparent",               # 盤の色
-            :outer_frame_stroke_color   => "transparent",
-            :outer_frame_stroke_width   => 0,
+            :outer_frame_stroke_color   => "transparent",               # 外枠の縁取り色(鬼滅盤用)
+            :outer_frame_stroke_width   => 0,                           # 外枠の縁取り幅(鬼滅盤用)
 
             :cell_colors                => nil,                         # セルの色 複数指定可
-            :piece_move_cell_fill_color => "hsla(0,0%,0%,0.05)",          # 移動元と移動先のセルの背景色(nilなら描画しない)
+            :piece_move_cell_fill_color => "hsla(0,0%,0%,0.05)",        # 移動元と移動先のセルの背景色(nilなら描画しない)
             :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
             # font
@@ -67,8 +69,8 @@ module Bioshogi
             :bg_file                  => nil,     # 背景ファイル
             :canvas_pattern_key       => nil,     # 背景パターン
 
-            :color_theme_key          => "is_color_theme_paper_simple",
-            :renderer_override_params          => {},
+            :color_theme_key          => "is_color_theme_paper_simple", # 色テーマ
+            :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
 
             # 連続で生成するか？
             # 昔はリサイズ後の背景をキャッシュしたりしていたが
