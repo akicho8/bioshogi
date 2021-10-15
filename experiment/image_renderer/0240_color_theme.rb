@@ -30,7 +30,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_real_wood1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_real_wood2").display
 # parser.image_renderer(color_theme_key: "is_color_theme_real_wood3").display
-# 
+#
 # parser.image_renderer(color_theme_key: "is_color_theme_cg_wood1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_cg_wood2").display
 # parser.image_renderer(color_theme_key: "is_color_theme_cg_wood3").display
@@ -41,26 +41,42 @@ parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture03").
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture04").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture05").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture06").display
+
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture07").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture08").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture09").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture10").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture11").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture12").display
+
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture13").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture14").display
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture15").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture16").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture17").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture18").display
+
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture19").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture20").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture21").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture22").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture23").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture24").display
+
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture13").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture14").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture15").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention2").display
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention3").display
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention4").display
-# 
+#
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention2").display
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention3").display
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention4").display
-# 
+#
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
