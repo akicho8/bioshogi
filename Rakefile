@@ -44,4 +44,9 @@ task "test:kifu" do
   end
 end
 
-
+desc "デモ生成"
+task "demo" do
+  Dir.chdir("#{__dir__}/experiment/image_renderer") do
+    system "ruby 0100_demo.rb"
+  end
+end

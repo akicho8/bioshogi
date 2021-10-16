@@ -12,8 +12,8 @@ module Bioshogi
             :stand_piece_font_bold       => false,             # 持駒を太くする？
 
             # 持駒数
-            :piece_count_bg_color        => "rgba(255,255,255,0.7)", # 駒数の背景
-            :piece_count_font_color      => "rgba(  0,  0,  0,0.9)", # *駒数の色(nilなら piece_font_color を代用)
+            :piece_count_bg_color        => "hsla(0,0%,100%,0.7)", # 駒数の背景
+            :piece_count_font_color      => "rgba(0,0%,  0%,0.9)", # *駒数の色(nilなら piece_font_color を代用)
             :piece_count_font_scale      => 0.6,               # 持駒数の大きさ
             :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
             :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ

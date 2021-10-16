@@ -89,7 +89,7 @@ bg_file = nil
 
 # parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
 
-# parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend").display
+parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_paper_simple", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_paper_shape", renderer_override_params: {bg_file: bg_file}).display
