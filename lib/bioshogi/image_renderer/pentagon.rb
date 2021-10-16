@@ -6,12 +6,12 @@ module Bioshogi
       included do
         default_params.update({
             # 駒用
-            :piece_pentagon_draw          => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
-            :pt_file       => nil,               # ☗のテクスチャ(あれば piece_pentagon_fill_color より優先)
-            :piece_pentagon_fill_color    => "transparent",     # ☗の色 ()
-            :piece_pentagon_stroke_color  => "transparent",     # ☗の縁取り色
-            :piece_pentagon_stroke_width  => 1,                 # ☗の縁取り幅
-            :piece_pentagon_scale         => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+            :piece_pentagon_draw         => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
+            :pt_file                     => nil,               # ☗のテクスチャ(あれば piece_pentagon_fill_color より優先)
+            :piece_pentagon_fill_color   => "transparent",     # ☗の色 ()
+            :piece_pentagon_stroke_color => "transparent",     # ☗の縁取り色
+            :piece_pentagon_stroke_width => 1,                 # ☗の縁取り幅
+            :piece_pentagon_scale        => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
             # :piece_pentagon_scale_map     => {
             #   :king    => 0.85,
@@ -85,7 +85,7 @@ module Bioshogi
               g.stroke_width(w)
             end
             if @s_pattern_layer
-              g.fill_pattern = @s_pattern_layer
+              g.fill_pattern = @s_pattern_layer # テクスチャが足りない場合は繰り返し敷き詰められる。だいたい64pxあればよい。余裕を見て 128x128 で作ろう
             end
             g.fill(params[:piece_pentagon_fill_color])
             g.polygon(*pentagon_real_points(v: v, location: location, scale: piece_pentagon_scale(piece)))
@@ -118,9 +118,10 @@ module Bioshogi
       def face_pentagon_draw(v:, location:)
         # shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
         draw_context(@d_piece_layer) do |g|
-          if face_pentagon_stroke_width
+          w = face_pentagon_stroke_width
+          if w && w.nonzero?
             g.stroke(face_pentagon_stroke_color)
-            g.stroke_width(face_pentagon_stroke_width)
+            g.stroke_width(w)
           end
           g.fill(face_pentagon_color(location))
           g.polygon(*pentagon_real_points(v: v, location: location, scale: face_pentagon_scale))

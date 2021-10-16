@@ -3,8 +3,8 @@ module Bioshogi
     class CanvasPatternInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :pattern_checker_light, command: :checker1, default_params: { base_color: "#fff", accent_color: "rgba(  0,  0,  0, 0.04)", }, },
-        { key: :pattern_checker_dark,  command: :checker1, default_params: { base_color: "#333", accent_color: "rgba(255,255,255, 0.04)", }, },
+        { key: :pattern_checker_grey_light, command: :checker1, default_params: { base_color: "#fff", accent_color: "rgba(  0,  0,  0, 0.04)", }, },
+        { key: :pattern_checker_grey_dark,  command: :checker1, default_params: { base_color: "#333", accent_color: "rgba(255,255,255, 0.04)", }, },
       ]
 
       def execute(params = {})

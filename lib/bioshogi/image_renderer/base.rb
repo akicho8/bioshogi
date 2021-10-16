@@ -72,10 +72,10 @@ module Bioshogi
             :color_theme_key          => "is_color_theme_paper_simple", # 色テーマ
             :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
 
-            # 連続で生成するか？
-            # 昔はリサイズ後の背景をキャッシュしたりしていたが
-            # レイヤー化してそもそも背景を破壊しないので必要になくなった
-            :continuous_render         => false,
+            # # 連続で生成するか？
+            # # 昔はリサイズ後の背景をキャッシュしたりしていたが
+            # # レイヤー化してそもそも背景を破壊しないので必要になくなった
+            # :continuous_render         => false,
           }
         end
 
@@ -130,11 +130,11 @@ module Bioshogi
           stand_draw              # to d_piece_layer, d_piece_count_layer
 
           logger.info "composite process"
-          current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-          current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-          current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-          current = current.composite(with_shadow(@d_piece_layer), 0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
-          current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp)                                                                        # 背景 + 物'
+          current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(with_shadow(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp) # 背景 + 物'
 
           current = condition_then_flip(current)
           current = condition_then_negate(current)
@@ -152,13 +152,14 @@ module Bioshogi
           # layer = Magick::Image.read("logo:").first
           layer = Magick::Image.read(Pathname("#{__dir__}/../assets/images/matrix_1024x768.png")).first
           layer = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
-          layer = CanvasPattern.fetch(:pattern_checker_dark).func(self).copy
+          layer = CanvasPattern.fetch(:pattern_checker_grey_dark).func(self).copy
           layer.resize!(*image_rect) # 200 ms
           # layer.blur_image(20.0, 10.0)
           # layer = layer.emboss
           # layer = Magick::Image.read("netscape:").first.resize(*image_rect)
           layer = condition_then_flip(layer) # 全体を反転するので背景だけ反転しておくことで元に戻る
         when v = params[:canvas_pattern_key]
+          ActiveSupport::Deprecation.warn("激重なため使用禁止")
           layer = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
           layer = Magick::Image.read(v).first
@@ -265,6 +266,11 @@ module Bioshogi
 
       def cell_h
         @cell_h ||= (vmin * params[:aspect_ratio_h]) / lattice.h
+      end
+
+      # セルサイズの短い方
+      def cell_vmin
+        @cell_vmin ||= [cell_w, cell_h].min
       end
 
       def vmin

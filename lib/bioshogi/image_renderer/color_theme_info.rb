@@ -18,7 +18,7 @@ module Bioshogi
         { key: :is_color_theme_style_editor_kurobeni,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :is_color_theme_mario_sky,               func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
         { key: :is_color_theme_club24,                  func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(84,62%,84%)",   outer_frame_fill_color: "hsl(40,66%,60%)")  }, },
-        { key: :is_color_theme_wars,                    func: -> e { e.is_color_theme_shogi_extend.merge(:fg_file => "#{__dir__}/../assets/images/board/board_texture4.png", bg_file: "#{__dir__}/../assets/images/background/the_scream.png", outer_frame_fill_color: "hsl(45,95%,67%)", :pt_file => "#{__dir__}/../assets/images/piece/piece_texture090.png") }, },
+        { key: :is_color_theme_piyo,                    func: -> e { e.is_color_theme_shogi_extend.merge(e.piyo_params) }, },
 
         { key: :is_color_theme_gradiention1,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention1.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_gradiention2,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gradiention2.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
@@ -52,32 +52,34 @@ module Bioshogi
         { key: :is_color_theme_cg_wood2,                func: -> e { e.real_wood_theme_core("board_texture2") }, },
         { key: :is_color_theme_cg_wood3,                func: -> e { e.real_wood_theme_core("board_texture3") }, },
         { key: :is_color_theme_cg_wood4,                func: -> e { e.real_wood_theme_core("board_texture4") }, },
-        { key: :is_color_theme_metal1,                  func: -> e { e.metal_theme("metal_00005", "metal_00003") }, },
 
-        { key: :is_color_theme_groovy_board_texture01, func: -> e { e.real_wood_theme_core("groovy_board_texture01", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture02, func: -> e { e.real_wood_theme_core("groovy_board_texture02", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture03, func: -> e { e.real_wood_theme_core("groovy_board_texture03", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture04, func: -> e { e.real_wood_theme_core("groovy_board_texture04", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture05, func: -> e { e.real_wood_theme_core("groovy_board_texture05", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture06, func: -> e { e.real_wood_theme_core("groovy_board_texture06", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture07, func: -> e { e.real_wood_theme_core("groovy_board_texture07", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture08, func: -> e { e.real_wood_theme_core("groovy_board_texture08", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture09, func: -> e { e.real_wood_theme_core("groovy_board_texture09", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture10, func: -> e { e.real_wood_theme_core("groovy_board_texture10", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture11, func: -> e { e.real_wood_theme_core("groovy_board_texture11", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture12, func: -> e { e.real_wood_theme_core("groovy_board_texture12", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture13, func: -> e { e.real_wood_theme_core("groovy_board_texture13", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture14, func: -> e { e.real_wood_theme_core("groovy_board_texture14", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture15, func: -> e { e.real_wood_theme_core("groovy_board_texture15", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture16, func: -> e { e.real_wood_theme_core("groovy_board_texture16", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture17, func: -> e { e.real_wood_theme_core("groovy_board_texture17", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture18, func: -> e { e.real_wood_theme_core("groovy_board_texture18", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture19, func: -> e { e.real_wood_theme_core("groovy_board_texture19", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture20, func: -> e { e.real_wood_theme_core("groovy_board_texture20", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture21, func: -> e { e.real_wood_theme_core("groovy_board_texture21", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture22, func: -> e { e.real_wood_theme_core("groovy_board_texture22", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture23, func: -> e { e.real_wood_theme_core("groovy_board_texture23", "groovy_piece_texture01") }, },
-        { key: :is_color_theme_groovy_board_texture24, func: -> e { e.real_wood_theme_core("groovy_board_texture24", "groovy_piece_texture01") }, },
+        { key: :is_color_theme_groovy_board_texture01, func: -> e { e.real_wood_theme_core("groovy_board_texture01", "groovy_piece_texture_dark", "groovy_background_texture_dark") }, },
+        { key: :is_color_theme_groovy_board_texture02, func: -> e { e.real_wood_theme_core("groovy_board_texture02", "groovy_piece_texture_dark", "groovy_background_texture_dark") }, },
+        { key: :is_color_theme_groovy_board_texture03, func: -> e { e.real_wood_theme_core("groovy_board_texture03", "groovy_piece_texture_dark", "groovy_background_texture_dark") }, },
+        { key: :is_color_theme_groovy_board_texture04, func: -> e { e.real_wood_theme_core("groovy_board_texture04", "groovy_piece_texture_light", "groovy_background_texture_light") }, },
+        { key: :is_color_theme_groovy_board_texture05, func: -> e { e.real_wood_theme_core("groovy_board_texture05", "groovy_piece_texture_light", "groovy_background_texture_light") }, },
+        { key: :is_color_theme_groovy_board_texture06, func: -> e { e.real_wood_theme_core("groovy_board_texture06", "groovy_piece_texture_light", "groovy_background_texture_light") }, },
+        { key: :is_color_theme_wars_red,               func: -> e { e.real_wood_theme_core("groovy_board_texture_wars", "groovy_piece_texture_wars",  "checker_red_dark").merge(e.swars_like) }, },
+        { key: :is_color_theme_wars_blue,              func: -> e { e.real_wood_theme_core("groovy_board_texture_wars", "groovy_piece_texture_wars", "checker_blue_dark").merge(e.swars_like) }, },
+
+        # { key: :is_color_theme_groovy_board_texture07, func: -> e { e.real_wood_theme_core("groovy_board_texture07", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture08, func: -> e { e.real_wood_theme_core("groovy_board_texture08", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture09, func: -> e { e.real_wood_theme_core("groovy_board_texture09", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture10, func: -> e { e.real_wood_theme_core("groovy_board_texture10", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture11, func: -> e { e.real_wood_theme_core("groovy_board_texture11", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture12, func: -> e { e.real_wood_theme_core("groovy_board_texture12", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture13, func: -> e { e.real_wood_theme_core("groovy_board_texture13", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture14, func: -> e { e.real_wood_theme_core("groovy_board_texture14", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture15, func: -> e { e.real_wood_theme_core("groovy_board_texture15", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture16, func: -> e { e.real_wood_theme_core("groovy_board_texture16", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture17, func: -> e { e.real_wood_theme_core("groovy_board_texture17", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture18, func: -> e { e.real_wood_theme_core("groovy_board_texture18", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture19, func: -> e { e.real_wood_theme_core("groovy_board_texture19", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture20, func: -> e { e.real_wood_theme_core("groovy_board_texture20", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture21, func: -> e { e.real_wood_theme_core("groovy_board_texture21", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture22, func: -> e { e.real_wood_theme_core("groovy_board_texture22", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture23, func: -> e { e.real_wood_theme_core("groovy_board_texture23", "groovy_piece_texture_dark") }, },
+        # { key: :is_color_theme_groovy_board_texture24, func: -> e { e.real_wood_theme_core("groovy_board_texture24", "groovy_piece_texture_dark") }, },
 
         { key: :is_color_theme_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
         { key: :is_color_theme_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix.png" }, },
@@ -95,7 +97,7 @@ module Bioshogi
           **piece_count_on_shadow_white_on_black(f),
           **outer_frame_padding_enabled,
 
-          # :bg_file => "#{__dir__}/../assets/images/background/checker_dark.png",
+          # :bg_file => "#{__dir__}/../assets/images/background/checker_grey_dark.png",
 
           **{
             **pentagon_enabled,
@@ -143,8 +145,8 @@ module Bioshogi
             :outer_frame_padding => 0.05,
           },
 
-          # :canvas_pattern_key      => :pattern_checker_dark,
-          :bg_file => "#{__dir__}/../assets/images/background/checker_dark.png",
+          # :canvas_pattern_key      => :pattern_checker_grey_dark,
+          :bg_file => "#{__dir__}/../assets/images/background/checker_grey_dark.png",
 
           **{
             **pentagon_enabled,
@@ -204,10 +206,10 @@ module Bioshogi
             :piece_pentagon_stroke_width => nil,
           },
 
-          # :bg_file                       => "#{__dir__}/../assets/images/background/checker_light.png",
+          # :bg_file                       => "#{__dir__}/../assets/images/background/checker_grey_light.png",
           # :bg_file                     => "#{__dir__}/../assets/images/background/matrix_1600x1200.png",
 
-          # :canvas_pattern_key          => :pattern_checker_light,
+          # :canvas_pattern_key          => :pattern_checker_grey_light,
 
           :piece_font_color              => "hsla(0,0%,25%,1.0)",
           :promoted_font_color           => syuiro.html,
@@ -217,6 +219,21 @@ module Bioshogi
 
           # 駒用
           :piece_pentagon_fill_color     => komairo.html,
+          # :piece_pentagon_fill_color     => komairo.dup.tap { |e| e.luminosity = 10 }.html,
+          # :piece_pentagon_fill_color     => komairo.dup.tap { |e| e.luminosity = 10 }.html,
+          # :piece_pentagon_fill_color     => "hsl(52,76%,87%)",
+          # :piece_pentagon_stroke_color   => "hsl(36,78%,50%)",  # ☗の縁取り色
+          # :piece_pentagon_stroke_width   => 3,                  # ☗の縁取り幅
+
+          # **piyo_params,
+          # :canvas_bg_color             => "hsl(35,100% 85%)", # 背景
+          # :outer_frame_fill_color      => "hsl(37,73%,68%)",  # 盤の色
+          # :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
+          # :piece_pentagon_stroke_color => "hsl(36,78%,50%)",  # ☗の縁取り色
+          # :piece_pentagon_stroke_width => 1,                  # ☗の縁取り幅
+          # :piece_pentagon_fill_color   => "hsl(43,100%,87%)",  # ☗の色
+          # :piece_pentagon_stroke_color => "hsl(43,100%,50%)",   # ☗の縁取り色
+          # :piece_pentagon_stroke_width => 0,                   # ☗の縁取り幅
 
           # :piece_pentagon_stroke_color => 0,                  # ☗の縁取り色(nilなら inner_frame_lattice_color を代用)
           # :piece_pentagon_stroke_width => 0,                  # ☗の縁取り幅(nilなら lattice_stroke_width を代用)
@@ -238,33 +255,33 @@ module Bioshogi
         }
       end
 
-      def real_wood_theme_core(fg_key, pt_key = "groovy_piece_texture1")
+      def piyo_params
+        {
+          :canvas_bg_color             => "hsl(35,100% 85%)", # 背景
+          :outer_frame_fill_color      => "hsl(37,73%,68%)",  # 盤の色
+          :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
+          :piece_pentagon_stroke_color => "hsl(36,78%,50%)",  # ☗の縁取り色
+          :piece_pentagon_stroke_width => 3,                  # ☗の縁取り幅
+          :face_pentagon_stroke_width  => 0,                  # ☗の縁取り幅(先後マーク)
+        }
+      end
+
+      def real_wood_theme_core(fg_key, pt_key = "groovy_piece_texture_dark", bg_key = "checker_grey_dark")
         is_color_theme_shogi_extend.merge({
             :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
             :pt_file => "#{__dir__}/../assets/images/piece/#{pt_key}.png",
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
             # :canvas_bg_color        => "#fff5ca",
             # :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
-            :bg_file => "#{__dir__}/../assets/images/background/checker_dark.png",
+            # :bg_file => "#{__dir__}/../assets/images/background/checker_grey_dark.png",
+            :bg_file => "#{__dir__}/../assets/images/background/#{bg_key}.png",
+
+            # :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
 
             # # ここだけ特別に薄い黒の上に黒文字
             # :piece_count_bg_color   => "hsla(0,0%,0%,0.1)",
             # :piece_count_font_color => "hsla(0,0%,0%,0.5)",
           })
-      end
-
-      def metal_theme(bg_key, fg_key)
-        is_color_theme_shogi_extend.merge({
-            :bg_file => "#{__dir__}/../assets/images/background/#{bg_key}.png",
-            :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
-            :pt_file => "#{__dir__}/../assets/images/piece/groovy_piece_texture1.png",
-         })
-      end
-
-      def foobar
-        is_color_theme_shogi_extend.merge({
-
-         })
       end
 
       def pentagon_enabled
@@ -335,12 +352,36 @@ module Bioshogi
         }
       end
 
+      def swars_like
+        {
+          :real_shadow_offset    => 3,
+          :real_shadow_sigma     => 2.0,
+          :real_shadow_opacity   => 0.9,
+
+          :soldier_font_bold     => true,
+          :stand_piece_font_bold => true,
+
+          :piece_pentagon_scale  => 0.9,
+          :soldier_font_scale    => 0.7,
+
+          **swars_hutidori,
+        }
+      end
+
+      def swars_hutidori
+        {
+          :piece_pentagon_stroke_color => "hsl(39,100%,68%)",  # ☗の縁取り色 (駒色とHSを合わせる) 元 [39, 1.00, 0.74]
+          :piece_pentagon_stroke_width => 1,                   # ☗の縁取り幅
+          :face_pentagon_stroke_width  => 0,                   # ☗の縁取り幅(先後マーク)
+        }
+      end
+
       def komairo
-        Color::RGB.new(255, 227, 156)
+        @komairo ||= PaletteInfo.fetch("主用駒色").to_color
       end
 
       def syuiro
-        Color::RGB.new(239, 69, 74)
+        @syuiro ||= PaletteInfo.fetch("主用朱色").to_color
       end
 
       def to_params

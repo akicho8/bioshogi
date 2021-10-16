@@ -16,6 +16,7 @@ module Bioshogi
   require "bioshogi/image_renderer/pentagon"
   require "bioshogi/image_renderer/helper"
 
+  require "bioshogi/image_renderer/palette_info"
   require "bioshogi/image_renderer/color_theme_info"
   require "bioshogi/image_renderer/canvas_pattern_info"
   require "bioshogi/image_renderer/font_theme_info"
