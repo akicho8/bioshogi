@@ -150,7 +150,7 @@ module Bioshogi
 
           **{
             **pentagon_enabled,
-            :piece_pentagon_fill_color   => komairo.adjust_saturation(0).html, # ☗の色(黄色)
+            :piece_pentagon_fill_color   => komairo.html, # ☗の色(黄色)
             :piece_pentagon_stroke_color => "transparent",
             :piece_pentagon_stroke_width => 0,
             # :shadow_pentagon_draw        => true,    # ☗の影を描画するか？
