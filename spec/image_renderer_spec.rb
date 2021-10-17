@@ -15,15 +15,22 @@ module Bioshogi
       assert { renderer.to_png24_binary[1..3] == "PNG" }
     end
 
-    it "color_theme_key" do
-      renderer = target1(color_theme_key: "is_color_theme_groovy_board_texture1")
-      assert { renderer.render }
-    end
+    describe "配色" do
+      it "color_theme_key" do
+        renderer = target1(color_theme_key: "is_color_theme_groovy_board_texture1")
+        assert { renderer.render }
+      end
 
-    describe "全配色指定確認" do
-      ImageRenderer::ColorThemeInfo.each do |e|
-        it e.key do
-          assert { target1(color_theme_key: e.key).render }
+      it "存在しないキーになったときエラーにしない" do
+        renderer = target1(color_theme_key: "(unknown)")
+        assert { renderer.render }
+      end
+
+      describe "全パターン確認" do
+        ImageRenderer::ColorThemeInfo.each do |e|
+          it e.key do
+            assert { target1(color_theme_key: e.key).render }
+          end
         end
       end
     end

@@ -94,12 +94,12 @@ module Bioshogi
         @mediator = mediator
         @params = default_params.merge(params)
 
-        if v = @params[:color_theme_key]
-          @params.update(ColorThemeInfo.fetch(v).to_params)
+        if e = ColorThemeInfo.lookup(@params[:color_theme_key])
+          @params.update(e.to_params)
         end
 
-        if v = @params[:font_theme_key]
-          @params.update(FontThemeInfo.fetch(v).to_params)
+        if e = FontThemeInfo.lookup(@params[:font_theme_key])
+          @params.update(e.to_params)
         end
 
         if v = @params[:renderer_override_params]
