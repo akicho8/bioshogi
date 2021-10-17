@@ -2,8 +2,8 @@ require "../setup"
 require "color"
 
 parser = Parser.parse("position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1")
-bg_file = "../../lib/bioshogi/assets/images/checker_grey_light.png"
-bg_file = "../../lib/bioshogi/assets/images/board/original/pakutexture06210140.jpg"
+# bg_file = "../../lib/bioshogi/assets/images/checker_grey_light.png"
+# bg_file = "../../lib/bioshogi/assets/images/board/original/pakutexture06210140.jpg"
 bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_path.to_s
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil
@@ -22,29 +22,19 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood1", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood3").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
 
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_real_wood3").display
-#
-# parser.image_renderer(color_theme_key: "is_color_theme_cg_wood1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_cg_wood2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_cg_wood3").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture2").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture3").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture4").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture5").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture6").display
 
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture01").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture02").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture03").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture04").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture05").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture06").display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture07").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture08").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture09").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture7").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture8").display
+# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture9").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture10").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture11").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture12").display
@@ -89,12 +79,12 @@ bg_file = nil
 
 # parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
 
-parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend").display
-parser.image_renderer(color_theme_key: "is_color_theme_paper_simple", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend").display
+# parser.image_renderer(color_theme_key: "is_color_theme_paper_simple", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_paper_shape", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor").display
-parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asagi", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_usubudou", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display

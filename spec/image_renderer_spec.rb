@@ -16,7 +16,7 @@ module Bioshogi
     end
 
     it "color_theme_key" do
-      renderer = target1(color_theme_key: "is_color_theme_real_wood1")
+      renderer = target1(color_theme_key: "is_color_theme_groovy_board_texture1")
       assert { renderer.render }
     end
 
