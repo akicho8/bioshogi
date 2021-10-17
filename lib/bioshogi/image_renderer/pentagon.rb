@@ -37,8 +37,8 @@ module Bioshogi
             :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
             :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
             :face_pentagon_color          => {
-              :black                      => "rgba(  0,  0,  0,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
-              :white                      => "rgba(255,255,255,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
+              :black                      => "hsla(0,0%,  0%,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
+              :white                      => "hsla(0,0%,100%,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
             },
 
             # 六角形のスタイル
