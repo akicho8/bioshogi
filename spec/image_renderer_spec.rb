@@ -42,5 +42,13 @@ module Bioshogi
         end
       end
     end
+
+    describe "XboldInfo全パターン確認" do
+      ImageRenderer::XboldInfo.each do |e|
+        it e.key do
+          assert { target1(xbold_key: e.key).render }
+        end
+      end
+    end
   end
 end

@@ -58,7 +58,8 @@ module Bioshogi
             :font_theme_key        => nil,                         # フォントの種類 noto_seif
             :font_regular          => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
             :font_bold             => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
-            :soldier_font_bold     => false,                        # 常に太字を使うか？
+            :soldier_font_bold     => false,                        # 太字を使うか？
+            :xbold_key             => :is_xbold_auto,               # 太字はおまかせ (つまり何もしない。nil でもよい)
 
             # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
 
@@ -99,6 +100,10 @@ module Bioshogi
         end
 
         if e = FontThemeInfo.lookup(@params[:font_theme_key])
+          @params.update(e.to_params)
+        end
+
+        if e = XboldInfo.lookup(@params[:xbold_key])
           @params.update(e.to_params)
         end
 
