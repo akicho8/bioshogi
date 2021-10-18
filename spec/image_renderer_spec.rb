@@ -43,10 +43,10 @@ module Bioshogi
       end
     end
 
-    describe "XboldInfo全パターン確認" do
-      ImageRenderer::XboldInfo.each do |e|
+    describe "PieceFontWeightInfo全パターン確認" do
+      ImageRenderer::PieceFontWeightInfo.each do |e|
         it e.key do
-          assert { target1(xbold_key: e.key).render }
+          assert { target1(piece_font_weight_key: e.key).render }
         end
       end
     end
