@@ -22,11 +22,11 @@ module Bioshogi
               :double                    => [0.8, 0.05],       # 駒数2桁のとき
             },
 
-            :piece_count_bg_scale         => 0,                       # 駒数の背景の大きさ
-            :piece_count_bg_adjust => {                     # 駒数の背景の微調整
-              :black => [0.0, 0.0],
-              :white => [0.0, 0.0],
-            },
+            :piece_count_bg_scale        => 0,              # 駒数の背景の大きさ 0:なし 1.0:セルの半分
+            # :piece_count_bg_adjust => {                     # 駒数の背景の微調整
+            #   :black => [0.0, 0.0],
+            #   :white => [0.0, 0.0],
+            # },
           })
       end
 
@@ -74,6 +74,7 @@ module Bioshogi
         end
       end
 
+      # 駒数
       def piece_count_draw(v:, count:, location:)
         if count >= 2
           w = count <= 9 ? :single : :double
@@ -92,6 +93,7 @@ module Bioshogi
         end
       end
 
+      # 駒数の下の丸
       def piece_count_bg_draw(v:, location:)
         if params[:piece_count_bg_color] && params[:piece_count_bg_scale].nonzero?
           draw_context(@d_piece_count_layer) do |g|
@@ -103,11 +105,11 @@ module Bioshogi
             # g.ellipse(*px(v2), *cell_rect, 0, 360) # x, y, w, h, angle(0 to 360)
 
             # 個数は左上を原点とした枠の中心(CenterGravity)で表示するのでその位置に移動する
-            a = v + V.half                                               # 中心に移動
-            a += V[*params[:piece_count_bg_adjust][location.key]] # 微調整
-            # aを基点として大きさを決める
-            b = a + V.half * params[:piece_count_bg_scale]
-            g.circle(*px(a), *px(b)) # (x1, y1) と (x2, y2) の2点を通る円
+            from = v + V.half                                               # 中心に移動
+            # from += V[*params[:piece_count_bg_adjust][location.key]] # 微調整
+            # fromを基点として大きさを決める
+            to = from + V.half * params[:piece_count_bg_scale]
+            g.circle(*px(from), *px(to)) # (x1, y1) と (x2, y2) の2点を通る円
 
             # roundrectangle でも円風にできるけど原点が左上なので半径の調整が難しい
 

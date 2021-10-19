@@ -338,10 +338,10 @@ module Bioshogi
             :single                    => [0.7, 0.08], # 駒数1桁のとき。[0, 0] なら該当の駒の中央
             :double                    => [0.7, 0.08], # 駒数2桁のとき
           },
-          :piece_count_bg_adjust => {
-            :black => [-0.01, -0.01],
-            :white => [-0.01, -0.01],
-          },
+          # :piece_count_bg_adjust => {
+          #   :black => [-0.01, -0.01],
+          #   :white => [-0.01, -0.01],
+          # },
         }
       end
 
