@@ -9,7 +9,7 @@ end
 
 parser = Parser.parse(SFEN1)
 ImageRenderer::ColorThemeInfo.each do |e|
-  bin = parser.to_png(color_theme_key: e.key, width: 1920, height: 1080, soldier_font_bold: true, stand_piece_font_bold: true)
+  bin = parser.to_png(color_theme_key: e.key, width: 1920, height: 1080)
   output(bin, "color_theme/#{e.key}.png")
 end
 

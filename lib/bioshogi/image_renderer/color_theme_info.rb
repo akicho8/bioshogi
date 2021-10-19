@@ -270,6 +270,9 @@ module Bioshogi
         is_color_theme_shogi_extend.merge({
             :fg_file => "#{__dir__}/../assets/images/board/#{fg_key}.png",
             :pt_file => "#{__dir__}/../assets/images/piece/#{pt_key}.png",
+
+            # :pt_file => Pathname("~/src/shogi-extend/nuxt_side/static/material/piece/0001.png").expand_path,
+
             # :bg_file              => "#{__dir__}/../assets/images/board/pakutexture06210140.png",
             # :canvas_bg_color        => "#fff5ca",
             # :canvas_bg_color        => komairo.adjust_brightness(12).css_rgb,
