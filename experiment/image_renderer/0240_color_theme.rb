@@ -26,11 +26,11 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
 
 parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture3").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture4").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture5").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture6").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture2").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture3").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture4").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture5").display
+parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture6").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture7").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture8").display
@@ -73,8 +73,8 @@ parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1").d
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
-parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
-parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
+# parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
+# parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
 # parser.image_renderer(color_theme_key: "is_color_theme_piyo").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
