@@ -74,7 +74,7 @@ parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1").d
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
 parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
-# parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
+parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
 # parser.image_renderer(color_theme_key: "is_color_theme_piyo").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
