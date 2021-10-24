@@ -10,12 +10,12 @@ module Bioshogi
 
         { key: :is_color_theme_shogi_extend,            func: -> e { e.is_color_theme_shogi_extend.merge(piece_count_bg_color: "hsla(0,0%,0%,0.08)") }, },
         { key: :is_color_theme_style_editor,            func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(100,41%,80%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.24)")  }, },
-        { key: :is_color_theme_style_editor_asahanada,  func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(195,41%,66%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
-        { key: :is_color_theme_style_editor_asagi,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(188,100%,37%)", outer_frame_fill_color: "hsla(0,0%,0%,0.15)") }, },
-        { key: :is_color_theme_style_editor_usubudou,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(289,25%,71%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
-        { key: :is_color_theme_style_editor_koiai,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
-        { key: :is_color_theme_style_editor_kuromidori, func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",    outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
-        { key: :is_color_theme_style_editor_kurobeni,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :is_color_theme_alpha_asahanada,  func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(195,41%,66%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
+        { key: :is_color_theme_alpha_asagi,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(188,100%,37%)", outer_frame_fill_color: "hsla(0,0%,0%,0.15)") }, },
+        { key: :is_color_theme_alpha_usubudou,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(289,25%,71%)",  outer_frame_fill_color: "hsla(0,0%,0%,0.15)")  }, },
+        { key: :is_color_theme_alpha_koiai,      func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(222,68%,19%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :is_color_theme_alpha_kuromidori, func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(96,5%,20%)",    outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
+        { key: :is_color_theme_alpha_kurobeni,   func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(284,12%,18%)",  outer_frame_fill_color: "hsla(0,0%,100%,0.5)") }, },
         { key: :is_color_theme_mario_sky,               func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(227,100%,71%)", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
         { key: :is_color_theme_club24,                  func: -> e { e.is_color_theme_shogi_extend.merge(canvas_bg_color: "hsl(84,62%,84%)",   outer_frame_fill_color: "hsl(40,66%,60%)")  }, },
         { key: :is_color_theme_piyo,                    func: -> e { e.is_color_theme_shogi_extend.merge(e.piyo_params) }, },
@@ -44,6 +44,8 @@ module Bioshogi
         { key: :is_color_theme_splatoon_stripe_red,      func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_red.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_splatoon_stripe_green,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_splatoon_stripe_purple,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_purple.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+
+        { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png", outer_frame_fill_color: "hsla(330,100%,71%,0.7)") }, },
 
         # { key: :is_color_theme_groovy_board_texture1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         # { key: :is_color_theme_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },

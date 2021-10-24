@@ -15,12 +15,14 @@ bg_file = nil
 # 96.-Lake.jpg
 # ).each do |e|
 #   bg_file = Pathname("~/Downloads/#{e}").expand_path.to_s
-#   parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
+#   parser.image_renderer(color_theme_key: "is_color_theme_alpha_asahanada", renderer_override_params: {bg_file: bg_file}).display
 # end
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key).display }
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
+
+parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
@@ -38,14 +40,14 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture10").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture11").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture12").display
-# 
+#
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture13").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture14").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture15").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture16").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture17").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture18").display
-# 
+#
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture19").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture20").display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture21").display
@@ -67,10 +69,10 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention3").display
 # parser.image_renderer(color_theme_key: "is_color_theme_radial_gradiention4").display
 #
-parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
-parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
-parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
-parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
+# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur2").display
+# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur3").display
+# parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
 # parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
@@ -84,12 +86,12 @@ parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 # parser.image_renderer(color_theme_key: "is_color_theme_paper_shape", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor").display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asahanada", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_asagi", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_usubudou", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_koiai", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_kuromidori", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_style_editor_kurobeni", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_asahanada", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_asagi", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_usubudou", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_koiai", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_kuromidori", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_alpha_kurobeni", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_red").display
 # parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_green").display
 # parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_purple").display
