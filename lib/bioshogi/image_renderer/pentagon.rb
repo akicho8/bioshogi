@@ -3,74 +3,76 @@
 module Bioshogi
   class ImageRenderer
     concerning :Pentagon do
-      included do
-        default_params.update({
-            # 駒用
-            :piece_pentagon_draw         => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
-            :pt_file                     => nil,               # ☗のテクスチャ(あれば piece_pentagon_fill_color より優先)
-            :piece_pentagon_fill_color   => "transparent",     # ☗の色 ()
-            :piece_pentagon_stroke_color => "transparent",     # ☗の縁取り色
-            :piece_pentagon_stroke_width => 1,                 # ☗の縁取り幅
-            :piece_pentagon_scale        => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+      class_methods do
+        def default_params
+          super.merge({
+              # 駒用
+              :piece_pentagon_draw         => false,             # 駒の形を描画するか？(trueにしたらpiece_font_scaleを調整すること)
+              :pt_file                     => nil,               # ☗のテクスチャ(あれば piece_pentagon_fill_color より優先)
+              :piece_pentagon_fill_color   => "transparent",     # ☗の色 ()
+              :piece_pentagon_stroke_color => "transparent",     # ☗の縁取り色
+              :piece_pentagon_stroke_width => 1,                 # ☗の縁取り幅
+              :piece_pentagon_scale        => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
-            # :piece_pentagon_scale_map     => {
-            #   :king    => 0.85,
-            #   :rook    => 0.85,
-            #   :bishop  => 0.85,
-            #   :gold    => 0.85,
-            #   :silver  => 0.85,
-            #   :knight  => 0.85,
-            #   :lance   => 0.85,
-            #   :pawn    => 0.50,
-            # },
+              # :piece_pentagon_scale_map     => {
+              #   :king    => 0.85,
+              #   :rook    => 0.85,
+              #   :bishop  => 0.85,
+              #   :gold    => 0.85,
+              #   :silver  => 0.85,
+              #   :knight  => 0.85,
+              #   :lance   => 0.85,
+              #   :pawn    => 0.50,
+              # },
 
-            # # 影
-            # :shadow_pentagon_draw         => false,              # ☗の影を描画するか？
-            # :shadow_pentagon_fill_color   => "hsla(0,0%,0%,0.35)", # ☗の影の色
-            # # :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
-            # # :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
-            # :shadow_pentagon_scale        => nil,               # ☗の影の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-            # :shadow_pentagon_level        => 0.03,              # 影の大きさ。右下方向にずらす度合い
+              # # 影
+              # :shadow_pentagon_draw         => false,              # ☗の影を描画するか？
+              # :shadow_pentagon_fill_color   => "hsla(0,0%,0%,0.35)", # ☗の影の色
+              # # :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
+              # # :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
+              # :shadow_pentagon_scale        => nil,               # ☗の影の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+              # :shadow_pentagon_level        => 0.03,              # 影の大きさ。右下方向にずらす度合い
 
-            # 先後
-            :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
-            :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
-            :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-            :face_pentagon_color          => {
-              :black                      => "hsla(0,0%,  0%,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
-              :white                      => "hsla(0,0%,100%,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
-            },
+              # 先後
+              :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
+              :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
+              :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
+              :face_pentagon_color          => {
+                :black                      => "hsla(0,0%,  0%,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
+                :white                      => "hsla(0,0%,100%,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
+              },
 
-            # 六角形のスタイル
-            #
-            #              |katahaba|   ----------------------
-            #             ／＼                         ↓
-            #            ／  ＼                     kaonaga
-            #          ／     ＼                       ↑
-            #         ／       ＼                      ｜
-            #       ／          ＼      ___________    ｜
-            #      |              |      ↓            ｜
-            #     |                 |   munenaga       ｜
-            #     |                 |    ↑            ｜
-            #    |        ●         |  ----------------------- 高さの中心
-            #   |                    |   ↓
-            #  |                     |  asinaga
-            # |                       |  ↑
-            # +-----------------------+ ---------
-            #             |→hunbari←|
-            #
-            # 1.0 = 半径相当 (横方向ならセル横幅/2で縦方向ならセル高さ/2)
-            # すべて中心からの相対距離
-            # 全体に対して *_scale でスケールする
-            #
-            :pentagon_profile => {
-              :munenaga => 0.7,  # 胸長
-              :katahaba => 0.76, # 肩幅(ふんばり幅と差が少ないと寸胴に見える)
-              :asinaga  => 1.0,  # 臍下
-              :hunbari  => 0.95, # ふんばり幅(1.0にするとデブに見える)
-              :kaonaga  => 1.0,  # 顔の長さ
-            },
-          })
+              # 六角形のスタイル
+              #
+              #              |katahaba|   ----------------------
+              #             ／＼                         ↓
+              #            ／  ＼                     kaonaga
+              #          ／     ＼                       ↑
+              #         ／       ＼                      ｜
+              #       ／          ＼      ___________    ｜
+              #      |              |      ↓            ｜
+              #     |                 |   munenaga       ｜
+              #     |                 |    ↑            ｜
+              #    |        ●         |  ----------------------- 高さの中心
+              #   |                    |   ↓
+              #  |                     |  asinaga
+              # |                       |  ↑
+              # +-----------------------+ ---------
+              #             |→hunbari←|
+              #
+              # 1.0 = 半径相当 (横方向ならセル横幅/2で縦方向ならセル高さ/2)
+              # すべて中心からの相対距離
+              # 全体に対して *_scale でスケールする
+              #
+              :pentagon_profile => {
+                :munenaga => 0.7,  # 胸長
+                :katahaba => 0.76, # 肩幅(ふんばり幅と差が少ないと寸胴に見える)
+                :asinaga  => 1.0,  # 臍下
+                :hunbari  => 0.95, # ふんばり幅(1.0にするとデブに見える)
+                :kaonaga  => 1.0,  # 顔の長さ
+              },
+            })
+        end
       end
 
       def piece_pentagon_draw(v:, location:, piece: nil)

@@ -36,6 +36,7 @@
 #
 module Bioshogi
   class AnimationMp4Builder
+    include Builder
     include AnimationBuilderTimeout
     include FfmpegSupport
 

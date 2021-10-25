@@ -116,6 +116,8 @@ require_relative "bioshogi/formatter/anything"
 
 require_relative "bioshogi/progress_cop"
 require_relative "bioshogi/media"
+require_relative "bioshogi/builder"
+require_relative "bioshogi/kif_builder"
 require_relative "bioshogi/image_renderer"
 require_relative "bioshogi/cover_renderer"
 require_relative "bioshogi/audio_theme_info"

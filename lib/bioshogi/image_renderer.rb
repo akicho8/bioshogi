@@ -6,6 +6,7 @@
 
 module Bioshogi
   class ImageRenderer
+    include Builder
   end
 
   require "bioshogi/image_renderer/base"

@@ -1,11 +1,6 @@
 module Bioshogi
   class ImageRenderer
     concerning :SoldierMethods do
-      included do
-        default_params.update({
-          })
-      end
-
       def soldier_draw_all
         mediator.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
       end

@@ -10,20 +10,20 @@ module Bioshogi
 
     class_methods do
       def default_params
-        {
-          # 全体
-          :page_duration     => 1.0,  # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
-          :end_duration      => 0,    # 終了図をN秒表示する
-          :end_pages         => nil,  # 終了図追加フレーム数。空なら end_duration / page_duration
-          :progress_callback => nil,  # 進捗通知用
-          :cover_text        => nil,  # 表紙(nilなら作らない)
+        super.merge({
+            # 全体
+            :page_duration              => 1.0,  # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
+            :end_duration               => 0,    # 終了図をN秒表示する
+            :end_pages                  => nil,  # 終了図追加フレーム数。空なら end_duration / page_duration
+            :progress_callback          => nil,  # 進捗通知用
+            :cover_text                 => nil,  # 表紙(nilなら作らない)
 
-          # 他
-          :ffmpeg_after_embed_options => nil,      # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
-          :tmpdir_remove              => true,     # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
-          :factory_method_key          => "is_factory_method_ffmpeg", # is_factory_method_rmagick or is_factory_method_ffmpeg
-          :continuous_render          => true,     # canvasを一度作成したらそのコピーを使い回す(昔はそうだった)
-        }
+            # 他
+            :ffmpeg_after_embed_options => nil,                        # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
+            :tmpdir_remove              => true,                       # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
+            :factory_method_key         => "is_factory_method_ffmpeg", # is_factory_method_rmagick or is_factory_method_ffmpeg
+            :continuous_render          => true,                       # canvasを一度作成したらそのコピーを使い回す(昔はそうだった)
+          })
       end
     end
 

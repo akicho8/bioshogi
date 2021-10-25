@@ -1,13 +1,15 @@
 module Bioshogi
   class ImageRenderer
     concerning :LayerMethods do
-      included do
-        default_params.update({
-            # 共通の影
-            :real_shadow_offset  => 3,    # 影のズレ
-            :real_shadow_sigma   => 1.5,  # 影の広がり (0:影なし)
-            :real_shadow_opacity => 0.4,  # 不透明度
-          })
+      class_methods do
+        def default_params
+          super.update({
+              # 共通の影
+              :real_shadow_offset  => 3,    # 影のズレ
+              :real_shadow_sigma   => 1.5,  # 影の広がり (0:影なし)
+              :real_shadow_opacity => 0.4,  # 不透明度
+            })
+        end
       end
 
       # いらない？

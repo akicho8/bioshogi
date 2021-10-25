@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
-require_relative "kif_format_methods"
+# require_relative "kif_format_methods"
 require_relative "ki2_format_methods"
 require_relative "csa_format_methods"
 require_relative "sfen_format_methods"
@@ -15,7 +15,7 @@ module Bioshogi
     concern :Anything do        # FIXME: parser に埋めるんじゃなくて parser を引数にした専用クラスで処理する。AnimationZipBuilder のように。
       MIN_TURN = 14
 
-      include KifFormatMethods
+      # include KifFormatMethods
       include Ki2FormatMethods
       include CsaFormatMethods
       include SfenFormatMethods
@@ -447,7 +447,9 @@ module Bioshogi
         LastActionInfo.fetch(key || :TORYO)
       end
 
-      private
+      def used_seconds_at(index)
+        @move_infos.dig(index, :used_seconds).to_i
+      end
 
       # mb_ljust("あ", 3)               # => "あ "
       # mb_ljust("1", 3)                # => "1  "
@@ -462,12 +464,7 @@ module Bioshogi
 
       def clock_exist?
         return @clock_exist if instance_variable_defined?(:@clock_exist)
-
         @clock_exist = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
-      end
-
-      def used_seconds_at(index)
-        @move_infos.dig(index, :used_seconds).to_i
       end
 
       def error_message_part(comment_mark = "*")
@@ -476,6 +473,10 @@ module Bioshogi
           s = "-" * 76 + "\n"
           [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
         end
+      end
+
+      def to_kif(options = {})
+        KifBuilder.new(self, options).to_kif
       end
     end
   end

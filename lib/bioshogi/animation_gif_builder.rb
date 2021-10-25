@@ -1,5 +1,6 @@
 module Bioshogi
   class AnimationGifBuilder
+    include Builder
     include AnimationBuilderTimeout
     include FfmpegSupport
 

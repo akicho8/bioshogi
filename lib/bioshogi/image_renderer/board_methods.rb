@@ -1,11 +1,6 @@
 module Bioshogi
   class ImageRenderer
     concerning :BoardMethods do
-      included do
-        default_params.update({
-          })
-      end
-
       private
 
       def lattice_layer_create
@@ -53,7 +48,7 @@ module Bioshogi
           g.stroke("transparent")
           g.fill(star_fill_color)
 
-          i = star_step
+          i = params[:star_step]
           (i...lattice.w).step(i) do |x|
             (i...lattice.h).step(i) do |y|
               v = V[x, y]

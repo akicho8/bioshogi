@@ -1,14 +1,15 @@
 module Bioshogi
   class AnimationZipBuilder
+    include Builder
     include AnimationBuilderTimeout
 
-    cattr_accessor :default_params do
-      {
-        :basename_format   => "%04d",
-        :continuous_render => true, # 連続で処理する
-        :progress_callback => nil,  # 進捗通知用
-        :cover_text        => nil,  # 表紙の内容(あれば表紙画像を作る)
-      }
+    def self.default_params
+      super.merge({
+          :basename_format   => "%04d",
+          :continuous_render => true, # 連続で処理する
+          :progress_callback => nil,  # 進捗通知用
+          :cover_text        => nil,  # 表紙の内容(あれば表紙画像を作る)
+        })
     end
 
     attr_reader :params
@@ -18,8 +19,7 @@ module Bioshogi
     def initialize(parser, params = {})
       require "zip"
       @parser = parser
-      @params = default_params.merge(params)
-      @dos_time = Zip::DOSTime.from_time(Time.now)
+      @params = self.class.default_params.merge(params)
     end
 
     def to_binary
@@ -56,9 +56,13 @@ module Bioshogi
 
     def zip_write2(z, filename, bin)
       entry = Zip::Entry.new(z, filename)
-      entry.time = @dos_time
+      entry.time = fixed_entry_time
       z.put_next_entry(entry)
       z.write(bin)
+    end
+
+    def fixed_entry_time
+      @fixed_entry_time ||= Zip::DOSTime.from_time(Time.now)
     end
   end
 end

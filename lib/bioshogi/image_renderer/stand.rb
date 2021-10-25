@@ -1,33 +1,35 @@
 module Bioshogi
   class ImageRenderer
     concerning :Stand do
-      included do
-        default_params.update({
-            # 全体
-            :stand_board_gap             => 0.25,              # 盤と駒台の隙間(1.0 = 1セル幅)
+      class_methods do
+        def default_params
+          super.merge({
+              # 全体
+              :stand_board_gap             => 0.25,              # 盤と駒台の隙間(1.0 = 1セル幅)
 
-            # 持駒
-            :stand_piece_line_height     => 1.0,               # 持駒の高さ(1.0 = 1セル高)
-            :stand_piece_font_scale      => nil,               # 持駒(nil なら soldier_font_scale を代用)
-            :stand_piece_font_bold       => false,             # 持駒を太くする？
+              # 持駒
+              :stand_piece_line_height     => 1.0,               # 持駒の高さ(1.0 = 1セル高)
+              :stand_piece_font_scale      => nil,               # 持駒(nil なら soldier_font_scale を代用)
+              :stand_piece_font_bold       => false,             # 持駒を太くする？
 
-            # 持駒数
-            :piece_count_bg_color        => "hsla(0,0%,100%,0.7)", # 駒数の背景
-            :piece_count_font_color      => "hsla(0,0%,  0%,0.9)", # *駒数の色(nilなら piece_font_color を代用)
-            :piece_count_font_scale      => 0.6,               # 持駒数の大きさ
-            :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
-            :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ
-            :piece_count_position_adjust => {                  # 駒数の位置
-              :single                    => [0.7, 0.05],       # 駒数1桁のとき。[0, 0] なら該当の駒の中央
-              :double                    => [0.8, 0.05],       # 駒数2桁のとき
-            },
+              # 持駒数
+              :piece_count_bg_color        => "hsla(0,0%,100%,0.7)", # 駒数の背景
+              :piece_count_font_color      => "hsla(0,0%,  0%,0.9)", # *駒数の色(nilなら piece_font_color を代用)
+              :piece_count_font_scale      => 0.6,               # 持駒数の大きさ
+              :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
+              :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ
+              :piece_count_position_adjust => {                  # 駒数の位置
+                :single                    => [0.7, 0.05],       # 駒数1桁のとき。[0, 0] なら該当の駒の中央
+                :double                    => [0.8, 0.05],       # 駒数2桁のとき
+              },
 
-            :piece_count_bg_scale        => 0,              # 駒数の背景の大きさ 0:なし 1.0:セルの半分
-            # :piece_count_bg_adjust => {                     # 駒数の背景の微調整
-            #   :black => [0.0, 0.0],
-            #   :white => [0.0, 0.0],
-            # },
-          })
+              :piece_count_bg_scale        => 0,              # 駒数の背景の大きさ 0:なし 1.0:セルの半分
+              # :piece_count_bg_adjust => {                     # 駒数の背景の微調整
+              #   :black => [0.0, 0.0],
+              #   :white => [0.0, 0.0],
+              # },
+            })
+        end
       end
 
       def stand_draw
