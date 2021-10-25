@@ -10,7 +10,7 @@ class App
 
     @error_list = Pathname("error_list.txt")
     if @error_list.exist?
-      @target_files = @error_list.readlines.collect { |e| Pathname(e.strip) }
+      @target_files = @error_list.readlines.reject { |e|e.match?("#") }.collect { |e| Pathname(e.strip) }
     else
       @target_files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
     end
@@ -29,29 +29,33 @@ class App
           csa_str = info.to_csa
           sfen_str = info.to_sfen
 
+          # KIF
           v = Parser.parse(kif_str)
           assert_equal v.to_kif, kif_str
           assert_equal v.to_ki2, ki2_str
           assert_equal v.to_csa, csa_str
           assert_equal v.to_sfen, sfen_str
 
+          # KI2
           v = Parser.parse(ki2_str)
           assert_equal v.to_kif, kif_str
           assert_equal v.to_ki2, ki2_str
           assert_equal v.to_csa, csa_str
           assert_equal v.to_sfen, sfen_str
 
+          # CSA
           v = Parser.parse(csa_str)
           assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
           assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
           assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
           assert_equal v.to_sfen(header_skip: true), info.to_sfen(header_skip: true)
 
+          # SFEN
           v = Parser.parse(sfen_str)
-          assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
-          assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
-          assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
-          assert_equal v.to_sfen(header_skip: true), info.to_sfen(header_skip: true)
+          assert_equal v.to_kif(header_skip: true, footer_skip: true), info.to_kif(header_skip: true, footer_skip: true)
+          assert_equal v.to_ki2(header_skip: true, footer_skip: true), info.to_ki2(header_skip: true, footer_skip: true)
+          # assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+          # assert_equal v.to_sfen(header_skip: true), info.to_sfen(header_skip: true)
         rescue => error
           @result[error.class.name] += 1
 

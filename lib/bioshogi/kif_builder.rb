@@ -50,7 +50,15 @@ module Bioshogi
         s
       }.join
 
-      ################################################################################
+      unless @params[:footer_skip]
+        out << footer_content
+      end
+
+      out.join
+    end
+
+    def footer_content
+      out = []
 
       left_part = nil
       right_part = nil
@@ -82,7 +90,7 @@ module Bioshogi
       out << @parser.judgment_message + "\n"
       out << @parser.error_message_part
 
-      out.join
+      out
     end
   end
 end
