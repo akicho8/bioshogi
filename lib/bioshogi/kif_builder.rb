@@ -28,21 +28,21 @@ module Bioshogi
       end
       out << "手数----指手---------消費時間--\n"
 
-      chess_clock = ChessClock.new
+      @chess_clock = ChessClock.new
 
       if @params[:no_embed_if_time_blank] && !@parser.clock_exist?
-        chess_clock = nil
+        @chess_clock = nil
       end
 
       out << @parser.mediator.hand_logs.collect.with_index.collect { |e, i|
-        if chess_clock
-          chess_clock.add(@parser.used_seconds_at(i))
+        if @chess_clock
+          @chess_clock.add(@parser.used_seconds_at(i))
         end
         n = 0
         if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
           n += @parser.mediator.initial_state_turn_info.display_turn
         end
-        s = "%*d %s %s" % [@params[:number_width], n + i.next, @parser.mb_ljust(e.to_kif(char_type: :formal_sheet), @params[:length]), chess_clock || ""]
+        s = "%*d %s %s" % [@params[:number_width], n + i.next, @parser.mb_ljust(e.to_kif(char_type: :formal_sheet), @params[:length]), @chess_clock || ""]
         s = s.rstrip + "\n"
         if v = e.to_skill_set_kif_comment
           s += v
@@ -75,9 +75,9 @@ module Bioshogi
       if true
         if @parser.last_status_params
           if used_seconds = @parser.last_status_params[:used_seconds]
-            if chess_clock
-              chess_clock.add(used_seconds)
-              right_part = chess_clock.to_s
+            if @chess_clock
+              @chess_clock.add(used_seconds)
+              right_part = @chess_clock.to_s
             end
           end
         end
