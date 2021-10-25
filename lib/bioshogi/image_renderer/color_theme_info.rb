@@ -394,6 +394,20 @@ module Bioshogi
           func.call(self).merge(merge_params || {})
         }.call
       end
+
+      def color_theme_cache_build(options = {})
+        options = {
+          verbose: false,
+        }.merge(options)
+        parser = Parser.parse(SFEN1)
+        file = Pathname("#{__dir__}/../assets/images/color_theme_cache/#{key}.png").expand_path
+        bin = parser.to_png(color_theme_key: key, width: 1920, height: 1080)
+        FileUtils.makedirs(file.dirname)
+        file.write(bin)
+        if options[:verbose]
+          puts file
+        end
+      end
     end
   end
 end

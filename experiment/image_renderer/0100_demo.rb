@@ -7,11 +7,11 @@ def output(bin, name)
   puts file
 end
 
-parser = Parser.parse(SFEN1)
-ImageRenderer::ColorThemeInfo.each do |e|
-  bin = parser.to_png(color_theme_key: e.key, width: 1920, height: 1080)
-  output(bin, "color_theme/#{e.key}.png")
-end
+# parser = Parser.parse(SFEN1)
+# ImageRenderer::ColorThemeInfo.each do |e|
+#   bin = parser.to_png(color_theme_key: e.key, width: 1920, height: 1080)
+#   output(bin, "color_theme/#{e.key}.png")
+# end
 
 ImageRenderer::CanvasPatternInfo.each do |e|
   bin = e.execute.to_blob { |e| e.format = "png" }

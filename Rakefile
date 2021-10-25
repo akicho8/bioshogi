@@ -50,3 +50,11 @@ task "demo" do
     system "ruby 0100_demo.rb"
   end
 end
+
+desc "配所テーマのキャッシュ生成"
+task "color_theme_cache" do
+  require "bioshogi"
+  Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
+    e.color_theme_cache_build(verbose: true)
+  end
+end
