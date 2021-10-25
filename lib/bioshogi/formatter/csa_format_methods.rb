@@ -29,10 +29,11 @@ module Bioshogi
       #
       def to_csa(options = {})
         options = {
-          board_expansion: false, # 平手であっても P1 形式で表示
-          compact: false,         # 指し手の部分だけ一行にする
-          oneline: false,         # 一行にする。改行もなし
-          header_skip: false,
+          :board_expansion => false, # 平手であっても P1 形式で表示
+          :compact         => false, # 指し手の部分だけ一行にする
+          :oneline         => false, # 一行にする。改行もなし
+          :header_skip     => false,
+          :footer_skip     => false,
         }.merge(options)
 
         mediator_run_once
@@ -78,18 +79,20 @@ module Bioshogi
 
         out << list.join(sep) + "\n"
 
-        if e = @last_status_params
-          # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
-          # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
-          # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
-          last_action_info = LastActionInfo.lookup(e[:last_action_key]) || LastActionInfo[:TORYO]
-          s = "%#{last_action_info.csa_key}"
-          if v = e[:used_seconds]
-            s += ",T#{v}"
+        unless options[:footer_skip]
+          if e = @last_status_params
+            # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
+            # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
+            # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
+            last_action_info = LastActionInfo.lookup(e[:last_action_key]) || LastActionInfo[:TORYO]
+            s = "%#{last_action_info.csa_key}"
+            if v = e[:used_seconds]
+              s += ",T#{v}"
+            end
+            out << s
+          else
+            out << "%TORYO"
           end
-          out << s
-        else
-          out << "%TORYO"
         end
 
         if @error_message

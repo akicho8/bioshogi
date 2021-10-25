@@ -7,6 +7,7 @@ module Bioshogi
           fixed_width: nil,
           same_suffix: "　",
           header_skip: false,
+          footer_skip: false,
         }.merge(options)
 
         mediator_run_once
@@ -44,8 +45,10 @@ module Bioshogi
           out << list2.collect { |e| e.join(" ").strip + "\n" }.join
         end
 
-        out << judgment_message + "\n"
-        out << error_message_part
+        unless options[:footer_skip]
+          out << judgment_message + "\n"
+          out << error_message_part
+        end
 
         out.join
       end
