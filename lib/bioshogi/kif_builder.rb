@@ -42,7 +42,9 @@ module Bioshogi
         if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
           n += @parser.mediator.initial_state_turn_info.display_turn
         end
-        s = "%*d %s %s" % [@params[:number_width], n + i.next, @parser.mb_ljust(e.to_kif(char_type: :formal_sheet), @params[:length]), @chess_clock || ""]
+        s = e.to_kif(char_type: :formal_sheet)
+        s = @parser.mb_ljust(s, @params[:length])
+        s = "%*d %s %s" % [@params[:number_width], n + i.next, s, @chess_clock || ""]
         s = s.rstrip + "\n"
         if v = e.to_skill_set_kif_comment
           s += v
