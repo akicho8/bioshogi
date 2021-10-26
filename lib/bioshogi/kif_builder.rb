@@ -34,7 +34,19 @@ module Bioshogi
         @chess_clock = nil
       end
 
-      out << @parser.mediator.hand_logs.collect.with_index { |e, i|
+      out << hand_log_body
+
+      unless @params[:footer_skip]
+        out << footer_content
+      end
+
+      out.join
+    end
+
+    private
+
+    def hand_log_body
+      @parser.mediator.hand_logs.collect.with_index { |e, i|
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
         end
@@ -51,12 +63,6 @@ module Bioshogi
         end
         s
       }.join
-
-      unless @params[:footer_skip]
-        out << footer_content
-      end
-
-      out.join
     end
 
     def footer_content

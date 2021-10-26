@@ -6,11 +6,11 @@ module Bioshogi
 
     def self.default_params
       super.merge({
-          :column_count        => 10,
-          :fixed_width => nil,
-          :same_suffix => "　",
-          :header_skip => false,
-          :footer_skip => false,
+          :column_count => 10,        # 最大N列
+          :fixed_width  => nil,       # 指定すると1つの指し手の幅になる。nilなら自動的に揃える
+          :same_suffix  => "　",
+          :header_skip  => false,
+          :footer_skip  => false,
         })
     end
 
@@ -28,9 +28,22 @@ module Bioshogi
         out << "\n"
       end
 
+      out << hand_log_body
+
+      unless @params[:footer_skip]
+        out << @parser.judgment_message + "\n"
+        out << @parser.error_message_part
+      end
+
+      out.join
+    end
+
+    private
+
+    def hand_log_body
       if @params[:fixed_width]
         # 固定幅で整列(値が小さいと揃わない場合がある)
-        out << @parser.mediator.hand_logs.group_by.with_index {|_, i| i / @params[:column_count] }.values.collect { |v|
+        @parser.mediator.hand_logs.group_by.with_index {|_, i| i / @params[:column_count] }.values.collect { |v|
           v.collect { |e|
             s = e.to_ki2(with_location: true, same_suffix: @params[:same_suffix])
             @parser.mb_ljust(s, @params[:fixed_width])
@@ -52,15 +65,8 @@ module Bioshogi
             @parser.mb_ljust(e.to_s, column_widths[i])
           end
         end
-        out << list2.collect { |e| e.join(" ").strip + "\n" }.join
+        list2.collect { |e| e.join(" ").strip + "\n" }.join
       end
-
-      unless @params[:footer_skip]
-        out << @parser.judgment_message + "\n"
-        out << @parser.error_message_part
-      end
-
-      out.join
     end
   end
 end
