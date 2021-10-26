@@ -34,7 +34,7 @@ module Bioshogi
         @chess_clock = nil
       end
 
-      out << @parser.mediator.hand_logs.collect.with_index.collect { |e, i|
+      out << @parser.mediator.hand_logs.collect.with_index { |e, i|
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
         end
