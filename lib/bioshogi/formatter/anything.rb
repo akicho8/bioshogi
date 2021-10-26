@@ -2,7 +2,7 @@
 
 # require_relative "kif_format_methods"
 # require_relative "ki2_format_methods"
-require_relative "csa_format_methods"
+# require_relative "csa_format_methods"
 require_relative "sfen_format_methods"
 require_relative "bod_format_methods"
 require_relative "binary_format_methods"
@@ -17,7 +17,7 @@ module Bioshogi
 
       # include KifFormatMethods
       # include Ki2FormatMethods
-      include CsaFormatMethods
+      # include CsaFormatMethods
       include SfenFormatMethods
       include BodFormatMethods
       include BinaryFormatMethods
@@ -467,6 +467,10 @@ module Bioshogi
         @clock_exist = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
       end
 
+      def clock_nothing?
+        !clock_exist?
+      end
+
       def error_message_part(comment_mark = "*")
         if @error_message
           v = @error_message.strip + "\n"
@@ -481,6 +485,10 @@ module Bioshogi
 
       def to_ki2(options = {})
         Ki2Builder.new(self, options).to_ki2
+      end
+
+      def to_csa(options = {})
+        CsaBuilder.new(self, options).to_csa
       end
     end
   end

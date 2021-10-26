@@ -28,10 +28,10 @@ module Bioshogi
       end
       out << "手数----指手---------消費時間--\n"
 
-      @chess_clock = ChessClock.new
-
-      if @params[:no_embed_if_time_blank] && !@parser.clock_exist?
+      if @params[:no_embed_if_time_blank] && @parser.clock_nothing?
         @chess_clock = nil
+      else
+        @chess_clock = ChessClock.new
       end
 
       out << hand_log_body
