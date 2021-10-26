@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 # require_relative "kif_format_methods"
-require_relative "ki2_format_methods"
+# require_relative "ki2_format_methods"
 require_relative "csa_format_methods"
 require_relative "sfen_format_methods"
 require_relative "bod_format_methods"
@@ -16,7 +16,7 @@ module Bioshogi
       MIN_TURN = 14
 
       # include KifFormatMethods
-      include Ki2FormatMethods
+      # include Ki2FormatMethods
       include CsaFormatMethods
       include SfenFormatMethods
       include BodFormatMethods
@@ -477,6 +477,10 @@ module Bioshogi
 
       def to_kif(options = {})
         KifBuilder.new(self, options).to_kif
+      end
+
+      def to_ki2(options = {})
+        Ki2Builder.new(self, options).to_ki2
       end
     end
   end
