@@ -384,9 +384,16 @@ module Bioshogi
       ].join
     end
 
-    # def legal_hand?(mediator)
-    #   true
-    # end
+    def to_akf(options = {})
+      {
+        :type  => "drop",
+        :to    => soldier.place.to_human_h,
+        :piece => soldier.piece.key,
+        :sfen  => to_sfen,
+        :kif   => to_kif,
+        :csa   => to_csa,
+      }
+    end
   end
 
   class MoveHand
@@ -416,8 +423,17 @@ module Bioshogi
       end
     end
 
+    # 成ったか？
     def promote_trigger?
       !origin_soldier.promoted && soldier.promoted
+    end
+
+    # 成れる状態だった？
+    def promotable?
+      if origin_soldier.place.promotable?(soldier.location) || # 移動元が相手の相手陣地 or
+        soldier.place.promotable?(soldier.location)            # 移動元が相手の相手陣地
+        soldier.piece.promotable?                              # 成駒になれる？
+      end
     end
 
     def to_kif(options = {})
@@ -449,6 +465,41 @@ module Bioshogi
         soldier.place.to_sfen,
         promote_trigger? ? "+" : nil,
       ].join
+    end
+
+    # if (this.type === "move") {
+    #   v = this.from.yomiage_name
+    # } else if (this.type === "promotable") {
+    #   v = this.from.piece.piece_yomiage.prefix_name + "、" + (this.to.promoted ? "なりっ！" : "ならずっ！")
+    # } else if (this.type === "put") {
+    #   v = this.to.piece.piece_yomiage.prefix_name + "、" + "うつ！"
+    # } else {
+    #   throw new Error("must not happen")
+    # }
+
+    def type
+      if promotable?
+        if promote_trigger?
+          "promoted"
+        else
+          "no_promoted"
+        end
+      else
+        "move"
+      end
+    end
+
+    def to_akf(options = {})
+      {
+        :type     => type,
+        :piece    => origin_soldier.piece.key,
+        :promoted => origin_soldier.promoted,
+        :from     => origin_soldier.place.to_human_h,
+        :to       => soldier.place.to_human_h,
+        :sfen     => to_sfen,
+        :kif      => to_kif,
+        :csa      => to_csa,
+      }
     end
 
     # def legal_move2?(mediator)

@@ -66,5 +66,12 @@ module Bioshogi
     def yomiage_format_methods(options = {})
       YomiageFormatMethods.new(self, options)
     end
+
+    def to_akf(options = {})
+      # HandLogAkfFormatter.new(self, options).to_h
+      {
+        **hand.to_akf,
+      }
+    end
   end
 end

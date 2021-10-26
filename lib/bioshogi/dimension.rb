@@ -196,6 +196,11 @@ module Bioshogi
       def to_sfen
         (self.class.units.size - @value).to_s
       end
+
+      # 人間向けの数字で 68 なら 6
+      def to_human_int
+        self.class.units.size - @value
+      end
     end
 
     class Yplace < Base
@@ -221,6 +226,11 @@ module Bioshogi
 
       def to_sfen
         ("a".ord + value).chr
+      end
+
+      # 人間向けの数字で 68 なら 8
+      def to_human_int
+        @value + 1
       end
     end
   end

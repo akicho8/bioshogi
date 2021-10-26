@@ -76,10 +76,6 @@ module Bioshogi
       "#<#{self.class.name} #{name}>"
     end
 
-    def to_xy
-      [@x.value, @y.value]
-    end
-
     def flip
       self.class.fetch([@x.flip, @y.flip])
     end
@@ -122,6 +118,20 @@ module Bioshogi
 
     def to_sfen
       to_a.collect(&:to_sfen).join
+    end
+
+    def to_xy
+      [@x.value, @y.value]
+    end
+
+    # "６八銀" なら [6, 8]
+    def to_human_int
+      to_a.collect(&:to_human_int)
+    end
+
+    # "６八銀" なら {x:6, y:8}
+    def to_human_h
+      { x: @x.to_human_int, y: @y.to_human_int }
     end
 
     def to_a

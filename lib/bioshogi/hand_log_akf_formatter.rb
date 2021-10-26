@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class OfficialFormatter
+  class HandLogAkfFormatter
     attr_reader :hand_log
     attr_reader :options
 
@@ -19,12 +19,10 @@ module Bioshogi
       @hand_log = hand_log
     end
 
-    def to_s
-      s = []
+    def to_h
+      @hv = {}
 
-      if location_name
-        s << location_name
-      end
+      pp hand_log
 
       if hand_log.place_same
         s << kw("同") + @options[:same_suffix]
@@ -55,9 +53,12 @@ module Bioshogi
           s << soldier_name
           s << motion
           if place_from && place_to                # 移動した and
-            if hand.promotable?
-              unless promoted
-                s << kw("不成") # or "生"
+            if place_from.promotable?(location) || # 移動元が相手の相手陣地 or
+                place_to.promotable?(location)     # 移動元が相手の相手陣地
+              unless promoted                      # 成ってない and
+                if piece.promotable?               # 成駒になれる
+                  s << kw("不成") # or "生"
+                end
               end
             end
           end

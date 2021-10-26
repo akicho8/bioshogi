@@ -43,6 +43,13 @@ module Bioshogi
         m, s = r.divmod(1.minute)
         "(%02d:%02d/%02d:%02d:%02d)" % [*@used_seconds.divmod(1.minute), h, m, s]
       end
+
+      def to_h
+        {
+          :total_seconds => total_seconds,
+          :used_seconds => used_seconds,
+        }
+      end
     end
   end
 end

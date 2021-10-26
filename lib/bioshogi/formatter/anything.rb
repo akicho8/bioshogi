@@ -505,6 +505,10 @@ module Bioshogi
         YomiageBuilder.new(self, options).to_s
       end
 
+      def to_akf(options = {})
+        AkfBuilder.new(self, options).to_h
+      end
+
       ################################################################################
 
       def image_renderer(options = {})
