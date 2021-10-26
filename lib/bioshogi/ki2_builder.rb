@@ -19,7 +19,7 @@ module Bioshogi
       @params = self.class.default_params.merge(params)
     end
 
-    def to_ki2
+    def to_s
       @parser.mediator_run_once
 
       out = []

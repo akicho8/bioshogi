@@ -46,7 +46,7 @@ module Bioshogi
       @params = self.class.default_params.merge(params)
     end
 
-    def to_csa
+    def to_s
       @parser.mediator_run_once
 
       out = []
@@ -67,22 +67,7 @@ module Bioshogi
       @parser.mediator_board_setup(obj) # なぜ？
       out << obj.to_csa(@params)
 
-      # 2通りある
-      # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_key))
-      # 2. mediator.turn_info を利用して mediator.turn_info.base_location.csa_sign を参照
-      # ↑どちらも違う
-      # 3. これが正しい
-      out << @parser.mediator.turn_info.turn_offset_zero_location.csa_sign + "\n"
-
-      list = @parser.mediator.hand_logs.collect.with_index do |e, i|
-        if @parser.clock_exist?
-          [e.to_csa, "T#{@parser.used_seconds_at(i)}"].join(",")
-        else
-          e.to_csa
-        end
-      end
-
-      out << list.join(separator) + "\n"
+      out << hand_log_body
 
       unless @params[:footer_skip]
         if e = @parser.last_status_params
@@ -122,6 +107,26 @@ module Bioshogi
     private
 
     def hand_log_body
+      out = []
+
+      # 2通りある
+      # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_key))
+      # 2. mediator.turn_info を利用して mediator.turn_info.base_location.csa_sign を参照
+      # ↑どちらも違う
+      # 3. これが正しい
+      out << @parser.mediator.turn_info.turn_offset_zero_location.csa_sign + "\n"
+
+      list = @parser.mediator.hand_logs.collect.with_index do |e, i|
+        if @parser.clock_exist?
+          [e.to_csa, "T#{@parser.used_seconds_at(i)}"].join(",")
+        else
+          e.to_csa
+        end
+      end
+
+      out << list.join(separator) + "\n"
+
+      out.join
     end
 
     def separator

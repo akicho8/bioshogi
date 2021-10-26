@@ -3,10 +3,10 @@
 # require_relative "kif_format_methods"
 # require_relative "ki2_format_methods"
 # require_relative "csa_format_methods"
-require_relative "sfen_format_methods"
-require_relative "bod_format_methods"
-require_relative "binary_format_methods"
-require_relative "yomiage_format_methods"
+# require_relative "sfen_format_methods"
+# require_relative "bod_format_methods"
+# require_relative "yomiage_format_methods"
+# require_relative "binary_format_methods"
 
 require_relative "header_builder"
 
@@ -18,10 +18,10 @@ module Bioshogi
       # include KifFormatMethods
       # include Ki2FormatMethods
       # include CsaFormatMethods
-      include SfenFormatMethods
-      include BodFormatMethods
-      include BinaryFormatMethods
-      include YomiageFormatMethods
+      # include SfenFormatMethods
+      # include BodFormatMethods
+      # include YomiageFormatMethods
+      # include BinaryFormatMethods
 
       include HeaderBuilder
 
@@ -479,16 +479,80 @@ module Bioshogi
         end
       end
 
+      ################################################################################
+
       def to_kif(options = {})
-        KifBuilder.new(self, options).to_kif
+        KifBuilder.new(self, options).to_s
       end
 
       def to_ki2(options = {})
-        Ki2Builder.new(self, options).to_ki2
+        Ki2Builder.new(self, options).to_s
       end
 
       def to_csa(options = {})
-        CsaBuilder.new(self, options).to_csa
+        CsaBuilder.new(self, options).to_s
+      end
+
+      def to_sfen(options = {})
+        SfenBuilder.new(self, options).to_s
+      end
+
+      def to_bod(options = {})
+        BodBuilder.new(self, options).to_s
+      end
+
+      def to_yomiage(options = {})
+        YomiageBuilder.new(self, options).to_s
+      end
+
+      ################################################################################
+
+      def image_renderer(options = {})
+        ImageRenderer.new(mediator, options)
+      end
+
+      def to_image(options = {})
+        image_renderer(options).to_blob_binary
+      end
+
+      ################################################################################
+
+      def to_png(options = {})
+        ImageRenderer.new(mediator, options.merge(image_format: "png")).to_blob_binary
+      end
+
+      def to_jpg(options = {})
+        ImageRenderer.new(mediator, options.merge(image_format: "jpg")).to_blob_binary
+      end
+
+      def to_gif(options = {})
+        ImageRenderer.new(mediator, options.merge(image_format: "gif")).to_blob_binary
+      end
+
+      def to_webp(options = {})
+        ImageRenderer.new(mediator, options.merge(image_format: "webp")).to_blob_binary
+      end
+
+      ################################################################################
+
+      def to_animation_mp4(options = {})
+        AnimationMp4Builder.new(self, options).to_binary
+      end
+
+      def to_animation_gif(options = {})
+        AnimationGifBuilder.new(self, options).to_binary
+      end
+
+      def to_animation_apng(options = {})
+        AnimationPngBuilder.new(self, options).to_binary
+      end
+
+      def to_animation_webp(options = {})
+        AnimationWebpBuilder.new(self, options).to_binary
+      end
+
+      def to_animation_zip(options = {})
+        AnimationZipBuilder.new(self, options).to_binary
       end
     end
   end
