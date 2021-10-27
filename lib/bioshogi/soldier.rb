@@ -288,8 +288,21 @@ module Bioshogi
       end
     end
 
+    def type
+      raise NotImplementedError, "#{__method__} is not implemented"
+    end
+
     def to_kif(*)
       raise NotImplementedError, "#{__method__} is not implemented"
+    end
+
+    def to_akf(*)
+      {
+        :type => type,
+        :sfen => to_sfen,
+        :kif  => to_kif,
+        :csa  => to_csa,
+      }
     end
 
     def inspect
@@ -354,6 +367,10 @@ module Bioshogi
       player.piece_box.add(soldier.piece.key => 1)
     end
 
+    def type
+      "t_drop"
+    end
+
     def to_kif(options = {})
       options = {
         with_location: true,
@@ -385,14 +402,10 @@ module Bioshogi
     end
 
     def to_akf(options = {})
-      {
-        :type  => "drop",
-        :to    => soldier.place.to_human_h,
-        :piece => soldier.piece.key,
-        :sfen  => to_sfen,
-        :kif   => to_kif,
-        :csa   => to_csa,
-      }
+      super.merge({
+          :to    => soldier.place.to_human_h,
+          :piece => soldier.piece.key,
+        })
     end
   end
 
@@ -430,10 +443,7 @@ module Bioshogi
 
     # 成れる状態だった？
     def promotable?
-      if origin_soldier.place.promotable?(soldier.location) || # 移動元が相手の相手陣地 or
-        soldier.place.promotable?(soldier.location)            # 移動元が相手の相手陣地
-        soldier.piece.promotable?                              # 成駒になれる？
-      end
+      origin_soldier.next_promotable?(soldier.place)
     end
 
     def to_kif(options = {})
@@ -467,39 +477,25 @@ module Bioshogi
       ].join
     end
 
-    # if (this.type === "move") {
-    #   v = this.from.yomiage_name
-    # } else if (this.type === "promotable") {
-    #   v = this.from.piece.piece_yomiage.prefix_name + "、" + (this.to.promoted ? "なりっ！" : "ならずっ！")
-    # } else if (this.type === "put") {
-    #   v = this.to.piece.piece_yomiage.prefix_name + "、" + "うつ！"
-    # } else {
-    #   throw new Error("must not happen")
-    # }
-
     def type
       if promotable?
         if promote_trigger?
-          "promoted"
+          "t_promote_on"
         else
-          "no_promoted"
+          "t_promote_throw"
         end
       else
-        "move"
+        "t_move"
       end
     end
 
     def to_akf(options = {})
-      {
-        :type     => type,
-        :piece    => origin_soldier.piece.key,
-        :promoted => origin_soldier.promoted,
-        :from     => origin_soldier.place.to_human_h,
-        :to       => soldier.place.to_human_h,
-        :sfen     => to_sfen,
-        :kif      => to_kif,
-        :csa      => to_csa,
-      }
+      super.merge({
+          :piece    => origin_soldier.piece.key,
+          :promoted => origin_soldier.promoted,
+          :from     => origin_soldier.place.to_human_h,
+          :to       => soldier.place.to_human_h,
+        })
     end
 
     # def legal_move2?(mediator)

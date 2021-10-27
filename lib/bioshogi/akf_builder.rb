@@ -36,13 +36,13 @@ module Bioshogi
       @hv[:moves] = @parser.mediator.hand_logs.collect.with_index { |e, i|
         @chess_clock.add(@parser.used_seconds_at(i))
         move = {
-          index: i,
+          human_index: @parser.mediator.initial_state_turn_info.display_turn + i.next,
           **e.to_akf,
           **@chess_clock.last_clock.to_h,
         }
         # n = 0
         # if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
-        #   n += @parser.mediator.initial_state_turn_info.display_turn
+        #   n += 
         # end
         # s = e.to_kif(char_type: :formal_sheet)
         # s = @parser.mb_ljust(s, @params[:length])

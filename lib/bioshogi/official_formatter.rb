@@ -5,6 +5,9 @@ module Bioshogi
     attr_reader :hand_log
     attr_reader :options
 
+    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, :handicap, to: :hand_log
+    delegate :place, :piece, :location, :promoted, to: :soldier
+
     def initialize(hand_log, options = {})
       @options = {
         :with_location => false,         # 先手後手のマークを入れる？
@@ -33,35 +36,32 @@ module Bioshogi
         s << @options[:separator]
       end
 
-      if drop_trigger?
+      if type == "t_drop"
         s << piece_name
-
         # 日本将棋連盟 棋譜の表記方法
         # https://www.shogi.or.jp/faq/kihuhyouki.html
         #
         # > 到達地点に盤上の駒が移動することも、持駒を打つこともできる場合
         # > 盤上の駒が動いた場合は通常の表記と同じ
         # > 持駒を打った場合は「打」と記入
-        # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
+        # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。
+        # > それ以外の場合は、持駒を打つ場合も「打」はつけません。
         if @options[:force_drop] || !candidate.empty?
           s << kw("打")
         end
+      elsif type == "t_promote_on"
+        s << piece_name
+        s << motion
+        s << kw("成")
+      elsif type == "t_promote_throw"
+        s << piece_name
+        s << motion
+        s << kw("不成") # or "生"
+      elsif type == "t_move"
+        s << soldier_name
+        s << motion
       else
-        if promote_trigger?
-          s << piece_name
-          s << motion
-          s << kw("成")
-        else
-          s << soldier_name
-          s << motion
-          if place_from && place_to                # 移動した and
-            if hand.promotable?
-              unless promoted
-                s << kw("不成") # or "生"
-              end
-            end
-          end
-        end
+        raise "must not happen"
       end
 
       s = s.join
@@ -100,6 +100,10 @@ module Bioshogi
     end
 
     private
+
+    def type
+      @type ||= hand.type
+    end
 
     # 3文字以上なら空白を詰める
     def str_compact(str)
@@ -347,20 +351,17 @@ module Bioshogi
       !_yr.cover?(_ty)
     end
 
-    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, :handicap, to: :hand_log
-    delegate :place, :piece, :location, :promoted, to: :soldier
-
-    # 「打」？
-    def drop_trigger?
-      drop_hand
-    end
+    # # 「打」？
+    # def drop_trigger?
+    #   drop_hand
+    # end
 
     # 「成」？
-    def promote_trigger?
-      if move_hand
-        move_hand.promote_trigger?
-      end
-    end
+    # def promote_trigger?
+    #   if move_hand
+    #     move_hand.promote_trigger?
+    #   end
+    # end
 
     # 移動元
     def place_from
