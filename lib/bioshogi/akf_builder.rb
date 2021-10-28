@@ -6,11 +6,6 @@ module Bioshogi
 
     def self.default_params
       super.merge({
-          :length                 => 12,
-          :number_width           => 4,
-          :header_skip            => false,
-          :footer_skip            => false,
-          :no_embed_if_time_blank => false, # 時間がすべて0ならタイムを指定しない
         })
     end
 
@@ -19,89 +14,47 @@ module Bioshogi
       @params = self.class.default_params.merge(params)
     end
 
-    # def to_h
-    #   {
-    #     :header => @parser.header.to_h,
-    #     :moves  => @parser.move_infos,
-    #   }
-    # end
-
     def to_h
       @parser.mediator_run_once
+
+      @mediator2 = Mediator.new
+      @parser.mediator_board_setup(@mediator2)
+
       @hv = {}
       @hv[:header] = @parser.header.to_h
 
       @chess_clock = ChessClock.new
 
-      @hv[:moves] = @parser.mediator.hand_logs.collect.with_index { |e, i|
-        @chess_clock.add(@parser.used_seconds_at(i))
-        move = {
-          human_index: @parser.mediator.initial_state_turn_info.display_turn + i.next,
-          **e.to_akf,
-          **@chess_clock.last_clock.to_h,
-        }
-        # n = 0
-        # if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
-        #   n += 
-        # end
-        # s = e.to_kif(char_type: :formal_sheet)
-        # s = @parser.mb_ljust(s, @params[:length])
-        # s = "%*d %s %s" % [@params[:number_width], i.next, s, @chess_clock || ""]
-        # s = s.rstrip + "\n"
-        # if v = e.to_skill_set_kif_comment
-        #   s += v
-        # end
-        # s
-        move
+      @hv[:moves] = []
+      @hv[:moves] << {
+        :human_index   => @mediator2.initial_state_turn_info.display_turn,
+        :place_same    => nil,
+        **@chess_clock.last_clock.to_h,
+        :total_seconds => nil,
+        :used_seconds  => nil,
+        :skill         => nil,
+        :sfen_type1    => @mediator2.to_sfen,
+        :sfen_type2    => @mediator2.to_snapshot_sfen,
       }
-
-      # out << hand_log_body
-      #
-      # unless @params[:footer_skip]
-      #   out << footer_content
-      # end
-      #
-      # out.join
+      @hv[:moves] += @parser.move_infos.collect.with_index do |info, i|
+        @mediator2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
+        @chess_clock.add(@parser.used_seconds_at(i))
+        hand_log = @mediator2.hand_logs.last
+        {
+          :human_index => @mediator2.initial_state_turn_info.display_turn + i.next,
+          :place_same  => hand_log.place_same,
+          **hand_log.to_akf,
+          **@chess_clock.last_clock.to_h,
+          :skill => hand_log.skill_set.to_h,
+          :sfen_type1 => @mediator2.to_sfen,
+          :sfen_type2 => @mediator2.to_snapshot_sfen,
+        }
+      end
 
       @hv
     end
-
-    private
-
-    # def footer_content
-    #   out = []
-    #
-    #   left_part = nil
-    #   right_part = nil
-    #
-    #   if @parser.last_action_info.kif_word
-    #     left_part = "%*d %s" % [
-    #       @params[:number_width],
-    #       # @parser.mediator.initial_state_turn_info.display_turn + @parser.mediator.hand_logs.size.next,
-    #       @parser.mediator.hand_logs.size.next,
-    #       @parser.mb_ljust(@parser.last_action_info.kif_word, @params[:length]),
-    #     ]
-    #   end
-    #
-    #   if true
-    #     if @parser.last_status_params
-    #       if used_seconds = @parser.last_status_params[:used_seconds]
-    #         if @chess_clock
-    #           @chess_clock.add(used_seconds)
-    #           right_part = @chess_clock.to_s
-    #         end
-    #       end
-    #     end
-    #   end
-    #
-    #   if left_part
-    #     out << "#{left_part} #{right_part}".rstrip + "\n"
-    #   end
-    #
-    #   out << @parser.judgment_message + "\n"
-    #   out << @parser.error_message_part
-    #
-    #   out
-    # end
   end
 end
+# ~> -:5:in `<class:AkfBuilder>': uninitialized constant Bioshogi::AkfBuilder::Builder (NameError)
+# ~> 	from -:4:in `<module:Bioshogi>'
+# ~> 	from -:3:in `<main>'
