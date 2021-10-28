@@ -30,7 +30,7 @@ module Bioshogi
         :human_index   => @mediator2.initial_state_turn_info.display_turn,
         :place_same    => nil,
         **@chess_clock.last_clock.to_h,
-        :total_seconds => nil,
+        :total_seconds => 0,
         :used_seconds  => nil,
         :skill         => nil,
         :history_sfen    => @mediator2.to_history_sfen,
@@ -55,6 +55,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:5:in `<class:AkfBuilder>': uninitialized constant Bioshogi::AkfBuilder::Builder (NameError)
-# ~> 	from -:4:in `<module:Bioshogi>'
-# ~> 	from -:3:in `<main>'

@@ -4,12 +4,6 @@ module Bioshogi
   class SfenBuilder
     include Builder
 
-    def self.default_params
-      super.merge({
-          # :startpos_embed => false, # なるべく startpos に変換する
-        })
-    end
-
     def initialize(parser, params = {})
       @parser = parser
       @params = self.class.default_params.merge(params)
