@@ -2,13 +2,13 @@ require "./setup"
 require "json"
 
 info = Parser.parse("position startpos moves 7i6h")
-info.mediator.to_current_sfen # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w - 2"
+info.mediator.to_snapshot_sfen # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w - 2"
 
 # ▼サーバーレス将棋 AI ☖ - Qiita
 # https://qiita.com/na-o-ys/items/b04ce27732c82b6beb9b
 
 require "faraday"
-url = "https://17xn1ovxga.execute-api.ap-northeast-1.amazonaws.com/production/gikou?byoyomi=10000&dimension=#{URI.escape(info.mediator.to_current_sfen)}"
+url = "https://17xn1ovxga.execute-api.ap-northeast-1.amazonaws.com/production/gikou?byoyomi=10000&dimension=#{URI.escape(info.mediator.to_snapshot_sfen)}"
 url # => "https://17xn1ovxga.execute-api.ap-northeast-1.amazonaws.com/production/gikou?byoyomi=10000&dimension=sfen%20lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL%20w%20-%202"
 response = Faraday.get(url)
 response.status                 # => 502

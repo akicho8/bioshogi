@@ -186,7 +186,7 @@ module Bioshogi
           if true
             @progress_cop.next_step("メタデータ埋め込み")
             title = params[:metadata_title].presence || "総手数#{@mediator.turn_info.display_turn}手"
-            comment = params[:metadata_comment].presence || @mediator.to_sfen
+            comment = params[:metadata_comment].presence || @mediator.to_history_sfen
             before_duration = Media.duration("_output1.mp4")
             strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
             after_duration = Media.duration("_output2.mp4")

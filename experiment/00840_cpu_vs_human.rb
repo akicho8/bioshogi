@@ -9,7 +9,7 @@ tp Brain.human_format(records)
 record = records.first
 hand = record[:hand]
 mediator.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
-puts mediator.to_sfen
+puts mediator.to_history_sfen
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

@@ -4,11 +4,11 @@ mediator = Mediator.new
 mediator.board.placement_from_hash(black: "十枚落ち", white: "裸玉")
 
 mediator.turn_info.handicap = false
-info = Parser.parse("position #{mediator.to_long_sfen}")
+info = Parser.parse("position #{mediator.to_snapshot_sfen}")
 puts info.to_ki2
 
 mediator.turn_info.handicap = true
-info = Parser.parse("position #{mediator.to_long_sfen}")
+info = Parser.parse("position #{mediator.to_snapshot_sfen}")
 puts info.to_ki2
 
 # >> 後手の持駒：なし

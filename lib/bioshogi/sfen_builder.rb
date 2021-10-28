@@ -10,7 +10,7 @@ module Bioshogi
     end
 
     def to_s
-      @parser.mediator.to_sfen(@params)
+      @parser.mediator.to_history_sfen(@params)
     end
   end
 end

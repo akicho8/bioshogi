@@ -6,7 +6,7 @@ PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["▲８八角
 tp PresetInfo.collect { |e|
   mediator = Mediator.new
   mediator.placement_from_preset(e.key)
-  [e.key, mediator.to_long_sfen]
+  [e.key, mediator.to_snapshot_sfen]
 }.to_h
 
 tp PresetInfo.collect(&:to_position_sfen)

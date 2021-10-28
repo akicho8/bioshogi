@@ -39,7 +39,7 @@ EOT
     it "placement_from_preset は手番も反映する" do
       mediator = Mediator.new
       mediator.placement_from_preset("香落ち")
-      assert { mediator.to_long_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
+      assert { mediator.to_snapshot_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
     end
 
     it "交互に打ちながら戦況表示" do

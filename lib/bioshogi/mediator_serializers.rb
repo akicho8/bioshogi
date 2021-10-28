@@ -91,7 +91,7 @@ module Bioshogi
 
       def before_run_process
         # turn_info_auto_set
-        @initial_state_board_sfen = to_current_sfen # FIXME: これはイケてない
+        @initial_state_board_sfen = to_snapshot_sfen # FIXME: これはイケてない
         @initial_state_turn_info = turn_info.clone
       end
 
@@ -103,19 +103,23 @@ module Bioshogi
       end
 
       # 現在の局面
-      def to_current_sfen
-        if startpos?
-          "position startpos"
-        else
-          to_long_sfen
-        end
+      # def to_snapshot_sfen
+      #   if false
+      #     if startpos?
+      #       "position startpos"
+      #     else
+      #       to_snapshot_sfen
+      #     end
+      #   else
+      #     to_snapshot_sfen
+      #   end
+      # end
+
+      def to_snapshot_sfen
+        (to_snapshot_sfen_without_turn + [turn_info.display_turn.next]).join(" ")
       end
 
-      def to_long_sfen
-        (to_long_sfen_without_turn + [turn_info.display_turn.next]).join(" ")
-      end
-
-      def to_long_sfen_without_turn
+      def to_snapshot_sfen_without_turn
         s = []
         s << "position"
         s << "sfen"
@@ -130,20 +134,17 @@ module Bioshogi
       end
 
       # 最初から現在までの局面
-      def to_sfen(options = {})
+      def to_history_sfen(options = {})
         s = []
+        unless @initial_state_board_sfen
+          raise BioshogiError, "@initial_state_board_sfen が未定義"
+        end
         s << @initial_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
         if hand_logs.present?
           s << "moves"
           s.concat(hand_logs.collect(&:to_sfen))
         end
-        s = s.join(" ")
-
-        if options[:position_startpos_disabled]
-          s = Sfen.startpos_style_remove(s)
-        end
-
-        s
+        s.join(" ")
       end
     end
 
