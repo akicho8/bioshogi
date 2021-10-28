@@ -105,7 +105,7 @@ module Bioshogi
       # 現在の局面
       def to_current_sfen
         if startpos?
-          "startpos"
+          "position startpos"
         else
           to_long_sfen
         end
@@ -117,6 +117,7 @@ module Bioshogi
 
       def to_long_sfen_without_turn
         s = []
+        s << "position"
         s << "sfen"
         s << board.to_sfen
         s << turn_info.current_location.to_sfen
@@ -131,7 +132,6 @@ module Bioshogi
       # 最初から現在までの局面
       def to_sfen(options = {})
         s = []
-        s << "position"
         s << @initial_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする
         if hand_logs.present?
           s << "moves"

@@ -39,7 +39,7 @@ module Bioshogi
     end
 
     def to_position_sfen
-      "position #{to_sfen}"
+      to_sfen
     end
 
     def to_board
