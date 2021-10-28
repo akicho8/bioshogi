@@ -35,8 +35,8 @@ module Bioshogi
     end
 
     it "startposを外す・つける" do
-      assert { Sfen.startpos_style_remove("position startpos") == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
-      assert { Sfen.startpos_style_add("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1") == "position startpos" }
+      assert { Sfen.startpos_remove("position startpos") == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { Sfen.startpos_embed("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1") == "position startpos" }
     end
   end
 end

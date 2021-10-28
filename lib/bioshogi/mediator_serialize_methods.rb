@@ -80,7 +80,7 @@ module Bioshogi
       MediatorSerializerCheckmateYomiage.new(self, options).to_s
     end
 
-    concerning :HistorySfenMethods do
+    concerning :UsiMethods do
       attr_reader :initial_state_board_sfen
       attr_reader :initial_state_turn_info
 

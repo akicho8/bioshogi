@@ -4,7 +4,7 @@ module Bioshogi
   class Mediator
     include MediatorBase
     include MediatorPlayers
-    include MediatorSerializers
+    include MediatorSerializeMethods
     include MediatorExecutor
     include MediatorVariables
     include MediatorTest

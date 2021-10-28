@@ -20,12 +20,12 @@ module Bioshogi
       end
 
       # position startpos を逆に position sfen ... 形式に変換
-      def startpos_style_remove(s)
+      def startpos_remove(s)
         s.sub(/startpos/, STARTPOS_EXPANSION)
       end
 
       # startpos スタイルに変更
-      def startpos_style_add(s)
+      def startpos_embed(s)
         s.sub(STARTPOS_EXPANSION, "startpos")
       end
     end
@@ -35,7 +35,7 @@ module Bioshogi
     end
 
     def parse
-      s = self.class.startpos_style_remove(source)
+      s = self.class.startpos_remove(source)
       md = s.match(SFEN_REGEXP)
       unless md
         raise SyntaxDefact, "入力されたSFEN形式の棋譜はぶっこわれています : #{source.inspect}"
