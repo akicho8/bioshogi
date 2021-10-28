@@ -6,7 +6,7 @@ module Bioshogi
 
     def self.default_params
       super.merge({
-          :startpos_embed => true, # なるべく startpos に変換する
+          # :startpos_embed => false, # なるべく startpos に変換する
         })
     end
 
