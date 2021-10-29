@@ -9,6 +9,7 @@ module Bioshogi
           :continuous_render => true, # 連続で処理する
           :progress_callback => nil,  # 進捗通知用
           :cover_text        => nil,  # 表紙の内容(あれば表紙画像を作る)
+          :bottom_text       => nil,  # 表紙の右下に小さく表示する1行
         })
     end
 
@@ -29,7 +30,7 @@ module Bioshogi
       zos = Zip::OutputStream.write_buffer do |z|
         if v = params[:cover_text].presence
           @progress_cop.next_step("表紙描画")
-          tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:width, :height)).to_png24_binary) }
+          tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).to_png24_binary) }
         end
         @progress_cop.next_step("初期配置")
         tob("初期配置") { zip_write1(z, 0) }

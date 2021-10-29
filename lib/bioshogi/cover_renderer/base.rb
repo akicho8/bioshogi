@@ -1,10 +1,11 @@
 module Bioshogi
   class CoverRenderer
     concerning :Base do
-      included do
-        cattr_accessor :default_params do
+      class_methods do
+        def default_params
           {
             :text         => nil,
+            :bottom_text  => nil,
             :width        => 1200,
             :height       => 630,
             :font_size    => 64,
@@ -23,7 +24,7 @@ module Bioshogi
 
       def initialize(params = {})
         require "rmagick"
-        @params = default_params.merge(params)
+        @params = self.class.default_params.merge(params)
       end
 
       def render
@@ -35,6 +36,19 @@ module Bioshogi
         gc.density   = params[:density]
         gc.gravity   = Magick::CenterGravity
         gc.annotate(@canvas_layer, 0, 0, 0, @canvas_layer.rows * -1 * params[:pull_to_top], params[:text])
+
+        if str = params[:bottom_text].presence
+          gc = Magick::Draw.new
+          pointsize = 16
+          margin_x = 8
+          margin_y = 6
+          gc.font      = params[:font_regular]
+          gc.fill      = params[:font_color]
+          gc.pointsize = pointsize
+          gc.gravity   = Magick::SouthEastGravity # 右下
+          gc.annotate(@canvas_layer, 0, 0, margin_x, margin_y, str)
+        end
+
         @canvas_layer
       end
 

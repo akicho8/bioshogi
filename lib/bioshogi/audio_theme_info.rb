@@ -50,7 +50,7 @@ module Bioshogi
       { key: :is_audio_theme_shw_akatsuki_japan, name: "Akatsuki JAPAN",                        source_url: "http://shw.in/",                                 author: "SHW",                  audio_part_a: :shw_akatsuki_japan,  audio_part_a_volume: 1.0, audio_part_a_duration: 236.64, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
       { key: :is_audio_theme_ds3895,             name: "百花繚乱",                              source_url: "https://dova-s.jp/bgm/play3895.html",            author: "天休ひさし",           audio_part_a: :ds3895,              audio_part_a_volume: 1.0, audio_part_a_duration: 133.7,  audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "loop",                                      },
 
-      { key: :is_audio_theme_ds2776,             name: "井の中の蛙",                            source_url: "https://dova-s.jp/bgm/play2776.html",            author: "スエノブ",             audio_part_a: :ds2776,              audio_part_a_volume: 1.0, audio_part_a_duration: 35.16,  audio_part_a_loop: true,   audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
+      { key: :is_audio_theme_ds2776,              name: "井の中の蛙",                            source_url: "https://dova-s.jp/bgm/play2776.html",            author: "スエノブ",             audio_part_a: :ds2776,              audio_part_a_volume: 1.0, audio_part_a_duration: 35.16,  audio_part_a_loop: true,   audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
       { key: :is_audio_theme_ds7138,              name: "パーティーはハチャメチャ大騒ぎ",        source_url: "https://dova-s.jp/bgm/play7138.html",            author: "スエノブ",             audio_part_a: :ds7138,              audio_part_a_volume: 1.0, audio_part_a_duration: 36.05,  audio_part_a_loop: true,   audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
       { key: :is_audio_theme_ds3812,              name: "Three Keys (Freestyle Rap Beat No.02)", source_url: "https://dova-s.jp/bgm/play3812.html",            author: "Khaim",                audio_part_a: :ds3812,              audio_part_a_volume: 1.0, audio_part_a_duration: 237.72, audio_part_a_loop: false,  audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
       { key: :is_audio_theme_ds14226,             name: "Somebody (Prod. Khaim)",                source_url: "https://dova-s.jp/bgm/play14226.html",           author: "Khaim",                audio_part_a: :ds14226,             audio_part_a_volume: 1.0, audio_part_a_duration: 158.17, audio_part_a_loop: true,   audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
@@ -72,6 +72,7 @@ module Bioshogi
         :audio_part_b        => audio_part_b,
         :audio_part_b_volume => audio_part_b_volume,
         :acrossfade_duration => acrossfade_duration,
+        :bottom_text         => bottom_text,
       }
     end
 
@@ -146,6 +147,12 @@ module Bioshogi
     def real_path(basename)
       if basename
         Pathname("#{__dir__}/assets/audios/#{basename}.m4a")
+      end
+    end
+
+    def bottom_text
+      if author
+        "BGM: #{name} by #{author}"
       end
     end
   end

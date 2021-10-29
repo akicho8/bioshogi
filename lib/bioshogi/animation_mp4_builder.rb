@@ -106,7 +106,7 @@ module Bioshogi
 
                 if v = params[:cover_text].presence
                   @progress_cop.next_step("表紙描画")
-                  tob("表紙描画") { list << CoverRenderer.new(text: v, **params.slice(:width, :height)).render }
+                  tob("表紙描画") { list << CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).render }
                 end
 
                 @progress_cop.next_step("初期配置")
@@ -149,7 +149,7 @@ module Bioshogi
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                 @progress_cop.next_step("表紙描画")
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:width, :height)).render.write(sfg.next) }
+                tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).render.write(sfg.next) }
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               end
 

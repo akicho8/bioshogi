@@ -12,11 +12,13 @@ module Bioshogi
       def default_params
         super.merge({
             # 全体
-            :page_duration              => 1.0,  # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
-            :end_duration               => 0,    # 終了図をN秒表示する
-            :end_pages                  => nil,  # 終了図追加フレーム数。空なら end_duration / page_duration
-            :progress_callback          => nil,  # 進捗通知用
-            :cover_text                 => nil,  # 表紙(nilなら作らない)
+            :page_duration              => 1.0,    # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
+            :end_duration               => 0,      # 終了図をN秒表示する
+            :end_pages                  => nil,    # 終了図追加フレーム数。空なら end_duration / page_duration
+            :progress_callback          => nil,    # 進捗通知用
+            :cover_text                 => nil,    # 表紙(nilなら作らない)
+            :bottom_text                => nil,    # 表紙の右下に小さく表示する1行
+            :turn_embed_key             => "is_turn_embed_off", # 手数を埋め込むか？
 
             # 他
             :ffmpeg_after_embed_options => nil,                        # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )

@@ -23,6 +23,7 @@ module Bioshogi
             :d_move_layer,
             :d_piece_layer,
             :d_piece_count_layer,
+            :d_turn_layer,
 
             :last_rendered_image,
           ].each do |e|

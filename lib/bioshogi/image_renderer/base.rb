@@ -67,6 +67,7 @@ module Bioshogi
               :negate                   => false,   # 反転
               :bg_file                  => nil,     # 背景ファイル
               :canvas_pattern_key       => nil,     # 背景パターン
+              :turn_embed_key           => "is_turn_embed_off",  # 現在の手数を埋めるか？
 
               # star
               :star_size                => 0.03,    # 星のサイズ(割合)
@@ -134,6 +135,7 @@ module Bioshogi
           soldier_move_cell_draw  # to d_move_layer
           soldier_draw_all        # to d_piece_layer
           stand_draw              # to d_piece_layer, d_piece_count_layer
+          turn_draw               # to d_turn_layer
 
           logger.info "composite process"
           current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp) # 背景 + 物'
@@ -143,6 +145,11 @@ module Bioshogi
           current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp) # 背景 + 物'
 
           current = condition_then_flip(current)
+
+          if @d_turn_layer
+            current = current.composite(@d_turn_layer, Magick::NorthWestGravity, Magick::OverCompositeOp)
+          end
+
           current = condition_then_negate(current)
 
           @build_counter += 1
@@ -350,6 +357,33 @@ module Bioshogi
       # 外側の領域
       def outer_rect
         outer_bottom_right - outer_top_left
+      end
+
+      def turn_draw
+        if params[:turn_embed_key] == "is_turn_embed_on"
+          pointsize = 32
+          w = 70
+          h = w
+          x = 0
+          y = 0
+          r = 26
+          @d_turn_layer = Magick::Image.new(w, h) { |e| e.background_color = "transparent" }
+
+          gc = Magick::Draw.new
+          gc.fill(params[:piece_count_bg_color])
+          from = [x + w/2, y + h/2]
+          to   = [x + w/2 + r, y + h/2]
+          gc.circle(*from, *to)
+          gc.draw(@d_turn_layer)
+
+          gc = Magick::Draw.new
+          gc.annotate(@d_turn_layer, w, h, x, y, @build_counter.to_s) do |e|
+            e.font      = params[:font_regular]
+            e.fill      = params[:piece_count_font_color] || params[:piece_font_color]
+            e.pointsize = pointsize
+            e.gravity   = Magick::CenterGravity
+          end
+        end
       end
     end
   end
