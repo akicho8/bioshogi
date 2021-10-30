@@ -14,8 +14,8 @@ module Bioshogi
           pointsize = cell_w * 0.75
           w = pointsize * 4
           h = pointsize
-          x = pointsize * 0.2
-          y = pointsize * 0
+          x = pointsize * 0.3
+          y = pointsize * 0.1
 
           # r = cell_w * 0.5
           # @d_turn_layer = Magick::Image.new(w, h) { |e| e.background_color = "transparent" }
