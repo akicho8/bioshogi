@@ -28,7 +28,7 @@ module Bioshogi
           # gc.draw(@d_turn_layer)
 
           gc = Magick::Draw.new
-          gc.annotate(layer, w, h, x, y, @build_counter) do |e|
+          gc.annotate(layer, w, h, x, y, "#{@build_counter}") do |e|
             e.font         = params[:font_bold]
             e.fill         = "hsla(0,0%,100%,1.0)"
             e.pointsize    = pointsize
