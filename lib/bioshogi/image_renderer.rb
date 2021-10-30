@@ -13,6 +13,7 @@ module Bioshogi
   require "bioshogi/image_renderer/layer_methods"
   require "bioshogi/image_renderer/board_methods"
   require "bioshogi/image_renderer/soldier_methods"
+  require "bioshogi/image_renderer/turn_methods"
   require "bioshogi/image_renderer/stand"
   require "bioshogi/image_renderer/pentagon"
   require "bioshogi/image_renderer/helper"
