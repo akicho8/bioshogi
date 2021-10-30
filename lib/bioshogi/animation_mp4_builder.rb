@@ -45,7 +45,7 @@ module Bioshogi
           # Audio関連
           :audio_enable        => true, # 音を結合するか？
           :fadeout_duration    => nil,  # ファイドアウト秒数。空なら end_pages * page_duration
-          :main_volume         => 0.5,  # 音量
+          :main_volume         => 0.8,  # 音量
 
           # テーマ関連
           :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
