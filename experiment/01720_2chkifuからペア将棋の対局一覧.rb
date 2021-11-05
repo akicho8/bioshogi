@@ -9,7 +9,7 @@ list = []
 Array(files).each do |file|
   file = Pathname(file).expand_path
   info = Parser.file_parse(file, typical_error_case: :skip)
-  if info.header.__to_simple_names_h.values.flatten.count >= 3
+  if info.header.entry_all_names.values.flatten.count >= 3
     list << file.to_s
   end
 end

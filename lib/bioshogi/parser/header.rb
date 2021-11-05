@@ -60,7 +60,7 @@ module Bioshogi
 
         # 「a」vs「b」を取り込む
         if md = source.match(/\*「(.*?)」?vs「(.*?)」?$/)
-          sente_gote.each.with_index do |e, i|
+          call_names.each.with_index do |e, i|
             key = "#{e}詳細"
             v = normalize_value(md.captures[i])
             self[key] = v
@@ -83,8 +83,11 @@ module Bioshogi
         end
       end
 
-      def sente_gote
-        Location.collect { |e| e.public_send(equality_or_handicap) }
+      def call_names
+        @call_names ||= -> {
+          v = handicap_validity
+          Location.collect { |e| e.call_name(v) }
+        }.call
       end
 
       # 消す予定
@@ -92,14 +95,14 @@ module Bioshogi
       def __to_meta_h
         [
           object,
-          __to_simple_names_h,
+          entry_all_names,
         ].compact.inject(&:merge)
       end
 
       # ["中倉宏美", "伊藤康晴"]
-      def __to_simple_names_h
-        sente_gote.inject({}) { |a, e|
-          a.merge(e => pair_split(object[e]))
+      def entry_all_names
+        call_names.inject({}) { |a, e|
+          a.merge(e => name_value_split(object[e]))
         }
       end
 
@@ -128,7 +131,7 @@ module Bioshogi
 
       # "清水市代・フレデリックポティエ"    => ["清水市代", "フレデリックポティエ"]
       # "清水市代＆フレデリック・ポティエ"  => ["清水市代", "フレデリックポティエ"]
-      def pair_split(s)
+      def name_value_split(s)
         if s
           if s.include?("＆")
             s.split("＆")
@@ -162,7 +165,7 @@ module Bioshogi
       end
 
       def piece_order_normalize
-        sente_gote.each do |e|
+        call_names.each do |e|
           e = "#{e}の持駒"
           if v = object[e].presence
             v = Piece.s_to_a(v)
@@ -200,7 +203,7 @@ module Bioshogi
       # 「上手」「下手」の文字がなければ「平手」と見なしている
       # 棋譜を見ずにヘッダーだけで推測している点に注意
       def equality_or_handicap
-        if handicap_validity == true
+        if handicap_validity
           :handicap_name
         else
           :equality_name
