@@ -1,27 +1,11 @@
 # frozen-string-literal: true
 
-# require_relative "kif_format_methods"
-# require_relative "ki2_format_methods"
-# require_relative "csa_format_methods"
-# require_relative "sfen_format_methods"
-# require_relative "bod_format_methods"
-# require_relative "yomiage_formatter"
-# require_relative "binary_format_methods"
-
 require_relative "header_builder"
 
 module Bioshogi
   module Formatter
-    concern :Anything do        # FIXME: parser に埋めるんじゃなくて parser を引数にした専用クラスで処理する。AnimationZipBuilder のように。
+    concern :Anything do
       MIN_TURN = 14
-
-      # include KifFormatMethods
-      # include Ki2FormatMethods
-      # include CsaFormatMethods
-      # include SfenFormatMethods
-      # include BodFormatMethods
-      # include YomiageFormatter
-      # include BinaryFormatMethods
 
       include HeaderBuilder
 

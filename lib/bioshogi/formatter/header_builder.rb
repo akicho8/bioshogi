@@ -46,52 +46,7 @@ module Bioshogi
               header.delete("#{e}の持駒")
             end
           end
-
-          # Location.reverse_each do |e|
-          #   key = "#{e.call_name(m.turn_info.handicap?)}の持駒"
-          #   if v = header.delete(key)
-          #     header[key] = v
-          #   end
-          # end
-
-          # 「なし」を埋める
-          # Location.each do |location|
-          #   key = "#{location.call_name(m.turn_info.handicap?)}の持駒"
-          #   v = header[key]
-          #   if v.blank?
-          #     header[key] = "なし"
-          #   end
-          # end
-
-          # 駒落ちの場合は「上手」「下手」の順に並べる (盤面をその間に入れるため)
-          # Location.reverse_each do |e|
-          #   key = "#{e.call_name(m.turn_info.handicap?)}の持駒"
-          #   if v = header.delete(key)
-          #     header[key] = v
-          #   end
-          # end
-
-          # 後手の持駒：○○
-          # 先手の持駒：○○
-          #
-          # の間に盤面を埋める
-          #
           s = raw_header_part_string + bod
-
-          # embed_str = m.board.to_s
-          # key = "#{Location[:white].call_name(m.turn_info.handicap?)}の持駒"
-          # s = s.sub(/(#{key}：.*\n)/, '\1' + embed_str)
-          #
-          # embed_str = nil
-          # v = mediator.turn_info.turn_base
-          # if v >= 1
-          #   embed_str = "\n手数＝#{v}\n"
-          # end
-          # if embed_str
-          #   key = "#{Location[:black].call_name(m.turn_info.handicap?)}の持駒"
-          #   s = s.sub(/(#{key}：.*\n)/, '\1' + embed_str)
-          # end
-
           s
         end
       end
