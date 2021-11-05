@@ -50,9 +50,9 @@ module Bioshogi
         end
       end
 
-      # def call_names
-      #   @call_names ||= flat_map(&:call_names)
-      # end
+      def call_names
+        @call_names ||= flat_map(&:call_names)
+      end
     end
 
     def call_names
