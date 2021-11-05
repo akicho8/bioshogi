@@ -451,17 +451,6 @@ module Bioshogi
         @move_infos.dig(index, :used_seconds).to_i
       end
 
-      # mb_ljust("あ", 3)               # => "あ "
-      # mb_ljust("1", 3)                # => "1  "
-      # mb_ljust("123", 3)              # => "123"
-      def mb_ljust(s, w)
-        n = w - s.encode("EUC-JP").bytesize
-        if n < 0
-          n = 0
-        end
-        s + " " * n
-      end
-
       def clock_exist?
         return @clock_exist if instance_variable_defined?(:@clock_exist)
         @clock_exist = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }

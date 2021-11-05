@@ -3,6 +3,7 @@
 module Bioshogi
   class KifBuilder
     include Builder
+    include TextBuilder
 
     def self.default_params
       super.merge({
@@ -55,7 +56,7 @@ module Bioshogi
           n += @parser.mediator.initial_state_turn_info.display_turn
         end
         s = e.to_kif(char_type: :formal_sheet)
-        s = @parser.mb_ljust(s, @params[:length])
+        s = mb_ljust(s, @params[:length])
         s = "%*d %s %s" % [@params[:number_width], n + i.next, s, @chess_clock || ""]
         s = s.rstrip + "\n"
         if v = e.to_skill_set_kif_comment
@@ -76,7 +77,7 @@ module Bioshogi
           @params[:number_width],
           # @parser.mediator.initial_state_turn_info.display_turn + @parser.mediator.hand_logs.size.next,
           @parser.mediator.hand_logs.size.next,
-          @parser.mb_ljust(@parser.last_action_info.kif_word, @params[:length]),
+          mb_ljust(@parser.last_action_info.kif_word, @params[:length]),
         ]
       end
 
