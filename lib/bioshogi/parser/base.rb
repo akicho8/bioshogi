@@ -42,23 +42,14 @@ module Bioshogi
           # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
           #  skip: 棋譜には記さない
           # false: 例外を出す(デフォルト)
-          typical_error_case: false,
-          # run_and_build_skip: false,
-          skill_monitor_enable: true,
-          skill_monitor_technique_enable: true,
-
-          validate_enable: true,           # 将棋ウォーズの棋譜なら指定すると少し速くなる
-          candidate_enable: true, # ki2にしないのであれば指定するとかなり速くなる
-
-          support_for_piyo_shogi_v4_1_5: false, # ぴよ将棋でKIFが読めるようにする
+          :typical_error_case             => false,
+          :skill_monitor_enable           => true,
+          :skill_monitor_technique_enable => true,
+          :validate_enable                => true, # 将棋ウォーズの棋譜なら指定すると少し速くなる
+          :candidate_enable               => true, # ki2にしないのであれば指定するとかなり速くなる
+          :support_for_piyo_shogi_v4_1_5  => false, # ぴよ将棋でKIFが読めるようにする
         }
       end
-
-      # def parse
-      #   unless @parser_options[:run_and_build_skip]
-      #     mediator_run_once
-      #   end
-      # end
 
       def parse
         raise NotImplementedError, "#{__method__} is not implemented"
