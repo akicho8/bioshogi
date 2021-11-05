@@ -52,14 +52,7 @@ module Bioshogi
       end
 
       def raw_header_part_string
-        s = raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
-
-        if @parser_options[:support_for_piyo_shogi_v4_1_5]
-          s = s.gsub(/(の持駒：.*)$/, '\1 ')
-        end
-
-        s
-
+        raw_header_part_hash.collect { |key, value| "#{key}：#{value}\n" }.join
       end
     end
   end
