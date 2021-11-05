@@ -115,7 +115,7 @@ require_relative "bioshogi/last_action_info"
 require_relative "bioshogi/kifu_format_info"
 require_relative "bioshogi/chess_clock"
 
-require_relative "bioshogi/formatter/anything"
+require_relative "bioshogi/formatter/export_methods"
 
 require_relative "bioshogi/progress_cop"
 require_relative "bioshogi/media"

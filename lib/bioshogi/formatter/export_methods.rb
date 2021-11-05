@@ -4,7 +4,7 @@ require_relative "header_builder"
 
 module Bioshogi
   module Formatter
-    concern :Anything do
+    concern :ExportMethods do
       MIN_TURN = 14
 
       include HeaderBuilder

@@ -6,7 +6,7 @@ require_relative "header"
 module Bioshogi
   module Parser
     class Base
-      include Formatter::Anything
+      include Formatter::ExportMethods
 
       cattr_accessor(:header_sep) { "：" }
 
