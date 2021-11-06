@@ -155,6 +155,10 @@ module Bioshogi
         @king_place = king_soldier&.place
       end
 
+      def used_piece_counts
+        @used_piece_counts ||= Hash.new(0)
+      end
+
       # 大駒コンプリートしている？
       def stronger_piece_completed?
         stronger_piece_have_count >= 4

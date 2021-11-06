@@ -78,6 +78,10 @@ module Bioshogi
       ].join
     end
 
+    def soldier_for_counts
+      origin_soldier
+    end
+
     def type
       if promotable?
         if promote_trigger?

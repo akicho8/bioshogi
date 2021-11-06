@@ -84,5 +84,10 @@ module Bioshogi
         mediator.player_at(soldier.location.flip).mate_danger?
       end
     end
+
+    # 使った駒とする soldier
+    def soldier_for_counts
+      raise NotImplementedError, "#{__method__} is not implemented"
+    end
   end
 end

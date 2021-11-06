@@ -23,6 +23,10 @@ module Bioshogi
       player.piece_box.add(soldier.piece.key => 1)
     end
 
+    def soldier_for_counts
+      soldier
+    end
+
     def to_kif(options = {})
       options = {
         with_location: true,

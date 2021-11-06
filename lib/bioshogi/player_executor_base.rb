@@ -52,6 +52,7 @@ module Bioshogi
       end
 
       hand.execute(mediator)
+      execute_after_process
       if captured_soldier
         piece_box_added(captured_soldier)
       end
@@ -70,6 +71,9 @@ module Bioshogi
       turn_changed_process
 
       hand
+    end
+
+    def execute_after_process
     end
 
     def piece_box_added(captured_soldier)
