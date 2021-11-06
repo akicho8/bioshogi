@@ -5,7 +5,7 @@ module Bioshogi
     # special_piece: 大駒があるか？
     memory_record [
       { key: "平手",       handicap: false, special_piece: true,  },
-      { key: "青空将棋",   handicap: false, special_piece: true,  },
+      # { key: "青空将棋",   handicap: false, special_piece: true,  },
       { key: "香落ち",     handicap: true,  special_piece: true,  },
       { key: "右香落ち",   handicap: true,  special_piece: true,  },
       { key: "角落ち",     handicap: true,  special_piece: false, },
@@ -28,7 +28,7 @@ module Bioshogi
         key = key.sub(/飛落/, "飛車落")
         key = key.sub(/裸玉/, "十九枚落ち")
         key = key.sub(/詰将棋/, "平手")
-        key = key.sub(/青空\z/, "青空将棋")
+        # key = key.sub(/青空\z/, "青空将棋")
         key = key.sub(/落\z/, "落ち")  # 香落 -> 香落ち
         super
       end

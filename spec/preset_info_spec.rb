@@ -9,7 +9,7 @@ module Bioshogi
     end
 
     it "特殊な名前" do
-      assert { PresetInfo["青空"] }
+      # assert { PresetInfo["青空"] }
       assert { PresetInfo["詰将棋"] }
     end
 
