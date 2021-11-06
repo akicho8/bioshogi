@@ -20,6 +20,10 @@ module Bioshogi
       }.merge(options)
 
       @hand_log = hand_log
+
+      if candidate_soldiers
+        raise BioshogiError, "candidate_enable オプションが有効になっていないため KI2 の特殊な移動表記を作れません"
+      end
     end
 
     def to_s
