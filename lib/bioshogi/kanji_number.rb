@@ -1,4 +1,6 @@
-require "active_support/all"
+if $0 == __FILE__
+  require "active_support/core_ext/module/attribute_accessors"
+end
 
 module Bioshogi
   module KanjiNumber

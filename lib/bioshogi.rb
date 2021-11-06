@@ -4,8 +4,8 @@ require "active_support/logger"
 require "active_support/configurable"
 require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/class/attribute"
-require "active_support/core_ext/class/attribute_accessors"
-require "active_support/core_ext/module/attribute_accessors"
+require "active_support/core_ext/class/attribute_accessors"  # for cattr_accessor
+require "active_support/core_ext/module/attribute_accessors" # for mattr_accessor
 require "active_support/core_ext/string"
 
 require "active_support/dependencies/autoload"
