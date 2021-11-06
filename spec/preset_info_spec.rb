@@ -2,6 +2,17 @@ require "spec_helper"
 
 module Bioshogi
   describe PresetInfo do
+    it "名前の揺らぎを考慮" do
+      assert { PresetInfo["飛車落ち"] }
+      assert { PresetInfo["飛落ち"]   }
+      assert { PresetInfo["飛落"]     }
+    end
+
+    it "特殊な名前" do
+      assert { PresetInfo["青空"] }
+      assert { PresetInfo["詰将棋"] }
+    end
+
     it "to_position_sfen" do
       assert { PresetInfo["平手"].to_position_sfen   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
       assert { PresetInfo["香落ち"].to_position_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
@@ -13,10 +24,6 @@ module Bioshogi
 
     it "ある" do
       assert PresetInfo["飛香落ち"]
-    end
-
-    it "名前が微妙に違っても同じインスタンス" do
-      assert PresetInfo["飛車落ち"] == PresetInfo["飛落ち"]
     end
 
     it "▲が平手で△が香落ちなので「香落ち」だと判断できる" do
