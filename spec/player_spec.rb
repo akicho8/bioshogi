@@ -342,7 +342,7 @@ EOT
 
     it "「５八金(49)」を入力した結果からKI2変換したとき「58金右」となる" do
       # これはいままで ki2 入力でしか試していなかったため不具合を発見できなかった
-      # 移動元が明確な kif で入力し、ki2 変換してみると candidate が nil だったので「右」がつかなかった
+      # 移動元が明確な kif で入力し、ki2 変換してみると candidate_soldiers が nil だったので「右」がつかなかった
       # 将棋DB2にも同様の不具合がある
       mediator = Mediator.start
       mediator.execute("５八金(49)")

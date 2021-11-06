@@ -41,7 +41,7 @@ module Bioshogi
         # > 盤上の駒が動いた場合は通常の表記と同じ
         # > 持駒を打った場合は「打」と記入
         # > ※「打」と記入するのはあくまでもその地点に盤上の駒を動かすこともできる場合のみです。それ以外の場合は、持駒を打つ場合も「打」はつけません。
-        if @options[:force_drop] || !candidate.empty?
+        if @options[:force_drop] || !candidate_soldiers.empty?
           s << kw("打")
         end
       else
@@ -79,7 +79,7 @@ module Bioshogi
       {
         :place_from     => place_from,
         :place_to       => place_to,
-        :candidate      => candidate.collect(&:name),
+        :candidate_soldiers      => candidate_soldiers.collect(&:name),
         :koreru_c       => koreru_c,
         :_migi_idou     => _migi_idou?,
         :_hidari_idou   => _hidari_idou?,
@@ -269,32 +269,32 @@ module Bioshogi
 
     # 移動先にこれる駒の数
     def koreru_c
-      candidate.count
+      candidate_soldiers.count
     end
 
     # 左からこれる駒の数
     def _hidari_kara_c
-      candidate.count { |s| s.place.x.value < _tx }
+      candidate_soldiers.count { |s| s.place.x.value < _tx }
     end
 
     # 右からこれる駒の数
     def _migi_kara_c
-      candidate.count { |s| s.place.x.value > _tx }
+      candidate_soldiers.count { |s| s.place.x.value > _tx }
     end
 
     # 水平に寄れる駒の数
     def yoreru_c
-      candidate.count { |s| s.place.y.value == _ty }
+      candidate_soldiers.count { |s| s.place.y.value == _ty }
     end
 
     # 上がれる駒の数(移動先より下にある数)
     def agareru_c
-      candidate.count { |s| s.place.y.value.send(_i(:>), _ty) }
+      candidate_soldiers.count { |s| s.place.y.value.send(_i(:>), _ty) }
     end
 
     # 下がれる駒の数(移動先より上にある数)
     def sagareru_c
-      candidate.count { |s| s.place.y.value.send(_i(:<), _ty) }
+      candidate_soldiers.count { |s| s.place.y.value.send(_i(:<), _ty) }
     end
 
     # 移動先X
@@ -329,26 +329,26 @@ module Bioshogi
 
     # 候補手の座標範囲
     def _xr
-      @_xr ||= Range.new(*candidate.collect { |e| e.place.x.value }.minmax)
+      @_xr ||= Range.new(*candidate_soldiers.collect { |e| e.place.x.value }.minmax)
     end
 
     def _yr
-      @_yr ||= Range.new(*candidate.collect { |e| e.place.y.value }.minmax)
+      @_yr ||= Range.new(*candidate_soldiers.collect { |e| e.place.y.value }.minmax)
     end
 
     # 移動元で二つの龍が水平線上にいる？
     def idou_moto_no_ryu_ga_suihei_ni_iru?
-      candidate.collect { |e| e.place.y.value }.uniq.size == 1
+      candidate_soldiers.collect { |e| e.place.y.value }.uniq.size == 1
     end
 
     # 移動先の水平線上よりすべて上 or すべて下
     # つまり、移動先のYが候補のYの範囲に含まれている
-    # だから candidate.all?{|s|s.place.y.value < _ty} || candidate.all?{|s|s.place.y.value > _ty} から !_yr.cover?(_ty) に変更できる
+    # だから candidate_soldiers.all?{|s|s.place.y.value < _ty} || candidate_soldiers.all?{|s|s.place.y.value > _ty} から !_yr.cover?(_ty) に変更できる
     def idousakino_suiheisenjou_yori_subete_ue_mataha_shita?
       !_yr.cover?(_ty)
     end
 
-    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate, :handicap, to: :hand_log
+    delegate :drop_hand, :move_hand, :soldier, :hand, :candidate_soldiers, :handicap, to: :hand_log
     delegate :place, :piece, :location, :promoted, to: :soldier
 
     # 「打」？

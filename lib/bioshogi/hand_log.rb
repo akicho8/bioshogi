@@ -7,7 +7,7 @@ module Bioshogi
     attr_accessor :drop_hand
     attr_accessor :move_hand
 
-    attr_accessor :candidate
+    attr_accessor :candidate_soldiers
     attr_accessor :place_same
     attr_accessor :skill_set
     attr_accessor :handicap

@@ -4,7 +4,7 @@ module Bioshogi
   describe HandLog do
     it do
       move_hand = MoveHand.create(soldier: Soldier.from_str("▲６八銀"), origin_soldier: Soldier.from_str("▲７九銀"))
-      object = HandLog.new(move_hand: move_hand, candidate: [])
+      object = HandLog.new(move_hand: move_hand, candidate_soldiers: [])
       assert { object.to_kif == "６八銀(79)" }
       assert { object.to_ki2 == "６八銀" }
       assert { object.to_csa == "+7968GI" }

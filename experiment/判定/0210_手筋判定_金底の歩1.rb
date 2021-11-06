@@ -25,7 +25,7 @@ mediator.execute("11歩打")
 pp mediator.hand_logs.last
 pp mediator.hand_logs.last.skill_set.technique_infos.first.key == :"金底の歩"
 # >> #<Bioshogi::HandLog:0x00007fae7b176e80
-# >>  @candidate=[],
+# >>  @candidate_soldiers=[],
 # >>  @drop_hand=<△１一歩打>,
 # >>  @handicap=false,
 # >>  @move_hand=nil,

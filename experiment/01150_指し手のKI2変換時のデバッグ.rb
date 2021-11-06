@@ -21,7 +21,7 @@ tp official_formatter.options
 # >> |----------------+--------------------------------------------------|
 # >> |     place_from | ７三                                             |
 # >> |       place_to | ８二                                             |
-# >> |      candidate | ["△８一銀", "△７一銀", "△９三銀", "△７三銀"] |
+# >> |      candidate_soldiers | ["△８一銀", "△７一銀", "△９三銀", "△７三銀"] |
 # >> |       koreru_c | 4                                                |
 # >> |     _migi_idou | false                                            |
 # >> |   _hidari_idou | true                                             |
