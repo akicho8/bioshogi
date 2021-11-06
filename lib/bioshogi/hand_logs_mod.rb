@@ -10,13 +10,13 @@ module Bioshogi
 
     def hand_log
       @hand_log ||= HandLog.new({
-          :drop_hand      => @drop_hand,
-          :move_hand      => @move_hand,
-          :candidate_soldiers      => @candidate_soldiers,
-          :place_same     => place_same?,
-          :skill_set      => skill_set,
-          :handicap       => mediator.turn_info.handicap?,
-          :personal_clock => player.personal_clock.clone.freeze, # 時計の状態を保持して手に結びつける
+          :drop_hand          => @drop_hand,
+          :move_hand          => @move_hand,
+          :candidate_soldiers => @candidate_soldiers, # nil の場合もある
+          :place_same         => place_same?,
+          :skill_set          => skill_set,
+          :handicap           => mediator.turn_info.handicap?,
+          :personal_clock     => player.personal_clock.clone.freeze, # 時計の状態を保持して手に結びつける
         }).freeze
     end
 

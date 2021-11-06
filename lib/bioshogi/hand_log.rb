@@ -14,10 +14,12 @@ module Bioshogi
 
     attr_accessor :personal_clock
 
+    delegate :soldier, to: :hand
+
     def to_kif(options = {})
       options = {
-        with_location: false,
-        char_type: :formal_sheet,
+        :with_location => false,
+        :char_type     => :formal_sheet,
       }.merge(options)
 
       hand.to_kif(options)
@@ -39,6 +41,10 @@ module Bioshogi
       hand.to_sfen(options)
     end
 
+    def to_akf(options = {})
+      hand.to_akf(options)
+    end
+
     def to_kif_ki2
       [to_kif, to_ki2]
     end
@@ -51,10 +57,6 @@ module Bioshogi
       skill_set.kif_comment(soldier.location)
     end
 
-    def soldier
-      hand.soldier
-    end
-
     def hand
       move_hand || drop_hand
     end
@@ -65,13 +67,6 @@ module Bioshogi
 
     def yomiage_formatter(options = {})
       YomiageFormatter.new(self, options)
-    end
-
-    def to_akf(options = {})
-      # HandLogAkfFormatter.new(self, options).to_h
-      {
-        **hand.to_akf,
-      }
     end
   end
 end
