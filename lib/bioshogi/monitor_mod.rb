@@ -3,8 +3,7 @@
 module Bioshogi
   concern :MonitorMod do
     def execute_after_process
-      s = hand.soldier_for_counts
-      player.used_piece_counts[[s.piece.key, s.promoted]] += 1
+      player.used_piece_counts[hand.to_counts_key] += 1
     end
 
     def move_hand_process(move_hand)

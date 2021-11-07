@@ -22,18 +22,8 @@ module Bioshogi
       EOT
 
       mediator = info.mediator
-      assert { mediator.player_at(:black).used_piece_counts == { [:bishop, false] => 2 } }
-      assert { mediator.player_at(:white).used_piece_counts == { [:silver, false] => 1 } }
+      assert { mediator.player_at(:black).used_piece_counts == {"B0" => 2} }
+      assert { mediator.player_at(:white).used_piece_counts == {"S0" => 1} }
     end
   end
 end
-# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
-# >> .
-# >> 
-# >> Top 1 slowest examples (0.33945 seconds, 98.5% of total time):
-# >>   works
-# >>     0.33945 seconds -:5
-# >> 
-# >> Finished in 0.34446 seconds (files took 1.3 seconds to load)
-# >> 1 example, 0 failures
-# >> 

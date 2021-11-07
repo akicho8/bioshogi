@@ -19,5 +19,5 @@ info = Parser.parse(<<~EOT)
 EOT
 
 mediator = info.mediator
-mediator.player_at(:black).used_piece_counts # => {[:bishop, false]=>2}
-mediator.player_at(:white).used_piece_counts # => {[:silver, false]=>1}
+mediator.player_at(:black).used_piece_counts # => {"B0"=>2}
+mediator.player_at(:white).used_piece_counts # => {"S0"=>1}
