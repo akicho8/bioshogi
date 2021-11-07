@@ -1,6 +1,13 @@
 # -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/piece_spec.rb" -*-
 # frozen-string-literal: true
-
+#
+#  Piece.s_to_h("飛0 角 竜1 馬2 龍2")                    # => {:rook=>3, :bishop=>3}
+#  Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
+#  Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
+#  Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
+#  Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
+#  Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
+#
 require "bioshogi/piece/piece_csa"
 require "bioshogi/piece/piece_vector"
 require "bioshogi/piece/piece_scale"
@@ -11,18 +18,13 @@ require "bioshogi/piece/piece_pressure"
 module Bioshogi
   class Piece
     class << self
-      # Piece.s_to_h("飛0 角 竜1 馬2 龍2")                    # => {:rook=>3, :bishop=>3}
-      # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
-      # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
-      # Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
-      # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
-      # Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
-
+      # 持駒文字列から駒配列に変換
       # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
       def s_to_a(str)
         s_to_h(str).yield_self { |v| h_to_a(v) }
       end
 
+      # 持駒文字列から駒個数のハッシュに変換
       # Piece.s_to_h("飛0 角 竜1 馬2 龍2") # => {:rook=>3, :bishop=>3}
       def s_to_h(str)
         str = KanjiNumber.kanji_to_number_string(str)
@@ -33,29 +35,31 @@ module Bioshogi
         end
       end
 
+      # 駒個数のハッシュから駒配列に変換
       # Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
-      def h_to_a(hash)
-        hash.flat_map do |piece_key, count|
+      def h_to_a(hv)
+        hv.flat_map do |piece_key, count|
           count.times.collect { Piece.fetch(piece_key) }
         end
       end
 
+      # 駒個数のハッシュから持駒文字列に変換
       # Piece.h_to_s(bishop: 1, rook: 2) # => "飛二 角"
-      def h_to_s(hash, options = {})
+      def h_to_s(hv, options = {})
         options = {
-          ordered: true,      # 価値のある駒順に並べる
-          separator: " ",
+          :ordered   => true, # 価値の高い順に並べる
+          :separator => " ",
         }.merge(options)
 
-        hash = hash.collect { |piece_key, count| [Piece.fetch(piece_key), count] }
+        hv = hv.collect { |key, count| [Piece.fetch(key), count] }
 
         if options[:ordered]
-          hash = hash.sort_by { |piece, _| -piece.basic_weight }
+          hv = hv.sort_by { |e, _| -e.basic_weight }
         end
 
-        hash = hash.reject { |piece, count| count.zero? }
+        hv = hv.reject { |piece, count| count.zero? }
 
-        hash.map { |piece, count|
+        hv.map { |piece, count|
           raise MustNotHappen if count < 0
           if count >= 2
             count = KanjiNumber.number_to_kanji(count)
@@ -66,12 +70,14 @@ module Bioshogi
         }.join(options[:separator])
       end
 
+      # 駒配列から持駒文字列に変換
       # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
       def a_to_s(pieces, options = {})
         pieces = pieces.collect { |e| Piece.fetch(e) }
-        h_to_s(pieces.group_by(&:key).transform_values(&:size), options)
+        h_to_s(pieces.group_by(&:key).transform_values(&:size), options) # ruby 2.7 では tally が使える
       end
 
+      # 持駒文字列から駒個数のハッシュに変換しつつさらに先後で分ける
       # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
       def s_to_h2(str)
         hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
@@ -103,7 +109,11 @@ module Bioshogi
       def fetch(value)
         super
       rescue => error
-        raise PieceNotFound, "#{value.inspect} に対応する駒がありません\n#{error.message}\nkeys: #{basic_group.keys.inspect}\nkeys: #{promoted_group.keys.inspect}"
+        raise PieceNotFound, [
+          "#{value.inspect} に対応する駒がありません",
+          error.message,
+          "keys: #{(basic_group.keys + promoted_group.keys).inspect}",
+        ].join("\n")
       end
 
       def basic_group
@@ -134,6 +144,9 @@ module Bioshogi
         end
       end
 
+      # char_type:
+      #   single_char: "全"
+      #   formal_sheet: "成銀"
       def any_name(promoted, options = {})
         if promoted
           if options[:char_type] == :formal_sheet
@@ -159,7 +172,7 @@ module Bioshogi
       end
     end
 
-    concerning :UsiMethods do
+    concerning :SfenMethods do
       class_methods do
         def fetch_by_sfen_char(ch)
           fetch(ch.upcase)
