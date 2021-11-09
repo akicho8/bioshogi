@@ -45,7 +45,7 @@ module Bioshogi
         { key: :is_color_theme_splatoon_stripe_green,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_splatoon_stripe_purple,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_purple.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png", outer_frame_fill_color: "hsla(330,100%,71%,0.7)") }, },
+        { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png", outer_frame_fill_color: "hsla(330,100%,93%,0.88)") }, },
 
         # { key: :is_color_theme_groovy_board_texture1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         # { key: :is_color_theme_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
