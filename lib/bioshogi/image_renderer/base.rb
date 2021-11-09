@@ -167,7 +167,7 @@ module Bioshogi
           # layer = Magick::Image.read("netscape:").first.resize(*image_rect)
           layer = condition_then_flip(layer) # 全体を反転するので背景だけ反転しておくことで元に戻る
         when v = params[:canvas_pattern_key]
-          ActiveSupport::Deprecation.warn("激重なため使用禁止")
+          warn "激重なため使用禁止"
           layer = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
           layer = Magick::Image.read(v).first

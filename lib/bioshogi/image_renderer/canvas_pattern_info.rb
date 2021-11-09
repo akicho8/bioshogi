@@ -8,7 +8,7 @@ module Bioshogi
       ]
 
       def execute(params = {})
-        ActiveSupport::Deprecation.warn("激重なので使用禁止")
+        warn "激重なので使用禁止"
         send(command, {**default_params, **params})
       end
 
