@@ -11,6 +11,8 @@ module Bioshogi
 
       def turn_draw(layer)
         if params[:turn_embed_key] == "is_turn_embed_on"
+          logger.info "turn_draw"
+
           pointsize = cell_w * 0.75
           w = pointsize * 4
           h = pointsize

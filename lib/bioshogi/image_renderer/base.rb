@@ -134,18 +134,21 @@ module Bioshogi
           soldier_move_cell_draw  # to d_move_layer
           soldier_draw_all        # to d_piece_layer
           stand_draw              # to d_piece_layer, d_piece_count_layer
-          # turn_draw               # to d_turn_layer
 
-          logger.info "composite process"
+          # メモリが足りないとこのどこかで落ちる
+          logger.info "composite"
           current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(with_shadow(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp) # 背景 + 物'
+
+          logger.info "condition_then_flip"
           current = condition_then_flip(current)
-          # current = current.composite(@d_turn_layer, Magick::NorthWestGravity, Magick::OverCompositeOp) if @d_turn_layer
-          turn_draw(current)
-          current = condition_then_negate(current)
+
+          turn_draw(current)    # レイヤーを作らず直接書き込み
+
+          current = condition_then_color_negate(current) # 色反転
 
           @build_counter += 1
           current
@@ -201,7 +204,7 @@ module Bioshogi
         end
       end
 
-      def condition_then_negate(layer)
+      def condition_then_color_negate(layer)
         if params[:negate]
           layer.negate
         else
