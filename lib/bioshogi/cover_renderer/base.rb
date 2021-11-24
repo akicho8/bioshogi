@@ -35,9 +35,9 @@ module Bioshogi
         gc.pointsize = params[:font_size]
         gc.density   = params[:density]
         gc.gravity   = Magick::CenterGravity
-        gc.annotate(@canvas_layer, 0, 0, 0, @canvas_layer.rows * -1 * params[:pull_to_top], params[:text])
+        gc.annotate(@canvas_layer, 0, 0, 0, @canvas_layer.rows * -1 * params[:pull_to_top], text)
 
-        if str = params[:bottom_text].presence
+        if str = bottom_text
           gc = Magick::Draw.new
           pointsize = 16
           margin_x = 8
@@ -53,6 +53,14 @@ module Bioshogi
       end
 
       private
+
+      def text
+        params[:text].to_s.gsub(/\u3000/, "  ")
+      end
+
+      def bottom_text
+        params[:bottom_text].presence
+      end
 
       def canvas_layer_create
         Magick::Image.new(*image_rect) do |e|
