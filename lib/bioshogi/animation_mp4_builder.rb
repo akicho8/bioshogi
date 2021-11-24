@@ -219,11 +219,11 @@ module Bioshogi
 
               @progress_cop.next_step("序盤 BGM時間・音量調整")
               # strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
-              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -t #{part1_t} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
+              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_a} -vn -t #{part1_t} -af volume=#{params[:audio_part_a_volume]} -y _part1.m4a)
               logger.info { "_part1.m4a: #{Media.duration('_part1.m4a')}" }
 
               @progress_cop.next_step("終盤 BGM時間・音量調整")
-              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -t #{part2_t} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
+              strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_b} -vn -t #{part2_t} -af volume=#{params[:audio_part_b_volume]} -y _part2.m4a)
               logger.info { "_part2.m4a: #{Media.duration('_part2.m4a')}" }
 
               @progress_cop.next_step("クロスフェイド連結")
@@ -242,7 +242,7 @@ module Bioshogi
                   logger.info { "audio_part_x: #{audio_part_x}" }
                   @progress_cop.next_step("フェイドアウトと音量調整")
                   af = audio_filters("volume=#{volume}", fadeout_value)
-                  strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -t #{total_duration} #{af} #{audio_bit_rate_o} -y _same_length1.m4a)
+                  strict_system %(ffmpeg -v warning -stream_loop -1 -i #{audio_part_x} -vn -t #{total_duration} #{af} #{audio_bit_rate_o} -y _same_length1.m4a)
                   logger.info { "#{audio_part_x.basename}: #{Media.duration(audio_part_x)}" }
                   break
                 end
