@@ -18,7 +18,7 @@ module Bioshogi
           end
 
           if player.location != origin_soldier.location
-            errors_add ReversePlayerPieceMoveError, "相手の駒を動かそうとしています"
+            errors_add ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{player.mediator.turn_info.turn_offset.next}手目の手番は#{player.location.name}#{player.call_name}ですが#{origin_soldier.location.name}#{player.opponent_player.call_name}の駒を持ちました"
           end
 
           if s = board.surface[soldier.place]

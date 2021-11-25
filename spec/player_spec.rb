@@ -104,6 +104,10 @@ EOT
             assert { Mediator.player_test_soldier_names(init: ["１二と", "１四歩"], execute: "１一と") == ["▲１一と", "▲１四歩"] }
           end
         end
+
+        it "相手の駒を動かそうとした" do
+          expect { Mediator.start.execute("34歩(33)") }.to raise_error(Bioshogi::ReversePlayerPieceMoveError, /【反則】相手の駒を動かそうとしています。1手目の手番は▲先手ですが△後手の駒を持ちました/)
+        end
       end
 
       describe "できない" do

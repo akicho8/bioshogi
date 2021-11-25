@@ -9,10 +9,11 @@ player_executor.execute
 
 mediator = Mediator.start
 mediator.execute("▲22角成")    # => 
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:111:in `raise_error': 移動できる駒がなく打の省略形と思われる指し手ですが銀を持っていません (Bioshogi::HoldPieceNotFound2)
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:131:in `raise_error': ５五に移動できる銀がないため打の省略形と考えましたが銀を持っていません。手番が間違っているのかもしれません (Bioshogi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀
 # ~> 棋譜: ２六歩(27) ３四歩(33)
+# ~> 
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
