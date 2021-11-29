@@ -102,7 +102,7 @@ module Bioshogi
 
   # 指定座標に移動できる駒に移動元の駒が含まれていない。初手25歩(27)や初手22角成(88)
   # いわゆる角ワープ
-  class CandidateSoldiersNotInclude < RuleError
+  class SoldierWarpError < RuleError
   end
 
   # 成れない条件で成ろうとする。初手７六歩成など
