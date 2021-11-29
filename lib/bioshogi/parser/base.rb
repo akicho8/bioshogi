@@ -22,32 +22,35 @@ module Bioshogi
         def accept?(source)
           raise NotImplementedError, "#{__method__} is not implemented"
         end
+
+        def default_parser_options
+          {
+            # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
+            #  skip: 棋譜には記さない
+            # false: 例外を出す(デフォルト)
+            :typical_error_case             => false,
+            :skill_monitor_enable           => true,
+            :skill_monitor_technique_enable => true,
+            :candidate_enable               => true,  # ki2にしないのであれば指定するとかなり速くなる
+
+            :validate_enable                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
+            :validate_double_pawn_skip      => false, # 二歩を無視するか？
+            :validate_warp_skip             => false, # 角ワープを無視するか？
+          }
+        end
       end
 
       attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
 
       def initialize(source, parser_options = {})
         @source = source
-        @parser_options = default_parser_options.merge(parser_options)
+        @parser_options = self.class.default_parser_options.merge(parser_options)
 
         @move_infos = []
         @first_comments = []
         @board_source = nil
         @last_status_params = nil
         @error_message = nil
-      end
-
-      def default_parser_options
-        {
-          # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
-          #  skip: 棋譜には記さない
-          # false: 例外を出す(デフォルト)
-          :typical_error_case             => false,
-          :skill_monitor_enable           => true,
-          :skill_monitor_technique_enable => true,
-          :validate_enable                => true, # 将棋ウォーズの棋譜なら指定すると少し速くなる
-          :candidate_enable               => true, # ki2にしないのであれば指定するとかなり速くなる
-        }
       end
 
       def parse

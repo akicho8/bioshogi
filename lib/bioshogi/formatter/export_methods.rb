@@ -24,6 +24,8 @@ module Bioshogi
                 :skill_monitor_technique_enable,
                 :candidate_enable,
                 :validate_enable,
+                :validate_double_pawn_skip,
+                :validate_warp_skip,
               ]))
         end
       end

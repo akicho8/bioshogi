@@ -100,7 +100,8 @@ module Bioshogi
   class NotFoundOnBoard < RuleError
   end
 
-  # 指定座標に移動できる駒に移動元の駒が含まれていない。初手25歩(27)の場合
+  # 指定座標に移動できる駒に移動元の駒が含まれていない。初手25歩(27)や初手22角成(88)
+  # いわゆる角ワープ
   class CandidateSoldiersNotInclude < RuleError
   end
 

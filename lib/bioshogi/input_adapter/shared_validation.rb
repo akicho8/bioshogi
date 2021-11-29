@@ -35,9 +35,12 @@ module Bioshogi
             end
           end
 
-          # 初手 "25歩(27)" とした場合
-          if !candidate_soldiers.include?(move_hand.origin_soldier)
-            errors_add CandidateSoldiersNotInclude, "#{move_hand}としましたが#{place_from}から#{place}には移動できません"
+          if player.mediator.params[:validate_warp_skip]
+          else
+            # 初手 "25歩(27)" とした場合
+            if !candidate_soldiers.include?(move_hand.origin_soldier)
+              errors_add CandidateSoldiersNotInclude, "#{move_hand}としましたが#{place_from}から#{place}には移動できません"
+            end
           end
         end
 
@@ -51,9 +54,12 @@ module Bioshogi
       def soft_validations
         super
 
-        if drop_hand
-          if collision_soldier = soldier.collision_pawn(board)
-            errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{drop_hand}ができません"
+        if player.mediator.params[:validate_double_pawn_skip]
+        else
+          if drop_hand
+            if collision_soldier = soldier.collision_pawn(board)
+              errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{drop_hand}ができません"
+            end
           end
         end
 
