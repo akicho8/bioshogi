@@ -5,7 +5,6 @@ module Bioshogi
         def default_params
           {
             :text         => nil,
-            :bottom_text  => nil,
             :width        => 1200,
             :height       => 630,
             :font_size    => 64,
@@ -16,6 +15,9 @@ module Bioshogi
             :image_format => "png",
             :font_regular => "#{__dir__}/../assets/fonts/RictyDiminished-Regular.ttf",  # 駒のフォント(普通)
             :font_bold    => "#{__dir__}/../assets/fonts/RictyDiminished-Bold.ttf",     # 駒のフォント(太字)
+            :bottom_text           => nil,
+            :bottom_text_pointsize => 32,
+            :bottom_text_margin    => 8,
           }
         end
       end
@@ -34,19 +36,19 @@ module Bioshogi
         gc.fill      = params[:font_color]
         gc.pointsize = params[:font_size]
         gc.density   = params[:density]
-        gc.gravity   = Magick::CenterGravity
-        gc.annotate(@canvas_layer, 0, 0, 0, @canvas_layer.rows * -1 * params[:pull_to_top], text)
+        gc.gravity   = Magick::CenterGravity # 中央
+        x = 0
+        y = @canvas_layer.rows * -1 * params[:pull_to_top] # 高さ x pull_to_top のぶんだけ持ち上げる
+        gc.annotate(@canvas_layer, 0, 0, x, y, text)
 
         if str = bottom_text
           gc = Magick::Draw.new
-          pointsize = 16
-          margin_x = 8
-          margin_y = 6
           gc.font      = params[:font_regular]
           gc.fill      = params[:font_color]
-          gc.pointsize = pointsize
+          gc.pointsize = params[:bottom_text_pointsize]
           gc.gravity   = Magick::SouthEastGravity # 右下
-          gc.annotate(@canvas_layer, 0, 0, margin_x, margin_y, str)
+          margin = params[:bottom_text_margin]
+          gc.annotate(@canvas_layer, 0, 0, margin, margin, str)
         end
 
         @canvas_layer
@@ -55,7 +57,7 @@ module Bioshogi
       private
 
       def text
-        params[:text].to_s.gsub(/\u3000/, "  ")
+        @text ||= params[:text].to_s.gsub(/\u3000/, "  ") # Ricty フォントでは全角が "「」" になってしまうため透明にする
       end
 
       def bottom_text
