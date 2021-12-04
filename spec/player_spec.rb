@@ -106,7 +106,7 @@ EOT
         end
 
         it "相手の駒を動かそうとした" do
-          expect { Mediator.start.execute("34歩(33)") }.to raise_error(Bioshogi::ReversePlayerPieceMoveError, /【反則】相手の駒を動かそうとしています。1手目の手番は▲先手ですが△後手の駒を持ちました/)
+          expect { Mediator.start.execute("34歩(33)") }.to raise_error(Bioshogi::ReversePlayerPieceMoveError, /【反則】相手の駒を動かそうとしています。1手目の手番は先手ですが後手の駒を持ちました/)
         end
       end
 
