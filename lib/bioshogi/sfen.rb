@@ -38,7 +38,14 @@ module Bioshogi
       s = self.class.startpos_remove(source)
       md = s.match(SFEN_REGEXP)
       unless md
-        raise SyntaxDefact, "入力されたSFEN形式の棋譜はぶっこわれています : #{source.inspect}"
+        message = []
+        message << "入力されたSFEN形式が正しく読み取れません。"
+        if source.match?(/\R/)
+          message << "途中で改行を含めないでください。"
+        end
+        message << " : #{source.inspect}"
+        message = message.join
+        raise SyntaxDefact, message
       end
       @attributes = md.named_captures.symbolize_keys
     end
