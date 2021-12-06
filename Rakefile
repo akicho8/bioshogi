@@ -51,7 +51,7 @@ task "demo" do
   end
 end
 
-desc "配所テーマのキャッシュ生成"
+desc "配色テーマのキャッシュ生成"
 task "color_theme_cache" do
   require "bioshogi"
   Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
