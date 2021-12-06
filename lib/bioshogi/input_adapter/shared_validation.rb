@@ -20,7 +20,14 @@ module Bioshogi
           if player.location != origin_soldier.location
             # player.location.name         => ▲
             # origin_soldier.location.name => △
-            errors_add ReversePlayerPieceMoveError, "相手の駒を動かそうとしています。#{player.mediator.turn_info.turn_offset.next}手目の手番は#{player.call_name}ですが#{player.opponent_player.call_name}の駒を持ちました"
+            message = []
+            message << "相手の駒を動かそうとしています"
+            message << "#{player.mediator.turn_info.turn_offset.next}手目の#{player.call_name}の手番ですが#{player.opponent_player.call_name}の駒を持ちました"
+            if player.mediator.turn_info.display_turn == 0
+              message << "もし平手で手番のハンデを貰っているなら☗側が初手を指してください"
+            end
+            message = message.join("。")
+            errors_add ReversePlayerPieceMoveError, message
           end
 
           if s = board.surface[soldier.place]
