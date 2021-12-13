@@ -23,6 +23,53 @@ module Bioshogi
     # -3334FU,T0
     # %TORYO,T16
 
+    # '-- syougi kifu --
+    # 'format=csa_v2
+    # 'make=QinoaSyougiConverter
+    # V2
+    # N+guest
+    # N-tume
+    # $START_TIME:2021/12/13 13:43:40
+    # $END_TIME:2021/12/13 13:46:37
+    # '--
+    # 'log=start_board
+    # P1-OU *  *  *  *  *  *  *  *
+    # P2 *  * +TO *  *  *  *  *  *
+    # P3+TO+TO+TO *  *  *  *  *  *
+    # P4 *  *  *  *  *  *  *  *  *
+    # P5 *  *  * -KA * +FU *  *  *
+    # P6 *  *  * -UM+FU * +FU+FU+FU
+    # P7 *  *  *  *  * -TO *  *  *
+    # P8 *  *  *  *  * +KI+GI-HI+OU
+    # P9 *  * -HI *  * +KI *  * +KY
+    # P+00KI
+    # P+00GI
+    # P+00KE
+    # P+00KY
+    # P+00FU
+    # P-00KI
+    # P-00GI00GI
+    # P-00KE
+    # '--
+    # +
+    # +1828OU,T1
+    # -4738TO,T1
+    # +4938KI,T1
+    # -0039GI,T1
+    # +3839KI,T1
+    # -0037GI,T1
+    # +2837OU,T1
+    # -7939RY,T1
+    # +3746OU,T1
+    # -3948RY,T1
+    # +4635OU,T54
+    # -6657UM,T1
+    # +3525OU,T26
+    # -0024KI,T1
+    # %TORYO
+    #
+    # 'end
+
     class CsaParser < Base
       cattr_accessor(:comment_char) { "'" }
 
@@ -30,10 +77,10 @@ module Bioshogi
         def accept?(source)
           source = Parser.source_normalize(source)
           false ||
-            source.match?(/^\s*\b(V\d+\.\d+)\b/)  || # '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
-            source.match?(/\b(PI|P\d|P[\+\-])\b/) ||
-            source.match?(/[+-]\d{4}[A-Z]{2}/)    ||
-            source.match?(/\b(N[+-])\b/)          ||
+            source.match?(/^\s*\b(V\d+\.\d+)\b/)  || # V2.2 '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
+            source.match?(/\b(PI|P\d|P[\+\-])\b/) || # PI P1 P+ P-
+            source.match?(/[+-]\d{4}[A-Z]{2}/)    || # +1828OU
+            source.match?(/\b(N[+-])\b/)          || # 対局者名
             false
         end
       end
@@ -60,28 +107,28 @@ module Bioshogi
         end
         header_normalize
 
+        @board_source = nil
+
         ################################################################################ (1)
         # > (1) 平手初期配置と駒落ち
         # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
         # > 例:二枚落ちPI82HI22KA
 
-        unless @board_source
-          if md = s.match(/^PI(?<handicap_piece_list>.*)/)
-            mediator = Mediator.new
-            mediator.placement_from_preset("平手")
-            if v = md[:handicap_piece_list]
-              v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
-                place = Place.fetch(xy)
-                piece = Piece.fetch(piece_key)
-                soldier = mediator.board.fetch(place)
-                if soldier.piece != piece
-                  raise SyntaxDefact, "#{v}として#{place}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
-                end
-                mediator.board.safe_delete_on(soldier.place)
+        if md = s.match(/^PI(?<handicap_piece_list>.*)/)
+          mediator = Mediator.new
+          mediator.placement_from_preset("平手")
+          if v = md[:handicap_piece_list]
+            v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
+              place = Place.fetch(xy)
+              piece = Piece.fetch(piece_key)
+              soldier = mediator.board.fetch(place)
+              if soldier.piece != piece
+                raise SyntaxDefact, "#{v}として#{place}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
               end
+              mediator.board.safe_delete_on(soldier.place)
             end
-            @board_source = mediator.board.to_s
           end
+          @board_source = mediator.board.to_s
         end
 
         ################################################################################ (2)
@@ -94,7 +141,10 @@ module Bioshogi
         # > P2 * -HI *  *  *  *  * -KA *
 
         # P1 形式の盤面の読み取り
-        unless @board_source
+        if s.match?(/^P\d/)
+          if @board_source
+            raise SyntaxDefact, "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています"
+          end
           @board_source = s.scan(/^P\d.*\n/).join.presence
         end
 
@@ -107,46 +157,61 @@ module Bioshogi
         # P+53KI00GI    …… 先手 ５三金 駒台に銀 を配置
         # P-00AL        …… 後手 残りすべての駒を駒台に配置
 
-        unless @board_source
-          if s.match?(/^P[\+\-](.*)/)
-            sub_mediator = Mediator.new
+        # NOTE: (2)の一括表現と(3)の駒別単独表現は共存する
+        # ドキュメントにはこのあたりの言及がなかったため @board_source がすでにあればスキップしていたが
+        # 詰将棋などではここで持駒を調整される
 
-            # 駒箱
-            piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
+        # unless @board_source
+        if s.match?(/^P[\+\-](.*)/)
+          sub_mediator = Mediator.new
 
-            # 両者の駒台
-            hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+          # 駒箱
+          piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
 
-            s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
-              location = Location.fetch(location_key)
-              piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
-                if piece_ch == "AL"
-                  raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません" if xy != "00"
-                  # 残りすべてを駒台に置く
-                  hold_pieces[location] += piece_box.pick_out_without_king
-                else
-                  attrs = Soldier.piece_and_promoted(piece_ch)
-                  # 駒箱から取り出す
-                  piece = piece_box.pick_out(attrs[:piece])
-                  if xy == "00"
-                    # 駒台に置く
-                    raise SyntaxDefact, "#{piece.name} は駒台に置けません" if piece.key == :king
-                    hold_pieces[location] << piece
-                  else
-                    # 盤に置く
-                    soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
-                    sub_mediator.board.place_on(soldier)
+          # 両者の駒台
+          hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+
+          s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
+            location = Location.fetch(location_key)
+            piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
+              if piece_ch == "AL"
+                if xy != "00"
+                  raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません"
+                end
+                # 残りすべてを駒台に置く
+                hold_pieces[location] += piece_box.pick_out_without_king
+              else
+                attrs = Soldier.piece_and_promoted(piece_ch)
+                # 駒箱から取り出す
+                piece = piece_box.pick_out(attrs[:piece])
+                if xy == "00"
+                  # 駒台に置く
+                  if piece.key == :king
+                    raise SyntaxDefact, "#{piece.name} は駒台に置けません"
                   end
+                  hold_pieces[location] << piece
+                else
+                  # 盤に置く
+                  if @board_source
+                    raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
+                  end
+                  soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
+                  sub_mediator.board.place_on(soldier)
                 end
               end
             end
-            hold_pieces.each do |location, pieces|
-              player = sub_mediator.player_at(location)
-              header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
-            end
+          end
+          hold_pieces.each do |location, pieces|
+            player = sub_mediator.player_at(location)
+            header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+          end
+
+          # PI か P1 で作ったのを破壊してしまうため指定がないときだけ指定する
+          unless @board_source
             @board_source = sub_mediator.board.to_s
           end
         end
+        # end
 
         # 手番は見ていない
 
