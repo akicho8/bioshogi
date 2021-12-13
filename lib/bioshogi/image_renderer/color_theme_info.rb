@@ -363,8 +363,9 @@ module Bioshogi
           :real_shadow_sigma     => 2.0,
           :real_shadow_opacity   => 0.9,
 
-          :soldier_font_bold     => true,
-          :stand_piece_font_bold => true,
+          # 初期値を bold 化する場合はコメントアウト
+          # :soldier_font_bold     => true,
+          # :stand_piece_font_bold => true,
 
           :piece_pentagon_scale  => 0.9,
           :soldier_font_scale    => 0.7,
