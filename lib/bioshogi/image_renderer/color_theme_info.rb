@@ -401,7 +401,7 @@ module Bioshogi
           verbose: false,
         }.merge(options)
         parser = Parser.parse(SFEN1)
-        file = Pathname("#{__dir__}/../assets/images/color_theme_cache/#{key}.png").expand_path
+        file = Pathname("#{__dir__}/../assets/images/color_theme_preview/#{key}.png").expand_path
         bin = parser.to_png(color_theme_key: key, width: 1920, height: 1080)
         FileUtils.makedirs(file.dirname)
         file.write(bin)

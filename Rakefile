@@ -51,10 +51,13 @@ task "demo" do
   end
 end
 
-desc "配色テーマのキャッシュ生成"
-task "color_theme_cache" do
-  require "bioshogi"
-  Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
-    e.color_theme_cache_build(verbose: true)
+namespace :color_theme_preview do
+  desc "配色テーマのキャッシュ生成"
+  task "genenrate" do
+    require "bioshogi"
+    Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
+      e.color_theme_cache_build(verbose: true)
+    end
   end
 end
+
