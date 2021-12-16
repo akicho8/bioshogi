@@ -22,7 +22,7 @@ module Bioshogi
             # origin_soldier.location.name => △
             message = []
             message << "相手の駒を動かそうとしています"
-            message << "#{player.mediator.turn_info.turn_offset.next}手目の#{player.call_name}の手番ですが#{player.opponent_player.call_name}の駒を持ちました"
+            message << "#{player.mediator.turn_info.turn_offset.next}手目は#{player.call_name}の手番ですが#{player.opponent_player.call_name}の駒を持ちました"
             if player.mediator.turn_info.display_turn == 0
               message << "もし平手で手番のハンデを貰っているなら☗側が初手を指してください"
             end
