@@ -47,7 +47,7 @@ module Bioshogi
           +
 
           %TORYO
-      EOT
+        EOT
       end
     end
 

@@ -116,15 +116,16 @@ module Bioshogi
       # 3. これが正しい
       out << @parser.mediator.turn_info.turn_offset_zero_location.csa_sign + "\n"
 
-      list = @parser.mediator.hand_logs.collect.with_index do |e, i|
-        if @parser.clock_exist?
-          [e.to_csa, "T#{@parser.used_seconds_at(i)}"].join(",")
-        else
-          e.to_csa
+      if @parser.mediator.hand_logs.present?
+        list = @parser.mediator.hand_logs.collect.with_index do |e, i|
+          if @parser.clock_exist?
+            [e.to_csa, "T#{@parser.used_seconds_at(i)}"].join(",")
+          else
+            e.to_csa
+          end
         end
+        out << list.join(separator) + "\n"
       end
-
-      out << list.join(separator) + "\n"
 
       out.join
     end
