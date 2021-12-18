@@ -10,6 +10,9 @@ module Bioshogi
       super
 
       if move_hand.soldier.piece.key == :king
+        # if move_hand.origin_soldier.initial_place?
+        #   # 元の位置から動いたか？
+        # end
         player.king_moved_counter += 1 # 居玉判定用
         player.king_first_moved_turn ||= mediator.turn_info.turn_offset # 本当の居玉判定用
       end

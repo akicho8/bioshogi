@@ -188,6 +188,16 @@ module Bioshogi
         Dimension::Xplace.dimension - 1 - place.x.value
       end
 
+      # センターにいる？
+      def center_place?
+        place.x.value == Dimension::Xplace.dimension / 2
+      end
+
+      # 自玉の位置にいる？
+      def initial_place?
+        center_place? && bottom_spaces == 0
+      end
+
       # 駒の重さ(=価値) 常にプラス
       def abs_weight
         piece.any_weight(promoted)

@@ -330,6 +330,7 @@ module Bioshogi
 
                 # 居玉判定
                 if true
+                  # if preset_info.key == :"平手"
                   mediator.players.each do |e|
                     # 14手以上の対局で一度も動かずに終了した
                     done = false
@@ -356,6 +357,7 @@ module Bioshogi
                       e.skill_set.list_push(NoteInfo["相居玉"])
                     end
                   end
+                  # end
                 end
               end
             end
