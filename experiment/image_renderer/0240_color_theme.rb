@@ -22,7 +22,7 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
+# parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
@@ -75,7 +75,7 @@ parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
-# parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
+parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
 # parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
 # parser.image_renderer(color_theme_key: "is_color_theme_piyo").display
 
