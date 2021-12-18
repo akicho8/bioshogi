@@ -185,7 +185,7 @@ module Bioshogi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::Yplace.dimension - 1 - place.x.value
+        Dimension::Xplace.dimension - 1 - place.x.value
       end
 
       # 駒の重さ(=価値) 常にプラス
