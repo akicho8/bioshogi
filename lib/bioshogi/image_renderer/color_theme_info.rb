@@ -359,9 +359,9 @@ module Bioshogi
 
       def swars_like
         {
-          :real_shadow_offset    => 3,
-          :real_shadow_sigma     => 2.0,
-          :real_shadow_opacity   => 0.9,
+          # :real_shadow_offset    => 3,
+          # :real_shadow_sigma     => 2.0,
+          # :real_shadow_opacity   => 0.9,
 
           # 初期値を bold 化する場合はコメントアウト
           # :soldier_font_bold     => true,

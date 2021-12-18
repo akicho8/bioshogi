@@ -56,7 +56,7 @@ end
 
 namespace :color_theme_preview do
   desc "配色テーマのキャッシュ生成"
-  task "genenrate" do
+  task "generate" do
     require "bioshogi"
     Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
       e.color_theme_cache_build(verbose: true)
