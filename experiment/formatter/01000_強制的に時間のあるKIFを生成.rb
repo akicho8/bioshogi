@@ -1,6 +1,6 @@
 require "../setup"
 
-puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
+puts Parser.file_parse("../katomomo.kif").to_kif(time_embed_force: true)
 # >> 開始日時：2017/11/11 10:00:00
 # >> 終了日時：2017/11/11 17:22:00
 # >> 棋戦：女流王座戦
@@ -10,8 +10,9 @@ puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
 # >> 後手：里見香奈 女流王座
 # >> 戦型：ゴキゲン中飛車
 # >> 先手の囲い：居飛車穴熊
-# >> 後手の囲い：片美濃囲い, 銀冠
+# >> 後手の囲い：銀冠
 # >> 先手の戦型：対振り持久戦, 三間飛車
+# >> 後手の戦型：ゴキゲン中飛車, 5筋位取り中飛車
 # >> 先手の手筋：垂れ歩
 # >> 後手の手筋：垂れ歩
 # >> 先手の備考：居飛車, 対振り, 対抗型
@@ -30,6 +31,7 @@ puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
 # >>   10 ５五歩(54)
 # >>   11 ３六歩(37)
 # >>   12 ５二飛(82)
+# >> *△戦型：ゴキゲン中飛車, 5筋位取り中飛車
 # >> *△備考：振り飛車
 # >>   13 ３七銀(48)
 # >>   14 ５三銀(42)
@@ -55,7 +57,6 @@ puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
 # >>   32 ８三銀(72)
 # >>   33 ８八銀(79)
 # >>   34 ７二金(61)
-# >> *△囲い：銀冠
 # >>   35 ６五歩(66)
 # >>   36 ７四歩(73)
 # >>   37 ６六金(67)
@@ -122,6 +123,7 @@ puts Parser.file_parse("../katomomo.kif").to_kif(no_embed_if_time_blank: true)
 # >>   94 ７五歩(74)
 # >>   95 ６四飛(68)
 # >>   96 ６三金(52)
+# >> *△囲い：銀冠
 # >>   97 ６八飛(64)
 # >>   98 ６五角打
 # >>   99 ６五飛(68)

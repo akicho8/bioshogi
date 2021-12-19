@@ -7,11 +7,11 @@ module Bioshogi
 
     def self.default_params
       super.merge({
-          :hand_width             => 12,
-          :number_width           => 4,
-          :header_skip            => false,
-          :footer_skip            => false,
-          :no_embed_if_time_blank => false, # 時間がすべて0ならタイムを指定しない
+          :hand_width       => 12,
+          :number_width     => 4,
+          :header_skip      => false,
+          :footer_skip      => false,
+          :time_embed_force => false, # 強制的に時間を含めるか？
         })
     end
 
@@ -29,9 +29,7 @@ module Bioshogi
       end
       out << "手数----指手---------消費時間--\n"
 
-      if @params[:no_embed_if_time_blank] && @parser.clock_nothing?
-        @chess_clock = nil
-      else
+      if @params[:time_embed_force] || @parser.clock_exist?
         @chess_clock = ChessClock.new
       end
 
