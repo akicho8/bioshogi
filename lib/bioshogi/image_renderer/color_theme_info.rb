@@ -84,7 +84,7 @@ module Bioshogi
         # { key: :is_color_theme_groovy_board_texture24, func: -> e { e.real_wood_theme_core("groovy_board_texture24", "groovy_piece_texture_dark") }, },
 
         { key: :is_color_theme_brightness_grey,         func: -> e { e.brightness_only_build(Color::GreyScale.from_fraction(0.7)) }, },
-        { key: :is_color_theme_brightness_matrix,       func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.6 }, alpha: 0.7) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix.png" }, },
+        { key: :is_color_theme_brightness_matrix,       func: -> e { e.brightness_only_build(Color::HSL.from_fraction(140/360.0, 1.0, 0.6), alpha: 0.8) }, merge_params: { bg_file: "#{__dir__}/../assets/images/background/matrix.png" }, },
         { key: :is_color_theme_brightness_green,        func: -> e { e.brightness_only_build(Color::RGB::Green.to_hsl.tap  { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { key: :is_color_theme_brightness_orange,       func: -> e { e.brightness_only_build(Color::RGB::Orange.to_hsl.tap { |e| e.s = 1.0; e.l = 0.4 }) }, },
         { key: :is_color_theme_kimetsu_red,             func: -> e { e.kimetsu_build(Color::RGB::MediumVioletRed.adjust_saturation(60)) }, },
@@ -107,10 +107,10 @@ module Bioshogi
             :piece_pentagon_stroke_color => f[-55],
             :piece_pentagon_stroke_width => 2,
           },
-          :canvas_bg_color                  => f[-88],        # 部屋の色
+          :canvas_bg_color               => f[-88],        # 部屋の色
           :outer_frame_fill_color        => f[-84],        # 盤の色
           :piece_move_cell_fill_color    => f[-81],        # 移動元と移動先のセルの背景色
-          :inner_frame_lattice_color                 => f[-40],        # 格子の色
+          :inner_frame_lattice_color     => f[-40],        # 格子の色
           :inner_frame_stroke_color      => f[-30],        # 格子の外枠色
 
           # 駒

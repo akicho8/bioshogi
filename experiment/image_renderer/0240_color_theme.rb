@@ -75,7 +75,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_plasma_blur4").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_club24").display
-parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
+# parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
 # parser.image_renderer(color_theme_key: "is_color_theme_wars_blue").display
 # parser.image_renderer(color_theme_key: "is_color_theme_piyo").display
 
@@ -97,7 +97,7 @@ parser.image_renderer(color_theme_key: "is_color_theme_wars_red").display
 # parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_purple").display
 # parser.image_renderer(color_theme_key: "is_color_theme_mario_sky").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").display
+parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix", viewpoint: "white").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_green").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_orange").display
