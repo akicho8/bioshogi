@@ -32,9 +32,16 @@ module Bioshogi
 
       private
 
-      # Ricty フォントでは全角が "「」" になってしまうため透明にする
       def text_normalize(str)
-        str.to_s.gsub(/\u3000/, "  ")
+        s = str.to_s
+
+        # 絵文字が含まれる場合はエラーとする
+        if s != emoji_reject(s)
+          raise ArgumentError, "絵文字と思われる画像化できない文字が含まれています : #{str.inspect}"
+        end
+
+        # Ricty フォントでは全角が "「」" になってしまうため透明にする
+        s.gsub(/\u3000/, "  ")
       end
 
       def canvas_layer_create
@@ -54,6 +61,10 @@ module Bioshogi
 
       def ext_name
         params[:image_format]
+      end
+
+      def emoji_reject(str)
+        str.to_s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
       end
     end
   end
