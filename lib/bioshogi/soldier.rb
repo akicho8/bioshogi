@@ -44,11 +44,20 @@ module Bioshogi
         PresetInfo.fetch(preset_key).board_parser.location_adjust[location.key]
       end
 
-      def preset_soldiers(params = {})
-        Location.flat_map do |location|
-          PresetInfo.fetch(params[location.key] || :"平手").board_parser.location_adjust[location.key]
-        end
+      # 先後それぞれの形を指定する
+      # Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name) # => ["▲５九玉", "△５一玉"]
+      def preset_soldiers(preset_key)
+        # Location.flat_map do |location|
+        #   PresetInfo.fetch(params[location.key] || :"平手").board_parser.location_adjust[location.key]
+        # end
+        PresetInfo.fetch(preset_key || :"平手").sorted_soldiers
       end
+
+      # 先後それぞれの形を指定する
+      # Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name) # => ["▲５九玉", "△５一玉"]
+      # def preset_soldiers2(preset_key)
+      #   PresetInfo.fetch(preset_key || :"平手").sorted_soldiers
+      # end
 
       def create(*args)
         new(*args).freeze

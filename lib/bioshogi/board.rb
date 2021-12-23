@@ -55,6 +55,7 @@ module Bioshogi
         when BoardParser.accept?(v)
           placement_from_shape(v)
         when v.kind_of?(Hash)
+          raise "must not happen"
           placement_from_hash(v)
         when v.kind_of?(String) && !InputParser.scan(v).empty?
           placement_from_human(v)
@@ -64,17 +65,27 @@ module Bioshogi
       end
 
       def placement_from_preset(value = nil)
-        placement_from_hash(white: value || "平手")
+        # placement_from_hash(white: value || "平手")
+        placement_from_soldiers(Soldier.preset_soldiers(value))
       end
 
+      # def placement_from_preset2(value = nil)
+      #   # placement_from_hash(white: value || "平手")
+      #   placement_from_soldiers(Soldier.preset_soldiers(value))
+      # end
+
+      # 柿木盤を読み取って反映する
+      # 毎回読み取るため遅い
       def placement_from_shape(str)
         placement_from_soldiers(BoardParser.parse(str).soldier_box)
       end
 
-      def placement_from_hash(hash)
-        placement_from_soldiers(Soldier.preset_soldiers(hash))
+      def placement_from_hash(value)
+        placement_from_preset(value)
       end
 
+      # 詰将棋の配置の読み上げのような表記で盤に反映する
+      # placement_from_human("△51玉 ▲59玉")
       def placement_from_human(str)
         soldiers = InputParser.scan(str).collect { |s| Soldier.from_str(s) }
         placement_from_soldiers(soldiers)
@@ -204,36 +215,37 @@ module Bioshogi
     end
 
     concerning :PresetMethods do
-      # ▲が平手であることが条件
+      # 盤の状態から手合割を逆算
       def preset_info
-        if preset_info_by_location(:black)&.key == :"平手"
-          preset_info_by_location(:white)
-        end
-      end
-
-      private
-
-      # location 側の手合割情報を得る
-      def preset_info_by_location(location)
-        # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
-        # これがないと、board_spec.rb だけを実行したとき落ちる
-        if Dimension.size_type != :board_size_9x9
-          return
-        end
-
-        location = Location[location]
-
-        # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-        black_only_soldiers = surface.values.collect { |e|
-          if e.location == location
-            e.flip_if_white
-          end
-        }.compact.sort
-
+        sorted_soldiers = surface.values.sort
         PresetInfo.find do |e|
-          e.location_split[:black] == black_only_soldiers
+          sorted_soldiers == e.sorted_soldiers
         end
       end
+
+      # private
+      #
+      # # location 側の手合割情報を得る
+      # def preset_info_by_location(location)
+      #   # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
+      #   # これがないと、board_spec.rb だけを実行したとき落ちる
+      #   if Dimension.size_type != :board_size_9x9
+      #     return
+      #   end
+      #
+      #   location = Location[location]
+      #
+      #   # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
+      #   black_only_soldiers = surface.values.collect { |e|
+      #     if e.location == location
+      #       e.flip_if_white
+      #     end
+      #   }.compact.sort
+      #
+      #   PresetInfo.find do |e|
+      #     e.location_split[:black] == black_only_soldiers
+      #   end
+      # end
     end
 
     prepend BoardPillerMethods

@@ -26,7 +26,7 @@ module Bioshogi
       assert PresetInfo["飛香落ち"]
     end
 
-    it "▲が平手で△が香落ちなので「香落ち」だと判断できる" do
+    it "「香落ち」だと判断できる" do
       mediator = Mediator.new
       mediator.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -42,12 +42,12 @@ module Bioshogi
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info&.key == :"香落ち" }
+      assert { mediator.board.preset_info.key == :"香落ち" }
     end
 
     it "▲は平手状態だけど△は不明" do
       mediator = Mediator.new
-mediator.board.placement_from_shape(<<~EOT)
+      mediator.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀 ・ ・|一
@@ -61,7 +61,7 @@ mediator.board.placement_from_shape(<<~EOT)
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info&.key == nil }
+      assert { mediator.board.preset_info == nil }
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
@@ -93,7 +93,7 @@ EOT
     end
 
     it "declined_soldiers" do
-      assert { PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) == ["▲８八角", "▲２八飛"] }
+      assert { PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) == ["△８二飛", "△２二角"] }
     end
 
     it "handicap_shift" do
