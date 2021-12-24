@@ -153,7 +153,7 @@ module Bioshogi
       end
 
       def to_kif
-        KakikiBoardFormatter.new(self).to_s
+        KakinokiBoardFormatter.new(self).to_s
       end
 
       def to_ki2

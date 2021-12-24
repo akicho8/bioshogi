@@ -62,7 +62,7 @@ require_relative "bioshogi/board_parser/compare_board_parser"
 require_relative "bioshogi/board_parser/csa_board_parser"
 require_relative "bioshogi/board_parser/sfen_board_parser"
 
-require_relative "bioshogi/kakiki_board_formatter"
+require_relative "bioshogi/kakinoki_board_formatter"
 require_relative "bioshogi/csa_board_formatter"
 require_relative "bioshogi/board"
 

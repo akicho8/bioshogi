@@ -14,7 +14,7 @@
 #  +---------------------------+
 #
 module Bioshogi
-  class KakikiBoardFormatter
+  class KakinokiBoardFormatter
     def initialize(board)
       @board = board
     end
