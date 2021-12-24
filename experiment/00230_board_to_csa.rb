@@ -1,9 +1,11 @@
 require "./setup"
 
+# 方法1
 board = Board.new
 board.placement_from_preset("二枚落ち")
 puts board.to_csa
 
+# 方法2
 puts PresetInfo["二枚落ち"].to_board.to_csa
 
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
