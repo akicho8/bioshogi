@@ -66,7 +66,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>          8   (0.9%)           8   (0.9%)     Bioshogi::Parser::Base::ConverterMethods#mb_ljust
 # >>          8   (0.9%)           8   (0.9%)     Bioshogi::SimpleModel#initialize
 # >>          7   (0.8%)           7   (0.8%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
-# >>         80   (8.7%)           7   (0.8%)     Bioshogi::BoardParser::KifBoardParser#cell_walker
+# >>         80   (8.7%)           7   (0.8%)     Bioshogi::BoardParser::KakinokiBoardParser#cell_walker
 # >>          9   (1.0%)           7   (0.8%)     MemoryRecord::SingletonMethods::ClassMethods#fetch
 # >>          7   (0.8%)           7   (0.8%)     #<Module:0x00007ff34a988e70>.kconv
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::SkillSet#defense_infos

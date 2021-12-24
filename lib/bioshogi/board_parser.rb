@@ -23,7 +23,7 @@ module Bioshogi
 
       def support_parsers
         [
-          KifBoardParser,
+          KakinokiBoardParser,
           CsaBoardParser,
           SfenBoardParser,
         ]

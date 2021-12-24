@@ -2,7 +2,7 @@
 
 module Bioshogi
   module BoardParser
-    class CompareBoardParser < KifBoardParser
+    class CompareBoardParser < KakinokiBoardParser
       def parse
         cell_walker do |place, prefix_char, something|
           case

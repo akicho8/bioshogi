@@ -57,7 +57,7 @@ require_relative "bioshogi/soldier_box"
 
 require_relative "bioshogi/board_parser"
 require_relative "bioshogi/board_parser/base"
-require_relative "bioshogi/board_parser/kif_board_parser"
+require_relative "bioshogi/board_parser/kakinoki_board_parser"
 require_relative "bioshogi/board_parser/compare_board_parser"
 require_relative "bioshogi/board_parser/csa_board_parser"
 require_relative "bioshogi/board_parser/sfen_board_parser"

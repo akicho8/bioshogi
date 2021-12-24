@@ -37,13 +37,14 @@ module Bioshogi
       Dimension::Yplace.dimension.times.collect do |y|
         fields = Dimension::Xplace.dimension.times.collect do |x|
           place = Place.fetch([x, y])
-          soldier_to_str(@board.surface[place])
+          soldier = @board.surface[place]
+          cell_str(soldier)
         end
         "|" + fields.join + "|" + Dimension::Yplace.fetch(y).name
       end
     end
 
-    def soldier_to_str(object)
+    def cell_str(object)
       if object
         object.to_bod
       else

@@ -23,7 +23,7 @@ module Bioshogi
     #   Bioshogi::BoardParser.parse(str) # => {white: ["４二玉"], black: []}
     #   Bioshogi::BoardParser.parse(str) # => {white: [<Soldier ...>], black: []}
     #
-    class KifBoardParser < Base
+    class KakinokiBoardParser < Base
       class << self
         def accept?(source)
           source && source.match?(/^\p{blank}*[\+\|]/)
