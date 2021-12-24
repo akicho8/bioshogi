@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 
-require_relative "piller_methods"
+require_relative "board_piller_methods"
 
 module Bioshogi
   class Board

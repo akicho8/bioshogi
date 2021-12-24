@@ -80,9 +80,9 @@ EOT
       end
     end
 
-    describe BoardParser::FireBoardParser do
+    describe BoardParser::CompareBoardParser do
       it "他の駒以外のものも拾える" do
-        info = BoardParser::FireBoardParser.parse(<<~EOT)
+        info = BoardParser::CompareBoardParser.parse(<<~EOT)
 +------+
 |v○v歩|
 | ・ 歩|
@@ -92,7 +92,7 @@ EOT
       end
 
       id do
-        board_parser = BoardParser::FireBoardParser.parse(<<~EOT)
+        board_parser = BoardParser::CompareBoardParser.parse(<<~EOT)
 +------------+
 | ・ ・ ★v香|
 |!歩@歩?歩*歩|

@@ -4162,7 +4162,7 @@ EOT
     ]
 
     def board_parser
-      @board_parser ||= BoardParser::FireBoardParser.parse(body)
+      @board_parser ||= BoardParser::CompareBoardParser.parse(body)
     end
 
     delegate :sorted_soldiers, :location_split, to: :board_parser

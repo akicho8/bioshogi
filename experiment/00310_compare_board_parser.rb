@@ -1,6 +1,6 @@
 require "./setup"
 
-board_parser = BoardParser::FireBoardParser.parse(<<~EOT)
+board_parser = BoardParser::CompareBoardParser.parse(<<~EOT)
 +------------+
 | ・ ・ ★v香|
 |!歩@歩?歩*歩|

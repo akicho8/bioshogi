@@ -52,7 +52,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::Xplace.lookup"
 # >>         43   (5.2%)          43   (5.2%)     Bioshogi::SimpleModel#initialize
 # >>         20   (2.4%)          20   (2.4%)     Bioshogi::SimpleModel#initialize
 # >>         17   (2.0%)          17   (2.0%)     Bioshogi::BoardParser::KifBoardParser#prefix_char_validate
-# >>        275  (33.1%)          17   (2.0%)     Bioshogi::BoardParser::FireBoardParser#parse
+# >>        275  (33.1%)          17   (2.0%)     Bioshogi::BoardParser::CompareBoardParser#parse
 # >>        275  (33.1%)          15   (1.8%)     Bioshogi::BoardParser::KifBoardParser#cell_walker
 # >>         15   (1.8%)          15   (1.8%)     Bioshogi::Dimension::Yplace._units
 # >>         14   (1.7%)          14   (1.7%)     Bioshogi::Place#to_xy
