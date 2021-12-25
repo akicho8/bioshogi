@@ -40,8 +40,8 @@ end
 
 desc "2chkifu読み込み変換テスト"
 task "test:kifu" do
-  Dir.chdir("#{__dir__}/experiment") do
-    system "ruby 2chkifu読み込み変換テスト.rb"
+  Dir.chdir("#{__dir__}/experiment/2chkifu読み込み変換テスト") do
+    system "ruby ./run.rb"
   end
 end
 

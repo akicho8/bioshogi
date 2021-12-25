@@ -12,7 +12,7 @@ class App
     if @error_list.exist?
       @target_files = @error_list.readlines.reject { |e|e.match?("#") }.collect { |e| Pathname(e.strip) }
     else
-      @target_files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
+      @target_files = Pathname.glob("../../../2chkifu/**/*.{ki2,KI2}").sort
     end
 
     # @target_files = "~/src/2chkifu/00001/00002.KI2"
