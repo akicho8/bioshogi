@@ -34,6 +34,25 @@ module Bioshogi
         key = key.sub(/落\z/, "落ち")            # 香落 -> 香落ち
         super
       end
+
+      # 持駒の比較は別途行う必要あり
+      def lookup_by_soldiers(soldiers, optimize: true)
+        if optimize
+          # 盤上の駒数で瞬時に比較すれば全体と比較する必要はなくなり速くなるかと思ったが誤差だった
+          @lookup_by_soldiers ||= group_by { |e| e.shape_info.board_parser.soldiers.count }
+          if list = @lookup_by_soldiers[soldiers.count]
+            sorted_soldiers = soldiers.sort
+            list.find do |e|
+              sorted_soldiers == e.sorted_soldiers
+            end
+          end
+        else
+          sorted_soldiers = soldiers.sort
+          PresetInfo.find do |e|
+            sorted_soldiers == e.sorted_soldiers
+          end
+        end
+      end
     end
 
     def to_sfen

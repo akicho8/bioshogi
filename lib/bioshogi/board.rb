@@ -210,36 +210,10 @@ module Bioshogi
 
     concerning :PresetMethods do
       # 盤の状態から手合割を逆算
-      def preset_info
-        sorted_soldiers = surface.values.sort
-        PresetInfo.find do |e|
-          sorted_soldiers == e.sorted_soldiers
-        end
+      # バリケード将棋などは持駒も見る必要があるけどやってない
+      def preset_info(optimize: true)
+        PresetInfo.lookup_by_soldiers(surface.values, optimize: optimize)
       end
-
-      # private
-      #
-      # # location 側の手合割情報を得る
-      # def preset_info_by_location(location)
-      #   # 駒配置情報は9x9を想定しているため9x9ではないときは手合割に触れないようにする
-      #   # これがないと、board_spec.rb だけを実行したとき落ちる
-      #   if Dimension.size_type != :board_size_9x9
-      #     return
-      #   end
-      #
-      #   location = Location[location]
-      #
-      #   # 手合割情報はすべて先手のデータなので、先手側から見た状態に揃える
-      #   black_only_soldiers = surface.values.collect { |e|
-      #     if e.location == location
-      #       e.flip_if_white
-      #     end
-      #   }.compact.sort
-      #
-      #   PresetInfo.find do |e|
-      #     e.location_split[:black] == black_only_soldiers
-      #   end
-      # end
     end
 
     prepend BoardPillerMethods

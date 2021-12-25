@@ -2,6 +2,16 @@ require "spec_helper"
 
 module Bioshogi
   describe Board do
+    it "逆算した手合割が正しい" do
+      assert {
+        PresetInfo.all? { |e|
+          board = Board.new
+          board.placement_from_preset(e.key)
+          board.preset_info == e
+        }
+      }
+    end
+
     it "配置" do
       mediator = Mediator.new
 
@@ -51,7 +61,7 @@ module Bioshogi
   end
 end
 # >> ...
-# >> 
+# >>
 # >> Finished in 0.02617 seconds (files took 1.46 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>
