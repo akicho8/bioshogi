@@ -113,7 +113,7 @@ module Bioshogi
       def handicap_validity
         preset_info = PresetInfo[object["手合割"]]
         if preset_info
-          return preset_info.name != "平手"
+          return preset_info.handicap
         end
 
         if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }

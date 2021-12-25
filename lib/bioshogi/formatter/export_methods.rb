@@ -184,9 +184,7 @@ module Bioshogi
         end
 
         if e = board_preset_info
-          if e.key != :"平手"
-            return true
-          end
+          return e.handicap
         end
 
         false

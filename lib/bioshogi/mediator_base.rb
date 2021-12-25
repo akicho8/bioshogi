@@ -66,11 +66,12 @@ module Bioshogi
       end
     end
 
-    def placement_from_preset(value = nil)
-      board.placement_from_preset(value)
+    def placement_from_preset(preset_key = nil)
+      preset_key ||= :"平手"
+      board.placement_from_preset(preset_key)
 
       # 手番の反映
-      preset_info = PresetInfo.fetch(value || :"平手")
+      preset_info = PresetInfo.fetch(preset_key)
       turn_info.handicap = preset_info.handicap
       turn_info.turn_base = 0 # FIXME: いる？
       turn_info.turn_offset = 0      # FIXME: いる？
