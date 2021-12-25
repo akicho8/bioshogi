@@ -12,21 +12,21 @@ module Bioshogi
     it "not_enough_piece_box" do
       mediator = Mediator.new
       mediator.placement_from_bod <<~EOT
-後手の持駒：香
-  ９ ８ ７ ６ ５ ４ ３ ２ １
-+---------------------------+
-| ・v桂v銀v金v玉v金v銀v桂v香|一
-| ・v飛 ・ ・ ・ ・ ・v角 ・|二
-|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-| ・ 角 ・ ・ ・ ・ ・ ・ ・|八
-| 香 桂 銀 金 ・ 金 銀 桂 ・|九
-+---------------------------+
-先手の持駒：飛
-EOT
+      後手の持駒：香
+      ９ ８ ７ ６ ５ ４ ３ ２ １
+      +---------------------------+
+        | ・v桂v銀v金v玉v金v銀v桂v香|一
+      | ・v飛 ・ ・ ・ ・ ・v角 ・|二
+      |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+      | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+      | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+      | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+      | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+      | ・ 角 ・ ・ ・ ・ ・ ・ ・|八
+      | 香 桂 銀 金 ・ 金 銀 桂 ・|九
+      +---------------------------+
+        先手の持駒：飛
+      EOT
 
       assert { mediator.to_piece_box == {:rook=>2, :lance=>3, :knight=>4, :silver=>4, :gold=>4, :king=>1, :bishop=>2, :pawn=>18} }
       assert { mediator.not_enough_piece_box.to_s == "玉 香" }
@@ -36,10 +36,26 @@ EOT
       assert { piece_box.to_s == "香" }
     end
 
-    it "placement_from_preset は手番も反映する" do
-      mediator = Mediator.new
-      mediator.placement_from_preset("香落ち")
-      assert { mediator.to_snapshot_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
+    describe "placement_from_preset" do
+      it "盤を反映する" do
+        mediator = Mediator.new
+        mediator.placement_from_preset("5五将棋")
+        assert { mediator.to_snapshot_sfen == "position sfen 4rbsgk/8p/9/4P4/4KGSBR/9/9/9/9 b - 1" }
+        assert { mediator.turn_info.handicap == false }
+      end
+
+      it "手番を反映する" do
+        mediator = Mediator.new
+        mediator.placement_from_preset("香落ち")
+        assert { mediator.turn_info.handicap }
+      end
+
+      it "持駒を反映する" do
+        mediator = Mediator.new
+        mediator.placement_from_preset("バリケード将棋")
+        assert { mediator.player_at(:black).piece_box.to_s == "飛 角 香" }
+        assert { mediator.player_at(:white).piece_box.to_s == "飛 角 香" }
+      end
     end
 
     it "交互に打ちながら戦況表示" do
@@ -160,3 +176,31 @@ EOT
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> ..............
+# >> 
+# >> Top 10 slowest examples (0.04938 seconds, 81.4% of total time):
+# >>   Bioshogi::Mediator normalized_names_with_alias
+# >>     0.00994 seconds -:5
+# >>   Bioshogi::Mediator 同歩からの同飛になること
+# >>     0.0076 seconds -:111
+# >>   Bioshogi::Mediator 状態の復元
+# >>     0.00736 seconds -:88
+# >>   Bioshogi::Mediator 交互に打ちながら戦況表示
+# >>     0.00611 seconds -:60
+# >>   Bioshogi::Mediator 手数を得る 「角と歩」以外の駒が取られる直前の手数
+# >>     0.00411 seconds -:172
+# >>   Bioshogi::Mediator not_enough_piece_box
+# >>     0.00383 seconds -:12
+# >>   Bioshogi::Mediator 手数を得る 駒が取られる直前の手数
+# >>     0.00382 seconds -:168
+# >>   Bioshogi::Mediator placement_from_preset 手番を反映する
+# >>     0.00244 seconds -:46
+# >>   Bioshogi::Mediator placement_from_preset 持駒を反映する
+# >>     0.00222 seconds -:52
+# >>   Bioshogi::Mediator フレームのサンドボックス実行(重要)
+# >>     0.00192 seconds -:124
+# >> 
+# >> Finished in 0.06067 seconds (files took 1.52 seconds to load)
+# >> 14 examples, 0 failures
+# >> 

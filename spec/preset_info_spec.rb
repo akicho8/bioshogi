@@ -2,15 +2,24 @@ require "spec_helper"
 
 module Bioshogi
   describe PresetInfo do
-    it "名前の揺らぎを考慮" do
-      assert { PresetInfo["飛車落ち"] }
-      assert { PresetInfo["飛落ち"]   }
-      assert { PresetInfo["飛落"]     }
+    describe "日本語ゆえの表記ゆれ問題" do
+      it "飛車落ち" do
+        assert { PresetInfo["飛車落ち"] }
+        assert { PresetInfo["飛落ち"]   }
+        assert { PresetInfo["飛落"]     }
+      end
+
+      it "5五将棋" do
+        assert { PresetInfo["55将棋"]   }
+        assert { PresetInfo["５５将棋"] }
+        assert { PresetInfo["5五将棋"]  }
+        assert { PresetInfo["五五将棋"] }
+        assert { PresetInfo["五々将棋"] }
+      end
     end
 
-    it "特殊な名前" do
-      # assert { PresetInfo["青空"] }
-      assert { PresetInfo["詰将棋"] }
+    it "詰将棋は平手にしておけば問題ない" do
+      assert { PresetInfo["詰将棋"] == PresetInfo["平手"] }
     end
 
     it "to_position_sfen" do

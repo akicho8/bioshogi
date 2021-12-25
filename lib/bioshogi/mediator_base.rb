@@ -67,17 +67,26 @@ module Bioshogi
     end
 
     def placement_from_preset(preset_key = nil)
-      preset_key ||= :"平手"
-      board.placement_from_preset(preset_key)
+      preset_info = PresetInfo.fetch(preset_key || "平手")
+
+      # 盤の反映
+      board.placement_from_soldiers(preset_info.sorted_soldiers)
+
+      # 持駒の反映
+      preset_info.piece_boxes.each do |location_key, piece_str|
+        player_at(location_key).pieces_set(piece_str)
+      end
 
       # 手番の反映
-      preset_info = PresetInfo.fetch(preset_key)
       turn_info.handicap = preset_info.handicap
-      turn_info.turn_base = 0 # FIXME: いる？
-      turn_info.turn_offset = 0      # FIXME: いる？
+
+      Bioshogi.assert { turn_info.turn_base == 0 }
+      Bioshogi.assert { turn_info.turn_offset == 0 }
 
       # 玉の位置を取得
       players.each(&:king_place_update)
+
+      # TODO: ここで居玉判定をするべきかどうかの判定を入れたらいい？
     end
   end
 end
