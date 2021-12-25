@@ -64,15 +64,9 @@ module Bioshogi
         end
       end
 
-      def placement_from_preset(value = nil)
-        # placement_from_hash(white: value || "平手")
-        placement_from_soldiers(Soldier.preset_soldiers(value))
+      def placement_from_preset(preset_key = nil)
+        placement_from_soldiers(Soldier.preset_soldiers(preset_key))
       end
-
-      # def placement_from_preset2(value = nil)
-      #   # placement_from_hash(white: value || "平手")
-      #   placement_from_soldiers(Soldier.preset_soldiers(value))
-      # end
 
       # 柿木盤を読み取って反映する
       # 毎回読み取るため遅い

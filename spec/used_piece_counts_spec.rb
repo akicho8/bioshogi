@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe do
+  describe "used_piece_counts" do
     it "works" do
       info = Parser.parse(<<~EOT)
       後手の持駒：
@@ -17,13 +17,24 @@ module Bioshogi
       | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
       | 香 桂 銀 金 玉 金 銀 桂 香|九
       +---------------------------+
-        先手の持駒：
+      先手の持駒：
       22角成 同銀 55角打
       EOT
 
       mediator = info.mediator
+
       assert { mediator.player_at(:black).used_piece_counts == {"B0" => 2} }
       assert { mediator.player_at(:white).used_piece_counts == {"S0" => 1} }
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> .
+# >> 
+# >> Top 1 slowest examples (0.34134 seconds, 98.6% of total time):
+# >>   used_piece_counts works
+# >>     0.34134 seconds -:5
+# >> 
+# >> Finished in 0.3461 seconds (files took 1.69 seconds to load)
+# >> 1 example, 0 failures
+# >> 
