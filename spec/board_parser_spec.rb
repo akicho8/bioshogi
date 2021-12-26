@@ -34,7 +34,7 @@ EOT
 +---+
 EOT
       end
-    
+
     it "成駒を認識" do
       assert { test1(<<-EOT) == ["△１一龍"] }
 +---+

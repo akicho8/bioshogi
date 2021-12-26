@@ -26,7 +26,7 @@ module Bioshogi
     class KakinokiBoardParser < Base
       class << self
         def accept?(source)
-          source && source.match?(/^\p{blank}*[\+\|]/)
+          source && source.match?(/^\p{blank}*(\+\-*\+|\|.*\|)/)
         end
       end
 

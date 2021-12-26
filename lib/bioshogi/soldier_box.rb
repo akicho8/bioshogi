@@ -16,23 +16,23 @@ module Bioshogi
     end
 
     def sorted_soldiers
-      @sorted_soldiers ||= soldiers.sort
+      @sorted_soldiers ||= soldiers.sort.freeze
     end
 
     def place_as_key_table
-      @place_as_key_table ||= soldiers.inject({}) { |a, e| a.merge(e.place => e) }
+      @place_as_key_table ||= soldiers.inject({}) { |a, e| a.merge(e.place => e) }.freeze
     end
 
     # ▲または△から見た状態に補正した全体のデータ
     def location_adjust
-      @location_adjust ||= Location.inject({}) do |a, location|
+      @location_adjust ||= Location.inject({}) { |a, location|
         a.merge(location.key => sorted_soldiers.collect { |e| e.public_send(location.normalize_key) })
-      end
+      }.freeze
     end
 
     # ▲△に分割
     def location_split
-      @location_split ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key })
+      @location_split ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key }).freeze
     end
   end
 end

@@ -4,9 +4,16 @@
 module Bioshogi
   module Parser
     class Ki2Parser < Base
+      cattr_accessor(:line_regexp1) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o }
+
       class << self
         def accept?(source)
-          !KifParser.accept?(source) && !CsaParser.accept?(source)
+          source = Parser.source_normalize(source)
+          if source.present?
+            if !KifParser.accept?(source) && !CsaParser.accept?(source)
+              source.match?(/^\p{blank}*(#{InputParser.regexp}|.*：.*)/) || BoardParser::KakinokiBoardParser.accept?(source)
+            end
+          end
         end
       end
 
