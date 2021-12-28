@@ -1,5 +1,19 @@
 #!/bin/sh
 
+ffmpeg -hide_banner -i ds8705.mp3  -c:a aac -strict experimental -vn -y ds8705.m4a
+ffmpeg -hide_banner -i ds1988.mp3  -c:a aac -strict experimental -vn -y ds1988.m4a
+ffmpeg -hide_banner -i ds2142.mp3  -c:a aac -strict experimental -vn -y ds2142.m4a
+ffmpeg -hide_banner -i ds10827.mp3 -c:a aac -strict experimental -vn -y ds10827.m4a
+ffmpeg -hide_banner -i ds8680.mp3  -c:a aac -strict experimental -vn -y ds8680.m4a
+ffmpeg -hide_banner -i ds5615.mp3  -c:a aac -strict experimental -vn -y ds5615.m4a
+ffmpeg -hide_banner -i ds13513.mp3 -c:a aac -strict experimental -vn -y ds13513.m4a
+ffmpeg -hide_banner -i ds13982.mp3 -c:a aac -strict experimental -vn -y ds13982.m4a
+ffmpeg -hide_banner -i ds4520.mp3  -c:a aac -strict experimental -vn -y ds4520.m4a
+ffmpeg -hide_banner -i ds568.mp3   -c:a aac -strict experimental -vn -y ds568.m4a
+ffmpeg -hide_banner -i ds1022.mp3  -c:a aac -strict experimental -vn -y ds1022.m4a
+# volume-normalize ds8705.m4a ds1988.m4a ds2142.m4a ds10827.m4a ds8680.m4a ds5615.m4a ds13513.m4a ds13982.m4a ds4520.m4a ds568.m4a ds1022.m4a
+# exit
+
 ffmpeg -hide_banner -i ds2582.mp3  -c:a aac -strict experimental -vn -y ds2582.m4a
 ffmpeg -hide_banner -i ds1982.mp3  -c:a aac -strict experimental -vn -y ds1982.m4a
 ffmpeg -hide_banner -i ds1777.mp3  -c:a aac -strict experimental -vn -y ds1777.m4a
