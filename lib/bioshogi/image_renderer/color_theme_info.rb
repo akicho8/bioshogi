@@ -41,11 +41,17 @@ module Bioshogi
         # { key: :is_color_theme_radial_gradiention5,     func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention5.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         # { key: :is_color_theme_radial_gradiention6,     func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/radial_gradiention6.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :is_color_theme_splatoon_stripe_red,      func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_red.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
-        { key: :is_color_theme_splatoon_stripe_green,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :is_color_theme_splatoon_stripe_red,      func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_red.png",     outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
+        { key: :is_color_theme_splatoon_stripe_green,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_splatoon_stripe_purple,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_purple.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png", outer_frame_fill_color: "hsla(330,100%,93%,0.88)") }, },
+        { key: :is_color_theme_pattern_mito,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_mito.png",  outer_frame_fill_color: "hsla(37,73%,68%,1.0)") }, }, # ぴよ将棋の盤の色
+        { key: :is_color_theme_pattern_skelton,          func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_skelton.png",      outer_frame_fill_color: "hsla(0,0%,70%,0.75)") }, },
+        { key: :is_color_theme_pattern_eva1,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva1.png",         outer_frame_fill_color: "hsla(258,50%,40%,1.0)", star_fill_color: "hsl(40,100%,50%)", **e.lattice_all_set("hsl(132,60%,50%)") ) }, },
+
+        # { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png",   outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
+        # { key: :is_color_theme_pattern_diamond,          func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_diamond.png", outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
+        # { key: :is_color_theme_pattern_spider,           func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_spider.png",   outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
 
         # { key: :is_color_theme_groovy_board_texture1,              func: -> e { e.real_wood_theme_core("pakutexture06210140") }, },
         # { key: :is_color_theme_real_wood2,              func: -> e { e.real_wood_theme_core("texture524_27") }, },
@@ -176,6 +182,14 @@ module Bioshogi
           :inner_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_color      => r[-20],             # 格子の外枠色
           :outer_frame_stroke_width      => 1,
+        }
+      end
+
+      def lattice_all_set(color)
+        {
+          :inner_frame_lattice_color  => color,
+          :inner_frame_stroke_color   => color,
+          # :outer_frame_stroke_color   => color,
         }
       end
 

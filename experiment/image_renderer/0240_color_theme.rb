@@ -23,6 +23,11 @@ bg_file = nil
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
 # parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
+parser.image_renderer(color_theme_key: "is_color_theme_pattern_mito").display
+parser.image_renderer(color_theme_key: "is_color_theme_pattern_skelton").display
+parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_pattern_diamond").display
+# parser.image_renderer(color_theme_key: "is_color_theme_pattern_spider").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
@@ -97,7 +102,7 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_splatoon_stripe_purple").display
 # parser.image_renderer(color_theme_key: "is_color_theme_mario_sky").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_grey", renderer_override_params: {bg_file: bg_file}).display
-parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").display
+# parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix", viewpoint: "white").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_green").display
 # parser.image_renderer(color_theme_key: "is_color_theme_brightness_orange").display
