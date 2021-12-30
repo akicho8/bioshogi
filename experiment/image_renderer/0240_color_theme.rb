@@ -22,23 +22,22 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-# parser.image_renderer(color_theme_key: "is_color_theme_pattern_mito").display
-# parser.image_renderer(color_theme_key: "is_color_theme_pattern_skelton").display
-# parser.image_renderer(color_theme_key: "is_color_theme_pattern_heart").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_mito").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_skelton").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_heart").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva0").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva2").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva6").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva8").display
+# parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva13").display
 
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva0").display
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva1").display
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva2").display
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva6").display
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva8").display
-parser.image_renderer(color_theme_key: "is_color_theme_pattern_eva13").display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva0").display
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva6").display
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva8").display
-# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva13").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva0").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva2").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva8").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva1").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva6").display
+parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva13").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
