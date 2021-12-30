@@ -45,17 +45,26 @@ module Bioshogi
         { key: :is_color_theme_splatoon_stripe_green,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_green.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
         { key: :is_color_theme_splatoon_stripe_purple,    func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/splatoon_stripe_purple.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)") }, },
 
-        { key: :is_color_theme_pattern_mito,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_mito.png",    outer_frame_fill_color: "hsla(37,73%,68%,1.0)") }, }, # ぴよ将棋の盤の色
-        { key: :is_color_theme_pattern_skelton,          func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_skelton.png", outer_frame_fill_color: "hsla(0,0%,70%,0.75)")  }, },
+        { key: :is_color_theme_pattern_mito,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_mito.png",    outer_frame_fill_color: "hsla(0,0%,100%,0.6)") }, }, # ネタ系でよい
+        { key: :is_color_theme_pattern_skelton,          func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_skelton.png", outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
+        { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png",   outer_frame_fill_color: "hsla(0,0%,0%,0.22)")  }, },
 
-        { key: :is_color_theme_pattern_eva0,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva0.png",    outer_frame_fill_color: "hsl( 40, 90%,55%)")  }, },
-        { key: :is_color_theme_pattern_eva1,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva1.png",    outer_frame_fill_color: "hsl(268, 70%,50%)")  }, },
-        { key: :is_color_theme_pattern_eva2,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva2.png",    outer_frame_fill_color: "hsl(  0,100%,45%)")  }, },
-        { key: :is_color_theme_pattern_eva6,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva6.png",    outer_frame_fill_color: "hsl(209, 54%,25%)")  }, },
-        { key: :is_color_theme_pattern_eva8,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva8.png",    outer_frame_fill_color: "hsl(327, 69%,77%)")  }, },
-        { key: :is_color_theme_pattern_eva13,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva13.png",   outer_frame_fill_color: "hsl(266, 18%,41%)")  }, },
+        { key: :is_color_theme_pattern_eva0,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva0.png",    outer_frame_fill_color: "hsl( 40,30%,60%)")      }, },
+        { key: :is_color_theme_pattern_eva1,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva1.png",    outer_frame_fill_color: "hsl(268,30%,60%)")      }, },
+        { key: :is_color_theme_pattern_eva2,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva2.png",    outer_frame_fill_color: "hsl(  0,30%,60%)")      }, },
+        { key: :is_color_theme_pattern_eva6,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva6.png",    outer_frame_fill_color: "hsl(209,30%,60%)")      }, },
+        { key: :is_color_theme_pattern_eva8,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva8.png",    outer_frame_fill_color: "hsl(327,30%,60%)")      }, },
+        { key: :is_color_theme_pattern_eva13,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_eva13.png",   outer_frame_fill_color: "hsl(266,30%,60%)")      }, },
+
+        { key: :is_color_theme_gingham_check_eva0,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva0.png",    outer_frame_fill_color: "hsla( 40,20%,60%,0.7)")  }, },
+        { key: :is_color_theme_gingham_check_eva1,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva1.png",    outer_frame_fill_color: "hsla(268,20%,60%,0.7)")  }, },
+        { key: :is_color_theme_gingham_check_eva2,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva2.png",    outer_frame_fill_color: "hsla(  0,20%,60%,0.7)")  }, },
+        { key: :is_color_theme_gingham_check_eva6,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva6.png",    outer_frame_fill_color: "hsla(209,20%,60%,0.7)")  }, },
+        { key: :is_color_theme_gingham_check_eva8,             func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva8.png",    outer_frame_fill_color: "hsla(327,20%,60%,0.7)")  }, },
+        { key: :is_color_theme_gingham_check_eva13,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/gingham_check_eva13.png",   outer_frame_fill_color: "hsla(266,20%,60%,0.7)")  }, },
 
         # { key: :is_color_theme_pattern_heart,            func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_heart.png",   outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
+
         # { key: :is_color_theme_pattern_diamond,          func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_diamond.png", outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
         # { key: :is_color_theme_pattern_spider,           func: -> e { e.is_color_theme_shogi_extend.merge(bg_file: "#{__dir__}/../assets/images/background/pattern_spider.png",   outer_frame_fill_color2: "hsla(330,100%,93%,0.88)") }, },
 
