@@ -480,6 +480,10 @@ module Bioshogi
         YomiageBuilder.new(self, options).to_s
       end
 
+      def to_yomiage_list(options = {})
+        YomiageBuilder.new(self, options).to_a
+      end
+
       def to_akf(options = {})
         AkfBuilder.new(self, options).to_h
       end

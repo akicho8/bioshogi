@@ -80,6 +80,10 @@ module Bioshogi
       MediatorSerializerCheckmateYomiage.new(self, options).to_s
     end
 
+    def to_yomiage_list(options = {})
+      MediatorSerializerCheckmateYomiage.new(self, options).to_a
+    end
+
     concerning :SfenMethods do
       attr_reader :initial_state_board_sfen
       attr_reader :initial_state_turn_info
