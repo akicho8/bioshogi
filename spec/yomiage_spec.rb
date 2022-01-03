@@ -11,7 +11,7 @@ module Bioshogi
       assert { info.to_yomiage == "gyokugata。いちいちgyoku。にぃいちkin。いちにぃ銀。にぃにぃkeima。せめかた。ごーさんkin。もちごま。なし" }
     end
 
-    it do
+    it "ありありのパターン" do
       info = Parser.parse(<<~EOT)
       後手の持駒：金
       +------+
@@ -46,6 +46,27 @@ module Bioshogi
       ]
       assert { info.to_yomiage_list == expected }
     end
+
+    it "玉方なし、攻め方なし、持駒なしのパターン" do
+      info = Parser.parse("position sfen 9/9/9/9/9/9/9/9/9 b - 1")
+      if $0 == __FILE__
+        tp info.to_yomiage_list
+      end
+      expected = [
+        {:command => "talk", :message => "gyokugata"},
+        {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
+        {:command => "talk", :message => "なし"},
+        {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
+        {:command => "talk", :message => "せめかた"},
+        {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
+        {:command => "talk", :message => "なし"},
+        {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
+        {:command => "talk", :message => "もちごま"},
+        {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
+        {:command => "talk", :message => "なし"},
+      ]
+      assert { info.to_yomiage_list == expected }
+    end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
@@ -72,14 +93,31 @@ end
 # >> | interval |               |   0.5 | sep1      |
 # >> | talk     | 銀            |       |           |
 # >> |----------+---------------+-------+-----------|
+# >> .|----------+-----------+-------+-----------|
+# >> | command  | message   | sleep | sleep_key |
+# >> |----------+-----------+-------+-----------|
+# >> | talk     | gyokugata |       |           |
+# >> | interval |           |   0.5 | sep1      |
+# >> | talk     | なし      |       |           |
+# >> | interval |           |   0.5 | sep1      |
+# >> | talk     | せめかた  |       |           |
+# >> | interval |           |   0.5 | sep1      |
+# >> | talk     | なし      |       |           |
+# >> | interval |           |   0.5 | sep1      |
+# >> | talk     | もちごま  |       |           |
+# >> | interval |           |   0.5 | sep1      |
+# >> | talk     | なし      |       |           |
+# >> |----------+-----------+-------+-----------|
 # >> .
 # >> 
-# >> Top 2 slowest examples (0.04036 seconds, 89.6% of total time):
+# >> Top 3 slowest examples (0.03036 seconds, 83.7% of total time):
 # >>   読み上げ works
-# >>     0.02084 seconds -:5
-# >>   読み上げ 
-# >>     0.01952 seconds -:14
+# >>     0.02167 seconds -:5
+# >>   読み上げ ありありのパターン
+# >>     0.00668 seconds -:14
+# >>   読み上げ 玉方なし、攻め方なし、持駒なしのパターン
+# >>     0.002 seconds -:50
 # >> 
-# >> Finished in 0.04507 seconds (files took 1.61 seconds to load)
-# >> 2 examples, 0 failures
+# >> Finished in 0.03627 seconds (files took 1.65 seconds to load)
+# >> 3 examples, 0 failures
 # >> 

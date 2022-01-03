@@ -55,11 +55,10 @@ module Bioshogi
         soldiers = soldiers.collect { |e|
           [e.place.yomiage, e.yomiage].join.squish
         }
-        soldiers = soldiers.presence || ["なし"]
         soldiers = append_separator(soldiers, :sep2)
       end
       av = Location.collect { |e|
-        [e.checkmate_yomiage, :sep1, group[e]]
+        [e.checkmate_yomiage, :sep1, group[e] || ["なし", :sep1]]
       }
       av = av.reverse           # 相手から読み上げるため
       # append_separator(av, :sep1)
@@ -71,7 +70,7 @@ module Bioshogi
       av = piece_counts.collect { |e, count|
         [Piece.fetch(e).yomiage(false), :sep1] * count
       }
-      av = av.presence || ["なし"]
+      av = av.presence || ["なし", :sep1]
       ["もちごま", :sep1, av]
     end
 
