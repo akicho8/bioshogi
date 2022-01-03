@@ -106,7 +106,7 @@ EOT
         end
 
         it "相手の駒を動かそうとした" do
-          expect { Mediator.start.execute("34歩(33)") }.to raise_error(Bioshogi::ReversePlayerPieceMoveError, /【反則】相手の駒を動かそうとしています。1手目は先手の手番ですが後手の駒を持ちました.*もし平手で手番のハンデを貰っているなら☗側が初手を指してください/)
+          expect { Mediator.start.execute("34歩(33)") }.to raise_error(Bioshogi::ReversePlayerPieceMoveError, /【反則】相手の駒を動かそうとしています。手番違いかもしれません。1手目は☗の手番ですが☖が着手しました/)
         end
       end
 
@@ -354,3 +354,61 @@ EOT
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> .......................F.......................................
+# >> 
+# >> Failures:
+# >> 
+# >>   1) Bioshogi::Player 移動 できる 相手の駒を動かそうとした
+# >>      Failure/Error: Unable to find - to read failed line
+# >> 
+# >>        expected Bioshogi::ReversePlayerPieceMoveError with message matching /【反則】相手の駒を動かそうとしています。1手目は先手の手番ですが後手の駒を持ちました.*もし平手で手番のハンデを貰っているなら☗側が初手を指してください/, got #<Bioshogi::ReversePlayerPieceMoveError: 【反則】相手の駒を動かそうとしています。手番違いかもしれません。1手目は☗の手番ですが☖が着手しました
+# >>        手番: 先手
+# >>        指...歩|七
+# >>        | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+# >>        | 香 桂 銀 金 玉 金 銀 桂 香|九
+# >>        +---------------------------+
+# >>        先手の持駒：なし
+# >>        手数＝0 まで
+# >> 
+# >>        先手番> with backtrace:
+# >>          # ./lib/bioshogi/player_executor_base.rb:131:in `raise_error'
+# >>          # ./lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
+# >>          # ./lib/bioshogi/player_executor_base.rb:42:in `execute'
+# >>          # ./lib/bioshogi/player.rb:23:in `execute'
+# >>          # ./lib/bioshogi/mediator_executor.rb:31:in `block in execute'
+# >>          # ./lib/bioshogi/mediator_executor.rb:30:in `each'
+# >>          # ./lib/bioshogi/mediator_executor.rb:30:in `execute'
+# >>          # -:110:in `block (5 levels) in <module:Bioshogi>'
+# >>          # -:110:in `block (4 levels) in <module:Bioshogi>'
+# >>      # -:110:in `block (4 levels) in <module:Bioshogi>'
+# >> 
+# >> Top 10 slowest examples (0.08364 seconds, 43.4% of total time):
+# >>   Bioshogi::Player 移動 できる 相手の駒を動かそうとした
+# >>     0.02072 seconds -:108
+# >>   Bioshogi::Player 座標を漢字・全角数字・半角数字のみでも指定できる
+# >>     0.01854 seconds -:5
+# >>   Bioshogi::Player 移動 成 成れない 自分の陣地から出るタイミングでも
+# >>     0.01058 seconds -:156
+# >>   Bioshogi::Player 指したあと前回の手を確認できる
+# >>     0.00687 seconds -:311
+# >>   Bioshogi::Player 打つ 打の意味が重要なケース 打を明示したので駒を打つ
+# >>     0.00562 seconds -:304
+# >>   Bioshogi::Player 初期配置
+# >>     0.00439 seconds -:54
+# >>   Bioshogi::Player 同
+# >>     0.00437 seconds -:344
+# >>   Bioshogi::Player 全体確認
+# >>     0.00426 seconds -:321
+# >>   Bioshogi::Player 打つ 打てる 空いているところに
+# >>     0.0042 seconds -:245
+# >>   Bioshogi::Player 打つ 打てる 打は曖昧なときだけ付く (このテストはログの変換のテストで入力のテストにはなっていない)
+# >>     0.00406 seconds -:252
+# >> 
+# >> Finished in 0.19285 seconds (files took 1.56 seconds to load)
+# >> 63 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:108 # Bioshogi::Player 移動 できる 相手の駒を動かそうとした
+# >> 

@@ -22,10 +22,7 @@ module Bioshogi
             # origin_soldier.location.name => △
             message = []
             message << "相手の駒を動かそうとしています"
-            message << "#{player.mediator.turn_info.turn_offset.next}手目は#{player.call_name}の手番ですが#{player.opponent_player.call_name}の駒を持ちました"
-            if player.mediator.turn_info.display_turn == 0
-              message << "もし平手で手番のハンデを貰っているなら☗側が初手を指してください"
-            end
+            message.concat(turn_error_messages)
             message = message.join("。")
             errors_add ReversePlayerPieceMoveError, message
           end
@@ -75,6 +72,34 @@ module Bioshogi
         if !soldier.alive?
           errors_add DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いかもしれません"
         end
+      end
+
+      def turn_error_messages
+        av = []
+        av << "手番違いかもしれません"
+
+        av << yield_self {
+          m = []
+          m << "#{player.mediator.turn_info.turn_offset.next}手目は#{player.location.pentagon_mark}の手番ですが"
+          m << "#{player.opponent_player.location.pentagon_mark}が着手しました"
+          m.join
+        }
+
+        if player.mediator.turn_info.handicap?
+          av << "手合割は「駒落ち」です"
+        end
+
+        if player.mediator.turn_info.display_turn == 0
+          if player.mediator.turn_info.handicap?
+            av << "平手で手番のハンデを貰っている場合は☗側が初手を指してください"
+          end
+        end
+
+        if player.mediator.turn_info.handicap?
+          av << "詰将棋で「上手・下手」の表記を用いている場合は「後手・先手」に直してください"
+        end
+
+        av
       end
     end
   end

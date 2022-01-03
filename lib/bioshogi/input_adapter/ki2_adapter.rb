@@ -43,19 +43,20 @@ module Bioshogi
         if drop_abbreviation? && !player.piece_box.exist?(piece)
           message = []
           message << "#{place}に移動できる#{piece}がないため打の省略形と考えましたが#{piece}を持っていません"
-          message << "手番が間違っているのかもしれません"
-          if player.mediator.turn_info.display_turn == 0
-            message << "もし平手で手番のハンデを貰っているなら☗側が初手を指してください"
-          end
+          message += turn_error_messages
           message = message.join("。")
           errors_add HoldPieceNotFound2, message
         end
 
         if !drop_trigger && candidate_soldiers.empty?
-          errors_add MovableBattlerNotFound, [
-            "#{player.call_name}の手番で#{place}に移動できる#{input[:kif_piece]}が見つかりません",
-            promoted ? "「#{place}#{piece}成」の間違いかもしれません" : nil,
-          ].compact.join("。")
+          message = []
+          message << "#{player.call_name}の手番で#{place}に移動できる#{input[:kif_piece]}が見つかりません"
+          if promoted
+            message << "「#{place}#{piece}成」の間違いかもしれません"
+          end
+          message += turn_error_messages
+          message = message.join("。")
+          errors_add MovableBattlerNotFound, message
         end
 
         if drop_trigger && promoted
