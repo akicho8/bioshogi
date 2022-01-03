@@ -43,7 +43,7 @@ module Bioshogi
         source = source.gsub(/[\*\s]+(解説|聞き手)：\S+/) { |s| "\n#{s.strip}\n" }
 
         # ぴよ将棋の「手合割：その他」があると手合割にその他は存在しないため削除する
-        source = source.sub(/^\s*手合割：その他.*(\R|$)/, "")
+        # source = source.sub(/^\s*手合割：その他.*(\R|$)/, "")
 
         # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがあるらしく、
         # "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
@@ -85,7 +85,7 @@ module Bioshogi
 
       def call_names
         @call_names ||= -> {
-          v = handicap_validity
+          v = guess_handicap?
           Location.collect { |e| e.call_name(v) }
         }.call
       end
@@ -110,11 +110,25 @@ module Bioshogi
       # 駒落ち判定順序
       # 1. 手合割があれば正規化して平手以外であれば
       # 2. 下手・上手の言葉が使われていれば
-      def handicap_validity
-        preset_info = PresetInfo[object["手合割"]]
-        if preset_info
-          return preset_info.handicap
+      def guess_handicap?
+        if e = PresetInfo[object["手合割"]]
+          return e.handicap
         end
+
+        # 柿木将棋Ⅸ V9.35 の詰将棋KIFの場合
+        #
+        # 問題点
+        # 上手下手表記になっている → だから駒落ちだと想定
+        # しかし実際はただの詰将棋 → なんで駒落ち関係ないのに上手・下手表記なのか
+        # このせいで上手・下手表記で駒落ちと判定はできなくなった
+        #
+        # 対策
+        # ここで「手合割」は「その他」になっているので上手・下手のチェックをする前に
+        # 「その他」なら平手、つまり「駒落ちではない」とする
+        #
+        # if object["手合割"] == "その他"
+        #   return false
+        # end
 
         if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }
           return true
@@ -125,6 +139,15 @@ module Bioshogi
         end
 
         nil
+      end
+
+      # その他なら平手にする手合割
+      def guess_preset_key
+        v = object["手合割"]
+        if v == "その他"
+          v = nil
+        end
+        v || "平手"
       end
 
       private
@@ -203,7 +226,7 @@ module Bioshogi
       # 「上手」「下手」の文字がなければ「平手」と見なしている
       # 棋譜を見ずにヘッダーだけで推測している点に注意
       def equality_or_handicap
-        if handicap_validity
+        if guess_handicap?
           :handicap_name
         else
           :equality_name

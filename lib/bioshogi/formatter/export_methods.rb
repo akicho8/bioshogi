@@ -72,10 +72,10 @@ module Bioshogi
         if @board_source
           mediator.board.placement_from_shape(@board_source)
         else
-          mediator.placement_from_preset(header["手合割"] || "平手")
+          mediator.placement_from_preset(header.guess_preset_key)
         end
 
-        handicap_p = handicap?
+        handicap_p = guess_handicap?
 
         mediator.turn_info.handicap = handicap_p
 
@@ -100,12 +100,10 @@ module Bioshogi
         # 「後手番」または「上手番」だけ書いた行がある場合
         # ただしすでに駒落ちの場合は無視する(そうしないと反転の反転で▲から始まってしまう)
         unless turn_base_set_p
-          if !handicap_p
+          if !handicap_p || true
             if v = header.force_location
-              if v.key == :white
-                mediator.turn_info.turn_base = 1
-                turn_base_set_p = true
-              end
+              mediator.turn_info.turn_base = v.code
+              turn_base_set_p = true
             end
           end
         end
@@ -177,8 +175,9 @@ module Bioshogi
         mediator.before_run_process # 最初の状態を記録
       end
 
-      def handicap?
-        v = header.handicap_validity
+      # 駒落ちか？ (推測)
+      def guess_handicap?
+        v = header.guess_handicap?
         if !v.nil?
           return v
         end
@@ -208,7 +207,7 @@ module Bioshogi
 
       # 手合割
       def preset_info
-        @preset_info ||= initial_mediator.board.preset_info || board_preset_info || PresetInfo.fetch(header["手合割"] || "平手")
+        @preset_info ||= initial_mediator.board.preset_info || board_preset_info || PresetInfo[header["手合割"]] || PresetInfo.fetch("平手")
       end
 
       # names_set(black: "alice", white: "bob")
