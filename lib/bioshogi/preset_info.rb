@@ -11,16 +11,18 @@ module Bioshogi
       { key: "飛車落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "飛香落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "二枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      # { key: "二枚持ち",       handicap: true,  special_piece: false, piece_boxes: { black: "飛角",   white: "",       }, }, # これは盤の情報から逆算できない。「二枚落ち」と判定されてしまうため、根本的にロジックを変更しないといけない。
       { key: "三枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
       { key: "四枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "六枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "トンボ",         handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
       { key: "八枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "十枚落ち",       handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "十九枚落ち",     handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
       { key: "二十枚落ち",     handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "5五将棋",        handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
       { key: "青空将棋",       handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
       { key: "バリケード将棋", handicap: false, special_piece: true,  piece_boxes: { black: "飛角香", white: "飛角香", }, },
+      { key: "5五将棋",        handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
     ]
 
     class << self
