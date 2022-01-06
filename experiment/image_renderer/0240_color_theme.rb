@@ -32,12 +32,19 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva8").display
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_eva13").display
 
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva0").display
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva2").display
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva8").display
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva1").display
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva6").display
-parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva13").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva0").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva2").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva8").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva6").display
+# parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva13").display
+
+parser.image_renderer(color_theme_key: "is_color_theme_explosion_yellow").display
+parser.image_renderer(color_theme_key: "is_color_theme_explosion_blue").display
+parser.image_renderer(color_theme_key: "is_color_theme_cloud_green").display
+parser.image_renderer(color_theme_key: "is_color_theme_cloud_pink").display
+parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva0").display
+parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
