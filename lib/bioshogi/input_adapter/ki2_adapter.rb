@@ -29,11 +29,11 @@ module Bioshogi
         super
 
         if !drop_trigger && candidate_soldiers.size >= 2 && motion_str.empty?
-          errors_add AmbiguousFormatError, "#{place}に移動できる候補が2つ以上ありますがサフィックスの指定がないため特定できません : #{candidate_soldiers_as_string}"
+          errors_add AmbiguousFormatError, "#{place}に移動できる駒が#{candidate_soldiers.size}つ以上ありますが表記が曖昧なため特定できません。#{candidate_soldiers_as_string}"
         end
 
         if !drop_trigger && candidate_soldiers.count >= 2 && !place_from
-          errors_add AmbiguousFormatError, "#{place}に移動できる候補が2つ以上ありますが#{motion_str}からは特定できません : #{candidate_soldiers_as_string}"
+          errors_add AmbiguousFormatError, "#{place}に移動できる駒が#{candidate_soldiers.size}つ以上ありますが「#{motion_str}」からは特定できません。#{candidate_soldiers_as_string}"
         end
 
         if force_drop_trigger && !player.piece_box.exist?(piece)

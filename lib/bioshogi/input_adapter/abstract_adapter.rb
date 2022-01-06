@@ -57,7 +57,17 @@ module Bioshogi
       end
 
       def candidate_soldiers_as_string
-        candidate_soldiers.collect(&:name).join(', ')
+        s = []
+        s << "移動元は"
+        s << candidate_soldiers.collect { |e| "「#{e.place.name}の#{e.any_name}」" }.join("か")
+        s << "の"
+        if candidate_soldiers.size >= 3
+          s << "どれ"
+        else
+          s << "どっち"
+        end
+        s << "でしょう？"
+        s.join
       end
 
       def soldier

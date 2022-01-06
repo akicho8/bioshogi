@@ -116,7 +116,8 @@ EOT
         end
 
         it "推測結果が複数パターンがあったので" do
-          expect { Mediator.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５九金") }.to raise_error(AmbiguousFormatError)
+          expect { Mediator.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つ以上ありますが表記が曖昧なため特定できません。移動元は「６九の金」か「４九の金」のどっちでしょう？/)
+          expect { Mediator.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金上") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つ以上ありますが「上」からは特定できません。移動元は「６九の金」か「４九の金」のどっちでしょう？/)
         end
 
         it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので打とみなすが飛を持っていない)" do
@@ -356,12 +357,12 @@ EOT
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
 # >> .......................F.......................................
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) Bioshogi::Player 移動 できる 相手の駒を動かそうとした
 # >>      Failure/Error: Unable to find - to read failed line
-# >> 
+# >>
 # >>        expected Bioshogi::ReversePlayerPieceMoveError with message matching /【反則】相手の駒を動かそうとしています。1手目は先手の手番ですが後手の駒を持ちました.*もし平手で手番のハンデを貰っているなら☗側が初手を指してください/, got #<Bioshogi::ReversePlayerPieceMoveError: 【反則】相手の駒を動かそうとしています。手番違いかもしれません。1手目は☗の手番ですが☖が着手しました
 # >>        手番: 先手
 # >>        指...歩|七
@@ -370,7 +371,7 @@ end
 # >>        +---------------------------+
 # >>        先手の持駒：なし
 # >>        手数＝0 まで
-# >> 
+# >>
 # >>        先手番> with backtrace:
 # >>          # ./lib/bioshogi/player_executor_base.rb:131:in `raise_error'
 # >>          # ./lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
@@ -382,7 +383,7 @@ end
 # >>          # -:110:in `block (5 levels) in <module:Bioshogi>'
 # >>          # -:110:in `block (4 levels) in <module:Bioshogi>'
 # >>      # -:110:in `block (4 levels) in <module:Bioshogi>'
-# >> 
+# >>
 # >> Top 10 slowest examples (0.08364 seconds, 43.4% of total time):
 # >>   Bioshogi::Player 移動 できる 相手の駒を動かそうとした
 # >>     0.02072 seconds -:108
@@ -404,11 +405,11 @@ end
 # >>     0.0042 seconds -:245
 # >>   Bioshogi::Player 打つ 打てる 打は曖昧なときだけ付く (このテストはログの変換のテストで入力のテストにはなっていない)
 # >>     0.00406 seconds -:252
-# >> 
+# >>
 # >> Finished in 0.19285 seconds (files took 1.56 seconds to load)
 # >> 63 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:108 # Bioshogi::Player 移動 できる 相手の駒を動かそうとした
-# >> 
+# >>
