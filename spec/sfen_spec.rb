@@ -13,10 +13,10 @@ module Bioshogi
           Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL x - 1 moves 2g2f\n3c3d")
         }.to raise_error(SyntaxDefact, /途中で改行を含めないでください/)
       end
-      it "2つ以上のスペースを含む" do
+      it "連続するスペースを含む" do
         expect {
           Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b  1")
-        }.to raise_error(SyntaxDefact, /2つ以上のスペース/)
+        }.to raise_error(SyntaxDefact, /連続するスペース/)
       end
     end
 
