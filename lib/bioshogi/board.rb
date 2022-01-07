@@ -211,8 +211,8 @@ module Bioshogi
     concerning :PresetMethods do
       # 盤の状態から手合割を逆算
       # バリケード将棋などは持駒も見る必要があるけどやってない
-      def preset_info(optimize: true)
-        PresetInfo.lookup_by_soldiers(surface.values, optimize: optimize)
+      def preset_info(options = {})
+        PresetInfo.lookup_by_soldiers(surface.values, options)
       end
     end
 
