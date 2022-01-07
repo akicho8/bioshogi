@@ -6,34 +6,34 @@ module Bioshogi
     #   大駒があるか？
     #   大駒がないのに「居飛車」と言うのはおかしいので special_piece を確認する
     #
-    # general:
-    #   一般的なソフトが対応しているか？
-    #   逆算したとき「二枚落ち」で general が true なら「手合割：二枚落ち」と表記する
-    #   general を無視して例えば「手合割：トンボ」としてしまうと一般的なソフトはなにそれ状態になり初期配置を用意できない
+    # minor:
+    #   一般的なソフトが対応してないものか？
+    #   逆算で安易に「手合割：トンボ」と表記しないようにするため
+    #   と一般的なソフトはなにそれ状態になり初期配置を用意できない
     #
     # handicap:
     #   △が初手を指すモードか？
     #
     memory_record [
-      { key: "平手",           public_name: true,  handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "香落ち",         public_name: true,  handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "右香落ち",       public_name: false, handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "角落ち",         public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "飛車落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "飛香落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二枚持ち",       public_name: false, handicap: true,  special_piece: false, piece_boxes: { black: "飛角",   white: "",       }, }, # これは盤の情報から逆算できない。「二枚落ち」と判定されてしまうため、根本的にロジックを変更しないといけない。
-      { key: "三枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
-      { key: "四枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "六枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "トンボ",         public_name: false, handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "八枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "十枚落ち",       public_name: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "十九枚落ち",     public_name: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二十枚落ち",     public_name: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "青空将棋",       public_name: false, handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "バリケード将棋", public_name: false, handicap: false, special_piece: true,  piece_boxes: { black: "飛角香", white: "飛角香", }, },
-      { key: "5五将棋",        public_name: false, handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "平手",           minor: false, handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "香落ち",         minor: false, handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "右香落ち",       minor: true,  handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "角落ち",         minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "飛車落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "飛香落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "二枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "二枚持ち",       minor: true,  handicap: true,  special_piece: false, piece_boxes: { black: "飛角",   white: "",       }, }, # これは盤の情報から逆算できない。「二枚落ち」と判定されてしまうため、根本的にロジックを変更しないといけない。
+      { key: "三枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
+      { key: "四枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "六枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "トンボ",         minor: true,  handicap: true,  special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "八枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "十枚落ち",       minor: false, handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "十九枚落ち",     minor: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "二十枚落ち",     minor: true,  handicap: true,  special_piece: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "青空将棋",       minor: true,  handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "バリケード将棋", minor: true,  handicap: false, special_piece: true,  piece_boxes: { black: "飛角香", white: "飛角香", }, },
+      { key: "5五将棋",        minor: true,  handicap: false, special_piece: true,  piece_boxes: { black: "",       white: "",       }, },
     ]
 
     class << self
@@ -48,15 +48,16 @@ module Bioshogi
         super
       end
 
-      def public_name_only
-        @public_name_only ||= find_all(&:public_name)
+      # 一般的なものに絞る
+      def major_list
+        @major_list ||= reject(&:minor)
       end
 
       # 持駒の比較は別途行う必要あり
       def lookup_by_soldiers(soldiers, options = {})
         options = {
-          :optimize    => false,  # 速くなる (気がするだけでほとんど効果がない)
-          :public_name => true,   # トンボなど一般的なソフトで認識されない名前には逆算しない
+          :optimize => false,               # 速くなる (気がするだけでほとんど効果がない)
+          :inclusion_minor => false, # トンボなど一般的な名前も含めるか？
         }.merge(options)
 
         if options[:optimize]
@@ -77,10 +78,10 @@ module Bioshogi
           # end
         else
           sorted_soldiers = soldiers.sort
-          if options[:public_name]
-            list = public_name_only
-          else
+          if options[:inclusion_minor]
             list = to_a
+          else
+            list = major_list
           end
           list.find do |e|
             sorted_soldiers == e.sorted_soldiers

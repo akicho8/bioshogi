@@ -2,6 +2,31 @@ require "spec_helper"
 
 module Bioshogi
   describe Parser::Base do
+    it "「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない" do
+      info = Parser.parse("手合割：トンボ")
+      assert { info.to_kif == <<~EOT }
+手合割：トンボ
+上手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・ ・ ・ ・v玉 ・ ・ ・ ・|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：なし
+上手番
+手数----指手---------消費時間--
+   1 投了
+まで0手で下手の勝ち
+EOT
+    end
+
     it "時間が空でも時間を出力するオプション" do
       info = Parser.parse(<<~EOT)
       手数----指手---------消費時間--
@@ -216,3 +241,42 @@ EOT
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> F...........
+# >>
+# >> Failures:
+# >>
+# >>   1) Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      Test::Unit::AssertionFailedError:
+# >>      # -:7:in `block (2 levels) in <module:Bioshogi>'
+# >>
+# >> Top 10 slowest examples (1.09 seconds, 97.3% of total time):
+# >>   Bioshogi::Parser::Base 時間が空でも時間を出力するオプション
+# >>     0.85963 seconds -:32
+# >>   Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
+# >>     0.0773 seconds -:5
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_sfen
+# >>     0.03085 seconds -:182
+# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_csa
+# >>     0.02224 seconds -:73
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_csa
+# >>     0.02075 seconds -:186
+# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定がない場合 to_kif
+# >>     0.01841 seconds -:135
+# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_kif
+# >>     0.01722 seconds -:87
+# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定がない場合 to_csa
+# >>     0.01566 seconds -:121
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_bod
+# >>     0.01316 seconds -:222
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_kif
+# >>     0.01313 seconds -:205
+# >>
+# >> Finished in 1.12 seconds (files took 1.76 seconds to load)
+# >> 12 examples, 1 failure
+# >>
+# >> Failed examples:
+# >>
+# >> rspec -:5 # Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
+# >>
