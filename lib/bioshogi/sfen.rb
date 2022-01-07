@@ -36,16 +36,18 @@ module Bioshogi
 
     def parse
       s = self.class.startpos_remove(source)
-      md = s.match(SFEN_REGEXP)
-      unless md
-        message = []
-        message << "入力されたSFEN形式が不正確です。"
-        if source.strip.match?(/\R/)
-          message << "原因とは関係ないかもしれないけど途中で改行を含めないでください。"
+      unless md = s.match(SFEN_REGEXP)
+        m = []
+        m << "入力されたSFEN形式が不正確です"
+        if source.match?(/\s{2,}/)
+          m << "2つ以上のスペースが含まれることは基本無いので持駒の部分などが欠けていないか確認してください"
         end
-        message << " : #{source.strip.inspect}"
-        message = message.join
-        raise SyntaxDefact, message
+        if source.strip.match?(/\R/)
+          m << "途中で改行を含めないでください"
+        end
+        m = m.join("。")
+        m = "#{m} : #{source.strip.inspect}"
+        raise SyntaxDefact, m
       end
       @attributes = md.named_captures.symbolize_keys
     end
