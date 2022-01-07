@@ -40,7 +40,11 @@ module Bioshogi
         end
       end
 
-      attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
+      attr_reader :move_infos
+      attr_reader :first_comments
+      attr_reader :board_source
+      attr_reader :last_status_params
+      attr_reader :error_message
 
       def initialize(source, parser_options = {})
         @source = source
@@ -76,7 +80,7 @@ module Bioshogi
       end
 
       # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
-      def henka_delete(s)
+      def branch_delete(s)
         s.sub(/^\p{blank}*変化：.*/m, "")
       end
 

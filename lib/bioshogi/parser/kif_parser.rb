@@ -43,7 +43,7 @@ module Bioshogi
         header_normalize
         board_read
 
-        s = henka_delete(normalized_source)
+        s = branch_delete(normalized_source)
         s.lines.each do |line|
           comment_read(line)
           if md = line.match(line_regexp1)

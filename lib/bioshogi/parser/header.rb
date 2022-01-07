@@ -73,12 +73,11 @@ module Bioshogi
           @turn_base = md[:turn_base].to_i
         end
 
-        # 「後手番」の指定があれば @force_location = Location(:white)
-        Location.each do |e|
-          e.call_names.each do |e|
-            if source.match?(/^#{e}番/)
-              @force_location = Location.fetch(e)
-            end
+        # 「後手番」の指定があれば
+        Location.each do |location|
+          if location.call_names.any? { |name| source.match?(/^#{name}番/) }
+            @force_location = location
+            break
           end
         end
       end
@@ -115,6 +114,21 @@ module Bioshogi
         if preset_info
           return preset_info.handicap
         end
+
+        # 柿木将棋Ⅸ V9.35 の詰将棋KIFの場合
+        #
+        # 問題点
+        # 上手下手表記になっている → だから駒落ちだと想定
+        # しかし実際はただの詰将棋 → なんで駒落ち関係ないのに上手・下手表記なのか
+        # このせいで上手・下手表記で駒落ちと判定はできなくなった
+        #
+        # 対策
+        # ここで「手合割」は「その他」になっているので上手・下手のチェックをする前に
+        # 「その他」なら平手、つまり「駒落ちではない」とする
+        #
+        # if object["手合割"] == "その他"
+        #   return false
+        # end
 
         if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }
           return true

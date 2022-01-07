@@ -22,7 +22,7 @@ module Bioshogi
         header_normalize
         board_read
 
-        s = henka_delete(normalized_source)
+        s = branch_delete(normalized_source)
         s.lines.each do |line|
           comment_read(line)
           s = /\p{blank}*/
