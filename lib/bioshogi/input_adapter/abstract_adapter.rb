@@ -66,7 +66,7 @@ module Bioshogi
         else
           s << "どっち"
         end
-        s << "でしょう？"
+        s << "かな？"
         s.join
       end
 
