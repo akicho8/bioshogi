@@ -39,11 +39,11 @@ module Bioshogi
       md = s.match(SFEN_REGEXP)
       unless md
         message = []
-        message << "入力されたSFEN形式が正しく読み取れません。"
-        if source.match?(/\R/)
-          message << "途中で改行を含めないでください。"
+        message << "入力されたSFEN形式が不正確です。"
+        if source.strip.match?(/\R/)
+          message << "原因とは関係ないかもしれないけど途中で改行を含めないでください。"
         end
-        message << " : #{source.inspect}"
+        message << " : #{source.strip.inspect}"
         message = message.join
         raise SyntaxDefact, message
       end
