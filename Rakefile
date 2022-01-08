@@ -22,6 +22,11 @@ RSpec::Core::RakeTask.new("spec:core") do |t|
   t.rspec_opts = "-f d -t ~animation"
 end
 
+desc "棋譜変換のテスト(TRANSFORM_OUTPUT=1 で expected を生成)"
+RSpec::Core::RakeTask.new("spec:transform") do |t|
+  t.rspec_opts = "-f d -t transform"
+end
+
 ################################################################################
 
 desc "ダンダースコアで始まるファイルを全削除"

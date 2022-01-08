@@ -4,7 +4,9 @@
 module Bioshogi
   module Parser
     class KifParser < Base
-      cattr_accessor(:henka_reject) { true }
+      include KakinokiMethods
+
+      cattr_accessor(:branch_delete_on_header) { true }
       cattr_accessor(:kif_separator) { /手数-+指手-+消費時間/ }
       cattr_accessor(:line_regexp1) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o }
       cattr_accessor(:line_regexp2) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/ }
@@ -39,13 +41,13 @@ module Bioshogi
       # assert { @result.move_infos.last  == {turn_number: "5", input: "投了", clock_part: "0:10/00:00:50"} }
       #
       def parse
-        header_read
+        kknk_header_read
         header_normalize
-        board_read
+        kknk_board_read
 
         s = branch_delete(normalized_source)
         s.lines.each do |line|
-          comment_read(line)
+          kknk_comment_read(line)
           if md = line.match(line_regexp1)
             input = md[:input].remove(/\p{blank}/)
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
@@ -97,7 +99,7 @@ module Bioshogi
         super
 
         # もしあれば削除
-        if henka_reject
+        if branch_delete_on_header
           header.object.delete("変化")
         end
       end

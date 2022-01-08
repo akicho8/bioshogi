@@ -8,8 +8,6 @@ module Bioshogi
     class Base
       include Formatter::ExportMethods
 
-      cattr_accessor(:header_sep) { "：" }
-
       class << self
         def parse(source, options = {})
           new(source, options).tap(&:parse)
@@ -45,6 +43,11 @@ module Bioshogi
       attr_reader :board_source
       attr_reader :last_status_params
       attr_reader :error_message
+      attr_reader :balance_info
+      attr_reader :force_location
+      attr_reader :force_handicap
+      attr_reader :force_preset_info
+      attr_reader :player_piece_boxes
 
       def initialize(source, parser_options = {})
         @source = source
@@ -55,6 +58,13 @@ module Bioshogi
         @board_source = nil
         @last_status_params = nil
         @error_message = nil
+
+        # @force_preset_info = PresetInfo.fetch("平手")
+        @force_preset_info = nil
+        @balance_info = BalanceInfo.fetch(:normal)
+        @force_location = nil
+        @force_handicap = nil
+        @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
       end
 
       def parse
@@ -69,11 +79,45 @@ module Bioshogi
         @header ||= Header.new
       end
 
-      private
+      def inspect
+        av = []
 
-      def header_read
-        header.parse_from_kif_format_header(normalized_source)
+        if @board_source
+          av << "* @board_source"
+          av << @board_source.strip
+          av << " "
+        end
+
+        av << "* attributes"
+        av << {
+          :force_preset_info    => force_preset_info,
+          :balance_info   => balance_info,
+          :force_location => force_location,
+          :force_handicap => force_handicap,
+        }.to_t.strip
+        av << " "
+
+        av << header.inspect.strip
+        av << " "
+
+        if @board_source
+          av << "* @board_source"
+          av << @board_source.strip
+          av << " "
+        end
+
+        av << "* move_infos"
+        av << move_infos.to_t.strip
+        av << " "
+
+        av << "* @last_status_params"
+        av << @last_status_params.to_t.strip
+        av << " "
+
+        av.join("\n").strip
       end
+
+      private
 
       def header_normalize
         header.normalize_all
@@ -82,34 +126,6 @@ module Bioshogi
       # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
       def branch_delete(s)
         s.sub(/^\p{blank}*変化：.*/m, "")
-      end
-
-      # for KIF, KI2
-      def board_read
-        if md = normalized_source.match(/(?<board>^\+\-.*\-\+$)/m)
-          @board_source = md[:board]
-        end
-      end
-
-      # for KIF, KI2
-      def comment_read(line)
-        if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
-          if @move_infos.empty?
-            first_comments_add(md[:comment])
-          else
-            note_add(md[:comment])
-          end
-        end
-      end
-
-      def first_comments_add(comment)
-        @first_comments << comment
-      end
-
-      # コメントは直前の棋譜の情報と共にする
-      def note_add(comment)
-        @move_infos.last[:comments] ||= []
-        @move_infos.last[:comments] << comment
       end
     end
   end

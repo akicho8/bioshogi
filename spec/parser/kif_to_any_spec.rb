@@ -152,7 +152,7 @@ EOT
       end
     end
 
-    describe "2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい" do
+    xdescribe "2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい" do
       before do
         @info = Parser.parse(<<~EOT)
         後手の持駒：なし

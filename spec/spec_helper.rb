@@ -2,6 +2,8 @@ require "bundler/setup"
 require "bioshogi"
 require "active_support/core_ext/benchmark"
 require "fileutils"
+require "pp"
+require "yaml"
 
 ENV["BIOSHOGI_ENV"] = "test"
 

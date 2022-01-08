@@ -50,6 +50,8 @@ EOT
     end
 
     it "to_kif" do
+      puts @info.to_kif
+
       assert { @info.to_kif == <<~EOT }
 棋戦：その他の棋戦
 開始日時：1938/03/01

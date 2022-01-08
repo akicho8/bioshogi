@@ -1,11 +1,16 @@
 # frozen-string-literal: true
 
 require_relative "parser/base"
-require_relative "parser/sfen_parser"
-require_relative "parser/bod_parser"
+
+# 柿木シリーズ
+require_relative "parser/kakinoki_methods"
 require_relative "parser/kif_parser"
-require_relative "parser/csa_parser"
 require_relative "parser/ki2_parser"
+require_relative "parser/bod_parser" # kif_parser を継承
+
+# 他
+require_relative "parser/sfen_parser"
+require_relative "parser/csa_parser"
 
 module Bioshogi
   module Parser

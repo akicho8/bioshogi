@@ -4,6 +4,8 @@
 module Bioshogi
   module Parser
     class Ki2Parser < Base
+      include KakinokiMethods
+
       cattr_accessor(:line_regexp1) { /^\p{blank}*(?<turn_number>\d+)\p{blank}+(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o }
 
       class << self
@@ -18,13 +20,13 @@ module Bioshogi
       end
 
       def parse
-        header_read
+        kknk_header_read
         header_normalize
-        board_read
+        kknk_board_read
 
         s = branch_delete(normalized_source)
         s.lines.each do |line|
-          comment_read(line)
+          kknk_comment_read(line)
           s = /\p{blank}*/
           i = InputParser.regexp
           if line.match?(/^#{s}#{i}/o)

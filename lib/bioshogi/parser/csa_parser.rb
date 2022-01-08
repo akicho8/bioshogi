@@ -101,18 +101,17 @@ module Bioshogi
           if e = CsaHeaderInfo[key]
             key = e.kif_side_key
           end
-
           # ヘッダー情報が重複した場合は最初に出てきたものを優先
           header[key] ||= value
         end
         header_normalize
 
-        @board_source = nil
+        # @board_source = nil
 
         ################################################################################ (1)
         # > (1) 平手初期配置と駒落ち
         # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
-        # > 例:二枚落ちPI82HI22KA
+        # > 例:二枚落ち PI82HI22KA
 
         if md = s.match(/^PI(?<handicap_piece_list>.*)/)
           mediator = Mediator.new
@@ -201,9 +200,11 @@ module Bioshogi
               end
             end
           end
+
           hold_pieces.each do |location, pieces|
-            player = sub_mediator.player_at(location)
-            header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+            # player = sub_mediator.player_at(location)
+            # header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+            player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
           end
 
           # PI か P1 で作ったのを破壊してしまうため指定がないときだけ指定する
@@ -212,6 +213,10 @@ module Bioshogi
           end
         end
         # end
+
+        if @board_source
+          @force_preset_info ||= Board.guess_preset_info(@board_source)
+        end
 
         # 手番は見ていない
 
@@ -226,12 +231,22 @@ module Bioshogi
         if md = s.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
           @last_status_params = md.named_captures.symbolize_keys
         end
+
+        if md = normalized_source.match(/^(?<csa_sign>[+-])$/)
+          # header.force_location = Location.fetch(md["csa_sign"])
+          # @force_location = Location.fetch(md["csa_sign"])
+          if Location.fetch(md["csa_sign"]).key == :white
+            @force_handicap = true
+          end
+        end
+
+        # if @board_source
+        # end
       end
 
-      # "-" だけの行があれば上手からの開始とする
-      def handicap?
-        normalized_source.match?(/^\-$/)
-      end
+      # # "-" だけの行があれば上手からの開始とする
+      # def handicap?
+      # end
 
       private
 

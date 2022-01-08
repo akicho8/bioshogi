@@ -6,6 +6,13 @@ module Bioshogi
   class Board
     class << self
       delegate :dimensiton_change, :size_type, :promotable_disable, to: "Bioshogi::Dimension"
+
+      # 指定の形から手合割を逆算する
+      def guess_preset_info(shape, options = {})
+        board = new
+        board.placement_from_shape(shape)
+        board.preset_info(options)
+      end
     end
 
     delegate :hash, to: :surface

@@ -1,11 +1,9 @@
 module Bioshogi
   module Parser
     class Header
-      delegate :[], :to_h, :delete, to: :object
-      attr_reader :turn_base
-      attr_reader :force_location
+      delegate :[], :to_h, :delete, :has_key?, to: :object
 
-      cattr_accessor(:system_comment_char) { "#" }
+      attr_accessor :force_location
 
       def []=(key, value)
         v = normalize_value(value)
@@ -27,61 +25,6 @@ module Bioshogi
         @meta_info ||= {}
       end
 
-      def parse_from_kif_format_header(source)
-        # 厳密ではないけど上部に絞る
-        if md = source.match(/(?<header_dirty_part>.*?)^(#{KifParser.kif_separator}|[▲△]|まで)/mo)
-          source = md[:header_dirty_part]
-        end
-
-        # 扱いやすいように全角スペースを半角化
-        source = source.gsub(/\p{blank}/, " ")
-
-        # システムコメント行を削除
-        source = source.remove(/^\s*#{system_comment_char}.*(\R|$)/o)
-
-        # 一行になっている「*解説：佐藤康光名人　聞き手：矢内理絵子女流三段」を整形する
-        source = source.gsub(/[\*\s]+(解説|聞き手)：\S+/) { |s| "\n#{s.strip}\n" }
-
-        # ぴよ将棋の「手合割：その他」があると手合割にその他は存在しないため削除する
-        source = source.sub(/^\s*手合割：その他.*(\R|$)/, "")
-
-        # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがあるらしく、
-        # "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
-        # そのため * を外して取り込んでいる → そのまま取り込むことにする(2020-11-16)
-        #
-        # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
-        #
-        source.scan(/^\s*([^#{Base.header_sep}\n]+)#{Base.header_sep}(.*)$/o).each do |key, value|
-          # key = key.remove(/^\*+/)
-          self[key.strip] = value.strip
-        end
-
-        # @raw_header = header.dup
-
-        # 「a」vs「b」を取り込む
-        if md = source.match(/\*「(.*?)」?vs「(.*?)」?$/)
-          call_names.each.with_index do |e, i|
-            key = "#{e}詳細"
-            v = normalize_value(md.captures[i])
-            self[key] = v
-            # meta_info[key] = v
-          end
-        end
-
-        # BOD風の指定があれば取り込む
-        if md = source.match(/^手数(＝|=)(?<turn_base>\d+)/)
-          @turn_base = md[:turn_base].to_i
-        end
-
-        # 「後手番」の指定があれば
-        Location.each do |location|
-          if location.call_names.any? { |name| source.match?(/^#{name}番/) }
-            @force_location = location
-            break
-          end
-        end
-      end
-
       def call_names
         @call_names ||= -> {
           v = handicap_validity
@@ -91,19 +34,19 @@ module Bioshogi
 
       # 消す予定
 
-      def __to_meta_h
-        [
-          object,
-          entry_all_names,
-        ].compact.inject(&:merge)
-      end
+      # def __to_meta_h
+      #   [
+      #     object,
+      #     entry_all_names,
+      #   ].compact.inject(&:merge)
+      # end
 
       # ["中倉宏美", "伊藤康晴"]
-      def entry_all_names
-        call_names.inject({}) { |a, e|
-          a.merge(e => name_value_split(object[e]))
-        }
-      end
+      # def entry_all_names
+      #   call_names.inject({}) { |a, e|
+      #     a.merge(e => name_value_split(object[e]))
+      #   }
+      # end
 
       # ヘッダー情報からのみで駒落ちかどうかを判定する
       # 駒落ち判定順序
@@ -130,15 +73,47 @@ module Bioshogi
         #   return false
         # end
 
-        if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }
-          return true
-        end
-
-        if Location.any? {|e| object.has_key?(e.equality_name) || object.has_key?("#{e.equality_name}の持駒") }
-          return false
-        end
+        # if Location.any? {|e| object.has_key?(e.handicap_name) || object.has_key?("#{e.handicap_name}の持駒") }
+        #   return true
+        # end
+        # 
+        # if Location.any? {|e| object.has_key?(e.equality_name) || object.has_key?("#{e.equality_name}の持駒") }
+        #   return false
+        # end
 
         nil
+      end
+
+      # 柿木将棋Ⅸ V9.35 の詰将棋KIFの場合
+      #
+      # 問題点
+      # 上手下手表記になっている → だから駒落ちだと想定
+      # しかし実際はただの詰将棋 → なんで駒落ち関係ないのに上手・下手表記なのか
+      # このせいで上手・下手表記で駒落ちと判定はできなくなった
+      #
+      # 対策
+      # ここで「手合割」は「その他」になっているので上手・下手のチェックをする前に
+      # 「その他」なら平手、つまり「駒落ちではない」とする
+      #
+      # if object["手合割"] == "その他"
+      #   return false
+      # end
+
+
+      def inspect
+        av = []
+        av << "* header attributes"
+        av << object.to_t.strip
+        av << " "
+
+        av << "* header methods (read)"
+        av << {
+          :handicap_validity => handicap_validity,
+          :force_location    => force_location,
+        }.to_t.strip
+        av << " "
+
+        av.join("\n").strip
       end
 
       private
