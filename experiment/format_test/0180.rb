@@ -113,4 +113,4 @@ puts info.to_kif
 # >> | △８四歩 |
 # >> |----------|
 # >>  
-# >> * @last_status_params
+# >> * @last_action_params

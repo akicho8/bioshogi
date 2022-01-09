@@ -3,16 +3,20 @@
 module Bioshogi
   class KifBuilder
     include Builder
-    include TextBuilder
+    include KakinokiBuilder
 
-    def self.default_params
-      super.merge({
-          :hand_width       => 12,
-          :number_width     => 4,
-          :header_skip      => false,
-          :footer_skip      => false,
-          :time_embed_force => false, # 強制的に時間を含めるか？
-        })
+    HEADER_BODY_SEP = "手数----指手---------消費時間--"
+
+    class << self
+      def default_params
+        super.merge({
+            :hand_width       => 12,
+            :number_width     => 4,
+            :header_skip      => false,
+            :footer_skip      => false,
+            :time_embed_force => false, # 強制的に時間を含めるか？
+          })
+      end
     end
 
     def initialize(parser, params = {})
@@ -27,7 +31,7 @@ module Bioshogi
       unless @params[:header_skip]
         out << @parser.header_part_string
       end
-      out << "手数----指手---------消費時間--\n"
+      out << HEADER_BODY_SEP + "\n"
 
       if @params[:time_embed_force] || @parser.clock_exist?
         @chess_clock = ChessClock.new
@@ -80,8 +84,8 @@ module Bioshogi
       end
 
       if true
-        if @parser.last_status_params
-          if used_seconds = @parser.last_status_params[:used_seconds]
+        if @parser.last_action_params
+          if used_seconds = @parser.last_action_params[:used_seconds]
             if @chess_clock
               @chess_clock.add(used_seconds)
               right_part = @chess_clock.to_s

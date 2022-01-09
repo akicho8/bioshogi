@@ -1,5 +1,5 @@
 module Bioshogi
-  concern :TextBuilder do
+  concern :KakinokiBuilder do
     # 全角対応 ljust
     #
     #  mb_ljust("あ", 3)  # => "あ "

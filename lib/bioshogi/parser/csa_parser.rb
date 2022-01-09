@@ -1,75 +1,6 @@
 # frozen-string-literal: true
 module Bioshogi
   module Parser
-
-    # 'encoding=Shift_JIS
-    # ' ---- Kifu for Windows V7 V7.31 CSA形式棋譜ファイル ----
-    # V2.2
-    # N+akicho8
-    # N-yosui26
-    # $EVENT:レーティング対局室(早指2)
-    # $START_TIME:2017/11/15 0:23:44
-    # P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-    # P2 * -HI *  *  *  *  * -KA *
-    # P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-    # P4 *  *  *  *  *  *  *  *  *
-    # P5 *  *  *  *  *  *  *  *  *
-    # P6 *  *  *  *  *  *  *  *  *
-    # P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-    # P8 * +KA *  *  *  *  * +HI *
-    # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-    # +
-    # +7968GI,T5
-    # -3334FU,T0
-    # %TORYO,T16
-
-    # '-- syougi kifu --
-    # 'format=csa_v2
-    # 'make=QinoaSyougiConverter
-    # V2
-    # N+guest
-    # N-tume
-    # $START_TIME:2021/12/13 13:43:40
-    # $END_TIME:2021/12/13 13:46:37
-    # '--
-    # 'log=start_board
-    # P1-OU *  *  *  *  *  *  *  *
-    # P2 *  * +TO *  *  *  *  *  *
-    # P3+TO+TO+TO *  *  *  *  *  *
-    # P4 *  *  *  *  *  *  *  *  *
-    # P5 *  *  * -KA * +FU *  *  *
-    # P6 *  *  * -UM+FU * +FU+FU+FU
-    # P7 *  *  *  *  * -TO *  *  *
-    # P8 *  *  *  *  * +KI+GI-HI+OU
-    # P9 *  * -HI *  * +KI *  * +KY
-    # P+00KI
-    # P+00GI
-    # P+00KE
-    # P+00KY
-    # P+00FU
-    # P-00KI
-    # P-00GI00GI
-    # P-00KE
-    # '--
-    # +
-    # +1828OU,T1
-    # -4738TO,T1
-    # +4938KI,T1
-    # -0039GI,T1
-    # +3839KI,T1
-    # -0037GI,T1
-    # +2837OU,T1
-    # -7939RY,T1
-    # +3746OU,T1
-    # -3948RY,T1
-    # +4635OU,T54
-    # -6657UM,T1
-    # +3525OU,T26
-    # -0024KI,T1
-    # %TORYO
-    #
-    # 'end
-
     class CsaParser < Base
       cattr_accessor(:comment_char) { "'" }
 
@@ -104,7 +35,7 @@ module Bioshogi
           # ヘッダー情報が重複した場合は最初に出てきたものを優先
           header[key] ||= value
         end
-        header_normalize
+        header.normalize
 
         # @board_source = nil
 
@@ -229,7 +160,7 @@ module Bioshogi
         end
 
         if md = s.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
-          @last_status_params = md.named_captures.symbolize_keys
+          @last_action_params = md.named_captures.symbolize_keys
         end
 
         if md = normalized_source.match(/^(?<csa_sign>[+-])$/)

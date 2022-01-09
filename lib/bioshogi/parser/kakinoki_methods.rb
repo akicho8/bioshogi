@@ -1,42 +1,106 @@
 module Bioshogi
   module Parser
+    # kif, ki2, bod に関係する処理だけ書くこと(重要)
+    # 間違って header.rb に書いてしまってるのはどんどんこっちに移動させること
+    # header.rb は CSA から見て不要なものが入っていてはいけない
     concern :KakinokiMethods do
-      included do
-        cattr_accessor(:kknk_system_comment_char) { "#" }
-        cattr_accessor(:kknk_key_value_sep) { "：" }
+      SYSTEM_COMMENT_CHAR        = "#"
+      KEY_VALUE_SEPARATOR        = "："
+
+      BOARD_REGEXP               = /(?<board>^\+\-.*\-\+$)/m
+      COMMENT_REGEXP             = /^\p{blank}*\*\p{blank}*(?<comment>.*)/
+      KEY_VALUE_REGEXP           = /^\s*([^#{KEY_VALUE_SEPARATOR}\n]+)#{KEY_VALUE_SEPARATOR}(.*)$/o
+      SYSTEM_COMMENT_LINE_REGEXP = /^\s*#{SYSTEM_COMMENT_CHAR}.*(\R|$)/o
+      HEADER_BODY_SEP_REGEXP     = /手数-+指手-+消費時間/
+      HEADER_PART_REGEXP         = /(?<header_dirty_part>.*?)^(#{HEADER_BODY_SEP_REGEXP}|[▲△☗☖▼▽]|まで)/mo
+
+      def parse
+        header_extract          # ヘッダー部分だけを抽出して扱いやすいテキストにする
+        key_value_store         # ヘッダーのキーと値のペアをとりあえず取り込む
+        unnecessary_keys_remove # 不要なキーの削除
+        player_piece_read       # そこから持駒の読み取る
+        force_preset_read       # 明示的な手合割の指定があれば読み取る (駒落ちモードに移行するのはここからだけ)
+        force_location_read     # 明示的な手番の指定があれば読み取る (あとでベースを切り替える)
+        header.normalize        # 
+        kknk_board_read         # 盤面の読み取り
+        body_parse              # 指し手の読み取り
       end
 
-      def kknk_header_read
-        @kif_head_str = normalized_source
+      def kknk_board_read
+        if md = normalized_source.match(BOARD_REGEXP)
+          @board_source = md[:board]
+          @force_preset_info ||= Board.guess_preset_info(@board_source)
+        end
+      end
+
+      def kknk_comment_read(line)
+        if md = line.match(COMMENT_REGEXP)
+          if @move_infos.empty?
+            first_comments_add(md[:comment])
+          else
+            command_add(md[:comment])
+          end
+        end
+      end
+
+      private
+
+      def kknk_body
+        @kknk_body ||= yield_self do
+          # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
+          normalized_source.remove(/^\p{blank}*変化：.*/m)
+        end
+      end
+
+      def header_extract
+        @kknk_head = normalized_source
 
         # 厳密ではないけど上部に絞る
-        if md = @kif_head_str.match(/(?<header_dirty_part>.*?)^(#{KifParser.kif_separator}|[▲△]|まで)/mo)
-          @kif_head_str = md[:header_dirty_part]
+        if md = @kknk_head.match(HEADER_PART_REGEXP)
+          @kknk_head = md[:header_dirty_part]
         end
 
         # 扱いやすいように全角スペースを半角化
-        @kif_head_str = @kif_head_str.gsub(/\p{blank}/, " ")
+        @kknk_head = @kknk_head.gsub(/\p{blank}+/, " ")
 
         # システムコメント行を削除
-        @kif_head_str = @kif_head_str.remove(/^\s*#{kknk_system_comment_char}.*(\R|$)/o)
+        @kknk_head = @kknk_head.remove(SYSTEM_COMMENT_LINE_REGEXP)
+      end
 
-        key_value_split_and_store
+      # 2020-11-16
+      # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがある
+      # そのため "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
+      # なので * を外して取り込むようにした
+      # しかし、受け入れないソフトがいるためアスタリスク込みで取り込むことにする
+      def key_value_store
+        # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
+        @kknk_head.scan(KEY_VALUE_REGEXP).each do |key, value|
+          header[key.strip] = value.strip
+        end
+      end
 
-        # 持駒の読み取り
+      def unnecessary_keys_remove
+        header.object.delete("変化")
+      end
+
+      def player_piece_read
         Location.each do |e|
           if v = e.call_names.collect { |e| header["#{e}の持駒"] }.join.presence
             @player_piece_boxes[e.key].set(Piece.s_to_h(v))
           end
         end
+      end
 
-        # 「上手番」「後手番」の指定があれば
+      def force_location_read
         Location.each do |location|
           if location.call_names.any? { |name| normalized_source.match?(/^#{name}番/) }
             @force_location = location
             break
           end
         end
+      end
 
+      def force_preset_read
         if v = header["手合割"]
           if e = PresetInfo[v]
             @force_preset_info = e
@@ -45,86 +109,16 @@ module Bioshogi
             end
           end
         end
-
-        # if v = handicap_validity2
-        #   if !v.nil?
-        #     @force_handicap = true
-        #   end
-        # end
       end
-
-      def key_value_split_and_store
-        # 一行になっている「*解説：佐藤康光名人　聞き手：矢内理絵子女流三段」を整形する
-        # @kif_head_str = @kif_head_str.gsub(/[\*\s]+(解説|聞き手)：\S+/) { |s| "\n#{s.strip}\n" }
-
-        # ぴよ将棋の「手合割：その他」があると手合割にその他は存在しないため削除する
-        # @kif_head_str = @kif_head_str.sub(/^\s*手合割：その他.*(\R|$)/, "")
-
-        # ヘッダーは自由にカスタマイズできるのに何かのソフトの都合で受け入れられないキーワードがあるらしく、
-        # "*キー：値" のように * でコメントアウトしてヘッダーを入れている場合がある
-        # そのため * を外して取り込んでいる → そのまま取り込むことにする(2020-11-16)
-        #
-        # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
-        #
-        @kif_head_str.scan(/^\s*([^#{kknk_key_value_sep}\n]+)#{kknk_key_value_sep}(.*)$/o).each do |key, value|
-          # key = key.remove(/^\*+/)
-          header[key.strip] = value.strip
-        end
-
-        # @raw_header = header.dup
-
-        # # 「a」vs「b」を取り込む
-        # if md = @kif_head_str.match(/\*「(.*?)」?vs「(.*?)」?$/)
-        #   call_names.each.with_index do |e, i|
-        #     key = "#{e}詳細"
-        #     v = normalize_value(md.captures[i])
-        #     header[key] = v
-        #     # meta_info[key] = v
-        #   end
-        # end
-      end
-
-      def kknk_board_read
-        if md = normalized_source.match(/(?<board>^\+\-.*\-\+$)/m)
-          @board_source = md[:board]
-          @force_preset_info ||= Board.guess_preset_info(@board_source)
-        end
-      end
-
-      def kknk_comment_read(line)
-        if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
-          if @move_infos.empty?
-            first_comments_add(md[:comment])
-          else
-            note_add(md[:comment])
-          end
-        end
-      end
-
-      private
 
       def first_comments_add(comment)
         @first_comments << comment
       end
 
       # コメントは直前の棋譜の情報と共にする
-      def note_add(comment)
+      def command_add(comment)
         @move_infos.last[:comments] ||= []
         @move_infos.last[:comments] << comment
-      end
-
-      def handicap_validity2
-        raise "使用禁止。上手・下手の名前があるからといって先後を判定してはいけない。柿木将棋の変則的なKIFは詰将棋に上手・下手を用いるためこれで判定すると整合性が取れなくなる"
-
-        if Location.any? {|e| header.has_key?(e.handicap_name) || header.has_key?("#{e.handicap_name}の持駒") }
-          return true
-        end
-
-        if Location.any? {|e| header.has_key?(e.equality_name) || header.has_key?("#{e.equality_name}の持駒") }
-          return false
-        end
-
-        nil
       end
     end
   end

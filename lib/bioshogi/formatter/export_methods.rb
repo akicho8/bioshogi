@@ -190,8 +190,8 @@ module Bioshogi
         #   # 72 で投了ということは 71 まで進める
         #   #
         #   if move_infos.empty?
-        #     if @last_status_params
-        #       if v = @last_status_params[:turn_number]
+        #     if @last_action_params
+        #       if v = @last_action_params[:turn_number]
         #         mediator.turn_info.turn_base = v.to_i.pred
         #         turn_base_set_p = true
         #       end
@@ -413,8 +413,8 @@ module Bioshogi
 
         # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
         if true
-          if @last_status_params
-            v = @last_status_params[:last_action_key]
+          if @last_action_params
+            v = @last_action_params[:last_action_key]
             unless LastActionInfo[v]
               if v == "反則勝ち"
                 v = "#{mediator.current_player.call_name}の手番なのに#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
@@ -453,8 +453,8 @@ module Bioshogi
 
         # 元の棋譜の記載を優先
         unless key
-          if @last_status_params
-            v = @last_status_params[:last_action_key]
+          if @last_action_params
+            v = @last_action_params[:last_action_key]
             if LastActionInfo[v]
               key = v
             end

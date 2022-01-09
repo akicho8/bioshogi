@@ -12,7 +12,7 @@ module Bioshogi
         end
       end
 
-      def normalize_all
+      def normalize
         time_format_normalize
         piece_order_normalize
       end
@@ -26,6 +26,7 @@ module Bioshogi
       end
 
       def call_names
+        raise
         @call_names ||= -> {
           v = handicap_validity
           Location.collect { |e| e.call_name(v) }
@@ -102,18 +103,6 @@ module Bioshogi
 
       private
 
-      # "清水市代・フレデリックポティエ"    => ["清水市代", "フレデリックポティエ"]
-      # "清水市代＆フレデリック・ポティエ"  => ["清水市代", "フレデリックポティエ"]
-      def name_value_split(s)
-        if s
-          if s.include?("＆")
-            s.split("＆")
-          else
-            s.split("・")
-          end
-        end
-      end
-
       def time_format_normalize
         object.each do |key, value|
           if key.match(/日時?\z/)
@@ -138,9 +127,9 @@ module Bioshogi
       end
 
       def piece_order_normalize
-        call_names.each do |e|
-          e = "#{e}の持駒"
-          if v = object[e].presence
+        Location.each do |e|
+          key = "#{e}の持駒"
+          if v = object[key].presence
             v = Piece.s_to_a(v)
             v = Piece.a_to_s(v, ordered: true, separator: " ")
             object[e] = v

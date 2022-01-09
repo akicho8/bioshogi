@@ -41,7 +41,7 @@ module Bioshogi
       attr_reader :move_infos
       attr_reader :first_comments
       attr_reader :board_source
-      attr_reader :last_status_params
+      attr_reader :last_action_params
       attr_reader :error_message
       attr_reader :balance_info
       attr_reader :force_location
@@ -56,7 +56,7 @@ module Bioshogi
         @move_infos = []
         @first_comments = []
         @board_source = nil
-        @last_status_params = nil
+        @last_action_params = nil
         @error_message = nil
 
         # @force_preset_info = PresetInfo.fetch("平手")
@@ -110,22 +110,11 @@ module Bioshogi
         av << move_infos.to_t.strip
         av << " "
 
-        av << "* @last_status_params"
-        av << @last_status_params.to_t.strip
+        av << "* @last_action_params"
+        av << @last_action_params.to_t.strip
         av << " "
 
         av.join("\n").strip
-      end
-
-      private
-
-      def header_normalize
-        header.normalize_all
-      end
-
-      # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
-      def branch_delete(s)
-        s.sub(/^\p{blank}*変化：.*/m, "")
       end
     end
   end

@@ -3,7 +3,7 @@
 module Bioshogi
   class Ki2Builder
     include Builder
-    include TextBuilder
+    include KakinokiBuilder
 
     def self.default_params
       super.merge({

@@ -73,7 +73,7 @@ puts info.to_kif
 # >> * move_infos
 # >> 
 # >>  
-# >> * @last_status_params
+# >> * @last_action_params
 # >> 後手：ごて
 # >> 先手：せんて
 # >> 先手の備考：居飛車, 相居飛車

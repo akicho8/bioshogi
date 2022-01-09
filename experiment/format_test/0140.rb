@@ -72,7 +72,7 @@ puts info.to_bod
 # >> * move_infos
 # >> 
 # >>  
-# >> * @last_status_params
+# >> * @last_action_params
 # >> 後手の持駒：飛 角 金 銀 桂 香 歩四
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

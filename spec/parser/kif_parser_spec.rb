@@ -61,7 +61,7 @@ module Bioshogi
             "棋戦"      => "(棋戦)",
             "持ち時間"  => "(持ち時間)",
             "手合割"    => "平手",
-            "先手"      => "(先  手)",
+            "先手"      => "(先 手)",
             "後手"      => "(後手)",
             "*放映日"   => "2003/09/07",
             "*棋戦詳細" => "第53回NHK杯戦2回戦第5局",
@@ -74,8 +74,8 @@ module Bioshogi
       end
 
       it "最後の情報" do
-        assert { @info.last_status_params[:last_action_key] == "投了" }
-        assert { @info.last_status_params[:used_seconds] == 10 }
+        assert { @info.last_action_params[:last_action_key] == "投了" }
+        assert { @info.last_action_params[:used_seconds] == 10 }
       end
 
       it "対局前コメント" do

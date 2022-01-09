@@ -74,7 +74,7 @@ puts info.to_kif
 # >> | △８四歩 |
 # >> |----------|
 # >>  
-# >> * @last_status_params
+# >> * @last_action_params
 # >> 手合割：その他
 # >> 下手の備考：居飛車, 相居飛車
 # >> 上手の備考：居飛車, 相居飛車
