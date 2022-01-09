@@ -1,10 +1,14 @@
-# TRANSFORM_OUTPUT=1 bundle exec rspec spec/transform_spec.rb -f d
-# VERBOSE=1 bundle exec rspec spec/transform_spec.rb -f d
+# transform/* のファイルを検証
 #
+# ▼これだけ実行
 # rake spec:transform
-# TRANSFORM_OUTPUT=1 rake spec:transform
+#
+# ▼あれこれ表示
 # VERBOSE=1 rake spec:transform
-
+#
+# ▼比較するファイルをいったん生成
+# TRANSFORM_OUTPUT=1 rake spec:transform
+#
 require "spec_helper"
 
 module Bioshogi
@@ -32,13 +36,11 @@ module Bioshogi
         e.dirname.glob("expected.*") do |expected_file|
           type = expected_file.extname.slice(/\w+/)
           actual = transform_to(info, type)
-          # puts actual
           expected = expected_file.read
           actual = actual.strip
           expected = expected.strip
           trace.call "  -> #{expected_file.extname}"
-          # assert { actual == expected }
-          expect(actual).to eq(expected)
+          expect(actual).to eq(expected) # diff になるので power assert にしない方がよい
         end
       end
     end
@@ -50,8 +52,7 @@ module Bioshogi
         s = error_to_text(error)
       end
       unless s.kind_of?(String)
-        s = s.pretty_inspect
-        # s = s.to_yaml
+        s = s.pretty_inspect # or to_yaml
       end
       s
     end
@@ -64,32 +65,4 @@ module Bioshogi
       ].join.strip + "\n"
     end
   end
-
-  # describe "変換" do
-  #   types = [:kif, :ki2, :bod, :csa, :sfen]
-  #   wildcard = "**/source.*"
-  #   Pathname(__dir__).glob("transform/**/source.*") do |e|
-  #     info = Parser.parse(e)
-  #     describe "IN: #{e.dirname.basename}" do
-  #       if ENV["TRANSFORM_OUTPUT"]
-  #         types.each do |type|
-  #           file = e.dirname.join("expected.#{type}")
-  #           file.write(info.public_send("to_#{type}"))
-  #           puts "write: #{file}"
-  #         end
-  #       end
-  #       e.dirname.glob("expected.*") do |expected_file|
-  #         type = expected_file.extname.slice(/\w+/)
-  #         actual = info.public_send("to_#{type}")
-  #         # puts actual
-  #         expected = expected_file.read
-  #         actual = actual.strip
-  #         expected = expected.strip
-  #         it "OUT: #{expected_file.extname}" do
-  #           assert { actual == expected }
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 end

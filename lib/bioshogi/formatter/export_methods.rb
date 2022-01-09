@@ -228,33 +228,13 @@ module Bioshogi
         end
       end
 
-      def handicap?
-        v = header.handicap_validity
-        if !v.nil?
-          return v
-        end
-
-        if e = board_preset_info
-          return e.handicap
-        end
-
-        false
-      end
-
       # 盤面の指定があるとき、盤面だけを見て、手合割を得る
       def board_preset_info
-        @board_preset_info ||= -> {
+        @board_preset_info ||= yield_self do
           if @board_source
-            # mediator = Mediator.new
-            # mediator.board.placement_from_shape(@board_source)
-            # mediator.board.preset_info
-
-            board = Board.new
-            board.placement_from_shape(@board_source)
-            board.preset_info
-
+            Board.guess_preset_info(@board_source)
           end
-        }.call
+        end
       end
 
       # 手合割

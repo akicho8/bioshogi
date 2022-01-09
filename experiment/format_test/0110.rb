@@ -36,7 +36,7 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info | 平手   |
+# >> | force_preset_info |        |
 # >> |      balance_info | 通常戦 |
 # >> |    force_location | △     |
 # >> |    force_handicap |        |
@@ -45,15 +45,15 @@ puts info.to_kif
 # >> * header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
-# >> | 上手の持駒 |        |
-# >> | 下手の持駒 |        |
+# >> | 上手の持駒 | なし   |
+# >> | 下手の持駒 | なし   |
 # >> |------------+--------|
 # >>  
 # >> * header methods (read)
-# >> |-------------------+------|
-# >> | handicap_validity | true |
-# >> |    force_location |      |
-# >> |-------------------+------|
+# >> |-------------------+--|
+# >> | handicap_validity |  |
+# >> |    force_location |  |
+# >> |-------------------+--|
 # >>  
 # >> * @board_source
 # >> +---------------------------+

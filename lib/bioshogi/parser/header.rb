@@ -32,22 +32,6 @@ module Bioshogi
         }.call
       end
 
-      # 消す予定
-
-      # def __to_meta_h
-      #   [
-      #     object,
-      #     entry_all_names,
-      #   ].compact.inject(&:merge)
-      # end
-
-      # ["中倉宏美", "伊藤康晴"]
-      # def entry_all_names
-      #   call_names.inject({}) { |a, e|
-      #     a.merge(e => name_value_split(object[e]))
-      #   }
-      # end
-
       # ヘッダー情報からのみで駒落ちかどうかを判定する
       # 駒落ち判定順序
       # 1. 手合割があれば正規化して平手以外であれば
@@ -187,16 +171,6 @@ module Bioshogi
         end
 
         s
-      end
-
-      # 「上手」「下手」の文字がなければ「平手」と見なしている
-      # 棋譜を見ずにヘッダーだけで推測している点に注意
-      def equality_or_handicap
-        if handicap_validity
-          :handicap_name
-        else
-          :equality_name
-        end
       end
     end
   end
