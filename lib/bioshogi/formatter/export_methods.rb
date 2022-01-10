@@ -50,6 +50,7 @@ module Bioshogi
         end
       end
 
+      # FIXME: mediator の最初の状態をコピーしておく
       def initial_mediator
         @initial_mediator ||= mediator_new.tap do |e|
           mediator_board_setup(e)

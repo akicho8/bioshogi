@@ -5,7 +5,7 @@ module Bioshogi
     include Builder
     include KakinokiBuilder
 
-    HEADER_BODY_SEP = "手数----指手---------消費時間--"
+    HEADER_BODY_SEPARATOR = "手数----指手---------消費時間--"
 
     class << self
       def default_params
@@ -19,36 +19,19 @@ module Bioshogi
       end
     end
 
-    def initialize(parser, params = {})
-      @parser = parser
-      @params = self.class.default_params.merge(params)
-    end
+    private
 
-    def to_s
-      @parser.mediator_run_once
-
-      out = []
-      unless @params[:header_skip]
-        out << @parser.header_part_string
-      end
-      out << HEADER_BODY_SEP + "\n"
-
+    def build_setup
       if @params[:time_embed_force] || @parser.clock_exist?
         @chess_clock = ChessClock.new
       end
-
-      out << hand_log_body
-
-      unless @params[:footer_skip]
-        out << footer_content
-      end
-
-      out.join
     end
 
-    private
+    def body_header
+      HEADER_BODY_SEPARATOR + "\n"
+    end
 
-    def hand_log_body
+    def body_hands
       @parser.mediator.hand_logs.collect.with_index { |e, i|
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
@@ -97,9 +80,6 @@ module Bioshogi
       if left_part
         out << "#{left_part} #{right_part}".rstrip + "\n"
       end
-
-      out << @parser.judgment_message + "\n"
-      out << @parser.error_message_part
 
       out
     end

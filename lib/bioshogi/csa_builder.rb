@@ -67,7 +67,7 @@ module Bioshogi
       @parser.mediator_board_setup(obj) # なぜ？
       out << obj.to_csa(@params)
 
-      out << hand_log_body
+      out << body_hands
 
       unless @params[:footer_skip]
         if e = @parser.last_action_params
@@ -106,7 +106,7 @@ module Bioshogi
 
     private
 
-    def hand_log_body
+    def body_hands
       out = []
 
       # 2通りある

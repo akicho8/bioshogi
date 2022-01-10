@@ -3,13 +3,10 @@
 module Bioshogi
   class BodBuilder
     include Builder
-
-    def initialize(parser, params = {})
-      @parser = parser
-      @params = self.class.default_params.merge(params)
-    end
+    include KakinokiBuilder
 
     def to_s
+      @parser.mediator_run_once
       @parser.mediator.to_bod(@params)
     end
   end

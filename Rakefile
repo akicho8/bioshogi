@@ -19,7 +19,7 @@ desc "重要なところだけのテスト"
 RSpec::Core::RakeTask.new("spec:core") do |t|
   # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"
   # t.rspec_opts = "-f d -t ~animation --fail-fast"
-  t.rspec_opts = "-f d -t ~animation"
+  t.rspec_opts = "-f d -t ~animation -t ~tactic"
 end
 
 desc "棋譜変換のテスト(TRANSFORM_OUTPUT=1 で expected を生成)"

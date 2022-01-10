@@ -73,7 +73,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 手合割：三枚落ち
 上手：伊藤宗印
 下手：天満屋
