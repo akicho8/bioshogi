@@ -21,10 +21,6 @@ module Bioshogi
         @object ||= {}
       end
 
-      def meta_info
-        @meta_info ||= {}
-      end
-
       def call_names
         raise
         @call_names ||= -> {
