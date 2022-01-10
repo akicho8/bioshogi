@@ -5,10 +5,19 @@ module Bioshogi
     attr_accessor :params
     attr_accessor :header
 
+    class_methods do
+      def default_params
+        super.merge({
+            :header_skip => false,
+            :footer_skip => false,
+          })
+      end
+    end
+
     def initialize(parser, params = {})
       @parser = parser
       @params = self.class.default_params.merge(params)
-      @header = parser.header.clone # clone できてる？
+      @header = parser.header.clone # FIXME: object は同じもの
     end
 
     def to_s

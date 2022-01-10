@@ -11,8 +11,6 @@ module Bioshogi
             :column_count => 10,        # 最大N列
             :fixed_width  => nil,       # 指定すると1つの指し手の幅になる。nilなら自動的に揃える
             :same_suffix  => "　",
-            :header_skip  => false,
-            :footer_skip  => false,
           })
       end
     end

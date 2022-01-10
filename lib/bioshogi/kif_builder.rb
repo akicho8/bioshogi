@@ -12,8 +12,6 @@ module Bioshogi
         super.merge({
             :hand_width       => 12,
             :number_width     => 4,
-            :header_skip      => false,
-            :footer_skip      => false,
             :time_embed_force => false, # 強制的に時間を含めるか？
           })
       end
