@@ -13,15 +13,15 @@ require "spec_helper"
 
 module Bioshogi
   describe "変換", transform: true do
-    it "works" do
-      trace = -> s {
-        if ENV["VERBOSE"]
-          puts s
-        end
-      }
-      types = [:kif, :ki2, :bod, :csa, :sfen, :akf]
-      wildcard = "**/source.*"
-      Pathname(__dir__).glob("transform/**/source.*") do |e|
+    trace = -> s {
+      if ENV["VERBOSE"]
+        puts s
+      end
+    }
+    types = [:kif, :ki2, :bod, :csa, :sfen, :akf]
+    wildcard = "**/source.*"
+    Pathname(__dir__).glob("transform/**/source.*") do |e|
+      it e do
         info = Parser.parse(e)
         trace.call "IN: #{e.dirname.basename}"
         if ENV["TRANSFORM_OUTPUT"]

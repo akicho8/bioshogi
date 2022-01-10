@@ -20,7 +20,7 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 -3334FU
 %TORYO
 EOT
-            end
+      end
 
       it "to_kif" do
         assert { @info.to_kif == <<~EOT }

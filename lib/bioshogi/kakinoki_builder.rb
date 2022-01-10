@@ -17,18 +17,18 @@ module Bioshogi
     def initialize(parser, params = {})
       @parser = parser
       @params = self.class.default_params.merge(params)
-      @header = parser.header.clone # FIXME: object は同じもの
+      # Bioshogi.assert { parser.header.object_id != @header.object.object_id }
     end
 
     def to_s
       build_setup
-
       @parser.mediator_run_once
+      @header = @parser.header.clone
 
       out = []
 
       unless @params[:header_skip]
-        if @parser.header.present?
+        if @header.present?
           out << header_part_string
         end
       end
@@ -62,17 +62,11 @@ module Bioshogi
     end
 
     def header_part_string
-      @header_part_string ||= header_part_string_build
-    end
-
-    def header_part_string_build
-      @parser.mediator_run_once
-
       m = @parser.initial_mediator
 
       if e = m.board.preset_info
         # 手合割がわかる場合
-        header["手合割"] = e.name
+        @header["手合割"] = e.name
         mochigoma_delete_if_blank # 手合割がわかるとき持駒が空なら消す
         raw_header_part_string
       else
@@ -108,9 +102,9 @@ module Bioshogi
     def mochigoma_delete_if_blank
       Location.call_names.each do |e|
         key = "#{e}の持駒"
-        if v = header[key]
-          if v.blank?
-            header.delete(key)
+        if v = @header[key]
+          if v.blank? || v == "なし"
+            @header.delete(key)
           end
         end
       end

@@ -31,8 +31,6 @@ module Bioshogi
       assert { turn_info.location_call_name   == "後手" }
       assert { info.to_kif == <<~EOT }
 手合割：六枚落ち
-上手の持駒：なし
-下手の持駒：なし
 手数----指手---------消費時間--
    1 ４二玉(51)
    2 投了
