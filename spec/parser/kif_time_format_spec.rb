@@ -16,17 +16,3 @@ module Bioshogi
     end
   end
 end
-# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
-# >> ...
-# >> 
-# >> Top 3 slowest examples (0.0429 seconds, 87.6% of total time):
-# >>   日時 表記統一
-# >>     0.04179 seconds -:5
-# >>   日時 日の場合は日時を含まない
-# >>     0.0006 seconds -:10
-# >>   日時 不正な日付
-# >>     0.00052 seconds -:14
-# >> 
-# >> Finished in 0.04898 seconds (files took 1.6 seconds to load)
-# >> 3 examples, 0 failures
-# >> 

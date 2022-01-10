@@ -154,13 +154,6 @@ EOT
       end
     end
 
-    # curl -O http://swks.sakura.ne.jp/wars/kifu/akicho8-JackTuti-20130609_201346.kif
-    # it "将棋ウォーズ棋譜変換サイトが生成したKIFフォーマットが読める" do
-    #   info = Parser::KifParser.parse(Pathname(__FILE__).dirname.join("../../resources/akicho8-JackTuti-20130609_201346.kif").expand_path)
-    #   assert { info.header }
-    #   assert { info.move_infos }
-    # end
-
     it "ヘッダーがなくてもKIFと判定する" do
       info = Parser.parse(<<~EOT)
       1 ７六歩
