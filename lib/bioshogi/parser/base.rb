@@ -48,22 +48,22 @@ module Bioshogi
       attr_reader :force_handicap
       attr_reader :force_preset_info
       attr_reader :player_piece_boxes
+      attr_reader :header
 
       def initialize(source, parser_options = {})
         @source = source
         @parser_options = self.class.default_parser_options.merge(parser_options)
 
-        @move_infos = []
-        @first_comments = []
-        @board_source = nil
+        @move_infos         = []
+        @first_comments     = []
+        @board_source       = nil
         @last_action_params = nil
-        @error_message = nil
-
-        # @force_preset_info = PresetInfo.fetch("平手")
-        @force_preset_info = nil
-        @balance_info = BalanceInfo.fetch(:normal)
-        @force_location = nil
-        @force_handicap = nil
+        @error_message      = nil
+        @header             = Header.new
+        @force_preset_info  = nil
+        @balance_info       = BalanceInfo.fetch(:normal)
+        @force_location     = nil
+        @force_handicap     = nil
         @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
       end
 
@@ -73,10 +73,6 @@ module Bioshogi
 
       def normalized_source
         @normalized_source ||= Parser.source_normalize(@source)
-      end
-
-      def header
-        @header ||= Header.new
       end
 
       def inspect
@@ -90,13 +86,14 @@ module Bioshogi
 
         av << "* attributes"
         av << {
-          :force_preset_info    => force_preset_info,
-          :balance_info   => balance_info,
-          :force_location => force_location,
-          :force_handicap => force_handicap,
+          :force_preset_info => force_preset_info,
+          :balance_info      => balance_info,
+          :force_location    => force_location,
+          :force_handicap    => force_handicap,
         }.to_t.strip
         av << " "
 
+        av << "* header"
         av << header.inspect.strip
         av << " "
 

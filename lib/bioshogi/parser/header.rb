@@ -24,13 +24,13 @@ module Bioshogi
       end
 
       def normalize
-        time_format_normalize
-        piece_order_normalize
+        time_normalize
+        piece_normalize
       end
 
       private
 
-      def time_format_normalize
+      def time_normalize
         object.each do |key, value|
           if key.match?(/日時?\z/) # "開始日" や "開始日時"
             if v = value.presence
@@ -49,13 +49,19 @@ module Bioshogi
         end
       end
 
-      def piece_order_normalize
+      def piece_normalize
         Location.each do |e|
-          key = "#{e}の持駒"
-          if v = object[key].presence
-            v = Piece.s_to_a(v)
-            v = Piece.a_to_s(v, ordered: true, separator: " ")
-            object[key] = v
+          e.call_names.each do |e|
+            key = "#{e}の持駒"
+            if v = object[key].presence
+              v = Piece.s_to_a(v)
+              v = Piece.a_to_s(v, ordered: true, separator: " ")
+              if v.present?
+                object[key] = v
+              else
+                object.delete(key)
+              end
+            end
           end
         end
       end

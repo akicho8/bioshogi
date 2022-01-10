@@ -4,9 +4,10 @@ module Bioshogi
     class KifParser < Base
       include KakinokiMethods
 
-      BEFORE_REGEXP = /^\p{blank}*(?<turn_number>\d+)\p{blank}+/
-      MOVE_REGEXP   = /#{BEFORE_REGEXP}(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
-      LAST_REGEXP   = /#{BEFORE_REGEXP}(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
+      BEFORE_REGEXP  = /^\p{blank}*(?<turn_number>\d+)\p{blank}+/
+      MOVE_REGEXP    = /#{BEFORE_REGEXP}(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
+      LAST_REGEXP    = /#{BEFORE_REGEXP}(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
+      MIN_SEC_REGEXP = /(?<min>\d+):(?<sec>\d+)/
 
       class << self
         def accept?(source)
@@ -15,8 +16,10 @@ module Bioshogi
         end
       end
 
+      private
+
       def body_parse
-        kknk_body.lines.each do |line|
+        body_part.lines.each do |line|
           kknk_comment_read(line)
           if md = line.match(MOVE_REGEXP)
             input = md[:input].remove(/\p{blank}/)
@@ -40,12 +43,10 @@ module Bioshogi
         end
       end
 
-      private
-
       def min_sec_str_to_seconds(s)
         if s.present?
-          if v = s.match(/(?<m>\d+):(?<s>\d+)/)
-            v[:m].to_i.minutes + v[:s].to_i.seconds
+          if md = s.match(MIN_SEC_REGEXP)
+            md[:min].to_i.minutes + md[:sec].to_i.seconds
           end
         end
       end

@@ -18,8 +18,10 @@ module Bioshogi
         end
       end
 
+      private
+
       def body_parse
-        kknk_body.lines.each do |line|
+        body_part.lines.each do |line|
           kknk_comment_read(line)
           if line.match?(MOVE_REGEXP)
             @move_infos += InputParser.scan(line).collect do |e|
@@ -28,7 +30,7 @@ module Bioshogi
           end
         end
 
-        if kknk_body.match?(/^まで\d+手で千日手/)
+        if body_part.match?(/^まで\d+手で千日手/)
           @last_action_params = { last_action_key: "SENNICHITE" }
         end
       end

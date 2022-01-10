@@ -21,9 +21,9 @@ module Bioshogi
         player_piece_read       # そこから持駒の読み取る
         force_preset_read       # 明示的な手合割の指定があれば読み取る (駒落ちモードに移行するのはここからだけ)
         force_location_read     # 明示的な手番の指定があれば読み取る (あとでベースを切り替える)
-        header.normalize        # 
         kknk_board_read         # 盤面の読み取り
         body_parse              # 指し手の読み取り
+        header.normalize        # ヘッダーの書き換え
       end
 
       def kknk_board_read
@@ -45,8 +45,8 @@ module Bioshogi
 
       private
 
-      def kknk_body
-        @kknk_body ||= yield_self do
+      def body_part
+        @body_part ||= yield_self do
           # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
           normalized_source.remove(/^\p{blank}*変化：.*/m)
         end
