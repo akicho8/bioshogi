@@ -73,8 +73,13 @@ module Bioshogi
       # 駒配列から持駒文字列に変換
       # Piece.a_to_s(["竜", :pawn, "竜"], ordered: true, separator: "/") # => "飛二/歩"
       def a_to_s(pieces, options = {})
+        h_to_s(a_to_h(pieces), options)
+      end
+
+      # 駒配列から個数のハッシュに変換
+      def a_to_h(pieces)
         pieces = pieces.collect { |e| Piece.fetch(e) }
-        h_to_s(pieces.group_by(&:key).transform_values(&:size), options) # ruby 2.7 では tally が使える
+        pieces.group_by(&:key).transform_values(&:size) # ruby 2.7 では tally が使える
       end
 
       # 持駒文字列から駒個数のハッシュに変換しつつさらに先後で分ける

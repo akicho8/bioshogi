@@ -8,8 +8,6 @@ module Bioshogi
     class Base
       include Formatter::ExportMethods
 
-      cattr_accessor(:header_sep) { "：" }
-
       class << self
         def parse(source, options = {})
           new(source, options).tap(&:parse)
@@ -40,17 +38,33 @@ module Bioshogi
         end
       end
 
-      attr_reader :move_infos, :first_comments, :last_status_params, :board_source, :error_message
+      attr_reader :move_infos
+      attr_reader :first_comments
+      attr_reader :board_source
+      attr_reader :last_action_params
+      attr_reader :error_message
+      attr_reader :balance_info
+      attr_reader :force_location
+      attr_reader :force_handicap
+      attr_reader :force_preset_info
+      attr_reader :player_piece_boxes
+      attr_reader :header
 
       def initialize(source, parser_options = {})
         @source = source
         @parser_options = self.class.default_parser_options.merge(parser_options)
 
-        @move_infos = []
-        @first_comments = []
-        @board_source = nil
-        @last_status_params = nil
-        @error_message = nil
+        @move_infos         = []
+        @first_comments     = []
+        @board_source       = nil
+        @last_action_params = nil
+        @error_message      = nil
+        @header             = Header.new
+        @force_preset_info  = nil
+        @balance_info       = BalanceInfo.fetch(:normal)
+        @force_location     = nil
+        @force_handicap     = nil
+        @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
       end
 
       def parse
@@ -61,51 +75,43 @@ module Bioshogi
         @normalized_source ||= Parser.source_normalize(@source)
       end
 
-      def header
-        @header ||= Header.new
-      end
+      def inspect
+        av = []
 
-      private
-
-      def header_read
-        header.parse_from_kif_format_header(normalized_source)
-      end
-
-      def header_normalize
-        header.normalize_all
-      end
-
-      # 激指で作った分岐対応KIFを読んだ場合「変化：8手」のような文字列が来た時点で打ち切る
-      def henka_delete(s)
-        s.sub(/^\p{blank}*変化：.*/m, "")
-      end
-
-      # for KIF, KI2
-      def board_read
-        if md = normalized_source.match(/(?<board>^\+\-.*\-\+$)/m)
-          @board_source = md[:board]
+        if @board_source
+          av << "* @board_source"
+          av << @board_source.strip
+          av << " "
         end
-      end
 
-      # for KIF, KI2
-      def comment_read(line)
-        if md = line.match(/^\p{blank}*\*\p{blank}*(?<comment>.*)/)
-          if @move_infos.empty?
-            first_comments_add(md[:comment])
-          else
-            note_add(md[:comment])
-          end
+        av << "* attributes"
+        av << {
+          :force_preset_info => force_preset_info,
+          :balance_info      => balance_info,
+          :force_location    => force_location,
+          :force_handicap    => force_handicap,
+        }.to_t.strip
+        av << " "
+
+        av << "* header"
+        av << header.inspect.strip
+        av << " "
+
+        if @board_source
+          av << "* @board_source"
+          av << @board_source.strip
+          av << " "
         end
-      end
 
-      def first_comments_add(comment)
-        @first_comments << comment
-      end
+        av << "* move_infos"
+        av << move_infos.to_t.strip
+        av << " "
 
-      # コメントは直前の棋譜の情報と共にする
-      def note_add(comment)
-        @move_infos.last[:comments] ||= []
-        @move_infos.last[:comments] << comment
+        av << "* @last_action_params"
+        av << @last_action_params.to_t.strip
+        av << " "
+
+        av.join("\n").strip
       end
     end
   end

@@ -6,6 +6,13 @@ module Bioshogi
   class Board
     class << self
       delegate :dimensiton_change, :size_type, :promotable_disable, to: "Bioshogi::Dimension"
+
+      # 指定の形から手合割を逆算する
+      def guess_preset_info(shape, options = {})
+        board = new
+        board.placement_from_shape(shape)
+        board.preset_info(options)
+      end
     end
 
     delegate :hash, to: :surface
@@ -211,8 +218,8 @@ module Bioshogi
     concerning :PresetMethods do
       # 盤の状態から手合割を逆算
       # バリケード将棋などは持駒も見る必要があるけどやってない
-      def preset_info(optimize: true)
-        PresetInfo.lookup_by_soldiers(surface.values, optimize: optimize)
+      def preset_info(options = {})
+        PresetInfo.lookup_by_soldiers(surface.values, options)
       end
     end
 

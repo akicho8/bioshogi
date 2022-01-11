@@ -35,9 +35,7 @@ module Bioshogi
     describe "囲い" do
       it "囲いチェック", :if => Bioshogi.config.skill_monitor_enable do
         info = Parser.file_parse("#{__dir__}/files/矢倉.kif")
-        info.mediator_run_once
-        # puts info.header_part_string
-        assert { info.header_part_string == <<~EOT }
+        assert { info.to_kif.include?(<<~EOT) }
 開始日時：1981/05/15 09:00:00
 棋戦：名将戦
 場所：東京「将棋会館」

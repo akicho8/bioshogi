@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe TacticInfo do
-    describe "すべての戦法の判定" do
+    describe "すべての戦法の判定", tactic: true do
       TacticInfo.all_elements.each do |e|
         it e.key do
           file = Pathname.glob("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first # 拡張子を "*" とすると ruby 2.5.1 から(？) 動かない

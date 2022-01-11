@@ -3,45 +3,21 @@
 module Bioshogi
   class Ki2Builder
     include Builder
-    include TextBuilder
+    include KakinokiBuilder
 
-    def self.default_params
-      super.merge({
-          :column_count => 10,        # 最大N列
-          :fixed_width  => nil,       # 指定すると1つの指し手の幅になる。nilなら自動的に揃える
-          :same_suffix  => "　",
-          :header_skip  => false,
-          :footer_skip  => false,
-        })
-    end
-
-    def initialize(parser, params = {})
-      @parser = parser
-      @params = self.class.default_params.merge(params)
-    end
-
-    def to_s
-      @parser.mediator_run_once
-
-      out = []
-      if @parser.header.present? && !@params[:header_skip]
-        out << @parser.header_part_string
-        out << "\n"
+    class << self
+      def default_params
+        super.merge({
+            :column_count => 10,        # 最大N列
+            :fixed_width  => nil,       # 指定すると1つの指し手の幅になる。nilなら自動的に揃える
+            :same_suffix  => "　",
+          })
       end
-
-      out << hand_log_body
-
-      unless @params[:footer_skip]
-        out << @parser.judgment_message + "\n"
-        out << @parser.error_message_part
-      end
-
-      out.join
     end
 
     private
 
-    def hand_log_body
+    def body_hands
       if @params[:fixed_width]
         # 固定幅で整列(値が小さいと揃わない場合がある)
         @parser.mediator.hand_logs.group_by.with_index {|_, i| i / @params[:column_count] }.values.collect { |v|

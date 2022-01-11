@@ -14,7 +14,6 @@ EOT
 
 tp info.header.to_h
 tp info.header.entry_all_names
-tp info.header.meta_info
 tp info.header.__to_meta_h
 tp info.header.to_kisen_a
 tp info.header.entry_all_names

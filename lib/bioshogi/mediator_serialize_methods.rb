@@ -14,26 +14,17 @@ module Bioshogi
       s << board.to_s
       s << player_at(:black).piece_box_as_header + "\n"
 
-      last = ""
-      if respond_to?(:hand_logs)
-        if hand_log = hand_logs.last
-          last = hand_log.to_kif(with_location: true)
+      unless options[:display_turn_skip]
+        last = ""
+        if respond_to?(:hand_logs)
+          if e = hand_logs.last
+            last = e.to_kif(with_location: true)
+          end
         end
-      end
-
-      if options[:display_turn_skip]
-      else
         s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
       end
 
-      if current_player.location.key == :white || true
-        if options[:compact]
-        else
-          s << "\n"
-        end
-        s << "#{current_player.call_name}番\n"
-      end
-
+      s << "#{current_player.call_name}番\n"
       s.join
     end
 
@@ -53,14 +44,14 @@ module Bioshogi
 
       if preset_info
         unless options[:oneline]
-          s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_info.name}" + "\n"
+          s << "#{Parser::CsaParser::SYSTEM_COMMENT_CHAR} 手合割:#{preset_info.name}" + "\n"
         end
       end
 
       if options[:board_expansion]
         s << board.to_csa
       else
-        if preset_info&.key == :"平手"
+        if preset_info == PresetInfo.fetch("平手")
           s << "PI" + "\n"
         else
           s << board.to_csa

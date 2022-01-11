@@ -1,120 +1,35 @@
 # frozen-string-literal: true
 module Bioshogi
   module Parser
-
-    # 'encoding=Shift_JIS
-    # ' ---- Kifu for Windows V7 V7.31 CSA形式棋譜ファイル ----
-    # V2.2
-    # N+akicho8
-    # N-yosui26
-    # $EVENT:レーティング対局室(早指2)
-    # $START_TIME:2017/11/15 0:23:44
-    # P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-    # P2 * -HI *  *  *  *  * -KA *
-    # P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-    # P4 *  *  *  *  *  *  *  *  *
-    # P5 *  *  *  *  *  *  *  *  *
-    # P6 *  *  *  *  *  *  *  *  *
-    # P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-    # P8 * +KA *  *  *  *  * +HI *
-    # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-    # +
-    # +7968GI,T5
-    # -3334FU,T0
-    # %TORYO,T16
-
-    # '-- syougi kifu --
-    # 'format=csa_v2
-    # 'make=QinoaSyougiConverter
-    # V2
-    # N+guest
-    # N-tume
-    # $START_TIME:2021/12/13 13:43:40
-    # $END_TIME:2021/12/13 13:46:37
-    # '--
-    # 'log=start_board
-    # P1-OU *  *  *  *  *  *  *  *
-    # P2 *  * +TO *  *  *  *  *  *
-    # P3+TO+TO+TO *  *  *  *  *  *
-    # P4 *  *  *  *  *  *  *  *  *
-    # P5 *  *  * -KA * +FU *  *  *
-    # P6 *  *  * -UM+FU * +FU+FU+FU
-    # P7 *  *  *  *  * -TO *  *  *
-    # P8 *  *  *  *  * +KI+GI-HI+OU
-    # P9 *  * -HI *  * +KI *  * +KY
-    # P+00KI
-    # P+00GI
-    # P+00KE
-    # P+00KY
-    # P+00FU
-    # P-00KI
-    # P-00GI00GI
-    # P-00KE
-    # '--
-    # +
-    # +1828OU,T1
-    # -4738TO,T1
-    # +4938KI,T1
-    # -0039GI,T1
-    # +3839KI,T1
-    # -0037GI,T1
-    # +2837OU,T1
-    # -7939RY,T1
-    # +3746OU,T1
-    # -3948RY,T1
-    # +4635OU,T54
-    # -6657UM,T1
-    # +3525OU,T26
-    # -0024KI,T1
-    # %TORYO
-    #
-    # 'end
-
     class CsaParser < Base
-      cattr_accessor(:comment_char) { "'" }
+      SYSTEM_COMMENT_CHAR = "'"
+      KEY_VALUE_REGEXP = /^(N[+-]|\$\w+:)(.*)$/
+
+      # 将棋ウォーズの時間はバグっていてマイナスの時間になることがあるため T-123 形式も考慮する。
+      # ただし、これを最後まで許容すると KIF の時間もマイナス表記になり、KENTOが読み込みに失敗する。
+      # いまは ChessClock クラスの add でチェックしてしかたなくマイナスにならないようにしている。
+      TIME_REGEXP = /[A-Z]([+-]?\d+)/
 
       class << self
         def accept?(source)
           source = Parser.source_normalize(source)
-          false ||
-            source.match?(/^\s*\b(V\d+\.\d+)\b/)  || # V2.2 '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
-            source.match?(/\b(PI|P\d|P[\+\-])\b/) || # PI P1 P+ P-
-            source.match?(/[+-]\d{4}[A-Z]{2}/)    || # +1828OU
-            source.match?(/\b(N[+-])\b/)          || # 対局者名
-            false
-        end
-      end
-
-      def normalized_source
-        @normalized_source ||= Parser.source_normalize(@source).yield_self do |s|
-          s = s.gsub(/^#{comment_char}.*/o, "")  # コメント行の削除
-          s = s.gsub(/,/, "\n")                  # カンマは改行と見なす
+          v = false
+          v ||= source.match?(/^\s*\b(V\d+\.\d+)\b/)  # V2.2 '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
+          v ||= source.match?(/\b(PI|P\d|P[\+\-])\b/) # PI P1 P+ P-
+          v ||= source.match?(/[+-]\d{4}[A-Z]{2}/)    # +1828OU
+          v ||= source.match?(/\b(N[+-])\b/)          # 対局者名
         end
       end
 
       def parse
-        s = normalized_source
-
-        # ヘッダーっぽいのもを収集
-        s.scan(/^(N[+-]|\$\w+:)(.*)\n/) do |key, value|
-          # キーをKIF側に統一
-          if e = CsaHeaderInfo[key]
-            key = e.kif_side_key
-          end
-
-          # ヘッダー情報が重複した場合は最初に出てきたものを優先
-          header[key] ||= value
-        end
-        header_normalize
-
-        @board_source = nil
+        key_value_store
 
         ################################################################################ (1)
         # > (1) 平手初期配置と駒落ち
         # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
-        # > 例:二枚落ちPI82HI22KA
+        # > 例:二枚落ち PI82HI22KA
 
-        if md = s.match(/^PI(?<handicap_piece_list>.*)/)
+        if md = normalized_source.match(/^PI(?<handicap_piece_list>.*)/)
           mediator = Mediator.new
           mediator.placement_from_preset("平手")
           if v = md[:handicap_piece_list]
@@ -141,11 +56,11 @@ module Bioshogi
         # > P2 * -HI *  *  *  *  * -KA *
 
         # P1 形式の盤面の読み取り
-        if s.match?(/^P\d/)
+        if normalized_source.match?(/^P\d/)
           if @board_source
             raise SyntaxDefact, "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています"
           end
-          @board_source = s.scan(/^P\d.*\n/).join.presence
+          @board_source = normalized_source.scan(/^P\d.*\n/).join.presence
         end
 
         ################################################################################ (3)
@@ -162,8 +77,8 @@ module Bioshogi
         # 詰将棋などではここで持駒を調整される
 
         # unless @board_source
-        if s.match?(/^P[\+\-](.*)/)
-          sub_mediator = Mediator.new
+        if normalized_source.match?(/^P[\+\-](.*)/)
+          sub_mediator = Mediator.new # FIXME
 
           # 駒箱
           piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))
@@ -171,7 +86,7 @@ module Bioshogi
           # 両者の駒台
           hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
 
-          s.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
+          normalized_source.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
             location = Location.fetch(location_key)
             piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
               if piece_ch == "AL"
@@ -201,9 +116,11 @@ module Bioshogi
               end
             end
           end
+
           hold_pieces.each do |location, pieces|
-            player = sub_mediator.player_at(location)
-            header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+            # player = sub_mediator.player_at(location)
+            # header["#{player.call_name}の持駒"] = Piece.a_to_s(pieces)
+            player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
           end
 
           # PI か P1 で作ったのを破壊してしまうため指定がないときだけ指定する
@@ -213,38 +130,52 @@ module Bioshogi
         end
         # end
 
+        if @board_source
+          @force_preset_info ||= Board.guess_preset_info(@board_source)
+        end
+
         # 手番は見ていない
 
         # 指し手
-        @move_infos += s.scan(/^([+-]?\d+\w+)\R+(?:#{time_regexp})?/o).collect do |input, used_seconds|
+        @move_infos += normalized_source.scan(/^([+-]?\d+\w+)\R+(?:#{TIME_REGEXP})?/o).collect do |input, used_seconds|
           if used_seconds
             used_seconds = used_seconds.to_i.seconds
           end
           {input: input, used_seconds: used_seconds}
         end
 
-        if md = s.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
-          @last_status_params = md.named_captures.symbolize_keys
+        if md = normalized_source.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
+          @last_action_params = md.named_captures.symbolize_keys
         end
-      end
 
-      # "-" だけの行があれば上手からの開始とする
-      def handicap?
-        normalized_source.match?(/^\-$/)
+        if md = normalized_source.match(/^(?<csa_sign>[+-])$/)
+          if Location.fetch(md["csa_sign"]).key == :white
+            @force_handicap = true # 微妙な判定
+          end
+        end
+
+        header.normalize
       end
 
       private
 
-      # 時間の部分
-      # T123 形式
-      # ありえないことだけど将棋ウォーズの時間はバグっていて時間が過去に戻ったりしてマイナスになることがあるため T-123 形式も考慮している
-      #
-      # 2020-02-13
-      # しかし、これを許容すると KIF の時間にマイナスになったりするので問題あり
-      # なのでいまは ChessClock クラスの add でチェックしている
-      #
-      def time_regexp
-        /[A-Z]([+-]?\d+)/
+      def normalized_source
+        @normalized_source ||= Parser.source_normalize(@source).yield_self do |s|
+          s = s.gsub(/^#{SYSTEM_COMMENT_CHAR}.*/o, "")  # コメント行の削除
+          s = s.gsub(/,/, "\n")                         # カンマは改行と見なす
+        end
+      end
+
+      # ヘッダーっぽいのもを収集
+      def key_value_store
+        normalized_source.scan(KEY_VALUE_REGEXP) do |key, value|
+          # キーをKIF側に統一
+          if e = CsaHeaderInfo[key]
+            key = e.kif_side_key
+          end
+          # ヘッダー情報が重複した場合は最初に出てきたものを優先
+          header[key] ||= value
+        end
       end
     end
   end

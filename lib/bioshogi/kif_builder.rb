@@ -3,48 +3,33 @@
 module Bioshogi
   class KifBuilder
     include Builder
-    include TextBuilder
+    include KakinokiBuilder
 
-    def self.default_params
-      super.merge({
-          :hand_width       => 12,
-          :number_width     => 4,
-          :header_skip      => false,
-          :footer_skip      => false,
-          :time_embed_force => false, # 強制的に時間を含めるか？
-        })
-    end
+    HEADER_BODY_SEPARATOR = "手数----指手---------消費時間--"
 
-    def initialize(parser, params = {})
-      @parser = parser
-      @params = self.class.default_params.merge(params)
-    end
-
-    def to_s
-      @parser.mediator_run_once
-
-      out = []
-      unless @params[:header_skip]
-        out << @parser.header_part_string
+    class << self
+      def default_params
+        super.merge({
+            :hand_width       => 12,
+            :number_width     => 4,
+            :time_embed_force => false, # 強制的に時間を含めるか？
+          })
       end
-      out << "手数----指手---------消費時間--\n"
-
-      if @params[:time_embed_force] || @parser.clock_exist?
-        @chess_clock = ChessClock.new
-      end
-
-      out << hand_log_body
-
-      unless @params[:footer_skip]
-        out << footer_content
-      end
-
-      out.join
     end
 
     private
 
-    def hand_log_body
+    def build_setup
+      if @params[:time_embed_force] || @parser.clock_exist?
+        @chess_clock = ChessClock.new
+      end
+    end
+
+    def body_header
+      HEADER_BODY_SEPARATOR + "\n"
+    end
+
+    def body_hands
       @parser.mediator.hand_logs.collect.with_index { |e, i|
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
@@ -70,32 +55,28 @@ module Bioshogi
       left_part = nil
       right_part = nil
 
-      if @parser.last_action_info.kif_word
-        left_part = "%*d %s" % [
-          @params[:number_width],
-          # @parser.mediator.initial_state_turn_info.display_turn + @parser.mediator.hand_logs.size.next,
-          @parser.mediator.hand_logs.size.next,
-          mb_ljust(@parser.last_action_info.kif_word, @params[:hand_width]),
-        ]
-      end
+      if @parser.last_action_info
+        if kakinoki_word = @parser.last_action_info.kakinoki_word
+          left_part = "%*d %s" % [
+            @params[:number_width],
+            @parser.mediator.hand_logs.size.next,
+            mb_ljust(kakinoki_word, @params[:hand_width]),
+          ]
+        end
 
-      if true
-        if @parser.last_status_params
-          if used_seconds = @parser.last_status_params[:used_seconds]
+        if @parser.last_action_params
+          if used_seconds = @parser.last_action_params[:used_seconds]
             if @chess_clock
               @chess_clock.add(used_seconds)
               right_part = @chess_clock.to_s
             end
           end
         end
-      end
 
-      if left_part
-        out << "#{left_part} #{right_part}".rstrip + "\n"
+        if left_part
+          out << "#{left_part} #{right_part}".rstrip + "\n"
+        end
       end
-
-      out << @parser.judgment_message + "\n"
-      out << @parser.error_message_part
 
       out
     end

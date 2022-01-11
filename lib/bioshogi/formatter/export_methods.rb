@@ -50,6 +50,7 @@ module Bioshogi
         end
       end
 
+      # FIXME: mediator の最初の状態をコピーしておく
       def initial_mediator
         @initial_mediator ||= mediator_new.tap do |e|
           mediator_board_setup(e)
@@ -57,160 +58,54 @@ module Bioshogi
       end
 
       def mediator_board_setup(mediator)
-        # 持駒を反映する
-        Location.each do |e|
-          e.call_names.each do |e|
-            if v = header["#{e}の持駒"]
-              mediator.player_at(e).piece_box.set(Piece.s_to_h(v))
-            end
-          end
-        end
+        case1(mediator)
+        mediator.before_run_process # 最初の状態を記録
+      end
 
-        # puts @board_source
-        # exit
+      def case1(mediator)
+        players_piece_box_set(mediator)
 
         if @board_source
           mediator.board.placement_from_shape(@board_source)
         else
-          mediator.placement_from_preset(header["手合割"] || "平手")
+          preset_info = PresetInfo[header["手合割"]] || PresetInfo["平手"]
+          mediator.placement_from_preset(preset_info.key)
         end
 
-        handicap_p = handicap?
-
-        mediator.turn_info.handicap = handicap_p
-
-        turn_base_set_p = false
-
-        # unless turn_base_set_p
-        #   if handicap?
-        #     mediator.turn_info.handicap = true
-        #     mediator.turn_info.turn_base = 1
-        #     turn_base_set_p = true
-        #   end
-        # end
-
-        # 手数＝xxx の読み取り。ぴよ将棋では読み込まれるけどこの部分がエラー表示される
-        unless turn_base_set_p
-          if header.turn_base
-            mediator.turn_info.turn_base = header.turn_base
-            turn_base_set_p = true
-          end
+        if force_location
+          mediator.turn_info.turn_base = force_location.code
         end
 
-        # 「後手番」または「上手番」だけ書いた行がある場合
-        # ただしすでに駒落ちの場合は無視する(そうしないと反転の反転で▲から始まってしまう)
-        unless turn_base_set_p
-          if !handicap_p
-            if v = header.force_location
-              if v.key == :white
-                mediator.turn_info.turn_base = 1
-                turn_base_set_p = true
-              end
-            end
-          end
+        if force_handicap
+          mediator.turn_info.handicap = force_handicap
         end
-
-        # KIFに手数の表記があって2手目から始まっているなら2手目までカウンタを進める
-        # KIFはかならず1から始まるルールらしいのでこれは間違った解釈
-        #
-        # 手数----指手---------消費時間--
-        #   3 76歩
-        #
-        # であれば 2 を設定
-        unless turn_base_set_p
-          if e = move_infos.first
-            if v = e[:turn_number]
-              mediator.turn_info.turn_base = v.to_i.pred
-              turn_base_set_p = true
-            end
-          end
-        end
-
-        # こちらも間違った解釈
-        # 手数が2以上から始まるKIFはないけど一応対応しとこう
-        unless turn_base_set_p
-          #
-          # 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
-          # 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
-          # 後手の持駒：銀 歩三
-          #   ９ ８ ７ ６ ５ ４ ３ ２ １
-          # +---------------------------+
-          # |v香v飛 ・ ・ ・ ・v玉v桂v香|一
-          # | ・ ・ ・v金 ・ ・v金v銀 ・|二
-          # | ・ ・ ・ ・v歩v歩 歩 ・ ・|三
-          # |v歩 ・ ・ ・ ・v角 桂v歩v歩|四
-          # | ・ ・v歩 銀v銀 桂 ・ ・ ・|五
-          # | 歩 歩 歩 歩 ・ 歩 ・ ・ 歩|六
-          # | ・ ・ 桂 ・ 歩 ・ 金 ・ ・|七
-          # | ・ ・ 金 ・ ・ ・ ・ ・ ・|八
-          # | 香 ・ 玉 ・ ・ ・ ・ 飛 香|九
-          # +---------------------------+
-          # 先手の持駒：角 歩
-          # 手数----指手---------消費時間--
-          #   72 投了
-          # まで71手で先手の勝ち
-          #
-          # 72 で投了ということは 71 まで進める
-          #
-          if move_infos.empty?
-            if @last_status_params
-              if v = @last_status_params[:turn_number]
-                mediator.turn_info.turn_base = v.to_i.pred
-                turn_base_set_p = true
-              end
-            end
-          end
-        end
-
-        # 「駒落ち判定」と「手番判定」が重複すると反対の反対で駒落ちなのに▲から始まってしまう
-        # それを防ぐために「手番判定」がなかったときのみ handicap 指定とする
-        # unless turn_base_set_p
-        #   mediator.turn_info.handicap = handicap?
-        # end
-
-        # さらに
-        # "まで71手で先手の勝ち"
-        # の部分を見てカウンタをセットすることもできるけど
-        # まだ必要になってないのでやらない
-        #
-        # 71手目からはじまるKIFはないのでこれも間違った解釈
-        mediator.before_run_process # 最初の状態を記録
       end
 
-      def handicap?
-        v = header.handicap_validity
-        if !v.nil?
-          return v
+      # 持駒を反映する
+      def players_piece_box_set(mediator)
+        player_piece_boxes.each do |k, v|
+          mediator.player_at(k).piece_box.set(v)
         end
-
-        if e = board_preset_info
-          return e.handicap
-        end
-
-        false
       end
 
       # 盤面の指定があるとき、盤面だけを見て、手合割を得る
       def board_preset_info
-        @board_preset_info ||= -> {
+        @board_preset_info ||= yield_self do
           if @board_source
-            # mediator = Mediator.new
-            # mediator.board.placement_from_shape(@board_source)
-            # mediator.board.preset_info
-
-            board = Board.new
-            board.placement_from_shape(@board_source)
-            board.preset_info
-
+            Board.guess_preset_info(@board_source)
           end
-        }.call
+        end
       end
 
       # 手合割
       def preset_info
-        @preset_info ||= initial_mediator.board.preset_info || board_preset_info || PresetInfo.fetch(header["手合割"] || "平手")
+        @preset_info ||= @force_preset_info
+        @preset_info ||= initial_mediator.board.preset_info
+        @preset_info ||= PresetInfo[header["手合割"]]
+        @preset_info ||= PresetInfo["平手"]
       end
 
+      # 消す
       # names_set(black: "alice", white: "bob")
       def names_set(params)
         locations = Location.send(handicap? ? :reverse_each : :itself)
@@ -361,40 +256,25 @@ module Bioshogi
             end
           end
 
-          # ヘッダーに埋める
-          TacticInfo.each do |e|
-            mediator.players.each do |player|
-              if v = player.skill_set.public_send(e.list_key).normalize.uniq.collect(&:name).presence # 手筋の場合、複数になる場合があるので uniq している
-                skill_set_hash["#{player.call_name}の#{e.name}"] = v
+          begin
+            # ヘッダーに埋める
+            TacticInfo.each do |e|
+              mediator.players.each do |player|
+                list = player.skill_set.public_send(e.list_key).normalize
+                if v = list.presence
+                  v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
+                  skill_set_hash["#{player.call_name}の#{e.name}"] = v.collect(&:name)
+                end
               end
             end
+            hv = skill_set_hash.transform_values { |e| e.join(", ") }
+            header.object.update(hv)
           end
-          header.object.update(skill_set_hash.transform_values { |e| e.join(", ") })
         end
       end
 
       def skill_set_hash
         @skill_set_hash ||= {}
-      end
-
-      def judgment_message
-        mediator_run_once
-
-        # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
-        if true
-          if @last_status_params
-            v = @last_status_params[:last_action_key]
-            unless LastActionInfo[v]
-              if v == "反則勝ち"
-                v = "#{mediator.current_player.call_name}の手番なのに#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
-              end
-              # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
-              return "*#{v}"
-            end
-          end
-        end
-
-        last_action_info.judgment_message(mediator)
       end
 
       def raw_header_part_hash
@@ -410,27 +290,42 @@ module Bioshogi
         }.compact.to_h
       end
 
-      def last_action_info
-        key = nil
-
-        # エラーなら最優先
-        unless key
-          if @error_message
-            key = :ILLEGAL_MOVE
-          end
+      def judgment_message
+        if e = last_action_info
+          e.judgment_message(mediator)
         end
+      end
 
-        # 元の棋譜の記載を優先
-        unless key
-          if @last_status_params
-            v = @last_status_params[:last_action_key]
-            if LastActionInfo[v]
-              key = v
+      def last_action_info
+        @last_action_info ||= yield_self do
+          key = nil
+
+          # エラーなら最優先
+          unless key
+            if @error_message
+              key = :ILLEGAL_MOVE
             end
           end
-        end
 
-        LastActionInfo.fetch(key || :TORYO)
+          # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
+          unless key
+            if @last_action_params
+              v = @last_action_params[:last_action_key]
+              if LastActionInfo[v]
+                key = v
+              end
+            end
+          end
+
+          # 何の指定もないときだけ投了とする
+          unless key
+            unless @last_action_params
+              key = :TORYO
+            end
+          end
+
+          LastActionInfo[key]
+        end
       end
 
       def used_seconds_at(index)

@@ -26,7 +26,6 @@ info = Parser.parse(<<~EOT)
 EOT
 
 tp info.header.to_h
-tp info.header.meta_info
 tp info.header.__to_meta_h
 tp info.header.entry_all_names
 puts info.to_ki2

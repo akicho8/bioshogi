@@ -31,14 +31,18 @@ module Bioshogi
   class CsaBuilder
     include Builder
 
-    def self.default_params
-      super.merge({
-          :board_expansion => false, # 平手であっても P1 形式で表示
-          :compact         => false, # 指し手の部分だけ一行にする
-          :oneline         => false, # 一行にする。改行もなし
-          :header_skip     => false,
-          :footer_skip     => false,
-        })
+    CSA_VERSION = "2.2"
+
+    class << self
+      def default_params
+        super.merge({
+            :board_expansion => false, # 平手であっても P1 形式で表示
+            :compact         => false, # 指し手の部分だけ一行にする
+            :oneline         => false, # 一行にする。改行もなし
+            :header_skip     => false,
+            :footer_skip     => false,
+          })
+      end
     end
 
     def initialize(parser, params = {})
@@ -50,27 +54,20 @@ module Bioshogi
       @parser.mediator_run_once
 
       out = []
-      out << "V2.2\n"
+      out << "V#{CSA_VERSION}\n"
 
       unless @params[:header_skip]
-        out << CsaHeaderInfo.collect { |e|
-          if v = @parser.header[e.kif_side_key].presence
-            if e.as_csa
-              v = e.instance_exec(v, &e.as_csa)
-            end
-            "#{e.csa_key}#{v}\n"
-          end
-        }.join
+        out << to_header
       end
 
       obj = Mediator.new
       @parser.mediator_board_setup(obj) # なぜ？
       out << obj.to_csa(@params)
 
-      out << hand_log_body
+      out << body_hands
 
       unless @params[:footer_skip]
-        if e = @parser.last_status_params
+        if e = @parser.last_action_params
           # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
           # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
           # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
@@ -86,7 +83,7 @@ module Bioshogi
       end
 
       if @parser.error_message
-        out << @parser.error_message_part(Parser::CsaParser.comment_char)
+        out << @parser.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
       end
 
       out = out.join
@@ -106,7 +103,18 @@ module Bioshogi
 
     private
 
-    def hand_log_body
+    def to_header
+      CsaHeaderInfo.collect { |e|
+        if v = @parser.header[e.kif_side_key].presence
+          if e.as_csa
+            v = e.instance_exec(v, &e.as_csa)
+          end
+          "#{e.csa_key}#{v}\n"
+        end
+      }.join
+    end
+
+    def body_hands
       out = []
 
       # 2通りある

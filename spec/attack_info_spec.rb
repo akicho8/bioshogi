@@ -4,13 +4,13 @@ module Bioshogi
   describe AttackInfo do
     it "新米長玉" do
       info = Parser.parse("▲７六歩 △６二玉")
-      assert { info.header_part_string.include?("後手の戦型：新米長玉") == true }
+      assert { info.to_kif.include?("後手の戦型：新米長玉") }
       assert { info.mediator.player_at(:white).attack_infos.collect(&:name) == ["新米長玉"] }
     end
 
     it "嬉野流" do
       info = Parser.parse("▲６八銀")
-      assert { info.header_part_string.include?("嬉野流") == true }
+      assert { info.to_kif.include?("嬉野流") }
     end
 
     it "tactic_info" do

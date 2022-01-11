@@ -53,14 +53,14 @@ module Bioshogi
 
       if preset_info
         unless options[:oneline]
-          s << "#{Parser::CsaParser.comment_char} 手合割:#{preset_info.name}" + "\n"
+          s << "#{Parser::CsaParser::SYSTEM_COMMENT_CHAR} 手合割:#{preset_info.name}" + "\n"
         end
       end
 
       if options[:board_expansion]
         s << board.to_csa
       else
-        if preset_info&.key == :"平手"
+        if preset_info == PresetInfo.fetch("平手")
           s << "PI" + "\n"
         else
           s << board.to_csa

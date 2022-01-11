@@ -1,0 +1,32 @@
+V2.2
+N+guest
+N-tume
+$START_TIME:2021/12/13 13:43:40
+$END_TIME:2021/12/13 13:46:37
+P1-OU *  *  *  *  *  *  *  *
+P2 *  * +TO *  *  *  *  *  *
+P3+TO+TO+TO *  *  *  *  *  *
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  * -KA * +FU *  *  *
+P6 *  *  * -UM+FU * +FU+FU+FU
+P7 *  *  *  *  * -TO *  *  *
+P8 *  *  *  *  * +KI+GI-HI+OU
+P9 *  * -HI *  * +KI *  * +KY
+P+00KI00GI00KE00KY00FU
+P-00KI00GI00GI00KE
++
++1828OU,T1
+-4738TO,T1
++4938KI,T1
+-0039GI,T1
++3839KI,T1
+-0037GI,T1
++2837OU,T1
+-7939RY,T1
++3746OU,T1
+-3948RY,T1
++4635OU,T54
+-6657UM,T1
++3525OU,T26
+-0024KI,T1
+%TORYO

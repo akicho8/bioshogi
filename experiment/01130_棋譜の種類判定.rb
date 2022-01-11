@@ -24,7 +24,7 @@ info = Parser.parse(<<~EOT)
 1 投了
 EOT
 info.class.name                       # => "Bioshogi::Parser::KifParser"
-info.last_status_params               # => {:last_action_key=>"投了", :used_seconds=>nil}
+info.last_action_params               # => {:last_action_key=>"投了", :used_seconds=>nil}
 
 info = Parser.parse(<<~EOT)
 1 ７六歩

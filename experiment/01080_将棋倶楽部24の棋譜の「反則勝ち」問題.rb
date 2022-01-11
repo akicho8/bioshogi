@@ -7,7 +7,7 @@ info = Parser.parse(<<~EOT)
 3 反則勝ち
 EOT
 tp info.move_infos
-tp info.last_status_params
+tp info.last_action_params
 tp info.last_action_info     # => <TORYO>
 info.judgment_message        # => "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
 info.to_csa.lines.last.strip # => "%TORYO"
@@ -23,7 +23,7 @@ info.to_csa.lines.last.strip # => "%TORYO"
 # >> |-----------------+----------|
 # >> |----------+-------|
 # >> |      key | TORYO |
-# >> | kif_word | 投了  |
+# >> | kakinoki_word | 投了  |
 # >> |   reason |       |
 # >> |     draw |       |
 # >> |     code | 0     |
