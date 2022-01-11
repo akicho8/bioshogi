@@ -19,19 +19,19 @@ module Bioshogi
       end
     }
 
-    error_to_text = -> error {
+    error_as_text = -> error {
       [
-        error.class.name,
+        "ERROR: #{error.class.name}",
         "\n",
         error.message,
       ].join.strip + "\n"
     }
 
-    transform_to = -> (info, type) {
+    transform_to = -> info, type {
       begin
         s = info.public_send("to_#{type}")
       rescue => error
-        s = error_to_text.(error)
+        s = error_as_text.(error)
       end
       unless s.kind_of?(String)
         s = s.pretty_inspect # or to_yaml
