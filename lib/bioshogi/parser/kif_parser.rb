@@ -4,9 +4,12 @@ module Bioshogi
     class KifParser < Base
       include KakinokiMethods
 
-      BEFORE_REGEXP  = /^\p{blank}*(?<turn_number>\d+)\p{blank}+/
-      MOVE_REGEXP    = /#{BEFORE_REGEXP}(?<input>#{InputParser.regexp})(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
-      LAST_REGEXP    = /#{BEFORE_REGEXP}(?<last_action_key>\S+)(\p{blank}*\(\p{blank}*(?<clock_part>.*)\))?/o
+      TURN_REGEXP    = /^\p{blank}*(?<turn_number>\d+)\p{blank}+/ # 後ろにスペースを含むこと
+      TIME_REGEXP    = /\p{blank}*(\(\p{blank}*(?<clock_part>.*)\))/
+      MOVE_REGEXP    = /#{TURN_REGEXP}(?<input>#{InputParser.regexp})#{TIME_REGEXP}?/o
+      LAST1_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)#{TIME_REGEXP}/o
+      LAST2_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)/o
+      LAST_REGEXP    = Regexp.union(LAST1_REGEXP, LAST2_REGEXP)
       MIN_SEC_REGEXP = /(?<min>\d+):(?<sec>\d+)/
 
       class << self
@@ -21,7 +24,8 @@ module Bioshogi
       def body_parse
         body_part.lines.each do |line|
           kknk_comment_read(line)
-          if md = line.match(MOVE_REGEXP)
+          case
+          when md = line.match(MOVE_REGEXP)
             input = md[:input].remove(/\p{blank}/)
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
             @move_infos << {
@@ -30,12 +34,13 @@ module Bioshogi
               :clock_part   => md[:clock_part],
               :used_seconds => used_seconds,
             }
-          else
-            if md = line.match(LAST_REGEXP)
+          when md = line.match(LAST_REGEXP)
+            last_action_key = md[:last_action_key].strip
+            if last_action_key.present?
               used_seconds = min_sec_str_to_seconds(md[:clock_part])
               @last_action_params = {
                 :turn_number     => md[:turn_number],
-                :last_action_key => md[:last_action_key],
+                :last_action_key => last_action_key,
                 :used_seconds    => used_seconds,
               }
             end

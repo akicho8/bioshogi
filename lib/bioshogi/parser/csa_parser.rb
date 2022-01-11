@@ -78,7 +78,7 @@ module Bioshogi
 
         # unless @board_source
         if normalized_source.match?(/^P[\+\-](.*)/)
-          sub_mediator = Mediator.new
+          sub_mediator = Mediator.new # FIXME
 
           # 駒箱
           piece_box = PieceBox.new(Piece.s_to_h("歩9角飛香2桂2銀2金2玉" * 2))

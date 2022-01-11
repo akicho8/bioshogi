@@ -63,11 +63,14 @@ module Bioshogi
       #   end
       # end
 
-      @hv[:header] = @hv[:header].merge({
-          :last_action_kif_word => @parser.last_action_info.kif_word,
-          :judgment_message     => @parser.judgment_message,
-          :error_text           => @parser.error_message_part,
-        })
+      @hv[:header] = @hv[:header]
+
+      if @parser.last_action_info
+        @hv[:last_action_kakinoki_word] = @parser.last_action_info.kakinoki_word
+      end
+
+      @hv[:judgment_message]          = @parser.judgment_message
+      @hv[:error_text]                = @parser.error_message_part
 
       @hv
     end

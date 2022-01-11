@@ -55,16 +55,15 @@ module Bioshogi
       left_part = nil
       right_part = nil
 
-      if @parser.last_action_info.kif_word
-        left_part = "%*d %s" % [
-          @params[:number_width],
-          # @parser.mediator.initial_state_turn_info.display_turn + @parser.mediator.hand_logs.size.next,
-          @parser.mediator.hand_logs.size.next,
-          mb_ljust(@parser.last_action_info.kif_word, @params[:hand_width]),
-        ]
-      end
+      if @parser.last_action_info
+        if kakinoki_word = @parser.last_action_info.kakinoki_word
+          left_part = "%*d %s" % [
+            @params[:number_width],
+            @parser.mediator.hand_logs.size.next,
+            mb_ljust(kakinoki_word, @params[:hand_width]),
+          ]
+        end
 
-      if true
         if @parser.last_action_params
           if used_seconds = @parser.last_action_params[:used_seconds]
             if @chess_clock
@@ -73,10 +72,10 @@ module Bioshogi
             end
           end
         end
-      end
 
-      if left_part
-        out << "#{left_part} #{right_part}".rstrip + "\n"
+        if left_part
+          out << "#{left_part} #{right_part}".rstrip + "\n"
+        end
       end
 
       out

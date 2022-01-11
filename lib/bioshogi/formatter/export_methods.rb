@@ -277,26 +277,6 @@ module Bioshogi
         @skill_set_hash ||= {}
       end
 
-      def judgment_message
-        mediator_run_once
-
-        # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
-        if true
-          if @last_action_params
-            v = @last_action_params[:last_action_key]
-            unless LastActionInfo[v]
-              if v == "反則勝ち"
-                v = "#{mediator.current_player.call_name}の手番なのに#{mediator.opponent_player.call_name}が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
-              end
-              # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
-              return "*#{v}"
-            end
-          end
-        end
-
-        last_action_info.judgment_message(mediator)
-      end
-
       def raw_header_part_hash
         header.object.collect { |key, value|
           if value
@@ -310,27 +290,42 @@ module Bioshogi
         }.compact.to_h
       end
 
-      def last_action_info
-        key = nil
-
-        # エラーなら最優先
-        unless key
-          if @error_message
-            key = :ILLEGAL_MOVE
-          end
+      def judgment_message
+        if e = last_action_info
+          e.judgment_message(mediator)
         end
+      end
 
-        # 元の棋譜の記載を優先
-        unless key
-          if @last_action_params
-            v = @last_action_params[:last_action_key]
-            if LastActionInfo[v]
-              key = v
+      def last_action_info
+        @last_action_info ||= yield_self do
+          key = nil
+
+          # エラーなら最優先
+          unless key
+            if @error_message
+              key = :ILLEGAL_MOVE
             end
           end
-        end
 
-        LastActionInfo.fetch(key || :TORYO)
+          # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
+          unless key
+            if @last_action_params
+              v = @last_action_params[:last_action_key]
+              if LastActionInfo[v]
+                key = v
+              end
+            end
+          end
+
+          # 何の指定もないときだけ投了とする
+          unless key
+            unless @last_action_params
+              key = :TORYO
+            end
+          end
+
+          LastActionInfo[key]
+        end
       end
 
       def used_seconds_at(index)

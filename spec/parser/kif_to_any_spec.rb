@@ -49,8 +49,10 @@ EOT
       2 ３四歩(33)   ( 0:02/00:00:02)
       3 反則勝ち
       EOT
-      assert { info.last_action_info.key == :TORYO }
-      assert { info.judgment_message == "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)" }
+      assert { info.last_action_info == nil }
+      assert { info.judgment_message == nil }
+      # assert { info.last_action_info.key == :TORYO }
+      # assert { info.judgment_message == "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)" }
       assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない
     end
 
@@ -242,41 +244,70 @@ EOT
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
-# >> F...........
-# >>
+# >> ..F....*****
+# >> 
+# >> Pending: (Failures listed here are expected and do not affect your suite's status)
+# >> 
+# >>   1) Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_sfen
+# >>      # Temporarily skipped with xdescribe
+# >>      # -:184
+# >> 
+# >>   2) Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_csa
+# >>      # Temporarily skipped with xdescribe
+# >>      # -:188
+# >> 
+# >>   3) Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_kif
+# >>      # Temporarily skipped with xdescribe
+# >>      # -:207
+# >> 
+# >>   4) Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_ki2
+# >>      # Temporarily skipped with xdescribe
+# >>      # -:217
+# >> 
+# >>   5) Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_bod
+# >>      # Temporarily skipped with xdescribe
+# >>      # -:224
+# >> 
 # >> Failures:
-# >>
-# >>   1) Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
+# >> 
+# >>   1) Bioshogi::Parser::Base 24棋譜の「反則勝ち」問題
 # >>      Failure/Error: Unable to find - to read failed line
-# >>      Test::Unit::AssertionFailedError:
-# >>      # -:7:in `block (2 levels) in <module:Bioshogi>'
-# >>
-# >> Top 10 slowest examples (1.09 seconds, 97.3% of total time):
+# >> 
+# >>      NoMethodError:
+# >>        undefined method `key' for nil:NilClass
+# >>      # -:56:in `block (3 levels) in <module:Bioshogi>'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # <internal:prelude>:137:in `__enable'
+# >>      # <internal:prelude>:137:in `enable'
+# >>      # -:56:in `block (2 levels) in <module:Bioshogi>'
+# >> 
+# >> Top 10 slowest examples (0.90546 seconds, 99.3% of total time):
 # >>   Bioshogi::Parser::Base 時間が空でも時間を出力するオプション
-# >>     0.85963 seconds -:32
+# >>     0.74246 seconds -:30
 # >>   Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
-# >>     0.0773 seconds -:5
-# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_sfen
-# >>     0.03085 seconds -:182
-# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_csa
-# >>     0.02224 seconds -:73
-# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_csa
-# >>     0.02075 seconds -:186
+# >>     0.07741 seconds -:5
 # >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定がない場合 to_kif
-# >>     0.01841 seconds -:135
+# >>     0.03108 seconds -:137
+# >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_csa
+# >>     0.02041 seconds -:75
 # >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_kif
-# >>     0.01722 seconds -:87
+# >>     0.01509 seconds -:89
 # >>   Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定がない場合 to_csa
-# >>     0.01566 seconds -:121
-# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_bod
-# >>     0.01316 seconds -:222
+# >>     0.01385 seconds -:123
+# >>   Bioshogi::Parser::Base 24棋譜の「反則勝ち」問題
+# >>     0.00514 seconds -:45
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_sfen
+# >>     0.00001 seconds -:184
+# >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_csa
+# >>     0.00001 seconds -:188
 # >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_kif
-# >>     0.01313 seconds -:205
-# >>
-# >> Finished in 1.12 seconds (files took 1.76 seconds to load)
-# >> 12 examples, 1 failure
-# >>
+# >>     0 seconds -:207
+# >> 
+# >> Finished in 0.91151 seconds (files took 1.69 seconds to load)
+# >> 12 examples, 1 failure, 5 pending
+# >> 
 # >> Failed examples:
-# >>
-# >> rspec -:5 # Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
-# >>
+# >> 
+# >> rspec -:45 # Bioshogi::Parser::Base 24棋譜の「反則勝ち」問題
+# >> 

@@ -1,0 +1,18 @@
+V2.2
+N+プレイヤー(R461)
+N-Lv17 ひよえ(R910)
+$EVENT:ぴよ将棋 青空将棋
+$START_TIME:2022/01/09 14:51:25
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * -KA *
+P3 *  *  *  *  *  *  *  *  *
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7 *  *  *  *  *  *  *  *  *
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
++
++2822RY,T1
+-8222HI,T1
+%TORYO

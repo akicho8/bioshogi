@@ -1,0 +1,16 @@
+V2.2
+$EVENT:ぴよ将棋 八枚落ち(トンボ)
+$START_TIME:2022/01/09 14:48:46
+P1 *  *  *  * -OU *  *  *  *
+P2 * -HI *  *  *  *  * -KA *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+-
+-8384FU,T1
++7776FU,T8
+%TORYO

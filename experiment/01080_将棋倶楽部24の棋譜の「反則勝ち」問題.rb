@@ -23,7 +23,7 @@ info.to_csa.lines.last.strip # => "%TORYO"
 # >> |-----------------+----------|
 # >> |----------+-------|
 # >> |      key | TORYO |
-# >> | kif_word | 投了  |
+# >> | kakinoki_word | 投了  |
 # >> |   reason |       |
 # >> |     draw |       |
 # >> |     code | 0     |

@@ -38,7 +38,12 @@ module Bioshogi
 
       unless @params[:footer_skip]
         out << footer_content
-        out << @parser.judgment_message + "\n"
+        if s = @parser.judgment_message
+          out << "#{s}\n"
+        end
+        if s = illegal_judgement_message
+          out << s
+        end
         out << @parser.error_message_part
       end
 
@@ -106,6 +111,17 @@ module Bioshogi
           if v.blank? || v == "なし"
             @header.delete(key)
           end
+        end
+      end
+    end
+
+    # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
+    # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
+    def illegal_judgement_message
+      if @parser.last_action_params
+        v = @parser.last_action_params[:last_action_key]
+        unless LastActionInfo[v]
+          "*#{v}\n"
         end
       end
     end

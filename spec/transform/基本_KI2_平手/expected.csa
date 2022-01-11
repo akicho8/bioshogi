@@ -1,0 +1,18 @@
+V2.2
+$EVENT:ぴよ将棋 八枚落ち
+$START_TIME:2022/01/09 14:49:48
+' 手合割:八枚落ち
+P1 *  *  * -KI-OU-KI *  *  *
+P2 *  *  *  *  *  *  *  *  *
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  *
+P5 *  *  *  *  *  *  *  *  *
+P6 *  *  *  *  *  *  *  *  *
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI *
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+-
+-4132KI
++7776FU
+-6172KI
+%TORYO
