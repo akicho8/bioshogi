@@ -66,13 +66,6 @@ module Bioshogi
       end
     end
 
-    describe "読み込み練習" do
-      it do
-        result = Parser::Ki2Parser.parse(Pathname(__FILE__).dirname.join("../../resources/竜王戦_ki2/龍王戦2002-15 羽生阿部-3.ki2").read)
-        # result.tapp
-      end
-    end
-
     it "千日手" do
       info = Parser::Ki2Parser.parse(["*引き分け", "まで100手で千日手"].join("\n"))
       info.mediator_run_once
