@@ -43,7 +43,7 @@ module Bioshogi
     wildcard = "**/source.*"
     Pathname(__dir__).glob("transform/**/source.*") do |e|
       describe e.dirname.basename do
-        info = Parser.parse(e)
+        info = Parser.parse(e, typical_error_case: :embed)
         trace.call "IN: #{e.dirname.basename}"
         if ENV["TRANSFORM_OUTPUT"]
           puts "    read: #{e}"
