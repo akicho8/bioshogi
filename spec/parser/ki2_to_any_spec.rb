@@ -13,8 +13,7 @@ module Bioshogi
       end
 
       it "to_kif" do
-        # puts @info.to_kif
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 場所：(場所)
 先手：(先手)
 後手：(後手)
@@ -41,8 +40,7 @@ EOT
       end
 
       it "to_ki2" do
-        # puts @info.to_ki2
-        assert { @info.to_ki2 == <<~EOT }
+        expect(@info.to_ki2).to eq(<<~EOT)
 場所：(場所)
 先手：(先手)
 後手：(後手)
@@ -50,13 +48,14 @@ EOT
 先手の備考：居飛車
 手合割：平手
 
-▲７六歩 △４二銀 ▲２六歩 △５四歩 ▲２五歩 △５三銀 ▲２四歩 △同　歩 ▲５六歩 △３二金
+▲７六歩 △４二銀 ▲２六歩 △５四歩 ▲２五歩 △５三銀 ▲２四歩 △同　歩
+▲５六歩 △３二金
 まで10手で後手の勝ち
 EOT
       end
 
       it "to_csa" do
-        assert { @info.to_csa == <<~EOT }
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 N+(先手)
 N-(後手)
@@ -79,7 +78,7 @@ EOT
       end
 
       it "to_csa(board_expansion: true)" do
-        assert { @info.to_csa(board_expansion: true, strip: true) == <<~EOT }
+        expect(@info.to_csa(board_expansion: true, strip: true)).to eq(<<~EOT)
 V2.2
 N+(先手)
 N-(後手)
@@ -120,7 +119,7 @@ EOT
         EOT
       end
       it "to_sfen" do
-        assert { @info.to_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d" }
+        expect(@info.to_sfen).to eq("position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 3c3d")
       end
     end
   end

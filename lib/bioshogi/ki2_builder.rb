@@ -8,9 +8,9 @@ module Bioshogi
     class << self
       def default_params
         super.merge({
-            :column_count => 10,        # 最大N列
+            :column_count => 8,         # 最大N列
             :fixed_width  => nil,       # 指定すると1つの指し手の幅になる。nilなら自動的に揃える
-            :same_suffix  => "　",
+            :same_suffix  => "　",      # "同角" みたいなときに "同" と "角" の間に入れる文字列
           })
       end
     end

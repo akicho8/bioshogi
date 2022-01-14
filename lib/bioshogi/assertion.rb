@@ -4,13 +4,13 @@ module Bioshogi
       actual = yield
     end
     unless actual
-      raise "#{message}: #{actual.inspect}"
+      raise MustNotHappen, "#{message}: #{actual.inspect}"
     end
   end
 
   def self.assert_equal(expected, actual, message = "assert_equal failed")
     if expected != actual
-      raise "#{message}: #{expected.inspect} != #{actual.inspect}"
+      raise MustNotHappen, "#{message}: #{expected.inspect} != #{actual.inspect}"
     end
   end
 end
