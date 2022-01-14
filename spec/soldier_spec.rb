@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Soldier do
     before do
-      @attributes = {place: Place["６八"], piece: Piece["銀"], promoted: false, location: Location[:black]}
+      @attributes = { place: Place["６八"], piece: Piece["銀"], promoted: false, location: Location[:black] }
     end
 
     it "基本形" do

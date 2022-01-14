@@ -32,7 +32,7 @@ module Bioshogi
         else
           raise PieceNotFound, "#{object.inspect} に対応する駒がありません"
         end
-        {piece: piece, promoted: promoted}
+        { piece: piece, promoted: promoted }
       end
 
       def new_with_promoted(object, attributes = {})
@@ -67,17 +67,18 @@ module Bioshogi
     def initialize(*)
       super
 
-      raise MustNotHappen, "piece missing" unless piece
-      raise MustNotHappen, "promoted is nil" if promoted.nil?
-      raise MustNotHappen, "location missing" unless location
-      raise MustNotHappen, "place missing" unless place
+      Bioshogi.assert { piece          }
+      Bioshogi.assert { !promoted.nil? }
+      Bioshogi.assert { location       }
+      Bioshogi.assert { place          }
     end
 
     def attributes
       { piece: piece, promoted: promoted, place: place, location: location }
     end
 
-    # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意したものなので何をキーにしてもよい。place は基本ユニークなのでこれで並べる
+    # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意した
+    # だから何をキーにしてもよい。place は基本ユニークなのでこれで並べる
     def <=>(other)
       place <=> other.place
     end
