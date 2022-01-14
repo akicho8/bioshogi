@@ -38,7 +38,7 @@ module Bioshogi
       s = self.class.startpos_remove(source)
       unless md = s.match(SFEN_REGEXP)
         m = []
-        m << "入力されたSFEN形式が不正確です"
+        m << "入力のSFEN形式が不正確です"
         if source.match?(/\s{2,}/)
           m << "連続するスペースが含まれている個所が壊れているかもしれません"
         end
