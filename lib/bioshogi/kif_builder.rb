@@ -34,13 +34,10 @@ module Bioshogi
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
         end
-        n = 0
-        if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
-          n += @parser.mediator.initial_state_turn_info.display_turn
-        end
         s = e.to_kif(char_type: :formal_sheet)
         s = mb_ljust(s, @params[:hand_width])
-        s = "%*d %s %s" % [@params[:number_width], n + i.next, s, @chess_clock || ""]
+        n = "%*d" % [@params[:number_width], i.next]
+        s = [n, s, @chess_clock].compact.join(" ")
         s = s.rstrip + "\n"
         if v = e.to_skill_set_kif_comment
           s += v

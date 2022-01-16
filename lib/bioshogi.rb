@@ -21,8 +21,6 @@ require "memory_record"
 module Bioshogi
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
-  mattr_accessor(:if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif) { false } # 2手目から始まる場合はKIFも2手目からとしてKIFに書き出す
-
   mattr_accessor(:run_counts) { Hash.new(0) }
 
   SFEN1 = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
