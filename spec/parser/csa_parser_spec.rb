@@ -15,12 +15,12 @@ module Bioshogi
       it "PI P1" do
         assert { test1("PI\nP1") == "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています" }
       end
-      it "PI P+" do
-        assert { test1("PI\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
-      end
-      it "P1 P+" do
-        assert { test1("P1\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
-      end
+      # it "PI P+" do
+      #   assert { test1("PI\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
+      # end
+      # it "P1 P+" do
+      #   assert { test1("P1\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
+      # end
     end
 
     describe "怪しい組み合わせからCSA変換" do
@@ -94,27 +94,27 @@ module Bioshogi
       assert { info.move_infos[1][:used_seconds] == -600 }
     end
 
-    it "空の P+ がある場合は無視というか盤面を読み取っているのでスキップしている" do
-      info = Parser.parse(<<~EOT)
-      V2.2
-      N+A
-      N-B
-      P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-      P2 * -HI *  *  *  *  * -KA *
-        P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-      P4 *  *  *  *  *  *  *  *  *
-        P5 *  *  *  *  *  *  *  *  *
-        P6 *  *  *  *  *  *  *  *  *
-        P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
-      P8 * +KA *  *  *  *  * +HI *
-        P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
-      P+
-        P-
-        +
-        +7776FU,T6
-      EOT
-      assert { info.board_source.include?("P1") }
-    end
+    # it "空の P+ がある場合は無視というか盤面を読み取っているのでスキップしている" do
+    #   info = Parser.parse(<<~EOT)
+    #   V2.2
+    #   N+A
+    #   N-B
+    #   P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+    #   P2 * -HI *  *  *  *  * -KA *
+    #     P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+    #   P4 *  *  *  *  *  *  *  *  *
+    #     P5 *  *  *  *  *  *  *  *  *
+    #     P6 *  *  *  *  *  *  *  *  *
+    #     P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+    #   P8 * +KA *  *  *  *  * +HI *
+    #     P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+    #   P+
+    #     P-
+    #     +
+    #     +7776FU,T6
+    #   EOT
+    #   assert { info.board_source.include?("P1") }
+    # end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.

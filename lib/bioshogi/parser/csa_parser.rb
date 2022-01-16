@@ -61,27 +61,25 @@ module Bioshogi
         end
       end
 
+      ################################################################################ (1)
+      # > (1) 平手初期配置と駒落ち
+      # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
+      # > 例:二枚落ち PI82HI22KA
       def case1_PI
-        ################################################################################ (1)
-        # > (1) 平手初期配置と駒落ち
-        # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
-        # > 例:二枚落ち PI82HI22KA
-        #
         if md = normalized_source.match(/^PI(?<handicap_piece_list>.*)/)
-          board = Board.new
-          board.placement_from_preset("平手")
+          @board = Board.new
+          @board.placement_from_preset("平手")
           if v = md[:handicap_piece_list]
             v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
               place = Place.fetch(xy)
               piece = Piece.fetch(piece_key)
-              soldier = board.fetch(place)
+              soldier = @board.fetch(place)
               if soldier.piece != piece
                 raise SyntaxDefact, "#{v}として#{place}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
               end
-              board.safe_delete_on(soldier.place)
+              @board.safe_delete_on(soldier.place)
             end
           end
-          @board_source = board.to_s
         end
       end
 
@@ -95,10 +93,13 @@ module Bioshogi
       # > P2 * -HI *  *  *  *  * -KA *
       def case2_P1
         if normalized_source.match?(/^P\d/)
-          if @board_source
+          if @board
             raise SyntaxDefact, "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています"
           end
-          @board_source = normalized_source.scan(/^P\d.*\n/).join.presence
+          str = normalized_source.scan(/^P\d.*\n/).join
+
+          @board = Board.new
+          @board.placement_from_shape(str)
         end
       end
 
@@ -116,7 +117,10 @@ module Bioshogi
       # 詰将棋などではここで持駒を調整される
       def case3_Psign
         if normalized_source.match?(/^P[\+\-](.*)/)
-          board = Board.new
+          # この時点で盤が用意されていなかったら空の盤を用意する
+          unless @board
+            @board = Board.new
+          end
 
           # 駒箱
           piece_box = PieceBox.real_box
@@ -142,11 +146,11 @@ module Bioshogi
                   hold_pieces[location] << piece
                 else
                   # 盤に置く
-                  if @board_source
-                    raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
-                  end
+                  # if @board_source
+                  #   raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
+                  # end
                   soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
-                  board.place_on(soldier)
+                  @board.place_on(soldier, validate: true)
                 end
               end
             end
@@ -155,17 +159,15 @@ module Bioshogi
           hold_pieces.each do |location, pieces|
             player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
           end
-
-          # PI か P1 で作ったのを破壊してしまうため指定がないときだけ指定する
-          unless @board_source
-            @board_source = board.to_s
-          end
         end
       end
 
       def guess_preset
-        if @board_source
-          @force_preset_info ||= Board.guess_preset_info(@board_source)
+        if @board
+          @board_source = @board.to_s # FIXME: 元に戻すのは無駄
+          if e = @board.preset_info
+            @force_preset_info = e
+          end
         end
       end
 
