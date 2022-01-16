@@ -76,11 +76,13 @@ module Bioshogi
       "#<#{self.class.name} #{name}>"
     end
 
+    # 180度回転 ※上下対象ではない
     def flip
       self.class.fetch([@x.flip, @y.flip])
     end
 
-    def horizontal_flip
+    # x座標のみ反転
+    def flop
       self.class.fetch([@x.flip, @y])
     end
 

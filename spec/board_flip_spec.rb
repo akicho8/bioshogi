@@ -33,7 +33,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.horizontal_flip.to_s == <<~EOT }
+      assert { board.flop.to_s == <<~EOT }
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・v桂v玉|一
@@ -47,7 +47,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.horizontal_flip.horizontal_flip.to_s == <<~EOT }
+      assert { board.flop.flop.to_s == <<~EOT }
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
@@ -61,7 +61,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.horizontal_flip.flip.to_s == <<~EOT }
+      assert { board.flop.flip.to_s == <<~EOT }
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|一

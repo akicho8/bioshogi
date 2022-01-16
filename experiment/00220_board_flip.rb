@@ -17,9 +17,9 @@ board.board_set_any(<<~EOT)
 +---------------------------+
 EOT
 puts board
-puts board.horizontal_flip
-puts board.horizontal_flip.horizontal_flip
-puts board.horizontal_flip.flip
+puts board.flop
+puts board.flop.flop
+puts board.flop.flip
 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

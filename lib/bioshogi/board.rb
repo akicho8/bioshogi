@@ -206,10 +206,10 @@ module Bioshogi
       end
 
       # X軸のみを反転した盤面を返す
-      def horizontal_flip
+      def flop
         self.class.new.tap do |board|
           surface.values.each do |e|
-            board.place_on(e.horizontal_flip)
+            board.place_on(e.flop)
           end
         end
       end
