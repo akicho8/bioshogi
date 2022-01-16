@@ -8,7 +8,7 @@ module Bioshogi
     class_methods do
       def default_params
         super.merge({
-            :header_skip => false,
+            :has_header => true,
             :footer_skip => false,
           })
       end
@@ -27,7 +27,7 @@ module Bioshogi
 
       out = []
 
-      unless @params[:header_skip]
+      if @params[:has_header]
         if @header.present?
           out << header_part_string
         end

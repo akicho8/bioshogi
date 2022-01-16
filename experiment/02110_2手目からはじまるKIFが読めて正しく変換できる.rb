@@ -24,9 +24,9 @@ EOT
 
 info.to_sfen                    # => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2 moves 5c5d 3g3f"
 puts info.to_bod
-puts info.to_csa(header_skip: true)
-puts info.to_kif(header_skip: true)
-puts info.to_ki2(header_skip: true)
+puts info.to_csa(has_header: false)
+puts info.to_kif(has_header: false)
+puts info.to_ki2(has_header: false)
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

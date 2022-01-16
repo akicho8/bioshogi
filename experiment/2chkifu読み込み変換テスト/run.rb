@@ -27,30 +27,30 @@ class App
 
           # KIF
           v = Parser.parse(info.to_kif)
-          assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
-          assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
-          assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+          assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
+          assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
+          assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
           assert_equal v.to_sfen, info.to_sfen
 
           # KI2
           v = Parser.parse(info.to_ki2)
-          assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
-          assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
-          assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+          assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
+          assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
+          assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
           assert_equal v.to_sfen, info.to_sfen
 
           # CSA
           v = Parser.parse(info.to_csa)
-          assert_equal v.to_kif(header_skip: true), info.to_kif(header_skip: true)
-          assert_equal v.to_ki2(header_skip: true), info.to_ki2(header_skip: true)
-          assert_equal v.to_csa(header_skip: true), info.to_csa(header_skip: true)
+          assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
+          assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
+          assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
           assert_equal v.to_sfen, info.to_sfen
 
           # SFEN
           v = Parser.parse(info.to_sfen)
-          assert_equal v.to_kif(header_skip: true, footer_skip: true), info.to_kif(header_skip: true, footer_skip: true)
-          assert_equal v.to_ki2(header_skip: true, footer_skip: true), info.to_ki2(header_skip: true, footer_skip: true)
-          assert_equal v.to_csa(header_skip: true, footer_skip: true), info.to_csa(header_skip: true, footer_skip: true)
+          assert_equal v.to_kif(has_header: false, footer_skip: true), info.to_kif(has_header: false, footer_skip: true)
+          assert_equal v.to_ki2(has_header: false, footer_skip: true), info.to_ki2(has_header: false, footer_skip: true)
+          assert_equal v.to_csa(has_header: false, footer_skip: true), info.to_csa(has_header: false, footer_skip: true)
           assert_equal v.to_sfen, info.to_sfen
         rescue => error
           @result[error.class.name] += 1

@@ -39,7 +39,7 @@ module Bioshogi
             :board_expansion => false, # 平手であっても P1 形式で表示
             :compact         => false, # 指し手の部分だけ一行にする
             :oneline         => false, # 一行にする。改行もなし
-            :header_skip     => false,
+            :has_header      => true,
             :footer_skip     => false,
           })
       end
@@ -56,7 +56,7 @@ module Bioshogi
       out = []
       out << "V#{CSA_VERSION}\n"
 
-      unless @params[:header_skip]
+      if @params[:has_header]
         out << to_header
       end
 
