@@ -30,7 +30,7 @@ module Bioshogi
     end
 
     it "すべての駒が入っている" do
-      assert { PieceBox.all_in_create == {king: 2, rook: 2, bishop: 2, gold: 4, silver: 4, knight: 4, lance: 4, pawn: 18} }
+      assert { PieceBox.real_box == {king: 2, rook: 2, bishop: 2, gold: 4, silver: 4, knight: 4, lance: 4, pawn: 18} }
     end
 
     it "駒を+1して-1したら駒はなくなっている" do

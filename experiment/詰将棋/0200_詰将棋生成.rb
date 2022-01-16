@@ -38,7 +38,7 @@ class App
       try_count.times do
         @mediator = Mediator.new
 
-        @piece_box = PieceBox.all_in_create
+        @piece_box = PieceBox.real_box
         @piece_box.add(king: -1)
         mediator.player_at(:white).piece_box.add(@piece_box)
 
