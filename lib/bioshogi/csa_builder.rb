@@ -40,7 +40,7 @@ module Bioshogi
             :compact         => false, # 指し手の部分だけ一行にする
             :oneline         => false, # 一行にする。改行もなし
             :has_header      => true,
-            :footer_skip     => false,
+            :has_footer      => true,
           })
       end
     end
@@ -66,7 +66,7 @@ module Bioshogi
 
       out << body_hands
 
-      unless @params[:footer_skip]
+      if @params[:has_footer]
         out << yield_self do
           av = []
           if e = @parser.last_action_params

@@ -48,9 +48,9 @@ class App
 
           # SFEN
           v = Parser.parse(info.to_sfen)
-          assert_equal v.to_kif(has_header: false, footer_skip: true), info.to_kif(has_header: false, footer_skip: true)
-          assert_equal v.to_ki2(has_header: false, footer_skip: true), info.to_ki2(has_header: false, footer_skip: true)
-          assert_equal v.to_csa(has_header: false, footer_skip: true), info.to_csa(has_header: false, footer_skip: true)
+          assert_equal v.to_kif(has_header: false, has_footer: false), info.to_kif(has_header: false, has_footer: false)
+          assert_equal v.to_ki2(has_header: false, has_footer: false), info.to_ki2(has_header: false, has_footer: false)
+          assert_equal v.to_csa(has_header: false, has_footer: false), info.to_csa(has_header: false, has_footer: false)
           assert_equal v.to_sfen, info.to_sfen
         rescue => error
           @result[error.class.name] += 1

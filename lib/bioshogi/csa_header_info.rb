@@ -74,9 +74,14 @@ module Bioshogi
       str = str.tr("０-９", "0-9")
       case
       when md = str.match(/(?<hour>\d+):(?<min>\d+)(\+(?<countdown>\d+))?/) # 01:03+00 → {min: 63, countdown: 0}
-        {min: md[:hour].to_i * 60 + md[:min].to_i, countdown: md[:countdown].to_i}
+        {
+          :min       => md[:hour].to_i * 60 + md[:min].to_i,
+          :countdown => md[:countdown].to_i,
+        }
       when md = str.match(/((?<hour>\d+)時間)?((?<min>\d+)分)?/)            # 1時間3分 or 1時間 or 3分
-        {min: md[:hour].to_i * 60 + md[:min].to_i}
+        {
+          :min => md[:hour].to_i * 60 + md[:min].to_i,
+        }
       else
         str
       end

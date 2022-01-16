@@ -9,7 +9,7 @@ module Bioshogi
       def default_params
         super.merge({
             :has_header => true,
-            :footer_skip => false,
+            :has_footer => true,
           })
       end
     end
@@ -36,7 +36,7 @@ module Bioshogi
       out << body_header
       out << body_hands
 
-      unless @params[:footer_skip]
+      if @params[:has_footer]
         out << footer_content
         if s = @parser.judgment_message
           out << "#{s}\n"
