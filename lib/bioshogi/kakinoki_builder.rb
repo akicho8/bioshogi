@@ -21,7 +21,7 @@ module Bioshogi
     end
 
     def to_s
-      build_setup
+      build_before
       @parser.mediator_run_once
       @header = @parser.header.clone
 
@@ -52,7 +52,7 @@ module Bioshogi
 
     private
 
-    def build_setup
+    def build_before
     end
 
     def body_header

@@ -19,7 +19,7 @@ module Bioshogi
 
     private
 
-    def build_setup
+    def build_before
       if @params[:time_embed_force] || @parser.clock_exist?
         @chess_clock = ChessClock.new
       end
