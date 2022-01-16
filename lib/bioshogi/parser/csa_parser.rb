@@ -139,9 +139,6 @@ module Bioshogi
                 piece = piece_box.pick_out(attrs[:piece])
                 if xy == "00"
                   # 駒台に置く
-                  if piece.key == :king
-                    raise SyntaxDefact, "#{piece.name} は駒台に置けません"
-                  end
                   hold_pieces[location] << piece
                 else
                   # 盤に置く
