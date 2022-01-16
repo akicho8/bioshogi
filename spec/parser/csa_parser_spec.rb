@@ -8,14 +8,18 @@ module Bioshogi
     end
 
     describe "表記干渉" do
+      def test1(s)
+        Parser.parse(s) rescue $!.message
+      end
+
       it "PI P1" do
-        assert { Parser.parse("PI\nP1") rescue $!.message == "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています" }
+        assert { test1("PI\nP1") == "1行表現の PI と、複数行一括表現の P1 の定義が干渉しています" }
       end
       it "PI P+" do
-        assert { Parser.parse("PI\nP+59OU") rescue $!.message == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
+        assert { test1("PI\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
       end
       it "P1 P+" do
-        assert { Parser.parse("P1\nP+59OU") rescue $!.message == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
+        assert { test1("P1\nP+59OU") == "P+59OU としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください" }
       end
     end
 

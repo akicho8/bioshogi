@@ -66,22 +66,22 @@ module Bioshogi
         # > (1) 平手初期配置と駒落ち
         # > 平手初期配置は、"PI"とする。駒落ちは、"PI"に続き、落とす駒の位置と種類を必要なだけ記述する。
         # > 例:二枚落ち PI82HI22KA
-
+        #
         if md = normalized_source.match(/^PI(?<handicap_piece_list>.*)/)
-          mediator = Mediator.new
-          mediator.placement_from_preset("平手")
+          board = Board.new
+          board.placement_from_preset("平手")
           if v = md[:handicap_piece_list]
             v.scan(/(\d+)(\D+)/i) do |xy, piece_key|
               place = Place.fetch(xy)
               piece = Piece.fetch(piece_key)
-              soldier = mediator.board.fetch(place)
+              soldier = board.fetch(place)
               if soldier.piece != piece
                 raise SyntaxDefact, "#{v}として#{place}#{piece.name}を落とす指定がありましたがそこにある駒は#{soldier.any_name}です"
               end
-              mediator.board.safe_delete_on(soldier.place)
+              board.safe_delete_on(soldier.place)
             end
           end
-          @board_source = mediator.board.to_s
+          @board_source = board.to_s
         end
       end
 
@@ -116,7 +116,7 @@ module Bioshogi
       # 詰将棋などではここで持駒を調整される
       def case3_Psign
         if normalized_source.match?(/^P[\+\-](.*)/)
-          new_mediator = Mediator.new # FIXME
+          board = Board.new
 
           # 駒箱
           piece_box = PieceBox.real_box
@@ -146,7 +146,7 @@ module Bioshogi
                     raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
                   end
                   soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
-                  new_mediator.board.place_on(soldier)
+                  board.place_on(soldier)
                 end
               end
             end
@@ -158,7 +158,7 @@ module Bioshogi
 
           # PI か P1 で作ったのを破壊してしまうため指定がないときだけ指定する
           unless @board_source
-            @board_source = new_mediator.board.to_s
+            @board_source = board.to_s
           end
         end
       end
