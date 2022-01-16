@@ -2,15 +2,18 @@
 
 module Bioshogi
   class PieceBox < SimpleDelegator
-    ALL_PIECES = "玉2飛2角2金4銀4桂4香4歩18"
+    ONE_SIDE_PIECES = "玉飛角金2銀2桂2香2歩9"
 
-    def self.default_pieces
-      @default_pieces ||= Piece.s_to_h(ALL_PIECES).freeze
-    end
-    private_class_method :default_pieces
+    class << self
+      def real_box
+        new(all_piece_counts)
+      end
 
-    def self.all_in_create
-      new(default_pieces)
+      private
+
+      def all_piece_counts
+        @all_piece_counts ||= Piece.s_to_h(ONE_SIDE_PIECES * 2).freeze
+      end
     end
 
     def initialize(value = {})

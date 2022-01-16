@@ -8,8 +8,8 @@ module Bioshogi
     class_methods do
       def default_params
         super.merge({
-            :header_skip => false,
-            :footer_skip => false,
+            :has_header => true,
+            :has_footer => true,
           })
       end
     end
@@ -21,13 +21,13 @@ module Bioshogi
     end
 
     def to_s
-      build_setup
+      build_before
       @parser.mediator_run_once
       @header = @parser.header.clone
 
       out = []
 
-      unless @params[:header_skip]
+      if @params[:has_header]
         if @header.present?
           out << header_part_string
         end
@@ -36,7 +36,7 @@ module Bioshogi
       out << body_header
       out << body_hands
 
-      unless @params[:footer_skip]
+      if @params[:has_footer]
         out << footer_content
         if s = @parser.judgment_message
           out << "#{s}\n"
@@ -52,7 +52,7 @@ module Bioshogi
 
     private
 
-    def build_setup
+    def build_before
     end
 
     def body_header

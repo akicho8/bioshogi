@@ -86,7 +86,7 @@ module Bioshogi
     end
 
     it "左右反転" do
-      assert Place["７六"].horizontal_flip == Place["３六"]
+      assert Place["７六"].flop == Place["３六"]
     end
 
     it "後手なら反転" do

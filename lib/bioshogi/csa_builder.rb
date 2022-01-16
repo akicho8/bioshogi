@@ -39,8 +39,8 @@ module Bioshogi
             :board_expansion => false, # 平手であっても P1 形式で表示
             :compact         => false, # 指し手の部分だけ一行にする
             :oneline         => false, # 一行にする。改行もなし
-            :header_skip     => false,
-            :footer_skip     => false,
+            :has_header      => true,
+            :has_footer      => true,
           })
       end
     end
@@ -56,8 +56,8 @@ module Bioshogi
       out = []
       out << "V#{CSA_VERSION}\n"
 
-      unless @params[:header_skip]
-        out << to_header
+      if @params[:has_header]
+        out << header_content
       end
 
       obj = Mediator.new
@@ -66,23 +66,8 @@ module Bioshogi
 
       out << body_hands
 
-      unless @params[:footer_skip]
-        out << yield_self do
-          av = []
-          if e = @parser.last_action_params
-            # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
-            # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
-            # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
-            last_action_info = LastActionInfo[e[:last_action_key]] || LastActionInfo[:TORYO]
-            av << "%#{last_action_info.csa_key}"
-            if v = e[:used_seconds]
-              av << "T#{v}"
-            end
-          else
-            av << "%TORYO"
-          end
-          av.join(",") + "\n"
-        end
+      if @params[:has_footer]
+        out << footer_content
       end
 
       if @parser.error_message
@@ -106,7 +91,7 @@ module Bioshogi
 
     private
 
-    def to_header
+    def header_content
       CsaHeaderInfo.collect { |e|
         if v = @parser.header[e.kif_side_key].presence
           if e.as_csa
@@ -139,6 +124,20 @@ module Bioshogi
       end
 
       out.join
+    end
+
+    # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
+    # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
+    # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
+    def footer_content
+      av = []
+      hv = @parser.last_action_params || { last_action_key: "TORYO" }
+      last_action_info = LastActionInfo[hv[:last_action_key]] || LastActionInfo[:TORYO]
+      av << "%#{last_action_info.csa_key}"
+      if v = hv[:used_seconds]
+        av << "T#{v}"
+      end
+      av.join(",") + "\n"
     end
 
     def separator

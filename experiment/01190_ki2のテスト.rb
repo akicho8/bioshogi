@@ -29,9 +29,9 @@ seconds = Benchmark.realtime do
     assert_equal(v.to_csa, csa_str)
 
     v = Parser.parse(csa_str)
-    assert_equal(v.to_kif(header_skip: true), info.to_kif(header_skip: true))
-    assert_equal(v.to_ki2(header_skip: true), info.to_ki2(header_skip: true))
-    assert_equal(v.to_csa(header_skip: true), info.to_csa(header_skip: true))
+    assert_equal(v.to_kif(has_header: false), info.to_kif(has_header: false))
+    assert_equal(v.to_ki2(has_header: false), info.to_ki2(has_header: false))
+    assert_equal(v.to_csa(has_header: false), info.to_csa(has_header: false))
   end
 end
 p seconds

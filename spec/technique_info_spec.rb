@@ -48,7 +48,7 @@ EOT
       assert { mediator.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
       mediator = mediator_new
-      mediator.placement_from_bod("#{board.horizontal_flip}\n手数＝1")
+      mediator.placement_from_bod("#{board.flop}\n手数＝1")
       mediator.execute("33桂")
       assert { mediator.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
@@ -58,7 +58,7 @@ EOT
       assert { mediator.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
       mediator = mediator_new
-      mediator.placement_from_bod("#{board.flip.horizontal_flip}\n手数＝0")
+      mediator.placement_from_bod("#{board.flip.flop}\n手数＝0")
       mediator.execute("77桂")
       assert { mediator.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
     end

@@ -21,7 +21,7 @@ piece_box.to_csa(:black)                       # => "P+00OU00KA00KA00KA"
 piece_box.to_s(separator: "/")                 # => "玉/角三"
 piece_box.score                                # => 45670
 
-PieceBox.all_in_create # => {:king=>2, :rook=>2, :bishop=>2, :gold=>4, :silver=>4, :knight=>4, :lance=>4, :pawn=>18}
+PieceBox.real_box # => {:king=>2, :rook=>2, :bishop=>2, :gold=>4, :silver=>4, :knight=>4, :lance=>4, :pawn=>18}
 
 hash = {:king => 1}.freeze
 piece_box = PieceBox.new(hash)  # => {:king=>1}

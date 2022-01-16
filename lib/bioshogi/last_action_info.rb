@@ -61,14 +61,8 @@ module Bioshogi
     end
 
     def judgment_message(mediator)
-      if Bioshogi.if_starting_from_the_2_hand_second_is_also_described_from_2_hand_first_kif
-        n = mediator.turn_info.display_turn
-      else
-        n = mediator.turn_info.turn_offset
-      end
-
       s = []
-      s << "まで#{n}手で"
+      s << "まで#{mediator.turn_info.turn_offset}手で"
       s << reason
       unless draw
         s << mediator.opponent_player.call_name

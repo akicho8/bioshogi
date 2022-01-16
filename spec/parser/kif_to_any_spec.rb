@@ -184,7 +184,7 @@ EOT
       end
 
       it "to_csa" do
-        assert { @info.to_csa(header_skip: true) == <<~EOT }
+        assert { @info.to_csa(has_header: false) == <<~EOT }
 V2.2
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA *
@@ -203,7 +203,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif(header_skip: true) == <<~EOT }
+        assert { @info.to_kif(has_header: false) == <<~EOT }
 手数----指手---------消費時間--
    1 ５四歩(53)
    2 ３六歩(37)
@@ -213,7 +213,7 @@ EOT
       end
 
       it "to_ki2" do
-        assert { @info.to_ki2(header_skip: true) == <<~EOT }
+        assert { @info.to_ki2(has_header: false) == <<~EOT }
 △５四歩 ▲３六歩
 まで2手で先手の勝ち
 EOT

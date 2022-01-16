@@ -99,8 +99,8 @@ module Bioshogi
       self.class.create(piece: piece, promoted: promoted, place: place.flip, location: location.flip)
     end
 
-    def horizontal_flip
-      self.class.create(piece: piece, promoted: promoted, place: place.horizontal_flip, location: location)
+    def flop
+      self.class.create(piece: piece, promoted: promoted, place: place.flop, location: location)
     end
 
     def flip_if_white
