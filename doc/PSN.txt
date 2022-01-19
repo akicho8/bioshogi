@@ -44,7 +44,7 @@ Rules For Creation of PSN Files
 Overview of PSN File Format
 ——————–
 
-Portable Shogi Notation (PSN) files end in ‘.psn’. For instance, A PSN file named ‘my_games’ would have the full name ‘my_games.psn’.
+Portable Shogi Notation (PSN) files end in ".psn" . For instance, A PSN file named "my_games" would have the full name "my_games.psn" .
 
 PSN files contain 0 or more partial or full game records.
 
@@ -65,19 +65,19 @@ Values should be surrounded by double straight quotes.
 
 For example, here are some properties from a PSN file.
 
-[Date “2009/08/01”]
-[Sente “Bob”]
-[Gote “Joe”]
-[SenteRank “3 Dan”]
-[GoteRank “Challenger”]
-[Result “0-1”]
-[Event “Home Tournament”]
-[Round “Final”]
-[Site “Bob’s Home”]
-[Handicap “Rook”]
-[Joseki “Silver Crown”]
+[Date "2009/08/01"]
+[Sente "Bob"]
+[Gote "Joe"]
+[SenteRank "3 Dan"]
+[GoteRank "Challenger"]
+[Result "0-1"]
+[Event "Home Tournament"]
+[Round "Final"]
+[Site "Bob" s Home"]
+[Handicap "Rook"]
+[Joseki "Silver Crown"]
 
-Property names are not case sensitive. “Site” and “sItE” are the same property name.
+Property names are not case sensitive. "Site" and "sItE" are the same property name.
 
 Standard record property names are:
 
@@ -85,27 +85,27 @@ Date —> year/month/date as numbers. The year should not be
 abbreviated.
 
 Sente —> name or title of black player
-Black —> name or title of opening player. Alternate name for “Sente”
+Black —> name or title of opening player. Alternate name for "Sente"
 property.
 
 Gote —> name or title of white player
-White —> name or title of 2nd player. Alternate name for “Gote”
+White —> name or title of 2nd player. Alternate name for "Gote"
 property.
 
 SenteRank —> Official rank of handicapped black player or player taking
 first move.
-SenteGrade —> Alternate name for “SenteRank” property.
-BlackRank —> Alternate name for “SenteRank” property.
-BlackGrade —> Alternate name for “SenteRank” property.
+SenteGrade —> Alternate name for "SenteRank" property.
+BlackRank —> Alternate name for "SenteRank" property.
+BlackGrade —> Alternate name for "SenteRank" property.
 
 GoteRank —> Official rank of non-handicapped white player or player
 taking second move
-GoteGrade —> Alternate name for “GoteRank” property.
-WhiteRank —> Alternate name for “GoteRank” property.
-WhiteGrade —> Alternate name for “GoteRank” property.
+GoteGrade —> Alternate name for "GoteRank" property.
+WhiteRank —> Alternate name for "GoteRank" property.
+WhiteGrade —> Alternate name for "GoteRank" property.
 
-Result —> result of game. Suggest values include “0-1” for white win,
-“1-0” for black win, and “Resigns” meaning next player to
+Result —> result of game. Suggest values include "0-1" for white win,
+"1-0" for black win, and "Resigns" meaning next player to
 move resigned instead of moving.
 
 Event —> tournament or event name
@@ -114,37 +114,37 @@ Site —> location of game play
 Handicap —> handicap name unspecified implies even game. Handicaps are not
 case sensitive. Standard values for Handicap are:
 
-“Even”
-“Sente”
-“Gote”
-“Lance”
-“Bishop”
-“Rook”
+"Even"
+"Sente"
+"Gote"
+"Lance"
+"Bishop"
+"Rook"
 
-“Rook and Lance”
-“Rook & Lance”
-“Rook+Lance”
-“Rook + Lance”
+"Rook and Lance"
+"Rook & Lance"
+"Rook+Lance"
+"Rook + Lance"
 
-“Two Pieces” (meaning rook and bishop)
-“Two Piece”
-“Rook and Bishop”
-“Rook+Bishop”
-“Rook + Bishop”
+"Two Pieces" (meaning rook and bishop)
+"Two Piece"
+"Rook and Bishop"
+"Rook+Bishop"
+"Rook + Bishop"
 
-“Four Pieces” (meaning rook, bishop, and both lances)
-“Four Piece”
+"Four Pieces" (meaning rook, bishop, and both lances)
+"Four Piece"
 
-“Six Pieces” (meaning rook, bishop, both lances, and both knights)
-“Six Piece”
+"Six Pieces" (meaning rook, bishop, both lances, and both knights)
+"Six Piece"
 
-“Eight Pieces” (meaning rook, bishop, both lances, both knights, and both
+"Eight Pieces" (meaning rook, bishop, both lances, both knights, and both
 silver generals)
-“Eight Piece”
+"Eight Piece"
 
-Joseki —> A standard opening used in the game such as “Silver Crown”
-or play style such as “Ranging Rook”.
-Opening —> Alternate name for “Joseki” property.
+Joseki —> A standard opening used in the game such as "Silver Crown"
+or play style such as "Ranging Rook".
+Opening —> Alternate name for "Joseki" property.
 
 Custom value name pairs are allowed. The previous name/value pairs are the only pairs required to be implemented.
 
@@ -153,7 +153,7 @@ PSN Record Summary
 
 The record summary is optional.
 
-The record summary is a specialized comment. Comments in *.psn files always are surrounded by curly braces. That is ‘{‘ begins a comment and ‘}’ ends a comment. The record summary comment is placed after the last record property, and before the first move of the game. It is the record summary by virtue of its location in the game record.
+The record summary is a specialized comment. Comments in *.psn files always are surrounded by curly braces. That is "{" begins a comment and "}" ends a comment. The record summary comment is placed after the last record property, and before the first move of the game. It is the record summary by virtue of its location in the game record.
 
 PSN Record Moves and Comments
 ——————–
@@ -166,7 +166,7 @@ Comments take the form of:
 
 {some comments}
 
-Comments are surrounded by curly braces. That is an opening ‘{‘ starts a comment and a closing ‘}’ ends a comment.
+Comments are surrounded by curly braces. That is an opening "{" starts a comment and a closing "}" ends a comment.
 
 Comments may span multiple lines or be contained between moves on a single line.
 
@@ -193,9 +193,9 @@ PSN Move Notation
 
 Move notation can be in full extended form or abbreviated. The reigning rule of PSN move notation is that the intended move MUST be obvious.
 
-Black (also called sente) always moves first. In handicap games, Black’s move is noted with three period with no spaces (“…”).
+Black (also called sente) always moves first. In handicap games, Black" s move is noted with three period with no spaces ("…").
 
-Case is sensitive in PSN move notation. For instance, “G” is a Gold General, and “g” is part of a board location.
+Case is sensitive in PSN move notation. For instance, "G" is a Gold General, and "g" is part of a board location.
 
 In all move notations (both abbreviated and full), tokens are named with a capital letter. Accepted token abbreviations are:
 
@@ -243,7 +243,7 @@ Move numbers are ignored by parsers and only supplied to make the game record mo
 
 Permissible token names (such as +R or K) are described above.
 
-Board locations are described by a grid with the X coordinate being a number (1-9) and the Y coordinate being described by a letter (a-i). Locations are described by (number)(letter) combinations starting from the white players left hand lance. For instance, “1a” describes the white player’s left lance’s initial location. “9i” describes the black player’s left lance’s initial location.
+Board locations are described by a grid with the X coordinate being a number (1-9) and the Y coordinate being described by a letter (a-i). Locations are described by (number)(letter) combinations starting from the white players left hand lance. For instance, "1a" describes the white player" s left lance" s initial location. "9i" describes the black player" s left lance" s initial location.
 
 Visually the board numbers and letters are arranged as follows.
 
@@ -272,21 +272,21 @@ i
 
    black player
 
-Valid move types include “-” for standard moves, “x” for captures, and “*” for drops.
+Valid move types include "-" for standard moves, "x" for captures, and "*" for drops.
 
-Valid promotion indicators are “+” meaning the token is promoting, “=” meaning the token could have promoted but did not, or nothing when promotion was not an option.
+Valid promotion indicators are "+" meaning the token is promoting, "=" meaning the token could have promoted but did not, or nothing when promotion was not an option.
 
 PSN Exceptions and Abbreviations
 (the shortcuts computer programmers hate, but normal humans love)
 ———————
 
-* If the “Handicap” property specifies a non even game the first move (“…”) may be omitted from the game record.
+* If the "Handicap" property specifies a non even game the first move ("…") may be omitted from the game record.
 
-* No comments are allowed on the special case “…” move for handicap games.
+* No comments are allowed on the special case "…" move for handicap games.
 
-* Leading “+” for promoted tokens is optional when the move is not ambiguous.
+* Leading "+" for promoted tokens is optional when the move is not ambiguous.
 
-* Capturing a players last moved token can be specified by a token and an “x”. For instance,
+* Capturing a players last moved token can be specified by a token and an "x". For instance,
 
 xG
 
@@ -296,23 +296,23 @@ Gx
 
 means that a Gold General captures the last moved or last dropped token (even if the other Gold General is in a position to capture a different token, or the capturing Gold General could have captured a different token.)
 
-NOTE: a promoted G in this notation would be “x+G” or “+Gx”
+NOTE: a promoted G in this notation would be "x+G" or "+Gx"
 
-* A token followed by an “x” CAN be a capture of an unambiguous token that did not just move or drop. For example, “Gx” first means Gold General captures a token that just moved. If no token just moved, then one and only one Gold General must have the option of capturing one and only one opposing token that did not just move or drop.
+* A token followed by an "x" CAN be a capture of an unambiguous token that did not just move or drop. For example, "Gx" first means Gold General captures a token that just moved. If no token just moved, then one and only one Gold General must have the option of capturing one and only one opposing token that did not just move or drop.
 
-* The “-” move type is only included for human readability. It is optional. “R4h-4c=” can be written “R4h4c=”.
+* The "-" move type is only included for human readability. It is optional. "R4h-4c=" can be written "R4h4c=".
 
-* The “=” symbol indicating a declined promotion is optional when no promotion took place.
+* The "=" symbol indicating a declined promotion is optional when no promotion took place.
 
-* The “+” promotion symbol may appear at the end of the move notation even if the token previously promoted. Essentially, ignore it in these cases.
+* The "+" promotion symbol may appear at the end of the move notation even if the token previously promoted. Essentially, ignore it in these cases.
 
-* The “x” for captures is optional if the capture can be implied from the existing notation token and location information.
+* The "x" for captures is optional if the capture can be implied from the existing notation token and location information.
 
-* The “*” for drops is optional if the drop can be implied from the existing token and location.
+* The "*" for drops is optional if the drop can be implied from the existing token and location.
 
-* Any location numbers or letters may be omitted if the retained letters or numbers are enough to determine the move unambiguously. This applies to moves, captures and drops. For instance, “G4ex3d” can also be written as “Gx3d”, “G3d”, “Ge3d”, or “G4exd” are all valid if they are unambiguous.
+* Any location numbers or letters may be omitted if the retained letters or numbers are enough to determine the move unambiguously. This applies to moves, captures and drops. For instance, "G4ex3d" can also be written as "Gx3d", "G3d", "Ge3d", or "G4exd" are all valid if they are unambiguous.
 
-So depending on the board setup, “P3d” could have any of the following meanings, as long as the meaning is clear in the context of the current shogi board.
+So depending on the board setup, "P3d" could have any of the following meanings, as long as the meaning is clear in the context of the current shogi board.
 
 P3d —> moves Pawn to 3d, OR
 captures with Pawn at 3d, OR
@@ -321,11 +321,11 @@ drops Pawn at 3d
 Sample PSN File with Single Record
 ———————
 
-[Date “2009/08/01”]
-[Sente “Joe”]
-[Gote “Mary”]
-[Result “0-1”]
-[Handicap “Even”]
+[Date "2009/08/01"]
+[Sente "Joe"]
+[Gote "Mary"]
+[Result "0-1"]
+[Handicap "Even"]
 {This is a fictitious game with random moves. It is meant merely to show the format of a PSN game record.}
 1.P7g-7f {Off to a not too interesting start.} 2.P2c-2d 3.P6g-6f 4.P3c-3d 5.B8h-7g 6.B2b-4d 7.P3g-3f 8.B4d-5e
 9.P4g-4f 10.B5ex4f 11.N2i-3g 12.B4fx3g+ 13.R2h-4h 14.N*6g 15.K5i-5h 16.N6gx7i+
@@ -339,7 +339,7 @@ Sample PSN File with Single Record
 73.P1e-1d 74.K5a-4a 75.G8i-8h 76.G6a-7a 77.N*1h {Nothing really to comment here, just want to show in game comment.} 78.G7a-6a 79.N*1e 80.G6a-7a
 81.S*5b 82.R8bx5b 83.L*2b 84.S*7i 85.P*2d 86.S7ix8h+ 87.B*6i 88.G*7i
 89.N*6h 90.+S8hx9i 91.P7f-7e 92.R5bx2b 93.P9f-9e 94.L*8e 95.P3f-3e 96.L*9f
-97.P1d-1c+ 98.S1bx1c 99.P*1d 100.L8ex8f 101.P9ex9d 102.B*8e 103.S3h-4i 104.B8ex5h+ {Can’t beleive white won. I must have been distracted.}
+97.P1d-1c+ 98.S1bx1c 99.P*1d 100.L8ex8f 101.P9ex9d 102.B*8e 103.S3h-4i 104.B8ex5h+ {Can't beleive white won. I must have been distracted.}
 
 Portable Shogi Notation (PSN) License
 ——————–
@@ -358,7 +358,7 @@ Samurai Chess, Gene Davis Software nor the names of its contributors may be
 used to endorse or promote products derived from this software without specific
 prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS”
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
 ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
