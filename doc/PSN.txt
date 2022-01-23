@@ -1,3 +1,5 @@
+https://en.wikipedia.org/wiki/Shogi_notation
+
 SHOGI
 PORTABLE SHOGI NOTATION (PSN) SPECIFICATION
 MAY 9, 2014 TGENEDAVIS
