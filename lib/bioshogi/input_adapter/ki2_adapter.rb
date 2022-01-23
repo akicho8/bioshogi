@@ -4,10 +4,10 @@ module Bioshogi
   module InputAdapter
     class Ki2Adapter < KifAdapter
       def self.flip_table
-        @flip_table ||= -> {
+        @flip_table ||= yield_self do
           table = {:first => :last, :> => :<}
           table.merge(table.invert)
-        }.call
+        end
       end
 
       include Ki2MotionWrapper
@@ -18,11 +18,11 @@ module Bioshogi
       end
 
       def place_from
-        @place_from ||= -> {
+        @place_from ||= yield_self do
           if soldier = origin_soldier
             soldier.place
           end
-        }.call
+        end
       end
 
       def hard_validations
@@ -65,20 +65,20 @@ module Bioshogi
       end
 
       def origin_soldier
-        @origin_soldier ||= -> {
+        @origin_soldier ||= yield_self do
           if !force_drop_trigger
             v = candidate_soldiers_select
             if v.size == 1
               v.first
             end
           end
-        }.call
+        end
       end
 
       private
 
       def candidate_soldiers_select
-        @candidate_soldiers_select ||= -> {
+        @candidate_soldiers_select ||= yield_self do
           list = candidate_soldiers
 
           if list.size >= 2
@@ -131,7 +131,7 @@ module Bioshogi
           end
 
           list
-        }.call
+        end
       end
 
       # 「打」の省略形かを推測する

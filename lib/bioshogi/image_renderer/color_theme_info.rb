@@ -430,9 +430,9 @@ module Bioshogi
       end
 
       def to_params
-        @to_params ||= -> {
+        @to_params ||= yield_self do
           func.call(self).merge(merge_params || {})
-        }.call
+        end
       end
 
       def color_theme_cache_build(options = {})

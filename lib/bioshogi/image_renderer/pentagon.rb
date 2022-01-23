@@ -154,7 +154,7 @@ module Bioshogi
       # 相対座標で☖の一周分
       # pentagon_real_points の方で行う計算で固定のものはこちらで先に行っておく
       def pentagon_points
-        @pentagon_points ||= -> {
+        @pentagon_points ||= yield_self do
           e = params[:pentagon_profile]
           [
             [0.0,            -e[:kaonaga]],  # 頂点
@@ -168,7 +168,7 @@ module Bioshogi
               y * cell_h * 0.5,
             ]
           end
-        }.call
+        end
       end
 
       ################################################################################ piece

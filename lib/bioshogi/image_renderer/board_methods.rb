@@ -111,7 +111,7 @@ module Bioshogi
       # 4. 角が取れたテクスチャが出来上がる
       #
       def texture_image
-        @texture_image ||= -> {
+        @texture_image ||= yield_self do
           image = Magick::Image.read(params[:fg_file].to_s).first
           image.resize_to_fill!(*ps(outer_rect))
 
@@ -129,7 +129,7 @@ module Bioshogi
           end
 
           image
-        }.call
+        end
       end
 
       def inner_frame_lattice_color

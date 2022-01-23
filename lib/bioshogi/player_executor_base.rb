@@ -21,10 +21,10 @@ module Bioshogi
     end
 
     def input
-      @input ||= -> {
+      @input ||= yield_self do
         md = InputParser.match!(@source)
         input_adapter_class(md).new(player, md.named_captures.symbolize_keys)
-      }.call
+      end
     end
 
     def perform_validations

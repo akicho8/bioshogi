@@ -28,14 +28,14 @@ module Bioshogi
       # > 上の駒は▲１三飛引成（成らない場合は▲１三飛引不成）。下の駒は▲１三飛上成（あがるなり）と表記します。
       # > 飛車や角に限り「行」を用いて▲１三飛行成（いくなり）と表記することもあります。
       def up_down
-        @up_down ||= -> {
+        @up_down ||= yield_self do
           if s = input[:ki2_up_down]
             if piece.brave?
               s = s.tr("行", "上")
             end
             s
           end
-        }.call
+        end
       end
     end
   end

@@ -26,10 +26,10 @@ module Bioshogi
 
       def all_vectors(promoted:, location:)
         @all_vectors ||= {}
-        @all_vectors[[promoted, location.key]] ||= -> {
+        @all_vectors[[promoted, location.key]] ||= yield_self do
           vectors = select_vectors(promoted)
           normalized_vectors(location, vectors)
-        }.call
+        end
       end
 
       private
