@@ -95,17 +95,17 @@ module Bioshogi
       attributes.hash
     end
 
-    def flip
-      self.class.create(piece: piece, promoted: promoted, place: place.flip, location: location.flip)
+    def half_rotate
+      self.class.create(piece: piece, promoted: promoted, place: place.half_rotate, location: location.flip)
     end
 
     def flop
       self.class.create(piece: piece, promoted: promoted, place: place.flop, location: location)
     end
 
-    def flip_if_white
+    def half_rotate_if_white
       if location.key == :white
-        flip
+        half_rotate
       else
         self
       end
@@ -155,7 +155,7 @@ module Bioshogi
 
     # 自分を▲側に補正したときの座標
     def normalized_place
-      place.flip_if_white(location)
+      place.half_rotate_if_white(location)
     end
 
     # 手筋判定用
@@ -167,7 +167,7 @@ module Bioshogi
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
       def top_spaces
-        place.flip_if_white(location).y.value
+        place.half_rotate_if_white(location).y.value
       end
 
       # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)

@@ -209,7 +209,7 @@ module Bioshogi
       def flip
         self.class.new.tap do |board|
           surface.values.each do |e|
-            board.place_on(e.flip)
+            board.place_on(e.half_rotate)
           end
         end
       end

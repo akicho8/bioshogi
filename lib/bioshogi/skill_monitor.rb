@@ -289,7 +289,7 @@ module Bioshogi
 
     # 後手側の場合は先手側の座標に切り替え済み
     def soldier
-      @soldier ||= executor.soldier.flip_if_white
+      @soldier ||= executor.soldier.half_rotate_if_white
     end
 
     # 比較順序超重要。不一致しやすいものから比較する

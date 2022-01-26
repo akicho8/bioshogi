@@ -77,7 +77,7 @@ module Bioshogi
     end
 
     # 180度回転 ※上下対象ではない
-    def flip
+    def half_rotate
       self.class.fetch([@x.flip, @y.flip])
     end
 
@@ -86,9 +86,9 @@ module Bioshogi
       self.class.fetch([@x.flip, @y])
     end
 
-    def flip_if_white(location)
+    def half_rotate_if_white(location)
       if Location[location].key == :white
-        flip
+        half_rotate
       else
         self
       end
