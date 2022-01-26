@@ -19,7 +19,7 @@ location = Location[:black]
 
 soldiers = mediator.board.surface.values.find_all {|e|e.location == location }
 tp soldiers.collect(&:name)
-sorted_black_side_soldiers = soldiers.collect{|e|e.half_rotate_if_white}.sort
+sorted_black_side_soldiers = soldiers.collect{|e|e.flip_if_white}.sort
 tp sorted_black_side_soldiers
 
 defense_info = DefenseInfo.find do |e|
@@ -29,7 +29,7 @@ defense_info = DefenseInfo.find do |e|
   e.black_side_soldiers.all? do |e|
     if soldier = mediator.board[e[:place]]
       if soldier.location == location
-        soldier.half_rotate_if_white == e
+        soldier.flip_if_white == e
       end
     end
   end

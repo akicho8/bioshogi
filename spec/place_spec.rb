@@ -82,7 +82,7 @@ module Bioshogi
     end
 
     it "反転" do
-      assert Place["７六"].half_rotate == Place["３四"]
+      assert Place["７六"].flip == Place["３四"]
     end
 
     it "左右反転" do
@@ -90,7 +90,7 @@ module Bioshogi
     end
 
     it "後手なら反転" do
-      assert Place["７六"].half_rotate_if_white(:white) == Place["３四"]
+      assert Place["７六"].flip_if_white(:white) == Place["３四"]
     end
 
     it "シリアライズからの復元" do

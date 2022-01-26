@@ -322,7 +322,7 @@ soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "�
 mediator.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = Soldier.from_str(s)
-    s.merge(place: s[:place].half_rotate_if_white(player.location))
+    s.merge(place: s[:place].flip_if_white(player.location))
   }
   player.soldier_create(_soldiers)
 end
