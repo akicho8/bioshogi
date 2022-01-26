@@ -166,12 +166,16 @@ module Bioshogi
 
       def stronger_piece_have_count
         c = 0
+
+        # 持駒の大駒
         c += piece_box[:rook] || 0
         c += piece_box[:bishop] || 0
 
+        # 盤上の大駒
         key = location.key
-        c += board.piece_counts(key, :rook)
-        c += board.piece_counts(key, :bishop)
+        c += board.piece_count_of(key, :rook)
+        c += board.piece_count_of(key, :bishop)
+
         c
       end
     end

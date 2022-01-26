@@ -1,6 +1,7 @@
 # frozen-string-literal: true
 
 require_relative "board_piller_methods"
+require_relative "board_piece_counts_methods"
 
 module Bioshogi
   class Board
@@ -50,9 +51,6 @@ module Bioshogi
         end
 
         surface[soldier.place] = soldier
-
-        key = [soldier.location.key, soldier.piece.key]
-        soldier_counts_surface[key] += 1 # soldier.piece.stronger をキーにすると速くなるかも？
       end
 
       def pick_up(place)
@@ -64,17 +62,11 @@ module Bioshogi
       end
 
       def safe_delete_on(place)
-        surface.delete(place).tap do |soldier|
-          if soldier
-            key = [soldier.location.key, soldier.piece.key]
-            soldier_counts_surface[key] -= 1
-          end
-        end
+        surface.delete(place)
       end
 
       def all_clear
         surface.clear
-        soldier_counts_surface.clear
       end
 
       # for DSL
@@ -117,10 +109,6 @@ module Bioshogi
 
       private
 
-      def soldier_counts_surface
-        @soldier_counts_surface ||= Hash.new(0)
-      end
-
       def assert_cell_blank(place)
         if surface.has_key?(place)
           raise PieceAlredyExist, "空のはずの#{place}に駒があります\n#{self}"
@@ -139,10 +127,6 @@ module Bioshogi
 
       def fetch(place)
         lookup(place) or raise PieceNotFoundOnBoard, "#{place}に何もありません\n#{self}"
-      end
-
-      def piece_counts(location_key, piece_key)
-        soldier_counts_surface[[location_key, piece_key]]
       end
 
       # FIXME: 空いている升の情報は駒を動かした時点で更新するようにすればこの部分の無駄な判定を減らせる
@@ -181,6 +165,12 @@ module Bioshogi
 
       def to_s_soldiers
         soldiers.collect(&:name_without_location).sort.join(" ")
+      end
+
+      # 盤の状態から手合割を逆算
+      # バリケード将棋などは持駒も見る必要があるけどやってない
+      def preset_info(options = {})
+        PresetInfo.lookup_by_soldiers(surface.values, options)
       end
 
       def to_kif
@@ -234,15 +224,7 @@ module Bioshogi
       end
     end
 
-    concerning :PresetMethods do
-      # 盤の状態から手合割を逆算
-      # バリケード将棋などは持駒も見る必要があるけどやってない
-      def preset_info(options = {})
-        PresetInfo.lookup_by_soldiers(surface.values, options)
-      end
-    end
-
     prepend BoardPillerMethods
-    # prepend BoardPieceCountMethods
+    prepend BoardPieceCountsMethods
   end
 end
