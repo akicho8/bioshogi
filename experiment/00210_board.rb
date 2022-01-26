@@ -7,11 +7,11 @@ mediator.placement_from_preset("裸玉")
 mediator.board.preset_info&.key    # => :十九枚落ち
 
 mediator.board.all_clear
-mediator.board.placement_from_hash("裸玉")
+mediator.board.placement_from_preset("裸玉")
 mediator.board.preset_info&.key    # => :十九枚落ち
 
 mediator.board.all_clear
-mediator.board.placement_from_hash("二十枚落ち")
+mediator.board.placement_from_preset("二十枚落ち")
 mediator.board.placement_from_human("△５一玉")
 mediator.board.preset_info&.key    # => :十九枚落ち
 

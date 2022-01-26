@@ -4,7 +4,7 @@ module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do
     it "平手" do
       mediator = Mediator.new
-      mediator.board.placement_from_hash("裸玉")
+      mediator.board.placement_from_preset("裸玉")
       mediator.execute("58玉")
       mediator.execute("52玉")
 
@@ -33,7 +33,7 @@ EOT
 
     it "駒落ち" do
       mediator = Mediator.new
-      mediator.board.placement_from_hash("裸玉")
+      mediator.board.placement_from_preset("裸玉")
       mediator.execute("58玉")
       mediator.execute("52玉")
 

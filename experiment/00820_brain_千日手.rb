@@ -2,7 +2,7 @@ require "./setup"
 
 mediator = Mediator.new
 mediator.board.hash
-mediator.board.placement_from_hash("平手")
+mediator.board.placement_from_preset("平手")
 mediator.pieces_set("▲飛 △飛")
 mediator.one_place_hash # => 4440883322357192303
 mediator.execute("▲５八玉")

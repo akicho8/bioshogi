@@ -1,7 +1,7 @@
 require "./setup"
 
 mediator = Mediator.new
-mediator.board.placement_from_hash("裸玉")
+mediator.board.placement_from_preset("裸玉")
 mediator.turn_info.handicap = false # △から始める場合
 mediator.to_snapshot_sfen # => "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
 puts mediator

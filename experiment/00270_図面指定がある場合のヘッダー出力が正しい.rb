@@ -1,7 +1,7 @@
 require "./setup"
 
 mediator = Mediator.new
-mediator.board.placement_from_hash("裸玉")
+mediator.board.placement_from_preset("裸玉")
 
 mediator.turn_info.handicap = false
 info = Parser.parse("position #{mediator.to_snapshot_sfen}")

@@ -7,11 +7,29 @@ module Bioshogi
     class << self
       delegate :dimensiton_change, :size_type, :promotable_disable, to: "Bioshogi::Dimension"
 
-      # 指定の形から手合割を逆算する
+      # 指定の柿木図面から手合割を逆算する
       def guess_preset_info(shape, options = {})
         board = new
         board.placement_from_shape(shape)
         board.preset_info(options)
+      end
+
+      def create_by_shape(key)
+        new.tap do |board|
+          board.placement_from_shape(key)
+        end
+      end
+
+      def create_by_human(key)
+        new.tap do |board|
+          board.placement_from_human(key)
+        end
+      end
+
+      def create_by_preset(key)
+        new.tap do |board|
+          board.placement_from_preset(key)
+        end
       end
     end
 
@@ -61,9 +79,6 @@ module Bioshogi
         case
         when BoardParser.accept?(v)
           placement_from_shape(v)
-        when v.kind_of?(Hash)
-          raise "must not happen"
-          placement_from_hash(v)
         when v.kind_of?(String) && !InputParser.scan(v).empty?
           placement_from_human(v)
         else
@@ -71,7 +86,7 @@ module Bioshogi
         end
       end
 
-      def placement_from_preset(preset_key = nil)
+      def placement_from_preset(preset_key)
         placement_from_soldiers(Soldier.preset_soldiers(preset_key))
       end
 
@@ -79,10 +94,6 @@ module Bioshogi
       # 毎回読み取るため遅い
       def placement_from_shape(str)
         placement_from_soldiers(BoardParser.parse(str).soldier_box)
-      end
-
-      def placement_from_hash(value)
-        placement_from_preset(value)
       end
 
       # 詰将棋の配置の読み上げのような表記で盤に反映する
