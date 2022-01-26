@@ -17,7 +17,7 @@ module Bioshogi
     end
 
     def run(&block)
-      mediator.board.board_set_any(attributes[:board])
+      mediator.board.placement_from_any(attributes[:board])
 
       if v = attributes[:pieces]
         Location.each do |e|

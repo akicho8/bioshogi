@@ -35,12 +35,11 @@ EOT
     end
 
     it "パンツを脱ぐ" do
-      board = Board.new
-      board.board_set_any(<<~EOT)
+      board = Board.create_by_shape(<<~EOT)
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|
 +---------------------------+
-        EOT
+EOT
 
       mediator = mediator_new
       mediator.placement_from_bod("#{board}\n手数＝1")
@@ -64,3 +63,15 @@ EOT
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> ..
+# >> 
+# >> Top 2 slowest examples (0.34827 seconds, 98.6% of total time):
+# >>   Bioshogi::TechniqueInfo 金底の歩
+# >>     0.33346 seconds -:12
+# >>   Bioshogi::TechniqueInfo パンツを脱ぐ
+# >>     0.01481 seconds -:37
+# >> 
+# >> Finished in 0.35312 seconds (files took 1.61 seconds to load)
+# >> 2 examples, 0 failures
+# >> 

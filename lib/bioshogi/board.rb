@@ -51,7 +51,8 @@ module Bioshogi
 
         surface[soldier.place] = soldier
 
-        soldier_counts_surface[[soldier.location.key, soldier.piece.key]] += 1 # soldier.piece.stronger をキーにすると速くなるかも？
+        key = [soldier.location.key, soldier.piece.key]
+        soldier_counts_surface[key] += 1 # soldier.piece.stronger をキーにすると速くなるかも？
       end
 
       def pick_up(place)
@@ -65,7 +66,8 @@ module Bioshogi
       def safe_delete_on(place)
         surface.delete(place).tap do |soldier|
           if soldier
-            soldier_counts_surface[[soldier.location.key, soldier.piece.key]] -= 1
+            key = [soldier.location.key, soldier.piece.key]
+            soldier_counts_surface[key] -= 1
           end
         end
       end
@@ -75,17 +77,22 @@ module Bioshogi
         soldier_counts_surface.clear
       end
 
-      def board_set_any(v)
+      # for DSL
+      # 引数の種類がわかっているなら専用メソッドを使うべき
+      def placement_from_any(v)
         case
+        when PresetInfo.lookup(v)
+          placement_from_preset(v)
         when BoardParser.accept?(v)
           placement_from_shape(v)
         when v.kind_of?(String) && !InputParser.scan(v).empty?
           placement_from_human(v)
         else
-          placement_from_preset(v)
+          raise ArgumentError, v.inspect
         end
       end
 
+      # 手合割で設定
       def placement_from_preset(preset_key)
         placement_from_soldiers(Soldier.preset_soldiers(preset_key))
       end
@@ -103,6 +110,7 @@ module Bioshogi
         placement_from_soldiers(soldiers)
       end
 
+      # まとめて追加で置く
       def placement_from_soldiers(soldiers)
         soldiers.each { |e| place_on(e) }
       end
@@ -235,5 +243,6 @@ module Bioshogi
     end
 
     prepend BoardPillerMethods
+    # prepend BoardPieceCountMethods
   end
 end

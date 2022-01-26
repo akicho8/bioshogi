@@ -73,7 +73,7 @@ module Bioshogi
       end
 
       def evaluate(context)
-        context.mediator_stack.mediator.board.board_set_any(@value)
+        context.mediator_stack.mediator.board.placement_from_any(@value)
       end
     end
 

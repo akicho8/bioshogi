@@ -3,8 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Board do
     it "反転" do
-      board = Board.new
-      board.board_set_any(<<~EOT)
+      board = Board.create_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
@@ -78,3 +77,13 @@ EOT
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> .
+# >> 
+# >> Top 1 slowest examples (0.0191 seconds, 71.1% of total time):
+# >>   Bioshogi::Board 反転
+# >>     0.0191 seconds -:5
+# >> 
+# >> Finished in 0.02689 seconds (files took 2.3 seconds to load)
+# >> 1 example, 0 failures
+# >> 

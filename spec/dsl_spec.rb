@@ -88,7 +88,6 @@ module Bioshogi
 
       describe "board" do
         it { dsl_block { board "平手" }.board }
-        it { dsl_block { board }.board }
         it { dsl_block { board <<-EOT }.board }
 +---+
 |v香|一
@@ -98,7 +97,7 @@ EOT
       end
 
       it "mov" do
-        dsl_block { board; mov "▲７六歩" }
+        dsl_block { board "平手"; mov "▲７六歩" }
       end
 
       it "pieces" do
@@ -107,13 +106,13 @@ EOT
 
       describe "stack" do
         it "push にブロック指定" do
-          assert { dsl_block { board; push { mov "▲７六歩" }    }.hand_logs.count == 0 }
+          assert { dsl_block { board "平手"; push { mov "▲７六歩" }    }.hand_logs.count == 0 }
         end
         it "明示的に pop で戻る" do
-          assert { dsl_block { board; push;  mov "▲７六歩"; pop }.hand_logs.count == 0 }
+          assert { dsl_block { board "平手"; push;  mov "▲７六歩"; pop }.hand_logs.count == 0 }
         end
         it "pushのみ" do
-          assert { dsl_block { board; push;  mov "▲７六歩"      }.hand_logs.count == 1 }
+          assert { dsl_block { board "平手"; push;  mov "▲７六歩"      }.hand_logs.count == 1 }
         end
         it "スタックが空のときにpopできない" do
           expect { dsl_block { pop } }.to raise_error(MementoStackEmpty)

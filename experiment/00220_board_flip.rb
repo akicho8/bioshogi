@@ -1,7 +1,6 @@
 require "./setup"
 
-board = Board.new
-board.board_set_any(<<~EOT)
+board = Board.create_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
