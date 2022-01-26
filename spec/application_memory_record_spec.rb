@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe ApplicationMemoryRecord do
-    it do
+    it "works" do
       klass = Class.new do
         include ApplicationMemoryRecord
         memory_record []

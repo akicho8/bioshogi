@@ -10,7 +10,7 @@ module Bioshogi
       assert { @records.first[:hand].to_s == "▲６八銀(79)" }
     end
 
-    it do
+    it "works" do
       Board.dimensiton_change([3, 3]) do
         mediator = MediatorSimple.new
         mediator.pieces_set("▲歩")
@@ -35,7 +35,7 @@ module Bioshogi
       end
     end
 
-    it do
+    it "works" do
       [Diver::NegaAlphaDiver, Diver::NegaScoutDiver].each do |diver_class|
         Board.promotable_disable do
           Board.dimensiton_change([2, 5]) do

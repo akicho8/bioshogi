@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe Player do
-    it do
+    it "works" do
       Board.dimensiton_change([2, 3]) do
         mediator = Mediator.new
         mediator.placement_from_bod <<~EOT

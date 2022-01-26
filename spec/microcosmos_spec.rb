@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe "ミクロコスモス" do
-    it do
+    it "works" do
       bod = nil
       GC.start
       GC.disable

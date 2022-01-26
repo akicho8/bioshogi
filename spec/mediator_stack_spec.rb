@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe MediatorStack do
-    it do
+    it "works" do
       object = MediatorStack.new
       object.mediator.placement_from_preset("平手")
       object.mediator.execute("▲７六歩")

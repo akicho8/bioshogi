@@ -6,7 +6,7 @@ module Bioshogi
       s.match(InputParser.regexp).named_captures.compact
     end
 
-    it do
+    it "works" do
       list = [
         "６八銀左",
         "△６八全",

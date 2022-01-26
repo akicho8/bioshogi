@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe SoldierBox do
-    it do
+    it "works" do
       soldier_box = SoldierBox.new
       soldier_box << Soldier.from_str("△５一玉")
       soldier_box << Soldier.from_str("▲６八銀")

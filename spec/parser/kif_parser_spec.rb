@@ -123,7 +123,7 @@ EOT
         EOT
       end
 
-      it do
+      it "works" do
         assert { @info.to_csa == <<~EOT }
 V2.2
 $SITE:(site)

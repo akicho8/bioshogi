@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe do
-    it do
+    it "works" do
       mediator = Mediator.new
       mediator.board.placement_from_human("▲９七歩")
      assert { mediator.player_at(:black).evaluator.score >= 1 }

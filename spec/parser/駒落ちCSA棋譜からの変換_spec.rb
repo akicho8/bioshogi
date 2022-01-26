@@ -98,7 +98,7 @@ EOT
   end
 
   describe "(3) 駒別単独表現" do
-    it do
+    it "works" do
       Parser.parse("V2.2,P-51OU,P+53KI00GI,P-00AL,-,-5141OU,+0052GI").to_csa == <<~EOT
 V2.2
 P1 *  *  *  * -OU *  *  *  *

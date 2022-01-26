@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe Player do
-    it do
+    it "works" do
       mediator = Mediator.new
       mediator.placement_from_bod <<~EOT
       後手の持駒：飛角金銀桂香歩

@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe Player do
-    it do
+    it "works" do
       mediator = Mediator.new
       mediator.placement_from_bod(<<~EOT)
 後手の持駒：
@@ -18,7 +18,7 @@ EOT
       assert { mediator.position_invalid? == true               }
     end
 
-    it do
+    it "works" do
       mediator = Mediator.new
       mediator.placement_from_bod(<<~EOT)
 後手の持駒：

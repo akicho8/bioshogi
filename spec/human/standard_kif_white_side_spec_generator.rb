@@ -106,7 +106,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         mediator.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
-# >>       it do
+# >>       it "works" do
 # >>         # P1A
 # >>         assert("１７の金が２８へ動く場合「２８金上」") { test1("２８金上") == ["２八金(17)", "２八金上", "-1728KI"] }
 # >>         assert("３８の金が２８へ動く場合「２８金寄」") { test1("２８金寄") == ["２八金(38)", "２八金寄", "-3828KI"] }
@@ -149,7 +149,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         mediator.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
-# >>       it do
+# >>       it "works" do
 # >>         # P2A 上がる駒が2枚ある場合「上」を省略して「左」「右」
 # >>         assert("１８の金が２９へ動く場合「２９金左」") { test1("２９金左") == ["２九金(18)", "２九金左", "-1829KI"] }
 # >>         assert("３８の金が２９へ動く場合「２９金右」") { test1("２９金右") == ["２九金(38)", "２九金右", "-3829KI"] }
@@ -192,7 +192,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         mediator.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
-# >>       it do
+# >>       it "works" do
 # >>         # P3A
 # >>         assert("４７の金が５８へ動く場合「５８金左」") { test1("５８金左") == ["５八金(47)", "５八金左", "-4758KI"] }
 # >>         assert("５７の金が５８へ動く場合「５８金直」") { test1("５８金直") == ["５八金(57)", "５八金直", "-5758KI"] }
@@ -239,7 +239,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("１９の竜が２８へ動く場合「２８竜引」") { test1("２８竜引") == ["２八龍(19)", "２八龍引", "-1928RY"] }
 # >>           assert("２６の竜が２８へ動く場合「２８竜上」") { test1("２８竜上") == ["２八龍(26)", "２八龍上", "-2628RY"] }
 # >>         end
@@ -263,7 +263,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("８７の竜が６７へ動く場合「６７竜寄」") { test1("６７竜寄") == ["６七龍(87)", "６七龍寄", "-8767RY"] } # ※寄る駒が1枚なので「寄」（「６７竜右」ではありません） }
 # >>           assert("５８の竜が６７へ引く場合「６７竜引」") { test1("６７竜引") == ["６七龍(58)", "６七龍引", "-5867RY"] } # ※引く駒が1枚なので「引」（「６７竜左」ではありません） }
 # >>         end
@@ -287,7 +287,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("５５の竜が７５に動く場合「７５竜左」") { test1("７５竜左") == ["７五龍(55)", "７五龍左", "-5575RY"] }
 # >>           assert("９５の竜が７５に動く場合「７５竜右」") { test1("７５竜右") == ["７五龍(95)", "７五龍右", "-9575RY"] }
 # >>         end
@@ -311,7 +311,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("１１の竜が２２に動く場合「２２竜左」") { test1("２２竜左") == ["２二龍(11)", "２二龍左", "-1122RY"] }
 # >>           assert("２１の竜が２２に動く場合「２２竜右」") { test1("２２竜右") == ["２二龍(21)", "２二龍右", "-2122RY"] }
 # >>         end
@@ -335,7 +335,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("８２の竜が９３に動く場合「９３竜左」") { test1("９３竜左") == ["９三龍(82)", "９三龍左", "-8293RY"] }
 # >>           assert("９１の竜が９３に動く場合「９３竜右」") { test1("９３竜右") == ["９三龍(91)", "９三龍右", "-9193RY"] }
 # >>         end
@@ -368,7 +368,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("１９の馬が２８へ動く場合「２８馬左」") { test1("２８馬左") == ["２八馬(19)", "２八馬左", "-1928UM"] }
 # >>           assert("２９の馬が２８へ動く場合「２８馬右」") { test1("２８馬右") == ["２八馬(29)", "２八馬右", "-2928UM"] }
 # >>         end
@@ -392,7 +392,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("１５の馬が２５へ動く場合「２５馬寄」") { test1("２５馬寄") == ["２五馬(15)", "２五馬寄", "-1525UM"] }
 # >>           assert("４７の馬が２５へ引く場合「２５馬引」") { test1("２５馬引") == ["２五馬(47)", "２五馬引", "-4725UM"] }
 # >>         end
@@ -416,7 +416,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("９９の馬が９８に動く場合「９８馬引」") { test1("９８馬引") == ["９八馬(99)", "９八馬引", "-9998UM"] }
 # >>           assert("７６の馬が９８に動く場合「９８馬上」") { test1("９８馬上") == ["９八馬(76)", "９八馬上", "-7698UM"] }
 # >>         end
@@ -440,7 +440,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("１１の馬が３３に動く場合「３３馬左」") { test1("３３馬左") == ["３三馬(11)", "３三馬左", "-1133UM"] }
 # >>           assert("５１の竜が３３に動く場合「３３馬右」") { test1("３３馬右") == ["３三馬(51)", "３三馬右", "-5133UM"] }
 # >>         end
@@ -464,7 +464,7 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>         end
 # >> 
-# >>         it do
+# >>         it "works" do
 # >>           assert("６３の馬が８１に動く場合「８１馬左」") { test1("８１馬左") == ["８一馬(63)", "８一馬左", "-6381UM"] }
 # >>           assert("９２の馬が８１に動く場合「８１馬右」") { test1("８１馬右") == ["８一馬(92)", "８一馬右", "-9281UM"] }
 # >>         end

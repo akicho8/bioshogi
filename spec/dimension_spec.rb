@@ -72,7 +72,7 @@ module Bioshogi
     end
 
     describe "5x5の盤面" do
-      it do
+      it "works" do
         Board.dimensiton_change([5, 5]) do
           assert { Mediator.player_test.board.to_s == <<~EOT }
   ５ ４ ３ ２ １
