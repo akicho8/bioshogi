@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+# http://www2.computer-shogi.org/protocol/record_v22.html
 
 module Bioshogi
   # P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
