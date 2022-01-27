@@ -39,11 +39,11 @@ module Bioshogi
       @handicap
     end
 
-    ################################################################################ FIXME: これは使われてない？
     def order_info
       OrderInfo.fetch(order_key)
     end
 
+    # for SkillMonitor
     def order_key
       if display_turn.even?
         :sente
@@ -51,7 +51,6 @@ module Bioshogi
         :gote
       end
     end
-    ################################################################################
 
     private
 
@@ -63,10 +62,6 @@ module Bioshogi
         key = :black
       end
       Location[key]
-    end
-
-    def current_location_index(diff)
-
     end
   end
 end
