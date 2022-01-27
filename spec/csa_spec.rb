@@ -14,7 +14,7 @@ module Bioshogi
       mediator.execute("５三桂")
       mediator.execute("８五歩")
       mediator.execute("5341NK") # 元位置の 53 の地点の駒を調べてもらい、成っていないのであれば NK は「４一桂成」で、成っていれば「４一成銀」になる
-      assert { mediator.to_s == <<~EOT }
+      expect(mediator.to_s).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -38,7 +38,7 @@ EOT
       mediator = Mediator.new
       mediator.placement_from_preset("平手")
       mediator.execute("7776FU")
-      assert { mediator.to_s == <<~EOT }
+      expect(mediator.to_s).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

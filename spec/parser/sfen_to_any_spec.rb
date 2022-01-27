@@ -11,7 +11,7 @@ module Bioshogi
       it "startpos の状態から" do
         info = Parser.parse("position startpos moves 7i6h")
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
-        assert { info.to_kif == <<~EOT }
+        expect(info.to_kif).to eq(<<~EOT)
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -26,7 +26,7 @@ EOT
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h")
         assert { info.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h" }
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
-        assert { info.to_kif == <<~EOT }
+        expect(info.to_kif).to eq(<<~EOT)
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -41,7 +41,7 @@ EOT
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
         assert { info.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
         assert { info.to_sfen(startpos_embed: true) == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
-        assert { info.to_kif == <<~EOT }
+        expect(info.to_kif).to eq(<<~EOT)
 先手の持駒：銀
 後手の持駒：銀二
 先手の戦型：嬉野流
@@ -57,7 +57,7 @@ EOT
 
       it "2手目から始まるSFENをKIFに変換したとき2手目から始まる→1手目から始まらないとだめ" do
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2 moves 5c5d 3g3f")
-        assert { info.to_kif == <<~EOT }
+        expect(info.to_kif).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

@@ -9,7 +9,7 @@ module Bioshogi
       ms = Benchmark.ms { bod = Parser.file_parse(Pathname(__dir__).join("../experiment/microcosmos.kif")).to_bod }
       GC.enable
       assert { ms < 1130 }
-      assert { bod == <<~EOT }
+      expect(bod).to eq(<<~EOT)
 後手の持駒：飛二 角 銀 桂二 香 歩三
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

@@ -76,7 +76,7 @@ module Bioshogi
 
     it "盤面表示" do
       mediator = Mediator.start
-      assert { mediator.board.to_s == <<~EOT }
+      expect(mediator.board.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -124,7 +124,7 @@ EOT
       end
 
       it "works" do
-        assert { @info.to_csa == <<~EOT }
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 $SITE:(site)
 P1 *  *  *  *  *  *  *  * -OU

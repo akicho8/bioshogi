@@ -28,7 +28,7 @@ module Bioshogi
       turn_info = info.initial_mediator.turn_info
       assert { turn_info.current_location.key == :white }
       assert { turn_info.location_call_name   == "上手" }
-      assert { info.to_kif == <<~EOT }
+      expect(info.to_kif).to eq(<<~EOT)
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

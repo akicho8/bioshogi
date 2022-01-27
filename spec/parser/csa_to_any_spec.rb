@@ -20,7 +20,7 @@ EOT
         end
 
         it "to_csa" do
-          assert { @info.to_csa == <<~EOT }
+          expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI
@@ -34,7 +34,7 @@ EOT
         end
 
         it "to_kif" do
-          assert { @info.to_kif == <<~EOT }
+          expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)
@@ -59,7 +59,7 @@ EOT
         end
 
         it "to_csa" do
-          assert { @info.to_csa == <<~EOT }
+          expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI
@@ -73,7 +73,7 @@ EOT
         end
 
         it "to_kif" do
-          assert { @info.to_kif == <<~EOT }
+          expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)

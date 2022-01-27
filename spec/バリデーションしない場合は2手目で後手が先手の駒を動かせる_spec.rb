@@ -5,7 +5,7 @@ module Bioshogi
     it "works" do
       sfen = "position startpos moves 2g2f 3i4h"
       info = Parser.parse(sfen, validate_enable: false)
-      assert { info.mediator.board.to_s == <<~EOT }
+      expect(info.mediator.board.to_s).to eq(<<~EOT)
         ９ ８ ７ ６ ５ ４ ３ ２ １
       +---------------------------+
       |v香v桂v銀v金v玉v金v銀v桂v香|一

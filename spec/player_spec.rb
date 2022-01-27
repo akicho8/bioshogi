@@ -53,7 +53,7 @@ module Bioshogi
 
     it "初期配置" do
       mediator = Mediator.start
-      assert { mediator.board.to_s == <<~EOT }
+      expect(mediator.board.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -325,7 +325,7 @@ EOT
       mediator.execute("３四歩")
       mediator.execute("２二角成")
       assert { mediator.player_at(:black).piece_box.to_s == "角" }
-      assert { mediator.board.to_s == <<~EOT }
+      expect(mediator.board.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

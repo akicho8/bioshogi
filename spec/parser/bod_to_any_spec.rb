@@ -27,7 +27,7 @@ module Bioshogi
       end
 
       it "to_bod" do
-        assert { @info.to_bod == <<~EOT }
+        expect(@info.to_bod).to eq(<<~EOT)
 後手の持駒：飛 角 金 銀 桂 香 歩四
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -48,7 +48,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 後手：ごて
 先手：せんて
 後手の持駒：飛 角 金 銀 桂 香 歩四

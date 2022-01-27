@@ -23,7 +23,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 先手の戦型：嬉野流
 手合割：平手
 手数----指手---------消費時間--
@@ -36,7 +36,7 @@ EOT
       end
 
       it "to_ki2" do
-        assert { @info.to_ki2 == <<~EOT }
+        expect(@info.to_ki2).to eq(<<~EOT)
 先手の戦型：嬉野流
 手合割：平手
 
@@ -46,7 +46,7 @@ EOT
       end
 
       it "to_csa" do
-        assert { @info.to_csa == <<~EOT }
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI

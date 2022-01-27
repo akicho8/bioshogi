@@ -29,7 +29,7 @@ module Bioshogi
       turn_info = info.initial_mediator.turn_info
       assert { turn_info.current_location.key == :white }
       assert { turn_info.location_call_name   == "後手" }
-      assert { info.to_kif == <<~EOT }
+      expect(info.to_kif).to eq(<<~EOT)
 手合割：六枚落ち
 手数----指手---------消費時間--
    1 ４二玉(51)

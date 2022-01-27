@@ -10,7 +10,7 @@ module Bioshogi
 
       mediator.turn_info.handicap = false
       info = Parser.parse("position #{mediator.to_snapshot_sfen}")
-      assert { info.to_ki2 == <<~EOT }
+      expect(info.to_ki2).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -39,7 +39,7 @@ EOT
 
       mediator.turn_info.handicap = true
       info = Parser.parse("position #{mediator.to_snapshot_sfen}")
-      assert { info.to_ki2 == <<~EOT }
+      expect(info.to_ki2).to eq(<<~EOT)
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

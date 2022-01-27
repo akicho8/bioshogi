@@ -4,7 +4,7 @@ module Bioshogi
   describe Parser::Base do
     it "「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない" do
       info = Parser.parse("手合割：トンボ")
-      assert { info.to_kif == <<~EOT }
+      expect(info.to_kif).to eq(<<~EOT)
 手合割：トンボ
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -33,7 +33,7 @@ EOT
         1 ７六歩(77)  (00:00/00:00:00)
         2 投了        (00:00/00:00:00)
       EOT
-      assert { info.to_kif(time_embed_force: true) == <<~EOT }
+      expect(info.to_kif(time_embed_force: true)).to eq(<<~EOT)
 手合割：平手
 手数----指手---------消費時間--
    1 ７六歩(77)   (00:00/00:00:00)
@@ -71,7 +71,7 @@ EOT
         end
 
         it "to_csa" do
-          assert { @info.to_csa == <<~EOT }
+          expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI
@@ -86,7 +86,7 @@ EOT
 
         it "to_kif" do
           # puts @info.to_kif
-          assert { @info.to_kif == <<~EOT }
+          expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 先手の戦型：嬉野流
 先手の備考：居飛車
@@ -119,7 +119,7 @@ EOT
         end
 
         it "to_csa" do
-          assert { @info.to_csa == <<~EOT }
+          expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI
@@ -134,7 +134,7 @@ EOT
 
         it "to_kif" do
           # puts @info.to_kif
-          assert { @info.to_kif == <<~EOT }
+          expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 先手の戦型：嬉野流
 先手の備考：居飛車
@@ -184,7 +184,7 @@ EOT
       end
 
       it "to_csa" do
-        assert { @info.to_csa(has_header: false) == <<~EOT }
+        expect(@info.to_csa(has_header: false)).to eq(<<~EOT)
 V2.2
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA *
@@ -203,7 +203,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif(has_header: false) == <<~EOT }
+        expect(@info.to_kif(has_header: false)).to eq(<<~EOT)
 手数----指手---------消費時間--
    1 ５四歩(53)
    2 ３六歩(37)
@@ -213,14 +213,14 @@ EOT
       end
 
       it "to_ki2" do
-        assert { @info.to_ki2(has_header: false) == <<~EOT }
+        expect(@info.to_ki2(has_header: false)).to eq(<<~EOT)
 △５四歩 ▲３六歩
 まで2手で先手の勝ち
 EOT
       end
 
       it "to_bod" do
-        assert { @info.to_bod == <<~EOT }
+        expect(@info.to_bod).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

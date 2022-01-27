@@ -16,7 +16,7 @@ EOT
       end
 
       it "to_kif" do
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 手合割：三枚落ち
 上手：伊藤宗印
 下手：天満屋
@@ -54,7 +54,7 @@ EOT
       end
 
       it "to_csa" do
-        assert { @info.to_csa == <<~EOT }
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:三枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE *
@@ -109,7 +109,7 @@ EOT
       end
 
       xit "to_kif" do
-        assert { @info.to_kif == <<~EOT }
+        expect(@info.to_kif).to eq(<<~EOT)
 手合割：その他
 上手の備考：居飛車
 上手の持駒：なし
@@ -140,7 +140,7 @@ EOT
       end
 
       xit "to_csa" do
-        assert { @info.to_csa == <<~EOT }
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 P1-KY-KE-GI-KI-OU-KI * -KE-KY
 P2 * -HI *  *  *  *  * -KA *

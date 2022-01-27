@@ -18,7 +18,7 @@ module Bioshogi
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.to_s == <<~EOT }
+      expect(board.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
@@ -32,7 +32,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.flop.to_s == <<~EOT }
+      expect(board.flop.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・v桂v玉|一
@@ -46,7 +46,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.flop.flop.to_s == <<~EOT }
+      expect(board.flop.flop.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
@@ -60,7 +60,7 @@ EOT
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
 EOT
-      assert { board.flop.flip.to_s == <<~EOT }
+      expect(board.flop.flip.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
