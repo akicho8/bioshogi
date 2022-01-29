@@ -10,7 +10,7 @@ module Bioshogi
 
       c = piller_counts[soldier.place.x.value] + 1
       if c > Dimension::Yplace.dimension
-        raise "#{soldier.place.x.hankaku_number}の列に#{c}個の駒が存在する状態"
+        raise MustNotHappen, "#{soldier.place.x.hankaku_number}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
       end
       piller_counts[soldier.place.x.value] = c
       self.piece_piller_by_latest_piece = (c == Dimension::Yplace.dimension) # 最後の駒が反映される

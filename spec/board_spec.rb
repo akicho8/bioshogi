@@ -67,6 +67,14 @@ module Bioshogi
         assert { mediator.board["１三"] == nil }
       end
     end
+
+    it "駒柱に駒を置こうとしている" do
+      board = Board.create_by_preset("平手")
+      board.place_on(Soldier.from_str("▲24玉"))
+      board.place_on(Soldier.from_str("▲25玉"))
+      board.place_on(Soldier.from_str("▲26玉"))
+      expect { board.place_on(Soldier.from_str("▲25玉")) }.to raise_error(MustNotHappen, /2の列に10個目の駒を配置しようとしています/)
+    end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
