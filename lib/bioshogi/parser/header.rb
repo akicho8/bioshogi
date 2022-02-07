@@ -39,8 +39,15 @@ module Bioshogi
               t ||= Time.local(*v.scan(/\d+/).collect(&:to_i)) rescue nil
               if t
                 format = "%Y/%m/%d"
-                if key.match?(/時\z/)
-                  format = "#{format} %T"
+                if false
+                  if key.match?(/時\z/)
+                    format = "#{format} %T"
+                  end
+                else
+                  if t.hour == 0 && t.min == 0
+                  else
+                    format = "#{format} %T"
+                  end
                 end
                 object[key] = t.strftime(format)
               end
