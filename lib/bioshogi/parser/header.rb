@@ -44,7 +44,7 @@ module Bioshogi
                     format = "#{format} %T"
                   end
                 else
-                  if t.hour == 0 && t.min == 0
+                  if t.hour == 0 && t.min == 0 && t.sec == 0
                   else
                     format = "#{format} %T"
                   end

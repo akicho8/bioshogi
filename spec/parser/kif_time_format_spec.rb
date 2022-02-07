@@ -7,8 +7,12 @@ module Bioshogi
       assert { Parser.parse("開始日時：2000-01-02 01:02:03").header.to_h           == {"開始日時"=>"2000/01/02 01:02:03"} }
     end
 
-    it "日の場合は日時を含まない" do
-      assert { Parser.parse("開始日：2000-01-02 01:02:03").header.to_h == {"開始日" => "2000/01/02"} }
+    it "「開始日時」も「開始日」も同じ扱い" do
+      assert { Parser.parse("開始日：2000-01-02 01:02:03").header.to_h == {"開始日" => "2000/01/02 01:02:03"} }
+    end
+
+    it "時分秒が0なら入れない" do
+      assert { Parser.parse("開始日：2000-01-02 00:00:00").header.to_h == {"開始日" => "2000/01/02"} }
     end
 
     it "不正な日付" do
