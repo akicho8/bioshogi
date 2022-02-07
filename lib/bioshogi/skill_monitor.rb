@@ -72,6 +72,7 @@ module Bioshogi
         # p e
         # p v
         player.opponent_player.skill_set.list_push(v)
+        # executor.skill_set.list_push(skill) # executor の方にも設定(これいる？)
       end
     end
 
