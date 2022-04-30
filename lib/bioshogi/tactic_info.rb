@@ -2,8 +2,8 @@ module Bioshogi
   class TacticInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :defense,   name: "囲い", },
       { key: :attack,    name: "戦型", },
+      { key: :defense,   name: "囲い", },
       { key: :technique, name: "手筋", },
       { key: :note,      name: "備考", },
     ]

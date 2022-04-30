@@ -36,7 +36,7 @@
     :_csa=>"+2822RY",
     :total_seconds=>1,
     :used_seconds=>1,
-    :skill=>{:defense=>[], :attack=>[], :technique=>[], :note=>[]},
+    :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+",
     :snapshot_sfen=>
@@ -60,7 +60,7 @@
     :_csa=>"-8222HI",
     :total_seconds=>1,
     :used_seconds=>1,
-    :skill=>{:defense=>[], :attack=>[], :technique=>[], :note=>[]},
+    :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+ 8b2b",
     :snapshot_sfen=>

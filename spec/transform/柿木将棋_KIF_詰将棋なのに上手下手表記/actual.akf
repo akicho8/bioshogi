@@ -23,7 +23,7 @@
     :_csa=>"+1312KI",
     :total_seconds=>0,
     :used_seconds=>0,
-    :skill=>{:defense=>[], :attack=>[], :technique=>[], :note=>[]},
+    :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>"position sfen 8k/9/8G/9/9/9/9/9/9 b G 1 moves 1c1b",
     :snapshot_sfen=>"position sfen 8k/8G/9/9/9/9/9/9/9 w G 2"}],
  :last_action_kakinoki_word=>"投了",

@@ -43,9 +43,9 @@ module Bioshogi
 先手：加藤一二三
 後手：原田泰夫
 戦型：矢倉
-先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
 先手の戦型：四手角
 後手の戦型：四手角
+先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
 先手の手筋：垂れ歩, 継ぎ桂, ふんどしの桂
 先手の備考：居飛車
 後手の備考：居飛車
@@ -54,5 +54,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:1:in `require': cannot infer basepath (LoadError)
-# ~> 	from -:1:in `<main>'
