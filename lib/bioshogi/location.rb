@@ -1,4 +1,3 @@
-
 # frozen-string-literal: true
 #
 # 上下のみを表わす
