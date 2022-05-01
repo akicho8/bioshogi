@@ -99,13 +99,13 @@ module Bioshogi
     end
 
     def mochigoma_delete_force
-      Location.call_names.each do |e|
+      LocationInfo.call_names.each do |e|
         header.delete("#{e}の持駒")
       end
     end
 
     def mochigoma_delete_if_blank
-      Location.call_names.each do |e|
+      LocationInfo.call_names.each do |e|
         key = "#{e}の持駒"
         if v = @header[key]
           if v.blank? || v == "なし"

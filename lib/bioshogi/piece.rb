@@ -85,10 +85,10 @@ module Bioshogi
       # 持駒文字列から駒個数のハッシュに変換しつつさらに先後で分ける
       # Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
       def s_to_h2(str)
-        hash = Location.inject({}) { |a, e| a.merge(e.key => []) }
-        str.scan(/([#{Location.polygon_chars_str}])([^#{Location.polygon_chars_str}]+)/) do |triangle, str|
-          location = Location[triangle]
-          hash[location.key] << str
+        hash = LocationInfo.inject({}) { |a, e| a.merge(e.key => []) }
+        str.scan(/([#{LocationInfo.polygon_chars_str}])([^#{LocationInfo.polygon_chars_str}]+)/) do |triangle, str|
+          location_info = LocationInfo[triangle]
+          hash[location_info.key] << str
         end
         hash.transform_values { |e| s_to_h(e.join) }
       end
@@ -188,10 +188,10 @@ module Bioshogi
       # "S"  先手の銀
       # "s"  後手の銀
       # "+s" 後手の成銀
-      def to_sfen(promoted: false, location: :black)
+      def to_sfen(promoted: false, location_info: :black)
         [
           promoted ? "+" : nil,
-          sfen_char.public_send(Location[location].key == :black ? :upcase : :downcase),
+          sfen_char.public_send(LocationInfo[location_info].key == :black ? :upcase : :downcase),
         ].join
       end
     end

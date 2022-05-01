@@ -32,9 +32,9 @@ module Bioshogi
 
             cells.reverse_each.with_index(1) do |e, x|
               if md = e.match(/(?<csa_sign>\S)(?<piece>\S{2})/)
-                location = Location[md[:csa_sign]]
+                location_info = LocationInfo[md[:csa_sign]]
                 place = Place["#{x}#{y}"]
-                soldiers << Soldier.new_with_promoted(md[:piece], place: place, location: location)
+                soldiers << Soldier.new_with_promoted(md[:piece], place: place, location_info: location_info)
               end
             end
           end

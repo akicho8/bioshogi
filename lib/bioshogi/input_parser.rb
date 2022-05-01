@@ -27,7 +27,7 @@ module Bioshogi
     private
 
     def kif_or_ki2_regexp
-      ki2_location = /(?<ki2_location>[#{Location.polygon_chars_str}])/o
+      ki2_location = /(?<ki2_location>[#{LocationInfo.polygon_chars_str}])/o
       kif_place = /(?<kif_place>#{Place.regexp})/o
       ki2_same = /(?<ki2_same>同)\p{blank}*/
 

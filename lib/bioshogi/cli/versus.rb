@@ -31,7 +31,7 @@ module Bioshogi
       pp options
       tp options
 
-      win_counts = Location.inject({}) { |a, e| a.merge(e.key => 0) }
+      win_counts = LocationInfo.inject({}) { |a, e| a.merge(e.key => 0) }
 
       options[:round].times do |round|
         mediator = Mediator.start
@@ -53,7 +53,7 @@ module Bioshogi
 
           tp deepen_score_list_params
           tp Brain.human_format(records)
-          tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
+          tp mediator.players.inject({}) { |a, e| a.merge(e.location_info => e.pressure_rate) }
           puts mediator
           puts
           puts "#{hand} #{record[:black_side_score]}"
@@ -62,7 +62,7 @@ module Bioshogi
 
           captured_soldier = current_player.executor.captured_soldier
           if captured_soldier && captured_soldier.piece.key == :king
-            win_counts[current_player.location.key] += 1
+            win_counts[current_player.location_info.key] += 1
             Pathname("win_counts.txt").write(win_counts.inspect)
             break
           end

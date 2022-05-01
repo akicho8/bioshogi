@@ -10,7 +10,7 @@ module Bioshogi
     def execute(mediator)
       if captured_soldier
         mediator.board.safe_delete_on(soldier.place)
-        player = mediator.player_at(soldier.location)
+        player = mediator.player_at(soldier.location_info)
         player.piece_box.add(captured_soldier.piece.key => 1)
       end
       mediator.board.pick_up(origin_soldier.place)
@@ -22,7 +22,7 @@ module Bioshogi
       mediator.board.place_on(origin_soldier)
 
       if captured_soldier
-        player = mediator.player_at(soldier.location)
+        player = mediator.player_at(soldier.location_info)
         player.piece_box.pick_out(captured_soldier.piece)
         mediator.board.place_on(captured_soldier)
       end
@@ -46,7 +46,7 @@ module Bioshogi
       }.merge(options)
 
       [
-        options[:with_location] ? soldier.location.name : nil, # "▲"
+        options[:with_location] ? soldier.location_info.name : nil, # "▲"
         soldier.place.name,                                    # "29"
         origin_soldier.any_name(options),                      # "飛"
         promote_trigger? ? "成" : "",                          # "成"
@@ -60,7 +60,7 @@ module Bioshogi
     # ・不成がわからない
     def to_csa(options = {})
       [
-        soldier.location.csa_sign,           # "+"
+        soldier.location_info.csa_sign,           # "+"
         origin_soldier.place.hankaku_number, # "28"
         soldier.place.hankaku_number,        # "29"
         soldier.to_csa,                      # "RY"
@@ -96,7 +96,7 @@ module Bioshogi
 
     def to_akf(options = {})
       {
-        :_location => origin_soldier.location.key,
+        :_location => origin_soldier.location_info.key,
         :type      => type,
         :piece     => origin_soldier.piece.key,
         :promoted  => origin_soldier.promoted,

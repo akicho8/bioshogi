@@ -7,7 +7,7 @@ module Bioshogi
     end
 
     def location_name
-      location.yomiage(handicap) + "、"
+      location_info.yomiage(handicap) + "、"
     end
 
     def piece_name

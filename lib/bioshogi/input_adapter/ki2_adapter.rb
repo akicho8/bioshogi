@@ -123,7 +123,7 @@ module Bioshogi
           # 真下にあるもの
           if list.size >= 2
             if one_up?
-              y = place.y.value + player.location.which_value(1, -1)
+              y = place.y.value + player.location_info.which_value(1, -1)
               list = list.find_all { |e|
                 e.place.x == place.x && e.place.y.value == y
               }
@@ -145,7 +145,7 @@ module Bioshogi
       end
 
       def flip_if_white(key)
-        if player.location.key == :white
+        if player.location_info.key == :white
           key = self.class.flip_table[key]
         end
         key

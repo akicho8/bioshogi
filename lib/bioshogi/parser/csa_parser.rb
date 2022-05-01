@@ -126,38 +126,38 @@ module Bioshogi
           piece_box = PieceBox.real_box
 
           # 両者の駒台
-          hold_pieces = Location.inject({}) { |a, e| a.merge(e => []) }
+          hold_pieces = LocationInfo.inject({}) { |a, e| a.merge(e => []) }
 
           normalized_source.scan(/^P([\+\-])(.*)$/) do |location_key, piece_list|
-            location = Location.fetch(location_key)
+            location_info = LocationInfo.fetch(location_key)
             piece_list.scan(/(\d+)(\D+)/i) do |xy, piece_ch|
               if piece_ch == "AL"
                 if xy != "00"
                   raise SyntaxDefact, "AL が指定されているのに座標が 00 になっていません"
                 end
                 # 残りすべてを駒台に置く
-                hold_pieces[location] += piece_box.pick_out_without_king
+                hold_pieces[location_info] += piece_box.pick_out_without_king
               else
                 attrs = Soldier.piece_and_promoted(piece_ch)
                 # 駒箱から取り出す
                 piece = piece_box.pick_out(attrs[:piece])
                 if xy == "00"
                   # 駒台に置く
-                  hold_pieces[location] << piece
+                  hold_pieces[location_info] << piece
                 else
                   # 盤に置く
                   # if @board_source
                   #   raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
                   # end
-                  soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
+                  soldier = Soldier.create(attrs.merge(location_info: location_info, place: Place.fetch(xy)))
                   @board.place_on(soldier, validate: true)
                 end
               end
             end
           end
 
-          hold_pieces.each do |location, pieces|
-            player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
+          hold_pieces.each do |location_info, pieces|
+            player_piece_boxes[location_info.key].set(Piece.a_to_h(pieces))
           end
         end
       end
@@ -173,7 +173,7 @@ module Bioshogi
 
       def read_turn
         if md = normalized_source.match(/^(?<csa_sign>[+-])$/)
-          if Location.fetch(md["csa_sign"]).key == :white
+          if LocationInfo.fetch(md["csa_sign"]).key == :white
             @force_handicap = true # 微妙な判定
           end
         end

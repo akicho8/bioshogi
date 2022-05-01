@@ -35,7 +35,7 @@ module Bioshogi
 
     # promoted は見ていない
     def location_with_piece_key_from(soldier)
-      [soldier.location.key, soldier.piece.key]
+      [soldier.location_info.key, soldier.piece.key]
     end
   end
 end

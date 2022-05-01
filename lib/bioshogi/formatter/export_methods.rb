@@ -108,7 +108,7 @@ module Bioshogi
       # 消す
       # names_set(black: "alice", white: "bob")
       def names_set(params)
-        locations = Location.send(handicap? ? :reverse_each : :itself)
+        locations = LocationInfo.send(handicap? ? :reverse_each : :itself)
         locations.each do |e|
           header[e.call_name(handicap?)] = params[e.key] || "？"
         end

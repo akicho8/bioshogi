@@ -64,7 +64,7 @@ module Bioshogi
         @balance_info       = BalanceInfo.fetch(:normal)
         @force_location     = nil
         @force_handicap     = nil
-        @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
+        @player_piece_boxes = LocationInfo.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
       end
 
       def parse

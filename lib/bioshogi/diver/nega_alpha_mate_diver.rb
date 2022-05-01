@@ -28,7 +28,7 @@ module Bioshogi
         if depth_max <= depth
           @eval_counter += 1
 
-          # raise if player.location.key == :white
+          # raise if player.location_info.key == :white
 
           # if player.mate_advantage?
           #   if collect_children(player.op, log).empty?

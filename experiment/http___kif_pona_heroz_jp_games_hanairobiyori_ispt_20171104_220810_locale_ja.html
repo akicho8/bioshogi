@@ -340,15 +340,15 @@
     _gaq.push(['_trackPageview']);
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      ga.src = ('https:' == document.location_info.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();    
   </script>
     <script>
       function getRequest(){
-        if(location.search.length > 1) {
+        if(location_info.search.length > 1) {
           var get = new Object();
-          var ret = location.search.substr(1).split("&");
+          var ret = location_info.search.substr(1).split("&");
           for(var i = 0; i < ret.length; i++) {
             var r = ret[i].split("=");
             get[r[0]] = r[1];

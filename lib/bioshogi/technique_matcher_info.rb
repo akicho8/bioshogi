@@ -14,7 +14,7 @@ module Bioshogi
             p soldier.piece.key
             p soldier.bottom_spaces
             p soldier.place
-            p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
+            p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location_info.value_sign])
           end
 
           # # 「打」でないとだめ
@@ -36,7 +36,7 @@ module Bioshogi
 
           # 1つ上の位置
           place = soldier.place
-          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+          v = Place.lookup([place.x.value, place.y.value - soldier.location_info.value_sign])
 
           # 1つ上の位置になにかないとだめ
           unless s = surface[v]
@@ -44,7 +44,7 @@ module Bioshogi
           end
 
           # 1つ上の駒が「自分」の「金」でないとだめ
-          unless s.piece.key == :gold && s.location == soldier.location
+          unless s.piece.key == :gold && s.location_info == soldier.location_info
             throw :skip
           end
         },
@@ -60,7 +60,7 @@ module Bioshogi
             p soldier.piece.key
             p soldier.bottom_spaces
             p soldier.place
-            p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
+            p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location_info.value_sign])
           end
 
           soldier = executor.move_hand.soldier
@@ -83,7 +83,7 @@ module Bioshogi
           # FIXME: origin_soldier
           # 下に2つ、壁の方に2つ
           place = soldier.place
-          v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
+          v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location_info.value_sign * 2])
 
           # そこに何かないとだめ
           unless s = surface[v]
@@ -91,7 +91,7 @@ module Bioshogi
           end
 
           # その駒が「自分」の「玉」でないとだめ
-          unless s.piece.key == :king && s.location == soldier.location
+          unless s.piece.key == :king && s.location_info == soldier.location_info
             throw :skip
           end
         },
@@ -108,7 +108,7 @@ module Bioshogi
           retv = [-1, +1].any? do |x|
             v = Place.lookup([place.x.value + x, place.y.value])
             if s = surface[v]
-              s.piece.key == :king && s.location != soldier.location
+              s.piece.key == :king && s.location_info != soldier.location_info
             end
           end
           unless retv
@@ -131,7 +131,7 @@ module Bioshogi
 
           # 一歩先が空
           place = soldier.place
-          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+          v = Place.lookup([place.x.value, place.y.value - soldier.location_info.value_sign])
           if surface[v]
             throw :skip
           end
@@ -163,9 +163,9 @@ module Bioshogi
           soldier = executor.hand.soldier
           place = soldier.place
           retv = [-1, +1].all? do |x|
-            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign])
+            v = Place.lookup([place.x.value + x, place.y.value + soldier.location_info.value_sign])
             if s = surface[v]
-              if s.location != soldier.location
+              if s.location_info != soldier.location_info
                 (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
               end
             end
@@ -182,11 +182,11 @@ module Bioshogi
         verify_process: proc {
           soldier = executor.hand.soldier
           place = soldier.place
-          v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+          v = Place.lookup([place.x.value, place.y.value - soldier.location_info.value_sign])
           unless s = surface[v]
             throw :skip
           end
-          unless s.piece.key == :knight && !s.promoted && s.location != soldier.location
+          unless s.piece.key == :knight && !s.promoted && s.location_info != soldier.location_info
             throw :skip
           end
         },
@@ -198,11 +198,11 @@ module Bioshogi
         verify_process: proc {
           soldier = executor.hand.soldier
           place = soldier.place
-          v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
+          v = Place.lookup([place.x.value, place.y.value + soldier.location_info.value_sign])
           unless s = surface[v]
             throw :skip
           end
-          unless s.location == soldier.location
+          unless s.location_info == soldier.location_info
             throw :skip
           end
           unless (s.piece.key == :lance && !s.promoted) || s.piece.key == :rook
@@ -218,9 +218,9 @@ module Bioshogi
           soldier = executor.hand.soldier
           place = soldier.place
           retv = [-1, +1].all? do |x|
-            v = Place.lookup([place.x.value + x, place.y.value - soldier.location.value_sign * 2])
+            v = Place.lookup([place.x.value + x, place.y.value - soldier.location_info.value_sign * 2])
             if s = surface[v]
-              if s.location != soldier.location
+              if s.location_info != soldier.location_info
                 s.abs_weight > soldier.abs_weight
               end
             end
@@ -238,9 +238,9 @@ module Bioshogi
           soldier = executor.hand.soldier
           place = soldier.place
           retv = [-1, +1].any? do |x|
-            v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign * 2])
+            v = Place.lookup([place.x.value + x, place.y.value + soldier.location_info.value_sign * 2])
             if s = surface[v]
-              s.piece.key == :knight && !s.promoted && s.location == soldier.location
+              s.piece.key == :knight && !s.promoted && s.location_info == soldier.location_info
             end
           end
           unless retv

@@ -23,12 +23,12 @@ module Bioshogi
 
     # turn_offset が 0 と仮定したときの手番
     def turn_offset_zero_location
-      Location[location_consider_handicap.code + turn_base]
+      LocationInfo[location_consider_handicap.code + turn_base]
     end
 
     # 現在の手番
     def current_location(diff = 0)
-      Location[location_consider_handicap.code + turn_base + turn_offset + diff]
+      LocationInfo[location_consider_handicap.code + turn_base + turn_offset + diff]
     end
 
     def location_call_name
@@ -54,14 +54,14 @@ module Bioshogi
 
     private
 
-    # 駒落ちを考慮した最初の location
+    # 駒落ちを考慮した最初の location_info
     def location_consider_handicap
       if handicap?
         key = :white
       else
         key = :black
       end
-      Location[key]
+      LocationInfo[key]
     end
   end
 end

@@ -47,7 +47,7 @@ module Bioshogi
 
     def soldiers
       soldiers = mediator.board.soldiers
-      group = soldiers.group_by(&:location)
+      group = soldiers.group_by(&:location_info)
       group = group.transform_values do |soldiers|
         soldiers = soldiers.sort_by { |e|
           [e.place.y.to_sfen, e.place.x.to_sfen]
@@ -57,7 +57,7 @@ module Bioshogi
         }
         soldiers = append_separator(soldiers, :sep2)
       end
-      av = Location.collect { |e|
+      av = LocationInfo.collect { |e|
         [e.checkmate_yomiage, :sep1, group[e] || ["なし", :sep1]]
       }
       av = av.reverse           # 相手から読み上げるため

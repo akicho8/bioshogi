@@ -114,7 +114,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        3  (    4.1%)  #<Module:0x00007ff34a12abc0>#<=>
 # >>        3  (    4.1%)  Bioshogi::Place#hash
 # >>        2  (    2.7%)  Bioshogi::DefenseInfo::AttackInfoSharedMethods#hold_piece_eq
-# >>        2  (    2.7%)  Bioshogi::SkillMonitor#location
+# >>        2  (    2.7%)  Bioshogi::SkillMonitor#location_info
 # >>        2  (    2.7%)  Bioshogi::BoardParser::Base#location_adjust
 # >>        2  (    2.7%)  block (3 levels) in memory_record
 # >>        2  (    2.7%)  Bioshogi::SkillMonitor#surface
@@ -189,7 +189,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   119  | 
 # >>                                   |   120  |         if true
 # >>                                   |   121  |           # 何もない制限。何かあればskip
-# >>     3    (0.3%)                   |   122  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["○"]
+# >>     3    (0.3%)                   |   122  |           if ary = e.board_parser.other_objects_loc_ary[location_info.key]["○"]
 # >>     5    (0.5%)                   |   123  |             ary.each do |e|
 # >>     5    (0.5%)                   |   124  |               if surface[e[:place]]
 # >>                                   |   125  |                 throw :skip
@@ -198,7 +198,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   128  |           end
 # >>                                   |   129  | 
 # >>                                   |   130  |           # 何かある制限。何もなければskip
-# >>     3    (0.3%)                   |   131  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["●"]
+# >>     3    (0.3%)                   |   131  |           if ary = e.board_parser.other_objects_loc_ary[location_info.key]["●"]
 # >>                                   |   132  |             ary.each do |e|
 # >>                                   |   133  |               if !surface[e[:place]]
 # >>                                   |   134  |                 throw :skip
@@ -209,7 +209,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   139  | 
 # >>                                   |   140  |         if true
 # >>                                   |   141  |           # 移動元ではない制限。移動元だったらskip
-# >>                                   |   142  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
+# >>                                   |   142  |           if ary = e.board_parser.other_objects_loc_ary[location_info.key]["☆"]
 # >>                                   |   143  |             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
 # >>                                   |   144  |             unless origin_soldier
 # >>                                   |   145  |               throw :skip
@@ -222,7 +222,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   152  |           end
 # >>                                   |   153  | 
 # >>                                   |   154  |           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
-# >>     3    (0.3%) /     1   (0.1%)  |   155  |           if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
+# >>     3    (0.3%) /     1   (0.1%)  |   155  |           if places_hash = e.board_parser.other_objects_loc_places_hash[location_info.key]["★"]
 # >>                                   |   156  |             # 移動元がないということは、もう何も該当しないので skip
 # >>                                   |   157  |             unless origin_soldier
 # >>                                   |   158  |               throw :skip
@@ -236,7 +236,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   166  |         end
 # >>                                   |   167  | 
 # >>                                   |   168  |         # 自分の金or銀がある
-# >>     3    (0.3%)                   |   169  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
+# >>     3    (0.3%)                   |   169  |         if ary = e.board_parser.other_objects_loc_ary[location_info.key]["◆"]
 # >>                                   |   170  |           ary.each do |e|
 # >>                                   |   171  |             unless worth_more_gteq_silver?(e[:place])
 # >>                                   |   172  |               throw :skip
@@ -245,7 +245,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   175  |         end
 # >>                                   |   176  | 
 # >>                                   |   177  |         # 自分の歩以上の駒がある
-# >>                                   |   178  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
+# >>                                   |   178  |         if ary = e.board_parser.other_objects_loc_ary[location_info.key]["◇"]
 # >>                                   |   179  |           ary.each do |e|
 # >>                                   |   180  |             unless worth_more_gteq_pawn?(e[:place])
 # >>                                   |   181  |               throw :skip
@@ -292,7 +292,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   222  |         end
 # >>                                   |   223  | 
 # >>                                   |   224  |         # どれかが盤上に正確に含まれるならOK
-# >>     6    (0.7%)                   |   225  |         if ary = e.board_parser.any_exist_soldiers.location_adjust[location.key].presence
+# >>     6    (0.7%)                   |   225  |         if ary = e.board_parser.any_exist_soldiers.location_adjust[location_info.key].presence
 # >>     4    (0.4%)                   |   226  |           if ary.any? { |e| soldier_exist?(e) }
 # >>                                   |   227  |           else
 # >>                                   |   228  |             throw :skip
@@ -300,7 +300,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   230  |         end
 # >>                                   |   231  | 
 # >>                                   |   232  |         # 指定の配置が盤上に含まれるならOK
-# >>     2    (0.2%)                   |   233  |         ary = e.board_parser.location_adjust[location.key]
+# >>     2    (0.2%)                   |   233  |         ary = e.board_parser.location_adjust[location_info.key]
 # >>    24    (2.6%)                   |   234  |         if ary.all? { |e| soldier_exist?(e) }
 # >>                                   |   235  |         else
 # >> Bioshogi::SkillMonitor#execute (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:13)

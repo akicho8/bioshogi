@@ -11,11 +11,11 @@ TacticInfo.all_elements.each do |e|
       info.mediator_run_once
       info.mediator.players.each { |player|
         keys = player.skill_set.list_of(e).normalize.collect(&:key)
-        row[player.location.key] = keys
+        row[player.location_info.key] = keys
       }
       info.mediator.players.each { |player|
-        if row[player.location.key].include?(e.key)
-          row["合致"] += player.location.mark
+        if row[player.location_info.key].include?(e.key)
+          row["合致"] += player.location_info.mark
         end
       }
     else

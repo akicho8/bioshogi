@@ -166,9 +166,9 @@ module Bioshogi
       # @example
       #   Place.fetch("１三").promotable?(:black) # => true
       #   Place.fetch("１四").promotable?(:black) # => false
-      def promotable?(location)
+      def promotable?(location_info)
         v = self
-        if location.white?
+        if location_info.white?
           v = v.flip
         end
         if _promotable_size

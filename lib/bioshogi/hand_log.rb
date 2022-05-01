@@ -54,7 +54,7 @@ module Bioshogi
     end
 
     def to_skill_set_kif_comment(options = {})
-      skill_set.kif_comment(soldier.location)
+      skill_set.kif_comment(soldier.location_info)
     end
 
     def hand

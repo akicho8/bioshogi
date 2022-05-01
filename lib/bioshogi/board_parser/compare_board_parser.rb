@@ -63,7 +63,7 @@ module Bioshogi
 
       # other_objects_hash_ary + 末尾配列
       def other_objects_loc_ary
-        @other_objects_loc_ary ||= Location.inject({}) do |a, l|
+        @other_objects_loc_ary ||= LocationInfo.inject({}) do |a, l|
           hash = other_objects_hash_ary.transform_values { |v|
             v.collect { |e| e.merge(place: e[:place].public_send(l.normalize_key)) }
           }
@@ -73,7 +73,7 @@ module Bioshogi
 
       # other_objects_hash_ary + 末尾 place のハッシュ
       def other_objects_loc_places_hash
-        @other_objects_loc_places_hash ||= Location.inject({}) do |a, l|
+        @other_objects_loc_places_hash ||= LocationInfo.inject({}) do |a, l|
           places_hash = other_objects_hash_ary.transform_values do |v|
             v.inject({}) { |a, e|
               e = e.merge(:place => e[:place].public_send(l.normalize_key))

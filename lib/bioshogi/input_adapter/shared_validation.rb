@@ -17,9 +17,9 @@ module Bioshogi
             end
           end
 
-          if player.location != origin_soldier.location
-            # player.location.name         => ▲
-            # origin_soldier.location.name => △
+          if player.location_info != origin_soldier.location_info
+            # player.location_info.name         => ▲
+            # origin_soldier.location_info.name => △
             message = []
             message << "相手の駒を動かそうとしています"
             message.concat(turn_error_messages)
@@ -28,7 +28,7 @@ module Bioshogi
           end
 
           if s = board.surface[soldier.place]
-            if s.location == player.location
+            if s.location_info == player.location_info
               errors_add SamePlayerBattlerOverwrideError, "自分の駒を取ろうとしています"
             end
           end
@@ -80,8 +80,8 @@ module Bioshogi
 
         av << yield_self {
           m = []
-          m << "#{player.mediator.turn_info.turn_offset.next}手目は#{player.location.pentagon_mark}の手番ですが"
-          m << "#{player.opponent_player.location.pentagon_mark}が着手しました"
+          m << "#{player.mediator.turn_info.turn_offset.next}手目は#{player.location_info.pentagon_mark}の手番ですが"
+          m << "#{player.opponent_player.location_info.pentagon_mark}が着手しました"
           m.join
         }
 

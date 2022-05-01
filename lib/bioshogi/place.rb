@@ -86,8 +86,8 @@ module Bioshogi
       self.class.fetch([@x.flip, @y])
     end
 
-    def flip_if_white(location)
-      if Location[location].key == :white
+    def flip_if_white(location_info)
+      if LocationInfo[location_info].key == :white
         flip
       else
         self
@@ -169,8 +169,8 @@ module Bioshogi
       to_xy.hash
     end
 
-    def promotable?(location)
-      @y.promotable?(location)
+    def promotable?(location_info)
+      @y.promotable?(location_info)
     end
   end
 end

@@ -6,16 +6,16 @@ module Bioshogi
   class Player
     include PlayerBrainMod
 
-    attr_reader :location
+    attr_reader :location_info
     attr_reader :mediator
 
     attr_reader :executor
 
     delegate :board, to: :mediator
 
-    def initialize(mediator:, location:)
+    def initialize(mediator:, location_info:)
       @mediator = mediator
-      @location = location
+      @location_info = location_info
     end
 
     def execute(str, options = {})
@@ -24,7 +24,7 @@ module Bioshogi
     end
 
     def opponent_player
-      @mediator.player_at(location.flip)
+      @mediator.player_at(location_info.flip)
     end
 
     # 自分と相手
@@ -47,7 +47,7 @@ module Bioshogi
         end
       else
         if object.kind_of?(String)
-          soldier = Soldier.from_str(object, location: location)
+          soldier = Soldier.from_str(object, location_info: location_info)
         else
           soldier = object
         end
@@ -59,7 +59,7 @@ module Bioshogi
     end
 
     def placement_from_human(str)
-      soldiers = InputParser.scan(str).collect { |s| Soldier.from_str(s, location: location) }
+      soldiers = InputParser.scan(str).collect { |s| Soldier.from_str(s, location_info: location_info) }
       board.placement_from_soldiers(soldiers)
     end
 
@@ -84,7 +84,7 @@ module Bioshogi
       end
 
       def call_name
-        location.call_name(mediator.turn_info.handicap?)
+        location_info.call_name(mediator.turn_info.handicap?)
       end
     end
 
@@ -108,17 +108,17 @@ module Bioshogi
       end
 
       def to_sfen
-        piece_box.to_sfen(location)
+        piece_box.to_sfen(location_info)
       end
 
       def to_csa
-        piece_box.to_csa(location)
+        piece_box.to_csa(location_info)
       end
     end
 
     concerning :SoldierMethods do
       def soldiers
-        board.surface.values.find_all { |e| e.location == location }
+        board.surface.values.find_all { |e| e.location_info == location_info }
       end
 
       def king_soldier
@@ -172,7 +172,7 @@ module Bioshogi
         c += piece_box[:bishop] || 0
 
         # 盤上の大駒
-        key = location.key
+        key = location_info.key
         c += board.piece_count_of(key, :rook)
         c += board.piece_count_of(key, :bishop)
 

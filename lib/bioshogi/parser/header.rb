@@ -57,7 +57,7 @@ module Bioshogi
       end
 
       def piece_normalize
-        Location.each do |e|
+        LocationInfo.each do |e|
           e.call_names.each do |e|
             key = "#{e}の持駒"
             if v = object[key].presence

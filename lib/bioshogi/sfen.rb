@@ -4,7 +4,7 @@ module Bioshogi
   class Sfen
     STARTPOS_EXPANSION = "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
     BOARD_REGEXP       = "[#{Piece.collect(&:sfen_char).join}1-9+\/]+"
-    LOCATION_REGEXP    = "[#{Location.collect(&:to_sfen).join}]"
+    LOCATION_REGEXP    = "[#{LocationInfo.collect(&:to_sfen).join}]"
     SFEN_REGEXP        = /(?:position\s+)?(?:sfen\s+)?(?<board>#{BOARD_REGEXP})\s+(?<b_or_w>#{LOCATION_REGEXP})\s+(?<hold_pieces>\S+)\s+(?<turn_counter_next>\d+)(\s+moves\s+(?<moves>.*))?/i
 
     attr_reader :attributes
@@ -56,19 +56,19 @@ module Bioshogi
       BoardParser::SfenBoardParser.parse(attributes[:board]).soldiers
     end
 
-    def location
-      Location.fetch(attributes[:b_or_w])
+    def location_info
+      LocationInfo.fetch(attributes[:b_or_w])
     end
 
     def piece_counts
-      hash = Location.inject({}) { |a, e| a.merge(e.key => {}) }
+      hash = LocationInfo.inject({}) { |a, e| a.merge(e.key => {}) }
       if str = attributes[:hold_pieces]
         if str != "-"
           str.scan(/(\d+)?(.)/) do |count, ch|
             count = (count || 1).to_i
             piece = Piece.fetch_by_sfen_char(ch)
-            location = Location.fetch_by_sfen_char(ch)
-            hash[location.key].update(piece.key => count) { |_, *c| c.sum }
+            location_info = LocationInfo.fetch_by_sfen_char(ch)
+            hash[location_info.key].update(piece.key => count) { |_, *c| c.sum }
           end
         end
       end
@@ -83,7 +83,7 @@ module Bioshogi
     end
 
     def handicap?
-      turn_base.even? && location.key == :white
+      turn_base.even? && location_info.key == :white
     end
 
     def move_infos
@@ -112,7 +112,7 @@ module Bioshogi
       {
         :soldiers     => soldiers,
         :piece_counts => piece_counts,
-        :location     => location,
+        :location_info     => location_info,
         :moves        => moves,
       }
     end

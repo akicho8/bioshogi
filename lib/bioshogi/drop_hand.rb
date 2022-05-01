@@ -12,14 +12,14 @@ module Bioshogi
     end
 
     def execute(mediator)
-      player = mediator.player_at(soldier.location)
+      player = mediator.player_at(soldier.location_info)
       player.piece_box.pick_out(soldier.piece)
       mediator.board.place_on(soldier)
     end
 
     def revert(mediator)
       mediator.board.safe_delete_on(soldier.place)
-      player = mediator.player_at(soldier.location)
+      player = mediator.player_at(soldier.location_info)
       player.piece_box.add(soldier.piece.key => 1)
     end
 
@@ -42,7 +42,7 @@ module Bioshogi
 
     def to_csa(options = {})
       [
-        soldier.location.csa_sign,
+        soldier.location_info.csa_sign,
         "00",
         soldier.place.hankaku_number,
         soldier.to_csa,
@@ -63,7 +63,7 @@ module Bioshogi
 
     def to_akf(options = {})
       {
-        :_location => soldier.location.key,
+        :_location => soldier.location_info.key,
         :type      => type,
         :to        => soldier.place.to_human_h,
         :piece     => soldier.piece.key,

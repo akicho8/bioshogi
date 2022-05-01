@@ -39,7 +39,7 @@ Rules For Creation of PSN Files
 
 1) Clarity. Always mark a move with enough detail that the move is unambiguous.
 
-2) Extraneous information is always optional. For instance, if stating the token and the final location makes it obvious what move took place, you are not required (though encouraged) to add information specifying what move resulted in the final location.
+2) Extraneous information is always optional. For instance, if stating the token and the final location_info makes it obvious what move took place, you are not required (though encouraged) to add information specifying what move resulted in the final location_info.
 
 3) Ambiguous notation is deprecated. In older PSN files, you may see moves specified that could describe more than one possible move. In all cases, ambiguous move notation is unsupported in modern PSN.
 
@@ -112,7 +112,7 @@ move resigned instead of moving.
 
 Event —> tournament or event name
 Round —> round (when in tournament)
-Site —> location of game play
+Site —> location_info of game play
 Handicap —> handicap name unspecified implies even game. Handicaps are not
 case sensitive. Standard values for Handicap are:
 
@@ -155,7 +155,7 @@ PSN Record Summary
 
 The record summary is optional.
 
-The record summary is a specialized comment. Comments in *.psn files always are surrounded by curly braces. That is "{" begins a comment and "}" ends a comment. The record summary comment is placed after the last record property, and before the first move of the game. It is the record summary by virtue of its location in the game record.
+The record summary is a specialized comment. Comments in *.psn files always are surrounded by curly braces. That is "{" begins a comment and "}" ends a comment. The record summary comment is placed after the last record property, and before the first move of the game. It is the record summary by virtue of its location_info in the game record.
 
 PSN Record Moves and Comments
 ——————–
@@ -197,7 +197,7 @@ Move notation can be in full extended form or abbreviated. The reigning rule of 
 
 Black (also called sente) always moves first. In handicap games, Black" s move is noted with three period with no spaces ("…").
 
-Case is sensitive in PSN move notation. For instance, "G" is a Gold General, and "g" is part of a board location.
+Case is sensitive in PSN move notation. For instance, "G" is a Gold General, and "g" is part of a board location_info.
 
 In all move notations (both abbreviated and full), tokens are named with a capital letter. Accepted token abbreviations are:
 
@@ -219,7 +219,7 @@ Promoted Pawn —> +P
 
 Extended (also called Full) notation moves take the form:
 
-(move#)(token)(from location)(move type)(to location)(promotion/no promotion)
+(move#)(token)(from location_info)(move type)(to location_info)(promotion/no promotion)
 
 For example,
 
@@ -235,7 +235,7 @@ A drop looks like this,
 
 B*6i
 
-meaning a Bishop is dropped at location 6i.
+meaning a Bishop is dropped at location_info 6i.
 
 means the Rook was moved from 4h to 4c without capturing a token, and could have promoted but chose not to promote.
 
@@ -245,7 +245,7 @@ Move numbers are ignored by parsers and only supplied to make the game record mo
 
 Permissible token names (such as +R or K) are described above.
 
-Board locations are described by a grid with the X coordinate being a number (1-9) and the Y coordinate being described by a letter (a-i). Locations are described by (number)(letter) combinations starting from the white players left hand lance. For instance, "1a" describes the white player" s left lance" s initial location. "9i" describes the black player" s left lance" s initial location.
+Board locations are described by a grid with the X coordinate being a number (1-9) and the Y coordinate being described by a letter (a-i). Locations are described by (number)(letter) combinations starting from the white players left hand lance. For instance, "1a" describes the white player" s left lance" s initial location_info. "9i" describes the black player" s left lance" s initial location_info.
 
 Visually the board numbers and letters are arranged as follows.
 
@@ -308,11 +308,11 @@ NOTE: a promoted G in this notation would be "x+G" or "+Gx"
 
 * The "+" promotion symbol may appear at the end of the move notation even if the token previously promoted. Essentially, ignore it in these cases.
 
-* The "x" for captures is optional if the capture can be implied from the existing notation token and location information.
+* The "x" for captures is optional if the capture can be implied from the existing notation token and location_info information.
 
-* The "*" for drops is optional if the drop can be implied from the existing token and location.
+* The "*" for drops is optional if the drop can be implied from the existing token and location_info.
 
-* Any location numbers or letters may be omitted if the retained letters or numbers are enough to determine the move unambiguously. This applies to moves, captures and drops. For instance, "G4ex3d" can also be written as "Gx3d", "G3d", "Ge3d", or "G4exd" are all valid if they are unambiguous.
+* Any location_info numbers or letters may be omitted if the retained letters or numbers are enough to determine the move unambiguously. This applies to moves, captures and drops. For instance, "G4ex3d" can also be written as "Gx3d", "G3d", "Ge3d", or "G4exd" are all valid if they are unambiguous.
 
 So depending on the board setup, "P3d" could have any of the following meanings, as long as the meaning is clear in the context of the current shogi board.
 

@@ -17,7 +17,7 @@ class MediatorDecorator < SimpleDelegator
             style = nil
             cell = ""
             if soldier = board.lookup([x, y])
-              angle = soldier.location.key == :white ? 180 : 0
+              angle = soldier.location_info.key == :white ? 180 : 0
               style = "transform: rotate(#{angle}deg)"
               cell = soldier.any_name
             end

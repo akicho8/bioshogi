@@ -88,7 +88,7 @@ EOT
 | ・ 歩|
 +------+
           EOT
-        info.other_objects == [{place: Place["21"], location: Location[:white], something: "○"}]
+        info.other_objects == [{place: Place["21"], location_info: LocationInfo[:white], something: "○"}]
       end
 
       id do

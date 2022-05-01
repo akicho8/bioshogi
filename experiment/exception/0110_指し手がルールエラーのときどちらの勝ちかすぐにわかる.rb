@@ -8,7 +8,7 @@ begin
 rescue => error
   puts error.mediator
   error.mediator.turn_info.display_turn  # => 2
-  error.mediator.win_player.location.key # => :white
+  error.mediator.win_player.location_info.key # => :white
 end
 
 # >> 後手の持駒：なし

@@ -26,7 +26,7 @@ module Bioshogi
         s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
       end
 
-      if current_player.location.key == :white || true
+      if current_player.location_info.key == :white || true
         if options[:compact]
         else
           s << "\n"

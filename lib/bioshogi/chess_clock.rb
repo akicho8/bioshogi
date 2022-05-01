@@ -3,17 +3,17 @@
 module Bioshogi
   class ChessClock
     def initialize
-      @mini_clocks = Location.inject({}) {|a, e| a.merge(e => PersonalClock.new) }
+      @mini_clocks = LocationInfo.inject({}) {|a, e| a.merge(e => PersonalClock.new) }
       @counter = 0
     end
 
     def add(v)
-      @mini_clocks[Location[@counter]].add(v)
+      @mini_clocks[LocationInfo[@counter]].add(v)
       @counter += 1
     end
 
     def last_clock
-      @mini_clocks[Location[@counter.pred]]
+      @mini_clocks[LocationInfo[@counter.pred]]
     end
 
     def to_s

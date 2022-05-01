@@ -2,9 +2,9 @@ require "./setup"
 
 Board.dimensiton_change([5, 5])
 mediator = Mediator.new
-soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"].collect { |e| Soldier.from_str(e, location: :black) }
+soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"].collect { |e| Soldier.from_str(e, location_key: :black) }
 mediator.players.each do |player|
-  if player.location.key == :white
+  if player.location_info.key == :white
     s = soldiers.collect(&:flip)
   else
     s = soldiers
