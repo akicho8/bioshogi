@@ -32,7 +32,7 @@ mediator = Mediator.new
 mediator.board.placement_from_soldiers(soldiers)
 puts mediator.board.to_s
 
-tp PresetInfo["平手"].location_split[LocationInfo[:black]]
+tp PresetInfo["平手"].location_split[Location[:black]]
 # >> |----------|
 # >> | ▲１一歩 |
 # >> |----------|

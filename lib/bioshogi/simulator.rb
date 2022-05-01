@@ -20,7 +20,7 @@ module Bioshogi
       mediator.board.placement_from_any(attributes[:board])
 
       if v = attributes[:pieces]
-        LocationInfo.each do |e|
+        Location.each do |e|
           if str = v[e.key]
             mediator.player_at(e).pieces_add(str)
           end

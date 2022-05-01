@@ -39,7 +39,7 @@ module Bioshogi
             captured_soldier = mediator.board.surface[place]
 
             # 自分の駒に衝突したら終わり
-            if captured_soldier && captured_soldier.location_info == soldier.location_info
+            if captured_soldier && captured_soldier.location == soldier.location
               break
             end
 

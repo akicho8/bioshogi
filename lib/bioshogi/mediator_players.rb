@@ -13,14 +13,14 @@ module Bioshogi
     attr_reader :players
 
     def players
-      @players ||= LocationInfo.collect do |e|
-        Player.new(mediator: self, location_info: e)
+      @players ||= Location.collect do |e|
+        Player.new(mediator: self, location: e)
       end
     end
 
     # player_at(-1) でも後手を取得できる
-    def player_at(location_info)
-      players[LocationInfo.fetch(location_info).code]
+    def player_at(location)
+      players[Location.fetch(location).code]
     end
 
     # 現在の手番のプレイヤー

@@ -15,8 +15,8 @@ module Bioshogi
         @move_infos = @sfen.move_infos
 
         @sfen.piece_counts.each do |location_key, counts|
-          location_info = LocationInfo.fetch(location_key)
-          name = location_info.call_name(@sfen.handicap?)
+          location = Location.fetch(location_key)
+          name = location.call_name(@sfen.handicap?)
           header["#{name}の持駒"] = Piece.h_to_s(counts)
         end
       end

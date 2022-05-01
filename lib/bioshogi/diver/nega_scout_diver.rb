@@ -34,7 +34,7 @@ module Bioshogi
             raise
             # v = SCORE_MAX - depth
             v = SCORE_MAX
-            log["#{hand} -> #{v} #{player.location_info}勝"] if log
+            log["#{hand} -> #{v} #{player.location}勝"] if log
             return [v, [hand]]
           else
             log["#{hand}"] if log

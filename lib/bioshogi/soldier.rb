@@ -9,17 +9,17 @@ module Bioshogi
           return str
         end
 
-        md = str.match(/\A(?<location_info>[#{LocationInfo.polygon_chars_str}])?(?<place>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
+        md = str.match(/\A(?<location>[#{Location.polygon_chars_str}])?(?<place>..)(?<piece>#{Piece.all_names.join("|")})\z/o)
         md or raise SyntaxDefact, "表記が間違っています。'６八銀' や '68銀' のように1つだけ入力してください : #{str.inspect}"
 
-        location_info = nil
-        if v = md[:location_info]
-          location_info = LocationInfo[v]
+        location = nil
+        if v = md[:location]
+          location = Location[v]
         end
-        if v = attributes[:location_info]
-          location_info = LocationInfo[v]
+        if v = attributes[:location]
+          location = Location[v]
         end
-        attrs = {place: Place.fetch(md[:place]), location_info: location_info}
+        attrs = {place: Place.fetch(md[:place]), location: location}
         new_with_promoted(md[:piece], attrs)
       end
 
@@ -39,9 +39,9 @@ module Bioshogi
         create(piece_and_promoted(object).merge(attributes))
       end
 
-      def preset_one_side_soldiers(preset_key, location_key: :black)
-        location_info = LocationInfo[location_info]
-        PresetInfo.fetch(preset_key).board_parser.location_adjust[location_info.key]
+      def preset_one_side_soldiers(preset_key, location: :black)
+        location = Location[location]
+        PresetInfo.fetch(preset_key).board_parser.location_adjust[location.key]
       end
 
       # 先後それぞれの形を指定する
@@ -59,7 +59,7 @@ module Bioshogi
 
     attr_accessor :piece
     attr_accessor :promoted
-    attr_accessor :location_info
+    attr_accessor :location
     attr_accessor :place
 
     private_class_method :new
@@ -69,12 +69,12 @@ module Bioshogi
 
       Bioshogi.assert { piece          }
       Bioshogi.assert { !promoted.nil? }
-      Bioshogi.assert { location_info       }
+      Bioshogi.assert { location       }
       Bioshogi.assert { place          }
     end
 
     def attributes
-      { piece: piece, promoted: promoted, place: place, location_info: location_info }
+      { piece: piece, promoted: promoted, place: place, location: location }
     end
 
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意した
@@ -96,15 +96,15 @@ module Bioshogi
     end
 
     def flip
-      self.class.create(piece: piece, promoted: promoted, place: place.flip, location_info: location_info.flip)
+      self.class.create(piece: piece, promoted: promoted, place: place.flip, location: location.flip)
     end
 
     def flop
-      self.class.create(piece: piece, promoted: promoted, place: place.flop, location_info: location_info)
+      self.class.create(piece: piece, promoted: promoted, place: place.flop, location: location)
     end
 
     def flip_if_white
-      if location_info.key == :white
+      if location.key == :white
         flip
       else
         self
@@ -112,7 +112,7 @@ module Bioshogi
     end
 
     def all_vectors
-      piece.all_vectors(promoted: promoted, location_info: location_info)
+      piece.all_vectors(promoted: promoted, location: location)
     end
 
     # 死に駒ではない？
@@ -131,7 +131,7 @@ module Bioshogi
 
     # 自分を移動元の状態と考えて to に移動したとき成れるか？
     def next_promotable?(to)
-      piece.promotable? && !promoted && (place.promotable?(location_info) || to.promotable?(location_info))
+      piece.promotable? && !promoted && (place.promotable?(location) || to.promotable?(location))
     end
 
     # 移動可能な座標を取得
@@ -143,7 +143,7 @@ module Bioshogi
     def collision_pawn(board)
       if piece.key == :pawn && !promoted
         board.vertical_pieces(place.x).find do |e|
-          e.piece.key == :pawn && !e.promoted && e.location_info == location_info
+          e.piece.key == :pawn && !e.promoted && e.location == location
         end
       end
     end
@@ -155,7 +155,7 @@ module Bioshogi
 
     # 自分を▲側に補正したときの座標
     def normalized_place
-      place.flip_if_white(location_info)
+      place.flip_if_white(location)
     end
 
     # 手筋判定用
@@ -167,7 +167,7 @@ module Bioshogi
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
       def top_spaces
-        place.flip_if_white(location_info).y.value
+        place.flip_if_white(location).y.value
       end
 
       # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
@@ -206,7 +206,7 @@ module Bioshogi
 
       # 駒の重さ(=価値)。先手視点。後手ならマイナスになる
       def relative_weight
-        abs_weight * location_info.value_sign
+        abs_weight * location.value_sign
       end
 
       # 敵への駒の圧力(終盤度)
@@ -237,7 +237,7 @@ module Bioshogi
     end
 
     def name(options = {})
-      location_info.name + place.name + any_name(options)
+      location.name + place.name + any_name(options)
     end
 
     def name_without_location(options = {})
@@ -253,15 +253,15 @@ module Bioshogi
     end
 
     def to_bod
-      location_info.varrow + any_name
+      location.varrow + any_name
     end
 
     def to_sfen
-      piece.to_sfen(promoted: promoted, location_info: location_info)
+      piece.to_sfen(promoted: promoted, location: location)
     end
 
     def to_csa_bod
-      location_info.csa_sign + to_csa
+      location.csa_sign + to_csa
     end
 
     def to_csa
@@ -273,7 +273,7 @@ module Bioshogi
         :piece    => piece.key,
         :promoted => promoted,
         :place    => place.to_human_h,
-        :location => location_info.key,
+        :location => location.key,
       }
     end
 

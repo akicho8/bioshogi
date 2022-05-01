@@ -15,10 +15,10 @@ module Bioshogi
             if ch.match?(/\d+/)
               x += ch.to_i
             else
-              location_info = LocationInfo.fetch_by_sfen_char(ch)
+              location = Location.fetch_by_sfen_char(ch)
               promoted = (promoted == "+")
               piece = Piece.fetch_by_sfen_char(ch)
-              soldiers << Soldier.create(piece: piece, place: place, location_info: location_info, promoted: promoted)
+              soldiers << Soldier.create(piece: piece, place: place, location: location, promoted: promoted)
               x += 1
             end
           end

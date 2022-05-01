@@ -67,7 +67,7 @@ module Bioshogi
         piece_keys = piece_box.keys
         board.blank_places.each do |place|
           piece_keys.each do |piece_key|
-            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, place: place, location_info: location_info)
+            soldier = Soldier.create(piece: Piece[piece_key], promoted: false, place: place, location: location)
 
             if options[:rule_valid]
               # 二歩と死に駒なら除外

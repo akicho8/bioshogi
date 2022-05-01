@@ -95,7 +95,7 @@ EOT
 
       mediator.board.to_s_soldiers == m2.board.to_s_soldiers
 
-      mediator.opponent_player.location_info                == m2.opponent_player.location_info
+      mediator.opponent_player.location                == m2.opponent_player.location
       mediator.opponent_player.piece_box.to_s          == m2.opponent_player.piece_box.to_s
       mediator.opponent_player.to_s_soldiers           == m2.opponent_player.to_s_soldiers
       mediator.opponent_player.executor.captured_soldier == m2.opponent_player.executor.captured_soldier

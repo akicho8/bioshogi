@@ -88,7 +88,7 @@ module Bioshogi
       end
 
       def build(place, piece, location_key)
-        Soldier.new_with_promoted(piece, place: place, location_info: LocationInfo.fetch(location_key))
+        Soldier.new_with_promoted(piece, place: place, location: Location.fetch(location_key))
       end
     end
   end

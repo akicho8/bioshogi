@@ -36,10 +36,10 @@ module Bioshogi
         g = params[:stand_piece_line_height]
 
         mediator.players.each do |player|
-          location_info = player.location_info
-          s = location_info.value_sign
+          location = player.location
+          s = location.value_sign
 
-          if player.location_info.key == :black
+          if player.location.key == :black
             v = v_bottom_right_outer
           else
             v = v_top_left_outer
@@ -49,44 +49,44 @@ module Bioshogi
           v -= h * s                                 # 右下から右端中央にずらす
           v += V[params[:stand_board_gap], 0] * s # 盤と持駒の隙間を開ける
 
-          face_pentagon_draw(v: v, location_info: location_info)
+          face_pentagon_draw(v: v, location: location)
 
           v += V[0, 1] * g * s
 
           player.piece_box.each.with_index do |(piece_key, count), i|
             piece = Piece.fetch(piece_key)
             # 持駒の影
-            piece_pentagon_draw(v: v, location_info: location_info, piece: piece)
+            piece_pentagon_draw(v: v, location: location, piece: piece)
 
             # 持駒
             char_draw({
                 :layer     => @d_piece_layer,
-                :v         => piece_char_adjust(v, location_info),
+                :v         => piece_char_adjust(v, location),
                 :text      => piece.name,
-                :location_info  => location_info,
+                :location  => location,
                 :color     => params[:stand_piece_color] || params[:piece_font_color],
                 :font_scale => (params[:stand_piece_font_scale] || params[:soldier_font_scale]) * piece.scale,
                 :bold      => params[:stand_piece_font_bold]
               })
 
             # 持駒数
-            piece_count_draw(v: v, count: count, location_info: location_info)
+            piece_count_draw(v: v, count: count, location: location)
             v += V[0, 1] * g * s
           end
         end
       end
 
       # 駒数
-      def piece_count_draw(v:, count:, location_info:)
+      def piece_count_draw(v:, count:, location:)
         if count >= 2
           w = count <= 9 ? :single : :double
-          v = v + V[*params[:piece_count_position_adjust][w]] * location_info.value_sign
-          piece_count_bg_draw(v: v, location_info: location_info)
+          v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
+          piece_count_bg_draw(v: v, location: location)
           char_draw({
               :layer        => @d_piece_count_layer,
               :v            => v,
               :text         => count.to_s,
-              :location_info     => location_info,
+              :location     => location,
               :color        => params[:piece_count_font_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
               :font_scale   => params[:piece_count_font_scale],
               :stroke_color => params[:piece_count_stroke_color],
@@ -96,19 +96,19 @@ module Bioshogi
       end
 
       # 駒数の下の丸
-      def piece_count_bg_draw(v:, location_info:)
+      def piece_count_bg_draw(v:, location:)
         if params[:piece_count_bg_color] && params[:piece_count_bg_scale].nonzero?
           draw_context(@d_piece_count_layer) do |g|
             g.fill(params[:piece_count_bg_color])
 
-            # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location_info.value_sign
-            # v2 = v + (V.half + V[*params[:piece_count_bg_adjust]]) * location_info.value_sign
-            # g.ellipse(*px(v2), *(cell_rect * params[:piece_count_bg_scale] * location_info.value_sign), 0, 360) # x, y, w, h, angle(0 to 360)
+            # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location.value_sign
+            # v2 = v + (V.half + V[*params[:piece_count_bg_adjust]]) * location.value_sign
+            # g.ellipse(*px(v2), *(cell_rect * params[:piece_count_bg_scale] * location.value_sign), 0, 360) # x, y, w, h, angle(0 to 360)
             # g.ellipse(*px(v2), *cell_rect, 0, 360) # x, y, w, h, angle(0 to 360)
 
             # 個数は左上を原点とした枠の中心(CenterGravity)で表示するのでその位置に移動する
             from = v + V.half                                               # 中心に移動
-            # from += V[*params[:piece_count_bg_adjust][location_info.key]] # 微調整
+            # from += V[*params[:piece_count_bg_adjust][location.key]] # 微調整
             # fromを基点として大きさを決める
             to = from + V.half * params[:piece_count_bg_scale]
             g.circle(*px(from), *px(to)) # (x1, y1) と (x2, y2) の2点を通る円

@@ -25,14 +25,14 @@ module Bioshogi
 
     # ▲または△から見た状態に補正した全体のデータ
     def location_adjust
-      @location_adjust ||= LocationInfo.inject({}) { |a, location_info|
-        a.merge(location_info.key => sorted_soldiers.collect { |e| e.public_send(location_info.normalize_key) })
+      @location_adjust ||= Location.inject({}) { |a, location|
+        a.merge(location.key => sorted_soldiers.collect { |e| e.public_send(location.normalize_key) })
       }.freeze
     end
 
     # ▲△に分割
     def location_split
-      @location_split ||= LocationInfo.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location_info.key }).freeze
+      @location_split ||= Location.inject({}) { |a, e| a.merge(e.key => []) }.merge(sorted_soldiers.group_by { |e| e.location.key }).freeze
     end
   end
 end

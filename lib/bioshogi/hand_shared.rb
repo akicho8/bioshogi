@@ -74,14 +74,14 @@ module Bioshogi
     #
     def legal_hand?(mediator)
       sandbox_execute(mediator) do
-        !mediator.player_at(soldier.location_info).mate_danger? # 「自玉に詰みがある」の反対
+        !mediator.player_at(soldier.location).mate_danger? # 「自玉に詰みがある」の反対
       end
     end
 
     # 王手か？
     def mate_hand?(mediator)
       sandbox_execute(mediator) do
-        mediator.player_at(soldier.location_info.flip).mate_danger?
+        mediator.player_at(soldier.location.flip).mate_danger?
       end
     end
 

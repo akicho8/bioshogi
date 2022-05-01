@@ -68,10 +68,10 @@ module Bioshogi
       flat_map(&:normalized_names_with_alias)
     end
 
-    def kif_comment(location_info)
+    def kif_comment(location)
       TacticInfo.collect { |e|
         if v = public_send(e.list_key).normalize.presence
-          [location_info.name, e.name, "：", v.collect(&:name).join(', '), "\n"].sum("*")
+          [location.name, e.name, "：", v.collect(&:name).join(', '), "\n"].sum("*")
         end
       }.compact.join.presence
     end

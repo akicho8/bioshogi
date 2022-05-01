@@ -7,7 +7,7 @@ module Bioshogi
 
       def soldier_draw(soldier)
         v = V[*soldier.place.to_xy]
-        location_info = soldier.location_info
+        location = soldier.location
         color = nil
         bold = false
 
@@ -20,13 +20,13 @@ module Bioshogi
           color ||= params[:promoted_font_color]
         end
 
-        piece_pentagon_draw(v: v, location_info: location_info, piece: soldier.piece)
+        piece_pentagon_draw(v: v, location: location, piece: soldier.piece)
 
         char_draw({
             :layer     => @d_piece_layer,
-            :v         => piece_char_adjust(v, location_info),
+            :v         => piece_char_adjust(v, location),
             :text      => soldier_name(soldier),
-            :location_info  => location_info,
+            :location  => location,
             :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
             :bold      => bold || params[:soldier_font_bold],
             :font_scale => soldier_font_scale(soldier.piece),
@@ -46,9 +46,9 @@ module Bioshogi
         end
       end
 
-      def char_draw(layer: nil, v:, text:, location_info:, font_scale:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil)
+      def char_draw(layer: nil, v:, text:, location:, font_scale:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil)
         g = Magick::Draw.new
-        g.rotation = location_info.angle
+        g.rotation = location.angle
         g.pointsize = cell_w * font_scale
 
         font = nil
@@ -72,7 +72,7 @@ module Bioshogi
       end
 
       def soldier_name(soldier)
-        if soldier.piece.key == :king && soldier.location_info.key == :white
+        if soldier.piece.key == :king && soldier.location.key == :white
           "王"
         else
           soldier.any_name
@@ -95,8 +95,8 @@ module Bioshogi
       end
 
       # フォントの位置を微調整
-      def piece_char_adjust(v, location_info)
-        v + V.one.map2(params[:piece_char_adjust][location_info.key]) { |a, b| a * b * location_info.value_sign }
+      def piece_char_adjust(v, location)
+        v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
 
       def soldier_font_scale(piece)

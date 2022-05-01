@@ -1,7 +1,7 @@
 require "./setup"
 
 Parser::Ki2Parser.accept?("▲２六歩") # => true
-Parser::Ki2Parser.parse("▲２六歩") # => #<Bioshogi::Parser::Ki2Parser:0x007fca908691f8 @source="▲２六歩", @options={}, @header={}, @move_infos=[{:location_info=>#<Bioshogi::LocationInfo:0x007fca8fb44590 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :flip_mark=>"▼", :other_match_chars=>["上手", "☗", "b"], :varrow=>" ", :angle=>0, :csa_sign=>"+", :code=>0}>, :input=>"２六歩", :mov=>"▲２六歩"}], @first_comments=[], @board_source=nil, @normalized_source="▲２六歩\n">
+Parser::Ki2Parser.parse("▲２六歩") # => #<Bioshogi::Parser::Ki2Parser:0x007fca908691f8 @source="▲２六歩", @options={}, @header={}, @move_infos=[{:location=>#<Bioshogi::Location:0x007fca8fb44590 @attributes={:key=>:black, :name=>"先手", :mark=>"▲", :flip_mark=>"▼", :other_match_chars=>["上手", "☗", "b"], :varrow=>" ", :angle=>0, :csa_sign=>"+", :code=>0}>, :input=>"２六歩", :mov=>"▲２六歩"}], @first_comments=[], @board_source=nil, @normalized_source="▲２六歩\n">
 
 puts Parser.parse("▲２六歩").to_kif
 puts Parser.parse("▲２六歩").to_ki2

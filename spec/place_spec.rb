@@ -51,12 +51,12 @@ module Bioshogi
     end
 
     it "相手陣地に入っているか？" do
-      assert Place.fetch("１二").promotable?(LocationInfo[:black]) == true
-      assert Place.fetch("１三").promotable?(LocationInfo[:black]) == true
-      assert Place.fetch("１四").promotable?(LocationInfo[:black]) == false
-      assert Place.fetch("１六").promotable?(LocationInfo[:white]) == false
-      assert Place.fetch("１七").promotable?(LocationInfo[:white]) == true
-      assert Place.fetch("１八").promotable?(LocationInfo[:white]) == true
+      assert Place.fetch("１二").promotable?(Location[:black]) == true
+      assert Place.fetch("１三").promotable?(Location[:black]) == true
+      assert Place.fetch("１四").promotable?(Location[:black]) == false
+      assert Place.fetch("１六").promotable?(Location[:white]) == false
+      assert Place.fetch("１七").promotable?(Location[:white]) == true
+      assert Place.fetch("１八").promotable?(Location[:white]) == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do

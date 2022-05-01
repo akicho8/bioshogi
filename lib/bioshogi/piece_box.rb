@@ -104,23 +104,23 @@ module Bioshogi
     end
 
     # http://yaneuraou.yaneu.com/2016/07/15/sfen%E6%96%87%E5%AD%97%E5%88%97%E3%81%AF%E4%B8%80%E6%84%8F%E3%81%AB%E5%AE%9A%E3%81%BE%E3%82%89%E3%81%AA%E3%81%84%E4%BB%B6/#:~:text=%E2%86%92%202016%2F7%2F15%2024,%E6%AD%A9%E3%80%8D%E3%81%AE%E9%A0%86%E7%95%AA%E3%81%A8%E3%81%97%E3%81%BE%E3%81%99%E3%80%82
-    def to_sfen(location_info)
-      location_info = LocationInfo[location_info]
+    def to_sfen(location)
+      location = Location[location]
       sorted_piece_objects_hash.sort_by { |piece, _|
         -piece.basic_weight
       }.flat_map { |piece, count|
-        [(count >= 2 ? count : ""), piece.to_sfen(location_info: location_info)]
+        [(count >= 2 ? count : ""), piece.to_sfen(location: location)]
       }.join
     end
 
-    def to_csa(location_info)
+    def to_csa(location)
       if object.empty?
         return ""
       end
-      location_info = LocationInfo[location_info]
+      location = Location[location]
       [
         "P",
-        location_info.csa_sign,
+        location.csa_sign,
         sorted_piece_objects_hash.flat_map { |piece, count|
           ["00", piece.csa.basic_name] * count
         },

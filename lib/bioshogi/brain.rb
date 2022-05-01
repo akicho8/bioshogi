@@ -97,7 +97,7 @@ module Bioshogi
             # if true
             #   if hand.king_captured?
             #     v = -SCORE_MAX
-            #     provisional_hands << {hand: hand, score: -v, black_side_score: -v * player.location_info.value_sign, best_pv: [], eval_times: 0, sec: 0}
+            #     provisional_hands << {hand: hand, score: -v, black_side_score: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
             #     mate = true
             #     break
             #   end
@@ -107,7 +107,7 @@ module Bioshogi
               start_time = Time.now
               v, pv = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
               v = -v                                        # 相手の良い手は自分のマイナス
-              provisional_hands << {hand: hand, score: v, black_side_score: v * player.location_info.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+              provisional_hands << {hand: hand, score: v, black_side_score: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
               # 1手詰: (v >= SCORE_MAX - 0) 自分勝ち
               # 2手詰: (v >= SCORE_MAX - 1) 相手勝ち
               # 3手詰: (v >= SCORE_MAX - 2) 自分勝ち
@@ -183,7 +183,7 @@ module Bioshogi
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v, pv = diver.dive
-          {hand: hand, score: -v, socre2: -v * player.location_info.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+          {hand: hand, score: -v, socre2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end
@@ -195,7 +195,7 @@ module Bioshogi
         hand.sandbox_execute(mediator) do
           start_time = Time.now
           v = evaluator.score
-          {hand: hand, score: v, socre2: v * player.location_info.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
+          {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
         end
       }.sort_by { |e| -e[:score] }
     end

@@ -24,11 +24,11 @@ module Bioshogi
         attributes[:promoted_repeat_vectors]
       end
 
-      def all_vectors(promoted:, location_info:)
+      def all_vectors(promoted:, location:)
         @all_vectors ||= {}
-        @all_vectors[[promoted, location_info.key]] ||= yield_self do
+        @all_vectors[[promoted, location.key]] ||= yield_self do
           vectors = select_vectors(promoted)
-          normalized_vectors(location_info, vectors)
+          normalized_vectors(location, vectors)
         end
       end
 
@@ -48,8 +48,8 @@ module Bioshogi
         Piece.fetch(key)
       end
 
-      def normalized_vectors(location_info, vectors)
-        if location_info.white?
+      def normalized_vectors(location, vectors)
+        if location.white?
           vectors = vectors.collect(&:flip_sign)
         end
         vectors

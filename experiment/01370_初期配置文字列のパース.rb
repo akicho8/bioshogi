@@ -8,11 +8,11 @@ Soldier.from_str("７六と").name # => "？７六と"
 # >> |    piece | 歩   |
 # >> | promoted | true |
 # >> |    place | ７六 |
-# >> | location_info | ▲   |
+# >> | location | ▲   |
 # >> |----------+------|
 # >> |----------+------|
 # >> |    piece | 歩   |
 # >> | promoted | true |
 # >> |    place | ７六 |
-# >> | location_info |      |
+# >> | location |      |
 # >> |----------+------|

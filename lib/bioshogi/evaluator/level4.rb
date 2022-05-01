@@ -8,7 +8,7 @@ module Bioshogi
       def score_compute_report
         rows = player.self_and_opponent.collect do |player|
           {
-            "先後"           => "#{player.location_info} #{player == self.player ? "自分" : ''}",
+            "先後"           => "#{player.location} #{player == self.player ? "自分" : ''}",
             "駒箱(常時加算)" => player.piece_box.score,
             "駒組み"         => opening_score(player),
             "終盤"           => final_stage_score(player),

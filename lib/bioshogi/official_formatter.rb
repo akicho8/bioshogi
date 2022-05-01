@@ -6,7 +6,7 @@ module Bioshogi
     attr_reader :options
 
     delegate :drop_hand, :move_hand, :soldier, :hand, :candidate_soldiers, :handicap, to: :hand_log
-    delegate :place, :piece, :location_info, :promoted, to: :soldier
+    delegate :place, :piece, :location, :promoted, to: :soldier
 
     def initialize(hand_log, options = {})
       @options = {
@@ -72,7 +72,7 @@ module Bioshogi
       s = str_compact(s)
 
       if @options[:with_location]
-        s = location_info.mark + s
+        s = location.mark + s
       end
 
       s
@@ -404,7 +404,7 @@ module Bioshogi
       private
 
       def _w(*values)
-        if s = location_info.which_value(*values)
+        if s = location.which_value(*values)
           if s.kind_of?(String)
             s = kw(s)
           end

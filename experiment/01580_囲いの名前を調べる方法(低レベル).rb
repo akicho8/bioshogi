@@ -15,9 +15,9 @@ mediator.board.placement_from_shape(<<~EOT)
 +---------------------------+
   EOT
 
-location_info = LocationInfo[:black]
+location = Location[:black]
 
-soldiers = mediator.board.surface.values.find_all {|e|e.location_info == location_info }
+soldiers = mediator.board.surface.values.find_all {|e|e.location == location }
 tp soldiers.collect(&:name)
 sorted_black_side_soldiers = soldiers.collect{|e|e.flip_if_white}.sort
 tp sorted_black_side_soldiers
@@ -28,7 +28,7 @@ defense_info = DefenseInfo.find do |e|
   # 盤上の状態に含まれる？
   e.black_side_soldiers.all? do |e|
     if soldier = mediator.board[e[:place]]
-      if soldier.location_info == location_info
+      if soldier.location == location
         soldier.flip_if_white == e
       end
     end

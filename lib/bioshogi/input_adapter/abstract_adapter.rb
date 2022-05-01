@@ -71,16 +71,16 @@ module Bioshogi
       end
 
       def soldier
-        @soldier ||= Soldier.create(piece: piece, promoted: promoted, place: place, location_info: soldier_location)
+        @soldier ||= Soldier.create(piece: piece, promoted: promoted, place: place, location: soldier_location)
       end
 
-      # 移動後の駒の location_info は移動元の駒の location_info に合わせる
+      # 移動後の駒の location は移動元の駒の location に合わせる
       # こうすることで、バリデーションをしない場合、2手目で後手は先手の駒を動かせる
       def soldier_location
         if origin_soldier
-          origin_soldier.location_info
+          origin_soldier.location
         else
-          player.location_info
+          player.location
         end
       end
 

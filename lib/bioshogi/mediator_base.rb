@@ -62,7 +62,7 @@ module Bioshogi
       end
 
       # 「上手」「下手」の名前がどこかに使われていれば駒落ち(雑)
-      if LocationInfo.any? { |e| str.include?(e.handicap_name) }
+      if Location.any? { |e| str.include?(e.handicap_name) }
         turn_info.handicap = true
       end
 

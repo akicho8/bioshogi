@@ -6,8 +6,8 @@ module Bioshogi
       def hard_validations
         super
 
-        if location_info
-          if player.location_info != location_info
+        if location
+          if player.location != location
             errors_add DifferentTurnCommonError, "#{player.call_name}の手番で#{player.opponent_player.call_name}が着手しました"
           end
         end
@@ -15,8 +15,8 @@ module Bioshogi
 
       private
 
-      def location_info
-        LocationInfo.fetch_if(input[location_key])
+      def location
+        Location.fetch_if(input[location_key])
       end
     end
   end

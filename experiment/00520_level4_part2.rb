@@ -21,7 +21,7 @@ player = mediator.player_at(:white)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level4)
 evaluator.score            # => -1375
 tp evaluator.score_compute_report
-tp mediator.players.inject({}) { |a, e| a.merge(e.location_info => e.pressure_rate) }
+tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
 mediator.players.each { |e| tp e.pressure_report }
 
 # >> |---------+----------------+--------+------+-------+--------------|

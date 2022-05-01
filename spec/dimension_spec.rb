@@ -55,12 +55,12 @@ module Bioshogi
     end
 
     it "成れるか？" do
-      assert Dimension::Yplace.fetch("二").promotable?(LocationInfo[:black]) == true
-      assert Dimension::Yplace.fetch("三").promotable?(LocationInfo[:black]) == true
-      assert Dimension::Yplace.fetch("四").promotable?(LocationInfo[:black]) == false
-      assert Dimension::Yplace.fetch("六").promotable?(LocationInfo[:white]) == false
-      assert Dimension::Yplace.fetch("七").promotable?(LocationInfo[:white]) == true
-      assert Dimension::Yplace.fetch("八").promotable?(LocationInfo[:white]) == true
+      assert Dimension::Yplace.fetch("二").promotable?(Location[:black]) == true
+      assert Dimension::Yplace.fetch("三").promotable?(Location[:black]) == true
+      assert Dimension::Yplace.fetch("四").promotable?(Location[:black]) == false
+      assert Dimension::Yplace.fetch("六").promotable?(Location[:white]) == false
+      assert Dimension::Yplace.fetch("七").promotable?(Location[:white]) == true
+      assert Dimension::Yplace.fetch("八").promotable?(Location[:white]) == true
     end
 
     it "インスタンスが異なっても同じ座標なら同じ" do

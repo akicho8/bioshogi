@@ -14,4 +14,4 @@ info1 = BoardParser.parse(<<~EOT)
 +---------------------------+
 EOT
 
-info1.location_split[LocationInfo[:black]].sort == PresetInfo["香落ち"].location_split[LocationInfo[:black]].sort # => false
+info1.location_split[Location[:black]].sort == PresetInfo["香落ち"].location_split[Location[:black]].sort # => false

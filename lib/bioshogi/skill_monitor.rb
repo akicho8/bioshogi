@@ -142,7 +142,7 @@ module Bioshogi
 
         if true
           # 何もない制限。何かあればskip
-          if ary = e.board_parser.other_objects_loc_ary[location_info.key]["○"]
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["○"]
             ary.each do |e|
               if surface[e[:place]]
                 throw :skip
@@ -151,7 +151,7 @@ module Bioshogi
           end
 
           # 何かある制限。何もなければskip
-          if ary = e.board_parser.other_objects_loc_ary[location_info.key]["●"]
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["●"]
             ary.each do |e|
               if !surface[e[:place]]
                 throw :skip
@@ -162,7 +162,7 @@ module Bioshogi
 
         if true
           # 移動元ではない制限。移動元だったらskip
-          if ary = e.board_parser.other_objects_loc_ary[location_info.key]["☆"]
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
             unless origin_soldier
               throw :skip
@@ -175,7 +175,7 @@ module Bioshogi
           end
 
           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
-          if places_hash = e.board_parser.other_objects_loc_places_hash[location_info.key]["★"]
+          if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
             # 移動元がないということは、もう何も該当しないので skip
             unless origin_soldier
               throw :skip
@@ -189,7 +189,7 @@ module Bioshogi
         end
 
         # 自分の金or銀がある
-        if ary = e.board_parser.other_objects_loc_ary[location_info.key]["◆"]
+        if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
           ary.each do |e|
             unless worth_more_gteq_silver?(e[:place])
               throw :skip
@@ -198,7 +198,7 @@ module Bioshogi
         end
 
         # 自分の歩以上の駒がある
-        if ary = e.board_parser.other_objects_loc_ary[location_info.key]["◇"]
+        if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
           ary.each do |e|
             unless worth_more_gteq_pawn?(e[:place])
               throw :skip
@@ -245,7 +245,7 @@ module Bioshogi
         end
 
         # どれかが盤上に正確に含まれるならOK
-        if ary = e.board_parser.any_exist_soldiers.location_adjust[location_info.key].presence
+        if ary = e.board_parser.any_exist_soldiers.location_adjust[location.key].presence
           if ary.any? { |e| soldier_exist?(e) }
           else
             throw :skip
@@ -253,7 +253,7 @@ module Bioshogi
         end
 
         # 指定の配置が盤上に含まれるならOK
-        ary = e.board_parser.location_adjust[location_info.key]
+        ary = e.board_parser.location_adjust[location.key]
         if ary.all? { |e| soldier_exist?(e) }
         else
           throw :skip
@@ -296,21 +296,21 @@ module Bioshogi
     # 比較順序超重要。不一致しやすいものから比較する
     def soldier_exist?(s)
       if v = surface[s.place]
-        v.piece == s.piece && v.promoted == s.promoted && v.location_info == s.location_info
+        v.piece == s.piece && v.promoted == s.promoted && v.location == s.location
       end
     end
 
     # place の位置に銀以上の価値がある(自分の)駒がある
     def worth_more_gteq_silver?(place)
       if v = surface[place]
-        v.location_info == location_info && v.abs_weight >= silver_piece_basic_weight
+        v.location == location && v.abs_weight >= silver_piece_basic_weight
       end
     end
 
     # place の位置に歩以上の価値がある(自分の)駒がある
     def worth_more_gteq_pawn?(place)
       if v = surface[place]
-        v.location_info == location_info
+        v.location == location
       end
     end
 
@@ -335,8 +335,8 @@ module Bioshogi
     end
 
     # プレイヤーの向き
-    def location_info
-      @location_info ||= player.location_info
+    def location
+      @location ||= player.location
     end
 
     def player

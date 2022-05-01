@@ -9,7 +9,7 @@
 # - 上下は△▲だけに対応する
 #
 module Bioshogi
-  class LocationInfo
+  class Location
     include ApplicationMemoryRecord
     memory_record [
       { key: :black, name: "▲", pentagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, value_sign: +1, checkmate_yomiage: "せめかた",  },

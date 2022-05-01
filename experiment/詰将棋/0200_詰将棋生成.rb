@@ -11,8 +11,8 @@ class App
       try_count: 10,
       motigoma: "銀2",
       soldiers_board_on: [
-        { location_key: :white, pieces: "玉",  xy_ranges: [1..2, 1..2] },
-        { location_key: :black, pieces: "金",  xy_ranges: [2..3, 2..3] },
+        { location: :white, pieces: "玉",  xy_ranges: [1..2, 1..2] },
+        { location: :black, pieces: "金",  xy_ranges: [2..3, 2..3] },
       ],
     }
     builder = Builder.new(builder_infos).run
@@ -69,7 +69,7 @@ class App
 
       @mate_records = []
       mate_proc = -> player, score, hand_route {
-        @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location_info.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
+        @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
       }
 
       brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
@@ -96,7 +96,7 @@ class App
       puts "------------------------------"
     end
 
-    def soldiers_board_on(location_info:, pieces: [], xy_ranges: [])
+    def soldiers_board_on(location:, pieces: [], xy_ranges: [])
       Piece.s_to_a(pieces).each do |piece|
         mediator.player_at(:white).piece_box.add(piece => -1)
 
@@ -119,7 +119,7 @@ class App
             promoted = (rand <= 0.5)
           end
 
-          soldier = Soldier.create(piece: piece, promoted: promoted, location_info: LocationInfo[location_info], place: place)
+          soldier = Soldier.create(piece: piece, promoted: promoted, location: Location[location], place: place)
 
           # 死に駒なら作りなおし
           unless soldier.alive?

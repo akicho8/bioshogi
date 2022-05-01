@@ -84,7 +84,7 @@ module Bioshogi
       end
 
       def player_piece_read
-        LocationInfo.each do |e|
+        Location.each do |e|
           if v = e.call_names.collect { |e| header["#{e}の持駒"] }.join.presence
             @player_piece_boxes[e.key].set(Piece.s_to_h(v))
           end
@@ -92,9 +92,9 @@ module Bioshogi
       end
 
       def force_location_read
-        LocationInfo.each do |location_info|
-          if location_info.call_names.any? { |name| normalized_source.match?(/^#{name}番/) }
-            @force_location = location_info
+        Location.each do |location|
+          if location.call_names.any? { |name| normalized_source.match?(/^#{name}番/) }
+            @force_location = location
             break
           end
         end

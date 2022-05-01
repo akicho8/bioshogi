@@ -75,9 +75,9 @@ module Bioshogi
         end
       end
 
-      def piece_pentagon_draw(v:, location_info:, piece: nil)
+      def piece_pentagon_draw(v:, location:, piece: nil)
         if params[:piece_pentagon_draw]
-          # shadow_pentagon_draw(v: v, location_info: location_info, scale: piece_pentagon_scale(piece))
+          # shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale(piece))
 
           # pentagon_box_debug(v)
           draw_context(@d_piece_layer) do |g|
@@ -90,12 +90,12 @@ module Bioshogi
               g.fill_pattern = @s_pattern_layer # テクスチャが足りない場合は繰り返し敷き詰められる。だいたい64pxあればよい。余裕を見て 128x128 で作ろう
             end
             g.fill(params[:piece_pentagon_fill_color])
-            g.polygon(*pentagon_real_points(v: v, location_info: location_info, scale: piece_pentagon_scale(piece)))
+            g.polygon(*pentagon_real_points(v: v, location: location, scale: piece_pentagon_scale(piece)))
           end
         end
       end
 
-      # def shadow_pentagon_draw(v:, location_info:, scale:)
+      # def shadow_pentagon_draw(v:, location:, scale:)
       #   if params[:shadow_pentagon_draw]
       #     raise "使用禁止"
       #
@@ -111,22 +111,22 @@ module Bioshogi
       #       # end
       #       g.fill(params[:shadow_pentagon_fill_color])
       #       g.translate(*(cell_rect * params[:shadow_pentagon_level]))
-      #       g.polygon(*pentagon_real_points(v: v, location_info: location_info, scale: scale))
+      #       g.polygon(*pentagon_real_points(v: v, location: location, scale: scale))
       #     end
       #   end
       # end
 
       # ☗を白黒で塗り分ける
-      def face_pentagon_draw(v:, location_info:)
-        # shadow_pentagon_draw(v: v, location_info: location_info, scale: face_pentagon_scale)
+      def face_pentagon_draw(v:, location:)
+        # shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
         draw_context(@d_piece_layer) do |g|
           w = face_pentagon_stroke_width
           if w && w.nonzero?
             g.stroke(face_pentagon_stroke_color)
             g.stroke_width(w)
           end
-          g.fill(face_pentagon_color(location_info))
-          g.polygon(*pentagon_real_points(v: v, location_info: location_info, scale: face_pentagon_scale))
+          g.fill(face_pentagon_color(location))
+          g.polygon(*pentagon_real_points(v: v, location: location, scale: face_pentagon_scale))
         end
       end
 
@@ -141,12 +141,12 @@ module Bioshogi
 
       # 実座標化
       # OPTIMIZE: cx, cy を除いた部分だけキャッシュした方がよくない？
-      def pentagon_real_points(v:, location_info:, scale: 1.0)
+      def pentagon_real_points(v:, location:, scale: 1.0)
         cx, cy = *px(v + V.half)  # 中央
         pentagon_points.flat_map do |x, y|
           [
-            cx + x * scale * location_info.value_sign,
-            cy + y * scale * location_info.value_sign,
+            cx + x * scale * location.value_sign,
+            cy + y * scale * location.value_sign,
           ]
         end
       end
@@ -192,8 +192,8 @@ module Bioshogi
         params[:face_pentagon_stroke_width] || params[:piece_pentagon_stroke_width]
       end
 
-      def face_pentagon_color(location_info)
-        params[:face_pentagon_color][location_info.key]
+      def face_pentagon_color(location)
+        params[:face_pentagon_color][location.key]
       end
 
       ################################################################################ shadow

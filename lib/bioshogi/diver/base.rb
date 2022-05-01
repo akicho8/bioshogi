@@ -51,7 +51,7 @@ module Bioshogi
 
         logger.info "    %d %s %s" % [
           context[:depth],
-          context[:player].location_info,
+          context[:player].location,
           str,
         ]
       end
