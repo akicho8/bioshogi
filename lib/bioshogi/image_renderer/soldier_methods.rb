@@ -22,7 +22,7 @@ module Bioshogi
 
         piece_pentagon_draw(v: v, location: location, piece: soldier.piece)
 
-        char_draw({
+        char_draw(**{
             :layer     => @d_piece_layer,
             :v         => piece_char_adjust(v, location),
             :text      => soldier_name(soldier),

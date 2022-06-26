@@ -59,7 +59,7 @@ module Bioshogi
             piece_pentagon_draw(v: v, location: location, piece: piece)
 
             # 持駒
-            char_draw({
+            char_draw(**{
                 :layer     => @d_piece_layer,
                 :v         => piece_char_adjust(v, location),
                 :text      => piece.name,
@@ -82,7 +82,7 @@ module Bioshogi
           w = count <= 9 ? :single : :double
           v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
           piece_count_bg_draw(v: v, location: location)
-          char_draw({
+          char_draw(**{
               :layer        => @d_piece_count_layer,
               :v            => v,
               :text         => count.to_s,
