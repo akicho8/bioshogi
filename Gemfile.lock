@@ -5,6 +5,7 @@ PATH
       actionview
       activesupport
       color
+      matrix
       memory_record
       table_format
       tree_support
@@ -37,6 +38,7 @@ GEM
     loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
+    matrix (0.4.2)
     memory_record (0.0.19)
       activesupport
     method_source (1.0.0)
@@ -106,4 +108,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   2.3.4
+   2.3.13

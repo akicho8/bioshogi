@@ -1,10 +1,4 @@
-{:header=>
-  {"開始日時"=>"2020/08/04 00:25:37",
-   "棋戦"=>"レーティング対局室(早指2)",
-   "手合割"=>"平手",
-   "先手"=>"alice(414)",
-   "後手"=>"bob(422)",
-   "手数"=>1},
+{:header=>{"開始日時"=>"2020/08/04 00:25:37", "棋戦"=>"レーティング対局室(早指2)", "手合割"=>"平手", "先手"=>"alice(414)", "後手"=>"bob(422)", "手数"=>1},
  :moves=>
   [{:index=>0,
     :human_index=>0,
@@ -12,10 +6,8 @@
     :total_seconds=>0,
     :used_seconds=>nil,
     :skill=>nil,
-    :history_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
-    :snapshot_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"},
+    :history_sfen=>"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    :snapshot_sfen=>"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"},
    {:index=>1,
     :human_index=>1,
     :place_same=>nil,
@@ -32,9 +24,7 @@
     :total_seconds=>1,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f",
-    :snapshot_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"}],
+    :history_sfen=>"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f",
+    :snapshot_sfen=>"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2"}],
  :judgment_message=>nil,
  :error_text=>nil}
