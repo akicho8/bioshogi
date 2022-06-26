@@ -37,14 +37,9 @@ module Bioshogi
         y = nil
 
         case value
-        when Array
-          a, b = value
-          x = Dimension::Xplace.lookup(a)
-          y = Dimension::Yplace.lookup(b)
-        when String
-          a, b = value.chars
-          x = Dimension::Xplace.lookup(a)
-          y = Dimension::Yplace.lookup(b)
+        when String, Array
+          x = Dimension::Xplace.lookup(value[0])
+          y = Dimension::Yplace.lookup(value[1])
         else
           if respond_to?(:to_a)
             return lookup(value.to_a)
