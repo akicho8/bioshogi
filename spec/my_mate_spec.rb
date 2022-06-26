@@ -19,7 +19,7 @@ module Bioshogi
       assert { mediator.player_at(:white).my_mate? == true  }
       assert { mediator.player_at(:white).op_mate? == false }
 
-      # 詰む場合はそれなに重い
+      # 詰む場合はそれなりに重い
       ms = Benchmark.ms { mediator.player_at(:white).my_mate? }
       assert { ms >= 50.0 }
 
@@ -29,5 +29,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:1:in `require': cannot infer basepath (LoadError)
-# ~>    from -:1:in `<main>'

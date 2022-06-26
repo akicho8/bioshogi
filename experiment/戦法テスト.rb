@@ -26,6 +26,3 @@ TacticInfo.all_elements.each do |e|
 end
 p rows.all? { |e| e["合致"].present? }      # => 
 tp rows
-# ~> -:6:in `block in <main>': undefined method `basename' for nil:NilClass (NoMethodError)
-# ~> 	from -:4:in `each'
-# ~> 	from -:4:in `<main>'
