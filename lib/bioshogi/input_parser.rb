@@ -13,7 +13,10 @@ module Bioshogi
     end
 
     def scan(str)
-      str.to_s.scan(regexp).collect(&:join)
+      @scan ||= {}
+      @scan[str] ||= yield_self do
+        str.to_s.scan(regexp).collect(&:join)
+      end
     end
 
     def slice_one(str)
