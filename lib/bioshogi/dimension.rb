@@ -183,10 +183,13 @@ module Bioshogi
       cattr_accessor(:_promotable_size) { nil }
 
       def self.lookup(value)
-        if value.kind_of?(String)
-          value = value.tr("1-9一二三四五六七八九", "１-９１-９")
+        @instance ||= {}
+        @instance[value] ||= yield_self do
+          if value.kind_of?(String)
+            value = value.tr("1-9一二三四五六七八九", "１-９１-９")
+          end
+          super
         end
-        super
       end
 
       def hankaku_number
@@ -210,10 +213,13 @@ module Bioshogi
 
       # "(52)" の "2" に対応するため
       def self.lookup(value)
-        if value.kind_of?(String)
-          value = value.tr("1-9１-９", "#{_units}#{_units}")
+        @instance ||= {}
+        @instance[value] ||= yield_self do
+          if value.kind_of?(String)
+            value = value.tr("1-9１-９", "#{_units}#{_units}")
+          end
+          super
         end
-        super
       end
 
       def hankaku_number
