@@ -65,6 +65,9 @@ module Bioshogi
     def initialize(x, y)
       @x = x
       @y = y
+
+      # memoize
+      to_xy
     end
 
     def inspect
@@ -118,7 +121,7 @@ module Bioshogi
     end
 
     def to_xy
-      [@x.value, @y.value]
+      @to_xy ||= [@x.value, @y.value]
     end
 
     # "６八銀" なら [6, 8]
