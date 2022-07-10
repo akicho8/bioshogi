@@ -22,6 +22,8 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
+parser.image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: {real_image: true}).display
+
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_mito").display
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_skelton").display
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_heart").display
@@ -39,12 +41,12 @@ bg_file = nil
 # parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva6").display
 # parser.image_renderer(color_theme_key: "is_color_theme_gingham_check_eva13").display
 
-parser.image_renderer(color_theme_key: "is_color_theme_explosion_yellow").display
-parser.image_renderer(color_theme_key: "is_color_theme_explosion_blue").display
-parser.image_renderer(color_theme_key: "is_color_theme_cloud_green").display
-parser.image_renderer(color_theme_key: "is_color_theme_cloud_pink").display
-parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva0").display
-parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
+# parser.image_renderer(color_theme_key: "is_color_theme_explosion_yellow").display
+# parser.image_renderer(color_theme_key: "is_color_theme_explosion_blue").display
+# parser.image_renderer(color_theme_key: "is_color_theme_cloud_green").display
+# parser.image_renderer(color_theme_key: "is_color_theme_cloud_pink").display
+# parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva0").display
+# parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
@@ -104,8 +106,8 @@ parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_metal1").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend").display
-# parser.image_renderer(color_theme_key: "is_color_theme_paper_simple", renderer_override_params: {bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_paper_shape", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_paper", renderer_override_params: {bg_file: bg_file}).display
+# parser.image_renderer(color_theme_key: "is_color_theme_shape", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_shogi_extend", renderer_override_params: {bg_file: bg_file}).display
 # parser.image_renderer(color_theme_key: "is_color_theme_style_editor").display
 # parser.image_renderer(color_theme_key: "is_color_theme_alpha_asahanada", renderer_override_params: {bg_file: bg_file}).display
@@ -137,8 +139,8 @@ parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
 # Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1008.8139999425039
 # >> |-------------------------|
-# >> | is_color_theme_paper_simple      |
-# >> | is_color_theme_paper_shape       |
+# >> | is_color_theme_paper      |
+# >> | is_color_theme_shape       |
 # >> | is_color_theme_shogi_extend      |
 # >> | is_color_theme_real_wood3         |
 # >> | is_color_theme_brightness_grey   |

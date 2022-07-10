@@ -14,25 +14,6 @@ module Bioshogi
               :piece_pentagon_stroke_width => 1,                 # ☗の縁取り幅
               :piece_pentagon_scale        => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
-              # :piece_pentagon_scale_map     => {
-              #   :king    => 0.85,
-              #   :rook    => 0.85,
-              #   :bishop  => 0.85,
-              #   :gold    => 0.85,
-              #   :silver  => 0.85,
-              #   :knight  => 0.85,
-              #   :lance   => 0.85,
-              #   :pawn    => 0.50,
-              # },
-
-              # # 影
-              # :shadow_pentagon_draw         => false,              # ☗の影を描画するか？
-              # :shadow_pentagon_fill_color   => "hsla(0,0%,0%,0.35)", # ☗の影の色
-              # # :shadow_pentagon_stroke_color => nil,               # ☗の影の縁取り色(nilなら shadow_pentagon_fill_color を代用)
-              # # :shadow_pentagon_stroke_width => 3,                 # ☗の影の縁取り幅。増やすと滲みやすい
-              # :shadow_pentagon_scale        => nil,               # ☗の影の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-              # :shadow_pentagon_level        => 0.03,              # 影の大きさ。右下方向にずらす度合い
-
               # 先後
               :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
               :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
@@ -77,8 +58,6 @@ module Bioshogi
 
       def piece_pentagon_draw(v:, location:, piece: nil)
         if params[:piece_pentagon_draw]
-          # shadow_pentagon_draw(v: v, location: location, scale: piece_pentagon_scale(piece))
-
           # pentagon_box_debug(v)
           draw_context(@d_piece_layer) do |g|
             w = params[:piece_pentagon_stroke_width]
@@ -95,30 +74,8 @@ module Bioshogi
         end
       end
 
-      # def shadow_pentagon_draw(v:, location:, scale:)
-      #   if params[:shadow_pentagon_draw]
-      #     raise "使用禁止"
-      #
-      #     # pentagon_box_debug(v)
-      #     draw_context do |g|
-      #       # NOTE: stroke すると fill した端を縁取って予想より濃くなり調整が難しくなるため取る
-      #       # if false
-      #       #   w = params[:shadow_pentagon_stroke_width]
-      #       #   if w && w.nonzero?
-      #       #     g.stroke(shadow_pentagon_stroke_color)
-      #       #     g.stroke_width(w)
-      #       #   end
-      #       # end
-      #       g.fill(params[:shadow_pentagon_fill_color])
-      #       g.translate(*(cell_rect * params[:shadow_pentagon_level]))
-      #       g.polygon(*pentagon_real_points(v: v, location: location, scale: scale))
-      #     end
-      #   end
-      # end
-
       # ☗を白黒で塗り分ける
       def face_pentagon_draw(v:, location:)
-        # shadow_pentagon_draw(v: v, location: location, scale: face_pentagon_scale)
         draw_context(@d_piece_layer) do |g|
           w = face_pentagon_stroke_width
           if w && w.nonzero?
@@ -175,7 +132,6 @@ module Bioshogi
 
       def piece_pentagon_scale(piece)
         params[:piece_pentagon_scale] * piece.scale
-        # params[:piece_pentagon_scale_map].fetch(piece.key, )
       end
 
       ################################################################################ turn
@@ -195,16 +151,6 @@ module Bioshogi
       def face_pentagon_color(location)
         params[:face_pentagon_color][location.key]
       end
-
-      ################################################################################ shadow
-
-      # def shadow_pentagon_stroke_color
-      #   params[:shadow_pentagon_stroke_color] || params[:shadow_pentagon_fill_color]
-      # end
-
-      # def shadow_pentagon_scale
-      #   params[:shadow_pentagon_scale] || piece_pentagon_scale
-      # end
 
       ################################################################################
 

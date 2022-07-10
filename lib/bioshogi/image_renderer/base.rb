@@ -73,7 +73,7 @@ module Bioshogi
               :star_fill_color          => nil,     # *星の色(nilなら inner_frame_lattice_color を代用)
               :star_step                => 3,       # 星はnセルごとに書く
 
-              :color_theme_key          => "is_color_theme_paper_simple", # 色テーマ
+              :color_theme_key          => "is_color_theme_paper", # 色テーマ
               :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
 
               # # 連続で生成するか？
@@ -140,7 +140,7 @@ module Bioshogi
           current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp) # 背景 + 物'
-          current = current.composite(with_shadow(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(with_shadow2(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp) # 背景 + 物'
 
           logger.info "condition_then_flip"
