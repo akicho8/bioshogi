@@ -6,6 +6,14 @@ module Bioshogi
       end
 
       def soldier_draw(soldier)
+        if params[:real_image]
+          soldier_draw_by_image(soldier)
+        else
+          soldier_draw_by_char(soldier)
+        end
+      end
+
+      def soldier_draw_by_char(soldier)
         v = V[*soldier.place.to_xy]
         location = soldier.location
         color = nil
@@ -32,6 +40,28 @@ module Bioshogi
             :font_scale => soldier_font_scale(soldier.piece),
           })
       end
+
+      def soldier_draw_by_image(soldier)
+        v = V[*soldier.place.to_xy]
+        type = "Portella"
+        key = [soldier.location.key[0], soldier.piece.sfen_char, soldier.promoted ? "1" : "0"].join.upcase
+        unique_key = "#{type}/#{key}"
+        png_path = "#{__dir__}/../assets/images/piece/#{unique_key}.png"
+        image = Magick::Image.read(png_path).first
+        image.resize_to_fill!(*cell_rect.collect(&:ceil))
+        @d_piece_layer.composite!(image, *px(v), Magick::OverCompositeOp)
+      end
+
+      # def soldier_draw_by_image(v: v, location: location, promoted: promoted, rect: rect)
+      #   v = V[*soldier.place.to_xy]
+      #   type = "Portella"
+      #   key = [soldier.location.key[0], soldier.piece.sfen_char, soldier.promoted ? "1" : "0"].join.upcase
+      #   unique_key = "#{type}/#{key}"
+      #   png_path = "#{__dir__}/../assets/images/piece/#{unique_key}.png"
+      #   image = Magick::Image.read(png_path).first
+      #   image.resize_to_fill!(*cell_rect)
+      #   @d_piece_layer.composite!(image, *px(v), Magick::OverCompositeOp)
+      # end
 
       def soldier_move_cell_draw
         if params[:piece_move_cell_fill_color]

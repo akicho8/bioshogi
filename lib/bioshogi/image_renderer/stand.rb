@@ -55,19 +55,31 @@ module Bioshogi
 
           player.piece_box.each.with_index do |(piece_key, count), i|
             piece = Piece.fetch(piece_key)
-            # 持駒の影
-            piece_pentagon_draw(v: v, location: location, piece: piece)
 
-            # 持駒
-            char_draw({
-                :layer     => @d_piece_layer,
-                :v         => piece_char_adjust(v, location),
-                :text      => piece.name,
-                :location  => location,
-                :color     => params[:stand_piece_color] || params[:piece_font_color],
-                :font_scale => (params[:stand_piece_font_scale] || params[:soldier_font_scale]) * piece.scale,
-                :bold      => params[:stand_piece_font_bold]
-              })
+            if params[:real_image]
+              type = "Portella"
+              key = [location.key[0], piece.sfen_char, "0"].join.upcase
+              unique_key = "#{type}/#{key}"
+              png_path = "#{__dir__}/../assets/images/piece/#{unique_key}.png"
+              image = Magick::Image.read(png_path).first
+              image.resize_to_fill!(*cell_rect.collect(&:ceil))
+              @d_piece_layer.composite!(image, *px(v), Magick::OverCompositeOp)
+
+            else
+              # 持駒の影
+              piece_pentagon_draw(v: v, location: location, piece: piece)
+
+              # 持駒
+              char_draw({
+                  :layer      => @d_piece_layer,
+                  :v          => piece_char_adjust(v, location),
+                  :text       => piece.name,
+                  :location   => location,
+                  :color      => params[:stand_piece_color] || params[:piece_font_color],
+                  :font_scale => (params[:stand_piece_font_scale] || params[:soldier_font_scale]) * piece.scale,
+                  :bold       => params[:stand_piece_font_bold]
+                })
+            end
 
             # 持駒数
             piece_count_draw(v: v, count: count, location: location)

@@ -50,6 +50,16 @@ module Bioshogi
       end
 
       # 指定のレイヤーに影をつける
+      # ただし real_image なら影をつけない
+      def with_shadow2(layer)
+        if params[:real_image]
+          layer
+        else
+          with_shadow(layer)
+        end
+      end
+
+      # 指定のレイヤーに影をつける
       def with_shadow(layer)
         if params[:real_shadow_sigma].nonzero?
           s = layer.shadow( # https://rmagick.github.io/image3.html#shadow
