@@ -66,14 +66,13 @@ module Bioshogi
               :image_format             => "png",   # 出力する画像タイプ
               :negate                   => false,   # 反転
               :bg_file                  => nil,     # 背景ファイル
-              :canvas_pattern_key       => nil,     # 背景パターン
 
               # star
               :star_size                => 0.03,    # 星のサイズ(割合)
               :star_fill_color          => nil,     # *星の色(nilなら inner_frame_lattice_color を代用)
               :star_step                => 3,       # 星はnセルごとに書く
 
-              :color_theme_key          => "is_color_theme_paper", # 色テーマ
+              :color_theme_key          => "is_color_theme_real", # 色テーマ
               :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
 
               # # 連続で生成するか？
@@ -169,9 +168,6 @@ module Bioshogi
           # layer = layer.emboss
           # layer = Magick::Image.read("netscape:").first.resize(*image_rect)
           layer = condition_then_flip(layer) # 全体を反転するので背景だけ反転しておくことで元に戻る
-        when v = params[:canvas_pattern_key]
-          warn "激重なため使用禁止"
-          layer = CanvasPatternInfo.fetch(v).execute(rect: image_rect)
         when v = params[:bg_file]
           layer = Magick::Image.read(v).first
           # layer.resize_to_fit!(*image_rect)  # 指定したサイズより(画像が小さいと)画像のサイズになる
