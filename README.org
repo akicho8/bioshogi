@@ -3,8 +3,8 @@
 #+html: <a href="https://travis-ci.org/akicho8/bioshogi"><img src="https://travis-ci.org/akicho8/bioshogi.svg?branch=master" /></a>
 #+html: <a href="https://codeclimate.com/github/akicho8/bioshogi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>
 
-  [[file:https:/www.shogi-extend.com/cpu-battle]]
-  [[https:/www.shogi-extend.com/cpu-battle]\]][デモ]]
+[[file:https://www.shogi-extend.com/cpu-battle][file:https://raw.github.com/akicho8/bioshogi/master/bioshogi.png]]
+[[https://www.shogi-extend.com/cpu-battle][デモ]]
 
 #+BEGIN_SRC ruby
 mediator = Mediator.start
