@@ -64,6 +64,7 @@ module Bioshogi
         is_color_theme_shogi_extend.merge({
             :canvas_bg_color        => "hsl(84,62%,84%)",
             :outer_frame_fill_color => "hsl(39,66%,60%)",
+            :face_pentagon_stroke_width  => 0,                  # ☗の縁取り幅(先後マーク)
           })
       end
 
