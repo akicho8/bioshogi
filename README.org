@@ -1,8 +1,5 @@
 * 将棋の棋譜相互変換、棋譜から戦術抽出、超弱いAIなどのライブラリ
 
-#+html: <a href="https://travis-ci.org/akicho8/bioshogi"><img src="https://travis-ci.org/akicho8/bioshogi.svg?branch=master" /></a>
-#+html: <a href="https://codeclimate.com/github/akicho8/bioshogi/maintainability"><img src="https://api.codeclimate.com/v1/badges/7a1b5fe273e0e2f55043/maintainability" /></a>
-
 [[file:https://www.shogi-extend.com/cpu-battle][file:https://raw.github.com/akicho8/bioshogi/master/bioshogi.png]]
 [[https://www.shogi-extend.com/cpu-battle][デモ]]
 
@@ -711,4 +708,4 @@ Options:
 ** ライセンス
 
    - Ricty Diminished https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
-   - 駒画像 Portella [[https://creativecommons.org/licenses/by-nc-sa/4.0/][CC BY-NC-SA 4.0]]
+   - 駒画像 Portella https://creativecommons.org/licenses/by-nc-sa/4.0/
