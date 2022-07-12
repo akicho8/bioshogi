@@ -6,7 +6,6 @@ module Bioshogi
     def self.default_params
       super.merge({
           :basename_format   => "%04d",
-          :continuous_render => true, # 連続で処理する
           :progress_callback => nil,  # 進捗通知用
           :cover_text        => nil,  # 表紙の内容(あれば表紙画像を作る)
           :bottom_text       => nil,  # 表紙の右下に小さく表示する1行

@@ -22,7 +22,7 @@ bg_file = nil
 
 # ImageRenderer::ColorThemeInfo.each { |e| parser.image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-parser.image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: {real_image: true}).display
+parser.image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: {piece_image_key: "Portella"}).display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_mito").display
 # parser.image_renderer(color_theme_key: "is_color_theme_emoji_pattern_skelton").display
@@ -47,41 +47,6 @@ parser.image_renderer(color_theme_key: "is_color_theme_real", renderer_override_
 # parser.image_renderer(color_theme_key: "is_color_theme_cloud_pink").display
 # parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva0").display
 # parser.image_renderer(color_theme_key: "is_color_theme_cloud_eva1").display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {fg_file: bg_file, bg_file: bg_file}).display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1", renderer_override_params: {bg_file: bg_file}).display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture1").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture2").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture3").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture4").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture5").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture6").display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture7").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture8").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture9").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture10").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture11").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture12").display
-#
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture13").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture14").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture15").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture16").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture17").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture18").display
-#
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture19").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture20").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture21").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture22").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture23").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture24").display
-
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture13").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture14").display
-# parser.image_renderer(color_theme_key: "is_color_theme_groovy_board_texture15").display
 
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention1").display
 # parser.image_renderer(color_theme_key: "is_color_theme_gradiention2").display

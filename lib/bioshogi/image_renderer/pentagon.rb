@@ -15,12 +15,18 @@ module Bioshogi
               :piece_pentagon_scale        => 0.85,              # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
 
               # 先後
-              :face_pentagon_stroke_color   => nil,               # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
-              :face_pentagon_stroke_width   => nil,               # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
+              :face_pentagon_stroke_color   => "hsla(0,0%,50%)",  # ☗の縁取り色(nilなら piece_pentagon_stroke_color を代用)
+              :face_pentagon_stroke_width   => 3,                 # ☗の縁取り幅(nilなら piece_pentagon_stroke_width を代用)
               :face_pentagon_scale          => 0.7,               # ☗の大きさ 1.0 なら元のまま。つまりセルの横幅まで広がる
-              :face_pentagon_color          => {
-                :black                      => "hsla(0,0%,  0%,0.7)",     # ☗を白と黒で塗り分けるときの先手の色
-                :white                      => "hsla(0,0%,100%,0.7)",     # ☗を白と黒で塗り分けるときの後手の色
+              :face_pentagon_color          => {                  # ☗を白と黒で塗り分けるときの色
+                :black => {
+                  :fill   => "hsl(0,0%,5%)",
+                  :stroke => "hsl(0,0%,20%)",
+                },
+                :white => {
+                  :fill   => "hsl(0,0%,95%)",
+                  :stroke => "hsl(0,0%,80%)",
+                },
               },
 
               # 六角形のスタイル
@@ -77,12 +83,13 @@ module Bioshogi
       # ☗を白黒で塗り分ける
       def face_pentagon_draw(v:, location:)
         draw_context(@d_piece_layer) do |g|
+          color = face_pentagon_color(location)
           w = face_pentagon_stroke_width
           if w && w.nonzero?
-            g.stroke(face_pentagon_stroke_color)
+            g.stroke(color[:stroke] || params[:piece_pentagon_stroke_color])
             g.stroke_width(w)
           end
-          g.fill(face_pentagon_color(location))
+          g.fill(color[:fill])
           g.polygon(*pentagon_real_points(v: v, location: location, scale: face_pentagon_scale))
         end
       end
@@ -138,10 +145,6 @@ module Bioshogi
 
       def face_pentagon_scale
         params[:face_pentagon_scale] || piece_pentagon_scale
-      end
-
-      def face_pentagon_stroke_color
-        params[:face_pentagon_stroke_color] || params[:piece_pentagon_stroke_color]
       end
 
       def face_pentagon_stroke_width

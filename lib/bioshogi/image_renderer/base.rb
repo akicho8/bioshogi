@@ -59,7 +59,8 @@ module Bioshogi
               :soldier_font_bold     => false,                        # 太字を使うか？
               :piece_font_weight_key             => :is_piece_font_weight_auto,               # 太字はおまかせ (つまり何もしない。nil でもよい)
 
-              # :font_regular           => "/Users/ikeda/Downloads/KsShogiPieces/KsShogiPieces.ttf", # 駒のフォント(普通)
+              # 駒
+              :piece_image_key               => nil, # リアルな駒を使うか？
 
               # other
               :viewpoint                => "black", # 視点
@@ -74,11 +75,6 @@ module Bioshogi
 
               :color_theme_key          => "is_color_theme_real", # 色テーマ
               :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
-
-              # # 連続で生成するか？
-              # # 昔はリサイズ後の背景をキャッシュしたりしていたが
-              # # レイヤー化してそもそも背景を破壊しないので必要になくなった
-              # :continuous_render         => false,
             })
         end
       end
@@ -139,7 +135,7 @@ module Bioshogi
           current = @s_canvas_layer.composite(@s_board_layer,      0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_move_layer,               0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@s_lattice_layer,            0, 0, Magick::OverCompositeOp) # 背景 + 物'
-          current = current.composite(with_shadow2(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
+          current = current.composite(with_shadow_only_font_pice(@d_piece_layer), 0, 0, Magick::OverCompositeOp) # 背景 + 物'
           current = current.composite(@d_piece_count_layer,        0, 0, Magick::OverCompositeOp) # 背景 + 物'
 
           logger.info "condition_then_flip"
@@ -182,10 +178,6 @@ module Bioshogi
 
         # 白黒の場合 GRAYColorspace になっていてこれに盤を重ねると白黒になってしまう、のを防ぐ
         layer.colorspace = Magick::SRGBColorspace
-
-        # if params[:continuous_render]
-        #   @continuous_render = layer.copy
-        # end
 
         logger.info { "canvas_layer_create for s_canvas_layer" }
 

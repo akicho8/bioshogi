@@ -49,10 +49,9 @@ module Bioshogi
         end
       end
 
-      # 指定のレイヤーに影をつける
-      # ただし real_image なら影をつけない
-      def with_shadow2(layer)
-        if params[:real_image]
+      # フォントでの駒のときだけ駒レイヤーに影をつける
+      def with_shadow_only_font_pice(layer)
+        if params[:piece_image_key]
           layer
         else
           with_shadow(layer)

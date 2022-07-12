@@ -24,7 +24,6 @@ module Bioshogi
             :ffmpeg_after_embed_options => nil,                        # ffmpegコマンドの YUV420 変換の際に最後に埋めるコマンド(-crt )
             :tmpdir_remove              => true,                       # 作業ディレクトリを最後に削除するか？ (デバッグ時にはfalseにする)
             :factory_method_key         => "is_factory_method_ffmpeg", # is_factory_method_rmagick or is_factory_method_ffmpeg
-            :continuous_render          => true,                       # canvasを一度作成したらそのコピーを使い回す(昔はそうだった)
           })
       end
     end

@@ -47,24 +47,17 @@ module Bioshogi
 
           h = V[0, player.piece_box.count] * g       # 駒数に対応した高さ
           v -= h * s                                 # 右下から右端中央にずらす
-          v += V[params[:stand_board_gap], 0] * s # 盤と持駒の隙間を開ける
+          v += V[params[:stand_board_gap], 0] * s    # 盤と持駒の隙間を開ける
 
-          face_pentagon_draw(v: v, location: location)
+          face_pentagon_draw(v: v, location: location) # ☗☖
 
           v += V[0, 1] * g * s
 
           player.piece_box.each.with_index do |(piece_key, count), i|
             piece = Piece.fetch(piece_key)
 
-            if params[:real_image]
-              type = "Portella"
-              key = [location.key[0], piece.sfen_char, "0"].join.upcase
-              unique_key = "#{type}/#{key}"
-              png_path = "#{__dir__}/../assets/images/piece/#{unique_key}.png"
-              image = Magick::Image.read(png_path).first
-              image.resize_to_fill!(*cell_rect.collect(&:ceil))
-              @d_piece_layer.composite!(image, *px(v), Magick::OverCompositeOp)
-
+            if params[:piece_image_key]
+              piece_image_draw(v: v, location: location, piece: piece)
             else
               # 持駒の影
               piece_pentagon_draw(v: v, location: location, piece: piece)

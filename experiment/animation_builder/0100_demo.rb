@@ -1,8 +1,8 @@
 require "../setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
+STORE_DIR = Pathname("#{__dir__}/../../demo/BGM合成後の確認用").expand_path
 
-def output(bin, name)
-  file = Pathname("#{__dir__}/../../demo/#{name}").expand_path
+def output(bin, file)
   FileUtils.makedirs(file.dirname)
   file.write(bin)
   puts file
@@ -17,16 +17,15 @@ end
 if true
   file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
   info = Parser.parse(file)
-  bin = info.to_animation_mp4(color_theme_key: :is_color_theme_groovy_board_texture1, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
-  output(bin, "BGM合成後の確認用/no_audio.mp4")
+  bin = info.to_animation_mp4(color_theme_key: :is_color_theme_real, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
+  output(bin, STORE_DIR.join("no_audio.mp4"))
 
   AudioThemeInfo.each do |e|
     if e.audio_part_a && e.audio_part_b.nil?
-      mp4_file = "#{__dir__}/no_audio.mp4"
+      mp4_file = STORE_DIR.join("no_audio.mp4")
 
       name = ("%02d" % e.code) + "_" + e.name.gsub(/[?.()-]/, "_").gsub(/\P{Graph}+/, "_").gsub(/_+/, "_")
-      output_file = Pathname("#{__dir__}/../../demo/BGM合成後の確認用/#{name}.mp4").expand_path
-      # puts output_file
+      output_file = STORE_DIR.join("#{name}.mp4")
       FileUtils.makedirs(output_file.dirname)
 
       # audio_part_a

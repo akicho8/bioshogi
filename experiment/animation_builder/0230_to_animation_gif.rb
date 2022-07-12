@@ -2,11 +2,11 @@ require "../setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 info = Parser.parse("position startpos moves 7g7f 8c8d")
 
-bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "is_factory_method_rmagick", tmpdir_remove: false, color_theme_key: "is_color_theme_groovy_board_texture1")
+bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "is_factory_method_rmagick", tmpdir_remove: false, color_theme_key: "is_color_theme_real")
 Pathname("_output_rmagick.gif").write(bin) # => 161024
 puts `identify _output_rmagick.gif`
 
-bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "is_factory_method_ffmpeg", tmpdir_remove: false, color_theme_key: "is_color_theme_groovy_board_texture1")
+bin = info.to_animation_gif(page_duration: 0.5, factory_method_key: "is_factory_method_ffmpeg", tmpdir_remove: false, color_theme_key: "is_color_theme_real")
 Pathname("_output.gif").write(bin) # => 925527
 puts `identify _output.gif`
 

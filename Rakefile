@@ -69,4 +69,3 @@ namespace :color_theme_preview do
     end
   end
 end
-

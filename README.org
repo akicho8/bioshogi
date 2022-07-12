@@ -711,3 +711,4 @@ Options:
 ** ライセンス
 
    - Ricty Diminished https://www.rs.tus.ac.jp/yyusa/ricty_diminished.html
+   - 駒画像 Portella [[https://creativecommons.org/licenses/by-nc-sa/4.0/][CC BY-NC-SA 4.0]]

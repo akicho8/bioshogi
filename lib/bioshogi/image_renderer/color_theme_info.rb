@@ -38,38 +38,44 @@ module Bioshogi
         is_color_theme_shogi_extend.merge({
             :fg_file => "#{__dir__}/../assets/images/board/board1.png",
             :bg_file => "#{__dir__}/../assets/images/background/background1.png",
-            :real_image => true,
+            :piece_image_key => "Portella",
           })
       end
 
       def is_color_theme_paper
         {
-          # 真っ白なので☖に枠をつける
-          :face_pentagon_stroke_color => "hsla(0,0%,0%,0.4)",
-          :face_pentagon_stroke_width => 1,
-          **shadow_off,
+          :face_pentagon_stroke_width => 1, # ☗の縁取り幅(先後マーク)
+          **shadow_disabled,
         }
       end
 
       def is_color_theme_shape
         {
           **pentagon_enabled,
+          **shadow_disabled,
           :piece_pentagon_fill_color   => "hsla(0,0%,100%,1.0)",
           :piece_pentagon_stroke_color => "hsla(0,0%,0%,0.4)",
           :piece_pentagon_stroke_width => 1,
-          **shadow_off,
+          :face_pentagon_stroke_width  => 1, # ☗の縁取り幅(先後マーク)
         }
       end
 
       def is_color_theme_club24
         is_color_theme_shogi_extend.merge({
             :canvas_bg_color        => "hsl(84,62%,84%)",
-            :outer_frame_fill_color => "hsl(40,66%,60%)",
+            :outer_frame_fill_color => "hsl(39,66%,60%)",
           })
       end
 
       def is_color_theme_piyo
-        is_color_theme_shogi_extend.merge(piyo_params)
+        is_color_theme_shogi_extend.merge({
+            :canvas_bg_color             => "hsl(35,100% 85%)", # 背景
+            :outer_frame_fill_color      => "hsl(37,73%,68%)",  # 盤の色
+            :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
+            :piece_pentagon_stroke_color => "hsl(36,78%,50%)",  # ☗の縁取り色
+            :piece_pentagon_stroke_width => 3,                  # ☗の縁取り幅
+            :face_pentagon_stroke_width  => 0,                  # ☗の縁取り幅(先後マーク)
+          })
       end
 
       private
@@ -78,42 +84,20 @@ module Bioshogi
         {
           **piece_count_on_shadow_black_on_white,
           **outer_frame_padding_enabled,
-
-          **{
-            **pentagon_enabled,
-            :piece_pentagon_stroke_width => nil,
-          },
-          :piece_font_color              => "hsla(0,0%,25%,1.0)",
-          :promoted_font_color           => syuiro.html,
-          :outer_frame_fill_color        => "hsla(0,0%,0%,0.2)", # "rgba(120,120,120,0.5)",
-          :piece_move_cell_fill_color    => "hsla(0,0%,0%,0.1)",
-
-          # 駒用
-          :piece_pentagon_fill_color     => komairo.html,
-
-          # 影を入れるので☗を半透明にしない
-          :face_pentagon_color         => {
-            :black => "hsla(0,0%,23%,1.0)",
-            :white => "hsla(0,0%,97%,1.0)",
-          },
+          **pentagon_enabled,
+          :piece_font_color           => "hsla(0,0%,25%,1.0)",
+          :promoted_font_color        => PaletteInfo.fetch("主用朱色").to_color.html,
+          :outer_frame_fill_color     => "hsla(0,0%,0%,0.2)", # "rgba(120,120,120,0.5)",
+          :piece_move_cell_fill_color => "hsla(0,0%,0%,0.1)",
+          :piece_pentagon_fill_color  => PaletteInfo.fetch("主用駒色").to_color.html,
         }
       end
 
-      def piyo_params
-        {
-          :canvas_bg_color             => "hsl(35,100% 85%)", # 背景
-          :outer_frame_fill_color      => "hsl(37,73%,68%)",  # 盤の色
-          :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
-          :piece_pentagon_stroke_color => "hsl(36,78%,50%)",  # ☗の縁取り色
-          :piece_pentagon_stroke_width => 3,                  # ☗の縁取り幅
-          :face_pentagon_stroke_width  => 0,                  # ☗の縁取り幅(先後マーク)
-        }
-      end
-
+      # 六角形の駒にする
       def pentagon_enabled
         {
           :piece_pentagon_draw => true,
-          :soldier_font_scale => 0.64,
+          :soldier_font_scale  => 0.64,
           :piece_char_adjust => {
             :black => [ 0.0425, 0.08],
             :white => [-0.01,   0.05],
@@ -121,15 +105,15 @@ module Bioshogi
         }
       end
 
-      def shadow_off
+      # 影OFF
+      def shadow_disabled
         {
-          # 影を取る
-          :real_shadow_sigma => 0,
+          :real_shadow_sigma => 0, # 影を取る
         }
       end
 
+      # 持駒駒数
       def piece_count_on_shadow_black_on_white
-        # 小さめ
         {
           :piece_count_bg_scale        => 0.3,         # 駒数の背景の大きさ
           :piece_count_font_scale      => 0.25,        # 持駒数の大きさ
@@ -140,35 +124,12 @@ module Bioshogi
         }
       end
 
+      # 盤の周囲に隙間を作る
       def outer_frame_padding_enabled
         {
           :outer_frame_padding      => 0.1,
           :inner_frame_stroke_width => 1,
         }
-      end
-
-      def swars_like
-        {
-          :piece_pentagon_scale  => 0.9,
-          :soldier_font_scale    => 0.7,
-          **swars_hutidori,
-        }
-      end
-
-      def swars_hutidori
-        {
-          :piece_pentagon_stroke_color => "hsl(39,100%,68%)",  # ☗の縁取り色 (駒色とHSを合わせる) 元 [39, 1.00, 0.74]
-          :piece_pentagon_stroke_width => 1,                   # ☗の縁取り幅
-          :face_pentagon_stroke_width  => 0,                   # ☗の縁取り幅(先後マーク)
-        }
-      end
-
-      def komairo
-        @komairo ||= PaletteInfo.fetch("主用駒色").to_color
-      end
-
-      def syuiro
-        @syuiro ||= PaletteInfo.fetch("主用朱色").to_color
       end
     end
   end
