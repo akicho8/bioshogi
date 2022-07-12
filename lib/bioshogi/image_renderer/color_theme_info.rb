@@ -36,8 +36,8 @@ module Bioshogi
 
       def is_color_theme_real
         is_color_theme_shogi_extend.merge({
-            :fg_file => "#{__dir__}/../assets/images/board/board1.png",
-            :bg_file => "#{__dir__}/../assets/images/background/background1.png",
+            :fg_file => "#{__dir__}/../assets/images/board/board_a.png",
+            :bg_file => "#{__dir__}/../assets/images/background/background_a.png",
             :piece_image_key => "Portella",
           })
       end
