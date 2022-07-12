@@ -1,5 +1,7 @@
 #!/bin/sh
 
+ffmpeg -hide_banner -i diamond_shark.mp3  -c:a aac -strict experimental -vn -y diamond_shark.m4a
+
 ffmpeg -hide_banner -i ds8705.mp3  -c:a aac -strict experimental -vn -y ds8705.m4a
 
 ffmpeg -hide_banner -i ds2142.mp3  -c:a aac -strict experimental -vn -y ds2142.m4a

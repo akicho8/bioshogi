@@ -14,12 +14,14 @@ if false
   output(bin, "BGM合成後の確認用/microcosmos.mp4")
 end
 
-if true
-  file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
-  info = Parser.parse(file)
-  bin = info.to_animation_mp4(color_theme_key: :is_color_theme_real, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
-  output(bin, STORE_DIR.join("no_audio.mp4"))
+# if true
+#   file = TacticInfo.flat_lookup("トマホーク").sample_kif_file
+#   info = Parser.parse(file)
+#   bin = info.to_animation_mp4(color_theme_key: :is_color_theme_real, page_duration: 0.5, end_duration: 7, audio_part_a: nil, audio_part_b: nil)
+#   output(bin, STORE_DIR.join("no_audio.mp4"))
+# end
 
+if true
   AudioThemeInfo.each do |e|
     if e.audio_part_a && e.audio_part_b.nil?
       mp4_file = STORE_DIR.join("no_audio.mp4")
