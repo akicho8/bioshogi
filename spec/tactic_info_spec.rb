@@ -22,8 +22,17 @@ module Bioshogi
       end
     end
 
-    it "flat_lookup" do
-      assert { TacticInfo.flat_lookup("金底の歩") }
+    describe "flat_lookup" do
+      it "works" do
+        assert { TacticInfo.flat_lookup("金底の歩") }
+      end
+      it "文字列でなくても to_s してから探す" do
+        o = Object.new
+        def o.to_s
+          "金底の歩"
+        end
+        assert { TacticInfo.flat_lookup(o) }
+      end
     end
   end
 end

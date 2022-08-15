@@ -19,6 +19,7 @@ module Bioshogi
     class << self
       # TacticInfo.flat_lookup("金底の歩").key # => :金底の歩
       def flat_lookup(key)
+        key = key.to_s
         v = nil
         each do |e|
           if v = e.model.lookup(key)
