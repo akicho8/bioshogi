@@ -83,8 +83,8 @@ module Bioshogi
       # 手番の反映
       turn_info.handicap = preset_info.handicap
 
-      Bioshogi.assert { turn_info.turn_base == 0 }
-      Bioshogi.assert { turn_info.turn_offset == 0 }
+      Assertion.assert { turn_info.turn_base == 0 }
+      Assertion.assert { turn_info.turn_offset == 0 }
 
       # 玉の位置を取得
       players.each(&:king_place_update)

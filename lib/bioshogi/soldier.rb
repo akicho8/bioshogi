@@ -67,10 +67,10 @@ module Bioshogi
     def initialize(*)
       super
 
-      Bioshogi.assert { piece          }
-      Bioshogi.assert { !promoted.nil? }
-      Bioshogi.assert { location       }
-      Bioshogi.assert { place          }
+      Assertion.assert { piece          }
+      Assertion.assert { !promoted.nil? }
+      Assertion.assert { location       }
+      Assertion.assert { place          }
     end
 
     def attributes

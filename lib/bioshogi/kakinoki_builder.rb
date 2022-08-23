@@ -17,7 +17,7 @@ module Bioshogi
     def initialize(parser, params = {})
       @parser = parser
       @params = self.class.default_params.merge(params)
-      # Bioshogi.assert { parser.header.object_id != @header.object.object_id }
+      # Assertion.assert { parser.header.object_id != @header.object.object_id }
     end
 
     def to_s
