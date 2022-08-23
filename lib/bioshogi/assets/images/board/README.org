@@ -1,1 +1,7 @@
-Full HD が 1920x1080 なのですべて 1080x1080
+* サイズ
+
+  Full HD が 1920x1080 なのですべて 1080x1080
+
+* shogi-player と合わせる
+
+  cp -av ~/src/bioshogi/lib/bioshogi/assets/images/board/*.png ~/src/shogi-player/assets/is_bg_variant
