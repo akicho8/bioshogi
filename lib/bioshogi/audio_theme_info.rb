@@ -17,7 +17,6 @@ module Bioshogi
       { key: :is_audio_theme_ds3812,         name: "Three Keys (Freestyle Rap Beat No.02)", source_url: "https://dova-s.jp/bgm/play3812.html",            author: "Khaim",                audio_part_a: :ds3812,              audio_part_a_volume: 1.0, audio_part_a_duration: 237.72, audio_part_a_loop: false,  audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
       { key: :is_audio_theme_ds4520,         name: "わくわくクッキングタイム的なBGM",       source_url: "https://dova-s.jp/bgm/play4520.html",  author:  "鷹尾まさき",       audio_part_a: :ds4520,  audio_part_a_volume: 1.0, audio_part_a_duration: 61.205,   audio_part_a_loop: false,  audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: "", },
       { key: :is_audio_theme_ds4712,         name: "昼下がり気分",                          source_url: "https://dova-s.jp/bgm/play4712.html",            author: "KK",                   audio_part_a: :ds4712,              audio_part_a_volume: 1.0, audio_part_a_duration: 235.26, audio_part_a_loop: false, audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "作者の紹介でYoutube動画に適しているとある", },
-      { key: :is_audio_theme_ds6574,         name: "Stay On Your Mind",                     source_url: "https://dova-s.jp/bgm/play6574.html",            author: "Khaim",                audio_part_a: :ds6574,              audio_part_a_volume: 1.0, audio_part_a_duration: 174.6,  audio_part_a_loop: true,   audio_part_b: nil,  audio_part_b_volume: nil, acrossfade_duration: nil, desc: nil, },
       { key: :is_audio_theme_headspin_only,  name: "ヘッドスピン",                          source_url: nil,                                              author: nil,                    audio_part_a: :headspin_long,       audio_part_a_volume: 1.0, audio_part_a_duration:  28.05, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "",                                          },
       { key: :is_audio_theme_nc55257,        name: "3分クッキング (break beats)",           source_url: "https://commons.nicovideo.jp/material/nc55257",  author: "ジェルバ",             audio_part_a: :nc55257,             audio_part_a_volume: 1.0, audio_part_a_duration: 144.59, audio_part_a_loop: true,  audio_part_b: nil,                   audio_part_b_volume: nil, acrossfade_duration: nil, desc: "",                                          },
     ]
@@ -61,7 +60,6 @@ module Bioshogi
     # |              is_audio_theme_ds3480 | 55.44  |
     # |             is_audio_theme_ds11184 | 157.13 |
     # |              is_audio_theme_ds6574 | 174.6  |
-    # |              is_audio_theme_ds3479 | 56.03  |
     # |---------------------------------+--------|
     def native_duration
       if audio_part_a
