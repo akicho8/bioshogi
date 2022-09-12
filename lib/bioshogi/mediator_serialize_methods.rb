@@ -86,7 +86,7 @@ module Bioshogi
 
       def before_run_process
         # turn_info_auto_set
-        @initial_state_board_sfen = to_snapshot_sfen # FIXME: これはイケてない
+        @initial_state_board_sfen = to_short_sfen # FIXME: これはイケてない
         @initial_state_turn_info = turn_info.clone
       end
 
@@ -98,23 +98,23 @@ module Bioshogi
       end
 
       # 現在の局面
-      # def to_snapshot_sfen
+      # def to_short_sfen
       #   if false
       #     if startpos?
       #       "position startpos"
       #     else
-      #       to_snapshot_sfen
+      #       to_short_sfen
       #     end
       #   else
-      #     to_snapshot_sfen
+      #     to_short_sfen
       #   end
       # end
 
-      def to_snapshot_sfen
-        "#{to_snapshot_sfen_without_turn} #{turn_info.display_turn.next}"
+      def to_short_sfen
+        "#{to_short_sfen_without_turn} #{turn_info.display_turn.next}"
       end
 
-      def to_snapshot_sfen_without_turn
+      def to_short_sfen_without_turn
         s = []
         s << "position"
         s << "sfen"

@@ -15,7 +15,7 @@
     :skill=>nil,
     :history_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1"},
    {:index=>1,
     :human_index=>1,
@@ -39,7 +39,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen lnsgkgsnl/1r5+R1/9/9/9/9/9/1B7/LNSGKGSNL w B 2"},
    {:index=>2,
     :human_index=>2,
@@ -63,7 +63,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+ 8b2b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen lnsgkgsnl/7r1/9/9/9/9/9/1B7/LNSGKGSNL b Br 3"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで2手で後手の勝ち",

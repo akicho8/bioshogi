@@ -9,7 +9,7 @@ module Bioshogi
       mediator.execute("52玉")
 
       mediator.turn_info.handicap = false
-      info = Parser.parse("position #{mediator.to_snapshot_sfen}")
+      info = Parser.parse("position #{mediator.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -38,7 +38,7 @@ EOT
       mediator.execute("52玉")
 
       mediator.turn_info.handicap = true
-      info = Parser.parse("position #{mediator.to_snapshot_sfen}")
+      info = Parser.parse("position #{mediator.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １

@@ -40,7 +40,7 @@ module Bioshogi
       it "盤を反映する" do
         mediator = Mediator.new
         mediator.placement_from_preset("5五将棋")
-        assert { mediator.to_snapshot_sfen == "position sfen 4rbsgk/8p/9/4P4/4KGSBR/9/9/9/9 b - 1" }
+        assert { mediator.to_short_sfen == "position sfen 4rbsgk/8p/9/4P4/4KGSBR/9/9/9/9 b - 1" }
         assert { mediator.turn_info.handicap == false }
       end
 

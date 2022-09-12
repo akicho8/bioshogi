@@ -91,7 +91,7 @@ class App
 
       puts "------------------------------"
       puts mediator.to_csa
-      puts mediator.to_snapshot_sfen
+      puts mediator.to_short_sfen
       puts mediator.to_history_sfen
       puts "------------------------------"
     end

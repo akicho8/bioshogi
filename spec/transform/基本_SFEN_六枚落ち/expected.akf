@@ -9,7 +9,7 @@
     :skill=>nil,
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"},
    {:index=>1,
     :human_index=>1,
@@ -29,7 +29,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 2sg1gs2/5k3/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 2"},
    {:index=>2,
     :human_index=>2,
@@ -49,7 +49,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 2sg1gs2/5k3/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 3"},
    {:index=>3,
     :human_index=>3,
@@ -69,7 +69,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g1gs2/1s3k3/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 4"},
    {:index=>4,
     :human_index=>4,
@@ -89,7 +89,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g1gs2/1s3k3/ppppppppp/9/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL w - 5"},
    {:index=>5,
     :human_index=>5,
@@ -109,7 +109,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g1g3/1s3k1s1/ppppppppp/9/9/2P4P1/PP1PPPP1P/1B5R1/LNSGKGSNL b - 6"},
    {:index=>6,
     :human_index=>6,
@@ -129,7 +129,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g1g3/1s3k1s1/ppppppppp/9/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 7"},
    {:index=>7,
     :human_index=>7,
@@ -149,7 +149,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g5/1s3kgs1/ppppppppp/9/7P1/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b - 8"},
    {:index=>8,
     :human_index=>8,
@@ -169,7 +169,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g5/1s3kgs1/ppppppppp/7P1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w - 9"},
    {:index=>9,
     :human_index=>9,
@@ -193,7 +193,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g5/1s3kgs1/ppppppp1p/7p1/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b p 10"},
    {:index=>10,
     :human_index=>10,
@@ -217,7 +217,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 3g5/1s3kgs1/ppppppp1p/7R1/9/2P6/PP1PPPP1P/1B7/LNSGKGSNL w Pp 11"},
    {:index=>11,
     :human_index=>11,
@@ -237,7 +237,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/ppppppp1p/7R1/9/2P6/PP1PPPP1P/1B7/LNSGKGSNL b Pp 12"},
    {:index=>12,
     :human_index=>12,
@@ -257,7 +257,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/ppppppp1p/9/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL w Pp 13"},
    {:index=>13,
     :human_index=>13,
@@ -274,7 +274,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/ppppppppp/9/9/2P6/PP1PPPP1P/1B5R1/LNSGKGSNL b P 14"},
    {:index=>14,
     :human_index=>14,
@@ -294,7 +294,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/ppppppppp/9/9/2P6/PP1PPPP1P/1B2G2R1/LNSGK1SNL w P 15"},
    {:index=>15,
     :human_index=>15,
@@ -314,7 +314,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/pp1pppppp/2p6/9/2P6/PP1PPPP1P/1B2G2R1/LNSGK1SNL b P 16"},
    {:index=>16,
     :human_index=>16,
@@ -334,7 +334,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/1sg2kgs1/pp1pppppp/2p6/9/2P6/PP1PPPP1P/1BS1G2R1/LN1GK1SNL w P 17"},
    {:index=>17,
     :human_index=>17,
@@ -354,7 +354,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/ppspppppp/2p6/9/2P6/PP1PPPP1P/1BS1G2R1/LN1GK1SNL b P 18"},
    {:index=>18,
     :human_index=>18,
@@ -374,7 +374,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/ppspppppp/2p6/9/2P6/PP1PPPP1P/1BS1G1SR1/LN1GK2NL w P 19"},
    {:index=>19,
     :human_index=>19,
@@ -394,7 +394,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/2ps5/9/2P6/PP1PPPP1P/1BS1G1SR1/LN1GK2NL b P 20"},
    {:index=>20,
     :human_index=>20,
@@ -414,7 +414,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/2ps5/9/2P6/PPSPPPP1P/1B2G1SR1/LN1GK2NL w P 21"},
    {:index=>21,
     :human_index=>21,
@@ -434,7 +434,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/2p6/2P6/PPSPPPP1P/1B2G1SR1/LN1GK2NL b P 22"},
    {:index=>22,
     :human_index=>22,
@@ -454,7 +454,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/2p6/2PP5/PPS1PPP1P/1B2G1SR1/LN1GK2NL w P 23"},
    {:index=>23,
     :human_index=>23,
@@ -478,7 +478,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/9/2pP5/PPS1PPP1P/1B2G1SR1/LN1GK2NL b Pp 24"},
    {:index=>24,
     :human_index=>24,
@@ -502,7 +502,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/9/2SP5/PP2PPP1P/1B2G1SR1/LN1GK2NL w 2Pp 25"},
    {:index=>25,
     :human_index=>25,
@@ -519,7 +519,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/2p6/2SP5/PP2PPP1P/1B2G1SR1/LN1GK2NL b 2P 26"},
    {:index=>26,
     :human_index=>26,
@@ -539,7 +539,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/2g2kgs1/pp1pppppp/3s5/2p6/3P5/PP1SPPP1P/1B2G1SR1/LN1GK2NL w 2P 27"},
    {:index=>27,
     :human_index=>27,
@@ -559,7 +559,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/ppgpppppp/3s5/2p6/3P5/PP1SPPP1P/1B2G1SR1/LN1GK2NL b 2P 28"},
    {:index=>28,
     :human_index=>28,
@@ -579,7 +579,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/ppgpppppp/3s5/2p6/3P5/PP1SPPPSP/1B2G2R1/LN1GK2NL w 2P 29"},
    {:index=>29,
     :human_index=>29,
@@ -599,7 +599,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p1gpppppp/1p1s5/2p6/3P5/PP1SPPPSP/1B2G2R1/LN1GK2NL b 2P 30"},
    {:index=>30,
     :human_index=>30,
@@ -619,7 +619,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p1gpppppp/1p1s5/2p6/3P5/PP1SPPPSP/1BG1G2R1/LN2K2NL w 2P 31"},
    {:index=>31,
     :human_index=>31,
@@ -639,7 +639,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p1gpppppp/3s5/1pp6/3P5/PP1SPPPSP/1BG1G2R1/LN2K2NL b 2P 32"},
    {:index=>32,
     :human_index=>32,
@@ -659,7 +659,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p1gpppppp/3s5/1pp6/3P2S2/PP1SPPP1P/1BG1G2R1/LN2K2NL w 2P 33"},
    {:index=>33,
     :human_index=>33,
@@ -679,7 +679,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2pppppp/2gs5/1pp6/3P2S2/PP1SPPP1P/1BG1G2R1/LN2K2NL b 2P 34"},
    {:index=>34,
     :human_index=>34,
@@ -699,7 +699,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2pppppp/2gs5/1pp4S1/3P5/PP1SPPP1P/1BG1G2R1/LN2K2NL w 2P 35"},
    {:index=>35,
     :human_index=>35,
@@ -719,7 +719,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p1pppp/2gsp4/1pp4S1/3P5/PP1SPPP1P/1BG1G2R1/LN2K2NL b 2P 36"},
    {:index=>36,
     :human_index=>36,
@@ -739,7 +739,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p1pppp/2gsp4/1pp4S1/3P2P2/PP1SPP2P/1BG1G2R1/LN2K2NL w 2P 37"},
    {:index=>37,
     :human_index=>37,
@@ -759,7 +759,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p2ppp/2gspp3/1pp4S1/3P2P2/PP1SPP2P/1BG1G2R1/LN2K2NL b 2P 38"},
    {:index=>38,
     :human_index=>38,
@@ -779,7 +779,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p2ppp/2gspp3/1pp4S1/3P2P2/PP1SPPN1P/1BG1G2R1/LN2K3L w 2P 39"},
    {:index=>39,
     :human_index=>39,
@@ -799,7 +799,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p2ppp/2gs1p3/1pp1p2S1/3P2P2/PP1SPPN1P/1BG1G2R1/LN2K3L b 2P 40"},
    {:index=>40,
     :human_index=>40,
@@ -819,7 +819,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2p2ppp/2gs1p3/1pp1p2S1/3P2P1P/PP1SPPN2/1BG1G2R1/LN2K3L w 2P 41"},
    {:index=>41,
     :human_index=>41,
@@ -839,7 +839,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2ps1ppp/2g2p3/1pp1p2S1/3P2P1P/PP1SPPN2/1BG1G2R1/LN2K3L b 2P 42"},
    {:index=>42,
     :human_index=>42,
@@ -859,7 +859,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/5kgs1/p2ps1ppp/2g2p3/1pp1p2SP/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L w 2P 43"},
    {:index=>43,
     :human_index=>43,
@@ -879,7 +879,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2pskppp/2g2p3/1pp1p2SP/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L b 2P 44"},
    {:index=>44,
     :human_index=>44,
@@ -899,7 +899,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2pskppp/2g2p2P/1pp1p2S1/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L w 2P 45"},
    {:index=>45,
     :human_index=>45,
@@ -923,7 +923,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2pskpp1/2g2p2p/1pp1p2S1/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L b 2Pp 46"},
    {:index=>46,
     :human_index=>46,
@@ -947,7 +947,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2pskpp1/2g2p2S/1pp1p4/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L w 3Pp 47"},
    {:index=>47,
     :human_index=>47,
@@ -967,7 +967,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p1/2g2pp1S/1pp1p4/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L b 3Pp 48"},
    {:index=>48,
     :human_index=>48,
@@ -987,7 +987,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p+S/2g2pp2/1pp1p4/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L w 3Pp 49"},
    {:index=>49,
     :human_index=>49,
@@ -1007,7 +1007,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p+S/2g2p3/1pp1p1p2/3P2P2/PP1SPPN2/1BG1G2R1/LN2K3L b 3Pp 50"},
    {:index=>50,
     :human_index=>50,
@@ -1031,7 +1031,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p+S/2g2p3/1pp1p1P2/3P5/PP1SPPN2/1BG1G2R1/LN2K3L w 4Pp 51"},
    {:index=>51,
     :human_index=>51,
@@ -1048,7 +1048,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p+S/2g2p3/1pp1p1P2/3P2p2/PP1SPPN2/1BG1G2R1/LN2K3L b 4P 52"},
    {:index=>52,
     :human_index=>52,
@@ -1068,7 +1068,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6gs1/p2psk1p+S/2g2p3/1pp1p1PN1/3P2p2/PP1SPP3/1BG1G2R1/LN2K3L w 4P 53"},
    {:index=>53,
     :human_index=>53,
@@ -1092,7 +1092,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2psk1ps/2g2p3/1pp1p1PN1/3P2p2/PP1SPP3/1BG1G2R1/LN2K3L b 4Ps 54"},
    {:index=>54,
     :human_index=>54,
@@ -1116,7 +1116,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2psk1p+L/2g2p3/1pp1p1PN1/3P2p2/PP1SPP3/1BG1G2R1/LN2K4 w S4Ps 55"},
    {:index=>55,
     :human_index=>55,
@@ -1136,7 +1136,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2psk1p+L/2g2p3/1pp1p1PN1/3P5/PP1SPP+p2/1BG1G2R1/LN2K4 b S4Ps 56"},
    {:index=>56,
     :human_index=>56,
@@ -1156,7 +1156,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2psk1p+L/2g2p3/1pp1p1PN1/3P5/PP1SPP+p2/1BG1G3R/LN2K4 w S4Ps 57"},
    {:index=>57,
     :human_index=>57,
@@ -1173,7 +1173,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2psk1p+L/2g2p3/1pp1p1PN1/3P2s2/PP1SPP+p2/1BG1G3R/LN2K4 b S4P 58"},
    {:index=>58,
     :human_index=>58,
@@ -1190,7 +1190,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6g2/p2pskSp+L/2g2p3/1pp1p1PN1/3P2s2/PP1SPP+p2/1BG1G3R/LN2K4 w 4P 59"},
    {:index=>59,
     :human_index=>59,
@@ -1210,7 +1210,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/9/p2pskSp+L/2g2p3/1pp1p1PN1/3P2s2/PP1SPP+p2/1BG1G3R/LN2K4 b 4P 60"},
    {:index=>60,
     :human_index=>60,
@@ -1234,7 +1234,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/9/p2pskS+L1/2g2p3/1pp1p1PN1/3P2s2/PP1SPP+p2/1BG1G3R/LN2K4 w 5P 61"},
    {:index=>61,
     :human_index=>61,
@@ -1258,7 +1258,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/9/p2pskS+L1/2g2p3/1pp1p1PN1/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 b 5Pp 62"},
    {:index=>62,
     :human_index=>62,
@@ -1278,7 +1278,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/9/p2pskS+L+N/2g2p3/1pp1p1P2/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 w 5Pp 63"},
    {:index=>63,
     :human_index=>63,
@@ -1298,7 +1298,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/9/p2ps1S+L+N/2g1kp3/1pp1p1P2/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 b 5Pp 64"},
    {:index=>64,
     :human_index=>64,
@@ -1318,7 +1318,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 6g2/7+N1/p2ps1S+L1/2g1kp3/1pp1p1P2/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 w 5Pp 65"},
    {:index=>65,
     :human_index=>65,
@@ -1342,7 +1342,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/7g1/p2ps1S+L1/2g1kp3/1pp1p1P2/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 b 5Pnp 66"},
    {:index=>66,
     :human_index=>66,
@@ -1366,7 +1366,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/7S1/p2ps2+L1/2g1kp3/1pp1p1P2/3P2s2/PP1SP+p3/1BG1G3R/LN2K4 w G5Pnp 67"},
    {:index=>67,
     :human_index=>67,
@@ -1390,7 +1390,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/7S1/p2ps2+L1/2g1kp3/1pp1p1P2/3P2s2/PP1SP4/1BG1+p3R/LN2K4 b G5Pgnp 68"},
    {:index=>68,
     :human_index=>68,
@@ -1414,7 +1414,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/7S1/p2ps2+L1/2g1kp3/1pp1p1P2/3P2s2/PP2P4/1BG1S3R/LN2K4 w G6Pgnp 69"},
    {:index=>69,
     :human_index=>69,
@@ -1431,7 +1431,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/7S1/p2ps2+L1/2g1kp3/1pp1p1P2/3P1ns2/PP2P4/1BG1S3R/LN2K4 b G6Pgp 70"},
    {:index=>70,
     :human_index=>70,
@@ -1451,7 +1451,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P1ns2/PP2P4/1BG1S3R/LN2K4 w G6Pgp 71"},
    {:index=>71,
     :human_index=>71,
@@ -1468,7 +1468,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P1nsp1/PP2P4/1BG1S3R/LN2K4 b G6Pg 72"},
    {:index=>72,
     :human_index=>72,
@@ -1488,7 +1488,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P1nsp1/PP2P4/1BGKS3R/LN7 w G6Pg 73"},
    {:index=>73,
     :human_index=>73,
@@ -1508,7 +1508,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P1ns2/PP2P2+p1/1BGKS3R/LN7 b G6Pg 74"},
    {:index=>74,
     :human_index=>74,
@@ -1528,7 +1528,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P1ns2/PP2P2+p1/1BGKS4/LN7 w G6Pg 75"},
    {:index=>75,
     :human_index=>75,
@@ -1552,7 +1552,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP2P2+p1/1BGK+n4/LN7 b G6Pgs 76"},
    {:index=>76,
     :human_index=>76,
@@ -1576,7 +1576,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP2P2+p1/1BG1K4/LN7 w GN6Pgs 77"},
    {:index=>77,
     :human_index=>77,
@@ -1596,7 +1596,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP2P1+p2/1BG1K4/LN7 b GN6Pgs 78"},
    {:index=>78,
     :human_index=>78,
@@ -1616,7 +1616,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP1KP1+p2/1BG6/LN7 w GN6Pgs 79"},
    {:index=>79,
     :human_index=>79,
@@ -1636,7 +1636,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/8+R/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP1KP+p3/1BG6/LN7 b GN6Pgs 80"},
    {:index=>80,
     :human_index=>80,
@@ -1656,7 +1656,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps1+S+L1/2g1kp3/1pp1p1P2/3P2s2/PP1KP+p3/1BG6/LN7 w GN6Pgs 81"},
    {:index=>81,
     :human_index=>81,
@@ -1676,7 +1676,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps1+S+L1/2g2p3/1pp1pkP2/3P2s2/PP1KP+p3/1BG6/LN7 b GN6Pgs 82"},
    {:index=>82,
     :human_index=>82,
@@ -1696,7 +1696,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps+S1+L1/2g2p3/1pp1pkP2/3P2s2/PP1KP+p3/1BG6/LN7 w GN6Pgs 83"},
    {:index=>83,
     :human_index=>83,
@@ -1713,7 +1713,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps+S1+L1/2g2p3/1pp1pkP2/3P2s2/PP1KP+p3/1BG1s4/LN7 b GN6Pg 84"},
    {:index=>84,
     :human_index=>84,
@@ -1733,7 +1733,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps+S1+L1/2g2p3/1pp1pkP2/3P2s2/PP2P+p3/1BGKs4/LN7 w GN6Pg 85"},
    {:index=>85,
     :human_index=>85,
@@ -1753,7 +1753,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h 7e7f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/6+R2/p2ps+S1+L1/2g2p3/1p2pkP2/2pP2s2/PP2P+p3/1BGKs4/LN7 b GN6Pg 86"},
    {:index=>86,
     :human_index=>86,
@@ -1773,7 +1773,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h 7e7f 3b3d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps+S1+L1/2g2p+R2/1p2pkP2/2pP2s2/PP2P+p3/1BGKs4/LN7 w GN6Pg 87"},
    {:index=>87,
     :human_index=>87,
@@ -1793,7 +1793,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h 7e7f 3b3d 4e4f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2ps+S1+L1/2g2p+R2/1p2p1P2/2pP1ks2/PP2P+p3/1BGKs4/LN7 b GN6Pg 88"},
    {:index=>88,
     :human_index=>88,
@@ -1817,7 +1817,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h 7e7f 3b3d 4e4f 4c5c",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2p+S2+L1/2g2p+R2/1p2p1P2/2pP1ks2/PP2P+p3/1BGKs4/LN7 w GSN6Pg 89"},
    {:index=>89,
     :human_index=>89,
@@ -1834,7 +1834,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 5a4b 7g7f 7a8b 2g2f 3a2b 2f2e 4a3b 2e2d 2c2d 2h2d 6a7b 2d2h P*2c 4i5h 7c7d 7i7h 8b7c 3i3h 7c6d 7h7g 7d7e 6g6f 7e7f 7g7f P*7e 7f6g 7b7c 3h2g 8c8d 6i7h 8d8e 2g3f 7c7d 3f2e 5c5d 3g3f 4c4d 2i3g 5d5e 1g1f 6d5c 1f1e 4b4c 1e1d 1c1d 2e1d 3c3d 1d1c+ 3d3e 3f3e P*3f 3g2e 2b1c 1i1c+ 3f3g+ 2h1h S*3f S*3c 3b3a 1c2c 3g4g 2e1c+ 4c5d 1c2b 3a2b 3c2b 4g5h 6g5h N*4f 2b3c+ P*2f 5i6h 2f2g+ 1h1b+ 4f5h+ 6h5h 2g3g 5h6g 3g4g 1b3b 5d4e 3c4c S*5h 6g6h 7e7f 3b3d 4e4f 4c5c G*6i",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen 9/9/p2p+S2+L1/2g2p+R2/1p2p1P2/2pP1ks2/PP2P+p3/1BGKs4/LN1g5 b GSN6P 90"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで89手で上手の勝ち",

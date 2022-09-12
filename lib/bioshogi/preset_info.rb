@@ -94,7 +94,7 @@ module Bioshogi
       mediator = Mediator.new
       mediator.placement_from_preset(key)
       mediator.turn_info.handicap = handicap
-      mediator.to_snapshot_sfen
+      mediator.to_short_sfen
     end
 
     def to_short_sfen

@@ -8,7 +8,7 @@ module Bioshogi
       mediator.before_run_process
       assert { mediator.to_history_sfen(startpos_embed: true) == "position startpos" }
       assert { mediator.to_history_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
-      assert { mediator.to_snapshot_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { mediator.to_short_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
       mediator.pieces_set("▲銀△銀銀")
       # puts mediator
       assert { mediator.board.to_sfen == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL" }

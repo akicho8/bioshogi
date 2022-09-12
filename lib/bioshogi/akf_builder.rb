@@ -36,7 +36,7 @@ module Bioshogi
         :used_seconds  => nil,
         :skill         => nil,
         :history_sfen  => @mediator2.to_history_sfen,
-        :snapshot_sfen => @mediator2.to_snapshot_sfen,
+        :short_sfen => @mediator2.to_short_sfen,
       }
       @hv[:moves] += @parser.move_infos.collect.with_index do |info, i|
         @mediator2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
@@ -50,7 +50,7 @@ module Bioshogi
           **@chess_clock.last_clock.to_h,
           :skill         => hand_log.skill_set.to_h,
           :history_sfen  => @mediator2.to_history_sfen,
-          :snapshot_sfen => @mediator2.to_snapshot_sfen,
+          :short_sfen => @mediator2.to_short_sfen,
         }
       end
 

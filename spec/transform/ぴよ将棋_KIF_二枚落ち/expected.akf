@@ -14,7 +14,7 @@
     :skill=>nil,
     :history_sfen=>
      "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"},
    {:index=>1,
     :human_index=>1,
@@ -34,7 +34,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen ln1gkgsnl/3s5/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 2"},
    {:index=>2,
     :human_index=>2,
@@ -54,7 +54,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen ln1gkgsnl/3s5/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 3"},
    {:index=>3,
     :human_index=>3,
@@ -74,7 +74,7 @@
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>
      "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f 5c5d",
-    :snapshot_sfen=>
+    :short_sfen=>
      "position sfen ln1gkgsnl/3s5/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 4"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで3手で上手の勝ち",

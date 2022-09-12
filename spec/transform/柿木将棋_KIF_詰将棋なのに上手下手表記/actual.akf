@@ -7,7 +7,7 @@
     :used_seconds=>nil,
     :skill=>nil,
     :history_sfen=>"position sfen 8k/9/8G/9/9/9/9/9/9 b G 1",
-    :snapshot_sfen=>"position sfen 8k/9/8G/9/9/9/9/9/9 b G 1"},
+    :short_sfen=>"position sfen 8k/9/8G/9/9/9/9/9/9 b G 1"},
    {:index=>1,
     :human_index=>1,
     :place_same=>nil,
@@ -25,7 +25,7 @@
     :used_seconds=>0,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
     :history_sfen=>"position sfen 8k/9/8G/9/9/9/9/9/9 b G 1 moves 1c1b",
-    :snapshot_sfen=>"position sfen 8k/8G/9/9/9/9/9/9/9 w G 2"}],
+    :short_sfen=>"position sfen 8k/8G/9/9/9/9/9/9/9 w G 2"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで1手で先手の勝ち",
  :error_text=>nil}
