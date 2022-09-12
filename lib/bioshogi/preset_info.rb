@@ -97,7 +97,7 @@ module Bioshogi
       mediator.to_snapshot_sfen
     end
 
-    def to_position_sfen
+    def to_short_sfen
       to_sfen
     end
 

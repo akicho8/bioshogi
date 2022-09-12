@@ -22,9 +22,9 @@ module Bioshogi
       assert { PresetInfo["詰将棋"] == PresetInfo["平手"] }
     end
 
-    it "to_position_sfen" do
-      assert { PresetInfo["平手"].to_position_sfen   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
-      assert { PresetInfo["香落ち"].to_position_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
+    it "to_short_sfen" do
+      assert { PresetInfo["平手"].to_short_sfen   == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { PresetInfo["香落ち"].to_short_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
     end
 
     it "black_only_soldiers" do

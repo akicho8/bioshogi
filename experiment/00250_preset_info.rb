@@ -9,7 +9,7 @@ tp PresetInfo.collect { |e|
   [e.key, mediator.to_snapshot_sfen]
 }.to_h
 
-tp PresetInfo.collect(&:to_position_sfen)
+tp PresetInfo.collect(&:to_short_sfen)
 
 # >> |------------+-------------------------------------------------------------------------------|
 # >> |       平手 | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 |
