@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 +---------+
 | ・ ・v玉|
 | ・ ・ ・|
@@ -10,8 +10,8 @@ mediator.placement_from_bod(<<~EOT)
 先手の持駒：飛香
 EOT
 
-mediator.players.each { |e| tp e.pressure_report }
-player = mediator.player_at(:black)
+xcontainer.players.each { |e| tp e.pressure_report }
+player = xcontainer.player_at(:black)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level1)
 evaluator.score               # => 3930
 # >> |----------+---------------+------|

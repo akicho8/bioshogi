@@ -1,7 +1,7 @@
 require "../setup"
 
-Parser.parse("P+00HI").mediator.player_at(:black).piece_box.to_s # => "飛"
-Parser.parse("P+00HI00HI").mediator.player_at(:black).piece_box.to_s # => "飛二"
+Parser.parse("P+00HI").xcontainer.player_at(:black).piece_box.to_s # => "飛"
+Parser.parse("P+00HI00HI").xcontainer.player_at(:black).piece_box.to_s # => "飛二"
 
 info = Parser.parse("PI\nP1") rescue $!     # => * @board_source
 info = Parser.parse("PI\nP+59OU") rescue $! # => * @board_source

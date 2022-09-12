@@ -1,6 +1,6 @@
 module Bioshogi
-  class MediatorSerializerCheckmateYomiage
-    attr_accessor :mediator
+  class XcontainerSerializerCheckmateYomiage
+    attr_accessor :xcontainer
     attr_accessor :options
 
     SYMBOL_TO_SLEEP_ARGUMENT = {
@@ -8,8 +8,8 @@ module Bioshogi
       :sep2 => 1.0,
     }
 
-    def initialize(mediator, options = {})
-      @mediator = mediator
+    def initialize(xcontainer, options = {})
+      @xcontainer = xcontainer
       @options = options
     end
 
@@ -46,7 +46,7 @@ module Bioshogi
     private
 
     def soldiers
-      soldiers = mediator.board.soldiers
+      soldiers = xcontainer.board.soldiers
       group = soldiers.group_by(&:location)
       group = group.transform_values do |soldiers|
         soldiers = soldiers.sort_by { |e|
@@ -65,7 +65,7 @@ module Bioshogi
     end
 
     def piece_box
-      piece_box = mediator.player_at(:black).piece_box # 白側の持駒は無視
+      piece_box = xcontainer.player_at(:black).piece_box # 白側の持駒は無視
       piece_counts = piece_box.sort_by { |e, count| -Piece.fetch(e).basic_weight }
       av = piece_counts.collect { |e, count|
         [Piece.fetch(e).yomiage(false), :sep1] * count

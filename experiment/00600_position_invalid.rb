@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod <<~EOT
 後手の持駒：
 +---+
 |v玉|
@@ -10,13 +10,13 @@ mediator.placement_from_bod <<~EOT
 先手の持駒：
 手数＝0
 EOT
-mediator.current_player.move_hands(promoted_only: true, king_captured_only: true).any? # => true
-mediator.current_player.mate_advantage?  # => true
-mediator.opponent_player.mate_advantage? # => true
-mediator.position_invalid?               # => true
+xcontainer.current_player.move_hands(promoted_only: true, king_captured_only: true).any? # => true
+xcontainer.current_player.mate_advantage?  # => true
+xcontainer.opponent_player.mate_advantage? # => true
+xcontainer.position_invalid?               # => true
 
-mediator = Mediator.new
-mediator.placement_from_bod <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod <<~EOT
 後手の持駒：
 +---+
 |v玉|
@@ -26,6 +26,6 @@ mediator.placement_from_bod <<~EOT
 先手の持駒：
 手数＝0
 EOT
-mediator.current_player.mate_danger?    # => true
-mediator.current_player.mate_advantage? # => false
-mediator.position_invalid?              # => false
+xcontainer.current_player.mate_danger?    # => true
+xcontainer.current_player.mate_advantage? # => false
+xcontainer.position_invalid?              # => false

@@ -1,13 +1,13 @@
 require "./setup"
 
-mediator_options = {
+xcontainer_options = {
   skill_monitor_enable: false,
   skill_monitor_technique_enable: false,
   candidate_enable: false,
   validate_enable: false,
 }
 
-info = Parser.parse("55玉(59)", mediator_options)
+info = Parser.parse("55玉(59)", xcontainer_options)
 puts info.to_kif
 # >> 手合割：平手
 # >> 手数----指手---------消費時間--

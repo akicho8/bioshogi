@@ -18,6 +18,6 @@ info = Parser.parse(<<~EOT)
 22角成 同銀 55角打
 EOT
 
-mediator = info.mediator
-mediator.player_at(:black).used_piece_counts # => {"B0"=>2}
-mediator.player_at(:white).used_piece_counts # => {"S0"=>1}
+xcontainer = info.xcontainer
+xcontainer.player_at(:black).used_piece_counts # => {"B0"=>2}
+xcontainer.player_at(:white).used_piece_counts # => {"S0"=>1}

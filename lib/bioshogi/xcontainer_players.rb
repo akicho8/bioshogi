@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :MediatorPlayers do
+  concern :XcontainerPlayers do
     class_methods do
       def start
         new.tap do |e|
@@ -14,7 +14,7 @@ module Bioshogi
 
     def players
       @players ||= Location.collect do |e|
-        Player.new(mediator: self, location: e)
+        Player.new(xcontainer: self, location: e)
       end
     end
 

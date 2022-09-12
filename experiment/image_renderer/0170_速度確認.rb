@@ -15,7 +15,7 @@ def test2
       # :skill_monitor_technique_enable => false,
       :candidate_enable                 => false,
       :validate_enable                  => false,
-      :mediator_class                 => MediatorFast,
+      :xcontainer_class                 => XcontainerFast,
     })
   object = info.image_renderer({width: 100, height: 100})
   object.to_blob[0..3]           # => "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG"

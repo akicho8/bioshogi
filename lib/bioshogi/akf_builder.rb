@@ -15,10 +15,10 @@ module Bioshogi
     end
 
     def to_h
-      @parser.mediator_run_once
+      @parser.xcontainer_run_once
 
-      @mediator2 = Mediator.new
-      @parser.mediator_board_setup(@mediator2)
+      @xcontainer2 = Xcontainer.new
+      @parser.xcontainer_board_setup(@xcontainer2)
 
       @hv = {}
       @hv[:header] = @parser.header.to_h.clone
@@ -29,28 +29,28 @@ module Bioshogi
       @hv[:moves] = []
       @hv[:moves] << {
         :index         => 0,
-        :human_index   => @mediator2.initial_state_turn_info.display_turn,
+        :human_index   => @xcontainer2.initial_state_turn_info.display_turn,
         :place_same    => nil,
         **@chess_clock.last_clock.to_h,
         :total_seconds => 0,
         :used_seconds  => nil,
         :skill         => nil,
-        :history_sfen  => @mediator2.to_history_sfen,
-        :short_sfen => @mediator2.to_short_sfen,
+        :history_sfen  => @xcontainer2.to_history_sfen,
+        :short_sfen => @xcontainer2.to_short_sfen,
       }
       @hv[:moves] += @parser.move_infos.collect.with_index do |info, i|
-        @mediator2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
+        @xcontainer2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
         @chess_clock.add(@parser.used_seconds_at(i))
-        hand_log = @mediator2.hand_logs.last
+        hand_log = @xcontainer2.hand_logs.last
         {
           :index         => i.next,
-          :human_index   => @mediator2.initial_state_turn_info.display_turn + i.next,
+          :human_index   => @xcontainer2.initial_state_turn_info.display_turn + i.next,
           :place_same    => hand_log.place_same,
           **hand_log.to_akf,
           **@chess_clock.last_clock.to_h,
           :skill         => hand_log.skill_set.to_h,
-          :history_sfen  => @mediator2.to_history_sfen,
-          :short_sfen => @mediator2.to_short_sfen,
+          :history_sfen  => @xcontainer2.to_history_sfen,
+          :short_sfen => @xcontainer2.to_short_sfen,
         }
       end
 

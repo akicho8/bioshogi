@@ -5,7 +5,7 @@ module Bioshogi
       def dive(player: params[:current_player], depth: 0, alpha: -SCORE_MAX, beta: SCORE_MAX, hand_route: [])
         tle_verify
 
-        mediator = player.mediator
+        xcontainer = player.xcontainer
 
         if depth == 0
           @eval_counter = 0
@@ -38,7 +38,7 @@ module Bioshogi
             return [v, [hand]]
           else
             log["#{hand}"] if log
-            hand.sandbox_execute(mediator) do
+            hand.sandbox_execute(xcontainer) do
               v, pv = dive(player: player.opponent_player, depth: depth + 1, alpha: alpha2, beta: beta2, hand_route: hand_route + [hand])
               v = -v
               [v, pv]
@@ -54,7 +54,7 @@ module Bioshogi
         # ここはなくてもいいけどベストな手から始めることで枝が減る
         if true
           # 効果的なもの順に並び換える→どうやって？？？
-          # children = mediator.move_ordering(player, children)
+          # children = xcontainer.move_ordering(player, children)
           children = children.entries # FIXME: 並び返るために全取得すると遅延評価にした意味がない
 
           # 最善候補を通常の窓で探索
@@ -66,7 +66,7 @@ module Bioshogi
             if hand.nil?
               break
             end
-            if hand.legal_hand?(mediator)
+            if hand.legal_hand?(xcontainer)
               break
             end
           end
@@ -85,7 +85,7 @@ module Bioshogi
         end
 
         children.each do |hand|
-          unless hand.legal_hand?(mediator)
+          unless hand.legal_hand?(xcontainer)
             next
           end
 

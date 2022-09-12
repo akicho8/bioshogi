@@ -1,11 +1,11 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_preset("裸玉")
-mediator.board.preset_info&.key    # => :十九枚落ち
-puts mediator.board.to_ki2
-puts mediator.board.to_kif
-puts mediator.board.to_csa
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("裸玉")
+xcontainer.board.preset_info&.key    # => :十九枚落ち
+puts xcontainer.board.to_ki2
+puts xcontainer.board.to_kif
+puts xcontainer.board.to_csa
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v玉 ・ ・ ・ ・|一

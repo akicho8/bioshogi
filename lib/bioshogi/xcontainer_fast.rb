@@ -1,10 +1,10 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class MediatorFast
-    include MediatorBase
-    include MediatorPlayers
-    include MediatorExecutor
+  class XcontainerFast
+    include XcontainerBase
+    include XcontainerPlayers
+    include XcontainerExecutor
 
     def executor_class
       PlayerExecutorWithoutMonitor

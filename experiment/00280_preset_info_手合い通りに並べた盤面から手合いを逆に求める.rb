@@ -1,13 +1,13 @@
 require "./setup"
 
 PresetInfo.each do |preset_info|
-  mediator = Mediator.new
-  mediator.placement_from_preset(preset_info.key)
-  puts mediator.board
+  xcontainer = Xcontainer.new
+  xcontainer.placement_from_preset(preset_info.key)
+  puts xcontainer.board
 
   # ここを簡潔にしたメソッドがある
   Location.each do |location|
-    soldiers = mediator.board.surface.values.find_all {|e| e.location == location }
+    soldiers = xcontainer.board.surface.values.find_all {|e| e.location == location }
     soldiers = soldiers.collect(&:flip_if_white).sort
     e = PresetInfo.find do |e|
       e.location_split[:black] == soldiers

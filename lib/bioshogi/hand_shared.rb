@@ -14,13 +14,13 @@ module Bioshogi
       end
     end
 
-    def sandbox_execute(mediator, &block)
+    def sandbox_execute(xcontainer, &block)
       begin
-        execute(mediator)
+        execute(xcontainer)
         Bioshogi.run_counts["sandbox_execute.execute"] += 1
         yield
       ensure
-        revert(mediator)
+        revert(xcontainer)
         Bioshogi.run_counts["sandbox_execute.revert"] += 1
       end
     end
@@ -72,16 +72,16 @@ module Bioshogi
     # 2. 王手の状態を回避したこと
     # の両方チェックするので↓この一つでよい。
     #
-    def legal_hand?(mediator)
-      sandbox_execute(mediator) do
-        !mediator.player_at(soldier.location).mate_danger? # 「自玉に詰みがある」の反対
+    def legal_hand?(xcontainer)
+      sandbox_execute(xcontainer) do
+        !xcontainer.player_at(soldier.location).mate_danger? # 「自玉に詰みがある」の反対
       end
     end
 
     # 王手か？
-    def mate_hand?(mediator)
-      sandbox_execute(mediator) do
-        mediator.player_at(soldier.location.flip).mate_danger?
+    def mate_hand?(xcontainer)
+      sandbox_execute(xcontainer) do
+        xcontainer.player_at(soldier.location.flip).mate_danger?
       end
     end
 

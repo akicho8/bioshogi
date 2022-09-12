@@ -60,12 +60,12 @@ module Bioshogi
       end
     end
 
-    def judgment_message(mediator)
+    def judgment_message(xcontainer)
       s = []
-      s << "まで#{mediator.turn_info.turn_offset}手で"
+      s << "まで#{xcontainer.turn_info.turn_offset}手で"
       s << reason
       unless draw
-        s << mediator.opponent_player.call_name
+        s << xcontainer.opponent_player.call_name
         s << "の"
         s << "勝ち"
       end

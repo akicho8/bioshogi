@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 上手の持駒：
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
@@ -19,5 +19,5 @@ mediator.placement_from_bod(<<~EOT)
 
 先手番
 EOT
-mediator.execute("43龍(45)")
-mediator.hand_logs.last.to_ki2  # => "４三龍右"
+xcontainer.execute("43龍(45)")
+xcontainer.hand_logs.last.to_ki2  # => "４三龍右"

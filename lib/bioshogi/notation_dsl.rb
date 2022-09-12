@@ -14,13 +14,13 @@ module Bioshogi
 
     class Push < Expression
       def evaluate(context)
-        context.mediator_stack.stack_push
+        context.xcontainer_stack.stack_push
       end
     end
 
     class Pop < Expression
       def evaluate(context)
-        context.mediator_stack.stack_pop
+        context.xcontainer_stack.stack_pop
       end
     end
 
@@ -30,7 +30,7 @@ module Bioshogi
       end
 
       def evaluate(context)
-        context.mediator_stack.mediator.var_push(@key)
+        context.xcontainer_stack.xcontainer.var_push(@key)
       end
     end
 
@@ -40,7 +40,7 @@ module Bioshogi
       end
 
       def evaluate(context)
-        context.mediator_stack.mediator.var_pop(@key)
+        context.xcontainer_stack.xcontainer.var_pop(@key)
       end
     end
 
@@ -51,7 +51,7 @@ module Bioshogi
       end
 
       def evaluate(context)
-        context.mediator_stack.mediator.variables[@key] = @value
+        context.xcontainer_stack.xcontainer.variables[@key] = @value
       end
     end
 
@@ -62,7 +62,7 @@ module Bioshogi
 
       def evaluate(context)
         @value.each do |k, v|
-          context.mediator_stack.mediator.player_at(k).pieces_add(v)
+          context.xcontainer_stack.xcontainer.player_at(k).pieces_add(v)
         end
       end
     end
@@ -73,7 +73,7 @@ module Bioshogi
       end
 
       def evaluate(context)
-        context.mediator_stack.mediator.board.placement_from_any(@value)
+        context.xcontainer_stack.xcontainer.board.placement_from_any(@value)
       end
     end
 
@@ -84,10 +84,10 @@ module Bioshogi
 
       def evaluate(context)
         InputParser.scan(@value).each do |str|
-          context.mediator_stack.mediator.execute(str)
-          if context.mediator_stack.mediator.variables[:auto_flushing]
-            context.snapshots << context.mediator_stack.mediator.deep_dup
-            context.mediator_stack.mediator.set(:comment, nil)
+          context.xcontainer_stack.xcontainer.execute(str)
+          if context.xcontainer_stack.xcontainer.variables[:auto_flushing]
+            context.snapshots << context.xcontainer_stack.xcontainer.deep_dup
+            context.xcontainer_stack.xcontainer.set(:comment, nil)
           end
         end
       end
@@ -100,10 +100,10 @@ module Bioshogi
 
       def evaluate(context)
         if @value
-          context.mediator_stack.mediator.set(:comment, @value)
+          context.xcontainer_stack.xcontainer.set(:comment, @value)
         end
-        context.snapshots << context.mediator_stack.mediator.deep_dup
-        context.mediator_stack.mediator.set(:comment, nil)
+        context.snapshots << context.xcontainer_stack.xcontainer.deep_dup
+        context.xcontainer_stack.xcontainer.set(:comment, nil)
       end
     end
 

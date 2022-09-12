@@ -23,7 +23,7 @@ info = Parser.parse(<<~EOT)
   72 投了
 まで71手で先手の勝ち
 EOT
-# puts info.mediator.to_bod
+# puts info.xcontainer.to_bod
 
 puts info.to_kif
 # tp info.header.to_h

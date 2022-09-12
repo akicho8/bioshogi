@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :MediatorVariables do
+  concern :XcontainerVariables do
     attr_reader :variables
     attr_reader :var_stack
 

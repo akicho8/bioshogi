@@ -18,7 +18,7 @@ module Bioshogi
         end
       end
 
-      if executor.mediator.params[:skill_monitor_technique_enable]
+      if executor.xcontainer.params[:skill_monitor_technique_enable]
         # 主に手筋用で戦型チェックにも使える
         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
         if e = TacticInfo.piece_hash_table[key]
@@ -97,21 +97,21 @@ module Bioshogi
 
         # 手数制限。制限を超えていたらskip
         if e.turn_limit
-          if e.turn_limit < player.mediator.turn_info.display_turn.next
+          if e.turn_limit < player.xcontainer.turn_info.display_turn.next
             throw :skip
           end
         end
 
         # 手数限定。手数が異なっていたらskip
         if e.turn_eq
-          if e.turn_eq != player.mediator.turn_info.display_turn.next
+          if e.turn_eq != player.xcontainer.turn_info.display_turn.next
             throw :skip
           end
         end
 
         # 手番限定。手番が異なればskip
         if e.order_key
-          if e.order_key != player.mediator.turn_info.order_key
+          if e.order_key != player.xcontainer.turn_info.order_key
             throw :skip
           end
         end
@@ -266,7 +266,7 @@ module Bioshogi
     def cold_war_verification(e)
       # 開戦済みならskip
       if e.cold_war
-        if player.mediator.kill_counter.positive?
+        if player.xcontainer.kill_counter.positive?
           throw :skip
         end
       end

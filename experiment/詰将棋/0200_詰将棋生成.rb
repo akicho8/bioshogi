@@ -21,7 +21,7 @@ class App
 
   class Builder
     attr_accessor :params
-    attr_accessor :mediator
+    attr_accessor :xcontainer
 
     def initialize(params = {})
       @params = params
@@ -36,43 +36,43 @@ class App
 
     def board_setup
       try_count.times do
-        @mediator = Mediator.new
+        @xcontainer = Xcontainer.new
 
         @piece_box = PieceBox.real_box
         @piece_box.add(king: -1)
-        mediator.player_at(:white).piece_box.add(@piece_box)
+        xcontainer.player_at(:white).piece_box.add(@piece_box)
 
         @params[:soldiers_board_on].each do |e|
           soldiers_board_on(e)
         end
 
-        unless mediator.player_at(:white).mate_danger?
+        unless xcontainer.player_at(:white).mate_danger?
           break
         end
 
-        mediator = nil
+        xcontainer = nil
       end
     end
 
     def black_piece_box_setup
-      if mediator
+      if xcontainer
         # 攻め手の駒台へ
         Piece.s_to_a(params[:motigoma]).each do |piece|
-          mediator.player_at(:white).piece_box.add(piece => -1)
-          mediator.player_at(:black).piece_box.add(piece => 1)
+          xcontainer.player_at(:white).piece_box.add(piece => -1)
+          xcontainer.player_at(:black).piece_box.add(piece => 1)
         end
       end
     end
 
     def mate_validation
-      puts mediator.to_bod
+      puts xcontainer.to_bod
 
       @mate_records = []
       mate_proc = -> player, score, hand_route {
         @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
       }
 
-      brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
+      brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
       @records = brain.iterative_deepening(depth_max_range: params[:nantedume]..params[:nantedume], mate_mode: true, no_break: true, motigoma_zero_denaito_dame: true, mate_proc: mate_proc)
 
       @records = @records.find_all { |e| e[:black_side_score] >= 1 }
@@ -80,27 +80,27 @@ class App
       tp Brain.human_format(@records)
       tp @mate_records
 
-      mediator.before_run_process
+      xcontainer.before_run_process
       if record = @records.first
         ([record[:hand]] + record[:best_pv]).each do |e|
           pp e
-          mediator.execute(e)
-          puts mediator.to_bod
+          xcontainer.execute(e)
+          puts xcontainer.to_bod
         end
       end
 
       puts "------------------------------"
-      puts mediator.to_csa
-      puts mediator.to_short_sfen
-      puts mediator.to_history_sfen
+      puts xcontainer.to_csa
+      puts xcontainer.to_short_sfen
+      puts xcontainer.to_history_sfen
       puts "------------------------------"
     end
 
     def soldiers_board_on(location:, pieces: [], xy_ranges: [])
       Piece.s_to_a(pieces).each do |piece|
-        mediator.player_at(:white).piece_box.add(piece => -1)
+        xcontainer.player_at(:white).piece_box.add(piece => -1)
 
-        blank_places = mediator.board.blank_places.entries
+        blank_places = xcontainer.board.blank_places.entries
         soldier = nil
         256.times do
           # 空いている位置を探す
@@ -108,7 +108,7 @@ class App
           loop do
             xy = 2.times.collect { |i| rand(xy_ranges[i] || (1..4)) }.join
             place = Place.fetch(xy)
-            unless mediator.board[place]
+            unless xcontainer.board[place]
               break
             end
           end
@@ -126,7 +126,7 @@ class App
             next
           end
 
-          mediator.board.place_on(soldier)
+          xcontainer.board.place_on(soldier)
           break
         end
       end

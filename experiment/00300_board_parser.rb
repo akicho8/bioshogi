@@ -28,9 +28,9 @@ soldiers = BoardParser.parse(<<~EOT).soldiers
 EOT
 tp soldiers
 
-mediator = Mediator.new
-mediator.board.placement_from_soldiers(soldiers)
-puts mediator.board.to_s
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_soldiers(soldiers)
+puts xcontainer.board.to_s
 
 tp PresetInfo["平手"].location_split[Location[:black]]
 # >> |----------|

@@ -3,8 +3,8 @@ require "./setup"
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 # Board.promotable_disable
 # Board.dimensiton_change([3, 3])
-mediator = Mediator.new
-mediator.placement_from_bod <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -22,7 +22,7 @@ mediator.placement_from_bod <<~EOT
 手数＝0
 EOT
 
-hand = mediator.current_player.create_all_hands(promoted_only: true).first          # => <▲９六歩(97)>
-Benchmark.ms { hand.legal_hand?(mediator)  }                   # => 0.6949999369680882
-Benchmark.ms { mediator.current_player.create_all_hands(promoted_only: true).to_a } # => 1.180000021122396
-Benchmark.ms { mediator.current_player.legal_all_hands.to_a  } # => 17.087999964132905
+hand = xcontainer.current_player.create_all_hands(promoted_only: true).first          # => <▲９六歩(97)>
+Benchmark.ms { hand.legal_hand?(xcontainer)  }                   # => 0.6949999369680882
+Benchmark.ms { xcontainer.current_player.create_all_hands(promoted_only: true).to_a } # => 1.180000021122396
+Benchmark.ms { xcontainer.current_player.legal_all_hands.to_a  } # => 17.087999964132905

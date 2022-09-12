@@ -3,8 +3,8 @@ require "spec_helper"
 module Bioshogi
   describe Parser::CsaParser do
     it "持駒表記の読み取り" do
-      assert { Parser.parse("P+00HI").mediator.player_at(:black).piece_box.to_s == "飛" }
-      assert { Parser.parse("P+00HI00HI").mediator.player_at(:black).piece_box.to_s == "飛二" }
+      assert { Parser.parse("P+00HI").xcontainer.player_at(:black).piece_box.to_s == "飛" }
+      assert { Parser.parse("P+00HI00HI").xcontainer.player_at(:black).piece_box.to_s == "飛二" }
     end
 
     describe "表記干渉" do
@@ -56,7 +56,7 @@ module Bioshogi
     end
 
     it "打のとき持駒がなければ盤面の情報を含むエラーを出す" do
-      error = Parser::CsaParser.parse("P1 *,+0093KA").mediator rescue $!
+      error = Parser::CsaParser.parse("P1 *,+0093KA").xcontainer rescue $!
       assert { error.message.include?("先手は角を９三に打とうとしましたが角を持っていません") }
       assert { error.message.include?("先手の持駒：なし")                         } # 盤面があるということ
     end

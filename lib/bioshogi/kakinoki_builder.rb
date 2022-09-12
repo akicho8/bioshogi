@@ -22,7 +22,7 @@ module Bioshogi
 
     def to_s
       build_before
-      @parser.mediator_run_once
+      @parser.xcontainer_run_once
       @header = @parser.header.clone
 
       out = []
@@ -67,7 +67,7 @@ module Bioshogi
     end
 
     def header_part_string
-      m = @parser.initial_mediator
+      m = @parser.initial_xcontainer
 
       if e = m.board.preset_info
         # 手合割がわかる場合

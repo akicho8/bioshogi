@@ -35,7 +35,7 @@ module Bioshogi
       def stand_draw
         g = params[:stand_piece_line_height]
 
-        mediator.players.each do |player|
+        xcontainer.players.each do |player|
           location = player.location
           s = location.value_sign
 

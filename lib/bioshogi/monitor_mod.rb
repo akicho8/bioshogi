@@ -14,23 +14,23 @@ module Bioshogi
         #   # 元の位置から動いたか？
         # end
         player.king_moved_counter += 1 # 居玉判定用
-        player.king_first_moved_turn ||= mediator.turn_info.turn_offset # 本当の居玉判定用
+        player.king_first_moved_turn ||= xcontainer.turn_info.turn_offset # 本当の居玉判定用
       end
     end
 
     # 大駒コンプリートチェック用にしか使ってない
     def piece_box_added(captured_soldier)
       # 駒を取った回数の記録
-      mediator.kill_counter += 1
+      xcontainer.kill_counter += 1
 
       # 駒が取られる最初の手数の記録
-      mediator.critical_turn ||= mediator.turn_info.turn_offset
+      xcontainer.critical_turn ||= xcontainer.turn_info.turn_offset
 
       # 「歩と角」を除く駒が取られる最初の手数の記録
-      unless mediator.outbreak_turn
+      unless xcontainer.outbreak_turn
         key = captured_soldier.piece.key
         if key != :pawn && key != :bishop
-          mediator.outbreak_turn = mediator.turn_info.turn_offset
+          xcontainer.outbreak_turn = xcontainer.turn_info.turn_offset
         end
       end
 
@@ -65,7 +65,7 @@ module Bioshogi
     def perform_skill_monitor_enable?
       if Bioshogi.config[:skill_monitor_enable]
         if Dimension.size_type == :board_size_9x9
-          mediator.params[:skill_monitor_enable]
+          xcontainer.params[:skill_monitor_enable]
         end
       end
     end

@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
@@ -20,7 +20,7 @@ mediator.placement_from_bod(<<~EOT)
 EOT
 
 # opening_score の unless e.promoted をはずして33の地点をマイナスすれば回避できるけどやめとく
-records = mediator.player_at(:black).brain(evaluator_class: Evaluator::Level4).iterative_deepening(depth_max_range: 0..0)
+records = xcontainer.player_at(:black).brain(evaluator_class: Evaluator::Level4).iterative_deepening(depth_max_range: 0..0)
 tp Brain.human_format(records)
 # >> |------+----------------+--------+--------+------------+----------|
 # >> | 順位 | 候補手         | 読み筋 | ▲形勢 | 評価局面数 | 処理時間 |

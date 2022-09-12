@@ -1,13 +1,13 @@
 # 棋譜の入力
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_preset("平手")
-mediator.execute("７六歩")
-mediator.execute("３四歩")
-mediator.execute("２二角成")
-mediator.player_at(:black).piece_box.to_s # => "角"
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("平手")
+xcontainer.execute("７六歩")
+xcontainer.execute("３四歩")
+xcontainer.execute("２二角成")
+xcontainer.player_at(:black).piece_box.to_s # => "角"
+puts xcontainer
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

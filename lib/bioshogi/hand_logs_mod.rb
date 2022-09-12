@@ -5,7 +5,7 @@ module Bioshogi
     def turn_ended_process
       super
 
-      mediator.hand_logs << hand_log
+      xcontainer.hand_logs << hand_log
     end
 
     def hand_log
@@ -15,13 +15,13 @@ module Bioshogi
           :candidate_soldiers => @candidate_soldiers, # nil の場合もある
           :place_same         => place_same?,
           :skill_set          => skill_set,
-          :handicap           => mediator.turn_info.handicap?,
+          :handicap           => xcontainer.turn_info.handicap?,
           :personal_clock     => player.personal_clock.clone.freeze, # 時計の状態を保持して手に結びつける
         }).freeze
     end
 
     def place_same?
-      if hand_log = mediator.hand_logs.last
+      if hand_log = xcontainer.hand_logs.last
         hand_log.soldier.place == soldier.place
       end
     end

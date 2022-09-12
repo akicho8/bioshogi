@@ -1,22 +1,22 @@
 require "./setup"
 
-mediator = Mediator.new
+xcontainer = Xcontainer.new
 
-mediator.board.all_clear
-mediator.placement_from_preset("裸玉")
-mediator.board.preset_info&.key    # => :十九枚落ち
+xcontainer.board.all_clear
+xcontainer.placement_from_preset("裸玉")
+xcontainer.board.preset_info&.key    # => :十九枚落ち
 
-mediator.board.all_clear
-mediator.board.placement_from_preset("裸玉")
-mediator.board.preset_info&.key    # => :十九枚落ち
+xcontainer.board.all_clear
+xcontainer.board.placement_from_preset("裸玉")
+xcontainer.board.preset_info&.key    # => :十九枚落ち
 
-mediator.board.all_clear
-mediator.board.placement_from_preset("二十枚落ち")
-mediator.board.placement_from_human("△５一玉")
-mediator.board.preset_info&.key    # => :十九枚落ち
+xcontainer.board.all_clear
+xcontainer.board.placement_from_preset("二十枚落ち")
+xcontainer.board.placement_from_human("△５一玉")
+xcontainer.board.preset_info&.key    # => :十九枚落ち
 
-mediator.board.all_clear
-mediator.board.placement_from_shape <<~EOT
+xcontainer.board.all_clear
+xcontainer.board.placement_from_shape <<~EOT
 +---------------------------+
 | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -29,4 +29,4 @@ mediator.board.placement_from_shape <<~EOT
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-mediator.board.preset_info&.key    # => :十九枚落ち
+xcontainer.board.preset_info&.key    # => :十九枚落ち

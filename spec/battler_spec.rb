@@ -4,7 +4,7 @@ module Bioshogi
   describe Soldier do
     describe "文字列表現" do
       before do
-        @soldier = Mediator.player_test(init: "５五と").soldiers.first
+        @soldier = Xcontainer.player_test(init: "５五と").soldiers.first
       end
 
       it "先手後手のマーク付き" do
@@ -27,7 +27,7 @@ module Bioshogi
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
       Board.dimensiton_change([3, 3]) do
-        player = Mediator.player_test(init: "▲１一飛")
+        player = Xcontainer.player_test(init: "▲１一飛")
         soldier = player.board.safe_delete_on(Place["１一"])
         assert { player.board["１一"] == nil } # 盤面から消えている
         # assert { soldier.place == nil }      # 盤上から削除した駒の座標は nil になっている }

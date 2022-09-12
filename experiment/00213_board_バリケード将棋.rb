@@ -1,8 +1,8 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_preset("バリケード将棋")
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("バリケード将棋")
+puts xcontainer
 # >> 後手の持駒：飛 角 香
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

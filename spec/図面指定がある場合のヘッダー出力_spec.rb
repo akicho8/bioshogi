@@ -3,13 +3,13 @@ require "spec_helper"
 module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do
     it "平手" do
-      mediator = Mediator.new
-      mediator.board.placement_from_preset("裸玉")
-      mediator.execute("58玉")
-      mediator.execute("52玉")
+      xcontainer = Xcontainer.new
+      xcontainer.board.placement_from_preset("裸玉")
+      xcontainer.execute("58玉")
+      xcontainer.execute("52玉")
 
-      mediator.turn_info.handicap = false
-      info = Parser.parse("position #{mediator.to_short_sfen}")
+      xcontainer.turn_info.handicap = false
+      info = Parser.parse("position #{xcontainer.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -32,13 +32,13 @@ EOT
     end
 
     it "駒落ち" do
-      mediator = Mediator.new
-      mediator.board.placement_from_preset("裸玉")
-      mediator.execute("58玉")
-      mediator.execute("52玉")
+      xcontainer = Xcontainer.new
+      xcontainer.board.placement_from_preset("裸玉")
+      xcontainer.execute("58玉")
+      xcontainer.execute("52玉")
 
-      mediator.turn_info.handicap = true
-      info = Parser.parse("position #{mediator.to_short_sfen}")
+      xcontainer.turn_info.handicap = true
+      info = Parser.parse("position #{xcontainer.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １

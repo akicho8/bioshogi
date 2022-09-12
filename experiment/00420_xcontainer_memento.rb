@@ -1,19 +1,19 @@
 require "./setup"
 
-mediator = Mediator.start
-mediator.pieces_set("▲歩")
-mediator.execute("▲６八銀")
-puts mediator
-mediator.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w P 2"
+xcontainer = Xcontainer.start
+xcontainer.pieces_set("▲歩")
+xcontainer.execute("▲６八銀")
+puts xcontainer
+xcontainer.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w P 2"
 
-memento = mediator.create_memento
-mediator.execute("△３四歩", executor_class: PlayerExecutorWithoutMonitor)
-puts mediator
-mediator.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b P 3"
+memento = xcontainer.create_memento
+xcontainer.execute("△３四歩", executor_class: PlayerExecutorWithoutMonitor)
+puts xcontainer
+xcontainer.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b P 3"
 
-mediator.restore_memento(memento)
-puts mediator
-mediator.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w P 2"
+xcontainer.restore_memento(memento)
+puts xcontainer
+xcontainer.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w P 2"
 
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

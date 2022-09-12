@@ -1,9 +1,9 @@
 require "./setup"
 
 Board.dimensiton_change([5, 5])
-mediator = Mediator.new
+xcontainer = Xcontainer.new
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"].collect { |e| Soldier.from_str(e, location: :black) }
-mediator.players.each do |player|
+xcontainer.players.each do |player|
   if player.location.key == :white
     s = soldiers.collect(&:flip)
   else
@@ -11,18 +11,18 @@ mediator.players.each do |player|
   end
   player.soldier_create(s)
 end
-mediator.piece_box_clear
-p mediator
-mediator.execute("２四銀")
-mediator.execute("４二銀")
-mediator.execute("３四角")
-mediator.execute("３二角")
-mediator.execute("２三銀")
-mediator.execute("４三銀")
-mediator.execute("１二銀")
-mediator.execute("同金")
-mediator.execute("同角")
-p mediator
+xcontainer.piece_box_clear
+p xcontainer
+xcontainer.execute("２四銀")
+xcontainer.execute("４二銀")
+xcontainer.execute("３四角")
+xcontainer.execute("３二角")
+xcontainer.execute("２三銀")
+xcontainer.execute("４三銀")
+xcontainer.execute("１二銀")
+xcontainer.execute("同金")
+xcontainer.execute("同角")
+p xcontainer
 # >> 後手の持駒：なし
 # >>   ５ ４ ３ ２ １
 # >> +---------------+

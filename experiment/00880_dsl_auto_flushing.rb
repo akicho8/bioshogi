@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Sequencer.new
-mediator.pattern = NotationDsl.define do
+xcontainer = Sequencer.new
+xcontainer.pattern = NotationDsl.define do
   board <<~EOT
   ９ ８ ７ ６ ５ ４ ３ ２ １
   +---------------------------+
@@ -33,8 +33,8 @@ mediator.pattern = NotationDsl.define do
     }
   }
 end
-mediator.evaluate
-puts mediator.snapshots.collect(&:to_text)
+xcontainer.evaluate
+puts xcontainer.snapshots.collect(&:to_text)
 # >> ---------------------------------------- {:auto_flushing=>true, :comment=>"成功するパターン"}
 # >> 指し手: ▲２四歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

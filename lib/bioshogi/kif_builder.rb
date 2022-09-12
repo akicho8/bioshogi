@@ -30,7 +30,7 @@ module Bioshogi
     end
 
     def body_hands
-      @parser.mediator.hand_logs.collect.with_index { |e, i|
+      @parser.xcontainer.hand_logs.collect.with_index { |e, i|
         if @chess_clock
           @chess_clock.add(@parser.used_seconds_at(i))
         end
@@ -56,7 +56,7 @@ module Bioshogi
         if kakinoki_word = @parser.last_action_info.kakinoki_word
           left_part = "%*d %s" % [
             @params[:number_width],
-            @parser.mediator.hand_logs.size.next,
+            @parser.xcontainer.hand_logs.size.next,
             mb_ljust(kakinoki_word, @params[:hand_width]),
           ]
         end

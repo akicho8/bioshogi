@@ -3,13 +3,13 @@ require "../setup"
 Board.promotable_disable
 Board.dimensiton_change([2, 3])
 
-mediator = Mediator.new
-mediator.board.placement_from_shape <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape <<~EOT
 +------+
 |v香v玉|
 |v歩 ・|
 | ・ 銀|
 +------+
 EOT
-player = mediator.player_at(:black)
+player = xcontainer.player_at(:black)
 player.move_hands(legal_only: true, mate_only: true).collect(&:to_kif).join(" ")   # => "▲２二銀(13) ▲１二銀(13)"

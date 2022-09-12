@@ -6,12 +6,12 @@ object.to_kif  # => "▲６八銀打"
 object.to_csa  # => "+0068GI"
 object.to_sfen # => "S*6h"
 
-mediator = Mediator.new
-mediator.pieces_set("▲銀")
-object.execute(mediator)
-puts mediator
-object.revert(mediator)
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.pieces_set("▲銀")
+object.execute(xcontainer)
+puts xcontainer
+object.revert(xcontainer)
+puts xcontainer
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

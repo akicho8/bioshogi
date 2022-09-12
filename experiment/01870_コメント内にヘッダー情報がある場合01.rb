@@ -19,7 +19,7 @@ EOT
 
 tp info.header.to_h
 
-# info.mediator_run_once
+# info.xcontainer_run_once
 # tp info.header.to_h
 # tp info.skill_set_hash
 

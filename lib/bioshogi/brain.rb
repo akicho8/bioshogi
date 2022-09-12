@@ -25,7 +25,7 @@ module Bioshogi
 
     attr_accessor :player, :params
 
-    delegate :mediator, :create_all_hands, to: :player
+    delegate :xcontainer, :create_all_hands, to: :player
     delegate :logger, :to => "Bioshogi", allow_nil: true
 
     def initialize(player, params = {})
@@ -73,7 +73,7 @@ module Bioshogi
 
       # if true
       #   # あまりに重いので読みの最初の手を合法手に絞る
-      #   children = children.find_all { |e| e.legal_hand?(mediator) }
+      #   children = children.find_all { |e| e.legal_hand?(xcontainer) }
       # else
       #   children = children.to_a # 何度も実行するためあえて配列化しておくの重要
       # end
@@ -103,7 +103,7 @@ module Bioshogi
             #   end
             # end
 
-            hand.sandbox_execute(mediator) do
+            hand.sandbox_execute(xcontainer) do
               start_time = Time.now
               v, pv = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
               v = -v                                        # 相手の良い手は自分のマイナス
@@ -163,8 +163,8 @@ module Bioshogi
 
     # Board.promotable_disable
     # Board.dimensiton_change([2, 5])
-    # mediator = Mediator.new
-    # mediator.board.placement_from_shape <<~EOT
+    # xcontainer = Xcontainer.new
+    # xcontainer.board.placement_from_shape <<~EOT
     # +------+
     # | ・v香|
     # | ・v飛|
@@ -173,14 +173,14 @@ module Bioshogi
     # | ・ 香|
     # +------+
     # EOT
-    # brain = mediator.player_at(:black).brain(evaluator_class: Evaluator::Level2)
+    # brain = xcontainer.player_at(:black).brain(evaluator_class: Evaluator::Level2)
     # brain.smart_score_list(depth_max: 2) # => [{:hand=><▲２四飛(14)>, :score=>105, :socre2=>105, :best_pv=>[<△１四歩(13)>, <▲１四飛(24)>], :eval_times=>12, :sec=>0.002647}, {:hand=><▲１三飛(14)>, :score=>103, :socre2=>103, :best_pv=>[<△１三飛(12)>, <▲１三香(15)>], :eval_times=>9, :sec=>0.001463}]
     #
     # 探索するけど探索の深さを延していかない
     def smart_score_list(params = {})
       diver = diver_instance(current_player: player.opponent_player)
       create_all_hands(promoted_only: true).collect { |hand|
-        hand.sandbox_execute(mediator) do
+        hand.sandbox_execute(xcontainer) do
           start_time = Time.now
           v, pv = diver.dive
           {hand: hand, score: -v, socre2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
@@ -192,7 +192,7 @@ module Bioshogi
     def fast_score_list(params = {})
       evaluator = player.evaluator(params.merge(params))
       create_all_hands(promoted_only: true).collect { |hand|
-        hand.sandbox_execute(mediator) do
+        hand.sandbox_execute(xcontainer) do
           start_time = Time.now
           v = evaluator.score
           {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}

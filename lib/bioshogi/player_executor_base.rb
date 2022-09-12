@@ -10,7 +10,7 @@ module Bioshogi
     attr_reader :drop_hand
     attr_reader :move_hand
 
-    delegate :board, :piece_box, :mediator, to: :player
+    delegate :board, :piece_box, :xcontainer, to: :player
     delegate :origin_soldier, :captured_soldier, to: :move_hand, allow_nil: true
     delegate :soldier, to: :hand
 
@@ -28,7 +28,7 @@ module Bioshogi
     end
 
     def perform_validations
-      if !mediator.params[:validate_enable]
+      if !xcontainer.params[:validate_enable]
         return
       end
 
@@ -47,11 +47,11 @@ module Bioshogi
       @drop_hand          = input.drop_hand
       @move_hand          = input.move_hand
       @candidate_soldiers = nil
-      if mediator.params[:candidate_enable]
+      if xcontainer.params[:candidate_enable]
         @candidate_soldiers = input.candidate_soldiers
       end
 
-      hand.execute(mediator)
+      hand.execute(xcontainer)
       execute_after_process
       if captured_soldier
         piece_box_added(captured_soldier)
@@ -66,7 +66,7 @@ module Bioshogi
       clock_add_process
       turn_ended_process
 
-      mediator.turn_info.turn_offset += 1
+      xcontainer.turn_info.turn_offset += 1
 
       turn_changed_process
 
@@ -103,27 +103,27 @@ module Bioshogi
       attributes = {
         "手番"   => player.call_name,
         "指し手" => input.input.values.join,
-        "棋譜"   => mediator.hand_logs.to_kif_a.join(" "),
+        "棋譜"   => xcontainer.hand_logs.to_kif_a.join(" "),
       }
 
       message = error[:message]
 
       # 一行に情報をつめこむ場合
       if false
-        message = ["[#{player.call_name}][#{mediator.turn_info.turn_offset.next}手目][#{input.input.values.join}]", message].join
+        message = ["[#{player.call_name}][#{xcontainer.turn_info.turn_offset.next}手目][#{input.input.values.join}]", message].join
       end
 
       str = []
       str << message
       str.concat(attributes.collect { |*e| e.join(": ") })
       str << ""
-      str << mediator.to_bod
+      str << xcontainer.to_bod
       str = str.collect(&:rstrip).join("\n")
 
       obj = error[:error_class].new(str)
 
-      obj.instance_variable_set(:@mediator, mediator)
-      obj.define_singleton_method(:mediator) { @mediator }
+      obj.instance_variable_set(:@xcontainer, xcontainer)
+      obj.define_singleton_method(:xcontainer) { @xcontainer }
 
       obj.instance_variable_set(:@input, input)
       obj.define_singleton_method(:input) { @input }

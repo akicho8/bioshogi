@@ -20,25 +20,25 @@ module Bioshogi
       end
     end
 
-    # FIXME: mediator経由でテストを書いてはいけない
+    # FIXME: xcontainer経由でテストを書いてはいけない
     it "配置" do
-      mediator = Mediator.new
+      xcontainer = Xcontainer.new
 
-      mediator.board.all_clear
-      mediator.placement_from_preset("裸玉")
-      assert { mediator.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      xcontainer.board.all_clear
+      xcontainer.placement_from_preset("裸玉")
+      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      mediator.board.all_clear
-      mediator.board.placement_from_preset("裸玉")
-      assert { mediator.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      xcontainer.board.all_clear
+      xcontainer.board.placement_from_preset("裸玉")
+      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      mediator.board.all_clear
-      mediator.board.placement_from_preset("二十枚落ち")
-      mediator.board.placement_from_human("△５一玉")
-      assert { mediator.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      xcontainer.board.all_clear
+      xcontainer.board.placement_from_preset("二十枚落ち")
+      xcontainer.board.placement_from_human("△５一玉")
+      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      mediator.board.all_clear
-      mediator.board.placement_from_shape <<~EOT
+      xcontainer.board.all_clear
+      xcontainer.board.placement_from_shape <<~EOT
       +---------------------------+
       | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
       | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -51,7 +51,7 @@ module Bioshogi
       | 香 桂 銀 金 玉 金 銀 桂 香|九
       +---------------------------+
         EOT
-      assert { mediator.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
     end
 
     it "サンプル" do
@@ -61,10 +61,10 @@ module Bioshogi
 
     it "指定の座標だけを消す微妙なテスト" do
       Board.dimensiton_change([1, 3]) do
-        mediator = Mediator.new
-        mediator.player_at(:black).soldier_create("１三香")
-        mediator.board.safe_delete_on(Place["１三"])
-        assert { mediator.board["１三"] == nil }
+        xcontainer = Xcontainer.new
+        xcontainer.player_at(:black).soldier_create("１三香")
+        xcontainer.board.safe_delete_on(Place["１三"])
+        assert { xcontainer.board["１三"] == nil }
       end
     end
 

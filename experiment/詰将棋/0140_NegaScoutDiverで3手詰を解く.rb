@@ -4,9 +4,9 @@ require "../setup"
 
 Board.dimensiton_change([2, 4])
 
-mediator = Mediator.new
-mediator.player_at(:black).pieces_add("金金")
-mediator.board.placement_from_shape <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.player_at(:black).pieces_add("金金")
+xcontainer.board.placement_from_shape <<~EOT
 +------+
 | ・ ・|
 | ・v玉|
@@ -15,9 +15,9 @@ mediator.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-# tp mediator.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
+# tp xcontainer.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
-brain = mediator.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
 records = brain.iterative_deepening(depth_max_range: 3..3, mate_mode: true)
 tp Brain.human_format(records)
 

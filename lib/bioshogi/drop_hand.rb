@@ -11,15 +11,15 @@ module Bioshogi
       end
     end
 
-    def execute(mediator)
-      player = mediator.player_at(soldier.location)
+    def execute(xcontainer)
+      player = xcontainer.player_at(soldier.location)
       player.piece_box.pick_out(soldier.piece)
-      mediator.board.place_on(soldier)
+      xcontainer.board.place_on(soldier)
     end
 
-    def revert(mediator)
-      mediator.board.safe_delete_on(soldier.place)
-      player = mediator.player_at(soldier.location)
+    def revert(xcontainer)
+      xcontainer.board.safe_delete_on(soldier.place)
+      player = xcontainer.player_at(soldier.location)
       player.piece_box.add(soldier.piece.key => 1)
     end
 

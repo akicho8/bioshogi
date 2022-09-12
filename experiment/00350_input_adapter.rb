@@ -1,8 +1,8 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.pieces_set("▲銀")
-mediator.board.placement_from_shape <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.pieces_set("▲銀")
+xcontainer.board.placement_from_shape <<~EOT
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ 飛|
 | ・ ・ ・ ・ 馬 ・ 銀 ・ ・|
@@ -10,7 +10,7 @@ mediator.board.placement_from_shape <<~EOT
 +---------------------------+
 EOT
 
-player = mediator.player_at(:black)
+player = xcontainer.player_at(:black)
 
 rows = [
   "△１二銀成",

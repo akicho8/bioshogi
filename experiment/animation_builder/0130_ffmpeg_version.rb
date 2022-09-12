@@ -4,11 +4,11 @@ require "rmagick"
 sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7g7f 7a6b 5g5f 8d8e 8h7g"
 sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
-mediator = info.mediator_for_image
-image_renderer = ImageRenderer.new(mediator, viewpoint: "black")
+xcontainer = info.xcontainer_for_image
+image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
 list = [nil, *info.move_infos]
 list.each.with_index do |e, i|
-  mediator.execute(e[:input]) if e
+  xcontainer.execute(e[:input]) if e
   image_renderer.render.write("_#{i}.png")
 end
 

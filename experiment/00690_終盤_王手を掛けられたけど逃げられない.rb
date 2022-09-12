@@ -3,8 +3,8 @@ require "./setup"
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 # Board.promotable_disable
 Board.dimensiton_change([3, 3]) do
-  mediator = Mediator.new
-  mediator.placement_from_bod <<~EOT
+  xcontainer = Xcontainer.new
+  xcontainer.placement_from_bod <<~EOT
 後手の持駒：
 +---------+
 |v玉 ・ ・|
@@ -18,7 +18,7 @@ Board.dimensiton_change([3, 3]) do
     Diver::NegaAlphaDiver,
     Diver::NegaScoutDiver,
   ].each do |diver_class|
-    brain = mediator.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+    brain = xcontainer.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
     records = brain.iterative_deepening(depth_max_range: 0..0)
     p records
     tp Brain.human_format(records)

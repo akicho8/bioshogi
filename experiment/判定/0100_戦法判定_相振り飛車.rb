@@ -12,9 +12,9 @@ info = Parser.parse(<<~EOT)
    3 投了
 まで2手で後手の勝ち
 EOT
-# puts info.mediator
-# tp info.mediator.players.first.attack_infos
-# tp info.mediator.players.last.attack_infos
+# puts info.xcontainer
+# tp info.xcontainer.players.first.attack_infos
+# tp info.xcontainer.players.last.attack_infos
 puts info.to_kif
 # >> <相振り飛車>
 # >> 先手の戦型：▲７八飛戦法, 相振り飛車

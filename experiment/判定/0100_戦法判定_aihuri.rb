@@ -25,9 +25,9 @@ info = Parser.parse(<<~EOT)
   12 投了
 まで11手で先手の勝ち
 EOT
-# puts info.mediator
-# tp info.mediator.players.first.attack_infos
-# tp info.mediator.players.last.attack_infos
+# puts info.xcontainer
+# tp info.xcontainer.players.first.attack_infos
+# tp info.xcontainer.players.last.attack_infos
 puts info.to_kif
 # >> 先手の戦型：手損角交換型, 相振り飛車
 # >> 後手の戦型：手得角交換型, 相振り飛車

@@ -1,10 +1,10 @@
 require "./setup"
 
 def f(v)
-  mediator = Mediator.new
-  mediator.placement_from_preset("平手")
-  mediator.execute(v)
-  mediator.hand_logs.to_kif_a
+  xcontainer = Xcontainer.new
+  xcontainer.placement_from_preset("平手")
+  xcontainer.execute(v)
+  xcontainer.hand_logs.to_kif_a
 end
 
 f "76歩"                        # => ["７六歩(77)"]

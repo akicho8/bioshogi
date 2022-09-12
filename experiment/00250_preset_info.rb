@@ -4,9 +4,9 @@ PresetInfo["裸玉"].sorted_soldiers.collect(&:to_s)       # => ["▲９七歩",
 PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["△８二飛", "△２二角"]
 
 tp PresetInfo.collect { |e|
-  mediator = Mediator.new
-  mediator.placement_from_preset(e.key)
-  [e.key, mediator.to_short_sfen]
+  xcontainer = Xcontainer.new
+  xcontainer.placement_from_preset(e.key)
+  [e.key, xcontainer.to_short_sfen]
 }.to_h
 
 tp PresetInfo.collect(&:to_short_sfen)

@@ -5,17 +5,17 @@ info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 out = ""
 out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
-mediator = Mediator.new
-mediator.placement_from_preset(info.header["手合割"])
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset(info.header["手合割"])
 info.move_infos.each do |info|
-  mediator.execute(info[:input])
+  xcontainer.execute(info[:input])
   # puts "-------------------------------------------"
   # puts info[:mov]
-  # puts mediator
+  # puts xcontainer
 end
 out << "手数----指手---------消費時間--\n"
-out << mediator.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
-out << "#{mediator.to_kif_a.size.next} 投了\n"
+out << xcontainer.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
+out << "#{xcontainer.to_kif_a.size.next} 投了\n"
 puts out
 # >> 開始日時：2017/11/11 10:00:00
 # >> 終了日時：2017/11/11 17:22:00

@@ -1,18 +1,18 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.board.hash
-mediator.board.placement_from_preset("平手")
-mediator.pieces_set("▲飛 △飛")
-mediator.one_place_hash # => 4440883322357192303
-mediator.execute("▲５八玉")
-mediator.execute("△５二玉")
-mediator.one_place_hash # => 2468075424501378097
-mediator.execute("▲５九玉")
-mediator.execute("△５一玉")
-mediator.one_place_hash # => 4440883322357192303
-mediator.one_place_map      # => {}
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.board.hash
+xcontainer.board.placement_from_preset("平手")
+xcontainer.pieces_set("▲飛 △飛")
+xcontainer.one_place_hash # => 4440883322357192303
+xcontainer.execute("▲５八玉")
+xcontainer.execute("△５二玉")
+xcontainer.one_place_hash # => 2468075424501378097
+xcontainer.execute("▲５九玉")
+xcontainer.execute("△５一玉")
+xcontainer.one_place_hash # => 4440883322357192303
+xcontainer.one_place_map      # => {}
+puts xcontainer
 # >> 後手の持駒：飛
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

@@ -66,7 +66,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::Xplace.lookup"
 # >>          8   (1.0%)           8   (1.0%)     #<Module:0x00007ff71734a998>.kconv
 # >>          8   (1.0%)           8   (1.0%)     Bioshogi::Soldier#attributes
 # >>         10   (1.2%)           8   (1.0%)     Bioshogi::InputParser#scan
-# >>          8   (1.0%)           8   (1.0%)     Bioshogi::MediatorBase#board
+# >>          8   (1.0%)           8   (1.0%)     Bioshogi::XcontainerBase#board
 # >>        136  (16.3%)           7   (0.8%)     Bioshogi::Movabler#move_list
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::Dimension::Base.value_range
 # >>         88  (10.6%)           6   (0.7%)     Bioshogi::Dimension::Xplace.lookup

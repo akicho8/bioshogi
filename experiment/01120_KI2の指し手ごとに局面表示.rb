@@ -15,12 +15,12 @@ info = Parser.parse(<<~EOT)
 まで104手で後手の勝ち
 EOT
 
-mediator = Mediator.new
-mediator.placement_from_preset("平手")
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("平手")
 info.move_infos.each do |info|
-  mediator.execute(info[:input])
-  puts mediator
-  puts mediator.hand_logs.last.to_ki2
+  xcontainer.execute(info[:input])
+  puts xcontainer
+  puts xcontainer.hand_logs.last.to_ki2
 end
 
 # >> 後手の持駒：なし

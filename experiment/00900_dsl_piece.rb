@@ -1,11 +1,11 @@
 require "./setup"
 
-mediator = Sequencer.new
-mediator.pattern = NotationDsl.define do
+xcontainer = Sequencer.new
+xcontainer.pattern = NotationDsl.define do
   pieces black: "歩"
 end
-mediator.evaluate
-puts mediator.mediator_stack.mediator.to_text
+xcontainer.evaluate
+puts xcontainer.xcontainer_stack.xcontainer.to_text
 # >> ---------------------------------------- {}
 # >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

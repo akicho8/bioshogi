@@ -75,7 +75,7 @@ module Bioshogi
         @sequencer = Sequencer.new
         @sequencer.pattern = builder
         @sequencer.evaluate
-        @sequencer.mediator_stack.mediator
+        @sequencer.xcontainer_stack.xcontainer
       end
 
       it "title" do

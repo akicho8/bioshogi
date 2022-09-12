@@ -3,8 +3,8 @@ require "spec_helper"
 module Bioshogi
   describe "ウィキペディアにある表記通りの解釈ができる" do
     def test1(str)
-      mediator = Bioshogi::Mediator.new
-      mediator.board.placement_from_shape(<<~EOT)
+      xcontainer = Bioshogi::Xcontainer.new
+      xcontainer.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ と ・ ・ ・|
 | ・ 銀 ・ ・ と と ・ 龍 ・|
@@ -17,9 +17,9 @@ module Bioshogi
 | 桂 ・ 桂 ・ ・ ・ ・ ・ ・|
 +---------------------------+
 EOT
-      mediator.current_player.pieces_add("歩金銀桂")
-      mediator.execute(str)
-      mediator.hand_logs.last.to_kif_ki2_csa
+      xcontainer.current_player.pieces_add("歩金銀桂")
+      xcontainer.execute(str)
+      xcontainer.hand_logs.last.to_kif_ki2_csa
     end
 
     describe "打" do

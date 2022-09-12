@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
@@ -19,14 +19,14 @@ mediator.placement_from_bod(<<~EOT)
 手数=1
 EOT
 
-player = mediator.player_at(:white)
+player = xcontainer.player_at(:white)
 player.pressure_level           # => -5
 player.pressure_rate            # => 0.0
 evaluator = player.evaluator(evaluator_class: Evaluator::Level4)
 evaluator.score            # => 2000
 tp evaluator.score_compute_report
-tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
-mediator.players.each { |e| tp e.pressure_report }
+tp xcontainer.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
+xcontainer.players.each { |e| tp e.pressure_report }
 
 # >> |---------+----------------+--------+------+-------+--------------|
 # >> | 先後    | 駒箱(常時加算) | 駒組み | 終盤 | 合計  | 差(自分基準) |

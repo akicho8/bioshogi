@@ -3,10 +3,10 @@ require "spec_helper"
 module Bioshogi
   describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
-      mediator = Bioshogi::Mediator.new
-      mediator.board.placement_from_shape(@board)
-      mediator.next_player.execute(str)
-      mediator.hand_logs.last.to_kif_ki2_csa
+      xcontainer = Bioshogi::Xcontainer.new
+      xcontainer.board.placement_from_shape(@board)
+      xcontainer.next_player.execute(str)
+      xcontainer.hand_logs.last.to_kif_ki2_csa
     end
 
     it "P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」" do

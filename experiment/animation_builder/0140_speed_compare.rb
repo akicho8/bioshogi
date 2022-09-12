@@ -14,12 +14,12 @@ end
 
 def case1
   info = Parser.parse(@sfen)
-  mediator = info.mediator_for_image
-  image_renderer = ImageRenderer.new(mediator, viewpoint: "black")
+  xcontainer = info.xcontainer_for_image
+  image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
   list = Magick::ImageList.new
   moves = [nil, *info.move_infos]
   moves.each.with_index do |e, i|
-    mediator.execute(e[:input]) if e
+    xcontainer.execute(e[:input]) if e
     image_renderer.render
     list.concat([image_renderer.canvas])
   end
@@ -34,11 +34,11 @@ end
 
 def case2
   info = Parser.parse(@sfen)
-  mediator = info.mediator_for_image
-  image_renderer = ImageRenderer.new(mediator, viewpoint: "black")
+  xcontainer = info.xcontainer_for_image
+  image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
   moves = [nil, *info.move_infos]
   moves.each.with_index do |e, i|
-    mediator.execute(e[:input]) if e
+    xcontainer.execute(e[:input]) if e
     image_renderer.render
     image_renderer.canvas.write("_#{i}.png")
   end

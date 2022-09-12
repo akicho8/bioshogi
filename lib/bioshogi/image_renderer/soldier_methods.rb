@@ -2,7 +2,7 @@ module Bioshogi
   class ImageRenderer
     concerning :SoldierMethods do
       def soldier_draw_all
-        mediator.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
+        xcontainer.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
       end
 
       def soldier_draw(soldier)

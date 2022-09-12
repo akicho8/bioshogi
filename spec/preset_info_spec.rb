@@ -36,8 +36,8 @@ module Bioshogi
     end
 
     it "「香落ち」だと判断できる" do
-      mediator = Mediator.new
-      mediator.board.placement_from_shape(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -51,12 +51,12 @@ module Bioshogi
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info.key == :"香落ち" }
+      assert { xcontainer.board.preset_info.key == :"香落ち" }
     end
 
     it "▲は平手状態だけど△は不明" do
-      mediator = Mediator.new
-      mediator.board.placement_from_shape(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀 ・ ・|一
@@ -70,12 +70,12 @@ EOT
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info == nil }
+      assert { xcontainer.board.preset_info == nil }
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
-      mediator = Mediator.new
-      mediator.board.placement_from_shape(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂 ・|一
@@ -89,7 +89,7 @@ EOT
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-      assert { mediator.board.preset_info == nil }
+      assert { xcontainer.board.preset_info == nil }
     end
 
     it "to_board" do

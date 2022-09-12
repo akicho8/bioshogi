@@ -34,31 +34,31 @@ module Bioshogi
       win_counts = Location.inject({}) { |a, e| a.merge(e.key => 0) }
 
       options[:round].times do |round|
-        mediator = Mediator.start
+        xcontainer = Xcontainer.start
         options[:times].times do
-          current_player = mediator.current_player
+          current_player = xcontainer.current_player
 
           deepen_score_list_params = {
             time_limit: options[:time_limit],
             depth_max_range: 0..options[:depth_max],
           }
-          diver_class = divers[mediator.turn_info.current_location.code]
+          diver_class = divers[xcontainer.turn_info.current_location.code]
           records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level3).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
-          mediator.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+          xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 
-          puts "---------------------------------------- [#{mediator.turn_info.turn_offset}] #{hand} (#{diver_class})"
-          # mediator.players.each { |e| tp e.pressure_report }
+          puts "---------------------------------------- [#{xcontainer.turn_info.turn_offset}] #{hand} (#{diver_class})"
+          # xcontainer.players.each { |e| tp e.pressure_report }
 
           tp deepen_score_list_params
           tp Brain.human_format(records)
-          tp mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
-          puts mediator
+          tp xcontainer.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
+          puts xcontainer
           puts
           puts "#{hand} #{record[:black_side_score]}"
           puts
-          puts mediator.to_kif_oneline
+          puts xcontainer.to_kif_oneline
 
           captured_soldier = current_player.executor.captured_soldier
           if captured_soldier && captured_soldier.piece.key == :king

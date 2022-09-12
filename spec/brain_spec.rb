@@ -3,25 +3,25 @@ require "spec_helper"
 module Bioshogi
   describe Brain do
     it "初手が嬉野流になるよう誘導される" do
-      mediator = Mediator.start
-      player = mediator.player_at(:black)
-      brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver, evaluator_class: Evaluator::Level3)
+      xcontainer = Xcontainer.start
+      player = xcontainer.player_at(:black)
+      brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver, evaluator_class: Evaluator::Level3)
       @records = brain.iterative_deepening(depth_max_range: 0..0)
       assert { @records.first[:hand].to_s == "▲６八銀(79)" }
     end
 
     it "works" do
       Board.dimensiton_change([3, 3]) do
-        mediator = MediatorSimple.new
-        mediator.pieces_set("▲歩")
-        mediator.board.placement_from_shape <<~EOT
+        xcontainer = XcontainerSimple.new
+        xcontainer.pieces_set("▲歩")
+        xcontainer.board.placement_from_shape <<~EOT
         +---------+
           | ・ ・ ・|
         | ・ 歩 ・|
         | ・ ・ ・|
         +---------+
           EOT
-        brain = mediator.player_at(:black).brain
+        brain = xcontainer.player_at(:black).brain
         assert { brain.create_all_hands(promoted_only: true).collect(&:to_kif) == ["▲２一歩成(22)", "▲３二歩打", "▲１二歩打", "▲３三歩打", "▲１三歩打"] }
         assert do
           brain.fast_score_list.collect { |e| e.merge(hand: e[:hand].to_kif).slice(:hand, :score) } == [
@@ -39,8 +39,8 @@ module Bioshogi
       [Diver::NegaAlphaDiver, Diver::NegaScoutDiver].each do |diver_class|
         Board.promotable_disable do
           Board.dimensiton_change([2, 5]) do
-            mediator = MediatorSimple.new
-            mediator.board.placement_from_shape <<~EOT
+            xcontainer = XcontainerSimple.new
+            xcontainer.board.placement_from_shape <<~EOT
             +------+
             | ・v香|
             | ・v飛|
@@ -49,7 +49,7 @@ module Bioshogi
             | ・ 香|
             +------+
               EOT
-            brain = mediator.player_at(:black).brain(diver_class: diver_class)
+            brain = xcontainer.player_at(:black).brain(diver_class: diver_class)
             assert { brain.diver_dive(depth_max: 1)[1].first.to_kif == "▲１三飛(14)" }
             assert { brain.diver_dive(depth_max: 2)[1].first.to_kif == "▲２四飛(14)" }
             assert { brain.diver_dive(depth_max: 3)[1].first.to_kif == "▲１三飛(14)" }
@@ -61,26 +61,26 @@ module Bioshogi
 
     describe "自動的に打つ" do
       it "盤上の駒を動かす" do
-        mediator = MediatorSimple.start
-        assert { mediator.player_at(:black).brain.create_all_hands(promoted_only: true).first }
+        xcontainer = XcontainerSimple.start
+        assert { xcontainer.player_at(:black).brain.create_all_hands(promoted_only: true).first }
       end
       it "全手筋" do
-        mediator = MediatorSimple.start
-        assert { mediator.player_at(:black).brain.create_all_hands(promoted_only: true).collect(&:to_kif).sort == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort }
+        xcontainer = XcontainerSimple.start
+        assert { xcontainer.player_at(:black).brain.create_all_hands(promoted_only: true).collect(&:to_kif).sort == ["▲９六歩(97)", "▲８六歩(87)", "▲７六歩(77)", "▲６六歩(67)", "▲５六歩(57)", "▲４六歩(47)", "▲３六歩(37)", "▲２六歩(27)", "▲１六歩(17)", "▲３八飛(28)", "▲４八飛(28)", "▲５八飛(28)", "▲６八飛(28)", "▲７八飛(28)", "▲１八飛(28)", "▲９八香(99)", "▲７八銀(79)", "▲６八銀(79)", "▲７八金(69)", "▲６八金(69)", "▲５八金(69)", "▲６八玉(59)", "▲５八玉(59)", "▲４八玉(59)", "▲５八金(49)", "▲４八金(49)", "▲３八金(49)", "▲４八銀(39)", "▲３八銀(39)", "▲１八香(19)"].sort }
       end
     end
 
     it "盤上の駒の全手筋" do
       Board.dimensiton_change([1, 5]) do
-        mediator = MediatorSimple.facade(init: "▲１五香")
-        assert { mediator.player_at(:black).move_hands(promoted_only: true).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"] }
+        xcontainer = XcontainerSimple.facade(init: "▲１五香")
+        assert { xcontainer.player_at(:black).move_hands(promoted_only: true).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"] }
       end
     end
 
     it "一番得するように打つ" do
       Board.dimensiton_change([2, 2]) do
-        mediator = MediatorSimple.facade(init: "▲１二歩", pieces_set: "▲歩")
-        assert { mediator.player_at(:black).brain.fast_score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} } == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}] }
+        xcontainer = XcontainerSimple.facade(init: "▲１二歩", pieces_set: "▲歩")
+        assert { xcontainer.player_at(:black).brain.fast_score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} } == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}] }
       end
     end
   end

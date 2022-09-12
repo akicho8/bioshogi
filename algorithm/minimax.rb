@@ -8,12 +8,12 @@ class Minimax < DirtyMinimax
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
-      return [mediator.evaluate(:o), []] # 常に「先手から」の評価値
+      return [xcontainer.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    player = mediator.player_at(turn)
-    children = mediator.available_places(player)
+    player = xcontainer.player_at(turn)
+    children = xcontainer.available_places(player)
     if children.empty?
       v, pv = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [v, [:pass, *pv]]
@@ -27,7 +27,7 @@ class Minimax < DirtyMinimax
 
     best_pv = []
     children.each do |place|
-      mediator.place_on(player, place) do
+      xcontainer.place_on(player, place) do
         v, pv = mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         if turn.even?
           flag = v > max # 自分が自分にとってもっとも有利な手を選択する

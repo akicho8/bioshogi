@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.board.placement_from_shape(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -15,11 +15,11 @@ mediator.board.placement_from_shape(<<~EOT)
 | ・ 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-puts mediator
-mediator.board.preset_info&.key        # => "香落ち"
+puts xcontainer
+xcontainer.board.preset_info&.key        # => "香落ち"
 
-mediator = Mediator.new
-mediator.board.placement_from_shape(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -33,8 +33,8 @@ mediator.board.placement_from_shape(<<~EOT)
 | ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
 +---------------------------+
 EOT
-puts mediator
-mediator.board.preset_info&.key        # => nil
+puts xcontainer
+xcontainer.board.preset_info&.key        # => nil
 # >> 1手目: ▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

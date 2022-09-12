@@ -51,7 +51,7 @@ module Bioshogi
     end
 
     def to_s
-      @parser.mediator_run_once
+      @parser.xcontainer_run_once
 
       out = []
       out << "V#{CSA_VERSION}\n"
@@ -60,8 +60,8 @@ module Bioshogi
         out << header_content
       end
 
-      obj = Mediator.new
-      @parser.mediator_board_setup(obj) # なぜ？
+      obj = Xcontainer.new
+      @parser.xcontainer_board_setup(obj) # なぜ？
       out << obj.to_csa(@params)
 
       out << body_hands
@@ -107,13 +107,13 @@ module Bioshogi
 
       # 2通りある
       # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_key))
-      # 2. mediator.turn_info を利用して mediator.turn_info.base_location.csa_sign を参照
+      # 2. xcontainer.turn_info を利用して xcontainer.turn_info.base_location.csa_sign を参照
       # ↑どちらも違う
       # 3. これが正しい
-      out << @parser.mediator.turn_info.turn_offset_zero_location.csa_sign + "\n"
+      out << @parser.xcontainer.turn_info.turn_offset_zero_location.csa_sign + "\n"
 
-      if @parser.mediator.hand_logs.present?
-        list = @parser.mediator.hand_logs.collect.with_index do |e, i|
+      if @parser.xcontainer.hand_logs.present?
+        list = @parser.xcontainer.hand_logs.collect.with_index do |e, i|
           if @parser.clock_exist?
             [e.to_csa, "T#{@parser.used_seconds_at(i)}"].join(",")
           else

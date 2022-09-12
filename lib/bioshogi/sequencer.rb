@@ -5,7 +5,7 @@ module Bioshogi
     attr_accessor :snapshots
     attr_accessor :pattern
     attr_accessor :instruction_placeer
-    attr_accessor :mediator_stack
+    attr_accessor :xcontainer_stack
 
     def initialize(pattern = nil)
       super()
@@ -13,7 +13,7 @@ module Bioshogi
       @pattern = pattern
       @snapshots = []
       @instruction_placeer = 0
-      @mediator_stack = MediatorStack.new
+      @xcontainer_stack = XcontainerStack.new
     end
 
     # def pattern=(block)

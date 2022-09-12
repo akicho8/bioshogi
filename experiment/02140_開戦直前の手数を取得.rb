@@ -1,6 +1,6 @@
 require "./setup"
 
-info = Mediator.start
+info = Xcontainer.start
 info.execute("76歩")
 info.execute("34歩")
 info.execute("22角成")

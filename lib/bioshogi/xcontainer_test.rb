@@ -1,19 +1,19 @@
 module Bioshogi
-  concern :MediatorTest do
+  concern :XcontainerTest do
     class_methods do
       def facade(params = {})
-        mediator = new
+        xcontainer = new
 
         if params[:init]
-          mediator.board.placement_from_human(params[:init])
+          xcontainer.board.placement_from_human(params[:init])
         end
 
         if params[:pieces_set]
-          mediator.pieces_set(params[:pieces_set])
+          xcontainer.pieces_set(params[:pieces_set])
         end
 
-        mediator.execute(params[:execute])
-        mediator
+        xcontainer.execute(params[:execute])
+        xcontainer
       end
 
       def player_test(params = {})
@@ -22,8 +22,8 @@ module Bioshogi
           initial_deal: true,
         }.merge(params)
 
-        mediator = new
-        player = mediator.player_at(params[:player])
+        xcontainer = new
+        player = xcontainer.player_at(params[:player])
 
         if params[:initial_deal]
           player.pieces_add("歩9角飛香2桂2銀2金2玉")
@@ -51,12 +51,12 @@ module Bioshogi
       end
 
       def read_spec(params)
-        mediator = new
-        player = mediator.player_at(:black)
+        xcontainer = new
+        player = xcontainer.player_at(:black)
         player.pieces_add("歩9角飛香2桂2銀2金2玉")
         player.placement_from_human(Array(params[:init]).join.gsub(/_/, ""))
         Array.wrap(params[:execute]).each { |v| player.execute(v) }
-        mediator.hand_logs.last.to_kif_ki2
+        xcontainer.hand_logs.last.to_kif_ki2
       end
     end
   end

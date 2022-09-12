@@ -22,11 +22,11 @@ rows = [
     row = {}
     row[:model] = model.name
     row[:depth_max_range] = 1..depth_max
-    row.update(app.mediator.run_counts)
+    row.update(app.xcontainer.run_counts)
     row.update(turn: app.current_turn.next)
-    row.update(app.mediator.histogram)
+    row.update(app.xcontainer.histogram)
     row.update("1手平均(s)": "%.2f" % ((Time.now - start_time) / app.current_turn.next))
-    row.update(app.mediator.same_pos.values.group_by(&:itself).transform_values(&:size).sort.to_h.transform_keys { |e| "深度#{e}" })
+    row.update(app.xcontainer.same_pos.values.group_by(&:itself).transform_values(&:size).sort.to_h.transform_keys { |e| "深度#{e}" })
   end
 end
 tp rows

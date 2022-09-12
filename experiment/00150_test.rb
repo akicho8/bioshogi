@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
-puts mediator
+xcontainer = Xcontainer.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
+puts xcontainer
 # >> 後手の持駒：歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

@@ -7,13 +7,13 @@ out << info.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
 out << "\n"
 # puts info
 
-mediator = Mediator.new
-mediator.placement_from_preset(info.header["手合割"])
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset(info.header["手合割"])
 info.move_infos.each do |info|
-  mediator.execute(info[:input])
+  xcontainer.execute(info[:input])
 end
-out << mediator.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
-out << mediator.judgment_message
+out << xcontainer.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
+out << xcontainer.judgment_message
 puts out
 
 # >> 開始日時：2017/11/11 10:00:00

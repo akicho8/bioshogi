@@ -4,10 +4,10 @@ require "./setup"
 
 Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do
-  mediator = Mediator.new
-  mediator.board.placement_from_human("▲３三歩 △１一歩")
-  puts mediator
-  object = Diver::NegaAlphaDiver.new(depth_max: 1, current_player: mediator.player_at(:black))
+  xcontainer = Xcontainer.new
+  xcontainer.board.placement_from_human("▲３三歩 △１一歩")
+  puts xcontainer
+  object = Diver::NegaAlphaDiver.new(depth_max: 1, current_player: xcontainer.player_at(:black))
   tp object.dive
 end
 # >> 後手の持駒：なし

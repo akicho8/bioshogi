@@ -12,11 +12,11 @@ class TestAll < Test::Unit::TestCase
       # BuggyNegaScout,
       NegaScout,
     ].collect do |klass|
-      mediator = klass.new
-      mediator.params[:dimension] = 4
-      mediator.params[:silent] = true
-      mediator.params[:depth_max] = 3
-      mediator.run
+      xcontainer = klass.new
+      xcontainer.params[:dimension] = 4
+      xcontainer.params[:silent] = true
+      xcontainer.params[:depth_max] = 3
+      xcontainer.run
     end
     assert histograms.uniq.count == 1
   end

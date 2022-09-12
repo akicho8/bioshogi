@@ -4,7 +4,7 @@ require "./setup"
 require "delegate"
 require "action_view"
 
-class MediatorDecorator < SimpleDelegator
+class XcontainerDecorator < SimpleDelegator
   include ActionView::Helpers::TagHelper
 
   attr_accessor :output_buffer
@@ -29,8 +29,8 @@ class MediatorDecorator < SimpleDelegator
   end
 end
 
-mediator = Mediator.start
-decorator = MediatorDecorator.new(mediator)
+xcontainer = Xcontainer.start
+decorator = XcontainerDecorator.new(xcontainer)
 puts decorator.to_html
 Pathname("_frame.html").write(decorator.to_html)
 `open _frame.html`

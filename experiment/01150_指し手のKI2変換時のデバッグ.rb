@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.board.placement_from_shape(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・v銀v銀 ・ ・ ・vとvとvと|
 | ・ ○ ・ ・ ・ ・ ・ ○vと|
@@ -14,8 +14,8 @@ mediator.board.placement_from_shape(<<~EOT)
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 +---------------------------+
 EOT
-mediator.next_player.execute("８二銀左引")
-official_formatter = mediator.hand_logs.last.official_formatter
+xcontainer.next_player.execute("８二銀左引")
+official_formatter = xcontainer.hand_logs.last.official_formatter
 tp official_formatter.to_debug_hash
 tp official_formatter.options
 # >> |----------------+--------------------------------------------------|

@@ -23,8 +23,8 @@ module Bioshogi
     end
 
     def to_binary
-      mediator = @parser.mediator_for_image
-      @image_renderer = ImageRenderer.new(mediator, params)
+      xcontainer = @parser.xcontainer_for_image
+      @image_renderer = ImageRenderer.new(xcontainer, params)
       @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size, &params[:progress_callback])
       zos = Zip::OutputStream.write_buffer do |z|
         if v = params[:cover_text].presence
@@ -35,7 +35,7 @@ module Bioshogi
         tob("初期配置") { zip_write1(z, 0) }
         @parser.move_infos.each.with_index do |e, i|
           @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
-          mediator.execute(e[:input])
+          xcontainer.execute(e[:input])
           tob("#{i}/#{@parser.move_infos.size}") { zip_write1(z, i.next) }
           logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
         end

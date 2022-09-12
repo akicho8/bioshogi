@@ -28,9 +28,9 @@ str = "
 手数----指手---------消費時間--
 "
 info = Parser.parse(str)
-info.initial_mediator.turn_info                    # => #<駒落ち:0+0:△上手番>
-info.initial_mediator.turn_info.current_location   # => <white>
-info.initial_mediator.turn_info.location_call_name # => "上手"
+info.initial_xcontainer.turn_info                    # => #<駒落ち:0+0:△上手番>
+info.initial_xcontainer.turn_info.current_location   # => <white>
+info.initial_xcontainer.turn_info.location_call_name # => "上手"
 puts info.to_kif
 # >> "---------------------"
 # >> 棋戦：

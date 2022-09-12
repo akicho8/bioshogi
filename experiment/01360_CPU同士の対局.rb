@@ -1,17 +1,17 @@
 require "./setup"
 
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 loop do
-  hand = mediator.current_player.brain.create_all_hands(promoted_only: true).to_a.sample
-  mediator.execute(hand)
-  captured_soldier = mediator.opponent_player.executor.captured_soldier
+  hand = xcontainer.current_player.brain.create_all_hands(promoted_only: true).to_a.sample
+  xcontainer.execute(hand)
+  captured_soldier = xcontainer.opponent_player.executor.captured_soldier
   if captured_soldier && captured_soldier.piece.key == :king
     break
   end
 end
-puts mediator.to_s
-puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_s
+puts xcontainer.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> 後手の持駒：玉
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

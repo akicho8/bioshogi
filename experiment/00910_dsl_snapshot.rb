@@ -1,11 +1,11 @@
 require "./setup"
 
-mediator = Sequencer.new
-mediator.pattern = NotationDsl.define do
+xcontainer = Sequencer.new
+xcontainer.pattern = NotationDsl.define do
   snapshot "OK"
 end
-mediator.evaluate
-puts mediator.snapshots.collect(&:to_text)
+xcontainer.evaluate
+puts xcontainer.snapshots.collect(&:to_text)
 # >> ---------------------------------------- {:comment=>"OK"}
 # >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

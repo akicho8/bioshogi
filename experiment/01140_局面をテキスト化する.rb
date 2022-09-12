@@ -1,10 +1,10 @@
 
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_preset("平手")
-mediator.execute("７六歩")
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("平手")
+xcontainer.execute("７六歩")
+puts xcontainer
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

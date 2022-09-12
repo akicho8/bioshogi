@@ -4,9 +4,9 @@ module Bioshogi
       attr_accessor :params
       attr_accessor :eval_counter
 
-      # delegate :mediator, to: :player
-      # delegate :evaluate, to: :mediator
-      # delegate :place_on, to: :mediator
+      # delegate :xcontainer, to: :player
+      # delegate :evaluate, to: :xcontainer
+      # delegate :place_on, to: :xcontainer
       delegate :logger, :to => "Bioshogi", allow_nil: true
 
       # iterative_deepening のパラメータがそのまま来ている

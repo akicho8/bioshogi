@@ -6,8 +6,8 @@ module Bioshogi
       attr_reader :player
       attr_reader :params
 
-      delegate :mediator, :board, to: :player
-      delegate :players, to: :mediator
+      delegate :xcontainer, :board, to: :player
+      delegate :players, to: :xcontainer
 
       def self.default_params
         {}

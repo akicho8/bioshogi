@@ -7,13 +7,13 @@ info = Parser.parse("
 ▲４七金    △３一角    ▲６八銀右  △７五歩    ▲６七銀    △７六歩    ▲同銀右
 ")
 
-mediator = Mediator.new
-mediator.placement_from_preset(info.header["手合割"])
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset(info.header["手合割"])
 info.move_infos.each do |info|
   puts info[:input]
-  mediator.execute(info[:input])
+  xcontainer.execute(info[:input])
 end
-tp mediator.hand_logs.last.to_ki2
+tp xcontainer.hand_logs.last.to_ki2
 # >> ▲７六歩
 # >> △８四歩
 # >> ▲７八銀

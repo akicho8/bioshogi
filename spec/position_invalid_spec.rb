@@ -3,8 +3,8 @@ require "spec_helper"
 module Bioshogi
   describe Player do
     it "works" do
-      mediator = Mediator.new
-      mediator.placement_from_bod(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：
 +---+
 |v玉|
@@ -13,14 +13,14 @@ module Bioshogi
   先手の持駒：
 手数＝0
 EOT
-      assert { mediator.current_player.mate_advantage? == true  }
-      assert { mediator.opponent_player.mate_advantage? == true }
-      assert { mediator.position_invalid? == true               }
+      assert { xcontainer.current_player.mate_advantage? == true  }
+      assert { xcontainer.opponent_player.mate_advantage? == true }
+      assert { xcontainer.position_invalid? == true               }
     end
 
     it "works" do
-      mediator = Mediator.new
-      mediator.placement_from_bod(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：
 +---+
 |v玉|
@@ -30,9 +30,9 @@ EOT
   先手の持駒：
 手数＝0
 EOT
-      assert { mediator.current_player.mate_danger? == true     }
-      assert { mediator.current_player.mate_advantage? == false }
-      assert { mediator.position_invalid? == false              }
+      assert { xcontainer.current_player.mate_danger? == true     }
+      assert { xcontainer.current_player.mate_advantage? == false }
+      assert { xcontainer.position_invalid? == false              }
     end
   end
 end

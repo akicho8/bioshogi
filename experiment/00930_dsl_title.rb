@@ -5,7 +5,7 @@ sequencer.pattern = NotationDsl.define do
   title "(title)"
 end
 sequencer.evaluate
-puts sequencer.mediator_stack.mediator.to_text
+puts sequencer.xcontainer_stack.xcontainer.to_text
 # >> ---------------------------------------- {:title=>"(title)"}
 # >> 指し手: 
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

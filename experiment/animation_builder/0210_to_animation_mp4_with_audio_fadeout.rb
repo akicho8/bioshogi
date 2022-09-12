@@ -26,7 +26,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [0] transparent_layer create for d_piece_count_layer BEGIN
 # >> [AnimationMp4Builder] [video] [0] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [0] composite process
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [1] static layer
 # >> [AnimationMp4Builder] [video] [1] dynamic layer
 # >> [AnimationMp4Builder] [video] [1] transparent_layer create for d_move_layer BEGIN
@@ -38,7 +38,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [1] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] move: 0 / 12
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [2] static layer
 # >> [AnimationMp4Builder] [video] [2] dynamic layer
 # >> [AnimationMp4Builder] [video] [2] transparent_layer create for d_move_layer BEGIN
@@ -49,7 +49,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [2] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [2] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [3] static layer
 # >> [AnimationMp4Builder] [video] [3] dynamic layer
 # >> [AnimationMp4Builder] [video] [3] transparent_layer create for d_move_layer BEGIN
@@ -60,7 +60,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [3] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [3] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [4] static layer
 # >> [AnimationMp4Builder] [video] [4] dynamic layer
 # >> [AnimationMp4Builder] [video] [4] transparent_layer create for d_move_layer BEGIN
@@ -71,7 +71,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [4] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [4] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [5] static layer
 # >> [AnimationMp4Builder] [video] [5] dynamic layer
 # >> [AnimationMp4Builder] [video] [5] transparent_layer create for d_move_layer BEGIN
@@ -82,7 +82,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [5] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [5] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [6] static layer
 # >> [AnimationMp4Builder] [video] [6] dynamic layer
 # >> [AnimationMp4Builder] [video] [6] transparent_layer create for d_move_layer BEGIN
@@ -93,7 +93,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [6] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [6] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [7] static layer
 # >> [AnimationMp4Builder] [video] [7] dynamic layer
 # >> [AnimationMp4Builder] [video] [7] transparent_layer create for d_move_layer BEGIN
@@ -104,7 +104,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [7] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [7] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [8] static layer
 # >> [AnimationMp4Builder] [video] [8] dynamic layer
 # >> [AnimationMp4Builder] [video] [8] transparent_layer create for d_move_layer BEGIN
@@ -115,7 +115,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [8] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [8] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [9] static layer
 # >> [AnimationMp4Builder] [video] [9] dynamic layer
 # >> [AnimationMp4Builder] [video] [9] transparent_layer create for d_move_layer BEGIN
@@ -126,7 +126,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [9] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [9] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [10] static layer
 # >> [AnimationMp4Builder] [video] [10] dynamic layer
 # >> [AnimationMp4Builder] [video] [10] transparent_layer create for d_move_layer BEGIN
@@ -137,7 +137,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [10] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [10] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [11] static layer
 # >> [AnimationMp4Builder] [video] [11] dynamic layer
 # >> [AnimationMp4Builder] [video] [11] transparent_layer create for d_move_layer BEGIN
@@ -149,7 +149,7 @@ tp Media.format("_output.mp4")
 # >> [AnimationMp4Builder] [video] [11] composite process
 # >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] move: 10 / 12
-# >> [AnimationMp4Builder] [video] @mediator.execute OK
+# >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [12] static layer
 # >> [AnimationMp4Builder] [video] [12] dynamic layer
 # >> [AnimationMp4Builder] [video] [12] transparent_layer create for d_move_layer BEGIN

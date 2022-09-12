@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：桂
 +---------+
 | ・ ・v玉|
@@ -10,14 +10,14 @@ mediator.placement_from_bod(<<~EOT)
 +---------+
 先手の持駒：香2
 EOT
-player = mediator.player_at(:black)
+player = xcontainer.player_at(:black)
 player.soldiers_pressure_level  # => 3
 player.piece_box.pressure_level # => 2
 player.pressure_level           # => 5
 player.pressure_rate            # => 0.3125
 tp player.pressure_report
 
-player = mediator.player_at(:white)
+player = xcontainer.player_at(:white)
 player.soldiers_pressure_level  # => 0
 player.piece_box.pressure_level # => 1
 player.pressure_level           # => 1

@@ -1,16 +1,16 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.players.collect { |e| e.evaluator.score } # => [0, 0]
+xcontainer = Xcontainer.new
+xcontainer.players.collect { |e| e.evaluator.score } # => [0, 0]
 
-mediator.board.placement_from_human("▲９七歩")
-mediator.players.collect { |e| e.evaluator.score } # => [100, -100]
+xcontainer.board.placement_from_human("▲９七歩")
+xcontainer.players.collect { |e| e.evaluator.score } # => [100, -100]
 
-mediator.board.placement_from_human("▲９七歩 △１三歩")
-mediator.players.collect { |e| e.evaluator.score } # => [0, 0]
+xcontainer.board.placement_from_human("▲９七歩 △１三歩")
+xcontainer.players.collect { |e| e.evaluator.score } # => [0, 0]
 
-mediator = Mediator.new
-mediator.placement_from_bod <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -26,10 +26,10 @@ mediator.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：
 EOT
-puts mediator
-tp mediator.player_at(:black).evaluator.detail_score
-mediator.player_at(:black).evaluator.score # => 1000
-mediator.player_at(:white).evaluator.score # => -1000
+puts xcontainer
+tp xcontainer.player_at(:black).evaluator.detail_score
+xcontainer.player_at(:black).evaluator.score # => 1000
+xcontainer.player_at(:white).evaluator.score # => -1000
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

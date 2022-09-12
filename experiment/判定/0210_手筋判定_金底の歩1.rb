@@ -1,7 +1,7 @@
 require "../setup"
 
-mediator = Mediator.new
-mediator.placement_from_bod(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.placement_from_bod(<<~EOT)
 後手の持駒：歩
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -20,10 +20,10 @@ mediator.placement_from_bod(<<~EOT)
 
 先手番
 EOT
-mediator.params[:skill_monitor_enable] = true
-mediator.execute("11歩打")
-pp mediator.hand_logs.last
-pp mediator.hand_logs.last.skill_set.technique_infos.first.key == :"金底の歩"
+xcontainer.params[:skill_monitor_enable] = true
+xcontainer.execute("11歩打")
+pp xcontainer.hand_logs.last
+pp xcontainer.hand_logs.last.skill_set.technique_infos.first.key == :"金底の歩"
 # ~> -:26:in `<main>': undefined method `key' for nil:NilClass (NoMethodError)
 # >> #<Bioshogi::HandLog:0x00007fe2478352f8
 # >>  @candidate_soldiers=[],

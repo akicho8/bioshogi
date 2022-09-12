@@ -1,5 +1,5 @@
 module Bioshogi
-  concern :MediatorSerializeMethods do
+  concern :XcontainerSerializeMethods do
     def judgment_message
       "まで#{turn_info.display_turn}手で#{win_player.call_name}の勝ち"
     end
@@ -77,7 +77,7 @@ module Bioshogi
     end
 
     def to_yomiage(options = {})
-      MediatorSerializerCheckmateYomiage.new(self, options).to_s
+      XcontainerSerializerCheckmateYomiage.new(self, options).to_s
     end
 
     concerning :HistorySfenMethods do

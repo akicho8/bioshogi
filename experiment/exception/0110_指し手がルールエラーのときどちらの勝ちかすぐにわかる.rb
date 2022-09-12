@@ -1,14 +1,14 @@
 require "../setup"
 
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 begin
-  mediator.execute("▲76歩")
-  mediator.execute("△34歩")
-  mediator.execute("▲11角成")
+  xcontainer.execute("▲76歩")
+  xcontainer.execute("△34歩")
+  xcontainer.execute("▲11角成")
 rescue => error
-  puts error.mediator
-  error.mediator.turn_info.display_turn  # => 2
-  error.mediator.win_player.location.key # => :white
+  puts error.xcontainer
+  error.xcontainer.turn_info.display_turn  # => 2
+  error.xcontainer.win_player.location.key # => :white
 end
 
 # >> 後手の持駒：なし

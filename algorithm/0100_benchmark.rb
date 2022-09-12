@@ -21,8 +21,8 @@ require "./all_algorithms"
 
       row = {}
       row[:model] = klass.name
-      row.update(app.mediator.run_counts)
-      row.update(app.mediator.histogram)
+      row.update(app.xcontainer.run_counts)
+      row.update(app.xcontainer.histogram)
       row.update(sec: "%.2f" % (Time.now - start_time))
     end
     puts

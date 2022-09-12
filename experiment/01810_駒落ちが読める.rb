@@ -53,11 +53,11 @@ puts info.to_kif
 puts "-" * 80
 puts info.to_csa
 
-mediator = Mediator.new
-mediator.placement_from_preset("香落ち")
-puts mediator
-mediator.execute("３四歩")
-puts mediator
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("香落ち")
+puts xcontainer
+xcontainer.execute("３四歩")
+puts xcontainer
 
 # >> --------------------------------------------------------------------------------
 # >> 開始日時：1956/01/19

@@ -2,15 +2,15 @@
 require "./setup"
 
 Piece.each do |piece|
-  mediator = Mediator.new
-  player = mediator.player_at(:black)
+  xcontainer = Xcontainer.new
+  player = xcontainer.player_at(:black)
   soldier = Soldier.from_str("▲５五#{piece.name}")
   soldier.move_list(player.board).each do |v|
     player.board.safe_delete_on(v.place)
     s = "#{v.place}竜"
     player.soldier_create(s)
   end
-  puts mediator.board
+  puts xcontainer.board
 end
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

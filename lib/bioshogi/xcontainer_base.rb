@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :MediatorBase do
+  concern :XcontainerBase do
     attr_writer :board
 
     def before_run_process

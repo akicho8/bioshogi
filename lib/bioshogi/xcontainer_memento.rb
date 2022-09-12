@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :MediatorMemento do
+  concern :XcontainerMemento do
     def create_memento
       Marshal.load(Marshal.dump([board, players.collect(&:piece_box), turn_info]))
     end

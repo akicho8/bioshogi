@@ -91,10 +91,10 @@ module Bioshogi
     end
 
     def to_sfen
-      mediator = Mediator.new
-      mediator.placement_from_preset(key)
-      mediator.turn_info.handicap = handicap
-      mediator.to_short_sfen
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_preset(key)
+      xcontainer.turn_info.handicap = handicap
+      xcontainer.to_short_sfen
     end
 
     def to_short_sfen

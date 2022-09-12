@@ -9,16 +9,16 @@ module Bioshogi
 
       include HeaderBuilder
 
-      def mediator_run_once
-        mediator
+      def xcontainer_run_once
+        xcontainer
       end
 
-      def mediator_class
-        @parser_options[:mediator_class] || Mediator
+      def xcontainer_class
+        @parser_options[:xcontainer_class] || Xcontainer
       end
 
-      def mediator_new
-        mediator_class.new.tap do |e|
+      def xcontainer_new
+        xcontainer_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
                 :skill_monitor_enable,
                 :skill_monitor_technique_enable,
@@ -30,61 +30,61 @@ module Bioshogi
         end
       end
 
-      # 画像生成のための mediator の初期状態を返す
-      def mediator_for_image
-        mediator = Mediator.new
-        mediator.params.update({
+      # 画像生成のための xcontainer の初期状態を返す
+      def xcontainer_for_image
+        xcontainer = Xcontainer.new
+        xcontainer.params.update({
             :skill_monitor_enable           => false,
             :skill_monitor_technique_enable => false,
             :candidate_enable               => false,
             :validate_enable                => false,
           })
-        mediator_board_setup(mediator) # FIXME: これ、必要ない SFEN を生成したりして遅い
-        mediator
+        xcontainer_board_setup(xcontainer) # FIXME: これ、必要ない SFEN を生成したりして遅い
+        xcontainer
       end
 
-      def mediator
-        @mediator ||= mediator_new.tap do |e|
-          mediator_board_setup(e)
-          mediator_run_all(e)
+      def xcontainer
+        @xcontainer ||= xcontainer_new.tap do |e|
+          xcontainer_board_setup(e)
+          xcontainer_run_all(e)
         end
       end
 
-      # FIXME: mediator の最初の状態をコピーしておく
-      def initial_mediator
-        @initial_mediator ||= mediator_new.tap do |e|
-          mediator_board_setup(e)
+      # FIXME: xcontainer の最初の状態をコピーしておく
+      def initial_xcontainer
+        @initial_xcontainer ||= xcontainer_new.tap do |e|
+          xcontainer_board_setup(e)
         end
       end
 
-      def mediator_board_setup(mediator)
-        case1(mediator)
-        mediator.before_run_process # 最初の状態を記録
+      def xcontainer_board_setup(xcontainer)
+        case1(xcontainer)
+        xcontainer.before_run_process # 最初の状態を記録
       end
 
-      def case1(mediator)
-        players_piece_box_set(mediator)
+      def case1(xcontainer)
+        players_piece_box_set(xcontainer)
 
         if @board_source
-          mediator.board.placement_from_shape(@board_source)
+          xcontainer.board.placement_from_shape(@board_source)
         else
           preset_info = PresetInfo[header["手合割"]] || PresetInfo["平手"]
-          mediator.placement_from_preset(preset_info.key)
+          xcontainer.placement_from_preset(preset_info.key)
         end
 
         if force_location
-          mediator.turn_info.turn_base = force_location.code
+          xcontainer.turn_info.turn_base = force_location.code
         end
 
         if force_handicap
-          mediator.turn_info.handicap = force_handicap
+          xcontainer.turn_info.handicap = force_handicap
         end
       end
 
       # 持駒を反映する
-      def players_piece_box_set(mediator)
+      def players_piece_box_set(xcontainer)
         player_piece_boxes.each do |k, v|
-          mediator.player_at(k).piece_box.set(v)
+          xcontainer.player_at(k).piece_box.set(v)
         end
       end
 
@@ -100,7 +100,7 @@ module Bioshogi
       # 手合割
       def preset_info
         @preset_info ||= @force_preset_info
-        @preset_info ||= initial_mediator.board.preset_info
+        @preset_info ||= initial_xcontainer.board.preset_info
         @preset_info ||= PresetInfo[header["手合割"]]
         @preset_info ||= PresetInfo["平手"]
       end
@@ -114,20 +114,20 @@ module Bioshogi
         end
       end
 
-      def mediator_run_all(mediator)
-        # FIXME: ここらへんは mediator のなかで実行する
+      def xcontainer_run_all(xcontainer)
+        # FIXME: ここらへんは xcontainer のなかで実行する
         begin
           move_infos.each.with_index do |info, i|
             if @parser_options[:debug]
-              p mediator
+              p xcontainer
             end
             if @parser_options[:callback]
-              @parser_options[:callback].call(mediator)
+              @parser_options[:callback].call(xcontainer)
             end
-            if @parser_options[:turn_limit] && mediator.turn_info.display_turn >= @parser_options[:turn_limit]
+            if @parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @parser_options[:turn_limit]
               break
             end
-            mediator.execute(info[:input], used_seconds: used_seconds_at(i))
+            xcontainer.execute(info[:input], used_seconds: used_seconds_at(i))
           end
         rescue CommonError => error
           if v = @parser_options[:typical_error_case]
@@ -147,13 +147,13 @@ module Bioshogi
 
           # 力戦判定(適当)
           if ENV["BIOSHOGI_ENV"] != "test"
-            if mediator.turn_info.display_turn >= MIN_TURN
-              # if mediator.players.all? { |e| e.skill_set.power_battle? }
-              #   mediator.players.each do |e|
+            if xcontainer.turn_info.display_turn >= MIN_TURN
+              # if xcontainer.players.all? { |e| e.skill_set.power_battle? }
+              #   xcontainer.players.each do |e|
               #     e.skill_set.push(AttackInfo["乱戦"])
               #   end
               # else
-              mediator.players.each do |e|
+              xcontainer.players.each do |e|
                 e.skill_set.rikisen_check_process
               end
               # end
@@ -163,8 +163,8 @@ module Bioshogi
           # 両方が入玉していれば「相入玉」タグを追加する
           # この場合、両方同時に入玉しているかどうかは判定できない
           if NoteInfo.values.present?
-            if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["入玉"]) }
-              mediator.players.each do |player|
+            if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["入玉"]) }
+              xcontainer.players.each do |player|
                 player.skill_set.list_push(NoteInfo["相入玉"])
               end
             end
@@ -174,7 +174,7 @@ module Bioshogi
               # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
               if preset_info
                 if preset_info.special_piece
-                  mediator.players.each do |player|
+                  xcontainer.players.each do |player|
                     if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
                       player.skill_set.list_push(NoteInfo["居飛車"])
                     end
@@ -182,32 +182,32 @@ module Bioshogi
 
                   if true
                     # 両方居飛車なら相居飛車
-                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
-                      mediator.players.each do |player|
+                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
+                      xcontainer.players.each do |player|
                         player.skill_set.list_push(NoteInfo["相居飛車"])
                       end
                     end
 
                     # 両方振り飛車なら相振り
-                    if mediator.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                      mediator.players.each do |player|
+                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      xcontainer.players.each do |player|
                         player.skill_set.list_push(NoteInfo["相振り"])
                       end
                     end
 
                     # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-                    if player = mediator.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                      others = mediator.players - [player]
+                    if player = xcontainer.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                      others = xcontainer.players - [player]
                       if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
                         others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
-                        mediator.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
+                        xcontainer.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
                       end
                     end
                   end
 
                   # 大駒がない状態で勝ったら「背水の陣」
-                  mediator.players.each do |player|
-                    if player == mediator.win_player
+                  xcontainer.players.each do |player|
+                    if player == xcontainer.win_player
                       if player.stronger_piece_have_count.zero?
                         player.skill_set.list_push(NoteInfo["背水の陣"])
                       end
@@ -215,8 +215,8 @@ module Bioshogi
                   end
                 end
 
-                # if mediator.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
-                #   mediator.players.each do |player|
+                # if xcontainer.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
+                #   xcontainer.players.each do |player|
                 #     player.skill_set.list_push(NoteInfo["相振り飛車"])
                 #   end
                 # end
@@ -224,18 +224,18 @@ module Bioshogi
                 # 居玉判定
                 if true
                   # if preset_info.key == :"平手"
-                  mediator.players.each do |e|
+                  xcontainer.players.each do |e|
                     # 14手以上の対局で一度も動かずに終了した
                     done = false
                     if !done
-                      if mediator.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
+                      if xcontainer.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
                         done = true
                       end
                     end
                     if !done
-                      if mediator.outbreak_turn # 歩と角以外の交換があったか？
+                      if xcontainer.outbreak_turn # 歩と角以外の交換があったか？
                         v = e.king_first_moved_turn
-                        if v.nil? || v >= mediator.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
+                        if v.nil? || v >= xcontainer.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
                           done = true
                         end
                       end
@@ -245,8 +245,8 @@ module Bioshogi
                     end
                   end
                   # 両方居玉だったら備考に相居玉
-                  if mediator.players.all? { |e| e.skill_set.has_skill?(DefenseInfo["居玉"]) }
-                    mediator.players.each do |e|
+                  if xcontainer.players.all? { |e| e.skill_set.has_skill?(DefenseInfo["居玉"]) }
+                    xcontainer.players.each do |e|
                       e.skill_set.list_push(NoteInfo["相居玉"])
                     end
                   end
@@ -259,7 +259,7 @@ module Bioshogi
           begin
             # ヘッダーに埋める
             TacticInfo.each do |e|
-              mediator.players.each do |player|
+              xcontainer.players.each do |player|
                 list = player.skill_set.public_send(e.list_key).normalize
                 if v = list.presence
                   v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
@@ -292,7 +292,7 @@ module Bioshogi
 
       def judgment_message
         if e = last_action_info
-          e.judgment_message(mediator)
+          e.judgment_message(xcontainer)
         end
       end
 
@@ -386,7 +386,7 @@ module Bioshogi
       ################################################################################
 
       def image_renderer(options = {})
-        ImageRenderer.new(mediator, options)
+        ImageRenderer.new(xcontainer, options)
       end
 
       def to_image(options = {})
@@ -396,19 +396,19 @@ module Bioshogi
       ################################################################################
 
       def to_png(options = {})
-        ImageRenderer.new(mediator, options.merge(image_format: "png")).to_blob_binary
+        ImageRenderer.new(xcontainer, options.merge(image_format: "png")).to_blob_binary
       end
 
       def to_jpg(options = {})
-        ImageRenderer.new(mediator, options.merge(image_format: "jpg")).to_blob_binary
+        ImageRenderer.new(xcontainer, options.merge(image_format: "jpg")).to_blob_binary
       end
 
       def to_gif(options = {})
-        ImageRenderer.new(mediator, options.merge(image_format: "gif")).to_blob_binary
+        ImageRenderer.new(xcontainer, options.merge(image_format: "gif")).to_blob_binary
       end
 
       def to_webp(options = {})
-        ImageRenderer.new(mediator, options.merge(image_format: "webp")).to_blob_binary
+        ImageRenderer.new(xcontainer, options.merge(image_format: "webp")).to_blob_binary
       end
 
       ################################################################################

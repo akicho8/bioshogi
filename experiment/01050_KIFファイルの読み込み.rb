@@ -4,16 +4,16 @@ require "./setup"
 info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.header.to_h
 
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 info.move_infos.each{|info|
-  mediator.execute(info[:input])
+  xcontainer.execute(info[:input])
 }
-puts mediator
-tp mediator.to_kif_a
-tp mediator.to_ki2_a
+puts xcontainer
+tp xcontainer.to_kif_a
+tp xcontainer.to_ki2_a
 
-puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> |----------+----------------------------------|
 # >> |   対局ID | 333                              |
 # >> | 開始日時 | 2010/12/14 09:00:00              |

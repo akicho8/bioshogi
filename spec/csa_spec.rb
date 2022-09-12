@@ -3,18 +3,18 @@ require "spec_helper"
 module Bioshogi
   describe do
     it "5341NK だけでは判断が難しい例" do
-      mediator = Mediator.new
-      mediator.placement_from_preset("平手")
-      mediator.execute("７六歩")
-      mediator.execute("３四歩")
-      mediator.execute("７七桂")
-      mediator.execute("８四歩")
-      mediator.execute("６五桂")
-      mediator.execute("３二金")
-      mediator.execute("５三桂")
-      mediator.execute("８五歩")
-      mediator.execute("5341NK") # 元位置の 53 の地点の駒を調べてもらい、成っていないのであれば NK は「４一桂成」で、成っていれば「４一成銀」になる
-      expect(mediator.to_s).to eq(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_preset("平手")
+      xcontainer.execute("７六歩")
+      xcontainer.execute("３四歩")
+      xcontainer.execute("７七桂")
+      xcontainer.execute("８四歩")
+      xcontainer.execute("６五桂")
+      xcontainer.execute("３二金")
+      xcontainer.execute("５三桂")
+      xcontainer.execute("８五歩")
+      xcontainer.execute("5341NK") # 元位置の 53 の地点の駒を調べてもらい、成っていないのであれば NK は「４一桂成」で、成っていれば「４一成銀」になる
+      expect(xcontainer.to_s).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -35,10 +35,10 @@ EOT
     end
 
     it "基本" do
-      mediator = Mediator.new
-      mediator.placement_from_preset("平手")
-      mediator.execute("7776FU")
-      expect(mediator.to_s).to eq(<<~EOT)
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_preset("平手")
+      xcontainer.execute("7776FU")
+      expect(xcontainer.to_s).to eq(<<~EOT)
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

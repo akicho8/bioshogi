@@ -1,8 +1,8 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :MediatorExecutor do
-    # MediatorSimple では使ってないメソッド
+  concern :XcontainerExecutor do
+    # XcontainerSimple では使ってないメソッド
     concerning :HumanMethods do
       included do
         delegate :to_kif_a, :to_ki2_a, :to_kif_oneline, to: :hand_logs

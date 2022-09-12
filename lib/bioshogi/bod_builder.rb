@@ -6,8 +6,8 @@ module Bioshogi
     include KakinokiBuilder
 
     def to_s
-      @parser.mediator_run_once
-      @parser.mediator.to_bod(@params)
+      @parser.xcontainer_run_once
+      @parser.xcontainer.to_bod(@params)
     end
   end
 end

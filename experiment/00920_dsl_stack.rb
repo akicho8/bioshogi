@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Sequencer.new
-mediator.pattern = NotationDsl.define do
+xcontainer = Sequencer.new
+xcontainer.pattern = NotationDsl.define do
   board "平手"
   mov "▲７六歩"
   snapshot "様子を伺う"
@@ -16,8 +16,8 @@ mediator.pattern = NotationDsl.define do
   snapshot "元に戻る"
 end
 
-mediator.evaluate
-puts mediator.snapshots.collect(&:to_text)
+xcontainer.evaluate
+puts xcontainer.snapshots.collect(&:to_text)
 # >> ---------------------------------------- {:comment=>"様子を伺う"}
 # >> 指し手: ▲７六歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

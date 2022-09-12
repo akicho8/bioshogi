@@ -1,12 +1,12 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class MediatorStack
-    attr_reader :mediator
+  class XcontainerStack
+    attr_reader :xcontainer
 
-    def initialize(mediator = Mediator.new)
+    def initialize(xcontainer = Xcontainer.new)
       @stack = []
-      @mediator = mediator
+      @xcontainer = xcontainer
     end
 
     def context_new(&block)
@@ -19,15 +19,15 @@ module Bioshogi
     end
 
     def stack_push
-      @stack.push(@mediator)
-      @mediator = @mediator.deep_dup
+      @stack.push(@xcontainer)
+      @xcontainer = @xcontainer.deep_dup
     end
 
     def stack_pop
       if @stack.empty?
         raise MementoStackEmpty
       end
-      @mediator = @stack.pop
+      @xcontainer = @stack.pop
     end
   end
 end

@@ -1,8 +1,8 @@
 require "../setup"
 
-error = Mediator.facade(init: "", execute: ["55飛"]) rescue $!
+error = Xcontainer.facade(init: "", execute: ["55飛"]) rescue $!
 error.input.input.values.join   # => "55飛"
-puts error.mediator
+puts error.xcontainer
 puts error.message
 
 # >> 後手の持駒：なし

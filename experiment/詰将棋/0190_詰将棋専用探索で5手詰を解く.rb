@@ -5,10 +5,10 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STD
 # Board.promotable_disable
 Board.dimensiton_change([3, 9])
 
-mediator = Mediator.new
-mediator.player_at(:black).pieces_add("銀金")
-# mediator.player_at(:white).pieces_add("飛2")
-mediator.board.placement_from_shape <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.player_at(:black).pieces_add("銀金")
+# xcontainer.player_at(:white).pieces_add("飛2")
+xcontainer.board.placement_from_shape <<~EOT
 +---------+
 |v金 ・v玉|
 |v金 ・ ・|
@@ -17,23 +17,23 @@ mediator.board.placement_from_shape <<~EOT
 +---------+
 EOT
 
-# tp mediator.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
+# tp xcontainer.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
 mate_records = []
 mate_proc = -> player, score, hand_route {
   mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
 }
 
-# brain = mediator.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+# brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
 # records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc)
 # tp Brain.human_format(records)
 
-# player = mediator.player_at(:black)
+# player = xcontainer.player_at(:black)
 # object = Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 # # object = Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 5, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 # tp object.dive
 
-brain = mediator.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
+brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
 records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc, log_scope: "▲１二銀打 △１二玉(11) ▲２一香成(23)")
 # records = records.find_all {|e| e[:black_side_score] >= 1 }
 tp Brain.human_format(records)

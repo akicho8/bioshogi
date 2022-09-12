@@ -1,7 +1,7 @@
 require "./setup"
 
 info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e")
-info.mediator.to_history_sfen           # => 
+info.xcontainer.to_history_sfen           # => 
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:83:in `raise_error': 【反則】▲２五歩(27)としましたが２七から２五に移動することはできません (Bioshogi::SoldierWarpError)
 # ~> 手番: 先手
 # ~> 指し手: 2e2g
@@ -25,13 +25,13 @@ info.mediator.to_history_sfen           # =>
 # ~> 先手番
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:33:in `execute'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:20:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/mediator_executor.rb:11:in `block in execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/mediator_executor.rb:10:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/mediator_executor.rb:10:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:187:in `block in mediator_run_all'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer_executor.rb:11:in `block in execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer_executor.rb:10:in `each'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer_executor.rb:10:in `execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:187:in `block in xcontainer_run_all'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:177:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:177:in `mediator_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:131:in `block in mediator'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:177:in `xcontainer_run_all'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:131:in `block in xcontainer'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:129:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:129:in `mediator'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:129:in `xcontainer'
 # ~> 	from -:4:in `<main>'

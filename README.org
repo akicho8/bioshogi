@@ -4,16 +4,16 @@
 [[https://www.shogi-extend.com/cpu-battle][デモ]]
 
 #+BEGIN_SRC ruby
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 [
   "７六歩", "８四歩", "７八金", "３二金",
   "２六歩", "８五歩", "７七角", "３四歩",
   "８八銀", "７七角成",
 ].each{|input|
-  mediator.execute(input)
+  xcontainer.execute(input)
 }
-puts mediator.board
-pp mediator.to_kif_a
+puts xcontainer.board
+pp xcontainer.to_kif_a
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一
@@ -52,17 +52,17 @@ info[:piece].name # => "歩"
 *** AI同士の対局 (ルールを守った上でランダムに指してみる)
 
 #+BEGIN_SRC ruby
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 loop do
-  hand = mediator.current_player.brain.create_all_hands.sample
-  mediator.execute(hand)
-  captured_soldier = mediator.opponent_player.executor.captured_soldier
+  hand = xcontainer.current_player.brain.create_all_hands.sample
+  xcontainer.execute(hand)
+  captured_soldier = xcontainer.opponent_player.executor.captured_soldier
   if executor.captured_soldier && executor.captured_soldier.piece.key == :king
     break
   end
 end
 
-p mediator
+p xcontainer
 # >> 78手目: ▽後手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -79,7 +79,7 @@ p mediator
 # >> ▲先手の持駒:歩 玉
 # >> ▽後手の持駒:歩
 
-puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲３八金(39) ▽４六歩打 ▲１二歩打 ▽３六歩(35) ▲５三桂成(65)
 # >> ▲４八玉 ▽５二金 ▲５六歩 ▽６二飛 ▲１六歩 ▽７二飛 ▲５九玉 ▽６二玉
 # >> ▲２六歩 ▽４二金 ▲４八飛 ▽５四歩 ▲７八銀 ▽５一金 ▲７六歩 ▽５五歩
@@ -116,16 +116,16 @@ pp info.header
     棋譜を入力していく
 
 #+BEGIN_SRC ruby
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 info.move_infos.each{|info|
-  mediator.execute(info[:input])
+  xcontainer.execute(info[:input])
 }
 #+END_SRC
 
     最終形
 
 #+BEGIN_SRC ruby
-puts mediator.inspect
+puts xcontainer.inspect
 # >> 147:▲先手番
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -146,7 +146,7 @@ puts mediator.inspect
     KIF形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲７六歩(77) ▽８四歩(83) ▲７八金(69) ▽３二金(41) ▲２六歩(27) ▽８五歩(84) ▲７七角(88) ▽３四歩(33)
 # >> ▲８八銀(79) ▽７七角成(22) ▲７七銀(88) ▽４二銀(31) ▲３八銀(39) ▽７二銀(71) ▲９六歩(97) ▽９四歩(93)
 # >> ▲４六歩(47) ▽６四歩(63) ▲４七銀(38) ▽６三銀(72) ▲６八玉(59) ▽３三銀(42) ▲５八金(49) ▽５四銀(63)
@@ -171,7 +171,7 @@ puts mediator.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join
     KI2形式の棋譜確認
 
 #+BEGIN_SRC ruby
-puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts xcontainer.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
 # >> ▲７六歩 ▽８四歩 ▲７八金 ▽３二金 ▲２六歩 ▽８五歩 ▲７七角 ▽３四歩
 # >> ▲８八銀 ▽７七角成 ▲同銀 ▽４二銀 ▲３八銀 ▽７二銀 ▲９六歩 ▽９四歩
 # >> ▲４六歩 ▽６四歩 ▲４七銀 ▽６三銀 ▲６八玉 ▽３三銀 ▲５八金 ▽５四銀
@@ -196,13 +196,13 @@ puts mediator.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join
 *** 駒が動ける場所
 
 #+BEGIN_SRC ruby
-mediator = Mediator.start
-player = mediator.player_at(:black)
+xcontainer = Xcontainer.start
+player = xcontainer.player_at(:black)
 player.soldier_create("５五馬")
 player.soldiers.first.move_list.each{|place|
   player.soldier_create("#{place}馬")
 }
-puts mediator.board
+puts xcontainer.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|一
@@ -288,14 +288,14 @@ BoardParser.parse(board)
 *** KIF形式の盤面表示と盤面の駒の確認
 
 #+BEGIN_SRC ruby
-mediator = Mediator.start
-mediator.piece_plot
-puts mediator.board
+xcontainer = Xcontainer.start
+xcontainer.piece_plot
+puts xcontainer.board
 
-mediator.board["５五"]      # => nil
-mediator.board["８八"].name # => "▲８八角"
-mediator.board["２八"].name # => "▲２八飛"
-mediator.board["５九"].name # => "▲５九玉"
+xcontainer.board["５五"]      # => nil
+xcontainer.board["８八"].name # => "▲８八角"
+xcontainer.board["２八"].name # => "▲２八飛"
+xcontainer.board["５九"].name # => "▲５九玉"
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -314,17 +314,17 @@ mediator.board["５九"].name # => "▲５九玉"
 
 #+BEGIN_SRC ruby
 Board.dimensiton_change([5, 5])
-mediator = Mediator.start
+xcontainer = Xcontainer.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
-mediator.players.each do |player|
+xcontainer.players.each do |player|
   _soldiers = soldiers.collect{|s|
     s = Soldier.from_str(s)
     s.merge(place: s[:place].flip_if_white(player.location))
   }
   player.soldier_create(_soldiers)
 end
-mediator.piece_box_clear
-p mediator
+xcontainer.piece_box_clear
+p xcontainer
 # >> 1手目: ▲先手番
 # >>   ５ ４ ３ ２ １
 # >> +---------------+
@@ -337,16 +337,16 @@ p mediator
 # >> ▲先手の持駒:
 # >> ▽後手の持駒:
 
-mediator.execute("２四銀")
-mediator.execute("４二銀")
-mediator.execute("３四角")
-mediator.execute("３二角")
-mediator.execute("２三銀")
-mediator.execute("４三銀")
-mediator.execute("１二銀")
-mediator.execute("同金")
-mediator.execute("同角")
-p mediator
+xcontainer.execute("２四銀")
+xcontainer.execute("４二銀")
+xcontainer.execute("３四角")
+xcontainer.execute("３二角")
+xcontainer.execute("２三銀")
+xcontainer.execute("４三銀")
+xcontainer.execute("１二銀")
+xcontainer.execute("同金")
+xcontainer.execute("同角")
+p xcontainer
 # >> 10手目: ▽後手番
 # >>   ５ ４ ３ ２ １
 # >> +---------------+
@@ -367,10 +367,10 @@ p mediator
 #+BEGIN_SRC ruby
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do
-  mediator = Mediator.new
-  mediator.board.placement_from_human("▲３三歩 △１一歩")
-  puts mediator
-  pp Diver::NegaAlphaDiver.run(player: mediator.player_at(:black), depth_max: 1)
+  xcontainer = Xcontainer.new
+  xcontainer.board.placement_from_human("▲３三歩 △１一歩")
+  puts xcontainer
+  pp Diver::NegaAlphaDiver.run(player: xcontainer.player_at(:black), depth_max: 1)
 end
 # >> 1手目: ▲先手番
 # >>   ３ ２ １
@@ -436,14 +436,14 @@ puts Parser.file_parse("microcosmos.kif").to_bod
 *** 詰みチェック
 
 #+BEGIN_EXAMPLE
-mediator = Mediator.new
-mediator.placement_from_preset("平手")
-brain = mediator.opponent_player.brain
+xcontainer = Xcontainer.new
+xcontainer.placement_from_preset("平手")
+brain = xcontainer.opponent_player.brain
 
 require 'active_support/core_ext/benchmark'
 Benchmark.ms { brain.iterative_deepening(depth_max_range: 0..0).none? }           # => 18.85599992237985
-Benchmark.ms { mediator.opponent_player.create_all_hands(legal_only: true).any? } # => 0.674000009894371
-Benchmark.ms { mediator.opponent_player.create_all_hands(legal_only: true).to_a } # => 19.73800011910498
+Benchmark.ms { xcontainer.opponent_player.create_all_hands(legal_only: true).any? } # => 0.674000009894371
+Benchmark.ms { xcontainer.opponent_player.create_all_hands(legal_only: true).to_a } # => 19.73800011910498
 #+END_EXAMPLE
 
 ** 仕様
@@ -679,7 +679,7 @@ Web Page：(Web Page)
     | 相対座標 | vector   |
     | 先手     | black    |
     | 後手     | white    |
-    | 対局室   | mediator |
+    | 対局室   | xcontainer |
 
 ** コマンドラインツール
 

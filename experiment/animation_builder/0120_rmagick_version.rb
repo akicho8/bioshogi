@@ -5,16 +5,16 @@ sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w 
 sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
 
-mediator = Mediator.new         # MediatorFast にする
-mediator.params.update({
+xcontainer = Xcontainer.new         # XcontainerFast にする
+xcontainer.params.update({
     :skill_monitor_enable           => false,
     :skill_monitor_technique_enable => false,
     :candidate_enable               => false,
     :validate_enable                => false,
   })
-info.mediator_board_setup(mediator)
-image_renderer = ImageRenderer.new(mediator, viewpoint: "black")
-# puts mediator
+info.xcontainer_board_setup(xcontainer)
+image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
+# puts xcontainer
 
 list = Magick::ImageList.new
 # list.ticks_per_second           # =>
@@ -22,7 +22,7 @@ list = Magick::ImageList.new
 image_renderer.render
 list.concat([image_renderer.canvas])
 info.move_infos.each.with_index(1) do |e, i|
-  mediator.execute(e[:input])
+  xcontainer.execute(e[:input])
   image_renderer.render
   list.concat([image_renderer.canvas])
   # puts image_renderer.to_tempfile
@@ -61,7 +61,7 @@ list.each.with_index do |e, i|
   e.write("_#{i}.png")
 end
 
-# puts mediator
+# puts xcontainer
 # >> _a.png PNG 1200x630 1200x630+0+0 16-bit Grayscale Gray 35105B 0.000u 0:00.000
 # >> [ PNG 1200x630 1200x630+0+0 PseudoClass 32c 16-bit 34kb,
 # >> _3.gif  1x1 1200x630+-1+-1 PseudoClass 33c 16-bit,

@@ -1,7 +1,7 @@
 require "./setup"
 
-mediator = Mediator.new
-mediator.board.placement_from_shape(<<~EOT)
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape(<<~EOT)
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *    -KA *
 P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -12,7 +12,7 @@ P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
 P8 *  *  *  *  *  *  *  *  *
 P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
-puts mediator
+puts xcontainer
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

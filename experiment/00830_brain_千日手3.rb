@@ -3,8 +3,8 @@ require "./setup"
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 Board.dimensiton_change([2, 5])
-mediator = Mediator.new
-mediator.board.placement_from_shape <<~EOT
+xcontainer = Xcontainer.new
+xcontainer.board.placement_from_shape <<~EOT
 +------+
 |v飛 ・|
 | ・ ・|
@@ -15,27 +15,27 @@ mediator.board.placement_from_shape <<~EOT
 
 1000.times do
   puts "-" * 80
-  puts mediator
+  puts xcontainer
 
-  info = mediator.current_player.brain.diver_dive(depth_max: 1)
+  info = xcontainer.current_player.brain.diver_dive(depth_max: 1)
   p info
   hand = info[:hand]
   puts "指し手: #{hand}"
-  tp mediator.one_place_map
-  mediator.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+  tp xcontainer.one_place_map
+  xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 end
 
-# mediator.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
-# mediator.execute("△23飛", executor_class: PlayerExecutorWithoutMonitor)
-# mediator.execute("▲19飛", executor_class: PlayerExecutorWithoutMonitor)
-# mediator.execute("△21飛", executor_class: PlayerExecutorWithoutMonitor)
+# xcontainer.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
+# xcontainer.execute("△23飛", executor_class: PlayerExecutorWithoutMonitor)
+# xcontainer.execute("▲19飛", executor_class: PlayerExecutorWithoutMonitor)
+# xcontainer.execute("△21飛", executor_class: PlayerExecutorWithoutMonitor)
 #
-# # mediator.execute("▲１七飛", executor_class: PlayerExecutorWithoutMonitor)
-# # tp mediator.one_place_map
-# # mediator.player_at(:black).evaluator.score  # => 0
-# # mediator.player_at(:black).evaluator.score2 # => 0
+# # xcontainer.execute("▲１七飛", executor_class: PlayerExecutorWithoutMonitor)
+# # tp xcontainer.one_place_map
+# # xcontainer.player_at(:black).evaluator.score  # => 0
+# # xcontainer.player_at(:black).evaluator.score2 # => 0
 #
-# mediator.player_at(:black).brain.diver_dive(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
+# xcontainer.player_at(:black).brain.diver_dive(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
 # ~> -:22:in `block in <main>': no implicit conversion of Symbol into Integer (TypeError)
 # ~> 	from -:16:in `times'
 # ~> 	from -:16:in `<main>'

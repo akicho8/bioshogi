@@ -4,10 +4,10 @@ module Bioshogi
   module HybridSequencer
     def self.execute(pattern)
       if pattern[:notation_dsl]
-        mediator = Sequencer.new
-        mediator.pattern = pattern[:notation_dsl]
-        mediator.evaluate
-        mediator.snapshots
+        xcontainer = Sequencer.new
+        xcontainer.pattern = pattern[:notation_dsl]
+        xcontainer.evaluate
+        xcontainer.snapshots
       else
         Simulator.run(pattern)
       end

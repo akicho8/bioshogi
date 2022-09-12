@@ -25,7 +25,7 @@ module Bioshogi
    1 ４二玉(51)
 "
       info = Parser.parse(str)
-      turn_info = info.initial_mediator.turn_info
+      turn_info = info.initial_xcontainer.turn_info
       assert { turn_info.current_location.key == :white }
       assert { turn_info.location_call_name   == "上手" }
       expect(info.to_kif).to eq(<<~EOT)

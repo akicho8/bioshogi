@@ -25,8 +25,8 @@ module Bioshogi
           logger.info { "最後に追加するフレーム数(end_pages): #{end_pages}" }
           logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
-          @mediator = @parser.mediator_for_image
-          @image_renderer = ImageRenderer.new(@mediator, params)
+          @xcontainer = @parser.xcontainer_for_image
+          @image_renderer = ImageRenderer.new(@xcontainer, params)
 
           if factory_method_key == "is_factory_method_rmagick"
             @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
@@ -44,7 +44,7 @@ module Bioshogi
 
               @parser.move_infos.each.with_index do |e, i|
                 @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
-                @mediator.execute(e[:input])
+                @xcontainer.execute(e[:input])
                 tob("#{i}/#{@parser.move_infos.size}") { list << @image_renderer.next_build }
                 logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
               end
@@ -92,7 +92,7 @@ module Bioshogi
 
             @parser.move_infos.each.with_index do |e, i|
               @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
-              @mediator.execute(e[:input])
+              @xcontainer.execute(e[:input])
               tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
               logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
             end

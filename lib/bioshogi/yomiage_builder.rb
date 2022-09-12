@@ -10,11 +10,11 @@ module Bioshogi
     end
 
     def to_s
-      @parser.mediator.to_yomiage(@params)
+      @parser.xcontainer.to_yomiage(@params)
     end
 
     def to_a
-      @parser.mediator.to_yomiage_list(@params)
+      @parser.xcontainer.to_yomiage_list(@params)
     end
   end
 end
