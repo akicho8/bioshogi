@@ -60,7 +60,7 @@ module Bioshogi
 
     def to_h
       TacticInfo.inject({}) do |a, e|
-        a.merge(e.key => public_send(e.list_key).normalize.collect(&:key))
+        a.merge(e.key => public_send(e.list_key).normalize.collect(&:name))
       end
     end
 

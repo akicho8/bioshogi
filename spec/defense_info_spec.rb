@@ -2,6 +2,15 @@ require "spec_helper"
 
 module Bioshogi
   describe DefenseInfo do
+    describe "keyとnameは異なる" do
+      it "key" do
+        assert { DefenseInfo["ビッグ４(振)"].key == :"ビッグ４(振)" }
+      end
+      it "name" do
+        assert { DefenseInfo["ビッグ４(振)"].name == "ビッグ４" }
+      end
+    end
+
     it "ある" do
       assert { DefenseInfo["アヒル囲い"] }
     end
@@ -36,20 +45,20 @@ module Bioshogi
       it "囲いチェック", :if => Bioshogi.config.skill_monitor_enable do
         info = Parser.file_parse("#{__dir__}/files/矢倉.kif")
         assert { info.to_kif.include?(<<~EOT) }
-開始日時：1981/05/15 09:00:00
-棋戦：名将戦
-場所：東京「将棋会館」
-手合割：平手
-先手：加藤一二三
-後手：原田泰夫
-戦型：矢倉
-先手の戦型：四手角
-後手の戦型：四手角
-先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
-先手の手筋：垂れ歩, 継ぎ桂, ふんどしの桂
-先手の備考：居飛車
-後手の備考：居飛車
-  EOT
+        開始日時：1981/05/15 09:00:00
+        棋戦：名将戦
+        場所：東京「将棋会館」
+        手合割：平手
+        先手：加藤一二三
+        後手：原田泰夫
+        戦型：矢倉
+        先手の戦型：四手角
+        後手の戦型：四手角
+        先手の囲い：総矢倉, 菱矢倉, へこみ矢倉
+        先手の手筋：垂れ歩, 継ぎ桂, ふんどしの桂
+        先手の備考：居飛車
+        後手の備考：居飛車
+        EOT
       end
     end
   end

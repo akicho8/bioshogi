@@ -29,6 +29,10 @@ module Bioshogi
       assert { AttackInfo["UFO銀"].sample_kif_file.exist? }
     end
 
+    it "sample_kif_info" do
+      assert { AttackInfo["UFO銀"].sample_kif_info }
+    end
+
     it "hit_turn" do
       assert { AttackInfo["UFO銀"].hit_turn == 23 }
     end

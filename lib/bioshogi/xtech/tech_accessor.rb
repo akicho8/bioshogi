@@ -31,6 +31,18 @@ module Bioshogi
       end
     end
 
+    # 必ず alternate_name に反応するようにしておく
+    def alternate_name
+      if defined?(super)
+        super
+      end
+    end
+
+    # key と name は異なる
+    def name
+      alternate_name || super
+    end
+
     def parent
       if super
         @parent ||= self.class.fetch(super)
@@ -117,6 +129,14 @@ module Bioshogi
 
     def sample_kif_file
       Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
+    end
+
+    def sample_kif_info(options = {})
+      Parser.file_parse(sample_kif_file, options)
+    end
+
+    def sample_kif_or_ki2_file
+      Pathname.glob("#{__dir__}/#{tactic_info.name}/#{key}.{kif,ki2}").first
     end
 
     # def sample_any_files

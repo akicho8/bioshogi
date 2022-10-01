@@ -1195,6 +1195,16 @@ EOT
 EOT
       },
       {
+        key: "ビッグ４(振)",
+        body: <<~EOT,
++---------------------------+
+| ・ ・ ・ ・ ・ ・@銀 銀 ・|七
+| ・ ・ ・ ・ ・ ・@金@金 香|八
+| ・ ・ ・ ・ ・ ・ ・ 桂 玉|九
++---------------------------+
+EOT
+      },
+      {
         key: "文鎮囲い",
         body: <<~EOT,
 +---------------------------+
@@ -4327,3 +4337,6 @@ EOT
     delegate :sorted_soldiers, :location_split, to: :board_parser
   end
 end
+# ~> -:28:in `<class:ShapeInfo>': uninitialized constant Bioshogi::ShapeInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:27:in `<module:Bioshogi>'
+# ~> 	from -:26:in `<main>'

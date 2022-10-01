@@ -2,7 +2,7 @@ require "./setup"
 
 rows = []
 TacticInfo.all_elements.each do |e|
-  file = Pathname.glob("#{__dir__}/../lib/bioshogi/#{e.tactic_info.name}/#{e.key}.{kif,ki2}").first
+  file = e.sample_kif_or_ki2_file
   row = { "合致" => "", key: e.key, file: file.basename.to_s }
   if e.tactic_info.key == :attack || true
     if file
@@ -26,6 +26,3 @@ TacticInfo.all_elements.each do |e|
 end
 p rows.all? { |e| e["合致"].present? }      # => 
 tp rows
-# ~> -:6:in `block in <main>': undefined method `basename' for nil:NilClass (NoMethodError)
-# ~> 	from -:4:in `each'
-# ~> 	from -:4:in `<main>'
