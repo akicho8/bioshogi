@@ -127,14 +127,6 @@ module Bioshogi
       handicap ? 1 : 0
     end
 
-    concerning :DelegateToShapeInfoMethods do
-      included do
-        delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info
-      end
-
-      def shape_info
-        ShapeInfo.lookup(key)
-      end
-    end
+    include ShapeInfoRelation
   end
 end

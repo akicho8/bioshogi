@@ -56,7 +56,7 @@ module Bioshogi
       },
     ]
 
-    include PresetInfo::DelegateToShapeInfoMethods
-    include DefenseInfo::AttackInfoSharedMethods
+    include ShapeInfoRelation
+    include TechAccessor
   end
 end

@@ -17,6 +17,7 @@ require "kconv"                 # for toeuc
 
 require "table_format"
 require "memory_record"
+require "tree_support"
 
 module Bioshogi
   include ActiveSupport::Configurable
@@ -64,18 +65,32 @@ require_relative "bioshogi/board_parser/sfen_board_parser"
 
 require_relative "bioshogi/kakinoki_board_formatter"
 require_relative "bioshogi/csa_board_formatter"
+require_relative "bioshogi/xtech/board_piller_methods"
+require_relative "bioshogi/board_piece_counts_methods"
 require_relative "bioshogi/board"
 
+require_relative "bioshogi/xtech/shape_info"
+require_relative "bioshogi/xtech/shape_info_relation"
+
+require_relative "bioshogi/xtech/tactic_hit_turn_table"
+require_relative "bioshogi/xtech/distribution_ratio"
+require_relative "bioshogi/xtech/tech_accessor"
+
+require_relative "bioshogi/xtech/sect_info"
+require_relative "bioshogi/xtech/defense_group_info"
+require_relative "bioshogi/xtech/defense_info"
+require_relative "bioshogi/xtech/attack_info"
+require_relative "bioshogi/xtech/technique_info"
+require_relative "bioshogi/xtech/note_info"
+require_relative "bioshogi/xtech/technique_matcher_info"
+require_relative "bioshogi/xtech/skill_set"
+require_relative "bioshogi/xtech/tactic_info"
+require_relative "bioshogi/xtech/tactic_urls_info"
+require_relative "bioshogi/xtech/skill_monitor"
+
+require_relative "bioshogi/preset_info"
+
 require_relative "bioshogi/xtra_pattern"
-require_relative "bioshogi/defense_info"
-require_relative "bioshogi/attack_info"
-require_relative "bioshogi/technique_info"
-require_relative "bioshogi/note_info"
-require_relative "bioshogi/technique_matcher_info"
-require_relative "bioshogi/skill_set"
-require_relative "bioshogi/tactic_info"
-require_relative "bioshogi/tactic_urls_info"
-require_relative "bioshogi/skill_monitor"
 require_relative "bioshogi/player"
 require_relative "bioshogi/input_parser"
 require_relative "bioshogi/input"
@@ -107,11 +122,6 @@ require_relative "bioshogi/notation_dsl"
 require_relative "bioshogi/hybrid_sequencer"
 require_relative "bioshogi/sequencer"
 require_relative "bioshogi/simulator"
-
-require_relative "bioshogi/shape_info"
-require_relative "bioshogi/preset_info"
-require_relative "bioshogi/sect_info"
-require_relative "bioshogi/defense_group_info"
 
 require_relative "bioshogi/evaluator"
 require_relative "bioshogi/diver"

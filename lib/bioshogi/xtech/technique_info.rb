@@ -19,7 +19,7 @@ module Bioshogi
       { wars_code: nil, key: "銀冠の小部屋", trigger_piece_key: nil,                                                    parent: nil, other_parents: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_safe: nil, pawn_have_safe: nil, cold_war: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  },
     ]
 
-    include PresetInfo::DelegateToShapeInfoMethods
-    include DefenseInfo::AttackInfoSharedMethods
+    include ShapeInfoRelation
+    include TechAccessor
   end
 end

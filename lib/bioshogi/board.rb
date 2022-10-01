@@ -1,8 +1,5 @@
 # frozen-string-literal: true
 
-require_relative "board_piller_methods"
-require_relative "board_piece_counts_methods"
-
 module Bioshogi
   class Board
     class << self
