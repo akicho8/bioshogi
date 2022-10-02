@@ -34,9 +34,9 @@ end
 
 ################################################################################
 
-desc "ダンダースコアで始まるファイルを全削除"
+desc "experiment以下のダンダースコアで始まるファイルを全削除"
 task :clean do
-  system %(find #{__dir__} -name "_*" -exec rm -f {} \\;)
+  system %(fd -u -g '_*' experiment -x rm -f)
 end
 
 desc "戦法テスト"
