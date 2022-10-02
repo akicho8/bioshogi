@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   describe DefenseInfo do
-    describe "keyとnameは異なる" do
+    xdescribe "keyとnameは異なる" do
       it "key" do
         assert { DefenseInfo["ビッグ４(振)"].key == :"ビッグ４(振)" }
       end

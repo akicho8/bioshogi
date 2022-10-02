@@ -15,6 +15,11 @@ RSpec::Core::RakeTask.new("spec:animation") do |t|
   t.rspec_opts = "-f d --fail-fast -t animation"
 end
 
+desc "戦法判定"
+RSpec::Core::RakeTask.new("spec:tactic") do |t|
+  t.rspec_opts = "-f d --fail-fast -t tactic"
+end
+
 desc "重要なところだけのテスト"
 RSpec::Core::RakeTask.new("spec:core") do |t|
   # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"

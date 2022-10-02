@@ -29,5 +29,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:1:in `require': cannot infer basepath (LoadError)
-# ~>    from -:1:in `<main>'
