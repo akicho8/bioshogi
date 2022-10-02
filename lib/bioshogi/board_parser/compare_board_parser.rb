@@ -6,7 +6,7 @@ module Bioshogi
       def parse
         cell_walker do |place, prefix_char, something|
           case
-          when Piece.all_names.include?(something)
+          when Piece.all_names_set.include?(something)
             case prefix_char
             when "!"
               # トリガーとする。盤面には含めない(含める必要がないため)

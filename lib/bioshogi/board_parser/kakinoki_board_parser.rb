@@ -32,7 +32,7 @@ module Bioshogi
 
       def parse
         cell_walker do |place, prefix_char, something|
-          if Piece.all_names.include?(something)
+          if Piece.all_names_set.include?(something)
             soldiers << build(place, something, prefix_char)
           end
         end

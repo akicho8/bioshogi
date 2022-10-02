@@ -144,8 +144,18 @@ module Bioshogi
           @all_names ||= flat_map(&:names)
         end
 
+        def all_names_set
+          @all_names_set ||= all_names.to_set
+        end
+
+        # 未使用
         def all_basic_names
           @all_basic_names ||= flat_map(&:basic_names)
+        end
+
+        # 未使用
+        def all_basic_names_set
+          @all_basic_names_set ||= all_basic_names.to_set
         end
       end
 
