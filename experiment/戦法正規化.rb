@@ -56,7 +56,7 @@ end
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/居飛車穴熊.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/松尾流穴熊.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/銀冠穴熊.kif
-# >> /Users/ikeda/src/bioshogi/experiment/囲い/ビッグ４.kif
+# >> /Users/ikeda/src/bioshogi/experiment/囲い/ビッグ4.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/箱入り娘.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/ミレニアム囲い.kif
 # >> /Users/ikeda/src/bioshogi/experiment/囲い/振り飛車穴熊.kif

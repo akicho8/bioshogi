@@ -4,10 +4,10 @@ module Bioshogi
   describe DefenseInfo do
     xdescribe "keyとnameは異なる" do
       it "key" do
-        assert { DefenseInfo["ビッグ４(振)"].key == :"ビッグ４(振)" }
+        assert { DefenseInfo["ビッグ4(振)"].key == :"ビッグ4(振)" }
       end
       it "name" do
-        assert { DefenseInfo["ビッグ４(振)"].name == "ビッグ４" }
+        assert { DefenseInfo["ビッグ4(振)"].name == "ビッグ4" }
       end
     end
 

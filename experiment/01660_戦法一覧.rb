@@ -48,7 +48,7 @@ tp rows
 # >> | Bioshogi::DefenseInfo | 居飛車穴熊           |                  | 松尾流穴熊                                     |        5 |
 # >> | Bioshogi::DefenseInfo | 松尾流穴熊           | 居飛車穴熊       |                                                |        7 |
 # >> | Bioshogi::DefenseInfo | 銀冠穴熊             |                  |                                                |        6 |
-# >> | Bioshogi::DefenseInfo | ビッグ４             |                  |                                                |        7 |
+# >> | Bioshogi::DefenseInfo | ビッグ4             |                  |                                                |        7 |
 # >> | Bioshogi::DefenseInfo | 箱入り娘             | 舟囲い           |                                                |        4 |
 # >> | Bioshogi::DefenseInfo | ミレニアム囲い       |                  |                                                |        3 |
 # >> | Bioshogi::DefenseInfo | 振り飛車穴熊         |                  |                                                |        5 |

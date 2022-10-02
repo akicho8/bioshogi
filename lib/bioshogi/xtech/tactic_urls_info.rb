@@ -286,7 +286,7 @@ module Bioshogi
         ],
       },
       {
-        key: "ビッグ４",
+        key: "ビッグ4",
         urls: [
           "http://mijinko83.blog110.fc2.com/blog-entry-115.html",
           "http://www5e.biglobe.ne.jp/~siratama/nonframe/syougi/ibisya/big4.html",
