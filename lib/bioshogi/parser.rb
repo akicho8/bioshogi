@@ -25,7 +25,7 @@ module Bioshogi
     def parse(source, options = {})
       source = source_replace(source)
       parser = accepted_class(source)
-      unless parser
+      if !parser
         raise FileFormatError, "棋譜のフォーマットが不明です : #{source}"
       end
       parser.parse(source, options)

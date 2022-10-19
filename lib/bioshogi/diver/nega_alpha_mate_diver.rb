@@ -102,7 +102,7 @@ module Bioshogi
         # children_exist = false
 
         children.each do |hand|
-          # unless hand.legal_hand?(xcontainer)
+          # if !hand.legal_hand?(xcontainer)
           #   # log["skip: #{hand}"] if log
           #   next
           # end
@@ -169,7 +169,7 @@ module Bioshogi
         #   alpha = -1
         # end
 
-        # unless children_exist
+        # if !children_exist
         #   raise BioshogiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{xcontainer.to_bod}"
         # end
 

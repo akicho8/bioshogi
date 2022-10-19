@@ -52,7 +52,7 @@ module Bioshogi
 
       def pick_up(place)
         soldier = safe_delete_on(place)
-        unless soldier
+        if !soldier
           raise NotFoundOnBoard, "#{place}の位置には何もありません"
         end
         soldier
@@ -130,7 +130,7 @@ module Bioshogi
       def blank_places
         Enumerator.new do |y|
           Place.each do |place|
-            unless surface[place]
+            if !surface[place]
               y << place
             end
           end

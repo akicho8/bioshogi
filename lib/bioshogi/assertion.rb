@@ -6,13 +6,13 @@ module Bioshogi
       if block_given?
         actual = yield
       end
-      unless actual
+      if !actual
         raise MustNotHappen, "#{message}: #{actual.inspect}"
       end
     end
 
     def assert_equal(expected, actual, message = "assert_equal failed")
-      unless expected == actual
+      if expected != actual
         raise MustNotHappen, "#{message}: #{expected.inspect} != #{actual.inspect}"
       end
     end

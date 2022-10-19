@@ -128,7 +128,7 @@ module Bioshogi
 
         # 駒を取ったとき制限。取ってないならskip
         if e.kill_only
-          unless executor.captured_soldier
+          if !executor.captured_soldier
             throw :skip
           end
         end
@@ -164,7 +164,7 @@ module Bioshogi
           # 移動元ではない制限。移動元だったらskip
           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
-            unless origin_soldier
+            if !origin_soldier
               throw :skip
             end
             ary.each do |e|
@@ -177,7 +177,7 @@ module Bioshogi
           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
           if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
             # 移動元がないということは、もう何も該当しないので skip
-            unless origin_soldier
+            if !origin_soldier
               throw :skip
             end
             if places_hash[origin_soldier.place]
@@ -191,7 +191,7 @@ module Bioshogi
         # 自分の金or銀がある
         if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
           ary.each do |e|
-            unless worth_more_gteq_silver?(e[:place])
+            if !worth_more_gteq_silver?(e[:place])
               throw :skip
             end
           end
@@ -200,7 +200,7 @@ module Bioshogi
         # 自分の歩以上の駒がある
         if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
           ary.each do |e|
-            unless worth_more_gteq_pawn?(e[:place])
+            if !worth_more_gteq_pawn?(e[:place])
               throw :skip
             end
           end

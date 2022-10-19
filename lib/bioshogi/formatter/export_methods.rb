@@ -301,14 +301,14 @@ module Bioshogi
           key = nil
 
           # エラーなら最優先
-          unless key
+          if !key
             if @error_message
               key = :ILLEGAL_MOVE
             end
           end
 
           # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
-          unless key
+          if !key
             if @last_action_params
               v = @last_action_params[:last_action_key]
               if LastActionInfo[v]
@@ -318,8 +318,8 @@ module Bioshogi
           end
 
           # 何の指定もないときだけ投了とする
-          unless key
-            unless @last_action_params
+          if !key
+            if !@last_action_params
               key = :TORYO
             end
           end

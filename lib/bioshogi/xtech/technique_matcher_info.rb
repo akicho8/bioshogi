@@ -18,19 +18,19 @@ module Bioshogi
           end
 
           # # 「打」でないとだめ
-          # unless executor.drop_hand
+          # if !executor.drop_hand
           #   throw :skip
           # end
 
           soldier = executor.hand.soldier
 
           # 「最下段」でないとだめ
-          unless soldier.bottom_spaces == 0
+          if soldier.bottom_spaces != 0
             throw :skip
           end
 
           # # 「歩」でないとだめ
-          # unless soldier.piece.key == :pawn
+          # if soldier.piece.key != :pawn
           #   throw :skip
           # end
 
@@ -39,12 +39,13 @@ module Bioshogi
           v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
 
           # 1つ上の位置になにかないとだめ
-          unless s = surface[v]
+          s = surface[v]
+          if !s
             throw :skip
           end
 
           # 1つ上の駒が「自分」の「金」でないとだめ
-          unless s.piece.key == :gold && s.location == soldier.location
+          if !(s.piece.key == :gold && s.location == soldier.location)
             throw :skip
           end
         },
@@ -66,17 +67,17 @@ module Bioshogi
           soldier = executor.move_hand.soldier
 
           # 「3段目」でないとだめ
-          unless soldier.bottom_spaces == 2
+          if soldier.bottom_spaces != 2
             throw :skip
           end
 
           # 「端から3つ目」でなければだめ
-          unless soldier.smaller_one_of_side_spaces == 2
+          if soldier.smaller_one_of_side_spaces != 2
             throw :skip
           end
 
           # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
-          unless executor.move_hand.origin_soldier.smaller_one_of_side_spaces == 1
+          if executor.move_hand.origin_soldier.smaller_one_of_side_spaces != 1
             throw :skip
           end
 
@@ -86,12 +87,13 @@ module Bioshogi
           v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
 
           # そこに何かないとだめ
-          unless s = surface[v]
+          s = surface[v]
+          if !s
             throw :skip
           end
 
           # その駒が「自分」の「玉」でないとだめ
-          unless s.piece.key == :king && s.location == soldier.location
+          if !(s.piece.key == :king && s.location == soldier.location)
             throw :skip
           end
         },
@@ -111,7 +113,7 @@ module Bioshogi
               s.piece.key == :king && s.location != soldier.location
             end
           end
-          unless retv
+          if !retv
             throw :skip
           end
         },
@@ -125,7 +127,7 @@ module Bioshogi
 
           # 2, 3, 4段目でなければだめ(1段目は反則)
           v = soldier.top_spaces
-          unless 1 <= v && v <= Dimension::Yplace._promotable_size
+          if !(1 <= v && v <= Dimension::Yplace._promotable_size)
             throw :skip
           end
 
@@ -145,12 +147,12 @@ module Bioshogi
           soldier = executor.hand.soldier
 
           # 8段目でなければだめ
-          unless soldier.bottom_spaces == 1
+          if soldier.bottom_spaces != 1
             throw :skip
           end
 
           # 端でなければだめ
-          unless soldier.smaller_one_of_side_spaces == 0
+          if soldier.smaller_one_of_side_spaces != 0
             throw :skip
           end
         },
@@ -170,7 +172,7 @@ module Bioshogi
               end
             end
           end
-          unless retv
+          if !retv
             throw :skip
           end
         },
@@ -183,10 +185,10 @@ module Bioshogi
           soldier = executor.hand.soldier
           place = soldier.place
           v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-          unless s = surface[v]
+          if !(s = surface[v])
             throw :skip
           end
-          unless s.piece.key == :knight && !s.promoted && s.location != soldier.location
+          if !(s.piece.key == :knight && !s.promoted && s.location != soldier.location)
             throw :skip
           end
         },
@@ -199,13 +201,13 @@ module Bioshogi
           soldier = executor.hand.soldier
           place = soldier.place
           v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
-          unless s = surface[v]
+          if !(s = surface[v])
             throw :skip
           end
-          unless s.location == soldier.location
+          if s.location != soldier.location
             throw :skip
           end
-          unless (s.piece.key == :lance && !s.promoted) || s.piece.key == :rook
+          if !((s.piece.key == :lance && !s.promoted) || s.piece.key == :rook)
             throw :skip
           end
         },
@@ -225,7 +227,7 @@ module Bioshogi
               end
             end
           end
-          unless retv
+          if !retv
             throw :skip
           end
         },
@@ -243,7 +245,7 @@ module Bioshogi
               s.piece.key == :knight && !s.promoted && s.location == soldier.location
             end
           end
-          unless retv
+          if !retv
             throw :skip
           end
         },
@@ -254,12 +256,12 @@ module Bioshogi
         logic_desc: "玉が移動して上のスペースが3つの状態から2つの状態になった",
         verify_process: proc {
           soldier = executor.hand.soldier
-          unless soldier.top_spaces == Dimension::Yplace._promotable_size - 1
+          if soldier.top_spaces != Dimension::Yplace._promotable_size - 1
             throw :skip
           end
 
           origin_soldier = executor.hand.origin_soldier
-          unless origin_soldier.top_spaces == Dimension::Yplace._promotable_size
+          if origin_soldier.top_spaces != Dimension::Yplace._promotable_size
             throw :skip
           end
 
@@ -274,7 +276,7 @@ module Bioshogi
         key: "角不成",
         logic_desc: "相手陣地に入るときと出るときの両方チェックする",
         verify_process: proc {
-          unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
+          if !executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
             throw :skip
           end
         },
@@ -284,7 +286,7 @@ module Bioshogi
         key: "飛車不成",
         logic_desc: "角不成と同じ方法でよい",
         verify_process: proc {
-          unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
+          if !executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
             throw :skip
           end
         },

@@ -82,7 +82,7 @@ class App
 
   def assert_equal(a, b)
     r = a == b
-    unless r
+    if !r
       diff(a, b)
     end
 
@@ -90,7 +90,7 @@ class App
     print r ? "." : "x"
     STDOUT.flush
 
-    unless r
+    if !r
       @error_body.open("a") do |e|
         e.puts "-" * 80
         e.puts @current.expand_path

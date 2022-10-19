@@ -118,7 +118,7 @@ module Bioshogi
       def case3_Psign
         if normalized_source.match?(/^P[\+\-](.*)/)
           # この時点で盤が用意されていなかったら空の盤を用意する
-          unless @board
+          if !@board
             @board = Board.new
           end
 

@@ -46,7 +46,7 @@ class App
           soldiers_board_on(e)
         end
 
-        unless xcontainer.player_at(:white).mate_danger?
+        if !xcontainer.player_at(:white).mate_danger?
           break
         end
 
@@ -108,7 +108,7 @@ class App
           loop do
             xy = 2.times.collect { |i| rand(xy_ranges[i] || (1..4)) }.join
             place = Place.fetch(xy)
-            unless xcontainer.board[place]
+            if !xcontainer.board[place]
               break
             end
           end
@@ -122,7 +122,7 @@ class App
           soldier = Soldier.create(piece: piece, promoted: promoted, location: Location[location], place: place)
 
           # 死に駒なら作りなおし
-          unless soldier.alive?
+          if !soldier.alive?
             next
           end
 

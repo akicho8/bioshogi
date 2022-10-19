@@ -71,7 +71,7 @@ module Bioshogi
 
     def urls
       v = TacticUrlsInfo[key]
-      unless v
+      if !v
         return []
       end
       v.urls

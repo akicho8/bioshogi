@@ -9,7 +9,7 @@ module Bioshogi
 
       def parse(source, options = {})
         parser = parser_class_find(source)
-        unless parser
+        if !parser
           raise FileFormatError, "盤面のフォーマットが不明です : #{source}"
         end
         parser.parse(source, options)

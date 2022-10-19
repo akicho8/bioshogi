@@ -91,7 +91,7 @@ module Bioshogi
       end
 
       def drop_hand
-        unless origin_soldier
+        if !origin_soldier
           @drop_hand ||= DropHand.create(soldier: soldier)
         end
       end

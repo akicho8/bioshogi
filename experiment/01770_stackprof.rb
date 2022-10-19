@@ -175,7 +175,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   105  | 
 # >>                                   |   106  |         # 駒を取ったとき制限。取ってないならskip
 # >>                                   |   107  |         if e.kill_only
-# >>                                   |   108  |           unless executor.captured_soldier
+# >>                                   |   108  |           if !executor.captured_soldier
 # >>                                   |   109  |             throw :skip
 # >>                                   |   110  |           end
 # >>                                   |   111  |         end
@@ -211,7 +211,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   141  |           # 移動元ではない制限。移動元だったらskip
 # >>                                   |   142  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
 # >>                                   |   143  |             # 移動元についての指定があるのに移動元がない場合はそもそも状況が異なるのでskip
-# >>                                   |   144  |             unless origin_soldier
+# >>                                   |   144  |             if !origin_soldier
 # >>                                   |   145  |               throw :skip
 # >>                                   |   146  |             end
 # >>                                   |   147  |             ary.each do |e|
@@ -224,7 +224,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   154  |           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
 # >>     3    (0.3%) /     1   (0.1%)  |   155  |           if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
 # >>                                   |   156  |             # 移動元がないということは、もう何も該当しないので skip
-# >>                                   |   157  |             unless origin_soldier
+# >>                                   |   157  |             if !origin_soldier
 # >>                                   |   158  |               throw :skip
 # >>                                   |   159  |             end
 # >>                                   |   160  |             if places_hash[origin_soldier.place]
@@ -238,7 +238,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   168  |         # 自分の金or銀がある
 # >>     3    (0.3%)                   |   169  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
 # >>                                   |   170  |           ary.each do |e|
-# >>                                   |   171  |             unless worth_more_gteq_silver?(e[:place])
+# >>                                   |   171  |             if !worth_more_gteq_silver?(e[:place])
 # >>                                   |   172  |               throw :skip
 # >>                                   |   173  |             end
 # >>                                   |   174  |           end
@@ -247,7 +247,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   177  |         # 自分の歩以上の駒がある
 # >>                                   |   178  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
 # >>                                   |   179  |           ary.each do |e|
-# >>                                   |   180  |             unless worth_more_gteq_pawn?(e[:place])
+# >>                                   |   180  |             if !worth_more_gteq_pawn?(e[:place])
 # >>                                   |   181  |               throw :skip
 # >>                                   |   182  |             end
 # >>                                   |   183  |           end

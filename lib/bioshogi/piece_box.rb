@@ -22,7 +22,7 @@ module Bioshogi
 
     def pick_out(piece)
       piece = Piece.fetch(piece)
-      unless exist?(piece)
+      if !exist?(piece)
         raise HoldPieceNotFound, "持駒から#{piece.name}を取り出そうとしましたが#{piece.name}を持っていません : #{to_h}"
       end
       add(piece => -1)

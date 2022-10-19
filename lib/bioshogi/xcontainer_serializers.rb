@@ -52,7 +52,7 @@ module Bioshogi
       preset_info = board.preset_info
 
       if preset_info
-        unless options[:oneline]
+        if !options[:oneline]
           s << "#{Parser::CsaParser::SYSTEM_COMMENT_CHAR} 手合割:#{preset_info.name}" + "\n"
         end
       end
@@ -136,7 +136,7 @@ module Bioshogi
       # 最初から現在までの局面
       def to_history_sfen(options = {})
         s = []
-        unless @initial_state_board_sfen
+        if !@initial_state_board_sfen
           raise BioshogiError, "@initial_state_board_sfen が未定義"
         end
         s << @initial_state_board_sfen # 局面を文字列でとっておくのってなんか違う気がする

@@ -64,7 +64,7 @@ module Bioshogi
       s = []
       s << "まで#{xcontainer.turn_info.turn_offset}手で"
       s << reason
-      unless draw
+      if !draw
         s << xcontainer.opponent_player.call_name
         s << "の"
         s << "勝ち"

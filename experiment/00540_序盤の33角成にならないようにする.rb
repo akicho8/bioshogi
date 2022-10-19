@@ -19,7 +19,7 @@ xcontainer.placement_from_bod(<<~EOT)
 手数=3
 EOT
 
-# opening_score の unless e.promoted をはずして33の地点をマイナスすれば回避できるけどやめとく
+# opening_score の if !e.promoted をはずして33の地点をマイナスすれば回避できるけどやめとく
 records = xcontainer.player_at(:black).brain(evaluator_class: Evaluator::Level4).iterative_deepening(depth_max_range: 0..0)
 tp Brain.human_format(records)
 # >> |------+----------------+--------+--------+------------+----------|

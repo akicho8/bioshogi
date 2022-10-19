@@ -32,7 +32,7 @@ module Bioshogi
       expr = nil
       loop do
         expr = @pattern.sequence[@instruction_placeer]
-        unless expr
+        if !expr
           break
         end
         @instruction_placeer += 1

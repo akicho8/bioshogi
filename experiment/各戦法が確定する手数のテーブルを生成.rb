@@ -9,7 +9,7 @@ TacticInfo.all_elements.each do |e|
       break true
     end
   end
-  unless hit
+  if !hit
     raise e.key
   end
 end

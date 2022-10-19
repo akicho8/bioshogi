@@ -57,7 +57,7 @@ class DirtyMinimax
         end
       end
 
-      unless params[:silent]
+      if !params[:silent]
         puts "#{'-' * 60} [#{turn}] #{player} 実行速度:#{time}".strip
         puts xcontainer
         if infos.empty?
@@ -78,7 +78,7 @@ class DirtyMinimax
       end
 
       if xcontainer.continuous_pass?
-        unless params[:silent]
+        if !params[:silent]
           puts "連続パスで終了"
         end
         break
@@ -88,7 +88,7 @@ class DirtyMinimax
         break
       end
     end
-    unless params[:silent]
+    if !params[:silent]
       tp xcontainer.histogram
     end
     xcontainer.histogram
@@ -131,7 +131,7 @@ class DirtyMinimax
     end
 
     if infos.empty?
-      unless xcontainer.available_places(player).empty?
+      if !xcontainer.available_places(player).empty?
         puts "指し手があるのにパスすることになってしまいます。制限時間を増やすか読みを浅くしてください。"
       end
     end

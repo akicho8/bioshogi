@@ -16,7 +16,7 @@ module Bioshogi
       end
 
       def place_from
-        unless drop_trigger
+        if !drop_trigger
           Place.fetch(input[:csa_from])
         end
       end

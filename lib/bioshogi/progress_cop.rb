@@ -99,7 +99,7 @@ module Bioshogi
 
     # 一定期間経過したか？
     def interval_passed?
-      unless @last_triggered
+      if !@last_triggered
         return true
       end
       if v = @params[:throttle_interval]

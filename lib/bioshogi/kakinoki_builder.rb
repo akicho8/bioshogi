@@ -120,7 +120,7 @@ module Bioshogi
     def illegal_judgement_message
       if @parser.last_action_params
         v = @parser.last_action_params[:last_action_key]
-        unless LastActionInfo[v]
+        if !LastActionInfo[v]
           "*#{v}\n"
         end
       end

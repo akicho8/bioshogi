@@ -25,11 +25,11 @@ module Bioshogi
       # ・brain.iterative_deepening(log_scope: "▲１二銀打") → 初手「▲１二銀打」から始まるもの
       # ・brain.iterative_deepening(log_scope: "▲１二銀打") → 
       def logger_info_on_depth(str, context)
-        return unless logger
+        return if !logger
 
         if context[:hand_route]
           if log_scope = params[:log_scope]
-            unless context[:hand_route].collect(&:to_s).join(" ").start_with?(log_scope)
+            if !context[:hand_route].collect(&:to_s).join(" ").start_with?(log_scope)
               return
             end
           end

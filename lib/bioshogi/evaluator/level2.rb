@@ -14,7 +14,7 @@ module Bioshogi
       def soldier_score(e)
         w = e.abs_weight
 
-        unless e.promoted
+        if !e.promoted
           if t = OpeningBasicTable[:field][e.piece.key]
             x, y = e.normalized_place.to_xy
             w += t[y][x]
