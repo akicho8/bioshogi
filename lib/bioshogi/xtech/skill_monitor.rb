@@ -265,11 +265,12 @@ module Bioshogi
 
     def cold_war_verification(e)
       # 開戦済みならskip
-      # 例えばそれまで静かで始めて角交換したときは kill_counter は 1 になるので chaos_level: 1 にしておけば skip されない
+      # 例えばそれまで静かで始めて角交換したときは kill_count は 1 になるので kill_count_lteq: 1 にしておけば skip されない
       # 0 < 1キル → skip
       # 1 < 1キル → ok
-      if threshold = e.chaos_level
-        if threshold < player.xcontainer.kill_counter
+      if v = e.kill_count_lteq
+        if v >= player.xcontainer.kill_count
+        else
           throw :skip
         end
       end

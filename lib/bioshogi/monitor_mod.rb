@@ -21,7 +21,7 @@ module Bioshogi
     # 大駒コンプリートチェック用にしか使ってない、ことはない
     def piece_box_added(captured_soldier)
       # 駒を取った回数の記録
-      xcontainer.kill_counter += 1
+      xcontainer.kill_count += 1
 
       # 駒が取られる最初の手数の記録
       xcontainer.critical_turn ||= xcontainer.turn_info.turn_offset
