@@ -29,6 +29,17 @@ module Bioshogi
         v
       end
 
+      # TacticInfo.fuzzy_flat_lookup("アヒル").key # => :アヒル戦法
+      def fuzzy_flat_lookup(key)
+        v = nil
+        source_expand(key).each do |str|
+          if v = flat_lookup(str)
+            break
+          end
+        end
+        v
+      end
+
       def all_elements
         @all_elements ||= flat_map { |e| e.model.to_a }
       end
@@ -89,6 +100,25 @@ module Bioshogi
         @every_time_proc_list ||= all_elements.find_all do |e|
           e.respond_to?(:every_time_proc) && e.every_time_proc
         end
+      end
+
+      def source_expand(str)
+        str = str.to_s
+        [
+          # "アヒル戦法"
+          str,
+          # "アヒル" → "アヒル戦法"
+          str + "戦法",
+          str + "囲い",
+          str + "流",
+          # "都成流戦法" → "都成流"
+          str.remove(/戦法\z/),
+          str.remove(/囲い\z/),
+          str.remove(/流\z/),
+          # 特殊
+          str.sub(/向かい飛車/, "向飛車"), # "向かい飛車" → "向かい飛車"
+          str.sub(/向飛車/, "向かい飛車"), # "向飛車" → "向かい飛車"
+        ]
       end
     end
   end

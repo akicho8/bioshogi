@@ -34,5 +34,12 @@ module Bioshogi
         assert { TacticInfo.flat_lookup(o) }
       end
     end
+
+    it "fuzzy_flat_lookup" do
+      assert { TacticInfo.fuzzy_flat_lookup("嬉野") }
+      assert { TacticInfo.fuzzy_flat_lookup("角頭歩") }
+      assert { TacticInfo.fuzzy_flat_lookup("アヒル") }
+      assert { TacticInfo.fuzzy_flat_lookup("阪田流向かい飛車") }
+    end
   end
 end
