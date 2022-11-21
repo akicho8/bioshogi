@@ -116,8 +116,8 @@ EOT
         end
 
         it "推測結果が複数パターンがあったので" do
-          expect { Xcontainer.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つありますが表記が曖昧なため特定できません。移動元は「６九の金」か「４九の金」のどっちかな？/)
-          expect { Xcontainer.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金上") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つありますが「上」からは特定できません。移動元は「６九の金」か「４九の金」のどっちかな？/)
+          expect { Xcontainer.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つありますが表記が曖昧なため特定できません。移動元は「６九の金」か「４九の金」のどっちでしょう？/)
+          expect { Xcontainer.player_test_soldier_names(init: ["６九金", "４九金"], execute: "５八金上") }.to raise_error(AmbiguousFormatError, /５八に移動できる駒が2つありますが「上」からは特定できません。移動元は「６九の金」か「４九の金」のどっちでしょう？/)
         end
 
         it "ルール上、成っている状態から成らない状態に戻れないので(盤上に飛が見つからないので打とみなすが飛を持っていない)" do
