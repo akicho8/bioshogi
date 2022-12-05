@@ -35,4 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "memory_record"
   spec.add_dependency "tree_support"
   spec.add_dependency "color"
+  spec.add_dependency "zeitwerk"
+  spec.add_dependency "thor"
 end

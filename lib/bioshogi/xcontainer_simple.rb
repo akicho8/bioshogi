@@ -5,7 +5,7 @@ module Bioshogi
     include XcontainerBase
     include XcontainerPlayers
     include XcontainerExecutor
-    include XcontainerSerializeMethods
+    include XcontainerSerializer
     include XcontainerMemento
     include XcontainerTest
 

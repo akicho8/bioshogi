@@ -1,7 +1,5 @@
 # frozen-string-literal: true
 
-require "bioshogi/evaluator/base"
-
 module Bioshogi
   module Evaluator
     class Level4 < Level3

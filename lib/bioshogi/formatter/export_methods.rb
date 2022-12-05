@@ -1,7 +1,5 @@
 # frozen-string-literal: true
 
-require_relative "header_builder"
-
 module Bioshogi
   module Formatter
     concern :ExportMethods do
@@ -162,10 +160,10 @@ module Bioshogi
 
           # 両方が入玉していれば「相入玉」タグを追加する
           # この場合、両方同時に入玉しているかどうかは判定できない
-          if NoteInfo.values.present?
-            if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["入玉"]) }
+          if Xtech::NoteInfo.values.present?
+            if xcontainer.players.all? { |e| e.skill_set.has_skill?(Xtech::NoteInfo["入玉"]) }
               xcontainer.players.each do |player|
-                player.skill_set.list_push(NoteInfo["相入玉"])
+                player.skill_set.list_push(Xtech::NoteInfo["相入玉"])
               end
             end
 
@@ -175,32 +173,32 @@ module Bioshogi
               if preset_info
                 if preset_info.special_piece
                   xcontainer.players.each do |player|
-                    if !player.skill_set.has_skill?(NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(NoteInfo["居飛車"])
-                      player.skill_set.list_push(NoteInfo["居飛車"])
+                    if !player.skill_set.has_skill?(Xtech::NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(Xtech::NoteInfo["居飛車"])
+                      player.skill_set.list_push(Xtech::NoteInfo["居飛車"])
                     end
                   end
 
                   if true
                     # 両方居飛車なら相居飛車
-                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["居飛車"]) }
+                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(Xtech::NoteInfo["居飛車"]) }
                       xcontainer.players.each do |player|
-                        player.skill_set.list_push(NoteInfo["相居飛車"])
+                        player.skill_set.list_push(Xtech::NoteInfo["相居飛車"])
                       end
                     end
 
                     # 両方振り飛車なら相振り
-                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(Xtech::NoteInfo["振り飛車"]) }
                       xcontainer.players.each do |player|
-                        player.skill_set.list_push(NoteInfo["相振り"])
+                        player.skill_set.list_push(Xtech::NoteInfo["相振り"])
                       end
                     end
 
                     # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-                    if player = xcontainer.players.find { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
+                    if player = xcontainer.players.find { |e| e.skill_set.has_skill?(Xtech::NoteInfo["振り飛車"]) }
                       others = xcontainer.players - [player]
-                      if others.none? { |e| e.skill_set.has_skill?(NoteInfo["振り飛車"]) }
-                        others.each { |e| e.skill_set.list_push(NoteInfo["対振り"]) }
-                        xcontainer.players.each { |e| e.skill_set.list_push(NoteInfo["対抗型"]) }
+                      if others.none? { |e| e.skill_set.has_skill?(Xtech::NoteInfo["振り飛車"]) }
+                        others.each { |e| e.skill_set.list_push(Xtech::NoteInfo["対振り"]) }
+                        xcontainer.players.each { |e| e.skill_set.list_push(Xtech::NoteInfo["対抗型"]) }
                       end
                     end
                   end
@@ -209,15 +207,15 @@ module Bioshogi
                   xcontainer.players.each do |player|
                     if player == xcontainer.win_player
                       if player.stronger_piece_have_count.zero?
-                        player.skill_set.list_push(NoteInfo["背水の陣"])
+                        player.skill_set.list_push(Xtech::NoteInfo["背水の陣"])
                       end
                     end
                   end
                 end
 
-                # if xcontainer.players.any? { |e| e.skill_set.note_infos.include?(NoteInfo["振り飛車"]) }
+                # if xcontainer.players.any? { |e| e.skill_set.note_infos.include?(Xtech::NoteInfo["振り飛車"]) }
                 #   xcontainer.players.each do |player|
-                #     player.skill_set.list_push(NoteInfo["相振り飛車"])
+                #     player.skill_set.list_push(Xtech::NoteInfo["相振り飛車"])
                 #   end
                 # end
 
@@ -247,7 +245,7 @@ module Bioshogi
                   # 両方居玉だったら備考に相居玉
                   if xcontainer.players.all? { |e| e.skill_set.has_skill?(DefenseInfo["居玉"]) }
                     xcontainer.players.each do |e|
-                      e.skill_set.list_push(NoteInfo["相居玉"])
+                      e.skill_set.list_push(Xtech::NoteInfo["相居玉"])
                     end
                   end
                   # end
@@ -258,7 +256,7 @@ module Bioshogi
 
           begin
             # ヘッダーに埋める
-            TacticInfo.each do |e|
+            Xtech::TacticInfo.each do |e|
               xcontainer.players.each do |player|
                 list = player.skill_set.public_send(e.list_key).normalize
                 if v = list.presence
@@ -422,7 +420,7 @@ module Bioshogi
       end
 
       def to_animation_apng(options = {})
-        AnimationPngBuilder.new(self, options).to_binary
+        AnimationApngBuilder.new(self, options).to_binary
       end
 
       def to_animation_webp(options = {})

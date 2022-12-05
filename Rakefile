@@ -32,6 +32,13 @@ RSpec::Core::RakeTask.new("spec:transform") do |t|
   t.rspec_opts = "-f d -t transform"
 end
 
+desc "ファイル名とモジュール名の対応付けが正しいことを検証する"
+task "test:loader" do
+  require "bioshogi"
+  Zeitwerk::Loader.eager_load_all
+  puts "OK"
+end
+
 ################################################################################
 
 desc "experiment以下のダンダースコアで始まるファイルを全削除"

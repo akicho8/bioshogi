@@ -9,17 +9,3 @@ module Bioshogi
     include Builder
   end
 end
-
-require "bioshogi/image_renderer/base"
-require "bioshogi/image_renderer/layer_methods"
-require "bioshogi/image_renderer/board_methods"
-require "bioshogi/image_renderer/soldier_methods"
-require "bioshogi/image_renderer/turn_methods"
-require "bioshogi/image_renderer/stand"
-require "bioshogi/image_renderer/pentagon"
-require "bioshogi/image_renderer/helper"
-
-require "bioshogi/image_renderer/palette_info"
-require "bioshogi/image_renderer/color_theme_info"
-require "bioshogi/image_renderer/font_theme_info"
-require "bioshogi/image_renderer/piece_font_weight_info"

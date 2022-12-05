@@ -1,7 +1,5 @@
 # frozen-string-literal: true
 
-require "pathname"
-
 module Bioshogi
   class XtraPattern < Hash
     @list = []

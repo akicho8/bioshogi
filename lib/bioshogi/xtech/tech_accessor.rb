@@ -1,146 +1,148 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  concern :TechAccessor do
-    included do
-      include TreeSupport::Treeable
-      include TreeSupport::Stringify
+  module Xtech
+    concern :TechAccessor do
+      included do
+        include TreeSupport::Treeable
+        include TreeSupport::Stringify
 
-      delegate :tactic_key, to: "self.class"
-    end
-
-    class_methods do
-      # ["ポンポン桂"].name # => "ポンポン桂"
-      # ["富沢キック"].name # => "ポンポン桂"
-      def lookup(v)
-        super || other_table[v]
+        delegate :tactic_key, to: "self.class"
       end
 
-      def tactic_key
-        @tactic_key ||= name.demodulize.underscore.remove(/_info/)
-      end
+      class_methods do
+        # ["ポンポン桂"].name # => "ポンポン桂"
+        # ["富沢キック"].name # => "ポンポン桂"
+        def lookup(v)
+          super || other_table[v]
+        end
 
-      private
+        def tactic_key
+          @tactic_key ||= name.demodulize.underscore.remove(/_info/)
+        end
 
-      def other_table
-        @other_table ||= inject({}) do |a, e|
-          e.alias_names.inject(a) do |a, v|
-            a.merge(v => e)
+        private
+
+        def other_table
+          @other_table ||= inject({}) do |a, e|
+            e.alias_names.inject(a) do |a, v|
+              a.merge(v => e)
+            end
           end
         end
       end
-    end
 
-    # 必ず alternate_name に反応するようにしておく
-    def alternate_name
-      if defined?(super)
-        super
+      # 必ず alternate_name に反応するようにしておく
+      def alternate_name
+        if defined?(super)
+          super
+        end
       end
-    end
 
-    # key と name は異なる
-    def name
-      alternate_name || super
-    end
-
-    def parent
-      if super
-        @parent ||= self.class.fetch(super)
+      # key と name は異なる
+      def name
+        alternate_name || super
       end
-    end
 
-    def children
-      @children ||= self.class.find_all { |e| e.parent == self }
-    end
-
-    def cached_descendants
-      @cached_descendants ||= descendants
-    end
-
-    def other_parents
-      @other_parents ||= Array(super).collect { |e| self.class.fetch(e) }
-    end
-
-    def alias_names
-      Array(super)
-    end
-
-    def sect_info
-      SectInfo.fetch(sect_key)
-    end
-
-    def urls
-      v = TacticUrlsInfo[key]
-      if !v
-        return []
+      def parent
+        if super
+          @parent ||= self.class.fetch(super)
+        end
       end
-      v.urls
-    end
 
-    def hold_piece_eq
-      if v = super
-        @hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))
+      def children
+        @children ||= self.class.find_all { |e| e.parent == self }
       end
-    end
 
-    def hold_piece_in
-      if v = super
-        @hold_piece_in ||= PieceBox.new(Piece.s_to_h(v))
+      def cached_descendants
+        @cached_descendants ||= descendants
       end
-    end
 
-    def hold_piece_not_in
-      if v = super
-        @hold_piece_not_in ||= PieceBox.new(Piece.s_to_h(v))
+      def other_parents
+        @other_parents ||= Array(super).collect { |e| self.class.fetch(e) }
       end
-    end
 
-    def tactic_info
-      TacticInfo.fetch(tactic_key)
-    end
-
-    def add_to_opponent
-      return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
-      if defined?(super) && v = super
-        @add_to_opponent ||= TacticInfo.flat_lookup(v)
+      def alias_names
+        Array(super)
       end
-    end
 
-    def technique_matcher_info
-      @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
-    end
-
-    def skip_elements
-      return @skip_elements if instance_variable_defined?(:@skip_elements)
-
-      @skip_elements = nil
-      if respond_to?(:skip_if_exist_keys)
-        @skip_elements = Array(skip_if_exist_keys).collect { |e| TacticInfo.flat_lookup(e) }
+      def sect_info
+        SectInfo.fetch(sect_key)
       end
-    end
 
-    def hit_turn
-      TacticHitTurnTable[key.to_s]
-    end
+      def urls
+        v = TacticUrlsInfo[key]
+        if !v
+          return []
+        end
+        v.urls
+      end
 
-    def distribution_ratio
-      DistributionRatio[key.to_s]
-    end
+      def hold_piece_eq
+        if v = super
+          @hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))
+        end
+      end
 
-    def sample_kif_file
-      Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
-    end
+      def hold_piece_in
+        if v = super
+          @hold_piece_in ||= PieceBox.new(Piece.s_to_h(v))
+        end
+      end
 
-    def sample_kif_info(options = {})
-      Parser.file_parse(sample_kif_file, options)
-    end
+      def hold_piece_not_in
+        if v = super
+          @hold_piece_not_in ||= PieceBox.new(Piece.s_to_h(v))
+        end
+      end
 
-    def sample_kif_or_ki2_file
-      Pathname.glob("#{__dir__}/#{tactic_info.name}/#{key}.{kif,ki2}").first
-    end
+      def tactic_info
+        TacticInfo.fetch(tactic_key)
+      end
 
-    # def sample_any_files
-    #   Pathname("#{__dir__}/#{tactic_info.name}").glob("#{key}.{kif,ki2,csa}")
-    # end
+      def add_to_opponent
+        return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
+        if defined?(super) && v = super
+          @add_to_opponent ||= TacticInfo.flat_lookup(v)
+        end
+      end
+
+      def technique_matcher_info
+        @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
+      end
+
+      def skip_elements
+        return @skip_elements if instance_variable_defined?(:@skip_elements)
+
+        @skip_elements = nil
+        if respond_to?(:skip_if_exist_keys)
+          @skip_elements = Array(skip_if_exist_keys).collect { |e| TacticInfo.flat_lookup(e) }
+        end
+      end
+
+      def hit_turn
+        TacticHitTurnTable[key.to_s]
+      end
+
+      def distribution_ratio
+        DistributionRatio[key.to_s]
+      end
+
+      def sample_kif_file
+        Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
+      end
+
+      def sample_kif_info(options = {})
+        Parser.file_parse(sample_kif_file, options)
+      end
+
+      def sample_kif_or_ki2_file
+        Pathname.glob("#{__dir__}/#{tactic_info.name}/#{key}.{kif,ki2}").first
+      end
+
+      # def sample_any_files
+      #   Pathname("#{__dir__}/#{tactic_info.name}").glob("#{key}.{kif,ki2,csa}")
+      # end
+    end
   end
 end

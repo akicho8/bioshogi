@@ -127,6 +127,6 @@ module Bioshogi
       handicap ? 1 : 0
     end
 
-    include ShapeInfoRelation
+    include Xtech::ShapeInfoRelation
   end
 end

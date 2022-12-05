@@ -3,6 +3,6 @@
 module Bioshogi
   class PlayerExecutorHuman < PlayerExecutorBase
     include HandLogsMod
-    include MonitorMod
+    include Xtech::MonitorMod
   end
 end
