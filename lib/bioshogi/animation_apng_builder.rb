@@ -1,5 +1,5 @@
 module Bioshogi
-  class AnimationPngBuilder < AnimationGifBuilder
+  class AnimationApngBuilder < AnimationGifBuilder
     def ext_name
       "apng"
     end

@@ -7,7 +7,9 @@ PATH
       color
       memory_record
       table_format
+      thor
       tree_support
+      zeitwerk
 
 GEM
   remote: https://rubygems.org/
@@ -83,11 +85,12 @@ GEM
       activesupport
     test-unit (3.5.5)
       power_assert
+    thor (1.2.1)
     tree_support (0.1.9)
       activesupport
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
@@ -106,4 +109,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   2.3.4
+   2.3.13

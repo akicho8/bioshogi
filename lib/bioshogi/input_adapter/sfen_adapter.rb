@@ -2,7 +2,7 @@
 
 module Bioshogi
   module InputAdapter
-    class UsiAdapter < AbstractAdapter
+    class SfenAdapter < AbstractAdapter
       include OriginSoldierMethods
       include SharedValidation
 

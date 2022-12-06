@@ -32,6 +32,13 @@ RSpec::Core::RakeTask.new("spec:transform") do |t|
   t.rspec_opts = "-f d -t transform"
 end
 
+desc "ファイル名とモジュール名の対応付けが正しいことを検証する"
+task "test:loader" do
+  require "bioshogi"
+  Zeitwerk::Loader.eager_load_all
+  puts "OK"
+end
+
 ################################################################################
 
 desc "experiment以下のダンダースコアで始まるファイルを全削除"
@@ -43,9 +50,14 @@ desc "戦法テスト"
 task :validate do
   Dir.chdir("#{__dir__}/experiment") do
     system "ruby 戦法テスト.rb"
-    system "ruby 各戦法が確定する手数のテーブルを生成.rb"
     system "ruby 戦法正規化.rb"
   end
+end
+
+desc "各戦法が確定する手数のテーブルの生成"
+task :generate do
+  require "bioshogi"
+  Bioshogi::Generator::TacticHitTurnTableGenerator.new.generate
 end
 
 desc "2chkifu読み込み変換テスト"

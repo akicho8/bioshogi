@@ -1,5 +1,5 @@
 module Bioshogi
-  concern :XcontainerSerializeMethods do
+  concern :XcontainerSerializer do
     def judgment_message
       "まで#{turn_info.display_turn}手で#{win_player.call_name}の勝ち"
     end
@@ -14,26 +14,17 @@ module Bioshogi
       s << board.to_s
       s << player_at(:black).piece_box_as_header + "\n"
 
-      last = ""
-      if respond_to?(:hand_logs)
-        if hand_log = hand_logs.last
-          last = hand_log.to_kif(with_location: true)
+      if !options[:display_turn_skip]
+        last = ""
+        if respond_to?(:hand_logs)
+          if e = hand_logs.last
+            last = e.to_kif(with_location: true)
+          end
         end
-      end
-
-      if options[:display_turn_skip]
-      else
         s << "手数＝#{turn_info.display_turn} #{last} まで".squish + "\n"
       end
 
-      if current_player.location.key == :white || true
-        if options[:compact]
-        else
-          s << "\n"
-        end
-        s << "#{current_player.call_name}番\n"
-      end
-
+      s << "#{current_player.call_name}番\n"
       s.join
     end
 
@@ -80,7 +71,11 @@ module Bioshogi
       XcontainerSerializerCheckmateYomiage.new(self, options).to_s
     end
 
-    concerning :HistorySfenMethods do
+    def to_yomiage_list(options = {})
+      XcontainerSerializerCheckmateYomiage.new(self, options).to_a
+    end
+
+    concerning :SfenMethods do
       attr_reader :initial_state_board_sfen
       attr_reader :initial_state_turn_info
 
@@ -153,3 +148,4 @@ module Bioshogi
     end
   end
 end
+

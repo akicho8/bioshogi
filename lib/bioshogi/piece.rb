@@ -8,12 +8,6 @@
 #  Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
 #  Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
 #
-require "bioshogi/piece/piece_csa"
-require "bioshogi/piece/piece_vector"
-require "bioshogi/piece/piece_scale"
-require "bioshogi/piece/piece_score"
-require "bioshogi/piece/piece_yomiage"
-require "bioshogi/piece/piece_pressure"
 
 module Bioshogi
   class Piece
@@ -260,11 +254,11 @@ module Bioshogi
 
     concerning :KifuyomiMethods do
       included do
-        delegate :yomiage, to: :piece_yomiage
+        delegate :yomiage, to: :yomiage_piece_info
       end
 
-      def piece_yomiage
-        @piece_yomiage ||= YomiagePieceInfo[key]
+      def yomiage_piece_info
+        @yomiage_piece_info ||= YomiagePieceInfo[key]
       end
     end
   end

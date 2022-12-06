@@ -33,13 +33,13 @@ module Bioshogi
       if av.last.kind_of?(Symbol)
         av.pop
       end
-      av = av.collect { |e|
+      av = av.collect do |e|
         if e.kind_of?(String)
           { command: "talk", message: e }
         else
           { command: "interval", sleep: SYMBOL_TO_SLEEP_ARGUMENT.fetch(e), sleep_key: e }
         end
-      }
+      end
       av
     end
 

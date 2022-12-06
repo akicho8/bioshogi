@@ -136,7 +136,7 @@ module Bioshogi
       when md[:kif_place_from]
         InputAdapter::KifAdapter
       when md[:sfen_to]
-        InputAdapter::UsiAdapter
+        InputAdapter::SfenAdapter
       when md[:csa_piece]
         InputAdapter::CsaAdapter
       else

@@ -1,7 +1,5 @@
 # frozen-string-literal: true
 
-require_relative "player_brain_mod"
-
 module Bioshogi
   class Player
     include PlayerBrainMod
@@ -134,7 +132,7 @@ module Bioshogi
       delegate :attack_infos, :defense_infos, to: :skill_set
 
       def skill_set
-        @skill_set ||= SkillSet.new
+        @skill_set ||= Explain::SkillSet.new
       end
     end
 

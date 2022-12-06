@@ -1,8 +1,6 @@
 # -*- compile-command: "bundle execute rspec ../../spec/kif_format_spec.rb" -*-
 # frozen-string-literal: true
 
-require_relative "header"
-
 module Bioshogi
   module Parser
     class Base

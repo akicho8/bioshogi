@@ -3,6 +3,6 @@
 module Bioshogi
   class PlayerExecutorHuman < PlayerExecutorBase
     include HandLogsMod
-    include MonitorMod
+    include Explain::MonitorMod
   end
 end

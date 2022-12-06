@@ -1,8 +1,5 @@
 # frozen-string-literal: true
 
-require "bioshogi/evaluator/level1"
-require "bioshogi/evaluator/opening_basic_table"
-
 module Bioshogi
   module Evaluator
     class Level2 < Level1
