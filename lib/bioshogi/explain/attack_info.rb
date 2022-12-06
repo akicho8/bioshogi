@@ -4,7 +4,7 @@
 #
 
 module Bioshogi
-  module Xtech
+  module Explain
     class AttackInfo
       include ApplicationMemoryRecord
       memory_record [

@@ -221,7 +221,7 @@ module Bioshogi
       end
     end
 
-    prepend Xtech::BoardPillerMethods
+    prepend Explain::BoardPillerMethods
     prepend BoardPieceCountsMethods
   end
 end

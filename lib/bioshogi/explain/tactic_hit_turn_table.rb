@@ -1,6 +1,6 @@
 # -*- frozen_string_literal: true -*-
 module Bioshogi
-  module Xtech
+  module Explain
     TacticHitTurnTable = {
       "花村流名古屋戦法" => 37,
       "清野流岐阜戦法" => 45,

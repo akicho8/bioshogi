@@ -3,7 +3,7 @@
 # 判定は kill_count_lteq, pawn_bishop_have_safe: nil, :pawn_have_safe しか使ってない
 
 module Bioshogi
-  module Xtech
+  module Explain
     class TechniqueInfo
       include ApplicationMemoryRecord
       memory_record [

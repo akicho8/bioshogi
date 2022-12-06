@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     concern :MonitorMod do
       def execute_after_process
         player.used_piece_counts[hand.to_counts_key] += 1

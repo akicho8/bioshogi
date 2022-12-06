@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Xtech
+  module Explain
     describe TechniqueInfo do
       def xcontainer_new
         Xcontainer.new.tap do |e|

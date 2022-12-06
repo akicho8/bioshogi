@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     class SkillSet
       attr_accessor :attack_infos
       attr_accessor :defense_infos

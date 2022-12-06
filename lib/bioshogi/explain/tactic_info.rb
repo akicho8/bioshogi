@@ -1,5 +1,5 @@
 module Bioshogi
-  module Xtech
+  module Explain
     class TacticInfo
       include ApplicationMemoryRecord
       memory_record [
@@ -10,7 +10,7 @@ module Bioshogi
       ]
 
       def model
-        @model ||= "bioshogi/xtech/#{key}_info".classify.constantize
+        @model ||= "bioshogi/explain/#{key}_info".classify.constantize
       end
 
       def list_key

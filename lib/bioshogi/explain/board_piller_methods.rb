@@ -2,7 +2,7 @@
 # 駒柱判定用
 
 module Bioshogi
-  module Xtech
+  module Explain
     module BoardPillerMethods
       attr_accessor :piece_piller_by_latest_piece
 

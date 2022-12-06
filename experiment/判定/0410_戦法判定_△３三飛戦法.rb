@@ -1,6 +1,6 @@
 require "../setup"
 
-info = Parser.parse(Pathname("../../lib/bioshogi/xtech/戦型/△３三飛戦法.kif"))
+info = Parser.parse(Pathname("../../lib/bioshogi/explain/戦型/△３三飛戦法.kif"))
 puts info.to_kif
 # >> 先手：Suhimam 三段
 # >> 後手：asa2yoru 二段

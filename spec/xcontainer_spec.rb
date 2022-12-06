@@ -4,8 +4,8 @@ module Bioshogi
   describe Xcontainer do
     it "normalized_names_with_alias" do
       xcontainer = Xcontainer.new
-      xcontainer.player_at(:black).skill_set.attack_infos << Xtech::AttackInfo["中田功XP"]
-      xcontainer.player_at(:white).skill_set.defense_infos << Xtech::DefenseInfo["美濃囲い"]
+      xcontainer.player_at(:black).skill_set.attack_infos << Explain::AttackInfo["中田功XP"]
+      xcontainer.player_at(:white).skill_set.defense_infos << Explain::DefenseInfo["美濃囲い"]
       assert { xcontainer.normalized_names_with_alias == ["中田功XP", "コーヤン流", "美濃囲い"] }
     end
 

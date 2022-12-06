@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Xtech
+  module Explain
     describe SkillSet do
       before do
         @skill_set = SkillSet.new

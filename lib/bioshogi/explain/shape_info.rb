@@ -24,7 +24,7 @@
 # ・なので右上5x5の盤であれば5x5のサイズで記入すればよい
 #
 module Bioshogi
-  module Xtech
+  module Explain
     class ShapeInfo
       include ApplicationMemoryRecord
       memory_record [

@@ -19,7 +19,7 @@ tp table
 body = table.inspect
 body.gsub!(",", ",\n")
 body.gsub!("=>", " => ")
-Pathname("../lib/bioshogi/xtech/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
+Pathname("../lib/bioshogi/explain/tactic_hit_turn_table.rb").write("# -*- frozen_string_literal: true -*-\nTacticHitTurnTable = #{body}")
 # >> |----------------------+----|
 # >> |             カニ囲い | 12 |
 # >> |           カブト囲い | 15 |

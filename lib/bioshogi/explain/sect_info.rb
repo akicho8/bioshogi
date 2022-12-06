@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     class SectInfo
       include ApplicationMemoryRecord
       memory_record [

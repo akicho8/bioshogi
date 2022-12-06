@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     concern :ShapeInfoRelation do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info

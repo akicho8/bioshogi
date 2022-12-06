@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     class SkillMonitor
       cattr_accessor(:walk_counts) { Hash.new(0) }
 

@@ -35,7 +35,7 @@ loader.ignore("#{__dir__}/bioshogi/errors.rb")
 loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
 loader.ignore("#{__dir__}/bioshogi/cli.rb")
 loader.ignore("#{__dir__}/bioshogi/cli")
-loader.ignore("#{__dir__}/bioshogi/xtech/{備考,囲い,戦型,手筋}")
+loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
 # loader.log!
 loader.setup

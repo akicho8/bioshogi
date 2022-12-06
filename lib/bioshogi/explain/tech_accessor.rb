@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     concern :TechAccessor do
       included do
         include TreeSupport::Treeable

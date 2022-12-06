@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     class DefenseInfo
       include ApplicationMemoryRecord
       memory_record do

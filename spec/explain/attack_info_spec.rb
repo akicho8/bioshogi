@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Xtech
+  module Explain
     describe AttackInfo do
       it "新米長玉" do
         info = Parser.parse("▲７六歩 △６二玉")

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Xtech
+  module Explain
     describe TacticInfo do
       describe "すべての戦法の判定", tactic: true do
         TacticInfo.all_elements.each do |e|

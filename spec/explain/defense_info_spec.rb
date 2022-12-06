@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Xtech
+  module Explain
     describe DefenseInfo do
       xdescribe "keyとnameは異なる" do
         it "key" do

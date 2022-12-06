@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Xtech
+  module Explain
     class NoteInfo
       include ApplicationMemoryRecord
       memory_record [
@@ -34,7 +34,7 @@ module Bioshogi
 
               # 相手にも追加
               if retv
-                player.opponent_player.skill_set.list_push(Xtech::NoteInfo["大駒全消失"])
+                player.opponent_player.skill_set.list_push(Explain::NoteInfo["大駒全消失"])
                 # list << note_info
                 # skill_set.list_of(e) << note_info
               end

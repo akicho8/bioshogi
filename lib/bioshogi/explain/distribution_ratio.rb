@@ -3,7 +3,7 @@
 # https://www.shogi-extend.com/script/defense-rarity
 
 module Bioshogi
-  module Xtech
+  module Explain
     DistributionRatio = {
       "耀龍ひねり飛車"       => { ratio: 0.000,  deviation: 45.212 },
       "木村定跡"             => { ratio: 0.001,  deviation: 45.214 },
