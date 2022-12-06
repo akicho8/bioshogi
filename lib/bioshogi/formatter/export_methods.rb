@@ -239,11 +239,11 @@ module Bioshogi
                       end
                     end
                     if done
-                      e.skill_set.list_push(DefenseInfo["居玉"])
+                      e.skill_set.list_push(Explain::DefenseInfo["居玉"])
                     end
                   end
                   # 両方居玉だったら備考に相居玉
-                  if xcontainer.players.all? { |e| e.skill_set.has_skill?(DefenseInfo["居玉"]) }
+                  if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::DefenseInfo["居玉"]) }
                     xcontainer.players.each do |e|
                       e.skill_set.list_push(Explain::NoteInfo["相居玉"])
                     end

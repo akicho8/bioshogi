@@ -37,6 +37,9 @@ loader.ignore("#{__dir__}/bioshogi/cli.rb")
 loader.ignore("#{__dir__}/bioshogi/cli")
 loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
+# generator 系は development 専用のため
+loader.do_not_eager_load("#{__dir__}/bioshogi/generator")
+
 # loader.log!
 loader.setup
 

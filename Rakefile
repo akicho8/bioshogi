@@ -50,9 +50,14 @@ desc "戦法テスト"
 task :validate do
   Dir.chdir("#{__dir__}/experiment") do
     system "ruby 戦法テスト.rb"
-    system "ruby 各戦法が確定する手数のテーブルを生成.rb"
     system "ruby 戦法正規化.rb"
   end
+end
+
+desc "各戦法が確定する手数のテーブルの生成"
+task :generate do
+  require "bioshogi"
+  Bioshogi::Generator::TacticHitTurnTableGenerator.new.generate
 end
 
 desc "2chkifu読み込み変換テスト"

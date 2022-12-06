@@ -1,4 +1,5 @@
 # -*- frozen_string_literal: true -*-
+# /Users/ikeda/src/bioshogi/lib/bioshogi/generator/tactic_hit_turn_table_generator.rb から生成しているので編集するべからず
 module Bioshogi
   module Explain
     TacticHitTurnTable = {
