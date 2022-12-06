@@ -17,12 +17,6 @@ module Bioshogi
         end
       end
 
-      it "すべての戦法に参考URLがある" do
-        TacticInfo.all_elements.each do |e|
-          assert { e.urls }
-        end
-      end
-
       describe "flat_lookup" do
         it "works" do
           assert { TacticInfo.flat_lookup("金底の歩") }

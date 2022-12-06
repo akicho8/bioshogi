@@ -70,14 +70,6 @@ module Bioshogi
         SectInfo.fetch(sect_key)
       end
 
-      def urls
-        v = TacticUrlsInfo[key]
-        if !v
-          return []
-        end
-        v.urls
-      end
-
       def hold_piece_eq
         if v = super
           @hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))

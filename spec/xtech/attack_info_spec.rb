@@ -22,10 +22,6 @@ module Bioshogi
         assert { AttackInfo["UFO銀"].name == "UFO銀" }
       end
 
-      it "urls" do
-        assert { AttackInfo["UFO銀"].urls }
-      end
-
       it "sample_kif_file" do
         assert { AttackInfo["UFO銀"].sample_kif_file.exist? }
       end
