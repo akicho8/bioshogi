@@ -58,8 +58,9 @@ desc "各戦法のレア度や戦法が確定する手数のテーブルの生�
 task :generate do
   require "bioshogi"
   Bioshogi::Explain::DistributionRatioGenerator.new.generate
-  Bioshogi::Generator::TacticHitTurnTableGenerator.new.generate
+  Bioshogi::Explain::TacticHitTurnTableGenerator.new.generate
 end
+task :g => :generate
 
 desc "2chkifu読み込み変換テスト"
 task "test:kifu" do

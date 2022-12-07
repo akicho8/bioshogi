@@ -1,7 +1,7 @@
-# -*- compile-command: "ruby -I../.. -rbioshogi -e Bioshogi::Generator::TacticHitTurnTableGenerator.new.generate" -*-
+# -*- compile-command: "ruby -I../.. -rbioshogi -e Bioshogi::Explain::TacticHitTurnTableGenerator.new.generate" -*-
 
 module Bioshogi
-  module Generator
+  module Explain
     class TacticHitTurnTableGenerator
       def generate
         body = body_format(turns_hash.inspect)
@@ -31,7 +31,7 @@ module Bioshogi
       end
 
       def output_file
-        Pathname("#{__dir__}/../explain/tactic_hit_turn_table.rb").expand_path
+        Pathname("#{__dir__}/tactic_hit_turn_table.rb").expand_path
       end
 
       def template
