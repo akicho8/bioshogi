@@ -54,9 +54,10 @@ task :validate do
   end
 end
 
-desc "各戦法が確定する手数のテーブルの生成"
+desc "各戦法のレア度や戦法が確定する手数のテーブルの生成"
 task :generate do
   require "bioshogi"
+  Bioshogi::Explain::DistributionRatioGenerator.new.generate
   Bioshogi::Generator::TacticHitTurnTableGenerator.new.generate
 end
 
