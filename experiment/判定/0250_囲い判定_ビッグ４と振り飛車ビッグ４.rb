@@ -1,11 +1,11 @@
 require "../setup"
 
-# info = DefenseInfo.fetch("ビッグ4").sample_kif_info
+# info = Explain::DefenseInfo.fetch("ビッグ4").sample_kif_info
 # tp info.header.to_h
 # tp info.xcontainer.players.collect { |e| e.skill_set.to_h }
 # puts info.to_kif
 
-info = DefenseInfo.fetch("振り飛車ビッグ4").sample_kif_info
+info = Explain::DefenseInfo.fetch("振り飛車ビッグ4").sample_kif_info
 tp info.xcontainer.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 

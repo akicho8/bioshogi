@@ -1,6 +1,6 @@
 require "../setup"
 
-info = AttackInfo.fetch("阪田流向飛車").sample_kif_info
+info = Explain::AttackInfo.fetch("阪田流向飛車").sample_kif_info
 tp info.xcontainer.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |------------------------------+---------+-----------+--------------------------------|

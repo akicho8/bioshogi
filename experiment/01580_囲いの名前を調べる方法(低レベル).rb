@@ -22,7 +22,7 @@ tp soldiers.collect(&:name)
 sorted_black_side_soldiers = soldiers.collect{|e|e.flip_if_white}.sort
 tp sorted_black_side_soldiers
 
-defense_info = DefenseInfo.find do |e|
+defense_info = Explain::DefenseInfo.find do |e|
   # p e.name
 
   # 盤上の状態に含まれる？

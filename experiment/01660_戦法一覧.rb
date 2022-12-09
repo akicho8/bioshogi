@@ -1,6 +1,6 @@
 require "./setup"
 
-rows = TacticInfo.flat_map do |tactic_info|
+rows = Explain::TacticInfo.flat_map do |tactic_info|
   tactic_info.model.collect do |e|
     {
       "モデル"         => e.class.name,

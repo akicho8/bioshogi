@@ -6,6 +6,9 @@ PATH
       activesupport
       color
       memory_record
+      rmagick
+      rubyzip
+      systemu
       table_format
       thor
       tree_support
