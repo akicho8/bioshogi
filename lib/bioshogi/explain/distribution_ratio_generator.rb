@@ -15,8 +15,8 @@ module Bioshogi
 
       def body_hash
         body = Faraday.get("https://www.shogi-extend.com/api/swars/distribution_ratio.json").body
-        ary = JSON.parse(body)
-        ary.inject({}) {|a, e| a.merge(e["name"] => e.except("name").symbolize_keys) }
+        hash = JSON.parse(body)
+        hash["items"].inject({}) {|a, e| a.merge(e["name"] => e.except("name").symbolize_keys) }
       end
 
       def output_file
