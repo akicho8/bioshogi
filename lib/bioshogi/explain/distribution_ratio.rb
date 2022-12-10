@@ -1610,7 +1610,7 @@ module Bioshogi
    :emission_ratio=>0.0,
    :diff_from_avg=>-0.0035587188612099642,
    :rarity_key=>"super_special_rare"},
- :菜々河流=>
+ :菜々河流△４四角=>
   {:index=>268,
    :count=>0,
    :emission_ratio=>0.0,
