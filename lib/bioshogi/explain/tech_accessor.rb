@@ -117,7 +117,7 @@ module Bioshogi
       end
 
       def distribution_ratio
-        DistributionRatio[key.to_s]
+        DistributionRatio[key]
       end
 
       def sample_kif_file
