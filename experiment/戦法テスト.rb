@@ -1,7 +1,7 @@
 require "./setup"
 
 rows = []
-TacticInfo.all_elements.each do |e|
+Explain::TacticInfo.all_elements.each do |e|
   file = e.sample_kif_or_ki2_file
   row = { "合致" => "", key: e.key, file: file.basename.to_s }
   if e.tactic_info.key == :attack || true

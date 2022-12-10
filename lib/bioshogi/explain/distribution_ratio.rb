@@ -1598,6 +1598,12 @@ module Bioshogi
    :emission_ratio=>0.0,
    :diff_from_avg=>-0.0035714285714285713,
    :rarity_key=>"super_special_rare"},
+ :菜々河流=>
+  {:index=>266,
+   :count=>0,
+   :emission_ratio=>0.0,
+   :diff_from_avg=>-0.0035714285714285713,
+   :rarity_key=>"super_special_rare"},
  :菜々河流向かい飛車=>
   {:index=>266,
    :count=>0,

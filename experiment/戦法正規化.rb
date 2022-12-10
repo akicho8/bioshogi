@@ -1,6 +1,6 @@
 require "./setup"
 
-TacticInfo.all_elements.each do |e|
+Explain::TacticInfo.all_elements.each do |e|
   dir = Pathname("#{__dir__}/../lib/bioshogi/explain/#{e.tactic_info.name}")
   file = dir.glob("#{e.key}.{kif,ki2}").first
   file = file.expand_path
