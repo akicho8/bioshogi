@@ -99,6 +99,10 @@ module Bioshogi
           av << "詰将棋で「上手・下手」の表記を用いている場合は「後手・先手」に直してください"
         end
 
+        # if player.xcontainer.turn_info.display_turn > 0
+        #   av << "将棋倶楽部24の場合、反則(二手指し)による不正な棋譜になっている場合があります"
+        # end
+
         av
       end
     end
