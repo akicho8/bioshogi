@@ -92,6 +92,13 @@ module Bioshogi
         TacticInfo.fetch(tactic_key)
       end
 
+      def group_info
+        return @group_info if instance_variable_defined?(:@group_info)
+        if respond_to?(:group_key) && group_key
+          @group_info ||= GroupInfo.fetch(group_key)
+        end
+      end
+
       def add_to_opponent
         return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
         if defined?(super) && v = super

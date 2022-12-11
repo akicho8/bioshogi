@@ -23,9 +23,7 @@ module Bioshogi
         end
         it "文字列でなくても to_s してから探す" do
           o = Object.new
-          def o.to_s
-            "金底の歩"
-          end
+          def o.to_s; "金底の歩"; end
           assert { TacticInfo.flat_lookup(o) }
         end
       end
@@ -35,6 +33,15 @@ module Bioshogi
         assert { TacticInfo.fuzzy_flat_lookup("角頭歩") }
         assert { TacticInfo.fuzzy_flat_lookup("アヒル") }
         assert { TacticInfo.fuzzy_flat_lookup("阪田流向かい飛車") }
+      end
+
+      it "all_elements" do
+        assert { TacticInfo.all_elements.include?(AttackInfo.fetch("棒銀")) }
+      end
+
+      it "all_elements_hash" do
+        assert { TacticInfo.all_elements_hash[:"棒銀"] }
+        assert { TacticInfo.all_elements_hash[:"美濃囲い"]       }
       end
     end
   end

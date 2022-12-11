@@ -18,6 +18,10 @@ module Bioshogi
         assert { AttackInfo.first.tactic_info.key == :attack }
       end
 
+      it "group_info" do
+        assert { AttackInfo["清野流岐阜戦法"].group_info.key == :"右玉" }
+      end
+
       it "UFO銀" do
         assert { AttackInfo["UFO銀"].name == "UFO銀" }
       end

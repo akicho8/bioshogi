@@ -20,14 +20,7 @@ module Bioshogi
       class << self
         # TacticInfo.flat_lookup("金底の歩").key # => :金底の歩
         def flat_lookup(key)
-          key = key.to_s
-          v = nil
-          each do |e|
-            if v = e.model.lookup(key)
-              break
-            end
-          end
-          v
+          all_elements_hash[key.to_s.to_sym]
         end
 
         # TacticInfo.fuzzy_flat_lookup("アヒル").key # => :アヒル戦法
@@ -42,7 +35,11 @@ module Bioshogi
         end
 
         def all_elements
-          @all_elements ||= flat_map { |e| e.model.to_a }
+          @all_elements ||= flat_map { |e| e.model.values }
+        end
+
+        def all_elements_hash
+          @all_elements_hash ||= all_elements.inject({}) { |a, e| a.merge(e.key => e) }
         end
 
         # technique_matcher_info を持っている all_elements
