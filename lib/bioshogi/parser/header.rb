@@ -34,9 +34,7 @@ module Bioshogi
         object.each do |key, value|
           if key.match?(/日時?\z/) # "開始日" や "開始日時"
             if v = value.presence
-              t = nil
-              t ||= Time.parse(v) rescue nil
-              t ||= Time.local(*v.scan(/\d+/).collect(&:to_i)) rescue nil
+              t = TimeParser.new(v).to_time
               if t
                 format = "%Y/%m/%d"
                 if false
