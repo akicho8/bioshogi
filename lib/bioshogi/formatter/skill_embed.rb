@@ -12,22 +12,22 @@ module Bioshogi
       end
 
       def perform
-        rikisen_hantei
+        rikisen_judgement
 
         # 両方が入玉していれば「相入玉」タグを追加する
         # この場合、両方同時に入玉しているかどうかは判定できない
-        ainyugyoku_check
+        ainyugyoku_judgement
 
         if @xparser.preset_info
           if @xparser.preset_info.special_piece
-            ibisha_check # 振り飛車でなければ居飛車
-            aiibisha_check              # 両方居飛車なら相居飛車
-            aihuri_check                # 両方振り飛車なら相振り
-            taihuri_check               # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-            haisui_check                # 大駒がない状態で勝ったら「背水の陣」
+            ibisha_judgement # 振り飛車でなければ居飛車
+            aiibisha_judgement              # 両方居飛車なら相居飛車
+            aihuri_judgement                # 両方振り飛車なら相振り
+            taihuri_judgement               # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+            haisui_judgement                # 大駒がない状態で勝ったら「背水の陣」
           end
-          igyoku_check                  # 居玉判定
-          aiigyoku_check                # 相居玉判定
+          igyoku_judgement                  # 居玉判定
+          aiigyoku_judgement                # 相居玉判定
         end
 
         header_write # ヘッダーに埋める
@@ -35,7 +35,7 @@ module Bioshogi
 
       private
 
-      def rikisen_hantei
+      def rikisen_judgement
         # return if ENV["BIOSHOGI_ENV"] == "test"
         if @xcontainer.turn_info.display_turn >= MIN_TURN
           # @xcontainer.players.each do |player|
@@ -60,7 +60,7 @@ module Bioshogi
         end
       end
 
-      def ainyugyoku_check
+      def ainyugyoku_judgement
         if @xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["入玉"]) }
           @xcontainer.players.each do |player|
             player.skill_set.list_push(Explain::NoteInfo["相入玉"])
@@ -69,7 +69,7 @@ module Bioshogi
       end
 
       # 振り飛車でなければ居飛車
-      def ibisha_check
+      def ibisha_judgement
         @xcontainer.players.each do |e|
           skill_set = e.skill_set
           if !skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Explain::NoteInfo["居飛車"])
@@ -78,7 +78,7 @@ module Bioshogi
         end
       end
 
-      def aiibisha_check
+      def aiibisha_judgement
         # 両方居飛車なら相居飛車
         if @xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["居飛車"]) }
           @xcontainer.players.each do |player|
@@ -87,7 +87,7 @@ module Bioshogi
         end
       end
 
-      def aihuri_check
+      def aihuri_judgement
         # 両方振り飛車なら相振り
         if @xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
           @xcontainer.players.each do |player|
@@ -96,7 +96,7 @@ module Bioshogi
         end
       end
 
-      def taihuri_check
+      def taihuri_judgement
         # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
         if player = @xcontainer.players.find { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
           others = @xcontainer.players - [player]
@@ -108,7 +108,7 @@ module Bioshogi
       end
 
       # 大駒がない状態で勝ったら「背水の陣」
-      def haisui_check
+      def haisui_judgement
         @xcontainer.players.each do |player|
           if player == @xcontainer.win_player
             if player.stronger_piece_have_count.zero?
@@ -118,7 +118,7 @@ module Bioshogi
         end
       end
 
-      def igyoku_check
+      def igyoku_judgement
         @xcontainer.players.each do |e|
           enabled = false
           # 14手以上の対局で一度も動かずに終了した
@@ -142,7 +142,7 @@ module Bioshogi
         end
       end
 
-      def aiigyoku_check
+      def aiigyoku_judgement
         # 両方居玉だったら備考に相居玉
         if @xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::DefenseInfo["居玉"]) }
           @xcontainer.players.each do |e|
