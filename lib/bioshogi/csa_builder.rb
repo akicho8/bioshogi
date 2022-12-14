@@ -80,10 +80,7 @@ module Bioshogi
         out = out.gsub(/\n/, ",")
       else
         out += "\n"
-
-        if ENV["BIOSHOGI_ENV"] == "test"
-          out = out.gsub(/\s+\n/, "\n")
-        end
+        out = out.gsub(/\s+\n/, "\n")
       end
 
       out
