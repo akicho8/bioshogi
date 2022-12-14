@@ -113,7 +113,7 @@ module Bioshogi
       end
 
       def xcontainer_run_all(xcontainer)
-        xcontainer_run_all_main(xcontainer)
+        Runner.new(self, xcontainer).perform
         if @parser_options[:skill_monitor_enable]
           skill_monitor_process(xcontainer)
         end
@@ -280,35 +280,6 @@ module Bioshogi
       end
 
       private
-
-      def xcontainer_run_all_main(xcontainer)
-        begin
-          move_infos.each.with_index do |info, i|
-            if @parser_options[:debug]
-              p xcontainer
-            end
-            if @parser_options[:callback]
-              @parser_options[:callback].call(xcontainer)
-            end
-            if @parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @parser_options[:turn_limit]
-              break
-            end
-            xcontainer.execute(info[:input], used_seconds: used_seconds_at(i))
-          end
-        rescue CommonError => error
-          if v = @parser_options[:typical_error_case]
-            case v
-            when :embed
-              @error_message = error.message
-            when :skip
-            else
-              raise MustNotHappen
-            end
-          else
-            raise error
-          end
-        end
-      end
 
       def skill_monitor_process(xcontainer)
         rikisen_hantei(xcontainer)

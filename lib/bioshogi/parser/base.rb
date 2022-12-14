@@ -40,13 +40,14 @@ module Bioshogi
       attr_reader :first_comments
       attr_reader :board_source
       attr_reader :last_action_params
-      attr_reader :error_message
+      attr_accessor :error_message
       attr_reader :balance_info
       attr_reader :force_location
       attr_reader :force_handicap
       attr_reader :force_preset_info
       attr_reader :player_piece_boxes
       attr_reader :header
+      attr_accessor :parser_options
 
       def initialize(source, parser_options = {})
         @source = source
