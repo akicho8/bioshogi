@@ -115,7 +115,7 @@ module Bioshogi
       def xcontainer_run_all(xcontainer)
         Runner.new(self, xcontainer).perform
         if @parser_options[:skill_monitor_enable]
-          SkillChecker.new(self, xcontainer).perform
+          SkillEmbed.new(self, xcontainer).perform
         end
       end
 

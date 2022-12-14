@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Formatter
-    class SkillChecker
+    class SkillEmbed
       attr_accessor :xparser
       attr_accessor :xcontainer
 
@@ -119,24 +119,24 @@ module Bioshogi
       end
 
       def igyoku_check
-        # if preset_info.key == :"平手"
         @xcontainer.players.each do |e|
+          enabled = false
           # 14手以上の対局で一度も動かずに終了した
-          done = false
-          if !done
+          if !enabled
             if @xcontainer.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
-              done = true
+              enabled = true
             end
           end
-          if !done
-            if @xcontainer.outbreak_turn # 歩と角以外の交換があったか？
+          # 歩と角以外の交換があったか？
+          if !enabled
+            if @xcontainer.outbreak_turn
               v = e.king_first_moved_turn
               if v.nil? || v >= @xcontainer.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
-                done = true
+                enabled = true
               end
             end
           end
-          if done
+          if enabled
             e.skill_set.list_push(Explain::DefenseInfo["居玉"])
           end
         end
@@ -159,7 +159,8 @@ module Bioshogi
             list = player.skill_set.public_send(e.list_key).normalize
             if v = list.presence
               v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
-              @xparser.skill_set_hash["#{player.call_name}の#{e.name}"] = v.collect(&:name)
+              key = "#{player.call_name}の#{e.name}"
+              @xparser.skill_set_hash[key] = v.collect(&:name)
             end
           end
         end
