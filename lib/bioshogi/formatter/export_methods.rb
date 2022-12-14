@@ -113,139 +113,9 @@ module Bioshogi
       end
 
       def xcontainer_run_all(xcontainer)
-        # FIXME: ここらへんは xcontainer のなかで実行する
-        begin
-          move_infos.each.with_index do |info, i|
-            if @parser_options[:debug]
-              p xcontainer
-            end
-            if @parser_options[:callback]
-              @parser_options[:callback].call(xcontainer)
-            end
-            if @parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @parser_options[:turn_limit]
-              break
-            end
-            xcontainer.execute(info[:input], used_seconds: used_seconds_at(i))
-          end
-        rescue CommonError => error
-          if v = @parser_options[:typical_error_case]
-            case v
-            when :embed
-              @error_message = error.message
-            when :skip
-            else
-              raise MustNotHappen
-            end
-          else
-            raise error
-          end
-        end
-
+        xcontainer_run_all_main(xcontainer)
         if @parser_options[:skill_monitor_enable]
-          rikisen_hantei(xcontainer)
-
-          # 両方が入玉していれば「相入玉」タグを追加する
-          # この場合、両方同時に入玉しているかどうかは判定できない
-          if Explain::NoteInfo.values.present?
-            ainyugyoku_check(xcontainer)
-
-            if true
-              # 1. 最初に設定
-              # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
-              if preset_info
-                if preset_info.special_piece
-                  furibisya_denakereba_ibisha(xcontainer)
-
-                  if true
-                    # 両方居飛車なら相居飛車
-                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["居飛車"]) }
-                      xcontainer.players.each do |player|
-                        player.skill_set.list_push(Explain::NoteInfo["相居飛車"])
-                      end
-                    end
-
-                    # 両方振り飛車なら相振り
-                    if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
-                      xcontainer.players.each do |player|
-                        player.skill_set.list_push(Explain::NoteInfo["相振り"])
-                      end
-                    end
-
-                    # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-                    if player = xcontainer.players.find { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
-                      others = xcontainer.players - [player]
-                      if others.none? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
-                        others.each { |e| e.skill_set.list_push(Explain::NoteInfo["対振り"]) }
-                        xcontainer.players.each { |e| e.skill_set.list_push(Explain::NoteInfo["対抗型"]) }
-                      end
-                    end
-                  end
-
-                  # 大駒がない状態で勝ったら「背水の陣」
-                  xcontainer.players.each do |player|
-                    if player == xcontainer.win_player
-                      if player.stronger_piece_have_count.zero?
-                        player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
-                      end
-                    end
-                  end
-                end
-
-                # if xcontainer.players.any? { |e| e.skill_set.note_infos.include?(Explain::NoteInfo["振り飛車"]) }
-                #   xcontainer.players.each do |player|
-                #     player.skill_set.list_push(Explain::NoteInfo["相振り飛車"])
-                #   end
-                # end
-
-                # 居玉判定
-                if true
-                  # if preset_info.key == :"平手"
-                  xcontainer.players.each do |e|
-                    # 14手以上の対局で一度も動かずに終了した
-                    done = false
-                    if !done
-                      if xcontainer.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
-                        done = true
-                      end
-                    end
-                    if !done
-                      if xcontainer.outbreak_turn # 歩と角以外の交換があったか？
-                        v = e.king_first_moved_turn
-                        if v.nil? || v >= xcontainer.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
-                          done = true
-                        end
-                      end
-                    end
-                    if done
-                      e.skill_set.list_push(Explain::DefenseInfo["居玉"])
-                    end
-                  end
-                  # 両方居玉だったら備考に相居玉
-                  if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::DefenseInfo["居玉"]) }
-                    xcontainer.players.each do |e|
-                      e.skill_set.list_push(Explain::NoteInfo["相居玉"])
-                    end
-                  end
-                  # end
-                end
-              end
-            end
-          end
-
-          begin
-            # ヘッダーに埋める
-            Explain::TacticInfo.each do |e|
-              xcontainer.players.each do |player|
-                list = player.skill_set.public_send(e.list_key).normalize
-                if v = list.presence
-                  v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
-                  skill_set_hash["#{player.call_name}の#{e.name}"] = v.collect(&:name)
-                end
-              end
-            end
-            hv = skill_set_hash.transform_values { |e| e.join(", ") }
-            header.object.update(hv)
-          end
+          skill_monitor_process(xcontainer)
         end
       end
 
@@ -411,6 +281,57 @@ module Bioshogi
 
       private
 
+      def xcontainer_run_all_main(xcontainer)
+        begin
+          move_infos.each.with_index do |info, i|
+            if @parser_options[:debug]
+              p xcontainer
+            end
+            if @parser_options[:callback]
+              @parser_options[:callback].call(xcontainer)
+            end
+            if @parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @parser_options[:turn_limit]
+              break
+            end
+            xcontainer.execute(info[:input], used_seconds: used_seconds_at(i))
+          end
+        rescue CommonError => error
+          if v = @parser_options[:typical_error_case]
+            case v
+            when :embed
+              @error_message = error.message
+            when :skip
+            else
+              raise MustNotHappen
+            end
+          else
+            raise error
+          end
+        end
+      end
+
+      def skill_monitor_process(xcontainer)
+        rikisen_hantei(xcontainer)
+
+        # 両方が入玉していれば「相入玉」タグを追加する
+        # この場合、両方同時に入玉しているかどうかは判定できない
+        ainyugyoku_check(xcontainer)
+
+        if preset_info
+          if preset_info.special_piece
+            furibisya_denakereba_ibisha(xcontainer) # 振り飛車でなければ居飛車
+            aiibisha_check(xcontainer)              # 両方居飛車なら相居飛車
+            aihuri_check(xcontainer)                # 両方振り飛車なら相振り
+            taihuri_check(xcontainer)               # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+            haisui_check(xcontainer)                # 大駒がない状態で勝ったら「背水の陣」
+          end
+          igyoku_check(xcontainer)                  # 居玉判定
+          aiigyoku_check(xcontainer)                # 相居玉判定
+        end
+
+        header_write(xcontainer) # ヘッダーに埋める
+      end
+
       def rikisen_hantei(xcontainer)
         # return if ENV["BIOSHOGI_ENV"] == "test"
         if xcontainer.turn_info.display_turn >= MIN_TURN
@@ -452,6 +373,95 @@ module Bioshogi
             e.skill_set.list_push(Explain::NoteInfo["居飛車"])
           end
         end
+      end
+
+      def aiibisha_check(xcontainer)
+        # 両方居飛車なら相居飛車
+        if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["居飛車"]) }
+          xcontainer.players.each do |player|
+            player.skill_set.list_push(Explain::NoteInfo["相居飛車"])
+          end
+        end
+      end
+
+      def aihuri_check(xcontainer)
+        # 両方振り飛車なら相振り
+        if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
+          xcontainer.players.each do |player|
+            player.skill_set.list_push(Explain::NoteInfo["相振り"])
+          end
+        end
+      end
+
+      def taihuri_check(xcontainer)
+        # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+        if player = xcontainer.players.find { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
+          others = xcontainer.players - [player]
+          if others.none? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
+            others.each { |e| e.skill_set.list_push(Explain::NoteInfo["対振り"]) }
+            xcontainer.players.each { |e| e.skill_set.list_push(Explain::NoteInfo["対抗型"]) }
+          end
+        end
+      end
+
+      # 大駒がない状態で勝ったら「背水の陣」
+      def haisui_check(xcontainer)
+        xcontainer.players.each do |player|
+          if player == xcontainer.win_player
+            if player.stronger_piece_have_count.zero?
+              player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
+            end
+          end
+        end
+      end
+
+      def igyoku_check(xcontainer)
+        # if preset_info.key == :"平手"
+        xcontainer.players.each do |e|
+          # 14手以上の対局で一度も動かずに終了した
+          done = false
+          if !done
+            if xcontainer.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
+              done = true
+            end
+          end
+          if !done
+            if xcontainer.outbreak_turn # 歩と角以外の交換があったか？
+              v = e.king_first_moved_turn
+              if v.nil? || v >= xcontainer.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた
+                done = true
+              end
+            end
+          end
+          if done
+            e.skill_set.list_push(Explain::DefenseInfo["居玉"])
+          end
+        end
+      end
+
+      def aiigyoku_check(xcontainer)
+        # 両方居玉だったら備考に相居玉
+        if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::DefenseInfo["居玉"]) }
+          xcontainer.players.each do |e|
+            e.skill_set.list_push(Explain::NoteInfo["相居玉"])
+          end
+        end
+        # end
+      end
+
+      def header_write(xcontainer)
+        # ヘッダーに埋める
+        Explain::TacticInfo.each do |e|
+          xcontainer.players.each do |player|
+            list = player.skill_set.public_send(e.list_key).normalize
+            if v = list.presence
+              v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
+              skill_set_hash["#{player.call_name}の#{e.name}"] = v.collect(&:name)
+            end
+          end
+        end
+        hv = skill_set_hash.transform_values { |e| e.join(", ") }
+        header.object.update(hv)
       end
     end
   end
