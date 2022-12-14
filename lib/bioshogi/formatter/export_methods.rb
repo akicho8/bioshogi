@@ -142,41 +142,19 @@ module Bioshogi
         end
 
         if @parser_options[:skill_monitor_enable]
-
-          # 力戦判定(適当)
-          if ENV["BIOSHOGI_ENV"] != "test"
-            if xcontainer.turn_info.display_turn >= MIN_TURN
-              # if xcontainer.players.all? { |e| e.skill_set.power_battle? }
-              #   xcontainer.players.each do |e|
-              #     e.skill_set.push(AttackInfo["乱戦"])
-              #   end
-              # else
-              xcontainer.players.each do |e|
-                e.skill_set.rikisen_check_process
-              end
-              # end
-            end
-          end
+          rikisen_hantei(xcontainer)
 
           # 両方が入玉していれば「相入玉」タグを追加する
           # この場合、両方同時に入玉しているかどうかは判定できない
           if Explain::NoteInfo.values.present?
-            if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["入玉"]) }
-              xcontainer.players.each do |player|
-                player.skill_set.list_push(Explain::NoteInfo["相入玉"])
-              end
-            end
+            ainyugyoku_check(xcontainer)
 
-            if ENV["BIOSHOGI_ENV"] != "test"
+            if true
               # 1. 最初に設定
               # とりあえず2つに分けたいので「振り飛車」でなければ「居飛車」としておく
               if preset_info
                 if preset_info.special_piece
-                  xcontainer.players.each do |player|
-                    if !player.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !player.skill_set.has_skill?(Explain::NoteInfo["居飛車"])
-                      player.skill_set.list_push(Explain::NoteInfo["居飛車"])
-                    end
-                  end
+                  furibisya_denakereba_ibisha(xcontainer)
 
                   if true
                     # 両方居飛車なら相居飛車
@@ -429,6 +407,51 @@ module Bioshogi
 
       def to_animation_zip(options = {})
         AnimationZipBuilder.new(self, options).to_binary
+      end
+
+      private
+
+      def rikisen_hantei(xcontainer)
+        # return if ENV["BIOSHOGI_ENV"] == "test"
+        if xcontainer.turn_info.display_turn >= MIN_TURN
+          # xcontainer.players.each do |player|
+          #   if player.skill_set.power_battle?
+          #     ChaosInfo.each do |chaos_info|
+          #       if chaos_info.if_cond[xcontainer]
+          #         player.skill_set.list_push(AttackInfo[chaos_info.key])
+          #         break
+          #       end
+          #     end
+          #   end
+          # end
+          # if xcontainer.players.all? { |e| e.skill_set.power_battle? }
+          #   xcontainer.players.each do |e|
+          #     e.skill_set.list_push(AttackInfo["乱戦"])
+          #   end
+          # else
+          xcontainer.players.each do |e|
+            e.skill_set.rikisen_check_process
+          end
+          # end
+        end
+      end
+
+      def ainyugyoku_check(xcontainer)
+        if xcontainer.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["入玉"]) }
+          xcontainer.players.each do |player|
+            player.skill_set.list_push(Explain::NoteInfo["相入玉"])
+          end
+        end
+      end
+
+      # 振り飛車でなければ居飛車
+      def furibisya_denakereba_ibisha(xcontainer)
+        xcontainer.players.each do |e|
+          skill_set = e.skill_set
+          if !skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Explain::NoteInfo["居飛車"])
+            e.skill_set.list_push(Explain::NoteInfo["居飛車"])
+          end
+        end
       end
     end
   end

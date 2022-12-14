@@ -52,6 +52,7 @@ module Bioshogi
       end
 
       def list_push(e)
+        raise "must not happen" unless e
         list_of(e).push(e)
       end
 
