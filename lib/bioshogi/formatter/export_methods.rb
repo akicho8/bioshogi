@@ -70,18 +70,18 @@ module Bioshogi
           xcontainer.placement_from_preset(preset_info.key)
         end
 
-        if force_location
-          xcontainer.turn_info.turn_base = force_location.code
+        if mi.force_location
+          xcontainer.turn_info.turn_base = mi.force_location.code
         end
 
-        if force_handicap
-          xcontainer.turn_info.handicap = force_handicap
+        if mi.force_handicap
+          xcontainer.turn_info.handicap = mi.force_handicap
         end
       end
 
       # 持駒を反映する
       def players_piece_box_set(xcontainer)
-        player_piece_boxes.each do |k, v|
+        mi.player_piece_boxes.each do |k, v|
           xcontainer.player_at(k).piece_box.set(v)
         end
       end
@@ -97,7 +97,7 @@ module Bioshogi
 
       # 手合割
       def preset_info
-        @preset_info ||= @force_preset_info
+        @preset_info ||= @mi.force_preset_info
         @preset_info ||= initial_xcontainer.board.preset_info
         @preset_info ||= PresetInfo[mi.header["手合割"]]
         @preset_info ||= PresetInfo["平手"]

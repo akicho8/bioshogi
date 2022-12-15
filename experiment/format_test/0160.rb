@@ -34,10 +34,10 @@ puts info.to_kif
 # >>
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info | 香落ち |
+# >> | mi.force_preset_info | 香落ち |
 # >> |      balance_info | 通常戦 |
-# >> |    force_location |        |
-# >> |    force_handicap | true   |
+# >> |    mi.force_location |        |
+# >> |    mi.force_handicap | true   |
 # >> |-------------------+--------|
 # >>
 # >> * mi.header attributes
@@ -51,7 +51,7 @@ puts info.to_kif
 # >> * mi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
-# >> |    force_location |  |
+# >> |    mi.force_location |  |
 # >> |-------------------+--|
 # >>
 # >> * @mi.board_source

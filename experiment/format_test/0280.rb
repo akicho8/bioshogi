@@ -9,10 +9,10 @@ p info
 puts info.to_kif
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info | 平手   |
+# >> | mi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    force_location |        |
-# >> |    force_handicap |        |
+# >> |    mi.force_location |        |
+# >> |    mi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
 # >> * mi.header

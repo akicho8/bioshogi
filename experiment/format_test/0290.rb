@@ -39,10 +39,10 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info |        |
+# >> | mi.force_preset_info |        |
 # >> |      balance_info | 通常戦 |
-# >> |    force_location | ▲     |
-# >> |    force_handicap |        |
+# >> |    mi.force_location | ▲     |
+# >> |    mi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
 # >> * mi.header

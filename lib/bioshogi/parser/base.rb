@@ -38,24 +38,13 @@ module Bioshogi
 
       attr_accessor :mi
       attr_accessor :error_message
-      attr_reader :force_location
-      attr_reader :force_handicap
-      attr_reader :force_preset_info
-      attr_reader :player_piece_boxes
-      attr_reader :header
       attr_accessor :parser_options
 
       def initialize(source, parser_options = {})
         @source = source
         @parser_options = self.class.default_parser_options.merge(parser_options)
-
         @mi = Mi.new
-
-        @error_message      = nil
-        @force_preset_info  = nil
-        @force_location     = nil
-        @force_handicap     = nil
-        @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }
+        @error_message = nil
       end
 
       def parse

@@ -29,7 +29,7 @@ module Bioshogi
       def kknk_board_read
         if md = normalized_source.match(BOARD_REGEXP)
           @mi.board_source = md[:board]
-          @force_preset_info ||= Board.guess_preset_info(@mi.board_source)
+          @mi.force_preset_info ||= Board.guess_preset_info(@mi.board_source)
         end
       end
 
@@ -86,7 +86,7 @@ module Bioshogi
       def player_piece_read
         Location.each do |e|
           if v = e.call_names.collect { |e| mi.header["#{e}の持駒"] }.join.presence
-            @player_piece_boxes[e.key].set(Piece.s_to_h(v))
+            @mi.player_piece_boxes[e.key].set(Piece.s_to_h(v))
           end
         end
       end
@@ -94,7 +94,7 @@ module Bioshogi
       def force_location_read
         Location.each do |location|
           if location.call_names.any? { |name| normalized_source.match?(/^#{name}番/) }
-            @force_location = location
+            @mi.force_location = location
             break
           end
         end
@@ -103,9 +103,9 @@ module Bioshogi
       def force_preset_read
         if v = mi.header["手合割"]
           if e = PresetInfo[v]
-            @force_preset_info = e
+            @mi.force_preset_info = e
             if e.handicap
-              @force_handicap = e.handicap
+              @mi.force_handicap = e.handicap
             end
           end
         end

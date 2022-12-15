@@ -157,7 +157,7 @@ module Bioshogi
           end
 
           hold_pieces.each do |location, pieces|
-            player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
+            mi.player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
           end
         end
       end
@@ -166,7 +166,7 @@ module Bioshogi
         if @board
           @mi.board_source = @board.to_s # FIXME: 元に戻すのは無駄
           if e = @board.preset_info
-            @force_preset_info = e
+            @mi.force_preset_info = e
           end
         end
       end
@@ -174,7 +174,7 @@ module Bioshogi
       def read_turn
         if md = normalized_source.match(/^(?<csa_sign>[+-])$/)
           if Location.fetch(md["csa_sign"]).key == :white
-            @force_handicap = true # 微妙な判定
+            @mi.force_handicap = true # 微妙な判定
           end
         end
       end
