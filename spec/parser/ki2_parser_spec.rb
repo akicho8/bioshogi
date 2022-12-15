@@ -43,7 +43,7 @@ module Bioshogi
 
       it "ヘッダー部" do
         assert do
-          @result.header.to_h == {
+          @result.mi.header.to_h == {
             "開始日時" => "2000/01/01",
             "終了日時" => "2000/01/01 01:00:00",
           }
@@ -62,7 +62,7 @@ module Bioshogi
       end
 
       it "対局前コメント" do
-        assert { @result.first_comments == ["対局前コメント"] }
+        assert { @result.mi.first_comments == ["対局前コメント"] }
       end
     end
 

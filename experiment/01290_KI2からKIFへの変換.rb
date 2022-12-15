@@ -3,10 +3,10 @@ require "./setup"
 info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 
 out = ""
-out << info.header.collect { |key, value| "#{key}：#{value}\n" }.join
+out << info.mi.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
 xcontainer = Xcontainer.new
-xcontainer.placement_from_preset(info.header["手合割"])
+xcontainer.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
   xcontainer.execute(info[:input])
   # puts "-------------------------------------------"

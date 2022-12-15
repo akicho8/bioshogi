@@ -13,12 +13,12 @@ info = Parser.parse(<<~EOT)
 *「菊田公毅（一橋大２年）」vs「曽根史仁（高知工大３年）」
 EOT
 
-tp info.header.to_h
-tp info.header.entry_all_names
-tp info.header.__to_meta_h
-tp info.header.to_kisen_a
-tp info.header.entry_all_names
-tp info.header.tags
+tp info.mi.header.to_h
+tp info.mi.header.entry_all_names
+tp info.mi.header.__to_meta_h
+tp info.mi.header.to_kisen_a
+tp info.mi.header.entry_all_names
+tp info.mi.header.tags
 # >> |----------+-----------------------------------------|
 # >> | 開始日時 | 2003/12/27                              |
 # >> |     棋戦 | 学生王将戦                              |

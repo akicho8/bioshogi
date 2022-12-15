@@ -113,7 +113,7 @@ module Bioshogi
     #     +
     #     +7776FU,T6
     #   EOT
-    #   assert { info.board_source.include?("P1") }
+    #   assert { info.mi.board_source.include?("P1") }
     # end
   end
 end

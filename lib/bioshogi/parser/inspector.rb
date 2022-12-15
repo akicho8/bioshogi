@@ -8,9 +8,9 @@ module Bioshogi
       def inspect
         av = []
 
-        if @parser.board_source
-          av << "* board_source"
-          av << @parser.board_source.strip
+        if @parser.mi.board_source
+          av << "* mi.board_source"
+          av << @parser.mi.board_source.strip
           av << " "
         end
 
@@ -23,13 +23,13 @@ module Bioshogi
         }.to_t.strip
         av << " "
 
-        av << "* header"
-        av << @parser.header.inspect.strip
+        av << "* mi.header"
+        av << @parser.mi.header.inspect.strip
         av << " "
 
-        if @parser.board_source
-          av << "* @parser.board_source"
-          av << @parser.board_source.strip
+        if @parser.mi.board_source
+          av << "* @parser.mi.board_source"
+          av << @parser.mi.board_source.strip
           av << " "
         end
 
@@ -37,8 +37,8 @@ module Bioshogi
         av << @parser.mi.move_infos.to_t.strip
         av << " "
 
-        av << "* @parser.last_action_params"
-        av << @parser.last_action_params.to_t.strip
+        av << "* @parser.mi.last_action_params"
+        av << @parser.mi.last_action_params.to_t.strip
         av << " "
 
         av.join("\n").strip

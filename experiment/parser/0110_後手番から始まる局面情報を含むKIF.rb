@@ -26,7 +26,7 @@ EOT
 # puts info.xcontainer.to_bod
 
 puts info.to_kif
-# tp info.header.to_h
+# tp info.mi.header.to_h
 # >> 先手の備考：居飛車, 相居飛車, 居玉, 相居玉
 # >> 後手の備考：居飛車, 相居飛車, 居玉, 相居玉
 # >> 後手の持駒：銀 歩三

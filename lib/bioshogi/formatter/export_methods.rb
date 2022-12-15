@@ -63,10 +63,10 @@ module Bioshogi
       def case1(xcontainer)
         players_piece_box_set(xcontainer)
 
-        if @board_source
-          xcontainer.board.placement_from_shape(@board_source)
+        if @mi.board_source
+          xcontainer.board.placement_from_shape(@mi.board_source)
         else
-          preset_info = PresetInfo[header["手合割"]] || PresetInfo["平手"]
+          preset_info = PresetInfo[mi.header["手合割"]] || PresetInfo["平手"]
           xcontainer.placement_from_preset(preset_info.key)
         end
 
@@ -89,8 +89,8 @@ module Bioshogi
       # 盤面の指定があるとき、盤面だけを見て、手合割を得る
       def board_preset_info
         @board_preset_info ||= yield_self do
-          if @board_source
-            Board.guess_preset_info(@board_source)
+          if @mi.board_source
+            Board.guess_preset_info(@mi.board_source)
           end
         end
       end
@@ -99,7 +99,7 @@ module Bioshogi
       def preset_info
         @preset_info ||= @force_preset_info
         @preset_info ||= initial_xcontainer.board.preset_info
-        @preset_info ||= PresetInfo[header["手合割"]]
+        @preset_info ||= PresetInfo[mi.header["手合割"]]
         @preset_info ||= PresetInfo["平手"]
       end
 
@@ -108,7 +108,7 @@ module Bioshogi
       def names_set(params)
         locations = Location.send(handicap? ? :reverse_each : :itself)
         locations.each do |e|
-          header[e.call_name(handicap?)] = params[e.key] || "？"
+          mi.header[e.call_name(handicap?)] = params[e.key] || "？"
         end
       end
 
@@ -124,7 +124,7 @@ module Bioshogi
       end
 
       def raw_header_part_hash
-        header.object.collect { |key, value|
+        mi.header.object.collect { |key, value|
           if value
             if e = CsaHeaderInfo[key]
               if e.as_kif
@@ -155,8 +155,8 @@ module Bioshogi
 
           # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
           if !key
-            if @last_action_params
-              v = @last_action_params[:last_action_key]
+            if @mi.last_action_params
+              v = @mi.last_action_params[:last_action_key]
               if LastActionInfo[v]
                 key = v
               end
@@ -165,7 +165,7 @@ module Bioshogi
 
           # 何の指定もないときだけ投了とする
           if !key
-            if !@last_action_params
+            if !@mi.last_action_params
               key = :TORYO
             end
           end

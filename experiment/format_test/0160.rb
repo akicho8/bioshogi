@@ -21,7 +21,7 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
 p info
 puts info.to_kif
-# >> * @board_source
+# >> * @mi.board_source
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE *
 # >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -40,7 +40,7 @@ puts info.to_kif
 # >> |    force_handicap | true   |
 # >> |-------------------+--------|
 # >>
-# >> * header attributes
+# >> * mi.header attributes
 # >> |----------+--------------|
 # >> |     棋戦 | その他の棋戦 |
 # >> | 開始日時 | 1938/03/01   |
@@ -48,13 +48,13 @@ puts info.to_kif
 # >> | 持ち時間 | 6時間        |
 # >> |----------+--------------|
 # >>
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
 # >> |    force_location |  |
 # >> |-------------------+--|
 # >>
-# >> * @board_source
+# >> * @mi.board_source
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE *
 # >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -73,7 +73,7 @@ puts info.to_kif
 # >> | +7776FU |              |
 # >> |---------+--------------|
 # >>
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 棋戦：その他の棋戦
 # >> 開始日時：1938/03/01
 # >> 戦型：その他の戦型

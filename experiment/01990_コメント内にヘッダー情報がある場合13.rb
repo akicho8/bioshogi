@@ -13,11 +13,11 @@ info = Parser.parse(<<~EOT)
 *「中村真梨花女流二段・山口恵梨子女流初段」vs「上田初美女流二段・井道千尋女流初段」
 EOT
 
-tp info.header.to_h
-tp info.header.entry_all_names
-tp info.header.__to_meta_h
-tp info.header.to_kisen_a
-tp info.header.entry_all_names
+tp info.mi.header.to_h
+tp info.mi.header.entry_all_names
+tp info.mi.header.__to_meta_h
+tp info.mi.header.to_kisen_a
+tp info.mi.header.entry_all_names
 # >> |----------+--------------------------------------------|
 # >> | 開始日時 | 2010/08/04                                 |
 # >> |     棋戦 | その他の棋戦                               |

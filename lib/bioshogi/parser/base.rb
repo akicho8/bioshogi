@@ -37,9 +37,6 @@ module Bioshogi
       end
 
       attr_accessor :mi
-      attr_reader :first_comments
-      attr_reader :board_source
-      attr_reader :last_action_params
       attr_accessor :error_message
       attr_reader :balance_info
       attr_reader :force_location
@@ -55,11 +52,7 @@ module Bioshogi
 
         @mi = Mi.new
 
-        @first_comments     = []
-        @board_source       = nil
-        @last_action_params = nil
         @error_message      = nil
-        @header             = Header.new
         @force_preset_info  = nil
         @balance_info       = BalanceInfo.fetch(:normal)
         @force_location     = nil

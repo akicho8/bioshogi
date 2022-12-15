@@ -28,7 +28,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -49,7 +49,7 @@ puts info.to_kif
 # >> |    force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+---------------------|
 # >> |       棋戦 | ぴよ将棋 青空将棋   |
 # >> |   開始日時 | 2022/01/09 14:51:25 |
@@ -60,13 +60,13 @@ puts info.to_kif
 # >> |       後手 | Lv17 ひよえ(R910)   |
 # >> |------------+---------------------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+-------|
 # >> | handicap_validity | false |
 # >> |    force_location |       |
 # >> |-------------------+-------|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -87,7 +87,7 @@ puts info.to_kif
 # >> |           2 | ２二飛(82)   | 0:01/00:00:01 |            1 |
 # >> |-------------+--------------+---------------+--------------|
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 棋戦：ぴよ将棋 青空将棋
 # >> 開始日時：2022/01/09 14:51:25
 # >> 手合割：平手

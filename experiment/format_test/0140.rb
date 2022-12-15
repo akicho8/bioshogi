@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_bod
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ 馬 ・ ・ 龍 ・ ・|二
@@ -42,7 +42,7 @@ puts info.to_bod
 # >> |    force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+------------------------|
 # >> |       後手 | ごて                   |
 # >> | 後手の持駒 | 飛 角 金 銀 桂 香 歩四 |
@@ -50,13 +50,13 @@ puts info.to_bod
 # >> | 先手の持駒 | 銀二 歩四              |
 # >> |------------+------------------------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+-------|
 # >> | handicap_validity | false |
 # >> |    force_location |       |
 # >> |-------------------+-------|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ 馬 ・ ・ 龍 ・ ・|二
@@ -72,7 +72,7 @@ puts info.to_bod
 # >> * mi.move_infos
 # >> 
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 後手の持駒：飛 角 金 銀 桂 香 歩四
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

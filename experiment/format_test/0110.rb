@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v王 ・ ・ ・ ・|一
 # >> | ・v飛 ・ ・ ・ ・ ・v飛 ・|二
@@ -42,20 +42,20 @@ puts info.to_kif
 # >> |    force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
 # >> | 上手の持駒 | なし   |
 # >> | 下手の持駒 | なし   |
 # >> |------------+--------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
 # >> |    force_location |  |
 # >> |-------------------+--|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v王 ・ ・ ・ ・|一
 # >> | ・v飛 ・ ・ ・ ・ ・v飛 ・|二
@@ -75,7 +75,7 @@ puts info.to_kif
 # >> |           1 | ４二玉(51) |            |              |
 # >> |-------------+------------+------------+--------------|
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 手合割：その他
 # >> 先手の備考：居飛車, 相居飛車
 # >> 後手の備考：居飛車, 相居飛車

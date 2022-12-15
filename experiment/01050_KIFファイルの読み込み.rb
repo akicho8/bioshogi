@@ -2,7 +2,7 @@
 require "./setup"
 
 info = Parser.parse(Pathname("ryuou20101214.kif"))
-tp info.header.to_h
+tp info.mi.header.to_h
 
 xcontainer = Xcontainer.start
 info.mi.move_infos.each{|info|

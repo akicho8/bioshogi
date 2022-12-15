@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Parser::KifParser do
     it "アスタリスクで始まるヘッダーはそのまま取り込む" do
-      assert { Parser.parse("*KEY1：value1").header.to_h == {"*KEY1" => "value1"} }
+      assert { Parser.parse("*KEY1：value1").mi.header.to_h == {"*KEY1" => "value1"} }
     end
 
     it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている←複雑なのでやらない" do
@@ -50,7 +50,7 @@ module Bioshogi
 
       it "ヘッダー部" do
         assert do
-          @info.header.to_h == {
+          @info.mi.header.to_h == {
             "開始日時" => "2000/01/01",
             "終了日時" => "2000/01/01 01:00:00",
             "手合割"   => "平手",
@@ -65,12 +65,12 @@ module Bioshogi
       end
 
       it "最後の情報" do
-        assert { @info.last_action_params[:last_action_key] == "投了" }
-        assert { @info.last_action_params[:used_seconds] == 10 }
+        assert { @info.mi.last_action_params[:last_action_key] == "投了" }
+        assert { @info.mi.last_action_params[:used_seconds] == 10 }
       end
 
       it "対局前コメント" do
-        assert { @info.first_comments == ["放映日：2000-01-01", "対局前コメント"] }
+        assert { @info.mi.first_comments == ["放映日：2000-01-01", "対局前コメント"] }
       end
     end
 
