@@ -5,7 +5,13 @@ module Bioshogi
     concern :ExportMethods do
       MIN_TURN = 14
 
-      include HeaderBuilder
+      included do
+        # delegate :to_kif, to: :exporter
+      end
+
+      def exporter
+        @exporter ||= Exporter.new(mi, parser_options)
+      end
 
       def xcontainer_run_once
         xcontainer

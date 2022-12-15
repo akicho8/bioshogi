@@ -2,12 +2,8 @@ require "./setup"
 
 info = Parser.parse("68S")
 puts info.to_kif
-# >> 先手の戦型：嬉野流
-# >> 先手の備考：居飛車, 相居飛車
-# >> 後手の備考：居飛車, 相居飛車
-# >> 手合割：平手
-# >> 手数----指手---------消費時間--
-# >>    1 ６八銀(79)
-# >> *▲戦型：嬉野流
-# >>    2 投了
-# >> まで1手で先手の勝ち
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/kif_builder.rb:23:in `build_before': undefined method `clock_exist?' for #<Bioshogi::Formatter::Exporter:0x00007fc744bcabe8> (NoMethodError)
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/kakinoki_builder.rb:24:in `to_s'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/exporter.rb:15:in `to_kif'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:9:in `to_kif'
+# ~> 	from -:4:in `<main>'

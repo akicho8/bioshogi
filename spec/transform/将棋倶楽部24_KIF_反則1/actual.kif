@@ -1,10 +1,2 @@
-開始日時：2020/08/04 00:25:37
-棋戦：レーティング対局室(早指2)
-手合割：平手
-先手：alice(414)
-後手：bob(422)
-先手の備考：居飛車, 相居飛車
-後手の備考：居飛車, 相居飛車
-手数----指手---------消費時間--
-   1 ７六歩(77)   (00:01/00:00:01)
-*先手 反則負け
+ERROR: NoMethodError
+undefined method `clock_exist?' for #<Bioshogi::Formatter::Exporter:0x00007fe3f57dbde8>

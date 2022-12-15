@@ -1,11 +1,2 @@
-棋戦：ぴよ将棋 八枚落ち
-開始日時：2022/01/09 14:49:48
-手合割：八枚落ち
-下手：プレイヤー(R461)
-上手：Lv17 ひよえ(R910)
-手数----指手---------消費時間--
-   1 ３二金(41)
-   2 ７六歩(77)
-   3 ７二金(61)
-   4 投了
-まで3手で上手の勝ち
+ERROR: NoMethodError
+undefined method `clock_exist?' for #<Bioshogi::Formatter::Exporter:0x00007fe3fb18efe8>
