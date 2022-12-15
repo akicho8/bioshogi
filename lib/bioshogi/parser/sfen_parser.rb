@@ -12,7 +12,7 @@ module Bioshogi
 
       def parse
         @sfen = Sfen.parse(normalized_source)
-        @move_infos = @sfen.move_infos
+        @mi.move_infos = @sfen.move_infos
 
         @sfen.piece_counts.each do |location_key, counts|
           location = Location.fetch(location_key)

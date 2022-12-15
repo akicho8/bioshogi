@@ -13,7 +13,7 @@ module Bioshogi
 
       def perform
         begin
-          @xparser.move_infos.each.with_index do |info, i|
+          @xparser.mi.move_infos.each.with_index do |info, i|
             if @xparser.parser_options[:debug]
               p xcontainer
             end

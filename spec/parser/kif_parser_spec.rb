@@ -61,7 +61,7 @@ module Bioshogi
       end
 
       it "棋譜の羅列" do
-        assert { @info.move_infos.first[:input] == "７六歩(77)" }
+        assert { @info.mi.move_infos.first[:input] == "７六歩(77)" }
       end
 
       it "最後の情報" do
@@ -160,11 +160,11 @@ EOT
       2 ３四歩
       EOT
       assert { info.class == Bioshogi::Parser::KifParser }
-      assert { info.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
+      assert { info.mi.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
 
       info = Parser.parse("1 投了")
       assert { info.class == Bioshogi::Parser::KifParser }
-      assert { info.move_infos == [] }
+      assert { info.mi.move_infos == [] }
     end
 
     #     it "駒落ちなのに「先手の持駒」のヘッダーがある場合は変換時に削除する" do

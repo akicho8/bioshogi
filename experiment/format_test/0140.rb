@@ -69,7 +69,7 @@ puts info.to_bod
 # >> | 香 桂v金 ・v金 ・ ・ 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * move_infos
+# >> * mi.move_infos
 # >> 
 # >>  
 # >> * @last_action_params

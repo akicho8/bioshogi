@@ -117,7 +117,7 @@ pp info.header
 
 #+BEGIN_SRC ruby
 xcontainer = Xcontainer.start
-info.move_infos.each{|info|
+info.mi.move_infos.each{|info|
   xcontainer.execute(info[:input])
 }
 #+END_SRC

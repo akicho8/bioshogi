@@ -7,7 +7,7 @@ info = Parser.parse(<<~EOT)
 -2233KA,T0
 EOT
 
-tp info.move_infos
+tp info.mi.move_infos
 # >> |---------+--------------|
 # >> | input   | used_seconds |
 # >> |---------+--------------|

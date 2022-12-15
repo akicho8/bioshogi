@@ -9,7 +9,7 @@ out << "\n"
 
 xcontainer = Xcontainer.new
 xcontainer.placement_from_preset(info.header["手合割"])
-info.move_infos.each do |info|
+info.mi.move_infos.each do |info|
   xcontainer.execute(info[:input])
 end
 out << xcontainer.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join

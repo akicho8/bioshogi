@@ -31,23 +31,23 @@ info = Parser.parse(<<~EOT)
 2 ３四歩
 EOT
 info.class.name                       # => "Bioshogi::Parser::KifParser"
-info.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
+info.mi.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
 
 info = Parser.parse(<<~EOT)
 1 ７六歩
 2 ３四歩
 EOT
 info.class.name                       # => "Bioshogi::Parser::KifParser"
-info.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
+info.mi.move_infos                       # => [{:turn_number=>"1", :input=>"７六歩", :clock_part=>nil, :used_seconds=>nil}, {:turn_number=>"2", :input=>"３四歩", :clock_part=>nil, :used_seconds=>nil}]
 
 info = Parser.parse(<<~EOT)
 68銀
 EOT
 info.class.name                       # => "Bioshogi::Parser::Ki2Parser"
-info.move_infos                       # => [{:input=>"68銀"}]
+info.mi.move_infos                       # => [{:input=>"68銀"}]
 
 info = Parser.parse(<<~EOT)
 ☗68銀
 EOT
 info.class.name                       # => "Bioshogi::Parser::Ki2Parser"
-info.move_infos                       # => [{:input=>"☗68銀"}]
+info.mi.move_infos                       # => [{:input=>"☗68銀"}]

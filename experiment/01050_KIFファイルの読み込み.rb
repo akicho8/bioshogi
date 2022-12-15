@@ -5,7 +5,7 @@ info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.header.to_h
 
 xcontainer = Xcontainer.start
-info.move_infos.each{|info|
+info.mi.move_infos.each{|info|
   xcontainer.execute(info[:input])
 }
 puts xcontainer

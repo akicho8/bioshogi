@@ -22,7 +22,7 @@ module Bioshogi
 
       @hv = {}
       @hv[:header] = @parser.header.to_h.clone
-      @hv[:header]["手数"] = @parser.move_infos.size
+      @hv[:header]["手数"] = @parser.mi.move_infos.size
 
       @chess_clock = ChessClock.new
 
@@ -38,7 +38,7 @@ module Bioshogi
         :history_sfen  => @xcontainer2.to_history_sfen,
         :short_sfen => @xcontainer2.to_short_sfen,
       }
-      @hv[:moves] += @parser.move_infos.collect.with_index do |info, i|
+      @hv[:moves] += @parser.mi.move_infos.collect.with_index do |info, i|
         @xcontainer2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
         @chess_clock.add(@parser.used_seconds_at(i))
         hand_log = @xcontainer2.hand_logs.last

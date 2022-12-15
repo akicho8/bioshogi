@@ -36,7 +36,7 @@ module Bioshogi
         end
       end
 
-      attr_reader :move_infos
+      attr_accessor :mi
       attr_reader :first_comments
       attr_reader :board_source
       attr_reader :last_action_params
@@ -53,7 +53,8 @@ module Bioshogi
         @source = source
         @parser_options = self.class.default_parser_options.merge(parser_options)
 
-        @move_infos         = []
+        @mi = Mi.new
+
         @first_comments     = []
         @board_source       = nil
         @last_action_params = nil
@@ -75,42 +76,7 @@ module Bioshogi
       end
 
       def inspect
-        av = []
-
-        if @board_source
-          av << "* @board_source"
-          av << @board_source.strip
-          av << " "
-        end
-
-        av << "* attributes"
-        av << {
-          :force_preset_info => force_preset_info,
-          :balance_info      => balance_info,
-          :force_location    => force_location,
-          :force_handicap    => force_handicap,
-        }.to_t.strip
-        av << " "
-
-        av << "* header"
-        av << header.inspect.strip
-        av << " "
-
-        if @board_source
-          av << "* @board_source"
-          av << @board_source.strip
-          av << " "
-        end
-
-        av << "* move_infos"
-        av << move_infos.to_t.strip
-        av << " "
-
-        av << "* @last_action_params"
-        av << @last_action_params.to_t.strip
-        av << " "
-
-        av.join("\n").strip
+        Inspector.new(self).inspect
       end
     end
   end

@@ -175,12 +175,12 @@ module Bioshogi
       end
 
       def used_seconds_at(index)
-        @move_infos.dig(index, :used_seconds).to_i
+        @mi.move_infos.dig(index, :used_seconds).to_i
       end
 
       def clock_exist?
         return @clock_exist if instance_variable_defined?(:@clock_exist)
-        @clock_exist = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
+        @clock_exist = @mi.move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
       end
 
       def clock_nothing?

@@ -180,7 +180,7 @@ module Bioshogi
       end
 
       def read_moves
-        @move_infos += normalized_source.scan(MOVE_REGEXP).collect do |input, n|
+        @mi.move_infos += normalized_source.scan(MOVE_REGEXP).collect do |input, n|
           if n
             n = n.to_i.seconds
           end

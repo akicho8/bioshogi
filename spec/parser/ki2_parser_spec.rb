@@ -16,11 +16,11 @@ module Bioshogi
     end
 
     it "棋譜部分のパース" do
-      assert { Parser::Ki2Parser.parse("７六歩(77)").move_infos.first[:input] == "７六歩(77)" }
-      assert { Parser::Ki2Parser.parse("７六歩").move_infos.first[:input]     == "７六歩"     }
-      assert { Parser::Ki2Parser.parse("△７六歩").move_infos.first[:input]   == "△７六歩"   }
-      assert { Parser::Ki2Parser.parse("☗７六歩").move_infos.first[:input]    == "☗７六歩"    }
-      assert { Parser::Ki2Parser.parse("☖７六歩").move_infos.first[:input]    == "☖７六歩"    }
+      assert { Parser::Ki2Parser.parse("７六歩(77)").mi.move_infos.first[:input] == "７六歩(77)" }
+      assert { Parser::Ki2Parser.parse("７六歩").mi.move_infos.first[:input]     == "７六歩"     }
+      assert { Parser::Ki2Parser.parse("△７六歩").mi.move_infos.first[:input]   == "△７六歩"   }
+      assert { Parser::Ki2Parser.parse("☗７六歩").mi.move_infos.first[:input]    == "☗７六歩"    }
+      assert { Parser::Ki2Parser.parse("☖７六歩").mi.move_infos.first[:input]    == "☖７六歩"    }
     end
 
     describe "ki2読み込み" do
@@ -52,7 +52,7 @@ module Bioshogi
 
       it "棋譜の羅列" do
         assert do
-          @result.move_infos == [
+          @result.mi.move_infos == [
             {input: "▲７六歩"},
             {input: "△３四歩", comments: ["コメント1"]},
             {input: "▲６六歩"},

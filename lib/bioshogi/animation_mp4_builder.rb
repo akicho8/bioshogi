@@ -99,7 +99,7 @@ module Bioshogi
             @image_renderer = ImageRenderer.new(@xcontainer, params)
 
             if factory_method_key == "is_factory_method_rmagick"
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + 3 + 7, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + 3 + 7, &params[:progress_callback])
 
               begin
                 list = Magick::ImageList.new
@@ -111,11 +111,11 @@ module Bioshogi
 
                 @progress_cop.next_step("初期配置")
                 list << @image_renderer.next_build
-                @parser.move_infos.each.with_index do |e, i|
-                  @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
+                @parser.mi.move_infos.each.with_index do |e, i|
+                  @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
                   @xcontainer.execute(e[:input])
                   list << @image_renderer.next_build
-                  logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
+                  logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
                 end
                 end_pages.times do |i|
                   @progress_cop.next_step("終了図 #{i}/#{end_pages}")
@@ -142,7 +142,7 @@ module Bioshogi
 
             if factory_method_key == "is_factory_method_ffmpeg"
               logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
               logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
               if v = params[:cover_text].presence
@@ -159,13 +159,13 @@ module Bioshogi
               tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
               logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
 
-              @parser.move_infos.each.with_index do |e, i|
-                @progress_cop.next_step("(#{i}/#{@parser.move_infos.size}) #{e[:input]}")
+              @parser.mi.move_infos.each.with_index do |e, i|
+                @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
                 @xcontainer.execute(e[:input])
                 logger.info("@xcontainer.execute OK")
-                tob("#{i}/#{@parser.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
+                tob("#{i}/#{@parser.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
                 logger.info("@image_renderer.next_build.write OK")
-                logger.info { "move: #{i} / #{@parser.move_infos.size}" } if i.modulo(10).zero?
+                logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
               end
               end_pages.times do |i|
                 @progress_cop.next_step("終了図 #{i}/#{end_pages}")

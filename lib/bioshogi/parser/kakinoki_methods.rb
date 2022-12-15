@@ -35,7 +35,7 @@ module Bioshogi
 
       def kknk_comment_read(line)
         if md = line.match(COMMENT_REGEXP)
-          if @move_infos.empty?
+          if @mi.move_infos.empty?
             first_comments_add(md[:comment])
           else
             command_add(md[:comment])
@@ -117,8 +117,8 @@ module Bioshogi
 
       # コメントは直前の棋譜の情報と共にする
       def command_add(comment)
-        @move_infos.last[:comments] ||= []
-        @move_infos.last[:comments] << comment
+        @mi.move_infos.last[:comments] ||= []
+        @mi.move_infos.last[:comments] << comment
       end
     end
   end

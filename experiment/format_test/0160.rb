@@ -65,7 +65,7 @@ puts info.to_kif
 # >> P8 * +KA *  *  *  *  * +HI *
 # >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 # >>
-# >> * move_infos
+# >> * mi.move_infos
 # >> |---------+--------------|
 # >> | input   | used_seconds |
 # >> |---------+--------------|

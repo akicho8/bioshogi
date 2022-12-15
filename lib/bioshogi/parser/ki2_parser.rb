@@ -24,7 +24,7 @@ module Bioshogi
         body_part.lines.each do |line|
           kknk_comment_read(line)
           if line.match?(MOVE_REGEXP)
-            @move_infos += InputParser.scan(line).collect do |e|
+            @mi.move_infos += InputParser.scan(line).collect do |e|
               { input: e }
             end
           end
