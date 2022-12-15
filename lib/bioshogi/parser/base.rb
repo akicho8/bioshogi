@@ -38,7 +38,6 @@ module Bioshogi
 
       attr_accessor :mi
       attr_accessor :error_message
-      attr_reader :balance_info
       attr_reader :force_location
       attr_reader :force_handicap
       attr_reader :force_preset_info
@@ -54,7 +53,6 @@ module Bioshogi
 
         @error_message      = nil
         @force_preset_info  = nil
-        @balance_info       = BalanceInfo.fetch(:normal)
         @force_location     = nil
         @force_handicap     = nil
         @player_piece_boxes = Location.inject({}) {|a, e| a.merge(e.key => PieceBox.new) }

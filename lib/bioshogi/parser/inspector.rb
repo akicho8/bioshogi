@@ -17,7 +17,6 @@ module Bioshogi
         av << "* attributes"
         av << {
           :force_preset_info => @parser.force_preset_info,
-          :balance_info      => @parser.balance_info,
           :force_location    => @parser.force_location,
           :force_handicap    => @parser.force_handicap,
         }.to_t.strip
