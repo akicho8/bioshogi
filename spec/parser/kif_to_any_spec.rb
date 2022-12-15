@@ -53,8 +53,8 @@ EOT
       2 ３四歩(33)   ( 0:02/00:00:02)
       3 反則勝ち
       EOT
-      assert { info.last_action_info == nil }
-      assert { info.judgment_message == nil }
+      assert { info.exporter.last_action_info == nil }
+      assert { info.exporter.judgment_message == nil }
       # assert { info.last_action_info.key == :TORYO }
       # assert { info.judgment_message == "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)" }
       assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない

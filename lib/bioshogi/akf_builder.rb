@@ -9,20 +9,20 @@ module Bioshogi
         })
     end
 
-    def initialize(parser, params = {})
-      @parser = parser
+    def initialize(exporter, params = {})
+      @exporter = exporter
       @params = self.class.default_params.merge(params)
     end
 
     def to_h
-      @parser.xcontainer_run_once
+      @exporter.xcontainer_run_once
 
       @xcontainer2 = Xcontainer.new
-      @parser.xcontainer_board_setup(@xcontainer2)
+      @exporter.xcontainer_init(@xcontainer2)
 
       @hv = {}
-      @hv[:header] = @parser.mi.header.to_h.clone
-      @hv[:header]["手数"] = @parser.mi.move_infos.size
+      @hv[:header] = @exporter.mi.header.to_h.clone
+      @hv[:header]["手数"] = @exporter.mi.move_infos.size
 
       @chess_clock = ChessClock.new
 
@@ -38,9 +38,9 @@ module Bioshogi
         :history_sfen  => @xcontainer2.to_history_sfen,
         :short_sfen => @xcontainer2.to_short_sfen,
       }
-      @hv[:moves] += @parser.mi.move_infos.collect.with_index do |info, i|
-        @xcontainer2.execute(info[:input], used_seconds: @parser.used_seconds_at(i))
-        @chess_clock.add(@parser.used_seconds_at(i))
+      @hv[:moves] += @exporter.mi.move_infos.collect.with_index do |info, i|
+        @xcontainer2.execute(info[:input], used_seconds: @exporter.used_seconds_at(i))
+        @chess_clock.add(@exporter.used_seconds_at(i))
         hand_log = @xcontainer2.hand_logs.last
         {
           :index         => i.next,
@@ -54,8 +54,8 @@ module Bioshogi
         }
       end
 
-      # if @parser.mi.last_action_params
-      #   if used_seconds = @parser.mi.last_action_params[:used_seconds]
+      # if @exporter.mi.last_action_params
+      #   if used_seconds = @exporter.mi.last_action_params[:used_seconds]
       #     if @chess_clock
       #       @chess_clock.add(used_seconds)
       #       right_part = @chess_clock.to_s
@@ -65,12 +65,12 @@ module Bioshogi
 
       @hv[:header] = @hv[:header]
 
-      if @parser.last_action_info
-        @hv[:last_action_kakinoki_word] = @parser.last_action_info.kakinoki_word
+      if @exporter.last_action_info
+        @hv[:last_action_kakinoki_word] = @exporter.last_action_info.kakinoki_word
       end
 
-      @hv[:judgment_message]          = @parser.judgment_message
-      @hv[:error_text]                = @parser.error_message_part
+      @hv[:judgment_message]          = @exporter.judgment_message
+      @hv[:error_text]                = @exporter.error_message_part
 
       @hv
     end

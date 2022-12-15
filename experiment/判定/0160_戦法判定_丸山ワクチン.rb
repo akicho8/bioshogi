@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("../戦型/丸山ワクチン.kif", turn_limit: 6)
-puts info.xcontainer
+puts info.exporter.xcontainer
 puts info.to_kif
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

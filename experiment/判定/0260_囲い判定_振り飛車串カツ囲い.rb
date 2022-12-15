@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Explain::DefenseInfo.fetch("振り飛車串カツ囲い").sample_kif_info
-tp info.xcontainer.players.collect { |e| e.skill_set.to_h }
+tp info.exporter.xcontainer.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |--------------+------------------------+-----------+--------------------------------|
 # >> | attack       | defense                | technique | note                           |

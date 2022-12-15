@@ -20,7 +20,7 @@ module Bioshogi
     private
 
     def build_before
-      if @params[:time_embed_force] || @parser.clock_exist?
+      if @params[:time_embed_force] || @exporter.clock_exist?
         @chess_clock = ChessClock.new
       end
     end
@@ -30,9 +30,9 @@ module Bioshogi
     end
 
     def body_hands
-      @parser.xcontainer.hand_logs.collect.with_index { |e, i|
+      @exporter.xcontainer.hand_logs.collect.with_index { |e, i|
         if @chess_clock
-          @chess_clock.add(@parser.used_seconds_at(i))
+          @chess_clock.add(@exporter.used_seconds_at(i))
         end
         s = e.to_kif(char_type: :formal_sheet)
         s = mb_ljust(s, @params[:hand_width])
@@ -52,17 +52,17 @@ module Bioshogi
       left_part = nil
       right_part = nil
 
-      if @parser.last_action_info
-        if kakinoki_word = @parser.last_action_info.kakinoki_word
+      if @exporter.last_action_info
+        if kakinoki_word = @exporter.last_action_info.kakinoki_word
           left_part = "%*d %s" % [
             @params[:number_width],
-            @parser.xcontainer.hand_logs.size.next,
+            @exporter.xcontainer.hand_logs.size.next,
             mb_ljust(kakinoki_word, @params[:hand_width]),
           ]
         end
 
-        if @parser.mi.last_action_params
-          if used_seconds = @parser.mi.last_action_params[:used_seconds]
+        if @exporter.mi.last_action_params
+          if used_seconds = @exporter.mi.last_action_params[:used_seconds]
             if @chess_clock
               @chess_clock.add(used_seconds)
               right_part = @chess_clock.to_s

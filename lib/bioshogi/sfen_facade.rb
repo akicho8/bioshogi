@@ -23,7 +23,7 @@ module Bioshogi
       attr_accessor :sfen
 
       # xcontainer 側に sfen を受け取るメソッドを入れる方法も検討
-      def xcontainer_board_setup(xcontainer)
+      def xcontainer_init(xcontainer)
         sfen.soldiers.each do |soldier|
           player = xcontainer.player_at(soldier.location)
           player.board.place_on(soldier, validate: true)
@@ -50,7 +50,7 @@ module Bioshogi
         @sfen = Sfen.parse(source)
 
         @xcontainer = Xcontainer.new
-        xcontainer_board_setup(@xcontainer)
+        xcontainer_init(@xcontainer)
         execute_moves(@xcontainer)
       end
     end

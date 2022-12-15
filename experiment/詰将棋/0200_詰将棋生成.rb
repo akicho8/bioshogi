@@ -15,11 +15,11 @@ class App
         { location: :black, pieces: "金",  xy_ranges: [2..3, 2..3] },
       ],
     }
-    builder = Builder.new(builder_infos).run
+    builder = TBuilder.new(builder_infos).run
     builder
   end
 
-  class Builder
+  class TBuilder
     attr_accessor :params
     attr_accessor :xcontainer
 

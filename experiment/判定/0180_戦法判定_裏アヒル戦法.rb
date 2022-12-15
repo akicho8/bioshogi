@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("../戦型/裏アヒル戦法.kif")
-puts info.xcontainer
+puts info.exporter.xcontainer
 puts info.to_kif
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

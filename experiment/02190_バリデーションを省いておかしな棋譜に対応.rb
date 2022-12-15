@@ -28,6 +28,6 @@ puts info.to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:50:in `block in xcontainer'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:48:in `tap'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:48:in `xcontainer'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:29:in `xcontainer_run_once'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:29:in `exporter.xcontainer_run_once'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:14:in `<main>'

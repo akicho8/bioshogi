@@ -91,5 +91,10 @@ module Bioshogi
 
       # TODO: ここで居玉判定をするべきかどうかの判定を入れたらいい？
     end
+
+    # SFEN で初期配置する
+    def placement_from_sfen(sfen_info)
+      SfenImporter.new(self, sfen_info).import
+    end
   end
 end

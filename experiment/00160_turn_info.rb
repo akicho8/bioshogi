@@ -8,10 +8,10 @@ object                          # => #<0+1:▲下手番>
 Parser.parse("６八銀").xcontainer.turn_info.turn_offset # => 1
 
 info = Parser.parse("72 投了")
-info.xcontainer.turn_info.turn_offset # => 0
-info.xcontainer.turn_info.display_turn # => 71
-info.xcontainer.turn_info.current_location.key # => :white
-info.xcontainer.turn_info.inspect # => "#<71+0:△後手番>"
+info.exporter.xcontainer.turn_info.turn_offset # => 0
+info.exporter.xcontainer.turn_info.display_turn # => 71
+info.exporter.xcontainer.turn_info.current_location.key # => :white
+info.exporter.xcontainer.turn_info.inspect # => "#<71+0:△後手番>"
 puts info.to_kif
 
 # >> 先手の備考：居飛車, 相居飛車, 居玉, 相居玉

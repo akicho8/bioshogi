@@ -19,7 +19,7 @@ EOT
 
 tp info.mi.header.to_h
 
-# info.xcontainer_run_once
+# info.exporter.xcontainer_run_once
 # tp info.mi.header.to_h
 # tp info.skill_set_hash
 

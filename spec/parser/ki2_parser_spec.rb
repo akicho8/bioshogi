@@ -68,8 +68,8 @@ module Bioshogi
 
     it "千日手" do
       info = Parser::Ki2Parser.parse(["*引き分け", "まで100手で千日手"].join("\n"))
-      info.xcontainer_run_once
-      str = info.last_action_info.judgment_message(info.xcontainer)
+      info.exporter.xcontainer_run_once
+      str = info.exporter.last_action_info.judgment_message(info.exporter.xcontainer)
       assert { str == "まで0手で千日手" }
     end
   end

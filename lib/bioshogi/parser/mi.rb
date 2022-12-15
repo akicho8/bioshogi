@@ -13,6 +13,7 @@ module Bioshogi
       attr_accessor :force_location
       attr_accessor :force_handicap
       attr_accessor :player_piece_boxes
+      attr_accessor :sfen_info
 
       # 変換時に必要なもの
       attr_accessor :error_message
@@ -28,6 +29,7 @@ module Bioshogi
         @force_handicap     = nil
         @player_piece_boxes = Location.inject({}) { |a, e| a.merge(e.key => PieceBox.new) }
         @error_message      = nil
+        @sfen_info          = nil
       end
     end
   end

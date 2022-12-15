@@ -1,7 +1,7 @@
 module Bioshogi
   # kif, ki2, bod 変換の共通処理
   concern :KakinokiBuilder do
-    attr_accessor :parser
+    attr_accessor :exporter
     attr_accessor :params
     attr_accessor :header
 
@@ -14,16 +14,16 @@ module Bioshogi
       end
     end
 
-    def initialize(parser, params = {})
-      @parser = parser
+    def initialize(exporter, params = {})
+      @exporter = exporter
       @params = self.class.default_params.merge(params)
-      # Assertion.assert { parser.mi.header.object_id != @mi.header.object.object_id }
+      # Assertion.assert { exporter.mi.header.object_id != @mi.header.object.object_id }
     end
 
     def to_s
       build_before
-      @parser.xcontainer_run_once
-      @header = @parser.mi.header.clone
+      @exporter.xcontainer_run_once
+      @header = @exporter.mi.header.clone
 
       out = []
 
@@ -38,13 +38,13 @@ module Bioshogi
 
       if @params[:has_footer]
         out << footer_content
-        if s = @parser.judgment_message
+        if s = @exporter.judgment_message
           out << "#{s}\n"
         end
         if s = illegal_judgement_message
           out << s
         end
-        out << @parser.error_message_part
+        out << @exporter.error_message_part
       end
 
       out.join
@@ -67,8 +67,7 @@ module Bioshogi
     end
 
     def header_part_string
-      m = @parser.initial_xcontainer
-
+      m = @exporter.initial_xcontainer
       if e = m.board.preset_info
         # 手合割がわかる場合
         @header["手合割"] = e.name
@@ -118,8 +117,8 @@ module Bioshogi
     # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
     # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
     def illegal_judgement_message
-      if @parser.mi.last_action_params
-        v = @parser.mi.last_action_params[:last_action_key]
+      if @exporter.mi.last_action_params
+        v = @exporter.mi.last_action_params[:last_action_key]
         if !LastActionInfo[v]
           "*#{v}\n"
         end

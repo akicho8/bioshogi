@@ -3,33 +3,33 @@
 module Bioshogi
   module Formatter
     class Runner
-      attr_accessor :xparser
+      attr_accessor :exporter
       attr_accessor :xcontainer
 
-      def initialize(xparser, xcontainer)
-        @xparser = xparser
+      def initialize(exporter, xcontainer)
+        @exporter = exporter
         @xcontainer = xcontainer
       end
 
       def perform
         begin
-          @xparser.mi.move_infos.each.with_index do |info, i|
-            if @xparser.parser_options[:debug]
+          @exporter.mi.move_infos.each.with_index do |info, i|
+            if @exporter.parser_options[:debug]
               p xcontainer
             end
-            if @xparser.parser_options[:callback]
-              @xparser.parser_options[:callback].call(xcontainer)
+            if @exporter.parser_options[:callback]
+              @exporter.parser_options[:callback].call(xcontainer)
             end
-            if @xparser.parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @xparser.parser_options[:turn_limit]
+            if @exporter.parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @exporter.parser_options[:turn_limit]
               break
             end
-            xcontainer.execute(info[:input], used_seconds: xparser.used_seconds_at(i))
+            xcontainer.execute(info[:input], used_seconds: exporter.used_seconds_at(i))
           end
         rescue CommonError => error
-          if v = @xparser.parser_options[:typical_error_case]
+          if v = @exporter.parser_options[:typical_error_case]
             case v
             when :embed
-              @xparser.mi.error_message = error.message
+              @exporter.mi.error_message = error.message
             when :skip
             else
               raise MustNotHappen

@@ -269,7 +269,7 @@ module Bioshogi
             # ここで相手を見て、相手も入玉していたら、次のように相入玉とする方法もあるが
             # player.skill_set.note_infos << Explain::NoteInfo["相入玉"]
             # それでなくてもここは処理が重いのでやらない
-            # xcontainer_run_once の方で、最後にチェックしている
+            # exporter.xcontainer_run_once の方で、最後にチェックしている
           },
         },
 

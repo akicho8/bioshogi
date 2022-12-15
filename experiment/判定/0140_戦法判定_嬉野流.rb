@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.parse("▲６八銀")
-puts info.xcontainer
+puts info.exporter.xcontainer
 puts info.to_ki2
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

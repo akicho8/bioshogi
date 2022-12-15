@@ -5,7 +5,7 @@ module Bioshogi
     describe "sfen から変換" do
       it "手合割がわかる" do
         info = Parser.parse("position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
-        assert { info.preset_info.key == :"角落ち" }
+        assert { info.exporter.preset_info.key == :"角落ち" }
       end
 
       it "startpos の状態から" do
