@@ -29,7 +29,7 @@ module Bioshogi
           if v = @xparser.parser_options[:typical_error_case]
             case v
             when :embed
-              @xparser.error_message = error.message
+              @xparser.mi.error_message = error.message
             when :skip
             else
               raise MustNotHappen

@@ -37,14 +37,12 @@ module Bioshogi
       end
 
       attr_accessor :mi
-      attr_accessor :error_message
       attr_accessor :parser_options
 
       def initialize(source, parser_options = {})
         @source = source
         @parser_options = self.class.default_parser_options.merge(parser_options)
         @mi = Mi.new
-        @error_message = nil
       end
 
       def parse

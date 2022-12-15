@@ -70,7 +70,7 @@ module Bioshogi
         out << footer_content
       end
 
-      if @parser.error_message
+      if @parser.mi.error_message
         out << @parser.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
       end
 

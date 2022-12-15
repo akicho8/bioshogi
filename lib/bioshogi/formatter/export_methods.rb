@@ -148,7 +148,7 @@ module Bioshogi
 
           # エラーなら最優先
           if !key
-            if @error_message
+            if @mi.error_message
               key = :ILLEGAL_MOVE
             end
           end
@@ -188,8 +188,8 @@ module Bioshogi
       end
 
       def error_message_part(comment_mark = "*")
-        if @error_message
-          v = @error_message.strip + "\n"
+        if @mi.error_message
+          v = @mi.error_message.strip + "\n"
           s = "-" * 76 + "\n"
           [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
         end

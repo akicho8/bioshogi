@@ -3,6 +3,7 @@
 module Bioshogi
   module Parser
     class Mi
+      # 読み取り結果
       attr_accessor :move_infos
       attr_accessor :first_comments
       attr_accessor :board_source
@@ -12,6 +13,9 @@ module Bioshogi
       attr_accessor :force_location
       attr_accessor :force_handicap
       attr_accessor :player_piece_boxes
+
+      # 変換時に必要なもの
+      attr_accessor :error_message
 
       def initialize
         @move_infos         = []
@@ -23,6 +27,7 @@ module Bioshogi
         @force_location     = nil
         @force_handicap     = nil
         @player_piece_boxes = Location.inject({}) { |a, e| a.merge(e.key => PieceBox.new) }
+        @error_message      = nil
       end
     end
   end
