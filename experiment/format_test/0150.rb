@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_bod
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -37,26 +37,26 @@ puts info.to_bod
 # >>  
 # >> * attributes
 # >> |-------------------+----------|
-# >> | force_preset_info | 二枚落ち |
+# >> | mi.force_preset_info | 二枚落ち |
 # >> |      balance_info | 通常戦   |
-# >> |    force_location |          |
-# >> |    force_handicap | true     |
+# >> |    mi.force_location |          |
+# >> |    mi.force_handicap | true     |
 # >> |-------------------+----------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+----------|
 # >> | 後手の持駒 | 歩2      |
 # >> | 先手の持駒 | 歩2      |
 # >> |     手合割 | 二枚落ち |
 # >> |------------+----------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+------|
 # >> | handicap_validity | true |
-# >> |    force_location |      |
+# >> |    mi.force_location |      |
 # >> |-------------------+------|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -70,14 +70,14 @@ puts info.to_bod
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 # >> +---------------------------+
 # >>  
-# >> * move_infos
+# >> * mi.move_infos
 # >> |-------------+--------+------------+--------------|
 # >> | turn_number | input  | clock_part | used_seconds |
 # >> |-------------+--------+------------+--------------|
 # >> |           1 | △73桂 |            |              |
 # >> |-------------+--------+------------+--------------|
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 上手の持駒：歩二
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

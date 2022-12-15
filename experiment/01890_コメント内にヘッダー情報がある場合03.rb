@@ -13,11 +13,11 @@ info = Parser.parse(<<~EOT)
 *「小池重明東海王将」vs「滝　源太赤旗準名人」
 EOT
 
-tp info.header.to_h
-tp info.header.entry_all_names
-tp info.header.__to_meta_h
-tp info.header.to_kisen_a
-tp info.header.entry_all_names
+tp info.mi.header.to_h
+tp info.mi.header.entry_all_names
+tp info.mi.header.__to_meta_h
+tp info.mi.header.to_kisen_a
+tp info.mi.header.entry_all_names
 # >> |----------+------------------------------------|
 # >> | 開始日時 | 1977/00/00                         |
 # >> |     棋戦 | その他の棋戦                       |

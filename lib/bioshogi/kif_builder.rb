@@ -61,8 +61,8 @@ module Bioshogi
           ]
         end
 
-        if @parser.last_action_params
-          if used_seconds = @parser.last_action_params[:used_seconds]
+        if @parser.mi.last_action_params
+          if used_seconds = @parser.mi.last_action_params[:used_seconds]
             if @chess_clock
               @chess_clock.add(used_seconds)
               right_part = @chess_clock.to_s

@@ -13,11 +13,11 @@ info = Parser.parse(<<~EOT)
 *解説：佐藤康光名人　聞き手：矢内理絵子女流三段
 EOT
 
-tp info.header.to_h
-tp info.header.entry_all_names
-tp info.header.__to_meta_h
-tp info.header.to_kisen_a
-tp info.header.entry_all_names
+tp info.mi.header.to_h
+tp info.mi.header.entry_all_names
+tp info.mi.header.__to_meta_h
+tp info.mi.header.to_kisen_a
+tp info.mi.header.entry_all_names
 # >> |----------+---------------------------------------|
 # >> | 開始日時 | 2001/01/01                            |
 # >> |     棋戦 | その他の棋戦                          |

@@ -16,7 +16,7 @@ info = Parser.parse(<<~EOT)
    4 ３四歩(33)   ( 0:00/00:00:00)
 EOT
 
-tp info.header.to_h
+tp info.mi.header.to_h
 puts info.to_kif
 # >> |--------+-------------------|
 # >> | 手合割 | 平手              |

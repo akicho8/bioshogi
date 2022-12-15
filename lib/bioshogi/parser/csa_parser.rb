@@ -37,7 +37,7 @@ module Bioshogi
         read_moves
         read_last
 
-        header.normalize
+        mi.header.normalize
       end
 
       private
@@ -57,7 +57,7 @@ module Bioshogi
             key = e.kif_side_key
           end
           # ヘッダー情報が重複した場合は最初に出てきたものを優先
-          header[key] ||= value
+          mi.header[key] ||= value
         end
       end
 
@@ -113,7 +113,7 @@ module Bioshogi
       # P-00AL        …… 後手 残りすべての駒を駒台に配置
       #
       # NOTE: (2)の一括表現と(3)の駒別単独表現は共存する
-      # ドキュメントにはこのあたりの言及がなかったため @board_source がすでにあればスキップしていたが
+      # ドキュメントにはこのあたりの言及がなかったため @mi.board_source がすでにあればスキップしていたが
       # 詰将棋などではここで持駒を調整される
       def case3_Psign
         if normalized_source.match?(/^P[\+\-](.*)/)
@@ -146,7 +146,7 @@ module Bioshogi
                   hold_pieces[location] << piece
                 else
                   # 盤に置く
-                  # if @board_source
+                  # if @mi.board_source
                   #   raise SyntaxDefact, "P#{location_key}#{xy}#{piece_ch} としましたがすでに、PI か P1 表記で盤面の指定があります。無駄にややこしくなるので PI P1 P+59OU 表記を同時に使わないでください"
                   # end
                   soldier = Soldier.create(attrs.merge(location: location, place: Place.fetch(xy)))
@@ -157,16 +157,16 @@ module Bioshogi
           end
 
           hold_pieces.each do |location, pieces|
-            player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
+            mi.player_piece_boxes[location.key].set(Piece.a_to_h(pieces))
           end
         end
       end
 
       def guess_preset
         if @board
-          @board_source = @board.to_s # FIXME: 元に戻すのは無駄
+          @mi.board_source = @board.to_s # FIXME: 元に戻すのは無駄
           if e = @board.preset_info
-            @force_preset_info = e
+            @mi.force_preset_info = e
           end
         end
       end
@@ -174,13 +174,13 @@ module Bioshogi
       def read_turn
         if md = normalized_source.match(/^(?<csa_sign>[+-])$/)
           if Location.fetch(md["csa_sign"]).key == :white
-            @force_handicap = true # 微妙な判定
+            @mi.force_handicap = true # 微妙な判定
           end
         end
       end
 
       def read_moves
-        @move_infos += normalized_source.scan(MOVE_REGEXP).collect do |input, n|
+        @mi.move_infos += normalized_source.scan(MOVE_REGEXP).collect do |input, n|
           if n
             n = n.to_i.seconds
           end
@@ -190,7 +190,7 @@ module Bioshogi
 
       def read_last
         if md = normalized_source.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
-          @last_action_params = md.named_captures.symbolize_keys
+          @mi.last_action_params = md.named_captures.symbolize_keys
         end
       end
     end

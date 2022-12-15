@@ -17,13 +17,13 @@ module Bioshogi
     def initialize(parser, params = {})
       @parser = parser
       @params = self.class.default_params.merge(params)
-      # Assertion.assert { parser.header.object_id != @header.object.object_id }
+      # Assertion.assert { parser.mi.header.object_id != @mi.header.object.object_id }
     end
 
     def to_s
       build_before
       @parser.xcontainer_run_once
-      @header = @parser.header.clone
+      @header = @parser.mi.header.clone
 
       out = []
 
@@ -82,7 +82,7 @@ module Bioshogi
     end
 
     def raw_header_part_hash
-      header.object.collect { |key, value|
+      @header.object.collect { |key, value|
         if value
           if e = CsaHeaderInfo[key]
             if e.as_kif
@@ -100,7 +100,7 @@ module Bioshogi
 
     def mochigoma_delete_force
       Location.call_names.each do |e|
-        header.delete("#{e}の持駒")
+        @header.delete("#{e}の持駒")
       end
     end
 
@@ -118,8 +118,8 @@ module Bioshogi
     # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
     # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
     def illegal_judgement_message
-      if @parser.last_action_params
-        v = @parser.last_action_params[:last_action_key]
+      if @parser.mi.last_action_params
+        v = @parser.mi.last_action_params[:last_action_key]
         if !LastActionInfo[v]
           "*#{v}\n"
         end

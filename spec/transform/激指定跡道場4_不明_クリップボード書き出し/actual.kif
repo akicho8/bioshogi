@@ -1,8 +1,2 @@
-手合割：平手
-後手の戦型：嬉野流
-手数----指手---------消費時間--
-   1 ７六歩(77)
-   2 ４二銀(31)
-*△戦型：嬉野流
-   3 投了
-まで2手で後手の勝ち
+ERROR: NoMethodError
+undefined method `clock_exist?' for #<Bioshogi::Formatter::Exporter:0x00007fe3f5f4ba38>

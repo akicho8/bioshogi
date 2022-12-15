@@ -28,7 +28,7 @@ module Bioshogi
           when md = line.match(MOVE_REGEXP)
             input = md[:input].remove(/\p{blank}/)
             used_seconds = min_sec_str_to_seconds(md[:clock_part])
-            @move_infos << {
+            @mi.move_infos << {
               :turn_number  => md[:turn_number],
               :input        => input,
               :clock_part   => md[:clock_part],
@@ -38,7 +38,7 @@ module Bioshogi
             last_action_key = md[:last_action_key].strip
             if last_action_key.present?
               used_seconds = min_sec_str_to_seconds(md[:clock_part])
-              @last_action_params = {
+              @mi.last_action_params = {
                 :turn_number     => md[:turn_number],
                 :last_action_key => last_action_key,
                 :used_seconds    => used_seconds,

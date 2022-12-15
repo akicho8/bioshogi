@@ -25,9 +25,9 @@ info = Parser.parse(<<~EOT)
 まで59手で千日手
 EOT
 
-tp info.header.to_h
-tp info.header.__to_meta_h
-tp info.header.entry_all_names
+tp info.mi.header.to_h
+tp info.mi.header.__to_meta_h
+tp info.mi.header.entry_all_names
 puts info.to_ki2
 # >> |----------+------------------------------------|
 # >> | 開始日時 | 2004/03/20                         |

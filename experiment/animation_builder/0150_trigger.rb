@@ -8,7 +8,7 @@ require "rmagick"
 info = Parser.parse(@sfen)
 xcontainer = info.xcontainer_for_image
 list = Magick::ImageList.new
-info.move_infos.each.with_index do |e|
+info.mi.move_infos.each.with_index do |e|
   xcontainer.execute(e[:input])
   p xcontainer.hand_logs.last
   p xcontainer.outbreak_turn

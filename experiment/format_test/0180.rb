@@ -59,7 +59,7 @@ puts info.to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/kif_builder.rb:24:in `to_s'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/export_methods.rb:508:in `to_kif'
 # ~> 	from -:22:in `<main>'
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -74,26 +74,26 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info | 平手   |
+# >> | mi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    force_location |        |
-# >> |    force_handicap |        |
+# >> |    mi.force_location |        |
+# >> |    mi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
 # >> | 上手の持駒 | なし   |
 # >> | 下手の持駒 | なし   |
 # >> |------------+--------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
-# >> |    force_location |  |
+# >> |    mi.force_location |  |
 # >> |-------------------+--|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -106,11 +106,11 @@ puts info.to_kif
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * move_infos
+# >> * mi.move_infos
 # >> |----------|
 # >> | input    |
 # >> |----------|
 # >> | △８四歩 |
 # >> |----------|
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params

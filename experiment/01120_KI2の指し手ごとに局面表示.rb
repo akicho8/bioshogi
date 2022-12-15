@@ -17,7 +17,7 @@ EOT
 
 xcontainer = Xcontainer.new
 xcontainer.placement_from_preset("平手")
-info.move_infos.each do |info|
+info.mi.move_infos.each do |info|
   xcontainer.execute(info[:input])
   puts xcontainer
   puts xcontainer.hand_logs.last.to_ki2

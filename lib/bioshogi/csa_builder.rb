@@ -70,7 +70,7 @@ module Bioshogi
         out << footer_content
       end
 
-      if @parser.error_message
+      if @parser.mi.error_message
         out << @parser.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
       end
 
@@ -80,10 +80,7 @@ module Bioshogi
         out = out.gsub(/\n/, ",")
       else
         out += "\n"
-
-        if ENV["BIOSHOGI_ENV"] == "test"
-          out = out.gsub(/\s+\n/, "\n")
-        end
+        out = out.gsub(/\s+\n/, "\n")
       end
 
       out
@@ -93,7 +90,7 @@ module Bioshogi
 
     def header_content
       CsaHeaderInfo.collect { |e|
-        if v = @parser.header[e.kif_side_key].presence
+        if v = @parser.mi.header[e.kif_side_key].presence
           if e.as_csa
             v = e.instance_exec(v, &e.as_csa)
           end
@@ -131,7 +128,7 @@ module Bioshogi
     # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
     def footer_content
       av = []
-      hv = @parser.last_action_params || { last_action_key: "TORYO" }
+      hv = @parser.mi.last_action_params || { last_action_key: "TORYO" }
       last_action_info = LastActionInfo[hv[:last_action_key]] || LastActionInfo[:TORYO]
       av << "%#{last_action_info.csa_key}"
       if v = hv[:used_seconds]

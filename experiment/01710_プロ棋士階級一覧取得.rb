@@ -13,7 +13,7 @@ Array(files).each do |file|
   file = Pathname(file).expand_path
   info = Parser.file_parse(file, typical_error_case: :skip)
 
-  count = info.header.entry_all_names.values.flatten.count
+  count = info.mi.header.entry_all_names.values.flatten.count
   counts[count] += 1
 
   if count == 2
@@ -23,7 +23,7 @@ Array(files).each do |file|
   end
 
   begin
-    tags += info.header.entry_all_names.values.flatten
+    tags += info.mi.header.entry_all_names.values.flatten
   rescue => error
     puts file
     raise error

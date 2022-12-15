@@ -5,8 +5,6 @@ require "fileutils"
 require "pp"
 require "yaml"
 
-ENV["BIOSHOGI_ENV"] = "test"
-
 log_file = Pathname("#{__dir__}/../log/test.log")
 FileUtils.makedirs(log_file.dirname)
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(log_file))

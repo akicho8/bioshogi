@@ -66,9 +66,9 @@ module Bioshogi
     end
 
     it "棋譜部分のパース" do
-      assert { Parser::CsaParser.parse("1234FU").move_infos.first[:input] == "1234FU" }
-      assert { Parser::CsaParser.parse("+1234FU").move_infos.first[:input] == "+1234FU" }
-      assert { Parser::CsaParser.parse("+1234FU,T1").move_infos.first == {input: "+1234FU", used_seconds: 1} }
+      assert { Parser::CsaParser.parse("1234FU").mi.move_infos.first[:input] == "1234FU" }
+      assert { Parser::CsaParser.parse("+1234FU").mi.move_infos.first[:input] == "+1234FU" }
+      assert { Parser::CsaParser.parse("+1234FU,T1").mi.move_infos.first == {input: "+1234FU", used_seconds: 1} }
     end
 
     it "残り時間の変換" do
@@ -90,8 +90,8 @@ module Bioshogi
       +7776FU,T+600
       -3334FU,T-600
       EOT
-      assert { info.move_infos[0][:used_seconds] == 600 }
-      assert { info.move_infos[1][:used_seconds] == -600 }
+      assert { info.mi.move_infos[0][:used_seconds] == 600 }
+      assert { info.mi.move_infos[1][:used_seconds] == -600 }
     end
 
     # it "空の P+ がある場合は無視というか盤面を読み取っているのでスキップしている" do
@@ -113,7 +113,7 @@ module Bioshogi
     #     +
     #     +7776FU,T6
     #   EOT
-    #   assert { info.board_source.include?("P1") }
+    #   assert { info.mi.board_source.include?("P1") }
     # end
   end
 end

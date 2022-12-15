@@ -22,7 +22,7 @@ EOT
 
 xcontainer = Xcontainer.new
 xcontainer.placement_from_preset("平手")
-info.move_infos.each do |e|
+info.mi.move_infos.each do |e|
   xcontainer.execute(e[:input])
   p [xcontainer.turn_info.turn_offset, e[:input], xcontainer.hand_logs.last.to_kif_ki2_csa]
 end

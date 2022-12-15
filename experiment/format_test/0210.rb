@@ -22,7 +22,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> | ・ ・v銀v金v玉v金v銀 ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -37,26 +37,26 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | force_preset_info | 平手   |
+# >> | mi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    force_location | △     |
-# >> |    force_handicap |        |
+# >> |    mi.force_location | △     |
+# >> |    mi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * header attributes
+# >> * mi.header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
 # >> | 上手の持駒 | なし   |
 # >> | 下手の持駒 | なし   |
 # >> |------------+--------|
 # >>  
-# >> * header methods (read)
+# >> * mi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
-# >> |    force_location |  |
+# >> |    mi.force_location |  |
 # >> |-------------------+--|
 # >>  
-# >> * @board_source
+# >> * @mi.board_source
 # >> +---------------------------+
 # >> | ・ ・v銀v金v玉v金v銀 ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -69,14 +69,14 @@ puts info.to_kif
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * move_infos
+# >> * mi.move_infos
 # >> |-------------+------------+------------+--------------|
 # >> | turn_number | input      | clock_part | used_seconds |
 # >> |-------------+------------+------------+--------------|
 # >> |           1 | ４二玉(51) |            |              |
 # >> |-------------+------------+------------+--------------|
 # >>  
-# >> * @last_action_params
+# >> * @mi.last_action_params
 # >> 手合割：六枚落ち
 # >> 上手の持駒：なし
 # >> 下手の持駒：なし
