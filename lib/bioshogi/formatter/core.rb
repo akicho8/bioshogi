@@ -19,6 +19,8 @@ module Bioshogi
         :to_jpg,
         :to_gif,
         :to_webp,
+        :to_yomiage,
+        :to_yomiage_list,
       ], to: :xcontainer
 
       def to_sfen(options = {})
@@ -35,14 +37,6 @@ module Bioshogi
 
       def to_csa(options = {})
         CsaBuilder.new(self, options).to_s
-      end
-
-      def to_yomiage(options = {})
-        YomiageBuilder.new(self, options).to_s
-      end
-
-      def to_yomiage_list(options = {})
-        YomiageBuilder.new(self, options).to_a
       end
 
       def to_akf(options = {})
