@@ -1,0 +1,10 @@
+require "../setup"
+parser = Parser.parse(Bioshogi::SFEN1)
+params = {
+  :color_theme_key => "is_color_theme_club24",
+  :renderer_override_params => {
+    :width  => 1920,
+    :height => 1080,
+  },
+}
+parser.screen_image_renderer(params).display

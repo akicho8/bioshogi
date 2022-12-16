@@ -5,11 +5,11 @@ sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w 
 sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
 xcontainer = info.formatter.xcontainer_for_image
-image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
+screen_image_renderer = ScreenImage.renderer(xcontainer, viewpoint: "black")
 list = [nil, *info.mi.move_infos]
 list.each.with_index do |e, i|
   xcontainer.execute(e[:input]) if e
-  image_renderer.render.write("_#{i}.png")
+  screen_image_renderer.render.write("_#{i}.png")
 end
 
 page_duration = 2.0

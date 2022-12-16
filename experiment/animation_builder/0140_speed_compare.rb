@@ -15,13 +15,13 @@ end
 def case1
   info = Parser.parse(@sfen)
   xcontainer = info.formatter.xcontainer_for_image
-  image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
+  screen_image_renderer = ScreenImage.renderer(xcontainer, viewpoint: "black")
   list = Magick::ImageList.new
   moves = [nil, *info.mi.move_infos]
   moves.each.with_index do |e, i|
     xcontainer.execute(e[:input]) if e
-    image_renderer.render
-    list.concat([image_renderer.canvas])
+    screen_image_renderer.render
+    list.concat([screen_image_renderer.canvas])
   end
   # list = list.coalesce            # 最小単位にしてあったら元のフレームサイズにする
   # list = list.optimize_layers(Magick::OptimizeLayer) # 最小単位にする
@@ -35,12 +35,12 @@ end
 def case2
   info = Parser.parse(@sfen)
   xcontainer = info.formatter.xcontainer_for_image
-  image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
+  screen_image_renderer = ScreenImage.renderer(xcontainer, viewpoint: "black")
   moves = [nil, *info.mi.move_infos]
   moves.each.with_index do |e, i|
     xcontainer.execute(e[:input]) if e
-    image_renderer.render
-    image_renderer.canvas.write("_#{i}.png")
+    screen_image_renderer.render
+    screen_image_renderer.canvas.write("_#{i}.png")
   end
   `ffmpeg -v warning -hide_banner -framerate #{fps_option} -i _%d.png -c:v libx264 -pix_fmt yuv420p -y _output1_2.mp4`
 end

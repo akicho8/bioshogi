@@ -28,7 +28,7 @@ module Bioshogi
               logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
               @xcontainer = @formatter.xcontainer_for_image
-              @image_renderer = ImageRenderer.new(@xcontainer, params)
+              @screen_image_renderer = ScreenImage.renderer(@xcontainer, params)
 
               if factory_method_key == "is_factory_method_rmagick"
                 @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
@@ -38,22 +38,22 @@ module Bioshogi
 
                   if v = params[:cover_text].presence
                     @progress_cop.next_step("表紙描画")
-                    tob("表紙描画") { list << CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).render }
+                    tob("表紙描画") { list << CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render }
                   end
 
                   @progress_cop.next_step("初期配置")
-                  tob("初期配置") { list << @image_renderer.next_build }
+                  tob("初期配置") { list << @screen_image_renderer.next_build }
 
                   @formatter.mi.move_infos.each.with_index do |e, i|
                     @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                     @xcontainer.execute(e[:input])
-                    tob("#{i}/#{@formatter.mi.move_infos.size}") { list << @image_renderer.next_build }
+                    tob("#{i}/#{@formatter.mi.move_infos.size}") { list << @screen_image_renderer.next_build }
                     logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                   end
 
                   end_pages.times do |i|
                     @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-                    tob("終了図 #{i}/#{end_pages}") { list << @image_renderer.last_rendered_image.copy }
+                    tob("終了図 #{i}/#{end_pages}") { list << @screen_image_renderer.last_rendered_image.copy }
                   end
 
                   list.delay = list.ticks_per_second * page_duration
@@ -86,22 +86,22 @@ module Bioshogi
 
                 if v = params[:cover_text].presence
                   @progress_cop.next_step("表紙描画")
-                  tob("表紙描画") { CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).render.write(sfg.next) }
+                  tob("表紙描画") { CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render.write(sfg.next) }
                 end
 
                 @progress_cop.next_step("初期配置")
-                tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
+                tob("初期配置") { @screen_image_renderer.next_build.write(sfg.next) }
 
                 @formatter.mi.move_infos.each.with_index do |e, i|
                   @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                   @xcontainer.execute(e[:input])
-                  tob("#{i}/#{@formatter.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
+                  tob("#{i}/#{@formatter.mi.move_infos.size}") { @screen_image_renderer.next_build.write(sfg.next) }
                   logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                 end
 
                 end_pages.times do |i|
                   @progress_cop.next_step("終了図 #{i}/#{end_pages}")
-                  tob("終了図 #{i}/#{end_pages}") { @image_renderer.last_rendered_image.write(sfg.next) }
+                  tob("終了図 #{i}/#{end_pages}") { @screen_image_renderer.last_rendered_image.write(sfg.next) }
                 end
 
                 @progress_cop.next_step("#{ext_name} 生成 #{sfg.index}p")
@@ -111,7 +111,7 @@ module Bioshogi
                 logger.info { `ls -alh _output1.#{ext_name}`.strip }
               end
 
-              @image_renderer.clear_all
+              @screen_image_renderer.clear_all
 
               File.binread("_output1.#{ext_name}")
             end

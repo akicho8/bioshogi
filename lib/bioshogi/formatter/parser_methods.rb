@@ -14,7 +14,7 @@ module Bioshogi
           :to_yomiage,
           :to_yomiage_list,
           :to_akf,
-          :image_renderer,
+          :screen_image_renderer,
           :to_image,
           :to_png,
           :to_jpg,

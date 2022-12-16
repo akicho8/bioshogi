@@ -13,20 +13,20 @@ xcontainer.params.update({
     :validate_enable                => false,
   })
 info.formatter.xcontainer_init(xcontainer)
-image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
+screen_image_renderer = ScreenImage.renderer(xcontainer, viewpoint: "black")
 # puts xcontainer
 
 list = Magick::ImageList.new
 # list.ticks_per_second           # =>
 # list.delay = list.ticks_per_second
-image_renderer.render
-list.concat([image_renderer.canvas])
+screen_image_renderer.render
+list.concat([screen_image_renderer.canvas])
 info.mi.move_infos.each.with_index(1) do |e, i|
   xcontainer.execute(e[:input])
-  image_renderer.render
-  list.concat([image_renderer.canvas])
-  # puts image_renderer.to_tempfile
-  image_renderer.canvas.write("_#{i}.gif")
+  screen_image_renderer.render
+  list.concat([screen_image_renderer.canvas])
+  # puts screen_image_renderer.to_tempfile
+  screen_image_renderer.canvas.write("_#{i}.gif")
 end
 
 @page_duration = 0.5            # 1枚を何秒で表示するか？

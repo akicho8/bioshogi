@@ -26,12 +26,12 @@ module Bioshogi
 
         def to_binary
           xcontainer = @formatter.xcontainer_for_image
-          @image_renderer = ImageRenderer.new(xcontainer, params)
+          @screen_image_renderer = ScreenImage.renderer(xcontainer, params)
           @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size, &params[:progress_callback])
           zos = Zip::OutputStream.write_buffer do |z|
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
-              tob("表紙描画") { zip_write2(z, "cover.png", CoverRenderer.new(text: v, **params.slice(:bottom_text, :width, :height)).to_png24_binary) }
+              tob("表紙描画") { zip_write2(z, "cover.png", CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).to_png24_binary) }
             end
             @progress_cop.next_step("初期配置")
             tob("初期配置") { zip_write1(z, 0) }
@@ -42,7 +42,7 @@ module Bioshogi
               logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
             end
           end
-          @image_renderer.clear_all
+          @screen_image_renderer.clear_all
           zos.string
         end
 
@@ -53,7 +53,7 @@ module Bioshogi
         end
 
         def zip_write1(z, index)
-          zip_write2(z, filename_for(index), @image_renderer.to_png24_binary)
+          zip_write2(z, filename_for(index), @screen_image_renderer.to_png24_binary)
         end
 
         def zip_write2(z, filename, bin)

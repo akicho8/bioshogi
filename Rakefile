@@ -74,7 +74,7 @@ task "demo" do
   Dir.chdir("#{__dir__}/experiment/animation_builder") do
     system "ruby 0100_demo.rb"
   end
-  Dir.chdir("#{__dir__}/experiment/image_renderer") do
+  Dir.chdir("#{__dir__}/experiment/screen_image_renderer") do
     system "ruby 0100_demo.rb"
   end
 end
@@ -83,7 +83,7 @@ namespace :color_theme_preview do
   desc "配色テーマのキャッシュ生成"
   task "generate" do
     require "bioshogi"
-    Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
+    Bioshogi::ScreenImage::ColorThemeInfo.each do |e|
       e.color_theme_cache_build(verbose: true)
     end
   end

@@ -13,7 +13,7 @@ module Bioshogi
 
       delegate *[
         :to_bod,
-        :image_renderer,
+        :screen_image_renderer,
         :to_image,
         :to_png,
         :to_jpg,

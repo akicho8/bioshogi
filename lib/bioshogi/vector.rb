@@ -28,7 +28,7 @@ module Bioshogi
   OV = OnceVector
   RV = RepeatVector
 
-  ################################################################################ for ImageRenderer
+  ################################################################################ for ScreenImage
 
   require "matrix"
 

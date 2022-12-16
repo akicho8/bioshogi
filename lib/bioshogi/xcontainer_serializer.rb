@@ -77,30 +77,30 @@ module Bioshogi
 
     ################################################################################
 
-    def image_renderer(options = {})
-      ImageRenderer.new(self, options)
+    def screen_image_renderer(options = {})
+      ScreenImage.renderer(self, options)
     end
 
     def to_image(options = {})
-      image_renderer(options).to_blob_binary
+      screen_image_renderer(options).to_blob_binary
     end
 
     ################################################################################
 
     def to_png(options = {})
-      ImageRenderer.new(self, options.merge(image_format: "png")).to_blob_binary
+      ScreenImage.renderer(self, options.merge(image_format: "png")).to_blob_binary
     end
 
     def to_jpg(options = {})
-      ImageRenderer.new(self, options.merge(image_format: "jpg")).to_blob_binary
+      ScreenImage.renderer(self, options.merge(image_format: "jpg")).to_blob_binary
     end
 
     def to_gif(options = {})
-      ImageRenderer.new(self, options.merge(image_format: "gif")).to_blob_binary
+      ScreenImage.renderer(self, options.merge(image_format: "gif")).to_blob_binary
     end
 
     def to_webp(options = {})
-      ImageRenderer.new(self, options.merge(image_format: "webp")).to_blob_binary
+      ScreenImage.renderer(self, options.merge(image_format: "webp")).to_blob_binary
     end
 
     concerning :SfenMethods do

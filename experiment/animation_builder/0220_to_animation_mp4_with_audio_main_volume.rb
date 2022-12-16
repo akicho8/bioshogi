@@ -40,7 +40,7 @@ m`open -a 'Google Chrome' _output.mp4`
 # >> [AnimationMp4Builder] [video] [1] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [1] composite process
 # >> [AnimationMp4Builder] [video] [0/4][end][0s]
-# >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
+# >> [AnimationMp4Builder] [video] @screen_image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] move: 0 / 4
 # >> [AnimationMp4Builder] [video] 2021-09-19 20:22:41 3/23  13.04 % T0 (1/4) 3c3d
 # >> [AnimationMp4Builder] [video] @xcontainer.execute OK
@@ -55,7 +55,7 @@ m`open -a 'Google Chrome' _output.mp4`
 # >> [AnimationMp4Builder] [video] [2] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [2] composite process
 # >> [AnimationMp4Builder] [video] [1/4][end][0s]
-# >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
+# >> [AnimationMp4Builder] [video] @screen_image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] 2021-09-19 20:22:41 4/23  17.39 % T1 (2/4) 8h2b+
 # >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [2/4][begin]
@@ -69,7 +69,7 @@ m`open -a 'Google Chrome' _output.mp4`
 # >> [AnimationMp4Builder] [video] [3] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [3] composite process
 # >> [AnimationMp4Builder] [video] [2/4][end][0s]
-# >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
+# >> [AnimationMp4Builder] [video] @screen_image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] 2021-09-19 20:22:41 5/23  21.74 % T0 (3/4) 8c8d
 # >> [AnimationMp4Builder] [video] @xcontainer.execute OK
 # >> [AnimationMp4Builder] [video] [3/4][begin]
@@ -83,7 +83,7 @@ m`open -a 'Google Chrome' _output.mp4`
 # >> [AnimationMp4Builder] [video] [4] transparent_layer create for d_piece_count_layer END
 # >> [AnimationMp4Builder] [video] [4] composite process
 # >> [AnimationMp4Builder] [video] [3/4][end][0s]
-# >> [AnimationMp4Builder] [video] @image_renderer.next_build.write OK
+# >> [AnimationMp4Builder] [video] @screen_image_renderer.next_build.write OK
 # >> [AnimationMp4Builder] [video] 2021-09-19 20:22:42 6/23  26.09 % T0 終了図 0/10
 # >> [AnimationMp4Builder] [video] [終了図 0/10][begin]
 # >> [AnimationMp4Builder] [video] [終了図 0/10][end][0s]

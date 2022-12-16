@@ -1,10 +1,10 @@
 require "spec_helper"
 
 module Bioshogi
-  describe ImageRenderer, animation: true do
+  describe ScreenImage, animation: true do
     def target1(params = {})
       parser = Parser.parse(Bioshogi::SFEN1)
-      parser.image_renderer(width: 2, height: 2, **params)
+      parser.screen_image_renderer(width: 2, height: 2, **params)
     end
 
     it "render" do
@@ -27,7 +27,7 @@ module Bioshogi
       end
 
       describe "全パターン確認" do
-        ImageRenderer::ColorThemeInfo.each do |e|
+        ScreenImage::ColorThemeInfo.each do |e|
           it e.key do
             assert { target1(color_theme_key: e.key).render }
           end
@@ -36,7 +36,7 @@ module Bioshogi
     end
 
     describe "全フォント指定確認" do
-      ImageRenderer::FontThemeInfo.each do |e|
+      ScreenImage::FontThemeInfo.each do |e|
         it e.key do
           assert { target1(font_theme_key: e.key).render }
         end
@@ -44,7 +44,7 @@ module Bioshogi
     end
 
     describe "PieceFontWeightInfo全パターン確認" do
-      ImageRenderer::PieceFontWeightInfo.each do |e|
+      ScreenImage::PieceFontWeightInfo.each do |e|
         it e.key do
           assert { target1(piece_font_weight_key: e.key).render }
         end
