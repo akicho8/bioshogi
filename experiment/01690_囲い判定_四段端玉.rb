@@ -7,7 +7,7 @@ tp bp.other_objects_loc_ary[:black]["◆"] # => [{:place=>#<Bioshogi::Place ８�
 tp tp bp.trigger_soldiers
 
 info = Parser.file_parse("囲い/四段端玉.kif")
-puts info.exporter.xcontainer
+puts info.formatter.xcontainer
 puts info.to_kif
 # >> |-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> | black | {"◇"=>[{:place=>#<Bioshogi::Place ９五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ８五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ７五>, :prefix_char=>" ", :something=>"◇"}], "◆"=>[{:place=>#<Bioshogi::Place ８六>, :prefix_cha... |

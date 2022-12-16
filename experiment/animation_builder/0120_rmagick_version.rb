@@ -12,7 +12,7 @@ xcontainer.params.update({
     :candidate_enable               => false,
     :validate_enable                => false,
   })
-info.exporter.xcontainer_init(xcontainer)
+info.formatter.xcontainer_init(xcontainer)
 image_renderer = ImageRenderer.new(xcontainer, viewpoint: "black")
 # puts xcontainer
 

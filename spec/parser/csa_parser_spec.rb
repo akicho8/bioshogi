@@ -56,7 +56,7 @@ module Bioshogi
     end
 
     it "打のとき持駒がなければ盤面の情報を含むエラーを出す" do
-      error = Parser::CsaParser.parse("P1 *,+0093KA").exporter.xcontainer rescue $!
+      error = Parser::CsaParser.parse("P1 *,+0093KA").formatter.xcontainer rescue $!
       assert { error.message.include?("先手は角を９三に打とうとしましたが角を持っていません") }
       assert { error.message.include?("先手の持駒：なし")                         } # 盤面があるということ
     end
@@ -78,11 +78,11 @@ module Bioshogi
     end
 
     it "結果を表すキーワードをKIFに変換したときどうなるか" do
-      assert { Parser::CsaParser.parse("%TIME_UP").exporter.judgment_message == "まで0手で時間切れにより後手の勝ち" }
-      assert { Parser::CsaParser.parse("%CHUDAN").exporter.judgment_message  == "まで0手で切断により後手の勝ち" }
-      assert { Parser::CsaParser.parse("%TORYO").exporter.judgment_message   == "まで0手で後手の勝ち" }
-      assert { Parser::CsaParser.parse("%ERROR").exporter.judgment_message   == "まで0手でエラーにより後手の勝ち" }
-      assert { Parser::CsaParser.parse("%TSUMI").exporter.judgment_message   == "まで0手で後手の勝ち" }
+      assert { Parser::CsaParser.parse("%TIME_UP").formatter.judgment_message == "まで0手で時間切れにより後手の勝ち" }
+      assert { Parser::CsaParser.parse("%CHUDAN").formatter.judgment_message  == "まで0手で切断により後手の勝ち" }
+      assert { Parser::CsaParser.parse("%TORYO").formatter.judgment_message   == "まで0手で後手の勝ち" }
+      assert { Parser::CsaParser.parse("%ERROR").formatter.judgment_message   == "まで0手でエラーにより後手の勝ち" }
+      assert { Parser::CsaParser.parse("%TSUMI").formatter.judgment_message   == "まで0手で後手の勝ち" }
     end
 
     it "マイナス時間を考慮する(将棋ウォーズ不具合対策)" do

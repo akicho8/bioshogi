@@ -4,7 +4,7 @@
 module Bioshogi
   module Parser
     class Base
-      include Formatter::ExportMethods
+      include Formatter::ParserMethods
 
       class << self
         def parse(source, options = {})

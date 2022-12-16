@@ -16,7 +16,7 @@ module Bioshogi
         Explain::TacticInfo.all_elements.each do |e|
           print "."
           info = e.sample_kif_info
-          found = info.exporter.xcontainer.hand_logs.each.with_index do |hand_log, i|
+          found = info.formatter.xcontainer.hand_logs.each.with_index do |hand_log, i|
             if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
               hash[e.key.to_s] = i.next
               break true

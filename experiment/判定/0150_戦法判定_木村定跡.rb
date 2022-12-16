@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("../戦型/木村定跡.kif", turn_limit: 42)
-puts info.exporter.xcontainer
+puts info.formatter.xcontainer
 puts info.to_ki2
 # >> 後手の持駒：角 歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

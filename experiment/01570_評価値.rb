@@ -17,5 +17,5 @@ info = Parser.parse(<<~EOT)
 先手の持駒：香
 EOT
 
-info.exporter.xcontainer.player_at(:white).evaluator.evaluate # => -30
-info.exporter.xcontainer.player_at(:black).evaluator.evaluate # => 30
+info.formatter.xcontainer.player_at(:white).evaluator.evaluate # => -30
+info.formatter.xcontainer.player_at(:black).evaluator.evaluate # => 30

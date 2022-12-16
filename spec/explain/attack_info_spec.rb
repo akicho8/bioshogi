@@ -6,7 +6,7 @@ module Bioshogi
       it "新米長玉" do
         info = Parser.parse("▲７六歩 △６二玉")
         assert { info.to_kif.include?("後手の戦型：新米長玉") }
-        assert { info.exporter.xcontainer.player_at(:white).attack_infos.collect(&:name) == ["新米長玉"] }
+        assert { info.formatter.xcontainer.player_at(:white).attack_infos.collect(&:name) == ["新米長玉"] }
       end
 
       it "嬉野流" do

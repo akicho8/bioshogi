@@ -8,7 +8,7 @@ kif_str = "
    4 ２二銀(31)   (00:00/00:00:00)
 "
 info = Parser.parse(kif_str)
-puts info.exporter.xcontainer
+puts info.formatter.xcontainer
 puts info.to_ki2
 
 # >> 後手の持駒：角

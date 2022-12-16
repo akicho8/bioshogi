@@ -3,33 +3,33 @@
 module Bioshogi
   module Formatter
     class Runner
-      attr_accessor :exporter
+      attr_accessor :formatter
       attr_accessor :xcontainer
 
-      def initialize(exporter, xcontainer)
-        @exporter = exporter
+      def initialize(formatter, xcontainer)
+        @formatter = formatter
         @xcontainer = xcontainer
       end
 
       def perform
         begin
-          @exporter.mi.move_infos.each.with_index do |info, i|
-            if @exporter.parser_options[:debug]
+          @formatter.mi.move_infos.each.with_index do |info, i|
+            if @formatter.parser_options[:debug]
               p xcontainer
             end
-            if @exporter.parser_options[:callback]
-              @exporter.parser_options[:callback].call(xcontainer)
+            if @formatter.parser_options[:callback]
+              @formatter.parser_options[:callback].call(xcontainer)
             end
-            if @exporter.parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @exporter.parser_options[:turn_limit]
+            if @formatter.parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @formatter.parser_options[:turn_limit]
               break
             end
-            xcontainer.execute(info[:input], used_seconds: exporter.used_seconds_at(i))
+            xcontainer.execute(info[:input], used_seconds: formatter.used_seconds_at(i))
           end
         rescue CommonError => error
-          if v = @exporter.parser_options[:typical_error_case]
+          if v = @formatter.parser_options[:typical_error_case]
             case v
             when :embed
-              @exporter.mi.error_message = error.message
+              @formatter.mi.error_message = error.message
             when :skip
             else
               raise MustNotHappen

@@ -75,6 +75,34 @@ module Bioshogi
       XcontainerSerializerCheckmateYomiage.new(self, options).to_a
     end
 
+    ################################################################################
+
+    def image_renderer(options = {})
+      ImageRenderer.new(self, options)
+    end
+
+    def to_image(options = {})
+      image_renderer(options).to_blob_binary
+    end
+
+    ################################################################################
+
+    def to_png(options = {})
+      ImageRenderer.new(self, options.merge(image_format: "png")).to_blob_binary
+    end
+
+    def to_jpg(options = {})
+      ImageRenderer.new(self, options.merge(image_format: "jpg")).to_blob_binary
+    end
+
+    def to_gif(options = {})
+      ImageRenderer.new(self, options.merge(image_format: "gif")).to_blob_binary
+    end
+
+    def to_webp(options = {})
+      ImageRenderer.new(self, options.merge(image_format: "webp")).to_blob_binary
+    end
+
     concerning :SfenMethods do
       attr_reader :initial_state_board_sfen
       attr_reader :initial_state_turn_info
@@ -148,4 +176,3 @@ module Bioshogi
     end
   end
 end
-

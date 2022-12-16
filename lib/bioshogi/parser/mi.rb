@@ -31,6 +31,15 @@ module Bioshogi
         @error_message      = nil
         @sfen_info          = nil
       end
+
+      def clock_exist?
+        return @clock_exist if instance_variable_defined?(:@clock_exist)
+        @clock_exist ||= @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
+      end
+
+      def clock_nothing?
+        !clock_exist?
+      end
     end
   end
 end

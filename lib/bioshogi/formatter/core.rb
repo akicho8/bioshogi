@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Formatter
-    class Exporter
+    class Core
       attr_accessor :mi
       attr_accessor :parser_options
 
@@ -24,11 +24,11 @@ module Bioshogi
       end
 
       def to_sfen(options = {})
-        SfenBuilder.new(self, options).to_s
+        xcontainer.to_history_sfen(options)
       end
 
       def to_bod(options = {})
-        BodBuilder.new(self, options).to_s
+        xcontainer.to_bod(options)
       end
 
       def to_yomiage(options = {})
@@ -45,31 +45,14 @@ module Bioshogi
 
       ################################################################################
 
-      def image_renderer(options = {})
-        ImageRenderer.new(xcontainer, options)
-      end
-
-      def to_image(options = {})
-        image_renderer(options).to_blob_binary
-      end
-
-      ################################################################################
-
-      def to_png(options = {})
-        ImageRenderer.new(xcontainer, options.merge(image_format: "png")).to_blob_binary
-      end
-
-      def to_jpg(options = {})
-        ImageRenderer.new(xcontainer, options.merge(image_format: "jpg")).to_blob_binary
-      end
-
-      def to_gif(options = {})
-        ImageRenderer.new(xcontainer, options.merge(image_format: "gif")).to_blob_binary
-      end
-
-      def to_webp(options = {})
-        ImageRenderer.new(xcontainer, options.merge(image_format: "webp")).to_blob_binary
-      end
+      delegate *[
+        :image_renderer,
+        :to_image,
+        :to_png,
+        :to_jpg,
+        :to_gif,
+        :to_webp,
+      ], to: :xcontainer
 
       ################################################################################
 
@@ -264,15 +247,6 @@ module Bioshogi
         @mi.move_infos.dig(index, :used_seconds).to_i
       end
 
-      def clock_exist?
-        return @clock_exist if instance_variable_defined?(:@clock_exist)
-        @clock_exist = @mi.move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
-      end
-
-      def clock_nothing?
-        !clock_exist?
-      end
-
       def error_message_part(comment_mark = "*")
         if @mi.error_message
           v = @mi.error_message.strip + "\n"
@@ -280,9 +254,6 @@ module Bioshogi
           [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
         end
       end
-
-      ################################################################################
-
     end
   end
 end

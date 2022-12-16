@@ -96,5 +96,6 @@ module Bioshogi
     def placement_from_sfen(sfen_info)
       SfenImporter.new(self, sfen_info).import
     end
+
   end
 end

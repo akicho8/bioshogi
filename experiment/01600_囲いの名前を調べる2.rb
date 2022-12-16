@@ -1,7 +1,7 @@
 require "./setup"
 
 info = Parser.file_parse("yagura.kif")
-info.exporter.xcontainer.players.each do |player|
+info.formatter.xcontainer.players.each do |player|
   tp player.skill_set.to_h
 end
 puts info.to_kif

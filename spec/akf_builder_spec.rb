@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe AkfBuilder do
+  describe Formatter::AkfBuilder do
     it "works" do
       assert { Parser.parse("68S").to_akf }
     end

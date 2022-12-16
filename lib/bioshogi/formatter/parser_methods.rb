@@ -2,9 +2,7 @@
 
 module Bioshogi
   module Formatter
-    concern :ExportMethods do
-      MIN_TURN = 14
-
+    concern :ParserMethods do
       included do
         delegate *[
           :xcontainer,
@@ -27,11 +25,11 @@ module Bioshogi
           :to_animation_apng,
           :to_animation_webp,
           :to_animation_zip,
-        ], to: :exporter
+        ], to: :formatter
       end
 
-      def exporter
-        @exporter ||= Exporter.new(mi, parser_options)
+      def formatter
+        @formatter ||= Core.new(mi, parser_options)
       end
     end
   end

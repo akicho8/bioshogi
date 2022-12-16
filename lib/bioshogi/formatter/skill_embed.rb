@@ -3,6 +3,8 @@
 module Bioshogi
   module Formatter
     class SkillEmbed
+      MIN_TURN = 14
+
       attr_accessor :xparser
       attr_accessor :xcontainer
 

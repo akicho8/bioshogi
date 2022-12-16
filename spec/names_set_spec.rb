@@ -4,7 +4,7 @@ module Bioshogi
   describe "names_set" do
     it "works" do
       info = Parser.parse("position sfen 4k4/9/9/9/9/9/PPPPPPPPP/9/4K4 w - 1")
-      info.exporter.names_set(black: "alice", white: "bob")
+      info.formatter.names_set(black: "alice", white: "bob")
       expect(info.to_ki2).to eq(<<~EOT)
 上手：bob
 下手：alice
@@ -30,7 +30,7 @@ module Bioshogi
 EOT
 
       info = Parser.parse("position startpos")
-      info.exporter.names_set(black: "alice", white: "bob")
+      info.formatter.names_set(black: "alice", white: "bob")
       expect(info.to_ki2).to eq(<<~EOT)
 先手：alice
 後手：bob
