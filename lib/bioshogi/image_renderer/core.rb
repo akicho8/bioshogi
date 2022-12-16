@@ -1,6 +1,6 @@
 module Bioshogi
-  class ImageRenderer
-    concerning :Base do
+  module ImageRenderer
+    concern :Core do
       class_methods do
         def default_params
           super.merge({

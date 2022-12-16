@@ -1,7 +1,7 @@
 require "color"
 
 module Bioshogi
-  class ImageRenderer
+  module ImageRenderer
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [

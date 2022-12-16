@@ -1,6 +1,6 @@
 module Bioshogi
-  class ImageRenderer
-    concerning :SoldierMethods do
+  module ImageRenderer
+    concern :SoldierMethods do
       def soldier_draw_all
         xcontainer.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
       end

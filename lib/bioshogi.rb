@@ -52,7 +52,7 @@ require "bioshogi/vector"
 require "bioshogi/errors"
 
 # 必須
-loader.eager_load_namespace(Bioshogi::ImageRenderer)
+# loader.eager_load_namespace(Bioshogi::ImageRenderer)
 
 # なくてもよい
 loader.eager_load

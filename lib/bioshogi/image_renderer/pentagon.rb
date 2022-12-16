@@ -1,8 +1,8 @@
 # 五角形の駒
 
 module Bioshogi
-  class ImageRenderer
-    concerning :Pentagon do
+  module ImageRenderer
+    concern :Pentagon do
       class_methods do
         def default_params
           super.merge({

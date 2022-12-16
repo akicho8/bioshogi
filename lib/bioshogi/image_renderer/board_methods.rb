@@ -1,6 +1,6 @@
 module Bioshogi
-  class ImageRenderer
-    concerning :BoardMethods do
+  module ImageRenderer
+    concern :BoardMethods do
       private
 
       def lattice_layer_create

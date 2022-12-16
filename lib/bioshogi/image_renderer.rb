@@ -5,7 +5,9 @@
 #
 
 module Bioshogi
-  class ImageRenderer
-    include Builder
+  module ImageRenderer
+    def self.new(*args)
+      Main.new(*args)
+    end
   end
 end

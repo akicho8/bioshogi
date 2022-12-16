@@ -1,6 +1,6 @@
 module Bioshogi
-  class ImageRenderer
-    concerning :LayerMethods do
+  module ImageRenderer
+    concern :LayerMethods do
       class_methods do
         def default_params
           super.update({

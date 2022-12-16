@@ -1,6 +1,6 @@
 module Bioshogi
-  class ImageRenderer
-    concerning :TurnMethods do
+  module ImageRenderer
+    concern :TurnMethods do
       class_methods do
         def default_params
           super.merge({

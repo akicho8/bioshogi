@@ -2,8 +2,8 @@ require "tempfile"
 require "securerandom"
 
 module Bioshogi
-  class ImageRenderer
-    concerning :Helper do
+  module ImageRenderer
+    concern :Helper do
       # 最後の render の結果を保持するバージョン
       # animation_mp4_builder, animation_gif_builder だけで使っている
       begin

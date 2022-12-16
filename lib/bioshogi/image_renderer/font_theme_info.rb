@@ -1,5 +1,5 @@
 module Bioshogi
-  class ImageRenderer
+  module ImageRenderer
     class FontThemeInfo
       include ApplicationMemoryRecord
       memory_record [
