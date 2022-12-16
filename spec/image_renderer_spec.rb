@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe ImageRenderer, animation: true do
     def target1(params = {})
-      parser = Parser.parse(XK::SFEN1)
+      parser = Parser.parse(Bioshogi::SFEN1)
       parser.image_renderer(width: 2, height: 2, **params)
     end
 
