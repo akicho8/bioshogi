@@ -2,8 +2,8 @@ require "../setup"
 require "color"
 
 parser = Parser.parse("position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1")
-# bg_file = "#{ASSETS_DIR}/images/checker_grey_light.png"
-# bg_file = "#{ASSETS_DIR}/images/board/original/pakutexture06210140.jpg"
+# bg_file = ASSETS_DIR.join("images/checker_grey_light.png")
+# bg_file = ASSETS_DIR.join("images/board/original/pakutexture06210140.jpg")
 bg_file = Pathname("~/Pictures/ぱくたそ/Redsugar20207061_TP_V.jpg").expand_path.to_s
 bg_file = Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path.to_s
 bg_file = nil

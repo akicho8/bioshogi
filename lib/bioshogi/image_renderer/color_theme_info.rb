@@ -23,7 +23,7 @@ module Bioshogi
           verbose: false,
         }.merge(options)
         parser = Parser.parse(SFEN1)
-        file = Pathname("#{ASSETS_DIR}/images/color_theme_preview/#{key}.png").expand_path
+        file = ASSETS_DIR.join("images/color_theme_preview/#{key}.png")
         bin = parser.to_png(color_theme_key: key, width: 1920, height: 1080)
         FileUtils.makedirs(file.dirname)
         file.write(bin)
@@ -36,8 +36,8 @@ module Bioshogi
 
       def is_color_theme_real
         is_color_theme_shogi_extend.merge({
-            :fg_file => "#{ASSETS_DIR}/images/board/board_a.png",
-            :bg_file => "#{ASSETS_DIR}/images/background/background_a.png",
+            :fg_file => ASSETS_DIR.join("images/board/board_a.png"),
+            :bg_file => ASSETS_DIR.join("images/background/background_a.png"),
             :piece_image_key => "Portella",
           })
       end

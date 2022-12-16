@@ -8,8 +8,8 @@ module Bioshogi
             :width        => 1200,
             :height       => 630,
             :image_format => "png",
-            :font_regular => "#{ASSETS_DIR}/fonts/RictyDiminished-Regular.ttf",  # 駒のフォント(普通)
-            :font_bold    => "#{ASSETS_DIR}/fonts/RictyDiminished-Bold.ttf",     # 駒のフォント(太字)
+            :font_regular => ASSETS_DIR.join("fonts/RictyDiminished-Regular.ttf"),  # 駒のフォント(普通)
+            :font_bold    => ASSETS_DIR.join("fonts/RictyDiminished-Bold.ttf"),     # 駒のフォント(太字)
             :bg_color     => "hsl(0,0%,15%)",
             :font_color   => "hsl(0,0%,100%)",
           }

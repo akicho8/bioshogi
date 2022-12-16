@@ -51,8 +51,8 @@ module Bioshogi
 
               # テーマ関連
               :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
-              :audio_part_a        => "#{ASSETS_DIR}/audios/headspin_long.m4a",        # 序盤
-              :audio_part_b        => "#{ASSETS_DIR}/audios/breakbeat_long_strip.m4a", # 中盤移行
+              :audio_part_a        => ASSETS_DIR.join("audios/headspin_long.m4a"),        # 序盤
+              :audio_part_b        => ASSETS_DIR.join("audios/breakbeat_long_strip.m4a"), # 中盤移行
               :audio_part_a_volume => 1.0,  # DEPRECATION: 1.0 固定とする
               :audio_part_b_volume => 1.0,  # DEPRECATION: 1.0 固定とする
               :acrossfade_duration => 2.0,  # 0なら単純な連結

@@ -82,7 +82,7 @@ module Bioshogi
 
         def real_path(basename)
           if basename
-            Pathname("#{ASSETS_DIR}/audios/#{basename}.m4a")
+            ASSETS_DIR.join("audios/#{basename}.m4a")
           end
         end
 

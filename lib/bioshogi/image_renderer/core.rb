@@ -54,8 +54,8 @@ module Bioshogi
 
               # font
               :font_theme_key        => nil,                         # フォントの種類 noto_seif
-              :font_regular          => "#{ASSETS_DIR}/fonts/RictyDiminished-Regular.ttf", # 駒のフォント(普通)
-              :font_bold             => "#{ASSETS_DIR}/fonts/RictyDiminished-Bold.ttf",    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
+              :font_regular          => ASSETS_DIR.join("fonts/RictyDiminished-Regular.ttf"), # 駒のフォント(普通)
+              :font_bold             => ASSETS_DIR.join("fonts/RictyDiminished-Bold.ttf"),    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
               :soldier_font_bold     => false,                        # 太字を使うか？
               :piece_font_weight_key             => :is_piece_font_weight_auto,               # 太字はおまかせ (つまり何もしない。nil でもよい)
 
@@ -156,7 +156,7 @@ module Bioshogi
         case
         when false
           # layer = Magick::Image.read("logo:").first
-          layer = Magick::Image.read(Pathname("#{ASSETS_DIR}/images/matrix_1024x768.png")).first
+          layer = Magick::Image.read(ASSETS_DIR.join("images/matrix_1024x768.png")).first
           layer = Magick::Image.read(Pathname("~/Pictures/ぱくたそ/IS107112702_TP_V.jpg").expand_path).first
           layer = CanvasPattern.fetch(:pattern_checker_grey_dark).func(self).copy
           layer.resize!(*image_rect) # 200 ms
