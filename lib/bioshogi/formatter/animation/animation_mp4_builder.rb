@@ -132,7 +132,7 @@ module Bioshogi
                     logger.info { "_output0.mp4: #{Media.duration('_output0.mp4')}" } if false
                     @page_count = list.count
                   ensure
-                    list.destroy!       # 恐いので明示的に解放しとこう
+                    list.each(&:destroy!) # 恐いので明示的に解放しとこう
                   end
 
                   logger.info { "合計ページ数: #{@page_count}" }

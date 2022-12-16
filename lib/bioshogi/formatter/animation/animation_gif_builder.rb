@@ -75,7 +75,7 @@ module Bioshogi
                     list.write("_output1.#{ext_name}")
                   end
                 ensure
-                  list.destroy!
+                  list.each(&:destroy!)
                 end
               end
 
