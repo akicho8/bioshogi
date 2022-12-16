@@ -113,14 +113,6 @@ EOT
       assert { object.xcontainer.to_ki2_a == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"] }
     end
 
-    it "Sequencer" do
-      data = NotationDsl.define{}
-      sequencer = Sequencer.new
-      sequencer.pattern = data
-      sequencer.evaluate
-      sequencer.snapshots
-    end
-
     it "フレームのサンドボックス実行(重要)" do
       xcontainer = Xcontainer.facade(init: "▲１二歩", pieces_set: "▼歩")
       assert { xcontainer.player_at(:black).to_s_soldiers == "１二歩" }
