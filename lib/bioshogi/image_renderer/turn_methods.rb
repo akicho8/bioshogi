@@ -31,7 +31,7 @@ module Bioshogi
 
           gc = Magick::Draw.new
           gc.annotate(layer, w, h, x, y, "#{@build_counter}") do |e|
-            e.font         = params[:font_bold]
+            e.font         = params[:font_bold].to_s
             e.fill         = "hsla(0,0%,100%,1.0)"
             e.pointsize    = pointsize
             e.stroke_width = 2

@@ -15,7 +15,7 @@ module Bioshogi
 
       def main_text_render
         gc = Magick::Draw.new
-        gc.font      = params[:font_regular]
+        gc.font      = params[:font_regular].to_s
         gc.fill      = params[:font_color]
         gc.pointsize = params[:font_size]
         gc.density   = params[:density]

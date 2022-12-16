@@ -17,7 +17,7 @@ module Bioshogi
       def bottom_text_render
         if bottom_text
           gc = Magick::Draw.new
-          gc.font      = params[:font_regular]
+          gc.font      = params[:font_regular].to_s
           gc.fill      = params[:font_color]
           gc.pointsize = params[:bottom_text_pointsize]
           gc.gravity   = params[:bottom_text_gravity]

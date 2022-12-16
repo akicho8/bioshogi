@@ -86,7 +86,7 @@ module Bioshogi
         font ||= params[:font_regular]
 
         if font
-          g.font = font
+          g.font = font.to_s
         end
 
         if stroke_width && stroke_color
