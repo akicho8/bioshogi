@@ -2,6 +2,46 @@ require "spec_helper"
 
 module Bioshogi
   describe Xcontainer do
+    it "works" do
+      xcontainer = Xcontainer.new
+      xcontainer.placement_from_preset("平手")
+      xcontainer.before_run_process
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos" }
+      assert { xcontainer.to_history_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { xcontainer.to_short_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      xcontainer.pieces_set("▲銀△銀銀")
+      # puts xcontainer
+      assert { xcontainer.board.to_sfen == "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL" }
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos" }
+      xcontainer.execute("▲６八銀")
+      assert { xcontainer.hand_logs.last.to_sfen == "7i6h" }
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
+      xcontainer.execute("△２四銀打")
+      assert { xcontainer.hand_logs.last.to_sfen == "S*2d" }
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos moves 7i6h S*2d" }
+      assert { xcontainer.initial_state_board_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      # puts xcontainer.board
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos moves 7i6h S*2d" }
+    end
+
+    it "load_from_sfen" do
+      xcontainer = Xcontainer.new
+      xcontainer.load_from_sfen(Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"))
+      assert { xcontainer.to_history_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
+
+      xcontainer = Xcontainer.new
+      xcontainer.load_from_sfen(Sfen.parse("position startpos moves 7i6h"))
+      assert { xcontainer.to_history_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
+
+      xcontainer = Xcontainer.new
+      xcontainer.load_from_sfen(Sfen.parse("position startpos"))
+      assert { xcontainer.to_history_sfen(startpos_embed: true) ==  "position startpos" }
+
+      xcontainer = Xcontainer.new
+      xcontainer.load_from_sfen(Sfen.parse("position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"))
+      assert { xcontainer.to_history_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
+    end
+
     it "normalized_names_with_alias" do
       xcontainer = Xcontainer.new
       xcontainer.player_at(:black).skill_set.attack_infos << Explain::AttackInfo["中田功XP"]
@@ -169,7 +209,7 @@ EOT
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
 # >> ..............
-# >> 
+# >>
 # >> Top 10 slowest examples (0.04938 seconds, 81.4% of total time):
 # >>   Bioshogi::Xcontainer normalized_names_with_alias
 # >>     0.00994 seconds -:5
@@ -191,7 +231,7 @@ end
 # >>     0.00222 seconds -:52
 # >>   Bioshogi::Xcontainer フレームのサンドボックス実行(重要)
 # >>     0.00192 seconds -:124
-# >> 
+# >>
 # >> Finished in 0.06067 seconds (files took 1.52 seconds to load)
 # >> 14 examples, 0 failures
-# >> 
+# >>

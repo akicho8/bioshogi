@@ -94,8 +94,12 @@ module Bioshogi
 
     # SFEN で初期配置する
     def placement_from_sfen(sfen_info)
-      SfenImporter.new(self, sfen_info).import
+      SfenImporter.new(self, sfen_info).import_initial
     end
 
+    # SFEN のすべてを流し込む
+    def load_from_sfen(sfen_info)
+      SfenImporter.new(self, sfen_info).import_all
+    end
   end
 end
