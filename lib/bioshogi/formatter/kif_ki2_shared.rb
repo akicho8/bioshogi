@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    # kif, ki2, bod 変換の共通処理
+    # kif, ki2 変換の共通処理
     concern :KifKi2Shared do
       attr_accessor :formatter
       attr_accessor :params

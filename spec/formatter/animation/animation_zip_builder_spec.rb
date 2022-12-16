@@ -2,36 +2,20 @@ require "spec_helper"
 
 module Bioshogi
   module Formatter
-    describe AnimationGifBuilder, animation: true do
-      include AnimationSupport
-
-      describe "gif" do
-        def test1(params = {})
-          video, audio = target1(:gif, :to_animation_gif, **params)
-          assert { video[:codec_name]    == "gif" }
-          assert { video[:duration].to_f == 3     }
-          assert { video[:r_frame_rate]  == "2/1" }
+    module Animation
+      describe AnimationZipBuilder, animation: true do
+        it "zip" do
+          info = Parser.parse("position startpos moves 7g7f 8c8d")
+          bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")
+          filename = Pathname("_outout.zip")
+          filename.write(bin)
+          puts `unzip -l #{filename}` if $0 == "-"
+          Zip::InputStream.open(StringIO.new(bin)) do |zis|
+            assert { zis.get_next_entry.name == "cover.png" }
+            assert { zis.get_next_entry.name == "xxx0.png"  }
+            assert { zis.get_next_entry.name == "xxx1.png"  }
+          end
         end
-
-        it "ffmpeg-version" do
-          test1(factory_method_key: "is_factory_method_ffmpeg")
-        end
-
-        it "rmagick-version" do
-          test1(factory_method_key: "is_factory_method_rmagick")
-        end
-      end
-
-      it "apng" do
-        video, audio = target1(:apng, :to_animation_apng)
-        assert { video[:codec_name] == "apng"  }
-        assert { video[:r_frame_rate] == "2/1"  }
-      end
-
-      it "webp" do
-        video, audio = target1(:webp, :to_animation_webp)
-        assert { video[:codec_name] == "webp"  }
-        assert { video[:r_frame_rate] == "25/1"  } # なんで 2/1 じゃない？
       end
     end
   end

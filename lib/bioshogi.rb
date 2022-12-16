@@ -11,15 +11,18 @@ require "active_support/dependencies/autoload"
 require "active_support/core_ext/array/grouping" # for in_groups_of
 require "active_support/core_ext/numeric"        # for 1.minute
 
-require "pathname"              # for toeuc
-require "time"                  # for Time.parse
-require "kconv"                 # for toeuc
+require "pathname" # for toeuc
+require "time"     # for Time.parse
+require "kconv"    # for toeuc
 
 require "table_format"
 require "memory_record"
 require "tree_support"
 
 module Bioshogi
+  ROOT_DIR   = "#{__dir__}/lib"
+  ASSETS_DIR = "#{ROOT}/assets"
+
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
   mattr_accessor(:run_counts) { Hash.new(0) }

@@ -6,8 +6,7 @@ module Bioshogi
       include Builder
 
       def self.default_params
-        super.merge({
-          })
+        super.merge({})
       end
 
       def initialize(formatter, params = {})
