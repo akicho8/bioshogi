@@ -54,7 +54,7 @@ module Bioshogi
         cache_key = [type_with_key, wh].join("/")
         @piece_image_draw ||= {}
         image = @piece_image_draw[cache_key] ||= yield_self do
-          png_path = "#{__dir__}/../assets/images/piece/#{type_with_key}.png"
+          png_path = "#{ASSETS_DIR}/images/piece/#{type_with_key}.png"
           image = Magick::Image.read(png_path).first
           image.resize_to_fill(*wh)
         end

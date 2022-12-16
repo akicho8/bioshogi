@@ -21,13 +21,13 @@ module Bioshogi
 
       def font_regular
         if v = super
-          "#{__dir__}/../assets/fonts/#{v}"
+          "#{ASSETS_DIR}/fonts/#{v}"
         end
       end
 
       def font_bold
         if v = super
-          "#{__dir__}/../assets/fonts/#{v}"
+          "#{ASSETS_DIR}/fonts/#{v}"
         end
       end
     end

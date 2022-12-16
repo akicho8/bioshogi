@@ -20,8 +20,8 @@ require "memory_record"
 require "tree_support"
 
 module Bioshogi
-  ROOT_DIR   = "#{__dir__}/lib"
-  ASSETS_DIR = "#{ROOT}/assets"
+  ROOT_DIR   = Pathname(__dir__)
+  ASSETS_DIR = ROOT_DIR.join("bioshogi/assets")
 
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }

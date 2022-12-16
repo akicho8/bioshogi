@@ -46,23 +46,23 @@ module Bioshogi
       ################################################################################
 
       def to_animation_mp4(options = {})
-        AnimationMp4Builder.new(self, options).to_binary
+        Animation::AnimationMp4Builder.new(self, options).to_binary
       end
 
       def to_animation_gif(options = {})
-        AnimationGifBuilder.new(self, options).to_binary
+        Animation::AnimationGifBuilder.new(self, options).to_binary
       end
 
       def to_animation_apng(options = {})
-        AnimationApngBuilder.new(self, options).to_binary
+        Animation::AnimationApngBuilder.new(self, options).to_binary
       end
 
       def to_animation_webp(options = {})
-        AnimationWebpBuilder.new(self, options).to_binary
+        Animation::AnimationWebpBuilder.new(self, options).to_binary
       end
 
       def to_animation_zip(options = {})
-        AnimationZipBuilder.new(self, options).to_binary
+        Animation::AnimationZipBuilder.new(self, options).to_binary
       end
 
       def xcontainer_run_once
