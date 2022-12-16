@@ -1,5 +1,7 @@
 module Bioshogi
-  class CoverRenderer
-    include ImageRenderer::Helper
+  module CoverRenderer
+    def self.new(*args)
+      Main.new(*args)
+    end
   end
 end

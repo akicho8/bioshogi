@@ -1,6 +1,6 @@
 module Bioshogi
-  class CoverRenderer
-    concerning :BottomTextMethods do
+  module CoverRenderer
+    concern :BottomTextMethods do
       class_methods do
         def default_params
           super.merge({

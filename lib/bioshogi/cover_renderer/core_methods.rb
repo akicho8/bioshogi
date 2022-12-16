@@ -1,6 +1,6 @@
 module Bioshogi
-  class CoverRenderer
-    concerning :Base do
+  module CoverRenderer
+    concern :CoreMethods do
       class_methods do
         def default_params
           {

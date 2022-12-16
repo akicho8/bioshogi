@@ -2,7 +2,7 @@ module Bioshogi
   module ImageRenderer
     class Main
       include Builder
-      include Core
+      include CoreMethods
       include BoardMethods
       include LayerMethods
       include Pentagon
