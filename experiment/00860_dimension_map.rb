@@ -27,7 +27,6 @@ xcontainer.execute("△23飛", executor_class: PlayerExecutorWithoutMonitor)
 xcontainer.execute("▲19飛", executor_class: PlayerExecutorWithoutMonitor)
 xcontainer.execute("△21飛", executor_class: PlayerExecutorWithoutMonitor)
 xcontainer.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
-tp xcontainer.one_place_map
 
 xcontainer.player_at(:black).evaluator.score  # => 
 xcontainer.player_at(:black).evaluator.score2 # => 

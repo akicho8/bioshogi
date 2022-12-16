@@ -33,14 +33,6 @@ module Bioshogi
       @board ||= params[:board_class].new
     end
 
-    def one_place_map
-      @one_place_map ||= Hash.new(0)
-    end
-
-    def one_place_hash
-      board.hash ^ players.collect(&:piece_box).hash ^ turn_info.current_location.hash
-    end
-
     def placement_from_bod(str)
       str = str.lines.collect(&:strip).join("\n")
       if md = str.match(/(?<board>^\+\-.*\-\+$)/m)
