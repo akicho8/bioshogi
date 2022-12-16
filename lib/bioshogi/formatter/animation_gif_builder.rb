@@ -11,11 +11,11 @@ module Bioshogi
           })
       end
 
-      # attr_accessor :parser
+      # attr_accessor :formatter
       # attr_accessor :params
 
-      def initialize(parser, params = {})
-        @parser = parser
+      def initialize(formatter, params = {})
+        @formatter = formatter
         @params = self.class.default_params.merge(params)
       end
 
@@ -26,11 +26,11 @@ module Bioshogi
             logger.info { "最後に追加するフレーム数(end_pages): #{end_pages}" }
             logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
-            @xcontainer = @parser.xcontainer_for_image
+            @xcontainer = @formatter.xcontainer_for_image
             @image_renderer = ImageRenderer.new(@xcontainer, params)
 
             if factory_method_key == "is_factory_method_rmagick"
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
 
               begin
                 list = Magick::ImageList.new
@@ -43,11 +43,11 @@ module Bioshogi
                 @progress_cop.next_step("初期配置")
                 tob("初期配置") { list << @image_renderer.next_build }
 
-                @parser.mi.move_infos.each.with_index do |e, i|
-                  @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
+                @formatter.mi.move_infos.each.with_index do |e, i|
+                  @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                   @xcontainer.execute(e[:input])
-                  tob("#{i}/#{@parser.mi.move_infos.size}") { list << @image_renderer.next_build }
-                  logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
+                  tob("#{i}/#{@formatter.mi.move_infos.size}") { list << @image_renderer.next_build }
+                  logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                 end
 
                 end_pages.times do |i|
@@ -81,7 +81,7 @@ module Bioshogi
             if factory_method_key == "is_factory_method_ffmpeg"
               command_required! :ffmpeg
 
-              @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + end_pages + 1, &params[:progress_callback])
+              @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1, &params[:progress_callback])
 
               if v = params[:cover_text].presence
                 @progress_cop.next_step("表紙描画")
@@ -91,11 +91,11 @@ module Bioshogi
               @progress_cop.next_step("初期配置")
               tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
 
-              @parser.mi.move_infos.each.with_index do |e, i|
-                @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
+              @formatter.mi.move_infos.each.with_index do |e, i|
+                @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                 @xcontainer.execute(e[:input])
-                tob("#{i}/#{@parser.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
-                logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
+                tob("#{i}/#{@formatter.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
+                logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
               end
 
               end_pages.times do |i|

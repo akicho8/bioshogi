@@ -50,8 +50,8 @@ module Bioshogi
 
             # テーマ関連
             :audio_theme_key     => nil,  # テーマみたいなものでパラメータを一括設定するキー。audio_theme_none なら明示的にオーディオなしにするけど、nilなら何もしない
-            :audio_part_a        => "#{__dir__}/assets/audios/headspin_long.m4a",        # 序盤
-            :audio_part_b        => "#{__dir__}/assets/audios/breakbeat_long_strip.m4a", # 中盤移行
+            :audio_part_a        => "#{__dir__}/../assets/audios/headspin_long.m4a",        # 序盤
+            :audio_part_b        => "#{__dir__}/../assets/audios/breakbeat_long_strip.m4a", # 中盤移行
             :audio_part_a_volume => 1.0,  # DEPRECATION: 1.0 固定とする
             :audio_part_b_volume => 1.0,  # DEPRECATION: 1.0 固定とする
             :acrossfade_duration => 2.0,  # 0なら単純な連結
@@ -67,11 +67,11 @@ module Bioshogi
           })
       end
 
-      # attr_accessor :parser
+      # attr_accessor :formatter
       # attr_accessor :params
 
-      def initialize(parser, params = {})
-        @parser = parser
+      def initialize(formatter, params = {})
+        @formatter = formatter
         @params = self.class.default_params.merge(params)
         if audio_theme_info
           @params.update(audio_theme_info.to_params)
@@ -96,11 +96,11 @@ module Bioshogi
               command_required! :ffmpeg
               ffmpeg_version_required!
 
-              @xcontainer = @parser.xcontainer_for_image
+              @xcontainer = @formatter.xcontainer_for_image
               @image_renderer = ImageRenderer.new(@xcontainer, params)
 
               if factory_method_key == "is_factory_method_rmagick"
-                @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + 3 + 7, &params[:progress_callback])
+                @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + 3 + 7, &params[:progress_callback])
 
                 begin
                   list = Magick::ImageList.new
@@ -112,11 +112,11 @@ module Bioshogi
 
                   @progress_cop.next_step("初期配置")
                   list << @image_renderer.next_build
-                  @parser.mi.move_infos.each.with_index do |e, i|
-                    @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
+                  @formatter.mi.move_infos.each.with_index do |e, i|
+                    @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                     @xcontainer.execute(e[:input])
                     list << @image_renderer.next_build
-                    logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
+                    logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                   end
                   end_pages.times do |i|
                     @progress_cop.next_step("終了図 #{i}/#{end_pages}")
@@ -143,7 +143,7 @@ module Bioshogi
 
               if factory_method_key == "is_factory_method_ffmpeg"
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
+                @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                 if v = params[:cover_text].presence
@@ -160,13 +160,13 @@ module Bioshogi
                 tob("初期配置") { @image_renderer.next_build.write(sfg.next) }
                 logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
 
-                @parser.mi.move_infos.each.with_index do |e, i|
-                  @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
+                @formatter.mi.move_infos.each.with_index do |e, i|
+                  @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
                   @xcontainer.execute(e[:input])
                   logger.info("@xcontainer.execute OK")
-                  tob("#{i}/#{@parser.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
+                  tob("#{i}/#{@formatter.mi.move_infos.size}") { @image_renderer.next_build.write(sfg.next) }
                   logger.info("@image_renderer.next_build.write OK")
-                  logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
+                  logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                 end
                 end_pages.times do |i|
                   @progress_cop.next_step("終了図 #{i}/#{end_pages}")

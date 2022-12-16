@@ -64,7 +64,7 @@ module Bioshogi
         #   end
         # end
 
-        @hv[:header] = @hv[:header]
+        # @hv[:header] = @hv[:header]
 
         if @formatter.last_action_info
           @hv[:last_action_kakinoki_word] = @formatter.last_action_info.kakinoki_word

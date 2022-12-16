@@ -1,17 +1,19 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Formatter::AnimationZipBuilder, animation: true do
-    it "zip" do
-      info = Parser.parse("position startpos moves 7g7f 8c8d")
-      bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")
-      filename = Pathname("_outout.zip")
-      filename.write(bin)
-      puts `unzip -l #{filename}` if $0 == "-"
-      Zip::InputStream.open(StringIO.new(bin)) do |zis|
-        assert { zis.get_next_entry.name == "cover.png" }
-        assert { zis.get_next_entry.name == "xxx0.png"  }
-        assert { zis.get_next_entry.name == "xxx1.png"  }
+  module Formatter
+    describe AnimationZipBuilder, animation: true do
+      it "zip" do
+        info = Parser.parse("position startpos moves 7g7f 8c8d")
+        bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")
+        filename = Pathname("_outout.zip")
+        filename.write(bin)
+        puts `unzip -l #{filename}` if $0 == "-"
+        Zip::InputStream.open(StringIO.new(bin)) do |zis|
+          assert { zis.get_next_entry.name == "cover.png" }
+          assert { zis.get_next_entry.name == "xxx0.png"  }
+          assert { zis.get_next_entry.name == "xxx1.png"  }
+        end
       end
     end
   end

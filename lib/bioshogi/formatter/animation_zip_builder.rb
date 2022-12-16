@@ -17,16 +17,16 @@ module Bioshogi
 
       delegate :logger, to: "Bioshogi"
 
-      def initialize(parser, params = {})
+      def initialize(formatter, params = {})
         require "zip"
-        @parser = parser
+        @formatter = formatter
         @params = self.class.default_params.merge(params)
       end
 
       def to_binary
-        xcontainer = @parser.xcontainer_for_image
+        xcontainer = @formatter.xcontainer_for_image
         @image_renderer = ImageRenderer.new(xcontainer, params)
-        @progress_cop = ProgressCop.new(1 + 1 + @parser.mi.move_infos.size, &params[:progress_callback])
+        @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size, &params[:progress_callback])
         zos = Zip::OutputStream.write_buffer do |z|
           if v = params[:cover_text].presence
             @progress_cop.next_step("表紙描画")
@@ -34,11 +34,11 @@ module Bioshogi
           end
           @progress_cop.next_step("初期配置")
           tob("初期配置") { zip_write1(z, 0) }
-          @parser.mi.move_infos.each.with_index do |e, i|
-            @progress_cop.next_step("(#{i}/#{@parser.mi.move_infos.size}) #{e[:input]}")
+          @formatter.mi.move_infos.each.with_index do |e, i|
+            @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
             xcontainer.execute(e[:input])
-            tob("#{i}/#{@parser.mi.move_infos.size}") { zip_write1(z, i.next) }
-            logger.info { "move: #{i} / #{@parser.mi.move_infos.size}" } if i.modulo(10).zero?
+            tob("#{i}/#{@formatter.mi.move_infos.size}") { zip_write1(z, i.next) }
+            logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
           end
         end
         @image_renderer.clear_all
