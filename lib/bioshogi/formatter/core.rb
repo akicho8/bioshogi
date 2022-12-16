@@ -167,15 +167,6 @@ module Bioshogi
         @preset_info ||= PresetInfo["平手"]
       end
 
-      # 消す
-      # names_set(black: "alice", white: "bob")
-      def names_set(params)
-        locations = Location.send(@mi.force_handicap ? :reverse_each : :itself)
-        locations.each do |e|
-          mi.header[e.call_name(@mi.force_handicap)] = params[e.key] || "？"
-        end
-      end
-
       def xcontainer_run_all(xcontainer)
         Runner.new(self, xcontainer).perform
         if @parser_options[:skill_monitor_enable]
