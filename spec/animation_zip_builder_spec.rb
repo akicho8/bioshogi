@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe AnimationZipBuilder, animation: true do
+  describe Formatter::AnimationZipBuilder, animation: true do
     it "zip" do
       info = Parser.parse("position startpos moves 7g7f 8c8d")
       bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")

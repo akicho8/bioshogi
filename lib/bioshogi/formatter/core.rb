@@ -11,6 +11,20 @@ module Bioshogi
         @parser_options = parser_options
       end
 
+      delegate *[
+        :to_bod,
+        :image_renderer,
+        :to_image,
+        :to_png,
+        :to_jpg,
+        :to_gif,
+        :to_webp,
+      ], to: :xcontainer
+
+      def to_sfen(options = {})
+        xcontainer.to_history_sfen(options)
+      end
+
       def to_kif(options = {})
         KifBuilder.new(self, options).to_s
       end
@@ -21,14 +35,6 @@ module Bioshogi
 
       def to_csa(options = {})
         CsaBuilder.new(self, options).to_s
-      end
-
-      def to_sfen(options = {})
-        xcontainer.to_history_sfen(options)
-      end
-
-      def to_bod(options = {})
-        xcontainer.to_bod(options)
       end
 
       def to_yomiage(options = {})
@@ -42,17 +48,6 @@ module Bioshogi
       def to_akf(options = {})
         AkfBuilder.new(self, options).to_h
       end
-
-      ################################################################################
-
-      delegate *[
-        :image_renderer,
-        :to_image,
-        :to_png,
-        :to_jpg,
-        :to_gif,
-        :to_webp,
-      ], to: :xcontainer
 
       ################################################################################
 
