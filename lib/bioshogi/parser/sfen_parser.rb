@@ -5,8 +5,8 @@ module Bioshogi
     class SfenParser < Base
       class << self
         def accept?(source)
-          source = Parser.source_normalize(source)
-          source.match?(/^(?:position|sfen)\b/i) || (source.lines.one? && Sfen.accept?(source))
+          str = Source.wrap(source).to_s
+          str.match?(/^(?:position|sfen)\b/i) || (str.lines.one? && Sfen.accept?(str))
         end
       end
 

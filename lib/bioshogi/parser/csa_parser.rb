@@ -15,12 +15,12 @@ module Bioshogi
 
       class << self
         def accept?(source)
-          source = Parser.source_normalize(source)
+          str = Source.wrap(source).to_s
           v = false
-          v ||= source.match?(/^\s*\b(V\d+\.\d+)\b/)  # V2.2 '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
-          v ||= source.match?(/\b(PI|P\d|P[\+\-])\b/) # PI P1 P+ P-
-          v ||= source.match?(/[+-]\d{4}[A-Z]{2}/)    # +1828OU
-          v ||= source.match?(/\b(N[+-])\b/)          # 対局者名
+          v ||= str.match?(/^\s*\b(V\d+\.\d+)\b/)  # V2.2 '# Kifu for iPhone V4.01 棋譜ファイル' の V4.01 がひっかかってしまうため ^\s* を入れるの重要
+          v ||= str.match?(/\b(PI|P\d|P[\+\-])\b/) # PI P1 P+ P-
+          v ||= str.match?(/[+-]\d{4}[A-Z]{2}/)    # +1828OU
+          v ||= str.match?(/\b(N[+-])\b/)          # 対局者名
         end
       end
 
@@ -43,7 +43,7 @@ module Bioshogi
       private
 
       def normalized_source
-        @normalized_source ||= Parser.source_normalize(@source).yield_self do |s|
+        @normalized_source ||= Source.wrap(@source).to_s.yield_self do |s|
           s = s.gsub(/^#{SYSTEM_COMMENT_CHAR}.*/o, "")  # コメント行の削除
           s = s.gsub(/,/, "\n")                         # カンマは改行と見なす
         end

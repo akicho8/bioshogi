@@ -59,7 +59,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::Xplace.lookup"
 # >>         12   (1.4%)          12   (1.4%)     Hash#symbolize_keys
 # >>         11   (1.3%)          11   (1.3%)     Bioshogi::Parser::Base::ConverterMethods#mb_ljust
 # >>         17   (2.0%)          10   (1.2%)     Bioshogi::Place#hash
-# >>         17   (2.0%)          10   (1.2%)     Bioshogi::Parser#source_normalize
+# >>         17   (2.0%)          10   (1.2%)     Bioshogi::Source.wrap
 # >>         10   (1.2%)          10   (1.2%)     Bioshogi::Dimension::Base.units
 # >>         11   (1.3%)           9   (1.1%)     Bioshogi::PieceVector#all_vectors
 # >>         25   (3.0%)           8   (1.0%)     #<Module:0x00007ff71818ba70>#<=>
