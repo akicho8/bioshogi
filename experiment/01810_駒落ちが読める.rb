@@ -53,7 +53,7 @@ puts info.to_kif
 puts "-" * 80
 puts info.to_csa
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("香落ち")
 puts container
 container.execute("３四歩")

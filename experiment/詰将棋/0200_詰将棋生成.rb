@@ -36,7 +36,7 @@ class App
 
     def board_setup
       try_count.times do
-        @container = Container.create
+        @container = Container::Basic.new
 
         @piece_box = PieceBox.real_box
         @piece_box.add(king: -1)

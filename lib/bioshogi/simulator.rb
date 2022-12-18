@@ -12,7 +12,7 @@ module Bioshogi
 
     def initialize(attributes)
       @attributes = attributes
-      @container = Container.create
+      @container = Container::Basic.new
       @snapshots = []
     end
 

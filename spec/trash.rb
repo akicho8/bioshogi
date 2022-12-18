@@ -14,7 +14,7 @@
 #   # | 香|三
 #   # +---+
 #   Board.dimensiton_change([1, 3]) do
-#     container = Container.create
+#     container = Container::Basic.new
 #     container.player_at(:black).soldier_create("１三香")
 #     # puts container
 #     assert { container.board["１三"].move_list(with_promoted: true).collect(&:to_s) == ["１二香", "１一杏"] }
@@ -30,7 +30,7 @@
 #   # | 杏|三
 #   # +---+
 #   Board.dimensiton_change([1, 3]) do
-#     container = Container.create
+#     container = Container::Basic.new
 #     container.player_at(:black).soldier_create("１三杏")
 #     # puts container
 #     assert { container.board["１三"].move_list(with_promoted: true).collect(&:to_s) == ["１二杏"] }

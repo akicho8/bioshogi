@@ -3,7 +3,7 @@ require "./setup"
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 # Board.promotable_disable
 # Board.dimensiton_change([3, 3])
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １

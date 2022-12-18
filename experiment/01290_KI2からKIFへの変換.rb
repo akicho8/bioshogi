@@ -5,7 +5,7 @@ info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 out = ""
 out << info.mi.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
   container.execute(info[:input])

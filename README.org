@@ -367,7 +367,7 @@ p container
 #+BEGIN_SRC ruby
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do
-  container = Container.create
+  container = Container::Basic.new
   container.board.placement_from_human("▲３三歩 △１一歩")
   puts container
   pp Diver::NegaAlphaDiver.run(player: container.player_at(:black), depth_max: 1)
@@ -436,7 +436,7 @@ puts Parser.file_parse("microcosmos.kif").to_bod
 *** 詰みチェック
 
 #+BEGIN_EXAMPLE
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 brain = container.opponent_player.brain
 

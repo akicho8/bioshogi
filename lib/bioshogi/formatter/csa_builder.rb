@@ -61,7 +61,7 @@ module Bioshogi
           out << header_content
         end
 
-        obj = Container.create
+        obj = Container::Basic.new
         @formatter.xcontainer_init(obj) # なぜ？
         out << obj.to_csa(@params)
 

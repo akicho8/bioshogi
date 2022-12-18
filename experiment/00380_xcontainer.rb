@@ -1,7 +1,7 @@
 # 棋譜の入力
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 container.execute("７六歩")
 container.execute("３四歩")

@@ -36,7 +36,7 @@ module Bioshogi
     end
 
     it "「香落ち」だと判断できる" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -55,7 +55,7 @@ EOT
     end
 
     it "▲は平手状態だけど△は不明" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -74,7 +74,7 @@ EOT
     end
 
     it "▲は「香落ち」だけど後手は平手状態ではないので正式な手合い名は出せない" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod(<<~EOT)
 +---------+
 | ・ ・v玉|

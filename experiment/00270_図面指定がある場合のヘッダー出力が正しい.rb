@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_preset("裸玉")
 
 container.turn_info.handicap = false

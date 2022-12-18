@@ -4,7 +4,7 @@ require "../setup"
 
 Board.dimensiton_change([2, 3])
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_shape <<~EOT
 +------+
 | ・v玉|

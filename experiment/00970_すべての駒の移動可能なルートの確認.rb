@@ -2,7 +2,7 @@
 require "./setup"
 
 Piece.each do |piece|
-  container = Container.create
+  container = Container::Basic.new
   player = container.player_at(:black)
   soldier = Soldier.from_str("▲５五#{piece.name}")
   soldier.move_list(player.board).each do |v|

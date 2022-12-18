@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -18,7 +18,7 @@ EOT
 puts container
 container.board.preset_info&.key        # => "香落ち"
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

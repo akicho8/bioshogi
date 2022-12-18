@@ -7,7 +7,7 @@ require "../setup"
 
 Board.dimensiton_change([2, 5])
 
-container = Container.create
+container = Container::Basic.new
 container.player_at(:black).pieces_add("金3")
 container.board.placement_from_shape <<~EOT
 +------+

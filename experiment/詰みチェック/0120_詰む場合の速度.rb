@@ -3,7 +3,7 @@
 
 require "../setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：飛角金銀桂香
 +---+

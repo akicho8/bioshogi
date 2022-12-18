@@ -12,7 +12,7 @@ module Bioshogi
     end
 
     it "yomiage" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_bod(<<~EOT)
       上手の持駒：飛
       ９ ８ ７ ６ ５ ４ ３ ２ １

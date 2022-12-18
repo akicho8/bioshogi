@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
-      container = Bioshogi::Container.create
+      container = Bioshogi::Container::Basic.new
       container.board.placement_from_shape(@board)
       container.next_player.execute(str)
       container.hand_logs.last.to_kif_ki2_csa

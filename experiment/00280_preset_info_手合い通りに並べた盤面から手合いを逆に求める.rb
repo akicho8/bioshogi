@@ -1,7 +1,7 @@
 require "./setup"
 
 PresetInfo.each do |preset_info|
-  container = Container.create
+  container = Container::Basic.new
   container.placement_from_preset(preset_info.key)
   puts container.board
 

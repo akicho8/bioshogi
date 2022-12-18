@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
 +---+
@@ -15,7 +15,7 @@ container.current_player.mate_advantage?  # => true
 container.opponent_player.mate_advantage? # => true
 container.position_invalid?               # => true
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
 +---+

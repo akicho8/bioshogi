@@ -15,7 +15,7 @@ info = Parser.parse(<<~EOT)
 まで104手で後手の勝ち
 EOT
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 info.mi.move_infos.each do |info|
   container.execute(info[:input])

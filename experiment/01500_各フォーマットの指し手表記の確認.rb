@@ -20,7 +20,7 @@ info = Parser.parse(<<~EOT)
 ▲２五歩
 EOT
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 info.mi.move_infos.each do |e|
   container.execute(e[:input])

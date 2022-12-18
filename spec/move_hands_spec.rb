@@ -4,7 +4,7 @@ module Bioshogi
   describe Player do
     it "works" do
       Board.dimensiton_change([2, 3]) do
-        container = Container.create
+        container = Container::Basic.new
         container.placement_from_bod <<~EOT
         後手の持駒：
         +------+

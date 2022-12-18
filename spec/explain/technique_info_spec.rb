@@ -4,7 +4,7 @@ module Bioshogi
   module Explain
     describe TechniqueInfo do
       def xcontainer_new
-        Container.create.tap do |e|
+        Container::Basic.new.tap do |e|
           e.params[:skill_monitor_enable] = true
           e.params[:skill_monitor_technique_enable] = true
         end

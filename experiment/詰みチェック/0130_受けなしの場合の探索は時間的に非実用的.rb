@@ -5,7 +5,7 @@ require "../setup"
 Board.promotable_disable
 Board.dimensiton_change([1, 6])
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：歩2
 +---+

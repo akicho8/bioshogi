@@ -4,7 +4,7 @@ module Bioshogi
   module Container
     describe do
       it "works" do
-        container = Container.create
+        container = Container::Basic.new
         container.placement_from_preset("平手")
         container.before_run_process
         assert { container.to_history_sfen(startpos_embed: true) == "position startpos" }
@@ -26,32 +26,32 @@ module Bioshogi
       end
 
       it "load_from_sfen" do
-        container = Container.create
+        container = Container::Basic.new
         container.load_from_sfen(Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d"))
         assert { container.to_history_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d" }
 
-        container = Container.create
+        container = Container::Basic.new
         container.load_from_sfen(Sfen.parse("position startpos moves 7i6h"))
         assert { container.to_history_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
 
-        container = Container.create
+        container = Container::Basic.new
         container.load_from_sfen(Sfen.parse("position startpos"))
         assert { container.to_history_sfen(startpos_embed: true) ==  "position startpos" }
 
-        container = Container.create
+        container = Container::Basic.new
         container.load_from_sfen(Sfen.parse("position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"))
         assert { container.to_history_sfen == "position sfen lnsgkgsn1/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1" }
       end
 
       it "normalized_names_with_alias" do
-        container = Container.create
+        container = Container::Basic.new
         container.player_at(:black).skill_set.attack_infos << Explain::AttackInfo["中田功XP"]
         container.player_at(:white).skill_set.defense_infos << Explain::DefenseInfo["美濃囲い"]
         assert { container.normalized_names_with_alias == ["中田功XP", "コーヤン流", "美濃囲い"] }
       end
 
       it "not_enough_piece_box" do
-        container = Container.create
+        container = Container::Basic.new
         container.placement_from_bod <<~EOT
         後手の持駒：香
         ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -79,20 +79,20 @@ module Bioshogi
 
       describe "placement_from_preset" do
         it "盤を反映する" do
-          container = Container.create
+          container = Container::Basic.new
           container.placement_from_preset("5五将棋")
           assert { container.to_short_sfen == "position sfen 4rbsgk/8p/9/4P4/4KGSBR/9/9/9/9 b - 1" }
           assert { container.turn_info.handicap == false }
         end
 
         it "手番を反映する" do
-          container = Container.create
+          container = Container::Basic.new
           container.placement_from_preset("香落ち")
           assert { container.turn_info.handicap }
         end
 
         it "持駒を反映する" do
-          container = Container.create
+          container = Container::Basic.new
           container.placement_from_preset("バリケード将棋")
           assert { container.player_at(:black).piece_box.to_s == "飛 角 香" }
           assert { container.player_at(:white).piece_box.to_s == "飛 角 香" }
@@ -100,7 +100,7 @@ module Bioshogi
       end
 
       it "交互に打ちながら戦況表示" do
-        container = Container.create
+        container = Container::Basic.new
         container.placement_from_preset("平手")
         container.execute(["７六歩", "３四歩"])
         assert { container.turn_info.turn_offset == 2 }

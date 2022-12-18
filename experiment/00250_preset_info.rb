@@ -4,7 +4,7 @@ PresetInfo["裸玉"].sorted_soldiers.collect(&:to_s)       # => ["▲９七歩",
 PresetInfo["二枚落ち"].declined_soldiers.collect(&:to_s) # => ["△８二飛", "△２二角"]
 
 tp PresetInfo.collect { |e|
-  container = Container.create
+  container = Container::Basic.new
   container.placement_from_preset(e.key)
   [e.key, container.to_short_sfen]
 }.to_h

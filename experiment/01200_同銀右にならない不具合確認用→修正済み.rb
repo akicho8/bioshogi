@@ -7,7 +7,7 @@ info = Parser.parse("
 ▲４七金    △３一角    ▲６八銀右  △７五歩    ▲６七銀    △７六歩    ▲同銀右
 ")
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
   puts info[:input]

@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 container.before_run_process
 container.to_history_sfen(startpos_embed: true) # => "position startpos"

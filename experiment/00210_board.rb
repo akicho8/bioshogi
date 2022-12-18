@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 
 container.board.all_clear
 container.placement_from_preset("裸玉")

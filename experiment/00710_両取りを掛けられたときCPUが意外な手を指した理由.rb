@@ -20,7 +20,7 @@ require "./setup"
 # 理想は▲42馬(+1200)だが、相手の手番で銀を必ず取られ -1050 になるのなら馬を切って -640 程度になる方を選んだ。
 # 人間的には違和感のある手だけどCPUにとっては一貫性のある考え方で、ある意味、両取り逃げるべからずを実践した手だった。
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -41,7 +41,7 @@ puts container
 tp container.player_at(:black).evaluator.detail_score
 container.player_at(:black).evaluator.score # => 1000
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -62,7 +62,7 @@ puts container
 tp container.player_at(:black).evaluator.detail_score
 container.player_at(:black).evaluator.score # => 3250
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：角
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -83,7 +83,7 @@ puts container
 tp container.player_at(:black).evaluator.detail_score
 container.player_at(:black).evaluator.score # => -640
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -104,7 +104,7 @@ puts container
 tp container.player_at(:black).evaluator.detail_score
 container.player_at(:black).evaluator.score # => 1200
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：銀
   ９ ８ ７ ６ ５ ４ ３ ２ １

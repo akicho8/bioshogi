@@ -17,7 +17,7 @@ module Bioshogi
       def to_h
         @formatter.xcontainer_run_once
 
-        @xcontainer2 = Container.create
+        @xcontainer2 = Container::Basic.new
         @formatter.xcontainer_init(@xcontainer2)
 
         @hv = {}

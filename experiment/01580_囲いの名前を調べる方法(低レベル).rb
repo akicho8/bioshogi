@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_shape(<<~EOT)
 +---------------------------+
 |v香 ・ ・ ・ ・v銀 ・ ・ ・|

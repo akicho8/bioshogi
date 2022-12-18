@@ -5,7 +5,7 @@ require "./setup"
 # Board.promotable_disable
 # Board.dimensiton_change([2, 5])
 #
-# container = Container.create
+# container = Container::Basic.new
 # container.board.placement_from_shape <<~EOT
 # +------+
 # | ・v香|
@@ -16,7 +16,7 @@ require "./setup"
 # +------+
 # EOT
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 
 brain = container.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)

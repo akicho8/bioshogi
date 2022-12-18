@@ -5,7 +5,7 @@ require "../setup"
 # Board.promotable_disable
 Board.dimensiton_change([4, 9])
 
-container = Container.create
+container = Container::Basic.new
 container.player_at(:black).pieces_add("金桂")
 container.board.placement_from_shape <<~EOT
 +------------+

@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.players.collect { |e| e.evaluator.score } # => [0, 0]
 
 container.board.placement_from_human("▲９七歩")
@@ -9,7 +9,7 @@ container.players.collect { |e| e.evaluator.score } # => [100, -100]
 container.board.placement_from_human("▲９七歩 △１三歩")
 container.players.collect { |e| e.evaluator.score } # => [0, 0]
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １

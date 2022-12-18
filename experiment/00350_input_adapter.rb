@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.pieces_set("▲銀")
 container.board.placement_from_shape <<~EOT
 +---------------------------+

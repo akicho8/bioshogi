@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Player do
     it "works" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_bod(<<~EOT)
 後手の持駒：
 +---+
@@ -19,7 +19,7 @@ EOT
     end
 
     it "works" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_bod(<<~EOT)
 後手の持駒：
 +---+

@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_bod(<<~EOT)
 +---------+
 | ・ ・v玉|
@@ -16,7 +16,7 @@ evaluator = player.evaluator(evaluator_class: Evaluator::Level3)
 evaluator.score            # => 3954
 tp evaluator.score_compute_report
 
-# container = Container.create
+# container = Container::Basic.new
 # container.placement_from_bod(<<~EOT)
 # +---------+
 # | ・ ・v玉|

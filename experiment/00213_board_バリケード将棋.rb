@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("バリケード将棋")
 puts container
 # >> 後手の持駒：飛 角 香

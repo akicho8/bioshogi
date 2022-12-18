@@ -1,7 +1,7 @@
 require "./setup"
 
 def f(v)
-  container = Container.create
+  container = Container::Basic.new
   container.placement_from_preset("平手")
   container.execute(v)
   container.hand_logs.to_kif_a

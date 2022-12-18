@@ -91,7 +91,7 @@ module Bioshogi
     end
 
     def to_sfen
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_preset(key)
       container.turn_info.handicap = handicap
       container.to_short_sfen

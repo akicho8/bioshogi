@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do
     it "平手" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_preset("裸玉")
       container.execute("58玉")
       container.execute("52玉")
@@ -34,7 +34,7 @@ EOT
     end
 
     it "駒落ち" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_preset("裸玉")
       container.execute("58玉")
       container.execute("52玉")

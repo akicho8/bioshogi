@@ -2,7 +2,7 @@
 
 require "../setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("平手")
 brain = container.opponent_player.brain
 

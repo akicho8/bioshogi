@@ -3,7 +3,7 @@ require "stackprof"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-container = Container.create
+container = Container::Basic.new
 container.pieces_set("▲歩△歩")
 container.board.placement_from_shape <<~EOT
 +------+

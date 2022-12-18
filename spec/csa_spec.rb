@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe do
     it "5341NK だけでは判断が難しい例" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_preset("平手")
       container.execute("７六歩")
       container.execute("３四歩")
@@ -35,7 +35,7 @@ EOT
     end
 
     it "基本" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_preset("平手")
       container.execute("7776FU")
       expect(container.to_s).to eq(<<~EOT)

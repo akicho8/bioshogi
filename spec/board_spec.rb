@@ -22,7 +22,7 @@ module Bioshogi
 
     # FIXME: xcontainer経由でテストを書いてはいけない
     it "配置" do
-      container = Container.create
+      container = Container::Basic.new
 
       container.board.all_clear
       container.placement_from_preset("裸玉")
@@ -61,7 +61,7 @@ module Bioshogi
 
     it "指定の座標だけを消す微妙なテスト" do
       Board.dimensiton_change([1, 3]) do
-        container = Container.create
+        container = Container::Basic.new
         container.player_at(:black).soldier_create("１三香")
         container.board.safe_delete_on(Place["１三"])
         assert { container.board["１三"] == nil }

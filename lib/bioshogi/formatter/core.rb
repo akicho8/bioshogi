@@ -88,7 +88,7 @@ module Bioshogi
 
       # 画像生成のための container の初期状態を返す
       def xcontainer_for_image
-        container = Container.create
+        container = Container::Basic.new
         container.params.update({
             :skill_monitor_enable           => false,
             :skill_monitor_technique_enable => false,

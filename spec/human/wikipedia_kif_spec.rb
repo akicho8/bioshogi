@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe "ウィキペディアにある表記通りの解釈ができる" do
     def test1(str)
-      container = Bioshogi::Container.create
+      container = Bioshogi::Container::Basic.new
       container.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ と ・ ・ ・|

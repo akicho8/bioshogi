@@ -6,7 +6,7 @@ object.to_kif  # => "▲６八銀打"
 object.to_csa  # => "+0068GI"
 object.to_sfen # => "S*6h"
 
-container = Container.create
+container = Container::Basic.new
 container.pieces_set("▲銀")
 object.execute(container)
 puts container

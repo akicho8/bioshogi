@@ -8,7 +8,7 @@ module Bioshogi
     end
 
     it "移動可能な筋(相手陣地から外に出た場合にも成れる)" do
-      container = Container.create
+      container = Container::Basic.new
       container.board.placement_from_shape <<~EOT
       +------+
         | ・ ・|
@@ -22,7 +22,7 @@ module Bioshogi
     end
 
     it "移動可能な筋の取得(超重要なテスト)" do
-      container = Container.create
+      container = Container::Basic.new
       Board.dimensiton_change([1, 5]) do
         test = -> s {
           soldier = Soldier.from_str(s)

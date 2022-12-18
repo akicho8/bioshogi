@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("裸玉")
 container.board.preset_info&.key    # => :十九枚落ち
 puts container.board.to_ki2

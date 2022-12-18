@@ -4,7 +4,7 @@ require "./setup"
 
 Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([3, 3]) do
-  container = Container.create
+  container = Container::Basic.new
   container.board.placement_from_human("▲３三歩 △１一歩")
   puts container
   object = Diver::NegaAlphaDiver.new(depth_max: 1, current_player: container.player_at(:black))

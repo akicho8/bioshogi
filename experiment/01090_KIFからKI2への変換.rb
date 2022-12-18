@@ -7,7 +7,7 @@ out << info.mi.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
 out << "\n"
 # puts info
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
   container.execute(info[:input])

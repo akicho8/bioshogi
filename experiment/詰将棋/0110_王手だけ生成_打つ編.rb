@@ -5,7 +5,7 @@ require "../setup"
 Board.promotable_disable
 Board.dimensiton_change([1, 3])
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_shape <<~EOT
 +---+
 |v玉|

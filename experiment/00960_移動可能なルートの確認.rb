@@ -1,7 +1,7 @@
 # 移動可能なルートの確認
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 player = container.player_at(:black)
 player.soldier_create("５五馬")
 player.soldiers.each do |soldier|
@@ -11,7 +11,7 @@ player.soldiers.each do |soldier|
 end
 puts container.board
 
-container = Container.create
+container = Container::Basic.new
 player = container.player_at(:black)
 soldier = Soldier.from_str("▲５五馬")
 soldier.move_list(container.board).each do |soldier|

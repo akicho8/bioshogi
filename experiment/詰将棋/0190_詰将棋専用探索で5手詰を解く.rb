@@ -5,7 +5,7 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STD
 # Board.promotable_disable
 Board.dimensiton_change([3, 9])
 
-container = Container.create
+container = Container::Basic.new
 container.player_at(:black).pieces_add("銀金")
 # container.player_at(:white).pieces_add("飛2")
 container.board.placement_from_shape <<~EOT

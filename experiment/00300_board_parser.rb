@@ -28,7 +28,7 @@ soldiers = BoardParser.parse(<<~EOT).soldiers
 EOT
 tp soldiers
 
-container = Container.create
+container = Container::Basic.new
 container.board.placement_from_soldiers(soldiers)
 puts container.board.to_s
 

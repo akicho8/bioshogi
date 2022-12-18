@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Player do
     it "終盤度" do
-      container = Container.create
+      container = Container::Basic.new
       container.placement_from_bod(<<~EOT)
       後手の持駒：桂
       +---------+

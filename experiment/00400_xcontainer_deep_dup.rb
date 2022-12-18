@@ -1,6 +1,6 @@
 require "./setup"
 
-container = Container.create
+container = Container::Basic.new
 container.placement_from_preset("十枚落ち")
 container.pieces_set("▲歩 △飛")
 container.execute("△52玉")
