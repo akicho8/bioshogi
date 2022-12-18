@@ -168,24 +168,6 @@ EOT
         container.deep_dup
       end
 
-      if false
-        it "XtraPattern", p: true do
-          XtraPattern.reload_all
-          XtraPattern.each do |pattern|
-            if pattern[:notation_dsl]
-              container = Sequencer.new
-              container.pattern = pattern[:notation_dsl]
-              container.evaluate
-              # p container.snapshots
-            else
-              container = Simulator.new(pattern)
-              container.execute
-              # container.execute{|e|p e}
-            end
-          end
-        end
-      end
-
       describe "手数を得る" do
         before do
           @info = Container::Basic.start
