@@ -25,8 +25,8 @@ module Bioshogi
         end
 
         def to_binary
-          xcontainer = @formatter.xcontainer_for_image
-          @screen_image_renderer = ScreenImage.renderer(xcontainer, params)
+          container = @formatter.xcontainer_for_image
+          @screen_image_renderer = ScreenImage.renderer(container, params)
           @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size, &params[:progress_callback])
           zos = Zip::OutputStream.write_buffer do |z|
             if v = params[:cover_text].presence
@@ -37,7 +37,7 @@ module Bioshogi
             tob("初期配置") { zip_write1(z, 0) }
             @formatter.mi.move_infos.each.with_index do |e, i|
               @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
-              xcontainer.execute(e[:input])
+              container.execute(e[:input])
               tob("#{i}/#{@formatter.mi.move_infos.size}") { zip_write1(z, i.next) }
               logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
             end

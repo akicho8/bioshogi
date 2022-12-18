@@ -23,7 +23,7 @@ end
 s = s.gsub(/^\s*\+.*?EOT/m) {|s| s.lines.reverse.drop(1).join + "EOT\n" }
 
 s = s.gsub(/\+(\d\d)/, '-\1')
-s = s.gsub(/xcontainer\.execute/, "xcontainer.next_player.execute")
+s = s.gsub(/container\.execute/, "container.next_player.execute")
 s = "# #{__FILE__} から生成するファイルなので変更禁止\n" + s
 
 puts s
@@ -88,8 +88,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>   describe "将棋連盟が定めている人間向け棋譜入力" do
 # >>     describe "P1 到達地点に複数の同じ駒が動ける場合「上」または「寄」または「引」で記入" do
 # >>       def test1(str)
-# >>         xcontainer = Xcontainer.new
-# >>         xcontainer.board.placement_from_shape(<<~EOT)
+# >>         container = Container.create
+# >>         container.board.placement_from_shape(<<~EOT)
 # >>         +---------------------------+
 # >>           | ・ ・v金 ・ ・ ・ ・ ・ ・|
 # >>         | ・ ・ ○ ・ ・ ・v金 ○ ・|
@@ -102,8 +102,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         | ・ ・ ・v銀 ・ ・ ・v銀 ・|
 # >>         +---------------------------+
 # >>           EOT
-# >>         xcontainer.next_player.execute(str)
-# >>         xcontainer.hand_logs.last.to_kif_ki2_csa
+# >>         container.next_player.execute(str)
+# >>         container.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
 # >>       it "works" do
@@ -131,8 +131,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>     describe "P2 到達地点に2枚の同じ駒が動ける場合、動作でどの駒が動いたかわからない時は、「左」「右」で記入" do
 # >>       def test1(str)
-# >>         xcontainer = Xcontainer.new
-# >>         xcontainer.board.placement_from_shape(<<~EOT)
+# >>         container = Container.create
+# >>         container.board.placement_from_shape(<<~EOT)
 # >>         +---------------------------+
 # >>           | ・ ・ ・ ・ ・ ・ ・ ○ ・|
 # >>         |v金 ○v金 ・ ・ ・v金 ・v金|
@@ -145,8 +145,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         | ・v銀v銀 ・ ・ ・v金v金 ・|
 # >>         +---------------------------+
 # >>           EOT
-# >>         xcontainer.next_player.execute(str)
-# >>         xcontainer.hand_logs.last.to_kif_ki2_csa
+# >>         container.next_player.execute(str)
+# >>         container.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
 # >>       it "works" do
@@ -174,8 +174,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>     describe "P3 到達地点に3枚以上の同じ駒が動ける場合、動作でどの駒が動いたかわからない時" do
 # >>       def test1(str)
-# >>         xcontainer = Xcontainer.new
-# >>         xcontainer.board.placement_from_shape(<<~EOT)
+# >>         container = Container.create
+# >>         container.board.placement_from_shape(<<~EOT)
 # >>         +---------------------------+
 # >>           | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 # >>         | ・ ・ ・ ・ ○ ・ ・ ・ ・|
@@ -188,8 +188,8 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >>         | ・v銀v銀 ・ ・ ・vとvとvと|
 # >>         +---------------------------+
 # >>           EOT
-# >>         xcontainer.next_player.execute(str)
-# >>         xcontainer.hand_logs.last.to_kif_ki2_csa
+# >>         container.next_player.execute(str)
+# >>         container.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
 # >>       it "works" do
@@ -215,10 +215,10 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>     describe "P4 竜が2枚の場合はやはり動作を優先します。ただし、「直」は使わずに「左」「右」で記入" do
 # >>       def test1(str)
-# >>         xcontainer = Xcontainer.new
-# >>         xcontainer.board.placement_from_shape(@board)
-# >>         xcontainer.next_player.execute(str)
-# >>         xcontainer.hand_logs.last.to_kif_ki2_csa
+# >>         container = Container.create
+# >>         container.board.placement_from_shape(@board)
+# >>         container.next_player.execute(str)
+# >>         container.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
 # >>       describe "P4A" do
@@ -344,10 +344,10 @@ File.write("standard_kif_white_side_spec.rb", s)
 # >> 
 # >>     describe "P5 馬が2枚の場合もやはり動作を優先します。竜と同様、「直」は使わずに「左」「右」で記入" do
 # >>       def test1(str)
-# >>         xcontainer = Xcontainer.new
-# >>         xcontainer.board.placement_from_shape(@board)
-# >>         xcontainer.next_player.execute(str)
-# >>         xcontainer.hand_logs.last.to_kif_ki2_csa
+# >>         container = Container.create
+# >>         container.board.placement_from_shape(@board)
+# >>         container.next_player.execute(str)
+# >>         container.hand_logs.last.to_kif_ki2_csa
 # >>       end
 # >> 
 # >>       describe "P5A" do

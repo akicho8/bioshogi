@@ -8,12 +8,12 @@ class BuggyNegaScout < NegaMax
   def nega_scout(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
     tle_verify
 
-    player = xcontainer.player_at(turn)
-    children = xcontainer.available_places(player)
+    player = container.player_at(turn)
+    children = container.available_places(player)
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
-      return [xcontainer.evaluate(player), []] # 現局面手番視点
+      return [container.evaluate(player), []] # 現局面手番視点
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
@@ -24,10 +24,10 @@ class BuggyNegaScout < NegaMax
 
     # 効果的なもの順に並び換える
     # if true
-    children = xcontainer.move_ordering(player, children)
+    children = container.move_ordering(player, children)
     # else
     #   children = children.sort_by do |e|
-    #     xcontainer.place_on(player, e) do
+    #     container.place_on(player, e) do
     #       -(-nega_alpha(turn: turn + 1, depth_max: 1))
     #     end
     #   end
@@ -36,7 +36,7 @@ class BuggyNegaScout < NegaMax
     max_v = -Float::INFINITY
     best_pv = []
     children.each do |place|
-      xcontainer.place_on(player, place) do
+      container.place_on(player, place) do
         a = [alpha, max_v].max
         v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -(a + 1), beta: -a) # null window search
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
@@ -59,19 +59,19 @@ class BuggyNegaScout < NegaMax
   # private
   # 
   # def nega_alpha(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
-  #   player = xcontainer.player_at(turn)
+  #   player = container.player_at(turn)
   # 
   #   if depth_max <= depth
-  #     return xcontainer.evaluate(player)
+  #     return container.evaluate(player)
   #   end
   # 
-  #   children = xcontainer.available_places(player)
+  #   children = container.available_places(player)
   #   if children.empty?
   #     return -nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
   #   end
   # 
   #   children.each do |place|
-  #     xcontainer.place_on(player, place) do
+  #     container.place_on(player, place) do
   #       score = -nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
   #       if alpha < score
   #         alpha = score

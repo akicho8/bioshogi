@@ -79,16 +79,16 @@ module Bioshogi
         end
       end
 
-      attr_accessor :xcontainer
+      attr_accessor :container
       attr_accessor :params
       attr_accessor :hand_log
 
       delegate :logger, to: "Bioshogi"
 
-      def initialize(xcontainer, params = {})
+      def initialize(container, params = {})
         # params.assert_valid_keys(default_params.keys)
 
-        @xcontainer = xcontainer
+        @container = container
         @params = self.class.default_params.merge(params)
 
         if e = ColorThemeInfo.lookup(@params[:color_theme_key])
@@ -114,7 +114,7 @@ module Bioshogi
         logger.tagged(@build_counter) do
           require "rmagick"
 
-          @hand_log = xcontainer.hand_logs.last
+          @hand_log = container.hand_logs.last
 
           # たまたまレイヤー単位でまとめられたけど本当はレイヤーを気にせずに「やりたいこと単位」でまとめるべき
           logger.info "static layer"

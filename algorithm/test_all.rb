@@ -12,11 +12,11 @@ class TestAll < Test::Unit::TestCase
       # BuggyNegaScout,
       NegaScout,
     ].collect do |klass|
-      xcontainer = klass.new
-      xcontainer.params[:dimension] = 4
-      xcontainer.params[:silent] = true
-      xcontainer.params[:depth_max] = 3
-      xcontainer.run
+      container = klass.new
+      container.params[:dimension] = 4
+      container.params[:silent] = true
+      container.params[:depth_max] = 3
+      container.run
     end
     assert histograms.uniq.count == 1
   end

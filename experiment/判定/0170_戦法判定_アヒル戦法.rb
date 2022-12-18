@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("../戦型/アヒル戦法.kif", turn_limit: 42)
-puts info.formatter.xcontainer
+puts info.formatter.container
 puts info.to_kif
 # >> 後手の持駒：桂
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

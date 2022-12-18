@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_shape(<<~EOT)
+container = Container.create
+container.board.placement_from_shape(<<~EOT)
 +---------------------------+
 |v香 ・ ・ ・ ・v銀 ・ ・ ・|
 | ・ ・ ・v金v金v玉 ・ ・ ・|
@@ -17,7 +17,7 @@ xcontainer.board.placement_from_shape(<<~EOT)
 
 location = Location[:black]
 
-soldiers = xcontainer.board.surface.values.find_all {|e|e.location == location }
+soldiers = container.board.surface.values.find_all {|e|e.location == location }
 tp soldiers.collect(&:name)
 sorted_black_side_soldiers = soldiers.collect{|e|e.flip_if_white}.sort
 tp sorted_black_side_soldiers
@@ -27,7 +27,7 @@ defense_info = Explain::DefenseInfo.find do |e|
 
   # 盤上の状態に含まれる？
   e.black_side_soldiers.all? do |e|
-    if soldier = xcontainer.board[e[:place]]
+    if soldier = container.board[e[:place]]
       if soldier.location == location
         soldier.flip_if_white == e
       end

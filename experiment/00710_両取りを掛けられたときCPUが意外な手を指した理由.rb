@@ -20,8 +20,8 @@ require "./setup"
 # 理想は▲42馬(+1200)だが、相手の手番で銀を必ず取られ -1050 になるのなら馬を切って -640 程度になる方を選んだ。
 # 人間的には違和感のある手だけどCPUにとっては一貫性のある考え方で、ある意味、両取り逃げるべからずを実践した手だった。
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -37,12 +37,12 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => 1000
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => 1000
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -58,12 +58,12 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：銀
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => 3250
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => 3250
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：角
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -79,12 +79,12 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：銀
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => -640
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => -640
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -100,12 +100,12 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => 1200
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => 1200
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：銀
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -121,9 +121,9 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => -1050
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => -1050
 
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

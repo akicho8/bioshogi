@@ -8,15 +8,15 @@ class NegaMax < Minimax
   def nega_max(turn:, depth_max:, depth: 0)
     tle_verify
 
-    player = xcontainer.player_at(turn)
+    player = container.player_at(turn)
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
-      return [xcontainer.evaluate(player), []] # 現局面手番視点
+      return [container.evaluate(player), []] # 現局面手番視点
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    children = xcontainer.available_places(player)
+    children = container.available_places(player)
     if children.empty?
       v, pv = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
       return [-v, [:pass, *pv]]
@@ -26,7 +26,7 @@ class NegaMax < Minimax
     best_pv = []
 
     children.each do |place|
-      xcontainer.place_on(player, place) do
+      container.place_on(player, place) do
         v, pv = nega_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
         v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する
         if v > max

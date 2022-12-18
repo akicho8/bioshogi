@@ -45,7 +45,7 @@ module Bioshogi
 
       Enumerator.new do |y|
         soldiers.each do |soldier|
-          soldier.move_list(xcontainer, options).each do |move_hand|
+          soldier.move_list(container, options).each do |move_hand|
             y << move_hand
           end
         end
@@ -80,14 +80,14 @@ module Bioshogi
 
             if options[:legal_only]
               # 合法手でなければ除外
-              if !drop_hand.legal_hand?(xcontainer)
+              if !drop_hand.legal_hand?(container)
                 next
               end
             end
 
             if options[:mate_only]
               # 王手がかからない手を除外
-              if !drop_hand.mate_hand?(xcontainer)
+              if !drop_hand.mate_hand?(container)
                 next
               end
             end
@@ -134,7 +134,7 @@ module Bioshogi
     private
 
     def move_list(soldier, options = {})
-      Movabler.move_list(xcontainer, soldier, options)
+      Movabler.move_list(container, soldier, options)
     end
   end
 end

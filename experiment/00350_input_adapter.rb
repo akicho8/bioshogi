@@ -1,8 +1,8 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.pieces_set("▲銀")
-xcontainer.board.placement_from_shape <<~EOT
+container = Container.create
+container.pieces_set("▲銀")
+container.board.placement_from_shape <<~EOT
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ 飛|
 | ・ ・ ・ ・ 馬 ・ 銀 ・ ・|
@@ -10,7 +10,7 @@ xcontainer.board.placement_from_shape <<~EOT
 +---------------------------+
 EOT
 
-player = xcontainer.player_at(:black)
+player = container.player_at(:black)
 
 rows = [
   "△１二銀成",

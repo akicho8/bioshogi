@@ -61,7 +61,7 @@ module Bioshogi
           out << header_content
         end
 
-        obj = Xcontainer.new
+        obj = Container.create
         @formatter.xcontainer_init(obj) # なぜ？
         out << obj.to_csa(@params)
 
@@ -105,13 +105,13 @@ module Bioshogi
 
         # 2通りある
         # 1. 初期盤面の状態から調べた手合割を利用して最初の手番を得る  (turn_info = TurnInfo.new(preset_key))
-        # 2. xcontainer.turn_info を利用して xcontainer.turn_info.base_location.csa_sign を参照
+        # 2. container.turn_info を利用して container.turn_info.base_location.csa_sign を参照
         # ↑どちらも違う
         # 3. これが正しい
-        out << @formatter.xcontainer.turn_info.turn_offset_zero_location.csa_sign + "\n"
+        out << @formatter.container.turn_info.turn_offset_zero_location.csa_sign + "\n"
 
-        if @formatter.xcontainer.hand_logs.present?
-          list = @formatter.xcontainer.hand_logs.collect.with_index do |e, i|
+        if @formatter.container.hand_logs.present?
+          list = @formatter.container.hand_logs.collect.with_index do |e, i|
             if @formatter.mi.clock_exist?
               [e.to_csa, "T#{@formatter.used_seconds_at(i)}"].join(",")
             else

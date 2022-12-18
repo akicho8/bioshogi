@@ -12,7 +12,7 @@ module Bioshogi
             if ["居玉", "力戦", "相居玉", "背水の陣", "相居飛車", "対振り", "相振り", "対抗型"].include?(e.key.to_s)
               next
             end
-            assert { info.formatter.xcontainer.normalized_names_with_alias.include?(e.key.to_s) }
+            assert { info.formatter.container.normalized_names_with_alias.include?(e.key.to_s) }
           end
         end
       end

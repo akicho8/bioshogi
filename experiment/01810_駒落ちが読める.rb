@@ -53,11 +53,11 @@ puts info.to_kif
 puts "-" * 80
 puts info.to_csa
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("香落ち")
-puts xcontainer
-xcontainer.execute("３四歩")
-puts xcontainer
+container = Container.create
+container.placement_from_preset("香落ち")
+puts container
+container.execute("３四歩")
+puts container
 
 # >> --------------------------------------------------------------------------------
 # >> 開始日時：1956/01/19

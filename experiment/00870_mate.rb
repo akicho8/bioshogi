@@ -5,8 +5,8 @@ require "./setup"
 Board.promotable_disable
 Board.dimensiton_change([2, 3])
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：金
 +------+
 | ・v玉|
@@ -15,9 +15,9 @@ xcontainer.placement_from_bod <<~EOT
 +------+
 先手の持駒：
 EOT
-puts xcontainer
+puts container
 
-brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver)
+brain = container.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver)
 # brain.diver_dive(depth_max: 0) # => [60, []]
 # brain.diver_dive(depth_max: 1) # => [2520, [<▲１二玉(13)>]]
 # brain.diver_dive(depth_max: 2) # => [60, [<▲２四玉(13)>, <△２二玉(11)>]]

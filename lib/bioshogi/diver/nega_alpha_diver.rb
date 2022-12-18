@@ -4,7 +4,7 @@ module Bioshogi
       def dive(player: params[:current_player], depth: 0, alpha: -SCORE_MAX, beta: SCORE_MAX, hand_route: [])
         tle_verify
 
-        xcontainer = player.xcontainer
+        container = player.container
 
         if depth == 0
           @eval_counter = 0
@@ -64,7 +64,7 @@ module Bioshogi
         best_hand = nil
 
         children.each do |hand|
-          # if !hand.legal_hand?(xcontainer)
+          # if !hand.legal_hand?(container)
           #   # log["skip: #{hand}"] if log
           #   next
           # end
@@ -85,7 +85,7 @@ module Bioshogi
           # else
           v = nil
           pv = nil
-          hand.sandbox_execute(xcontainer) do
+          hand.sandbox_execute(container) do
             v, pv = dive(player: player.opponent_player, depth: depth + 1, alpha: -beta, beta: -alpha, hand_route: hand_route + [hand])
             v = -v
           end
@@ -106,7 +106,7 @@ module Bioshogi
         end
 
         # if !children_exist
-        #   raise BioshogiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{xcontainer.to_bod}"
+        #   raise BioshogiError, "#{player.call_name}の指し手が一つもありません。すべての駒を取られている可能性があります\n#{container.to_bod}"
         # end
 
         if best_hand

@@ -6,11 +6,11 @@ object.to_kif  # => "▲６八銀(79)"
 object.to_csa  # => "+7968GI"
 object.to_sfen # => "7i6h"
 
-xcontainer = Xcontainer.start
-object.execute(xcontainer)
-puts xcontainer
-object.revert(xcontainer)
-puts xcontainer
+container = Container::Basic.start
+object.execute(container)
+puts container
+object.revert(container)
+puts container
 
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

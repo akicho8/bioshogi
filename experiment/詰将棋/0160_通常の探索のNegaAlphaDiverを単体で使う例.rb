@@ -7,9 +7,9 @@ require "../setup"
 
 Board.dimensiton_change([2, 5])
 
-xcontainer = Xcontainer.new
-xcontainer.player_at(:black).pieces_add("金3")
-xcontainer.board.placement_from_shape <<~EOT
+container = Container.create
+container.player_at(:black).pieces_add("金3")
+container.board.placement_from_shape <<~EOT
 +------+
 | ・ ・|
 | ・ ・|
@@ -24,7 +24,7 @@ mate_proc = proc do |player, score, hand_route|
   mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
 end
 
-player = xcontainer.player_at(:black)
+player = container.player_at(:black)
 object = Diver::NegaAlphaDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 tp object.dive
 tp mate_records

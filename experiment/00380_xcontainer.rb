@@ -1,13 +1,13 @@
 # 棋譜の入力
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
-xcontainer.execute("７六歩")
-xcontainer.execute("３四歩")
-xcontainer.execute("２二角成")
-xcontainer.player_at(:black).piece_box.to_s # => "角"
-puts xcontainer
+container = Container.create
+container.placement_from_preset("平手")
+container.execute("７六歩")
+container.execute("３四歩")
+container.execute("２二角成")
+container.player_at(:black).piece_box.to_s # => "角"
+puts container
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

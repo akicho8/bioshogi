@@ -1,6 +1,6 @@
 require "./setup"
 
-puts Parser.parse(<<~EOT).xcontainer
+puts Parser.parse(<<~EOT).container
 後手の持駒：飛
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

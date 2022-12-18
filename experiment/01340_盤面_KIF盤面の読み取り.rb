@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_shape(<<~EOT)
+container = Container.create
+container.board.placement_from_shape(<<~EOT)
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一
 | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -14,7 +14,7 @@ xcontainer.board.placement_from_shape(<<~EOT)
 | 香 桂 銀 金 玉 金 銀 桂 香|九
 +---------------------------+
 EOT
-puts xcontainer
+puts container
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

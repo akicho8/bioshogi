@@ -20,11 +20,11 @@ info = Parser.parse(<<~EOT)
 ▲２五歩
 EOT
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
+container = Container.create
+container.placement_from_preset("平手")
 info.mi.move_infos.each do |e|
-  xcontainer.execute(e[:input])
-  p [xcontainer.turn_info.turn_offset, e[:input], xcontainer.hand_logs.last.to_kif_ki2_csa]
+  container.execute(e[:input])
+  p [container.turn_info.turn_offset, e[:input], container.hand_logs.last.to_kif_ki2_csa]
 end
 # >> [1, "▲７六歩", ["７六歩(77)", "７六歩", "+7776FU"]]
 # >> [2, "△８四歩", ["８四歩(83)", "８四歩", "-8384FU"]]

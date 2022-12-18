@@ -7,13 +7,13 @@ info = Parser.parse("
 ▲４七金    △３一角    ▲６八銀右  △７五歩    ▲６七銀    △７六歩    ▲同銀右
 ")
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset(info.mi.header["手合割"])
+container = Container.create
+container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
   puts info[:input]
-  xcontainer.execute(info[:input])
+  container.execute(info[:input])
 end
-tp xcontainer.hand_logs.last.to_ki2
+tp container.hand_logs.last.to_ki2
 # >> ▲７六歩
 # >> △８四歩
 # >> ▲７八銀

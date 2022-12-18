@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：
 +------+
 | ・v玉|
@@ -11,4 +11,4 @@ xcontainer.placement_from_bod <<~EOT
 先手の持駒：
 手数＝1
   EOT
-xcontainer.current_player.brain.create_all_hands(promoted_only: true).to_a # => [<△２一玉(11)>]
+container.current_player.brain.create_all_hands(promoted_only: true).to_a # => [<△２一玉(11)>]

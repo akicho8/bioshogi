@@ -5,14 +5,14 @@ module Bioshogi
     include PlayerBrainMod
 
     attr_reader :location
-    attr_reader :xcontainer
+    attr_reader :container
 
     attr_reader :executor
 
-    delegate :board, to: :xcontainer
+    delegate :board, to: :container
 
-    def initialize(xcontainer:, location:)
-      @xcontainer = xcontainer
+    def initialize(container:, location:)
+      @container = container
       @location = location
     end
 
@@ -22,7 +22,7 @@ module Bioshogi
     end
 
     def opponent_player
-      @xcontainer.player_at(location.flip)
+      @container.player_at(location.flip)
     end
 
     # 自分と相手
@@ -67,14 +67,14 @@ module Bioshogi
         true &&
           e.promoted == promoted &&                                      # 成っているかどうかで絞る
           e.piece.key == piece_key &&                                    # 同じ種類に絞る
-          e.move_list(xcontainer).any? { |e| e.soldier.place == place } && # 目的地に来れる
+          e.move_list(container).any? { |e| e.soldier.place == place } && # 目的地に来れる
           true
       end
     end
 
     concerning :HelperMethods do
       def judge_key
-        if xcontainer.win_player == self
+        if container.win_player == self
           :win
         else
           :lose
@@ -82,7 +82,7 @@ module Bioshogi
       end
 
       def call_name
-        location.call_name(xcontainer.turn_info.handicap?)
+        location.call_name(container.turn_info.handicap?)
       end
     end
 

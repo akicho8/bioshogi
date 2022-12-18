@@ -2,8 +2,8 @@ require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Board.dimensiton_change([2, 4]) do
-  xcontainer = Xcontainer.new
-  xcontainer.placement_from_bod <<~EOT
+  container = Container.create
+  container.placement_from_bod <<~EOT
 後手の持駒：
 +------+
 |v香v玉|
@@ -18,7 +18,7 @@ EOT
     Diver::NegaAlphaDiver,
     Diver::NegaScoutDiver,
   ].each do |diver_class|
-    brain = xcontainer.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+    brain = container.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
     records = brain.iterative_deepening(depth_max_range: 3..3)
     tp Brain.human_format(records)
   end

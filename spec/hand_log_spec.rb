@@ -12,8 +12,8 @@ module Bioshogi
     end
 
     it "yomiage" do
-      xcontainer = Xcontainer.new
-      xcontainer.placement_from_bod(<<~EOT)
+      container = Container.create
+      container.placement_from_bod(<<~EOT)
       上手の持駒：飛
       ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -32,18 +32,18 @@ module Bioshogi
 
       後手番
       EOT
-      xcontainer.execute("68銀")
-      assert { xcontainer.hand_logs.last.yomiage }
-      xcontainer.execute("55飛打")
-      assert { xcontainer.hand_logs.last.yomiage }
-      xcontainer.execute("34銀成")
-      assert { xcontainer.hand_logs.last.yomiage }
-      xcontainer.execute("57飛成")
-      assert { xcontainer.hand_logs.last.yomiage }
-      xcontainer.execute("53銀不成")
-      assert { xcontainer.hand_logs.last.yomiage }
-      xcontainer.execute("同成銀")
-      assert { xcontainer.hand_logs.last.yomiage }
+      container.execute("68銀")
+      assert { container.hand_logs.last.yomiage }
+      container.execute("55飛打")
+      assert { container.hand_logs.last.yomiage }
+      container.execute("34銀成")
+      assert { container.hand_logs.last.yomiage }
+      container.execute("57飛成")
+      assert { container.hand_logs.last.yomiage }
+      container.execute("53銀不成")
+      assert { container.hand_logs.last.yomiage }
+      container.execute("同成銀")
+      assert { container.hand_logs.last.yomiage }
     end
 
     it "時間が指し手に結び付いている" do
@@ -57,7 +57,7 @@ module Bioshogi
 6 ４二銀(31) (03:00/00:00:00)
       EOT
 
-      assert { parser.xcontainer.hand_logs.last.personal_clock.to_s == "(03:00/00:06:00)" }
+      assert { parser.container.hand_logs.last.personal_clock.to_s == "(03:00/00:06:00)" }
     end
   end
 end

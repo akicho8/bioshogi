@@ -2,14 +2,14 @@ require "./setup"
 
 info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2f")
 # info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e", typical_error_case: :embed)
-xcontainer = info.formatter.xcontainer
-puts xcontainer
-records = xcontainer.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
+container = info.formatter.container
+puts container
+records = container.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
 tp Brain.human_format(records)
 record = records.first
 hand = record[:hand]
-xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
-puts xcontainer.to_history_sfen
+container.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+puts container.to_history_sfen
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

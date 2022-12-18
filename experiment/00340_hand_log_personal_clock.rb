@@ -10,7 +10,7 @@ parser = Parser.parse(<<~EOT)
 6 ４二銀(31) (00:00/00:00:00)
 EOT
 
-tp parser.xcontainer.hand_logs.collect(&:personal_clock)
+tp parser.container.hand_logs.collect(&:personal_clock)
 # >> |------------------|
 # >> | (00:01/00:00:01) |
 # >> | (00:00/00:00:00) |

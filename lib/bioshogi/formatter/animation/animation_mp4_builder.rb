@@ -97,8 +97,8 @@ module Bioshogi
                 command_required! :ffmpeg
                 ffmpeg_version_required!
 
-                @xcontainer = @formatter.xcontainer_for_image
-                @screen_image_renderer = ScreenImage.renderer(@xcontainer, params)
+                @container = @formatter.xcontainer_for_image
+                @screen_image_renderer = ScreenImage.renderer(@container, params)
 
                 if factory_method_key == "is_factory_method_rmagick"
                   @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + 3 + 7, &params[:progress_callback])
@@ -115,7 +115,7 @@ module Bioshogi
                     list << @screen_image_renderer.next_build
                     @formatter.mi.move_infos.each.with_index do |e, i|
                       @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
-                      @xcontainer.execute(e[:input])
+                      @container.execute(e[:input])
                       list << @screen_image_renderer.next_build
                       logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                     end
@@ -163,8 +163,8 @@ module Bioshogi
 
                   @formatter.mi.move_infos.each.with_index do |e, i|
                     @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
-                    @xcontainer.execute(e[:input])
-                    logger.info("@xcontainer.execute OK")
+                    @container.execute(e[:input])
+                    logger.info("@container.execute OK")
                     tob("#{i}/#{@formatter.mi.move_infos.size}") { @screen_image_renderer.next_build.write(sfg.next) }
                     logger.info("@screen_image_renderer.next_build.write OK")
                     logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
@@ -187,8 +187,8 @@ module Bioshogi
 
               if true
                 @progress_cop.next_step("メタデータ埋め込み")
-                title = params[:metadata_title].presence || "総手数#{@xcontainer.turn_info.display_turn}手"
-                comment = params[:metadata_comment].presence || @xcontainer.to_history_sfen
+                title = params[:metadata_title].presence || "総手数#{@container.turn_info.display_turn}手"
+                comment = params[:metadata_comment].presence || @container.to_history_sfen
                 before_duration = Media.duration("_output1.mp4")
                 strict_system %(ffmpeg -v warning -hide_banner -i _output1.mp4 -metadata title="#{title}" -metadata comment="#{comment}" -codec copy -y _output2.mp4)
                 after_duration = Media.duration("_output2.mp4")
@@ -207,8 +207,8 @@ module Bioshogi
               logger.tagged("audio") do
                 logger.info { "2. BGM準備" }
 
-                if @xcontainer.outbreak_turn
-                  @switch_turn = @xcontainer.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
+                if @container.outbreak_turn
+                  @switch_turn = @container.outbreak_turn + 1 # 取った手の位置が欲しいので「取る直前」+ 1
                   logger.info { "BGMが切り替わるページ(switch_turn): #{@switch_turn}" }
                 end
 

@@ -8,9 +8,9 @@ module Bioshogi
 
     it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている←複雑なのでやらない" do
       info = Parser.parse("72 投了")
-      assert { info.formatter.xcontainer.turn_info.turn_offset == 0               } # 内部的には0手目
-      assert { info.formatter.xcontainer.turn_info.display_turn == 0              } # 表示するなら現在71手目←やめ
-      assert { info.formatter.xcontainer.turn_info.current_location.key == :black } # 手番は△←やめ
+      assert { info.formatter.container.turn_info.turn_offset == 0               } # 内部的には0手目
+      assert { info.formatter.container.turn_info.display_turn == 0              } # 表示するなら現在71手目←やめ
+      assert { info.formatter.container.turn_info.current_location.key == :black } # 手番は△←やめ
       assert { info.to_kif.include?("1 投了")                         } # KIFにしたとき復元している→しないのが正しい
     end
 
@@ -75,8 +75,8 @@ module Bioshogi
     end
 
     it "盤面表示" do
-      xcontainer = Xcontainer.start
-      expect(xcontainer.board.to_s).to eq(<<~EOT)
+      container = Container::Basic.start
+      expect(container.board.to_s).to eq(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|一

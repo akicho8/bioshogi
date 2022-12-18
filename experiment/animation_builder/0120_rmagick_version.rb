@@ -5,16 +5,16 @@ sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w 
 sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
 
-xcontainer = Xcontainer.new         # XcontainerFast にする
-xcontainer.params.update({
+container = Container.create         # Container::XcontainerFast にする
+container.params.update({
     :skill_monitor_enable           => false,
     :skill_monitor_technique_enable => false,
     :candidate_enable               => false,
     :validate_enable                => false,
   })
-info.formatter.xcontainer_init(xcontainer)
-screen_image_renderer = ScreenImage.renderer(xcontainer, viewpoint: "black")
-# puts xcontainer
+info.formatter.xcontainer_init(container)
+screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
+# puts container
 
 list = Magick::ImageList.new
 # list.ticks_per_second           # =>
@@ -22,7 +22,7 @@ list = Magick::ImageList.new
 screen_image_renderer.render
 list.concat([screen_image_renderer.canvas])
 info.mi.move_infos.each.with_index(1) do |e, i|
-  xcontainer.execute(e[:input])
+  container.execute(e[:input])
   screen_image_renderer.render
   list.concat([screen_image_renderer.canvas])
   # puts screen_image_renderer.to_tempfile
@@ -61,7 +61,7 @@ list.each.with_index do |e, i|
   e.write("_#{i}.png")
 end
 
-# puts xcontainer
+# puts container
 # >> _a.png PNG 1200x630 1200x630+0+0 16-bit Grayscale Gray 35105B 0.000u 0:00.000
 # >> [ PNG 1200x630 1200x630+0+0 PseudoClass 32c 16-bit 34kb,
 # >> _3.gif  1x1 1200x630+-1+-1 PseudoClass 33c 16-bit,

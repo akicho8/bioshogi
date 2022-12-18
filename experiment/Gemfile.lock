@@ -6,7 +6,7 @@ PATH
       activesupport
       color
       memory_record
-      rmagick
+      rmagick (>= 5.0.0)
       rubyzip
       systemu
       table_format

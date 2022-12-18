@@ -11,15 +11,15 @@ module Bioshogi
       end
     end
 
-    def execute(xcontainer)
-      player = xcontainer.player_at(soldier.location)
+    def execute(container)
+      player = container.player_at(soldier.location)
       player.piece_box.pick_out(soldier.piece)
-      xcontainer.board.place_on(soldier)
+      container.board.place_on(soldier)
     end
 
-    def revert(xcontainer)
-      xcontainer.board.safe_delete_on(soldier.place)
-      player = xcontainer.player_at(soldier.location)
+    def revert(container)
+      container.board.safe_delete_on(soldier.place)
+      player = container.player_at(soldier.location)
       player.piece_box.add(soldier.piece.key => 1)
     end
 

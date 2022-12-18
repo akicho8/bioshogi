@@ -1,11 +1,11 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("十枚落ち")
-xcontainer.pieces_set("▲歩 △飛")
-xcontainer.execute("△52玉")
-puts xcontainer
-puts xcontainer.deep_dup
+container = Container.create
+container.placement_from_preset("十枚落ち")
+container.pieces_set("▲歩 △飛")
+container.execute("△52玉")
+puts container
+puts container.deep_dup
 # >> 上手の持駒：飛
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

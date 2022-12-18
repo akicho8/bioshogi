@@ -26,7 +26,7 @@ module Bioshogi
       # 固定幅で整列
       # 値が小さいと揃わない場合がある
       def fixed_width_body_hands
-        @formatter.xcontainer.hand_logs.group_by.with_index {|_, i| i / @params[:column_max] }.values.collect { |v|
+        @formatter.container.hand_logs.group_by.with_index {|_, i| i / @params[:column_max] }.values.collect { |v|
           v.collect { |e|
             s = e.to_ki2(with_location: true, same_suffix: @params[:same_suffix])
             mb_ljust(s, @params[:column_width])
@@ -37,7 +37,7 @@ module Bioshogi
       # 自動整列
       # かならず揃う
       def auto_width_body_hands
-        list = @formatter.xcontainer.hand_logs.collect do |e|
+        list = @formatter.container.hand_logs.collect do |e|
           e.to_ki2(with_location: true, same_suffix: @params[:same_suffix])
         end
 

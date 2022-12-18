@@ -144,21 +144,21 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    74  | 
 # >>                                   |    75  |         # 手数制限。制限を超えていたらskip
 # >>     1    (0.1%)                   |    76  |         if e.turn_limit
-# >>                                   |    77  |           if e.turn_limit < player.xcontainer.turn_info.turn_offset.next
+# >>                                   |    77  |           if e.turn_limit < player.container.turn_info.turn_offset.next
 # >>                                   |    78  |             throw :skip
 # >>                                   |    79  |           end
 # >>                                   |    80  |         end
 # >>                                   |    81  | 
 # >>                                   |    82  |         # 手数限定。手数が異なっていたらskip
 # >>                                   |    83  |         if e.turn_eq
-# >>                                   |    84  |           if e.turn_eq != player.xcontainer.turn_info.turn_offset.next
+# >>                                   |    84  |           if e.turn_eq != player.container.turn_info.turn_offset.next
 # >>                                   |    85  |             throw :skip
 # >>                                   |    86  |           end
 # >>                                   |    87  |         end
 # >>                                   |    88  | 
 # >>                                   |    89  |         # 手番限定。手番が異なればskip
 # >>                                   |    90  |         if e.order_key
-# >>                                   |    91  |           if e.order_key != player.xcontainer.turn_info.order_key
+# >>                                   |    91  |           if e.order_key != player.container.turn_info.order_key
 # >>                                   |    92  |             throw :skip
 # >>                                   |    93  |           end
 # >>                                   |    94  |         end
@@ -320,7 +320,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
-# >>        1  (    0.5%)  Bioshogi::PlayerExecutorBase#xcontainer
+# >>        1  (    0.5%)  Bioshogi::PlayerExecutorBase#container
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
@@ -333,7 +333,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
 # >>                                   |    20  | 
-# >>     1    (0.1%)                   |    21  |       if executor.xcontainer.params[:skill_monitor_technique_enable]
+# >>     1    (0.1%)                   |    21  |       if executor.container.params[:skill_monitor_technique_enable]
 # >>                                   |    22  |         # 主に手筋用で戦型チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Explain::TacticInfo.piece_hash_table[key]

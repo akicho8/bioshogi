@@ -5,8 +5,8 @@ require "../setup"
 Board.promotable_disable
 Board.dimensiton_change([1, 6])
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：歩2
 +---+
 |v玉|
@@ -19,7 +19,7 @@ xcontainer.placement_from_bod <<~EOT
 先手の持駒：
 EOT
 
-brain = xcontainer.player_at(:white).brain(diver_class: Diver::NegaAlphaMateDiver)
+brain = container.player_at(:white).brain(diver_class: Diver::NegaAlphaMateDiver)
 records = brain.iterative_deepening(depth_max_range: 0..7)
 tp Brain.human_format(records)
 # 遅すぎて使えない

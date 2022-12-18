@@ -4,8 +4,8 @@ require "./setup"
 # Board.promotable_disable
 Board.dimensiton_change([3, 4])
 
-xcontainer = Xcontainer.new
-# xcontainer.placement_from_bod <<~EOT
+container = Container.create
+# container.placement_from_bod <<~EOT
 # 後手の持駒：
 # +---------+
 # | ・v歩v玉|
@@ -15,7 +15,7 @@ xcontainer = Xcontainer.new
 # 先手の持駒：桂
 # EOT
 
-xcontainer.placement_from_bod <<~EOT
+container.placement_from_bod <<~EOT
 後手の持駒：
 +---------+
 | ・v香v玉|
@@ -27,26 +27,26 @@ xcontainer.placement_from_bod <<~EOT
 手数＝1
 EOT
 
-# puts xcontainer
+# puts container
 
-# xcontainer.execute("▲24桂打")
-# captured_soldier = xcontainer.opponent_player.executor.captured_soldier
+# container.execute("▲24桂打")
+# captured_soldier = container.opponent_player.executor.captured_soldier
 # captured_soldier                # => nil
 
 # 王手された状態で後手の手番
 
-# player = xcontainer.current_player
+# player = container.current_player
 # soldier = player.soldiers.first                                   # => <Bioshogi::Soldier "▲２四桂">
-# soldier.move_list(xcontainer.board).to_a # => [<▲１二桂成(24)>]
+# soldier.move_list(container.board).to_a # => [<▲１二桂成(24)>]
 # exit
 #
-# xcontainer.current_player.soldiers # =>
+# container.current_player.soldiers # =>
 #
-# xcontainer.current_player.brain(diver_class: Diver::NegaScoutDiver).move_hands(promoted_only: true).to_a # =>
+# container.current_player.brain(diver_class: Diver::NegaScoutDiver).move_hands(promoted_only: true).to_a # =>
 # exit
 
-xcontainer.current_player.brain(diver_class: Diver::NegaScoutDiver).create_all_hands(promoted_only: true).to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
-records = xcontainer.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
+container.current_player.brain(diver_class: Diver::NegaScoutDiver).create_all_hands(promoted_only: true).to_a # => [<△１二玉(11)>, <△２三歩成(22)>]
+records = container.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record
 hand = record[:hand]
@@ -56,15 +56,15 @@ end
 tp Brain.human_format(records)
 
 # # 後手は王手してきた金を取った状態
-# xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
-# puts xcontainer
+# container.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+# puts container
 #
 # # 先手の手番でその玉を取る
-# records = xcontainer.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
+# records = container.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
 # record = records.first
 # tp record
 # tp Brain.human_format(records)
-# xcontainer.execute(record[:hand].to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+# container.execute(record[:hand].to_sfen, executor_class: PlayerExecutorWithoutMonitor)
 
 #   if captured_soldier && captured_soldier.piece.key == :king
 #     break

@@ -3,8 +3,8 @@ require "./setup"
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 Board.dimensiton_change([3, 3])
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_shape <<~EOT
+container = Container.create
+container.board.placement_from_shape <<~EOT
 +---------+
 | ・ ・v歩|
 | ・ ・ ・|
@@ -12,9 +12,9 @@ xcontainer.board.placement_from_shape <<~EOT
 +---------+
 EOT
 
-tp xcontainer.player_at(:black).brain.diver_dive(depth_max: 0)
-tp xcontainer.player_at(:black).brain.diver_dive(depth_max: 1)
-tp xcontainer.player_at(:black).brain.diver_dive(depth_max: 2)
+tp container.player_at(:black).brain.diver_dive(depth_max: 0)
+tp container.player_at(:black).brain.diver_dive(depth_max: 1)
+tp container.player_at(:black).brain.diver_dive(depth_max: 2)
 # >>     0 ▲ +0
 # >> |----|
 # >> |  0 |

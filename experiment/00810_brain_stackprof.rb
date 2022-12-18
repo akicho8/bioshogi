@@ -1,25 +1,25 @@
 require "./setup"
 
-# xcontainer = Xcontainer.start
-# xcontainer.execute("▲６八銀")
-# xcontainer.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
+# container = Container::Basic.start
+# container.execute("▲６八銀")
+# container.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
 # 
-# xcontainer = XcontainerSimple.start
-# xcontainer.execute("▲６八銀")
-# xcontainer.instance_variables     # => 
+# container = Container::XcontainerSimple.start
+# container.execute("▲６八銀")
+# container.instance_variables     # => 
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-xcontainer = Xcontainer.start
+container = Container::Basic.start
 
 StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   50.times do
-    v, pv = xcontainer.current_player.brain.diver_dive(depth_max: 2)
+    v, pv = container.current_player.brain.diver_dive(depth_max: 2)
     hand = pv.first
-    xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+    container.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
   end
 end
-puts xcontainer
+puts container
 tp Bioshogi.run_counts
 
 system "stackprof stackprof.dump"
@@ -68,7 +68,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>      11391  (85.3%)         428   (3.2%)     Bioshogi::Player::BrainMethods#move_hands
 # >>        863   (6.5%)         319   (2.4%)     Bioshogi::Dimension::Base#valid?
 # >>        310   (2.3%)         310   (2.3%)     Bioshogi::Piece::VectorMethods#piece_vector
-# >>        216   (1.6%)         216   (1.6%)     Bioshogi::XcontainerBase#board
+# >>        216   (1.6%)         216   (1.6%)     Bioshogi::Core#board
 # >>        674   (5.0%)         188   (1.4%)     Bioshogi::Dimension::Xplace.lookup
 # >>        629   (4.7%)         169   (1.3%)     Bioshogi::Dimension::Yplace.lookup
 # >>        168   (1.3%)         168   (1.3%)     Bioshogi::Piece::ScoreMethods#piece_score

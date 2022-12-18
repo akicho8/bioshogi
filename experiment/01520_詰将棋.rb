@@ -1,17 +1,17 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_shape(<<~EOT)
+container = Container.create
+container.board.placement_from_shape(<<~EOT)
 +---+
 |v玉|
 | ・|
 | ・|
 +---+
 EOT
-xcontainer.player_at(:black).pieces_set("★竜") # 必要なものだけ拾うのでエラーにはならない
-xcontainer.player_at(:black).pieces_set("飛　金0銀1銀2")
-xcontainer.player_at(:white).pieces_set("香2")
-puts xcontainer
+container.player_at(:black).pieces_set("★竜") # 必要なものだけ拾うのでエラーにはならない
+container.player_at(:black).pieces_set("飛　金0銀1銀2")
+container.player_at(:white).pieces_set("香2")
+puts container
 # >> 後手の持駒：香二
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

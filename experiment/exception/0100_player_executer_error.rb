@@ -1,14 +1,14 @@
 require "../setup"
 
-xcontainer = Xcontainer.start
-xcontainer.execute("▲２六歩")
-xcontainer.execute("△３四歩")
-player = xcontainer.player_at(:black)
+container = Container::Basic.start
+container.execute("▲２六歩")
+container.execute("△３四歩")
+player = container.player_at(:black)
 player_executor = PlayerExecutorHuman.new(player, "▲５五銀")
 player_executor.execute
 
-xcontainer = Xcontainer.start
-xcontainer.execute("▲22角成")    # => 
+container = Container::Basic.start
+container.execute("▲22角成")    # => 
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:131:in `raise_error': ５五に移動できる銀がないため打の省略形と考えましたが銀を持っていません。手番が間違っているのかもしれません (Bioshogi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀

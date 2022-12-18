@@ -7,24 +7,24 @@ module Bioshogi
     attr_accessor :origin_soldier
     attr_accessor :captured_soldier
 
-    def execute(xcontainer)
+    def execute(container)
       if captured_soldier
-        xcontainer.board.safe_delete_on(soldier.place)
-        player = xcontainer.player_at(soldier.location)
+        container.board.safe_delete_on(soldier.place)
+        player = container.player_at(soldier.location)
         player.piece_box.add(captured_soldier.piece.key => 1)
       end
-      xcontainer.board.pick_up(origin_soldier.place)
-      xcontainer.board.place_on(soldier)
+      container.board.pick_up(origin_soldier.place)
+      container.board.place_on(soldier)
     end
 
-    def revert(xcontainer)
-      xcontainer.board.pick_up(soldier.place)
-      xcontainer.board.place_on(origin_soldier)
+    def revert(container)
+      container.board.pick_up(soldier.place)
+      container.board.place_on(origin_soldier)
 
       if captured_soldier
-        player = xcontainer.player_at(soldier.location)
+        player = container.player_at(soldier.location)
         player.piece_box.pick_out(captured_soldier.piece)
-        xcontainer.board.place_on(captured_soldier)
+        container.board.place_on(captured_soldier)
       end
     end
 

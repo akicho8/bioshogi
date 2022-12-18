@@ -1,23 +1,23 @@
 # 移動可能なルートの確認
 require "./setup"
 
-xcontainer = Xcontainer.new
-player = xcontainer.player_at(:black)
+container = Container.create
+player = container.player_at(:black)
 player.soldier_create("５五馬")
 player.soldiers.each do |soldier|
-  soldier.move_list(xcontainer.board).each do |v|
+  soldier.move_list(container.board).each do |v|
     player.soldier_create("#{v.place}馬")
   end
 end
-puts xcontainer.board
+puts container.board
 
-xcontainer = Xcontainer.new
-player = xcontainer.player_at(:black)
+container = Container.create
+player = container.player_at(:black)
 soldier = Soldier.from_str("▲５五馬")
-soldier.move_list(xcontainer.board).each do |soldier|
+soldier.move_list(container.board).each do |soldier|
   player.soldier_create("#{soldier.place}馬")
 end
-puts xcontainer.board
+puts container.board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | 馬 ・ ・ ・ ・ ・ ・ ・ 馬|一

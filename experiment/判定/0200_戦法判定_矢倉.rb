@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("yagura.kif")
-puts info.formatter.xcontainer
+puts info.formatter.container
 puts info.to_ki2
 # >> 後手の持駒：歩四 桂 金
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

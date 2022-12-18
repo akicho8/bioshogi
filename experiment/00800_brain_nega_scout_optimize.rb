@@ -5,8 +5,8 @@ require "./setup"
 # Board.promotable_disable
 # Board.dimensiton_change([2, 5])
 #
-# xcontainer = Xcontainer.new
-# xcontainer.board.placement_from_shape <<~EOT
+# container = Container.create
+# container.board.placement_from_shape <<~EOT
 # +------+
 # | ・v香|
 # | ・v飛|
@@ -16,10 +16,10 @@ require "./setup"
 # +------+
 # EOT
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
+container = Container.create
+container.placement_from_preset("平手")
 
-brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
 # brain.diver_dive(depth_max: 0) # => [-100, []]
 # brain.diver_dive(depth_max: 1) # => [105, [<▲１三飛(14)>]]
 # brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]
@@ -67,7 +67,7 @@ system "stackprof stackprof.dump"
 # >>        120   (3.6%)         120   (3.6%)     Bioshogi::Dimension::Base.value_range
 # >>        225   (6.8%)         105   (3.2%)     Bioshogi::Dimension::Base#valid?
 # >>         56   (1.7%)          56   (1.7%)     Bioshogi::Piece::VectorMethods#piece_vector
-# >>         52   (1.6%)          52   (1.6%)     Bioshogi::XcontainerBase#board
+# >>         52   (1.6%)          52   (1.6%)     Bioshogi::Core#board
 # >>         93   (2.8%)          50   (1.5%)     Bioshogi::Board::UpdateMethods#safe_delete_on
 # >>       1343  (40.4%)          49   (1.5%)     Set#each
 # >>         46   (1.4%)          46   (1.4%)     Bioshogi::SimpleModel#initialize

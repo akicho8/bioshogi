@@ -5,8 +5,8 @@ require "./setup"
 Board.promotable_disable
 Board.dimensiton_change([2, 5])
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_shape <<~EOT
+container = Container.create
+container.board.placement_from_shape <<~EOT
 +------+
 | ・v香|
 | ・v飛|
@@ -16,7 +16,7 @@ xcontainer.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-brain = xcontainer.player_at(:black).brain
+brain = container.player_at(:black).brain
 brain.diver_dive(depth_max: 0) # => [-100, []]
 brain.diver_dive(depth_max: 1) # => [105, [<▲１三飛(14)>]]
 brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]

@@ -2,7 +2,7 @@ module Bioshogi
   module ScreenImage
     concern :SoldierMethods do
       def soldier_draw_all
-        xcontainer.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
+        container.board.soldiers.each(&method(:soldier_draw))                                                                                # 駒を描画
       end
 
       def soldier_draw(soldier)

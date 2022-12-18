@@ -9,11 +9,11 @@ Explain::TacticInfo.all_elements.each do |e|
       str = file.read
       info = Parser.parse(str)
       info.formatter.xcontainer_run_once
-      info.formatter.xcontainer.players.each { |player|
+      info.formatter.container.players.each { |player|
         keys = player.skill_set.list_of(e).normalize.collect(&:key)
         row[player.location.key] = keys
       }
-      info.formatter.xcontainer.players.each { |player|
+      info.formatter.container.players.each { |player|
         if row[player.location.key].include?(e.key)
           row["合致"] += player.location.mark
         end

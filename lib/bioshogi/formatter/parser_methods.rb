@@ -5,7 +5,7 @@ module Bioshogi
     concern :ParserMethods do
       included do
         delegate *[
-          :xcontainer,
+          :container,
           :to_kif,
           :to_ki2,
           :to_csa,

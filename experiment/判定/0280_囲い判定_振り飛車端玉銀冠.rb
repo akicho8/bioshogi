@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Explain::DefenseInfo.fetch("振り飛車端玉銀冠").sample_kif_info
-tp info.formatter.xcontainer.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |--------------------------------------------------------+----------------------+-----------+------------------------|
 # >> | attack                                                 | defense              | technique | note                   |

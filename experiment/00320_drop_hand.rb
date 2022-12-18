@@ -6,12 +6,12 @@ object.to_kif  # => "▲６八銀打"
 object.to_csa  # => "+0068GI"
 object.to_sfen # => "S*6h"
 
-xcontainer = Xcontainer.new
-xcontainer.pieces_set("▲銀")
-object.execute(xcontainer)
-puts xcontainer
-object.revert(xcontainer)
-puts xcontainer
+container = Container.create
+container.pieces_set("▲銀")
+object.execute(container)
+puts container
+object.revert(container)
+puts container
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

@@ -5,7 +5,7 @@ module Bioshogi
       def dive(player: params[:current_player], depth: 0, hand_route: [])
         tle_verify
 
-        xcontainer = player.xcontainer
+        container = player.container
 
         if depth == 0
           @eval_counter = 0
@@ -38,7 +38,7 @@ module Bioshogi
         best_pv = [MATE]      # 初期値を詰みにしておくことで children が空のときに詰みが返る
 
         children.each do |hand|
-          hand.sandbox_execute(xcontainer) do
+          hand.sandbox_execute(container) do
             log["#{hand}"] if log
             v, pv = dive(player: player.opponent_player, depth: depth + 1, hand_route: hand_route + [hand])
             v = -v # 相手の一番良い手は自分の一番悪い手としたいので符号を反転する

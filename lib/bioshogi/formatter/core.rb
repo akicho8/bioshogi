@@ -21,10 +21,10 @@ module Bioshogi
         :to_webp,
         :to_yomiage,
         :to_yomiage_list,
-      ], to: :xcontainer
+      ], to: :container
 
       def to_sfen(options = {})
-        xcontainer.to_history_sfen(options)
+        container.to_history_sfen(options)
       end
 
       def to_kif(options = {})
@@ -66,11 +66,11 @@ module Bioshogi
       end
 
       def xcontainer_run_once
-        xcontainer
+        container
       end
 
       def xcontainer_class
-        @parser_options[:xcontainer_class] || Xcontainer
+        @parser_options[:xcontainer_class] || Container::Basic
       end
 
       def xcontainer_new
@@ -86,61 +86,61 @@ module Bioshogi
         end
       end
 
-      # 画像生成のための xcontainer の初期状態を返す
+      # 画像生成のための container の初期状態を返す
       def xcontainer_for_image
-        xcontainer = Xcontainer.new
-        xcontainer.params.update({
+        container = Container.create
+        container.params.update({
             :skill_monitor_enable           => false,
             :skill_monitor_technique_enable => false,
             :candidate_enable               => false,
             :validate_enable                => false,
           })
-        xcontainer_init(xcontainer) # FIXME: これ、必要ない SFEN を生成したりして遅い
-        xcontainer
+        xcontainer_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
+        container
       end
 
-      def xcontainer
-        @xcontainer ||= xcontainer_new.tap do |e|
+      def container
+        @container ||= xcontainer_new.tap do |e|
           xcontainer_init(e)
           xcontainer_run_all(e)
         end
       end
 
-      # FIXME: xcontainer の最初の状態をコピーしておく
+      # FIXME: container の最初の状態をコピーしておく
       def initial_xcontainer
         @initial_xcontainer ||= xcontainer_new.tap do |e|
           xcontainer_init(e)
         end
       end
 
-      def xcontainer_init(xcontainer)
+      def xcontainer_init(container)
         if @mi.sfen_info
-          xcontainer.placement_from_sfen(@mi.sfen_info)
+          container.placement_from_sfen(@mi.sfen_info)
         else
-          players_piece_box_set(xcontainer)
+          players_piece_box_set(container)
 
           if @mi.board_source
-            xcontainer.board.placement_from_shape(@mi.board_source)
+            container.board.placement_from_shape(@mi.board_source)
           else
             preset_info = PresetInfo[mi.header["手合割"]] || PresetInfo["平手"]
-            xcontainer.placement_from_preset(preset_info.key)
+            container.placement_from_preset(preset_info.key)
           end
 
           if mi.force_location
-            xcontainer.turn_info.turn_base = mi.force_location.code
+            container.turn_info.turn_base = mi.force_location.code
           end
 
           if mi.force_handicap
-            xcontainer.turn_info.handicap = mi.force_handicap
+            container.turn_info.handicap = mi.force_handicap
           end
         end
-        xcontainer.before_run_process # 最初の状態を記録
+        container.before_run_process # 最初の状態を記録
       end
 
       # 持駒を反映する
-      def players_piece_box_set(xcontainer)
+      def players_piece_box_set(container)
         mi.player_piece_boxes.each do |k, v|
-          xcontainer.player_at(k).piece_box.set(v)
+          container.player_at(k).piece_box.set(v)
         end
       end
 
@@ -161,10 +161,10 @@ module Bioshogi
         @preset_info ||= PresetInfo["平手"]
       end
 
-      def xcontainer_run_all(xcontainer)
-        Runner.new(self, xcontainer).perform
+      def xcontainer_run_all(container)
+        Runner.new(self, container).perform
         if @parser_options[:skill_monitor_enable]
-          SkillEmbed.new(self, xcontainer).perform
+          SkillEmbed.new(self, container).perform
         end
       end
 
@@ -187,7 +187,7 @@ module Bioshogi
 
       def judgment_message
         if e = last_action_info
-          e.judgment_message(xcontainer)
+          e.judgment_message(container)
         end
       end
 

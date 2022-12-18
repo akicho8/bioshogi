@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod(<<~EOT)
+container = Container.create
+container.placement_from_bod(<<~EOT)
 +---------+
 | ・ ・v玉|
 | ・ ・ ・|
@@ -10,8 +10,8 @@ xcontainer.placement_from_bod(<<~EOT)
 先手の持駒：飛香
 EOT
 
-xcontainer.players.each { |e| tp e.pressure_report }
-player = xcontainer.player_at(:black)
+container.players.each { |e| tp e.pressure_report }
+player = container.player_at(:black)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level1)
 evaluator.score               # => 3930
 # >> |----------+---------------+------|

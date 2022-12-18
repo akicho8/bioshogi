@@ -91,10 +91,10 @@ module Bioshogi
     end
 
     def to_sfen
-      xcontainer = Xcontainer.new
-      xcontainer.placement_from_preset(key)
-      xcontainer.turn_info.handicap = handicap
-      xcontainer.to_short_sfen
+      container = Container.create
+      container.placement_from_preset(key)
+      container.turn_info.handicap = handicap
+      container.to_short_sfen
     end
 
     def to_short_sfen

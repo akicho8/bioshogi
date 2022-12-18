@@ -1,7 +1,7 @@
 require "./setup"
 
-Parser.parse("５五飛").xcontainer rescue puts $!.message
-Parser.parse("position startpos moves B*1e") .xcontainer rescue puts $!.message
+Parser.parse("５五飛").container rescue puts $!.message
+Parser.parse("position startpos moves B*1e") .container rescue puts $!.message
 
 # >> ５五に移動できる飛がないため打の省略形と考えましたが飛を持っていません
 # >> 手番: 先手

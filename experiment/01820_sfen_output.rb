@@ -1,28 +1,28 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
-xcontainer.before_run_process
-xcontainer.to_history_sfen                # => "position startpos"
-xcontainer.pieces_set("▲銀△銀銀")
-puts xcontainer
-xcontainer.board.to_sfen          # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL"
-xcontainer.to_history_sfen                # => "position startpos"
-xcontainer.execute("▲６八銀")
-xcontainer.hand_logs.last.to_sfen # => "7i6h"
-xcontainer.to_history_sfen                # => "position startpos moves 7i6h"
-xcontainer.execute("△２四銀打")
-xcontainer.hand_logs.last.to_sfen # => "S*2d"
-xcontainer.to_history_sfen                # => "position startpos moves 7i6h S*2d"
-xcontainer.initial_state_board_sfen # => "startpos"
-puts xcontainer.board
-xcontainer.to_short_sfen        # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
-xcontainer.hand_logs.collect(&:to_sfen) # => ["7i6h", "S*2d"]
+container = Container.create
+container.placement_from_preset("平手")
+container.before_run_process
+container.to_history_sfen                # => "position startpos"
+container.pieces_set("▲銀△銀銀")
+puts container
+container.board.to_sfen          # => "lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL"
+container.to_history_sfen                # => "position startpos"
+container.execute("▲６八銀")
+container.hand_logs.last.to_sfen # => "7i6h"
+container.to_history_sfen                # => "position startpos moves 7i6h"
+container.execute("△２四銀打")
+container.hand_logs.last.to_sfen # => "S*2d"
+container.to_history_sfen                # => "position startpos moves 7i6h S*2d"
+container.initial_state_board_sfen # => "startpos"
+puts container.board
+container.to_short_sfen        # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+container.hand_logs.collect(&:to_sfen) # => ["7i6h", "S*2d"]
 
-xcontainer.execute("▲52銀打")
-xcontainer.execute("△94歩")
-xcontainer.execute("▲43銀成")
-xcontainer.to_short_sfen        # => "sfen lnsgkgsnl/1r5b1/1pppp+Sppp/p6s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w Ps 6"
+container.execute("▲52銀打")
+container.execute("△94歩")
+container.execute("▲43銀成")
+container.to_short_sfen        # => "sfen lnsgkgsnl/1r5b1/1pppp+Sppp/p6s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w Ps 6"
 
 # >> 後手の持駒：銀二
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

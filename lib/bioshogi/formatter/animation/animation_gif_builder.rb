@@ -27,8 +27,8 @@ module Bioshogi
               logger.info { "最後に追加するフレーム数(end_pages): #{end_pages}" }
               logger.info { "1手当たりの秒数(page_duration): #{page_duration}" }
 
-              @xcontainer = @formatter.xcontainer_for_image
-              @screen_image_renderer = ScreenImage.renderer(@xcontainer, params)
+              @container = @formatter.xcontainer_for_image
+              @screen_image_renderer = ScreenImage.renderer(@container, params)
 
               if factory_method_key == "is_factory_method_rmagick"
                 @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1 + 1, &params[:progress_callback])
@@ -46,7 +46,7 @@ module Bioshogi
 
                   @formatter.mi.move_infos.each.with_index do |e, i|
                     @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
-                    @xcontainer.execute(e[:input])
+                    @container.execute(e[:input])
                     tob("#{i}/#{@formatter.mi.move_infos.size}") { list << @screen_image_renderer.next_build }
                     logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                   end
@@ -94,7 +94,7 @@ module Bioshogi
 
                 @formatter.mi.move_infos.each.with_index do |e, i|
                   @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
-                  @xcontainer.execute(e[:input])
+                  @container.execute(e[:input])
                   tob("#{i}/#{@formatter.mi.move_infos.size}") { @screen_image_renderer.next_build.write(sfg.next) }
                   logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
                 end

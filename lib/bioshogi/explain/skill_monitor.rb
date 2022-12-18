@@ -19,7 +19,7 @@ module Bioshogi
           end
         end
 
-        if executor.xcontainer.params[:skill_monitor_technique_enable]
+        if executor.container.params[:skill_monitor_technique_enable]
           # 主に手筋用で戦型チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
           if e = TacticInfo.piece_hash_table[key]
@@ -98,21 +98,21 @@ module Bioshogi
 
           # 手数制限。制限を超えていたらskip
           if e.turn_limit
-            if e.turn_limit < player.xcontainer.turn_info.display_turn.next
+            if e.turn_limit < player.container.turn_info.display_turn.next
               throw :skip
             end
           end
 
           # 手数限定。手数が異なっていたらskip
           if e.turn_eq
-            if e.turn_eq != player.xcontainer.turn_info.display_turn.next
+            if e.turn_eq != player.container.turn_info.display_turn.next
               throw :skip
             end
           end
 
           # 手番限定。手番が異なればskip
           if e.order_key
-            if e.order_key != player.xcontainer.turn_info.order_key
+            if e.order_key != player.container.turn_info.order_key
               throw :skip
             end
           end
@@ -270,7 +270,7 @@ module Bioshogi
         # 0 < 1キル → skip
         # 1 < 1キル → ok
         if v = e.kill_count_lteq
-          if v >= player.xcontainer.kill_count
+          if v >= player.container.kill_count
           else
             throw :skip
           end

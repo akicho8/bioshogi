@@ -74,7 +74,7 @@ module Bioshogi
     describe "5x5の盤面" do
       it "works" do
         Board.dimensiton_change([5, 5]) do
-          expect(Xcontainer.player_test.board.to_s).to eq(<<~EOT)
+          expect(Container::Basic.player_test.board.to_s).to eq(<<~EOT)
   ５ ４ ３ ２ １
 +---------------+
 | ・ ・ ・ ・ ・|一

@@ -4,8 +4,8 @@ require "./setup"
 # Board.promotable_disable
 Board.dimensiton_change([2, 4])
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container.create
+container.placement_from_bod <<~EOT
 後手の持駒：
 +------+
 |v香 ・|
@@ -21,7 +21,7 @@ EOT
   Diver::NegaScoutDiver,
 ].each do |diver_class|
   tp Bioshogi.run_counts.clear
-  brain = xcontainer.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+  brain = container.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
   tp Brain.human_format(records)

@@ -1,14 +1,14 @@
 require "../setup"
 
-xcontainer = Xcontainer.start
+container = Container::Basic.start
 begin
-  xcontainer.execute("▲76歩")
-  xcontainer.execute("△34歩")
-  xcontainer.execute("▲11角成")
+  container.execute("▲76歩")
+  container.execute("△34歩")
+  container.execute("▲11角成")
 rescue => error
-  puts error.xcontainer
-  error.xcontainer.turn_info.display_turn  # => 2
-  error.xcontainer.win_player.location.key # => :white
+  puts error.container
+  error.container.turn_info.display_turn  # => 2
+  error.container.win_player.location.key # => :white
 end
 
 # >> 後手の持駒：なし

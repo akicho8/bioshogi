@@ -8,12 +8,12 @@ class NegaScout < NegaMax
   def nega_scout(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
     tle_verify
 
-    player = xcontainer.player_at(turn)
-    children = xcontainer.available_places(player)
+    player = container.player_at(turn)
+    children = container.available_places(player)
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
-      return [xcontainer.evaluate(player), []] # 現局面手番視点
+      return [container.evaluate(player), []] # 現局面手番視点
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
@@ -25,7 +25,7 @@ class NegaScout < NegaMax
 
     # 再帰を簡潔に記述するため
     recursive = -> _place, alpha2, beta2 {
-      xcontainer.place_on(player, _place) do
+      container.place_on(player, _place) do
         v, pv = nega_scout(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: alpha2, beta: beta2)
         v = -v
         [v, pv]
@@ -33,7 +33,7 @@ class NegaScout < NegaMax
     }
 
     # 効果的なもの順に並び換える
-    children = xcontainer.move_ordering(player, children)
+    children = container.move_ordering(player, children)
 
     # 最善候補を通常の窓で探索
     place = children.shift
