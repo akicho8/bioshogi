@@ -3,7 +3,7 @@
 module Bioshogi
   module Container
     concern :ExecuteMethods do
-      # XcontainerSimple では使ってないメソッド
+      # Simple では使ってないメソッド
       concerning :HumanMethods do
         included do
           delegate :to_kif_a, :to_ki2_a, :to_kif_oneline, to: :hand_logs
@@ -33,7 +33,7 @@ module Bioshogi
       end
 
       def executor_class
-        PlayerExecutorHuman
+        PlayerExecutor::Human
       end
     end
   end

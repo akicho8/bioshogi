@@ -17,7 +17,7 @@ module Bioshogi
     end
 
     def execute(str, options = {})
-      @executor = (options[:executor_class] || PlayerExecutorHuman).new(self, str, options)
+      @executor = (options[:executor_class] || PlayerExecutor::Human).new(self, str, options)
       @executor.execute
     end
 

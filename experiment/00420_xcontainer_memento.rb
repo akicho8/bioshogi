@@ -7,7 +7,7 @@ puts container
 container.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w P 2"
 
 memento = container.create_memento
-container.execute("△３四歩", executor_class: PlayerExecutorWithoutMonitor)
+container.execute("△３四歩", executor_class: PlayerExecutor::WithoutMonitor)
 puts container
 container.to_short_sfen   # => "sfen lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b P 3"
 

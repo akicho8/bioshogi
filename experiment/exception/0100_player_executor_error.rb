@@ -4,7 +4,7 @@ container = Container::Basic.start
 container.execute("▲２六歩")
 container.execute("△３四歩")
 player = container.player_at(:black)
-player_executor = PlayerExecutorHuman.new(player, "▲５五銀")
+player_executor = PlayerExecutor::Human.new(player, "▲５五銀")
 player_executor.execute
 
 container = Container::Basic.start

@@ -2,13 +2,15 @@
 
 module Bioshogi
   module Container
-    class XcontainerFast
+    class Simple
       include CoreMethods
       include PlayersMethods
       include ExecuteMethods
+      include SerializeMethods
+      include TestMethods
 
       def executor_class
-        PlayerExecutorWithoutMonitor
+        PlayerExecutor::WithoutMonitor
       end
     end
   end

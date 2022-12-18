@@ -19,14 +19,14 @@ container.board.placement_from_shape <<~EOT
 +------+
   EOT
 
-container.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
+container.execute("▲17飛", executor_class: PlayerExecutor::WithoutMonitor)
 container.player_at(:black).evaluator.score  # => 0
 container.player_at(:black).evaluator.score2 # => 
 
-container.execute("△23飛", executor_class: PlayerExecutorWithoutMonitor)
-container.execute("▲19飛", executor_class: PlayerExecutorWithoutMonitor)
-container.execute("△21飛", executor_class: PlayerExecutorWithoutMonitor)
-container.execute("▲17飛", executor_class: PlayerExecutorWithoutMonitor)
+container.execute("△23飛", executor_class: PlayerExecutor::WithoutMonitor)
+container.execute("▲19飛", executor_class: PlayerExecutor::WithoutMonitor)
+container.execute("△21飛", executor_class: PlayerExecutor::WithoutMonitor)
+container.execute("▲17飛", executor_class: PlayerExecutor::WithoutMonitor)
 
 container.player_at(:black).evaluator.score  # => 
 container.player_at(:black).evaluator.score2 # => 

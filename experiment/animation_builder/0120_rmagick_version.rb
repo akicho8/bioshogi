@@ -5,7 +5,7 @@ sfen = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w 
 sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
 
-container = Container::Basic.new         # Container::XcontainerFast にする
+container = Container::Basic.new         # Container::Fast にする
 container.params.update({
     :skill_monitor_enable           => false,
     :skill_monitor_technique_enable => false,

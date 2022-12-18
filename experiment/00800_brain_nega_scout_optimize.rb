@@ -43,7 +43,7 @@ puts "%.1f ms" % ms
 
 system "stackprof stackprof.dump"
 # system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
-# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutorHuman#hand_log"
+# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
 # system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 

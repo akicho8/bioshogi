@@ -26,7 +26,7 @@ puts "%.1f ms" % ms
 system "stackprof stackprof.dump"
 # system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 
-# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutorHuman#hand_log"
+# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
 system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Dimension::Base.lookup"
@@ -71,7 +71,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>          7   (0.8%)           7   (0.8%)     #<Module:0x00007ff34a988e70>.kconv
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::SkillSet#defense_infos
 # >>          8   (0.9%)           6   (0.7%)     Bioshogi::SkillMonitor#surface
-# >>         46   (5.0%)           6   (0.7%)     Bioshogi::PlayerExecutorBase#input
+# >>         46   (5.0%)           6   (0.7%)     Bioshogi::PlayerExecutor::Base#input
 # >>          9   (1.0%)           6   (0.7%)     Bioshogi::InputParser#match!
 # >>         12   (1.3%)           6   (0.7%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>          9   (1.0%)           6   (0.7%)     #<Module:0x00007ff34a8f9540>#<=>
@@ -306,7 +306,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >> Bioshogi::SkillMonitor#execute (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:13)
 # >>   samples:     0 self (0.0%)  /    196 total (21.3%)
 # >>   callers:
-# >>      196  (  100.0%)  Bioshogi::PlayerExecutorHuman#perform_skill_monitor
+# >>      196  (  100.0%)  Bioshogi::PlayerExecutor::Human#perform_skill_monitor
 # >>       83  (   42.3%)  Bioshogi::SkillMonitor#execute
 # >>        7  (    3.6%)  Bioshogi::SkillMonitor#execute_block
 # >>   callees (196 total):
@@ -320,7 +320,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
-# >>        1  (    0.5%)  Bioshogi::PlayerExecutorBase#container
+# >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table

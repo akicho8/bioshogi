@@ -4,7 +4,7 @@ require "./setup"
 # container.execute("▲６八銀")
 # container.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
 # 
-# container = Container::XcontainerSimple.start
+# container = Container::Simple.start
 # container.execute("▲６八銀")
 # container.instance_variables     # => 
 
@@ -16,7 +16,7 @@ StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   50.times do
     v, pv = container.current_player.brain.diver_dive(depth_max: 2)
     hand = pv.first
-    container.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+    container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
   end
 end
 puts container
