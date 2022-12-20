@@ -44,7 +44,7 @@ module Bioshogi
       [
         soldier.location.csa_sign,
         "00",
-        soldier.place.hankaku_number,
+        soldier.place.number_hankaku,
         soldier.to_csa,
       ].join
     end

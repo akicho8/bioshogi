@@ -23,31 +23,27 @@ module Bioshogi
       assert { Place.fetch("43").name   == "４三" }
       assert { Place.fetch([0, 0]).name == "９一" }
 
-      expect { Place.fetch("卍三") }.to raise_error(SyntaxDefact)
-      expect { Place.fetch(nil)    }.to raise_error(SyntaxDefact)
-      expect { Place.fetch("")     }.to raise_error(SyntaxDefact)
-      expect { Place.fetch("0")    }.to raise_error(SyntaxDefact)
+      expect { Place.fetch("卍三")   }.to raise_error(SyntaxDefact)
+      expect { Place.fetch(nil)      }.to raise_error(SyntaxDefact)
+      expect { Place.fetch("")       }.to raise_error(SyntaxDefact)
+      expect { Place.fetch("0")      }.to raise_error(SyntaxDefact)
+      expect { Place.fetch([-1, 0])  }.to raise_error(SyntaxDefact)
+      expect { Place.fetch([0, -1])  }.to raise_error(SyntaxDefact)
 
-      expect { Board.dimensiton_change([2, 2]) { Place.fetch("33")   } }.to raise_error(SyntaxDefact)
-      expect { Board.dimensiton_change([2, 2]) { Place.fetch("３三") } }.to raise_error(SyntaxDefact)
-    end
-
-    it "#valid?" do
-      assert { Place.fetch("４三").valid?    == true }
-      assert { Place.fetch([-1, -1]).valid? == false }
+      expect { Dimension.wh_change([2, 2]) { Place.fetch("33")   } }.to raise_error(SyntaxDefact)
+      expect { Dimension.wh_change([2, 2]) { Place.fetch("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it "#name は、座標を表す" do
       assert { Place.fetch("４三").name    == "４三" }
-      assert { Place.fetch([-1, -1]).name == "盤外" }
     end
 
     it "to_s は name の alias" do
       assert { Place.fetch("４三").to_s == "４三" }
     end
 
-    it "#hankaku_number は ７六歩(77) の 77 の部分を作るときに使う" do
-      assert Place.fetch("４三").hankaku_number == "43"
+    it "#number_hankaku は ７六歩(77) の 77 の部分を作るときに使う" do
+      assert Place.fetch("４三").number_hankaku == "43"
     end
 
     it "相手陣地に入っているか？" do
@@ -68,9 +64,9 @@ module Bioshogi
     end
 
     it "盤面内か？" do
-      assert Place["１一"].vector_add([0, 0]).valid?  == true
-      assert Place["１一"].vector_add([1, 0]).valid?  == false
-      assert Place["１一"].vector_add([0, -1]).valid? == false
+      assert { Place["１一"].vector_add([0, 0]) }
+      assert { !Place["１一"].vector_add([1, 0]) }
+      assert { !Place["１一"].vector_add([0, -1]) }
     end
 
     it "内部状態" do

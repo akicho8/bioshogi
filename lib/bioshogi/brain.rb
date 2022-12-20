@@ -161,8 +161,8 @@ module Bioshogi
       params[:diver_class].new(params.merge(args))
     end
 
-    # Board.promotable_disable
-    # Board.dimensiton_change([2, 5])
+    # Dimension::PlaceY.promotable_disabled
+    # Dimension.wh_change([2, 5])
     # container = Container::Basic.new
     # container.board.placement_from_shape <<~EOT
     # +------+

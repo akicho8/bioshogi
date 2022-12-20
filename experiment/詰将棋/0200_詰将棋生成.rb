@@ -1,8 +1,8 @@
 require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Board.promotable_disable
-# Board.dimensiton_change([5, 5])
+# Dimension::PlaceY.promotable_disabled
+# Dimension.wh_change([5, 5])
 
 class App
   def run

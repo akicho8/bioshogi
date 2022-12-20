@@ -128,7 +128,7 @@ module Bioshogi
 
             # 2, 3, 4段目でなければだめ(1段目は反則)
             v = soldier.top_spaces
-            if !(1 <= v && v <= Dimension::Yplace._promotable_size)
+            if !(1 <= v && v <= Dimension::PlaceY.promotable_depth)
               throw :skip
             end
 
@@ -257,12 +257,12 @@ module Bioshogi
           logic_desc: "玉が移動して上のスペースが3つの状態から2つの状態になった",
           verify_process: proc {
             soldier = executor.hand.soldier
-            if soldier.top_spaces != Dimension::Yplace._promotable_size - 1
+            if soldier.top_spaces != Dimension::PlaceY.promotable_depth - 1
               throw :skip
             end
 
             origin_soldier = executor.hand.origin_soldier
-            if origin_soldier.top_spaces != Dimension::Yplace._promotable_size
+            if origin_soldier.top_spaces != Dimension::PlaceY.promotable_depth
               throw :skip
             end
 

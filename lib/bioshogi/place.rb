@@ -17,8 +17,8 @@ module Bioshogi
       include Enumerable
 
       def each(&block)
-        Dimension::Yplace.dimension.times.flat_map { |y|
-          Dimension::Xplace.dimension.times.collect { |x|
+        Dimension::PlaceY.dimension.times.flat_map { |y|
+          Dimension::PlaceX.dimension.times.collect { |x|
             self[[x, y]]
           }
         }.each(&block)
@@ -39,12 +39,12 @@ module Bioshogi
         case value
         when Array
           a, b = value
-          x = Dimension::Xplace.lookup(a)
-          y = Dimension::Yplace.lookup(b)
+          x = Dimension::PlaceX.lookup(a)
+          y = Dimension::PlaceY.lookup(b)
         when String
           a, b = value.chars
-          x = Dimension::Xplace.lookup(a)
-          y = Dimension::Yplace.lookup(b)
+          x = Dimension::PlaceX.lookup(a)
+          y = Dimension::PlaceY.lookup(b)
         else
           if respond_to?(:to_a)
             return lookup(value.to_a)
@@ -95,11 +95,7 @@ module Bioshogi
     end
 
     def name
-      if valid?
-        to_a.collect { |e| e.name }.join
-      else
-        "盤外"
-      end
+      to_a.collect { |e| e.name }.join
     end
 
     def zenkaku_number
@@ -114,8 +110,8 @@ module Bioshogi
       name
     end
 
-    def hankaku_number
-      to_a.collect(&:hankaku_number).join
+    def number_hankaku
+      to_a.collect(&:number_hankaku).join
     end
 
     def to_sfen
@@ -142,16 +138,16 @@ module Bioshogi
 
     def vector_add(vector)
       x, y = vector
-      self.class.fetch([@x.value + x, @y.value + y])
+      self.class.lookup([@x.value + x, @y.value + y])
     end
 
-    def valid?
-      @x.valid? && @y.valid?
-    end
-
-    def invalid?
-      !valid?
-    end
+    # def valid?
+    #   @x.valid? && @y.valid?
+    # end
+    #
+    # def invalid?
+    #   !valid?
+    # end
 
     def ==(other)
       eql?(other)

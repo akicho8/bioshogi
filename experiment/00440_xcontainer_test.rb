@@ -5,7 +5,7 @@ container.to_ki2_a          # => ["▲２六歩", "△２四歩"]
 
 Basic.facade(init: "▲９七歩").players.collect{|e|e.evaluate} # => 
 
-Board.dimensiton_change([2, 2]) do
+Dimension.wh_change([2, 2]) do
   container = Container::Basic.facade(init: "▲１二歩", pieces_set: "▲歩")
   container.player_at(:black).brain.create_all_hands(promoted_only: true)  # => 
   container.player_at(:black).brain.fast_score_list # => 

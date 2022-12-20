@@ -2,8 +2,8 @@ require "./setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Board.promotable_disable
-Board.dimensiton_change([2, 3])
+Dimension::PlaceY.promotable_disabled
+Dimension.wh_change([2, 3])
 
 container = Container::Basic.new
 container.placement_from_bod <<~EOT

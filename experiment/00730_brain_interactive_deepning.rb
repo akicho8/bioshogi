@@ -2,7 +2,7 @@ require "./setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Board.dimensiton_change([2, 5])
+Dimension.wh_change([2, 5])
 [
   Diver::NegaAlphaDiver,
   Diver::NegaScoutDiver,

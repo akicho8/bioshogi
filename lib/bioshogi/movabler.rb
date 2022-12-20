@@ -32,7 +32,7 @@ module Bioshogi
             place = place.vector_add(vector)
 
             # 盤外に出たら終わり
-            if place.invalid?
+            unless place
               break
             end
 

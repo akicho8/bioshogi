@@ -26,7 +26,7 @@ module Bioshogi
     end
 
     it "#abone - 盤面の駒をなかったことにする(テスト用)" do
-      Board.dimensiton_change([3, 3]) do
+      Dimension.wh_change([3, 3]) do
         player = Container::Basic.player_test(init: "▲１一飛")
         soldier = player.board.safe_delete_on(Place["１一"])
         assert { player.board["１一"] == nil } # 盤面から消えている

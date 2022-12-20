@@ -69,8 +69,8 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>        863   (6.5%)         319   (2.4%)     Bioshogi::Dimension::Base#valid?
 # >>        310   (2.3%)         310   (2.3%)     Bioshogi::Piece::VectorMethods#piece_vector
 # >>        216   (1.6%)         216   (1.6%)     Bioshogi::Core#board
-# >>        674   (5.0%)         188   (1.4%)     Bioshogi::Dimension::Xplace.lookup
-# >>        629   (4.7%)         169   (1.3%)     Bioshogi::Dimension::Yplace.lookup
+# >>        674   (5.0%)         188   (1.4%)     Bioshogi::Dimension::PlaceX.lookup
+# >>        629   (4.7%)         169   (1.3%)     Bioshogi::Dimension::PlaceY.lookup
 # >>        168   (1.3%)         168   (1.3%)     Bioshogi::Piece::ScoreMethods#piece_score
 # >>        455   (3.4%)         145   (1.1%)     #<Module:0x00007ffcd2539d60>#<=>
 # >>        140   (1.0%)         140   (1.0%)     Bioshogi::Board#surface
@@ -92,8 +92,8 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>       31  (    0.7%)  Bioshogi::Place.[]
 # >>   callees (3188 total):
 # >>     1896  (   59.5%)  Bioshogi::Dimension::Base#hash
-# >>      674  (   21.1%)  Bioshogi::Dimension::Xplace.lookup
-# >>      618  (   19.4%)  Bioshogi::Dimension::Yplace.lookup
+# >>      674  (   21.1%)  Bioshogi::Dimension::PlaceX.lookup
+# >>      618  (   19.4%)  Bioshogi::Dimension::PlaceY.lookup
 # >>   code:
 # >>                                   |    30  |       def lookup(value)
 # >>   676    (5.1%) /   676   (5.1%)  |    31  |         if value.kind_of?(self)
@@ -106,12 +106,12 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>                                   |    38  |         case value
 # >>    73    (0.5%) /    73   (0.5%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
-# >>   673    (5.0%)                   |    41  |           x = Dimension::Xplace.lookup(a)
-# >>   618    (4.6%)                   |    42  |           y = Dimension::Yplace.lookup(b)
+# >>   673    (5.0%)                   |    41  |           x = Dimension::PlaceX.lookup(a)
+# >>   618    (4.6%)                   |    42  |           y = Dimension::PlaceY.lookup(b)
 # >>                                   |    43  |         when String
 # >>                                   |    44  |           a, b = value.chars
-# >>     1    (0.0%)                   |    45  |           x = Dimension::Xplace.lookup(a)
-# >>                                   |    46  |           y = Dimension::Yplace.lookup(b)
+# >>     1    (0.0%)                   |    45  |           x = Dimension::PlaceX.lookup(a)
+# >>                                   |    46  |           y = Dimension::PlaceY.lookup(b)
 # >>    10    (0.1%) /    10   (0.1%)  |    47  |         end
 # >>                                   |    48  | 
 # >>                                   |    49  |         if x && y

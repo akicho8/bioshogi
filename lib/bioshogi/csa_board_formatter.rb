@@ -17,8 +17,8 @@ module Bioshogi
     end
 
     def to_s
-      Dimension::Yplace.dimension.times.collect { |y|
-        "P#{y.next}" + Dimension::Xplace.dimension.times.collect { |x|
+      Dimension::PlaceY.dimension.times.collect { |y|
+        "P#{y.next}" + Dimension::PlaceX.dimension.times.collect { |x|
           place = Place.fetch([x, y])
           soldier_to_str(@board.surface[place])
         }.join + "\n"

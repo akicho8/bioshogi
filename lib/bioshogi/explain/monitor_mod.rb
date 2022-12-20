@@ -65,7 +65,7 @@ module Bioshogi
 
       def perform_skill_monitor_enable?
         if Bioshogi.config[:skill_monitor_enable]
-          if Dimension.size_type == :board_size_9x9
+          if Dimension.size_type == :d9x9
             container.params[:skill_monitor_enable]
           end
         end

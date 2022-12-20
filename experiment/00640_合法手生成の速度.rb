@@ -1,8 +1,8 @@
 require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Board.promotable_disable
-# Board.dimensiton_change([3, 3])
+# Dimension::PlaceY.promotable_disabled
+# Dimension.wh_change([3, 3])
 container = Container::Basic.new
 container.placement_from_bod <<~EOT
 後手の持駒：

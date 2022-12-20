@@ -11,7 +11,7 @@ module Bioshogi
     end
 
     it "works" do
-      Board.dimensiton_change([3, 3]) do
+      Dimension.wh_change([3, 3]) do
         container = Container::Simple.new
         container.pieces_set("▲歩")
         container.board.placement_from_shape <<~EOT
@@ -37,8 +37,8 @@ module Bioshogi
 
     it "works" do
       [Diver::NegaAlphaDiver, Diver::NegaScoutDiver].each do |diver_class|
-        Board.promotable_disable do
-          Board.dimensiton_change([2, 5]) do
+        Dimension::PlaceY.promotable_disabled do
+          Dimension.wh_change([2, 5]) do
             container = Container::Simple.new
             container.board.placement_from_shape <<~EOT
             +------+
@@ -71,14 +71,14 @@ module Bioshogi
     end
 
     it "盤上の駒の全手筋" do
-      Board.dimensiton_change([1, 5]) do
+      Dimension.wh_change([1, 5]) do
         container = Container::Simple.facade(init: "▲１五香")
         assert { container.player_at(:black).move_hands(promoted_only: true).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１二香成(15)", "▲１一香成(15)"] }
       end
     end
 
     it "一番得するように打つ" do
-      Board.dimensiton_change([2, 2]) do
+      Dimension.wh_change([2, 2]) do
         container = Container::Simple.facade(init: "▲１二歩", pieces_set: "▲歩")
         assert { container.player_at(:black).brain.fast_score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} } == [{:hand=>"▲１一歩成(12)", :score=>1305}, {:hand=>"▲２二歩打", :score=>200}] }
       end

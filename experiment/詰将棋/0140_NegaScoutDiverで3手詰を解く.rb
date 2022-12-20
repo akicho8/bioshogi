@@ -2,7 +2,7 @@ require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Board.dimensiton_change([2, 4])
+Dimension.wh_change([2, 4])
 
 container = Container::Basic.new
 container.player_at(:black).pieces_add("金金")

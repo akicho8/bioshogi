@@ -3,8 +3,6 @@
 module Bioshogi
   module Board
     class << self
-      delegate :dimensiton_change, :size_type, :promotable_disable, to: "Bioshogi::Dimension"
-
       def new(*args, &block)
         Basic.new(*args, &block)
       end

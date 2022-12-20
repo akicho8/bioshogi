@@ -32,5 +32,5 @@ container.player_at(:black).evaluator.score  # =>
 container.player_at(:black).evaluator.score2 # => 
 #
 # container.player_at(:black).brain.diver_dive(depth_max: 1) # => {:hand=>#<▲２八香(29)>, :score=>0, :depth=>0, :reading_hands=>[#<▲２八香(29)>, #<△９一飛(21)>]}
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/evaluator.rb:19:in `score2': undefined local variable or method `player_score_for' for #<Bioshogi::Evaluator:0x00007febd22b68d8> (NameError)
-# ~> 	from -:24:in `<main>'
+# ~> -:24:in `<main>': undefined method `score2' for #<Bioshogi::Evaluator::Level1:0x00007fad3b25b670> (NoMethodError)
+# ~> Did you mean?  score

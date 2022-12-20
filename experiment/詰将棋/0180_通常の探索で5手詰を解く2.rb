@@ -2,8 +2,8 @@ require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-# Board.promotable_disable
-Board.dimensiton_change([4, 9])
+# Dimension::PlaceY.promotable_disabled
+Dimension.wh_change([4, 9])
 
 container = Container::Basic.new
 container.player_at(:black).pieces_add("金桂")
