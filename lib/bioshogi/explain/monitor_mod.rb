@@ -64,11 +64,14 @@ module Bioshogi
       end
 
       def perform_skill_monitor_enable?
+        # return instance_variable_get("@perform_skill_monitor_enable_p") if instance_variable_defined?("@perform_skill_monitor_enable_p")
+        # @perform_skill_monitor_enable_p ||= yield_self do
         if Bioshogi.config[:skill_monitor_enable]
-          if Dimension.size_type == :d9x9
+          if Dimension.dimension_info.key == :d9x9
             container.params[:skill_monitor_enable]
           end
         end
+        # end
       end
     end
   end

@@ -30,8 +30,8 @@ module Bioshogi
         end
       end
 
-      def size_type
-        DimensionInfo.fetch(dimension_wh).key
+      def dimension_info
+        DimensionInfo.fetch(dimension_wh)
       end
 
       def dimension_wh
