@@ -1,9 +1,9 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Pvec do
+  describe PieceVector do
     it "works" do
-      assert { Pvec[1, 2].flip_sign == Pvec[-1, -2] }
+      assert { PieceVector[1, 2].flip_sign == PieceVector[-1, -2] }
     end
   end
 end
