@@ -124,7 +124,7 @@ module Bioshogi
 
       # フォントの位置を微調整
       def piece_char_adjust(v, location)
-        v + V.one.map2(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
+        v + V.one.mul(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
       end
 
       def soldier_font_scale(piece)

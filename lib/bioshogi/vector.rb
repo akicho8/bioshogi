@@ -3,6 +3,8 @@
 # 駒の移動情報定義用
 #
 
+# require "matrix"
+
 module Bioshogi
   class PieceVector < Array
     def flip_sign
@@ -27,34 +29,4 @@ module Bioshogi
 
   OV = OnceVector
   RV = RepeatVector
-
-  ################################################################################ for ScreenImage
-
-  class V < Vector
-    def self.one
-      self[1, 1]
-    end
-
-    def self.half
-      self[0.5, 0.5]
-    end
-
-    def x
-      self[0]
-    end
-
-    def y
-      self[1]
-    end
-  end
-
-  class Rect < Vector
-    def w
-      self[0]
-    end
-
-    def h
-      self[1]
-    end
-  end
 end

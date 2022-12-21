@@ -49,7 +49,7 @@ module Bioshogi
       end
 
       def image_rect
-        Rect[params[:width], params[:height]]
+        Rect.new(params[:width], params[:height])
       end
 
       def ext_name

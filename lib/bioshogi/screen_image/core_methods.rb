@@ -223,10 +223,10 @@ module Bioshogi
         # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
         # なので w * 90, h * 100 のような感じにしないといけない
         # [90, 100] みたいなのは cell_rect に入っている
-        # ベクトルのそれぞれの位置を掛け算するには map2 を使う
+        # ベクトルのそれぞれの位置を掛け算するには mul を使う
         # https://docs.ruby-lang.org/ja/latest/class/Vector.html
         # collect2 だと Array になってしまうので注意
-        # map2 を使わないのなら top_left + V[v.x * cell_w, v.y * cell_h] で良い
+        # mul を使わないのなら top_left + V[v.x * cell_w, v.y * cell_h] で良い
         # ベタな書き方をしてみたけど速度に影響なし
         # また v でメモ化してみたけどこれも影響なし
         top_left + ps(v)
@@ -234,7 +234,7 @@ module Bioshogi
 
       # pixel size
       def ps(v)
-        v.map2(cell_rect) { |a, b| a * b }
+        v.mul(cell_rect) { |a, b| a * b }
       end
 
       def minus_one(x, y)
@@ -252,11 +252,11 @@ module Bioshogi
       end
 
       def image_rect
-        @image_rect ||= Rect[params[:width], params[:height]]
+        @image_rect ||= Rect.new(params[:width], params[:height])
       end
 
       def lattice
-        @lattice ||= Rect[params[:dimension_w], params[:dimension_h]]
+        @lattice ||= Rect.new(params[:dimension_w], params[:dimension_h])
       end
 
       def cell_w
@@ -277,7 +277,7 @@ module Bioshogi
       end
 
       def cell_rect
-        @cell_rect ||= Rect[cell_w, cell_h]
+        @cell_rect ||= Rect.new(cell_w, cell_h)
       end
 
       def center
@@ -285,7 +285,7 @@ module Bioshogi
       end
 
       def top_left
-        @top_left ||= center - cell_rect.map2(lattice) { |a, b| a * b } / 2
+        @top_left ||= center - cell_rect.mul(lattice) { |a, b| a * b } / 2
       end
 
       def v_bottom_right_outer
