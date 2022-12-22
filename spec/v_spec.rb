@@ -28,10 +28,6 @@ module Bioshogi
       assert { V[5, 6].inspect == "<[5, 6]>" }
     end
 
-    it "collect" do
-      assert { V[5, 6].collect { |e| e * 10 } == V[50, 60] }
-    end
-
     it "hash, eql?" do
       assert { { V[5, 6] => true }[V[5, 6]] }
     end
@@ -42,6 +38,14 @@ module Bioshogi
 
     it "-" do
       assert { -V[1, 2] == V[-1, -2] }
+    end
+
+    it "each" do
+      assert { V[1, 2].each }
+    end
+
+    it "collect" do
+      assert { V[2, 3].collect.to_a == [2, 3] }
     end
   end
 end

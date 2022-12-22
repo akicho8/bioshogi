@@ -14,8 +14,6 @@ module Bioshogi
       end
     end
 
-    # include Enumerable
-
     attr_reader :x
     attr_reader :y
 
@@ -24,15 +22,11 @@ module Bioshogi
       @y = y
     end
 
-    # delegate :each, to: :to_a
+    include Enumerable
+    delegate :each, to: :to_a
 
     def to_a
       [@x, @y]
-    end
-
-    def collect(&block)
-      # raise
-      self.class.new(*to_a.collect(&block)) # FIXME: class.new がとれたらとる
     end
 
     def ==(other)
