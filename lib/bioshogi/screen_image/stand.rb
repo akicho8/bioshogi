@@ -65,7 +65,7 @@ module Bioshogi
               # 持駒
               char_draw({
                   :layer      => @d_piece_layer,
-                  :v          => piece_char_adjust(v, location),
+                  :v          => v + piece_char_adjust(location),
                   :text       => piece.name,
                   :location   => location,
                   :color      => params[:stand_piece_color] || params[:piece_font_color],

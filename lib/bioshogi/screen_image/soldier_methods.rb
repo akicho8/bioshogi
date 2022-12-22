@@ -32,7 +32,7 @@ module Bioshogi
 
         char_draw({
             :layer     => @d_piece_layer,
-            :v         => piece_char_adjust(v, location),
+            :v         => v + piece_char_adjust(location),
             :text      => soldier_name(soldier),
             :location  => location,
             :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
@@ -123,8 +123,9 @@ module Bioshogi
       end
 
       # フォントの位置を微調整
-      def piece_char_adjust(v, location)
-        v + V.one.mul(params[:piece_char_adjust][location.key]) { |a, b| a * b * location.value_sign }
+      def piece_char_adjust(location)
+        @piece_char_adjust ||= {}
+        @piece_char_adjust[location.key] ||= V[*params[:piece_char_adjust][location.key]] * location.value_sign
       end
 
       def soldier_font_scale(piece)

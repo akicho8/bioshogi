@@ -3,8 +3,6 @@
 # 駒の移動情報定義用
 #
 
-# require "matrix"
-
 module Bioshogi
   class PieceVector < Array
     def flip_sign

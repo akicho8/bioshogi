@@ -14,6 +14,8 @@ module Bioshogi
       end
     end
 
+    # include Enumerable
+
     attr_reader :x
     attr_reader :y
 
@@ -22,11 +24,14 @@ module Bioshogi
       @y = y
     end
 
+    # delegate :each, to: :to_a
+
     def to_a
       [@x, @y]
     end
 
     def collect(&block)
+      # raise
       self.class.new(*to_a.collect(&block)) # FIXME: class.new がとれたらとる
     end
 
@@ -34,8 +39,12 @@ module Bioshogi
       @x == other.x && @y == other.y
     end
 
+    def hash
+      to_a.hash
+    end
+
     def eql?(other)
-      @x == other.x && @y == other.y
+      instance_of?(other.class) && @x == other.x && @y == other.y
     end
 
     def <=>(other)
@@ -50,49 +59,20 @@ module Bioshogi
       "<#{self}>"
     end
 
-    def add(other)
-      if other.kind_of?(self.class)
-        self.class.new(@x + other.x, @y + other.y)
-      elsif other.respond_to?(:to_a)
-        self + self.class.new(*other)
-      else
-        self.class.new(@x + other, @y + other)
-      end
+    def -@
+      self * -1
     end
 
-    def sub(other)
-      if other.kind_of?(self.class)
-        self.class.new(@x - other.x, @y - other.y)
-      elsif other.respond_to?(:to_a)
-        self - self.class.new(*other)
-      else
-        self.class.new(@x - other, @y - other)
-      end
+    %i(+ - * /).each do |op|
+      class_eval <<-EOT, __FILE__, __LINE__ + 1
+        def #{op}(other)                                        # def +(other)
+          if other.kind_of?(self.class)                         #   if other.kind_of?(self.class)
+            self.class.new(@x #{op} other.x, @y #{op} other.y)  #     self.class.new(@x + other.x, @y + other.y)
+          else                                                  #   else
+            self.class.new(@x #{op} other, @y #{op} other)      #     self.class.new(@x + other, @y + other)
+          end                                                   #   end
+        end                                                     # end
+      EOT
     end
-
-    def mul(other)
-      if other.kind_of?(self.class)
-        self.class.new(@x * other.x, @y * other.y)
-      elsif other.respond_to?(:to_a)
-        self * self.class.new(*other)
-      else
-        self.class.new(@x * other, @y * other)
-      end
-    end
-
-    def div(other)
-      if other.kind_of?(self.class)
-        self.class.new(@x / other.x, @y / other.y)
-      elsif other.respond_to?(:to_a)
-        self / self.class.new(*other)
-      else
-        self.class.new(@x / other, @y / other)
-      end
-    end
-
-    alias + add
-    alias - sub
-    alias * mul
-    alias / div
   end
 end

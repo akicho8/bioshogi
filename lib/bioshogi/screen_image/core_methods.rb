@@ -215,26 +215,14 @@ module Bioshogi
         end
       end
 
+      # メモ化の効果なし
       def px(v)
-        # もともとセルは正方形だった
-        # だから「top_left + v * cell_w」でよかった
-        # これは w, h を同じ値で乗算する
-        # するとセルが正方形になる
-        # しかし実際の将棋盤は縦長なので正方形にすると心理的に押し潰された印象になってしまう
-        # なので w * 90, h * 100 のような感じにしないといけない
-        # [90, 100] みたいなのは cell_rect に入っている
-        # ベクトルのそれぞれの位置を掛け算するには mul を使う
-        # https://docs.ruby-lang.org/ja/latest/class/Vector.html
-        # collect2 だと Array になってしまうので注意
-        # mul を使わないのなら top_left + V[v.x * cell_w, v.y * cell_h] で良い
-        # ベタな書き方をしてみたけど速度に影響なし
-        # また v でメモ化してみたけどこれも影響なし
         top_left + ps(v)
       end
 
       # pixel size
       def ps(v)
-        v.mul(cell_rect) { |a, b| a * b }
+        v * cell_rect
       end
 
       def minus_one(x, y)
@@ -285,7 +273,7 @@ module Bioshogi
       end
 
       def top_left
-        @top_left ||= center - cell_rect.mul(lattice) { |a, b| a * b } / 2
+        @top_left ||= center - cell_rect * lattice / 2
       end
 
       def v_bottom_right_outer
