@@ -11,7 +11,7 @@ module Bioshogi
         @container = container
       end
 
-      def perform
+      def call
         begin
           @formatter.mi.move_infos.each.with_index do |info, i|
             if @formatter.parser_options[:debug]

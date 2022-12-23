@@ -13,7 +13,7 @@ module Bioshogi
         @container = container
       end
 
-      def perform
+      def call
         rikisen_judgement
 
         # 両方が入玉していれば「相入玉」タグを追加する
