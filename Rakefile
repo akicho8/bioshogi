@@ -30,7 +30,7 @@ desc "重要なところだけのテスト"
 RSpec::Core::RakeTask.new("spec:core") do |t|
   # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"
   # t.rspec_opts = "-f d -t ~animation --fail-fast"
-  t.rspec_opts = "-f d -t ~animation -t ~tactic -t ~transform"
+  t.rspec_opts = "-f d  -t ~screen_image -t ~animation -t ~tactic -t ~transform"
 end
 task :t => "spec:core"
 

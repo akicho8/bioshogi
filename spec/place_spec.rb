@@ -56,7 +56,7 @@ module Bioshogi
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do
-      assert Place.fetch("５五").vector_add([1, 2]).name == "４七"
+      assert Place.fetch("５五").vector_add(V[1, 2]).name == "４七"
     end
 
     it "内部座標を返す" do
@@ -64,9 +64,9 @@ module Bioshogi
     end
 
     it "盤面内か？" do
-      assert { Place["１一"].vector_add([0, 0]) }
-      assert { !Place["１一"].vector_add([1, 0]) }
-      assert { !Place["１一"].vector_add([0, -1]) }
+      assert { Place["１一"].vector_add(V[0, 0]) }
+      assert { !Place["１一"].vector_add(V[1, 0]) }
+      assert { !Place["１一"].vector_add(V[0, -1]) }
     end
 
     it "内部状態" do

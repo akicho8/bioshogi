@@ -137,8 +137,7 @@ module Bioshogi
     end
 
     def vector_add(vector)
-      x, y = vector
-      self.class.lookup([@x.value + x, @y.value + y])
+      self.class.lookup([@x.value + vector.x, @y.value + vector.y])
     end
 
     # def valid?

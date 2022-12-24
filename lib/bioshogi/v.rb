@@ -20,6 +20,7 @@ module Bioshogi
     def initialize(x, y)
       @x = x
       @y = y
+      freeze
     end
 
     include Enumerable
@@ -30,7 +31,7 @@ module Bioshogi
     end
 
     def to_ary
-      [@x, @y]
+      to_a
     end
 
     def ==(other)
@@ -49,18 +50,6 @@ module Bioshogi
       to_a <=> other.to_a
     end
 
-    def to_s
-      to_a.to_s
-    end
-
-    def inspect
-      "<#{self}>"
-    end
-
-    def -@
-      self * -1
-    end
-
     %i(+ - * /).each do |op|
       class_eval <<-EOT, __FILE__, __LINE__ + 1
         def #{op}(other)                                        # def +(other)
@@ -71,6 +60,18 @@ module Bioshogi
           end                                                   #   end
         end                                                     # end
       EOT
+    end
+
+    def -@
+      self * -1
+    end
+
+    def to_s
+      to_a.to_s
+    end
+
+    def inspect
+      "<#{self}>"
     end
   end
 end

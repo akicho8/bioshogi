@@ -52,7 +52,7 @@ module Bioshogi
             end
 
             # いっぽだけベクトルならそれで終わり
-            if vector.kind_of?(OnceVector)
+            if vector.kind_of?(V::OnceVector)
               break
             end
           end
