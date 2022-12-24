@@ -61,7 +61,7 @@ module Bioshogi
       end
 
       def yomiage
-        YomiageNumberInfo.fetch(key).yomiage
+        Yomiage::NumberInfo.fetch(key).yomiage
       end
 
       def flip

@@ -66,7 +66,7 @@ module Bioshogi
     end
 
     def yomiage_formatter(options = {})
-      YomiageFormatter.new(self, options)
+      Yomiage::Formatter.new(self, options)
     end
   end
 end
