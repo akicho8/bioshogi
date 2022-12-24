@@ -25,7 +25,7 @@ mate_proc = proc do |player, score, hand_route|
 end
 
 player = container.player_at(:black)
-object = Diver::NegaAlphaDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
+object = Ai::Diver::NegaAlphaDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 tp object.dive
 tp mate_records
 

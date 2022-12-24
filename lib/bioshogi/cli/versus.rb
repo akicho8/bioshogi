@@ -43,7 +43,7 @@ module Bioshogi
             depth_max_range: 0..options[:depth_max],
           }
           diver_class = divers[container.turn_info.current_location.code]
-          records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level3).iterative_deepening(deepen_score_list_params)
+          records = current_player.brain(diver_class: diver_class, evaluator_class: Ai::Evaluator::Level3).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
           container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
@@ -52,7 +52,7 @@ module Bioshogi
           # container.players.each { |e| tp e.pressure_report }
 
           tp deepen_score_list_params
-          tp Brain.human_format(records)
+          tp Ai::Brain.human_format(records)
           tp container.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
           puts container
           puts

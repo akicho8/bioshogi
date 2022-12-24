@@ -19,9 +19,9 @@ container.placement_from_bod <<~EOT
 先手の持駒：
 EOT
 
-brain = container.player_at(:white).brain(diver_class: Diver::NegaAlphaDiver)
+brain = container.player_at(:white).brain(diver_class: Ai::Diver::NegaAlphaDiver)
 records = brain.iterative_deepening(depth_max_range: 0..7)
-tp Brain.human_format(records)
+tp Ai::Brain.human_format(records)
 # 遅すぎて使えない
 
 # >> |------+------------+----------------------------------------------------------------------------------------+--------+------------+----------|

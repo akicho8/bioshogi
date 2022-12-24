@@ -21,7 +21,7 @@ EOT
 
 # opening_score の if !e.promoted をはずして33の地点をマイナスすれば回避できるけどやめとく
 records = container.player_at(:black).brain(evaluator_class: Evaluator::Level4).iterative_deepening(depth_max_range: 0..0)
-tp Brain.human_format(records)
+tp Ai::Brain.human_format(records)
 # >> |------+----------------+--------+--------+------------+----------|
 # >> | 順位 | 候補手         | 読み筋 | ▲形勢 | 評価局面数 | 処理時間 |
 # >> |------+----------------+--------+--------+------------+----------|

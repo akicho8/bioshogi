@@ -19,7 +19,7 @@ require "./setup"
 container = Container::Basic.new
 container.placement_from_preset("平手")
 
-brain = container.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
 # brain.diver_dive(depth_max: 0) # => [-100, []]
 # brain.diver_dive(depth_max: 1) # => [105, [<▲１三飛(14)>]]
 # brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]

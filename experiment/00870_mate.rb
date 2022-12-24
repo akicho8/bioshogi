@@ -17,7 +17,7 @@ container.placement_from_bod <<~EOT
 EOT
 puts container
 
-brain = container.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaDiver)
 # brain.diver_dive(depth_max: 0) # => [60, []]
 # brain.diver_dive(depth_max: 1) # => [2520, [<▲１二玉(13)>]]
 # brain.diver_dive(depth_max: 2) # => [60, [<▲２四玉(13)>, <△２二玉(11)>]]

@@ -2,7 +2,7 @@
 
 module Bioshogi
   class Player
-    include PlayerBrainMod
+    include Ai::PlayerBrainMod
 
     attr_reader :location
     attr_reader :container

@@ -17,14 +17,14 @@ container.placement_from_bod <<~EOT
 手数＝0
 EOT
 [
-  Diver::NegaAlphaDiver,
-  Diver::NegaScoutDiver,
+  Ai::Diver::NegaAlphaDiver,
+  Ai::Diver::NegaScoutDiver,
 ].each do |diver_class|
   tp Bioshogi.run_counts.clear
-  brain = container.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+  brain = container.current_player.brain(diver_class: diver_class) # Ai::Diver::NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
-  tp Brain.human_format(records)
+  tp Ai::Brain.human_format(records)
   tp Bioshogi.run_counts
 end
 

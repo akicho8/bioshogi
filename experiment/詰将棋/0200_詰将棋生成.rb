@@ -72,12 +72,12 @@ class App
         @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
       }
 
-      brain = container.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
+      brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaMateDiver) # 詰将棋専用探索
       @records = brain.iterative_deepening(depth_max_range: params[:nantedume]..params[:nantedume], mate_mode: true, no_break: true, motigoma_zero_denaito_dame: true, mate_proc: mate_proc)
 
       @records = @records.find_all { |e| e[:black_side_score] >= 1 }
 
-      tp Brain.human_format(@records)
+      tp Ai::Brain.human_format(@records)
       tp @mate_records
 
       container.before_run_process

@@ -4,8 +4,8 @@ require "./setup"
 
 Dimension.wh_change([2, 5])
 [
-  Diver::NegaAlphaDiver,
-  Diver::NegaScoutDiver,
+  Ai::Diver::NegaAlphaDiver,
+  Ai::Diver::NegaScoutDiver,
 ].each do |diver_class|
   container = Container::Basic.new
   container.board.placement_from_shape <<~EOT

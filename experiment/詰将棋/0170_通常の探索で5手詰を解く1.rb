@@ -23,9 +23,9 @@ mate_proc = proc do |player, score, hand_route|
   mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
 end
 
-brain = container.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaDiver)
 records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc)
-tp Brain.human_format(records)
+tp Ai::Brain.human_format(records)
 tp mate_records
 
 # >> |------+--------------+--------------------------------------------------------------+--------+------------+----------+--------|

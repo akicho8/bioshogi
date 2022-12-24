@@ -4,8 +4,8 @@ info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5
 # info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e", typical_error_case: :embed)
 container = info.formatter.container
 puts container
-records = container.current_player.brain(diver_class: Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
-tp Brain.human_format(records)
+records = container.current_player.brain(diver_class: Ai::Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
+tp Ai::Brain.human_format(records)
 record = records.first
 hand = record[:hand]
 container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
