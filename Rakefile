@@ -9,10 +9,16 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 task :default => :spec
 
-desc "動画/画像変換のテスト"
+desc "動画変換のテスト"
 RSpec::Core::RakeTask.new("spec:animation") do |t|
   # t.pattern = "spec/**/{animation,image}*_spec.rb"
   t.rspec_opts = "-f d --fail-fast -t animation"
+end
+
+desc "画像変換のテスト"
+RSpec::Core::RakeTask.new("spec:screen_image") do |t|
+  # t.pattern = "spec/**/{screen_image,image}*_spec.rb"
+  t.rspec_opts = "-f d --fail-fast -t screen_image"
 end
 
 desc "戦法判定"
