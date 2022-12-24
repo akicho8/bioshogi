@@ -10,11 +10,6 @@ module Bioshogi
       @handicap = handicap
       @turn_offset = turn_offset || 0
       @turn_base = turn_base || 0
-      freeze
-    end
-
-    def next
-      self.class.new(handicap: handicap, turn_base: nil, turn_offset: turn_offset.next)
     end
 
     def inspect
