@@ -157,12 +157,12 @@ module Bioshogi
       to_xy <=> other.to_xy
     end
 
-    def eql?(other)
-      self.class == other.class && to_xy == other.to_xy
-    end
-
     def hash
       to_xy.hash
+    end
+
+    def eql?(other)
+      self.class == other.class && to_xy == other.to_xy
     end
 
     def promotable?(location)

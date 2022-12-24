@@ -29,6 +29,10 @@ module Bioshogi
       [@x, @y]
     end
 
+    def to_ary
+      [@x, @y]
+    end
+
     def ==(other)
       @x == other.x && @y == other.y
     end
