@@ -67,7 +67,7 @@ module Bioshogi
         clock_add_process
         turn_ended_process
 
-        container.turn_info.turn_offset += 1
+        container.turn_info = container.turn_info.next
 
         turn_changed_process
 
