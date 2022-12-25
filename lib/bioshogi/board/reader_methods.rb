@@ -58,7 +58,7 @@ module Bioshogi
       end
 
       def to_kif
-        KakinokiBoardFormatter.new(self).to_s
+        KakinokiFormatter.new(self).to_s
       end
 
       def to_ki2
