@@ -66,7 +66,7 @@ module Bioshogi
       end
 
       def to_csa
-        CsaBoardFormatter.new(self).to_s
+        CsaFormatter.new(self).to_s
       end
 
       def to_s
