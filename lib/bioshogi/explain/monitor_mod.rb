@@ -49,7 +49,7 @@ module Bioshogi
         super
 
         if v = @params[:used_seconds]
-          player.personal_clock.add(v)
+          player.single_clock.add(v)
         end
       end
 

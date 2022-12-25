@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  class PersonalClock
+  class SingleClock
     attr_reader :total_seconds
     attr_reader :used_seconds
 

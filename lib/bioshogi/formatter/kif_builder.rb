@@ -22,7 +22,7 @@ module Bioshogi
 
       def build_before
         if @params[:time_embed_force] || @formatter.mi.clock_exist?
-          @chess_clock = ChessClock.new
+          @main_clock = MainClock.new
         end
       end
 
@@ -32,13 +32,13 @@ module Bioshogi
 
       def body_hands
         @formatter.container.hand_logs.collect.with_index { |e, i|
-          if @chess_clock
-            @chess_clock.add(@formatter.used_seconds_at(i))
+          if @main_clock
+            @main_clock.add(@formatter.used_seconds_at(i))
           end
           s = e.to_kif(char_type: :formal_sheet)
           s = mb_ljust(s, @params[:hand_width])
           n = "%*d" % [@params[:number_width], i.next]
-          s = [n, s, @chess_clock].compact.join(" ")
+          s = [n, s, @main_clock].compact.join(" ")
           s = s.rstrip + "\n"
           if v = e.to_skill_set_kif_comment
             s += v
@@ -64,9 +64,9 @@ module Bioshogi
 
           if @formatter.mi.last_action_params
             if used_seconds = @formatter.mi.last_action_params[:used_seconds]
-              if @chess_clock
-                @chess_clock.add(used_seconds)
-                right_part = @chess_clock.to_s
+              if @main_clock
+                @main_clock.add(used_seconds)
+                right_part = @main_clock.to_s
               end
             end
           end

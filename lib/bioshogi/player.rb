@@ -179,9 +179,9 @@ module Bioshogi
       end
     end
 
-    concerning :MiniClockMethods do
-      def personal_clock
-        @personal_clock ||= ChessClock::PersonalClock.new
+    concerning :SingleClockMethods do
+      def single_clock
+        @single_clock ||= SingleClock.new
       end
     end
 

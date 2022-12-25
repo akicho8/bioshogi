@@ -16,7 +16,7 @@ module Bioshogi
           :place_same         => place_same?,
           :skill_set          => skill_set,
           :handicap           => container.turn_info.handicap?,
-          :personal_clock     => player.personal_clock.clone.freeze, # 時計の状態を保持して手に結びつける
+          :single_clock       => player.single_clock.clone.freeze, # 時計の状態を保持して手に結びつける
         }).freeze
     end
 

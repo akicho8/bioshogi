@@ -33,7 +33,7 @@ end
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
 loader.ignore("#{__dir__}/bioshogi/logger.rb")
-loader.ignore("#{__dir__}/bioshogi/vector_shortcut.rb")
+loader.ignore("#{__dir__}/bioshogi/vector_constants.rb")
 loader.ignore("#{__dir__}/bioshogi/errors.rb")
 loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
 loader.ignore("#{__dir__}/bioshogi/assets")
@@ -48,7 +48,7 @@ loader.do_not_eager_load("#{__dir__}/explain/*_generator")
 loader.setup
 
 require "bioshogi/logger"
-require "bioshogi/vector_shortcut"
+require "bioshogi/vector_constants"
 require "bioshogi/errors"
 
 # 必須

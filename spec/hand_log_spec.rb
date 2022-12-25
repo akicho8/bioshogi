@@ -22,7 +22,7 @@ module Bioshogi
 6 ４二銀(31) (03:00/00:00:00)
       EOT
 
-      assert { parser.container.hand_logs.last.personal_clock.to_s == "(03:00/00:06:00)" }
+      assert { parser.container.hand_logs.last.single_clock.to_s == "(03:00/00:06:00)" }
     end
   end
 end

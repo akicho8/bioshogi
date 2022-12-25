@@ -12,7 +12,7 @@ module Bioshogi
     attr_accessor :skill_set
     attr_accessor :handicap
 
-    attr_accessor :personal_clock
+    attr_accessor :single_clock
 
     delegate :soldier, to: :hand
 

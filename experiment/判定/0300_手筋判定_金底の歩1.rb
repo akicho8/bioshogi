@@ -30,8 +30,8 @@ pp container.hand_logs.last.skill_set.technique_infos.first.key == :"金底の�
 # >>  @drop_hand=<△１一歩打>,
 # >>  @handicap=false,
 # >>  @move_hand=nil,
-# >>  @personal_clock=
-# >>   #<Bioshogi::ChessClock::PersonalClock:0x00007fe247835618
+# >>  @single_clock=
+# >>   #<Bioshogi::SingleClock:0x00007fe247835618
 # >>    @total_seconds=0,
 # >>    @used_seconds=0>,
 # >>  @place_same=nil,
