@@ -116,7 +116,7 @@ module Bioshogi
 
       def origin_place
         if hand_log
-          if hand_log.hand.kind_of?(MoveHand)
+          if hand_log.hand.kind_of?(Hand::Move)
             V[*hand_log.hand.origin_soldier.place.to_xy]
           end
         end

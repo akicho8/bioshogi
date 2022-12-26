@@ -79,7 +79,7 @@ module Bioshogi
 
       # 成れるなら成る
       if origin_soldier.next_promotable?(soldier.place)
-        move_hand = MoveHand.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+        move_hand = Hand::Move.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
         success = piece_store_core(container, move_hand, yielder, options)
         if success
           if options[:promoted_only]
@@ -94,7 +94,7 @@ module Bioshogi
 
       if soldier.alive?
         # すでに成っている(または成らない)手を生成
-        move_hand = MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
+        move_hand = Hand::Move.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: captured_soldier)
         piece_store_core(container, move_hand, yielder, options)
       end
     end

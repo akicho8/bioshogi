@@ -43,11 +43,11 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >> 
 # >> 先手番
 # >> |-----------------------------+-------|
-# >> |     Bioshogi::MoveHand.create | 21973 |
+# >> |     Bioshogi::Hand::Move.create | 21973 |
 # >> |     sandbox_execute.execute | 38626 |
 # >> |      sandbox_execute.revert | 38626 |
 # >> | Bioshogi::Evaluator::Base#score | 16796 |
-# >> |     Bioshogi::DropHand.create | 550   |
+# >> |     Bioshogi::Hand::Drop.create | 550   |
 # >> |-----------------------------+-------|
 # >> ==================================
 # >>   Mode: wall(1000)

@@ -77,7 +77,7 @@ module Bioshogi
                 end
               end
 
-              drop_hand = DropHand.create(soldier: soldier)
+              drop_hand = Hand::Drop.create(soldier: soldier)
 
               if options[:legal_only]
                 # 合法手でなければ除外

@@ -86,13 +86,13 @@ module Bioshogi
 
       def move_hand
         if origin_soldier
-          @move_hand ||= MoveHand.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: board.surface[place])
+          @move_hand ||= Hand::Move.create(soldier: soldier, origin_soldier: origin_soldier, captured_soldier: board.surface[place])
         end
       end
 
       def drop_hand
         if !origin_soldier
-          @drop_hand ||= DropHand.create(soldier: soldier)
+          @drop_hand ||= Hand::Drop.create(soldier: soldier)
         end
       end
 
