@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 module Bioshogi
-  module Movabler
+  module SoldierWalker
     extend self
 
     # soldier が移動可能な手をすべて取得する
@@ -24,7 +24,7 @@ module Bioshogi
     #
     #   となるので成っているかどうかにかかわらず B の方法でやればいい
     #
-    def move_list(container, soldier, options = {})
+    def call(container, soldier, options = {})
       Enumerator.new do |yielder|
         soldier.all_vectors.each do |vector|
           place = soldier.place

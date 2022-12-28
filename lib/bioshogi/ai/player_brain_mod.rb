@@ -135,7 +135,7 @@ module Bioshogi
       private
 
       def move_list(soldier, options = {})
-        Movabler.move_list(container, soldier, options)
+        SoldierWalker.call(container, soldier, options)
       end
     end
   end

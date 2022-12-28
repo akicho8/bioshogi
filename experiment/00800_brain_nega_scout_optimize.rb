@@ -57,7 +57,7 @@ system "stackprof stackprof.dump"
 # >>        439  (13.2%)         439  (13.2%)     Bioshogi::Dimension::Base#hash
 # >>        320   (9.6%)         320   (9.6%)     (garbage collection)
 # >>       1050  (31.6%)         304   (9.1%)     Bioshogi::Place.lookup
-# >>       2202  (66.3%)         264   (7.9%)     Bioshogi::Movabler#move_list
+# >>       2202  (66.3%)         264   (7.9%)     Bioshogi::SoldierWalker.call
 # >>        238   (7.2%)         238   (7.2%)     Bioshogi::Dimension::Base.lookup
 # >>        323   (9.7%)         167   (5.0%)     Bioshogi::Place#hash
 # >>        191   (5.7%)         166   (5.0%)     Bioshogi::PieceVector#all_vectors
@@ -78,7 +78,7 @@ system "stackprof stackprof.dump"
 # >>         34   (1.0%)          34   (1.0%)     Bioshogi::Board#surface
 # >>         64   (1.9%)          28   (0.8%)     Bioshogi::Board::UpdateMethods#place_on
 # >>         84   (2.5%)          25   (0.8%)     #<Module:0x00007fd8473525b0>#<=>
-# >>        212   (6.4%)          25   (0.8%)     Bioshogi::Movabler#piece_store
+# >>        212   (6.4%)          25   (0.8%)     Bioshogi::SoldierWalker#piece_store
 # >>        106   (3.2%)          20   (0.6%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>         13   (0.4%)          13   (0.4%)     Bioshogi::Board::UpdateMethods#soldier_counts_surface
 # >>         82   (2.5%)          11   (0.3%)     Bioshogi::Board::PillerMethods#place_on

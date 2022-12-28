@@ -33,7 +33,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::PlaceX.lookup"
 # system "stackprof stackprof.dump --method Bioshogi::Soldier#attributes"
 
 # system "stackprof stackprof.dump --method Bioshogi::Place.fetch"
-# system "stackprof stackprof.dump --method Bioshogi::Movabler#move_list"
+# system "stackprof stackprof.dump --method Bioshogi::SoldierWalker.call"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
@@ -67,7 +67,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::PlaceX.lookup"
 # >>          8   (1.0%)           8   (1.0%)     Bioshogi::Soldier#attributes
 # >>         10   (1.2%)           8   (1.0%)     Bioshogi::InputParser#scan
 # >>          8   (1.0%)           8   (1.0%)     Bioshogi::Core#board
-# >>        136  (16.3%)           7   (0.8%)     Bioshogi::Movabler#move_list
+# >>        136  (16.3%)           7   (0.8%)     Bioshogi::SoldierWalker.call
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::Dimension::Base.value_range
 # >>         88  (10.6%)           6   (0.7%)     Bioshogi::Dimension::PlaceX.lookup
 # >>          6   (0.7%)           6   (0.7%)     MemoryRecord::SingletonMethods::ClassMethods#lookup

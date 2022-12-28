@@ -136,7 +136,7 @@ module Bioshogi
 
     # 移動可能な座標を取得
     def move_list(board, options = {})
-      Movabler.move_list(board, self, options)
+      SoldierWalker.call(board, self, options)
     end
 
     # 二歩？

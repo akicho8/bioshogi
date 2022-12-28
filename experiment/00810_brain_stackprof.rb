@@ -57,7 +57,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
 # >>       1896  (14.2%)        1896  (14.2%)     Bioshogi::Dimension::Base#hash
 # >>       1882  (14.1%)        1882  (14.1%)     (garbage collection)
-# >>      11384  (85.2%)        1168   (8.7%)     Bioshogi::Movabler#move_list
+# >>      11384  (85.2%)        1168   (8.7%)     Bioshogi::SoldierWalker.call
 # >>       4246  (31.8%)        1058   (7.9%)     Bioshogi::Place.lookup
 # >>        946   (7.1%)         946   (7.1%)     Bioshogi::Dimension::Base.lookup
 # >>        819   (6.1%)         741   (5.5%)     Bioshogi::PieceVector#all_vectors
@@ -77,7 +77,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>        131   (1.0%)         131   (1.0%)     Bioshogi::SimpleModel#initialize
 # >>      10705  (80.1%)         105   (0.8%)     Set#each
 # >>        529   (4.0%)         101   (0.8%)     Bioshogi::Player::SoldierMethods#soldiers
-# >>      11279  (84.4%)          95   (0.7%)     Bioshogi::Movabler#piece_store
+# >>      11279  (84.4%)          95   (0.7%)     Bioshogi::SoldierWalker#piece_store
 # >>        177   (1.3%)          91   (0.7%)     Bioshogi::Board::UpdateMethods#place_on
 # >>         81   (0.6%)          81   (0.6%)     Bioshogi::SimpleModel#initialize
 # >>         64   (0.5%)          44   (0.3%)     MemoryRecord::SingletonMethods::ClassMethods#fetch

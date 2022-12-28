@@ -34,7 +34,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Soldier#attributes"
 
 # system "stackprof stackprof.dump --method Bioshogi::Place.fetch"
-# system "stackprof stackprof.dump --method Bioshogi::Movabler#move_list"
+# system "stackprof stackprof.dump --method Bioshogi::SoldierWalker.call"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
