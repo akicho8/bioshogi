@@ -16,12 +16,17 @@ module Bioshogi
 
       include Enumerable
 
+      def cache_clear
+        @foo = nil
+      end
+
       def each(&block)
-        Dimension::PlaceY.dimension.times.flat_map { |y|
+        @foo ||= Dimension::PlaceY.dimension.times.flat_map { |y|
           Dimension::PlaceX.dimension.times.collect { |x|
             self[[x, y]]
           }
-        }.each(&block)
+        }
+        @foo.each(&block)
       end
 
       def fetch(value)

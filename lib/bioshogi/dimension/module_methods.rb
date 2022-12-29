@@ -17,6 +17,7 @@ module Bioshogi
         h, v = wsize
         PlaceX.dimension_set(h)
         PlaceY.dimension_set(v)
+        Place.cache_clear
         if block_given?
           begin
             yield
@@ -24,6 +25,7 @@ module Bioshogi
             h, v = save_value
             PlaceX.dimension_set(h)
             PlaceY.dimension_set(v)
+            Place.cache_clear
           end
         else
           save_value
