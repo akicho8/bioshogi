@@ -97,7 +97,7 @@ module Bioshogi
                 command_required! :ffmpeg
                 ffmpeg_version_required!
 
-                @container = @formatter.xcontainer_for_image
+                @container = @formatter.container_for_image
                 @screen_image_renderer = ScreenImage.renderer(@container, params)
 
                 if factory_method_key == "is_factory_method_rmagick"

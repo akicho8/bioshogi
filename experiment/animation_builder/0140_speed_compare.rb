@@ -14,7 +14,7 @@ end
 
 def case1
   info = Parser.parse(@sfen)
-  container = info.formatter.xcontainer_for_image
+  container = info.formatter.container_for_image
   screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
   list = Magick::ImageList.new
   moves = [nil, *info.mi.move_infos]
@@ -34,7 +34,7 @@ end
 
 def case2
   info = Parser.parse(@sfen)
-  container = info.formatter.xcontainer_for_image
+  container = info.formatter.container_for_image
   screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
   moves = [nil, *info.mi.move_infos]
   moves.each.with_index do |e, i|

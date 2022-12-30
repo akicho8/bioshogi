@@ -15,12 +15,12 @@ EOT
 puts info.to_kif
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/skill_set.rb:38:in `list_of': undefined method `tactic_info' for nil:NilClass (NoMethodError)
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/skill_set.rb:42:in `list_push'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:282:in `block in xcontainer_run_all'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:282:in `block in container_run_all'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:279:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:279:in `xcontainer_run_all'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:279:in `container_run_all'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.xcontainer_run_once'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:15:in `<main>'

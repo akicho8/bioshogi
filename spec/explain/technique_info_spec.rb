@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   module Explain
     describe TechniqueInfo do
-      def xcontainer_new
+      def container_new
         Container::Basic.new.tap do |e|
           e.params[:skill_monitor_enable] = true
           e.params[:skill_monitor_technique_enable] = true
@@ -11,7 +11,7 @@ module Bioshogi
       end
 
       it "金底の歩" do
-        container = xcontainer_new
+        container = container_new
         container.placement_from_bod(<<~EOT)
         後手の持駒：歩
         ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -42,22 +42,22 @@ module Bioshogi
         +---------------------------+
           EOT
 
-        container = xcontainer_new
+        container = container_new
         container.placement_from_bod("#{board}\n手数＝1")
         container.execute("73桂")
         assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
-        container = xcontainer_new
+        container = container_new
         container.placement_from_bod("#{board.flop}\n手数＝1")
         container.execute("33桂")
         assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
-        container = xcontainer_new
+        container = container_new
         container.placement_from_bod("#{board.flip}\n手数＝0")
         container.execute("37桂")
         assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
 
-        container = xcontainer_new
+        container = container_new
         container.placement_from_bod("#{board.flip.flop}\n手数＝0")
         container.execute("77桂")
         assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }

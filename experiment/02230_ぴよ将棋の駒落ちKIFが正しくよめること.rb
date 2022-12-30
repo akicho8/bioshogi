@@ -22,9 +22,9 @@ str = "
    1 ４二玉(51)
 "
 info = Parser.parse(str)
-info.initial_xcontainer.turn_info                    # => #<駒落ち:0+0:△上手番>
-info.initial_xcontainer.turn_info.current_location   # => <white>
-info.initial_xcontainer.turn_info.location_call_name # => "上手"
+info.initial_container.turn_info                    # => #<駒落ち:0+0:△上手番>
+info.initial_container.turn_info.current_location   # => <white>
+info.initial_container.turn_info.location_call_name # => "上手"
 puts info.to_kif
 # >> 手合割：六枚落ち
 # >> 下手の備考：居玉

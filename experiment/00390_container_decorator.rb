@@ -4,7 +4,7 @@ require "./setup"
 require "delegate"
 require "action_view"
 
-class Container::XcontainerDecorator < SimpleDelegator
+class Container::ContainerDecorator < SimpleDelegator
   include ActionView::Helpers::TagHelper
 
   attr_accessor :output_buffer
@@ -30,7 +30,7 @@ class Container::XcontainerDecorator < SimpleDelegator
 end
 
 container = Container::Basic.start
-decorator = Container::XcontainerDecorator.new(container)
+decorator = Container::ContainerDecorator.new(container)
 puts decorator.to_html
 Pathname("_frame.html").write(decorator.to_html)
 `open _frame.html`

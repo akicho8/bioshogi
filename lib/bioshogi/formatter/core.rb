@@ -65,16 +65,16 @@ module Bioshogi
         Animation::AnimationZipBuilder.new(self, options).to_binary
       end
 
-      def xcontainer_run_once
+      def container_run_once
         container
       end
 
-      def xcontainer_class
-        @parser_options[:xcontainer_class] || Container::Basic
+      def container_class
+        @parser_options[:container_class] || Container::Basic
       end
 
-      def xcontainer_new
-        xcontainer_class.new.tap do |e|
+      def container_new
+        container_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
                 :skill_monitor_enable,
                 :skill_monitor_technique_enable,
@@ -87,7 +87,7 @@ module Bioshogi
       end
 
       # 画像生成のための container の初期状態を返す
-      def xcontainer_for_image
+      def container_for_image
         container = Container::Basic.new
         container.params.update({
             :skill_monitor_enable           => false,
@@ -95,25 +95,25 @@ module Bioshogi
             :candidate_enable               => false,
             :validate_enable                => false,
           })
-        xcontainer_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
+        container_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
         container
       end
 
       def container
-        @container ||= xcontainer_new.tap do |e|
-          xcontainer_init(e)
-          xcontainer_run_all(e)
+        @container ||= container_new.tap do |e|
+          container_init(e)
+          container_run_all(e)
         end
       end
 
       # FIXME: container の最初の状態をコピーしておく
-      def initial_xcontainer
-        @initial_xcontainer ||= xcontainer_new.tap do |e|
-          xcontainer_init(e)
+      def initial_container
+        @initial_container ||= container_new.tap do |e|
+          container_init(e)
         end
       end
 
-      def xcontainer_init(container)
+      def container_init(container)
         if @mi.sfen_info
           container.placement_from_sfen(@mi.sfen_info)
         else
@@ -156,12 +156,12 @@ module Bioshogi
       # 手合割
       def preset_info
         @preset_info ||= @mi.force_preset_info
-        @preset_info ||= initial_xcontainer.board.preset_info
+        @preset_info ||= initial_container.board.preset_info
         @preset_info ||= PresetInfo[mi.header["手合割"]]
         @preset_info ||= PresetInfo["平手"]
       end
 
-      def xcontainer_run_all(container)
+      def container_run_all(container)
         Runner.new(self, container).call
         if @parser_options[:skill_monitor_enable]
           SkillEmbed.new(self, container).call

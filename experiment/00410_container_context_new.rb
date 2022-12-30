@@ -1,6 +1,6 @@
 require "./setup"
 
-s = Container::XcontainerStack.new
+s = Container::ContainerStack.new
 s.context_new do
   s.container.to_short_sfen     # => "sfen 9/9/9/9/9/9/9/9/9 b - 1"
   s.context_new do

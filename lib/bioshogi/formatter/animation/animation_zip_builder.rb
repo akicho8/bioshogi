@@ -25,7 +25,7 @@ module Bioshogi
         end
 
         def to_binary
-          container = @formatter.xcontainer_for_image
+          container = @formatter.container_for_image
           @screen_image_renderer = ScreenImage.renderer(container, params)
           @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size, &params[:progress_callback])
           zos = Zip::OutputStream.write_buffer do |z|

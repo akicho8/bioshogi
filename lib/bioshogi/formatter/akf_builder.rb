@@ -15,10 +15,10 @@ module Bioshogi
       end
 
       def to_h
-        @formatter.xcontainer_run_once
+        @formatter.container_run_once
 
-        @xcontainer2 = Container::Basic.new
-        @formatter.xcontainer_init(@xcontainer2)
+        @container2 = Container::Basic.new
+        @formatter.container_init(@container2)
 
         @hv = {}
         @hv[:header] = @formatter.mi.header.to_h.clone
@@ -29,28 +29,28 @@ module Bioshogi
         @hv[:moves] = []
         @hv[:moves] << {
           :index         => 0,
-          :human_index   => @xcontainer2.initial_state_turn_info.display_turn,
+          :human_index   => @container2.initial_state_turn_info.display_turn,
           :place_same    => nil,
           **@main_clock.last_clock.to_h,
           :total_seconds => 0,
           :used_seconds  => nil,
           :skill         => nil,
-          :history_sfen  => @xcontainer2.to_history_sfen,
-          :short_sfen => @xcontainer2.to_short_sfen,
+          :history_sfen  => @container2.to_history_sfen,
+          :short_sfen => @container2.to_short_sfen,
         }
         @hv[:moves] += @formatter.mi.move_infos.collect.with_index do |info, i|
-          @xcontainer2.execute(info[:input], used_seconds: @formatter.used_seconds_at(i))
+          @container2.execute(info[:input], used_seconds: @formatter.used_seconds_at(i))
           @main_clock.add(@formatter.used_seconds_at(i))
-          hand_log = @xcontainer2.hand_logs.last
+          hand_log = @container2.hand_logs.last
           {
             :index         => i.next,
-            :human_index   => @xcontainer2.initial_state_turn_info.display_turn + i.next,
+            :human_index   => @container2.initial_state_turn_info.display_turn + i.next,
             :place_same    => hand_log.place_same,
             **hand_log.to_akf,
             **@main_clock.last_clock.to_h,
             :skill         => hand_log.skill_set.to_h,
-            :history_sfen  => @xcontainer2.to_history_sfen,
-            :short_sfen => @xcontainer2.to_short_sfen,
+            :history_sfen  => @container2.to_history_sfen,
+            :short_sfen => @container2.to_short_sfen,
           }
         end
 

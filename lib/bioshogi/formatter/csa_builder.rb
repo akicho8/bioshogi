@@ -52,7 +52,7 @@ module Bioshogi
       end
 
       def to_s
-        @formatter.xcontainer_run_once
+        @formatter.container_run_once
 
         out = []
         out << "V#{CSA_VERSION}\n"
@@ -62,7 +62,7 @@ module Bioshogi
         end
 
         obj = Container::Basic.new
-        @formatter.xcontainer_init(obj) # なぜ？
+        @formatter.container_init(obj) # なぜ？
         out << obj.to_csa(@params)
 
         out << body_hands

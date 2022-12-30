@@ -20,7 +20,7 @@ module Bioshogi
       end
     end
 
-    # FIXME: xcontainer経由でテストを書いてはいけない
+    # FIXME: container経由でテストを書いてはいけない
     it "配置" do
       container = Container::Basic.new
 

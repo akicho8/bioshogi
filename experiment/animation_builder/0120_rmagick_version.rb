@@ -12,7 +12,7 @@ container.params.update({
     :candidate_enable               => false,
     :validate_enable                => false,
   })
-info.formatter.xcontainer_init(container)
+info.formatter.container_init(container)
 screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
 # puts container
 

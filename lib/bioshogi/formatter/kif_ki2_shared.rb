@@ -23,7 +23,7 @@ module Bioshogi
 
       def to_s
         build_before
-        @formatter.xcontainer_run_once
+        @formatter.container_run_once
         @header = @formatter.mi.header.clone
 
         out = []
@@ -68,7 +68,7 @@ module Bioshogi
       end
 
       def header_part_string
-        m = @formatter.initial_xcontainer
+        m = @formatter.initial_container
         if e = m.board.preset_info
           # 手合割がわかる場合
           @header["手合割"] = e.name
