@@ -2,11 +2,11 @@ require "./setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-# Board.promotable_disable
-# Board.dimensiton_change([2, 5])
+# Dimension::PlaceY.promotable_disabled
+# Dimension.wh_change([2, 5])
 #
-# xcontainer = Xcontainer.new
-# xcontainer.board.placement_from_shape <<~EOT
+# container = Container::Basic.new
+# container.board.placement_from_shape <<~EOT
 # +------+
 # | ・v香|
 # | ・v飛|
@@ -16,10 +16,10 @@ require "./setup"
 # +------+
 # EOT
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
+container = Container::Basic.new
+container.placement_from_preset("平手")
 
-brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
 # brain.diver_dive(depth_max: 0) # => [-100, []]
 # brain.diver_dive(depth_max: 1) # => [105, [<▲１三飛(14)>]]
 # brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]
@@ -43,7 +43,7 @@ puts "%.1f ms" % ms
 
 system "stackprof stackprof.dump"
 # system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
-# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutorHuman#hand_log"
+# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
 # system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 
@@ -57,7 +57,7 @@ system "stackprof stackprof.dump"
 # >>        439  (13.2%)         439  (13.2%)     Bioshogi::Dimension::Base#hash
 # >>        320   (9.6%)         320   (9.6%)     (garbage collection)
 # >>       1050  (31.6%)         304   (9.1%)     Bioshogi::Place.lookup
-# >>       2202  (66.3%)         264   (7.9%)     Bioshogi::Movabler#move_list
+# >>       2202  (66.3%)         264   (7.9%)     Bioshogi::SoldierWalker.call
 # >>        238   (7.2%)         238   (7.2%)     Bioshogi::Dimension::Base.lookup
 # >>        323   (9.7%)         167   (5.0%)     Bioshogi::Place#hash
 # >>        191   (5.7%)         166   (5.0%)     Bioshogi::PieceVector#all_vectors
@@ -67,18 +67,18 @@ system "stackprof stackprof.dump"
 # >>        120   (3.6%)         120   (3.6%)     Bioshogi::Dimension::Base.value_range
 # >>        225   (6.8%)         105   (3.2%)     Bioshogi::Dimension::Base#valid?
 # >>         56   (1.7%)          56   (1.7%)     Bioshogi::Piece::VectorMethods#piece_vector
-# >>         52   (1.6%)          52   (1.6%)     Bioshogi::XcontainerBase#board
+# >>         52   (1.6%)          52   (1.6%)     Bioshogi::Core#board
 # >>         93   (2.8%)          50   (1.5%)     Bioshogi::Board::UpdateMethods#safe_delete_on
 # >>       1343  (40.4%)          49   (1.5%)     Set#each
 # >>         46   (1.4%)          46   (1.4%)     Bioshogi::SimpleModel#initialize
-# >>        163   (4.9%)          45   (1.4%)     Bioshogi::Dimension::Yplace.lookup
+# >>        163   (4.9%)          45   (1.4%)     Bioshogi::Dimension::PlaceY.lookup
 # >>         40   (1.2%)          40   (1.2%)     Bioshogi::SimpleModel#initialize
-# >>        158   (4.8%)          38   (1.1%)     Bioshogi::Dimension::Xplace.lookup
+# >>        158   (4.8%)          38   (1.1%)     Bioshogi::Dimension::PlaceX.lookup
 # >>         36   (1.1%)          36   (1.1%)     Bioshogi::Piece::ScoreMethods#piece_score
 # >>         34   (1.0%)          34   (1.0%)     Bioshogi::Board#surface
 # >>         64   (1.9%)          28   (0.8%)     Bioshogi::Board::UpdateMethods#place_on
 # >>         84   (2.5%)          25   (0.8%)     #<Module:0x00007fd8473525b0>#<=>
-# >>        212   (6.4%)          25   (0.8%)     Bioshogi::Movabler#piece_store
+# >>        212   (6.4%)          25   (0.8%)     Bioshogi::SoldierWalker#piece_store
 # >>        106   (3.2%)          20   (0.6%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>         13   (0.4%)          13   (0.4%)     Bioshogi::Board::UpdateMethods#soldier_counts_surface
 # >>         82   (2.5%)          11   (0.3%)     Bioshogi::Board::PillerMethods#place_on

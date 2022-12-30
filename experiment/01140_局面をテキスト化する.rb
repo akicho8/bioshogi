@@ -1,10 +1,10 @@
 
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
-xcontainer.execute("７六歩")
-puts xcontainer
+container = Container::Basic.new
+container.placement_from_preset("平手")
+container.execute("７六歩")
+puts container
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

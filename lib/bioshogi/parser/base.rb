@@ -4,7 +4,7 @@
 module Bioshogi
   module Parser
     class Base
-      include Formatter::ExportMethods
+      include Formatter::ParserMethods
 
       class << self
         def parse(source, options = {})
@@ -40,7 +40,7 @@ module Bioshogi
       attr_accessor :parser_options
 
       def initialize(source, parser_options = {})
-        @source = source
+        @source = Source.wrap(source)
         @parser_options = self.class.default_parser_options.merge(parser_options)
         @mi = Mi.new
       end
@@ -50,7 +50,7 @@ module Bioshogi
       end
 
       def normalized_source
-        @normalized_source ||= Parser.source_normalize(@source)
+        @normalized_source ||= @source.to_s
       end
 
       def inspect

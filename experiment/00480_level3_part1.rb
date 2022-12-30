@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod(<<~EOT)
+container = Container::Basic.new
+container.placement_from_bod(<<~EOT)
 +---------+
 | ・ ・v玉|
 | ・ ・ ・|
@@ -10,21 +10,21 @@ xcontainer.placement_from_bod(<<~EOT)
 先手の持駒：飛香
 EOT
 
-xcontainer.players.each { |e| tp e.pressure_report }
-player = xcontainer.player_at(:black)
+container.players.each { |e| tp e.pressure_report }
+player = container.player_at(:black)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level3)
 evaluator.score            # => 3954
 tp evaluator.score_compute_report
 
-# xcontainer = Xcontainer.new
-# xcontainer.placement_from_bod(<<~EOT)
+# container = Container::Basic.new
+# container.placement_from_bod(<<~EOT)
 # +---------+
 # | ・ ・v玉|
 # | ・ 金 ・|
 # | ・ ・ ・|
 # +---------+
 # EOT
-# evaluator = xcontainer.player_at(:black).evaluator(evaluator_class: Evaluator::Level3)
+# evaluator = container.player_at(:black).evaluator(evaluator_class: Evaluator::Level3)
 # s2 = evaluator.score                 # => -38635
 #
 # s2 - s1                         # => 5

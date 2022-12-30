@@ -1,25 +1,25 @@
 require "./setup"
 
-# xcontainer = Xcontainer.start
-# xcontainer.execute("▲６八銀")
-# xcontainer.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
+# container = Container::Basic.start
+# container.execute("▲６八銀")
+# container.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
 # 
-# xcontainer = XcontainerSimple.start
-# xcontainer.execute("▲６八銀")
-# xcontainer.instance_variables     # => 
+# container = Container::Simple.start
+# container.execute("▲６八銀")
+# container.instance_variables     # => 
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-xcontainer = Xcontainer.start
+container = Container::Basic.start
 
 StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   50.times do
-    v, pv = xcontainer.current_player.brain.diver_dive(depth_max: 2)
+    v, pv = container.current_player.brain.diver_dive(depth_max: 2)
     hand = pv.first
-    xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+    container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
   end
 end
-puts xcontainer
+puts container
 tp Bioshogi.run_counts
 
 system "stackprof stackprof.dump"
@@ -43,11 +43,11 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >> 
 # >> 先手番
 # >> |-----------------------------+-------|
-# >> |     Bioshogi::MoveHand.create | 21973 |
+# >> |     Bioshogi::Hand::Move.create | 21973 |
 # >> |     sandbox_execute.execute | 38626 |
 # >> |      sandbox_execute.revert | 38626 |
 # >> | Bioshogi::Evaluator::Base#score | 16796 |
-# >> |     Bioshogi::DropHand.create | 550   |
+# >> |     Bioshogi::Hand::Drop.create | 550   |
 # >> |-----------------------------+-------|
 # >> ==================================
 # >>   Mode: wall(1000)
@@ -57,7 +57,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>      TOTAL    (pct)     SAMPLES    (pct)     FRAME
 # >>       1896  (14.2%)        1896  (14.2%)     Bioshogi::Dimension::Base#hash
 # >>       1882  (14.1%)        1882  (14.1%)     (garbage collection)
-# >>      11384  (85.2%)        1168   (8.7%)     Bioshogi::Movabler#move_list
+# >>      11384  (85.2%)        1168   (8.7%)     Bioshogi::SoldierWalker.call
 # >>       4246  (31.8%)        1058   (7.9%)     Bioshogi::Place.lookup
 # >>        946   (7.1%)         946   (7.1%)     Bioshogi::Dimension::Base.lookup
 # >>        819   (6.1%)         741   (5.5%)     Bioshogi::PieceVector#all_vectors
@@ -68,16 +68,16 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>      11391  (85.3%)         428   (3.2%)     Bioshogi::Player::BrainMethods#move_hands
 # >>        863   (6.5%)         319   (2.4%)     Bioshogi::Dimension::Base#valid?
 # >>        310   (2.3%)         310   (2.3%)     Bioshogi::Piece::VectorMethods#piece_vector
-# >>        216   (1.6%)         216   (1.6%)     Bioshogi::XcontainerBase#board
-# >>        674   (5.0%)         188   (1.4%)     Bioshogi::Dimension::Xplace.lookup
-# >>        629   (4.7%)         169   (1.3%)     Bioshogi::Dimension::Yplace.lookup
+# >>        216   (1.6%)         216   (1.6%)     Bioshogi::Core#board
+# >>        674   (5.0%)         188   (1.4%)     Bioshogi::Dimension::PlaceX.lookup
+# >>        629   (4.7%)         169   (1.3%)     Bioshogi::Dimension::PlaceY.lookup
 # >>        168   (1.3%)         168   (1.3%)     Bioshogi::Piece::ScoreMethods#piece_score
 # >>        455   (3.4%)         145   (1.1%)     #<Module:0x00007ffcd2539d60>#<=>
 # >>        140   (1.0%)         140   (1.0%)     Bioshogi::Board#surface
 # >>        131   (1.0%)         131   (1.0%)     Bioshogi::SimpleModel#initialize
 # >>      10705  (80.1%)         105   (0.8%)     Set#each
 # >>        529   (4.0%)         101   (0.8%)     Bioshogi::Player::SoldierMethods#soldiers
-# >>      11279  (84.4%)          95   (0.7%)     Bioshogi::Movabler#piece_store
+# >>      11279  (84.4%)          95   (0.7%)     Bioshogi::SoldierWalker#piece_store
 # >>        177   (1.3%)          91   (0.7%)     Bioshogi::Board::UpdateMethods#place_on
 # >>         81   (0.6%)          81   (0.6%)     Bioshogi::SimpleModel#initialize
 # >>         64   (0.5%)          44   (0.3%)     MemoryRecord::SingletonMethods::ClassMethods#fetch
@@ -92,8 +92,8 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>       31  (    0.7%)  Bioshogi::Place.[]
 # >>   callees (3188 total):
 # >>     1896  (   59.5%)  Bioshogi::Dimension::Base#hash
-# >>      674  (   21.1%)  Bioshogi::Dimension::Xplace.lookup
-# >>      618  (   19.4%)  Bioshogi::Dimension::Yplace.lookup
+# >>      674  (   21.1%)  Bioshogi::Dimension::PlaceX.lookup
+# >>      618  (   19.4%)  Bioshogi::Dimension::PlaceY.lookup
 # >>   code:
 # >>                                   |    30  |       def lookup(value)
 # >>   676    (5.1%) /   676   (5.1%)  |    31  |         if value.kind_of?(self)
@@ -106,12 +106,12 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>                                   |    38  |         case value
 # >>    73    (0.5%) /    73   (0.5%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
-# >>   673    (5.0%)                   |    41  |           x = Dimension::Xplace.lookup(a)
-# >>   618    (4.6%)                   |    42  |           y = Dimension::Yplace.lookup(b)
+# >>   673    (5.0%)                   |    41  |           x = Dimension::PlaceX.lookup(a)
+# >>   618    (4.6%)                   |    42  |           y = Dimension::PlaceY.lookup(b)
 # >>                                   |    43  |         when String
 # >>                                   |    44  |           a, b = value.chars
-# >>     1    (0.0%)                   |    45  |           x = Dimension::Xplace.lookup(a)
-# >>                                   |    46  |           y = Dimension::Yplace.lookup(b)
+# >>     1    (0.0%)                   |    45  |           x = Dimension::PlaceX.lookup(a)
+# >>                                   |    46  |           y = Dimension::PlaceY.lookup(b)
 # >>    10    (0.1%) /    10   (0.1%)  |    47  |         end
 # >>                                   |    48  | 
 # >>                                   |    49  |         if x && y

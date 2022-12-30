@@ -28,9 +28,9 @@ soldiers = BoardParser.parse(<<~EOT).soldiers
 EOT
 tp soldiers
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_soldiers(soldiers)
-puts xcontainer.board.to_s
+container = Container::Basic.new
+container.board.placement_from_soldiers(soldiers)
+puts container.board.to_s
 
 tp PresetInfo["平手"].location_split[Location[:black]]
 # >> |----------|

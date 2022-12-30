@@ -120,7 +120,7 @@ module Bioshogi
       v = false
       v ||= piece.always_alive # 死に駒にならない駒か？ (基本、後ろに移動できる駒)
       v ||= promoted           # すでに成っているか？ (成っている駒は金の動きなので後ろに移動できる)
-      v ||= all_vectors.any? { |e| place.vector_add(e).valid? } # ちょっとでも動ける？
+      v ||= all_vectors.any? { |e| place.vector_add(e) } # ちょっとでも動ける？
     end
 
     def merge(attributes)
@@ -136,7 +136,7 @@ module Bioshogi
 
     # 移動可能な座標を取得
     def move_list(board, options = {})
-      Movabler.move_list(board, self, options)
+      SoldierWalker.call(board, self, options)
     end
 
     # 二歩？
@@ -162,7 +162,7 @@ module Bioshogi
     concerning :TechniqueMatcherMethods do
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
       def bottom_spaces
-        Dimension::Yplace.dimension - 1 - top_spaces
+        Dimension::PlaceY.dimension - 1 - top_spaces
       end
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
@@ -186,12 +186,12 @@ module Bioshogi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::Xplace.dimension - 1 - place.x.value
+        Dimension::PlaceX.dimension - 1 - place.x.value
       end
 
       # センターにいる？
       def center_place?
-        place.x.value == Dimension::Xplace.dimension / 2
+        place.x.value == Dimension::PlaceX.dimension / 2
       end
 
       # 自玉の位置にいる？

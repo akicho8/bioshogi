@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container::Basic.new
+container.placement_from_bod <<~EOT
 後手の持駒：香
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -19,9 +19,9 @@ xcontainer.placement_from_bod <<~EOT
 EOT
 
 # 足りない駒
-xcontainer.not_enough_piece_box.to_s # => "玉 香"
+container.not_enough_piece_box.to_s # => "玉 香"
 
 # 玉の数は無視して足りない駒を調べる
-piece_box = xcontainer.not_enough_piece_box
+piece_box = container.not_enough_piece_box
 piece_box.delete(:king)
 piece_box.to_s                  # => "香"

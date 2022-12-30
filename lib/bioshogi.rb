@@ -11,15 +11,18 @@ require "active_support/dependencies/autoload"
 require "active_support/core_ext/array/grouping" # for in_groups_of
 require "active_support/core_ext/numeric"        # for 1.minute
 
-require "pathname"              # for toeuc
-require "time"                  # for Time.parse
-require "kconv"                 # for toeuc
+require "pathname" # for toeuc
+require "time"     # for Time.parse
+require "kconv"    # for toeuc
 
 require "table_format"
 require "memory_record"
 require "tree_support"
 
 module Bioshogi
+  ROOT_DIR   = Pathname(__dir__)
+  ASSETS_DIR = ROOT_DIR.join("bioshogi/assets")
+
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
   mattr_accessor(:run_counts) { Hash.new(0) }
@@ -30,7 +33,7 @@ end
 require "zeitwerk"
 loader = Zeitwerk::Loader.for_gem
 loader.ignore("#{__dir__}/bioshogi/logger.rb")
-loader.ignore("#{__dir__}/bioshogi/vector.rb")
+loader.ignore("#{__dir__}/bioshogi/vector_constants.rb")
 loader.ignore("#{__dir__}/bioshogi/errors.rb")
 loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
 loader.ignore("#{__dir__}/bioshogi/assets")
@@ -45,7 +48,11 @@ loader.do_not_eager_load("#{__dir__}/explain/*_generator")
 loader.setup
 
 require "bioshogi/logger"
-require "bioshogi/vector"
+require "bioshogi/vector_constants"
 require "bioshogi/errors"
 
+# 必須
+# loader.eager_load_namespace(Bioshogi::ScreenImage)
+
+# なくてもよい
 loader.eager_load

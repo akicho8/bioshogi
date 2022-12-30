@@ -21,7 +21,7 @@ kif_str = "
   15 投了
 "
 info = Parser.parse(kif_str)
-puts info.xcontainer
+puts info.formatter.container
 puts info.to_ki2
 
 # >> 後手の持駒：歩二

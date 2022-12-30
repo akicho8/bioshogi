@@ -5,17 +5,17 @@ info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 out = ""
 out << info.mi.header.collect { |key, value| "#{key}：#{value}\n" }.join
 # puts info
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset(info.mi.header["手合割"])
+container = Container::Basic.new
+container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
-  xcontainer.execute(info[:input])
+  container.execute(info[:input])
   # puts "-------------------------------------------"
   # puts info[:mov]
-  # puts xcontainer
+  # puts container
 end
 out << "手数----指手---------消費時間--\n"
-out << xcontainer.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
-out << "#{xcontainer.to_kif_a.size.next} 投了\n"
+out << container.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
+out << "#{container.to_kif_a.size.next} 投了\n"
 puts out
 # >> 開始日時：2017/11/11 10:00:00
 # >> 終了日時：2017/11/11 17:22:00

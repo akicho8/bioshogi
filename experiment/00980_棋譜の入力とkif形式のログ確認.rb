@@ -1,14 +1,14 @@
 # 棋譜の入力とkif形式のログ確認
 require "./setup"
 
-xcontainer = Xcontainer.start
+container = Container::Basic.start
 [
   "７六歩", "８四歩", "７八金", "３二金",
 ].each{|input|
-  xcontainer.execute(input)
+  container.execute(input)
 }
-puts xcontainer.board
-pp xcontainer.to_kif_a
+puts container.board
+pp container.to_kif_a
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉 ・v銀v桂v香|一

@@ -4,9 +4,9 @@ info = Parser.parse(<<~EOT)
 ▲７六歩 △６二玉
 EOT
 
-puts info.xcontainer
-tp info.xcontainer.players.first.attack_infos
-tp info.xcontainer.players.last.attack_infos
+puts info.formatter.container
+tp info.formatter.container.players.first.attack_infos
+tp info.formatter.container.players.last.attack_infos
 puts info.to_ki2
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

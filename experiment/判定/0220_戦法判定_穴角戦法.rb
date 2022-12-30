@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.parse("▲９八香 △３四歩 ▲９九角 △８四歩 ▲８八銀")
-puts info.xcontainer
+puts info.formatter.container
 puts info.to_ki2
 
 # >> 後手の持駒：なし

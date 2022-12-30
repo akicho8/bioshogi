@@ -1,7 +1,7 @@
 require "../setup"
 
 info = Parser.file_parse("../戦型/新風車.ki2", turn_limit: 42)
-puts info.xcontainer
+puts info.formatter.container
 puts info.to_ki2
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

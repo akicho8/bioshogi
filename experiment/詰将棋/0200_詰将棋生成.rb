@@ -1,8 +1,8 @@
 require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Board.promotable_disable
-# Board.dimensiton_change([5, 5])
+# Dimension::PlaceY.promotable_disabled
+# Dimension.wh_change([5, 5])
 
 class App
   def run
@@ -15,13 +15,13 @@ class App
         { location: :black, pieces: "金",  xy_ranges: [2..3, 2..3] },
       ],
     }
-    builder = Builder.new(builder_infos).run
+    builder = TBuilder.new(builder_infos).run
     builder
   end
 
-  class Builder
+  class TBuilder
     attr_accessor :params
-    attr_accessor :xcontainer
+    attr_accessor :container
 
     def initialize(params = {})
       @params = params
@@ -36,71 +36,71 @@ class App
 
     def board_setup
       try_count.times do
-        @xcontainer = Xcontainer.new
+        @container = Container::Basic.new
 
         @piece_box = PieceBox.real_box
         @piece_box.add(king: -1)
-        xcontainer.player_at(:white).piece_box.add(@piece_box)
+        container.player_at(:white).piece_box.add(@piece_box)
 
         @params[:soldiers_board_on].each do |e|
           soldiers_board_on(e)
         end
 
-        if !xcontainer.player_at(:white).mate_danger?
+        if !container.player_at(:white).mate_danger?
           break
         end
 
-        xcontainer = nil
+        container = nil
       end
     end
 
     def black_piece_box_setup
-      if xcontainer
+      if container
         # 攻め手の駒台へ
         Piece.s_to_a(params[:motigoma]).each do |piece|
-          xcontainer.player_at(:white).piece_box.add(piece => -1)
-          xcontainer.player_at(:black).piece_box.add(piece => 1)
+          container.player_at(:white).piece_box.add(piece => -1)
+          container.player_at(:black).piece_box.add(piece => 1)
         end
       end
     end
 
     def mate_validation
-      puts xcontainer.to_bod
+      puts container.to_bod
 
       @mate_records = []
       mate_proc = -> player, score, hand_route {
         @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
       }
 
-      brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaMateDiver) # 詰将棋専用探索
+      brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaMateDiver) # 詰将棋専用探索
       @records = brain.iterative_deepening(depth_max_range: params[:nantedume]..params[:nantedume], mate_mode: true, no_break: true, motigoma_zero_denaito_dame: true, mate_proc: mate_proc)
 
       @records = @records.find_all { |e| e[:black_side_score] >= 1 }
 
-      tp Brain.human_format(@records)
+      tp Ai::Brain.human_format(@records)
       tp @mate_records
 
-      xcontainer.before_run_process
+      container.before_run_process
       if record = @records.first
         ([record[:hand]] + record[:best_pv]).each do |e|
           pp e
-          xcontainer.execute(e)
-          puts xcontainer.to_bod
+          container.execute(e)
+          puts container.to_bod
         end
       end
 
       puts "------------------------------"
-      puts xcontainer.to_csa
-      puts xcontainer.to_short_sfen
-      puts xcontainer.to_history_sfen
+      puts container.to_csa
+      puts container.to_short_sfen
+      puts container.to_history_sfen
       puts "------------------------------"
     end
 
     def soldiers_board_on(location:, pieces: [], xy_ranges: [])
       Piece.s_to_a(pieces).each do |piece|
-        xcontainer.player_at(:white).piece_box.add(piece => -1)
+        container.player_at(:white).piece_box.add(piece => -1)
 
-        blank_places = xcontainer.board.blank_places.entries
+        blank_places = container.board.blank_places.entries
         soldier = nil
         256.times do
           # 空いている位置を探す
@@ -108,7 +108,7 @@ class App
           loop do
             xy = 2.times.collect { |i| rand(xy_ranges[i] || (1..4)) }.join
             place = Place.fetch(xy)
-            if !xcontainer.board[place]
+            if !container.board[place]
               break
             end
           end
@@ -126,7 +126,7 @@ class App
             next
           end
 
-          xcontainer.board.place_on(soldier)
+          container.board.place_on(soldier)
           break
         end
       end

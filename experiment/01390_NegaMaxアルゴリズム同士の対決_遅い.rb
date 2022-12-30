@@ -2,18 +2,18 @@
 
 require "./setup"
 
-xcontainer = Xcontainer.start
-xcontainer.piece_plot
+container = Container::Basic.start
+container.piece_plot
 loop do
-  think_result = xcontainer.current_player.brain.diver_dive(depth_max: 1, random: true)
+  think_result = container.current_player.brain.diver_dive(depth_max: 1, random: true)
   hand = InputParser.slice_one(think_result[:hand])
   p hand
-  xcontainer.execute(hand)
-  p xcontainer
-  captured_soldier = xcontainer.opponent_player.executor.captured_soldier
+  container.execute(hand)
+  p container
+  captured_soldier = container.opponent_player.executor.captured_soldier
   # break
   if captured_soldier && captured_soldier.piece.key == :king
     break
   end
 end
-p xcontainer.to_kif_a.join(" ")
+p container.to_kif_a.join(" ")

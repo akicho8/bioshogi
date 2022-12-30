@@ -1,0 +1,256 @@
+require "spec_helper"
+
+module Bioshogi
+  module Formatter
+    module Animation
+      describe AnimationZipBuilder, animation: true do
+        it "zip" do
+          info = Parser.parse("position startpos moves 7g7f 8c8d")
+          bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")
+          filename = Pathname("_outout.zip")
+          filename.write(bin)
+          puts `unzip -l #{filename}` if $0 == "-"
+          Zip::InputStream.open(StringIO.new(bin)) do |zis|
+            assert { zis.get_next_entry.name == "cover.png" }
+            assert { zis.get_next_entry.name == "xxx0.png"  }
+            assert { zis.get_next_entry.name == "xxx1.png"  }
+          end
+        end
+      end
+    end
+  end
+  # >> [{:index=>0,
+  # >>   :codec_name=>"h264",
+  # >>   :codec_long_name=>"H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+  # >>   :profile=>"High",
+  # >>   :codec_type=>"video",
+  # >>   :codec_tag_string=>"avc1",
+  # >>   :codec_tag=>"0x31637661",
+  # >>   :width=>2,
+  # >>   :height=>2,
+  # >>   :coded_width=>2,
+  # >>   :coded_height=>2,
+  # >>   :closed_captions=>0,
+  # >>   :has_b_frames=>2,
+  # >>   :pix_fmt=>"yuv420p",
+  # >>   :level=>10,
+  # >>   :chroma_location=>"left",
+  # >>   :refs=>1,
+  # >>   :is_avc=>"true",
+  # >>   :nal_length_size=>"4",
+  # >>   :r_frame_rate=>"2/1",
+  # >>   :avg_frame_rate=>"2/1",
+  # >>   :time_base=>"1/16384",
+  # >>   :start_pts=>0,
+  # >>   :start_time=>"0.000000",
+  # >>   :duration_ts=>49152,
+  # >>   :duration=>"3.000000",
+  # >>   :bit_rate=>"2133",
+  # >>   :bits_per_raw_sample=>"8",
+  # >>   :nb_frames=>"6",
+  # >>   :disposition=>
+  # >>    {:default=>1,
+  # >>     :dub=>0,
+  # >>     :original=>0,
+  # >>     :comment=>0,
+  # >>     :lyrics=>0,
+  # >>     :karaoke=>0,
+  # >>     :forced=>0,
+  # >>     :hearing_impaired=>0,
+  # >>     :visual_impaired=>0,
+  # >>     :clean_effects=>0,
+  # >>     :attached_pic=>0,
+  # >>     :timed_thumbnails=>0},
+  # >>   :tags=>
+  # >>    {:language=>"und",
+  # >>     :handler_name=>"VideoHandler",
+  # >>     :vendor_id=>"[0][0][0][0]"}},
+  # >>  {:index=>1,
+  # >>   :codec_name=>"aac",
+  # >>   :codec_long_name=>"AAC (Advanced Audio Coding)",
+  # >>   :profile=>"LC",
+  # >>   :codec_type=>"audio",
+  # >>   :codec_tag_string=>"mp4a",
+  # >>   :codec_tag=>"0x6134706d",
+  # >>   :sample_fmt=>"fltp",
+  # >>   :sample_rate=>"44100",
+  # >>   :channels=>2,
+  # >>   :channel_layout=>"stereo",
+  # >>   :bits_per_sample=>0,
+  # >>   :r_frame_rate=>"0/0",
+  # >>   :avg_frame_rate=>"0/0",
+  # >>   :time_base=>"1/44100",
+  # >>   :start_pts=>0,
+  # >>   :start_time=>"0.000000",
+  # >>   :duration_ts=>132300,
+  # >>   :duration=>"3.000000",
+  # >>   :bit_rate=>"127224",
+  # >>   :nb_frames=>"131",
+  # >>   :disposition=>
+  # >>    {:default=>1,
+  # >>     :dub=>0,
+  # >>     :original=>0,
+  # >>     :comment=>0,
+  # >>     :lyrics=>0,
+  # >>     :karaoke=>0,
+  # >>     :forced=>0,
+  # >>     :hearing_impaired=>0,
+  # >>     :visual_impaired=>0,
+  # >>     :clean_effects=>0,
+  # >>     :attached_pic=>0,
+  # >>     :timed_thumbnails=>0},
+  # >>   :tags=>
+  # >>    {:language=>"eng",
+  # >>     :handler_name=>"SoundHandler",
+  # >>     :vendor_id=>"[0][0][0][0]"}}]
+  # >> .[{:index=>0,
+  # >>   :codec_name=>"gif",
+  # >>   :codec_long_name=>"CompuServe GIF (Graphics Interchange Format)",
+  # >>   :codec_type=>"video",
+  # >>   :codec_tag_string=>"[0][0][0][0]",
+  # >>   :codec_tag=>"0x0000",
+  # >>   :width=>2,
+  # >>   :height=>2,
+  # >>   :coded_width=>2,
+  # >>   :coded_height=>2,
+  # >>   :closed_captions=>0,
+  # >>   :has_b_frames=>0,
+  # >>   :pix_fmt=>"bgra",
+  # >>   :level=>-99,
+  # >>   :refs=>1,
+  # >>   :r_frame_rate=>"2/1",
+  # >>   :avg_frame_rate=>"2/1",
+  # >>   :time_base=>"1/100",
+  # >>   :start_pts=>0,
+  # >>   :start_time=>"0.000000",
+  # >>   :duration_ts=>300,
+  # >>   :duration=>"3.000000",
+  # >>   :nb_frames=>"6",
+  # >>   :disposition=>
+  # >>    {:default=>0,
+  # >>     :dub=>0,
+  # >>     :original=>0,
+  # >>     :comment=>0,
+  # >>     :lyrics=>0,
+  # >>     :karaoke=>0,
+  # >>     :forced=>0,
+  # >>     :hearing_impaired=>0,
+  # >>     :visual_impaired=>0,
+  # >>     :clean_effects=>0,
+  # >>     :attached_pic=>0,
+  # >>     :timed_thumbnails=>0}}]
+  # >> .[{:index=>0,
+  # >>   :codec_name=>"apng",
+  # >>   :codec_long_name=>"APNG (Animated Portable Network Graphics) image",
+  # >>   :codec_type=>"video",
+  # >>   :codec_tag_string=>"[0][0][0][0]",
+  # >>   :codec_tag=>"0x0000",
+  # >>   :width=>2,
+  # >>   :height=>2,
+  # >>   :coded_width=>2,
+  # >>   :coded_height=>2,
+  # >>   :closed_captions=>0,
+  # >>   :has_b_frames=>0,
+  # >>   :pix_fmt=>"gray16be",
+  # >>   :level=>-99,
+  # >>   :color_range=>"pc",
+  # >>   :refs=>1,
+  # >>   :r_frame_rate=>"2/1",
+  # >>   :avg_frame_rate=>"2/1",
+  # >>   :time_base=>"1/100000",
+  # >>   :disposition=>
+  # >>    {:default=>0,
+  # >>     :dub=>0,
+  # >>     :original=>0,
+  # >>     :comment=>0,
+  # >>     :lyrics=>0,
+  # >>     :karaoke=>0,
+  # >>     :forced=>0,
+  # >>     :hearing_impaired=>0,
+  # >>     :visual_impaired=>0,
+  # >>     :clean_effects=>0,
+  # >>     :attached_pic=>0,
+  # >>     :timed_thumbnails=>0}}]
+  # >> .[{:index=>0,
+  # >>   :codec_name=>"webp",
+  # >>   :codec_long_name=>"WebP",
+  # >>   :codec_type=>"video",
+  # >>   :codec_tag_string=>"[0][0][0][0]",
+  # >>   :codec_tag=>"0x0000",
+  # >>   :width=>0,
+  # >>   :height=>0,
+  # >>   :coded_width=>0,
+  # >>   :coded_height=>0,
+  # >>   :closed_captions=>0,
+  # >>   :has_b_frames=>0,
+  # >>   :level=>-99,
+  # >>   :refs=>1,
+  # >>   :r_frame_rate=>"25/1",
+  # >>   :avg_frame_rate=>"25/1",
+  # >>   :time_base=>"1/25",
+  # >>   :disposition=>
+  # >>    {:default=>0,
+  # >>     :dub=>0,
+  # >>     :original=>0,
+  # >>     :comment=>0,
+  # >>     :lyrics=>0,
+  # >>     :karaoke=>0,
+  # >>     :forced=>0,
+  # >>     :hearing_impaired=>0,
+  # >>     :visual_impaired=>0,
+  # >>     :clean_effects=>0,
+  # >>     :attached_pic=>0,
+  # >>     :timed_thumbnails=>0}}]
+  # >> .Archive:  _outout.zip
+  # >>   Length      Date    Time    Name
+  # >> ---------  ---------- -----   ----
+  # >>      9960  09-18-2021 18:17   cover.png
+  # >>     33815  09-18-2021 18:17   xxx0.png
+  # >>     35120  09-18-2021 18:17   xxx1.png
+  # >>     36299  09-18-2021 18:17   xxx2.png
+  # >> ---------                     -------
+  # >>    115194                     4 files
+  # >> .{:index=>1,
+  # >>  :codec_name=>"aac",
+  # >>  :codec_long_name=>"AAC (Advanced Audio Coding)",
+  # >>  :profile=>"LC",
+  # >>  :codec_type=>"audio",
+  # >>  :codec_tag_string=>"mp4a",
+  # >>  :codec_tag=>"0x6134706d",
+  # >>  :sample_fmt=>"fltp",
+  # >>  :sample_rate=>"44100",
+  # >>  :channels=>2,
+  # >>  :channel_layout=>"stereo",
+  # >>  :bits_per_sample=>0,
+  # >>  :r_frame_rate=>"0/0",
+  # >>  :avg_frame_rate=>"0/0",
+  # >>  :time_base=>"1/44100",
+  # >>  :start_pts=>0,
+  # >>  :start_time=>"0.000000",
+  # >>  :duration_ts=>530432,
+  # >>  :duration=>"12.027937",
+  # >>  :bit_rate=>"129600",
+  # >>  :nb_frames=>"519",
+  # >>  :disposition=>
+  # >>   {:default=>1,
+  # >>    :dub=>0,
+  # >>    :original=>0,
+  # >>    :comment=>0,
+  # >>    :lyrics=>0,
+  # >>    :karaoke=>0,
+  # >>    :forced=>0,
+  # >>    :hearing_impaired=>0,
+  # >>    :visual_impaired=>0,
+  # >>    :clean_effects=>0,
+  # >>    :attached_pic=>0,
+  # >>    :timed_thumbnails=>0},
+  # >>  :tags=>
+  # >>   {:language=>"und",
+  # >>    :handler_name=>"SoundHandler",
+  # >>    :vendor_id=>"[0][0][0][0]"}}
+  # >> .
+  # >>
+  # >> Finished in 21.6 seconds (files took 1.88 seconds to load)
+  # >> 6 examples, 0 failures
+  # >>
+end

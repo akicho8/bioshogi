@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod(<<~EOT)
+container = Container::Basic.new
+container.placement_from_bod(<<~EOT)
 後手の持駒：
 +---------------------------+
 |v香v桂v銀v金v玉v金v銀v桂v香|
@@ -17,12 +17,12 @@ xcontainer.placement_from_bod(<<~EOT)
 先手の持駒：歩飛
 EOT
 
-player = xcontainer.player_at(:white)
+player = container.player_at(:white)
 evaluator = player.evaluator(evaluator_class: Evaluator::Level3)
 evaluator.score            # => -709
 tp evaluator.score_compute_report
-tp xcontainer.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
-xcontainer.players.each { |e| tp e.pressure_report }
+tp container.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
+container.players.each { |e| tp e.pressure_report }
 
 # >> |---------+----------------+-----------------------+----------------------+------------+------|
 # >> | 先後    | 駒箱(常時加算) | 序盤                  | 終盤                 | 序終盤合計 | 全体 |

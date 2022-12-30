@@ -3,8 +3,8 @@ require "spec_helper"
 module Bioshogi
   describe do
     def test1(str)
-      xcontainer = Bioshogi::Xcontainer.new
-      xcontainer.board.placement_from_shape(<<~EOT)
+      container = Bioshogi::Container::Basic.new
+      container.board.placement_from_shape(<<~EOT)
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・v角|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
@@ -17,8 +17,8 @@ module Bioshogi
 | ・ ・ ・ ・ ・ ・ ・ ・v飛|
 +---------------------------+
         EOT
-      xcontainer.next_player.execute(str)
-      xcontainer.hand_logs.last.to_kif_ki2_csa
+      container.next_player.execute(str)
+      container.hand_logs.last.to_kif_ki2_csa
     end
 
     it "エラー" do

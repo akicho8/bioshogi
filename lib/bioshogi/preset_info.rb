@@ -56,7 +56,7 @@ module Bioshogi
       # 持駒の比較は別途行う必要あり
       def lookup_by_soldiers(soldiers, options = {})
         options = {
-          :optimize => false,               # 速くなる (気がするだけでほとんど効果がない)
+          :optimize        => false, # 速くなる (気がするだけでほとんど効果がない)
           :inclusion_minor => false, # トンボなど一般的な名前も含めるか？
         }.merge(options)
 
@@ -83,18 +83,16 @@ module Bioshogi
           else
             list = major_list
           end
-          list.find do |e|
-            sorted_soldiers == e.sorted_soldiers
-          end
+          list.find { |e| sorted_soldiers == e.sorted_soldiers }
         end
       end
     end
 
     def to_sfen
-      xcontainer = Xcontainer.new
-      xcontainer.placement_from_preset(key)
-      xcontainer.turn_info.handicap = handicap
-      xcontainer.to_short_sfen
+      container = Container::Basic.new
+      container.placement_from_preset(key)
+      container.turn_info.handicap = handicap
+      container.to_short_sfen
     end
 
     def to_short_sfen

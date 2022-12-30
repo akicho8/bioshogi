@@ -70,8 +70,14 @@ module Bioshogi
       assert { piece.names          == ["飛", "HI", "R", :rook, "龍", "竜", "RY"] }
       assert { piece.key            == :rook }
       assert { piece.promotable?    == true }
-      assert { piece.all_vectors(promoted: false, location: Location[:black]) == Set[RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
-      assert { piece.all_vectors(promoted: true, location: Location[:black])  == Set[OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
+    end
+
+    it "all_vectors" do
+      piece = Piece.lookup("飛")
+      assert { piece.all_vectors(promoted: false, location: Location[:black]) == [RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
+      assert { piece.all_vectors(promoted: true,  location: Location[:black]) == [OV[-1, -1], OV[1, -1], OV[-1, 1], OV[1, 1], RV[0, -1], RV[-1, 0], RV[1, 0], RV[0, 1]] }
+      assert { piece.all_vectors(promoted: false, location: Location[:white]) == [RV[0, 1], RV[1, 0], RV[-1, 0], RV[0, -1]] }
+      assert { piece.all_vectors(promoted: true,  location: Location[:white]) == [OV[1, 1], OV[-1, 1], OV[1, -1], OV[-1, -1], RV[0, 1], RV[1, 0], RV[-1, 0], RV[0, -1]] }
     end
 
     it "KIFやKI2用にオプションで「杏」ではなく「成香」と表記する" do

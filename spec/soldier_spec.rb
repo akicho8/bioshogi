@@ -40,8 +40,8 @@ module Bioshogi
     it "指し手" do
       soldier = Soldier.from_str("▲６八全")
       origin_soldier = Soldier.from_str("▲７九銀")
-      assert MoveHand.create(soldier: soldier, origin_soldier: origin_soldier).to_kif == "▲６八銀成(79)"
-      assert DropHand.create(soldier: Soldier.from_str("▲５五飛")).to_kif == "▲５五飛打"
+      assert Hand::Move.create(soldier: soldier, origin_soldier: origin_soldier).to_kif == "▲６八銀成(79)"
+      assert Hand::Drop.create(soldier: Soldier.from_str("▲５五飛")).to_kif == "▲５五飛打"
     end
 
     it "底からの移動幅" do

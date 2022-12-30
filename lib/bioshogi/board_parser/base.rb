@@ -36,7 +36,7 @@ module Bioshogi
       private
 
       def shape_lines
-        @shape_lines ||= Parser.source_normalize(@source).remove(/\s*#.*/).strip.lines.to_a
+        @shape_lines ||= Source.wrap(@source).to_s.remove(/\s*#.*/).strip.lines.to_a
       end
     end
   end

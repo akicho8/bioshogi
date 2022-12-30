@@ -1,16 +1,16 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.players.collect { |e| e.evaluator.score } # => [0, 0]
+container = Container::Basic.new
+container.players.collect { |e| e.evaluator.score } # => [0, 0]
 
-xcontainer.board.placement_from_human("▲９七歩")
-xcontainer.players.collect { |e| e.evaluator.score } # => [100, -100]
+container.board.placement_from_human("▲９七歩")
+container.players.collect { |e| e.evaluator.score } # => [100, -100]
 
-xcontainer.board.placement_from_human("▲９七歩 △１三歩")
-xcontainer.players.collect { |e| e.evaluator.score } # => [0, 0]
+container.board.placement_from_human("▲９七歩 △１三歩")
+container.players.collect { |e| e.evaluator.score } # => [0, 0]
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container::Basic.new
+container.placement_from_bod <<~EOT
 後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -26,10 +26,10 @@ xcontainer.placement_from_bod <<~EOT
 +---------------------------+
 先手の持駒：
 EOT
-puts xcontainer
-tp xcontainer.player_at(:black).evaluator.detail_score
-xcontainer.player_at(:black).evaluator.score # => 1000
-xcontainer.player_at(:white).evaluator.score # => -1000
+puts container
+tp container.player_at(:black).evaluator.detail_score
+container.player_at(:black).evaluator.score # => 1000
+container.player_at(:white).evaluator.score # => -1000
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

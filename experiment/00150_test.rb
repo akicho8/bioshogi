@@ -1,7 +1,7 @@
 require "./setup"
 
-xcontainer = Xcontainer.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
-puts xcontainer
+container = Container::Basic.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
+puts container
 # >> 後手の持駒：歩
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

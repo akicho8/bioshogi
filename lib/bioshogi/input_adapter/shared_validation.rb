@@ -41,7 +41,7 @@ module Bioshogi
             end
           end
 
-          if player.xcontainer.params[:validate_warp_skip]
+          if player.container.params[:validate_warp_skip]
           else
             # 初手 "25歩(27)" とした場合
             if !candidate_soldiers.include?(move_hand.origin_soldier)
@@ -60,7 +60,7 @@ module Bioshogi
       def soft_validations
         super
 
-        if player.xcontainer.params[:validate_double_pawn_skip]
+        if player.container.params[:validate_double_pawn_skip]
         else
           if drop_hand
             if collision_soldier = soldier.collision_pawn(board)
@@ -80,26 +80,26 @@ module Bioshogi
 
         av << yield_self {
           m = []
-          m << "#{player.xcontainer.turn_info.turn_offset.next}手目は#{player.location.pentagon_mark}の手番ですが"
+          m << "#{player.container.turn_info.turn_offset.next}手目は#{player.location.pentagon_mark}の手番ですが"
           m << "#{player.opponent_player.location.pentagon_mark}が着手しました"
           m.join
         }
 
-        if player.xcontainer.turn_info.handicap?
+        if player.container.turn_info.handicap?
           av << "手合割は「駒落ち」です"
         end
 
-        if player.xcontainer.turn_info.display_turn == 0
-          if player.xcontainer.turn_info.handicap?
+        if player.container.turn_info.display_turn == 0
+          if player.container.turn_info.handicap?
             av << "平手で手番のハンデを貰っている場合は☗側が初手を指してください"
           end
         end
 
-        if player.xcontainer.turn_info.handicap?
+        if player.container.turn_info.handicap?
           av << "詰将棋で「上手・下手」の表記を用いている場合は「後手・先手」に直してください"
         end
 
-        # if player.xcontainer.turn_info.display_turn > 0
+        # if player.container.turn_info.display_turn > 0
         #   av << "将棋倶楽部24の場合、反則(二手指し)による不正な棋譜になっている場合があります"
         # end
 

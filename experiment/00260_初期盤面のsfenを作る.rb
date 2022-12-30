@@ -1,12 +1,12 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.board.placement_from_preset("裸玉")
-xcontainer.turn_info.handicap = false # △から始める場合
-xcontainer.to_short_sfen # => "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
-puts xcontainer
+container = Container::Basic.new
+container.board.placement_from_preset("裸玉")
+container.turn_info.handicap = false # △から始める場合
+container.to_short_sfen # => "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
+puts container
 
-info = Parser.parse("position #{xcontainer.to_short_sfen}")
+info = Parser.parse("position #{container.to_short_sfen}")
 puts info.to_ki2
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

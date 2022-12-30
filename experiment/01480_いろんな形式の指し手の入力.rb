@@ -1,10 +1,10 @@
 require "./setup"
 
 def f(v)
-  xcontainer = Xcontainer.new
-  xcontainer.placement_from_preset("平手")
-  xcontainer.execute(v)
-  xcontainer.hand_logs.to_kif_a
+  container = Container::Basic.new
+  container.placement_from_preset("平手")
+  container.execute(v)
+  container.hand_logs.to_kif_a
 end
 
 f "76歩"                        # => ["７六歩(77)"]

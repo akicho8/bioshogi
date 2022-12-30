@@ -1,9 +1,9 @@
 require "./setup"
 
-xcontainer = Xcontainer.start
-player = xcontainer.player_at(:black)
-brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaAlphaDiver, evaluator_class: Evaluator::Level3)
+container = Container::Basic.start
+player = container.player_at(:black)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaDiver, evaluator_class: Evaluator::Level3)
 @records = brain.iterative_deepening(depth_max_range: 0..0)
 @records.first[:hand].to_s == "▲６八銀(79)"
-# tp Brain.human_format(@records)
+# tp Ai::Brain.human_format(@records)
 

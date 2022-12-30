@@ -1,17 +1,17 @@
 require "./setup"
 
-object = XcontainerStack.new
-object.xcontainer.placement_from_preset("平手")
-object.xcontainer.execute("▲７六歩")
+object = Container::XcontainerStack.new
+object.container.placement_from_preset("平手")
+object.container.execute("▲７六歩")
 object.stack_push
-object.xcontainer.execute("△３四歩")
+object.container.execute("△３四歩")
 object.stack_pop
 
-object = XcontainerStack.new
-object.xcontainer.object_id
-object_id = object.xcontainer.object_id
+object = Container::XcontainerStack.new
+object.container.object_id
+object_id = object.container.object_id
 object.stack_push
-object.xcontainer.object_id != object_id # => true
+object.container.object_id != object_id # => true
 object.stack_pop
-object.xcontainer.object_id
-object.xcontainer.object_id == object_id # => true
+object.container.object_id
+object.container.object_id == object_id # => true

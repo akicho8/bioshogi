@@ -26,7 +26,7 @@ puts "%.1f ms" % ms
 system "stackprof stackprof.dump"
 # system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 
-# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutorHuman#hand_log"
+# system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
 system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Dimension::Base.lookup"
@@ -34,7 +34,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Soldier#attributes"
 
 # system "stackprof stackprof.dump --method Bioshogi::Place.fetch"
-# system "stackprof stackprof.dump --method Bioshogi::Movabler#move_list"
+# system "stackprof stackprof.dump --method Bioshogi::SoldierWalker.call"
 # system "stackprof --flamegraph stackprof.dump > flamegraph"
 # system "stackprof --flamegraph-viewer=flamegraph"
 
@@ -58,8 +58,8 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>         16   (1.7%)          16   (1.7%)     Bioshogi::Dimension::Base#hash
 # >>         27   (2.9%)          13   (1.4%)     Bioshogi::Place#hash
 # >>         13   (1.4%)          13   (1.4%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
-# >>         15   (1.6%)          12   (1.3%)     Bioshogi::Dimension::Xplace#hankaku_number
-# >>         12   (1.3%)          11   (1.2%)     Bioshogi::Dimension::Yplace#hankaku_number
+# >>         15   (1.6%)          12   (1.3%)     Bioshogi::Dimension::PlaceX#number_hankaku
+# >>         12   (1.3%)          11   (1.2%)     Bioshogi::Dimension::PlaceY#number_hankaku
 # >>          9   (1.0%)           9   (1.0%)     Bioshogi::Soldier#attributes
 # >>          9   (1.0%)           9   (1.0%)     ActiveSupport::Duration#initialize
 # >>         14   (1.5%)           9   (1.0%)     ActiveSupport::Duration.===
@@ -71,7 +71,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>          7   (0.8%)           7   (0.8%)     #<Module:0x00007ff34a988e70>.kconv
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::SkillSet#defense_infos
 # >>          8   (0.9%)           6   (0.7%)     Bioshogi::SkillMonitor#surface
-# >>         46   (5.0%)           6   (0.7%)     Bioshogi::PlayerExecutorBase#input
+# >>         46   (5.0%)           6   (0.7%)     Bioshogi::PlayerExecutor::Base#input
 # >>          9   (1.0%)           6   (0.7%)     Bioshogi::InputParser#match!
 # >>         12   (1.3%)           6   (0.7%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>          9   (1.0%)           6   (0.7%)     #<Module:0x00007ff34a8f9540>#<=>
@@ -144,21 +144,21 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    74  | 
 # >>                                   |    75  |         # 手数制限。制限を超えていたらskip
 # >>     1    (0.1%)                   |    76  |         if e.turn_limit
-# >>                                   |    77  |           if e.turn_limit < player.xcontainer.turn_info.turn_offset.next
+# >>                                   |    77  |           if e.turn_limit < player.container.turn_info.turn_offset.next
 # >>                                   |    78  |             throw :skip
 # >>                                   |    79  |           end
 # >>                                   |    80  |         end
 # >>                                   |    81  | 
 # >>                                   |    82  |         # 手数限定。手数が異なっていたらskip
 # >>                                   |    83  |         if e.turn_eq
-# >>                                   |    84  |           if e.turn_eq != player.xcontainer.turn_info.turn_offset.next
+# >>                                   |    84  |           if e.turn_eq != player.container.turn_info.turn_offset.next
 # >>                                   |    85  |             throw :skip
 # >>                                   |    86  |           end
 # >>                                   |    87  |         end
 # >>                                   |    88  | 
 # >>                                   |    89  |         # 手番限定。手番が異なればskip
 # >>                                   |    90  |         if e.order_key
-# >>                                   |    91  |           if e.order_key != player.xcontainer.turn_info.order_key
+# >>                                   |    91  |           if e.order_key != player.container.turn_info.order_key
 # >>                                   |    92  |             throw :skip
 # >>                                   |    93  |           end
 # >>                                   |    94  |         end
@@ -306,7 +306,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >> Bioshogi::SkillMonitor#execute (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:13)
 # >>   samples:     0 self (0.0%)  /    196 total (21.3%)
 # >>   callers:
-# >>      196  (  100.0%)  Bioshogi::PlayerExecutorHuman#perform_skill_monitor
+# >>      196  (  100.0%)  Bioshogi::PlayerExecutor::Human#perform_skill_monitor
 # >>       83  (   42.3%)  Bioshogi::SkillMonitor#execute
 # >>        7  (    3.6%)  Bioshogi::SkillMonitor#execute_block
 # >>   callees (196 total):
@@ -320,7 +320,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
-# >>        1  (    0.5%)  Bioshogi::PlayerExecutorBase#xcontainer
+# >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  block in <class:TechniqueMatcherInfo>
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
@@ -333,7 +333,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
 # >>                                   |    20  | 
-# >>     1    (0.1%)                   |    21  |       if executor.xcontainer.params[:skill_monitor_technique_enable]
+# >>     1    (0.1%)                   |    21  |       if executor.container.params[:skill_monitor_technique_enable]
 # >>                                   |    22  |         # 主に手筋用で戦型チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Explain::TacticInfo.piece_hash_table[key]

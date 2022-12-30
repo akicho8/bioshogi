@@ -3,13 +3,13 @@ require "spec_helper"
 module Bioshogi
   describe "図面指定がある場合のヘッダー出力" do
     it "平手" do
-      xcontainer = Xcontainer.new
-      xcontainer.board.placement_from_preset("裸玉")
-      xcontainer.execute("58玉")
-      xcontainer.execute("52玉")
+      container = Container::Basic.new
+      container.board.placement_from_preset("裸玉")
+      container.execute("58玉")
+      container.execute("52玉")
 
-      xcontainer.turn_info.handicap = false
-      info = Parser.parse("position #{xcontainer.to_short_sfen}")
+      container.turn_info.handicap = false
+      info = Parser.parse("position #{container.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 先手の備考：居飛車, 相居飛車
 後手の備考：居飛車, 相居飛車, 背水の陣
@@ -34,13 +34,13 @@ EOT
     end
 
     it "駒落ち" do
-      xcontainer = Xcontainer.new
-      xcontainer.board.placement_from_preset("裸玉")
-      xcontainer.execute("58玉")
-      xcontainer.execute("52玉")
+      container = Container::Basic.new
+      container.board.placement_from_preset("裸玉")
+      container.execute("58玉")
+      container.execute("52玉")
 
-      xcontainer.turn_info.handicap = true
-      info = Parser.parse("position #{xcontainer.to_short_sfen}")
+      container.turn_info.handicap = true
+      info = Parser.parse("position #{container.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
 下手の備考：居飛車, 相居飛車
 上手の備考：居飛車, 相居飛車

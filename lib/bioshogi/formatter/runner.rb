@@ -3,33 +3,33 @@
 module Bioshogi
   module Formatter
     class Runner
-      attr_accessor :xparser
-      attr_accessor :xcontainer
+      attr_accessor :formatter
+      attr_accessor :container
 
-      def initialize(xparser, xcontainer)
-        @xparser = xparser
-        @xcontainer = xcontainer
+      def initialize(formatter, container)
+        @formatter = formatter
+        @container = container
       end
 
-      def perform
+      def call
         begin
-          @xparser.mi.move_infos.each.with_index do |info, i|
-            if @xparser.parser_options[:debug]
-              p xcontainer
+          @formatter.mi.move_infos.each.with_index do |info, i|
+            if @formatter.parser_options[:debug]
+              p container
             end
-            if @xparser.parser_options[:callback]
-              @xparser.parser_options[:callback].call(xcontainer)
+            if @formatter.parser_options[:callback]
+              @formatter.parser_options[:callback].call(container)
             end
-            if @xparser.parser_options[:turn_limit] && xcontainer.turn_info.display_turn >= @xparser.parser_options[:turn_limit]
+            if @formatter.parser_options[:turn_limit] && container.turn_info.display_turn >= @formatter.parser_options[:turn_limit]
               break
             end
-            xcontainer.execute(info[:input], used_seconds: xparser.used_seconds_at(i))
+            container.execute(info[:input], used_seconds: formatter.used_seconds_at(i))
           end
         rescue CommonError => error
-          if v = @xparser.parser_options[:typical_error_case]
+          if v = @formatter.parser_options[:typical_error_case]
             case v
             when :embed
-              @xparser.mi.error_message = error.message
+              @formatter.mi.error_message = error.message
             when :skip
             else
               raise MustNotHappen

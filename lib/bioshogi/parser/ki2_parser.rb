@@ -9,10 +9,10 @@ module Bioshogi
 
       class << self
         def accept?(source)
-          source = Parser.source_normalize(source)
-          if source.present?
-            if !KifParser.accept?(source) && !CsaParser.accept?(source)
-              source.match?(ACCEPT_REGEXP) || BoardParser::KakinokiBoardParser.accept?(source)
+          str = Source.wrap(source).to_s
+          if str.present?
+            if !KifParser.accept?(str) && !CsaParser.accept?(str)
+              str.match?(ACCEPT_REGEXP) || BoardParser::KakinokiBoardParser.accept?(str)
             end
           end
         end

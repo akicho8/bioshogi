@@ -37,7 +37,7 @@ module Bioshogi
       end
 
       def same_place
-        if hand_log = player.xcontainer.hand_logs.last
+        if hand_log = player.container.hand_logs.last
           hand_log.soldier.place
         end
       end

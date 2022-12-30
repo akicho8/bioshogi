@@ -2,12 +2,12 @@ require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-# Board.promotable_disable
-Board.dimensiton_change([4, 9])
+# Dimension::PlaceY.promotable_disabled
+Dimension.wh_change([4, 9])
 
-xcontainer = Xcontainer.new
-xcontainer.player_at(:black).pieces_add("金桂")
-xcontainer.board.placement_from_shape <<~EOT
+container = Container::Basic.new
+container.player_at(:black).pieces_add("金桂")
+container.board.placement_from_shape <<~EOT
 +------------+
 | 馬 ・v桂v香|
 | ・ ・ ・v玉|
@@ -16,19 +16,19 @@ xcontainer.board.placement_from_shape <<~EOT
 +------------+
 EOT
 
-# tp xcontainer.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
+# tp container.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
 mate_records = []
 mate_proc = proc do |player, score, hand_route|
   mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
 end
 
-# brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+# brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
 # records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc)
-# tp Brain.human_format(records)
+# tp Ai::Brain.human_format(records)
 
-player = xcontainer.player_at(:black)
-object = Diver::NegaAlphaDiver.new(depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
+player = container.player_at(:black)
+object = Ai::Diver::NegaAlphaDiver.new(depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 tp object.dive
 tp mate_records
 

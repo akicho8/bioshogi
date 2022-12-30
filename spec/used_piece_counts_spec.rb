@@ -21,10 +21,10 @@ module Bioshogi
       22角成 同銀 55角打
       EOT
 
-      xcontainer = info.xcontainer
+      container = info.formatter.container
 
-      assert { xcontainer.player_at(:black).used_piece_counts == {"B0" => 2} }
-      assert { xcontainer.player_at(:white).used_piece_counts == {"S0" => 1} }
+      assert { container.player_at(:black).used_piece_counts == {"B0" => 2} }
+      assert { container.player_at(:white).used_piece_counts == {"S0" => 1} }
     end
   end
 end

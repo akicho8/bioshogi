@@ -34,31 +34,31 @@ module Bioshogi
       win_counts = Location.inject({}) { |a, e| a.merge(e.key => 0) }
 
       options[:round].times do |round|
-        xcontainer = Xcontainer.start
+        container = Container::Basic.start
         options[:times].times do
-          current_player = xcontainer.current_player
+          current_player = container.current_player
 
           deepen_score_list_params = {
             time_limit: options[:time_limit],
             depth_max_range: 0..options[:depth_max],
           }
-          diver_class = divers[xcontainer.turn_info.current_location.code]
-          records = current_player.brain(diver_class: diver_class, evaluator_class: Evaluator::Level3).iterative_deepening(deepen_score_list_params)
+          diver_class = divers[container.turn_info.current_location.code]
+          records = current_player.brain(diver_class: diver_class, evaluator_class: Ai::Evaluator::Level3).iterative_deepening(deepen_score_list_params)
           record = records.first
           hand = record[:hand]
-          xcontainer.execute(hand.to_sfen, executor_class: PlayerExecutorWithoutMonitor)
+          container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
 
-          puts "---------------------------------------- [#{xcontainer.turn_info.turn_offset}] #{hand} (#{diver_class})"
-          # xcontainer.players.each { |e| tp e.pressure_report }
+          puts "---------------------------------------- [#{container.turn_info.turn_offset}] #{hand} (#{diver_class})"
+          # container.players.each { |e| tp e.pressure_report }
 
           tp deepen_score_list_params
-          tp Brain.human_format(records)
-          tp xcontainer.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
-          puts xcontainer
+          tp Ai::Brain.human_format(records)
+          tp container.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
+          puts container
           puts
           puts "#{hand} #{record[:black_side_score]}"
           puts
-          puts xcontainer.to_kif_oneline
+          puts container.to_kif_oneline
 
           captured_soldier = current_player.executor.captured_soldier
           if captured_soldier && captured_soldier.piece.key == :king

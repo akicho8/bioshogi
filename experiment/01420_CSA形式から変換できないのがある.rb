@@ -193,15 +193,15 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
 
 puts info.to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer.rb:212:in `block in execute': 【反則】先手番で後手が着手しました : -8384FU (Bioshogi::DifferentTurnCommonError)
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer.rb:203:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/xcontainer.rb:203:in `execute'
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/container.rb:212:in `block in execute': 【反則】先手番で後手が着手しました : -8384FU (Bioshogi::DifferentTurnCommonError)
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container.rb:203:in `each'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container.rb:203:in `execute'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:377:in `block in xcontainer_run_all'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:367:in `each'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:367:in `xcontainer_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:337:in `block in xcontainer'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:337:in `block in container'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:335:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:335:in `xcontainer'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:325:in `xcontainer_run_once'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:335:in `container'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:325:in `formatter.xcontainer_run_once'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/parser/base.rb:228:in `to_kif'
 # ~> 	from -:195:in `<main>'

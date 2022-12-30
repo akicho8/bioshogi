@@ -5,7 +5,7 @@ require "./reversi_app"
 require "timeout"
 
 class DirtyMinimax
-  attr_accessor :xcontainer
+  attr_accessor :container
   attr_accessor :params
   attr_accessor :current_turn
   attr_accessor :time_limit_exceeded
@@ -27,11 +27,11 @@ class DirtyMinimax
   end
 
   def run
-    @xcontainer = ReversiApp.new(params)
+    @container = ReversiApp.new(params)
 
     params[:times].times do |turn|
       @current_turn = turn
-      player = xcontainer.player_at(turn)
+      player = container.player_at(turn)
 
       start_time = Time.now
       if params[:depth_max_range]
@@ -43,23 +43,23 @@ class DirtyMinimax
 
       if infos.empty?
         # 手がないときはここでパスする
-        xcontainer.pass_count += 1
+        container.pass_count += 1
       else
         if best = infos.first
           hand = best[:hand]
           if hand == :pass
             raise "must not happen"
-            xcontainer.pass_count += 1
+            container.pass_count += 1
           else
-            xcontainer.place_on(player, hand)
-            xcontainer.pass_count = 0
+            container.place_on(player, hand)
+            container.pass_count = 0
           end
         end
       end
 
       if !params[:silent]
         puts "#{'-' * 60} [#{turn}] #{player} 実行速度:#{time}".strip
-        puts xcontainer
+        puts container
         if infos.empty?
           puts "(pass)"
         end
@@ -77,28 +77,28 @@ class DirtyMinimax
         tp rows
       end
 
-      if xcontainer.continuous_pass?
+      if container.continuous_pass?
         if !params[:silent]
           puts "連続パスで終了"
         end
         break
       end
 
-      if xcontainer.game_over?
+      if container.game_over?
         break
       end
     end
     if !params[:silent]
-      tp xcontainer.histogram
+      tp container.histogram
     end
-    xcontainer.histogram
+    container.histogram
   end
 
   def fast_score_list(turn)
-    player = xcontainer.player_at(turn)
+    player = container.player_at(turn)
 
-    infos = xcontainer.available_places(player).collect do |e|
-      xcontainer.place_on(player, e) do
+    infos = container.available_places(player).collect do |e|
+      container.place_on(player, e) do
         v, pv = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         v = -v
         {hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v}
@@ -108,7 +108,7 @@ class DirtyMinimax
   end
 
   def iterative_deepening(turn)
-    player = xcontainer.player_at(turn)
+    player = container.player_at(turn)
 
     @time_limit_exceeded = nil
     if v = params[:time_limit]
@@ -118,8 +118,8 @@ class DirtyMinimax
     infos = []
     all_finished = catch @time_limit_exceeded do
       params[:depth_max_range].each do |depth_max|
-        infos = xcontainer.available_places(player).collect do |e|
-          xcontainer.place_on(player, e) do
+        infos = container.available_places(player).collect do |e|
+          container.place_on(player, e) do
             start_time = Time.now
             v, pv = compute_score(turn: turn + 1, depth_max: depth_max)
             v = -v
@@ -131,7 +131,7 @@ class DirtyMinimax
     end
 
     if infos.empty?
-      if !xcontainer.available_places(player).empty?
+      if !container.available_places(player).empty?
         puts "指し手があるのにパスすることになってしまいます。制限時間を増やすか読みを浅くしてください。"
       end
     end
@@ -151,7 +151,7 @@ class DirtyMinimax
     v, pv = primitive_mini_max(turn: turn, depth_max: depth_max)
 
     # Negamax を想定しているため後手番なら符号を逆にする(後手から見て有利な状況は、よりマイナスではなく、よりプラスであるとする)
-    player = xcontainer.player_at(turn)
+    player = container.player_at(turn)
     if player == :x
       v = -v
     end
@@ -164,12 +164,12 @@ class DirtyMinimax
 
     # 一番深い局面に達したらはじめて評価する
     if depth_max <= depth
-      return [xcontainer.evaluate(:o), []] # 常に「先手から」の評価値
+      return [container.evaluate(:o), []] # 常に「先手から」の評価値
     end
 
     # 合法手がない場合はパスして相手に手番を渡す
-    player = xcontainer.player_at(turn)
-    children = xcontainer.available_places(player)
+    player = container.player_at(turn)
+    children = container.available_places(player)
 
     if children.empty?
       v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
@@ -181,7 +181,7 @@ class DirtyMinimax
       # 自分が自分にとってもっとも有利な手を探す
       max = -Float::INFINITY
       children.each do |place|
-        xcontainer.place_on(player, place) do
+        container.place_on(player, place) do
           v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v > max
             best_pv = [place, *pv]
@@ -195,7 +195,7 @@ class DirtyMinimax
       # 相手が自分にとってもっとも不利な手を探す
       min = Float::INFINITY
       children.each do |place|
-        xcontainer.place_on(player, place) do
+        container.place_on(player, place) do
           v, pv = primitive_mini_max(turn: turn + 1, depth_max: depth_max, depth: depth + 1)
           if v < min
             best_pv = [place, *pv]

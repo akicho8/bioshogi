@@ -1,2 +1,8 @@
-ERROR: NoMethodError
-undefined method `clock_exist?' for #<Bioshogi::Formatter::Exporter:0x00007fe3f5c589e8>
+先手の備考：居飛車, 相居飛車
+後手の備考：居飛車, 相居飛車
+手合割：平手
+手数----指手---------消費時間--
+   1 ７六歩(77)
+   2 ３四歩(33)
+   3 投了
+まで2手で後手の勝ち

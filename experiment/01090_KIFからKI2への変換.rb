@@ -7,13 +7,13 @@ out << info.mi.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
 out << "\n"
 # puts info
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset(info.mi.header["手合割"])
+container = Container::Basic.new
+container.placement_from_preset(info.mi.header["手合割"])
 info.mi.move_infos.each do |info|
-  xcontainer.execute(info[:input])
+  container.execute(info[:input])
 end
-out << xcontainer.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
-out << xcontainer.judgment_message
+out << container.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
+out << container.judgment_message
 puts out
 
 # >> 開始日時：2017/11/11 10:00:00

@@ -1,8 +1,8 @@
 require "../setup"
 
-error = Xcontainer.facade(init: "", execute: ["55飛"]) rescue $!
+error = Container::Basic.facade(init: "", execute: ["55飛"]) rescue $!
 error.input.input.values.join   # => "55飛"
-puts error.xcontainer
+puts error.container
 puts error.message
 
 # >> 後手の持駒：なし

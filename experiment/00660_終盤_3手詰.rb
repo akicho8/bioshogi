@@ -1,11 +1,11 @@
 require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Board.promotable_disable
-Board.dimensiton_change([2, 4])
+# Dimension::PlaceY.promotable_disabled
+Dimension.wh_change([2, 4])
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_bod <<~EOT
+container = Container::Basic.new
+container.placement_from_bod <<~EOT
 後手の持駒：
 +------+
 |v香 ・|
@@ -17,14 +17,14 @@ xcontainer.placement_from_bod <<~EOT
 手数＝0
 EOT
 [
-  Diver::NegaAlphaDiver,
-  Diver::NegaScoutDiver,
+  Ai::Diver::NegaAlphaDiver,
+  Ai::Diver::NegaScoutDiver,
 ].each do |diver_class|
   tp Bioshogi.run_counts.clear
-  brain = xcontainer.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+  brain = container.current_player.brain(diver_class: diver_class) # Ai::Diver::NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
-  tp Brain.human_format(records)
+  tp Ai::Brain.human_format(records)
   tp Bioshogi.run_counts
 end
 
@@ -41,10 +41,10 @@ end
 # >> |    8 | ▲２四玉(14) | △２三歩成(22) (詰み)                                          | -999998 |          0 | 0.005127 |
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> |-------------------------------+-----|
-# >> |     Bioshogi::MoveHand.create | 562 |
+# >> |     Bioshogi::Hand::Move.create | 562 |
 # >> |       sandbox_execute.execute | 590 |
 # >> |        sandbox_execute.revert | 590 |
-# >> |     Bioshogi::DropHand.create | 102 |
+# >> |     Bioshogi::Hand::Drop.create | 102 |
 # >> | Bioshogi::Evaluator::Base#score | 67  |
 # >> |-------------------------------+-----|
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
@@ -60,9 +60,9 @@ end
 # >> |    8 | ▲２四玉(14) | △２三歩成(22) (詰み)                                          | -999998 |          0 | 0.004281 |
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|
 # >> |-------------------------------+-----|
-# >> |     Bioshogi::MoveHand.create | 657 |
+# >> |     Bioshogi::Hand::Move.create | 657 |
 # >> |       sandbox_execute.execute | 587 |
 # >> |        sandbox_execute.revert | 587 |
-# >> |     Bioshogi::DropHand.create | 208 |
+# >> |     Bioshogi::Hand::Drop.create | 208 |
 # >> | Bioshogi::Evaluator::Base#score | 62  |
 # >> |-------------------------------+-----|

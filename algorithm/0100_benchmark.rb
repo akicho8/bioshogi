@@ -21,8 +21,8 @@ require "./all_algorithms"
 
       row = {}
       row[:model] = klass.name
-      row.update(app.xcontainer.run_counts)
-      row.update(app.xcontainer.histogram)
+      row.update(app.container.run_counts)
+      row.update(app.container.histogram)
       row.update(sec: "%.2f" % (Time.now - start_time))
     end
     puts

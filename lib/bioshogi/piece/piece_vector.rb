@@ -49,10 +49,7 @@ module Bioshogi
       end
 
       def normalized_vectors(location, vectors)
-        if location.white?
-          vectors = vectors.collect(&:flip_sign)
-        end
-        vectors
+        vectors.collect { |e| e * location.value_sign }
       end
 
       def basic_vectors
@@ -70,9 +67,9 @@ module Bioshogi
         end
 
         [
-          *ov.compact.collect { |v| OnceVector[*v]   },
-          *rv.compact.collect { |v| RepeatVector[*v] },
-        ].to_set
+          *ov.compact.collect { |v| V::OnceVector[*v]   },
+          *rv.compact.collect { |v| V::RepeatVector[*v] },
+        ]
       end
 
       def basic_once_vectors

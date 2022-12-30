@@ -2,13 +2,13 @@ require "./setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Board.dimensiton_change([2, 5])
+Dimension.wh_change([2, 5])
 [
-  Diver::NegaAlphaDiver,
-  Diver::NegaScoutDiver,
+  Ai::Diver::NegaAlphaDiver,
+  Ai::Diver::NegaScoutDiver,
 ].each do |diver_class|
-  xcontainer = Xcontainer.new
-  xcontainer.board.placement_from_shape <<~EOT
+  container = Container::Basic.new
+  container.board.placement_from_shape <<~EOT
   +------+
   | ・v香|
   | ・v飛|
@@ -17,7 +17,7 @@ Board.dimensiton_change([2, 5])
   | ・ 香|
   +------+
     EOT
-  brain = xcontainer.player_at(:black).brain(diver_class: diver_class)
+  brain = container.player_at(:black).brain(diver_class: diver_class)
   tp brain.iterative_deepening(depth_max_range: 0..0) # => [{:hand=><▲１三飛成(14)>, :score=>305, :black_side_score=>305, :best_pv=>[], :eval_times=>1, :sec=>7.5e-05, :other=>[]}, {:hand=><▲２四飛(14)>, :score=>-100, :black_side_score=>-100, :best_pv=>[], :eval_times=>1, :sec=>3.0e-05, :other=>[]}], [{:hand=><▲１三飛成(14)>, :score=>305, :black_side_score=>305, :best_pv=>[], :eval_times=>1, :sec=>2.9e-05, :other=>[]}, {:hand=><▲２四飛(14)>, :score=>-100, :black_side_score=>-100, :best_pv=>[], :eval_times=>1, :sec=>2.3e-05, :other=>[]}]
   tp brain.iterative_deepening(depth_max_range: 0..1) # => [{:hand=><▲２四飛(14)>, :score=>-1200, :black_side_score=>-1200, :best_pv=>[<△１四歩成(13)>], :eval_times=>2, :sec=>0.000296, :other=>[]}, {:hand=><▲１三飛成(14)>, :score=>-4195, :black_side_score=>-4195, :best_pv=>[<△１三飛成(12)>], :eval_times=>2, :sec=>0.000331, :other=>[]}], [{:hand=><▲２四飛(14)>, :score=>-1200, :black_side_score=>-1200, :best_pv=>[<△１四歩成(13)>], :eval_times=>3, :sec=>0.000459, :other=>[]}, {:hand=><▲１三飛成(14)>, :score=>-4195, :black_side_score=>-4195, :best_pv=>[<△１三飛成(12)>], :eval_times=>2, :sec=>0.000443, :other=>[]}]
   tp brain.iterative_deepening(depth_max_range: 0..2) # => [{:hand=><▲１三飛成(14)>, :score=>705, :black_side_score=>705, :best_pv=>[<△１三飛成(12)>, <▲１三香成(15)>], :eval_times=>10, :sec=>0.001576, :other=>[]}, {:hand=><▲２四飛(14)>, :score=>105, :black_side_score=>105, :best_pv=>[<△１四歩成(13)>, <▲１四香(15)>], :eval_times=>12, :sec=>0.001552, :other=>[]}], [{:hand=><▲１三飛成(14)>, :score=>705, :black_side_score=>705, :best_pv=>[<△１三飛成(12)>, <▲１三香成(15)>], :eval_times=>11, :sec=>0.002705, :other=>[]}, {:hand=><▲２四飛(14)>, :score=>105, :black_side_score=>105, :best_pv=>[<△１四歩成(13)>, <▲１四香(15)>], :eval_times=>15, :sec=>0.004912, :other=>[]}]

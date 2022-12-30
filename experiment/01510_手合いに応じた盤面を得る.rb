@@ -1,11 +1,11 @@
 require "./setup"
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("裸玉")
-xcontainer.board.preset_info&.key    # => :十九枚落ち
-puts xcontainer.board.to_ki2
-puts xcontainer.board.to_kif
-puts xcontainer.board.to_csa
+container = Container::Basic.new
+container.placement_from_preset("裸玉")
+container.board.preset_info&.key    # => :十九枚落ち
+puts container.board.to_ki2
+puts container.board.to_kif
+puts container.board.to_csa
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v玉 ・ ・ ・ ・|一

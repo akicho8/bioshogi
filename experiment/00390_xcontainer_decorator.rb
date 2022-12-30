@@ -4,16 +4,16 @@ require "./setup"
 require "delegate"
 require "action_view"
 
-class XcontainerDecorator < SimpleDelegator
+class Container::XcontainerDecorator < SimpleDelegator
   include ActionView::Helpers::TagHelper
 
   attr_accessor :output_buffer
 
   def to_html
     tag.table(border: true) do
-      Dimension::Yplace.dimension.times.collect { |y|
+      Dimension::PlaceY.dimension.times.collect { |y|
         tag.tr {
-          Dimension::Xplace.dimension.times.collect { |x|
+          Dimension::PlaceX.dimension.times.collect { |x|
             style = nil
             cell = ""
             if soldier = board.lookup([x, y])
@@ -29,8 +29,8 @@ class XcontainerDecorator < SimpleDelegator
   end
 end
 
-xcontainer = Xcontainer.start
-decorator = XcontainerDecorator.new(xcontainer)
+container = Container::Basic.start
+decorator = Container::XcontainerDecorator.new(container)
 puts decorator.to_html
 Pathname("_frame.html").write(decorator.to_html)
 `open _frame.html`

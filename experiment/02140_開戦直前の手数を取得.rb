@@ -1,6 +1,6 @@
 require "./setup"
 
-info = Xcontainer.start
+info = Container::Basic.start
 info.execute("76歩")
 info.execute("34歩")
 info.execute("22角成")

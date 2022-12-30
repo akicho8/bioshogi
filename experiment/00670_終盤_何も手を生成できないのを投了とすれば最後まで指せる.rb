@@ -1,10 +1,10 @@
 require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Board.promotable_disable
-Board.dimensiton_change([2, 4]) do
-  xcontainer = Xcontainer.new
-  xcontainer.placement_from_bod <<~EOT
+# Dimension::PlaceY.promotable_disabled
+Dimension.wh_change([2, 4]) do
+  container = Container::Basic.new
+  container.placement_from_bod <<~EOT
 後手の持駒：
 +------+
 |v歩v玉|
@@ -15,12 +15,12 @@ Board.dimensiton_change([2, 4]) do
 手数＝1
   EOT
   [
-    Diver::NegaAlphaDiver,
-    Diver::NegaScoutDiver,
+    Ai::Diver::NegaAlphaDiver,
+    Ai::Diver::NegaScoutDiver,
   ].each do |diver_class|
-    brain = xcontainer.current_player.brain(diver_class: diver_class) # Diver::NegaAlphaDiver
+    brain = container.current_player.brain(diver_class: diver_class) # Ai::Diver::NegaAlphaDiver
     records = brain.iterative_deepening(depth_max_range: 4..4)
     records                     # => [], []
-    tp Brain.human_format(records)
+    tp Ai::Brain.human_format(records)
   end
 end

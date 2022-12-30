@@ -9,10 +9,16 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 task :default => :spec
 
-desc "動画/画像変換のテスト"
+desc "動画変換のテスト"
 RSpec::Core::RakeTask.new("spec:animation") do |t|
   # t.pattern = "spec/**/{animation,image}*_spec.rb"
   t.rspec_opts = "-f d --fail-fast -t animation"
+end
+
+desc "画像変換のテスト"
+RSpec::Core::RakeTask.new("spec:screen_image") do |t|
+  # t.pattern = "spec/**/{screen_image,image}*_spec.rb"
+  t.rspec_opts = "-f d --fail-fast -t screen_image"
 end
 
 desc "戦法判定"
@@ -24,8 +30,9 @@ desc "重要なところだけのテスト"
 RSpec::Core::RakeTask.new("spec:core") do |t|
   # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"
   # t.rspec_opts = "-f d -t ~animation --fail-fast"
-  t.rspec_opts = "-f d -t ~animation -t ~tactic"
+  t.rspec_opts = "-f d  -t ~screen_image -t ~animation -t ~tactic -t ~transform"
 end
+task :t => "spec:core"
 
 desc "棋譜変換のテスト(TRANSFORM_OUTPUT=1 で expected を生成)"
 RSpec::Core::RakeTask.new("spec:transform") do |t|
@@ -74,7 +81,7 @@ task "demo" do
   Dir.chdir("#{__dir__}/experiment/animation_builder") do
     system "ruby 0100_demo.rb"
   end
-  Dir.chdir("#{__dir__}/experiment/image_renderer") do
+  Dir.chdir("#{__dir__}/experiment/screen_image_renderer") do
     system "ruby 0100_demo.rb"
   end
 end
@@ -83,7 +90,7 @@ namespace :color_theme_preview do
   desc "配色テーマのキャッシュ生成"
   task "generate" do
     require "bioshogi"
-    Bioshogi::ImageRenderer::ColorThemeInfo.each do |e|
+    Bioshogi::ScreenImage::ColorThemeInfo.each do |e|
       e.color_theme_cache_build(verbose: true)
     end
   end

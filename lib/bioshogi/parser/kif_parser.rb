@@ -14,8 +14,8 @@ module Bioshogi
 
       class << self
         def accept?(source)
-          source = Parser.source_normalize(source)
-          source.match?(HEADER_BODY_SEP_REGEXP) || source.match?(MOVE_REGEXP) || source.match?(LAST_REGEXP)
+          str = Source.wrap(source).to_s
+          str.match?(HEADER_BODY_SEP_REGEXP) || str.match?(MOVE_REGEXP) || str.match?(LAST_REGEXP)
         end
       end
 

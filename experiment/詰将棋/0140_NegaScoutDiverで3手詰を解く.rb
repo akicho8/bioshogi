@@ -2,11 +2,11 @@ require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Board.dimensiton_change([2, 4])
+Dimension.wh_change([2, 4])
 
-xcontainer = Xcontainer.new
-xcontainer.player_at(:black).pieces_add("金金")
-xcontainer.board.placement_from_shape <<~EOT
+container = Container::Basic.new
+container.player_at(:black).pieces_add("金金")
+container.board.placement_from_shape <<~EOT
 +------+
 | ・ ・|
 | ・v玉|
@@ -15,11 +15,11 @@ xcontainer.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-# tp xcontainer.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
+# tp container.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
-brain = xcontainer.player_at(:black).brain(diver_class: Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
 records = brain.iterative_deepening(depth_max_range: 3..3, mate_mode: true)
-tp Brain.human_format(records)
+tp Ai::Brain.human_format(records)
 
 # >> |------+----------------+--------------------------------------+--------+------------+----------|
 # >> | 順位 | 候補手         | 読み筋                               | ▲形勢 | 評価局面数 | 処理時間 |

@@ -15,12 +15,12 @@ info = Parser.parse(<<~EOT)
 まで104手で後手の勝ち
 EOT
 
-xcontainer = Xcontainer.new
-xcontainer.placement_from_preset("平手")
+container = Container::Basic.new
+container.placement_from_preset("平手")
 info.mi.move_infos.each do |info|
-  xcontainer.execute(info[:input])
-  puts xcontainer
-  puts xcontainer.hand_logs.last.to_ki2
+  container.execute(info[:input])
+  puts container
+  puts container.hand_logs.last.to_ki2
 end
 
 # >> 後手の持駒：なし

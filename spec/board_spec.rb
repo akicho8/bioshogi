@@ -22,23 +22,23 @@ module Bioshogi
 
     # FIXME: xcontainer経由でテストを書いてはいけない
     it "配置" do
-      xcontainer = Xcontainer.new
+      container = Container::Basic.new
 
-      xcontainer.board.all_clear
-      xcontainer.placement_from_preset("裸玉")
-      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      container.board.all_clear
+      container.placement_from_preset("裸玉")
+      assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      xcontainer.board.all_clear
-      xcontainer.board.placement_from_preset("裸玉")
-      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      container.board.all_clear
+      container.board.placement_from_preset("裸玉")
+      assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      xcontainer.board.all_clear
-      xcontainer.board.placement_from_preset("二十枚落ち")
-      xcontainer.board.placement_from_human("△５一玉")
-      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      container.board.all_clear
+      container.board.placement_from_preset("二十枚落ち")
+      container.board.placement_from_human("△５一玉")
+      assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
-      xcontainer.board.all_clear
-      xcontainer.board.placement_from_shape <<~EOT
+      container.board.all_clear
+      container.board.placement_from_shape <<~EOT
       +---------------------------+
       | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
       | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -51,7 +51,7 @@ module Bioshogi
       | 香 桂 銀 金 玉 金 銀 桂 香|九
       +---------------------------+
         EOT
-      assert { xcontainer.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+      assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
     end
 
     it "サンプル" do
@@ -60,11 +60,11 @@ module Bioshogi
     end
 
     it "指定の座標だけを消す微妙なテスト" do
-      Board.dimensiton_change([1, 3]) do
-        xcontainer = Xcontainer.new
-        xcontainer.player_at(:black).soldier_create("１三香")
-        xcontainer.board.safe_delete_on(Place["１三"])
-        assert { xcontainer.board["１三"] == nil }
+      Dimension.wh_change([1, 3]) do
+        container = Container::Basic.new
+        container.player_at(:black).soldier_create("１三香")
+        container.board.safe_delete_on(Place["１三"])
+        assert { container.board["１三"] == nil }
       end
     end
 
