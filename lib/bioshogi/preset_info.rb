@@ -56,7 +56,7 @@ module Bioshogi
       # 持駒の比較は別途行う必要あり
       def lookup_by_soldiers(soldiers, options = {})
         options = {
-          :optimize => false,               # 速くなる (気がするだけでほとんど効果がない)
+          :optimize        => false, # 速くなる (気がするだけでほとんど効果がない)
           :inclusion_minor => false, # トンボなど一般的な名前も含めるか？
         }.merge(options)
 
@@ -83,9 +83,7 @@ module Bioshogi
           else
             list = major_list
           end
-          list.find do |e|
-            sorted_soldiers == e.sorted_soldiers
-          end
+          list.find { |e| sorted_soldiers == e.sorted_soldiers }
         end
       end
     end

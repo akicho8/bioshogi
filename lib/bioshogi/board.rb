@@ -8,28 +8,20 @@ module Bioshogi
       end
 
       # 指定の柿木図面から手合割を逆算する
-      def guess_preset_info(shape, options = {})
-        board = new
-        board.placement_from_shape(shape)
-        board.preset_info(options)
+      def guess_preset_info(str, options = {})
+        create_by_shape(str).preset_info(options)
       end
 
-      def create_by_shape(key)
-        new.tap do |board|
-          board.placement_from_shape(key)
-        end
+      def create_by_shape(str)
+        new.tap { |e| e.placement_from_shape(str) }
       end
 
-      def create_by_human(key)
-        new.tap do |board|
-          board.placement_from_human(key)
-        end
+      def create_by_human(str)
+        new.tap { |e| e.placement_from_human(str) }
       end
 
       def create_by_preset(key)
-        new.tap do |board|
-          board.placement_from_preset(key)
-        end
+        new.tap { |e| e.placement_from_preset(key) }
       end
     end
   end
