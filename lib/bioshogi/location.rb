@@ -110,6 +110,7 @@ module Bioshogi
       ].flatten.compact.to_set
     end
 
+    # FIXME: とる
     # HTMLにするとき楽なように後手なら transform: rotate(180deg) を返す
     def style_transform
       if angle.nonzero?
