@@ -31,7 +31,7 @@ module Bioshogi
                 object           => object,
                 i                => object,
                 e.number_kanji   => object,
-                e.number_hankaku => object,
+                e.hankaku_number => object,
                 e.number_zenkaku => object,
               })
           }.freeze
@@ -53,7 +53,7 @@ module Bioshogi
         :key,
         :number_kanji,
         :number_zenkaku,
-        :number_hankaku,
+        :hankaku_number,
       ], to: :char_info
 
       def char_info

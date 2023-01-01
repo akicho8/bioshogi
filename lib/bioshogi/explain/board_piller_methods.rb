@@ -11,7 +11,7 @@ module Bioshogi
 
         c = piller_counts[soldier.place.x.value] + 1
         if c > Dimension::PlaceY.dimension
-          raise MustNotHappen, "#{soldier.place.x.number_hankaku}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
+          raise MustNotHappen, "#{soldier.place.x.hankaku_number}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
         end
         piller_counts[soldier.place.x.value] = c
         self.piece_piller_by_latest_piece = (c == Dimension::PlaceY.dimension) # 最後の駒が反映される

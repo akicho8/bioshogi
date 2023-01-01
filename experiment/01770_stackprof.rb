@@ -58,8 +58,8 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>         16   (1.7%)          16   (1.7%)     Bioshogi::Dimension::Base#hash
 # >>         27   (2.9%)          13   (1.4%)     Bioshogi::Place#hash
 # >>         13   (1.4%)          13   (1.4%)     MemoryRecord::SingletonMethods::ClassMethods#lookup
-# >>         15   (1.6%)          12   (1.3%)     Bioshogi::Dimension::PlaceX#number_hankaku
-# >>         12   (1.3%)          11   (1.2%)     Bioshogi::Dimension::PlaceY#number_hankaku
+# >>         15   (1.6%)          12   (1.3%)     Bioshogi::Dimension::PlaceX#hankaku_number
+# >>         12   (1.3%)          11   (1.2%)     Bioshogi::Dimension::PlaceY#hankaku_number
 # >>          9   (1.0%)           9   (1.0%)     Bioshogi::Soldier#attributes
 # >>          9   (1.0%)           9   (1.0%)     ActiveSupport::Duration#initialize
 # >>         14   (1.5%)           9   (1.0%)     ActiveSupport::Duration.===

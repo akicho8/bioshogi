@@ -51,7 +51,7 @@ module Bioshogi
           soldier.place.name,                                    # "29"
           origin_soldier.any_name(options),                      # "飛"
           promote_trigger? ? "成" : "",                          # "成"
-          "(", origin_soldier.place.number_hankaku, ")",         # "(28)"
+          "(", origin_soldier.place.hankaku_number, ")",         # "(28)"
         ].join
       end
 
@@ -62,8 +62,8 @@ module Bioshogi
       def to_csa(options = {})
         [
           soldier.location.csa_sign,           # "+"
-          origin_soldier.place.number_hankaku, # "28"
-          soldier.place.number_hankaku,        # "29"
+          origin_soldier.place.hankaku_number, # "28"
+          soldier.place.hankaku_number,        # "29"
           soldier.to_csa,                      # "RY"
         ].join
       end

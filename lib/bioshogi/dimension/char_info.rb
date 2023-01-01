@@ -16,7 +16,7 @@ module Bioshogi
         { key: "9",  number_kanji: "九", number_zenkaku: "９", },
       ]
 
-      def number_hankaku
+      def hankaku_number
         key.to_s
       end
     end

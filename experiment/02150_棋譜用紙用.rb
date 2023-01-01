@@ -25,7 +25,7 @@ EOT
 
 hand_logs = parser.container.hand_logs
 hand_logs.each do |e|
-  p e.to_ki2(place_format: :number_hankaku, separator: " ", same_suffix: " ", char_type: :formal_sheet)
+  p e.to_ki2(place_format: :hankaku_number, separator: " ", same_suffix: " ", char_type: :formal_sheet)
   p e.to_kif
 end
 # >> "76 歩"

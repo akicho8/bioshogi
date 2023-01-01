@@ -102,16 +102,16 @@ module Bioshogi
       to_a.collect(&:zenkaku_number).join
     end
 
+    def hankaku_number
+      to_a.collect(&:hankaku_number).join
+    end
+
     def yomiage
       to_a.collect(&:yomiage).join
     end
 
     def to_s
       name
-    end
-
-    def number_hankaku
-      to_a.collect(&:number_hankaku).join
     end
 
     def to_sfen

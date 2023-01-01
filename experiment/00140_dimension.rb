@@ -15,7 +15,7 @@ Dimension::PlaceX.fetch("１").object_id == Dimension::PlaceX.fetch("１").objec
 instance = Dimension::PlaceX.fetch("１")
 instance.name           # => "１"
 instance.value          # => 8
-instance.number_hankaku # => "1"
+instance.hankaku_number # => "1"
 instance.zenkaku_number # => "１"
 instance.to_sfen        # => "1"
 instance.to_human_int   # => 1
@@ -24,7 +24,7 @@ instance.yomiage        # => "いち"
 instance = Dimension::PlaceY.fetch("１")
 instance.name           # => "一"
 instance.value          # => 0
-instance.number_hankaku # => "1"
+instance.hankaku_number # => "1"
 instance.zenkaku_number # => "１"
 instance.to_sfen        # => "a"
 instance.to_human_int   # => 1
@@ -33,7 +33,7 @@ instance.yomiage        # => "いち"
 test_methods = [
   :name,
   :value,
-  :number_hankaku,
+  :hankaku_number,
   :zenkaku_number,
   :to_sfen,
   :to_human_int,
@@ -52,7 +52,7 @@ test.(Dimension::PlaceX)
 test.(Dimension::PlaceY)
 # >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:44", :lookup, [nil, #<Bioshogi::Dimension::PlaceY:70178848317620 "一" 0>]]
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
-# >> | name | value | number_hankaku | zenkaku_number | to_sfen | to_human_int | yomiage |
+# >> | name | value | hankaku_number | zenkaku_number | to_sfen | to_human_int | yomiage |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> | ９   |     0 |              9 | ９             |       9 |            9 | きゅう  |
 # >> | ８   |     1 |              8 | ８             |       8 |            8 | はち    |
@@ -65,7 +65,7 @@ test.(Dimension::PlaceY)
 # >> | １   |     8 |              1 | １             |       1 |            1 | いち    |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
-# >> | name | value | number_hankaku | zenkaku_number | to_sfen | to_human_int | yomiage |
+# >> | name | value | hankaku_number | zenkaku_number | to_sfen | to_human_int | yomiage |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> | 一   |     0 |              1 | １             | a       |            1 | いち    |
 # >> | 二   |     1 |              2 | ２             | b       |            2 | にぃ    |
