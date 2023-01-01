@@ -5,6 +5,7 @@ module Bioshogi
     class Fast
       include CoreMethods
       include PlayersMethods
+      include SerializeMethods
       include ExecuteMethods
 
       def executor_class
