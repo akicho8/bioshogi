@@ -57,9 +57,15 @@ desc "戦法テスト"
 task :validate do
   Dir.chdir("#{__dir__}/experiment") do
     system "ruby 戦法テスト.rb"
-    system "ruby 戦法正規化.rb"
   end
 end
+
+desc "戦法ファイルの正規化"
+task :normalize do
+  require "bioshogi"
+  Bioshogi::Explain::FileNormalizer.new.call
+end
+task :n => :normalize
 
 desc "各戦法のレア度や戦法が確定する手数のテーブルの生成"
 task :generate do
