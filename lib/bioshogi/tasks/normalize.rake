@@ -3,4 +3,5 @@ task :normalize do
   require "bioshogi"
   Bioshogi::Explain::FileNormalizer.new.call
 end
+
 task :n => :normalize

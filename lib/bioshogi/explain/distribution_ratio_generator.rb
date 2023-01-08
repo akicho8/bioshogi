@@ -6,6 +6,8 @@ require "faraday"
 module Bioshogi
   module Explain
     class DistributionRatioGenerator
+      SOURCE_URL = "https://www.shogi-extend.com/api/swars/distribution_ratio.json"
+
       def generate
         output_file.write(template % { body: body_hash.pretty_inspect.strip })
         puts "write: #{output_file}"
@@ -14,9 +16,9 @@ module Bioshogi
       private
 
       def body_hash
-        response = Faraday.get("https://www.shogi-extend.com/api/swars/distribution_ratio.json")
+        response = Faraday.get(SOURCE_URL)
         hash = JSON.parse(response.body, symbolize_names: true)
-        hash[:items_hash]
+        hash[:items].inject({}) {|a, e| a.merge(e[:name].to_sym => e) }
       end
 
       def output_file
