@@ -1,6 +1,8 @@
+# -*- compile-command: "rake v" -*-
+
 module Bioshogi
   module Explain
-    class SenpoTest
+    class TacticValidator
       def call
         rows = TacticInfo.all_elements.collect(&method(:process_one))
         puts
@@ -36,4 +38,3 @@ module Bioshogi
     end
   end
 end
-
