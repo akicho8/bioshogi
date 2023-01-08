@@ -1,6 +1,7 @@
 desc "戦法テスト"
 task :validate do
-  Dir.chdir("#{__dir__}/experiment") do
-    system "ruby 戦法テスト.rb"
-  end
+  require "bioshogi"
+  Bioshogi::Explain::SenpoTest.new.call
 end
+
+task :v => :validate

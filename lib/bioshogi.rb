@@ -41,8 +41,10 @@ loader.ignore("#{__dir__}/bioshogi/cli.rb")
 loader.ignore("#{__dir__}/bioshogi/cli")
 loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
-# generator 系は development 専用のため
-loader.do_not_eager_load("#{__dir__}/explain/*_generator")
+# 開発環境専用のものは遅延読み込みする
+loader.do_not_eager_load("#{__dir__}/explain/*_generator.rb")
+loader.do_not_eager_load("#{__dir__}/explain/senpo_test.rb")
+loader.do_not_eager_load("#{__dir__}/explain/file_normalizer.rb")
 
 # loader.log!
 loader.setup

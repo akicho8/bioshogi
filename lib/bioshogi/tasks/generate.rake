@@ -4,4 +4,5 @@ task :generate do
   Bioshogi::Explain::DistributionRatioGenerator.new.generate
   Bioshogi::Explain::TacticHitTurnTableGenerator.new.generate
 end
+
 task :g => :generate
