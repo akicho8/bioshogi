@@ -22,6 +22,7 @@ require "tree_support"
 module Bioshogi
   ROOT_DIR   = Pathname(__dir__)
   ASSETS_DIR = ROOT_DIR.join("bioshogi/assets")
+  LOG_DIR    = ROOT_DIR.join("bioshogi/log")
 
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
@@ -42,9 +43,10 @@ loader.ignore("#{__dir__}/bioshogi/cli")
 loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
 # 開発環境専用のものは遅延読み込みする
-loader.do_not_eager_load("#{__dir__}/explain/*_generator.rb")
-loader.do_not_eager_load("#{__dir__}/explain/tactic_validator.rb")
-loader.do_not_eager_load("#{__dir__}/explain/file_normalizer.rb")
+loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
+loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
+loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
+loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
 
 # loader.log!
 loader.setup
