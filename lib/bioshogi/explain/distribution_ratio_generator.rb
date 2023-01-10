@@ -18,6 +18,7 @@ module Bioshogi
       def body_hash
         response = Faraday.get(SOURCE_URL)
         hash = JSON.parse(response.body, symbolize_names: true)
+        validate(hash)
         hash[:items].inject({}) {|a, e| a.merge(e[:name].to_sym => e) }
       end
 
@@ -35,6 +36,12 @@ module Bioshogi
         o << "  end"
         o << "end"
         o.join("\n") + "\n"
+      end
+
+      def validate(hash)
+        unless hash[:items].sum { |e| e[:emission_ratio] } == 1.0
+          raise "must not happen"
+        end
       end
     end
   end
