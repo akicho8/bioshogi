@@ -8,7 +8,7 @@ require "./setup"
 
 info = Parser.parse("position sfen 9/4k4/9/9/9/9/PPPPPPPPP/1B2K2R1/LNSG1GSNL w - 3")
 p info
-p info.mi
+p info.pi
 puts info.to_kif
 # >> * attributes
 # >> |-------------------+--|
@@ -17,14 +17,14 @@ puts info.to_kif
 # >> |    force_handicap |  |
 # >> |-------------------+--|
 # >>  
-# >> * mi.header
+# >> * pi.header
 # >> 
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> 
 # >>  
-# >> * @parser.mi.last_action_params
-# >> #<Bioshogi::Parser::Mi:0x00007fd09c1931a0 @move_infos=[], @first_comments=[], @board_source=nil, @last_action_params=nil, @header=, @force_preset_info=nil, @force_location=nil, @force_handicap=nil, @player_piece_boxes={:black=>{}, :white=>{}}, @error_message=nil>
+# >> * @parser.pi.last_action_params
+# >> #<Bioshogi::Parser::Pi:0x00007fd09c1931a0 @move_infos=[], @first_comments=[], @board_source=nil, @last_action_params=nil, @header=, @force_preset_info=nil, @force_location=nil, @force_handicap=nil, @player_piece_boxes={:black=>{}, :white=>{}}, @error_message=nil>
 # >> 先手の備考：居飛車, 相居飛車
 # >> 後手の備考：居飛車, 相居飛車
 # >> 手合割：平手

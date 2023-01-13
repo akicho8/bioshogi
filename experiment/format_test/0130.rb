@@ -20,7 +20,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -35,26 +35,26 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info | 平手   |
+# >> | pi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location |        |
-# >> |    mi.force_handicap |        |
+# >> |    pi.force_location |        |
+# >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * mi.header attributes
+# >> * pi.header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
 # >> | 上手の持駒 |        |
 # >> | 下手の持駒 |        |
 # >> |------------+--------|
 # >>  
-# >> * mi.header methods (read)
+# >> * pi.header methods (read)
 # >> |-------------------+------|
 # >> | handicap_validity | true |
-# >> |    mi.force_location |      |
+# >> |    pi.force_location |      |
 # >> |-------------------+------|
 # >>  
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -67,14 +67,14 @@ puts info.to_kif
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |----------|
 # >> | input    |
 # >> |----------|
 # >> | △８四歩 |
 # >> |----------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 手合割：その他
 # >> 下手の備考：居飛車, 相居飛車
 # >> 上手の備考：居飛車, 相居飛車

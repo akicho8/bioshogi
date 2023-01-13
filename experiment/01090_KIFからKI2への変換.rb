@@ -3,13 +3,13 @@ require "./setup"
 info = Bioshogi::Parser.parse(Pathname("katomomo.kif"))
 
 out = ""
-out << info.mi.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
+out << info.pi.header.to_h.collect { |key, value| "#{key}：#{value}\n" }.join
 out << "\n"
 # puts info
 
 container = Container::Basic.new
-container.placement_from_preset(info.mi.header["手合割"])
-info.mi.move_infos.each do |info|
+container.placement_from_preset(info.pi.header["手合割"])
+info.pi.move_infos.each do |info|
   container.execute(info[:input])
 end
 out << container.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join

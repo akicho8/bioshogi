@@ -8,8 +8,8 @@ info = Parser.parse("
 ")
 
 container = Container::Basic.new
-container.placement_from_preset(info.mi.header["手合割"])
-info.mi.move_infos.each do |info|
+container.placement_from_preset(info.pi.header["手合割"])
+info.pi.move_infos.each do |info|
   puts info[:input]
   container.execute(info[:input])
 end

@@ -1,7 +1,7 @@
 require "../setup"
 
 # info = Explain::DefenseInfo.fetch("ビッグ4").sample_kif_info
-# tp info.mi.header.to_h
+# tp info.pi.header.to_h
 # tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 # puts info.to_kif
 

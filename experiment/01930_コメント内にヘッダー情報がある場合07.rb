@@ -16,10 +16,10 @@ info = Parser.parse(<<~EOT)
 *清水ペアのポティエはフランス、矢内ペアのドレクスラーはドイツの選手。
 EOT
 
-tp info.mi.header.to_h
-tp info.mi.header.entry_all_names
-tp info.mi.header.__to_meta_h
-tp info.mi.header.entry_all_names
+tp info.pi.header.to_h
+tp info.pi.header.entry_all_names
+tp info.pi.header.__to_meta_h
+tp info.pi.header.entry_all_names
 # >> |-----------+-------------------------------------------|
 # >> |  開始日時 | 2008/11/09                                |
 # >> |      棋戦 | その他の棋戦                              |

@@ -1,8 +1,8 @@
 module Bioshogi
   module Parser
     # kif, ki2, bod に関係する処理だけ書くこと(重要)
-    # 間違って mi.header.rb に書いてしまってるのはどんどんこっちに移動させること
-    # mi.header.rb は CSA から見て不要なものが入っていてはいけない
+    # 間違って pi.header.rb に書いてしまってるのはどんどんこっちに移動させること
+    # pi.header.rb は CSA から見て不要なものが入っていてはいけない
     concern :KakinokiMethods do
       SYSTEM_COMMENT_CHAR        = "#"
       KEY_VALUE_SEPARATOR        = "："
@@ -23,19 +23,19 @@ module Bioshogi
         force_location_read     # 明示的な手番の指定があれば読み取る (あとでベースを切り替える)
         kknk_board_read         # 盤面の読み取り
         body_parse              # 指し手の読み取り
-        mi.header.normalize        # ヘッダーの書き換え
+        pi.header.normalize        # ヘッダーの書き換え
       end
 
       def kknk_board_read
         if md = normalized_source.match(BOARD_REGEXP)
-          @mi.board_source = md[:board]
-          @mi.force_preset_info ||= Board.guess_preset_info(@mi.board_source)
+          @pi.board_source = md[:board]
+          @pi.force_preset_info ||= Board.guess_preset_info(@pi.board_source)
         end
       end
 
       def kknk_comment_read(line)
         if md = line.match(COMMENT_REGEXP)
-          if @mi.move_infos.empty?
+          if @pi.move_infos.empty?
             first_comments_add(md[:comment])
           else
             command_add(md[:comment])
@@ -75,18 +75,18 @@ module Bioshogi
       def key_value_store
         # "foo\nbar:1".scan(/^([^:\n]+):(.*)/).to_a # => [["bar", "1"]]
         @kknk_head.scan(KEY_VALUE_REGEXP).each do |key, value|
-          mi.header[key.strip] = value.strip
+          pi.header[key.strip] = value.strip
         end
       end
 
       def unnecessary_keys_remove
-        mi.header.object.delete("変化")
+        pi.header.object.delete("変化")
       end
 
       def player_piece_read
         Location.each do |e|
-          if v = e.call_names.collect { |e| mi.header["#{e}の持駒"] }.join.presence
-            @mi.player_piece_boxes[e.key].set(Piece.s_to_h(v))
+          if v = e.call_names.collect { |e| pi.header["#{e}の持駒"] }.join.presence
+            @pi.player_piece_boxes[e.key].set(Piece.s_to_h(v))
           end
         end
       end
@@ -94,31 +94,31 @@ module Bioshogi
       def force_location_read
         Location.each do |location|
           if location.call_names.any? { |name| normalized_source.match?(/^#{name}番/) }
-            @mi.force_location = location
+            @pi.force_location = location
             break
           end
         end
       end
 
       def force_preset_read
-        if v = mi.header["手合割"]
+        if v = pi.header["手合割"]
           if e = PresetInfo[v]
-            @mi.force_preset_info = e
+            @pi.force_preset_info = e
             if e.handicap
-              @mi.force_handicap = e.handicap
+              @pi.force_handicap = e.handicap
             end
           end
         end
       end
 
       def first_comments_add(comment)
-        @mi.first_comments << comment
+        @pi.first_comments << comment
       end
 
       # コメントは直前の棋譜の情報と共にする
       def command_add(comment)
-        @mi.move_infos.last[:comments] ||= []
-        @mi.move_infos.last[:comments] << comment
+        @pi.move_infos.last[:comments] ||= []
+        @pi.move_infos.last[:comments] << comment
       end
     end
   end

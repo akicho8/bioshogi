@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Parser::KifParser do
     it "アスタリスクで始まるヘッダーはそのまま取り込む" do
-      assert { Parser.parse("*KEY1：value1").mi.header.to_h == {"*KEY1" => "value1"} }
+      assert { Parser.parse("*KEY1：value1").pi.header.to_h == {"*KEY1" => "value1"} }
     end
 
     it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている←複雑なのでやらない" do
@@ -50,7 +50,7 @@ module Bioshogi
 
       it "ヘッダー部" do
         assert do
-          @info.mi.header.to_h == {
+          @info.pi.header.to_h == {
             "開始日時" => "2000/01/01",
             "終了日時" => "2000/01/01 01:00:00",
             "手合割"   => "平手",
@@ -61,16 +61,16 @@ module Bioshogi
       end
 
       it "棋譜の羅列" do
-        assert { @info.mi.move_infos.first[:input] == "７六歩(77)" }
+        assert { @info.pi.move_infos.first[:input] == "７六歩(77)" }
       end
 
       it "最後の情報" do
-        assert { @info.mi.last_action_params[:last_action_key] == "投了" }
-        assert { @info.mi.last_action_params[:used_seconds] == 10 }
+        assert { @info.pi.last_action_params[:last_action_key] == "投了" }
+        assert { @info.pi.last_action_params[:used_seconds] == 10 }
       end
 
       it "対局前コメント" do
-        assert { @info.mi.first_comments == ["放映日：2000-01-01", "対局前コメント"] }
+        assert { @info.pi.first_comments == ["放映日：2000-01-01", "対局前コメント"] }
       end
     end
 
@@ -160,11 +160,11 @@ EOT
       2 ３四歩
       EOT
       assert { info.class == Bioshogi::Parser::KifParser }
-      assert { info.mi.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
+      assert { info.pi.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
 
       info = Parser.parse("1 投了")
       assert { info.class == Bioshogi::Parser::KifParser }
-      assert { info.mi.move_infos == [] }
+      assert { info.pi.move_infos == [] }
     end
 
     #     it "駒落ちなのに「先手の持駒」のヘッダーがある場合は変換時に削除する" do

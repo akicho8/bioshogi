@@ -13,7 +13,7 @@ module Bioshogi
 
       def call
         begin
-          @formatter.mi.move_infos.each.with_index do |info, i|
+          @formatter.pi.move_infos.each.with_index do |info, i|
             if @formatter.parser_options[:debug]
               p container
             end
@@ -29,7 +29,7 @@ module Bioshogi
           if v = @formatter.parser_options[:typical_error_case]
             case v
             when :embed
-              @formatter.mi.error_message = error.message
+              @formatter.pi.error_message = error.message
             when :skip
             else
               raise MustNotHappen

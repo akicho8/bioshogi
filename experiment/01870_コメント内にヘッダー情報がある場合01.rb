@@ -17,10 +17,10 @@ info = Parser.parse(<<~EOT)
 まで138手で後手の勝ち
 EOT
 
-tp info.mi.header.to_h
+tp info.pi.header.to_h
 
 # info.formatter.container_run_once
-# tp info.mi.header.to_h
+# tp info.pi.header.to_h
 # tp info.skill_set_hash
 
 # >> |-----------+--------------------------|

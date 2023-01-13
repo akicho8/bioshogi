@@ -21,8 +21,8 @@ module Bioshogi
         @formatter.container_init(@container2)
 
         @hv = {}
-        @hv[:header] = @formatter.mi.header.to_h.clone
-        @hv[:header]["手数"] = @formatter.mi.move_infos.size
+        @hv[:header] = @formatter.pi.header.to_h.clone
+        @hv[:header]["手数"] = @formatter.pi.move_infos.size
 
         @main_clock = MainClock.new
 
@@ -38,7 +38,7 @@ module Bioshogi
           :history_sfen  => @container2.to_history_sfen,
           :short_sfen => @container2.to_short_sfen,
         }
-        @hv[:moves] += @formatter.mi.move_infos.collect.with_index do |info, i|
+        @hv[:moves] += @formatter.pi.move_infos.collect.with_index do |info, i|
           @container2.execute(info[:input], used_seconds: @formatter.used_seconds_at(i))
           @main_clock.add(@formatter.used_seconds_at(i))
           hand_log = @container2.hand_logs.last
@@ -54,8 +54,8 @@ module Bioshogi
           }
         end
 
-        # if @formatter.mi.last_action_params
-        #   if used_seconds = @formatter.mi.last_action_params[:used_seconds]
+        # if @formatter.pi.last_action_params
+        #   if used_seconds = @formatter.pi.last_action_params[:used_seconds]
         #     if @main_clock
         #       @main_clock.add(used_seconds)
         #       right_part = @main_clock.to_s

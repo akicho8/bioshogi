@@ -9,7 +9,7 @@ info = Parser.parse(<<~EOT)
    5 投了         (00:01/00:00:31)
 EOT
 
-tp info.mi.move_infos
+tp info.pi.move_infos
 
 puts "-" * 80
 puts info.to_kif

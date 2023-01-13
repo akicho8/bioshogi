@@ -36,13 +36,13 @@ module Bioshogi
         end
       end
 
-      attr_accessor :mi
+      attr_accessor :pi
       attr_accessor :parser_options
 
       def initialize(source, parser_options = {})
         @source = Source.wrap(source)
         @parser_options = self.class.default_parser_options.merge(parser_options)
-        @mi = Mi.new
+        @pi = Pi.new
       end
 
       def parse

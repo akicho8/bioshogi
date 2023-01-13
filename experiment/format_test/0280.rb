@@ -9,25 +9,25 @@ p info
 puts info.to_kif
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info | 平手   |
+# >> | pi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location |        |
-# >> |    mi.force_handicap |        |
+# >> |    pi.force_location |        |
+# >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * mi.header
+# >> * pi.header
 # >> |--------+------|
 # >> | 手合割 | 平手 |
 # >> |--------+------|
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |-------------+------------+---------------+--------------|
 # >> | turn_number | input      | clock_part    | used_seconds |
 # >> |-------------+------------+---------------+--------------|
 # >> |           1 | ７六歩(77) | 0:01/00:00:01 |            1 |
 # >> |-------------+------------+---------------+--------------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> |-----------------+---------------|
 # >> |     turn_number | 2             |
 # >> | last_action_key | 先手 反則負け |

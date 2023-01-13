@@ -8,36 +8,36 @@ module Bioshogi
       def inspect
         av = []
 
-        if @parser.mi.board_source
-          av << "* mi.board_source"
-          av << @parser.mi.board_source.strip
+        if @parser.pi.board_source
+          av << "* pi.board_source"
+          av << @parser.pi.board_source.strip
           av << " "
         end
 
         av << "* attributes"
         av << {
-          :force_preset_info => @parser.mi.force_preset_info,
-          :force_location    => @parser.mi.force_location,
-          :force_handicap    => @parser.mi.force_handicap,
+          :force_preset_info => @parser.pi.force_preset_info,
+          :force_location    => @parser.pi.force_location,
+          :force_handicap    => @parser.pi.force_handicap,
         }.to_t.strip
         av << " "
 
-        av << "* mi.header"
-        av << @parser.mi.header.inspect.strip
+        av << "* pi.header"
+        av << @parser.pi.header.inspect.strip
         av << " "
 
-        if @parser.mi.board_source
-          av << "* @parser.mi.board_source"
-          av << @parser.mi.board_source.strip
+        if @parser.pi.board_source
+          av << "* @parser.pi.board_source"
+          av << @parser.pi.board_source.strip
           av << " "
         end
 
-        av << "* mi.move_infos"
-        av << @parser.mi.move_infos.to_t.strip
+        av << "* pi.move_infos"
+        av << @parser.pi.move_infos.to_t.strip
         av << " "
 
-        av << "* @parser.mi.last_action_params"
-        av << @parser.mi.last_action_params.to_t.strip
+        av << "* @parser.pi.last_action_params"
+        av << @parser.pi.last_action_params.to_t.strip
         av << " "
 
         av.join("\n").strip

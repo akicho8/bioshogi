@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_bod
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -37,26 +37,26 @@ puts info.to_bod
 # >>  
 # >> * attributes
 # >> |-------------------+----------|
-# >> | mi.force_preset_info | 二枚落ち |
+# >> | pi.force_preset_info | 二枚落ち |
 # >> |      balance_info | 通常戦   |
-# >> |    mi.force_location |          |
-# >> |    mi.force_handicap | true     |
+# >> |    pi.force_location |          |
+# >> |    pi.force_handicap | true     |
 # >> |-------------------+----------|
 # >>  
-# >> * mi.header attributes
+# >> * pi.header attributes
 # >> |------------+----------|
 # >> | 後手の持駒 | 歩2      |
 # >> | 先手の持駒 | 歩2      |
 # >> |     手合割 | 二枚落ち |
 # >> |------------+----------|
 # >>  
-# >> * mi.header methods (read)
+# >> * pi.header methods (read)
 # >> |-------------------+------|
 # >> | handicap_validity | true |
-# >> |    mi.force_location |      |
+# >> |    pi.force_location |      |
 # >> |-------------------+------|
 # >>  
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -70,14 +70,14 @@ puts info.to_bod
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|九
 # >> +---------------------------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |-------------+--------+------------+--------------|
 # >> | turn_number | input  | clock_part | used_seconds |
 # >> |-------------+--------+------------+--------------|
 # >> |           1 | △73桂 |            |              |
 # >> |-------------+--------+------------+--------------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 上手の持駒：歩二
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

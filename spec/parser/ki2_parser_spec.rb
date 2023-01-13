@@ -16,11 +16,11 @@ module Bioshogi
     end
 
     it "棋譜部分のパース" do
-      assert { Parser::Ki2Parser.parse("７六歩(77)").mi.move_infos.first[:input] == "７六歩(77)" }
-      assert { Parser::Ki2Parser.parse("７六歩").mi.move_infos.first[:input]     == "７六歩"     }
-      assert { Parser::Ki2Parser.parse("△７六歩").mi.move_infos.first[:input]   == "△７六歩"   }
-      assert { Parser::Ki2Parser.parse("☗７六歩").mi.move_infos.first[:input]    == "☗７六歩"    }
-      assert { Parser::Ki2Parser.parse("☖７六歩").mi.move_infos.first[:input]    == "☖７六歩"    }
+      assert { Parser::Ki2Parser.parse("７六歩(77)").pi.move_infos.first[:input] == "７六歩(77)" }
+      assert { Parser::Ki2Parser.parse("７六歩").pi.move_infos.first[:input]     == "７六歩"     }
+      assert { Parser::Ki2Parser.parse("△７六歩").pi.move_infos.first[:input]   == "△７六歩"   }
+      assert { Parser::Ki2Parser.parse("☗７六歩").pi.move_infos.first[:input]    == "☗７六歩"    }
+      assert { Parser::Ki2Parser.parse("☖７六歩").pi.move_infos.first[:input]    == "☖７六歩"    }
     end
 
     describe "ki2読み込み" do
@@ -43,7 +43,7 @@ module Bioshogi
 
       it "ヘッダー部" do
         assert do
-          @result.mi.header.to_h == {
+          @result.pi.header.to_h == {
             "開始日時" => "2000/01/01",
             "終了日時" => "2000/01/01 01:00:00",
           }
@@ -52,7 +52,7 @@ module Bioshogi
 
       it "棋譜の羅列" do
         assert do
-          @result.mi.move_infos == [
+          @result.pi.move_infos == [
             {input: "▲７六歩"},
             {input: "△３四歩", comments: ["コメント1"]},
             {input: "▲６六歩"},
@@ -62,7 +62,7 @@ module Bioshogi
       end
 
       it "対局前コメント" do
-        assert { @result.mi.first_comments == ["対局前コメント"] }
+        assert { @result.pi.first_comments == ["対局前コメント"] }
       end
     end
 

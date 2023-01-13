@@ -29,7 +29,7 @@ module Bioshogi
       end
 
       def formatter
-        @formatter ||= Core.new(mi, parser_options)
+        @formatter ||= Core.new(pi, parser_options)
       end
     end
   end

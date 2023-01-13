@@ -21,7 +21,7 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 EOT
 p info
 puts info.to_kif
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE *
 # >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -34,13 +34,13 @@ puts info.to_kif
 # >>
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info | 香落ち |
+# >> | pi.force_preset_info | 香落ち |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location |        |
-# >> |    mi.force_handicap | true   |
+# >> |    pi.force_location |        |
+# >> |    pi.force_handicap | true   |
 # >> |-------------------+--------|
 # >>
-# >> * mi.header attributes
+# >> * pi.header attributes
 # >> |----------+--------------|
 # >> |     棋戦 | その他の棋戦 |
 # >> | 開始日時 | 1938/03/01   |
@@ -48,13 +48,13 @@ puts info.to_kif
 # >> | 持ち時間 | 6時間        |
 # >> |----------+--------------|
 # >>
-# >> * mi.header methods (read)
+# >> * pi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
-# >> |    mi.force_location |  |
+# >> |    pi.force_location |  |
 # >> |-------------------+--|
 # >>
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE *
 # >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
@@ -65,7 +65,7 @@ puts info.to_kif
 # >> P8 * +KA *  *  *  *  * +HI *
 # >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 # >>
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |---------+--------------|
 # >> | input   | used_seconds |
 # >> |---------+--------------|
@@ -73,7 +73,7 @@ puts info.to_kif
 # >> | +7776FU |              |
 # >> |---------+--------------|
 # >>
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 棋戦：その他の棋戦
 # >> 開始日時：1938/03/01
 # >> 戦型：その他の戦型

@@ -6,10 +6,10 @@ info = Parser.parse(<<~EOT)
 *棋戦詳細：第13回銀河戦本戦Cブロック07回戦
 EOT
 
-tp info.mi.header.to_h
-tp info.mi.header.entry_all_names
-tp info.mi.header.__to_meta_h
-tp info.mi.header.entry_all_names
+tp info.pi.header.to_h
+tp info.pi.header.entry_all_names
+tp info.pi.header.__to_meta_h
+tp info.pi.header.entry_all_names
 # >> |-----------+--------------------------------|
 # >> |      先手 | 小野修一                       |
 # >> |      後手 | 小林裕士                       |

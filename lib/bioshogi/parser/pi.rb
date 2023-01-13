@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Parser
-    class Mi
+    class Pi
       # 読み取り結果
       attr_accessor :move_infos
       attr_accessor :first_comments

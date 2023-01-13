@@ -24,14 +24,14 @@ module Bioshogi
         body_part.lines.each do |line|
           kknk_comment_read(line)
           if line.match?(MOVE_REGEXP)
-            @mi.move_infos += InputParser.scan(line).collect do |e|
+            @pi.move_infos += InputParser.scan(line).collect do |e|
               { input: e }
             end
           end
         end
 
         if body_part.match?(/^まで\d+手で千日手/)
-          @mi.last_action_params = { last_action_key: "SENNICHITE" }
+          @pi.last_action_params = { last_action_key: "SENNICHITE" }
         end
       end
     end

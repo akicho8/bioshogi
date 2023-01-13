@@ -3,11 +3,11 @@
 module Bioshogi
   module Formatter
     class Core
-      attr_accessor :mi
+      attr_accessor :pi
       attr_accessor :parser_options
 
-      def initialize(mi, parser_options)
-        @mi = mi
+      def initialize(pi, parser_options)
+        @pi = pi
         @parser_options = parser_options
       end
 
@@ -114,24 +114,24 @@ module Bioshogi
       end
 
       def container_init(container)
-        if @mi.sfen_info
-          container.placement_from_sfen(@mi.sfen_info)
+        if @pi.sfen_info
+          container.placement_from_sfen(@pi.sfen_info)
         else
           players_piece_box_set(container)
 
-          if @mi.board_source
-            container.board.placement_from_shape(@mi.board_source)
+          if @pi.board_source
+            container.board.placement_from_shape(@pi.board_source)
           else
-            preset_info = PresetInfo[mi.header["手合割"]] || PresetInfo["平手"]
+            preset_info = PresetInfo[pi.header["手合割"]] || PresetInfo["平手"]
             container.placement_from_preset(preset_info.key)
           end
 
-          if mi.force_location
-            container.turn_info.turn_base = mi.force_location.code
+          if pi.force_location
+            container.turn_info.turn_base = pi.force_location.code
           end
 
-          if mi.force_handicap
-            container.turn_info.handicap = mi.force_handicap
+          if pi.force_handicap
+            container.turn_info.handicap = pi.force_handicap
           end
         end
         container.before_run_process # 最初の状態を記録
@@ -139,7 +139,7 @@ module Bioshogi
 
       # 持駒を反映する
       def players_piece_box_set(container)
-        mi.player_piece_boxes.each do |k, v|
+        pi.player_piece_boxes.each do |k, v|
           container.player_at(k).piece_box.set(v)
         end
       end
@@ -147,17 +147,17 @@ module Bioshogi
       # 盤面の指定があるとき、盤面だけを見て、手合割を得る
       def board_preset_info
         @board_preset_info ||= yield_self do
-          if @mi.board_source
-            Board.guess_preset_info(@mi.board_source)
+          if @pi.board_source
+            Board.guess_preset_info(@pi.board_source)
           end
         end
       end
 
       # 手合割
       def preset_info
-        @preset_info ||= @mi.force_preset_info
+        @preset_info ||= @pi.force_preset_info
         @preset_info ||= initial_container.board.preset_info
-        @preset_info ||= PresetInfo[mi.header["手合割"]]
+        @preset_info ||= PresetInfo[pi.header["手合割"]]
         @preset_info ||= PresetInfo["平手"]
       end
 
@@ -173,7 +173,7 @@ module Bioshogi
       end
 
       def raw_header_part_hash
-        mi.header.object.collect { |key, value|
+        pi.header.object.collect { |key, value|
           if value
             if e = CsaHeaderInfo[key]
               if e.as_kif
@@ -197,15 +197,15 @@ module Bioshogi
 
           # エラーなら最優先
           if !key
-            if @mi.error_message
+            if @pi.error_message
               key = :ILLEGAL_MOVE
             end
           end
 
           # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
           if !key
-            if @mi.last_action_params
-              v = @mi.last_action_params[:last_action_key]
+            if @pi.last_action_params
+              v = @pi.last_action_params[:last_action_key]
               if LastActionInfo[v]
                 key = v
               end
@@ -214,7 +214,7 @@ module Bioshogi
 
           # 何の指定もないときだけ投了とする
           if !key
-            if !@mi.last_action_params
+            if !@pi.last_action_params
               key = :TORYO
             end
           end
@@ -224,12 +224,12 @@ module Bioshogi
       end
 
       def used_seconds_at(index)
-        @mi.move_infos.dig(index, :used_seconds).to_i
+        @pi.move_infos.dig(index, :used_seconds).to_i
       end
 
       def error_message_part(comment_mark = "*")
-        if @mi.error_message
-          v = @mi.error_message.strip + "\n"
+        if @pi.error_message
+          v = @pi.error_message.strip + "\n"
           s = "-" * 76 + "\n"
           [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
         end

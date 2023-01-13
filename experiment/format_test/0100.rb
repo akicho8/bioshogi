@@ -14,44 +14,44 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +------+
 # >> | 飛v玉|
 # >> +------+
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info |        |
+# >> | pi.force_preset_info |        |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location | ▲     |
-# >> |    mi.force_handicap |        |
+# >> |    pi.force_location | ▲     |
+# >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * mi.header attributes
+# >> * pi.header attributes
 # >> |------------+--------|
 # >> |     手合割 | その他 |
 # >> | 下手の持駒 | 金     |
 # >> |------------+--------|
 # >>  
-# >> * mi.header methods (read)
+# >> * pi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
-# >> |    mi.force_location |  |
+# >> |    pi.force_location |  |
 # >> |-------------------+--|
 # >>  
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +------+
 # >> | 飛v玉|
 # >> +------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |-------------+-------+------------+--------------|
 # >> | turn_number | input | clock_part | used_seconds |
 # >> |-------------+-------+------------+--------------|
 # >> |           1 | 11飛  |            |              |
 # >> |-------------+-------+------------+--------------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 手合割：その他
 # >> 先手の囲い：居玉
 # >> 後手の囲い：居玉

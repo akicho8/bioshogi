@@ -21,7 +21,7 @@ module Bioshogi
       private
 
       def build_before
-        if @params[:time_embed_force] || @formatter.mi.clock_exist?
+        if @params[:time_embed_force] || @formatter.pi.clock_exist?
           @main_clock = MainClock.new
         end
       end
@@ -62,8 +62,8 @@ module Bioshogi
             ]
           end
 
-          if @formatter.mi.last_action_params
-            if used_seconds = @formatter.mi.last_action_params[:used_seconds]
+          if @formatter.pi.last_action_params
+            if used_seconds = @formatter.pi.last_action_params[:used_seconds]
               if @main_clock
                 @main_clock.add(used_seconds)
                 right_part = @main_clock.to_s

@@ -24,7 +24,7 @@ info = Parser.parse(<<~EOT, typical_error_case: :embed)
 EOT
 p info
 puts info.to_kif
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -39,13 +39,13 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info |        |
+# >> | pi.force_preset_info |        |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location | ▲     |
-# >> |    mi.force_handicap |        |
+# >> |    pi.force_location | ▲     |
+# >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * mi.header
+# >> * pi.header
 # >> |------------+----------------------------|
 # >> | 先手の備考 | 居飛車, 相居飛車           |
 # >> | 後手の備考 | 居飛車, 相居飛車, 背水の陣 |
@@ -53,7 +53,7 @@ puts info.to_kif
 # >> | 先手の持駒 | 歩二                       |
 # >> |------------+----------------------------|
 # >>  
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> | ・ ・ ・ ・v玉 ・ ・ ・ ・|一
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|二
@@ -66,7 +66,7 @@ puts info.to_kif
 # >> | ・ ・ ・ ・ 玉 ・ ・ ・ ・|九
 # >> +---------------------------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |-------------+----------+------------+--------------|
 # >> | turn_number | input    | clock_part | used_seconds |
 # >> |-------------+----------+------------+--------------|
@@ -75,7 +75,7 @@ puts info.to_kif
 # >> |           3 | ５三歩打 |            |              |
 # >> |-------------+----------+------------+--------------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 先手の備考：居飛車, 相居飛車
 # >> 後手の備考：居飛車, 相居飛車, 背水の陣
 # >> 後手の持駒：歩

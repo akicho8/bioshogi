@@ -6,7 +6,7 @@ sfen = "position startpos moves 7g7f 8c8d 2g2f"
 info = Parser.parse(sfen)
 container = info.formatter.container_for_image
 screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
-list = [nil, *info.mi.move_infos]
+list = [nil, *info.pi.move_infos]
 list.each.with_index do |e, i|
   container.execute(e[:input]) if e
   screen_image_renderer.render.write("_#{i}.png")

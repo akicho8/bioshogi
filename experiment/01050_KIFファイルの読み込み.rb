@@ -2,10 +2,10 @@
 require "./setup"
 
 info = Parser.parse(Pathname("ryuou20101214.kif"))
-tp info.mi.header.to_h
+tp info.pi.header.to_h
 
 container = Container::Basic.start
-info.mi.move_infos.each{|info|
+info.pi.move_infos.each{|info|
   container.execute(info[:input])
 }
 puts container

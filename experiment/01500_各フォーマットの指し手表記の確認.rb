@@ -22,7 +22,7 @@ EOT
 
 container = Container::Basic.new
 container.placement_from_preset("平手")
-info.mi.move_infos.each do |e|
+info.pi.move_infos.each do |e|
   container.execute(e[:input])
   p [container.turn_info.turn_offset, e[:input], container.hand_logs.last.to_kif_ki2_csa]
 end

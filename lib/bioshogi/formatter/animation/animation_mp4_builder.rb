@@ -101,7 +101,7 @@ module Bioshogi
                 @screen_image_renderer = ScreenImage.renderer(@container, params)
 
                 if factory_method_key == "is_factory_method_rmagick"
-                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + 3 + 7, &params[:progress_callback])
+                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.pi.move_infos.size + 3 + 7, &params[:progress_callback])
 
                   begin
                     list = Magick::ImageList.new
@@ -113,11 +113,11 @@ module Bioshogi
 
                     @progress_cop.next_step("初期配置")
                     list << @screen_image_renderer.next_build
-                    @formatter.mi.move_infos.each.with_index do |e, i|
-                      @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
+                    @formatter.pi.move_infos.each.with_index do |e, i|
+                      @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")
                       @container.execute(e[:input])
                       list << @screen_image_renderer.next_build
-                      logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
+                      logger.info { "move: #{i} / #{@formatter.pi.move_infos.size}" } if i.modulo(10).zero?
                     end
                     end_pages.times do |i|
                       @progress_cop.next_step("終了図 #{i}/#{end_pages}")
@@ -144,7 +144,7 @@ module Bioshogi
 
                 if factory_method_key == "is_factory_method_ffmpeg"
                   logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
+                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.pi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
                   logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                   if v = params[:cover_text].presence
@@ -161,13 +161,13 @@ module Bioshogi
                   tob("初期配置") { @screen_image_renderer.next_build.write(sfg.next) }
                   logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
 
-                  @formatter.mi.move_infos.each.with_index do |e, i|
-                    @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
+                  @formatter.pi.move_infos.each.with_index do |e, i|
+                    @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")
                     @container.execute(e[:input])
                     logger.info("@container.execute OK")
-                    tob("#{i}/#{@formatter.mi.move_infos.size}") { @screen_image_renderer.next_build.write(sfg.next) }
+                    tob("#{i}/#{@formatter.pi.move_infos.size}") { @screen_image_renderer.next_build.write(sfg.next) }
                     logger.info("@screen_image_renderer.next_build.write OK")
-                    logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
+                    logger.info { "move: #{i} / #{@formatter.pi.move_infos.size}" } if i.modulo(10).zero?
                   end
                   end_pages.times do |i|
                     @progress_cop.next_step("終了図 #{i}/#{end_pages}")

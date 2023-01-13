@@ -167,7 +167,7 @@ module Bioshogi
           end
         end
         hv = @xparser.skill_set_hash.transform_values { |e| e.join(", ") }
-        @xparser.mi.header.object.update(hv)
+        @xparser.pi.header.object.update(hv)
       end
     end
   end

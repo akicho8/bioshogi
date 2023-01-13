@@ -21,7 +21,7 @@ list = Magick::ImageList.new
 # list.delay = list.ticks_per_second
 screen_image_renderer.render
 list.concat([screen_image_renderer.canvas])
-info.mi.move_infos.each.with_index(1) do |e, i|
+info.pi.move_infos.each.with_index(1) do |e, i|
   container.execute(e[:input])
   screen_image_renderer.render
   list.concat([screen_image_renderer.canvas])

@@ -8,7 +8,7 @@ info = Parser.parse(<<~EOT)
 %TORYO,T1
 EOT
 
-tp info.mi.move_infos
+tp info.pi.move_infos
 
 puts "-" * 80
 puts info.to_kif

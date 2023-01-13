@@ -18,13 +18,13 @@ module Bioshogi
       def initialize(formatter, params = {})
         @formatter = formatter
         @params = self.class.default_params.merge(params)
-        # Assertion.assert { formatter.mi.header.object_id != @mi.header.object.object_id }
+        # Assertion.assert { formatter.pi.header.object_id != @pi.header.object.object_id }
       end
 
       def to_s
         build_before
         @formatter.container_run_once
-        @header = @formatter.mi.header.clone
+        @header = @formatter.pi.header.clone
 
         out = []
 
@@ -118,8 +118,8 @@ module Bioshogi
       # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
       # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
       def illegal_judgement_message
-        if @formatter.mi.last_action_params
-          v = @formatter.mi.last_action_params[:last_action_key]
+        if @formatter.pi.last_action_params
+          v = @formatter.pi.last_action_params[:last_action_key]
           if !LastActionInfo[v]
             "*#{v}\n"
           end

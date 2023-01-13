@@ -71,7 +71,7 @@ module Bioshogi
           out << footer_content
         end
 
-        if @formatter.mi.error_message
+        if @formatter.pi.error_message
           out << @formatter.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
         end
 
@@ -91,7 +91,7 @@ module Bioshogi
 
       def header_content
         CsaHeaderInfo.collect { |e|
-          if v = @formatter.mi.header[e.kif_side_key].presence
+          if v = @formatter.pi.header[e.kif_side_key].presence
             if e.as_csa
               v = e.instance_exec(v, &e.as_csa)
             end
@@ -112,7 +112,7 @@ module Bioshogi
 
         if @formatter.container.hand_logs.present?
           list = @formatter.container.hand_logs.collect.with_index do |e, i|
-            if @formatter.mi.clock_exist?
+            if @formatter.pi.clock_exist?
               [e.to_csa, "T#{@formatter.used_seconds_at(i)}"].join(",")
             else
               e.to_csa
@@ -129,7 +129,7 @@ module Bioshogi
       # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
       def footer_content
         av = []
-        hv = @formatter.mi.last_action_params || { last_action_key: "TORYO" }
+        hv = @formatter.pi.last_action_params || { last_action_key: "TORYO" }
         last_action_info = LastActionInfo[hv[:last_action_key]] || LastActionInfo[:TORYO]
         av << "%#{last_action_info.csa_key}"
         if v = hv[:used_seconds]

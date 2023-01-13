@@ -27,7 +27,7 @@ module Bioshogi
         def to_binary
           container = @formatter.container_for_image
           @screen_image_renderer = ScreenImage.renderer(container, params)
-          @progress_cop = ProgressCop.new(1 + 1 + @formatter.mi.move_infos.size, &params[:progress_callback])
+          @progress_cop = ProgressCop.new(1 + 1 + @formatter.pi.move_infos.size, &params[:progress_callback])
           zos = Zip::OutputStream.write_buffer do |z|
             if v = params[:cover_text].presence
               @progress_cop.next_step("表紙描画")
@@ -35,11 +35,11 @@ module Bioshogi
             end
             @progress_cop.next_step("初期配置")
             tob("初期配置") { zip_write1(z, 0) }
-            @formatter.mi.move_infos.each.with_index do |e, i|
-              @progress_cop.next_step("(#{i}/#{@formatter.mi.move_infos.size}) #{e[:input]}")
+            @formatter.pi.move_infos.each.with_index do |e, i|
+              @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")
               container.execute(e[:input])
-              tob("#{i}/#{@formatter.mi.move_infos.size}") { zip_write1(z, i.next) }
-              logger.info { "move: #{i} / #{@formatter.mi.move_infos.size}" } if i.modulo(10).zero?
+              tob("#{i}/#{@formatter.pi.move_infos.size}") { zip_write1(z, i.next) }
+              logger.info { "move: #{i} / #{@formatter.pi.move_infos.size}" } if i.modulo(10).zero?
             end
           end
           @screen_image_renderer.clear_all

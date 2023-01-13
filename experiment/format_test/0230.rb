@@ -28,7 +28,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -43,13 +43,13 @@ puts info.to_kif
 # >>  
 # >> * attributes
 # >> |-------------------+--------|
-# >> | mi.force_preset_info | 平手   |
+# >> | pi.force_preset_info | 平手   |
 # >> |      balance_info | 通常戦 |
-# >> |    mi.force_location |        |
-# >> |    mi.force_handicap |        |
+# >> |    pi.force_location |        |
+# >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
 # >>  
-# >> * mi.header attributes
+# >> * pi.header attributes
 # >> |------------+---------------------|
 # >> |       棋戦 | ぴよ将棋 青空将棋   |
 # >> |   開始日時 | 2022/01/09 14:51:25 |
@@ -60,13 +60,13 @@ puts info.to_kif
 # >> |       後手 | Lv17 ひよえ(R910)   |
 # >> |------------+---------------------|
 # >>  
-# >> * mi.header methods (read)
+# >> * pi.header methods (read)
 # >> |-------------------+-------|
 # >> | handicap_validity | false |
-# >> |    mi.force_location |       |
+# >> |    pi.force_location |       |
 # >> |-------------------+-------|
 # >>  
-# >> * @mi.board_source
+# >> * @pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -79,7 +79,7 @@ puts info.to_kif
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |-------------+--------------+---------------+--------------|
 # >> | turn_number | input        | clock_part    | used_seconds |
 # >> |-------------+--------------+---------------+--------------|
@@ -87,7 +87,7 @@ puts info.to_kif
 # >> |           2 | ２二飛(82)   | 0:01/00:00:01 |            1 |
 # >> |-------------+--------------+---------------+--------------|
 # >>  
-# >> * @mi.last_action_params
+# >> * @pi.last_action_params
 # >> 棋戦：ぴよ将棋 青空将棋
 # >> 開始日時：2022/01/09 14:51:25
 # >> 手合割：平手

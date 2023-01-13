@@ -59,7 +59,7 @@ puts info.to_kif
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/kif_ki2_shared.rb:25:in `to_s'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:201:in `to_kif'
 # ~> 	from -:22:in `<main>'
-# >> * mi.board_source
+# >> * pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -79,12 +79,12 @@ puts info.to_kif
 # >> |    force_handicap |  |
 # >> |-------------------+--|
 # >>  
-# >> * mi.header
+# >> * pi.header
 # >> |--------+--------|
 # >> | 手合割 | その他 |
 # >> |--------+--------|
 # >>  
-# >> * @parser.mi.board_source
+# >> * @parser.pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金 ・v桂v香|一
 # >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
@@ -97,11 +97,11 @@ puts info.to_kif
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
 # >>  
-# >> * mi.move_infos
+# >> * pi.move_infos
 # >> |----------|
 # >> | input    |
 # >> |----------|
 # >> | △８四歩 |
 # >> |----------|
 # >>  
-# >> * @parser.mi.last_action_params
+# >> * @parser.pi.last_action_params

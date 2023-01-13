@@ -14,11 +14,11 @@ info = Parser.parse(<<~EOT)
 *「吉田正和（17歳、埼玉）」vs「村田登亀雄（39歳、前回優勝)」
 EOT
 
-tp info.mi.header.to_h
-tp info.mi.header.entry_all_names
-tp info.mi.header.__to_meta_h
-tp info.mi.header.to_kisen_a
-tp info.mi.header.entry_all_names
+tp info.pi.header.to_h
+tp info.pi.header.entry_all_names
+tp info.pi.header.__to_meta_h
+tp info.pi.header.to_kisen_a
+tp info.pi.header.entry_all_names
 # ~> -:21:in `<main>': undefined method `to_kisen_a' for #<Bioshogi::Parser::Header:0x00007f821515e1d8> (NoMethodError)
 # >> |----------+------------------------------------|
 # >> | 開始日時 | 2003/11/09                         |

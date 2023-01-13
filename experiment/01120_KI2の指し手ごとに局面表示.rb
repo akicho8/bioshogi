@@ -17,7 +17,7 @@ EOT
 
 container = Container::Basic.new
 container.placement_from_preset("平手")
-info.mi.move_infos.each do |info|
+info.pi.move_infos.each do |info|
   container.execute(info[:input])
   puts container
   puts container.hand_logs.last.to_ki2
