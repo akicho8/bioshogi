@@ -4,4 +4,5 @@ task :normalize do
   Bioshogi::Explain::FileNormalizer.new.call
 end
 
+desc "alias to normalize"
 task :n => :normalize

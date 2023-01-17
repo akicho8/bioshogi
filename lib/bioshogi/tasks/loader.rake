@@ -5,4 +5,5 @@ task :loader do
   puts "OK"
 end
 
+desc "alias to loader"
 task :l => :loader

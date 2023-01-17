@@ -3,8 +3,10 @@ require "rspec/core/rake_task"
 desc "すべてのテスト"
 RSpec::Core::RakeTask.new(:test) do |t|
 end
+desc "alias to test"
 task :default => :test
 
+desc "alias to test:core"
 task :c => "test:core"
 
 namespace :test do

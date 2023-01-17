@@ -4,4 +4,5 @@ task :tactic_validate do
   Bioshogi::Explain::TacticValidator.new.call
 end
 
+desc "alias to tactic_validate"
 task :v => :tactic_validate

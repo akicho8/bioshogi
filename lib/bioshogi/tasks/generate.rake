@@ -5,4 +5,5 @@ task :generate do
   Bioshogi::Explain::TacticHitTurnTableGenerator.new.generate
 end
 
+desc "alias to generate"
 task :g => :generate

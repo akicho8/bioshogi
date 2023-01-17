@@ -4,4 +4,5 @@ task "extreme_validator" do
   Bioshogi::ExtremeValidator.new(limit: ENV["LIMIT"]).call
 end
 
+desc "alias to extreme_validator"
 task :"2" => :extreme_validator
