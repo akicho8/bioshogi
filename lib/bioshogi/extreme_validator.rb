@@ -136,7 +136,7 @@ module Bioshogi
         if error_list.exist?
           files = error_list.readlines.reject { |e|e.match?("#") }.collect { |e| Pathname(e.strip) }
         else
-          files = ROOT_DIR.glob("../../2chkifu/**/*.{ki2,KI2}").sort
+          files = ROOT_DIR.glob("../../2chkifu/**/*.{ki2,KI2}").sort # ~/src/2chkifu
         end
         files.take(limit)
       end

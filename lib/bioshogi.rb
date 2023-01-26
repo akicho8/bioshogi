@@ -47,6 +47,7 @@ loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
+loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
 
 # loader.log!
 loader.setup
