@@ -5,6 +5,7 @@ PATH
       actionview
       activesupport
       color
+      faraday
       memory_record
       rmagick (>= 5.0.0)
       rubyzip
@@ -110,7 +111,6 @@ DEPENDENCIES
   bioshogi!
   bundler
   byebug
-  faraday
   pry
   rake
   rspec

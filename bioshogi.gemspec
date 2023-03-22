@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "stackprof"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "faraday"
   spec.add_development_dependency "byebug"
 
   spec.add_dependency "activesupport"
@@ -39,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rmagick", ">= 5.0.0"
   spec.add_dependency "systemu"
   spec.add_dependency "rubyzip"
+  spec.add_dependency "faraday"
 end
