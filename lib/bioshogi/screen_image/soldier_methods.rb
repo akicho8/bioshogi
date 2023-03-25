@@ -30,15 +30,15 @@ module Bioshogi
 
         piece_pentagon_draw(v: v, location: location, piece: soldier.piece) # ☗☖
 
-        char_draw({
-            :layer     => @d_piece_layer,
-            :v         => v + piece_char_adjust(location),
-            :text      => soldier_name(soldier),
-            :location  => location,
-            :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
-            :bold      => bold || params[:soldier_font_bold],
-            :font_scale => soldier_font_scale(soldier.piece),
-          })
+        char_draw(
+          :layer     => @d_piece_layer,
+          :v         => v + piece_char_adjust(location),
+          :text      => soldier_name(soldier),
+          :location  => location,
+          :color     => color || params[:normal_piece_color_map][soldier.piece.key] || params[:piece_font_color],
+          :bold      => bold || params[:soldier_font_bold],
+          :font_scale => soldier_font_scale(soldier.piece),
+          )
       end
 
       def soldier_draw_by_image(soldier)

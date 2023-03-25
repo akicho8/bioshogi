@@ -63,7 +63,7 @@ module Bioshogi
               piece_pentagon_draw(v: v, location: location, piece: piece)
 
               # 持駒
-              char_draw({
+              char_draw(
                   :layer      => @d_piece_layer,
                   :v          => v + piece_char_adjust(location),
                   :text       => piece.name,
@@ -71,7 +71,7 @@ module Bioshogi
                   :color      => params[:stand_piece_color] || params[:piece_font_color],
                   :font_scale => (params[:stand_piece_font_scale] || params[:soldier_font_scale]) * piece.scale,
                   :bold       => params[:stand_piece_font_bold]
-                })
+                )
             end
 
             # 持駒数
@@ -87,16 +87,16 @@ module Bioshogi
           w = count <= 9 ? :single : :double
           v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
           piece_count_bg_draw(v: v, location: location)
-          char_draw({
-              :layer        => @d_piece_count_layer,
-              :v            => v,
-              :text         => count.to_s,
-              :location     => location,
-              :color        => params[:piece_count_font_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
-              :font_scale   => params[:piece_count_font_scale],
-              :stroke_color => params[:piece_count_stroke_color],
-              :stroke_width => params[:piece_count_stroke_width],
-            })
+          char_draw(
+            :layer        => @d_piece_count_layer,
+            :v            => v,
+            :text         => count.to_s,
+            :location     => location,
+            :color        => params[:piece_count_font_color] || params[:piece_font_color], # 地べたに描画するのでコントラスト比を下げるの重要
+            :font_scale   => params[:piece_count_font_scale],
+            :stroke_color => params[:piece_count_stroke_color],
+            :stroke_width => params[:piece_count_stroke_width],
+            )
         end
       end
 
