@@ -1,10 +1,4 @@
-{:header=>
-  {"棋戦"=>"ぴよ将棋 二枚落ち",
-   "開始日時"=>"2022/01/09 14:48:02",
-   "手合割"=>"二枚落ち",
-   "下手"=>"プレイヤー(R461)",
-   "上手"=>"Lv17 ひよえ(R910)",
-   "手数"=>3},
+{:header=>{"棋戦"=>"ぴよ将棋 二枚落ち", "開始日時"=>"2022/01/09 14:48:02", "手合割"=>"二枚落ち", "下手"=>"プレイヤー(R461)", "上手"=>"Lv17 ひよえ(R910)", "手数"=>3},
  :moves=>
   [{:index=>0,
     :human_index=>0,
@@ -12,10 +6,8 @@
     :total_seconds=>0,
     :used_seconds=>nil,
     :skill=>nil,
-    :history_sfen=>
-     "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",
-    :short_sfen=>
-     "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"},
+    :history_sfen=>"position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",
+    :short_sfen=>"position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"},
    {:index=>1,
     :human_index=>1,
     :place_same=>nil,
@@ -32,10 +24,8 @@
     :total_seconds=>1,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b",
-    :short_sfen=>
-     "position sfen ln1gkgsnl/3s5/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 2"},
+    :history_sfen=>"position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b",
+    :short_sfen=>"position sfen ln1gkgsnl/3s5/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 2"},
    {:index=>2,
     :human_index=>2,
     :place_same=>false,
@@ -52,10 +42,8 @@
     :total_seconds=>1,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f",
-    :short_sfen=>
-     "position sfen ln1gkgsnl/3s5/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 3"},
+    :history_sfen=>"position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f",
+    :short_sfen=>"position sfen ln1gkgsnl/3s5/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 3"},
    {:index=>3,
     :human_index=>3,
     :place_same=>false,
@@ -72,10 +60,8 @@
     :total_seconds=>2,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f 5c5d",
-    :short_sfen=>
-     "position sfen ln1gkgsnl/3s5/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 4"}],
+    :history_sfen=>"position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1 moves 7a6b 7g7f 5c5d",
+    :short_sfen=>"position sfen ln1gkgsnl/3s5/pppp1pppp/4p4/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL b - 4"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで3手で上手の勝ち",
  :error_text=>nil}

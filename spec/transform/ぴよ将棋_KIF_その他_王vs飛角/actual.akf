@@ -51,8 +51,7 @@
     :total_seconds=>2,
     :used_seconds=>2,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen 4k4/9/9/9/9/9/9/1B5R1/9 w - 2 moves 5a6b 2h2b+",
+    :history_sfen=>"position sfen 4k4/9/9/9/9/9/9/1B5R1/9 w - 2 moves 5a6b 2h2b+",
     :short_sfen=>"position sfen 9/3k3+R1/9/9/9/9/9/1B7/9 w - 4"},
    {:index=>3,
     :human_index=>4,
@@ -70,8 +69,7 @@
     :total_seconds=>2,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen 4k4/9/9/9/9/9/9/1B5R1/9 w - 2 moves 5a6b 2h2b+ 6b7c",
+    :history_sfen=>"position sfen 4k4/9/9/9/9/9/9/1B5R1/9 w - 2 moves 5a6b 2h2b+ 6b7c",
     :short_sfen=>"position sfen 9/7+R1/2k6/9/9/9/9/1B7/9 b - 5"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで3手で後手の勝ち",

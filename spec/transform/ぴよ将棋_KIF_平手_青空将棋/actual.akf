@@ -16,10 +16,8 @@
     :total_seconds=>0,
     :used_seconds=>nil,
     :skill=>nil,
-    :history_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",
-    :short_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1"},
+    :history_sfen=>"position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",
+    :short_sfen=>"position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1"},
    {:index=>1,
     :human_index=>1,
     :place_same=>nil,
@@ -29,21 +27,15 @@
     :promoted=>false,
     :from=>{:x=>2, :y=>8},
     :to=>{:x=>2, :y=>2},
-    :captured=>
-     {:piece=>:bishop,
-      :promoted=>false,
-      :place=>{:x=>2, :y=>2},
-      :location=>:white},
+    :captured=>{:piece=>:bishop, :promoted=>false, :place=>{:x=>2, :y=>2}, :location=>:white},
     :_sfen=>"2h2b+",
     :_kif=>"▲２二飛成(28)",
     :_csa=>"+2822RY",
     :total_seconds=>1,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+",
-    :short_sfen=>
-     "position sfen lnsgkgsnl/1r5+R1/9/9/9/9/9/1B7/LNSGKGSNL w B 2"},
+    :history_sfen=>"position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+",
+    :short_sfen=>"position sfen lnsgkgsnl/1r5+R1/9/9/9/9/9/1B7/LNSGKGSNL w B 2"},
    {:index=>2,
     :human_index=>2,
     :place_same=>true,
@@ -53,21 +45,15 @@
     :promoted=>false,
     :from=>{:x=>8, :y=>2},
     :to=>{:x=>2, :y=>2},
-    :captured=>
-     {:piece=>:rook,
-      :promoted=>true,
-      :place=>{:x=>2, :y=>2},
-      :location=>:black},
+    :captured=>{:piece=>:rook, :promoted=>true, :place=>{:x=>2, :y=>2}, :location=>:black},
     :_sfen=>"8b2b",
     :_kif=>"△２二飛(82)",
     :_csa=>"-8222HI",
     :total_seconds=>1,
     :used_seconds=>1,
     :skill=>{:attack=>[], :defense=>[], :technique=>[], :note=>[]},
-    :history_sfen=>
-     "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+ 8b2b",
-    :short_sfen=>
-     "position sfen lnsgkgsnl/7r1/9/9/9/9/9/1B7/LNSGKGSNL b Br 3"}],
+    :history_sfen=>"position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+ 8b2b",
+    :short_sfen=>"position sfen lnsgkgsnl/7r1/9/9/9/9/9/1B7/LNSGKGSNL b Br 3"}],
  :last_action_kakinoki_word=>"投了",
  :judgment_message=>"まで2手で後手の勝ち",
  :error_text=>nil}
