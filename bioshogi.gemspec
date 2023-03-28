@@ -5,12 +5,13 @@ require 'bioshogi/version'
 Gem::Specification.new do |spec|
   spec.name         = "bioshogi"
   spec.version      = Bioshogi::VERSION
-  spec.author       = "akicho8"
-  spec.email        = "akicho8@gmail.com"
+  spec.author       = "Akira Ikeda"
+  spec.email        = "pinpon.ikeda@gmail.com"
   spec.homepage     = "https://github.com/akicho8/bioshogi"
   spec.summary      = "Shogi library"
   spec.description  = "Shogi library"
   spec.platform     = Gem::Platform::RUBY
+  spec.license      = "AGPL-3"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
