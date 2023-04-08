@@ -215,7 +215,7 @@ module Bioshogi
           end
 
           # # 歩を除いて何か持っていたらskip
-          # if e.pawn_bishop_have_safe: nil, :pawn_have_safe
+          # if e.pawn_bishop_have_ok: nil, :pawn_have_ok
           #   if !piece_box.except(:pawn).empty?
           #     throw :skip
           #   end
@@ -277,14 +277,14 @@ module Bioshogi
         end
 
         # 歩を除いて何か持っていたらskip
-        if e.pawn_have_safe
+        if e.pawn_have_ok
           if !piece_box.except(:pawn).empty?
             throw :skip
           end
         end
 
         # 歩または角を除いて何か持っていたらskip
-        if e.pawn_bishop_have_safe
+        if e.pawn_bishop_have_ok
           if !piece_box.except(:pawn, :bishop).empty?
             throw :skip
           end
