@@ -38,6 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
   spec.add_dependency "rmagick", ">= 5.0.0"
   spec.add_dependency "systemu"
-  spec.add_dependency "rubyzip"
+  spec.add_dependency "rubyzip", "~> 2.3.0"
   spec.add_dependency "faraday"
 end

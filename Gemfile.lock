@@ -8,7 +8,7 @@ PATH
       faraday
       memory_record
       rmagick (>= 5.0.0)
-      rubyzip
+      rubyzip (~> 2.3.0)
       systemu
       table_format
       thor
@@ -118,4 +118,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   2.4.9
+   2.4.10
