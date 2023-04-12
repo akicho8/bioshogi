@@ -8,7 +8,7 @@ PATH
       faraday
       memory_record
       rmagick (>= 5.0.0)
-      rubyzip
+      rubyzip (~> 2.3.0)
       systemu
       table_format
       thor
@@ -73,7 +73,7 @@ GEM
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.1)
       connection_pool (~> 2.2)
-    nokogiri (1.14.2)
+    nokogiri (1.14.3)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     pkg-config (1.5.1)
