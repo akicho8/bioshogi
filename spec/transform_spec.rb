@@ -1,13 +1,13 @@
 # transform/* のファイルを検証
 #
 # ▼これだけ実行
-# rake spec:transform
+# rake test:transform
 #
 # ▼あれこれ表示
-# VERBOSE=1 rake spec:transform
+# VERBOSE=1 rake test:transform
 #
 # ▼比較するファイルをいったん生成
-# TRANSFORM_OUTPUT=1 rake spec:transform
+# TRANSFORM_OUTPUT=1 rake test:transform
 #
 require "spec_helper"
 
