@@ -8,7 +8,7 @@ PATH
       faraday
       memory_record
       rmagick (>= 5.0.0)
-      rubyzip
+      rubyzip (~> 2.3.0)
       systemu
       table_format
       thor
@@ -29,13 +29,13 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    addressable (2.8.1)
+    addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     benchmark-ips (2.12.0)
     builder (3.2.4)
     color (1.8)
     concurrent-ruby (1.2.2)
-    connection_pool (2.4.0)
+    connection_pool (2.4.1)
     crass (1.0.6)
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
@@ -47,12 +47,12 @@ GEM
     faraday-net_http (3.0.2)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.12.0)
+    i18n (1.13.0)
       concurrent-ruby (~> 1.0)
-    loofah (2.19.1)
+    loofah (2.21.3)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
-    mechanize (2.8.5)
+      nokogiri (>= 1.12.0)
+    mechanize (2.9.1)
       addressable (~> 2.8)
       domain_name (~> 0.5, >= 0.5.20190701)
       http-cookie (~> 1.0, >= 1.0.3)
@@ -68,13 +68,13 @@ GEM
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
-    mini_portile2 (2.8.1)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     net-http-digest_auth (1.4.1)
-    net-http-persistent (4.0.1)
+    net-http-persistent (4.0.2)
       connection_pool (~> 2.2)
-    nokogiri (1.14.2)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.15.1)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     pkg-config (1.5.1)
     power_assert (2.0.3)
@@ -90,13 +90,13 @@ GEM
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
     rubyzip (2.3.2)
-    stackprof (0.2.24)
+    stackprof (0.2.25)
     systemu (2.6.5)
     table_format (0.0.15)
       activesupport
-    test-unit (3.5.7)
+    test-unit (3.5.8)
       power_assert
-    thor (1.2.1)
+    thor (1.2.2)
     tree_support (0.1.9)
       activesupport
     tzinfo (2.0.6)
@@ -106,7 +106,7 @@ GEM
     unf_ext (0.0.8.2)
     webrick (1.8.1)
     webrobots (0.1.2)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 PLATFORMS
   ruby
