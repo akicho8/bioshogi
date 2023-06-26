@@ -23,12 +23,14 @@ module Bioshogi
     class AbstractAdapter
       attr_reader :player
       attr_reader :input
+      attr_reader :source
 
       delegate :board, to: :player
 
-      def initialize(player, input)
+      def initialize(player, input, source)
         @player = player
         @input = input
+        @source = source
       end
 
       def perform_validations

@@ -95,6 +95,12 @@ EOT
         assert { error.message.lines.first.strip == "角を打とうとしましたが角を持っていません" }
         assert { error.message.include?("手数＝0 まで") }
       end
+
+      it "エラー時の指し手が正しい" do
+        error = Container::Basic.facade(init: "", execute: ["2e2d"]) rescue $!
+        assert { error.input.source == "2e2d" }
+        assert { error.message.include?("指し手: 2e2d") }
+      end
     end
   end
 end

@@ -26,7 +26,7 @@ module Bioshogi
       def error_message
         attributes = {
           "手番"   => @context.player.call_name,
-          "指し手" => @context.input.input.values.join,
+          "指し手" => @context.input.source,
           "棋譜"   => @context.container.hand_logs.to_kif_a.join(" "),
         }
 
@@ -34,7 +34,7 @@ module Bioshogi
 
         # 一行に情報をつめこむ場合
         if false
-          message = ["[#{@context.player.call_name}][#{@context.container.turn_info.turn_offset.next}手目][#{@context.input.input.values.join}]", message].join
+          message = ["[#{@context.player.call_name}][#{@context.container.turn_info.turn_offset.next}手目][#{@context.input.source}]", message].join
         end
 
         str = []

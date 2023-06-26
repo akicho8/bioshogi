@@ -24,7 +24,7 @@ module Bioshogi
       def input
         @input ||= yield_self do
           md = InputParser.match!(@source)
-          input_adapter_class(md).new(player, md.named_captures.symbolize_keys)
+          input_adapter_class(md).new(player, md.named_captures.symbolize_keys, @source)
         end
       end
 
