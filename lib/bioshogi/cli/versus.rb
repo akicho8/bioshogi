@@ -24,8 +24,8 @@ module Bioshogi
       end
 
       divers = [
-        Bioshogi.const_get(options[:black_diver]),
-        Bioshogi.const_get(options[:white_diver]),
+        Bioshogi::Ai.const_get(options[:black_diver]),
+        Bioshogi::Ai.const_get(options[:white_diver]),
       ]
       tp divers
       pp options
