@@ -11,7 +11,7 @@ require "active_support/dependencies/autoload"
 require "active_support/core_ext/array/grouping" # for in_groups_of
 require "active_support/core_ext/numeric"        # for 1.minute
 
-require "pathname" # for toeuc
+require "pathname"
 require "time"     # for Time.parse
 require "kconv"    # for toeuc
 
