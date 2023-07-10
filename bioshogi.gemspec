@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary      = "Shogi library"
   spec.description  = "Shogi library"
   spec.platform     = Gem::Platform::RUBY
-  spec.license      = "AGPL-3"
+  spec.license      = "AGPL-3.0"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
