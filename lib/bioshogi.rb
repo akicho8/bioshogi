@@ -1,10 +1,11 @@
-require "active_support/logger"
 require "active_support/configurable"
 require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/class/attribute_accessors"  # for cattr_accessor
 require "active_support/core_ext/module/attribute_accessors" # for mattr_accessor
 require "active_support/core_ext/string"
+
+require "active_support/logger"
 require "active_support/tagged_logging"
 
 require "active_support/dependencies/autoload"
@@ -49,7 +50,7 @@ loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
 
-# loader.log!
+loader.log! if false
 loader.setup
 
 require "bioshogi/logger"
