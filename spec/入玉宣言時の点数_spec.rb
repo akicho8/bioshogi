@@ -8,30 +8,32 @@ module Bioshogi
 後手の持駒：歩 角
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
-| 飛 と ・ ・ 玉 ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
+| 飛 と と と と ・ ・ ・ 玉|
+| と と と と ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 | 歩 ・ ・ ・ ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
-|v歩 ・ ・ ・v玉 ・ ・ ・ ・  |
+|v歩 ・ ・ ・ ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
-| ・ ・ ・ ・ ・ ・ ・ ・ ・|
-|v飛vとvと ・ ・ ・ ・ ・ ・ |
+|vとvとvとvとvと ・ ・ ・ ・|
+|v飛vとvとvとvと ・ ・ ・ v玉|
 +---------------------------+
 先手の持駒：歩歩
 EOT
-      assert { container.players.collect(&:ek_score_without_cond) == [8, 13]    }
-      assert { container.players.collect(&:ek_score_with_cond) == [nil, nil] }
+      assert { container.player_at(:black).ek_score_without_cond == 15 }
+      assert { container.player_at(:black).ek_score_with_cond == nil }
+      assert { container.player_at(:white).ek_score_without_cond == 20 }
+      assert { container.player_at(:white).ek_score_with_cond == 20 }
     end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
 # >> .
 # >> 
-# >> Top 1 slowest examples (0.01399 seconds, 87.3% of total time):
+# >> Top 1 slowest examples (0.01991 seconds, 87.2% of total time):
 # >>   入玉宣言時の点数 works
-# >>     0.01399 seconds -:5
+# >>     0.01991 seconds -:5
 # >> 
-# >> Finished in 0.01602 seconds (files took 0.54542 seconds to load)
+# >> Finished in 0.02282 seconds (files took 0.59605 seconds to load)
 # >> 1 example, 0 failures
 # >> 

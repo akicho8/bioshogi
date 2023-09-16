@@ -34,7 +34,11 @@ module Bioshogi
 
       # 相手陣に入っている玉を除く駒
       def entered_soldiers
-        soldiers.find_all { |e| e.place.promotable?(location) }
+        soldiers.find_all do |e|
+          if e.piece.key != :king
+            e.place.promotable?(location)
+          end
+        end
       end
     end
   end
