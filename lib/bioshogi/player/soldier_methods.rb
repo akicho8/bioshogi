@@ -19,6 +19,23 @@ module Bioshogi
       def soldiers_ek_score
         soldiers.sum(&:ek_score)
       end
+
+      # 入玉している？
+      def king_soldier_entered?
+        if soldier = king_soldier
+          soldier.place.promotable?(location)
+        end
+      end
+
+      # 玉を除く駒が10毎以上相手陣に入っているか？
+      def many_soliders_are_in_the_opponent_area?
+        entered_soldiers.count >= Piece::EkScoreInfo::N_SOLIDIERS_IN_OPPONENT_AREA_WITHOUT_KING
+      end
+
+      # 相手陣に入っている玉を除く駒
+      def entered_soldiers
+        soldiers.find_all { |e| e.place.promotable?(location) }
+      end
     end
   end
 end

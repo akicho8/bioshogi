@@ -13,24 +13,25 @@ module Bioshogi
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 | 歩 ・ ・ ・ ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
-|v歩 ・ ・ ・ ・ ・ ・ ・ ・|
+|v歩 ・ ・ ・v玉 ・ ・ ・ ・  |
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|
-|v飛vとvと ・v玉 ・ ・ ・ ・|
+|v飛vとvと ・ ・ ・ ・ ・ ・ |
 +---------------------------+
 先手の持駒：歩歩
 EOT
-      assert { container.players.collect(&:ek_score) == [8, 13] }
+      assert { container.players.collect(&:ek_score1) == [8, 13]    }
+      assert { container.players.collect(&:ek_score2) == [nil, nil] }
     end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
 # >> .
 # >> 
-# >> Top 1 slowest examples (0.01398 seconds, 84.2% of total time):
+# >> Top 1 slowest examples (0.01399 seconds, 87.3% of total time):
 # >>   入玉宣言時の点数 works
-# >>     0.01398 seconds -:5
+# >>     0.01399 seconds -:5
 # >> 
-# >> Finished in 0.01659 seconds (files took 0.63288 seconds to load)
+# >> Finished in 0.01602 seconds (files took 0.54542 seconds to load)
 # >> 1 example, 0 failures
 # >> 

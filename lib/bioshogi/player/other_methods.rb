@@ -44,9 +44,16 @@ module Bioshogi
         c
       end
 
-      # 入玉宣言時の得点合計
-      def ek_score
+      # 入玉宣言時の得点合計(仮)
+      def ek_score1
         soldiers_ek_score + piece_box.ek_score
+      end
+
+      # 入玉宣言時の得点合計(最終)
+      def ek_score2
+        if king_soldier_entered? && many_soliders_are_in_the_opponent_area?
+          ek_score1
+        end
       end
     end
   end

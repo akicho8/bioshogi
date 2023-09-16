@@ -3,6 +3,8 @@
 module Bioshogi
   class Piece
     class EkScoreInfo
+      N_SOLIDIERS_IN_OPPONENT_AREA_WITHOUT_KING = 10 # 玉を除く駒が何枚以上相手陣に入っていればよい
+
       include ApplicationMemoryRecord
       memory_record [
         # https://www.shogi.or.jp/faq/amature-kitei.html
