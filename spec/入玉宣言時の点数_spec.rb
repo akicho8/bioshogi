@@ -20,8 +20,8 @@ module Bioshogi
 +---------------------------+
 先手の持駒：歩歩
 EOT
-      assert { container.players.collect(&:ek_score1) == [8, 13]    }
-      assert { container.players.collect(&:ek_score2) == [nil, nil] }
+      assert { container.players.collect(&:ek_score_without_cond) == [8, 13]    }
+      assert { container.players.collect(&:ek_score_with_cond) == [nil, nil] }
     end
   end
 end
