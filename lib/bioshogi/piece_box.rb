@@ -97,6 +97,14 @@ module Bioshogi
       object.sum { |piece_key, count| Piece[piece_key].standby_level * count }
     end
 
+    ################################################################################ 入玉時のスコア
+
+    def ek_score
+      object.sum do |piece_key, count|
+        Piece[piece_key].ek_score * count
+      end
+    end
+
     ################################################################################ formatter
 
     def to_s(options = {})

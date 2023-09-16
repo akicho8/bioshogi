@@ -43,6 +43,11 @@ module Bioshogi
 
         c
       end
+
+      # 入玉宣言時の得点合計
+      def ek_score
+        soldiers_ek_score + piece_box.ek_score
+      end
     end
   end
 end

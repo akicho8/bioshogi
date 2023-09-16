@@ -158,6 +158,15 @@ module Bioshogi
       place.flip_if_white(location)
     end
 
+    # 入玉宣言時の得点
+    def ek_score
+      if place.promotable?(location)
+        piece.ek_score
+      else
+        0
+      end
+    end
+
     # 手筋判定用
     concerning :TechniqueMatcherMethods do
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す

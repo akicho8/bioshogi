@@ -261,5 +261,16 @@ module Bioshogi
         @yomiage_piece_info ||= YomiagePieceInfo[key]
       end
     end
+
+    concerning :EkScoreInfoMethods do
+      included do
+        delegate :ek_score, to: :ek_score_info
+      end
+
+      def ek_score_info
+        @ek_score_info ||= EkScoreInfo[key]
+      end
+    end
   end
 end
+

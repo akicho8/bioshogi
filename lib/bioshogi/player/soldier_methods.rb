@@ -14,6 +14,11 @@ module Bioshogi
       def to_s_soldiers
         soldiers.collect(&:name_without_location).sort.join(" ")
       end
+
+      # 入玉宣言時の盤上にある駒の得点合計
+      def soldiers_ek_score
+        soldiers.sum(&:ek_score)
+      end
     end
   end
 end
