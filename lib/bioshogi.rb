@@ -1,16 +1,14 @@
-require "active_support/configurable"
+# ActiveSupport の core_ext を除いたファイルを関連を個別に読み込むことを ActiveSupport は想定していない
+# (個別読み込んでいるアップデートする度に不整合おきる)
+# 単に require "active_support" で必須のものをすべて読み込んだ上で必要な core_ext だけ読み込むの正しい
+require "active_support"                                     # core_ext/* を除くすべてを読み込む
 require "active_support/core_ext/array/wrap"
 require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/class/attribute_accessors"  # for cattr_accessor
 require "active_support/core_ext/module/attribute_accessors" # for mattr_accessor
 require "active_support/core_ext/string"
-
-require "active_support/logger"
-require "active_support/tagged_logging"
-
-require "active_support/dependencies/autoload"
-require "active_support/core_ext/array/grouping" # for in_groups_of
-require "active_support/core_ext/numeric"        # for 1.minute
+require "active_support/core_ext/array/grouping"             # for in_groups_of
+require "active_support/core_ext/numeric"                    # for 1.minute
 
 require "pathname"
 require "time"     # for Time.parse
