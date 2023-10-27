@@ -6,7 +6,7 @@ module Bioshogi
       if block_given?
         actual = yield
       end
-      if !actual
+      unless actual
         raise MustNotHappen, "#{message}: #{actual.inspect}"
       end
     end
