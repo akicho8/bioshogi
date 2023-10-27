@@ -4,7 +4,7 @@ module Bioshogi
   module Formatter
     concern :ParserMethods do
       included do
-        delegate *[
+        FORMATTER_METHODS = [
           :container,
           :to_kif,
           :to_ki2,
@@ -25,7 +25,8 @@ module Bioshogi
           :to_animation_apng,
           :to_animation_webp,
           :to_animation_zip,
-        ], to: :formatter
+        ].freeze
+        delegate(*FORMATTER_METHODS, to: :formatter)
       end
 
       def formatter
