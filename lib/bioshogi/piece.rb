@@ -202,7 +202,7 @@ module Bioshogi
 
     concerning :CsaMethods do
       def csa
-        @csa ||= PieceCsa[key]
+        @csa ||= PieceCsa.fetch(key)
       end
     end
 
@@ -218,7 +218,7 @@ module Bioshogi
       end
 
       def piece_vector
-        @piece_vector ||= PieceVector[key]
+        @piece_vector ||= PieceVector.fetch(key)
       end
     end
 
@@ -228,7 +228,7 @@ module Bioshogi
       end
 
       def piece_scale
-        @piece_scale ||= PieceScale[key]
+        @piece_scale ||= PieceScale.fetch(key)
       end
     end
 
@@ -238,7 +238,7 @@ module Bioshogi
       end
 
       def piece_score
-        @piece_score ||= PieceScore[key]
+        @piece_score ||= PieceScore.fetch(key)
       end
     end
 
@@ -248,7 +248,7 @@ module Bioshogi
       end
 
       def piece_pressure
-        @piece_pressure ||= PiecePressure[key]
+        @piece_pressure ||= PiecePressure.fetch(key)
       end
     end
 
@@ -258,7 +258,7 @@ module Bioshogi
       end
 
       def yomiage_piece_info
-        @yomiage_piece_info ||= YomiagePieceInfo[key]
+        @yomiage_piece_info ||= YomiagePieceInfo.fetch(key)
       end
     end
 
@@ -268,7 +268,7 @@ module Bioshogi
       end
 
       def ek_score_info
-        @ek_score_info ||= EkScoreInfo[key]
+        @ek_score_info ||= EkScoreInfo.fetch(key)
       end
     end
   end

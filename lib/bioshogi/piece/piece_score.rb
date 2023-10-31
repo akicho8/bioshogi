@@ -16,7 +16,7 @@ module Bioshogi
       ]
 
       def piece
-        Piece[key]
+        Piece.fetch(key)
       end
 
       def any_weight(promoted)
