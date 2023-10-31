@@ -50,8 +50,8 @@ module Bioshogi
         PresetInfo.fetch(preset_key || :"平手").sorted_soldiers
       end
 
-      def create(*args)
-        new(*args).freeze
+      def create(...)
+        new(...).freeze
       end
     end
 

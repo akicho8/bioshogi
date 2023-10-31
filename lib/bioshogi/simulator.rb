@@ -2,8 +2,8 @@
 
 module Bioshogi
   class Simulator
-    def self.run(*args, &block)
-      new(*args, &block).tap(&:run)
+    def self.run(...)
+      new(...).tap(&:run)
     end
 
     attr_accessor :container

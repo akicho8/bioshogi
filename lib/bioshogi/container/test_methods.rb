@@ -47,8 +47,8 @@ module Bioshogi
           player
         end
 
-        def player_test_soldier_names(*args)
-          player_test(*args).soldiers.collect(&:name).sort
+        def player_test_soldier_names(...)
+          player_test(...).soldiers.collect(&:name).sort
         end
 
         def read_spec(params)

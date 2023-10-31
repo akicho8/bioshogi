@@ -9,9 +9,9 @@ module Bioshogi
       end
 
       class_methods do
-        def create(*args)
+        def create(...)
           Bioshogi.run_counts["#{name}.#{__method__}"] += 1
-          new(*args).freeze
+          new(...).freeze
         end
       end
 

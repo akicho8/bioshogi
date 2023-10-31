@@ -9,8 +9,8 @@ module Bioshogi
         self[0.5, 0.5]
       end
 
-      def [](*args)
-        new(*args)
+      def [](...)
+        new(...)
       end
     end
 

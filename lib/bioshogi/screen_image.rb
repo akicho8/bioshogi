@@ -4,8 +4,8 @@
 #
 module Bioshogi
   module ScreenImage
-    def self.renderer(*args)
-      Renderer.new(*args)
+    def self.renderer(...)
+      Renderer.new(...)
     end
   end
 end

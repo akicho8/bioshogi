@@ -3,8 +3,8 @@
 module Bioshogi
   module Board
     class << self
-      def new(*args, &block)
-        Basic.new(*args, &block)
+      def new(...)
+        Basic.new(...)
       end
 
       # 指定の柿木図面から手合割を逆算する

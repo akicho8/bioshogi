@@ -5,8 +5,8 @@ module Bioshogi
         "まで#{turn_info.display_turn}手で#{win_player.call_name}の勝ち"
       end
 
-      def to_s(*args)
-        to_bod(*args)
+      def to_s(...)
+        to_bod(...)
       end
 
       def to_bod(options = {})

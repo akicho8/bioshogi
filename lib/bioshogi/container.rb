@@ -1,8 +1,8 @@
 module Bioshogi
   module Container
     class << self
-      def create(*args)
-        Basic.new(*args)
+      def create(...)
+        Basic.new(...)
       end
     end
   end
