@@ -179,7 +179,7 @@ class ReversiApp
     dimension.times.flat_map { |y|
       dimension.times.collect { |x|
         v = Vector[x, y]
-        if !board[v]
+        unless board[v]
           v
         end
       }
@@ -202,7 +202,7 @@ class ReversiApp
       end
       element = board[place]
       # 空の升ならダメ
-      if !element
+      unless element
         count = 0
         break
       end

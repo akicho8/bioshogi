@@ -31,7 +31,6 @@ player = container.player_at(:black)
 object = Ai::Diver::NegaAlphaDiver.new(depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 tp object.dive
 tp mate_records
-
 # >> |--------------------------------------------------------------------------------------------|
 # >> |                                                                                     999994 |
 # >> | [<▲２四桂打>, <△２四銀(13)>, <▲２二歩成(23)>, <△１三玉(12)>, <▲２三馬(41)>, "(詰み)"] |

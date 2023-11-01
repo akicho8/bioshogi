@@ -102,14 +102,14 @@ module Bioshogi
     def piece_store_core(container, move_hand, yielder, options)
       # 自玉に王手がかかる手は除外するか？
       if options[:legal_only]
-        if !move_hand.legal_hand?(container)
+        unless move_hand.legal_hand?(container)
           return
         end
       end
 
       # 相手に王手がかかる手だけにする
       if options[:mate_only]
-        if !move_hand.mate_hand?(container)
+        unless move_hand.mate_hand?(container)
           return
         end
       end

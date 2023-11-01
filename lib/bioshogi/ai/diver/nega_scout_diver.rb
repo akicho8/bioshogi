@@ -86,7 +86,7 @@ module Bioshogi
           end
 
           children.each do |hand|
-            if !hand.legal_hand?(container)
+            unless hand.legal_hand?(container)
               next
             end
 

@@ -124,13 +124,13 @@ module Bioshogi
         @container.players.each do |e|
           enabled = false
           # 14手以上の対局で一度も動かずに終了した
-          if !enabled
+          unless enabled
             if @container.turn_info.display_turn >= MIN_TURN && e.king_moved_counter.zero?
               enabled = true
             end
           end
           # 歩と角以外の交換があったか？
-          if !enabled
+          unless enabled
             if @container.outbreak_turn
               v = e.king_first_moved_turn
               if v.nil? || v >= @container.outbreak_turn  # 玉は動いていない、または戦いが激しくなってから動いた

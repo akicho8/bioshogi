@@ -23,7 +23,7 @@ module Bioshogi
         end
 
         # 結局座標がわからない場合
-        if !place
+        unless place
           errors_add SyntaxDefact, "移動先の座標が不明です"
         end
       end

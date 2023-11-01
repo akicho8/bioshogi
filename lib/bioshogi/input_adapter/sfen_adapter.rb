@@ -44,7 +44,7 @@ module Bioshogi
         super
 
         if drop_trigger
-          if !player.piece_box.exist?(piece)
+          unless player.piece_box.exist?(piece)
             errors_add HoldPieceNotFound, "#{piece}を打とうとしましたが#{piece}を持っていません"
           end
         end

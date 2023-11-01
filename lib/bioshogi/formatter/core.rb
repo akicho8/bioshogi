@@ -196,14 +196,14 @@ module Bioshogi
           key = nil
 
           # エラーなら最優先
-          if !key
+          unless key
             if @pi.error_message
               key = :ILLEGAL_MOVE
             end
           end
 
           # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
-          if !key
+          unless key
             if @pi.last_action_params
               v = @pi.last_action_params[:last_action_key]
               if LastActionInfo[v]
@@ -213,8 +213,8 @@ module Bioshogi
           end
 
           # 何の指定もないときだけ投了とする
-          if !key
-            if !@pi.last_action_params
+          unless key
+            unless @pi.last_action_params
               key = :TORYO
             end
           end

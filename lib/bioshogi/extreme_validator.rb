@@ -50,7 +50,7 @@ module Bioshogi
 
     def assert_equal(a, b)
       r = a == b
-      if !r
+      unless r
         diff(a, b)
       end
 
@@ -58,7 +58,7 @@ module Bioshogi
       print r ? "." : "x"
       STDOUT.flush
 
-      if !r
+      unless r
         error_body.open("a") do |e|
           e.puts "-" * 80
           e.puts @current.expand_path

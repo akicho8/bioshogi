@@ -44,7 +44,7 @@ module Bioshogi
           w = 0
           player.soldiers.each do |e|
             w += e.abs_weight
-            if !e.promoted # ← これを入れると序盤の「33角成」をダメな手だと教えられない、けどやっぱり成ってない駒だけを序盤駒とした方がいいか
+            unless e.promoted # ← これを入れると序盤の「33角成」をダメな手だと教えられない、けどやっぱり成ってない駒だけを序盤駒とした方がいいか
               if t = opening_basic_table[:field][e.piece.key]
                 x, y = e.normalized_place.to_xy
                 w += t[y][x]
@@ -90,7 +90,7 @@ module Bioshogi
 
         # 盤上の駒の位置による重み
         def soldier_score_for_scene(e, king_place, table)
-          return 0 if !king_place
+          return 0 unless king_place
 
           if e.promoted || e.piece.key == :gold || e.piece.key == :silver
             # 相手の玉との距離
@@ -108,7 +108,7 @@ module Bioshogi
             mx = gx.abs
 
             w = table.dig(my, mx)
-            return 0 if !w
+            return 0 unless w
             # p ["#{__FILE__}:#{__LINE__}", __method__, e, w, s, [mx, my], king_place]
             w
           else

@@ -14,7 +14,7 @@ module Bioshogi
       # fetch できなかったとき default_key が指すレコードを返す
       def self.safe_fetch(key)
         v = lookup(key)
-        if !v
+        unless v
           v = fetch(default_key)
         end
         v

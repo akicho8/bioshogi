@@ -15,7 +15,7 @@ module Bioshogi
 
       def pick_up(place)
         soldier = safe_delete_on(place)
-        if !soldier
+        unless soldier
           raise NotFoundOnBoard, "#{place}の位置には何もありません"
         end
         soldier

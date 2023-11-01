@@ -36,7 +36,7 @@ module Bioshogi
 
     def parse
       s = self.class.startpos_remove(source)
-      if !md = s.match(SFEN_REGEXP)
+      unless md = s.match(SFEN_REGEXP)
         m = []
         m << "入力のSFEN形式が不正確です"
         if source.match?(/\s{2,}/)

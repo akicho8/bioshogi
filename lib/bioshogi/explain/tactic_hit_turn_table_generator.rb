@@ -22,7 +22,7 @@ module Bioshogi
               break true
             end
           end
-          if !found
+          unless found
             raise e.key
           end
         end

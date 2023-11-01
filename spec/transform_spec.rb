@@ -33,7 +33,7 @@ module Bioshogi
       rescue => error
         s = error_as_text.(error)
       end
-      if !s.kind_of?(String)
+      unless s.kind_of?(String)
         s = s.pretty_inspect # or to_yaml
       end
       s

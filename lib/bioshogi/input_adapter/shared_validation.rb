@@ -12,7 +12,7 @@ module Bioshogi
           end
 
           if move_hand.promote_trigger?
-            if !origin_soldier.next_promotable?(place)
+            unless origin_soldier.next_promotable?(place)
               errors_add NotPromotable, "#{origin_soldier.place}から#{place}への移動では成れません"
             end
           end
@@ -44,7 +44,7 @@ module Bioshogi
           if player.container.params[:validate_warp_skip]
           else
             # 初手 "25歩(27)" とした場合
-            if !candidate_soldiers.include?(move_hand.origin_soldier)
+            unless candidate_soldiers.include?(move_hand.origin_soldier)
               errors_add SoldierWarpError, "#{move_hand}としましたが#{place_from}から#{place}には移動できません"
             end
           end
@@ -69,7 +69,7 @@ module Bioshogi
           end
         end
 
-        if !soldier.alive?
+        unless soldier.alive?
           errors_add DeadPieceRuleError, "#{soldier}は死に駒です。「#{soldier}成」の間違いかもしれません"
         end
       end

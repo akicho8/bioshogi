@@ -120,7 +120,7 @@ module Bioshogi
       def illegal_judgement_message
         if @formatter.pi.last_action_params
           v = @formatter.pi.last_action_params[:last_action_key]
-          if !LastActionInfo[v]
+          unless LastActionInfo[v]
             "*#{v}\n"
           end
         end

@@ -28,7 +28,7 @@ module Bioshogi
         container.critical_turn ||= container.turn_info.turn_offset
 
         # 「歩と角」を除く駒が取られる最初の手数の記録
-        if !container.outbreak_turn
+        unless container.outbreak_turn
           key = captured_soldier.piece.key
           if key != :pawn && key != :bishop
             container.outbreak_turn = container.turn_info.turn_offset

@@ -17,11 +17,11 @@ module Bioshogi
             t = Time.now
             logger.info { command }
             status, stdout, stderr = systemu(command) # 例外は出ないのでensure不要
-            logger.info { "status: #{status}" } if !status.success?
+            logger.info { "status: #{status}" } unless status.success?
             logger.info { "elapsed: #{(Time.now - t).round}s" }
             logger.info { "stderr: #{stderr}" } if stderr.present?
             logger.info { "stdout: #{stdout}" } if stdout.present?
-            if !status.success?
+            unless status.success?
               raise StandardError, stderr.strip
             end
           end
@@ -31,7 +31,7 @@ module Bioshogi
           logger.info { "which #{command}" }
           status, _, _ = systemu("which #{command}")
           logger.info { "status: #{status}" }
-          if !status.success?
+          unless status.success?
             raise StandardError, "no #{command} in path"
           end
         end

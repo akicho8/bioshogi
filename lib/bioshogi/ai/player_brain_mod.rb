@@ -72,7 +72,7 @@ module Bioshogi
 
               if options[:rule_valid]
                 # 二歩と死に駒なら除外
-                if !soldier.rule_valid?(board)
+                unless soldier.rule_valid?(board)
                   next
                 end
               end
@@ -81,14 +81,14 @@ module Bioshogi
 
               if options[:legal_only]
                 # 合法手でなければ除外
-                if !drop_hand.legal_hand?(container)
+                unless drop_hand.legal_hand?(container)
                   next
                 end
               end
 
               if options[:mate_only]
                 # 王手がかからない手を除外
-                if !drop_hand.mate_hand?(container)
+                unless drop_hand.mate_hand?(container)
                   next
                 end
               end

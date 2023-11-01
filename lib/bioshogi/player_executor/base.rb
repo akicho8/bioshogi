@@ -29,7 +29,7 @@ module Bioshogi
       end
 
       def perform_validations
-        if !container.params[:validate_enable]
+        unless container.params[:validate_enable]
           return
         end
 

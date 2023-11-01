@@ -6,7 +6,7 @@ module Bioshogi
 
     def match!(str)
       md = str.to_s.match(regexp)
-      if !md
+      unless md
         raise SyntaxDefact, "表記が間違っています : #{str.inspect}"
       end
       md

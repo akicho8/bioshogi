@@ -200,7 +200,7 @@ module Bioshogi
                 end
               end
 
-              if !primary_audio_file
+              unless primary_audio_file
                 return Pathname("_output2.mp4").read
               end
 

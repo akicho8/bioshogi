@@ -66,7 +66,7 @@ module Bioshogi
 
       def origin_soldier
         @origin_soldier ||= yield_self do
-          if !force_drop_trigger
+          unless force_drop_trigger
             v = candidate_soldiers_select
             if v.size == 1
               v.first

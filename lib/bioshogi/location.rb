@@ -22,13 +22,13 @@ module Bioshogi
       def lookup(value)
         v = super
 
-        if !v
+        unless v
           if value.kind_of?(Integer)
             v = lookup(value.modulo(count))
           end
         end
 
-        if !v
+        unless v
           v = find { |e| e.match_target_values_set.include?(value) }
         end
 
