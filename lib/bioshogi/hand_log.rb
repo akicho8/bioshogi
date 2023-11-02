@@ -25,24 +25,24 @@ module Bioshogi
       hand.to_kif(options)
     end
 
-    def to_ki2(options = {})
-      official_formatter(options).to_s
+    def to_ki2(...)
+      official_formatter(...).to_s
     end
 
-    def yomiage(options = {})
-      yomiage_formatter(options).to_s
+    def yomiage(...)
+      yomiage_formatter(...).to_s
     end
 
-    def to_csa(options = {})
-      hand.to_csa(options)
+    def to_csa(...)
+      hand.to_csa(...)
     end
 
-    def to_sfen(options = {})
-      hand.to_sfen(options)
+    def to_sfen(...)
+      hand.to_sfen(...)
     end
 
-    def to_akf(options = {})
-      hand.to_akf(options)
+    def to_akf(...)
+      hand.to_akf(...)
     end
 
     def to_kif_ki2
@@ -61,12 +61,12 @@ module Bioshogi
       move_hand || drop_hand
     end
 
-    def official_formatter(options = {})
-      OfficialFormatter.new(self, options)
+    def official_formatter(...)
+      OfficialFormatter.new(self, ...)
     end
 
-    def yomiage_formatter(options = {})
-      Yomiage::Formatter.new(self, options)
+    def yomiage_formatter(...)
+      Yomiage::Formatter.new(self, ...)
     end
   end
 end
