@@ -5,8 +5,8 @@ module Bioshogi
 
       attr_accessor :object
 
-      def initialize(...)
-        @object = Hash[...]
+      def initialize(*args)
+        @object = Hash[*args]
       end
 
       def []=(key, value)
