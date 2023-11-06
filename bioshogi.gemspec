@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "byebug"
 
-  spec.add_dependency "activesupport"
+  spec.add_dependency "activesupport", ">= 7.1.0"
   spec.add_dependency "actionview"
   spec.add_dependency "table_format"
   spec.add_dependency "memory_record"
@@ -38,6 +38,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
   spec.add_dependency "rmagick", ">= 5.0.0"
   spec.add_dependency "systemu"
-  spec.add_dependency "rubyzip", "~> 2.3.0"
+  spec.add_dependency "rubyzip", ">= 2.3.0"
   spec.add_dependency "faraday"
 end
