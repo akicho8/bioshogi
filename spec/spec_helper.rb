@@ -1,9 +1,17 @@
-require "bundler/setup"
+# require "bundler/setup"
 require "bioshogi"
 require "active_support/core_ext/benchmark"
 require "fileutils"
 require "pp"
 require "yaml"
+
+# 標準出力キャプチャ用
+if true
+  require "tempfile"
+  require "active_support/testing/stream"
+  include ActiveSupport::Testing::Stream
+  # capture(:stdout) { puts "x" }   # => "x\n"
+end
 
 log_file = Pathname("#{__dir__}/../log/test.log")
 FileUtils.makedirs(log_file.dirname)

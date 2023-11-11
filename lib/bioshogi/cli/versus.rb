@@ -1,12 +1,7 @@
-# frozen-string-literal: true
-# bioshogi versus
-
-if $0 == __FILE__
-  require "../cli"
-end
+require "../cli" if $0 == __FILE__
 
 module Bioshogi
-  class Cli < Thor
+  class CLI < Thor
     desc "versus", "CPU同士の対戦"
     option :depth_max,   type: :numeric, aliases: "-d", default: 8
     option :times,       type: :numeric, aliases: "-n", default: 512
@@ -73,7 +68,7 @@ module Bioshogi
 end
 
 if $0 == __FILE__
-  Bioshogi::Cli.start(["versus", "-r1", "-n1", "-t3", "-d3"])
+  Bioshogi::CLI.start(["versus", "-r1", "-n1", "-t3", "-d3"])
 end
 
 # >> |--------------------------|

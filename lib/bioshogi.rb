@@ -9,6 +9,8 @@ require "active_support/core_ext/module/attribute_accessors" # for mattr_accesso
 require "active_support/core_ext/string"
 require "active_support/core_ext/array/grouping"             # for in_groups_of
 require "active_support/core_ext/numeric"                    # for 1.minute
+require "active_support/core_ext/hash"                       # for too_options
+require "active_support/core_ext/pathname"                   # for existence
 
 require "pathname"
 require "time"     # for Time.parse
@@ -40,6 +42,7 @@ loader.ignore("#{__dir__}/bioshogi/assets")
 loader.ignore("#{__dir__}/bioshogi/cli.rb")
 loader.ignore("#{__dir__}/bioshogi/cli")
 loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
+loader.inflector.inflect("cli" => "CLI")
 
 # 開発環境専用のものは遅延読み込みする
 loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
@@ -47,6 +50,9 @@ loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
 loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
+
+# CLI用
+loader.do_not_eager_load("#{__dir__}/bioshogi/commands/*.rb")
 
 loader.log! if false
 loader.setup

@@ -1,34 +1,51 @@
-# frozen-string-literal: true
-# bioshogi convert -f ki2 ../../../experiment/katomomo.kif
+require "../cli" if $0 == __FILE__
 
-if $0 == __FILE__
-  require "../cli"
-end
-
+# -*- compile-command: "../../../.bin/bioshogi convert -f ki2 ../assets/kifu_formats/sample.kif" -*-
 module Bioshogi
-  class Cli
+  class CLI
     desc "convert", "一括棋譜フォーマット変換"
     option :format,     type: :string, aliases: "-f", default: "kif"
-    option :output_dir, type: :string, aliases: "-o", default: "output"
+    option :output_dir, type: :string, aliases: "-o"
+    option :overwrite,  type: :boolean, aliases: "-w", default: false
     def convert(*files)
-      files.each do |in_file|
-        in_file = Pathname(in_file).expand_path
-        info = Parser.file_parse(in_file)
-        str = info.public_send("to_#{options[:format]}")
-        if options[:output_dir].blank?
-          puts str
-        else
-          dir = Pathname(options[:output_dir]).expand_path
-          out_file = dir.join(in_file.basename.sub_ext([".", options[:format]].join))
-          FileUtils.mkdir_p(dir)
-          out_file.write(str)
-          puts "#{in_file} => #{out_file}"
-        end
-      end
+      Commands::Convert.new(files, options.to_options).call
     end
   end
 end
 
 if $0 == __FILE__
-  Bioshogi::Cli.start(["convert", "-f", "ki2", "../../../experiment/katomomo.kif"])
+  Bioshogi::CLI.start(["convert", "-f", "ki2", "../assets/kifu_formats/sample.kif"])
 end
+# >> 開始日時：2017/11/11 10:00:00
+# >> 終了日時：2017/11/11 17:22:00
+# >> 棋戦：女流王座戦
+# >> 場所：大阪・芝苑
+# >> 手合割：平手
+# >> 先手：加藤桃子 女王
+# >> 後手：里見香奈 女流王座
+# >> 戦型：ゴキゲン中飛車
+# >> 先手の戦型：対振り持久戦, 三間飛車
+# >> 後手の戦型：ゴキゲン中飛車, 5筋位取り中飛車
+# >> 先手の囲い：居飛車穴熊
+# >> 後手の囲い：銀冠
+# >> 先手の手筋：垂れ歩
+# >> 後手の手筋：垂れ歩
+# >> 先手の備考：居飛車, 対振り, 対抗型
+# >> 後手の備考：振り飛車, 対抗型
+# >> 
+# >> ▲２六歩   △３四歩   ▲２五歩 △３三角 ▲７六歩 △４二銀 ▲４八銀 △５四歩
+# >> ▲６八玉   △５五歩   ▲３六歩 △５二飛 ▲３七銀 △５三銀 ▲４六銀 △４四銀
+# >> ▲５八金右 △６二玉   ▲７八玉 △７二玉 ▲６六歩 △８二玉 ▲６七金 △７二銀
+# >> ▲７七角   △９四歩   ▲８八玉 △９五歩 ▲９八香 △８四歩 ▲９九玉 △８三銀
+# >> ▲８八銀   △７二金   ▲６五歩 △７四歩 ▲６六金 △７三桂 ▲８六角 △５一飛
+# >> ▲７八飛   △８五歩   ▲５九角 △４二角 ▲７九金 △３三桂 ▲７五歩 △同　歩
+# >> ▲同　金   △同　角   ▲同　飛 △７四歩 ▲７六飛 △７五金 ▲７八飛 △５六歩
+# >> ▲同　歩   △６五金   ▲５五歩 △５六歩 ▲２六角 △１四歩 ▲６二歩 △５二金
+# >> ▲６一歩成 △同　飛   ▲５四歩 △６六金 ▲６八飛 △７六金 ▲７七歩 △７五金
+# >> ▲５八飛   △６六金   ▲６八飛 △６五金 ▲３二角 △８六歩 ▲同　歩 △３五歩
+# >> ▲２三角成 △６四歩   ▲３五歩 △２一飛 ▲３四馬 △９二香 ▲４八角 △９一飛
+# >> ▲２四歩   △７五金   ▲５六馬 △８四歩 ▲７五角 △同　歩 ▲６四飛 △６三金左
+# >> ▲６八飛   △６五角   ▲同　飛 △同　桂 ▲同　馬 △５九飛 ▲６六桂 △７三金上
+# >> ▲５二角   △６四金直 ▲同　馬 △同　金 ▲６五歩 △４八角 ▲６四歩 △６六角成
+# >> ▲７三金
+# >> まで113手で先手の勝ち

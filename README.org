@@ -688,7 +688,7 @@ Web Page：(Web Page)
 Commands:
   bioshogi convert         # 棋譜フォーマット変換
   bioshogi help [COMMAND]  # Describe available commands or one specific command
-  bioshogi input_parser    # 入力
+  bioshogi input_checker    # 入力
   bioshogi piece           # 駒一覧
   bioshogi versus          # CPU同士の対戦
 

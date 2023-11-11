@@ -4,6 +4,13 @@ module Bioshogi
   module InputParser
     extend self
 
+    def check(text)
+      rows = InputParser.scan(text).collect do |str|
+        {"入力" => str}.merge(match!(str).named_captures)
+      end
+      tp rows
+    end
+
     def match!(str)
       md = str.to_s.match(regexp)
       unless md
