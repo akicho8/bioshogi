@@ -78,6 +78,7 @@ module Bioshogi
 
         # ordered_children = children # 前の反復で最善とされた順に並んでいる手
 
+        children_count = 0
         hands = []
         provisional_hands = []
         mate = false
@@ -88,6 +89,7 @@ module Bioshogi
             provisional_hands = []
             mate = false
             children.each do |hand|
+              children_count += 1
               logger.debug "#ROOT #{hand}" if logger
 
               # 即詰があれば探索を速攻打ち切る場合
@@ -148,7 +150,8 @@ module Bioshogi
 
         # 自分の合法手があるのに相手の手を1手も見つけられない状況
         # TLEが早過ぎる場合に起きる
-        if !children.empty? && hands.empty?
+        # TLEが早過ぎる場合、そもそも childrens.empty? はエラーになる
+        if children_count >= 1 && hands.empty?
           raise BrainProcessingHeavy, "合法手を生成したにもかかわらず、指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
         end
 
