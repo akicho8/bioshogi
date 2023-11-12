@@ -50,7 +50,7 @@ module Bioshogi
         end
 
         def store_dir
-          ROOT_DIR.join("../demo/BGM合成後の確認用").expand_path
+          ROOT.join("../demo/BGM合成後の確認用").expand_path
         end
       end
     end

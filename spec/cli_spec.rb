@@ -3,15 +3,20 @@ require "bioshogi/cli"
 
 module Bioshogi
   describe CLI do
-    it "convert" do
-      capture(:stdout) do
-        Bioshogi::CLI.start(["convert", "-f", "ki2", "../lib/bioshogi/assets/kifu_formats/sample.kif"])
-      end
+    around do |e|
+      capture(:stdout) { e.run }
     end
+
+    it "convert" do
+      Bioshogi::CLI.start(["convert", "-f", "ki2", "../lib/bioshogi/assets/kifu_formats/sample.kif"])
+    end
+
     it "input_checker" do
-      capture(:stdout) do
-        Bioshogi::CLI.start(["input_checker", "68S"])
-      end
+      Bioshogi::CLI.start(["input_checker", "68S"])
+    end
+
+    it "versus" do
+      Bioshogi::CLI.start(["versus", "-t", "0.1", "-n", "1"])
     end
   end
 end

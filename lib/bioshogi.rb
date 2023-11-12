@@ -21,9 +21,10 @@ require "memory_record"
 require "tree_support"
 
 module Bioshogi
-  ROOT_DIR   = Pathname(__dir__)
-  ASSETS_DIR = ROOT_DIR.join("bioshogi/assets")
-  LOG_DIR    = ROOT_DIR.join("bioshogi/log")
+  ROOT       = Pathname(__dir__)
+  ASSETS_DIR = ROOT.join("bioshogi/assets")
+  LOG_DIR    = ROOT.join("bioshogi/log")
+  TMP_DIR    = ROOT.join("../tmp")
 
   include ActiveSupport::Configurable
   config_accessor(:skill_monitor_enable) { true }
@@ -32,37 +33,45 @@ module Bioshogi
   SFEN1 = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
 end
 
-require "zeitwerk"
-loader = Zeitwerk::Loader.for_gem
-loader.ignore("#{__dir__}/bioshogi/logger.rb")
-loader.ignore("#{__dir__}/bioshogi/vector_constants.rb")
-loader.ignore("#{__dir__}/bioshogi/errors.rb")
-loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
-loader.ignore("#{__dir__}/bioshogi/assets")
-loader.ignore("#{__dir__}/bioshogi/cli.rb")
-loader.ignore("#{__dir__}/bioshogi/cli")
-loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
-loader.inflector.inflect("cli" => "CLI")
+if true
+  require "zeitwerk"
+  loader = Zeitwerk::Loader.for_gem
 
-# 開発環境専用のものは遅延読み込みする
-loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
-loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
-loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
-loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
-loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
+  # 自動で読み込まないファイルやディレクトリを指定する
+  loader.ignore("#{__dir__}/bioshogi/logger.rb")
+  loader.ignore("#{__dir__}/bioshogi/vector_constants.rb")
+  loader.ignore("#{__dir__}/bioshogi/errors.rb")
+  loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
+  loader.ignore("#{__dir__}/bioshogi/assets")
+  loader.ignore("#{__dir__}/bioshogi/cli.rb")
+  loader.ignore("#{__dir__}/bioshogi/cli")
+  loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
-# CLI用
-loader.do_not_eager_load("#{__dir__}/bioshogi/commands/*.rb")
+  # 変換ルール調整
+  loader.inflector.inflect("cli" => "CLI")
+  loader.inflector.inflect("ai" => "Ai")
 
-loader.log! if false
-loader.setup
+  # 開発環境専用のものは遅延読み込みする
+  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
 
-require "bioshogi/logger"
-require "bioshogi/vector_constants"
-require "bioshogi/errors"
+  # CLI用
+  # loader.do_not_eager_load("#{__dir__}/bioshogi/commands/*.rb")
 
-# 必須
-# loader.eager_load_namespace(Bioshogi::ScreenImage)
+  loader.log! if false
 
-# なくてもよい
-loader.eager_load
+  loader.setup
+
+  require "bioshogi/logger"
+  require "bioshogi/vector_constants"
+  require "bioshogi/errors"
+
+  # 必須
+  # loader.eager_load_namespace(Bioshogi::ScreenImage)
+
+  # なくてもよい
+  loader.eager_load
+end
