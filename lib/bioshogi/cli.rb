@@ -10,6 +10,7 @@ module Bioshogi
 
     include Converter::CLI
     include AI::Versus::CLI
+    include InputParser::CLI
   end
 
   Pathname(__dir__).glob("cli/*.rb").each { |e| require e }

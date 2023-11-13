@@ -4,6 +4,15 @@ module Bioshogi
   module InputParser
     extend self
 
+    concern :CLI do
+      included do
+        desc "input_match", "指し手の一つ分の入力の読み取り"
+        def input_match(*argv)
+          InputParser.check(argv.join(" "))
+        end
+      end
+    end
+
     def check(text)
       rows = InputParser.scan(text).collect do |str|
         {"入力" => str}.merge(match!(str).named_captures)

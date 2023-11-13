@@ -11,8 +11,8 @@ module Bioshogi
       Bioshogi::CLI.start(["convert", "-f", "ki2", ASSETS_DIR.join("kifu_formats/sample.kif")])
     end
 
-    it "input_checker" do
-      Bioshogi::CLI.start(["input_checker", "68S"])
+    it "input_match" do
+      Bioshogi::CLI.start(["input_match", "68S"])
     end
 
     it "versus" do
