@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     concern :PlayerBrainMod do
       def evaluator(options = {})
         (options[:evaluator_class] || Evaluator::Level1).new(self, options)

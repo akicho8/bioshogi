@@ -4,7 +4,7 @@ require "json"
 info = Parser.parse("position startpos moves 7i6h")
 info.formatter.container.to_short_sfen # => "sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w - 2"
 
-# ▼サーバーレス将棋 Ai ☖ - Qiita
+# ▼サーバーレス将棋 AI ☖ - Qiita
 # https://qiita.com/na-o-ys/items/b04ce27732c82b6beb9b
 
 require "faraday"

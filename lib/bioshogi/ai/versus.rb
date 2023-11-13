@@ -1,7 +1,7 @@
 # -*- compile-command: "../../../.bin/bioshogi versus" -*-
 
 module Bioshogi
-  module Ai
+  module AI
     class Versus
       concern :CLI do
         included do
@@ -41,8 +41,8 @@ module Bioshogi
         end
 
         divers = [
-          Bioshogi::Ai.const_get(@options[:black_diver]),
-          Bioshogi::Ai.const_get(@options[:white_diver]),
+          Bioshogi::AI.const_get(@options[:black_diver]),
+          Bioshogi::AI.const_get(@options[:white_diver]),
         ]
         tp divers
         pp @options
@@ -60,7 +60,7 @@ module Bioshogi
               depth_max_range: 0..@options[:depth_max],
             }
             diver_class = divers[container.turn_info.current_location.code]
-            records = current_player.brain(diver_class: diver_class, evaluator_class: Ai::Evaluator::Level3).iterative_deepening(deepen_score_list_params)
+            records = current_player.brain(diver_class: diver_class, evaluator_class: AI::Evaluator::Level3).iterative_deepening(deepen_score_list_params)
             record = records.first
             hand = record[:hand]
             container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
@@ -69,7 +69,7 @@ module Bioshogi
             # container.players.each { |e| tp e.pressure_report }
 
             tp deepen_score_list_params
-            tp Ai::Brain.human_format(records)
+            tp AI::Brain.human_format(records)
             tp container.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }
             puts container
             puts

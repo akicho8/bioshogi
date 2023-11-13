@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Ai
+  module AI
     module Evaluator
 
       # http://www.yss-aya.com/book.html

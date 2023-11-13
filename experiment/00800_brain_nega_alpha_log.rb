@@ -7,7 +7,7 @@ Dimension.wh_change([3, 3]) do
   container = Container::Basic.new
   container.board.placement_from_human("▲３三歩 △１一歩")
   puts container
-  object = Ai::Diver::NegaAlphaDiver.new(depth_max: 1, current_player: container.player_at(:black))
+  object = AI::Diver::NegaAlphaDiver.new(depth_max: 1, current_player: container.player_at(:black))
   tp object.dive
 end
 # >> 後手の持駒：なし

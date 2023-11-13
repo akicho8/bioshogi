@@ -40,28 +40,28 @@ container.opponent_player.executor.captured_soldier # => <Bioshogi::Soldier "△
 #
 # container.current_player.soldiers # =>
 #
-# container.current_player.brain(diver_class: Ai::Diver::NegaScoutDiver).move_hands(promoted_only: true).to_a # =>
+# container.current_player.brain(diver_class: AI::Diver::NegaScoutDiver).move_hands(promoted_only: true).to_a # =>
 # exit
 
-container.current_player.brain(diver_class: Ai::Diver::NegaScoutDiver).create_all_hands(promoted_only: true).to_a # => [<△２三歩成(22)>]
-records = container.current_player.brain(diver_class: Ai::Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
+container.current_player.brain(diver_class: AI::Diver::NegaScoutDiver).create_all_hands(promoted_only: true).to_a # => [<△２三歩成(22)>]
+records = container.current_player.brain(diver_class: AI::Diver::NegaScoutDiver).iterative_deepening(time_limit: nil, depth_max_range: 5..5)
 record = records.first
 tp record
 hand = record[:hand]
 if record[:score] <= -(Bioshogi::SCORE_MAX - 1)
   p "投了"
 end
-tp Ai::Brain.human_format(records)
+tp AI::Brain.human_format(records)
 
 # # 後手は王手してきた金を取った状態
 # container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
 # puts container
 #
 # # 先手の手番でその玉を取る
-# records = container.current_player.brain(diver_class: Ai::Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
+# records = container.current_player.brain(diver_class: AI::Diver::NegaScoutDiver).iterative_deepening(time_limit: 3, depth_max_range: 0..8)
 # record = records.first
 # tp record
-# tp Ai::Brain.human_format(records)
+# tp AI::Brain.human_format(records)
 # container.execute(record[:hand].to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
 
 #   if captured_soldier && captured_soldier.piece.key == :king

@@ -2,7 +2,7 @@
 
 module Bioshogi
   class Player
-    include Ai::PlayerBrainMod
+    include AI::PlayerBrainMod
     include PieceBoxMethods
     include SoldierMethods
     include OtherMethods

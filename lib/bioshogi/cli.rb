@@ -9,7 +9,7 @@ module Bioshogi
     class_option :quiet, type: :boolean
 
     include Converter::CLI
-    include Ai::Versus::CLI
+    include AI::Versus::CLI
   end
 
   Pathname(__dir__).glob("cli/*.rb").each { |e| require e }

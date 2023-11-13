@@ -15,12 +15,12 @@ Dimension.wh_change([2, 4]) do
 手数＝0
   EOT
   [
-    Ai::Diver::NegaAlphaDiver,
-    Ai::Diver::NegaScoutDiver,
+    AI::Diver::NegaAlphaDiver,
+    AI::Diver::NegaScoutDiver,
   ].each do |diver_class|
-    brain = container.current_player.brain(diver_class: diver_class) # Ai::Diver::NegaAlphaDiver
+    brain = container.current_player.brain(diver_class: diver_class) # AI::Diver::NegaAlphaDiver
     records = brain.iterative_deepening(depth_max_range: 4..4)
-    tp Ai::Brain.human_format(records)
+    tp AI::Brain.human_format(records)
   end
 end
 # >> |------+----------------+-------------------------------------------------------+--------+------------+----------|

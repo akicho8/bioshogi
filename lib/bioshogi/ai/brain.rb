@@ -4,7 +4,7 @@
 require "timeout"
 
 module Bioshogi
-  module Ai
+  module AI
     # 指定の Diver を使って簡単に反復探索するためのクラス
     class Brain
       def self.human_format(infos)
@@ -50,13 +50,13 @@ module Bioshogi
       def iterative_deepening(params = {})
         # このパラメータはそのまま Diver に渡している
         params = {
-          depth_max_range: 1..1,  # 1..3 なら時間がある限り1→2→3手と読み進めていく。3手詰限定なら 3..3 とする
-          time_limit: nil,        # nil なら時間制限なし。時間指定なしなら 深度を を 1..3 のようにする意味はなくて最初から 3..3 とすればよい
-          mate_mode: false,       # 王手になる手と、王手をかわす手だけを生成するか？
+          :depth_max_range => 1..1,  # 1..3 なら時間がある限り1→2→3手と読み進めていく。3手詰限定なら 3..3 とする
+          :time_limit      => nil,   # nil なら時間制限なし。時間指定なしなら 深度を を 1..3 のようにする意味はなくて最初から 3..3 とすればよい
+          :mate_mode       => false, # 王手になる手と、王手をかわす手だけを生成するか？
 
           # 常に diver_instance に渡すもの
-          base_player: player,    # どちらのプレイヤーから開始したか。詰将棋のときなど先後で指し手の方針を明確に分ける必要があるため。
-          current_player: player.opponent_player, # Diver#dive の最初の player として使うため
+          :base_player    => player,    # どちらのプレイヤーから開始したか。詰将棋のときなど先後で指し手の方針を明確に分ける必要があるため。
+          :current_player => player.opponent_player, # Diver#dive の最初の player として使うため
         }.merge(params)
 
         if params[:time_limit]
@@ -78,7 +78,7 @@ module Bioshogi
 
         # ordered_children = children # 前の反復で最善とされた順に並んでいる手
 
-        children_count = 0
+        child_count = 0
         hands = []
         provisional_hands = []
         mate = false
@@ -89,8 +89,8 @@ module Bioshogi
             provisional_hands = []
             mate = false
             children.each do |hand|
-              children_count += 1
               logger.debug "#ROOT #{hand}" if logger
+              child_count += 1
 
               # 即詰があれば探索を速攻打ち切る場合
               # 無効にしてもいいけど他の探索で時間がかかったら、この深さの探索全体がTLEでキャンセルされる可能性がある
@@ -106,8 +106,15 @@ module Bioshogi
               hand.sandbox_execute(container) do
                 start_time = Time.now
                 v, pv = diver.dive(hand_route: [hand]) # TLEが発生してするとcatchまで飛ぶ
-                v = -v                                        # 相手の良い手は自分のマイナス
-                provisional_hands << {hand: hand, score: v, black_side_score: v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+                v = -v                                 # 相手の良い手は自分のマイナス
+                provisional_hands << {
+                  :hand             => hand,
+                  :score            => v,
+                  :black_side_score => v * player.location.value_sign,
+                  :best_pv          => pv,
+                  :eval_times       => diver.eval_counter,
+                  :sec              => Time.now - start_time,
+                }
                 # 1手詰: (v >= SCORE_MAX - 0) 自分勝ち
                 # 2手詰: (v >= SCORE_MAX - 1) 相手勝ち
                 # 3手詰: (v >= SCORE_MAX - 2) 自分勝ち
@@ -151,7 +158,7 @@ module Bioshogi
         # 自分の合法手があるのに相手の手を1手も見つけられない状況
         # TLEが早過ぎる場合に起きる
         # TLEが早過ぎる場合、そもそも childrens.empty? はエラーになる
-        if children_count >= 1 && hands.empty?
+        if child_count >= 1 && hands.empty?
           raise BrainProcessingHeavy, "合法手を生成したにもかかわらず、指し手の候補を絞れません。制限時間を増やすか読みの深度を浅くしてください : #{params}"
         end
 
@@ -184,7 +191,14 @@ module Bioshogi
           hand.sandbox_execute(container) do
             start_time = Time.now
             v, pv = diver.dive
-            {hand: hand, score: -v, socre2: -v * player.location.value_sign, best_pv: pv, eval_times: diver.eval_counter, sec: Time.now - start_time}
+            {
+              :hand       => hand,
+              :score      => -v,
+              :socre2     => -v * player.location.value_sign,
+              :best_pv    => pv,
+              :eval_times => diver.eval_counter,
+              :sec        => Time.now - start_time,
+            }
           end
         }.sort_by { |e| -e[:score] }
       end
@@ -196,7 +210,14 @@ module Bioshogi
           hand.sandbox_execute(container) do
             start_time = Time.now
             v = evaluator.score
-            {hand: hand, score: v, socre2: v * player.location.value_sign, best_pv: [], eval_times: 1, sec: Time.now - start_time}
+            {
+              :hand       => hand,
+              :score      => v,
+              :socre2     => v * player.location.value_sign,
+              :best_pv    => [],
+              :eval_times => 1,
+              :sec        => Time.now - start_time,
+            }
           end
         }.sort_by { |e| -e[:score] }
       end

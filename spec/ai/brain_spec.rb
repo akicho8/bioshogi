@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  module Ai
+  module AI
     describe Brain do
       it "初手が嬉野流になるよう誘導される" do
         container = Container::Basic.start

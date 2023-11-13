@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     module Diver
       # 詰将棋専用
       # ・評価値の大小は関係なく3つの状態しかない

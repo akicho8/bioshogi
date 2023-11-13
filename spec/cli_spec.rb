@@ -8,7 +8,7 @@ module Bioshogi
     end
 
     it "convert" do
-      Bioshogi::CLI.start(["convert", "-f", "ki2", "../lib/bioshogi/assets/kifu_formats/sample.kif"])
+      Bioshogi::CLI.start(["convert", "-f", "ki2", ASSETS_DIR.join("kifu_formats/sample.kif")])
     end
 
     it "input_checker" do
@@ -16,7 +16,7 @@ module Bioshogi
     end
 
     it "versus" do
-      Bioshogi::CLI.start(["versus", "-t", "0.1", "-n", "1"])
+      Bioshogi::CLI.start(["versus", "-t", "0.5", "-n", "1"])
     end
   end
 end

@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     module Diver
       # コードはわかりやすいが遅い
       class NegaMaxDiver < Base

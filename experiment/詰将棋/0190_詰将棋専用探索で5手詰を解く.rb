@@ -24,19 +24,19 @@ mate_proc = -> player, score, hand_route {
   mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
 }
 
-# brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
+# brain = container.player_at(:black).brain(diver_class: AI::Diver::NegaScoutDiver)
 # records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc)
-# tp Ai::Brain.human_format(records)
+# tp AI::Brain.human_format(records)
 
 # player = container.player_at(:black)
-# object = Ai::Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
-# # object = Ai::Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 5, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
+# object = AI::Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 6, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
+# # object = AI::Diver::NegaAlphaMateDiver.new(evaluator_class: Evaluator::Level1, depth_max: 5, current_player: player, mate_mode: true, base_player: player, mate_proc: mate_proc)
 # tp object.dive
 
-brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaAlphaMateDiver) # 詰将棋専用探索
+brain = container.player_at(:black).brain(diver_class: AI::Diver::NegaAlphaMateDiver) # 詰将棋専用探索
 records = brain.iterative_deepening(depth_max_range: 5..5, mate_mode: true, mate_proc: mate_proc, log_scope: "▲１二銀打 △１二玉(11) ▲２一香成(23)")
 # records = records.find_all {|e| e[:black_side_score] >= 1 }
-tp Ai::Brain.human_format(records)
+tp AI::Brain.human_format(records)
 
 tp "他の詰み筋。ただし全部取得するには NegaAlphaMateDiver のループのところでbreakしてはいけない。あと勝手読みの詰みも含まれるので意図した手順と異なることもある。あくまでデバッグ用"
 tp mate_records

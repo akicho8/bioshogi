@@ -49,7 +49,7 @@ if true
 
   # 変換ルール調整
   loader.inflector.inflect("cli" => "CLI")
-  loader.inflector.inflect("ai" => "Ai")
+  loader.inflector.inflect("ai" => "AI")
 
   # 開発環境専用のものは遅延読み込みする
   loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")

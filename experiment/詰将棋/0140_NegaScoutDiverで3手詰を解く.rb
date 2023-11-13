@@ -17,9 +17,9 @@ EOT
 
 # tp container.player_at(:black).normal_all_hands(legal_only: true, mate_only: true)
 
-brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: AI::Diver::NegaScoutDiver)
 records = brain.iterative_deepening(depth_max_range: 3..3, mate_mode: true)
-tp Ai::Brain.human_format(records)
+tp AI::Brain.human_format(records)
 
 # >> |------+----------------+--------------------------------------+--------+------------+----------|
 # >> | 順位 | 候補手         | 読み筋                               | ▲形勢 | 評価局面数 | 処理時間 |

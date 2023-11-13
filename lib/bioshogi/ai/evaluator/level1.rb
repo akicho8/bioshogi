@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Ai
+  module AI
     module Evaluator
       # 評価すること
       # ・盤上の駒の価値

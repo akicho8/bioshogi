@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     module Diver
       class Base
         MATE = "(詰み)"

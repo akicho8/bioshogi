@@ -16,7 +16,7 @@ container.board.placement_from_shape <<~EOT
 +------+
 EOT
 
-brain = container.player_at(:black).brain(diver_class: Ai::Diver::NegaScoutDiver)
+brain = container.player_at(:black).brain(diver_class: AI::Diver::NegaScoutDiver)
 brain.diver_dive(depth_max: 0) # => [-100, []]
 brain.diver_dive(depth_max: 1) # => [105, [<▲１三飛(14)>]]
 brain.diver_dive(depth_max: 2) # => [-100, [<▲２四飛(14)>, <△２二飛(12)>]]

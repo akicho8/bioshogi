@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     module Diver
       # https://ja.wikipedia.org/wiki/Negascout
       class NegaScoutDiver < Base

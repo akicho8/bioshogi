@@ -1,5 +1,5 @@
 module Bioshogi
-  module Ai
+  module AI
     module Diver
       class NegaAlphaDiver < Base
         def dive(player: params[:current_player], depth: 0, alpha: -SCORE_MAX, beta: SCORE_MAX, hand_route: [])
