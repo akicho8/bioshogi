@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bioshogi (0.0.3)
+    bioshogi (0.0.4)
       actionview
       activesupport (>= 7.1.0)
       color
@@ -132,4 +132,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   2.4.21
+   2.4.22
