@@ -18,5 +18,9 @@ module Bioshogi
     it "versus" do
       Bioshogi::CLI.start(["versus", "-t", "0.5", "-n", "1"])
     end
+
+    it "piece" do
+      Bioshogi::CLI.start(["piece"])
+    end
   end
 end

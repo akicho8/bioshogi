@@ -43,8 +43,6 @@ if true
   loader.ignore("#{__dir__}/bioshogi/errors.rb")
   loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
   loader.ignore("#{__dir__}/bioshogi/assets")
-  loader.ignore("#{__dir__}/bioshogi/cli.rb")
-  loader.ignore("#{__dir__}/bioshogi/cli")
   loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
 
   # 変換ルール調整
@@ -57,6 +55,7 @@ if true
   loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/cli.rb")
 
   # CLI用
   # loader.do_not_eager_load("#{__dir__}/bioshogi/commands/*.rb")

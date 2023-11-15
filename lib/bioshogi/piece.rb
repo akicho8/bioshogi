@@ -11,6 +11,15 @@
 
 module Bioshogi
   class Piece
+    concern :CLI do
+      included do
+        desc "piece", "駒一覧"
+        def piece
+          tp Piece.collect(&:to_h)
+        end
+      end
+    end
+
     class << self
       # 持駒文字列から駒配列に変換
       # Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
@@ -273,4 +282,3 @@ module Bioshogi
     end
   end
 end
-
