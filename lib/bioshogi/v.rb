@@ -39,7 +39,7 @@ module Bioshogi
     end
 
     def hash
-      to_a.hash
+      @x.hash ^ @y.hash
     end
 
     def eql?(other)
