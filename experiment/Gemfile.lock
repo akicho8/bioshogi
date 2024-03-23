@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    bioshogi (0.0.7)
+    bioshogi (0.0.8)
       actionview
       activesupport (>= 7.1.0)
       color
@@ -18,13 +18,13 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (7.1.2)
-      activesupport (= 7.1.2)
+    actionview (7.1.3.2)
+      activesupport (= 7.1.3.2)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activesupport (7.1.2)
+    activesupport (7.1.3.2)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -38,10 +38,10 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     base64 (0.1.1)
     benchmark-ips (2.12.0)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     builder (3.2.4)
     color (1.8)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.2.3)
     connection_pool (2.4.1)
     crass (1.0.6)
     diff-lcs (1.5.0)
@@ -79,7 +79,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.1003)
     mini_portile2 (2.8.5)
-    minitest (5.20.0)
+    minitest (5.22.2)
     mutex_m (0.2.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
