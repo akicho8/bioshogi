@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bioshogi (0.0.11)
+    bioshogi (0.0.12)
       actionview
       activesupport (>= 7.1.0)
       color
