@@ -335,7 +335,7 @@ tp rows
 # >> | Bioshogi::Explain::NoteInfo      | 相居飛車                 |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 対振り                   |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 相振り                   |                  |
-# >> | Bioshogi::Explain::NoteInfo      | 対抗型                   |                  |
+# >> | Bioshogi::Explain::NoteInfo      | 対抗形                   |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 大駒コンプリート         |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 駒柱                     |                  |
 # >> |----------------------------------+--------------------------+------------------|

@@ -25,7 +25,7 @@ module Bioshogi
             ibisha_judgement   # 振り飛車でなければ居飛車
             aiibisha_judgement # 両方居飛車なら相居飛車
             aihuri_judgement   # 両方振り飛車なら相振り
-            taihuri_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+            taihuri_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗形」
             haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
             igyoku_judgement   # 居玉判定
             aiigyoku_judgement # 相居玉判定
@@ -101,12 +101,12 @@ module Bioshogi
       end
 
       def taihuri_judgement
-        # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+        # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗形」
         if player = @container.players.find { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
           others = @container.players - [player]
           if others.none? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
             others.each { |e| e.skill_set.list_push(Explain::NoteInfo["対振り"]) }
-            @container.players.each { |e| e.skill_set.list_push(Explain::NoteInfo["対抗型"]) }
+            @container.players.each { |e| e.skill_set.list_push(Explain::NoteInfo["対抗形"]) }
           end
         end
       end
