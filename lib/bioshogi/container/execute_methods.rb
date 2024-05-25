@@ -10,7 +10,7 @@ module Bioshogi
         end
 
         attr_writer :kill_count      # 駒を取った回数
-        attr_accessor :critical_turn # 最初の駒が取られる直前の手数           (avg: 21.6328)
+        attr_accessor :critical_turn # 最初の駒が取られる直前の手数           (avg: 22.6328)
         attr_accessor :outbreak_turn # 「歩と角」を除く駒が取られる直前の手数 (avg: 41.8402)
 
         def kill_count

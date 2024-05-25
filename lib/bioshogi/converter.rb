@@ -27,6 +27,8 @@ module Bioshogi
       @files.each { |e| process_one(e) }
     end
 
+    private
+
     def process_one(in_file)
       in_file = Pathname(in_file).expand_path
       info = Parser.file_parse(in_file)
@@ -35,7 +37,7 @@ module Bioshogi
       when @options[:overwrite]
         in_file.write(str)
         puts "[overwrite] #{in_file} => #{out_file}"
-      when @options[:output_dir].present?
+      when output_dir
         out_file = output_dir + in_file.basename.sub_ext(extname)
         FileUtils.mkdir_p(out_file.dirname)
         out_file.write(str)
@@ -46,7 +48,9 @@ module Bioshogi
     end
 
     def output_dir
-      Pathname(@options[:output_dir]).expand_path
+      if v = @options[:output_dir]
+        Pathname(v).expand_path
+      end
     end
 
     def extname
