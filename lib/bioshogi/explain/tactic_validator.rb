@@ -20,17 +20,15 @@ module Bioshogi
           str = file.read
           info = Parser.parse(str)
           info.formatter.container_run_once
-          info.formatter.container.players.each { |player|
+          info.formatter.container.players.each do |player|
             keys = player.skill_set.list_of(e).normalize.collect(&:key)
             row[player.location.key] = keys
-          }
-          info.formatter.container.players.each { |player|
+          end
+          info.formatter.container.players.each do |player|
             if row[player.location.key].include?(e.key)
               row["合致"] += player.location.mark
             end
-          }
-        else
-          row["合致"] = "skip"
+          end
         end
         print row["合致"].present? ? "." : "E"
         row

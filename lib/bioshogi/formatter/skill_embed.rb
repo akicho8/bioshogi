@@ -29,10 +29,12 @@ module Bioshogi
             haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
             igyoku_judgement   # 居玉判定
             aiigyoku_judgement # 相居玉判定
+            kyusen_judgement   # 急戦・持久戦
+            tantesuu_judgement # 短手数・長手数
           end
         end
 
-        header_write # ヘッダーに埋める
+        header_write
       end
 
       private
@@ -153,6 +155,35 @@ module Bioshogi
           end
         end
         # end
+      end
+
+      def kyusen_judgement
+        if turn = @container.outbreak_turn
+          if turn < Stat::OUTBREAK_TURN_AVG
+            key = "急戦"
+          else
+            key = "持久戦"
+          end
+          @container.players.each do |e|
+            e.skill_set.list_push(Explain::NoteInfo[key])
+          end
+        end
+      end
+
+      def tantesuu_judgement
+        if @container.critical_turn # 1回でも駒の交換があった
+          max = @container.turn_info.display_turn
+          if max >= MIN_TURN
+            if max < Stat::TURN_MAX_AVG
+              key = "短手数"
+            else
+              key = "長手数"
+            end
+            @container.players.each do |e|
+              e.skill_set.list_push(Explain::NoteInfo[key])
+            end
+          end
+        end
       end
 
       def header_write

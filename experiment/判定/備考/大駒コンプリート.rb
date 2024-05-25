@@ -13,14 +13,23 @@ info = Parser.parse(<<~EOT)
 まで6手で後手の勝ち
 EOT
 puts info.to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/skill_set.rb:38:in `list_of': undefined method `tactic_info' for nil:NilClass (NoMethodError)
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/skill_set.rb:42:in `list_push'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:282:in `block in container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:279:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:279:in `container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
-# ~> 	from -:15:in `<main>'
+# >> 4
+# >> 手合割：平手
+# >> 先手の戦型：手損角交換型
+# >> 後手の戦型：手得角交換型
+# >> 先手の囲い：居玉
+# >> 後手の囲い：居玉
+# >> 先手の備考：大駒コンプリート, 居飛車, 対振り, 対抗型, 相居玉
+# >> 後手の備考：振り飛車, 大駒全消失, 対抗型, 背水の陣, 相居玉
+# >> 手数----指手---------消費時間--
+# >>    1 ７六歩(77)
+# >>    2 ３四歩(33)
+# >>    3 ２二角成(88)
+# >> *▲戦型：手損角交換型
+# >>    4 ３二飛(82)
+# >> *△備考：振り飛車
+# >>    5 ３二馬(22)
+# >> *▲備考：大駒コンプリート
+# >>    6 ５二玉(51)
+# >>    7 投了
+# >> まで6手で後手の勝ち
