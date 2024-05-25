@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    bioshogi (0.0.10)
+    bioshogi (0.0.13)
       actionview
       activesupport (>= 7.1.0)
       color
@@ -78,7 +78,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2024.0507)
     mini_portile2 (2.8.6)
-    minitest (5.22.3)
+    minitest (5.23.0)
     mutex_m (0.2.0)
     net-http (0.4.1)
       uri
