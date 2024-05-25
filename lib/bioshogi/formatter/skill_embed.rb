@@ -3,7 +3,7 @@
 module Bioshogi
   module Formatter
     class SkillEmbed
-      MIN_TURN = 14
+      MIN_TURN = 14             # これ以上の手数だと対局が成立している見なす
 
       attr_accessor :xparser
       attr_accessor :container
@@ -22,14 +22,14 @@ module Bioshogi
 
         if @xparser.preset_info
           if @xparser.preset_info.special_piece
-            ibisha_judgement # 振り飛車でなければ居飛車
-            aiibisha_judgement              # 両方居飛車なら相居飛車
-            aihuri_judgement                # 両方振り飛車なら相振り
-            taihuri_judgement               # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
-            haisui_judgement                # 大駒がない状態で勝ったら「背水の陣」
+            ibisha_judgement   # 振り飛車でなければ居飛車
+            aiibisha_judgement # 両方居飛車なら相居飛車
+            aihuri_judgement   # 両方振り飛車なら相振り
+            taihuri_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗型」
+            haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
+            igyoku_judgement   # 居玉判定
+            aiigyoku_judgement # 相居玉判定
           end
-          igyoku_judgement                  # 居玉判定
-          aiigyoku_judgement                # 相居玉判定
         end
 
         header_write # ヘッダーに埋める
@@ -120,6 +120,7 @@ module Bioshogi
         end
       end
 
+      # 居玉判定
       def igyoku_judgement
         @container.players.each do |e|
           enabled = false
