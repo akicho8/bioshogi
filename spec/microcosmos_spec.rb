@@ -6,7 +6,7 @@ module Bioshogi
       bod = nil
       GC.start
       GC.disable
-      ms = Benchmark.ms { bod = Parser.file_parse("#{__dir__}/../experiment/microcosmos.kif").to_bod }
+      ms = Benchmark.ms { bod = Parser.file_parse("#{__dir__}/../workbench/microcosmos.kif").to_bod }
       GC.enable
       # assert { ms < 1130 }
       assert { ms < 2000 }
