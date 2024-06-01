@@ -329,7 +329,7 @@ tp rows
 # >> | Bioshogi::Explain::NoteInfo      | 居飛車                   |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 振り飛車                 |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 相入玉                   |                  |
-# >> | Bioshogi::Explain::NoteInfo      | 大駒全消失               |                  |
+# >> | Bioshogi::Explain::NoteInfo      | 大駒全ブッチ               |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 相居玉                   |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 背水の陣                 |                  |
 # >> | Bioshogi::Explain::NoteInfo      | 相居飛車                 |                  |
