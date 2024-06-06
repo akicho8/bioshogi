@@ -14,6 +14,7 @@ module Bioshogi
       end
 
       def call
+        miyakodume_check
         rikisen_judgement
 
         # 両方が入玉していれば「相入玉」タグを追加する
@@ -61,6 +62,29 @@ module Bioshogi
             e.skill_set.rikisen_check_process
           end
           # end
+        end
+      end
+
+      def miyakodume_check
+        if last_action_params = @xparser.pi.last_action_params
+          if last_action_key = last_action_params[:last_action_key]
+            if last_action_info = LastActionInfo[last_action_key]
+              if last_action_info.key == :TSUMI
+                if soldier = @container.board["55"]
+                  if soldier.piece.key == :king
+                    tag = Explain::NoteInfo["都詰め"]
+                    if @container.lose_player.location == soldier.location
+                      @container.win_player.skill_set.list_push(tag)
+                      # 最後の手にも入れておく
+                      if hand_log = @container.hand_logs.last
+                        hand_log.skill_set.list_push(tag)
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
         end
       end
 

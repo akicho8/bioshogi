@@ -32,6 +32,8 @@ module Bioshogi
         { key: "短手数",   },
         { key: "長手数",   },
 
+        { key: "都詰め",   },
+
         {
           key: "大駒コンプリート", parent: nil, other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
           piece_box_added_proc: -> note_info, captured_soldier {
