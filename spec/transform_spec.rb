@@ -34,7 +34,7 @@ module Bioshogi
         s = error_as_text.(error)
       end
       unless s.kind_of?(String)
-        s = s.pretty_inspect # or to_yaml
+        s = PP.pp(s, "", 80)  # or s.to_yaml
       end
       s
     }
