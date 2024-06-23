@@ -23,8 +23,9 @@ module Bioshogi
 
         if @xparser.preset_info
           if @xparser.preset_info.special_piece
-            ibisha_judgement   # 振り飛車でなければ居飛車
-            aiibisha_judgement # 両方居飛車なら相居飛車
+            ibisha_judgement    # 振り飛車でなければ居飛車(最初に判定する)
+            aiibisha_judgement  # 両方居飛車なら相居飛車
+            taiibisya_judgement # 相手が居飛車なら対居飛車
             aihuri_judgement   # 両方振り飛車なら相振り
             taihuri_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り」。両方に「対抗形」
             haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
@@ -111,6 +112,15 @@ module Bioshogi
         if @container.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["居飛車"]) }
           @container.players.each do |player|
             player.skill_set.list_push(Explain::NoteInfo["相居飛車"])
+          end
+        end
+      end
+
+      def taiibisya_judgement
+        # 相手が居飛車なら対居飛車
+        @container.players.each do |player|
+          if player.opponent_player.skill_set.has_skill?(Explain::NoteInfo["居飛車"])
+            player.skill_set.list_push(Explain::NoteInfo["対居飛車"])
           end
         end
       end

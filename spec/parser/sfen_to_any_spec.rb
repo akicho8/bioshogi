@@ -13,8 +13,8 @@ module Bioshogi
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
         expect(info.to_kif).to eq(<<~EOT)
 先手の戦型：嬉野流
-先手の備考：居飛車, 相居飛車
-後手の備考：居飛車, 相居飛車
+先手の備考：居飛車, 相居飛車, 対居飛車
+後手の備考：居飛車, 相居飛車, 対居飛車
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
@@ -30,8 +30,8 @@ EOT
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
         expect(info.to_kif).to eq(<<~EOT)
 先手の戦型：嬉野流
-先手の備考：居飛車, 相居飛車
-後手の備考：居飛車, 相居飛車
+先手の備考：居飛車, 相居飛車, 対居飛車
+後手の備考：居飛車, 相居飛車, 対居飛車
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
@@ -49,8 +49,8 @@ EOT
 先手の持駒：銀
 後手の持駒：銀二
 先手の戦型：嬉野流
-先手の備考：居飛車, 相居飛車
-後手の備考：居飛車, 相居飛車
+先手の備考：居飛車, 相居飛車, 対居飛車
+後手の備考：居飛車, 相居飛車, 対居飛車
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
@@ -64,8 +64,8 @@ EOT
       it "2手目から始まるSFENをKIFに変換したとき2手目から始まる→1手目から始まらないとだめ" do
         info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 2 moves 5c5d 3g3f")
         expect(info.to_kif).to eq(<<~EOT)
-先手の備考：居飛車, 相居飛車
-後手の備考：居飛車, 相居飛車
+先手の備考：居飛車, 相居飛車, 対居飛車
+後手の備考：居飛車, 相居飛車, 対居飛車
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
