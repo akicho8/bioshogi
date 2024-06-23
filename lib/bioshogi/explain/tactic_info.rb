@@ -23,6 +23,10 @@ module Bioshogi
           all_elements_hash[key.to_s.to_sym]
         end
 
+        def flat_fetch(key)
+          all_elements_hash.fetch(key.to_s.to_sym)
+        end
+
         # TacticInfo.fuzzy_flat_lookup("アヒル").key # => :アヒル戦法
         def fuzzy_flat_lookup(key)
           v = nil
