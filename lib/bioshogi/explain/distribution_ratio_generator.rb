@@ -19,6 +19,10 @@ module Bioshogi
         response = Faraday.get(SOURCE_URL)
         hash = JSON.parse(response.body, symbolize_names: true)
         validate(hash)
+        hash[:items].each do |e|
+          e[:name] = e[:name].to_sym
+          e[:rarity_key] = e[:rarity_key].to_sym
+        end
         hash[:items].inject({}) {|a, e| a.merge(e[:name].to_sym => e) }
       end
 

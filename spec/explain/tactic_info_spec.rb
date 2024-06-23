@@ -28,6 +28,12 @@ module Bioshogi
         end
       end
 
+      describe "flat_fetch" do
+        it "works" do
+          assert { TacticInfo.flat_fetch("金底の歩") }
+        end
+      end
+
       it "fuzzy_flat_lookup" do
         assert { TacticInfo.fuzzy_flat_lookup("嬉野") }
         assert { TacticInfo.fuzzy_flat_lookup("角頭歩") }
