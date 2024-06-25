@@ -9,7 +9,7 @@ module Bioshogi
             file = e.sample_kif_or_ki2_file
             info = Parser.parse(file)
             info.formatter.container_run_once
-            if ["居玉", "力戦", "相居玉", "背水の陣", "相居飛車", "対振り", "相振り", "対抗形"].include?(e.key.to_s)
+            if ["居玉", "力戦", "相居玉", "背水の陣", "相居飛車", "対振り飛車", "相振り飛車", "対抗形"].include?(e.key.to_s)
               next
             end
             assert { info.formatter.container.normalized_names_with_alias.include?(e.key.to_s) }
