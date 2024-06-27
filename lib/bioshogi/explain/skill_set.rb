@@ -78,6 +78,11 @@ module Bioshogi
         }.compact.join.presence
       end
 
+      # 戦法と囲いのスタイル(複数)のなかからもっとも変態に近いものを得る
+      def main_style_info
+        (attack_infos + defense_infos).collect(&:style_info).max
+      end
+
       class List < Array
         # 重複しているように感じる囲いなどを整理する
         def normalize

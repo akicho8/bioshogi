@@ -165,13 +165,16 @@ module Bioshogi
         Runner.new(self, container).call
         if @parser_options[:skill_monitor_enable]
           SkillEmbed.new(self, container).call
+          StyleEmbed.new(self, container).call
         end
       end
 
+      # FIXME: これは skill_embed のなかだけにあればよくね？
       def skill_set_hash
         @skill_set_hash ||= {}
       end
 
+      # FIXME: メソッドが重複してね？
       def raw_header_part_hash
         pi.header.object.collect { |key, value|
           if value

@@ -67,6 +67,7 @@ module Bioshogi
 
       include ShapeInfoRelation
       include TechAccessor
+      include StyleAccessor
     end
   end
 end

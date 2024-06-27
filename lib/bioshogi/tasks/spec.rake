@@ -1,15 +1,15 @@
 require "rspec/core/rake_task"
 
 desc "すべてのテスト"
-RSpec::Core::RakeTask.new(:test) do |t|
+RSpec::Core::RakeTask.new(:spec) do |t|
 end
-desc "alias to test"
-task :default => :test
+desc "alias to spec"
+task :default => :spec
 
-desc "alias to test:core"
-task :c => "test:core"
+desc "alias to spec:core"
+task :c => "spec:core"
 
-namespace :test do
+namespace :spec do
   desc "重要なところだけのテスト"
   RSpec::Core::RakeTask.new(:core) do |t|
     # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"

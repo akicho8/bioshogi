@@ -38,25 +38,46 @@ module Bioshogi
       it "エイリアスを含めたすべての名前を取得" do
         assert { @skill_set.normalized_names_with_alias == ["ダイヤモンド美濃", "中田功XP", "コーヤン流", "嬉野流", "入玉"] }
       end
+
+      it "代表とする棋風" do
+        assert { @skill_set.main_style_info.key == :"準王道" }
+      end
     end
   end
-  # >> ......
-  # >>
-  # >> Top 6 slowest examples (0.01322 seconds, 69.1% of total time):
-  # >>   Bioshogi::SkillSet 全部入り
-  # >>     0.01201 seconds -:15
-  # >>   Bioshogi::SkillSet 「ダイヤモンド美濃」に含まれる「片美濃囲い」と、親戚の「銀美濃」を除外する
-  # >>     0.00031 seconds -:19
-  # >>   Bioshogi::SkillSet エイリアスを含めたすべての名前を取得
-  # >>     0.00028 seconds -:35
-  # >>   Bioshogi::SkillSet 別名を足したい場合
-  # >>     0.00022 seconds -:23
-  # >>   Bioshogi::SkillSet defense_infos内でエイリアスを含めたすべての名前を取得
-  # >>     0.00022 seconds -:31
-  # >>   Bioshogi::SkillSet all
-  # >>     0.00018 seconds -:27
-  # >>
-  # >> Finished in 0.01911 seconds (files took 1.67 seconds to load)
-  # >> 6 examples, 0 failures
-  # >>
-end
+                                      end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
+# >> ..F....
+# >> 
+# >> Failures:
+# >> 
+# >>   1) Bioshogi::Explain::SkillSet 代表とする棋風
+# >>      Failure/Error: Unable to find - to read failed line
+# >> 
+# >>      NoMethodError:
+# >>        undefined method `main_style_info' for #<Bioshogi::Explain::SkillSet:0x0000000108c41040 @defense_infos=[<片美濃囲い>, <銀美濃>, <ダイヤモンド美濃>], @attack_infos=[<中田功XP>, <嬉野流>], @note_infos=[<入玉>]>
+# >>      # -:43:in `block (3 levels) in <module:Explain>'
+# >>      # -:43:in `block (2 levels) in <module:Explain>'
+# >> 
+# >> Top 7 slowest examples (0.01482 seconds, 58.6% of total time):
+# >>   Bioshogi::Explain::SkillSet all
+# >>     0.00885 seconds -:34
+# >>   Bioshogi::Explain::SkillSet エイリアスを含めたすべての名前を取得
+# >>     0.00116 seconds -:38
+# >>   Bioshogi::Explain::SkillSet Bioshogi::Explain::SkillSet::List defense_infos内でエイリアスを含めたすべての名前を取得
+# >>     0.00099 seconds -:29
+# >>   Bioshogi::Explain::SkillSet Bioshogi::Explain::SkillSet::List 「ダイヤモンド美濃」に含まれる「片美濃囲い」と、親戚の「銀美濃」を除外する
+# >>     0.00098 seconds -:21
+# >>   Bioshogi::Explain::SkillSet 代表とする棋風
+# >>     0.00095 seconds -:42
+# >>   Bioshogi::Explain::SkillSet Bioshogi::Explain::SkillSet::List 別名を足したい場合
+# >>     0.00095 seconds -:25
+# >>   Bioshogi::Explain::SkillSet Bioshogi::Explain::SkillSet::List 全部入り
+# >>     0.00094 seconds -:17
+# >> 
+# >> Finished in 0.02527 seconds (files took 1.87 seconds to load)
+# >> 7 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:42 # Bioshogi::Explain::SkillSet 代表とする棋風
+# >> 

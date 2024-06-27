@@ -220,7 +220,6 @@ module Bioshogi
       end
 
       def header_write
-        # ヘッダーに埋める
         Explain::TacticInfo.each do |e|
           @container.players.each do |player|
             list = player.skill_set.public_send(e.list_key).normalize
