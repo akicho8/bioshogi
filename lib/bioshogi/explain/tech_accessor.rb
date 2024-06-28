@@ -123,10 +123,6 @@ module Bioshogi
         TacticHitTurnTable[key.to_s]
       end
 
-      def distribution_ratio
-        DistributionRatio[key]
-      end
-
       def sample_kif_file
         Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
       end

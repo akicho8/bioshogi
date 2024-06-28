@@ -38,8 +38,12 @@ module Bioshogi
         assert { AttackInfo["UFO銀"].hit_turn == 23 }
       end
 
-      it "distribution_ratio" do
-        assert { AttackInfo["UFO銀"].distribution_ratio }
+      it "frequency" do
+        assert { AttackInfo["UFO銀"].frequency }
+      end
+
+      it "style_info" do
+        assert { AttackInfo["UFO銀"].style_info }
       end
     end
   end

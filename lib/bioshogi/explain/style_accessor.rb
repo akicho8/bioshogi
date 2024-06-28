@@ -13,7 +13,7 @@ module Bioshogi
           @styles_hash ||= yield_self do
             list = values.reject { |e| style_reject_keys.include?(e.key) }
             # list = list.take(7)
-            list = list.sort_by { |e| -(Frequency[e.key] || 0) }
+            list = list.sort_by { |e| -e.frequency }
             backets = Array.new(list.size, StyleInfo.count.pred) # 正確に四分割できないため「変態」で埋める
             step = list.size / StyleInfo.count
             StyleInfo.count.pred.times do |i|
@@ -28,11 +28,15 @@ module Bioshogi
       end
 
       # 王道 or 変態
-      # 無いときの扱いは難しい
+      # 新しい戦法を追加したばかりのときはテーブルにない場合がある？ → 必ずある
+      # なぜなら最初に新しい戦法を追加するのは bioshogi 側なため。
+      # したがってない場合を心配する必要はない。
       def style_info
-        self.class.styles_hash[key] || StyleInfo.values.last # 無いときは変態としている
+        self.class.styles_hash.fetch(key)
       end
 
+      # 使用数
+      # これは Frequency にない場合もあるため、ない場合に 0 を返すのは正しい。
       def frequency
         Frequency[key] || 0
       end
