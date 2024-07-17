@@ -5,14 +5,15 @@ module Bioshogi
     class PieceScale
       include ApplicationMemoryRecord
       memory_record [
-        { key: :king,   scale: 1.00, },
-        { key: :rook,   scale: 1.00, },
-        { key: :bishop, scale: 1.00, },
-        { key: :gold,   scale: 0.97, },
-        { key: :silver, scale: 0.94, },
-        { key: :knight, scale: 0.91, },
-        { key: :lance,  scale: 0.88, },
-        { key: :pawn,   scale: 0.85, },
+        # http://kijishi.html.xdomain.jp/komanosize.htm
+        { key: :king,   scale: 1.00, }, # 王が一番大きい
+        { key: :rook,   scale: 0.99, }, # 飛車と角の大きさは同じでよい
+        { key: :bishop, scale: 0.99, },
+        { key: :gold,   scale: 0.98, }, # 金・銀の大きさは同じ
+        { key: :silver, scale: 0.98, },
+        { key: :knight, scale: 0.97, }, # 桂馬の香車の差は大きい
+        { key: :lance,  scale: 0.95, },
+        { key: :pawn,   scale: 0.94, },
       ]
     end
   end
