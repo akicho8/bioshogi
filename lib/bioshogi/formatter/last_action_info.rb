@@ -31,20 +31,20 @@ module Bioshogi
     class LastActionInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  },
-        { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  },
-        { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, },
-        { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  },
-        { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  },
-        { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  },
-        { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  },
-        { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  },
-        { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  },
-        { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  },
-        { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  },
-        { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  },
-        { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  },
-        { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  },
+        { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  win_or_lose_p: true, },
+        { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  win_or_lose_p: true, },
+        { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, win_or_lose_p: nil,  },
+        { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  win_or_lose_p: true, },
+        { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
+        { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
+        { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
+        { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_or_lose_p: nil,  },
+        { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる
+        { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  },
+        { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_or_lose_p: nil,  },
+        { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_or_lose_p: true, },
+        { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  },
+        { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  win_or_lose_p: nil,  },
       ]
 
       alias csa_key key

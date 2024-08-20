@@ -40,6 +40,17 @@ module Bioshogi
       def clock_nothing?
         !clock_exist?
       end
+
+      # 勝ち負けがついた一般的な終わり方をしたか？
+      def win_or_lose_p
+        if last_action_params
+          if last_action_key = last_action_params[:last_action_key]
+            if last_action_info = Formatter::LastActionInfo[last_action_key]
+              last_action_info.win_or_lose_p
+            end
+          end
+        end
+      end
     end
   end
 end
