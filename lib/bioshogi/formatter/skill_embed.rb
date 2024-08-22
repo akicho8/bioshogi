@@ -99,10 +99,12 @@ module Bioshogi
 
       # 振り飛車でなければ居飛車
       def ibisha_judgement
-        @container.players.each do |e|
-          skill_set = e.skill_set
-          if !skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Explain::NoteInfo["居飛車"])
-            e.skill_set.list_push(Explain::NoteInfo["居飛車"])
+        if @container.turn_info.display_turn >= MIN_TURN # 0手で切断した場合も「居飛車」とならないようにするため
+          @container.players.each do |e|
+            skill_set = e.skill_set
+            if !skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Explain::NoteInfo["居飛車"])
+              e.skill_set.list_push(Explain::NoteInfo["居飛車"])
+            end
           end
         end
       end

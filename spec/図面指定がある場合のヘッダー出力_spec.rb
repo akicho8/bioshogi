@@ -11,8 +11,6 @@ module Bioshogi
       container.turn_info.handicap = false
       info = Parser.parse("position #{container.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
-先手の備考：居飛車, 相居飛車, 対居飛車
-後手の備考：居飛車, 相居飛車, 対居飛車
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -42,8 +40,6 @@ EOT
       container.turn_info.handicap = true
       info = Parser.parse("position #{container.to_short_sfen}")
       expect(info.to_ki2).to eq(<<~EOT)
-下手の備考：居飛車, 相居飛車, 対居飛車
-上手の備考：居飛車, 相居飛車, 対居飛車
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+

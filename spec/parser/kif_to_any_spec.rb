@@ -6,8 +6,6 @@ module Bioshogi
       info = Parser.parse("手合割：トンボ")
       expect(info.to_kif).to eq(<<~EOT)
 手合割：トンボ
-下手の備考：居飛車, 相居飛車, 対居飛車
-上手の備考：居飛車, 相居飛車, 対居飛車
 上手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -36,8 +34,6 @@ EOT
         2 投了        (00:00/00:00:00)
       EOT
       expect(info.to_kif(time_embed_force: true)).to eq(<<~EOT)
-先手の備考：居飛車, 相居飛車, 対居飛車
-後手の備考：居飛車, 相居飛車, 対居飛車
 手合割：平手
 手数----指手---------消費時間--
    1 ７六歩(77)   (00:00/00:00:00)
@@ -89,7 +85,6 @@ EOT
         end
 
         it "to_kif" do
-         puts @info.to_kif
           expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 先手の戦型：嬉野流
@@ -138,7 +133,6 @@ EOT
         end
 
         it "to_kif" do
-          # puts @info.to_kif
           expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 先手の戦型：嬉野流
