@@ -79,9 +79,9 @@ module Bioshogi
 
     it "結果を表すキーワードをKIFに変換したときどうなるか" do
       assert { Parser::CsaParser.parse("%TIME_UP").formatter.judgment_message == "まで0手で時間切れにより後手の勝ち" }
-      assert { Parser::CsaParser.parse("%CHUDAN").formatter.judgment_message  == "まで0手で切断により後手の勝ち" }
+      assert { Parser::CsaParser.parse("%CHUDAN").formatter.judgment_message  == nil }
       assert { Parser::CsaParser.parse("%TORYO").formatter.judgment_message   == "まで0手で後手の勝ち" }
-      assert { Parser::CsaParser.parse("%ERROR").formatter.judgment_message   == "まで0手でエラーにより後手の勝ち" }
+      assert { Parser::CsaParser.parse("%ERROR").formatter.judgment_message   == nil }
       assert { Parser::CsaParser.parse("%TSUMI").formatter.judgment_message   == "まで0手で後手の勝ち" }
     end
 

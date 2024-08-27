@@ -31,20 +31,22 @@ module Bioshogi
     class LastActionInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  win_or_lose_p: true, },
-        { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  win_or_lose_p: true, },
-        { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, win_or_lose_p: nil,  },
-        { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  win_or_lose_p: true, },
-        { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
-        { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
-        { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_or_lose_p: nil,  },
-        { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_or_lose_p: nil,  },
-        { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる
-        { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  },
-        { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_or_lose_p: nil,  },
-        { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_or_lose_p: true, },
-        { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  win_or_lose_p: nil,  },
-        { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  win_or_lose_p: nil,  },
+        # 手番による勝者判定が可能なら win_player_collect_p を true にする
+        # CHUDAN などはどちらが中断(切断)したのかもしわからない
+        { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  win_player_collect_p: true, },
+        { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  win_player_collect_p: nil,  }, # 切断の場合どちらが切断したのかわからないため win_player_collect_p: true にしてはいけない
+        { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, win_player_collect_p: nil,  },
+        { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  win_player_collect_p: true, },
+        { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
+        { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
+        { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
+        { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_player_collect_p: nil,  },
+        { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる
+        { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  },
+        { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_player_collect_p: nil,  },
+        { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_player_collect_p: true, },
+        { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  },
+        { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  win_player_collect_p: nil,  },
       ]
 
       alias csa_key key
@@ -62,15 +64,17 @@ module Bioshogi
       end
 
       def judgment_message(container)
-        s = []
-        s << "まで#{container.turn_info.turn_offset}手で"
-        s << reason
-        unless draw
-          s << container.opponent_player.call_name
-          s << "の"
-          s << "勝ち"
+        if win_player_collect_p
+          s = []
+          s << "まで#{container.turn_info.turn_offset}手で"
+          s << reason
+          unless draw
+            s << container.opponent_player.call_name # これが信じられるのは win_player_collect_p のときだけ
+            s << "の"
+            s << "勝ち"
+          end
+          s.join
         end
-        s.join
       end
     end
   end

@@ -148,17 +148,18 @@ module Bioshogi
 
       # 大駒がない状態で勝ったら「背水の陣」
       def haisui_judgement
-        # 入玉の場合「指した方が負け」になるケースがあり win_player が信用できなくなるため、
-        # 勝ち負けがついた終わり方をしたとき (win_or_lose_p) のときだけとする
-        if @xparser.pi.win_or_lose_p
-          @container.players.each do |player|
-            if player == @container.win_player # 入玉の場合「指した方が負け」になるケースがあるため win_player が信用できない
-              if player.stronger_piece_have_count.zero?
-                player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
-              end
-            end
+        if win_side_location
+          player = @container.player_at(win_side_location)
+          if player.stronger_piece_have_count.zero?
+            player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
           end
         end
+      end
+
+      # 勝った側を返す
+      # nil の場合もある
+      def win_side_location
+        @win_side_location ||= @xparser.win_side_location(@container)
       end
 
       # 居玉判定

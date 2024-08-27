@@ -23,6 +23,8 @@ module Bioshogi
       { key: "$START_TIME:", kif_side_key: "開始日時", },
       { key: "$END_TIME:",   kif_side_key: "終了日時", },
       { key: "$OPENING:",    kif_side_key: "戦型",     },
+      { key: "$X_FINAL:",    kif_side_key: "結末",     },
+      { key: "$X_WINNER:",   kif_side_key: "勝者",     },
       {
         key: "$TIME_LIMIT:",
         kif_side_key: "持ち時間",

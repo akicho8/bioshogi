@@ -237,6 +237,23 @@ module Bioshogi
           [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
         end
       end
+
+      # 勝った側を返す
+      # nil の場合もある
+      def win_side_location(container)
+        # 勝者が明示されている場合
+        # SHOGI-EXTEND 側からは常に勝者を入れている
+        # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
+        if v = @pi.header["勝者"]
+          Location.fetch(v)
+        else
+          # 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる
+          # これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない
+          if @pi.win_player_collect_p
+            container.win_player.location
+          end
+        end
+      end
     end
   end
 end
