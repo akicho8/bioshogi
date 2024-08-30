@@ -30,7 +30,10 @@ module Bioshogi
             end
           end
         end
-        print row["合致"].present? ? "." : "E"
+        if row["合致"].blank?
+          row["合致"] = "ERROR"
+        end
+        print row["合致"] == "ERROR" ? "E" : "."
         row
       end
     end
