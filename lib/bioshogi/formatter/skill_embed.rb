@@ -29,6 +29,7 @@ module Bioshogi
             aihuri_judgement   # 両方振り飛車なら相振り
             taikoukei_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り飛車」。両方に「対抗形」
             haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
+            SugatayakiValidator.new(self).call # 穴熊の姿焼
             igyoku_judgement   # 居玉判定
             aiigyoku_judgement # 相居玉判定
             kyusen_judgement   # 急戦・持久戦
@@ -37,6 +38,12 @@ module Bioshogi
         end
 
         header_write
+      end
+
+      # 勝った側を返す
+      # nil の場合もある
+      def win_side_location
+        @win_side_location ||= @xparser.win_side_location(@container)
       end
 
       private
@@ -154,12 +161,6 @@ module Bioshogi
             player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
           end
         end
-      end
-
-      # 勝った側を返す
-      # nil の場合もある
-      def win_side_location
-        @win_side_location ||= @xparser.win_side_location(@container)
       end
 
       # 居玉判定

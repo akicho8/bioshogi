@@ -15,6 +15,20 @@ module Bioshogi
         { key: :pawn,   basic_weight:   100, promoted_weight: 1200, hold_weight:   105, },
       ]
 
+      class << self
+        # このスコア以上であれば必勝(姿焼き判定)とする
+        def sure_victory_score
+          @sure_victory_score ||= [
+            self[:king].basic_weight,      # 玉
+            self[:rook].promoted_weight,   # 龍
+            self[:bishop].promoted_weight, # 馬
+            self[:rook].hold_weight,       # 飛 (持駒)
+            self[:bishop].hold_weight,     # 角 (持駒)
+            self[:gold].basic_weight * 4,  # 金相当 * 4 (と金などを含む)
+          ].sum
+        end
+      end
+
       def piece
         Piece.fetch(key)
       end

@@ -67,7 +67,8 @@ module Bioshogi
           },
         },
 
-        { key: "都詰め",   },
+        { key: "穴熊の姿焼き", }, # 勝った方だけに入れる
+        { key: "都詰め",       },
       ]
 
       include ShapeInfoRelation

@@ -24,25 +24,30 @@ module Bioshogi
         @used_piece_counts ||= Hash.new(0)
       end
 
+      ################################################################################
+
       # 大駒コンプリートしている？
       def stronger_piece_completed?
         stronger_piece_have_count >= 4
       end
 
+      # 大駒の数
       def stronger_piece_have_count
-        c = 0
+        count = 0
 
         # 持駒の大駒
-        c += piece_box[:rook] || 0
-        c += piece_box[:bishop] || 0
+        count += piece_box[:rook] || 0
+        count += piece_box[:bishop] || 0
 
         # 盤上の大駒
         key = location.key
-        c += board.piece_count_of(key, :rook)
-        c += board.piece_count_of(key, :bishop)
+        count += board.piece_count_of(key, :rook)
+        count += board.piece_count_of(key, :bishop)
 
-        c
+        count
       end
+
+      ################################################################################
 
       # 入玉宣言時の得点合計(仮)
       def ek_score_without_cond
@@ -51,10 +56,25 @@ module Bioshogi
 
       # 入玉宣言時の得点合計(最終)
       def ek_score_with_cond
+        # 「入玉」かつ「玉を除く駒が10毎以上相手陣に入っている」なら
         if king_soldier_entered? && many_soliders_are_in_the_opponent_area?
           ek_score_without_cond
         end
       end
+
+      ################################################################################
+
+      # 総合得点(先後とも正)
+      def current_score
+        soldiers.sum(&:abs_weight) + piece_box.score
+      end
+
+      # 圧倒的なスコアがある？
+      def overwhelming_score?
+        current_score >= Piece::PieceScore.sure_victory_score
+      end
+
+      ################################################################################
     end
   end
 end

@@ -1,3 +1,9 @@
+# 直接 require "~/src/bioshogi/lib/bioshogi" されたときに ~/src/bioshogi/lib をパスに加える
+# そうしないとグローバルで入れた gem の方を読んでしまう
+unless $LOAD_PATH.include?(__dir__)
+  $LOAD_PATH.unshift(__dir__)
+end
+
 # ActiveSupport の core_ext を除いたファイルを関連を個別に読み込むことを ActiveSupport は想定していない
 # (個別読み込んでいるアップデートする度に不整合おきる)
 # 単に require "active_support" で必須のものをすべて読み込んだ上で必要な core_ext だけ読み込むの正しい
