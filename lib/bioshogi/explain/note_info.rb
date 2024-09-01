@@ -71,6 +71,8 @@ module Bioshogi
         { key: "都詰め",       },
       ]
 
+      class_attribute :human_name, default: "備考"
+
       include ShapeInfoRelation
       include TechAccessor
       include StyleAccessor

@@ -3,6 +3,10 @@ require "spec_helper"
 module Bioshogi
   module Explain
     describe AttackInfo do
+      it ".human_name" do
+        assert { AttackInfo.human_name == "戦型" }
+      end
+
       it "新米長玉" do
         info = Parser.parse("▲７六歩 △６二玉")
         assert { info.to_kif.include?("後手の戦型：新米長玉") }

@@ -3,14 +3,18 @@ module Bioshogi
     class TacticInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :attack,    name: "戦型", },
-        { key: :defense,   name: "囲い", },
-        { key: :technique, name: "手筋", },
-        { key: :note,      name: "備考", },
+        { key: :attack,    },
+        { key: :defense,   },
+        { key: :technique, },
+        { key: :note,      },
       ]
 
       def model
         @model ||= "bioshogi/explain/#{key}_info".classify.constantize
+      end
+
+      def name
+        model.human_name
       end
 
       def list_key

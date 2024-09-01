@@ -124,6 +124,8 @@ module Bioshogi
         ]
       end
 
+      class_attribute :human_name, default: "囲い"
+
       include ShapeInfoRelation
       include TechAccessor
       include StyleAccessor

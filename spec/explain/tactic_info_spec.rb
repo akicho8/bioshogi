@@ -49,6 +49,10 @@ module Bioshogi
         assert { TacticInfo.all_elements_hash[:"棒銀"] }
         assert { TacticInfo.all_elements_hash[:"美濃囲い"]       }
       end
+
+      it "name" do
+        assert { TacticInfo[:attack].name == "戦型" }
+      end
     end
   end
 end
