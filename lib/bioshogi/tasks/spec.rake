@@ -10,6 +10,8 @@ desc "alias to spec:core"
 task :c => "spec:core"
 
 namespace :spec do
+  task :fast => :core
+
   desc "重要なところだけのテスト"
   RSpec::Core::RakeTask.new(:core) do |t|
     # t.exclude_pattern = "spec/**/{animation,image}*_spec.rb"

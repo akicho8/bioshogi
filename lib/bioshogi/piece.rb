@@ -1,13 +1,11 @@
-# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/piece_spec.rb" -*-
 # frozen-string-literal: true
-#
+
 #  Piece.s_to_h("飛0 角 竜1 馬2 龍2")                    # => {:rook=>3, :bishop=>3}
 #  Piece.h_to_a(rook: 2, bishop: 1).collect(&:name)      # => ["飛", "飛", "角"]
 #  Piece.s_to_a("飛0 角 竜1 馬2 龍2 飛").collect(&:name) # => ["飛", "飛", "飛", "飛", "角", "角", "角"]
 #  Piece.a_to_s([:bishop, "竜", "竜"])                   # => "飛二 角"
 #  Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金")               # => {:black=>{:pawn=>2, :rook=>1, :gold=>1}, :white=>{:pawn=>2, :rook=>1}}
 #  Piece.h_to_s(bishop: 1, rook: 2)                      # => "飛二 角"
-#
 
 module Bioshogi
   class Piece
@@ -141,6 +139,10 @@ module Bioshogi
       attributes
     end
 
+    def promotable?
+      promotable
+    end
+
     concerning :NameMethods do
       class_methods do
         def all_names
@@ -209,76 +211,38 @@ module Bioshogi
       end
     end
 
-    concerning :CsaMethods do
-      def csa
-        @csa ||= PieceCsa.fetch(key)
-      end
+    def csa
+      @csa ||= PieceCsa.fetch(key)
     end
 
-    concerning :OtherMethods do
-      def promotable?
-        promotable
-      end
+    def piece_vector
+      @piece_vector ||= PieceVector.fetch(key)
     end
+    delegate :brave?, :all_vectors, to: :piece_vector
 
-    concerning :VectorMethods do
-      included do
-        delegate :brave?, :all_vectors, to: :piece_vector
-      end
-
-      def piece_vector
-        @piece_vector ||= PieceVector.fetch(key)
-      end
+    def piece_scale
+      @piece_scale ||= PieceScale.fetch(key)
     end
+    delegate :scale, to: :piece_scale
 
-    concerning :ScaleMethods do
-      included do
-        delegate :scale, to: :piece_scale
-      end
-
-      def piece_scale
-        @piece_scale ||= PieceScale.fetch(key)
-      end
+    def piece_score
+      @piece_score ||= PieceScore.fetch(key)
     end
+    delegate :any_weight, :basic_weight, :promoted_weight, :hold_weight, to: :piece_score
 
-    concerning :ScoreMethods do
-      included do
-        delegate :any_weight, :basic_weight, :promoted_weight, :hold_weight, to: :piece_score
-      end
-
-      def piece_score
-        @piece_score ||= PieceScore.fetch(key)
-      end
+    def piece_pressure
+      @piece_pressure ||= PiecePressure.fetch(key)
     end
+    delegate :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
 
-    concerning :PressureMethods do
-      included do
-        delegate :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
-      end
-
-      def piece_pressure
-        @piece_pressure ||= PiecePressure.fetch(key)
-      end
+    def yomiage_piece_info
+      @yomiage_piece_info ||= YomiagePieceInfo.fetch(key)
     end
+    delegate :yomiage, to: :yomiage_piece_info
 
-    concerning :KifuyomiMethods do
-      included do
-        delegate :yomiage, to: :yomiage_piece_info
-      end
-
-      def yomiage_piece_info
-        @yomiage_piece_info ||= YomiagePieceInfo.fetch(key)
-      end
+    def ek_score_info
+      @ek_score_info ||= EkScoreInfo.fetch(key)
     end
-
-    concerning :EkScoreInfoMethods do
-      included do
-        delegate :ek_score, to: :ek_score_info
-      end
-
-      def ek_score_info
-        @ek_score_info ||= EkScoreInfo.fetch(key)
-      end
-    end
+    delegate :ek_score, to: :ek_score_info
   end
 end
