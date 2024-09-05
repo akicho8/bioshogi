@@ -1,4 +1,3 @@
-# -*- coding: utf-8; compile-command: "bundle exec rspec ../../spec/brain_spec.rb" -*-
 # frozen-string-literal: true
 
 require "timeout"

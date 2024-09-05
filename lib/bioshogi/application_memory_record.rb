@@ -3,21 +3,14 @@ module Bioshogi
 
   concern :ApplicationMemoryRecord do
     included do
-      include MemoryRecord
+      unless self < MemoryRecord
+        include MemoryRecord
+      end
 
-      def self.fetch(*)
+      def self.fetch(...)
         super
       rescue KeyError => error
         raise KeyNotFound, error.message
-      end
-
-      # fetch できなかったとき default_key が指すレコードを返す
-      def self.safe_fetch(key)
-        v = lookup(key)
-        unless v
-          v = fetch(default_key)
-        end
-        v
       end
     end
 
