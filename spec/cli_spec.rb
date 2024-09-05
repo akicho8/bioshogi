@@ -2,7 +2,7 @@ require "spec_helper"
 require "bioshogi/cli"
 
 module Bioshogi
-  describe CLI do
+  RSpec.describe CLI do
     around do |e|
       capture(:stdout) { e.run }
     end

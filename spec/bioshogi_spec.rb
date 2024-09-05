@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Bioshogi do
+  RSpec.describe Bioshogi do
     describe "棋譜ファイルの読み込み" do
       it "できる" do
         Parser.file_parse(Pathname(__FILE__).dirname.join("files/sample1.kif"))

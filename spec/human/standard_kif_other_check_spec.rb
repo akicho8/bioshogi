@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe "バグが再発しないように確認するためのテスト" do
+  RSpec.describe "バグが再発しないように確認するためのテスト" do
     def test1(str)
       container = Bioshogi::Container::Basic.new
       container.board.placement_from_shape(@board)

@@ -2,7 +2,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Place do
+  RSpec.describe Place do
     it "コレクション" do
       assert { Place.each.present? == true }
     end

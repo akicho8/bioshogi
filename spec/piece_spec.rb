@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Piece do
+  RSpec.describe Piece do
     before do
       @pieces = [Piece["歩"], Piece["歩"], Piece["飛"]]
     end

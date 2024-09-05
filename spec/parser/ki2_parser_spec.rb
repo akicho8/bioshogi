@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Parser::Ki2Parser do
+  RSpec.describe Parser::Ki2Parser do
     it "空はKI2と見なさない" do
       assert { !Parser::Ki2Parser.accept?(nil)  }
       assert { !Parser::Ki2Parser.accept?("")   }

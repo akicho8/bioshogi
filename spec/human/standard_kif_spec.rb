@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe "将棋連盟が定めている人間向け棋譜入力" do
+  RSpec.describe "将棋連盟が定めている人間向け棋譜入力" do
     describe "P1 到達地点に複数の同じ駒が動ける場合「上」または「寄」または「引」で記入" do
       def test1(str)
         container = Container::Basic.new

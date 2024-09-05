@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Parser::KifParser do
+  RSpec.describe Parser::KifParser do
     it "アスタリスクで始まるヘッダーはそのまま取り込む" do
       assert { Parser.parse("*KEY1：value1").pi.header.to_h == {"*KEY1" => "value1"} }
     end

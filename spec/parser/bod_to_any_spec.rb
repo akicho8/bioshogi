@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Parser::Base do
+  RSpec.describe Parser::Base do
     describe "BODからの変換" do
       before do
         @info = Parser.parse(<<~EOT)

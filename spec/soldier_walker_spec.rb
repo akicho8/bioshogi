@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe "#move_list" do
+  RSpec.describe "#move_list" do
     it "ある地点に移動するとき成れるのか？" do
       soldier = Soldier.from_str("▲13銀")
      assert { soldier.next_promotable?(Place["14"]) }

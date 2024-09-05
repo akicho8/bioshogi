@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Board do
+  RSpec.describe Board do
     describe "逆算" do
       it "トンボはマイナーなので逆算できない" do
         board = Board.new

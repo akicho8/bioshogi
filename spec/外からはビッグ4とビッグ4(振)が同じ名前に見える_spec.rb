@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe do
+  RSpec.describe do
     xit "works" do
       info = DefenseInfo.fetch("ビッグ4(振)").sample_kif_info
       assert { info.formatter.container.player_at(:black).defense_infos.collect(&:name) == ["ビッグ4"] }

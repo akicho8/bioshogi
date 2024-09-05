@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Parser::TimeParser do
+  RSpec.describe Parser::TimeParser do
     it "無効" do
       assert { Parser::TimeParser.new("").to_time           == nil }
       assert { Parser::TimeParser.new("9999/99/99").to_time == nil }

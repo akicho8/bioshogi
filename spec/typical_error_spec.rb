@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe CommonError do
+  RSpec.describe CommonError do
     describe "二歩の反則負け" do
       before do
         @file = "#{__dir__}/files/反則二歩.ki2"

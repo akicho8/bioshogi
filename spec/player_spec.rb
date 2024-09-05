@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Player do
+  RSpec.describe Player do
     it "座標を漢字・全角数字・半角数字のみでも指定できる" do
       assert { Container::Basic.player_test_soldier_names(init: "五五歩", execute: "五四歩") == ["▲５四歩"] }
       assert { Container::Basic.player_test_soldier_names(init: "55歩", execute: "54歩") == ["▲５四歩"] }

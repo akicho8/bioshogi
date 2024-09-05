@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe InputParser do
+  RSpec.describe InputParser do
     def test1(s)
       s.match(InputParser.regexp).named_captures.compact
     end

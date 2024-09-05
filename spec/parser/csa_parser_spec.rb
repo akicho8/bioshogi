@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe Parser::CsaParser do
+  RSpec.describe Parser::CsaParser do
     it "持駒表記の読み取り" do
       assert { Parser.parse("P+00HI").container.player_at(:black).piece_box.to_s == "飛" }
       assert { Parser.parse("P+00HI00HI").container.player_at(:black).piece_box.to_s == "飛二" }

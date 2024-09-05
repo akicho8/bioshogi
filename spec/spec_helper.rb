@@ -47,4 +47,7 @@ RSpec.configure do |config|
   end
   config.expect_with :test_unit
   config.example_status_persistence_file_path = "#{__dir__}/_all_test_result.txt"
+
+  # https://wai-doi.hatenablog.com/entry/rspec-describe
+  config.expose_dsl_globally = false # グローバルに RSpec 関連メソッドをぶちまけないようにする
 end

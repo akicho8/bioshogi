@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe "ミクロコスモス" do
+  RSpec.describe "ミクロコスモス" do
     it "works" do
       bod = nil
       GC.start

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  describe KanjiNumber do
+  RSpec.describe KanjiNumber do
     it "works" do
       assert { KanjiNumber.kanji_to_number_string("") == "" }
       assert { KanjiNumber.kanji_to_number_string("歩") == "歩" }
