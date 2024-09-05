@@ -1,5 +1,23 @@
 require "./setup"
 
+preset_info = Board.guess_preset_info(<<~EOT)
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・ ・ ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+EOT
+preset_info  # => <角落ち>
+
+Board.create_by_preset("角落ち").preset_info # => <角落ち>
+
 board = Board.create_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
@@ -19,7 +37,6 @@ puts board
 puts board.flop
 puts board.flop.flop
 puts board.flop.flip
-
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> |v玉v桂 ・ ・ ・ ・ ・ ・ ・|一

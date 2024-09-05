@@ -2,6 +2,10 @@ require "spec_helper"
 
 module Bioshogi
   RSpec.describe Board do
+    it ".create_by_preset" do
+      assert { Board.create_by_preset("角落ち").preset_info.key == :"角落ち" }
+    end
+
     describe "逆算" do
       it "トンボはマイナーなので逆算できない" do
         board = Board.new
@@ -77,19 +81,3 @@ module Bioshogi
     end
   end
 end
-# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
-# >> ....
-# >>
-# >> Top 4 slowest examples (0.07819 seconds, 93.9% of total time):
-# >>   Bioshogi::Board 逆算
-# >>     0.07257 seconds -:5
-# >>   Bioshogi::Board 配置
-# >>     0.00495 seconds -:13
-# >>   Bioshogi::Board 指定の座標だけを消す微妙なテスト
-# >>     0.00046 seconds -:51
-# >>   Bioshogi::Board サンプル
-# >>     0.00022 seconds -:46
-# >>
-# >> Finished in 0.08327 seconds (files took 1.63 seconds to load)
-# >> 4 examples, 0 failures
-# >>
