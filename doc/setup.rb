@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift("#{__dir__}/../lib")
+$LOAD_PATH.unshift(File.expand_path("#{__dir__}/../lib"))
 require "bioshogi"
 # Source2MD.logger.level = :debug if false
 
