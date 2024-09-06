@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    describe AttackInfo do
+    RSpec.describe AttackInfo do
       it ".human_name" do
         assert { AttackInfo.human_name == "戦型" }
       end
