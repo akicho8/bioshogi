@@ -120,7 +120,7 @@ module Bioshogi
       end
 
       def hit_turn
-        TacticHitTurnTable[key.to_s]
+        TacticHitTurnTable[key]
       end
 
       def sample_kif_file

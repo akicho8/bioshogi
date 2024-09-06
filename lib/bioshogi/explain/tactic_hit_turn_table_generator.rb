@@ -1,33 +1,33 @@
-# -*- compile-command: "ruby -I../.. -rbioshogi -e Bioshogi::Explain::TacticHitTurnTableGenerator.new.generate" -*-
-
 module Bioshogi
   module Explain
     class TacticHitTurnTableGenerator
-      def generate
-        body = body_format(turns_hash.inspect)
-        output_file.write(template % { body: body })
-        puts "write: #{output_file}"
+      def initialize(options = {})
+        @options = {
+          verbose: true,
+        }.merge(options)
       end
 
-      private
+      def call
+        body = body_format(to_h.inspect)
+        output_file.write(template % { body: body })
+        if @options[:verbose]
+          puts "write: #{output_file}"
+        end
+      end
 
-      def turns_hash
-        hash = {}
-        Explain::TacticInfo.all_elements.each do |e|
-          print "."
-          info = e.sample_kif_info
-          found = info.formatter.container.hand_logs.each.with_index do |hand_log, i|
+      def to_h
+        list = Explain::TacticInfo.all_elements.collect do |e|
+          turn = nil
+          e.sample_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
             if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
-              hash[e.key.to_s] = i.next
-              break true
+              turn = i.next
+              break
             end
           end
-          unless found
-            raise e.key
-          end
+          [e, turn]
         end
-        puts
-        hash
+
+        list.sort_by { |e, turn| turn || 0 }.collect { |e, turn| [e.name, turn] }.to_h
       end
 
       def output_file
@@ -54,6 +54,7 @@ module Bioshogi
         str = str.gsub(/\s*,\s*/, ",\n")
         str = str.gsub(/^(?=")/, "  " * 3)
         str = str.gsub("=>", " => ")
+        str = str.gsub(/ "/, ':"')
         str = str.rstrip
       end
     end
