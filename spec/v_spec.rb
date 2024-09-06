@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe V do
+  describe V do
     it "+" do
       assert { (V[5, 6] + V[2, 3]) == V[7, 9]   }
       assert { (V[5, 6] + 10)      == V[15, 16] }

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "used_piece_counts" do
+  describe "used_piece_counts" do
     it "works" do
       info = Parser.parse(<<~EOT)
       後手の持駒：

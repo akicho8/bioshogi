@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe MainClock do
+  describe MainClock do
     it "MainClock" do
       main_clock = MainClock.new
       main_clock.add(1)

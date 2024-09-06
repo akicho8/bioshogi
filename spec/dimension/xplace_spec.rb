@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Dimension do
+  describe Dimension do
     describe "範囲外または無効" do
       it "引数が根本的にダメなのでエラー" do
         expect { Dimension::PlaceX.fetch("")  }.to raise_error(SyntaxDefact)

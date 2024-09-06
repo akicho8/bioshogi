@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Board do
+  describe Board do
     it "反転" do
       board = Board.create_by_shape(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １

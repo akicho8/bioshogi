@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Parser::Base do
+  describe Parser::Base do
     describe "KI2からの変換" do
       before do
         @info = Parser.parse(<<~EOT)

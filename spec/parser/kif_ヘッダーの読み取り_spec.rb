@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "ヘッダーの読み取り" do
+  describe "ヘッダーの読み取り" do
     it "基本" do
       assert { Parser.parse("key：value").pi.header.to_h == { "key" => "value" } }
     end

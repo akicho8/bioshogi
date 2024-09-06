@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    RSpec.describe DefenseInfo do
+    describe DefenseInfo do
       xdescribe "keyとnameは異なる" do
         it "key" do
           assert { DefenseInfo["ビッグ4(振)"].key == :"ビッグ4(振)" }

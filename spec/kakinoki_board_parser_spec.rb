@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe BoardParser::KakinokiBoardParser do
+  describe BoardParser::KakinokiBoardParser do
     it "works" do
       assert { BoardParser::KakinokiBoardParser.accept?("+--+") }
       assert { BoardParser::KakinokiBoardParser.accept?("|・|") }

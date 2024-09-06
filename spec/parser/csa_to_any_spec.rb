@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Parser::Base do
+  describe Parser::Base do
     it "-2725RYのときに候補が2つあるのでKI2にしたときに「△２五飛引成」になる" do
       info = Parser.parse("+7776FU,-3334FU,+2726FU,-4344FU,+2625FU,-2233KA,+5756FU,-8222HI,+5968OU,-2324FU,+2524FU,-3324KA,+2824HI,-2224HI,+0015KA,-0027HI,+0028FU,-2725RY")
       assert { info.to_ki2.include?("△２五飛引成") == true }

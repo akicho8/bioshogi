@@ -37,18 +37,19 @@ module Bioshogi
         { key: "大駒全ブッチ", },
         {
           key: "大駒コンプリート", parent: nil, other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
+          add_to_opponent: "大駒全ブッチ",
           piece_box_added_proc: -> note_info, captured_soldier {
             if captured_soldier.piece.stronger
-              retv = player.stronger_piece_completed?
-
-              # 相手にも追加
-              if retv
-                player.opponent_player.skill_set.list_push(Explain::NoteInfo["大駒全ブッチ"])
-                # list << note_info
-                # skill_set.list_of(e) << note_info
-              end
-
-              retv
+              player.stronger_piece_completed?
+              # retv = player.stronger_piece_completed?
+              # # 相手にも追加
+              # if retv
+              #   # raise
+              #   # player.opponent_player.skill_set.list_push(Explain::NoteInfo["大駒全ブッチ"])
+              #   # list << note_info
+              #   # skill_set.list_of(e) << note_info
+              # end
+              # retv
             end
           },
         },

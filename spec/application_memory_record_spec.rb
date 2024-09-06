@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe ApplicationMemoryRecord do
+  describe ApplicationMemoryRecord do
     it "works" do
       klass = Class.new do
         include ApplicationMemoryRecord

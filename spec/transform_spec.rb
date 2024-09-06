@@ -12,7 +12,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "変換", transform: true do
+  describe "変換", transform: true do
     trace = -> s {
       if ENV["VERBOSE"]
         puts s

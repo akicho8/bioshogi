@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "駒落ちCSA棋譜からの変換" do
+  describe "駒落ちCSA棋譜からの変換" do
     before do
       @info = Parser.parse(<<~EOT, skill_monitor_enable: false)
 V2.2
@@ -65,7 +65,7 @@ EOT
     end
   end
 
-  RSpec.describe "(1) 平手初期配置と駒落ち" do
+  describe "(1) 平手初期配置と駒落ち" do
     it "落とす駒が明記されているケース" do
       info = Parser.parse(<<~EOT)
 V2.2
@@ -97,7 +97,7 @@ EOT
     end
   end
 
-  RSpec.describe "(3) 駒別単独表現" do
+  describe "(3) 駒別単独表現" do
     it "works" do
       Parser.parse("V2.2,P-51OU,P+53KI00GI,P-00AL,-,-5141OU,+0052GI").to_csa == <<~EOT
 V2.2

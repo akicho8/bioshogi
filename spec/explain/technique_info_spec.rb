@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    RSpec.describe TechniqueInfo do
+    describe TechniqueInfo do
       def container_new
         Container::Basic.new.tap do |e|
           e.params[:skill_monitor_enable] = true

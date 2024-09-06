@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Board do
+  describe Board do
     it ".create_by_preset" do
       assert { Board.create_by_preset("角落ち").preset_info.key == :"角落ち" }
     end

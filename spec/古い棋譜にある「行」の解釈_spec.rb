@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe do
+  describe do
     def test1(str)
       container = Bioshogi::Container::Basic.new
       container.board.placement_from_shape(<<~EOT)

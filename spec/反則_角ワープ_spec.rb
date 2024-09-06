@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "角ワープ" do
+  describe "角ワープ" do
     it "works" do
       sfen = "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 8h2b+"
       assert { Parser.parse(sfen).to_sfen rescue $!.class == SoldierWarpError }

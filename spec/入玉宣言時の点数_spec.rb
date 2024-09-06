@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe "入玉宣言時の点数" do
+  describe "入玉宣言時の点数" do
     it "works" do
       container = Container::Basic.new
       container.placement_from_bod(<<~EOT)

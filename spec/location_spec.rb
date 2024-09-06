@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Location do
+  describe Location do
     it "変換可能" do
       assert { Location[-1].key      == :white }
       assert { Location[0].key       == :black }

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe BoardParser::CsaBoardParser do
+  describe BoardParser::CsaBoardParser do
     it "基本" do
       assert { Parser.parse("P2 * -HI *  *  *  *  * +KA *").to_sfen == "position sfen 9/1r5B1/9/9/9/9/9/9/9 b - 1" }
     end

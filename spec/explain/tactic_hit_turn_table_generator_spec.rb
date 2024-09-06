@@ -2,9 +2,9 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    RSpec.describe TacticHitTurnTableGenerator do
+    describe "発動手数のテーブル生成", tactic: true do
       it "works" do
-        TacticHitTurnTableGenerator.new.to_h(verbose: true)
+        assert { TacticHitTurnTableGenerator.new.to_h }
       end
     end
   end

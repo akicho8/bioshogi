@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    RSpec.describe TacticInfo do
+    describe TacticInfo do
       describe "すべての戦法の判定", tactic: true do
         TacticInfo.all_elements.each do |e|
           it e.key do

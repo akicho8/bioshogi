@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe PresetInfo do
+  describe PresetInfo do
     describe "日本語ゆえの表記ゆれ問題" do
       it "飛車落ち" do
         assert { PresetInfo["飛車落ち"] }

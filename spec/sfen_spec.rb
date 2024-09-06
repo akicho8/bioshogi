@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Sfen do
+  describe Sfen do
     it "改行は正規表現に含めない" do
       assert { Sfen.parse("position startpos moves 2g2f\n3c3d").moves == ["2g2f"] }
       assert { Sfen.parse("position startpos moves 2g2f\n").moves     == ["2g2f"] }

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Player do
+  describe Player do
     it "works" do
       Dimension.wh_change([2, 3]) do
         container = Container::Basic.new

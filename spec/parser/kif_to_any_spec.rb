@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Parser::Base do
+  describe Parser::Base do
     it "「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない" do
       info = Parser.parse("手合割：トンボ")
       expect(info.to_kif).to eq(<<~EOT)

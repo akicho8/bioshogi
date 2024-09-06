@@ -2,7 +2,7 @@ require "spec_helper"
 
 module Bioshogi
   module Explain
-    RSpec.describe SkillSet do
+    describe SkillSet do
       before do
         @skill_set = SkillSet.new
         @skill_set.defense_infos << DefenseInfo["片美濃囲い"]

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 module Bioshogi
-  RSpec.describe Player do
+  describe Player do
     it "終盤度" do
       container = Container::Basic.new
       container.placement_from_bod(<<~EOT)
