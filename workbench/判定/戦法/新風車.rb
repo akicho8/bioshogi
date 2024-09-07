@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Parser.file_parse("../戦型/新風車.ki2", turn_limit: 42)
+info = Parser.file_parse("../戦法/新風車.ki2", turn_limit: 42)
 puts info.formatter.container
 puts info.to_ki2
 # >> 後手の持駒：なし
@@ -18,7 +18,7 @@ puts info.to_ki2
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝32 △５一玉(52) まで
-# >> 先手の戦型：右玉, 新風車
+# >> 先手の戦法：右玉, 新風車
 # >> 手合割：平手
 # >> 
 # >> ▲２六歩 △５二玉 ▲６六歩 △５一玉 ▲７六歩 △５二玉 ▲７七角 △５一玉 ▲７八金 △５二玉

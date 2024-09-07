@@ -49,7 +49,7 @@ if true
   loader.ignore("#{__dir__}/bioshogi/errors.rb")
   loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
   loader.ignore("#{__dir__}/bioshogi/assets")
-  loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦型,手筋}")
+  loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦法,手筋}")
 
   # 変換ルール調整
   loader.inflector.inflect("cli" => "CLI")

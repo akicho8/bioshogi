@@ -12,12 +12,12 @@ module Bioshogi
         info = Parser.parse("position startpos moves 7i6h")
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
         expect(info.to_kif).to eq(<<~EOT)
-先手の戦型：嬉野流
+先手の戦法：嬉野流
 先手の棋風：王道
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
-*▲戦型：嬉野流
+*▲戦法：嬉野流
    2 投了
 まで1手で先手の勝ち
 EOT
@@ -28,12 +28,12 @@ EOT
         assert { info.to_sfen == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h" }
         assert { info.to_sfen(startpos_embed: true) == "position startpos moves 7i6h" }
         expect(info.to_kif).to eq(<<~EOT)
-先手の戦型：嬉野流
+先手の戦法：嬉野流
 先手の棋風：王道
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
-*▲戦型：嬉野流
+*▲戦法：嬉野流
    2 投了
 まで1手で先手の勝ち
 EOT
@@ -46,12 +46,12 @@ EOT
         expect(info.to_kif).to eq(<<~EOT)
 先手の持駒：銀
 後手の持駒：銀二
-先手の戦型：嬉野流
+先手の戦法：嬉野流
 先手の棋風：王道
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)
-*▲戦型：嬉野流
+*▲戦法：嬉野流
    2 ２四銀打
    3 投了
 まで2手で後手の勝ち

@@ -3,8 +3,8 @@ require "../../setup"
 info = Parser.parse(Pathname("../../lib/bioshogi/explain/手筋/幽霊角.kif"))
 puts info.to_kif
 # >> 棋戦：共有将棋盤
-# >> 先手の戦型：力戦
-# >> 後手の戦型：力戦
+# >> 先手の戦法：力戦
+# >> 後手の戦法：力戦
 # >> 先手の囲い：居玉
 # >> 先手の備考：居飛車, 相居飛車
 # >> 後手の備考：居飛車, 相居飛車

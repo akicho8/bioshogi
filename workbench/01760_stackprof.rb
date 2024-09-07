@@ -334,7 +334,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    19  |       end
 # >>                                   |    20  | 
 # >>     1    (0.1%)                   |    21  |       if executor.container.params[:skill_monitor_technique_enable]
-# >>                                   |    22  |         # 主に手筋用で戦型チェックにも使える
+# >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Explain::TacticInfo.piece_hash_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|

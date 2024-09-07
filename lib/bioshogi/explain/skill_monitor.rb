@@ -20,7 +20,7 @@ module Bioshogi
         end
 
         if executor.container.params[:skill_monitor_technique_enable]
-          # 主に手筋用で戦型チェックにも使える
+          # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
           if e = TacticInfo.piece_hash_table[key]
             e.each do |e|

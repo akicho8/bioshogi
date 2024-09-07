@@ -34,7 +34,7 @@ info.initial_container.turn_info.location_call_name # => "上手"
 puts info.to_kif
 # >> "---------------------"
 # >> 棋戦：
-# >> 戦型：
+# >> 戦法：
 # >> 開始日時：
 # >> 終了日時：
 # >> 上手の持駒：なし

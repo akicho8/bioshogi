@@ -51,7 +51,7 @@ module Bioshogi
       end
 
       it "name" do
-        assert { TacticInfo[:attack].name == "戦型" }
+        assert { TacticInfo[:attack].name == "戦法" }
       end
     end
   end

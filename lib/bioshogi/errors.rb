@@ -44,7 +44,7 @@ module Bioshogi
   class FileFormatError < BioshogiError
   end
 
-  # 手合割・囲い・戦型などのあるはずのデータがない
+  # 手合割・囲い・戦法などのあるはずのデータがない
   class KeyNotFound < BioshogiError
   end
 

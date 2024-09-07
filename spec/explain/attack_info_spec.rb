@@ -4,12 +4,12 @@ module Bioshogi
   module Explain
     describe AttackInfo do
       it ".human_name" do
-        assert { AttackInfo.human_name == "戦型" }
+        assert { AttackInfo.human_name == "戦法" }
       end
 
       it "新米長玉" do
         info = Parser.parse("▲７六歩 △６二玉")
-        assert { info.to_kif.include?("後手の戦型：新米長玉") }
+        assert { info.to_kif.include?("後手の戦法：新米長玉") }
         assert { info.formatter.container.player_at(:white).attack_infos.collect(&:name) == ["新米長玉"] }
       end
 
