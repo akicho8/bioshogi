@@ -141,23 +141,24 @@ module Bioshogi
           },
         },
 
-        {
-          key: "遠見の角",
-          logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
-          verify_process: proc {
-            soldier = executor.hand.soldier
-
-            # 8段目でなければだめ
-            if soldier.bottom_spaces != 1
-              throw :skip
-            end
-
-            # 端でなければだめ
-            if soldier.smaller_one_of_side_spaces != 0
-              throw :skip
-            end
-          },
-        },
+        # 単に「18角打」をチェックした方がいい
+        # {
+        #   key: "遠見の角",
+        #   logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
+        #   verify_process: proc {
+        #     soldier = executor.hand.soldier
+        #
+        #     # 8段目でなければだめ
+        #     if soldier.bottom_spaces != 1
+        #       throw :skip
+        #     end
+        #
+        #     # 端でなければだめ
+        #     if soldier.smaller_one_of_side_spaces != 0
+        #       throw :skip
+        #     end
+        #   },
+        # },
 
         {
           key: "割り打ちの銀",
