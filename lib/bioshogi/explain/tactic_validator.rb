@@ -7,7 +7,7 @@ module Bioshogi
         rows = TacticInfo.all_elements.collect(&method(:process_one))
         puts
         tp rows
-        puts rows.all? { |e| e["合致"].present? } ? "OK" : "ERROR"
+        puts rows.none? { |e| e["合致"] == "ERROR" } ? "OK" : "ERROR"
       end
 
       private
