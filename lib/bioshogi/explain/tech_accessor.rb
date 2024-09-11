@@ -76,6 +76,12 @@ module Bioshogi
         end
       end
 
+      def op_hold_piece_eq
+        if defined?(super) && v = super
+          @op_hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))
+        end
+      end
+
       def hold_piece_in
         if v = super
           @hold_piece_in ||= PieceBox.new(Piece.s_to_h(v))

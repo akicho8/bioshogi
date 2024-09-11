@@ -223,6 +223,13 @@ module Bioshogi
               end
             end
 
+            # 相手の駒が一致していなければskip
+            if v = e.op_hold_piece_eq
+              if op_piece_box != v
+                throw :skip
+              end
+            end
+
             # 指定の駒をすべて含んでいるならOK
             if v = e.hold_piece_in
               if v.all? { |piece_key, _| piece_box.has_key?(piece_key) }
@@ -321,6 +328,11 @@ module Bioshogi
       # 持駒
       def piece_box
         @piece_box ||= player.piece_box
+      end
+
+      # 相手の持駒
+      def op_piece_box
+        @op_piece_box ||= player.opponent_player.piece_box
       end
 
       # 移動元情報
