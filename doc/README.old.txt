@@ -500,7 +500,7 @@ Benchmark.ms { container.opponent_player.create_all_hands(legal_only: true).to_a
     | RuleError            | 反則系例外の親                                 | 二歩など                                                                                |
     | CommonError          | 黙認できる例外の親                             | いまのところ二歩と手番間違いの2つだけ                                                   |
     | SamePlaceDifferent   | 座標と「同」を同時に指定したが一致しない       | "同歩" だけでいいのに "２四同歩" と場所を明示したとき、その前の指し手が "２四○" でない |
-    | TimeMinusError       | 消費時間がマイナスになっている                 | CSAの読み込みのとき不整合が起きやすい。1分の持ち時間なのに1手1分で2手指したときなど     |
+    | ConsumedTimeMinusError       | 消費時間がマイナスになっている                 | CSAの読み込みのとき不整合が起きやすい。1分の持ち時間なのに1手1分で2手指したときなど     |
     | FileFormatError      | ファイルのフォーマットがおかしい               | KIFファイルとして画像ファイルを読ませた                                                 |
     | KeyNotFound          | 手合割・囲い・戦法などのあるはずのデータがない | 手合割で「二枚落ち」と書くところを「飛車角落ち」と書いた                                |
     | BrainProcessingHeavy | 処理が重すぎる                                 | 反復深化深さ優先探索でのタイムリミットが短かすぎて指し手を生成できない                  |

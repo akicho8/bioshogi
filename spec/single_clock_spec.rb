@@ -13,7 +13,7 @@ module Bioshogi
       # 将棋ウォーズの棋譜取り込みで3分や10秒を10分として判別してしまったとき
       # この判定がなかったため棋譜の時間がマイナスになって他のソフトで読めなくなってしまった
       single_clock = SingleClock.new
-      expect { single_clock.add(-1) }.to raise_error(TimeMinusError)
+      expect { single_clock.add(-1) }.to raise_error(ConsumedTimeMinusError)
     end
   end
 end

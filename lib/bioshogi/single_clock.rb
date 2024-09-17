@@ -10,14 +10,14 @@ module Bioshogi
       @used_seconds = 0
     end
 
-    def add(v)
-      v = v.to_i
-      if v.negative?
+    def add(second)
+      second = second.to_i
+      if second.negative?
         # 将棋ウォーズの棋譜はまれにマイナスの消費時間が存在してこれになる
-        raise TimeMinusError, "消費時間がマイナスになっています : #{v}"
+        raise ConsumedTimeMinusError, "消費時間がマイナスになっています : #{second}"
       end
-      @total_seconds += v
-      @used_seconds = v
+      @total_seconds += second
+      @used_seconds = second
     end
 
     def to_s

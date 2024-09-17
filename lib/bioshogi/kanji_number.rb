@@ -1,7 +1,3 @@
-if $0 == __FILE__
-  require "active_support/core_ext/module/attribute_accessors"
-end
-
 module Bioshogi
   module KanjiNumber
     extend self
@@ -83,46 +79,5 @@ module Bioshogi
     def extract(s, &block)
       s.scan(regexp, &block)
     end
-  end
-
-  if $0 == __FILE__
-    KanjiNumber.kanji_to_number_string("")               # => ""
-    KanjiNumber.kanji_to_number_string("歩")             # => "歩"
-    KanjiNumber.kanji_to_number_string("歩〇")           # => "歩0"
-    KanjiNumber.kanji_to_number_string("歩九")           # => "歩9"
-    KanjiNumber.kanji_to_number_string("歩十")           # => "歩10"
-    KanjiNumber.kanji_to_number_string("歩十〇")         # => "歩10"
-    KanjiNumber.kanji_to_number_string("歩十一")         # => "歩11"
-    KanjiNumber.kanji_to_number_string("歩十九")         # => "歩19"
-    KanjiNumber.kanji_to_number_string("歩二十")         # => "歩20"
-    KanjiNumber.kanji_to_number_string("歩二十〇")       # => "歩20"
-    KanjiNumber.kanji_to_number_string("歩二十一")       # => "歩21"
-    KanjiNumber.kanji_to_number_string("歩百二十三")     # => "歩123"
-    KanjiNumber.kanji_to_number_string("歩千二百三十四") # => "歩1234"
-
-    KanjiNumber.kanji_to_number_string("歩十")           # => "歩10"
-    KanjiNumber.kanji_to_number_string("歩百")           # => "歩100"
-    KanjiNumber.kanji_to_number_string("歩千")           # => "歩1000"
-    KanjiNumber.kanji_to_number_string("歩1万")          # => "歩10000"
-    KanjiNumber.kanji_to_number_string("歩1憶")          # => "歩100000"
-    KanjiNumber.kanji_to_number_string("歩1兆")          # => "歩1000000"
-
-    KanjiNumber.number_to_kanji(0)                      # => "〇"
-    KanjiNumber.number_to_kanji(1)                      # => "一"
-    KanjiNumber.number_to_kanji(10)                     # => "十"
-    KanjiNumber.number_to_kanji(12)                     # => "十二"
-    KanjiNumber.number_to_kanji(2)                      # => "二"
-    KanjiNumber.number_to_kanji(23)                     # => "二十三"
-    KanjiNumber.number_to_kanji(123)                    # => "百二十三"
-    KanjiNumber.number_to_kanji(120)                    # => "百二十"
-    KanjiNumber.number_to_kanji(100)                    # => "百"
-    KanjiNumber.number_to_kanji(1000)                   # => "千"
-    KanjiNumber.number_to_kanji(10000)                  # => "一万"
-    KanjiNumber.number_to_kanji(100000)                 # => "一憶"
-    KanjiNumber.number_to_kanji(1000000)                # => "一兆"
-    KanjiNumber.number_to_kanji(1234.5678)              # => "千二百三十四"
-
-    KanjiNumber.extract("歩百二十三") # => ["百二十三"]
-    KanjiNumber.regexp                # => /[十百千万憶兆〇一二三四五六七八九]+/
   end
 end
