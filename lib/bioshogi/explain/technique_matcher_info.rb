@@ -181,6 +181,38 @@ module Bioshogi
         },
 
         {
+          key: "たすきの銀",
+          logic_desc: "打った銀の斜めに飛と金がある",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place # 72
+            retv = [1, -1].any? do |x|
+              v = Place.lookup([place.x.value - x, place.y.value - soldier.location.value_sign]) # 81
+              if s = surface[v]
+                if s.piece.key == :rook && !s.promoted && s.location != soldier.location # 左上に相手の飛車がある
+                  v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign]) # 63
+                  if s = surface[v]
+                    (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && s.location != soldier.location # 右下に相手の金または成銀がある
+                    # s.piece.key == :gold && s.location != soldier.location # 右下に相手の金がある
+                  end
+                end
+              end
+            end
+            unless retv
+              throw :skip
+            end
+          },
+        },
+
+        {
+          key: "たすきの角",
+          logic_desc: "打った角の斜めに飛と金がある",
+          verify_process: proc {
+            instance_eval(&TechniqueMatcherInfo[:"たすきの銀"].verify_process)
+          },
+        },
+
+        {
           key: "桂頭の銀",
           logic_desc: "打った銀の上に相手の桂がある",
           verify_process: proc {
@@ -297,3 +329,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:6:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Explain::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
+# ~>    from -:5:in `<module:Explain>'
+# ~>    from -:4:in `<module:Bioshogi>'
+# ~>    from -:3:in `<main>'
