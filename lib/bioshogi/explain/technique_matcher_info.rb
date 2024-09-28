@@ -248,6 +248,38 @@ module Bioshogi
         },
 
         {
+          key: "田楽刺し",
+          logic_desc: "角の頭に打つ",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+            mode = :walk_to_bishop
+            loop do
+              place = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+              unless place
+                throw :skip     # 盤面の外なので終わり
+              end
+              if s = surface[place]
+                if s.location == soldier.location
+                  throw :skip     # 自分と同じ駒があった場合はおわり
+                end
+                if mode == :walk_to_bishop
+                  if s.piece.key == :bishop && !s.promoted
+                    mode = :walk_to_king
+                  end
+                else
+                  if s.piece.dengaku_target
+                    break
+                  end
+                end
+              else
+                # 駒がないので次のマスに進む
+              end
+            end
+          },
+        },
+
+        {
           key: "ふんどしの桂",
           logic_desc: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
           verify_process: proc {
