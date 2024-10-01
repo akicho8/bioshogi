@@ -53,6 +53,10 @@ module Bioshogi
       it "name" do
         assert { TacticInfo[:attack].name == "戦法" }
       end
+
+      it ".piece_hash_table" do
+        assert { TacticInfo.piece_hash_table[[:pawn, false, true]].include?(TechniqueInfo["金底の歩"]) }
+      end
     end
   end
 end

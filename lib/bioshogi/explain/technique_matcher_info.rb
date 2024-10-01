@@ -228,24 +228,59 @@ module Bioshogi
           },
         },
 
-        {
-          key: "ロケット",
-          logic_desc: "打った香の下に自分の香か飛か龍がある",
-          verify_process: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
-            unless s = surface[v]
-              throw :skip
-            end
-            if s.location != soldier.location
-              throw :skip
-            end
-            unless (s.piece.key == :lance && !s.promoted) || s.piece.key == :rook
-              throw :skip
-            end
-          },
-        },
+        # {
+        #   key: "ロケット",
+        #   logic_desc: "打った香の下に自分の香か飛か龍がある",
+        #   verify_process: proc {
+        #     # p ["#{__FILE__}:#{__LINE__}", __method__, ]
+        #     soldier = executor.hand.soldier
+        #     # p soldier.bottom_spaces
+        #     # p place
+        #     # p place.y
+        #     # p place.y.flip
+        #     # place = Place.lookup([place.x.value, place.y.value + soldier.bottom_spaces * soldier.location.value_sign])
+        # 
+        #     rook_count = 0
+        #     lance_count = 0
+        #     if soldier.piece.key == :rook
+        #       rook_count += 1
+        #     else
+        #       lance_count += 1
+        #     end
+        # 
+        #     [1, -1].each do |sign| # 1:↓ -1:↑
+        #       (1..).each do |i|
+        #         place = Place.lookup([soldier.place.x.value, soldier.place.y.value + (i * soldier.location.value_sign * sign)])
+        #         unless place
+        #           break
+        #         end
+        #         if s = surface[place]
+        #           if s.location == soldier.location
+        #             if s.piece.key == :rook
+        #               rook_count += 1
+        #             elsif s.piece.key == :lance && !s.promoted
+        #               lance_count += 1
+        #             else
+        #               break
+        #             end
+        #           else
+        #             break
+        #           end
+        #         end
+        #       end
+        #     end
+        # 
+        #     p rook_count
+        #     p lance_count
+        # 
+        #     count = rook_count + lance_count
+        #     if lance_count >= 1 && count >= 2
+        #       # raise "ここで count 段ロケットということはわかったがこれをどうタグに入れるか？"
+        #     else
+        #       throw :skip
+        #     end
+        #   },
+        # },
 
         {
           key: "田楽刺し",

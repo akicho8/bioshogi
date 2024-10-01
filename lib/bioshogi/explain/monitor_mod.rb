@@ -54,7 +54,7 @@ module Bioshogi
 
       def perform_skill_monitor
         if perform_skill_monitor_enable?
-          SkillMonitor.new(self).execute
+          SkillMonitor.new(self).call
         end
       end
 

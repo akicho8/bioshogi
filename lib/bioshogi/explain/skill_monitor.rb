@@ -11,8 +11,8 @@ module Bioshogi
         @executor = executor
       end
 
-      def execute
-        if e = TacticInfo.soldier_hash_table[soldier]
+      def call
+        if e = TacticInfo.primary_soldier_hash_table[soldier]
           e.each do |e|
             walk_counts[e.key] += 1
             execute_one(e)
@@ -21,7 +21,7 @@ module Bioshogi
 
         if executor.container.params[:skill_monitor_technique_enable]
           # 主に手筋用で戦法チェックにも使える
-          key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
+          key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand] # :PIECE_HASH_TABLE:
           if e = TacticInfo.piece_hash_table[key]
             e.each do |e|
               execute_block(e) do |list|
@@ -31,17 +31,11 @@ module Bioshogi
               end
             end
           end
+
+          RocketMonitor.new(self).call
         end
 
-        # これはループなので遅い
-        # TacticInfo.piece_hash_table.each do |e|
-        #   execute_block(e) do |list|
-        #     cold_war_verification(e)
-        #     instance_eval(&e.technique_matcher_info.verify_process)
-        #   end
-        # end
-
-        # 毎回呼ぶやつ
+        # 毎回呼ぶやつ (for 駒柱)
         TacticInfo.every_time_proc_list.each do |e|
           walk_counts[e.key] += 1
           if instance_exec(e, &e.every_time_proc)
@@ -49,8 +43,6 @@ module Bioshogi
           end
         end
       end
-
-      private
 
       def execute_block(e)
         catch :skip do

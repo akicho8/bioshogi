@@ -70,6 +70,7 @@ module Bioshogi
 
         { key: "穴熊の姿焼き", }, # 勝った方だけに入れる
         { key: "都詰め",       },
+        { key: "ロケット",     },
       ]
 
       class_attribute :human_name, default: "備考"

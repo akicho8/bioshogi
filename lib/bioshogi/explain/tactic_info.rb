@@ -50,42 +50,56 @@ module Bioshogi
           @all_elements_hash ||= all_elements.inject({}) { |a, e| a.merge(e.key => e) }
         end
 
+        ################################################################################
+
+        # :PIECE_HASH_TABLE:
         # technique_matcher_info を持っている all_elements
         def piece_hash_table
           @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
-            technique_matcher_info = e.technique_matcher_info
-            if technique_matcher_info
-              v = e.trigger_piece_key
-              keys = nil
-              case v[:motion]
-              when :both
-                keys = [
-                  [v[:piece_key], v[:promoted], true],   # 「打」許可
-                  [v[:piece_key], v[:promoted], false],  # 「移動」も許可
-                ]
-              when :move
-                keys = [
-                  [v[:piece_key], v[:promoted], false],
-                ]
-              when :drop
-                keys = [
-                  [v[:piece_key], v[:promoted], true],
-                ]
-              else
-                raise "must not happen"
-              end
-              keys.each do |key|
-                m[key] ||= []
-                m[key] << e
+            if e.technique_matcher_info
+              Array.wrap(e.trigger_piece_key).each do |hv|
+                piece_hash_table_keys_by(hv).each do |key|
+                  m[key] ||= []
+                  m[key] << e
+                end
               end
             end
           end
         end
 
+        def piece_hash_table_keys_by(hv)
+          drop_p = array_from_motion(hv[:motion])
+
+          av = []
+          Array.wrap(hv[:piece_key]).each do |x|
+            Array.wrap(hv[:promoted]).each do |y|
+              Array.wrap(drop_p).each do |z|
+                av << [x, y, z]
+              end
+            end
+          end
+          av
+        end
+
+        def array_from_motion(motion)
+          case motion
+          when :move
+            [false]
+          when :drop
+            [true]
+          when :both
+            [true, false] # 「打」と「移動」を許可する
+          else
+            raise "must not happen"
+          end
+        end
+
+        ################################################################################
+
         # トリガーがある場合はそれだけ登録すればよくて
         # 登録がないものはすべてをトリガーキーと見なす
-        def soldier_hash_table
-          @soldier_hash_table ||= all_elements.each_with_object({}) do |e, m|
+        def primary_soldier_hash_table
+          @primary_soldier_hash_table ||= all_elements.each_with_object({}) do |e, m|
             if e.shape_info
               e.board_parser.primary_soldiers.each do |s|
                 # soldier 自体をキーにすればほどよく分散できる

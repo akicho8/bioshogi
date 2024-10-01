@@ -311,7 +311,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        7  (    3.6%)  Bioshogi::SkillMonitor#execute_block
 # >>   callees (196 total):
 # >>       83  (   42.3%)  Bioshogi::SkillMonitor#execute
-# >>       78  (   39.8%)  Bioshogi::TacticInfo.soldier_hash_table
+# >>       78  (   39.8%)  Bioshogi::TacticInfo.primary_soldier_hash_table
 # >>       74  (   37.8%)  Bioshogi::SkillMonitor#execute_one
 # >>       17  (    8.7%)  Bioshogi::SkillMonitor#soldier
 # >>       12  (    6.1%)  Bioshogi::Soldier#hash
@@ -326,7 +326,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
 # >>   code:
 # >>                                   |    13  |     def execute
-# >>   111   (12.1%)                   |    14  |       if e = Explain::TacticInfo.soldier_hash_table[soldier]
+# >>   111   (12.1%)                   |    14  |       if e = Explain::TacticInfo.primary_soldier_hash_table[soldier]
 # >>    74    (8.0%)                   |    15  |         e.each do |e|
 # >>                                   |    16  |           walk_counts[e.key] += 1
 # >>    74    (8.0%)                   |    17  |           execute_one(e)

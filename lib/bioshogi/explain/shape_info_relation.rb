@@ -21,7 +21,7 @@ module Bioshogi
       #   end
       # end
       #
-      # def soldier_hash_table
+      # def primary_soldier_hash_table
       #   if shape_info
       #     shape_infos.each_with_object({}) do |e, m|
       #       e.board_parser.primary_soldiers.each_with_object({}) do |s, m|
