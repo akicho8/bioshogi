@@ -5,6 +5,12 @@ module Bioshogi
     class NoteInfo
       include ApplicationMemoryRecord
       memory_record [
+        # 戦法から引っ越し
+
+        { key: "角交換型",     parent: nil,        other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  kill_count_lteq: 1,   hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil, group_key: nil,  add_to_opponent: "角交換型",     technique_matcher_info: nil, },
+        { key: "手得角交換型", parent: "角交換型", other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil, group_key: nil,  add_to_opponent: nil,            technique_matcher_info: nil, },
+        { key: "手損角交換型", parent: "角交換型", other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: :sente, not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil, group_key: nil,  add_to_opponent: "手得角交換型", technique_matcher_info: nil, },
+
         # パラメータがないものはあとで埋めるもの
 
         { key: "居飛車",    parent: nil, other_parents: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist_keys: "振り飛車", },
