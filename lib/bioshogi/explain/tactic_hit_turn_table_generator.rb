@@ -27,7 +27,7 @@ module Bioshogi
           [e, turn]
         end
 
-        list.sort_by { |e, turn| turn || 0 }.collect { |e, turn| [e.name, turn] }.to_h
+        list.sort_by { |e, turn| [turn || 0, e.name] }.collect { |e, turn| [e.name, turn] }.to_h
       end
 
       def output_file
