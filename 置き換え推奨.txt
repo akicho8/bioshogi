@@ -13,7 +13,7 @@
 ~/src/bioshogi/lib/bioshogi/explain/戦法/藤井システム.kif:9:棋戦詳細：第54期順位戦B級2組7回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/中原流相掛かり.kif:8:棋戦詳細：第4期竜王戦1組残留決定戦準決勝
 ~/src/bioshogi/lib/bioshogi/explain/戦法/阿久津流急戦矢倉.kif:8:棋戦詳細：第1回銀河戦本戦Bブロック22回戦
-~/src/bioshogi/lib/bioshogi/explain/戦法/▲７二飛亜急戦.kif:9:棋戦詳細：第60期棋聖戦
+~/src/bioshogi/lib/bioshogi/explain/戦法/△７二飛亜急戦.kif:9:棋戦詳細：第60期棋聖戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/ツノ銀中飛車.kif:8:棋戦詳細：第46期順位戦C級2組1回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/棒銀.kif:8:棋戦詳細：第50期順位戦C級1組6回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/左美濃急戦.kif:9:棋戦詳細：第60期順位戦C級2組8回戦
