@@ -112,7 +112,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 中田功XP                 | 三間飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | 真部流                   |                  |
 # >> | Bioshogi::Explain::AttackInfo    | ▲７八飛戦法             | 三間飛車         |
-# >> | Bioshogi::Explain::AttackInfo    | ４→３戦法               | 四間飛車         |
+# >> | Bioshogi::Explain::AttackInfo    | 戸部流4→3戦法               | 四間飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | 楠本式石田流             |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 新石田流                 |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 新鬼殺し                 | 三間飛車         |
