@@ -138,7 +138,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | やばボーズ流             | 一手損角換わり   |
 # >> | Bioshogi::Explain::AttackInfo    | 幻想四間飛車             | 四間飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | タランチュラ戦法         |                  |
-# >> | Bioshogi::Explain::AttackInfo    | 久夢流                   |                  |
+# >> | Bioshogi::Explain::AttackInfo    | 間宮久夢流                   |                  |
 # >> | Bioshogi::Explain::AttackInfo    | きｍきｍ金               |                  |
 # >> | Bioshogi::Explain::AttackInfo    | ポンポン桂               |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 銀雲雀                   |                  |
