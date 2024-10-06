@@ -44,7 +44,7 @@ module Bioshogi
         end
 
         if count >= 2
-          skill_monitor.skill_push(NoteInfo[:"ロケット"])
+          # skill_monitor.skill_push(NoteInfo[:"ロケット"])
           if technique_info = TechniqueInfo[:"#{count}段ロケット"] # 7段以上のロケットは除外する
             skill_monitor.skill_push(technique_info)
           end

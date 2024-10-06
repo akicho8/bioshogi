@@ -39,6 +39,12 @@ module Bioshogi
       include ShapeInfoRelation
       include TechAccessor
       include StyleAccessor
+
+      class << self
+        def rocket_list
+          @rocket_list ||= values.find_all { |e| e.key.end_with?("ロケット") }
+        end
+      end
     end
   end
 end

@@ -3,6 +3,10 @@ require "spec_helper"
 module Bioshogi
   module Explain
     describe TechniqueInfo do
+      it ".rocket_list" do
+        TechniqueInfo.rocket_list.include?(TechniqueInfo[:"6段ロケット"])
+      end
+
       def container_new
         Container::Basic.new.tap do |e|
           e.params[:skill_monitor_enable] = true

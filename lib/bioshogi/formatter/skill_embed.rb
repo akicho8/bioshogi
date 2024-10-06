@@ -29,6 +29,7 @@ module Bioshogi
             aihuri_judgement   # 両方振り飛車なら相振り
             taikoukei_judgement  # 片方だけが「振り飛車」なら、振り飛車ではない方に「対振り飛車」。両方に「対抗形」
             haisui_judgement   # 大駒がない状態で勝ったら「背水の陣」
+            rocket_judgement   # N段ロケットがあれば「ロケット」
             SugatayakiValidator.new(self).call # 穴熊の姿焼
             igyoku_judgement   # 居玉判定
             aiigyoku_judgement # 相居玉判定
@@ -163,6 +164,16 @@ module Bioshogi
                 player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
               end
             end
+          end
+        end
+      end
+
+      # N段ロケットがあれば「ロケット」
+      def rocket_judgement
+        @container.players.each do |player|
+          technique_infos = player.skill_set.technique_infos
+          if Explain::TechniqueInfo.rocket_list.any? { |e| technique_infos.include?(e) }
+            player.skill_set.list_push(Explain::NoteInfo["ロケット"])
           end
         end
       end
