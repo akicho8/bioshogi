@@ -39,7 +39,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 矢倉中飛車               |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 右四間飛車               |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 原始棒銀                 |                  |
-# >> | Bioshogi::Explain::AttackInfo    | かまいたち戦法           |                  |
+# >> | Bioshogi::Explain::AttackInfo    | 英春流かまいたち戦法           |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 高田流左玉               |                  |
 # >> | Bioshogi::Explain::AttackInfo    | 英春流カメレオン         |                  |
 # >> | Bioshogi::Explain::AttackInfo    | パックマン戦法           |                  |
