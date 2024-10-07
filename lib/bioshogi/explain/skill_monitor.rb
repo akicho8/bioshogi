@@ -259,12 +259,19 @@ module Bioshogi
 
       def cold_war_verification(e)
         # 開戦済みならskip
-        # 例えばそれまで静かで始めて角交換したときは kill_count は 1 になるので kill_count_lteq: 1 にしておけば skip されない
+        # 例えばそれまで静かで始めて角交換したときは kill_count は 1 になるので outbreak_skip: nil, kill_count_lteq: 1 にしておけば skip されない
         # 0 < 1キル → skip
         # 1 < 1キル → ok
         if v = e.kill_count_lteq
           if v >= player.container.kill_count
           else
+            throw :skip
+          end
+        end
+
+        # 「歩と角」を除く駒が取られた場合はskip
+        if e.outbreak_skip
+          if player.container.outbreak_turn # 「歩と角」を除く駒が取られた手数が入っている
             throw :skip
           end
         end
