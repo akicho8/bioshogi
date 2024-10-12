@@ -1,115 +1,110 @@
-lib/bioshogi/explain/囲い/居飛車穴熊.kif:先手の戦法：四間飛車, 腰掛け銀
-lib/bioshogi/explain/囲い/居飛車穴熊.kif:後手の戦法：対振り持久戦, 袖飛車
-lib/bioshogi/explain/囲い/串カツ囲い.kif:先手の戦法：対振り持久戦, 袖飛車
-lib/bioshogi/explain/囲い/金無双.kif:先手の戦法：向かい飛車, ６筋位取り
+lib/bioshogi/explain/戦法/四間飛車ミレニアム.kif:先手の戦法：角道オープン四間飛車, 四間飛車ミレニアム
+lib/bioshogi/explain/戦法/一間飛車.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:先手の戦法：相掛かり, 中原流相掛かり
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:後手の戦法：相掛かり, 腰掛け銀
-lib/bioshogi/explain/囲い/雲隠れ玉.kif:先手の戦法：向かい飛車, 陽動振り飛車
-lib/bioshogi/explain/囲い/雲隠れ玉.kif:*▲戦法：向かい飛車, 陽動振り飛車
-lib/bioshogi/explain/戦法/モノレール向かい飛車.kif:後手の戦法：モノレール向かい飛車, 腰掛け銀
-lib/bioshogi/explain/囲い/ビッグ4.kif:先手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/囲い/四角矢倉.kif:先手の戦法：腰掛け銀, 四手角
-lib/bioshogi/explain/備考/大駒コンプリート.kif:後手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/一間飛車.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車
-lib/bioshogi/explain/囲い/松尾流穴熊.kif:先手の戦法：対振り持久戦, 袖飛車
-lib/bioshogi/explain/囲い/豆腐矢倉.kif:後手の戦法：腰掛け銀, 右四間飛車
-lib/bioshogi/explain/戦法/角換わり早繰り銀.kif:後手の戦法：一手損角換わり, 角換わり腰掛け銀
-lib/bioshogi/explain/戦法/四間飛車ミレニアム.kif:先手の戦法：角道オープン四間飛車, 四間飛車ミレニアム
-lib/bioshogi/explain/囲い/隅矢倉.kif:先手の戦法：▲３七銀戦法, 端棒銀
-lib/bioshogi/explain/戦法/2手目△３ニ飛戦法.kif:先手の戦法：四間飛車, 早石田
-lib/bioshogi/explain/戦法/高田流左玉.kif:先手の戦法：向かい飛車, ６筋位取り, 高田流左玉
-lib/bioshogi/explain/戦法/腰掛け銀.kif:下手の戦法：腰掛け銀, 右四間飛車
-lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:先手の戦法：四間飛車, 陽動振り飛車
-lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:*▲戦法：四間飛車, 陽動振り飛車
-lib/bioshogi/explain/囲い/銀冠.kif:後手の戦法：四間飛車, 石田流
-lib/bioshogi/explain/囲い/三段右玉.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
-lib/bioshogi/explain/囲い/美濃熊囲い.kif:先手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/飯島流相掛かり引き角戦法.kif:先手の戦法：相掛かり棒銀, UFO銀, 飯島流相掛かり引き角戦法
-lib/bioshogi/explain/囲い/四枚美濃.kif:先手の戦法：三間飛車, 向かい飛車
-lib/bioshogi/explain/囲い/裏アヒル囲い.kif:先手の戦法：目くらまし戦法, 裏アヒル戦法
-lib/bioshogi/explain/囲い/大隅囲い.kif:先手の戦法：角道オープン四間飛車, 耀龍四間飛車
-lib/bioshogi/explain/戦法/左美濃急戦.kif:先手の戦法：左美濃急戦, 角換わり棒銀
-lib/bioshogi/explain/戦法/右四間飛車急戦.kif:先手の戦法：四間飛車, 角交換振り飛車
-lib/bioshogi/explain/戦法/矢倉棒銀.kif:後手の戦法：矢倉棒銀, 四手角
-lib/bioshogi/explain/囲い/高美濃囲い.kif:後手の戦法：三間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/雀刺し.kif:先手の戦法：▲３七銀戦法, 雀刺し
-lib/bioshogi/explain/戦法/端棒銀.kif:先手の戦法：端棒銀, 角交換振り飛車
-lib/bioshogi/explain/囲い/流れ矢倉.kif:後手の戦法：腰掛け銀, 右四間飛車
-lib/bioshogi/explain/囲い/カブト美濃.kif:先手の戦法：相掛かり, 陽動振り飛車
-lib/bioshogi/explain/囲い/カタ囲い.kif:先手の戦法：相掛かり, 石田流
-lib/bioshogi/explain/囲い/カタ囲い.kif:後手の戦法：相掛かり, 腰掛け銀
-lib/bioshogi/explain/戦法/新米長玉.kif:後手の戦法：新米長玉, 新嬉野流, 棒玉
-lib/bioshogi/explain/戦法/阿久津流急戦矢倉.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
-lib/bioshogi/explain/戦法/ダイレクト向かい飛車.kif:後手の戦法：一手損角換わり, ダイレクト向かい飛車
-lib/bioshogi/explain/戦法/玉頭銀.kif:後手の戦法：玉頭銀, 原始棒銀
-lib/bioshogi/explain/戦法/屋敷流二枚銀棒銀型.kif:先手の戦法：原始棒銀, 棒銀, 屋敷流二枚銀棒銀型
-lib/bioshogi/explain/戦法/原始棒銀.kif:先手の戦法：原始棒銀, 棒銀
-lib/bioshogi/explain/戦法/戸部流4→3戦法.kif:後手の戦法：角道オープン四間飛車, 戸部流4→3戦法
-lib/bioshogi/explain/戦法/レグスペ.kif:後手の戦法：一手損角換わり, レグスペ
 lib/bioshogi/explain/戦法/相掛かり.kif:後手の戦法：△２三歩戦法, 相掛かり
-lib/bioshogi/explain/戦法/右四間飛車.kif:先手の戦法：腰掛け銀, 右四間飛車
+lib/bioshogi/explain/戦法/レグスペ.kif:後手の戦法：一手損角換わり, レグスペ
+lib/bioshogi/explain/戦法/阿久津流急戦矢倉.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
+lib/bioshogi/explain/戦法/角換わり早繰り銀.kif:後手の戦法：一手損角換わり, 角換わり腰掛け銀
+lib/bioshogi/explain/戦法/戸部流4→3戦法.kif:後手の戦法：角道オープン四間飛車, 戸部流4→3戦法
+lib/bioshogi/explain/戦法/2手目△３ニ飛戦法.kif:先手の戦法：四間飛車, 早石田
 lib/bioshogi/explain/戦法/穴角戦法.kif:先手の戦法：三間飛車, 穴角戦法
 lib/bioshogi/explain/戦法/穴角戦法.kif:後手の戦法：右四間飛車, 腰掛け銀, 対振り持久戦
-lib/bioshogi/explain/戦法/三間飛車ミレニアム.kif:先手の戦法：早石田, 三間飛車ミレニアム
-lib/bioshogi/explain/戦法/金銀橋.kif:後手の戦法：右四間飛車, 腰掛け銀
-lib/bioshogi/explain/戦法/ツノ銀中飛車.kif:後手の戦法：阪田流2手目△9四歩, 対振り持久戦, 袖飛車
-lib/bioshogi/explain/戦法/鷺宮定跡.kif:先手の戦法：鷺宮定跡, 袖飛車
-lib/bioshogi/explain/戦法/鷺宮定跡.kif:*▲戦法：鷺宮定跡, 袖飛車
-lib/bioshogi/explain/戦法/加藤流袖飛車.kif:後手の戦法：加藤流袖飛車, 袖飛車
-lib/bioshogi/explain/戦法/加藤流袖飛車.kif:*△戦法：加藤流袖飛車, 袖飛車
-lib/bioshogi/explain/戦法/超急戦.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車
 lib/bioshogi/explain/戦法/ショーダンシステム.kif:先手の戦法：初手▲７八飛戦法, 早石田
-lib/bioshogi/explain/戦法/急戦棒銀.kif:後手の戦法：原始棒銀, 急戦棒銀
-lib/bioshogi/explain/戦法/トマホーク.kif:先手の戦法：三間飛車, トマホーク
-lib/bioshogi/explain/戦法/△２三歩戦法.kif:後手の戦法：△２三歩戦法, 一手損角換わり
-lib/bioshogi/explain/戦法/一間飛車穴熊.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車穴熊
-lib/bioshogi/explain/戦法/遠山流.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車, 遠山流
-lib/bioshogi/explain/戦法/xaby角戦法.kif:後手の戦法：一手損角換わり, xaby角戦法
-lib/bioshogi/explain/戦法/中飛車左穴熊.kif:後手の戦法：陽動振り飛車, 中飛車左穴熊
-lib/bioshogi/explain/戦法/竹部スペシャル.kif:先手の戦法：横歩取り, 竹部スペシャル
-lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法, 中原飛車
-lib/bioshogi/explain/戦法/▲３七銀戦法.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
-lib/bioshogi/explain/戦法/桐山流タテ歩棒銀.kif:先手の戦法：ひねり飛車, 桐山流タテ歩棒銀
-lib/bioshogi/explain/囲い/空中楼閣.kif:後手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/暴銀.kif:先手の戦法：角道オープン四間飛車, 角交換振り飛車, 暴銀
-lib/bioshogi/explain/戦法/5筋位取り中飛車.kif:先手の戦法：原始中飛車, 5筋位取り中飛車
 lib/bioshogi/explain/戦法/裏アヒル戦法.kif:先手の戦法：目くらまし戦法, 裏アヒル戦法
-lib/bioshogi/explain/戦法/角換わり腰掛け銀.kif:後手の戦法：角換わり腰掛け銀, 右四間飛車
-lib/bioshogi/explain/戦法/カニカニ金.kif:先手の戦法：カニカニ金, 陽動振り飛車
-lib/bioshogi/explain/戦法/相振り飛車.kif:*△戦法：2手目△３ニ飛戦法, 相振り飛車
-lib/bioshogi/explain/戦法/稲庭戦法.kif:先手の戦法：嬉野流, 稲庭戦法
-lib/bioshogi/explain/戦法/Uターン飛車.kif:後手の戦法：四間飛車, Uターン飛車
-lib/bioshogi/explain/戦法/菅井流三間飛車.kif:先手の戦法：角換わり, 菅井流三間飛車
-lib/bioshogi/explain/戦法/陽動振り飛車.kif:先手の戦法：四間飛車, 陽動振り飛車
-lib/bioshogi/explain/戦法/陽動振り飛車.kif:*▲戦法：四間飛車, 陽動振り飛車
-lib/bioshogi/explain/戦法/６筋位取り.kif:先手の戦法：英春流かまいたち戦法, ６筋位取り
-lib/bioshogi/explain/戦法/初手７八銀戦法.kif:先手の戦法：初手７八銀戦法, 四間飛車
-lib/bioshogi/explain/戦法/英ちゃん流中飛車.kif:先手の戦法：嬉野流, 英ちゃん流中飛車, アヒル戦法
+lib/bioshogi/explain/戦法/高田流左玉.kif:先手の戦法：向かい飛車, ６筋位取り, 高田流左玉
+lib/bioshogi/explain/戦法/ダイレクト向かい飛車.kif:後手の戦法：一手損角換わり, ダイレクト向かい飛車
+lib/bioshogi/explain/戦法/桐山流タテ歩棒銀.kif:先手の戦法：ひねり飛車, 桐山流タテ歩棒銀
+lib/bioshogi/explain/戦法/モノレール向かい飛車.kif:後手の戦法：モノレール向かい飛車, 腰掛け銀
+lib/bioshogi/explain/戦法/金銀橋.kif:後手の戦法：右四間飛車, 腰掛け銀
+lib/bioshogi/explain/囲い/居飛車穴熊.kif:先手の戦法：四間飛車, 腰掛け銀
+lib/bioshogi/explain/囲い/居飛車穴熊.kif:後手の戦法：対振り持久戦, 袖飛車
+lib/bioshogi/explain/囲い/ビッグ4.kif:先手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/囲い/金無双.kif:先手の戦法：向かい飛車, ６筋位取り
+lib/bioshogi/explain/備考/大駒コンプリート.kif:後手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/囲い/四角矢倉.kif:先手の戦法：腰掛け銀, 四手角
+lib/bioshogi/explain/囲い/串カツ囲い.kif:先手の戦法：対振り持久戦, 袖飛車
+lib/bioshogi/explain/囲い/松尾流穴熊.kif:先手の戦法：対振り持久戦, 袖飛車
+lib/bioshogi/explain/囲い/雲隠れ玉.kif:先手の戦法：向かい飛車, 陽動振り飛車
+lib/bioshogi/explain/囲い/雲隠れ玉.kif:*▲戦法：向かい飛車, 陽動振り飛車
+lib/bioshogi/explain/戦法/左美濃急戦.kif:先手の戦法：左美濃急戦, 角換わり棒銀
+lib/bioshogi/explain/戦法/玉頭銀.kif:後手の戦法：玉頭銀, 原始棒銀
+lib/bioshogi/explain/戦法/矢倉棒銀.kif:後手の戦法：矢倉棒銀, 四手角
+lib/bioshogi/explain/囲い/流れ矢倉.kif:後手の戦法：腰掛け銀, 右四間飛車
+lib/bioshogi/explain/囲い/裏アヒル囲い.kif:先手の戦法：目くらまし戦法, 裏アヒル戦法
+lib/bioshogi/explain/囲い/豆腐矢倉.kif:後手の戦法：腰掛け銀, 右四間飛車
+lib/bioshogi/explain/囲い/カブト美濃.kif:先手の戦法：相掛かり, 陽動振り飛車
+lib/bioshogi/explain/戦法/端棒銀.kif:先手の戦法：端棒銀, 角交換振り飛車
+lib/bioshogi/explain/囲い/隅矢倉.kif:先手の戦法：▲３七銀戦法, 端棒銀
+lib/bioshogi/explain/囲い/カタ囲い.kif:先手の戦法：相掛かり, 石田流
+lib/bioshogi/explain/囲い/カタ囲い.kif:後手の戦法：相掛かり, 腰掛け銀
+lib/bioshogi/explain/囲い/三段右玉.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
+lib/bioshogi/explain/囲い/美濃熊囲い.kif:先手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/囲い/四枚美濃.kif:先手の戦法：三間飛車, 向かい飛車
+lib/bioshogi/explain/戦法/新米長玉.kif:後手の戦法：新米長玉, 新嬉野流, 棒玉
+lib/bioshogi/explain/囲い/大隅囲い.kif:先手の戦法：角道オープン四間飛車, 耀龍四間飛車
+lib/bioshogi/explain/戦法/原始棒銀.kif:先手の戦法：原始棒銀, 棒銀
+lib/bioshogi/explain/囲い/高美濃囲い.kif:後手の戦法：三間飛車, 向かい飛車
+lib/bioshogi/explain/戦法/三間飛車ミレニアム.kif:先手の戦法：早石田, 三間飛車ミレニアム
+lib/bioshogi/explain/囲い/空中楼閣.kif:後手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/戦法/xaby角戦法.kif:後手の戦法：一手損角換わり, xaby角戦法
+lib/bioshogi/explain/戦法/急戦棒銀.kif:後手の戦法：原始棒銀, 急戦棒銀
 lib/bioshogi/explain/戦法/矢倉中飛車.kif:後手の戦法：矢倉中飛車, 陽動振り飛車
 lib/bioshogi/explain/戦法/矢倉中飛車.kif:*△戦法：矢倉中飛車, 陽動振り飛車
-lib/bioshogi/explain/戦法/花村流名古屋戦法.kif:先手の戦法：６筋位取り, 花村流名古屋戦法
-lib/bioshogi/explain/戦法/英春流カメレオン.kif:先手の戦法：英春流カメレオン, 向かい飛車
-lib/bioshogi/explain/戦法/青野流.kif:先手の戦法：横歩取り, 青野流
-lib/bioshogi/explain/戦法/角換わり新型.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
-lib/bioshogi/explain/戦法/飛騨の中飛車合掌造り.kif:先手の戦法：ゴキゲン中飛車, 飛騨の中飛車合掌造り
-lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:先手の戦法：６筋位取り, 清野流岐阜戦法
-lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:後手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/菜々河流向かい飛車.kif:後手の戦法：菜々河流向かい飛車, 角交換振り飛車
-lib/bioshogi/explain/戦法/▲８五飛車戦法.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法
-lib/bioshogi/explain/戦法/ひねり飛車.kif:先手の戦法：相掛かり, ひねり飛車
-lib/bioshogi/explain/戦法/英春流かまいたち戦法.kif:後手の戦法：英春流かまいたち戦法, ５筋位取り, 5筋位取り中飛車, 対振り持久戦
-lib/bioshogi/explain/戦法/角換わり棒銀.kif:先手の戦法：原始棒銀, 角換わり棒銀
-lib/bioshogi/explain/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
-lib/bioshogi/explain/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
-lib/bioshogi/explain/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車
-lib/bioshogi/explain/戦法/対ひねり飛車たこ金戦法.kif:先手の戦法：相掛かり, ひねり飛車
-lib/bioshogi/explain/戦法/対ひねり飛車たこ金戦法.kif:後手の戦法：相掛かり, 対ひねり飛車たこ金戦法, 棒金
-lib/bioshogi/explain/戦法/脇システム.kif:先手の戦法：▲３七銀戦法, 脇システム, 矢倉棒銀
-lib/bioshogi/explain/戦法/新村田システム.kif:先手の戦法：相掛かり, 新村田システム
-lib/bioshogi/explain/戦法/勇気流.kif:先手の戦法：横歩取り, 勇気流
-lib/bioshogi/explain/戦法/UFO銀.kif:先手の戦法：相掛かり棒銀, UFO銀
-lib/bioshogi/explain/戦法/一直線穴熊.kif:先手の戦法：対振り持久戦, 一直線穴熊
-lib/bioshogi/explain/戦法/一直線穴熊.kif:後手の戦法：腰掛け銀, 幻想四間飛車
+lib/bioshogi/explain/戦法/腰掛け銀.kif:下手の戦法：腰掛け銀, 右四間飛車
+lib/bioshogi/explain/戦法/超急戦.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車
+lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:先手の戦法：四間飛車, 陽動振り飛車
+lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:*▲戦法：四間飛車, 陽動振り飛車
+lib/bioshogi/explain/戦法/竹部スペシャル.kif:先手の戦法：横歩取り, 竹部スペシャル
+lib/bioshogi/explain/戦法/初手７八銀戦法.kif:先手の戦法：初手７八銀戦法, 四間飛車
+lib/bioshogi/explain/戦法/菅井流三間飛車.kif:先手の戦法：角換わり, 菅井流三間飛車
+lib/bioshogi/explain/戦法/△２三歩戦法.kif:後手の戦法：△２三歩戦法, 一手損角換わり
+lib/bioshogi/explain/囲い/銀冠.kif:後手の戦法：四間飛車, 石田流
 lib/bioshogi/explain/戦法/対振り持久戦.kif:先手の戦法：対振り持久戦, 袖飛車
 lib/bioshogi/explain/戦法/対振り持久戦.kif:後手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/戦法/青野流.kif:先手の戦法：横歩取り, 青野流
+lib/bioshogi/explain/戦法/新村田システム.kif:先手の戦法：相掛かり, 新村田システム
 lib/bioshogi/explain/戦法/阪田流向飛車.kif:後手の戦法：角換わり, 阪田流向飛車
+lib/bioshogi/explain/戦法/一直線穴熊.kif:先手の戦法：対振り持久戦, 一直線穴熊
+lib/bioshogi/explain/戦法/一直線穴熊.kif:後手の戦法：腰掛け銀, 幻想四間飛車
+lib/bioshogi/explain/戦法/Uターン飛車.kif:後手の戦法：四間飛車, Uターン飛車
+lib/bioshogi/explain/戦法/遠山流.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車, 遠山流
+lib/bioshogi/explain/戦法/飯島流相掛かり引き角戦法.kif:先手の戦法：相掛かり棒銀, UFO銀, 飯島流相掛かり引き角戦法
+lib/bioshogi/explain/戦法/脇システム.kif:先手の戦法：▲３七銀戦法, 脇システム, 矢倉棒銀
+lib/bioshogi/explain/戦法/暴銀.kif:先手の戦法：角道オープン四間飛車, 角交換振り飛車, 暴銀
+lib/bioshogi/explain/戦法/ツノ銀中飛車.kif:後手の戦法：阪田流2手目△9四歩, 対振り持久戦, 袖飛車
+lib/bioshogi/explain/戦法/右四間飛車急戦.kif:先手の戦法：四間飛車, 角交換振り飛車
+lib/bioshogi/explain/戦法/屋敷流二枚銀棒銀型.kif:先手の戦法：原始棒銀, 棒銀, 屋敷流二枚銀棒銀型
+lib/bioshogi/explain/戦法/右四間飛車.kif:先手の戦法：腰掛け銀, 右四間飛車
+lib/bioshogi/explain/戦法/雀刺し.kif:先手の戦法：▲３七銀戦法, 雀刺し
+lib/bioshogi/explain/戦法/▲３七銀戦法.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
+lib/bioshogi/explain/戦法/角換わり腰掛け銀.kif:後手の戦法：角換わり腰掛け銀, 右四間飛車
+lib/bioshogi/explain/戦法/対ひねり飛車たこ金戦法.kif:先手の戦法：相掛かり, ひねり飛車
+lib/bioshogi/explain/戦法/対ひねり飛車たこ金戦法.kif:後手の戦法：相掛かり, 対ひねり飛車たこ金戦法, 棒金
+lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法, 中原飛車
+lib/bioshogi/explain/戦法/稲庭戦法.kif:先手の戦法：嬉野流, 稲庭戦法
+lib/bioshogi/explain/戦法/角換わり棒銀.kif:先手の戦法：原始棒銀, 角換わり棒銀
+lib/bioshogi/explain/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
+lib/bioshogi/explain/戦法/飛騨の中飛車合掌造り.kif:先手の戦法：ゴキゲン中飛車, 飛騨の中飛車合掌造り
+lib/bioshogi/explain/戦法/菜々河流向かい飛車.kif:後手の戦法：菜々河流向かい飛車, 角交換振り飛車
+lib/bioshogi/explain/戦法/６筋位取り.kif:先手の戦法：英春流かまいたち戦法, ６筋位取り
+lib/bioshogi/explain/戦法/中飛車左穴熊.kif:後手の戦法：陽動振り飛車, 中飛車左穴熊
+lib/bioshogi/explain/戦法/ひねり飛車.kif:先手の戦法：相掛かり, ひねり飛車
+lib/bioshogi/explain/戦法/▲８五飛車戦法.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法
+lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:先手の戦法：６筋位取り, 清野流岐阜戦法
+lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:後手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/戦法/一間飛車穴熊.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車穴熊
+lib/bioshogi/explain/戦法/相振り飛車.kif:*△戦法：2手目△３ニ飛戦法, 相振り飛車
+lib/bioshogi/explain/戦法/陽動振り飛車.kif:先手の戦法：四間飛車, 陽動振り飛車
+lib/bioshogi/explain/戦法/陽動振り飛車.kif:*▲戦法：四間飛車, 陽動振り飛車
+lib/bioshogi/explain/戦法/英ちゃん流中飛車.kif:先手の戦法：嬉野流, 英ちゃん流中飛車, アヒル戦法
+lib/bioshogi/explain/戦法/UFO銀.kif:先手の戦法：相掛かり棒銀, UFO銀
+lib/bioshogi/explain/戦法/勇気流.kif:先手の戦法：横歩取り, 勇気流
+lib/bioshogi/explain/戦法/英春流かまいたち戦法.kif:後手の戦法：英春流かまいたち戦法, ５筋位取り, 5筋位取り中飛車, 対振り持久戦
+lib/bioshogi/explain/戦法/英春流カメレオン.kif:先手の戦法：英春流カメレオン, 向かい飛車
+lib/bioshogi/explain/戦法/花村流名古屋戦法.kif:先手の戦法：６筋位取り, 花村流名古屋戦法
+lib/bioshogi/explain/戦法/カニカニ金.kif:先手の戦法：カニカニ金, 陽動振り飛車
+lib/bioshogi/explain/戦法/角換わり新型.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
+lib/bioshogi/explain/戦法/5筋位取り中飛車.kif:先手の戦法：原始中飛車, 5筋位取り中飛車
+lib/bioshogi/explain/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
+lib/bioshogi/explain/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車
