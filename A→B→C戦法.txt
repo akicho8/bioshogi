@@ -85,7 +85,7 @@ lib/bioshogi/explain/戦法/脇システム.kif:先手の戦法：▲３七銀�
 lib/bioshogi/explain/戦法/腰掛け銀.kif:下手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/explain/戦法/花村流名古屋戦法.kif:先手の戦法：6筋位取り, 花村流名古屋戦法
 lib/bioshogi/explain/戦法/英ちゃん流中飛車.kif:先手の戦法：嬉野流, 英ちゃん流中飛車, アヒル戦法
-lib/bioshogi/explain/戦法/英春流かまいたち戦法.kif:後手の戦法：英春流かまいたち戦法, ５筋位取り, 5筋位取り中飛車, 対振り持久戦
+lib/bioshogi/explain/戦法/英春流かまいたち戦法.kif:後手の戦法：英春流かまいたち戦法, 5筋位取り, 5筋位取り中飛車, 対振り持久戦
 lib/bioshogi/explain/戦法/英春流カメレオン.kif:先手の戦法：英春流カメレオン, 向かい飛車
 lib/bioshogi/explain/戦法/菅井流三間飛車.kif:先手の戦法：角換わり, 菅井流三間飛車
 lib/bioshogi/explain/戦法/菜々河流向かい飛車.kif:後手の戦法：菜々河流向かい飛車, 角交換振り飛車

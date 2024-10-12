@@ -148,8 +148,8 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 新村田システム           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 玉頭位取り               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 6筋位取り               |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ５筋位取り               |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 銀雲雀                   | ５筋位取り         |
+# >> | Bioshogi::Explain::AttackInfo    | 5筋位取り               |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 銀雲雀                   | 5筋位取り         |
 # >> | Bioshogi::Explain::AttackInfo    | 地下鉄飛車               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 飯島流引き角戦法         |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 飯島流相掛かり引き角戦法 |                    |
