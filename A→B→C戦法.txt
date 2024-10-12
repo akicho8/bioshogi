@@ -26,6 +26,7 @@ lib/bioshogi/explain/囲い/雲隠れ玉.kif:*▲戦法：向かい飛車, 陽�
 lib/bioshogi/explain/囲い/高美濃囲い.kif:後手の戦法：三間飛車, 向かい飛車
 lib/bioshogi/explain/戦法/2手目△３ニ飛戦法.kif:先手の戦法：四間飛車, 早石田
 lib/bioshogi/explain/戦法/5筋位取り中飛車.kif:先手の戦法：原始中飛車, 5筋位取り中飛車
+lib/bioshogi/explain/戦法/6筋位取り.kif:先手の戦法：英春流かまいたち戦法, 6筋位取り
 lib/bioshogi/explain/戦法/UFO銀.kif:先手の戦法：相掛かり棒銀, UFO銀
 lib/bioshogi/explain/戦法/Uターン飛車.kif:後手の戦法：四間飛車, Uターン飛車
 lib/bioshogi/explain/戦法/xaby角戦法.kif:後手の戦法：一手損角換わり, xaby角戦法
@@ -106,4 +107,3 @@ lib/bioshogi/explain/戦法/青野流.kif:先手の戦法：横歩取り, 青野
 lib/bioshogi/explain/戦法/飛騨の中飛車合掌造り.kif:先手の戦法：ゴキゲン中飛車, 飛騨の中飛車合掌造り
 lib/bioshogi/explain/戦法/飯島流相掛かり引き角戦法.kif:先手の戦法：相掛かり棒銀, UFO銀, 飯島流相掛かり引き角戦法
 lib/bioshogi/explain/戦法/高田流左玉.kif:先手の戦法：向かい飛車, 6筋位取り, 高田流左玉
-lib/bioshogi/explain/戦法/6筋位取り.kif:先手の戦法：英春流かまいたち戦法, 6筋位取り
