@@ -94,7 +94,6 @@ lib/bioshogi/explain/戦法/角換わり棒銀.kif:先手の戦法：原始棒�
 lib/bioshogi/explain/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
 lib/bioshogi/explain/戦法/角換わり腰掛け銀.kif:後手の戦法：角換わり腰掛け銀, 右四間飛車
 lib/bioshogi/explain/戦法/超急戦.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車
-lib/bioshogi/explain/戦法/遠山流.kif:後手の戦法：ゴキゲン中飛車, 角交換振り飛車, 遠山流
 lib/bioshogi/explain/戦法/金銀橋.kif:後手の戦法：右四間飛車, 腰掛け銀
 lib/bioshogi/explain/戦法/阪田流向飛車.kif:後手の戦法：角換わり, 阪田流向飛車
 lib/bioshogi/explain/戦法/阿久津流急戦矢倉.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
