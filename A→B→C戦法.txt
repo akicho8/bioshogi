@@ -20,6 +20,7 @@ lib/bioshogi/explain/囲い/裏アヒル囲い.kif:先手の戦法：目くら�
 lib/bioshogi/explain/囲い/豆腐矢倉.kif:後手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/explain/囲い/金無双.kif:先手の戦法：向かい飛車, 6筋位取り
 lib/bioshogi/explain/囲い/銀冠.kif:後手の戦法：四間飛車, 石田流
+lib/bioshogi/explain/囲い/銀冠穴熊.kif:先手の戦法：四間飛車ミレニアム, 向かい飛車
 lib/bioshogi/explain/囲い/隅矢倉.kif:先手の戦法：▲３七銀戦法, 端棒銀
 lib/bioshogi/explain/囲い/雲隠れ玉.kif:先手の戦法：向かい飛車, 陽動振り飛車
 lib/bioshogi/explain/囲い/雲隠れ玉.kif:*▲戦法：向かい飛車, 陽動振り飛車
