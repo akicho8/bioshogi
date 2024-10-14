@@ -5,7 +5,6 @@ lib/bioshogi/explain/囲い/カタ囲い.kif:先手の戦法：相掛かり, 石
 lib/bioshogi/explain/囲い/カタ囲い.kif:後手の戦法：相掛かり, 腰掛け銀
 lib/bioshogi/explain/囲い/カブト美濃.kif:先手の戦法：相掛かり, 陽動振り飛車
 lib/bioshogi/explain/囲い/ビッグ4.kif:先手の戦法：四間飛車, 向かい飛車
-lib/bioshogi/explain/囲い/三段右玉.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
 lib/bioshogi/explain/囲い/串カツ囲い.kif:先手の戦法：対振り持久戦, 袖飛車
 lib/bioshogi/explain/囲い/四枚穴熊.kif:後手の戦法：四間飛車, 向かい飛車
 lib/bioshogi/explain/囲い/四枚美濃.kif:先手の戦法：三間飛車, 向かい飛車
@@ -87,7 +86,6 @@ lib/bioshogi/explain/戦法/英春流カメレオン.kif:先手の戦法：英�
 lib/bioshogi/explain/戦法/菅井流三間飛車.kif:先手の戦法：角換わり, 菅井流三間飛車
 lib/bioshogi/explain/戦法/菜々河流向かい飛車.kif:後手の戦法：菜々河流向かい飛車, 角交換振り飛車
 lib/bioshogi/explain/戦法/裏アヒル戦法.kif:先手の戦法：目くらまし戦法, 裏アヒル戦法
-lib/bioshogi/explain/戦法/角換わり新型.kif:先手の戦法：角換わり腰掛け銀, 角換わり新型
 lib/bioshogi/explain/戦法/角換わり早繰り銀.kif:後手の戦法：一手損角換わり, 角換わり腰掛け銀
 lib/bioshogi/explain/戦法/角換わり棒銀.kif:先手の戦法：原始棒銀, 角換わり棒銀
 lib/bioshogi/explain/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
