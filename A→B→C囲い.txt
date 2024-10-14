@@ -3,7 +3,6 @@ lib/bioshogi/explain/囲い/あずまや囲い.kif:先手の囲い：あずま�
 lib/bioshogi/explain/囲い/あずまや囲い.kif:後手の囲い：無敵囲い, 居玉
 lib/bioshogi/explain/囲い/カブト美濃.kif:先手の囲い：坊主美濃, カブト美濃
 lib/bioshogi/explain/囲い/ムリヤリ矢倉.kif:後手の囲い：ムリヤリ矢倉, 金矢倉
-lib/bioshogi/explain/囲い/右玉.kif:先手の囲い：カブト囲い, 銀矢倉
 lib/bioshogi/explain/囲い/紙穴熊.kif:先手の囲い：紙穴熊, 振り飛車穴熊
 lib/bioshogi/explain/囲い/角矢倉.kif:先手の囲い：カブト囲い, 角矢倉
 lib/bioshogi/explain/囲い/高矢倉.kif:先手の囲い：オリジナル雁木, 高矢倉
