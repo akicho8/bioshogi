@@ -31,7 +31,6 @@ lib/bioshogi/explain/戦法/6筋位取り.kif:先手の戦法：英春流かま�
 lib/bioshogi/explain/戦法/UFO銀.kif:先手の戦法：相掛かり棒銀, UFO銀
 lib/bioshogi/explain/戦法/Uターン飛車.kif:後手の戦法：四間飛車, Uターン飛車
 lib/bioshogi/explain/戦法/▲３七銀戦法.kif:先手の戦法：▲３七銀戦法, 陽動振り飛車
-lib/bioshogi/explain/戦法/▲８五飛車戦法.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法
 lib/bioshogi/explain/戦法/△２三歩戦法.kif:後手の戦法：△２三歩戦法, 一手損角換わり
 lib/bioshogi/explain/戦法/ひねり飛車.kif:先手の戦法：相掛かり, ひねり飛車
 lib/bioshogi/explain/戦法/カニカニ金.kif:先手の戦法：カニカニ金, 陽動振り飛車
@@ -46,7 +45,7 @@ lib/bioshogi/explain/戦法/一間飛車穴熊.kif:後手の戦法：阪田流2�
 lib/bioshogi/explain/戦法/三間飛車ミレニアム.kif:先手の戦法：早石田, 三間飛車ミレニアム
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:先手の戦法：相掛かり, 中原流相掛かり
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:後手の戦法：相掛かり, 腰掛け銀
-lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△３三角型空中戦法, ▲８五飛車戦法, 中原飛車
+lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△３三角型空中戦法, 中原飛車
 lib/bioshogi/explain/戦法/中飛車左穴熊.kif:後手の戦法：陽動振り飛車, 中飛車左穴熊
 lib/bioshogi/explain/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/explain/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車

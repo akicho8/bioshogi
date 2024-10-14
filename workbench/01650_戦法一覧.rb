@@ -65,7 +65,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 中原飛車                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 腰掛け銀                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 鎖鎌銀                   |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲８五飛車戦法           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 中座飛車           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | UFO銀                    |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 横歩取り                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | △３三角型空中戦法       |                    |

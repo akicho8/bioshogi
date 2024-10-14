@@ -50,7 +50,7 @@
 ~/src/bioshogi/lib/bioshogi/explain/戦法/棒金.kif:8:棋戦詳細：第26回早指し将棋選手権戦予選
 ~/src/bioshogi/lib/bioshogi/explain/戦法/早石田.kif:8:棋戦詳細：第12期十段戦リーグ
 ~/src/bioshogi/lib/bioshogi/explain/戦法/向かい飛車.kif:8:棋戦詳細：第10期竜王戦2組昇級者決定戦決勝
-~/src/bioshogi/lib/bioshogi/explain/戦法/▲８五飛車戦法.kif:10:棋戦詳細：第62期順位戦C級2組7回戦
+~/src/bioshogi/lib/bioshogi/explain/戦法/中座飛車.kif:10:棋戦詳細：第62期順位戦C級2組7回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/木村定跡.kif:9:棋戦詳細：定跡実験室
 ~/src/bioshogi/lib/bioshogi/explain/戦法/角換わり棒銀.kif:8:棋戦詳細：第50期順位戦C級1組6回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/三間飛車.kif:8:棋戦詳細：第26回早指し将棋選手権戦予選
