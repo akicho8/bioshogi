@@ -1,4 +1,5 @@
 lib/bioshogi/explain/備考/大駒コンプリート.kif:後手の戦法：四間飛車, 向かい飛車
+lib/bioshogi/explain/囲い/_▲7七金型雁木.kif:後手の戦法：袖飛車, 地下鉄飛車
 lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:先手の戦法：四間飛車, 陽動振り飛車
 lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:*▲戦法：四間飛車, 陽動振り飛車
 lib/bioshogi/explain/囲い/カタ囲い.kif:先手の戦法：相掛かり, 石田流
