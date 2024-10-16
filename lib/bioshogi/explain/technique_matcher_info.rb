@@ -102,7 +102,7 @@ module Bioshogi
 
         {
           key: "腹銀",
-          logic_desc: "銀を打ったり移動したとき左右どちらかに相手の玉がある",
+          logic_desc: "銀を打ったとき左右どちらかに相手の玉がある",
           verify_process: proc {
             soldier = executor.hand.soldier
 
@@ -115,6 +115,22 @@ module Bioshogi
               end
             end
             unless retv
+              throw :skip
+            end
+          },
+        },
+
+        {
+          key: "尻銀",
+          logic_desc: "銀を打ったとき下に相手の玉がある",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+            v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
+            unless s = surface[v]
+              throw :skip
+            end
+            unless s.piece.key == :king && s.location != soldier.location
               throw :skip
             end
           },
@@ -228,6 +244,22 @@ module Bioshogi
           },
         },
 
+        {
+          key: "歩頭の桂",
+          logic_desc: "打った桂の上に相手の歩がある",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+            unless s = surface[v]
+              throw :skip
+            end
+            unless s.piece.key == :pawn && !s.promoted && s.location != soldier.location
+              throw :skip
+            end
+          },
+        },
+
         # {
         #   key: "ロケット",
         #   logic_desc: "打った香の下に自分の香か飛か龍がある",
@@ -239,7 +271,7 @@ module Bioshogi
         #     # p place.y
         #     # p place.y.flip
         #     # place = Place.lookup([place.x.value, place.y.value + soldier.bottom_spaces * soldier.location.value_sign])
-        # 
+        #
         #     rook_count = 0
         #     lance_count = 0
         #     if soldier.piece.key == :rook
@@ -247,7 +279,7 @@ module Bioshogi
         #     else
         #       lance_count += 1
         #     end
-        # 
+        #
         #     [1, -1].each do |sign| # 1:↓ -1:↑
         #       (1..).each do |i|
         #         place = Place.lookup([soldier.place.x.value, soldier.place.y.value + (i * soldier.location.value_sign * sign)])
@@ -269,10 +301,10 @@ module Bioshogi
         #         end
         #       end
         #     end
-        # 
+        #
         #     p rook_count
         #     p lance_count
-        # 
+        #
         #     count = rook_count + lance_count
         #     if lance_count >= 1 && count >= 2
         #       # raise "ここで count 段ロケットということはわかったがこれをどうタグに入れるか？"
