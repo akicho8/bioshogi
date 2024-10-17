@@ -115,6 +115,38 @@ module Bioshogi
         },
 
         {
+          key: "位の確保",
+          logic_desc: "5段目の歩の下に銀を移動する",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+
+            # 6段目に移動した
+            unless place.y.value == (Dimension::PlaceY.dimension / 2 + soldier.location.value_sign)
+              throw :skip
+            end
+
+            # 両端2列は含まない
+            padding = 2
+            unless (padding...(Dimension::PlaceX.dimension - padding)).cover?(place.x.value)
+              throw :skip
+            end
+
+            # 自分の歩の下に移動した
+            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+            unless (s = surface[v]) && s.piece.key == :pawn && !s.promoted && s.location == soldier.location
+              throw :skip
+            end
+
+            # 自分の歩の上には何もないこと
+            v = Place.lookup([place.x.value, place.y.value - (soldier.location.value_sign * 2)])
+            if surface[v]
+              throw :skip
+            end
+          },
+        },
+
+        {
           key: "パンツを脱ぐ",
           logic_desc: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           verify_process: proc {
