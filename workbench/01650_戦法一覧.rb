@@ -195,7 +195,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 勇気流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 竹部スペシャル           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 極限早繰り銀             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 33金型早繰り銀           | 角換わり早繰り銀   |
+# >> | Bioshogi::Explain::AttackInfo    | △3三金型早繰り銀           | 角換わり早繰り銀   |
 # >> | Bioshogi::Explain::AttackInfo    | 三間飛車藤井システム     | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | トマホーク               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 羽生式袖飛車             |                    |
