@@ -34,7 +34,7 @@ lib/bioshogi/explain/戦法/▲３七銀戦法.kif:先手の戦法：▲３七�
 lib/bioshogi/explain/戦法/△２三歩戦法.kif:後手の戦法：△２三歩戦法, 一手損角換わり
 lib/bioshogi/explain/戦法/ひねり飛車.kif:先手の戦法：相掛かり, ひねり飛車
 lib/bioshogi/explain/戦法/カニカニ金.kif:先手の戦法：カニカニ金, 陽動振り飛車
-lib/bioshogi/explain/戦法/ショーダンシステム.kif:先手の戦法：初手▲７八飛戦法, 早石田
+lib/bioshogi/explain/戦法/ショーダンシステム.kif:先手の戦法：初手▲7八飛戦法, 早石田
 lib/bioshogi/explain/戦法/ダイレクト向かい飛車.kif:後手の戦法：一手損角換わり, ダイレクト向かい飛車
 lib/bioshogi/explain/戦法/ツノ銀中飛車.kif:後手の戦法：阪田流2手目△9四歩, 対振り持久戦, 袖飛車
 lib/bioshogi/explain/戦法/モノレール向かい飛車.kif:後手の戦法：モノレール向かい飛車, 腰掛け銀
