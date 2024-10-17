@@ -177,7 +177,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 棒玉                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 超速▲３七銀             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 対振り持久戦             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | △７二飛亜急戦           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | △7二飛亜急戦           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 袖飛車                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 一直線穴熊               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 穴角戦法                 |                    |
