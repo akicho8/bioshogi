@@ -34,11 +34,11 @@ module Bioshogi
         end
 
         it "子供" do
-          assert { DefenseInfo["片美濃囲い"].children.collect(&:name) == ["美濃囲い", "片銀冠", "銀美濃", "木村美濃", "大山美濃", "ちょんまげ美濃"] }
+          assert { DefenseInfo["片美濃囲い"].children.collect(&:name) == ["美濃囲い", "片銀冠", "銀美濃", "木村美濃", "大山美濃", "美濃熊囲い"] }
         end
 
         it "子孫" do
-          assert { DefenseInfo["片美濃囲い"].descendants.collect(&:name) == ["美濃囲い", "高美濃囲い", "振り飛車四枚美濃", "ダイヤモンド美濃", "片銀冠", "銀冠", "銀美濃", "木村美濃", "大山美濃", "ちょんまげ美濃", "坊主美濃"] }
+          assert { DefenseInfo["片美濃囲い"].descendants.collect(&:name) == ["美濃囲い", "高美濃囲い", "振り飛車四枚美濃", "ダイヤモンド美濃", "片銀冠", "銀冠", "銀美濃", "木村美濃", "裾固め", "大山美濃", "美濃熊囲い"] }
         end
       end
     end
