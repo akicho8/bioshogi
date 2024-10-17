@@ -3,6 +3,13 @@
 module Bioshogi
   module Explain
     class TechniqueMatcherInfo
+      LRUD_PLUS_TWO = [
+        [ 2,  0],
+        [-2,  0],
+        [ 0,  2],
+        [ 0, -2],
+      ]
+
       include ApplicationMemoryRecord
       memory_record [
         {
@@ -47,6 +54,26 @@ module Bioshogi
 
             # 1つ上の駒が「自分」の「金」でないとだめ
             unless s.piece.key == :gold && s.location == soldier.location
+              throw :skip
+            end
+          },
+        },
+
+        {
+          key: "一間竜",
+          logic_desc: "上下左右+2の位置に相手の玉がある",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+
+            place = soldier.place
+            retv = LRUD_PLUS_TWO.any? do |x, y|
+              v = Place.lookup([place.x.value + x, place.y.value + y])
+              if s = surface[v]
+                s.piece.key == :king && s.location != soldier.location
+              end
+            end
+
+            unless retv
               throw :skip
             end
           },
@@ -428,7 +455,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:6:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Explain::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
-# ~>    from -:5:in `<module:Explain>'
-# ~>    from -:4:in `<module:Bioshogi>'
-# ~>    from -:3:in `<main>'
