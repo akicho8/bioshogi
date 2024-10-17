@@ -10,6 +10,8 @@ module Bioshogi
         [ 0, -2],
       ]
 
+      LR = [-1, +1]
+
       include ApplicationMemoryRecord
       memory_record [
         {
@@ -80,6 +82,39 @@ module Bioshogi
         },
 
         {
+          key: "こびん攻め",
+          logic_desc: "玉や飛の斜めの歩を攻める",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+
+            # 端の場合は「こびん」とは言わないため省く
+            if place.x.value == 0 || place.x.value == Dimension::PlaceX.dimension.pred
+              throw :skip
+            end
+
+            # 相手が歩か？
+            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+            if (s = surface[v]) && s.piece.key == :pawn && !s.promoted && s.location != soldier.location
+            else
+              throw :skip
+            end
+
+            # その歩の後ろの左右に玉か飛があるか？
+            retv = LR.any? do |x|
+              v = Place.lookup([place.x.value + x, place.y.value - (soldier.location.value_sign * 2)])
+              if s = surface[v]
+                (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != soldier.location
+              end
+            end
+
+            unless retv
+              throw :skip
+            end
+          },
+        },
+
+        {
           key: "パンツを脱ぐ",
           logic_desc: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           verify_process: proc {
@@ -135,7 +170,7 @@ module Bioshogi
 
             # 左右に相手の玉がいるか？
             place = soldier.place
-            retv = [-1, +1].any? do |x|
+            retv = LR.any? do |x|
               v = Place.lookup([place.x.value + x, place.y.value])
               if s = surface[v]
                 s.piece.key == :king && s.location != soldier.location
@@ -209,7 +244,7 @@ module Bioshogi
           verify_process: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = [-1, +1].all? do |x|
+            retv = LR.all? do |x|
               v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign])
               if s = surface[v]
                 if s.location != soldier.location
@@ -379,7 +414,7 @@ module Bioshogi
           verify_process: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = [-1, +1].all? do |x|
+            retv = LR.all? do |x|
               v = Place.lookup([place.x.value + x, place.y.value - soldier.location.value_sign * 2])
               if s = surface[v]
                 if s.location != soldier.location
@@ -399,7 +434,7 @@ module Bioshogi
           verify_process: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = [-1, +1].any? do |x|
+            retv = LR.any? do |x|
               v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign * 2])
               if s = surface[v]
                 s.piece.key == :knight && !s.promoted && s.location == soldier.location
