@@ -42,6 +42,7 @@ lib/bioshogi/explain/戦法/一直線穴熊.kif:先手の戦法：対振り持�
 lib/bioshogi/explain/戦法/一直線穴熊.kif:後手の戦法：腰掛け銀, 幻想四間飛車
 lib/bioshogi/explain/戦法/一間飛車.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車
 lib/bioshogi/explain/戦法/一間飛車穴熊.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車穴熊
+lib/bioshogi/explain/戦法/三段右玉.kif:後手の戦法：角換わり新型, 三段右玉
 lib/bioshogi/explain/戦法/三間飛車ミレニアム.kif:先手の戦法：早石田, 三間飛車ミレニアム
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:先手の戦法：相掛かり, 中原流相掛かり
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:後手の戦法：相掛かり, 腰掛け銀
@@ -75,6 +76,7 @@ lib/bioshogi/explain/戦法/矢倉棒銀.kif:後手の戦法：矢倉棒銀, 四
 lib/bioshogi/explain/戦法/稲庭戦法.kif:先手の戦法：嬉野流, 稲庭戦法
 lib/bioshogi/explain/戦法/穴角戦法.kif:先手の戦法：三間飛車, 穴角戦法
 lib/bioshogi/explain/戦法/穴角戦法.kif:後手の戦法：右四間飛車, 腰掛け銀, 対振り持久戦
+lib/bioshogi/explain/戦法/羽生流右玉.kif:後手の戦法：一手損角換わり, 羽生流右玉
 lib/bioshogi/explain/戦法/脇システム.kif:先手の戦法：▲3七銀戦法, 脇システム, 矢倉棒銀
 lib/bioshogi/explain/戦法/腰掛け銀.kif:下手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/explain/戦法/花村流名古屋戦法.kif:先手の戦法：6筋位取り, 花村流名古屋戦法
@@ -90,6 +92,7 @@ lib/bioshogi/explain/戦法/角換わり早繰り銀.kif:後手の戦法：一�
 lib/bioshogi/explain/戦法/角換わり棒銀.kif:先手の戦法：原始棒銀, 角換わり棒銀
 lib/bioshogi/explain/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
 lib/bioshogi/explain/戦法/角換わり腰掛け銀.kif:後手の戦法：角換わり腰掛け銀, 右四間飛車
+lib/bioshogi/explain/戦法/金銀橋.kif:先手の戦法：金銀橋, 雁木右玉
 lib/bioshogi/explain/戦法/金銀橋.kif:後手の戦法：右四間飛車, 腰掛け銀
 lib/bioshogi/explain/戦法/阪田流向飛車.kif:後手の戦法：角換わり, 阪田流向飛車
 lib/bioshogi/explain/戦法/阿久津流急戦矢倉.kif:先手の戦法：▲3七銀戦法, 陽動振り飛車
