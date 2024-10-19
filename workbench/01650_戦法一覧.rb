@@ -20,9 +20,9 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 花村流名古屋戦法         |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 清野流岐阜戦法           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | GAVA角                   |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲５五龍中飛車           | 原始中飛車         |
+# >> | Bioshogi::Explain::AttackInfo    | ▲5五龍中飛車           | 原始中飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | ノーガード戦法           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲３七銀戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ▲3七銀戦法             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 脇システム               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | ウソ矢倉                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 矢倉棒銀                 |                    |
@@ -48,7 +48,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 新米長玉                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 稲庭戦法                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 四手角                   |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 都成流△３一金           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 都成流△3一金           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 角換わり                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 一手損角換わり           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 角換わり腰掛け銀         | 角換わり           |
@@ -68,10 +68,10 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 中座飛車           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | UFO銀                    |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 横歩取り                 |                    |
-# >> | Bioshogi::Explain::AttackInfo    | △３三角型空中戦法       |                    |
-# >> | Bioshogi::Explain::AttackInfo    | △３三桂戦法             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | △２三歩戦法             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | △４五角戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | △3三角型空中戦法       |                    |
+# >> | Bioshogi::Explain::AttackInfo    | △3三桂戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | △2三歩戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | △4五角戦法             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 相横歩取り               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 先手中飛車               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 中飛車ミレニアム         |                    |
@@ -84,7 +84,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 風車                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 新風車                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 加藤流袖飛車             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲５七金戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ▲5七金戦法             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 超急戦                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 遠山流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 四間飛車                 |                    |
@@ -101,13 +101,13 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | レグスペ                 | 角交換振り飛車     |
 # >> | Bioshogi::Explain::AttackInfo    | 三間飛車                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 三間飛車ミレニアム       | 三間飛車           |
-# >> | Bioshogi::Explain::AttackInfo    | △３三飛戦法             | 三間飛車           |
+# >> | Bioshogi::Explain::AttackInfo    | △3三飛戦法             | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 石田流                   | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 早石田                   | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | ムリヤリ早石田           | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 升田式石田流             | 早石田             |
 # >> | Bioshogi::Explain::AttackInfo    | 鬼殺し                   | 三間飛車           |
-# >> | Bioshogi::Explain::AttackInfo    | 2手目△３ニ飛戦法        | 三間飛車           |
+# >> | Bioshogi::Explain::AttackInfo    | 2手目△3ニ飛戦法        | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 中田功XP                 | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 真部流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 初手▲7八飛戦法         | 三間飛車           |
@@ -126,10 +126,10 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 阪田流向飛車             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | オザワシステム           | 向かい飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | 鬼殺し向かい飛車         | 向かい飛車         |
-# >> | Bioshogi::Explain::AttackInfo    | 菜々河流△４四角         |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 菜々河流向かい飛車       | 菜々河流△４四角   |
-# >> | Bioshogi::Explain::AttackInfo    | 天彦流▲６六角           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 天彦流向かい飛車         | 天彦流▲６六角     |
+# >> | Bioshogi::Explain::AttackInfo    | 菜々河流△4四角         |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 菜々河流向かい飛車       | 菜々河流△4四角   |
+# >> | Bioshogi::Explain::AttackInfo    | 天彦流▲6六角           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 天彦流向かい飛車         | 天彦流▲6六角     |
 # >> | Bioshogi::Explain::AttackInfo    | 陽動振り飛車             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 角頭歩戦法               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 玉頭銀                   |                    |
@@ -155,9 +155,9 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 飯島流相掛かり引き角戦法 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 丸山ワクチン             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 新丸山ワクチン           | 丸山ワクチン       |
-# >> | Bioshogi::Explain::AttackInfo    | ▲４六銀右急戦           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲４六銀左急戦           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲４五歩早仕掛け         |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ▲4六銀右急戦           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ▲4六銀左急戦           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ▲4五歩早仕掛け         |                    |
 # >> | Bioshogi::Explain::AttackInfo    | へなちょこ急戦           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | エルモ急戦               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 鷺宮定跡                 |                    |
@@ -172,10 +172,10 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 鳥刺し                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 嬉野流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 新嬉野流                 | 嬉野流             |
-# >> | Bioshogi::Explain::AttackInfo    | メイドシステム           | 初手７八銀戦法     |
+# >> | Bioshogi::Explain::AttackInfo    | メイドシステム           | 初手7八銀戦法     |
 # >> | Bioshogi::Explain::AttackInfo    | 棒金                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 棒玉                     |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 超速▲３七銀             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 超速▲3七銀             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 対振り持久戦             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | △7二飛亜急戦           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 袖飛車                   |                    |
@@ -199,10 +199,10 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 三間飛車藤井システム     | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | トマホーク               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 羽生式袖飛車             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 初手７八銀戦法           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 初手３六歩戦法           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 2手目△74歩戦法          |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 4手目△３三角戦法        |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 初手7八銀戦法           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 初手3六歩戦法           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 2手目△7四歩戦法          |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 4手目△3三角戦法        |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 魔界四間飛車             | 四間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | 目くらまし戦法           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 端棒銀                   |                    |
@@ -360,7 +360,7 @@ tp rows
 # >> | Bioshogi::Explain::NoteInfo      | 角交換型                 |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 手得角交換型             | 角交換型           |
 # >> | Bioshogi::Explain::NoteInfo      | 手損角交換型             | 角交換型           |
-# >> | Bioshogi::Explain::NoteInfo      | 2手目△62銀              |                    |
+# >> | Bioshogi::Explain::NoteInfo      | 2手目△6二銀              |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 居飛車                   |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 振り飛車                 |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 相居飛車                 |                    |

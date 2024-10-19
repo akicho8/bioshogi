@@ -31,6 +31,7 @@ module Bioshogi
           all_elements_hash.fetch(key.to_s.to_sym)
         end
 
+        # 曖昧検索用
         # TacticInfo.fuzzy_flat_lookup("アヒル").key # => :アヒル戦法
         def fuzzy_flat_lookup(key)
           v = nil
@@ -136,7 +137,7 @@ module Bioshogi
             str.remove(/囲い\z/),
             str.remove(/流\z/),
             # 特殊
-            str.sub(/向かい飛車/, "向飛車"), # "向かい飛車" → "向かい飛車"
+            str.sub(/向かい飛車/, "向飛車"), # "向かい飛車" → "向飛車"
             str.sub(/向飛車/, "向かい飛車"), # "向飛車" → "向かい飛車"
           ]
         end
