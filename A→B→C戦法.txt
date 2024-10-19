@@ -69,7 +69,6 @@ lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:先手の戦法：6筋位�
 lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:後手の戦法：ノーマル四間飛車, 向かい飛車
 lib/bioshogi/explain/戦法/玉頭銀.kif:後手の戦法：ノーマル四間飛車, 玉頭銀
 lib/bioshogi/explain/戦法/相振り飛車.kif:*△戦法：2手目△3ニ飛戦法, 相振り飛車
-lib/bioshogi/explain/戦法/相掛かり.kif:後手の戦法：△2三歩戦法, 相掛かり
 lib/bioshogi/explain/戦法/矢倉中飛車.kif:後手の戦法：矢倉中飛車, 陽動振り飛車
 lib/bioshogi/explain/戦法/矢倉中飛車.kif:*△戦法：矢倉中飛車, 陽動振り飛車
 lib/bioshogi/explain/戦法/矢倉棒銀.kif:後手の戦法：矢倉棒銀, 四手角
