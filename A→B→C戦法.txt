@@ -67,7 +67,7 @@ lib/bioshogi/explain/戦法/暴銀.kif:先手の戦法：角道オープン四�
 lib/bioshogi/explain/戦法/桐山流タテ歩棒銀.kif:先手の戦法：ひねり飛車, 桐山流タテ歩棒銀
 lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:先手の戦法：6筋位取り, 清野流岐阜戦法
 lib/bioshogi/explain/戦法/清野流岐阜戦法.kif:後手の戦法：ノーマル四間飛車, 向かい飛車
-lib/bioshogi/explain/戦法/玉頭銀.kif:後手の戦法：玉頭銀, 原始棒銀
+lib/bioshogi/explain/戦法/玉頭銀.kif:後手の戦法：ノーマル四間飛車, 玉頭銀
 lib/bioshogi/explain/戦法/相振り飛車.kif:*△戦法：2手目△３ニ飛戦法, 相振り飛車
 lib/bioshogi/explain/戦法/相掛かり.kif:後手の戦法：△２三歩戦法, 相掛かり
 lib/bioshogi/explain/戦法/矢倉中飛車.kif:後手の戦法：矢倉中飛車, 陽動振り飛車
