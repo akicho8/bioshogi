@@ -22,7 +22,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | GAVA角                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | ▲5五龍中飛車           | 原始中飛車         |
 # >> | Bioshogi::Explain::AttackInfo    | ノーガード戦法           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | ▲3七銀戦法             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 矢倉▲3七銀戦法             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 脇システム               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | ウソ矢倉                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 矢倉棒銀                 |                    |
