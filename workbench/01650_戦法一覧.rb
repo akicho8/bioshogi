@@ -162,7 +162,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | エルモ急戦               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 鷺宮定跡                 |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 棒銀                     |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 急戦棒銀                 | 棒銀               |
+# >> | Bioshogi::Explain::AttackInfo    | 対矢倉急戦棒銀                 | 棒銀               |
 # >> | Bioshogi::Explain::AttackInfo    | 暴銀                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 左美濃急戦               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 右四間飛車               |                    |
