@@ -3,6 +3,7 @@
 module Bioshogi
   module Explain
     TacticHitTurnTable = {
+     :"ミレニアム" => nil,
      :"ロケット" => nil,
      :"力戦" => nil,
      :"大駒全ブッチ" => nil,

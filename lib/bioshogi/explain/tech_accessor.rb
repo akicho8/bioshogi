@@ -105,6 +105,13 @@ module Bioshogi
         end
       end
 
+      def add_to_self
+        return @add_to_self if instance_variable_defined?(:@add_to_self)
+        if defined?(super) && v = super
+          @add_to_self ||= TacticInfo.flat_lookup(v)
+        end
+      end
+
       def add_to_opponent
         return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
         if defined?(super) && v = super

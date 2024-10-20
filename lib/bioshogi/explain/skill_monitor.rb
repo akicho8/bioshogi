@@ -57,6 +57,10 @@ module Bioshogi
 
         player.skill_set.list_push(skill)   # プレイヤーの個別設定
         executor.skill_set.list_push(skill) # executor の方にも設定(これいる？)
+        if v = skill.add_to_self
+          player.skill_set.list_push(v)
+          # executor.skill_set.list_push(v)
+        end
         if v = skill.add_to_opponent
           player.opponent_player.skill_set.list_push(v)
           # executor.skill_set.list_push(v)
