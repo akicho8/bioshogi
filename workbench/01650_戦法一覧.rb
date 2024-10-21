@@ -172,7 +172,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 鳥刺し                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 嬉野流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 新嬉野流                 | 嬉野流             |
-# >> | Bioshogi::Explain::AttackInfo    | メイドシステム           | 初手7八銀戦法     |
+# >> | Bioshogi::Explain::AttackInfo    | メイドシステム           | 初手▲7八銀戦法     |
 # >> | Bioshogi::Explain::AttackInfo    | 棒金                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 棒玉                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 超速▲3七銀戦法             |                    |
@@ -199,8 +199,8 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 三間飛車藤井システム     | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | トマホーク               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 羽生式袖飛車             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 初手7八銀戦法           |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 初手3六歩戦法           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 初手▲7八銀戦法           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 初手▲3六歩戦法           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 2手目△7四歩戦法          |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 4手目△3三角戦法        |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 魔界四間飛車             | 四間飛車           |
@@ -360,7 +360,7 @@ tp rows
 # >> | Bioshogi::Explain::NoteInfo      | 角交換型                 |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 手得角交換型             | 角交換型           |
 # >> | Bioshogi::Explain::NoteInfo      | 手損角交換型             | 角交換型           |
-# >> | Bioshogi::Explain::NoteInfo      | 2手目△6二銀              |                    |
+# >> | Bioshogi::Explain::NoteInfo      | 2手目△6二銀戦法              |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 居飛車                   |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 振り飛車                 |                    |
 # >> | Bioshogi::Explain::NoteInfo      | 相居飛車                 |                    |

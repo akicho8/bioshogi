@@ -46,7 +46,7 @@ lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△3三角型空�
 lib/bioshogi/explain/戦法/中飛車左穴熊.kif:後手の戦法：5筋位取り中飛車, 対振り持久戦, 中飛車左穴熊
 lib/bioshogi/explain/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/explain/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車
-lib/bioshogi/explain/戦法/初手7八銀戦法.kif:先手の戦法：初手7八銀戦法, 四間飛車
+lib/bioshogi/explain/戦法/初手▲7八銀戦法.kif:先手の戦法：初手▲7八銀戦法, 四間飛車
 lib/bioshogi/explain/戦法/原始棒銀.kif:先手の戦法：原始棒銀, 棒銀
 lib/bioshogi/explain/戦法/右四間飛車.kif:先手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/explain/戦法/四間飛車ミレニアム.kif:先手の戦法：角道オープン四間飛車, 四間飛車ミレニアム
