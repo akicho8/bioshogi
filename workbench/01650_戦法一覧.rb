@@ -175,7 +175,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | メイドシステム           | 初手7八銀戦法     |
 # >> | Bioshogi::Explain::AttackInfo    | 棒金                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 棒玉                     |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 超速▲3七銀             |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 超速▲3七銀戦法             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 対振り持久戦             |                    |
 # >> | Bioshogi::Explain::AttackInfo    | △7二飛亜急戦           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 袖飛車                   |                    |
