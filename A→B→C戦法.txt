@@ -6,6 +6,7 @@ lib/bioshogi/explain/囲い/ちょんまげ美濃.kif:*▲戦法：四間飛車,
 lib/bioshogi/explain/囲い/カタ囲い.kif:先手の戦法：相掛かり, 石田流
 lib/bioshogi/explain/囲い/カタ囲い.kif:後手の戦法：相掛かり, 腰掛け銀
 lib/bioshogi/explain/囲い/カブト美濃.kif:先手の戦法：相掛かり, 陽動振り飛車
+lib/bioshogi/explain/囲い/ツノ銀雁木.kif:後手の戦法：村田システム, 右四間飛車
 lib/bioshogi/explain/囲い/ビッグ4.kif:先手の戦法：四間飛車, 向かい飛車
 lib/bioshogi/explain/囲い/串カツ囲い.kif:先手の戦法：対振り持久戦, 袖飛車
 lib/bioshogi/explain/囲い/四枚穴熊.kif:後手の戦法：四間飛車, 向かい飛車
@@ -40,7 +41,7 @@ lib/bioshogi/explain/戦法/一間飛車.kif:後手の戦法：阪田流2手目�
 lib/bioshogi/explain/戦法/一間飛車穴熊.kif:後手の戦法：阪田流2手目△9四歩, 一間飛車穴熊
 lib/bioshogi/explain/戦法/三段右玉.kif:後手の戦法：角換わり腰掛け銀, 三段右玉
 lib/bioshogi/explain/戦法/三間飛車ミレニアム.kif:先手の戦法：早石田, 三間飛車ミレニアム
-lib/bioshogi/explain/戦法/中原流相掛かり.kif:先手の戦法：相掛かり, 中原流相掛かり
+lib/bioshogi/explain/戦法/中原流相掛かり.kif:先手の戦法：相掛かり, 中原流相掛かり, 新村田システム
 lib/bioshogi/explain/戦法/中原流相掛かり.kif:後手の戦法：相掛かり, 腰掛け銀
 lib/bioshogi/explain/戦法/中原飛車.kif:後手の戦法：△3三角型空中戦法, 中原飛車
 lib/bioshogi/explain/戦法/中飛車左穴熊.kif:後手の戦法：5筋位取り中飛車, 対振り持久戦, 中飛車左穴熊
