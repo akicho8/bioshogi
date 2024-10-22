@@ -179,10 +179,19 @@ module Bioshogi
             end
           end
 
-          # 自分の金or銀がある
+          # 自分の金or銀以上がある
           if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
             ary.each do |e|
               unless worth_more_gteq_silver?(e[:place])
+                throw :skip
+              end
+            end
+          end
+
+          # 自分の金or銀がある
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["■"]
+            ary.each do |e|
+              unless silver_or_gold?(e[:place])
                 throw :skip
               end
             end
@@ -320,6 +329,13 @@ module Bioshogi
       def worth_more_gteq_silver?(place)
         if v = surface[place]
           v.location == location && v.abs_weight >= silver_piece_basic_weight
+        end
+      end
+
+      # place の位置に銀 or 金がある
+      def silver_or_gold?(place)
+        if v = surface[place]
+          v.location == location && (v.piece.key == :silver || v.piece.key == :gold)
         end
       end
 
