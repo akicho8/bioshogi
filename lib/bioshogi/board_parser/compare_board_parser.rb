@@ -20,11 +20,11 @@ module Bioshogi
             when "*"
               # ▲でどれかがここに含まれる
               soldier = build(place, something, :black)
-              any_exist_soldiers << soldier # FIXME: ここと
+              black_any_exist_soldiers << soldier
             when "?"
               # △側でどれかがここに含まれる
               soldier = build(place, something, :white)
-              any_exist_soldiers << soldier # FIXME: ここは別で管理するべき？
+              white_any_exist_soldiers << soldier
             when "~"
               # ▲でここに含まれない
               soldier = build(place, something, :black)
@@ -49,8 +49,13 @@ module Bioshogi
       end
 
       # どれかが含まれる用
-      def any_exist_soldiers
-        @any_exist_soldiers ||= SoldierBox.new
+      def black_any_exist_soldiers
+        @black_any_exist_soldiers ||= SoldierBox.new
+      end
+
+      # どれかが含まれる用
+      def white_any_exist_soldiers
+        @white_any_exist_soldiers ||= SoldierBox.new
       end
 
       # 含まれない用

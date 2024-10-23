@@ -292,7 +292,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |   222  |         end
 # >>                                   |   223  | 
 # >>                                   |   224  |         # どれかが盤上に正確に含まれるならOK
-# >>     6    (0.7%)                   |   225  |         if ary = e.board_parser.any_exist_soldiers.location_adjust[location.key].presence
+# >>     6    (0.7%)                   |   225  |         if ary = e.board_parser.black_any_exist_soldiers.location_adjust[location.key].presence
 # >>     4    (0.4%)                   |   226  |           if ary.any? { |e| soldier_exist?(e) }
 # >>                                   |   227  |           else
 # >>                                   |   228  |             throw :skip
