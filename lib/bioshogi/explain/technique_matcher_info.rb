@@ -461,6 +461,41 @@ module Bioshogi
         },
 
         {
+          key: "継ぎ歩",
+          logic_desc: "",
+          verify_process: proc {
+            # 0手前: ▲25歩打 継ぎ歩 したらここに来る
+
+            soldier = executor.hand.soldier
+            x = soldier.place.x
+            y = soldier.place.y
+            y2 = y.value - soldier.location.value_sign # 24歩のY座標(整数値)
+
+            # 1手前: △24同歩 取らされる
+            flag = false
+            if hand_log = executor.container.hand_logs[-1]
+              if s = hand_log.move_hand&.soldier
+                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && s.location != soldier.location)
+              end
+            end
+            unless flag
+              throw :skip
+            end
+
+            # 2手前: ▲24歩(25) 突き
+            flag = false
+            if hand_log = executor.container.hand_logs[-2]
+              if s = hand_log.hand.soldier # 「突き」だけにするなら move_hand だけにする
+                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && s.location == soldier.location)
+              end
+            end
+            unless flag
+              throw :skip
+            end
+          },
+        },
+
+        {
           key: "継ぎ桂",
           logic_desc: "打った桂の2つ後ろの左右のどちらかに自分の桂がある",
           verify_process: proc {
@@ -522,3 +557,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:15:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Explain::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:5:in `<module:Explain>'
+# ~> 	from -:4:in `<module:Bioshogi>'
+# ~> 	from -:3:in `<main>'
