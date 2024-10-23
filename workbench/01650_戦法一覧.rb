@@ -80,7 +80,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | 英ちゃん流中飛車         |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 原始中飛車               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 中飛車左穴熊             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 平目                     |                    |
+# >> | Bioshogi::Explain::AttackInfo    | ヒラメ戦法                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 風車                     |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 新風車                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 加藤流袖飛車             |                    |

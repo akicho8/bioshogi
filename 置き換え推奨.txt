@@ -37,7 +37,7 @@
 ~/src/bioshogi/lib/bioshogi/explain/戦法/遠山流.kif:8:棋戦詳細：アマプロ勝ち抜き戦（近代将棋1995年4月号）
 ~/src/bioshogi/lib/bioshogi/explain/戦法/四手角.kif:9:棋戦詳細：第18期棋王戦本戦3回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/右四間飛車左美濃.kif:8:棋戦詳細：第70期棋聖戦最終予選C組
-~/src/bioshogi/lib/bioshogi/explain/戦法/平目.kif:8:棋戦詳細：第34回早指し将棋選手権戦予選
+~/src/bioshogi/lib/bioshogi/explain/戦法/ヒラメ戦法.kif:8:棋戦詳細：第34回早指し将棋選手権戦予選
 ~/src/bioshogi/lib/bioshogi/explain/戦法/中飛車左穴熊.kif:8:棋戦詳細：第50期順位戦B級1組10回戦
 ~/src/bioshogi/lib/bioshogi/explain/戦法/新石田流.kif:11:棋戦詳細：第54期王座戦二次予選
 ~/src/bioshogi/lib/bioshogi/explain/戦法/角換わり腰掛け銀.kif:7:棋戦詳細：市川太郎松六段披露宴会にて
