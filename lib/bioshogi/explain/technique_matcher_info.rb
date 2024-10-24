@@ -461,6 +461,50 @@ module Bioshogi
         },
 
         {
+          key: "たたきの歩",
+          logic_desc: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+
+            # # 中盤以降は無効とする
+            # if executor.container.turn_info.display_turn.next >= 42
+            #   throw :skip
+            # end
+
+            # 打った位置が1から4段目である
+            if soldier.top_spaces <= Dimension::PlaceY.promotable_depth
+            else
+              throw :skip
+            end
+
+            # 相手が「成駒」または「飛金銀香玉」である
+            flag = false
+            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+            if s = surface[v]
+              if s.location != soldier.location
+                if s.promoted || s.piece.tatakare_target
+                  flag = true
+                end
+              end
+            end
+            unless flag
+              throw :skip
+            end
+
+            # 打った位置の後ろに自分の(前に進めることのできる)駒があるなら無効とする (厳密な判定ではない)
+            v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
+            if s = surface[v]
+              if s.location == soldier.location
+                if s.promoted || s.piece.maesusumeru
+                  throw :skip
+                end
+              end
+            end
+          },
+        },
+
+        {
           key: "継ぎ歩",
           logic_desc: "",
           verify_process: proc {
