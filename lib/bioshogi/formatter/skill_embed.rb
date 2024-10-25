@@ -15,6 +15,7 @@ module Bioshogi
 
       def call
         miyakodume_check
+        meijin_judgement        # 力戦より前
         rikisen_judgement
 
         # 両方が入玉していれば「相入玉」タグを追加する
@@ -71,6 +72,17 @@ module Bioshogi
             e.skill_set.rikisen_check_process
           end
           # end
+        end
+      end
+
+      def meijin_judgement
+        if @container.turn_info.display_turn >= MIN_TURN
+          if win_side_location
+            player = @container.player_at(win_side_location)
+            if player.skill_set.power_battle?
+              player.skill_set.list_push(Explain::NoteInfo[:"名人に定跡なし"])
+            end
+          end
         end
       end
 

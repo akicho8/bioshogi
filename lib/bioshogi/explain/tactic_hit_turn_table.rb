@@ -5,6 +5,7 @@ module Bioshogi
     TacticHitTurnTable = {
      :"ロケット" => nil,
      :"力戦" => nil,
+     :"名人に定跡なし" => nil,
      :"大駒全ブッチ" => nil,
      :"対居飛車" => nil,
      :"対抗形" => nil,
