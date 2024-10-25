@@ -10,7 +10,8 @@ module Bioshogi
         [ 0, -2],
       ]
 
-      LR = [-1, +1]
+      LR  = [-1, +1]
+      LR2 = [[1, 2], [-1, -2]]
 
       include ApplicationMemoryRecord
       memory_record [
@@ -354,6 +355,72 @@ module Bioshogi
           },
         },
 
+        {
+          key: "銀ばさみ",
+          logic_desc: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
+          verify_process: proc {
+            # 「打」ではだめ
+            if executor.drop_hand
+              throw :skip
+            end
+
+            # 「同歩」ではだめ
+            if executor.move_hand.captured_soldier
+              throw :skip
+            end
+
+            soldier = executor.hand.soldier
+            place = soldier.place
+
+            # 進めた歩の前が空である
+            flag = false
+            if v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+              unless surface[v]
+                flag = true
+              end
+            end
+            unless flag
+              throw :skip
+            end
+
+            matched = LR2.any? do |x1, x2|
+              silver_exist = false
+              pawn_exist = false
+
+              # 隣に相手の銀がある
+              if v = Place.lookup([place.x.value + x1, place.y.value])
+                if s = surface[v]
+                  if s.piece.key == :silver && !s.promoted && s.location != soldier.location
+                    silver_exist = true
+                  end
+                end
+              end
+              # その隣に自分の歩がある
+              if silver_exist
+                if v = Place.lookup([place.x.value + x2, place.y.value])
+                  if s = surface[v]
+                    if s.piece.key == :pawn && !s.promoted && s.location == soldier.location
+                      pawn_exist = true
+                    end
+                  end
+                end
+              end
+              # その歩の前が空
+              if pawn_exist
+                if v = Place.lookup([place.x.value + x2, place.y.value - soldier.location.value_sign])
+                  unless surface[v]
+                    true
+                  end
+                end
+              end
+            end
+
+            unless matched
+              throw :skip
+            end
+          },
+        },
+
         # {
         #   key: "ロケット",
         #   logic_desc: "打った香の下に自分の香か飛か龍がある",
@@ -671,7 +738,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:15:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Explain::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
-# ~>    from -:5:in `<module:Explain>'
-# ~>    from -:4:in `<module:Bioshogi>'
-# ~>    from -:3:in `<main>'

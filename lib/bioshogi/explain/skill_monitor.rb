@@ -387,6 +387,8 @@ module Bioshogi
       def player
         @player ||= executor.player
       end
+
+      prepend TechniqueMatcherHelper
     end
   end
 end
