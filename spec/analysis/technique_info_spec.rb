@@ -9,8 +9,8 @@ module Bioshogi
 
       def container_new
         Container::Basic.new.tap do |e|
-          e.params[:skill_monitor_enable] = true
-          e.params[:skill_monitor_technique_enable] = true
+          e.params[:analyzer_enable] = true
+          e.params[:analyzer_technique_enable] = true
         end
       end
 

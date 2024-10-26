@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    concern :MonitorMod do
+    concern :AnalyzerMod do
       def execute_after_process
         player.used_piece_counts[hand.to_counts_key] += 1
       end
@@ -35,7 +35,7 @@ module Bioshogi
           end
         end
 
-        if perform_skill_monitor_enable?
+        if perform_analyzer_enable?
           TacticInfo.piece_box_added_proc_list.each do |e|
             if instance_exec(e, captured_soldier, &e.piece_box_added_proc)
               skill_push(e)
@@ -52,9 +52,9 @@ module Bioshogi
         end
       end
 
-      def perform_skill_monitor
-        if perform_skill_monitor_enable?
-          SkillMonitor.new(self).call
+      def perform_analyzer
+        if perform_analyzer_enable?
+          Analyzer.new(self).call
         end
       end
 
@@ -74,12 +74,12 @@ module Bioshogi
         @skill_set ||= SkillSet.new
       end
 
-      def perform_skill_monitor_enable?
-        # return instance_variable_get("@perform_skill_monitor_enable_p") if instance_variable_defined?("@perform_skill_monitor_enable_p")
-        # @perform_skill_monitor_enable_p ||= yield_self do
-        if Bioshogi.config[:skill_monitor_enable]
+      def perform_analyzer_enable?
+        # return instance_variable_get("@perform_analyzer_enable_p") if instance_variable_defined?("@perform_analyzer_enable_p")
+        # @perform_analyzer_enable_p ||= yield_self do
+        if Bioshogi.config[:analyzer_enable]
           if Dimension.dimension_info.key == :d9x9
-            container.params[:skill_monitor_enable]
+            container.params[:analyzer_enable]
           end
         end
         # end

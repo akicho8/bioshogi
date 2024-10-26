@@ -1,6 +1,6 @@
 require "./setup"
 
-# Bioshogi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:analyzer_enable] = false
 
 require "stackprof"
 
@@ -28,7 +28,7 @@ system "stackprof stackprof.dump"
 
 # system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
-system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
+system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Dimension::Base.lookup"
 # system "stackprof stackprof.dump --method Hash#transform_keys"
 # system "stackprof stackprof.dump --method Bioshogi::Soldier#attributes"
@@ -70,23 +70,23 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>          9   (1.0%)           7   (0.8%)     MemoryRecord::SingletonMethods::ClassMethods#fetch
 # >>          7   (0.8%)           7   (0.8%)     #<Module:0x00007ff34a988e70>.kconv
 # >>          7   (0.8%)           7   (0.8%)     Bioshogi::SkillSet#defense_infos
-# >>          8   (0.9%)           6   (0.7%)     Bioshogi::SkillMonitor#surface
+# >>          8   (0.9%)           6   (0.7%)     Bioshogi::Analyzer#surface
 # >>         46   (5.0%)           6   (0.7%)     Bioshogi::PlayerExecutor::Base#input
 # >>          9   (1.0%)           6   (0.7%)     Bioshogi::InputParser#match!
 # >>         12   (1.3%)           6   (0.7%)     Bioshogi::Player::SoldierMethods#soldiers
 # >>          9   (1.0%)           6   (0.7%)     #<Module:0x00007ff34a8f9540>#<=>
-# >> Bioshogi::SkillMonitor#execute_block (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:47)
+# >> Bioshogi::Analyzer#execute_block (/Users/ikeda/src/bioshogi/lib/bioshogi/analyzer.rb:47)
 # >>   samples:     2 self (0.2%)  /     83 total (9.0%)
 # >>   callers:
-# >>       81  (   97.6%)  Bioshogi::SkillMonitor#execute_block
-# >>       74  (   89.2%)  Bioshogi::SkillMonitor#execute_one
-# >>        9  (   10.8%)  Bioshogi::SkillMonitor#execute
+# >>       81  (   97.6%)  Bioshogi::Analyzer#execute_block
+# >>       74  (   89.2%)  Bioshogi::Analyzer#execute_one
+# >>        9  (   10.8%)  Bioshogi::Analyzer#execute
 # >>   callees (81 total):
-# >>       81  (  100.0%)  Bioshogi::SkillMonitor#execute_block
-# >>       58  (   71.6%)  Bioshogi::SkillMonitor#execute_one
+# >>       81  (  100.0%)  Bioshogi::Analyzer#execute_block
+# >>       58  (   71.6%)  Bioshogi::Analyzer#execute_one
 # >>       13  (   16.0%)  Bioshogi::SkillSet#list_of
-# >>        7  (    8.6%)  Bioshogi::SkillMonitor#execute
-# >>        3  (    3.7%)  Bioshogi::SkillMonitor#player
+# >>        7  (    8.6%)  Bioshogi::Analyzer#execute
+# >>        3  (    3.7%)  Bioshogi::Analyzer#player
 # >>   code:
 # >>                                   |    47  |     def execute_block(e)
 # >>    81    (8.8%)                   |    48  |       catch :skip do
@@ -97,27 +97,27 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    53  |       end
 # >>     2    (0.2%) /     2   (0.2%)  |    54  |     end
 # >>                                   |    55  | 
-# >> Bioshogi::SkillMonitor#execute_one (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:56)
+# >> Bioshogi::Analyzer#execute_one (/Users/ikeda/src/bioshogi/lib/bioshogi/analyzer.rb:56)
 # >>   samples:     1 self (0.1%)  /     74 total (8.0%)
 # >>   callers:
-# >>       74  (  100.0%)  Bioshogi::SkillMonitor#execute
-# >>       58  (   78.4%)  Bioshogi::SkillMonitor#execute_block
-# >>       19  (   25.7%)  Bioshogi::SkillMonitor#execute_one
+# >>       74  (  100.0%)  Bioshogi::Analyzer#execute
+# >>       58  (   78.4%)  Bioshogi::Analyzer#execute_block
+# >>       19  (   25.7%)  Bioshogi::Analyzer#execute_one
 # >>   callees (73 total):
-# >>       74  (  101.4%)  Bioshogi::SkillMonitor#execute_block
-# >>       19  (   26.0%)  Bioshogi::SkillMonitor#execute_one
-# >>       14  (   19.2%)  Bioshogi::SkillMonitor#soldier_exist?
+# >>       74  (  101.4%)  Bioshogi::Analyzer#execute_block
+# >>       19  (   26.0%)  Bioshogi::Analyzer#execute_one
+# >>       14  (   19.2%)  Bioshogi::Analyzer#soldier_exist?
 # >>        8  (   11.0%)  Bioshogi::DefenseInfo#board_parser
 # >>        6  (    8.2%)  #<Module:0x00007ff34a109560>#<=>
 # >>        5  (    6.8%)  Bioshogi::AttackInfo#board_parser
-# >>        4  (    5.5%)  Bioshogi::SkillMonitor#cold_war_verification
+# >>        4  (    5.5%)  Bioshogi::Analyzer#cold_war_verification
 # >>        3  (    4.1%)  #<Module:0x00007ff34a12abc0>#<=>
 # >>        3  (    4.1%)  Bioshogi::Place#hash
 # >>        2  (    2.7%)  Bioshogi::DefenseInfo::AttackInfoSharedMethods#hold_piece_eq
-# >>        2  (    2.7%)  Bioshogi::SkillMonitor#location
+# >>        2  (    2.7%)  Bioshogi::Analyzer#location
 # >>        2  (    2.7%)  Bioshogi::BoardParser::Base#location_adjust
 # >>        2  (    2.7%)  block (3 levels) in memory_record
-# >>        2  (    2.7%)  Bioshogi::SkillMonitor#surface
+# >>        2  (    2.7%)  Bioshogi::Analyzer#surface
 # >>        1  (    1.4%)  #<Module:0x00007ff34a14cd60>#<=>
 # >>        1  (    1.4%)  Bioshogi::DefenseInfo::AttackInfoSharedMethods#hold_piece_not_in
 # >>        1  (    1.4%)  Object#presence
@@ -303,19 +303,19 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>     2    (0.2%)                   |   233  |         ary = e.board_parser.location_adjust[location.key]
 # >>    24    (2.6%)                   |   234  |         if ary.all? { |e| soldier_exist?(e) }
 # >>                                   |   235  |         else
-# >> Bioshogi::SkillMonitor#execute (/Users/ikeda/src/bioshogi/lib/bioshogi/skill_monitor.rb:13)
+# >> Bioshogi::Analyzer#execute (/Users/ikeda/src/bioshogi/lib/bioshogi/analyzer.rb:13)
 # >>   samples:     0 self (0.0%)  /    196 total (21.3%)
 # >>   callers:
-# >>      196  (  100.0%)  Bioshogi::PlayerExecutor::Human#perform_skill_monitor
-# >>       83  (   42.3%)  Bioshogi::SkillMonitor#execute
-# >>        7  (    3.6%)  Bioshogi::SkillMonitor#execute_block
+# >>      196  (  100.0%)  Bioshogi::PlayerExecutor::Human#perform_analyzer
+# >>       83  (   42.3%)  Bioshogi::Analyzer#execute
+# >>        7  (    3.6%)  Bioshogi::Analyzer#execute_block
 # >>   callees (196 total):
-# >>       83  (   42.3%)  Bioshogi::SkillMonitor#execute
+# >>       83  (   42.3%)  Bioshogi::Analyzer#execute
 # >>       78  (   39.8%)  Bioshogi::TacticInfo.primary_soldier_hash_table
-# >>       74  (   37.8%)  Bioshogi::SkillMonitor#execute_one
-# >>       17  (    8.7%)  Bioshogi::SkillMonitor#soldier
+# >>       74  (   37.8%)  Bioshogi::Analyzer#execute_one
+# >>       17  (    8.7%)  Bioshogi::Analyzer#soldier
 # >>       12  (    6.1%)  Bioshogi::Soldier#hash
-# >>        9  (    4.6%)  Bioshogi::SkillMonitor#execute_block
+# >>        9  (    4.6%)  Bioshogi::Analyzer#execute_block
 # >>        4  (    2.0%)  Bioshogi::Soldier#eql?
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
 # >>        2  (    1.0%)  block in <class:TechniqueMatcherInfo>
@@ -333,7 +333,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
 # >>                                   |    20  | 
-# >>     1    (0.1%)                   |    21  |       if executor.container.params[:skill_monitor_technique_enable]
+# >>     1    (0.1%)                   |    21  |       if executor.container.params[:analyzer_technique_enable]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Analysis::TacticInfo.piece_hash_table[key]

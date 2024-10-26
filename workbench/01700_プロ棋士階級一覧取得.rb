@@ -1,5 +1,5 @@
 require "./setup"
-# Bioshogi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:analyzer_enable] = false
 
 tags = []
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort

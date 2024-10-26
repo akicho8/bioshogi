@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class SkillMonitor
+    class Analyzer
       cattr_accessor(:walk_counts) { Hash.new(0) }
 
       attr_reader :executor
@@ -19,7 +19,7 @@ module Bioshogi
           end
         end
 
-        if executor.container.params[:skill_monitor_technique_enable]
+        if executor.container.params[:analyzer_technique_enable]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand] # :PIECE_HASH_TABLE:
           if e = TacticInfo.piece_hash_table[key]
@@ -32,7 +32,7 @@ module Bioshogi
             end
           end
 
-          RocketMonitor.new(self).call
+          RocketAnalyzer.new(self).call
         end
 
         # 毎回呼ぶやつ (for 駒柱)

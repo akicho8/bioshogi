@@ -11,8 +11,8 @@ end
 def test2
   info = Parser.parse(Pathname("../katomomo.kif").read, {
       :turn_limit                     => @turn_limit,
-      # :skill_monitor_enable           => false,
-      # :skill_monitor_technique_enable => false,
+      # :analyzer_enable           => false,
+      # :analyzer_technique_enable => false,
       :candidate_enable                 => false,
       :validate_enable                  => false,
       # :container_class                 => Container::Fast,

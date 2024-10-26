@@ -1,19 +1,19 @@
 require "./setup"
 require 'active_support/core_ext/benchmark'
 
-# Bioshogi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:analyzer_enable] = false
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
 files = Array(files).take((ARGV.first || 100).to_i)
 seconds = Benchmark.realtime do
   files.each do |file|
-    info = Parser.file_parse(file, typical_error_case: :skip, skill_monitor_technique_enable: true)
+    info = Parser.file_parse(file, typical_error_case: :skip, analyzer_technique_enable: true)
     info.to_kif
   end
 end
 
 p seconds
-tp Analysis::SkillMonitor.walk_counts.sort_by { |k, v| -v }.to_h
+tp Analysis::Analyzer.walk_counts.sort_by { |k, v| -v }.to_h
 # >> 2.85152000002563
 # >> |--------------------------+-------|
 # >> |                     駒柱 | 11262 |

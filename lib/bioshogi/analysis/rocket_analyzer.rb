@@ -2,17 +2,17 @@
 
 module Bioshogi
   module Analysis
-    class RocketMonitor
+    class RocketAnalyzer
       DEBUG = false
 
-      attr_reader :skill_monitor
+      attr_reader :analyzer
       attr_reader :soldier
       attr_reader :drop_hand
 
-      delegate :executor, to: :skill_monitor
+      delegate :executor, to: :analyzer
 
-      def initialize(skill_monitor)
-        @skill_monitor = skill_monitor
+      def initialize(analyzer)
+        @analyzer = analyzer
       end
 
       def call
@@ -44,9 +44,9 @@ module Bioshogi
         end
 
         if count >= 2
-          # skill_monitor.skill_push(NoteInfo[:"ロケット"])
+          # analyzer.skill_push(NoteInfo[:"ロケット"])
           if technique_info = TechniqueInfo[:"#{count}段ロケット"] # 7段以上のロケットは除外する
-            skill_monitor.skill_push(technique_info)
+            analyzer.skill_push(technique_info)
           end
         end
       end
@@ -78,7 +78,7 @@ module Bioshogi
             unless place
               break                                     # 盤面の外
             end
-            if s = skill_monitor.surface[place]
+            if s = analyzer.surface[place]
               if s.location != soldier.location
                 break                                   # 相手の駒
               end
@@ -102,7 +102,7 @@ module Bioshogi
       end
 
       def surface
-        skill_monitor.surface
+        analyzer.surface
       end
 
       def soldier

@@ -76,8 +76,8 @@ module Bioshogi
       def container_new
         container_class.new.tap do |e|
           e.params.update(@parser_options.slice(*[
-                :skill_monitor_enable,
-                :skill_monitor_technique_enable,
+                :analyzer_enable,
+                :analyzer_technique_enable,
                 :candidate_enable,
                 :validate_enable,
                 :validate_double_pawn_skip,
@@ -90,8 +90,8 @@ module Bioshogi
       def container_for_image
         container = Container::Basic.new
         container.params.update({
-            :skill_monitor_enable           => false,
-            :skill_monitor_technique_enable => false,
+            :analyzer_enable           => false,
+            :analyzer_technique_enable => false,
             :candidate_enable               => false,
             :validate_enable                => false,
           })
@@ -163,7 +163,7 @@ module Bioshogi
 
       def container_run_all(container)
         Runner.new(self, container).call
-        if @parser_options[:skill_monitor_enable]
+        if @parser_options[:analyzer_enable]
           SkillEmbed.new(self, container).call
           StyleEmbed.new(self, container).call
         end

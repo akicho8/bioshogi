@@ -8,7 +8,7 @@ records = container.current_player.brain(diver_class: AI::Diver::NegaScoutDiver)
 tp AI::Brain.human_format(records)
 record = records.first
 hand = record[:hand]
-container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
+container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutAnalyzer)
 puts container.to_history_sfen
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

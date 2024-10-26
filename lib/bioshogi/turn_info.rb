@@ -43,7 +43,7 @@ module Bioshogi
       OrderInfo.fetch(order_key)
     end
 
-    # for SkillMonitor
+    # for Analyzer
     def order_key
       if display_turn.even?
         :sente

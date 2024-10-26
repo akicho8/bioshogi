@@ -1,6 +1,6 @@
 require "./setup"
 
-# Bioshogi.config[:skill_monitor_enable] = false
+# Bioshogi.config[:analyzer_enable] = false
 
 require "stackprof"
 
@@ -26,7 +26,7 @@ system "stackprof stackprof.dump"
 # system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # system "stackprof stackprof.dump --method Bioshogi::PlayerExecutor::Human#hand_log"
 # system "stackprof stackprof.dump --method Bioshogi::InputAdapter::Ki2Adapter#candidate_soldiers_select"
-# system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
+# system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # system "stackprof stackprof.dump --method Bioshogi::Dimension::Base.lookup"
 system "stackprof stackprof.dump --method Bioshogi::Dimension::PlaceX.lookup"
 # system "stackprof stackprof.dump --method Hash#transform_keys"

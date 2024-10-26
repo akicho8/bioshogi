@@ -1,8 +1,8 @@
 require "./setup"
 
 container_options = {
-  skill_monitor_enable: false,
-  skill_monitor_technique_enable: false,
+  analyzer_enable: false,
+  analyzer_technique_enable: false,
   candidate_enable: false,
   validate_enable: false,
 }

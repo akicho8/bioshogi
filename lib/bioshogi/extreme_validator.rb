@@ -10,7 +10,7 @@ module Bioshogi
     end
 
     def call
-      # Bioshogi.config[:skill_monitor_enable] = false
+      # Bioshogi.config[:analyzer_enable] = false
 
       error_body.delete rescue nil
       result = Hash.new(0)

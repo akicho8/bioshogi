@@ -9,7 +9,7 @@ module Bioshogi
       include ExecuteMethods
 
       def executor_class
-        PlayerExecutor::WithoutMonitor
+        PlayerExecutor::WithoutAnalyzer
       end
     end
   end

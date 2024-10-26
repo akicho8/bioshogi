@@ -62,7 +62,7 @@ module Bioshogi
           move_hand_process(move_hand)
         end
 
-        perform_skill_monitor
+        perform_analyzer
 
         clock_add_process
         turn_ended_process
@@ -92,7 +92,7 @@ module Bioshogi
       def turn_ended_process
       end
 
-      def perform_skill_monitor
+      def perform_analyzer
       end
 
       def turn_changed_process

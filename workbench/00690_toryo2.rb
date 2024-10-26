@@ -54,7 +54,7 @@ end
 tp AI::Brain.human_format(records)
 
 # # 後手は王手してきた金を取った状態
-# container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
+# container.execute(hand.to_sfen, executor_class: PlayerExecutor::WithoutAnalyzer)
 # puts container
 #
 # # 先手の手番でその玉を取る
@@ -62,7 +62,7 @@ tp AI::Brain.human_format(records)
 # record = records.first
 # tp record
 # tp AI::Brain.human_format(records)
-# container.execute(record[:hand].to_sfen, executor_class: PlayerExecutor::WithoutMonitor)
+# container.execute(record[:hand].to_sfen, executor_class: PlayerExecutor::WithoutAnalyzer)
 
 #   if captured_soldier && captured_soldier.piece.key == :king
 #     break

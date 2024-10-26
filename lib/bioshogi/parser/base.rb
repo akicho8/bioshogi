@@ -25,8 +25,8 @@ module Bioshogi
             #  skip: 棋譜には記さない
             # false: 例外を出す(デフォルト)
             :typical_error_case             => false,
-            :skill_monitor_enable           => true,
-            :skill_monitor_technique_enable => true,
+            :analyzer_enable           => true,
+            :analyzer_technique_enable => true,
             :candidate_enable               => true,  # ki2にしないのであれば指定するとかなり速くなる
 
             :validate_enable                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
