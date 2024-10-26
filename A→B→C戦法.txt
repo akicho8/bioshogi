@@ -56,7 +56,6 @@ lib/bioshogi/explain/戦法/対振り持久戦.kif:先手の戦法：対振り�
 lib/bioshogi/explain/戦法/対振り持久戦.kif:後手の戦法：四間飛車, 向かい飛車
 lib/bioshogi/explain/戦法/対矢倉急戦棒銀.kif:後手の戦法：原始棒銀, 対矢倉急戦棒銀
 lib/bioshogi/explain/戦法/屋敷流二枚銀棒銀型.kif:先手の戦法：原始棒銀, 棒銀, 屋敷流二枚銀棒銀型
-lib/bioshogi/explain/戦法/左美濃急戦.kif:先手の戦法：左美濃急戦, 角換わり棒銀
 lib/bioshogi/explain/戦法/戸部流4→3戦法.kif:後手の戦法：角道オープン四間飛車, 戸部流4→3戦法
 lib/bioshogi/explain/戦法/新村田システム.kif:先手の戦法：相掛かり, 新村田システム
 lib/bioshogi/explain/戦法/新米長玉.kif:後手の戦法：新米長玉, 新嬉野流, 棒玉

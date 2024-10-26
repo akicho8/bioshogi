@@ -28,7 +28,11 @@ module Bioshogi
             when "~"
               # ▲でここに含まれない
               soldier = build(place, something, :black)
-              not_exist_soldiers << soldier
+              black_not_exist_soldiers << soldier
+            when "^"
+              # △でここに含まれない
+              soldier = build(place, something, :black)
+              white_not_exist_soldiers << soldier
             else
               soldier = build(place, something, prefix_char)
               soldiers << soldier
@@ -59,8 +63,13 @@ module Bioshogi
       end
 
       # 含まれない用
-      def not_exist_soldiers
-        @not_exist_soldiers ||= SoldierBox.new
+      def black_not_exist_soldiers
+        @black_not_exist_soldiers ||= SoldierBox.new
+      end
+
+      # 含まれない用
+      def white_not_exist_soldiers
+        @white_not_exist_soldiers ||= SoldierBox.new
       end
 
       # 高速に比較するためにメモ化したアクセサシリーズ

@@ -1,7 +1,7 @@
 require "./setup"
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}")
-files = files.take(30000)
+files = files.take(3000000)
 files = files.collect(&:expand_path)
 hash = Hash.new(0)
 files.each do |file|

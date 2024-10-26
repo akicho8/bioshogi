@@ -190,7 +190,7 @@ tp rows
 # >> | Bioshogi::Explain::AttackInfo    | うっかり三間飛車         | 三間飛車           |
 # >> | Bioshogi::Explain::AttackInfo    | アヒル戦法               |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 裏アヒル戦法             |                    |
-# >> | Bioshogi::Explain::AttackInfo    | 矢倉左美濃急戦           |                    |
+# >> | Bioshogi::Explain::AttackInfo    | 対矢倉左美濃急戦           |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 青野流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 勇気流                   |                    |
 # >> | Bioshogi::Explain::AttackInfo    | 竹部スペシャル           |                    |

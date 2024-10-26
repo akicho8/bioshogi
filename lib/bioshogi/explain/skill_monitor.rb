@@ -251,13 +251,6 @@ module Bioshogi
             end
           end
 
-          # どれかが盤上に正確に含まれたらskip (for 流線矢倉)
-          if ary = e.board_parser.not_exist_soldiers.location_adjust[location.key].presence
-            if ary.any? { |e| soldier_exist?(e) }
-              throw :skip
-            end
-          end
-
           # どれかが盤上に正確に含まれるならOK
           if ary = e.board_parser.black_any_exist_soldiers.location_adjust[location.key].presence
             if ary.any? { |e| soldier_exist?(e) }
@@ -279,6 +272,20 @@ module Bioshogi
           if ary.all? { |e| soldier_exist?(e) }
           else
             throw :skip
+          end
+
+          # 先手でどれかが盤上に正確に含まれたらskip (for 流線矢倉)
+          if ary = e.board_parser.black_not_exist_soldiers.location_adjust[location.key].presence
+            if ary.any? { |e| soldier_exist?(e) }
+              throw :skip
+            end
+          end
+
+          # 後手でどれかが盤上に正確に含まれたらskip
+          if ary = e.board_parser.white_not_exist_soldiers.location_adjust[location.key].presence
+            if ary.any? { |e| soldier_exist?(e) }
+              throw :skip
+            end
           end
         end
       end
