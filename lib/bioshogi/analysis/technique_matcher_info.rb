@@ -421,6 +421,72 @@ module Bioshogi
           },
         },
 
+        {
+          key: "端玉には端歩",
+          logic_desc: nil,
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            place = soldier.place
+
+            # 端の場合のみ
+            if place.x.value == 0 || place.x.value == Dimension::PlaceX.dimension.pred
+            else
+              throw :skip
+            end
+
+            # 進めた歩の前が歩である
+            pawn_found = false
+            if v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
+              if s = surface[v]
+                if s.piece.key == :pawn && !s.promoted && s.location != soldier.location
+                  pawn_found = true
+                end
+              end
+            end
+            unless pawn_found
+              throw :skip
+            end
+
+            # その相手の歩の奥に相手の玉がいる
+            king_found = false
+            (2...Dimension::PlaceY.dimension).each do |y|
+              if v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign * y])
+                if s = surface[v]
+                  if s.piece.key == :king && s.location != soldier.location
+                    king_found = true
+                  end
+                  break
+                else
+                  # 空ならさらに奥を見る
+                end
+              else
+                break
+              end
+            end
+            unless king_found
+              throw :skip
+            end
+
+            # 端の下に香がいる
+            lance_found = false
+            bottom_place = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign * soldier.bottom_spaces]) # 99
+            Dimension::PlaceY.dimension.times do |y|
+              v = Place.lookup([bottom_place.x.value, bottom_place.y.value - (soldier.location.value_sign * y)])
+              if s = surface[v]
+                if s.piece.key == :lance && !s.promoted && s.location == soldier.location
+                  lance_found = true
+                end
+                break
+              else
+                # 空ならさらに上を見る
+              end
+            end
+            unless lance_found
+              throw :skip
+            end
+          },
+        },
+
         # {
         #   key: "ロケット",
         #   logic_desc: "打った香の下に自分の香か飛か龍がある",
@@ -738,3 +804,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:16:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Analysis::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:5:in `<module:Analysis>'
+# ~> 	from -:4:in `<module:Bioshogi>'
+# ~> 	from -:3:in `<main>'
