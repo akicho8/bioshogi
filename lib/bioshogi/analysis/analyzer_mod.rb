@@ -38,7 +38,7 @@ module Bioshogi
         if perform_analyzer_enable?
           TacticInfo.piece_box_added_proc_list.each do |e|
             if instance_exec(e, captured_soldier, &e.piece_box_added_proc)
-              skill_push(e)
+              skill_push2(e)
             end
           end
         end
@@ -58,9 +58,16 @@ module Bioshogi
         end
       end
 
-      def skill_push(skill)
+      def skill_push2(skill)
         player.skill_set.list_push(skill)   # プレイヤーの個別設定
-        skill_set.list_push(skill) # executor の方にも設定(これいる？)
+        skill_set.list_push(skill) # executor の方にも設定(これいる？) ← いらない
+
+        # 自分に入れる
+        # p skill
+        # p skill.add_to_self
+        if v = skill.add_to_self
+          player.skill_set.list_push(v)
+        end
 
         # 相手に入れる
         if v = skill.add_to_opponent

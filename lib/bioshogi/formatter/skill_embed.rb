@@ -36,6 +36,7 @@ module Bioshogi
             aiigyoku_judgement # 相居玉判定
             kyusen_judgement   # 急戦・持久戦
             tantesuu_judgement # 短手数・長手数
+            anaguma_judgement  # 穴熊・対穴熊
           end
         end
 
@@ -152,6 +153,15 @@ module Bioshogi
         if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) }
           @container.players.each do |player|
             player.skill_set.list_push(Analysis::NoteInfo["相振り飛車"])
+          end
+        end
+      end
+
+      def anaguma_judgement
+        # 両方穴熊なら相穴熊
+        if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["穴熊"]) }
+          @container.players.each do |player|
+            player.skill_set.list_push(Analysis::NoteInfo["相穴熊"])
           end
         end
       end
