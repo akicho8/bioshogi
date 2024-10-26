@@ -45,8 +45,8 @@ module Bioshogi
 
       it "normalized_names_with_alias" do
         container = Container::Basic.new
-        container.player_at(:black).skill_set.attack_infos << Explain::AttackInfo["中田功XP"]
-        container.player_at(:white).skill_set.defense_infos << Explain::DefenseInfo["美濃囲い"]
+        container.player_at(:black).skill_set.attack_infos << Analysis::AttackInfo["中田功XP"]
+        container.player_at(:white).skill_set.defense_infos << Analysis::DefenseInfo["美濃囲い"]
         assert { container.normalized_names_with_alias == ["中田功XP", "コーヤン流", "美濃囲い"] }
       end
 

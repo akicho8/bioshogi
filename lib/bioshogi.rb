@@ -49,16 +49,16 @@ if true
   loader.ignore("#{__dir__}/bioshogi/errors.rb")
   loader.ignore("#{__dir__}/bioshogi/contrib/**/*.rb")
   loader.ignore("#{__dir__}/bioshogi/assets")
-  loader.ignore("#{__dir__}/bioshogi/explain/{備考,囲い,戦法,手筋}")
+  loader.ignore("#{__dir__}/bioshogi/analysis/{備考,囲い,戦法,手筋}")
 
   # 変換ルール調整
   loader.inflector.inflect("cli" => "CLI")
   loader.inflector.inflect("ai" => "AI")
 
   # 開発環境専用のものは遅延読み込みする
-  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/*_generator.rb")
-  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/tactic_validator.rb")
-  loader.do_not_eager_load("#{__dir__}/bioshogi/explain/file_normalizer.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/*_generator.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/tactic_validator.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/file_normalizer.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_validator.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/cli.rb")

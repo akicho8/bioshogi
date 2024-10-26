@@ -90,7 +90,7 @@ module Bioshogi
     end
 
     def skill_set
-      @skill_set ||= Explain::SkillSet.new
+      @skill_set ||= Analysis::SkillSet.new
     end
     delegate :attack_infos, :defense_infos, to: :skill_set
 

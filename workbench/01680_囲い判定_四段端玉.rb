@@ -1,6 +1,6 @@
 require "./setup"
 
-bp = Explain::DefenseInfo["四段端玉"].board_parser
+bp = Analysis::DefenseInfo["四段端玉"].board_parser
 tp bp.other_objects_loc_ary           # => {:black=>{"◇"=>[{:place=>#<Bioshogi::Place ９五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ８五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ７五>, :prefix_char=>" ", :something=>"◇"}], "◆"=>[{:place=>#<Bioshogi::Place ８六>, :prefix_char=>" ", :something=>"◆"}, {:place=>#<Bioshogi::Place ７六>, :prefix_char=>" ", :something=>"◆"}]}, :white=>{"◇"=>[{:place=>#<Bioshogi::Place １五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ２五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ３五>, :prefix_char=>" ", :something=>"◇"}], "◆"=>[{:place=>#<Bioshogi::Place ２四>, :prefix_char=>" ", :something=>"◆"}, {:place=>#<Bioshogi::Place ３四>, :prefix_char=>" ", :something=>"◆"}]}}
 tp bp.other_objects_loc_ary[:black]   # => {"◇"=>[{:place=>#<Bioshogi::Place ９五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ８五>, :prefix_char=>" ", :something=>"◇"}, {:place=>#<Bioshogi::Place ７五>, :prefix_char=>" ", :something=>"◇"}], "◆"=>[{:place=>#<Bioshogi::Place ８六>, :prefix_char=>" ", :something=>"◆"}, {:place=>#<Bioshogi::Place ７六>, :prefix_char=>" ", :something=>"◆"}]}
 tp bp.other_objects_loc_ary[:black]["◆"] # => [{:place=>#<Bioshogi::Place ８六>, :prefix_char=>" ", :something=>"◆"}, {:place=>#<Bioshogi::Place ７六>, :prefix_char=>" ", :something=>"◆"}]

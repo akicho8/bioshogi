@@ -1,9 +1,9 @@
 require "../../setup"
 
-info = Explain::AttackInfo.fetch("高田流左玉").sample_kif_info
+info = Analysis::AttackInfo.fetch("高田流左玉").sample_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 
-info = Explain::AttackInfo.fetch("英春流かまいたち戦法").sample_kif_info
+info = Analysis::AttackInfo.fetch("英春流かまいたち戦法").sample_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 
 # >> |--------------------------------------------+------------------+-----------+------------------------|

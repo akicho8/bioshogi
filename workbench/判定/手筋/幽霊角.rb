@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Parser.parse(Pathname("../../lib/bioshogi/explain/手筋/幽霊角.kif"))
+info = Parser.parse(Pathname("../../lib/bioshogi/analysis/手筋/幽霊角.kif"))
 puts info.to_kif
 # >> 棋戦：共有将棋盤
 # >> 先手の戦法：力戦

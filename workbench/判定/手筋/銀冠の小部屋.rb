@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Parser.parse(Pathname("../../lib/bioshogi/explain/手筋/銀冠の小部屋.kif"))
+info = Parser.parse(Pathname("../../lib/bioshogi/analysis/手筋/銀冠の小部屋.kif"))
 puts info.to_kif
 # >> 先手の囲い：舟囲い, 天守閣美濃, 端玉銀冠
 # >> 後手の囲い：高美濃囲い, 銀冠

@@ -17,7 +17,7 @@ module Bioshogi
       include ReaderMethods
       include TechniqueMatcherMethods
 
-      prepend Explain::BoardPillerMethods
+      prepend Analysis::BoardPillerMethods
       prepend PieceCountsMethods
     end
   end

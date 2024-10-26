@@ -2,8 +2,8 @@ require "./setup"
 
 # rcodetools で実行するとなぜかフリーズする → しなくなった
 
-tp Explain::AttackInfo.collect { |e|
-  list = Explain::AttackInfo.to_a - [e]
+tp Analysis::AttackInfo.collect { |e|
+  list = Analysis::AttackInfo.to_a - [e]
   list = list.find_all { |o|
     soldiers = o.sorted_soldiers
     (o.sorted_soldiers & e.sorted_soldiers) == e.sorted_soldiers

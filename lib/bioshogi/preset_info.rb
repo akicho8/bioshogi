@@ -125,6 +125,6 @@ module Bioshogi
       handicap ? 1 : 0
     end
 
-    include Explain::ShapeInfoRelation
+    include Analysis::ShapeInfoRelation
   end
 end

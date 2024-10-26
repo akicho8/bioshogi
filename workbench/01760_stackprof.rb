@@ -326,7 +326,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
 # >>   code:
 # >>                                   |    13  |     def execute
-# >>   111   (12.1%)                   |    14  |       if e = Explain::TacticInfo.primary_soldier_hash_table[soldier]
+# >>   111   (12.1%)                   |    14  |       if e = Analysis::TacticInfo.primary_soldier_hash_table[soldier]
 # >>    74    (8.0%)                   |    15  |         e.each do |e|
 # >>                                   |    16  |           walk_counts[e.key] += 1
 # >>    74    (8.0%)                   |    17  |           execute_one(e)
@@ -336,7 +336,7 @@ system "stackprof stackprof.dump --method Bioshogi::SkillMonitor#execute"
 # >>     1    (0.1%)                   |    21  |       if executor.container.params[:skill_monitor_technique_enable]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
-# >>     1    (0.1%)                   |    24  |         if e = Explain::TacticInfo.piece_hash_table[key]
+# >>     1    (0.1%)                   |    24  |         if e = Analysis::TacticInfo.piece_hash_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
 # >>                                   |    27  |               walk_counts[e.key] += 1

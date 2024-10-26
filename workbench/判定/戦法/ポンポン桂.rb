@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Parser.parse(Pathname("../../lib/bioshogi/explain/戦法/ポンポン桂.kif"))
+info = Parser.parse(Pathname("../../lib/bioshogi/analysis/戦法/ポンポン桂.kif"))
 puts info.to_kif
 # >> 開始日時：1998/11/17
 # >> 棋戦：順位戦

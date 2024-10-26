@@ -80,7 +80,7 @@ module Bioshogi
           if win_side_location
             player = @container.player_at(win_side_location)
             if player.skill_set.power_battle?
-              player.skill_set.list_push(Explain::NoteInfo[:"名人に定跡なし"])
+              player.skill_set.list_push(Analysis::NoteInfo[:"名人に定跡なし"])
             end
           end
         end
@@ -93,7 +93,7 @@ module Bioshogi
               if last_action_info.key == :TSUMI
                 if soldier = @container.board["55"]
                   if soldier.piece.key == :king
-                    tag = Explain::NoteInfo["都詰め"]
+                    tag = Analysis::NoteInfo["都詰め"]
                     if @container.lose_player.location == soldier.location
                       @container.win_player.skill_set.list_push(tag)
                       # 最後の手にも入れておく
@@ -110,9 +110,9 @@ module Bioshogi
       end
 
       def ainyugyoku_judgement
-        if @container.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["入玉"]) }
+        if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["入玉"]) }
           @container.players.each do |player|
-            player.skill_set.list_push(Explain::NoteInfo["相入玉"])
+            player.skill_set.list_push(Analysis::NoteInfo["相入玉"])
           end
         end
       end
@@ -122,8 +122,8 @@ module Bioshogi
         if @container.turn_info.display_turn >= MIN_TURN # 0手で切断した場合も「居飛車」とならないようにするため
           @container.players.each do |e|
             skill_set = e.skill_set
-            if !skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Explain::NoteInfo["居飛車"])
-              e.skill_set.list_push(Explain::NoteInfo["居飛車"])
+            if !skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Analysis::NoteInfo["居飛車"])
+              e.skill_set.list_push(Analysis::NoteInfo["居飛車"])
             end
           end
         end
@@ -131,9 +131,9 @@ module Bioshogi
 
       def aiibisha_judgement
         # 両方居飛車なら相居飛車
-        if @container.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["居飛車"]) }
+        if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["居飛車"]) }
           @container.players.each do |player|
-            player.skill_set.list_push(Explain::NoteInfo["相居飛車"])
+            player.skill_set.list_push(Analysis::NoteInfo["相居飛車"])
           end
         end
       end
@@ -141,27 +141,27 @@ module Bioshogi
       def taiibisya_judgement
         # 相手が居飛車なら対居飛車
         @container.players.each do |player|
-          if player.opponent_player.skill_set.has_skill?(Explain::NoteInfo["居飛車"])
-            player.skill_set.list_push(Explain::NoteInfo["対居飛車"])
+          if player.opponent_player.skill_set.has_skill?(Analysis::NoteInfo["居飛車"])
+            player.skill_set.list_push(Analysis::NoteInfo["対居飛車"])
           end
         end
       end
 
       def aihuri_judgement
         # 両方振り飛車なら相振り
-        if @container.players.all? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
+        if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) }
           @container.players.each do |player|
-            player.skill_set.list_push(Explain::NoteInfo["相振り飛車"])
+            player.skill_set.list_push(Analysis::NoteInfo["相振り飛車"])
           end
         end
       end
 
       def taikoukei_judgement
         # 片方だけが「振り飛車」なら両方に「対抗形」
-        if player = @container.players.find { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
+        if player = @container.players.find { |e| e.skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) }
           others = @container.players - [player]
-          if others.none? { |e| e.skill_set.has_skill?(Explain::NoteInfo["振り飛車"]) }
-            @container.players.each { |e| e.skill_set.list_push(Explain::NoteInfo["対抗形"]) }
+          if others.none? { |e| e.skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) }
+            @container.players.each { |e| e.skill_set.list_push(Analysis::NoteInfo["対抗形"]) }
           end
         end
       end
@@ -172,8 +172,8 @@ module Bioshogi
           if win_side_location
             player = @container.player_at(win_side_location)
             if player.stronger_piece_have_count.zero?                           # 最後の状態でも全ブッチ状態なら
-              if player.skill_set.has_skill?(Explain::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
-                player.skill_set.list_push(Explain::NoteInfo["背水の陣"])
+              if player.skill_set.has_skill?(Analysis::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
+                player.skill_set.list_push(Analysis::NoteInfo["背水の陣"])
               end
             end
           end
@@ -184,8 +184,8 @@ module Bioshogi
       def rocket_judgement
         @container.players.each do |player|
           technique_infos = player.skill_set.technique_infos
-          if Explain::TechniqueInfo.rocket_list.any? { |e| technique_infos.include?(e) }
-            player.skill_set.list_push(Explain::NoteInfo["ロケット"])
+          if Analysis::TechniqueInfo.rocket_list.any? { |e| technique_infos.include?(e) }
+            player.skill_set.list_push(Analysis::NoteInfo["ロケット"])
           end
         end
       end
@@ -210,16 +210,16 @@ module Bioshogi
             end
           end
           if enabled
-            e.skill_set.list_push(Explain::DefenseInfo["居玉"])
+            e.skill_set.list_push(Analysis::DefenseInfo["居玉"])
           end
         end
       end
 
       def aiigyoku_judgement
         # 両方居玉だったら備考に相居玉
-        if @container.players.all? { |e| e.skill_set.has_skill?(Explain::DefenseInfo["居玉"]) }
+        if @container.players.all? { |e| e.skill_set.has_skill?(Analysis::DefenseInfo["居玉"]) }
           @container.players.each do |e|
-            e.skill_set.list_push(Explain::NoteInfo["相居玉"])
+            e.skill_set.list_push(Analysis::NoteInfo["相居玉"])
           end
         end
         # end
@@ -234,7 +234,7 @@ module Bioshogi
               key = "持久戦"
             end
             @container.players.each do |e|
-              e.skill_set.list_push(Explain::NoteInfo[key])
+              e.skill_set.list_push(Analysis::NoteInfo[key])
             end
           end
         end
@@ -251,7 +251,7 @@ module Bioshogi
                 key = "長手数"
               end
               @container.players.each do |e|
-                e.skill_set.list_push(Explain::NoteInfo[key])
+                e.skill_set.list_push(Analysis::NoteInfo[key])
               end
             end
           end
@@ -259,7 +259,7 @@ module Bioshogi
       end
 
       def header_write
-        Explain::TacticInfo.each do |e|
+        Analysis::TacticInfo.each do |e|
           @container.players.each do |player|
             list = player.skill_set.public_send(e.list_key).normalize
             if v = list.presence

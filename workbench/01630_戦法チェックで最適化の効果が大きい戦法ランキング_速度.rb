@@ -13,7 +13,7 @@ seconds = Benchmark.realtime do
 end
 
 p seconds
-tp Explain::SkillMonitor.walk_counts.sort_by { |k, v| -v }.to_h
+tp Analysis::SkillMonitor.walk_counts.sort_by { |k, v| -v }.to_h
 # >> 2.85152000002563
 # >> |--------------------------+-------|
 # >> |                     駒柱 | 11262 |
