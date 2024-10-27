@@ -45,9 +45,9 @@ module Bioshogi
 
       it "normalized_names_with_alias" do
         container = Container::Basic.new
-        container.player_at(:black).skill_set.attack_infos << Analysis::AttackInfo["中田功XP"]
+        container.player_at(:black).skill_set.attack_infos << Analysis::AttackInfo["コーヤン流三間飛車"]
         container.player_at(:white).skill_set.defense_infos << Analysis::DefenseInfo["美濃囲い"]
-        assert { container.normalized_names_with_alias == ["中田功XP", "コーヤン流", "美濃囲い"] }
+        assert { container.normalized_names_with_alias == ["コーヤン流三間飛車", "コーヤン流", "美濃囲い"] }
       end
 
       it "not_enough_piece_box" do

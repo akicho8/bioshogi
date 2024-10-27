@@ -8,7 +8,7 @@ module Bioshogi
         @skill_set.defense_infos << DefenseInfo["片美濃囲い"]
         @skill_set.defense_infos << DefenseInfo["銀美濃"]
         @skill_set.defense_infos << DefenseInfo["ダイヤモンド美濃"]
-        @skill_set.attack_infos << AttackInfo["中田功XP"]
+        @skill_set.attack_infos << AttackInfo["コーヤン流三間飛車"]
         @skill_set.attack_infos << AttackInfo["嬉野流"]
         @skill_set.note_infos << NoteInfo["入玉"]
       end
@@ -23,7 +23,7 @@ module Bioshogi
         end
 
         it "別名を足したい場合" do
-          assert { @skill_set.attack_infos.normalize.flat_map {|e|[e.key, *e.alias_names]} == [:"中田功XP", "コーヤン流", :"嬉野流"] }
+          assert { @skill_set.attack_infos.normalize.flat_map {|e|[e.key, *e.alias_names]} == [:"コーヤン流三間飛車", "コーヤン流", :"嬉野流"] }
         end
 
         it "defense_infos内でエイリアスを含めたすべての名前を取得" do
@@ -36,7 +36,7 @@ module Bioshogi
       end
 
       it "エイリアスを含めたすべての名前を取得" do
-        assert { @skill_set.normalized_names_with_alias == ["ダイヤモンド美濃", "中田功XP", "コーヤン流", "嬉野流", "入玉"] }
+        assert { @skill_set.normalized_names_with_alias == ["ダイヤモンド美濃", "コーヤン流三間飛車", "コーヤン流", "嬉野流", "入玉"] }
       end
 
       it "代表とする棋風" do
@@ -54,7 +54,7 @@ module Bioshogi
 # >>      Failure/Error: Unable to find - to read failed line
 # >> 
 # >>      NoMethodError:
-# >>        undefined method `main_style_info' for #<Bioshogi::Analysis::SkillSet:0x0000000108c41040 @defense_infos=[<片美濃囲い>, <銀美濃>, <ダイヤモンド美濃>], @attack_infos=[<中田功XP>, <嬉野流>], @note_infos=[<入玉>]>
+# >>        undefined method `main_style_info' for #<Bioshogi::Analysis::SkillSet:0x0000000108c41040 @defense_infos=[<片美濃囲い>, <銀美濃>, <ダイヤモンド美濃>], @attack_infos=[<コーヤン流三間飛車>, <嬉野流>], @note_infos=[<入玉>]>
 # >>      # -:43:in `block (3 levels) in <module:Analysis>'
 # >>      # -:43:in `block (2 levels) in <module:Analysis>'
 # >> 
