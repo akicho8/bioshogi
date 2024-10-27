@@ -18,13 +18,16 @@ module Bioshogi
         end
 
         def call
-          if @file = @elem.sample_kif_or_ki2_file
+          @elem.reference_files.each do |file|
+            unless file.exist?
+              puts "#{@elem} の #{file} が見つかりません"
+              next
+            end
+            @file = file
             @old_text = @file.read
             @new_text = Parser.parse(source_text).to_kif
             new_file.write(@new_text)
             puts "#{mark} [#{@index.next} / #{TacticInfo.all_elements.size}] #{new_file}"
-          else
-            puts "#{@elem} に対応するファイルが見つかりません"
           end
         end
 

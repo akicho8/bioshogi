@@ -6,13 +6,11 @@ module Bioshogi
       describe "すべての戦法の判定", tactic: true do
         TacticInfo.all_elements.each do |e|
           it e.key do
-            file = e.sample_kif_or_ki2_file
-            info = Parser.parse(file)
-            info.formatter.container_run_once
-            if ["居玉", "力戦", "相居玉", "背水の陣", "相居飛車", "対振り飛車", "相振り飛車", "対抗形"].include?(e.key.to_s)
-              next
+            e.reference_files.each do |file|
+              info = Parser.parse(file)
+              info.formatter.container_run_once
+              assert { info.formatter.container.normalized_names_with_alias.include?(e.key.to_s) }
             end
-            assert { info.formatter.container.normalized_names_with_alias.include?(e.key.to_s) }
           end
         end
       end

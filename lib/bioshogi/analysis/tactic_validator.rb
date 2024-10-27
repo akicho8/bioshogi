@@ -4,7 +4,11 @@ module Bioshogi
   module Analysis
     class TacticValidator
       def call
-        @rows = TacticInfo.all_elements.collect { |e| SingleValidator.new(e).call }
+        @rows = TacticInfo.all_elements.flat_map do |e|
+          e.reference_files.collect do |file|
+            SingleValidator.new(e, file).call
+          end
+        end
         puts
         tp @rows
         puts success? ? "OK" : "ERROR"
@@ -22,16 +26,16 @@ module Bioshogi
       private
 
       class SingleValidator
-        def initialize(item)
+        def initialize(item, file)
           @item = item
+          @file = file
         end
 
         def call
-          file = @item.sample_kif_or_ki2_file
           row = { "合致" => "", key: @item.key }
-          if file
-            # row[:file] = file.basename.to_s
-            str = file.read
+          if @file
+            row[:file] = @file.basename.to_s
+            str = @file.read
             info = Parser.parse(str)
             info.formatter.container_run_once
             info.formatter.container.players.each do |player|

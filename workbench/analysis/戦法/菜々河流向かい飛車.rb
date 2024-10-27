@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Analysis::AttackInfo.fetch("菜々河流向かい飛車").sample_kif_info
+info = Analysis::AttackInfo.fetch("菜々河流向かい飛車").main_reference_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |------------------------+---------+-----------+--------------------------------|

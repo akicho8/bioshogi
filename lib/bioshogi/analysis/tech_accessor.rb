@@ -136,21 +136,27 @@ module Bioshogi
         TacticHitTurnTable[key]
       end
 
-      def sample_kif_file
+      ################################################################################
+
+      # この戦法を発動する代表とする棋譜ファイル
+      def main_reference_file
         Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
       end
 
-      def sample_kif_info(options = {})
-        Parser.file_parse(sample_kif_file, options)
+      # この戦法を発動する代表とする棋譜ファイルの情報
+      def main_reference_info(options = {})
+        Parser.file_parse(main_reference_file, options)
       end
 
-      def sample_kif_or_ki2_file
-        Pathname.glob("#{__dir__}/#{tactic_info.name}/#{key}.{kif,ki2}").first
+      # この戦法を発動するファイルたち
+      def reference_files
+        [
+          main_reference_file,
+          *Pathname("#{__dir__}/#{tactic_info.name}").glob("#{key}/**/*.kif"),
+        ]
       end
 
-      # def sample_any_files
-      #   Pathname("#{__dir__}/#{tactic_info.name}").glob("#{key}.{kif,ki2,csa}")
-      # end
+      ################################################################################
     end
   end
 end

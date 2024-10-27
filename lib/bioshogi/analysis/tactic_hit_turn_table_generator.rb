@@ -18,7 +18,7 @@ module Bioshogi
       def to_h
         list = Analysis::TacticInfo.all_elements.collect do |e|
           turn = nil
-          e.sample_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
+          e.main_reference_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
             if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
               turn = i.next
               break

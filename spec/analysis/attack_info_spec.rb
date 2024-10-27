@@ -30,12 +30,12 @@ module Bioshogi
         assert { AttackInfo["UFO銀"].name == "UFO銀" }
       end
 
-      it "sample_kif_file" do
-        assert { AttackInfo["UFO銀"].sample_kif_file.exist? }
+      it "main_reference_file" do
+        assert { AttackInfo["UFO銀"].main_reference_file.exist? }
       end
 
-      it "sample_kif_info" do
-        assert { AttackInfo["UFO銀"].sample_kif_info }
+      it "main_reference_info" do
+        assert { AttackInfo["UFO銀"].main_reference_info }
       end
 
       it "hit_turn" do

@@ -2,16 +2,16 @@ require "./setup"
 Bioshogi::Analysis::TacticHitTurnTableGenerator.new.call
 
 # e = Bioshogi::Analysis::TacticInfo.flat_lookup("大駒コンプリート") # => <大駒コンプリート>
-# e.sample_kif_info.formatter.container.hand_logs.each do |e|
+# e.main_reference_info.formatter.container.hand_logs.each do |e|
 #   p e.to_kif
 #   p e.skill_set
 # end
-# puts e.sample_kif_info.to_kif
+# puts e.main_reference_info.to_kif
 
-# hand_logs = e.sample_kif_info.formatter.container.hand_logs   # =>
+# hand_logs = e.main_reference_info.formatter.container.hand_logs   # =>
 # tp hand_logs
 #   turn = nil
-#   e.sample_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
+#   e.main_reference_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
 #     if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
 #       turn = i.next
 #       break
