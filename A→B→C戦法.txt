@@ -33,6 +33,7 @@ lib/bioshogi/analysis/戦法/UFO銀.kif:先手の戦法：相掛かり棒銀, UF
 lib/bioshogi/analysis/戦法/Uターン飛車.kif:後手の戦法：四間飛車, Uターン飛車
 lib/bioshogi/analysis/戦法/△2三歩戦法.kif:後手の戦法：△2三歩戦法, 一手損角換わり
 lib/bioshogi/analysis/戦法/ひねり飛車.kif:先手の戦法：相掛かり, ひねり飛車
+lib/bioshogi/analysis/戦法/ゴリラの右手.kif:先手の戦法：角換わり, ゴリラの右手
 lib/bioshogi/analysis/戦法/ショーダンシステム.kif:先手の戦法：初手▲7八飛戦法, 早石田
 lib/bioshogi/analysis/戦法/ダイレクト向かい飛車.kif:後手の戦法：一手損角換わり, ダイレクト向かい飛車
 lib/bioshogi/analysis/戦法/ツノ銀中飛車.kif:後手の戦法：阪田流2手目△9四歩, 対振り持久戦, 袖飛車
