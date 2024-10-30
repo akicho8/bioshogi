@@ -5,8 +5,8 @@ Analysis::TacticInfo.each do |e|
   e.model.each do |e|
     if e.root?
       puts e.to_s_tree { |e|
-        if e.other_parents.present?
-          "#{e.name} (別親: #{e.other_parents.collect(&:key).join(', ')})"
+        if e.related_ancestors.present?
+          "#{e.name} (別親: #{e.related_ancestors.collect(&:key).join(', ')})"
         else
           e.name
         end

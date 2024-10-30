@@ -58,8 +58,8 @@ module Bioshogi
         @cached_descendants ||= descendants
       end
 
-      def other_parents
-        @other_parents ||= Array(super).collect { |e| self.class.fetch(e) }
+      def related_ancestors
+        @related_ancestors ||= Array(super).collect { |e| self.class.fetch(e) }
       end
 
       def alias_names

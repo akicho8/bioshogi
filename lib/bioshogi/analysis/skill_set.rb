@@ -90,8 +90,8 @@ module Bioshogi
           # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
           list -= list.flat_map { |e| e.ancestors }
           # さらに「ダイヤモンド美濃」に含まれる「銀美濃」を消す
-          # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが other_parents にある
-          list -= list.flat_map { |e| e.other_parents.flat_map(&:self_and_ancestors) }
+          # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが related_ancestors にある
+          list -= list.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
           list
         end
 
