@@ -13,6 +13,10 @@ module Bioshogi
       LR  = [-1, +1]
       LR2 = [[1, 2], [-1, -2]]
 
+      TOP_PLUS_ONE  = 1          # ▲から見て2段目のこと
+      SIDE_PLUS_ONE = 1         # ▲から見て2筋と8筋のこと
+      X_2_8         = Set[SIDE_PLUS_ONE, Dimension::PlaceX.dimension - 1 - SIDE_PLUS_ONE]
+
       include ApplicationMemoryRecord
       memory_record [
         {
@@ -334,6 +338,10 @@ module Bioshogi
               throw :skip
             end
             unless s.piece.key == :knight && !s.promoted && s.location != soldier.location
+              throw :skip
+            end
+            # 「22銀打」または「82銀打」を除外する
+            if X_2_8.include?(place.x.value) && soldier.top_spaces == TOP_PLUS_ONE
               throw :skip
             end
           },
@@ -805,6 +813,6 @@ module Bioshogi
   end
 end
 # ~> -:16:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Analysis::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
-# ~> 	from -:5:in `<module:Analysis>'
-# ~> 	from -:4:in `<module:Bioshogi>'
-# ~> 	from -:3:in `<main>'
+# ~>    from -:5:in `<module:Analysis>'
+# ~>    from -:4:in `<module:Bioshogi>'
+# ~>    from -:3:in `<main>'
