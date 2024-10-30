@@ -88,7 +88,7 @@ lib/bioshogi/analysis/戦法/角換わり棒銀.kif:先手の戦法：原始棒�
 lib/bioshogi/analysis/戦法/角換わり棒銀.kif:*▲戦法：原始棒銀, 角換わり棒銀
 lib/bioshogi/analysis/戦法/逆棒銀.kif:先手の戦法：四間飛車, 逆棒銀
 lib/bioshogi/analysis/戦法/金銀橋.kif:後手の戦法：右四間飛車, 腰掛け銀
-lib/bioshogi/analysis/戦法/阪田流向飛車.kif:後手の戦法：角換わり, 阪田流向飛車
+lib/bioshogi/analysis/戦法/阪田流向かい飛車.kif:後手の戦法：角換わり, 阪田流向かい飛車
 lib/bioshogi/analysis/戦法/陽動振り飛車.kif:先手の戦法：四間飛車, 陽動振り飛車
 lib/bioshogi/analysis/戦法/陽動振り飛車.kif:*▲戦法：四間飛車, 陽動振り飛車
 lib/bioshogi/analysis/戦法/飛騨の中飛車合掌造り.kif:先手の戦法：ゴキゲン中飛車, 飛騨の中飛車合掌造り

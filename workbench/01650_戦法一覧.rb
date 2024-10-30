@@ -123,7 +123,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | ダイレクト向かい飛車     |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | モノレール向かい飛車     |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | メリケン向かい飛車       | 向かい飛車         |
-# >> | Bioshogi::Analysis::AttackInfo    | 阪田流向飛車             |                    |
+# >> | Bioshogi::Analysis::AttackInfo    | 阪田流向かい飛車             |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | オザワシステム           | 向かい飛車         |
 # >> | Bioshogi::Analysis::AttackInfo    | 鬼殺し向かい飛車         | 向かい飛車         |
 # >> | Bioshogi::Analysis::AttackInfo    | 菜々河流△4四角         |                    |

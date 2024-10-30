@@ -23,7 +23,7 @@
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/升田式石田流.kif:9:棋戦詳細：第2回近将カップ2回戦第9局
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/△2三歩戦法.kif:9:棋戦詳細：定跡実験室
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/腰掛け銀.kif:8:棋戦詳細：将棋名家手合上巻第22局
-~/src/bioshogi/lib/bioshogi/analysis/戦法/阪田流向飛車.kif:8:棋戦詳細：第1期竜王戦本戦トーナメント準決勝第1局
+~/src/bioshogi/lib/bioshogi/analysis/戦法/阪田流向かい飛車.kif:8:棋戦詳細：第1期竜王戦本戦トーナメント準決勝第1局
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/矢倉中飛車.kif:6:棋戦詳細：将棋名家手合下巻第13局
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/塚田スペシャル.kif:8:棋戦詳細：第8回全日本プロトーナメント2回戦
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/脇システム.kif:9:棋戦詳細：第38期棋聖戦一次予選
