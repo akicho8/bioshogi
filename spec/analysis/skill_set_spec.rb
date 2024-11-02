@@ -36,7 +36,7 @@ module Bioshogi
       end
 
       it "代表とする棋風" do
-        assert { @skill_set.main_style_info.key == :"準王道" }
+        assert { @skill_set.main_style_info.key == :"変態" }
       end
     end
   end

@@ -717,6 +717,16 @@ module Bioshogi
                 end
               end
             end
+
+            # 2手前に歩を前に打っているなら現在は「連打の歩」になるためスキップする
+            y2 = soldier.place.y.value - soldier.location.value_sign # 24歩のY座標(整数値)
+            if hand_log = executor.container.hand_logs[-2]
+              if s = hand_log&.drop_hand&.soldier
+                if s.piece.key == :pawn && s.place.x == place.x && s.place.y.value == y2 && s.location == soldier.location
+                  throw :skip
+                end
+              end
+            end
           },
         },
 
@@ -766,7 +776,7 @@ module Bioshogi
             y = soldier.place.y
             y2 = y.value - soldier.location.value_sign # 24歩のY座標(整数値)
 
-            # 1手前: △24同歩 取らされる
+            # 1手前: △24同何か 取らされる
             flag = false
             if hand_log = executor.container.hand_logs[-1]
               if s = hand_log&.move_hand&.soldier
@@ -781,7 +791,9 @@ module Bioshogi
             flag = false
             if hand_log = executor.container.hand_logs[-2]
               if s = hand_log&.drop_hand&.soldier
-                flag = (s.place.x == x && s.place.y.value == y2 && s.location == soldier.location)
+                if s.piece.key == :pawn && s.place.x == x && s.place.y.value == y2 && s.location == soldier.location
+                  flag = true
+                end
               end
             end
             unless flag

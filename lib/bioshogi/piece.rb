@@ -103,7 +103,7 @@ module Bioshogi
       { key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "G", promotable: false, always_alive: true,  stronger: false, dengaku_target: false, tatakare_target: true,  maesusumeru: true,  },
       { key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_formal_sheet_name: "成銀", other_matched_promoted_names: nil,   sfen_char: "S", promotable: true,  always_alive: true,  stronger: false, dengaku_target: false, tatakare_target: true,  maesusumeru: true,  },
       { key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_formal_sheet_name: "成桂", other_matched_promoted_names: "今",  sfen_char: "N", promotable: true,  always_alive: false, stronger: false, dengaku_target: false, tatakare_target: false, maesusumeru: false, },
-      { key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_formal_sheet_name: "成香", other_matched_promoted_names: "仝",  sfen_char: "L", promotable: true,  always_alive: false, stronger: false, dengaku_target: false, tatakare_target: true,  maesusumeru: true,  },
+      { key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_formal_sheet_name: "成香", other_matched_promoted_names: "仝",  sfen_char: "L", promotable: true,  always_alive: false, stronger: false, dengaku_target: false, tatakare_target: false, maesusumeru: true,  },
       { key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "P", promotable: true,  always_alive: false, stronger: false, dengaku_target: false, tatakare_target: false, maesusumeru: true,  },
     ]
 
