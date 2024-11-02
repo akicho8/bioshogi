@@ -218,7 +218,7 @@ module Bioshogi
     def piece_vector
       @piece_vector ||= PieceVector.fetch(key)
     end
-    delegate :brave?, :all_vectors, to: :piece_vector
+    delegate *PieceVector::DELEGATE_METHODS, to: :piece_vector
 
     def piece_scale
       @piece_scale ||= PieceScale.fetch(key)

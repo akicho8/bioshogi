@@ -1,4 +1,3 @@
-# -*- coding: utf-8; compile-command: "bundle execute rspec ../../spec/soldier_spec.rb" -*-
 # frozen-string-literal: true
 
 module Bioshogi
@@ -56,6 +55,7 @@ module Bioshogi
     end
 
     include SimpleModel
+    include TechniqueMatcherMethods
 
     attr_accessor :piece
     attr_accessor :promoted
@@ -95,14 +95,17 @@ module Bioshogi
       attributes.hash
     end
 
+    # 180度回転
     def flip
       self.class.create(piece: piece, promoted: promoted, place: place.flip, location: location.flip)
     end
 
+    # 左右反転
     def flop
       self.class.create(piece: piece, promoted: promoted, place: place.flop, location: location)
     end
 
+    # ▲視点に統一
     def flip_if_white
       if location.key == :white
         flip
@@ -164,78 +167,6 @@ module Bioshogi
         piece.ek_score
       else
         0
-      end
-    end
-
-    # 手筋判定用
-    concerning :TechniqueMatcherMethods do
-      # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
-      def bottom_spaces
-        Dimension::PlaceY.dimension - 1 - top_spaces
-      end
-
-      # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
-      def top_spaces
-        place.flip_if_white(location).y.value
-      end
-
-      # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
-      def smaller_one_of_side_spaces
-        [place.x.value, __distance_from_right].min
-      end
-
-      # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
-      def sign_to_goto_closer_side
-        if place.x.value > __distance_from_right
-          1
-        else
-          -1
-        end
-      end
-
-      # 先手から見て右からの距離
-      def __distance_from_right
-        Dimension::PlaceX.dimension - 1 - place.x.value
-      end
-
-      # センターにいる？
-      def center_place?
-        place.x.value == Dimension::PlaceX.dimension / 2
-      end
-
-      # 自玉の位置にいる？
-      def initial_place?
-        center_place? && bottom_spaces == 0
-      end
-
-      # 駒の重さ(=価値) 常にプラス
-      def abs_weight
-        piece.any_weight(promoted)
-      end
-
-      # 駒の重さ(=価値)。先手視点。後手ならマイナスになる
-      def relative_weight
-        abs_weight * location.value_sign
-      end
-
-      # 敵への駒の圧力(終盤度)
-      def pressure_level(area = 4)
-        case
-        when top_spaces < area
-          if promoted
-            piece.promoted_attack_level
-          else
-            piece.attack_level
-          end
-        when bottom_spaces < area
-          if promoted
-            -piece.promoted_defense_level
-          else
-            -piece.defense_level
-          end
-        else
-          0
-        end
       end
     end
 

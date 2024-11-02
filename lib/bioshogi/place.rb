@@ -94,6 +94,28 @@ module Bioshogi
       end
     end
 
+    # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
+    # 例えば 13 であれば 2 を返す
+    def top_spaces(location)
+      flip_if_white(location).y.value
+    end
+
+    # 自分の側の一番下を0として底辺までの高さを返す
+    # 例えば 13 であれば 6 を返す
+    def bottom_spaces(location)
+      Dimension::PlaceY.dimension - 1 - top_spaces(location)
+    end
+
+    # 自分の陣地にいる？
+    def own_side?(location)
+      bottom_spaces(location) < Dimension::PlaceY.promotable_depth
+    end
+
+    # 相手の陣地にいる？
+    def opponent_side?(location)
+      top_spaces(location) < Dimension::PlaceY.promotable_depth
+    end
+
     def name
       to_a.collect { |e| e.name }.join
     end

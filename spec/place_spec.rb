@@ -100,5 +100,19 @@ module Bioshogi
       b = Place["２一"]
       assert { [a, b].sort == [b, a] }
     end
+
+    it "opponent_side?" do
+      assert { Place["13"].opponent_side?(:black) == true  } # ▲から見た13の位置は敵陣か？
+      assert { Place["14"].opponent_side?(:black) == false }
+      assert { Place["16"].opponent_side?(:white) == false }
+      assert { Place["17"].opponent_side?(:white) == true  }
+    end
+
+    it "own_side?" do
+      assert { Place["13"].own_side?(:white) == true  } # △から見た13の位置は自陣か？
+      assert { Place["14"].own_side?(:white) == false }
+      assert { Place["16"].own_side?(:black) == false }
+      assert { Place["17"].own_side?(:black) == true  }
+    end
   end
 end

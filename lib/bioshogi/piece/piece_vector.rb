@@ -10,21 +10,27 @@ module Bioshogi
     class PieceVector
       include ApplicationMemoryRecord
       memory_record [
-        { key: :king,   basic_once_vectors: :pattern_king,       basic_repeat_vectors: nil,           promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           },
-        { key: :rook,   basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_plus, promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus, },
-        { key: :bishop, basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_x,    promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x,    },
-        { key: :gold,   basic_once_vectors: :pattern_gold,       basic_repeat_vectors: nil,           promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           },
-        { key: :silver, basic_once_vectors: :pattern_silver,     basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
-        { key: :knight, basic_once_vectors: :pattern_knight,     basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
-        { key: :lance,  basic_once_vectors: nil,                 basic_repeat_vectors: :pattern_pawn, promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
-        { key: :pawn,   basic_once_vectors: :pattern_pawn,       basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
+        { key: :king,   basic_once_vectors: :pattern_king,   basic_repeat_vectors: nil,           promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           },
+        { key: :rook,   basic_once_vectors: nil,             basic_repeat_vectors: :pattern_plus, promoted_once_vectors: :pattern_x,    promoted_repeat_vectors: :pattern_plus, },
+        { key: :bishop, basic_once_vectors: nil,             basic_repeat_vectors: :pattern_x,    promoted_once_vectors: :pattern_plus, promoted_repeat_vectors: :pattern_x,    },
+        { key: :gold,   basic_once_vectors: :pattern_gold,   basic_repeat_vectors: nil,           promoted_once_vectors: nil,           promoted_repeat_vectors: nil,           },
+        { key: :silver, basic_once_vectors: :pattern_silver, basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
+        { key: :knight, basic_once_vectors: :pattern_knight, basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
+        { key: :lance,  basic_once_vectors: nil,             basic_repeat_vectors: :pattern_pawn, promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
+        { key: :pawn,   basic_once_vectors: :pattern_pawn,   basic_repeat_vectors: nil,           promoted_once_vectors: :pattern_gold, promoted_repeat_vectors: nil,           },
+      ]
+
+      DELEGATE_METHODS = [
+        :brave?,
+        :all_vectors,
       ]
 
       def brave?
         attributes[:promoted_repeat_vectors]
       end
 
-      def all_vectors(promoted:, location:)
+      # すべてはこれで足りるので他のメソッドを public にするべからず
+      def all_vectors(location:, promoted: false)
         @all_vectors ||= {}
         @all_vectors[[promoted, location.key]] ||= yield_self do
           vectors = select_vectors(promoted)

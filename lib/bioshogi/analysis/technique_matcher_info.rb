@@ -256,24 +256,64 @@ module Bioshogi
           },
         },
 
-        # 単に「18角打」をチェックした方がいい
-        # {
-        #   key: "遠見の角",
-        #   logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
-        #   verify_process: proc {
-        #     soldier = executor.hand.soldier
-        #
-        #     # 8段目でなければだめ
-        #     if soldier.bottom_spaces != 1
-        #       throw :skip
-        #     end
-        #
-        #     # 端でなければだめ
-        #     if soldier.smaller_one_of_side_spaces != 0
-        #       throw :skip
-        #     end
-        #   },
-        # },
+        # 単に「18角打」をチェックした方がいい → やめ → 自力判定する
+        {
+          key: "遠見の角",
+          logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
+          verify_process: proc {
+            soldier = executor.hand.soldier
+            location = soldier.location
+            place = soldier.place
+
+            # 中盤以降であること (そうしないと序盤の77角打まで該当してしまう)
+            if executor.container.outbreak_turn
+            else
+              throw :skip
+            end
+
+            # 自陣から打っていること
+            if soldier.own_side?
+            else
+              throw :skip
+            end
+
+            # # 端でなければだめ
+            # if soldier.smaller_one_of_side_spaces != 0
+            #   throw :skip
+            # end
+
+            # 角の4方向のレイ
+            vectors = soldier.piece.all_vectors(location: location) # => [RV<[-1, -1]>, RV<[1, -1]>, RV<[-1, 1]>, RV<[1, 1]>]
+            # 敵陣に進むベクトルに絞る
+            vectors = vectors.find_all { |x, y| y != location.value_sign } # => [RV<[-1, -1]>, RV<[1, -1]>]
+
+            retv = vectors.any? do |x, y|      # 左上と右上を試す
+              step_count = 0                   # 斜めの効きの数 (駒に衝突したらそこも含める)
+              opponent_territory = nil         # 一直線に相手の陣地に入れるか？
+              pos = place                      # 開始地点
+              Dimension::PlaceY.dimension.times do |i|
+                if pos = Place.lookup([pos.x.value + x, pos.y.value + y])
+                  step_count += 1                                  # 効きの数+1
+                  opponent_territory ||= pos.promotable?(location) # 相手の陣地に入れるか？
+                  surface[pos] and break                           # 相手の駒または自分の駒がある場合は終わる
+                else
+                  break                                            # 外に出た
+                end
+              end
+
+              if false
+                p "距離:#{step_count}, 入陣:#{opponent_territory}"
+              end
+
+              # 4 だとマッチしすぎるため 5 にする (5にするなら5の列ならskipにすれば最適化できるが不具合の元なのでやらない)
+              step_count >= 5 && opponent_territory
+            end
+
+            unless retv
+              throw :skip
+            end
+          },
+        },
 
         {
           key: "割り打ちの銀",
@@ -812,7 +852,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:16:in `<class:TechniqueMatcherInfo>': uninitialized constant Bioshogi::Analysis::TechniqueMatcherInfo::ApplicationMemoryRecord (NameError)
-# ~>    from -:5:in `<module:Analysis>'
-# ~>    from -:4:in `<module:Bioshogi>'
-# ~>    from -:3:in `<main>'
