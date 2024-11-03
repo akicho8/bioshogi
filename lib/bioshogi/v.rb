@@ -19,6 +19,10 @@ module Bioshogi
         @around_vectors ||= [up, right, down, left]
       end
 
+      def left_right_vectors
+        @left_right_vectors ||= [left, right]
+      end
+
       def up
         @up ||= self[0, -1]
       end
@@ -59,7 +63,7 @@ module Bioshogi
 
       ################################################################################ 桂馬の動き
 
-      def keima_ways
+      def keima_vectors
         @keima_methods ||= [up_up_right, up_up_left]
       end
 

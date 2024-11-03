@@ -49,6 +49,11 @@ module Bioshogi
       def in_three_to_seven?
         RANGE_3_7.cover?(value)
       end
+
+      # センターにいる？ (5の列にいる？)
+      def center_place?
+        value == dimension / 2
+      end
     end
   end
 end

@@ -62,13 +62,13 @@ module Bioshogi
       end
 
       # センターにいる？ (5の列にいる？)
-      def center_place?
-        place.x.value == Dimension::PlaceX.dimension / 2
+      def column_is_center?
+        place.column_is_center?
       end
 
       # 自玉の位置にいる？
       def initial_place?
-        center_place? && bottom_spaces == 0
+        column_is_center? && bottom_spaces == 0
       end
 
       # 駒の重さ(=価値) 常にプラス

@@ -2,16 +2,11 @@ require "spec_helper"
 
 module Bioshogi
   describe V do
-    it ".around_vectors" do
-      assert { V.around_vectors }
-    end
-
-    it ".ikkenryu_vectors" do
-      assert { V.ikkenryu_vectors }
-    end
-
-    it ".keima_ways" do
-      assert { V.keima_ways }
+    it ".*_vectors" do
+      assert { V.around_vectors     }
+      assert { V.left_right_vectors }
+      assert { V.ikkenryu_vectors   }
+      assert { V.keima_vectors      }
     end
 
     it "+" do

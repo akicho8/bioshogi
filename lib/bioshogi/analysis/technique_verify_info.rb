@@ -61,33 +61,26 @@ module Bioshogi
           description: "玉または飛の斜めの歩を攻める",
           func: proc {
             # 1. 2〜8筋であること (端の場合は「こびん」とは言わないため)
-            unless place.column_in_two_to_eight?
-              throw :skip
-            end
+            verify_if { place.column_in_two_to_eight? }
 
             # 2. 相手が歩であること
-            matched = false
-            if v = soldier.move_to(:up)
-              if s = surface[v]
-                if s.piece.key == :pawn && !s.promoted && s.location != location
-                  matched = true
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  s.piece.key == :pawn && !s.promoted && s.location != location
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
 
             # 3. 桂馬の効きの位置に「玉」または「飛車」があること
-            matched = V.keima_ways.any? do |e|
-              if v = soldier.move_to(e)
-                if s = surface[v]
-                  (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != location
+            verify_if do
+              V.keima_vectors.any? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != location
+                  end
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },
@@ -120,50 +113,34 @@ module Bioshogi
           },
         },
 
+        # FIXME
         {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: proc {
-            if false
-              p executor.move_hand
-              soldier = executor.move_hand.soldier
-              p soldier.piece.key
-              p soldier.bottom_spaces
-              p soldier.place
-              p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
-            end
+            # 1. 下から3段目であること
+            verify_if { soldier.bottom_spaces == 2 }
 
-            soldier = executor.move_hand.soldier
-
-            # 「3段目」でないとだめ
-            if soldier.bottom_spaces != 2
-              throw :skip
-            end
-
-            # 「端から3つ目」でなければだめ
-            if soldier.smaller_one_of_side_spaces != 2
-              throw :skip
-            end
+            # 2. 端から3つ目であること
+            verify_if { soldier.smaller_one_of_side_spaces == 2 }
 
             # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
-            if executor.move_hand.origin_soldier.smaller_one_of_side_spaces != 1
-              throw :skip
-            end
+            verify_if { origin_soldier.smaller_one_of_side_spaces == 1 }
 
-            # FIXME: origin_soldier
-            # 下に2つ、壁の方に2つ
-            place = soldier.place
-            v = Place.lookup([place.x.value + soldier.sign_to_goto_closer_side * 2, place.y.value + soldier.location.value_sign * 2])
-
-            # そこに何かないとだめ
-            s = surface[v]
-            unless s
-              throw :skip
-            end
-
-            # その駒が「自分」の「玉」でないとだめ
-            unless s.piece.key == :king && s.location == soldier.location
-              throw :skip
+            # ↓↓→→の位置に自分の「玉」があること
+            verify_if do
+              if v = place.xy_add(soldier.sign_to_goto_closer_side * 2, location.value_sign * 2)
+                # p v
+                # p origin_soldier.place
+                # p origin_soldier.sign_to_goto_closer_side
+                # if v = origin_soldier.place.xy_add(origin_soldier.sign_to_goto_closer_side, location.value_sign)
+                # p v
+                # p v
+                # p surface[v]
+                if s = surface[v]
+                  s.piece.key == :king && s.location == location
+                end
+              end
             end
           },
         },
@@ -172,18 +149,14 @@ module Bioshogi
           key: "腹銀",
           description: "銀を打ったとき左右どちらかに相手の玉がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-
-            matched = LR.any? do |x|
-              v = place.xy_add(x, 0)
-              if s = surface[v]
-                s.piece.key == :king && s.location != soldier.location
+            verify_if do
+              V.left_right_vectors.any? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    s.piece.key == :king && s.location != location
+                  end
+                end
               end
-            end
-
-            unless matched
-              throw :skip
             end
           },
         },

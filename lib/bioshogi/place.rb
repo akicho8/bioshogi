@@ -190,7 +190,7 @@ module Bioshogi
       xy_add(*(vector * location.value_sign))
     end
 
-    ################################################################################
+    ################################################################################ @x への delegate 系
 
     # 2から8筋か？
     def column_in_two_to_eight?
@@ -205,6 +205,11 @@ module Bioshogi
     # 3から7筋か？
     def column_in_three_to_seven?
       @x.in_three_to_seven?
+    end
+
+    # 5の筋か？
+    def column_is_center?
+      @x.center_place?
     end
 
     ################################################################################
