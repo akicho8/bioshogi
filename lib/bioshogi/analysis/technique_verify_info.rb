@@ -165,14 +165,12 @@ module Bioshogi
           key: "尻銀",
           description: "銀を打ったとき下に相手の玉がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            v = place.move_to_xy(0, 1, location: soldier.location)
-            unless s = surface[v]
-              throw :skip
-            end
-            unless s.piece.key == :king && s.location != soldier.location
-              throw :skip
+            verify_if do
+              if v = soldier.move_to(:down)
+                if s = surface[v]
+                  s.piece.key == :king && s.location != location
+                end
+              end
             end
           },
         },
