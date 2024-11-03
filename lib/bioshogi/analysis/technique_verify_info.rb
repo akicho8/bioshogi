@@ -179,19 +179,14 @@ module Bioshogi
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: proc {
-            soldier = executor.hand.soldier
+            # 1. 2, 3, 4段目であること
+            verify_if { soldier.tarehu_ikeru? }
 
-            # 2, 3, 4段目でなければだめ(1段目は反則)
-            v = soldier.top_spaces
-            unless 1 <= v && v <= Dimension::PlaceY.promotable_depth
-              throw :skip
-            end
-
-            # 一歩先が空
-            place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-            if surface[v]
-              throw :skip
+            # 2. 先が空であること
+            verify_if do
+              if v = soldier.move_to(:up)
+                !surface[v]
+              end
             end
           },
         },

@@ -76,50 +76,7 @@ module Bioshogi
       "#<#{self.class.name} #{name}>"
     end
 
-    # 180度回転 ※上下対象ではない
-    def flip
-      self.class.fetch([@x.flip, @y.flip])
-    end
-
-    # x座標のみ反転
-    def flop
-      self.class.fetch([@x.flip, @y])
-    end
-
-    def flip_if_white(location)
-      if Location[location].key == :white
-        flip
-      else
-        self
-      end
-    end
-
-    # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
-    # 例えば 13 であれば 2 を返す
-    def top_spaces(location)
-      flip_if_white(location).y.value
-    end
-
-    # 自分の側の一番下を0として底辺までの高さを返す
-    # 例えば 13 であれば 6 を返す
-    def bottom_spaces(location)
-      Dimension::PlaceY.dimension - 1 - top_spaces(location)
-    end
-
-    # 中央のすぐ下(6段目)にいる？ (white だと4段目)
-    def in_zensen?(location)
-      @y.value == (Dimension::PlaceY.dimension / 2 + location.value_sign)
-    end
-
-    # 自分の陣地にいる？
-    def own_side?(location)
-      bottom_spaces(location) < Dimension::PlaceY.promotable_depth
-    end
-
-    # 相手の陣地にいる？
-    def opponent_side?(location)
-      top_spaces(location) < Dimension::PlaceY.promotable_depth
-    end
+    ################################################################################
 
     def name
       to_a.collect { |e| e.name }.join
@@ -161,6 +118,85 @@ module Bioshogi
 
     def to_a
       [@x, @y]
+    end
+
+    ################################################################################
+
+    # 180度回転 ※上下対象ではない
+    def flip
+      self.class.fetch([@x.flip, @y.flip])
+    end
+
+    # x座標のみ反転
+    def flop
+      self.class.fetch([@x.flip, @y])
+    end
+
+    def flip_if_white(location)
+      if Location[location].key == :white
+        flip
+      else
+        self
+      end
+    end
+
+    ################################################################################
+
+    # def valid?
+    #   @x.valid? && @y.valid?
+    # end
+    #
+    # def invalid?
+    #   !valid?
+    # end
+
+    def ==(other)
+      eql?(other)
+    end
+
+    def <=>(other)
+      to_xy <=> other.to_xy
+    end
+
+    def hash
+      to_xy.hash
+    end
+
+    def eql?(other)
+      self.class == other.class && to_xy == other.to_xy
+    end
+
+    ################################################################################ 手筋判定サポート
+
+    def promotable?(location)
+      @y.promotable?(location)
+    end
+
+    # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
+    # 例えば 13 であれば 2 を返す
+    def top_spaces(location)
+      flip_if_white(location).y.value
+    end
+
+    # 自分の側の一番下を0として底辺までの高さを返す
+    # 例えば 13 であれば 6 を返す
+    def bottom_spaces(location)
+      Dimension::PlaceY.dimension - 1 - top_spaces(location)
+    end
+
+    # 中央のすぐ下(6段目)にいる？ (white だと4段目)
+    def in_zensen?(location)
+      @y.value == (Dimension::PlaceY.dimension / 2 + location.value_sign)
+    end
+
+    # 自分の陣地にいる？
+    def own_side?(location)
+      bottom_spaces(location) < Dimension::PlaceY.promotable_depth
+    end
+
+    # 相手の陣地にいる？
+    def opponent_side?(location)
+      top_spaces(location) < Dimension::PlaceY.promotable_depth
     end
 
     ################################################################################ 移動
@@ -213,33 +249,5 @@ module Bioshogi
     end
 
     ################################################################################
-
-    # def valid?
-    #   @x.valid? && @y.valid?
-    # end
-    #
-    # def invalid?
-    #   !valid?
-    # end
-
-    def ==(other)
-      eql?(other)
-    end
-
-    def <=>(other)
-      to_xy <=> other.to_xy
-    end
-
-    def hash
-      to_xy.hash
-    end
-
-    def eql?(other)
-      self.class == other.class && to_xy == other.to_xy
-    end
-
-    def promotable?(location)
-      @y.promotable?(location)
-    end
   end
 end

@@ -71,6 +71,13 @@ module Bioshogi
         column_is_center? && bottom_spaces == 0
       end
 
+      # 垂れ歩状態か？ (つまり2, 3, 4段目)
+      def tarehu_ikeru?
+        top_spaces.between?(1, Dimension::PlaceY.promotable_depth)
+      end
+
+      ################################################################################
+
       # 駒の重さ(=価値) 常にプラス
       def abs_weight
         piece.any_weight(promoted)

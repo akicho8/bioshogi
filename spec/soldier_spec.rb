@@ -84,5 +84,22 @@ module Bioshogi
       assert { Soldier.from_str("▲61歩").sign_to_goto_closer_side == -1 }
       assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
     end
+
+    it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
+      assert { Soldier.from_str("▲41歩").sign_to_goto_closer_side == 1  }
+      assert { Soldier.from_str("△41歩").sign_to_goto_closer_side == 1  }
+      assert { Soldier.from_str("▲51歩").sign_to_goto_closer_side == -1 }
+      assert { Soldier.from_str("△51歩").sign_to_goto_closer_side == -1 }
+      assert { Soldier.from_str("▲61歩").sign_to_goto_closer_side == -1 }
+      assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
+    end
+
+    it "tarehu_ikeru?" do
+      assert { Soldier.from_str("▲11歩").tarehu_ikeru? == false }
+      assert { Soldier.from_str("▲12歩").tarehu_ikeru? == true  }
+      assert { Soldier.from_str("▲13歩").tarehu_ikeru? == true  }
+      assert { Soldier.from_str("▲14歩").tarehu_ikeru? == true  }
+      assert { Soldier.from_str("▲15歩").tarehu_ikeru? == false }
+    end
   end
 end
