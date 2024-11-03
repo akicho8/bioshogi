@@ -106,6 +106,11 @@ module Bioshogi
       Dimension::PlaceY.dimension - 1 - top_spaces(location)
     end
 
+    # 中央のすぐ下(6段目)にいる？ (white だと4段目)
+    def in_zensen?(location)
+      @y.value == (Dimension::PlaceY.dimension / 2 + location.value_sign)
+    end
+
     # 自分の陣地にいる？
     def own_side?(location)
       bottom_spaces(location) < Dimension::PlaceY.promotable_depth
@@ -158,9 +163,51 @@ module Bioshogi
       [@x, @y]
     end
 
-    def vector_add(vector)
-      self.class.lookup([@x.value + vector.x, @y.value + vector.y])
+    ################################################################################ 移動
+
+    def xy_add(x, y)
+      self.class.lookup([@x.value + x, @y.value + y])
     end
+
+    def vector_add(vector)
+      xy_add(vector.x, vector.y)
+    end
+
+    # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
+    def move_to_xy(x, y, location:)
+      if location.key == :white
+        x = -x
+        y = -y
+      end
+      xy_add(x, y)
+    end
+
+    # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
+    def move_to(vector, location:)
+      if vector.kind_of?(Symbol)
+        vector = V.public_send(vector)
+      end
+      xy_add(*(vector * location.value_sign))
+    end
+
+    ################################################################################
+
+    # 2から8筋か？
+    def x_in_2_to_8?
+      @x.in_2_to_8?
+    end
+
+    # 2または8筋か？
+    def x_in_2_or_8?
+      @x.in_2_or_8?
+    end
+
+    # 3から7筋か？
+    def x_in_3_to_7?
+      @x.in_3_to_7?
+    end
+
+    ################################################################################
 
     # def valid?
     #   @x.valid? && @y.valid?

@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        if e = TacticInfo.primary_soldier_hash_table[soldier]
+        if e = TacticInfo.primary_soldier_hash_table[black_side_soldier]
           e.each do |e|
             walk_counts[e.key] += 1
             execute_one(e)
@@ -27,7 +27,7 @@ module Bioshogi
               execute_block(e) do |list|
                 walk_counts[e.key] += 1
                 cold_war_verification(e)
-                instance_eval(&e.technique_matcher_info.verify_process)
+                instance_eval(&e.technique_verify_info.func)
               end
             end
           end
@@ -46,9 +46,14 @@ module Bioshogi
 
       def execute_block(e)
         catch :skip do
-          list = player.skill_set.list_of(e)
-          yield list
+          yield
           skill_push(e)
+        end
+      end
+
+      def verify_if
+        unless yield
+          throw :skip
         end
       end
 
@@ -72,7 +77,11 @@ module Bioshogi
       end
 
       def execute_one(e)
-        execute_block(e) do |list|
+        execute_block(e) do
+          list = player.skill_set.list_of(e)
+
+          ################################################################################ FIXME: 最初にチェックするのは遅いかもしれない
+
           # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
           if list.include?(e)
             throw :skip
@@ -89,6 +98,8 @@ module Bioshogi
           if e.cached_descendants.any? { |e| list.include?(e) }
             throw :skip
           end
+
+          ################################################################################
 
           # 手数制限。制限を超えていたらskip
           if e.turn_limit
@@ -332,9 +343,19 @@ module Bioshogi
 
       ################################################################################
 
-      # 後手側の場合は先手側の座標に切り替え済み
+      # 盤上で操作し終わった駒
       def soldier
-        @soldier ||= executor.soldier.flip_if_white
+        @soldier ||= executor.soldier
+      end
+
+      # 盤上で操作し終わった駒の位置
+      def place
+        @place ||= soldier.place
+      end
+
+      # 後手側の場合は先手側の座標に切り替え済み
+      def black_side_soldier
+        @black_side_soldier ||= executor.soldier.flip_if_white
       end
 
       # 比較順序超重要。不一致しやすいものから比較する

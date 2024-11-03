@@ -2,16 +2,68 @@ module Bioshogi
   class V
     class << self
       def one
-        self[1, 1]
+        @one ||= self[1, 1]
       end
 
       def half
-        self[0.5, 0.5]
+        @half ||= self[0.5, 0.5]
       end
 
       def [](...)
         new(...)
       end
+
+      ################################################################################
+
+      def up
+        @up ||= self[0, -1]
+      end
+
+      def right
+        @right ||= self[1, 0]
+      end
+
+      def left
+        @left ||= self[-1, 0]
+      end
+
+      def down
+        @down ||= self[0, 1]
+      end
+
+      ################################################################################
+
+      def up2
+        @up2 ||= up * 2
+      end
+
+      def right2
+        @right2 ||= right * 2
+      end
+
+      def left2
+        @left2 ||= left * 2
+      end
+
+      def down2
+        @down2 ||= down * 2
+      end
+
+      ################################################################################ 桂馬の動き
+
+      def keima_ways
+        @keima_methods ||= [:up_up_right, :up_up_left]
+      end
+
+      def up_up_right
+        @up_up_right ||= self[1, -2]
+      end
+
+      def up_up_left
+        @up_up_left ||= self[-1, -2]
+      end
+
+      ################################################################################
     end
 
     attr_reader :x

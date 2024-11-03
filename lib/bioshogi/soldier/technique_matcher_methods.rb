@@ -2,6 +2,8 @@ module Bioshogi
   class Soldier
     # 手筋判定用
     concern :TechniqueMatcherMethods do
+      ################################################################################ location を考慮した place へのショートカット
+
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
       def top_spaces
         place.top_spaces(location)
@@ -10,6 +12,11 @@ module Bioshogi
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
       def bottom_spaces
         place.bottom_spaces(location)
+      end
+
+      # 中央のすぐ下(6段目)にいる？ (white だと4段目)
+      def in_zensen?
+        place.in_zensen?(location)
       end
 
       # 自分の陣地にいる？
@@ -21,6 +28,19 @@ module Bioshogi
       def opponent_side?
         place.opponent_side?(location)
       end
+
+      # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
+      # 2つ進んだ位置などを一発で調べたいときに使う
+      def move_to_xy(x, y)
+        place.move_to_xy(x, y, location: location)
+      end
+
+      # より抽象的な方法で移動した位置を返す
+      def move_to(vector)
+        place.move_to(vector, location: location)
+      end
+
+      ################################################################################
 
       # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
       def smaller_one_of_side_spaces

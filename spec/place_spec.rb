@@ -114,5 +114,17 @@ module Bioshogi
       assert { Place["16"].own_side?(:black) == false }
       assert { Place["17"].own_side?(:black) == true  }
     end
+
+    it "move_to_xy" do
+      assert { Place["55"].move_to_xy(1, -1, location: Location[:black]).name == "４四" }
+      assert { Place["55"].move_to_xy(1, -1, location: Location[:white]).name == "６六" }
+    end
+
+    it "move_to_xy" do
+      assert { Place["15"].x_in_2_to_8? == false }
+      assert { Place["25"].x_in_2_to_8? == true  }
+      assert { Place["85"].x_in_2_to_8? == true  }
+      assert { Place["95"].x_in_2_to_8? == false }
+    end
   end
 end

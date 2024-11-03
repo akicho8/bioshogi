@@ -2,65 +2,45 @@
 
 module Bioshogi
   module Analysis
-    class TechniqueMatcherInfo
-      LRUD_PLUS_TWO = [
-        [ 2,  0],
-        [-2,  0],
-        [ 0,  2],
-        [ 0, -2],
-      ]
+    class TechniqueVerifyInfo
+      UP    = V[ 0, -1]
+      RIGHT = V[ 1,  0]
+      LEFT  = V[-1,  0]
+      DOWN  = V[ 0,  1]
 
-      LR  = [-1, +1]
-      LR2 = [[1, 2], [-1, -2]]
+      LR            = [-1, +1]                           # 1ステップの左右
+      LR2           = [[1, 2], [-1, -2]]                 # 1〜2ステップの左右
+      LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
 
-      TOP_PLUS_ONE  = 1          # ▲から見て2段目のこと
-      SIDE_PLUS_ONE = 1         # ▲から見て2筋と8筋のこと
-      X_2_8         = Set[SIDE_PLUS_ONE, Dimension::PlaceX.dimension - 1 - SIDE_PLUS_ONE]
+      TOP_PLUS_ONE  = 1 # ▲から見て2段目のこと
+      SIDE_PLUS_1 = 1 # 2筋と8筋は左右から「1」つ内側にある
+
+      # # ▲から見て2筋と8筋
+      # ARRAY_2_8     = [SIDE_PLUS_1, Dimension::PlaceX.dimension - 1 - SIDE_PLUS_1] # [2, 8]
+      # SET_2_8       = ARRAY_2_8.to_set                                                 # #<Set: {2, 3}>
+      # RANGE_2_8     = Range.new(*ARRAY_2_8)                                            # 2..8
 
       include ApplicationMemoryRecord
       memory_record [
         {
           key: "金底の歩",
-          logic_desc: "打った歩が一番下の段でその上に自分の金がある",
-          verify_process: proc {
-            if false
-              p executor.drop_hand
-              soldier = executor.hand.soldier
-              p soldier.piece.key
-              p soldier.bottom_spaces
-              p soldier.place
-              p Place.lookup([soldier.place.x.value, soldier.place.y.value - soldier.location.value_sign])
-            end
-
-            # # 「打」でないとだめ
-            # unless executor.drop_hand
-            #   throw :skip
-            # end
-
-            soldier = executor.hand.soldier
-
-            # 「最下段」でないとだめ
-            if soldier.bottom_spaces != 0
+          description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
+          func: proc {
+            # 1. 「最下段」であること
+            unless soldier.bottom_spaces.zero?
               throw :skip
             end
 
-            # # 「歩」でないとだめ
-            # if soldier.piece.key != :pawn
-            #   throw :skip
-            # end
-
-            # 1つ上の位置
-            place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-
-            # 1つ上の位置になにかないとだめ
-            s = surface[v]
-            unless s
-              throw :skip
+            # 2. 上に自分の金があること
+            matched = false
+            if v = soldier.move_to(:up)
+              if s = surface[v]
+                if s.piece.key == :gold && s.location == location
+                  matched = true
+                end
+              end
             end
-
-            # 1つ上の駒が「自分」の「金」でないとだめ
-            unless s.piece.key == :gold && s.location == soldier.location
+            unless matched
               throw :skip
             end
           },
@@ -68,19 +48,15 @@ module Bioshogi
 
         {
           key: "一間竜",
-          logic_desc: "上下左右+2の位置に相手の玉がある",
-          verify_process: proc {
-            soldier = executor.hand.soldier
-
-            place = soldier.place
-            retv = LRUD_PLUS_TWO.any? do |x, y|
-              v = Place.lookup([place.x.value + x, place.y.value + y])
+          description: "上下左右の1つ離れたところのどこかに相手の玉がある",
+          func: proc {
+            matched = LRUD_PLUS_TWO.any? do |x, y|
+              v = soldier.place.xy_add(x, y)
               if s = surface[v]
-                s.piece.key == :king && s.location != soldier.location
+                s.piece.key == :king && s.location != location
               end
             end
-
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -88,32 +64,35 @@ module Bioshogi
 
         {
           key: "こびん攻め",
-          logic_desc: "玉や飛の斜めの歩を攻める",
-          verify_process: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-
-            # 端の場合は「こびん」とは言わないため省く
-            if place.x.value == 0 || place.x.value == Dimension::PlaceX.dimension.pred
+          description: "玉または飛の斜めの歩を攻める",
+          func: proc {
+            # 1. 2〜8筋であること (端の場合は「こびん」とは言わないため)
+            unless place.x_in_2_to_8?
               throw :skip
             end
 
-            # 相手が歩か？
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-            if (s = surface[v]) && s.piece.key == :pawn && !s.promoted && s.location != soldier.location
-            else
-              throw :skip
-            end
-
-            # その歩の後ろの左右に玉か飛があるか？
-            retv = LR.any? do |x|
-              v = Place.lookup([place.x.value + x, place.y.value - (soldier.location.value_sign * 2)])
+            # 2. 相手が歩であること
+            matched = false
+            if v = soldier.move_to(:up)
               if s = surface[v]
-                (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != soldier.location
+                if s.piece.key == :pawn && !s.promoted && s.location != location
+                  matched = true
+                end
               end
             end
+            unless matched
+              throw :skip
+            end
 
-            unless retv
+            # 3. 桂馬の効きの位置に「玉」または「飛車」があること
+            matched = V.keima_ways.any? do |e|
+              if v = soldier.move_to(e)
+                if s = surface[v]
+                  (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != location
+                end
+              end
+            end
+            unless matched
               throw :skip
             end
           },
@@ -121,40 +100,36 @@ module Bioshogi
 
         {
           key: "位の確保",
-          logic_desc: "5段目の歩の下に銀を移動する",
-          verify_process: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
+          description: "中盤戦になる前に5段目の歩を銀で支える",
+          func: proc {
+            # 1. 前線(6段目)にいること
+            verify_if { soldier.in_zensen? }
 
-            # 6段目に移動した
-            unless place.y.value == (Dimension::PlaceY.dimension / 2 + soldier.location.value_sign)
-              throw :skip
+            # 2. 3〜7列であること (両端2列は「位」とは言わないため)
+            verify_if { place.x_in_3_to_7? }
+
+            # 3. 前に歩があること
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  s.piece.key == :pawn && !s.promoted && s.location == location
+                end
+              end
             end
 
-            # 両端2列は含まない
-            padding = 2
-            unless (padding...(Dimension::PlaceX.dimension - padding)).cover?(place.x.value)
-              throw :skip
-            end
-
-            # 自分の歩の下に移動した
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
-            unless (s = surface[v]) && s.piece.key == :pawn && !s.promoted && s.location == soldier.location
-              throw :skip
-            end
-
-            # 自分の歩の上には何もないこと
-            v = Place.lookup([place.x.value, place.y.value - (soldier.location.value_sign * 2)])
-            if surface[v]
-              throw :skip
+            # 4. 歩の上には何もないこと
+            verify_if do
+              if v = soldier.move_to(:up2)
+                !surface[v]
+              end
             end
           },
         },
 
         {
           key: "パンツを脱ぐ",
-          logic_desc: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
-          verify_process: proc {
+          description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
+          func: proc {
             if false
               p executor.move_hand
               soldier = executor.move_hand.soldier
@@ -201,19 +176,19 @@ module Bioshogi
 
         {
           key: "腹銀",
-          logic_desc: "銀を打ったとき左右どちらかに相手の玉がある",
-          verify_process: proc {
+          description: "銀を打ったとき左右どちらかに相手の玉がある",
+          func: proc {
             soldier = executor.hand.soldier
-
-            # 左右に相手の玉がいるか？
             place = soldier.place
-            retv = LR.any? do |x|
-              v = Place.lookup([place.x.value + x, place.y.value])
+
+            matched = LR.any? do |x|
+              v = place.xy_add(x, 0)
               if s = surface[v]
                 s.piece.key == :king && s.location != soldier.location
               end
             end
-            unless retv
+
+            unless matched
               throw :skip
             end
           },
@@ -221,11 +196,11 @@ module Bioshogi
 
         {
           key: "尻銀",
-          logic_desc: "銀を打ったとき下に相手の玉がある",
-          verify_process: proc {
+          description: "銀を打ったとき下に相手の玉がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value + soldier.location.value_sign])
+            v = place.move_to_xy(0, 1, location: soldier.location)
             unless s = surface[v]
               throw :skip
             end
@@ -237,8 +212,8 @@ module Bioshogi
 
         {
           key: "垂れ歩",
-          logic_desc: "打った歩の前が空で次に成れる余地がある場合",
-          verify_process: proc {
+          description: "打った歩の前が空で次に成れる余地がある場合",
+          func: proc {
             soldier = executor.hand.soldier
 
             # 2, 3, 4段目でなければだめ(1段目は反則)
@@ -259,8 +234,8 @@ module Bioshogi
         # 単に「18角打」をチェックした方がいい → やめ → 自力判定する
         {
           key: "遠見の角",
-          logic_desc: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
-          verify_process: proc {
+          description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
+          func: proc {
             soldier = executor.hand.soldier
             location = soldier.location
             place = soldier.place
@@ -287,7 +262,7 @@ module Bioshogi
             # 敵陣に進むベクトルに絞る
             vectors = vectors.find_all { |x, y| y != location.value_sign } # => [RV<[-1, -1]>, RV<[1, -1]>]
 
-            retv = vectors.any? do |x, y|      # 左上と右上を試す
+            matched = vectors.any? do |x, y|      # 左上と右上を試す
               step_count = 0                   # 斜めの効きの数 (駒に衝突したらそこも含める)
               opponent_territory = nil         # 一直線に相手の陣地に入れるか？
               pos = place                      # 開始地点
@@ -309,7 +284,7 @@ module Bioshogi
               step_count >= 5 && opponent_territory
             end
 
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -317,11 +292,11 @@ module Bioshogi
 
         {
           key: "割り打ちの銀",
-          logic_desc: "打った銀の後ろの左右両方に相手の飛か金がある",
-          verify_process: proc {
+          description: "打った銀の後ろの左右両方に相手の飛か金がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = LR.all? do |x|
+            matched = LR.all? do |x|
               v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign])
               if s = surface[v]
                 if s.location != soldier.location
@@ -329,7 +304,7 @@ module Bioshogi
                 end
               end
             end
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -337,11 +312,11 @@ module Bioshogi
 
         {
           key: "たすきの銀",
-          logic_desc: "打った銀の斜めに飛と金がある",
-          verify_process: proc {
+          description: "打った銀の斜めに飛と金がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place # 72
-            retv = [1, -1].any? do |x|
+            matched = [1, -1].any? do |x|
               v = Place.lookup([place.x.value - x, place.y.value - soldier.location.value_sign]) # 81
               if s = surface[v]
                 if s.piece.key == :rook && !s.promoted && s.location != soldier.location # 左上に相手の飛車がある
@@ -353,7 +328,7 @@ module Bioshogi
                 end
               end
             end
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -361,16 +336,16 @@ module Bioshogi
 
         {
           key: "たすきの角",
-          logic_desc: "打った角の斜めに飛と金がある",
-          verify_process: proc {
-            instance_eval(&TechniqueMatcherInfo[:"たすきの銀"].verify_process)
+          description: "打った角の斜めに飛と金がある",
+          func: proc {
+            instance_eval(&TechniqueVerifyInfo[:"たすきの銀"].func)
           },
         },
 
         {
           key: "桂頭の銀",
-          logic_desc: "打った銀の上に相手の桂がある",
-          verify_process: proc {
+          description: "打った銀の上に相手の桂がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
             v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
@@ -381,7 +356,7 @@ module Bioshogi
               throw :skip
             end
             # 「22銀打」または「82銀打」を除外する
-            if X_2_8.include?(place.x.value) && soldier.top_spaces == TOP_PLUS_ONE
+            if place.x_in_2_or_8? && soldier.top_spaces == TOP_PLUS_ONE
               throw :skip
             end
           },
@@ -389,8 +364,8 @@ module Bioshogi
 
         {
           key: "歩頭の桂",
-          logic_desc: "打った桂の上に相手の歩がある",
-          verify_process: proc {
+          description: "打った桂の上に相手の歩がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
             v = Place.lookup([place.x.value, place.y.value - soldier.location.value_sign])
@@ -405,8 +380,8 @@ module Bioshogi
 
         {
           key: "銀ばさみ",
-          logic_desc: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
-          verify_process: proc {
+          description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
+          func: proc {
             # 「打」ではだめ
             if executor.drop_hand
               throw :skip
@@ -471,8 +446,8 @@ module Bioshogi
 
         {
           key: "端玉には端歩",
-          logic_desc: nil,
-          verify_process: proc {
+          description: nil,
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
 
@@ -537,8 +512,8 @@ module Bioshogi
 
         # {
         #   key: "ロケット",
-        #   logic_desc: "打った香の下に自分の香か飛か龍がある",
-        #   verify_process: proc {
+        #   description: "打った香の下に自分の香か飛か龍がある",
+        #   func: proc {
         #     # p ["#{__FILE__}:#{__LINE__}", __method__, ]
         #     soldier = executor.hand.soldier
         #     # p soldier.bottom_spaces
@@ -591,8 +566,8 @@ module Bioshogi
 
         {
           key: "田楽刺し",
-          logic_desc: "角の頭に打つ",
-          verify_process: proc {
+          description: "角の頭に打つ",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
             mode = :walk_to_bishop
@@ -623,11 +598,11 @@ module Bioshogi
 
         {
           key: "ふんどしの桂",
-          logic_desc: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
-          verify_process: proc {
+          description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = LR.all? do |x|
+            matched = LR.all? do |x|
               v = Place.lookup([place.x.value + x, place.y.value - soldier.location.value_sign * 2])
               if s = surface[v]
                 if s.location != soldier.location
@@ -635,7 +610,7 @@ module Bioshogi
                 end
               end
             end
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -643,8 +618,8 @@ module Bioshogi
 
         {
           key: "土下座の歩",
-          logic_desc: nil,
-          verify_process: proc {
+          description: nil,
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
 
@@ -678,8 +653,8 @@ module Bioshogi
 
         {
           key: "たたきの歩",
-          logic_desc: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
-          verify_process: proc {
+          description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
 
@@ -732,8 +707,8 @@ module Bioshogi
 
         {
           key: "継ぎ歩",
-          logic_desc: "",
-          verify_process: proc {
+          description: "",
+          func: proc {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
             soldier = executor.hand.soldier
@@ -767,8 +742,8 @@ module Bioshogi
 
         {
           key: "連打の歩",
-          logic_desc: "",
-          verify_process: proc {
+          description: "",
+          func: proc {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
             soldier = executor.hand.soldier
@@ -804,17 +779,18 @@ module Bioshogi
 
         {
           key: "継ぎ桂",
-          logic_desc: "打った桂の2つ後ろの左右のどちらかに自分の桂がある",
-          verify_process: proc {
+          description: "打った桂の2つ後ろの左右のどちらかに自分の桂がある",
+          func: proc {
             soldier = executor.hand.soldier
             place = soldier.place
-            retv = LR.any? do |x|
+
+            matched = LR.any? do |x|
               v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign * 2])
               if s = surface[v]
                 s.piece.key == :knight && !s.promoted && s.location == soldier.location
               end
             end
-            unless retv
+            unless matched
               throw :skip
             end
           },
@@ -822,8 +798,8 @@ module Bioshogi
 
         {
           key: "入玉",
-          logic_desc: "玉が移動して上のスペースが3つの状態から2つの状態になった",
-          verify_process: proc {
+          description: "玉が移動して上のスペースが3つの状態から2つの状態になった",
+          func: proc {
             soldier = executor.hand.soldier
             if soldier.top_spaces != Dimension::PlaceY.promotable_depth - 1
               throw :skip
@@ -843,8 +819,8 @@ module Bioshogi
 
         {
           key: "角不成",
-          logic_desc: "相手陣地に入るときと出るときの両方チェックする",
-          verify_process: proc {
+          description: "相手陣地に入るときと出るときの両方チェックする",
+          func: proc {
             unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
               throw :skip
             end
@@ -853,8 +829,8 @@ module Bioshogi
 
         {
           key: "飛車不成",
-          logic_desc: "角不成と同じ方法でよい",
-          verify_process: proc {
+          description: "角不成と同じ方法でよい",
+          func: proc {
             unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
               throw :skip
             end

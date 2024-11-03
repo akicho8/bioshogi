@@ -119,8 +119,8 @@ module Bioshogi
         end
       end
 
-      def technique_matcher_info
-        @technique_matcher_info ||= TechniqueMatcherInfo.lookup(key)
+      def technique_verify_info
+        @technique_verify_info ||= TechniqueVerifyInfo.lookup(key)
       end
 
       def skip_elements
