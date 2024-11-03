@@ -41,8 +41,8 @@ Place["17"].own_side?(:black) # => true
 Place["55"].move_to_xy(1, -1, location: Location[:black]) # => #<Bioshogi::Place ４四>
 Place["55"].move_to_xy(1, -1, location: Location[:white]) # => #<Bioshogi::Place ６六>
 
-Place["15"].x_in_2_to_8?    # => false
-Place["25"].x_in_2_to_8?    # => true
-Place["85"].x_in_2_to_8?    # => true
-Place["95"].x_in_2_to_8?    # => false
+Place["15"].column_in_two_to_eight?    # => false
+Place["25"].column_in_two_to_eight?    # => true
+Place["85"].column_in_two_to_eight?    # => true
+Place["95"].column_in_two_to_eight?    # => false
 

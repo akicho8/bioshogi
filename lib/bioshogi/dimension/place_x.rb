@@ -36,17 +36,17 @@ module Bioshogi
       end
 
       # 2から8筋か？
-      def in_2_to_8?
+      def in_two_to_eight?
         RANGE_2_8.cover?(value)
       end
 
       # 2または8筋か？
-      def in_2_or_8?
+      def in_two_or_eight?
         SET_2_8.include?(value)
       end
 
       # 3から7筋か？
-      def in_3_to_7?
+      def in_three_to_seven?
         RANGE_3_7.cover?(value)
       end
     end

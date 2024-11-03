@@ -121,10 +121,10 @@ module Bioshogi
     end
 
     it "move_to_xy" do
-      assert { Place["15"].x_in_2_to_8? == false }
-      assert { Place["25"].x_in_2_to_8? == true  }
-      assert { Place["85"].x_in_2_to_8? == true  }
-      assert { Place["95"].x_in_2_to_8? == false }
+      assert { Place["15"].column_in_two_to_eight? == false }
+      assert { Place["25"].column_in_two_to_eight? == true  }
+      assert { Place["85"].column_in_two_to_eight? == true  }
+      assert { Place["95"].column_in_two_to_eight? == false }
     end
   end
 end

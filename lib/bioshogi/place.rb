@@ -193,18 +193,18 @@ module Bioshogi
     ################################################################################
 
     # 2から8筋か？
-    def x_in_2_to_8?
-      @x.in_2_to_8?
+    def column_in_two_to_eight?
+      @x.in_two_to_eight?
     end
 
     # 2または8筋か？
-    def x_in_2_or_8?
-      @x.in_2_or_8?
+    def column_in_two_or_eight?
+      @x.in_two_or_eight?
     end
 
     # 3から7筋か？
-    def x_in_3_to_7?
-      @x.in_3_to_7?
+    def column_in_three_to_seven?
+      @x.in_three_to_seven?
     end
 
     ################################################################################

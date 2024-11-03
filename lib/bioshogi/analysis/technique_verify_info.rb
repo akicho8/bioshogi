@@ -61,7 +61,7 @@ module Bioshogi
           description: "玉または飛の斜めの歩を攻める",
           func: proc {
             # 1. 2〜8筋であること (端の場合は「こびん」とは言わないため)
-            unless place.x_in_2_to_8?
+            unless place.column_in_two_to_eight?
               throw :skip
             end
 
@@ -100,7 +100,7 @@ module Bioshogi
             verify_if { soldier.in_zensen? }
 
             # 2. 3〜7列であること (両端2列は「位」とは言わないため)
-            verify_if { place.x_in_3_to_7? }
+            verify_if { place.column_in_three_to_seven? }
 
             # 3. 前に歩があること
             verify_if do
@@ -350,7 +350,7 @@ module Bioshogi
               throw :skip
             end
             # 「22銀打」または「82銀打」を除外する
-            if place.x_in_2_or_8? && soldier.top_spaces == TOP_PLUS_ONE
+            if place.column_in_two_or_eight? && soldier.top_spaces == TOP_PLUS_ONE
               throw :skip
             end
           },
