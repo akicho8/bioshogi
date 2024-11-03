@@ -7,7 +7,7 @@ module Bioshogi
     end
 
     describe "縦横軸の数字" do
-      it "ない場合は右上を基点とする" do
+      it "なくてもいい" do
         assert { test1(<<-EOT) == ["▲１二歩", "△１一歩"] }
 +------+
 | ・v歩|
@@ -16,7 +16,7 @@ module Bioshogi
 EOT
       end
 
-      it "明示的に指定された場合はその位置とみなす" do
+      it "あると任意の位置とみなす" do
         assert { test1(<<-EOT) == ["▲８九歩", "△８八歩"] }
   ９ ８
 +------+
@@ -27,7 +27,7 @@ EOT
       end
     end
 
-    it "盤面の右側にはコメントを書いてもいい" do
+    it "コメント" do
       assert { test1(<<-EOT) == ["▲１一歩"] }
 +---+
 | 歩| # コメント
@@ -35,7 +35,7 @@ EOT
 EOT
       end
 
-    it "成駒を認識する" do
+    it "成駒を認識" do
       assert { test1(<<-EOT) == ["△１一龍"] }
 +---+
 |v龍|
@@ -43,15 +43,15 @@ EOT
 EOT
     end
 
-#     it "盤面サイズを変更していてもパースできる" do
-#       Dimension.wh_change([2, 2]) do
-#         assert { test1(<<-EOT) == ["▲２一歩"] }
-# +------+
-# | 歩 ・|
-# +------+
-# EOT
-#       end
-#     end
+    it "盤面サイズを変更していてもパースできる" do
+      Dimension.wh_change([2, 2]) do
+        assert { test1(<<-EOT) == ["▲２一歩"] }
++------+
+| 歩 ・|
++------+
+EOT
+      end
+    end
 
     it "盤面の「・」はなくてもいい" do
       assert { test1(<<-EOT) == ["▲１二歩", "△１一歩"] }
