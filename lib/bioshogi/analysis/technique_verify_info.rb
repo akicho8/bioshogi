@@ -106,7 +106,7 @@ module Bioshogi
 
             # 4. 歩の上には何もないこと
             verify_if do
-              if v = soldier.move_to(:up2)
+              if v = soldier.move_to(:up_up)
                 !surface[v]
               end
             end
@@ -254,18 +254,16 @@ module Bioshogi
           key: "割り打ちの銀",
           description: "打った銀の後ろの左右両方に相手の飛か金がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            matched = LR.all? do |x|
-              v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign])
-              if s = surface[v]
-                if s.location != soldier.location
-                  (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
+            verify_if do
+              V.wariuchi_vectors.all? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    if s.location != location
+                      (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
+                    end
+                  end
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },

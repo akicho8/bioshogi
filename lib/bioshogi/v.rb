@@ -1,5 +1,7 @@
 module Bioshogi
   class V
+    extend PresetVectors
+
     class << self
       def one
         @one ||= self[1, 1]
@@ -12,70 +14,6 @@ module Bioshogi
       def [](...)
         new(...)
       end
-
-      ################################################################################
-
-      def around_vectors
-        @around_vectors ||= [up, right, down, left]
-      end
-
-      def left_right_vectors
-        @left_right_vectors ||= [left, right]
-      end
-
-      def up
-        @up ||= self[0, -1]
-      end
-
-      def right
-        @right ||= self[1, 0]
-      end
-
-      def left
-        @left ||= self[-1, 0]
-      end
-
-      def down
-        @down ||= self[0, 1]
-      end
-
-      ################################################################################ 一間竜の状態
-
-      def ikkenryu_vectors
-        @ikkenryu_vectors ||= [right2, left2, up2, down2] # 左右を先に持ってくると気持ち程度速くなる
-      end
-
-      def right2
-        @right2 ||= right * 2
-      end
-
-      def left2
-        @left2 ||= left * 2
-      end
-
-      def up2
-        @up2 ||= up * 2
-      end
-
-      def down2
-        @down2 ||= down * 2
-      end
-
-      ################################################################################ 桂馬の動き
-
-      def keima_vectors
-        @keima_methods ||= [up_up_right, up_up_left]
-      end
-
-      def up_up_right
-        @up_up_right ||= self[1, -2]
-      end
-
-      def up_up_left
-        @up_up_left ||= self[-1, -2]
-      end
-
-      ################################################################################
     end
 
     attr_reader :x

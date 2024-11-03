@@ -1,3 +1,2 @@
-require "../setup"
-_ { ActiveRecord::Base.connection.tables } # =>
-s { ActiveRecord::Base.connection.tables } # =>
+require "./setup"
+Soldier.from_str("▲12歩").tarehu_ikeru? # => true

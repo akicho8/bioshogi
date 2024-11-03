@@ -7,6 +7,7 @@ module Bioshogi
       assert { V.left_right_vectors }
       assert { V.ikkenryu_vectors   }
       assert { V.keima_vectors      }
+      assert { V.wariuchi_vectors   }
     end
 
     it "+" do
