@@ -179,7 +179,7 @@ module Bioshogi
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: proc {
-            # 1. 2, 3, 4段目であること
+            # 1. 2, 3, 4 段目であること
             verify_if { soldier.tarehu_ikeru? }
 
             # 2. 先が空であること
@@ -268,26 +268,25 @@ module Bioshogi
           },
         },
 
+        # FIXME
         {
           key: "たすきの銀",
           description: "打った銀の斜めに飛と金がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place # 72
-            matched = [1, -1].any? do |x|
-              v = Place.lookup([place.x.value - x, place.y.value - soldier.location.value_sign]) # 81
-              if s = surface[v]
-                if s.piece.key == :rook && !s.promoted && s.location != soldier.location # 左上に相手の飛車がある
-                  v = Place.lookup([place.x.value + x, place.y.value + soldier.location.value_sign]) # 63
+            verify_if do
+              [1, -1].any? do |x|
+                if v = place.xy_add(-x, -location.value_sign) # 81
                   if s = surface[v]
-                    (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && s.location != soldier.location # 右下に相手の金または成銀がある
-                    # s.piece.key == :gold && s.location != soldier.location # 右下に相手の金がある
+                    if s.piece.key == :rook && !s.promoted && s.location != location # 左上に飛車がある
+                      if v = place.xy_add(x, location.value_sign) # 63
+                        if s = surface[v]
+                          (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && s.location != location # 右下に金または成銀がある
+                        end
+                      end
+                    end
                   end
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },
