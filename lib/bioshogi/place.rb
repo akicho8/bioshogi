@@ -2,8 +2,8 @@
 #
 # 座標
 #
-#   Place["４三"].name   # => "４三"
 #   Place["４三"].name  # => "４三"
+#   Place["4三"].name   # => "４三"
 #   Place["43"].name    # => "４三"
 #
 
@@ -70,6 +70,7 @@ module Bioshogi
     def initialize(x, y)
       @x = x
       @y = y
+      @cache = {}
     end
 
     def inspect
@@ -78,12 +79,12 @@ module Bioshogi
 
     # 180度回転 ※上下対象ではない
     def flip
-      self.class.fetch([@x.flip, @y.flip])
+      @cache[:flip] ||= self.class.fetch([@x.flip, @y.flip])
     end
 
     # x座標のみ反転
     def flop
-      self.class.fetch([@x.flip, @y])
+      @cache[:flop] ||= self.class.fetch([@x.flip, @y])
     end
 
     def flip_if_white(location)
@@ -117,19 +118,19 @@ module Bioshogi
     end
 
     def name
-      to_a.collect { |e| e.name }.join
+      @cache[:name] ||= to_a.collect { |e| e.name }.join
     end
 
     def zenkaku_number
-      to_a.collect(&:zenkaku_number).join
+      @cache[:zenkaku_number] ||= to_a.collect(&:zenkaku_number).join
     end
 
     def hankaku_number
-      to_a.collect(&:hankaku_number).join
+      @cache[:hankaku_number] ||= to_a.collect(&:hankaku_number).join
     end
 
     def yomiage
-      to_a.collect(&:yomiage).join
+      @cache[:yomiage] ||= to_a.collect(&:yomiage).join
     end
 
     def to_s
@@ -137,25 +138,25 @@ module Bioshogi
     end
 
     def to_sfen
-      to_a.collect(&:to_sfen).join
+      @cache[:to_sfen] ||= to_a.collect(&:to_sfen).join
     end
 
     def to_xy
-      [@x.value, @y.value]
+      @cache[:to_xy] ||= [@x.value, @y.value]
     end
 
     # "６八銀" なら [6, 8]
     def to_human_int
-      to_a.collect(&:to_human_int)
+      @cache[:to_human_int] ||= to_a.collect(&:to_human_int)
     end
 
     # "６八銀" なら {x:6, y:8}
     def to_human_h
-      { x: @x.to_human_int, y: @y.to_human_int }
+      @cache[:to_human_h] ||= { x: @x.to_human_int, y: @y.to_human_int }
     end
 
     def to_a
-      [@x, @y]
+      @cache[:to_a] ||= [@x, @y]
     end
 
     def vector_add(vector)
