@@ -15,6 +15,10 @@ module Bioshogi
 
       ################################################################################
 
+      def around_vectors
+        @around_vectors ||= [up, right, down, left]
+      end
+
       def up
         @up ||= self[0, -1]
       end
@@ -31,10 +35,10 @@ module Bioshogi
         @down ||= self[0, 1]
       end
 
-      ################################################################################
+      ################################################################################ 一間竜の状態
 
-      def up2
-        @up2 ||= up * 2
+      def ikkenryu_vectors
+        @ikkenryu_vectors ||= [right2, left2, up2, down2] # 左右を先に持ってくると気持ち程度速くなる
       end
 
       def right2
@@ -45,6 +49,10 @@ module Bioshogi
         @left2 ||= left * 2
       end
 
+      def up2
+        @up2 ||= up * 2
+      end
+
       def down2
         @down2 ||= down * 2
       end
@@ -52,7 +60,7 @@ module Bioshogi
       ################################################################################ 桂馬の動き
 
       def keima_ways
-        @keima_methods ||= [:up_up_right, :up_up_left]
+        @keima_methods ||= [up_up_right, up_up_left]
       end
 
       def up_up_right

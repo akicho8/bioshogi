@@ -3,14 +3,14 @@
 module Bioshogi
   module Analysis
     class TechniqueVerifyInfo
-      UP    = V[ 0, -1]
-      RIGHT = V[ 1,  0]
-      LEFT  = V[-1,  0]
-      DOWN  = V[ 0,  1]
+      # UP    = V[ 0, -1]
+      # RIGHT = V[ 1,  0]
+      # LEFT  = V[-1,  0]
+      # DOWN  = V[ 0,  1]
 
       LR            = [-1, +1]                           # 1ステップの左右
       LR2           = [[1, 2], [-1, -2]]                 # 1〜2ステップの左右
-      LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
+      # LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
 
       TOP_PLUS_ONE  = 1 # ▲から見て2段目のこと
       SIDE_PLUS_1 = 1 # 2筋と8筋は左右から「1」つ内側にある
@@ -27,21 +27,15 @@ module Bioshogi
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
           func: proc {
             # 1. 「最下段」であること
-            unless soldier.bottom_spaces.zero?
-              throw :skip
-            end
+            verify_if { soldier.bottom_spaces.zero? }
 
             # 2. 上に自分の金があること
-            matched = false
-            if v = soldier.move_to(:up)
-              if s = surface[v]
-                if s.piece.key == :gold && s.location == location
-                  matched = true
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  s.piece.key == :gold && s.location == location
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },
@@ -50,14 +44,14 @@ module Bioshogi
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに相手の玉がある",
           func: proc {
-            matched = LRUD_PLUS_TWO.any? do |x, y|
-              v = soldier.place.xy_add(x, y)
-              if s = surface[v]
-                s.piece.key == :king && s.location != location
+            verify_if do
+              V.ikkenryu_vectors.any? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    s.piece.key == :king && s.location != location
+                  end
+                end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },

@@ -2,6 +2,18 @@ require "spec_helper"
 
 module Bioshogi
   describe V do
+    it ".around_vectors" do
+      assert { V.around_vectors }
+    end
+
+    it ".ikkenryu_vectors" do
+      assert { V.ikkenryu_vectors }
+    end
+
+    it ".keima_ways" do
+      assert { V.keima_ways }
+    end
+
     it "+" do
       assert { (V[5, 6] + V[2, 3]) == V[7, 9]   }
       assert { (V[5, 6] + 10)      == V[15, 16] }
@@ -42,6 +54,10 @@ module Bioshogi
 
     it "each" do
       assert { V[1, 2].each }
+    end
+
+    it "collect" do
+      assert { V[2, 3].collect.to_a == [2, 3] }
     end
 
     it "collect" do
