@@ -46,9 +46,9 @@ module Bioshogi
     # for Analyzer
     def order_key
       if display_turn.even?
-        :sente
+        :order_first
       else
-        :gote
+        :order_second
       end
     end
 
