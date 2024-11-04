@@ -9,6 +9,7 @@ module Bioshogi
       assert { V.keima_vectors      }
       assert { V.wariuchi_vectors   }
       assert { V.ginbasami_verctors }
+      assert { V.tsugikei_vectors   }
     end
   end
 end

@@ -656,19 +656,16 @@ module Bioshogi
 
         {
           key: "継ぎ桂",
-          description: "打った桂の2つ後ろの左右のどちらかに自分の桂がある",
+          description: "継ぐのは前なので打った桂の2つ後ろの左右のどちらかに自分の桂がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-
-            matched = LR.any? do |x|
-              v = Place.lookup([place.x.value + x, place.y.value + soldier.location.sign_dir * 2])
-              if s = surface[v]
-                s.piece.key == :knight && !s.promoted && own?(s)
+            verify_if do
+              V.tsugikei_vectors.any? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    s.piece.key == :knight && !s.promoted && own?(s)
+                  end
+                end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },

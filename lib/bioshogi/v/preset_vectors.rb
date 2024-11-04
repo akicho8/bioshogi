@@ -24,10 +24,11 @@ module Bioshogi
       end
 
       def ginbasami_verctors
-        @ginbasami_verctors ||= [
-          [right, right_right, right_right_up],
-          [left,  left_left,   left_left_up],
-        ]
+        @ginbasami_verctors ||= [[right, right_right, right_right_up], [left,  left_left,   left_left_up]]
+      end
+
+      def tsugikei_vectors
+        @tsugikei_methods ||= [down_down_right, down_down_left]
       end
 
       ################################################################################ 上下左右
@@ -84,6 +85,16 @@ module Bioshogi
 
       def up_up_left
         @up_up_left ||= up + up + left
+      end
+
+      ################################################################################ 継ぎ桂チェック用
+
+      def down_down_right
+        @down_down_right ||= down + down + right
+      end
+
+      def down_down_left
+        @down_down_left ||= down + down + left
       end
 
       ################################################################################ 銀ばさみチェック用
