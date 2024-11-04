@@ -23,6 +23,13 @@ module Bioshogi
         @keima_methods ||= [up_up_right, up_up_left]
       end
 
+      def ginbasami_verctors
+        @ginbasami_verctors ||= [
+          [right, right_right, right_right_up],
+          [left,  left_left,   left_left_up],
+        ]
+      end
+
       ################################################################################ 上下左右
 
       def right
@@ -77,6 +84,16 @@ module Bioshogi
 
       def up_up_left
         @up_up_left ||= up + up + left
+      end
+
+      ################################################################################ 銀ばさみチェック用
+
+      def right_right_up
+        @right_right_up ||= right + right + up
+      end
+
+      def left_left_up
+        @left_left_up ||= left + left + up
       end
 
       ################################################################################

@@ -1,5 +1,7 @@
 # frozen-string-literal: true
 
+# :OPTION: は考慮する必要があるもの。
+
 module Bioshogi
   module Analysis
     class TechniqueVerifyInfo
@@ -13,6 +15,9 @@ module Bioshogi
       # LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
 
       ROW_IS_2  = 1 # ▲から見て2段目のこと
+
+      Y_UP   = -1
+      Y_DOWN = 1
 
       # SIDE_PLUS_1   = 1 # 2筋と8筋は左右から「1」つ内側にある
       # # ▲から見て2筋と8筋
@@ -218,9 +223,9 @@ module Bioshogi
             # end
 
             # 角の4方向のレイ
-            vectors = soldier.piece.all_vectors(location: location) # => [RV<[-1, -1]>, RV<[1, -1]>, RV<[-1, 1]>, RV<[1, 1]>]
+            vectors = soldier.piece.all_vectors(location: location) # => 
             # 敵陣に進むベクトルに絞る
-            vectors = vectors.find_all { |x, y| y != location.sign_dir } # => [RV<[-1, -1]>, RV<[1, -1]>]
+            vectors = vectors.find_all { |x, y| y != location.sign_dir } # => 
 
             matched = vectors.any? do |x, y|      # 左上と右上を試す
               step_count = 0                   # 斜めの効きの数 (駒に衝突したらそこも含める)
@@ -303,7 +308,7 @@ module Bioshogi
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
           func: proc {
-            # 1. 上に桂馬がある
+            # 1. 上に相手の桂がある
             verify_if do
               if v = soldier.move_to(:up)
                 if s = surface[v]
@@ -312,7 +317,9 @@ module Bioshogi
               end
             end
 
-            # 2. 「22銀」や「82銀」ではないこと (端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため)
+            # 2. 「22銀」や「82銀」ではないこと :OPTION:
+            # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
+            # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             verify_if do
               !(place.column_in_two_or_eight? && soldier.top_spaces == ROW_IS_2)
             end
@@ -323,14 +330,12 @@ module Bioshogi
           key: "歩頭の桂",
           description: "打った桂の上に相手の歩がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-            unless s = surface[v]
-              throw :skip
-            end
-            unless s.piece.key == :pawn && !s.promoted && s.location != soldier.location
-              throw :skip
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  s.piece.key == :pawn && !s.promoted && opponent?(s)
+                end
+              end
             end
           },
         },
@@ -339,64 +344,44 @@ module Bioshogi
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
           func: proc {
-            # 「打」ではだめ
-            if executor.drop_hand
-              throw :skip
-            end
+            # 1. 「同歩」でないこと
+            verify_if { !executor.move_hand.captured_soldier }
 
-            # 「同歩」ではだめ
-            if executor.move_hand.captured_soldier
-              throw :skip
-            end
-
-            soldier = executor.hand.soldier
-            place = soldier.place
-
-            # 進めた歩の前が空である
-            flag = false
-            if v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-              unless surface[v]
-                flag = true
+            # 2. 進めた歩の前が空であること
+            verify_if do
+              if v = soldier.move_to(:up)
+                !surface[v]
               end
             end
-            unless flag
-              throw :skip
-            end
 
-            matched = LR2.any? do |x1, x2|
-              silver_exist = false
-              pawn_exist = false
-
-              # 隣に相手の銀がある
-              if v = Place.lookup([place.x.value + x1, place.y.value])
-                if s = surface[v]
-                  if s.piece.key == :silver && !s.promoted && s.location != soldier.location
-                    silver_exist = true
-                  end
-                end
-              end
-              # その隣に自分の歩がある
-              if silver_exist
-                if v = Place.lookup([place.x.value + x2, place.y.value])
-                  if s = surface[v]
-                    if s.piece.key == :pawn && !s.promoted && s.location == soldier.location
-                      pawn_exist = true
+            # 左右どちらかが成立していること
+            verify_if do
+              V.ginbasami_verctors.any? do |right, right_right, right_right_up|
+                # 3. 右に相手の銀ある
+                found = yield_self do
+                  if v = soldier.move_to(right)
+                    if s = surface[v]
+                      s.piece.key == :silver && !s.promoted && opponent?(s)
                     end
                   end
                 end
-              end
-              # その歩の前が空
-              if pawn_exist
-                if v = Place.lookup([place.x.value + x2, place.y.value - soldier.location.sign_dir])
-                  unless surface[v]
-                    true
+                found or next
+
+                # 4. 右右に自分の歩がある
+                found = yield_self do
+                  if v = soldier.move_to(right_right)
+                    if s = surface[v]
+                      s.piece.key == :pawn && !s.promoted && own?(s)
+                    end
                   end
                 end
-              end
-            end
+                found or next
 
-            unless matched
-              throw :skip
+                # 5. 右右上が空である
+                if v = soldier.move_to(right_right_up)
+                  !surface[v]
+                end
+              end
             end
           },
         },
@@ -405,64 +390,53 @@ module Bioshogi
           key: "端玉には端歩",
           description: nil,
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
+            # 1. 端であること
+            verify_if { place.column_is_begin_or_end? }
 
-            # 端の場合のみ
-            if place.x.value == 0 || place.x.value == Dimension::PlaceX.dimension.pred
-            else
-              throw :skip
-            end
-
-            # 進めた歩の前が歩である
-            pawn_found = false
-            if v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-              if s = surface[v]
-                if s.piece.key == :pawn && !s.promoted && s.location != soldier.location
-                  pawn_found = true
-                end
-              end
-            end
-            unless pawn_found
-              throw :skip
-            end
-
-            # その相手の歩の奥に相手の玉がいる
-            king_found = false
-            (2...Dimension::PlaceY.dimension).each do |y|
-              if v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir * y])
+            # 2. 上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
+            verify_if do
+              if v = soldier.move_to(:up)
                 if s = surface[v]
-                  if s.piece.key == :king && s.location != soldier.location
-                    king_found = true
-                  end
-                  break
-                else
-                  # 空ならさらに奥を見る
+                  s.piece.key == :pawn && !s.promoted && opponent?(s)
                 end
-              else
-                break
               end
-            end
-            unless king_found
-              throw :skip
             end
 
-            # 端の下に香がいる
-            lance_found = false
-            bottom_place = Place.lookup([place.x.value, place.y.value + soldier.location.sign_dir * soldier.bottom_spaces]) # 99
-            Dimension::PlaceY.dimension.times do |y|
-              v = Place.lookup([bottom_place.x.value, bottom_place.y.value - (soldier.location.sign_dir * y)])
-              if s = surface[v]
-                if s.piece.key == :lance && !s.promoted && s.location == soldier.location
-                  lance_found = true
+            # 3. 奥に相手の玉がいること (13→12→11と探す)
+            verify_if do
+              # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
+              # Dimension::PlaceY.dimension は書かなくてもいい
+              (2..Dimension::PlaceY.dimension).any? do |y|
+                if v = soldier.move_to_xy(0, Y_UP * y)
+                  if s = surface[v]
+                    if s.piece.key == :king && opponent?(s)
+                      true
+                    else
+                      break     # 駒があるが玉でない場合は切り上げる
+                    end
+                  end
+                else
+                  break         # 一番上まで調べたが玉はいなかった
                 end
-                break
-              else
-                # 空ならさらに上を見る
               end
             end
-            unless lance_found
-              throw :skip
+
+            # 4. 下に「自分の香飛龍」 (17→18→19と探す)
+            verify_if do
+              # この 2 は突いた歩の 2 つ下から香を調べるため
+              (2..Dimension::PlaceY.dimension).any? do |y|
+                if v = soldier.move_to_xy(0, Y_DOWN * y)
+                  if s = surface[v]
+                    if s.maeni_ittyokusen? && own?(s) # 「自分の香飛龍」か？
+                      true
+                    else
+                      break     # 駒があるが「自分の香飛龍」ではなかったため切り上げる
+                    end
+                  end
+                else
+                  break         # 一番下まで調べたが「自分の香飛龍」はいなかった
+                end
+              end
             end
           },
         },
@@ -494,7 +468,7 @@ module Bioshogi
         #           break
         #         end
         #         if s = surface[place]
-        #           if s.location == soldier.location
+        #           if own?(s)
         #             if s.piece.key == :rook
         #               rook_count += 1
         #             elsif s.piece.key == :lance && !s.promoted
@@ -534,7 +508,7 @@ module Bioshogi
                 throw :skip     # 盤面の外なので終わり
               end
               if s = surface[place]
-                if s.location == soldier.location
+                if own?(s)
                   throw :skip     # 自分と同じ駒があった場合はおわり
                 end
                 if mode == :walk_to_bishop
@@ -562,7 +536,7 @@ module Bioshogi
             matched = LR.all? do |x|
               v = Place.lookup([place.x.value + x, place.y.value - soldier.location.sign_dir * 2])
               if s = surface[v]
-                if s.location != soldier.location
+                if opponent?(s)
                   s.abs_weight > soldier.abs_weight
                 end
               end
@@ -596,7 +570,7 @@ module Bioshogi
             flag = false
             v = Place.lookup([place.x.value, place.y.value - (soldier.location.sign_dir * 2)])
             if s = surface[v]
-              if s.location != soldier.location
+              if opponent?(s)
                 if s.promoted || s.piece.maesusumeru
                   flag = true
                 end
@@ -630,7 +604,7 @@ module Bioshogi
             flag = false
             v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
             if s = surface[v]
-              if s.location != soldier.location
+              if opponent?(s)
                 if s.promoted || s.piece.tatakare_target
                   flag = true
                 end
@@ -643,7 +617,7 @@ module Bioshogi
             # 打った位置の後ろに自分の(前に進めることのできる)駒があるなら無効とする (厳密な判定ではない)
             v = Place.lookup([place.x.value, place.y.value + soldier.location.sign_dir])
             if s = surface[v]
-              if s.location == soldier.location
+              if own?(s)
                 if s.promoted || s.piece.maesusumeru
                   throw :skip
                 end
@@ -654,7 +628,7 @@ module Bioshogi
             y2 = soldier.place.y.value - soldier.location.sign_dir # 24歩のY座標(整数値)
             if hand_log = executor.container.hand_logs[-2]
               if s = hand_log&.drop_hand&.soldier
-                if s.piece.key == :pawn && s.place.x == place.x && s.place.y.value == y2 && s.location == soldier.location
+                if s.piece.key == :pawn && s.place.x == place.x && s.place.y.value == y2 && own?(s)
                   throw :skip
                 end
               end
@@ -677,7 +651,7 @@ module Bioshogi
             flag = false
             if hand_log = executor.container.hand_logs[-1]
               if s = hand_log&.move_hand&.soldier
-                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && s.location != soldier.location)
+                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && opponent?(s))
               end
             end
             unless flag
@@ -688,7 +662,7 @@ module Bioshogi
             flag = false
             if hand_log = executor.container.hand_logs[-2]
               if s = hand_log&.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にすること
-                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && s.location == soldier.location)
+                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && own?(s))
               end
             end
             unless flag
@@ -712,7 +686,7 @@ module Bioshogi
             flag = false
             if hand_log = executor.container.hand_logs[-1]
               if s = hand_log&.move_hand&.soldier
-                flag = (s.place.x == x && s.place.y.value == y2 && s.location != soldier.location)
+                flag = (s.place.x == x && s.place.y.value == y2 && opponent?(s))
               end
             end
             unless flag
@@ -723,7 +697,7 @@ module Bioshogi
             flag = false
             if hand_log = executor.container.hand_logs[-2]
               if s = hand_log&.drop_hand&.soldier
-                if s.piece.key == :pawn && s.place.x == x && s.place.y.value == y2 && s.location == soldier.location
+                if s.piece.key == :pawn && s.place.x == x && s.place.y.value == y2 && own?(s)
                   flag = true
                 end
               end
@@ -744,7 +718,7 @@ module Bioshogi
             matched = LR.any? do |x|
               v = Place.lookup([place.x.value + x, place.y.value + soldier.location.sign_dir * 2])
               if s = surface[v]
-                s.piece.key == :knight && !s.promoted && s.location == soldier.location
+                s.piece.key == :knight && !s.promoted && own?(s)
               end
             end
             unless matched
@@ -797,3 +771,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:28:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:7:in `<module:Analysis>'
+# ~> 	from -:6:in `<module:Bioshogi>'
+# ~> 	from -:5:in `<main>'

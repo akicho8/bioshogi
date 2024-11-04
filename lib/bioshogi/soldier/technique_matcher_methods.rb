@@ -40,6 +40,11 @@ module Bioshogi
         place.move_to(vector, location: location)
       end
 
+      # 15の状態であれば19を返す
+      def to_bottom_place
+        move_to_xy(0, bottom_spaces)
+      end
+
       ################################################################################
 
       # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
@@ -74,6 +79,11 @@ module Bioshogi
       # 垂れ歩状態か？ (つまり2, 3, 4段目)
       def tarehu_ikeru?
         top_spaces.between?(1, Dimension::PlaceY.promotable_depth)
+      end
+
+      # 前に一直線に進めるタイプか？
+      def maeni_ittyokusen?
+        (piece.key == :lance && !promoted) || piece.key == :rook
       end
 
       ################################################################################

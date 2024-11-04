@@ -248,6 +248,11 @@ module Bioshogi
       @x.center_place?
     end
 
+    # 端？
+    def column_is_begin_or_end?
+      @x.begin_or_end?
+    end
+
     ################################################################################
   end
 end

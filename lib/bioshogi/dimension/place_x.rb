@@ -54,6 +54,11 @@ module Bioshogi
       def center_place?
         value == dimension / 2
       end
+
+      # 端？
+      def begin_or_end?
+        value == 0 || value == dimension.pred
+      end
     end
   end
 end

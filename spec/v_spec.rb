@@ -2,14 +2,6 @@ require "spec_helper"
 
 module Bioshogi
   describe V do
-    it ".*_vectors" do
-      assert { V.around_vectors     }
-      assert { V.left_right_vectors }
-      assert { V.ikkenryu_vectors   }
-      assert { V.keima_vectors      }
-      assert { V.wariuchi_vectors   }
-    end
-
     it "+" do
       assert { (V[5, 6] + V[2, 3]) == V[7, 9]   }
       assert { (V[5, 6] + 10)      == V[15, 16] }

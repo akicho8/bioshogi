@@ -421,10 +421,17 @@ module Bioshogi
         @opponent_location ||= location.flip
       end
 
+      # soldier は相手の駒か？
       def opponent?(soldier)
-        soldier.location != location
+        soldier.location == opponent_location
       end
 
+      # soldier は自分の駒か？
+      def own?(soldier)
+        soldier.location == location
+      end
+
+      # 自分
       def player
         @player ||= executor.player
       end
