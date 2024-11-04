@@ -116,15 +116,8 @@ module Bioshogi
     end
 
     it "move_to_xy" do
-      assert { Place["55"].move_to_xy(1, -1, location: Location[:black]).name == "４四" }
-      assert { Place["55"].move_to_xy(1, -1, location: Location[:white]).name == "６六" }
-    end
-
-    it "move_to_xy" do
-      assert { Place["15"].column_in_two_to_eight? == false }
-      assert { Place["25"].column_in_two_to_eight? == true  }
-      assert { Place["85"].column_in_two_to_eight? == true  }
-      assert { Place["95"].column_in_two_to_eight? == false }
+      assert { Place["55"].move_to_xy(Location[:black], 1, -1).name == "４四" }
+      assert { Place["55"].move_to_xy(Location[:white], 1, -1).name == "６六" }
     end
   end
 end

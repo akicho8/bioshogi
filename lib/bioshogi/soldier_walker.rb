@@ -78,7 +78,7 @@ module Bioshogi
       soldier = origin_soldier.merge(place: place)
 
       # 成れるなら成る
-      if origin_soldier.next_promotable?(soldier.place)
+      if origin_soldier.tsugini_nareru_on?(soldier.place)
         move_hand = Hand::Move.create(soldier: soldier.merge(promoted: true), origin_soldier: origin_soldier, captured_soldier: captured_soldier)
         success = piece_store_core(container, move_hand, yielder, options)
         if success

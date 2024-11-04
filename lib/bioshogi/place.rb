@@ -67,7 +67,8 @@ module Bioshogi
 
     attr_accessor :x, :y
 
-    delegate *Dimension::PlaceY::DELEGATE_METHODS, to: :@y
+    delegate *Dimension::PlaceX::DELEGATE_METHODS, to: :x
+    delegate *Dimension::PlaceY::DELEGATE_METHODS, to: :y
 
     def initialize(x, y)
       @x = x
@@ -170,6 +171,7 @@ module Bioshogi
 
     ################################################################################ 移動
 
+    # FIXME: private にする
     def xy_add(x, y)
       self.class.lookup([@x.value + x, @y.value + y])
     end
@@ -179,47 +181,61 @@ module Bioshogi
     end
 
     # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
-    def move_to_xy(x, y, location:)
-      if location.key == :white
-        x = -x
-        y = -y
-      end
-      xy_add(x, y)
+    def move_to_xy(location, x, y)
+      xy_add(x * location.sign_dir, y * location.sign_dir)
     end
 
     # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
-    def move_to(vector, location:)
+    def move_to(location, vector)
       if vector.kind_of?(Symbol)
         vector = V.public_send(vector)
       end
       xy_add(*(vector * location.sign_dir))
     end
 
+    ################################################################################
+
+    def move_to_bottom(location)
+      self.class.fetch([x, location.bottom])
+    end
+
+    def move_to_top(location)
+      self.class.fetch([x, location.top])
+    end
+
+    def move_to_left(location)
+      self.class.fetch([location.left, y])
+    end
+
+    def move_to_right(location)
+      self.class.fetch([location.right, y])
+    end
+
     ################################################################################ @x への delegate 系
 
     # 2から8筋か？
-    def column_in_two_to_eight?
-      @x.in_two_to_eight?
+    def x_is_two_to_eight?
+      @x.x_is_two_to_eight?
     end
 
     # 2または8筋か？
-    def column_in_two_or_eight?
-      @x.in_two_or_eight?
+    def x_is_two_or_eight?
+      @x.x_is_two_or_eight?
     end
 
     # 3から7筋か？
-    def column_in_three_to_seven?
-      @x.in_three_to_seven?
+    def x_is_three_to_seven?
+      @x.x_is_three_to_seven?
     end
 
     # 5の筋か？
-    def column_is_center?
-      @x.center_place?
+    def x_is_center?
+      @x.x_is_center?
     end
 
     # 端？
-    def column_is_begin_or_end?
-      @x.begin_or_end?
+    def x_is_left_or_right?
+      @x.x_is_left_or_right?
     end
 
     ################################################################################

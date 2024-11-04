@@ -133,7 +133,7 @@ module Bioshogi
     ################################################################################ Utility
 
     # 自分を移動元の状態と考えて to に移動したとき成れるか？
-    def next_promotable?(to)
+    def tsugini_nareru_on?(to)
       piece.promotable? && !promoted && (place.opp_side?(location) || to.opp_side?(location))
     end
 

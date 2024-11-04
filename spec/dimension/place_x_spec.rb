@@ -47,28 +47,40 @@ module Bioshogi
       assert Dimension::PlaceX.fetch("１").flip.name == "９"
     end
 
-    it "in_two_to_eight?" do
-      assert { Dimension::PlaceX.fetch("1").in_two_to_eight? == false }
-      assert { Dimension::PlaceX.fetch("2").in_two_to_eight? == true  }
-      assert { Dimension::PlaceX.fetch("5").in_two_to_eight? == true  }
-      assert { Dimension::PlaceX.fetch("8").in_two_to_eight? == true  }
-      assert { Dimension::PlaceX.fetch("9").in_two_to_eight? == false }
+    it "左右の位置" do
+      assert { Dimension::PlaceX.left.name  == "９" }
+      assert { Dimension::PlaceX.right.name == "１" }
     end
 
-    it "in_three_to_seven?" do
-      assert { Dimension::PlaceX.fetch("2").in_three_to_seven? == false }
-      assert { Dimension::PlaceX.fetch("3").in_three_to_seven? == true  }
-      assert { Dimension::PlaceX.fetch("5").in_three_to_seven? == true  }
-      assert { Dimension::PlaceX.fetch("7").in_three_to_seven? == true  }
-      assert { Dimension::PlaceX.fetch("8").in_three_to_seven? == false }
+    it "左右のスペース" do
+      assert { Dimension::PlaceX.fetch("7").left_spaces(Location[:black])  == 2 }
+      assert { Dimension::PlaceX.fetch("7").right_spaces(Location[:black]) == 6 }
+      assert { Dimension::PlaceX.fetch("7").left_spaces(Location[:white])  == 6 }
+      assert { Dimension::PlaceX.fetch("7").right_spaces(Location[:white]) == 2 }
     end
 
-    it "in_two_or_eight?" do
-      assert { Dimension::PlaceX.fetch("1").in_two_or_eight? == false }
-      assert { Dimension::PlaceX.fetch("2").in_two_or_eight? == true  }
-      assert { Dimension::PlaceX.fetch("5").in_two_or_eight? == false }
-      assert { Dimension::PlaceX.fetch("8").in_two_or_eight? == true  }
-      assert { Dimension::PlaceX.fetch("9").in_two_or_eight? == false }
+    it "x_is_two_to_eight?" do
+      assert { Dimension::PlaceX.fetch("1").x_is_two_to_eight? == false }
+      assert { Dimension::PlaceX.fetch("2").x_is_two_to_eight? == true  }
+      assert { Dimension::PlaceX.fetch("5").x_is_two_to_eight? == true  }
+      assert { Dimension::PlaceX.fetch("8").x_is_two_to_eight? == true  }
+      assert { Dimension::PlaceX.fetch("9").x_is_two_to_eight? == false }
+    end
+
+    it "x_is_three_to_seven?" do
+      assert { Dimension::PlaceX.fetch("2").x_is_three_to_seven? == false }
+      assert { Dimension::PlaceX.fetch("3").x_is_three_to_seven? == true  }
+      assert { Dimension::PlaceX.fetch("5").x_is_three_to_seven? == true  }
+      assert { Dimension::PlaceX.fetch("7").x_is_three_to_seven? == true  }
+      assert { Dimension::PlaceX.fetch("8").x_is_three_to_seven? == false }
+    end
+
+    it "x_is_two_or_eight?" do
+      assert { Dimension::PlaceX.fetch("1").x_is_two_or_eight? == false }
+      assert { Dimension::PlaceX.fetch("2").x_is_two_or_eight? == true  }
+      assert { Dimension::PlaceX.fetch("5").x_is_two_or_eight? == false }
+      assert { Dimension::PlaceX.fetch("8").x_is_two_or_eight? == true  }
+      assert { Dimension::PlaceX.fetch("9").x_is_two_or_eight? == false }
     end
   end
 end

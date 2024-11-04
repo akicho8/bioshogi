@@ -66,11 +66,22 @@ module Bioshogi
       assert { Location.call_names == ["先手", "下手", "後手", "上手"] }
       assert { Location[:black].call_names == ["先手", "下手"] }
     end
+
+    it "位置から見た盤面の上下左右の座標を取得する" do
+      assert { Location[:black].bottom.name == "九" }
+      assert { Location[:black].top.name    == "一" }
+      assert { Location[:black].right.name  == "１" }
+      assert { Location[:black].left.name   == "９" }
+      assert { Location[:white].bottom.name == "一" }
+      assert { Location[:white].top.name    == "九" }
+      assert { Location[:white].left.name   == "１" }
+      assert { Location[:white].right.name  == "９" }
+    end
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
 # >> ............
-# >> 
+# >>
 # >> Top 10 slowest examples (0.01486 seconds, 61.0% of total time):
 # >>   Bioshogi::Location 変換可能
 # >>     0.01027 seconds -:5
@@ -92,7 +103,7 @@ end
 # >>     0.00018 seconds -:36
 # >>   Bioshogi::Location 変換不能で nil
 # >>     0.00016 seconds -:32
-# >> 
+# >>
 # >> Finished in 0.02436 seconds (files took 1.98 seconds to load)
 # >> 12 examples, 0 failures
-# >> 
+# >>

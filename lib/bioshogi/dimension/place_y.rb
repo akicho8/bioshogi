@@ -20,6 +20,14 @@ module Bioshogi
           @char_infos ||= CharInfo.take(dimension)
         end
 
+        def top
+          fetch(0)
+        end
+
+        def bottom
+          fetch(dimension.pred)
+        end
+
         # 一時的に成れない状況にする
         def promotable_disabled(&block)
           old_value = promotable_depth
@@ -72,7 +80,7 @@ module Bioshogi
 
       # 自分の側の一番下を0として底辺までの高さを返す (例えば7段目であれば2を返す)
       def bottom_spaces(location)
-        dimension - 1 - top_spaces(location)
+        dimension.pred - top_spaces(location)
       end
 
       # 相手の陣地にいる？

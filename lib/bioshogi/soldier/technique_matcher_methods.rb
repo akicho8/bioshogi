@@ -2,57 +2,77 @@ module Bioshogi
   class Soldier
     # 手筋判定用
     concern :TechniqueMatcherMethods do
-      ################################################################################ location を考慮した place へのショートカット
+      ################################################################################ location を考慮した place へのショートカット (X)
 
-      # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
+      def left_spaces
+        place.left_spaces(location)
+      end
+
+      def right_spaces
+        place.right_spaces(location)
+      end
+
+      delegate *Dimension::PlaceX::DELEGATE_METHODS_NO_ARGS, to: :place
+
+      ################################################################################ location を考慮した place へのショートカット (Y)
+
       def top_spaces
         place.top_spaces(location)
       end
 
-      # 成れる状態？
-      def opp_side?
-        top_spaces < Dimension::PlaceY.promotable_depth
-      end
-
-      # 成れない状態？
-      def not_opp_side?
-        top_spaces >= Dimension::PlaceY.promotable_depth
-      end
-
-      # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
       def bottom_spaces
         place.bottom_spaces(location)
       end
 
-      # 中央のすぐ下(6段目)にいる？ (white だと4段目)
-      def kurai_sasae?
-        place.kurai_sasae?(location)
-      end
-
-      # 自分の陣地にいる？
-      def own_side?
-        place.own_side?(location)
-      end
-
-      # 相手の陣地にいる？
       def opp_side?
         place.opp_side?(location)
       end
 
+      def not_opp_side?
+        place.not_opp_side?(location)
+      end
+
+      def own_side?
+        place.own_side?(location)
+      end
+
+      def not_own_side?
+        place.not_own_side?(location)
+      end
+
+      def kurai_sasae?
+        place.kurai_sasae?(location)
+      end
+
+      ################################################################################
+
+      def move_to_bottom
+        place.move_to_bottom(location)
+      end
+
+      def move_to_top
+        place.move_to_top(location)
+      end
+
+      def move_to_left
+        place.move_to_left(location)
+      end
+
+      def move_to_right
+        place.move_to_right(location)
+      end
+
+      ################################################################################
+
       # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
       # 2つ進んだ位置などを一発で調べたいときに使う
       def move_to_xy(x, y)
-        place.move_to_xy(x, y, location: location)
+        place.move_to_xy(location, x, y)
       end
 
       # より抽象的な方法で移動した位置を返す
       def move_to(vector)
-        place.move_to(vector, location: location)
-      end
-
-      # 15の状態であれば19を返す
-      def to_bottom_place
-        move_to_xy(0, bottom_spaces)
+        place.move_to(location, vector)
       end
 
       ################################################################################
@@ -73,17 +93,17 @@ module Bioshogi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::PlaceX.dimension - 1 - place.x.value
+        Dimension::PlaceX.dimension.pred - place.x.value
       end
 
       # センターにいる？ (5の列にいる？)
-      def column_is_center?
-        place.column_is_center?
+      def x_is_center?
+        place.x_is_center?
       end
 
       # 自玉の位置にいる？
       def initial_place?
-        column_is_center? && bottom_spaces == 0
+        x_is_center? && bottom_spaces == 0
       end
 
       # 垂れ歩状態か？ (つまり2, 3, 4段目)

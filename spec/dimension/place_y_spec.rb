@@ -27,6 +27,11 @@ module Bioshogi
       assert { [Dimension::PlaceX.fetch("1"), Dimension::PlaceX.fetch("2")].sort.collect(&:name) == ["２", "１"] }
     end
 
+    it "上下の位置" do
+      assert { Dimension::PlaceY.top.name    == "一" }
+      assert { Dimension::PlaceY.bottom.name == "九" }
+    end
+
     describe "5x5の盤面" do
       it "works" do
         Dimension.wh_change([5, 5]) do

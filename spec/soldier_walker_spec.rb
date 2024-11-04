@@ -4,7 +4,7 @@ module Bioshogi
   describe "#move_list" do
     it "ある地点に移動するとき成れるのか？" do
       soldier = Soldier.from_str("▲13銀")
-     assert { soldier.next_promotable?(Place["14"]) }
+     assert { soldier.tsugini_nareru_on?(Place["14"]) }
     end
 
     it "移動可能な筋(相手陣地から外に出た場合にも成れる)" do

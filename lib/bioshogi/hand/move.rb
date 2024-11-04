@@ -36,7 +36,7 @@ module Bioshogi
 
       # 成れる状態だった？
       def state_where_it_can_become_promote?
-        origin_soldier.next_promotable?(soldier.place)
+        origin_soldier.tsugini_nareru_on?(soldier.place)
       end
 
       # 人間には読みやすいがパースは大変

@@ -12,7 +12,7 @@ module Bioshogi
           end
 
           if move_hand.promote_trigger?
-            unless origin_soldier.next_promotable?(place)
+            unless origin_soldier.tsugini_nareru_on?(place)
               errors_add NotPromotable, "#{origin_soldier.place}から#{place}への移動では成れません"
             end
           end

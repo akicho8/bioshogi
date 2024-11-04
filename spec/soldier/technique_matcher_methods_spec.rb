@@ -60,17 +60,33 @@ module Bioshogi
       assert { Soldier.from_str("▲15歩").tarehu_ikeru? == false }
     end
 
-    it "to_bottom_place" do
-      assert { Soldier.from_str("▲11歩").to_bottom_place.name == "１九" }
-      assert { Soldier.from_str("▲15歩").to_bottom_place.name == "１九" }
-      assert { Soldier.from_str("▲19歩").to_bottom_place.name == "１九" }
-    end
-
     it "maeni_ittyokusen" do
       assert { Soldier.from_str("▲19香").maeni_ittyokusen? == true  }
       assert { Soldier.from_str("▲19飛").maeni_ittyokusen? == true  }
       assert { Soldier.from_str("▲19杏").maeni_ittyokusen? == false }
       assert { Soldier.from_str("▲19角").maeni_ittyokusen? == false }
+    end
+
+    it "move_to_*" do
+      assert { Soldier.from_str("△34飛").move_to_bottom.name == "３一" }
+      assert { Soldier.from_str("△34飛").move_to_top.name    == "３九" }
+      assert { Soldier.from_str("△34飛").move_to_right.name  == "９四" }
+      assert { Soldier.from_str("△34飛").move_to_left.name   == "１四" }
+    end
+
+    it "*_spaces" do
+      assert { Soldier.from_str("△34飛").top_spaces    == 5 }
+      assert { Soldier.from_str("△34飛").bottom_spaces == 3 }
+      assert { Soldier.from_str("△34飛").left_spaces   == 2 }
+      assert { Soldier.from_str("△34飛").right_spaces  == 6 }
+    end
+
+    it "x_is_*?" do
+      assert { Soldier.from_str("△34飛").x_is_two_to_eight?   ==  true  }
+      assert { Soldier.from_str("△34飛").x_is_two_or_eight?   ==  false }
+      assert { Soldier.from_str("△34飛").x_is_three_to_seven? ==  true  }
+      assert { Soldier.from_str("△34飛").x_is_center?         ==  false }
+      assert { Soldier.from_str("△34飛").x_is_left_or_right?  ==  false }
     end
   end
 end
