@@ -55,7 +55,7 @@ module Bioshogi
       end
 
       def normalized_vectors(location, vectors)
-        vectors.collect { |e| e * location.value_sign }
+        vectors.collect { |e| e * location.sign_dir }
       end
 
       def basic_vectors

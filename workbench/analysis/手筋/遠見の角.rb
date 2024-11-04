@@ -4,7 +4,7 @@ require "../../setup"
 # # 角の4方向のレイ
 # vectors = Piece[:bishop].all_vectors(promoted: false, location: location) # => [RV<[-1, -1]>, RV<[1, -1]>, RV<[-1, 1]>, RV<[1, 1]>]
 # # 敵陣に進むベクトルに絞る
-# vectors = vectors.find_all { |x, y| y == -location.value_sign } # => [RV<[-1, -1]>, RV<[1, -1]>]
+# vectors = vectors.find_all { |x, y| y == -location.sign_dir } # => [RV<[-1, -1]>, RV<[1, -1]>]
 
 info = Parser.parse(<<~EOT)
 後手の持駒：

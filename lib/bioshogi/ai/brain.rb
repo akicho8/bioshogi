@@ -96,7 +96,7 @@ module Bioshogi
               # if true
               #   if hand.king_captured?
               #     v = -SCORE_MAX
-              #     provisional_hands << {hand: hand, score: -v, black_side_score: -v * player.location.value_sign, best_pv: [], eval_times: 0, sec: 0}
+              #     provisional_hands << {hand: hand, score: -v, black_side_score: -v * player.location.sign_dir, best_pv: [], eval_times: 0, sec: 0}
               #     mate = true
               #     break
               #   end
@@ -109,7 +109,7 @@ module Bioshogi
                 provisional_hands << {
                   :hand             => hand,
                   :score            => v,
-                  :black_side_score => v * player.location.value_sign,
+                  :black_side_score => v * player.location.sign_dir,
                   :best_pv          => pv,
                   :eval_times       => diver.eval_counter,
                   :sec              => Time.now - start_time,
@@ -193,7 +193,7 @@ module Bioshogi
             {
               :hand       => hand,
               :score      => -v,
-              :socre2     => -v * player.location.value_sign,
+              :socre2     => -v * player.location.sign_dir,
               :best_pv    => pv,
               :eval_times => diver.eval_counter,
               :sec        => Time.now - start_time,
@@ -212,7 +212,7 @@ module Bioshogi
             {
               :hand       => hand,
               :score      => v,
-              :socre2     => v * player.location.value_sign,
+              :socre2     => v * player.location.sign_dir,
               :best_pv    => [],
               :eval_times => 1,
               :sec        => Time.now - start_time,

@@ -125,7 +125,7 @@ module Bioshogi
       # フォントの位置を微調整
       def piece_char_adjust(location)
         @piece_char_adjust ||= {}
-        @piece_char_adjust[location.key] ||= V[*params[:piece_char_adjust][location.key]] * location.value_sign
+        @piece_char_adjust[location.key] ||= V[*params[:piece_char_adjust][location.key]] * location.sign_dir
       end
 
       def soldier_font_scale(piece)

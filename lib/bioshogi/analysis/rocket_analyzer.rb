@@ -34,11 +34,11 @@ module Bioshogi
         end
 
         # 飛の下に香がある形は除外する
-        # [@lance_y, @rook_y, @lance_y <=> @rook_y, soldier.location.value_sign] # => [3, 4, -1, 1] (先手)
-        # [@lance_y, @rook_y, @lance_y <=> @rook_y, soldier.location.value_sign] # => [5, 4, 1, -1] (後手)
-        # つまり ((@lance_y <=> @rook_y) + soldier.location.value_sign).zero? のとき飛車の上に香車がいる
+        # [@lance_y, @rook_y, @lance_y <=> @rook_y, soldier.location.sign_dir] # => [3, 4, -1, 1] (先手)
+        # [@lance_y, @rook_y, @lance_y <=> @rook_y, soldier.location.sign_dir] # => [5, 4, 1, -1] (後手)
+        # つまり ((@lance_y <=> @rook_y) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
         if @rook_count == 1 && @lance_count == 1
-          if ((@lance_y <=> @rook_y) + soldier.location.value_sign).nonzero?
+          if ((@lance_y <=> @rook_y) + soldier.location.sign_dir).nonzero?
             return
           end
         end
@@ -74,7 +74,7 @@ module Bioshogi
 
         [-1, 1].each do |sign| # -1:↑ 1:↓
           (1..).each do |y|
-            place = Place.lookup([soldier.place.x.value, soldier.place.y.value + (y * soldier.location.value_sign * sign)])
+            place = Place.lookup([soldier.place.x.value, soldier.place.y.value + (y * soldier.location.sign_dir * sign)])
             unless place
               break                                     # 盤面の外
             end

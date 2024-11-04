@@ -37,7 +37,7 @@ module Bioshogi
 
         container.players.each do |player|
           location = player.location
-          s = location.value_sign
+          s = location.sign_dir
 
           if player.location.key == :black
             v = v_bottom_right_outer
@@ -85,7 +85,7 @@ module Bioshogi
       def piece_count_draw(v:, count:, location:)
         if count >= 2
           w = count <= 9 ? :single : :double
-          v = v + V[*params[:piece_count_position_adjust][w]] * location.value_sign
+          v = v + V[*params[:piece_count_position_adjust][w]] * location.sign_dir
           piece_count_bg_draw(v: v, location: location)
           char_draw(
             :layer        => @d_piece_count_layer,
@@ -106,9 +106,9 @@ module Bioshogi
           draw_context(@d_piece_count_layer) do |g|
             g.fill(params[:piece_count_bg_color])
 
-            # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location.value_sign
-            # v2 = v + (V.half + V[*params[:piece_count_bg_adjust]]) * location.value_sign
-            # g.ellipse(*px(v2), *(cell_rect * params[:piece_count_bg_scale] * location.value_sign), 0, 360) # x, y, w, h, angle(0 to 360)
+            # v2 = v + V[*params[:piece_count_bg_adjust][w]] * location.sign_dir
+            # v2 = v + (V.half + V[*params[:piece_count_bg_adjust]]) * location.sign_dir
+            # g.ellipse(*px(v2), *(cell_rect * params[:piece_count_bg_scale] * location.sign_dir), 0, 360) # x, y, w, h, angle(0 to 360)
             # g.ellipse(*px(v2), *cell_rect, 0, 360) # x, y, w, h, angle(0 to 360)
 
             # 個数は左上を原点とした枠の中心(CenterGravity)で表示するのでその位置に移動する

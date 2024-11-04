@@ -85,7 +85,7 @@ module Bioshogi
 
       # 駒の重さ(=価値)。先手視点。後手ならマイナスになる
       def relative_weight
-        abs_weight * location.value_sign
+        abs_weight * location.sign_dir
       end
 
       # 敵への駒の圧力(終盤度)

@@ -186,7 +186,7 @@ module Bioshogi
 
     # 中央のすぐ下(6段目)にいる？ (white だと4段目)
     def in_zensen?(location)
-      @y.value == (Dimension::PlaceY.dimension / 2 + location.value_sign)
+      @y.value == (Dimension::PlaceY.dimension / 2 + location.sign_dir)
     end
 
     # 自分の陣地にいる？
@@ -223,7 +223,7 @@ module Bioshogi
       if vector.kind_of?(Symbol)
         vector = V.public_send(vector)
       end
-      xy_add(*(vector * location.value_sign))
+      xy_add(*(vector * location.sign_dir))
     end
 
     ################################################################################ @x への delegate 系

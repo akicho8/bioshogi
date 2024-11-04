@@ -109,8 +109,8 @@ module Bioshogi
         cx, cy = *px(v + V.half)  # 中央
         pentagon_points.flat_map do |x, y|
           [
-            cx + x * scale * location.value_sign,
-            cy + y * scale * location.value_sign,
+            cx + x * scale * location.sign_dir,
+            cy + y * scale * location.sign_dir,
           ]
         end
       end
