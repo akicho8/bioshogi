@@ -3,8 +3,7 @@
 module Bioshogi
   module Dimension
     class Base
-      class_attribute :dimension
-      self.dimension = 9
+      class_attribute :dimension, default: 9
 
       attr_reader :value
 
@@ -66,6 +65,14 @@ module Bioshogi
 
       def flip
         self.class.fetch(self.class.char_infos.size - 1 - @value)
+      end
+
+      def white_then_flip(location)
+        if Location[location].key == :white
+          flip
+        else
+          self
+        end
       end
 
       def ==(other)

@@ -17,8 +17,8 @@ Place["11"].object_id           # => 2040
 # Dimension::PlaceX.fetch(1).object_id # => 70357212614280
 # Dimension::PlaceX.fetch(1).object_id # => 70357212614280
 
-Place["76"].hash                # => 3509947724978323174
-Place["７６"].hash              # => 3509947724978323174
+Place["76"].hash                # => 2565954906804027321
+Place["７６"].hash              # => 2565954906804027321
 Place["76"].object_id           # => 2060
 Place["７６"].object_id         # => 2060
 hash = {}
@@ -26,13 +26,13 @@ hash = {}
 hash[Place["76"]] = 1
 hash[Place["７６"]]             # => 1
 
-[1, 2].hash                     # => -1755251422519666414
-[1, 2].hash                     # => -1755251422519666414
+[1, 2].hash                     # => 2653466016010256257
+[1, 2].hash                     # => 2653466016010256257
 
-Place["13"].opponent_side?(:black) # => true
-Place["14"].opponent_side?(:black) # => false
-Place["16"].opponent_side?(:white) # => false
-Place["17"].opponent_side?(:white) # => true
+Place["13"].opp_side?(:black) # => true
+Place["14"].opp_side?(:black) # => false
+Place["16"].opp_side?(:white) # => false
+Place["17"].opp_side?(:white) # => true
 Place["13"].own_side?(:white) # => true
 Place["14"].own_side?(:white) # => false
 Place["16"].own_side?(:black) # => false
@@ -46,3 +46,5 @@ Place["25"].column_in_two_to_eight?    # => true
 Place["85"].column_in_two_to_eight?    # => true
 Place["95"].column_in_two_to_eight?    # => false
 
+Place["13"].top_spaces(Location[:black])          # => 2
+Place["13"].opp_side?(Location[:black])    # => true

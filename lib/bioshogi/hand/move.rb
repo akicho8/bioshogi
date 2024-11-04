@@ -35,7 +35,7 @@ module Bioshogi
       end
 
       # 成れる状態だった？
-      def promotable?
+      def state_where_it_can_become_promote?
         origin_soldier.next_promotable?(soldier.place)
       end
 
@@ -84,7 +84,7 @@ module Bioshogi
       end
 
       def type
-        if promotable?
+        if state_where_it_can_become_promote?
           if promote_trigger?
             "t_promote_on"
           else

@@ -95,7 +95,7 @@ module Bioshogi
           description: "中盤戦になる前に5段目の歩を銀で支える",
           func: proc {
             # 1. 前線(6段目)にいること
-            verify_if { soldier.in_zensen? }
+            verify_if { soldier.kurai_sasae? }
 
             # 2. 3〜7列であること (両端2列は「位」とは言わないため)
             verify_if { place.column_in_three_to_seven? }
@@ -234,7 +234,7 @@ module Bioshogi
               Dimension::PlaceY.dimension.times do |i|
                 if pos = Place.lookup([pos.x.value + x, pos.y.value + y])
                   step_count += 1                                  # 効きの数+1
-                  opponent_territory ||= pos.promotable?(location) # 相手の陣地に入れるか？
+                  opponent_territory ||= pos.opp_side?(location) # 相手の陣地に入れるか？
                   surface[pos] and break                           # 相手の駒または自分の駒がある場合は終わる
                 else
                   break                                            # 外に出た
@@ -440,60 +440,6 @@ module Bioshogi
             end
           },
         },
-
-        # {
-        #   key: "ロケット",
-        #   description: "打った香の下に自分の香か飛か龍がある",
-        #   func: proc {
-        #     # p ["#{__FILE__}:#{__LINE__}", __method__, ]
-        #     soldier = executor.hand.soldier
-        #     # p soldier.bottom_spaces
-        #     # p place
-        #     # p place.y
-        #     # p place.y.flip
-        #     # place = Place.lookup([place.x.value, place.y.value + soldier.bottom_spaces * soldier.location.sign_dir])
-        #
-        #     rook_count = 0
-        #     lance_count = 0
-        #     if soldier.piece.key == :rook
-        #       rook_count += 1
-        #     else
-        #       lance_count += 1
-        #     end
-        #
-        #     [1, -1].each do |sign| # 1:↓ -1:↑
-        #       (1..).each do |i|
-        #         place = Place.lookup([soldier.place.x.value, soldier.place.y.value + (i * soldier.location.sign_dir * sign)])
-        #         unless place
-        #           break
-        #         end
-        #         if s = surface[place]
-        #           if own?(s)
-        #             if s.piece.key == :rook
-        #               rook_count += 1
-        #             elsif s.piece.key == :lance && !s.promoted
-        #               lance_count += 1
-        #             else
-        #               break
-        #             end
-        #           else
-        #             break
-        #           end
-        #         end
-        #       end
-        #     end
-        #
-        #     p rook_count
-        #     p lance_count
-        #
-        #     count = rook_count + lance_count
-        #     if lance_count >= 1 && count >= 2
-        #       # raise "ここで count 段ロケットということはわかったがこれをどうタグに入れるか？"
-        #     else
-        #       throw :skip
-        #     end
-        #   },
-        # },
 
         {
           key: "田楽刺し",
@@ -731,12 +677,10 @@ module Bioshogi
           key: "入玉",
           description: "玉が移動して上のスペースが3つの状態から2つの状態になった",
           func: proc {
-            soldier = executor.hand.soldier
-            if soldier.top_spaces != Dimension::PlaceY.promotable_depth - 1
-              throw :skip
+            verify_if do
+              soldier.top_spaces == Dimension::PlaceY.promotable_depth - 1
             end
 
-            origin_soldier = executor.hand.origin_soldier
             if origin_soldier.top_spaces != Dimension::PlaceY.promotable_depth
               throw :skip
             end
@@ -752,9 +696,7 @@ module Bioshogi
           key: "角不成",
           description: "相手陣地に入るときと出るときの両方チェックする",
           func: proc {
-            unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
-              throw :skip
-            end
+            verify_if { origin_soldier.next_promotable?(place) }
           },
         },
 
@@ -762,16 +704,10 @@ module Bioshogi
           key: "飛車不成",
           description: "角不成と同じ方法でよい",
           func: proc {
-            unless executor.hand.origin_soldier.next_promotable?(executor.soldier.place)
-              throw :skip
-            end
+            verify_if { origin_soldier.next_promotable?(place) }
           },
         },
       ]
     end
   end
 end
-# ~> -:28:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
-# ~> 	from -:7:in `<module:Analysis>'
-# ~> 	from -:6:in `<module:Bioshogi>'
-# ~> 	from -:5:in `<main>'

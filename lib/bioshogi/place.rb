@@ -9,8 +9,6 @@
 
 module Bioshogi
   class Place
-    attr_accessor :x, :y
-
     class << self
       private :new
 
@@ -67,6 +65,10 @@ module Bioshogi
       end
     end
 
+    attr_accessor :x, :y
+
+    delegate *Dimension::PlaceY::DELEGATE_METHODS, to: :@y
+
     def initialize(x, y)
       @x = x
       @y = y
@@ -79,7 +81,7 @@ module Bioshogi
     ################################################################################
 
     def name
-      to_a.collect { |e| e.name }.join
+      to_a.collect(&:name).join
     end
 
     def zenkaku_number
@@ -122,7 +124,7 @@ module Bioshogi
 
     ################################################################################
 
-    # 180度回転 ※上下対象ではない
+    # 180度回転 (上下対象ではない)
     def flip
       self.class.fetch([@x.flip, @y.flip])
     end
@@ -132,7 +134,7 @@ module Bioshogi
       self.class.fetch([@x.flip, @y])
     end
 
-    def flip_if_white(location)
+    def white_then_flip(location)
       if Location[location].key == :white
         flip
       else
@@ -164,39 +166,6 @@ module Bioshogi
 
     def eql?(other)
       self.class == other.class && to_xy == other.to_xy
-    end
-
-    ################################################################################ 手筋判定サポート
-
-    def promotable?(location)
-      @y.promotable?(location)
-    end
-
-    # 自分の側の一番上を0としてあとどれだけで突き当たるかの値
-    # 例えば 13 であれば 2 を返す
-    def top_spaces(location)
-      flip_if_white(location).y.value
-    end
-
-    # 自分の側の一番下を0として底辺までの高さを返す
-    # 例えば 13 であれば 6 を返す
-    def bottom_spaces(location)
-      Dimension::PlaceY.dimension - 1 - top_spaces(location)
-    end
-
-    # 中央のすぐ下(6段目)にいる？ (white だと4段目)
-    def in_zensen?(location)
-      @y.value == (Dimension::PlaceY.dimension / 2 + location.sign_dir)
-    end
-
-    # 自分の陣地にいる？
-    def own_side?(location)
-      bottom_spaces(location) < Dimension::PlaceY.promotable_depth
-    end
-
-    # 相手の陣地にいる？
-    def opponent_side?(location)
-      top_spaces(location) < Dimension::PlaceY.promotable_depth
     end
 
     ################################################################################ 移動

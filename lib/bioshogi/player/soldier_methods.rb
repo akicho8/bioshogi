@@ -23,7 +23,7 @@ module Bioshogi
       # 入玉している？
       def king_soldier_entered?
         if soldier = king_soldier
-          soldier.place.promotable?(location)
+          soldier.place.opp_side?(location)
         end
       end
 
@@ -36,7 +36,7 @@ module Bioshogi
       def entered_soldiers
         soldiers.find_all do |e|
           if e.piece.key != :king
-            e.place.promotable?(location)
+            e.place.opp_side?(location)
           end
         end
       end

@@ -43,7 +43,7 @@ module Bioshogi
               container = Container::Simple.new
               container.board.placement_from_shape <<~EOT
               +------+
-                | ・v香|
+              | ・v香|
               | ・v飛|
               | ・v歩|
               | ・ 飛|

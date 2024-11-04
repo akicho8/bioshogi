@@ -86,11 +86,11 @@ module Bioshogi
               if md = v.match(/[左右]/)
                 if piece.brave?
                   m = {"左" => :first, "右" => :last}.fetch(md.to_s)
-                  m = flip_if_white(m)
+                  m = white_then_flip(m)
                   list = list.sort_by { |e| e.place.x.value }.send(m, 1)
                 else
                   m = {"左" => :>, "右" => :<}.fetch(md.to_s)
-                  m = flip_if_white(m)
+                  m = white_then_flip(m)
                   list = list.find_all do |e|
                     place.x.value.send(m, e.place.x.value)
                   end
@@ -103,7 +103,7 @@ module Bioshogi
             if v = up_down
               if md = v.match(/[上引]/)
                 m = {"上" => :<, "引" => :>}.fetch(md.to_s)
-                m = flip_if_white(m)
+                m = white_then_flip(m)
                 list = list.find_all do |e|
                   place.y.value.send(m, e.place.y.value)
                 end
@@ -144,7 +144,7 @@ module Bioshogi
         !promoted && !suffix_exist? && candidate_soldiers.empty?
       end
 
-      def flip_if_white(key)
+      def white_then_flip(key)
         if player.location.key == :white
           key = self.class.flip_table[key]
         end

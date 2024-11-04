@@ -106,7 +106,7 @@ module Bioshogi
     end
 
     # ▲視点に統一
-    def flip_if_white
+    def white_then_flip
       if location.key == :white
         flip
       else
@@ -134,7 +134,7 @@ module Bioshogi
 
     # 自分を移動元の状態と考えて to に移動したとき成れるか？
     def next_promotable?(to)
-      piece.promotable? && !promoted && (place.promotable?(location) || to.promotable?(location))
+      piece.promotable? && !promoted && (place.opp_side?(location) || to.opp_side?(location))
     end
 
     # 移動可能な座標を取得
@@ -158,12 +158,12 @@ module Bioshogi
 
     # 自分を▲側に補正したときの座標
     def normalized_place
-      place.flip_if_white(location)
+      place.white_then_flip(location)
     end
 
     # 入玉宣言時の得点
     def ek_score
-      if place.promotable?(location)
+      if place.opp_side?(location)
         piece.ek_score
       else
         0

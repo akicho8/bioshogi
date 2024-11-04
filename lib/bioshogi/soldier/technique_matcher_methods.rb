@@ -9,14 +9,24 @@ module Bioshogi
         place.top_spaces(location)
       end
 
+      # 成れる状態？
+      def opp_side?
+        top_spaces < Dimension::PlaceY.promotable_depth
+      end
+
+      # 成れない状態？
+      def not_opp_side?
+        top_spaces >= Dimension::PlaceY.promotable_depth
+      end
+
       # 自分の側の一番下を0としてどれだけ前に進んでいるかを返す
       def bottom_spaces
         place.bottom_spaces(location)
       end
 
       # 中央のすぐ下(6段目)にいる？ (white だと4段目)
-      def in_zensen?
-        place.in_zensen?(location)
+      def kurai_sasae?
+        place.kurai_sasae?(location)
       end
 
       # 自分の陣地にいる？
@@ -25,8 +35,8 @@ module Bioshogi
       end
 
       # 相手の陣地にいる？
-      def opponent_side?
-        place.opponent_side?(location)
+      def opp_side?
+        place.opp_side?(location)
       end
 
       # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)

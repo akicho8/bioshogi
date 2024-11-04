@@ -84,7 +84,7 @@ module Bioshogi
         if flop
           place = place.flop
         end
-        place = place.flip_if_white(lose_side_location)
+        place = place.white_then_flip(lose_side_location)
         if soldier = container.board[place]
           if soldier.location == lose_side_location
             soldier

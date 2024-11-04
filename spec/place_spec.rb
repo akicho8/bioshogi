@@ -47,12 +47,12 @@ module Bioshogi
     end
 
     it "相手陣地に入っているか？" do
-      assert Place.fetch("１二").promotable?(Location[:black]) == true
-      assert Place.fetch("１三").promotable?(Location[:black]) == true
-      assert Place.fetch("１四").promotable?(Location[:black]) == false
-      assert Place.fetch("１六").promotable?(Location[:white]) == false
-      assert Place.fetch("１七").promotable?(Location[:white]) == true
-      assert Place.fetch("１八").promotable?(Location[:white]) == true
+      assert Place.fetch("１二").opp_side?(Location[:black]) == true
+      assert Place.fetch("１三").opp_side?(Location[:black]) == true
+      assert Place.fetch("１四").opp_side?(Location[:black]) == false
+      assert Place.fetch("１六").opp_side?(Location[:white]) == false
+      assert Place.fetch("１七").opp_side?(Location[:white]) == true
+      assert Place.fetch("１八").opp_side?(Location[:white]) == true
     end
 
     it "ベクトルを加算して新しい座標オブジェクトを返す" do
@@ -86,7 +86,7 @@ module Bioshogi
     end
 
     it "後手なら反転" do
-      assert Place["７六"].flip_if_white(:white) == Place["３四"]
+      assert Place["７六"].white_then_flip(:white) == Place["３四"]
     end
 
     it "シリアライズからの復元" do
@@ -101,11 +101,11 @@ module Bioshogi
       assert { [a, b].sort == [b, a] }
     end
 
-    it "opponent_side?" do
-      assert { Place["13"].opponent_side?(:black) == true  } # ▲から見た13の位置は敵陣か？
-      assert { Place["14"].opponent_side?(:black) == false }
-      assert { Place["16"].opponent_side?(:white) == false }
-      assert { Place["17"].opponent_side?(:white) == true  }
+    it "opp_side?" do
+      assert { Place["13"].opp_side?(:black) == true  } # ▲から見た13の位置は敵陣か？
+      assert { Place["14"].opp_side?(:black) == false }
+      assert { Place["16"].opp_side?(:white) == false }
+      assert { Place["17"].opp_side?(:white) == true  }
     end
 
     it "own_side?" do
