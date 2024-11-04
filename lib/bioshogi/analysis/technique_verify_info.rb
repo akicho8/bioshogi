@@ -12,9 +12,9 @@ module Bioshogi
       LR2           = [[1, 2], [-1, -2]]                 # 1〜2ステップの左右
       # LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
 
-      TOP_PLUS_ONE  = 1 # ▲から見て2段目のこと
-      SIDE_PLUS_1 = 1 # 2筋と8筋は左右から「1」つ内側にある
+      ROW_IS_2  = 1 # ▲から見て2段目のこと
 
+      # SIDE_PLUS_1   = 1 # 2筋と8筋は左右から「1」つ内側にある
       # # ▲から見て2筋と8筋
       # ARRAY_2_8     = [SIDE_PLUS_1, Dimension::PlaceX.dimension - 1 - SIDE_PLUS_1] # [2, 8]
       # SET_2_8       = ARRAY_2_8.to_set                                                 # #<Set: {2, 3}>
@@ -48,7 +48,7 @@ module Bioshogi
               V.ikkenryu_vectors.any? do |e|
                 if v = soldier.move_to(e)
                   if s = surface[v]
-                    s.piece.key == :king && s.location != location
+                    s.piece.key == :king && opponent?(s)
                   end
                 end
               end
@@ -67,7 +67,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = surface[v]
-                  s.piece.key == :pawn && !s.promoted && s.location != location
+                  s.piece.key == :pawn && !s.promoted && opponent?(s)
                 end
               end
             end
@@ -77,7 +77,7 @@ module Bioshogi
               V.keima_vectors.any? do |e|
                 if v = soldier.move_to(e)
                   if s = surface[v]
-                    (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && s.location != location
+                    (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && opponent?(s)
                   end
                 end
               end
@@ -153,7 +153,7 @@ module Bioshogi
               V.left_right_vectors.any? do |e|
                 if v = soldier.move_to(e)
                   if s = surface[v]
-                    s.piece.key == :king && s.location != location
+                    s.piece.key == :king && opponent?(s)
                   end
                 end
               end
@@ -168,7 +168,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:down)
                 if s = surface[v]
-                  s.piece.key == :king && s.location != location
+                  s.piece.key == :king && opponent?(s)
                 end
               end
             end
@@ -258,7 +258,7 @@ module Bioshogi
               V.wariuchi_vectors.all? do |e|
                 if v = soldier.move_to(e)
                   if s = surface[v]
-                    if s.location != location
+                    if opponent?(s)
                       (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
                     end
                   end
@@ -277,10 +277,10 @@ module Bioshogi
               [1, -1].any? do |x|
                 if v = place.xy_add(-x, -location.sign_dir) # 81
                   if s = surface[v]
-                    if s.piece.key == :rook && !s.promoted && s.location != location # 左上に飛車がある
+                    if s.piece.key == :rook && !s.promoted && opponent?(s) # 左上に飛車がある
                       if v = place.xy_add(x, location.sign_dir) # 63
                         if s = surface[v]
-                          (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && s.location != location # 右下に金または成銀がある
+                          (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && opponent?(s) # 右下に金または成銀がある
                         end
                       end
                     end
@@ -303,18 +303,18 @@ module Bioshogi
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-            unless s = surface[v]
-              throw :skip
+            # 1. 上に桂馬がある
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  s.piece.key == :knight && !s.promoted && opponent?(s)
+                end
+              end
             end
-            unless s.piece.key == :knight && !s.promoted && s.location != soldier.location
-              throw :skip
-            end
-            # 「22銀打」または「82銀打」を除外する
-            if place.column_in_two_or_eight? && soldier.top_spaces == TOP_PLUS_ONE
-              throw :skip
+
+            # 2. 「22銀」や「82銀」ではないこと (端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため)
+            verify_if do
+              !(place.column_in_two_or_eight? && soldier.top_spaces == ROW_IS_2)
             end
           },
         },

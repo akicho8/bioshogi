@@ -416,6 +416,15 @@ module Bioshogi
         @location ||= player.location
       end
 
+      # 対戦相手の向き
+      def opponent_location
+        @opponent_location ||= location.flip
+      end
+
+      def opponent?(soldier)
+        soldier.location != location
+      end
+
       def player
         @player ||= executor.player
       end
