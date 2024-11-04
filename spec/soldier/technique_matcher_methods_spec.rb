@@ -82,11 +82,23 @@ module Bioshogi
     end
 
     it "x_is_*?" do
-      assert { Soldier.from_str("△34飛").x_is_two_to_eight?   ==  true  }
-      assert { Soldier.from_str("△34飛").x_is_two_or_eight?   ==  false }
-      assert { Soldier.from_str("△34飛").x_is_three_to_seven? ==  true  }
-      assert { Soldier.from_str("△34飛").x_is_center?         ==  false }
-      assert { Soldier.from_str("△34飛").x_is_left_or_right?  ==  false }
+      assert { Soldier.from_str("△34飛").x_is_two_to_eight?   == true  }
+      assert { Soldier.from_str("△34飛").x_is_two_or_eight?   == false }
+      assert { Soldier.from_str("△34飛").x_is_three_to_seven? == true  }
+      assert { Soldier.from_str("△34飛").x_is_center?         == false }
+      assert { Soldier.from_str("△34飛").x_is_left_or_right?  == false }
+    end
+
+    it "yondanme?" do
+      assert { Soldier.from_str("△55玉").yondanme? == false }
+      assert { Soldier.from_str("△56玉").yondanme? == true  }
+      assert { Soldier.from_str("△57玉").yondanme? == false }
+    end
+
+    it "sandanme?" do
+      assert { Soldier.from_str("△56玉").sandanme? == false }
+      assert { Soldier.from_str("△57玉").sandanme? == true  }
+      assert { Soldier.from_str("△58玉").sandanme? == false }
     end
   end
 end

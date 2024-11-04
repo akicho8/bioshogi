@@ -675,20 +675,10 @@ module Bioshogi
 
         {
           key: "入玉",
-          description: "玉が移動して上のスペースが3つの状態から2つの状態になった",
+          description: "玉が4段目から3段目に移動した",
           func: proc {
-            verify_if do
-              soldier.top_spaces == Dimension::PlaceY.promotable_depth - 1
-            end
-
-            if origin_soldier.top_spaces != Dimension::PlaceY.promotable_depth
-              throw :skip
-            end
-
-            # ここで相手を見て、相手も入玉していたら、次のように相入玉とする方法もあるが
-            # player.skill_set.note_infos << Analysis::NoteInfo["相入玉"]
-            # それでなくてもここは処理が重いのでやらない
-            # formatter.container_run_once の方で、最後にチェックしている
+            verify_if { soldier.sandanme?        }
+            verify_if { origin_soldier.yondanme? }
           },
         },
 

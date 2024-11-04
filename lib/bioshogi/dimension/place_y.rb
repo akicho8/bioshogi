@@ -13,6 +13,8 @@ module Bioshogi
         :own_side?,
         :not_own_side?,
         :kurai_sasae?,
+        :sandanme?,
+        :yondanme?,
       ]
 
       class << self
@@ -106,6 +108,16 @@ module Bioshogi
       # 中央のすぐ下にいる？ (位の歩を支える銀の位置で▲なら6段目で△なら4段目ならtrue)
       def kurai_sasae?(location)
         value == (dimension / 2 + location.sign_dir)
+      end
+
+      # 玉が初めて入玉した位置か？
+      def sandanme?(location)
+        top_spaces(location) == promotable_depth.pred
+      end
+
+      # 玉があと一歩で入玉できる位置か？
+      def yondanme?(location)
+        top_spaces(location) == promotable_depth
       end
     end
   end

@@ -44,6 +44,14 @@ module Bioshogi
         place.kurai_sasae?(location)
       end
 
+      def sandanme?
+        place.sandanme?(location)
+      end
+
+      def yondanme?
+        place.yondanme?(location)
+      end
+
       ################################################################################
 
       def move_to_bottom
