@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    concern :TechAccessor do
+    concern :BasicAccessor do
       included do
         include TreeSupport::Treeable
         include TreeSupport::Stringify
@@ -18,7 +18,7 @@ module Bioshogi
         end
 
         def tactic_key
-          @tactic_key ||= name.demodulize.underscore.remove(/_info/)
+          @tactic_key ||= name.demodulize.underscore.remove(/_info/).to_sym
         end
 
         private

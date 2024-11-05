@@ -15,6 +15,10 @@ module Bioshogi
         end
       end
 
+      it "すべての戦法や囲いのスタイルを取得できる" do
+        assert { TacticInfo.all_elements.all?(&:style_info) }
+      end
+
       describe "flat_lookup" do
         it "works" do
           assert { TacticInfo.flat_lookup("金底の歩") }

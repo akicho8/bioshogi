@@ -93,7 +93,7 @@ module Bioshogi
       class_attribute :human_name, default: "備考"
 
       include ShapeInfoRelation
-      include TechAccessor
+      include BasicAccessor
       include StyleAccessor
     end
   end

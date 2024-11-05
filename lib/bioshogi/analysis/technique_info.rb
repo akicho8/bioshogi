@@ -49,7 +49,7 @@ module Bioshogi
       class_attribute :human_name, default: "手筋"
 
       include ShapeInfoRelation
-      include TechAccessor
+      include BasicAccessor
       include StyleAccessor
 
       class << self

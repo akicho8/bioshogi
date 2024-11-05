@@ -166,7 +166,7 @@ module Bioshogi
       class_attribute :human_name, default: "囲い"
 
       include ShapeInfoRelation
-      include TechAccessor
+      include BasicAccessor
       include StyleAccessor
 
       # outbreak_skip で代用するため pawn_bishop_have_ok は無効化する
