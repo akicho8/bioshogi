@@ -273,17 +273,16 @@ module Bioshogi
           },
         },
 
-        # FIXME
         {
           key: "たすきの銀",
           description: "打った銀の斜めに飛と金がある",
           func: proc {
             verify_if do
-              [1, -1].any? do |x|
-                if v = place.xy_add(-x, -location.sign_dir) # 81
+              V.tasuki_vectors.any? do |up_left, down_right|
+                if v = soldier.move_to(up_left)
                   if s = surface[v]
                     if s.piece.key == :rook && !s.promoted && opponent?(s) # 左上に飛車がある
-                      if v = place.xy_add(x, location.sign_dir) # 63
+                      if v = soldier.move_to(down_right)
                         if s = surface[v]
                           (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && opponent?(s) # 右下に金または成銀がある
                         end

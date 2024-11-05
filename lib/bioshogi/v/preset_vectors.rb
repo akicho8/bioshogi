@@ -31,6 +31,10 @@ module Bioshogi
         @tsugikei_methods ||= [down_down_right, down_down_left]
       end
 
+      def tasuki_vectors
+        @tasuki_vectors ||= [[up_left, down_right], [up_right, down_left]]
+      end
+
       ################################################################################ 上下左右
 
       def right
@@ -49,7 +53,15 @@ module Bioshogi
         @left ||= -right
       end
 
-      ################################################################################ 割り打ち
+      ################################################################################ 斜め
+
+      def up_left
+        @up_left ||= up + left
+      end
+
+      def up_right
+        @up_right ||= up + right
+      end
 
       def down_left
         @down_left ||= down + left
@@ -105,12 +117,6 @@ module Bioshogi
 
       def left_left_up
         @left_left_up ||= left + left + up
-      end
-
-      ################################################################################ たすきチェック用
-
-      def up_left
-        @up_left ||= up + left
       end
 
       ################################################################################
