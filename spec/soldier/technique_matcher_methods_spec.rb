@@ -34,24 +34,6 @@ module Bioshogi
       assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
     end
 
-    it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
-      assert { Soldier.from_str("▲41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("△41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("▲51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("▲61歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
-    end
-
-    it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
-      assert { Soldier.from_str("▲41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("△41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("▲51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("▲61歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
-    end
-
     it "tarehu_ikeru?" do
       assert { Soldier.from_str("▲11歩").tarehu_ikeru? == false }
       assert { Soldier.from_str("▲12歩").tarehu_ikeru? == true  }
@@ -72,6 +54,14 @@ module Bioshogi
       assert { Soldier.from_str("△34飛").move_to_top.name    == "３九" }
       assert { Soldier.from_str("△34飛").move_to_right.name  == "９四" }
       assert { Soldier.from_str("△34飛").move_to_left.name   == "１四" }
+    end
+
+    it "move_to" do
+      assert { Soldier.from_str("△34飛").move_to(:up).name                    == "３五" }
+      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 0).name  == "３四" }
+      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 1).name  == "３五" }
+      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 2).name  == "３六" }
+      assert { Soldier.from_str("△34飛").move_to(:up, magnification: -2).name == "３二" }
     end
 
     it "*_spaces" do

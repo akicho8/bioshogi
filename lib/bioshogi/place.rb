@@ -186,11 +186,11 @@ module Bioshogi
     end
 
     # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
-    def move_to(location, vector)
+    def move_to(location, vector, magnification: 1)
       if vector.kind_of?(Symbol)
         vector = V.public_send(vector)
       end
-      xy_add(*(vector * location.sign_dir))
+      xy_add(*(vector * location.sign_dir * magnification))
     end
 
     ################################################################################

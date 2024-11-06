@@ -20,3 +20,8 @@ Soldier.from_str("△34飛").x_is_three_to_seven? # => true
 Soldier.from_str("△34飛").x_is_center?         # => false
 Soldier.from_str("△34飛").x_is_left_or_right?  # => false
 
+Soldier.from_str("△34飛").move_to(:up).name # => "３五"
+Soldier.from_str("△34飛").move_to(:up, magnification: 0).name # => "３四"
+Soldier.from_str("△34飛").move_to(:up, magnification: 1).name # => "３五"
+Soldier.from_str("△34飛").move_to(:up, magnification: 2).name # => "３六"
+

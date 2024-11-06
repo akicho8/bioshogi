@@ -79,8 +79,8 @@ module Bioshogi
       end
 
       # より抽象的な方法で移動した位置を返す
-      def move_to(vector)
-        place.move_to(location, vector)
+      def move_to(vector, **options)
+        place.move_to(location, vector, **options)
       end
 
       ################################################################################

@@ -35,6 +35,10 @@ module Bioshogi
         @tasuki_vectors ||= [[up_left, down_right], [up_right, down_left]]
       end
 
+      def bishop_naname_mae_vectors
+        @bishop_naname_mae_vectors ||= [up_left, up_right]
+      end
+
       ################################################################################ 上下左右
 
       def right
