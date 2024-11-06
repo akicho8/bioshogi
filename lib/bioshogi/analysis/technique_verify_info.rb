@@ -481,33 +481,25 @@ module Bioshogi
           key: "土下座の歩",
           description: nil,
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
+            # 1. 8,9段目であること
+            verify_if { soldier.bottom_spaces < 2 }
 
-            # 8,9段目であること
-            if soldier.bottom_spaces < 2
-            else
-              throw :skip
-            end
-
-            # 一つ上が空であること
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-            if surface[v]
-              throw :skip
-            end
-
-            # 二つ上に相手の前に進める駒があること
-            flag = false
-            v = Place.lookup([place.x.value, place.y.value - (soldier.location.sign_dir * 2)])
-            if s = surface[v]
-              if opponent?(s)
-                if s.promoted || s.piece.maesusumeru
-                  flag = true
-                end
+            # 2. 一つ上が空であること
+            verify_if do
+              if v = soldier.move_to(:up)
+                !surface[v]
               end
             end
-            unless flag
-              throw :skip
+
+            # 3. 二つ上に相手の前に進める駒があること (成銀や馬があっても土下座の対象とする)
+            verify_if do
+              if v = soldier.move_to(:up_up)
+                if s = surface[v]
+                  if opponent?(s)
+                    s.piece.maesusumeru || s.promoted
+                  end
+                end
+              end
             end
           },
         },
