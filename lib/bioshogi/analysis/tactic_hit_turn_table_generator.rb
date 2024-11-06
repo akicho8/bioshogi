@@ -8,7 +8,6 @@ module Bioshogi
       end
 
       def call
-        body = body_format(to_h.inspect)
         output_file.write(template % { body: body })
         if @options[:verbose]
           puts "write: #{output_file}"
@@ -16,10 +15,10 @@ module Bioshogi
       end
 
       def to_h
-        list = Analysis::TacticInfo.all_elements.collect do |e|
+        av = Analysis::TacticInfo.all_elements.collect do |e|
           turn = nil
           e.main_reference_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
-            if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
+            if hand_log.skill_set.has_skill?(e)
               turn = i.next
               break
             end
@@ -27,7 +26,18 @@ module Bioshogi
           [e, turn]
         end
 
-        list.sort_by { |e, turn| [turn || 0, e.name] }.collect { |e, turn| [e.name, turn] }.to_h
+        av.sort_by { |e, turn| [turn || 0, e.name] }.collect { |e, turn| [e.name, turn] }.to_h
+      end
+
+      def body
+        str = to_h.inspect
+        str = str.gsub(/{/, "")
+        str = str.gsub(/}/, ",")
+        str = str.gsub(/\s*,\s*/, ",\n")
+        str = str.gsub(/^(?=")/, "  " * 3)
+        str = str.gsub("=>", " => ")
+        str = str.gsub(/ "/, ':"')
+        str = str.rstrip
       end
 
       def output_file
@@ -38,6 +48,7 @@ module Bioshogi
         o = []
         o << "# -*- frozen_string_literal: true -*-"
         o << "# #{__FILE__} から生成しているので編集するべからず"
+        o << "# 手数が nil のものは最後に判定してるため成立した手数を正確に知ることができない"
         o << "module Bioshogi"
         o << "  module Analysis"
         o << "    TacticHitTurnTable = {"
@@ -46,16 +57,6 @@ module Bioshogi
         o << "  end"
         o << "end"
         o.join("\n") + "\n"
-      end
-
-      def body_format(str)
-        str = str.gsub(/{/, "")
-        str = str.gsub(/}/, ",")
-        str = str.gsub(/\s*,\s*/, ",\n")
-        str = str.gsub(/^(?=")/, "  " * 3)
-        str = str.gsub("=>", " => ")
-        str = str.gsub(/ "/, ':"')
-        str = str.rstrip
       end
     end
   end

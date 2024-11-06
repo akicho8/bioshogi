@@ -30,14 +30,9 @@ tp TacticInfo.all_elements.inject({}) {|a, e| a.merge(e.key => e.style_info) }
 # m                               # => {:四間飛車=><王道>, :新嬉野流=><王道>, :UFO銀=><準王道>, :玉頭銀=><準王道>, :横歩取り=><準変態>, :中原流急戦矢倉=><準変態>, :トマホーク=><変態>, :ツノ銀型右玉=><変態>, :糸谷流右玉=><変態>}
 # m[:"暴銀"]                      # => <変態>
 
-# info = Parser.parse("48玉 34歩 76歩 88角成")
-# # info.container.players.count    # => 2
-#
-# # skill_set = info.container.players[0].skill_set
-# # skills = skill_set.attack_infos + skill_set.defense_infos
-# # skills.collect(&:name)                            # => ["新米長玉", "角交換型", "手得角交換型"]
-# # main_style_info = skills.collect { |e| e.style_info }.max  # => <変態>
-# #
+info = Parser.parse("48玉 34歩 76歩 88角成")
+info.container.players.count    # => 2
+info.container.players[0].skill_set.main_style_info # => <準変態>
 # # p info.pi.header
 #
 # exit
