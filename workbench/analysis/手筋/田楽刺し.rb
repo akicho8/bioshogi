@@ -1,4 +1,4 @@
-require "../../setup"
+require "./setup"
 
 info = Parser.parse(<<~EOT)
 後手の持駒：香4

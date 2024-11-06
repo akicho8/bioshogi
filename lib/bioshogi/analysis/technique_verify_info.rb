@@ -223,9 +223,9 @@ module Bioshogi
             # end
 
             # 角の4方向のレイ
-            vectors = soldier.piece.all_vectors(location: location) # => 
+            vectors = soldier.piece.all_vectors(location: location) # =>
             # 敵陣に進むベクトルに絞る
-            vectors = vectors.find_all { |x, y| y != location.sign_dir } # => 
+            vectors = vectors.find_all { |x, y| y != location.sign_dir } # =>
 
             matched = vectors.any? do |x, y|      # 左上と右上を試す
               step_count = 0                   # 斜めの効きの数 (駒に衝突したらそこも含める)
@@ -275,7 +275,7 @@ module Bioshogi
 
         {
           key: "たすきの銀",
-          description: "打った銀の斜めに飛と金がある",
+          description: "打った銀の斜め前に飛があり対極に金がある",
           func: proc {
             verify_if do
               V.tasuki_vectors.any? do |up_left, down_right|
@@ -297,7 +297,7 @@ module Bioshogi
 
         {
           key: "たすきの角",
-          description: "打った角の斜めに飛と金がある",
+          description: "打った角の斜め前に飛があり対極に金がある",
           func: proc {
             instance_eval(&TechniqueVerifyInfo[:"たすきの銀"].func)
           },
@@ -442,32 +442,38 @@ module Bioshogi
 
         {
           key: "田楽刺し",
-          description: "角の頭に打つ",
+          description: "角の頭に打ってその奥に玉などの大駒がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            mode = :walk_to_bishop
-            loop do
-              place = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-              unless place
-                throw :skip     # 盤面の外なので終わり
-              end
-              if s = surface[place]
-                if own?(s)
-                  throw :skip     # 自分と同じ駒があった場合はおわり
-                end
-                if mode == :walk_to_bishop
-                  if s.piece.key == :bishop && !s.promoted
-                    mode = :walk_to_king
+            verify_if do
+              mode = :walk_to_bishop
+              Dimension::PlaceY.dimension.times do |y|
+                if v = soldier.move_to_xy(0, Y_UP * (1 + y))
+                  if s = surface[v]
+                    if opponent?(s)
+                      case mode
+                      when :walk_to_bishop # 角を探す
+                        if s.piece.key == :bishop && !s.promoted
+                          mode = :walk_to_dengaku_target
+                        end
+                      when :walk_to_dengaku_target # 大駒を探す
+                        if s.piece.dengaku_target
+                          mode = :dengaku_mached
+                          break
+                        end
+                      else
+                        raise "must not happen"
+                      end
+                    else
+                      break # 自分の駒が間にある場合は田楽指しではない
+                    end
+                  else
+                    # 駒がない場合はさらに奥に進む
                   end
                 else
-                  if s.piece.dengaku_target
-                    break
-                  end
+                  break         # 盤の外に出た場合は終わる
                 end
-              else
-                # 駒がないので次のマスに進む
               end
+              mode == :dengaku_mached
             end
           },
         },
