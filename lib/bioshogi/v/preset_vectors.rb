@@ -16,11 +16,11 @@ module Bioshogi
       end
 
       def ikkenryu_vectors
-        @ikkenryu_vectors ||= [right_right, left_left, up_up, down_down]
+        @ikkenryu_vectors ||= [left_left, right_right, up_up, down_down]
       end
 
       def keima_vectors
-        @keima_methods ||= [up_up_right, up_up_left]
+        @keima_methods ||= [up_up_left, up_up_right]
       end
 
       def ginbasami_verctors

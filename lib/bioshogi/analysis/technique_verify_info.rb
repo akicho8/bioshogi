@@ -432,7 +432,7 @@ module Bioshogi
                   if s = surface[v]
                     if opponent?(s)
                       case mode
-                      when :walk_to_bishop # 角を探す
+                      when :walk_to_bishop         # 角を探す
                         if s.piece.key == :bishop && !s.promoted
                           mode = :walk_to_dengaku_target
                         end
@@ -463,18 +463,16 @@ module Bioshogi
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
-            matched = LR.all? do |x|
-              v = Place.lookup([place.x.value + x, place.y.value - soldier.location.sign_dir * 2])
-              if s = surface[v]
-                if opponent?(s)
-                  s.abs_weight > soldier.abs_weight
+            verify_if do
+              V.keima_vectors.all? do |e|
+                if v = soldier.move_to(e)
+                  if s = surface[v]
+                    if opponent?(s)
+                      s.abs_weight > soldier.abs_weight
+                    end
+                  end
                 end
               end
-            end
-            unless matched
-              throw :skip
             end
           },
         },
