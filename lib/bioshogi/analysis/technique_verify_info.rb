@@ -508,50 +508,41 @@ module Bioshogi
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
           func: proc {
-            soldier = executor.hand.soldier
-            place = soldier.place
+            # 1. 打った位置が1から4段目である
+            verify_if { soldier.top_spaces.between?(1, Dimension::PlaceY.promotable_depth) }
 
-            # # 中盤以降は無効とする
-            # if executor.container.turn_info.display_turn.next >= 42
-            #   throw :skip
-            # end
-
-            # 打った位置が1から4段目である
-            if soldier.top_spaces <= Dimension::PlaceY.promotable_depth
-            else
-              throw :skip
-            end
-
-            # 相手が「成駒」または「飛金銀香玉」である
-            flag = false
-            v = Place.lookup([place.x.value, place.y.value - soldier.location.sign_dir])
-            if s = surface[v]
-              if opponent?(s)
-                if s.promoted || s.piece.tatakare_target
-                  flag = true
-                end
-              end
-            end
-            unless flag
-              throw :skip
-            end
-
-            # 打った位置の後ろに自分の(前に進めることのできる)駒があるなら無効とする (厳密な判定ではない)
-            v = Place.lookup([place.x.value, place.y.value + soldier.location.sign_dir])
-            if s = surface[v]
-              if own?(s)
-                if s.promoted || s.piece.maesusumeru
-                  throw :skip
+            # 2. 相手が「成駒」または「飛金銀香玉」である
+            verify_if do
+              if v = soldier.move_to(:up)
+                if s = surface[v]
+                  if opponent?(s)
+                    s.promoted || s.piece.tatakare_target
+                  end
                 end
               end
             end
 
-            # 2手前に歩を前に打っているなら現在は「連打の歩」になるためスキップする
-            y2 = soldier.place.y.value - soldier.location.sign_dir # 24歩のY座標(整数値)
-            if hand_log = executor.container.hand_logs[-2]
-              if s = hand_log&.drop_hand&.soldier
-                if s.piece.key == :pawn && s.place.x == place.x && s.place.y.value == y2 && own?(s)
-                  throw :skip
+            # 3. 打った歩に結びついている利きがないこと
+            # とするのが本当は正しいのだけど大変なので
+            # 「打った位置の後ろに自分の(前に進めることのできる)駒がないこと」だけを判定している
+            skip_if do
+              if v = soldier.move_to(:down)
+                if s = surface[v]
+                  if own?(s)
+                    s.promoted || s.piece.maesusumeru
+                  end
+                end
+              end
+            end
+
+            # 4. 連打の歩ではないこと :OPTION:
+            skip_if do
+              if hand_log = executor.container.hand_logs[-2] # 前回の自分の手
+                if drop_hand = hand_log.drop_hand            # 打った手
+                  if s = drop_hand.soldier                   # 駒
+                    Assertion.assert { own?(s) }
+                    s.piece.key == :pawn && s.place == soldier.move_to(:up)
+                  end
                 end
               end
             end
@@ -674,3 +665,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:28:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
+# ~> 	from -:7:in `<module:Analysis>'
+# ~> 	from -:6:in `<module:Bioshogi>'
+# ~> 	from -:5:in `<main>'

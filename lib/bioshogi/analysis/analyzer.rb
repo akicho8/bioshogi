@@ -57,6 +57,12 @@ module Bioshogi
         end
       end
 
+      def skip_if
+        if yield
+          throw :skip
+        end
+      end
+
       def skill_push(skill)
         executor.skill_push2(skill)
 
