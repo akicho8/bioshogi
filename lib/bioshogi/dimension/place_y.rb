@@ -5,18 +5,6 @@ module Bioshogi
     class PlaceY < Base
       cattr_accessor(:promotable_depth) { 3 }      # 相手の陣地の成れる縦幅
 
-      DELEGATE_METHODS = [
-        :top_spaces,
-        :bottom_spaces,
-        :opp_side?,
-        :not_opp_side?,
-        :own_side?,
-        :not_own_side?,
-        :kurai_sasae?,
-        :sandanme?,
-        :yondanme?,
-      ]
-
       class << self
         def char_infos
           @char_infos ||= CharInfo.take(dimension)
@@ -59,66 +47,66 @@ module Bioshogi
         value + 1
       end
 
-      ################################################################################
+      ################################################################################ すべて▲から見た結果を返す
 
-      # 成れるか？
-      # @example
-      #   Place.fetch("１三").opp_side?(:black) # => true
-      #   Place.fetch("１四").opp_side?(:black) # => false
-      # def opp_side?(location)
-      #   v = self
-      #   if location.white?
-      #     v = v.flip
-      #   end
-      #   if promotable_depth
-      #     v.value < promotable_depth
-      #   end
-      # end
+      DELEGATE_METHODS = [
+        :top_spaces,
+        :bottom_spaces,
+        :opp_side?,
+        :not_opp_side?,
+        :own_side?,
+        :not_own_side?,
+        :kurai_sasae?,
+        :sandanme?,
+        :yondanme?,
+      ]
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7段目であれば6を返す)
-      def top_spaces(location)
-        white_then_flip(location).value
+      def top_spaces
+        value
       end
 
       # 自分の側の一番下を0として底辺までの高さを返す (例えば7段目であれば2を返す)
-      def bottom_spaces(location)
-        dimension.pred - top_spaces(location)
+      def bottom_spaces
+        dimension.pred - top_spaces
       end
 
       # 相手の陣地にいる？
-      def opp_side?(location)
-        top_spaces(location) < promotable_depth
+      def opp_side?
+        top_spaces < promotable_depth
       end
 
       # 相手の陣地に入ってない？
-      def not_opp_side?(location)
-        !opp_side?(location)
+      def not_opp_side?
+        !opp_side?
       end
 
       # 自分の陣地にいる？
-      def own_side?(location)
-        bottom_spaces(location) < promotable_depth
+      def own_side?
+        bottom_spaces < promotable_depth
       end
 
       # 自分の陣地にいない？
-      def not_own_side?(location)
-        !own_side?(location)
+      def not_own_side?
+        !own_side?
       end
 
       # 中央のすぐ下にいる？ (位の歩を支える銀の位置で▲なら6段目で△なら4段目ならtrue)
-      def kurai_sasae?(location)
-        value == (dimension / 2 + location.sign_dir)
+      def kurai_sasae?
+        value == (dimension / 2 + 1)
       end
 
       # 玉が初めて入玉した位置か？
-      def sandanme?(location)
-        top_spaces(location) == promotable_depth.pred
+      def sandanme?
+        top_spaces == promotable_depth.pred
       end
 
       # 玉があと一歩で入玉できる位置か？
-      def yondanme?(location)
-        top_spaces(location) == promotable_depth
+      def yondanme?
+        top_spaces == promotable_depth
       end
+
+      ################################################################################
     end
   end
 end

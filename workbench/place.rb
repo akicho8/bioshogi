@@ -17,8 +17,8 @@ Place["11"].object_id           # => 2040
 # Dimension::PlaceX.fetch(1).object_id # => 70357212614280
 # Dimension::PlaceX.fetch(1).object_id # => 70357212614280
 
-Place["76"].hash                # => -3773589924383953812
-Place["７６"].hash              # => -3773589924383953812
+Place["76"].hash                # => 2082891752263303151
+Place["７６"].hash              # => 2082891752263303151
 Place["76"].object_id           # => 2060
 Place["７６"].object_id         # => 2060
 hash = {}
@@ -26,33 +26,20 @@ hash = {}
 hash[Place["76"]] = 1
 hash[Place["７６"]]             # => 1
 
-[1, 2].hash                     # => -3888008448451412462
-[1, 2].hash                     # => -3888008448451412462
+[1, 2].hash                     # => -4399854291003605512
+[1, 2].hash                     # => -4399854291003605512
 
-Place["13"].opp_side?(:black) # => true
-Place["14"].opp_side?(:black) # => false
-Place["16"].opp_side?(:white) # => false
-Place["17"].opp_side?(:white) # => true
-Place["13"].own_side?(:white) # => true
-Place["14"].own_side?(:white) # => false
-Place["16"].own_side?(:black) # => false
-Place["17"].own_side?(:black) # => true
+################################################################################
 
-Place["55"].move_to_xy(Location[:black], 1, -1) # => #<Bioshogi::Place ４四>
-Place["55"].move_to_xy(Location[:white], 1, -1) # => #<Bioshogi::Place ６六>
+Place["55"].move_to(Location[:white], V.up)                  # => #<Bioshogi::Place ５六>
+Place["55"].move_to(Location[:white], :up)                   # => #<Bioshogi::Place ５六>
+Place["55"].move_to(Location[:white], :up, magnification: 0) # => #<Bioshogi::Place ５五>
+Place["55"].move_to(Location[:white], :up, magnification: 2) # => #<Bioshogi::Place ５七>
+Place["55"].move_to(Location[:white], :up, magnification: 9) # => nil
 
-Place["15"].x_is_two_to_eight?    # => false
-Place["25"].x_is_two_to_eight?    # => true
-Place["85"].x_is_two_to_eight?    # => true
-Place["95"].x_is_two_to_eight?    # => false
+Place["55"].move_to_bottom_edge(Location[:white])            # => #<Bioshogi::Place ５一>
+Place["55"].move_to_top_edge(Location[:white])               # => #<Bioshogi::Place ５九>
+Place["55"].move_to_left_edge(Location[:white])              # => #<Bioshogi::Place １五>
+Place["55"].move_to_right_edge(Location[:white])             # => #<Bioshogi::Place ９五>
 
-Place["13"].top_spaces(Location[:black])          # => 2
-Place["13"].opp_side?(Location[:black])    # => true
-
-place = Place["13"]             # => #<Bioshogi::Place １三>
-Location[:black].bottom         # => #<Bioshogi::Dimension::PlaceY:2080 "九" 8>
-Place[[place.x, Location[:black].bottom]] # => #<Bioshogi::Place １九>
-
-place = Place["13"]             # => #<Bioshogi::Place １三>
-Location[:black].bottom         # => #<Bioshogi::Dimension::PlaceY:2080 "九" 8>
-Place[[place.x, Location[:white].bottom]] # => #<Bioshogi::Place １一>
+################################################################################

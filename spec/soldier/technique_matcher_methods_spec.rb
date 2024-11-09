@@ -50,10 +50,10 @@ module Bioshogi
     end
 
     it "move_to_*" do
-      assert { Soldier.from_str("△34飛").move_to_bottom.name == "３一" }
-      assert { Soldier.from_str("△34飛").move_to_top.name    == "３九" }
-      assert { Soldier.from_str("△34飛").move_to_right.name  == "９四" }
-      assert { Soldier.from_str("△34飛").move_to_left.name   == "１四" }
+      assert { Soldier.from_str("△34飛").move_to_bottom_edge.name == "３一" }
+      assert { Soldier.from_str("△34飛").move_to_top_edge.name    == "３九" }
+      assert { Soldier.from_str("△34飛").move_to_right_edge.name  == "９四" }
+      assert { Soldier.from_str("△34飛").move_to_left_edge.name   == "１四" }
     end
 
     it "move_to" do
@@ -76,7 +76,11 @@ module Bioshogi
       assert { Soldier.from_str("△34飛").x_is_two_or_eight?   == false }
       assert { Soldier.from_str("△34飛").x_is_three_to_seven? == true  }
       assert { Soldier.from_str("△34飛").x_is_center?         == false }
-      assert { Soldier.from_str("△34飛").x_is_left_or_right?  == false }
+      assert { Soldier.from_str("△34飛").x_is_edge?           == false }
+      assert { Soldier.from_str("△34飛").x_is_right_area?     == false }
+      assert { Soldier.from_str("△34飛").x_is_left_area?      == true  }
+      assert { Soldier.from_str("△34飛").x_is_right_edge?     == false }
+      assert { Soldier.from_str("△34飛").x_is_left_edge?      == false }
     end
 
     it "yondanme?" do

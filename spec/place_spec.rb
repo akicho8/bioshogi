@@ -101,23 +101,27 @@ module Bioshogi
       assert { [a, b].sort == [b, a] }
     end
 
-    it "opp_side?" do
-      assert { Place["13"].opp_side?(:black) == true  } # ▲から見た13の位置は敵陣か？
-      assert { Place["14"].opp_side?(:black) == false }
-      assert { Place["16"].opp_side?(:white) == false }
-      assert { Place["17"].opp_side?(:white) == true  }
-    end
-
-    it "own_side?" do
-      assert { Place["13"].own_side?(:white) == true  } # △から見た13の位置は自陣か？
-      assert { Place["14"].own_side?(:white) == false }
-      assert { Place["16"].own_side?(:black) == false }
-      assert { Place["17"].own_side?(:black) == true  }
-    end
+    ################################################################################
 
     it "move_to_xy" do
-      assert { Place["55"].move_to_xy(Location[:black], 1, -1).name == "４四" }
       assert { Place["55"].move_to_xy(Location[:white], 1, -1).name == "６六" }
     end
+
+    it "move_to" do
+      assert { Place["55"].move_to(Location[:white], V.up)                  == Place["56"] }
+      assert { Place["55"].move_to(Location[:white], :up)                   == Place["56"] }
+      assert { Place["55"].move_to(Location[:white], :up, magnification: 0) == Place["55"] }
+      assert { Place["55"].move_to(Location[:white], :up, magnification: 2) == Place["57"] }
+      assert { Place["55"].move_to(Location[:white], :up, magnification: 9) == nil         }
+    end
+
+    it "move_to_*_edge" do
+      assert { Place["55"].move_to_bottom_edge(Location[:white]) == Place["51"] }
+      assert { Place["55"].move_to_top_edge(Location[:white])    == Place["59"] }
+      assert { Place["55"].move_to_left_edge(Location[:white])   == Place["15"] }
+      assert { Place["55"].move_to_right_edge(Location[:white])  == Place["95"] }
+    end
+
+    ################################################################################
   end
 end

@@ -2,85 +2,10 @@ module Bioshogi
   class Soldier
     # 手筋判定用
     concern :TechniqueMatcherMethods do
-      ################################################################################ location を考慮した place へのショートカット (X)
-
-      def left_spaces
-        place.left_spaces(location)
-      end
-
-      def right_spaces
-        place.right_spaces(location)
-      end
-
-      delegate *Dimension::PlaceX::DELEGATE_METHODS_NO_ARGS, to: :place
-
-      ################################################################################ location を考慮した place へのショートカット (Y)
-
-      def top_spaces
-        place.top_spaces(location)
-      end
-
-      def bottom_spaces
-        place.bottom_spaces(location)
-      end
-
-      def opp_side?
-        place.opp_side?(location)
-      end
-
-      def not_opp_side?
-        place.not_opp_side?(location)
-      end
-
-      def own_side?
-        place.own_side?(location)
-      end
-
-      def not_own_side?
-        place.not_own_side?(location)
-      end
-
-      def kurai_sasae?
-        place.kurai_sasae?(location)
-      end
-
-      def sandanme?
-        place.sandanme?(location)
-      end
-
-      def yondanme?
-        place.yondanme?(location)
-      end
-
-      ################################################################################
-
-      def move_to_bottom
-        place.move_to_bottom(location)
-      end
-
-      def move_to_top
-        place.move_to_top(location)
-      end
-
-      def move_to_left
-        place.move_to_left(location)
-      end
-
-      def move_to_right
-        place.move_to_right(location)
-      end
-
-      ################################################################################
-
-      # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
-      # 2つ進んだ位置などを一発で調べたいときに使う
-      def move_to_xy(x, y)
-        place.move_to_xy(location, x, y)
-      end
-
-      # より抽象的な方法で移動した位置を返す
-      def move_to(vector, **options)
-        place.move_to(location, vector, **options)
+      Place::DELEGATE_METHODS.each do |name|
+        define_method(name) do |*args, **options|
+          place.public_send(name, location, *args, **options)
+        end
       end
 
       ################################################################################
@@ -104,10 +29,10 @@ module Bioshogi
         Dimension::PlaceX.dimension.pred - place.x.value
       end
 
-      # センターにいる？ (5の列にいる？)
-      def x_is_center?
-        place.x_is_center?
-      end
+      # # センターにいる？ (5の列にいる？)
+      # def x_is_center?
+      #   place.x_is_center?
+      # end
 
       # 自玉の位置にいる？
       def initial_place?
@@ -158,3 +83,6 @@ module Bioshogi
     end
   end
 end
+# ~> -:4:in `<class:Soldier>': undefined method `concern' for Bioshogi::Soldier:Class (NoMethodError)
+# ~> 	from -:2:in `<module:Bioshogi>'
+# ~> 	from -:1:in `<main>'

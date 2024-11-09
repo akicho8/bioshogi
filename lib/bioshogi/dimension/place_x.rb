@@ -1,5 +1,10 @@
 # frozen-string-literal: true
 
+# 方針
+# - location 考慮は Place の仕事である
+# - location を持ち込んではいけない
+# - 常に▲視点のメソッドとする
+
 module Bioshogi
   module Dimension
     class PlaceX < Base
@@ -14,21 +19,6 @@ module Bioshogi
       ARRAY_3_7     = [SIDE_PLUS_2, dimension.pred - SIDE_PLUS_2] # [3, 7]
       SET_3_7       = ARRAY_3_7.to_set                                                 # #<Set: {3, 3}>
       RANGE_3_7     = Range.new(*ARRAY_3_7)                                            # 3..7
-
-      # 引き数がないもの
-      DELEGATE_METHODS_NO_ARGS = [
-        :x_is_two_to_eight?,
-        :x_is_two_or_eight?,
-        :x_is_three_to_seven?,
-        :x_is_center?,
-        :x_is_left_or_right?,
-      ]
-
-      DELEGATE_METHODS = [
-        :left_spaces,
-        :right_spaces,
-        *DELEGATE_METHODS_NO_ARGS,
-      ]
 
       class << self
         # ["1", "2", "3"] -> ["3", "2", "1"].last(2) -> ["2", "1"]
@@ -58,16 +48,32 @@ module Bioshogi
         self.class.char_infos.size - value
       end
 
-      ################################################################################
+      ################################################################################ どれも▲から見た結果を返す
+
+      DELEGATE_METHODS = [
+        :left_spaces,
+        :right_spaces,
+
+        :x_is_two_to_eight?,
+        :x_is_two_or_eight?,
+        :x_is_three_to_seven?,
+        :x_is_center?,
+        :x_is_edge?,
+
+        :x_is_right_area?,
+        :x_is_left_area?,
+        :x_is_right_edge?,
+        :x_is_left_edge?,
+      ]
 
       # location から見て左方向の余白
-      def left_spaces(location)
-        white_then_flip(location).value
+      def left_spaces
+        value
       end
 
       # location から見て右方向の余白
-      def right_spaces(location)
-        dimension.pred - left_spaces(location)
+      def right_spaces
+        dimension.pred - left_spaces
       end
 
       # 2から8筋か？
@@ -91,9 +97,31 @@ module Bioshogi
       end
 
       # 端？
-      def x_is_left_or_right?
-        value == 0 || value == dimension.pred
+      def x_is_edge?
+        x_is_left_edge? || x_is_right_edge?
       end
+
+      # 右側か？
+      def x_is_right_area?
+        value > dimension / 2
+      end
+
+      # 左側か？
+      def x_is_left_area?
+        value < dimension / 2
+      end
+
+      # 右端か？
+      def x_is_right_edge?
+        value == dimension.pred
+      end
+
+      # 左端か？
+      def x_is_left_edge?
+        value == 0
+      end
+
+      ################################################################################
     end
   end
 end

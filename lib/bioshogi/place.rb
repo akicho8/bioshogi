@@ -67,8 +67,19 @@ module Bioshogi
 
     attr_accessor :x, :y
 
-    delegate *Dimension::PlaceX::DELEGATE_METHODS, to: :x
-    delegate *Dimension::PlaceY::DELEGATE_METHODS, to: :y
+    # for Soldier
+    DELEGATE_METHODS = [
+      *Dimension::PlaceX::DELEGATE_METHODS,
+      *Dimension::PlaceY::DELEGATE_METHODS,
+
+      :move_to,
+      :move_to_xy,
+
+      :move_to_bottom_edge,
+      :move_to_top_edge,
+      :move_to_left_edge,
+      :move_to_right_edge,
+    ]
 
     def initialize(x, y)
       @x = x
@@ -135,6 +146,7 @@ module Bioshogi
       self.class.fetch([@x.flip, @y])
     end
 
+    # Soldier では独自に定義しているためここに Soldier からここに委譲してはいけない
     def white_then_flip(location)
       if Location[location].key == :white
         flip
@@ -180,12 +192,14 @@ module Bioshogi
       xy_add(vector.x, vector.y)
     end
 
-    # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
+    # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
+    # 2つ進んだ位置などを一発で調べたいときに使う
+    # なるべく使うな
     def move_to_xy(location, x, y)
       xy_add(x * location.sign_dir, y * location.sign_dir)
     end
 
-    # 上下左右は -1 +1 -1 +1 だが white から見ているときは反転する
+    # より抽象的な方法で移動した位置を返す
     def move_to(location, vector, magnification: 1)
       if vector.kind_of?(Symbol)
         vector = V.public_send(vector)
@@ -193,49 +207,36 @@ module Bioshogi
       xy_add(*(vector * location.sign_dir * magnification))
     end
 
-    ################################################################################
+    ################################################################################ location から見た上下左右に寄せた位置を返す
 
-    def move_to_bottom(location)
+    def move_to_bottom_edge(location)
       self.class.fetch([x, location.bottom])
     end
 
-    def move_to_top(location)
+    def move_to_top_edge(location)
       self.class.fetch([x, location.top])
     end
 
-    def move_to_left(location)
+    def move_to_left_edge(location)
       self.class.fetch([location.left, y])
     end
 
-    def move_to_right(location)
+    def move_to_right_edge(location)
       self.class.fetch([location.right, y])
     end
 
-    ################################################################################ @x への delegate 系
+    ################################################################################ location から見た情報を返す
 
-    # 2から8筋か？
-    def x_is_two_to_eight?
-      @x.x_is_two_to_eight?
+    Dimension::PlaceX::DELEGATE_METHODS.each do |name|
+      define_method(name) do |location|
+        @x.white_then_flip(location).public_send(name)
+      end
     end
 
-    # 2または8筋か？
-    def x_is_two_or_eight?
-      @x.x_is_two_or_eight?
-    end
-
-    # 3から7筋か？
-    def x_is_three_to_seven?
-      @x.x_is_three_to_seven?
-    end
-
-    # 5の筋か？
-    def x_is_center?
-      @x.x_is_center?
-    end
-
-    # 端？
-    def x_is_left_or_right?
-      @x.x_is_left_or_right?
+    Dimension::PlaceY::DELEGATE_METHODS.each do |name|
+      define_method(name) do |location|
+        @y.white_then_flip(location).public_send(name)
+      end
     end
 
     ################################################################################

@@ -66,7 +66,7 @@ module Bioshogi
           description: "玉または飛の斜めの歩を攻める",
           func: proc {
             # 1. 2〜8筋であること (端の場合は「こびん」とは言わないため)
-            verify_if { place.x_is_two_to_eight? }
+            verify_if { soldier.x_is_two_to_eight? }
 
             # 2. 相手が歩であること
             verify_if do
@@ -98,7 +98,7 @@ module Bioshogi
             verify_if { soldier.kurai_sasae? }
 
             # 2. 3〜7列であること (両端2列は「位」とは言わないため)
-            verify_if { place.x_is_three_to_seven? }
+            verify_if { soldier.x_is_three_to_seven? }
 
             # 3. 前に歩があること
             verify_if do
@@ -292,8 +292,8 @@ module Bioshogi
             # 2. 「22銀」や「82銀」ではないこと :OPTION:
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
-            verify_if do
-              !(place.x_is_two_or_eight? && soldier.top_spaces == ROW_IS_2)
+            skip_if do
+              soldier.x_is_two_or_eight? && soldier.top_spaces == ROW_IS_2
             end
           },
         },
@@ -363,7 +363,7 @@ module Bioshogi
           description: nil,
           func: proc {
             # 1. 端であること
-            verify_if { place.x_is_left_or_right? }
+            verify_if { soldier.x_is_edge? }
 
             # 2. 上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
             verify_if do
@@ -658,6 +658,6 @@ module Bioshogi
   end
 end
 # ~> -:28:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
-# ~> 	from -:7:in `<module:Analysis>'
-# ~> 	from -:6:in `<module:Bioshogi>'
-# ~> 	from -:5:in `<main>'
+# ~>    from -:7:in `<module:Analysis>'
+# ~>    from -:6:in `<module:Bioshogi>'
+# ~>    from -:5:in `<main>'
