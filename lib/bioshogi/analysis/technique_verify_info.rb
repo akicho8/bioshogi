@@ -109,16 +109,15 @@ module Bioshogi
               end
             end
 
-            # 4. 歩の上には何もないこと
-            verify_if do
+            # 4. 歩の上に何もないこと (歩の上に何か駒があった場合は無効) :OPTION:
+            skip_if do
               if v = soldier.move_to(:up_up)
-                !surface[v]
+                surface[v]
               end
             end
           },
         },
 
-        # FIXME
         {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
@@ -135,13 +134,6 @@ module Bioshogi
             # ↓↓→→の位置に自分の「玉」があること
             verify_if do
               if v = place.xy_add(soldier.sign_to_goto_closer_side * 2, location.sign_dir * 2)
-                # p v
-                # p origin_soldier.place
-                # p origin_soldier.sign_to_goto_closer_side
-                # if v = origin_soldier.place.xy_add(origin_soldier.sign_to_goto_closer_side, location.sign_dir)
-                # p v
-                # p v
-                # p surface[v]
                 if s = surface[v]
                   s.piece.key == :king && s.location == location
                 end
