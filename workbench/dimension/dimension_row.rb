@@ -23,10 +23,10 @@ DimensionRow.fetch("7").not_own_side? # => false
 DimensionRow.fetch("5").kurai_sasae?  # => false
 DimensionRow.fetch("6").kurai_sasae?  # => true
 
-DimensionRow.fetch("2").sandanme?     # => false
-DimensionRow.fetch("3").sandanme?     # => true
-DimensionRow.fetch("4").sandanme?     # => false
+DimensionRow.fetch("2").just_nyuugyoku?     # => false
+DimensionRow.fetch("3").just_nyuugyoku?     # => true
+DimensionRow.fetch("4").just_nyuugyoku?     # => false
 
-DimensionRow.fetch("3").yondanme?     # => false
-DimensionRow.fetch("4").yondanme?     # => true
-DimensionRow.fetch("5").yondanme?     # => false
+DimensionRow.fetch("3").atoippo_nyuugyoku?     # => false
+DimensionRow.fetch("4").atoippo_nyuugyoku?     # => true
+DimensionRow.fetch("5").atoippo_nyuugyoku?     # => false

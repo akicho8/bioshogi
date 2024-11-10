@@ -63,16 +63,16 @@ module Bioshogi
         assert { DimensionRow.fetch("6").kurai_sasae? == true  }
       end
 
-      it "sandanme?" do
-        assert { DimensionRow.fetch("2").sandanme? == false }
-        assert { DimensionRow.fetch("3").sandanme? == true  }
-        assert { DimensionRow.fetch("4").sandanme? == false }
+      it "just_nyuugyoku?" do
+        assert { DimensionRow.fetch("2").just_nyuugyoku? == false }
+        assert { DimensionRow.fetch("3").just_nyuugyoku? == true  }
+        assert { DimensionRow.fetch("4").just_nyuugyoku? == false }
       end
 
       it "works" do
-        assert { DimensionRow.fetch("3").yondanme? == false }
-        assert { DimensionRow.fetch("4").yondanme? == true  }
-        assert { DimensionRow.fetch("5").yondanme? == false }
+        assert { DimensionRow.fetch("3").atoippo_nyuugyoku? == false }
+        assert { DimensionRow.fetch("4").atoippo_nyuugyoku? == true  }
+        assert { DimensionRow.fetch("5").atoippo_nyuugyoku? == false }
       end
 
       ################################################################################

@@ -57,8 +57,8 @@ module Bioshogi
         :own_side?,
         :not_own_side?,
         :kurai_sasae?,
-        :sandanme?,
-        :yondanme?,
+        :just_nyuugyoku?,
+        :atoippo_nyuugyoku?,
       ]
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7段目であれば6を返す)
@@ -91,18 +91,22 @@ module Bioshogi
         !own_side?
       end
 
-      # 中央のすぐ下にいる？ (位の歩を支える銀の位置で▲なら6段目で△なら4段目ならtrue)
+      # 位を支える位置(中央の1行下)か？
+      # ここらは数字にしてはいけない
+      # 「コード上の整数」「将棋の意味での段数」「意味を持つ位置」なのか区別がつかなくなる
+      # 位置に意味を持たせた命名にする
+      # つまり「6」ではなく「位を支える位置」として命名する
       def kurai_sasae?
         value == (dimension_size / 2 + 1)
       end
 
       # 玉が初めて入玉した位置か？
-      def sandanme?
+      def just_nyuugyoku?
         top_spaces == promotable_depth.pred
       end
 
       # 玉があと一歩で入玉できる位置か？
-      def yondanme?
+      def atoippo_nyuugyoku?
         top_spaces == promotable_depth
       end
 

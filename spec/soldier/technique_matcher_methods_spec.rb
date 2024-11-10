@@ -83,16 +83,16 @@ module Bioshogi
       assert { Soldier.from_str("△34飛").column_is_left_edge?      == false }
     end
 
-    it "yondanme?" do
-      assert { Soldier.from_str("△55玉").yondanme? == false }
-      assert { Soldier.from_str("△56玉").yondanme? == true  }
-      assert { Soldier.from_str("△57玉").yondanme? == false }
+    it "atoippo_nyuugyoku?" do
+      assert { Soldier.from_str("△55玉").atoippo_nyuugyoku? == false }
+      assert { Soldier.from_str("△56玉").atoippo_nyuugyoku? == true  }
+      assert { Soldier.from_str("△57玉").atoippo_nyuugyoku? == false }
     end
 
-    it "sandanme?" do
-      assert { Soldier.from_str("△56玉").sandanme? == false }
-      assert { Soldier.from_str("△57玉").sandanme? == true  }
-      assert { Soldier.from_str("△58玉").sandanme? == false }
+    it "just_nyuugyoku?" do
+      assert { Soldier.from_str("△56玉").just_nyuugyoku? == false }
+      assert { Soldier.from_str("△57玉").just_nyuugyoku? == true  }
+      assert { Soldier.from_str("△58玉").just_nyuugyoku? == false }
     end
   end
 end

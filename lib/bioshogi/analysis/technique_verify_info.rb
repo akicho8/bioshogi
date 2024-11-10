@@ -633,8 +633,8 @@ module Bioshogi
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
           func: proc {
-            verify_if { soldier.sandanme?        }
-            verify_if { origin_soldier.yondanme? }
+            verify_if { soldier.just_nyuugyoku?           }
+            verify_if { origin_soldier.atoippo_nyuugyoku? }
           },
         },
 
