@@ -11,7 +11,7 @@ module Bioshogi
       ################################################################################
 
       # 前に一直線に進めるタイプか？
-      def maeni_ittyokusen?
+      def boar_mode?
         (piece.key == :lance && normal?) || piece.key == :rook
       end
 
@@ -49,6 +49,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:4:in `<class:Soldier>': undefined method `concern' for Bioshogi::Soldier:Class (NoMethodError)
-# ~> 	from -:2:in `<module:Bioshogi>'
-# ~> 	from -:1:in `<main>'

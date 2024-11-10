@@ -42,11 +42,11 @@ module Bioshogi
       assert { Soldier.from_str("▲15歩").tarefu_desuka? == false }
     end
 
-    it "maeni_ittyokusen" do
-      assert { Soldier.from_str("▲19香").maeni_ittyokusen? == true  }
-      assert { Soldier.from_str("▲19飛").maeni_ittyokusen? == true  }
-      assert { Soldier.from_str("▲19杏").maeni_ittyokusen? == false }
-      assert { Soldier.from_str("▲19角").maeni_ittyokusen? == false }
+    it "boar_mode" do
+      assert { Soldier.from_str("▲19香").boar_mode? == true  }
+      assert { Soldier.from_str("▲19飛").boar_mode? == true  }
+      assert { Soldier.from_str("▲19杏").boar_mode? == false }
+      assert { Soldier.from_str("▲19角").boar_mode? == false }
     end
 
     it "move_to_*" do

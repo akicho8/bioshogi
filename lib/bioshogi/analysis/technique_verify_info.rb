@@ -379,7 +379,7 @@ module Bioshogi
               (2..).any? do |y|
                 if v = soldier.relative_move_to(:down, magnification: y)
                   if s = board[v]
-                    if s.maeni_ittyokusen? && own?(s) # 「自分の香飛龍」か？
+                    if s.boar_mode? && own?(s) # 「自分の香飛龍」か？
                       true
                     else
                       break     # 駒があるが「自分の香飛龍」ではなかったため切り上げる

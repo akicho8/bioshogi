@@ -1,8 +1,8 @@
 require "./setup"
-Soldier.from_str("▲19香").maeni_ittyokusen?                   # => true
-Soldier.from_str("▲19飛").maeni_ittyokusen?                   # => true
-Soldier.from_str("▲19杏").maeni_ittyokusen?                   # => false
-Soldier.from_str("▲19角").maeni_ittyokusen?                   # => false
+Soldier.from_str("▲19香").boar_mode?                   # => true
+Soldier.from_str("▲19飛").boar_mode?                   # => true
+Soldier.from_str("▲19杏").boar_mode?                   # => false
+Soldier.from_str("▲19角").boar_mode?                   # => false
 
 Soldier.from_str("△34飛").move_to_bottom_edge                 # => #<Bioshogi::Place ３一>
 Soldier.from_str("△34飛").move_to_top_edge                    # => #<Bioshogi::Place ３九>

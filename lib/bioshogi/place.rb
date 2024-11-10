@@ -184,22 +184,6 @@ module Bioshogi
 
     ################################################################################ 移動
 
-    # FIXME: private にする
-    def xy_add(x, y)
-      self.class.lookup([@x.value + x, @y.value + y])
-    end
-
-    def vector_add(vector)
-      xy_add(vector.x, vector.y)
-    end
-
-    # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
-    # 2つ進んだ位置などを一発で調べたいときに使う
-    # なるべく使うな
-    def move_to_xy(location, x, y)
-      xy_add(x * location.sign_dir, y * location.sign_dir)
-    end
-
     # より抽象的な方法で移動した位置を返す
     def relative_move_to(location, vector, magnification: 1)
       if vector.kind_of?(Symbol)
@@ -211,6 +195,22 @@ module Bioshogi
     # 自玉の位置にいる？
     def king_default_place?(location)
       column_is_center?(location) && bottom_spaces(location) == 0
+    end
+
+    def xy_add(x, y)
+      self.class.lookup([@x.value + x, @y.value + y])
+    end
+    private :xy_add
+
+    def vector_add(vector)
+      xy_add(vector.x, vector.y)
+    end
+
+    # 上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する)
+    # 2つ進んだ位置などを一発で調べたいときに使う
+    # なるべく使うな
+    def move_to_xy(location, x, y)
+      xy_add(x * location.sign_dir, y * location.sign_dir)
     end
 
     ################################################################################ location から見た上下左右に寄せた位置を返す
