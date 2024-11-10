@@ -67,6 +67,18 @@ module Bioshogi
         assert { DimensionColumn.fetch("9").right_spaces == 8 }
       end
 
+      it "column_spaces_min" do
+        assert { DimensionColumn.fetch("4").column_spaces_min == 3 }
+        assert { DimensionColumn.fetch("5").column_spaces_min == 4 }
+        assert { DimensionColumn.fetch("6").column_spaces_min == 3 }
+      end
+
+      it "left_or_right_to_closer_side" do
+        assert { DimensionColumn.fetch("4").left_or_right_to_closer_side == :right }
+        assert { DimensionColumn.fetch("5").left_or_right_to_closer_side == :left  }
+        assert { DimensionColumn.fetch("6").left_or_right_to_closer_side == :left  }
+      end
+
       it "column_is_two_to_eight?" do
         assert { DimensionColumn.fetch("1").column_is_two_to_eight? == false }
         assert { DimensionColumn.fetch("2").column_is_two_to_eight? == true  }

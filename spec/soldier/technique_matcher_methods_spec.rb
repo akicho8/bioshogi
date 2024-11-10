@@ -17,21 +17,21 @@ module Bioshogi
     end
 
     it "「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)" do
-      assert { Soldier.from_str("▲41歩").smaller_one_of_side_spaces == 3 }
-      assert { Soldier.from_str("△41歩").smaller_one_of_side_spaces == 3 }
-      assert { Soldier.from_str("▲51歩").smaller_one_of_side_spaces == 4 }
-      assert { Soldier.from_str("△51歩").smaller_one_of_side_spaces == 4 }
-      assert { Soldier.from_str("▲61歩").smaller_one_of_side_spaces == 3 }
-      assert { Soldier.from_str("△61歩").smaller_one_of_side_spaces == 3 }
+      assert { Soldier.from_str("▲41歩").column_spaces_min == 3 }
+      assert { Soldier.from_str("△41歩").column_spaces_min == 3 }
+      assert { Soldier.from_str("▲51歩").column_spaces_min == 4 }
+      assert { Soldier.from_str("△51歩").column_spaces_min == 4 }
+      assert { Soldier.from_str("▲61歩").column_spaces_min == 3 }
+      assert { Soldier.from_str("△61歩").column_spaces_min == 3 }
     end
 
     it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
-      assert { Soldier.from_str("▲41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("△41歩").sign_to_goto_closer_side == 1  }
-      assert { Soldier.from_str("▲51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△51歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("▲61歩").sign_to_goto_closer_side == -1 }
-      assert { Soldier.from_str("△61歩").sign_to_goto_closer_side == -1 }
+      assert { Soldier.from_str("▲41歩").left_or_right_to_closer_side == :right }
+      assert { Soldier.from_str("△41歩").left_or_right_to_closer_side == :right }
+      assert { Soldier.from_str("▲51歩").left_or_right_to_closer_side == :left }
+      assert { Soldier.from_str("△51歩").left_or_right_to_closer_side == :left }
+      assert { Soldier.from_str("▲61歩").left_or_right_to_closer_side == :left }
+      assert { Soldier.from_str("△61歩").left_or_right_to_closer_side == :left }
     end
 
     it "tarehu_ikeru?" do

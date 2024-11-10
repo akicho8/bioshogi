@@ -38,7 +38,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :gold && s.location == location
+                  s.piece.key == :gold && own?(s)
                 end
               end
             end
@@ -72,7 +72,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :pawn && !s.promoted && opponent?(s)
+                  s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
               end
             end
@@ -82,7 +82,7 @@ module Bioshogi
               V.keima_vectors.any? do |e|
                 if v = soldier.move_to(e)
                   if s = board[v]
-                    (s.piece.key == :king || (s.piece.key == :rook && !s.promoted)) && opponent?(s)
+                    (s.piece.key == :king || (s.piece.key == :rook && s.normal?)) && opponent?(s)
                   end
                 end
               end
@@ -104,7 +104,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :pawn && !s.promoted && s.location == location
+                  s.piece.key == :pawn && s.normal? && own?(s)
                 end
               end
             end
@@ -126,16 +126,16 @@ module Bioshogi
             verify_if { soldier.bottom_spaces == 2 }
 
             # 2. 端から3つ目であること
-            verify_if { soldier.smaller_one_of_side_spaces == 2 }
+            verify_if { soldier.column_spaces_min == 2 }
 
-            # 移動元は「端から2つ目」でなければだめ(△61から飛んだ場合を除外する)
-            verify_if { origin_soldier.smaller_one_of_side_spaces == 1 }
+            # 3. 動元は「端から2つ目」であること (▲41から飛んだ場合を除外する)
+            verify_if { origin_soldier.column_spaces_min == 1 }
 
-            # ↓↓→→の位置に自分の「玉」があること
+            # 4. 移動元の端側に「玉」があること
             verify_if do
-              if v = place.xy_add(soldier.sign_to_goto_closer_side * 2, location.sign_dir * 2)
+              if v = origin_soldier.move_to(soldier.left_or_right_to_closer_side)
                 if s = board[v]
-                  s.piece.key == :king && s.location == location
+                  s.piece.key == :king && own?(s)
                 end
               end
             end
@@ -182,7 +182,7 @@ module Bioshogi
             # 2. 先が空であること
             verify_if do
               if v = soldier.move_to(:up)
-                !board[v]
+                board.empty_cell?(v)
               end
             end
           },
@@ -237,7 +237,7 @@ module Bioshogi
                 if v = soldier.move_to(e)
                   if s = board[v]
                     if opponent?(s)
-                      (s.piece.key == :rook && !s.promoted) || s.piece.key == :gold
+                      (s.piece.key == :rook && s.normal?) || s.piece.key == :gold
                     end
                   end
                 end
@@ -254,7 +254,7 @@ module Bioshogi
               V.tasuki_vectors.any? do |up_left, down_right|
                 if v = soldier.move_to(up_left)
                   if s = board[v]
-                    if s.piece.key == :rook && !s.promoted && opponent?(s) # 左上に飛車がある
+                    if s.piece.key == :rook && s.normal? && opponent?(s) # 左上に飛車がある
                       if v = soldier.move_to(down_right)
                         if s = board[v]
                           (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && opponent?(s) # 右下に金または成銀がある
@@ -284,7 +284,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :knight && !s.promoted && opponent?(s)
+                  s.piece.key == :knight && s.normal? && opponent?(s)
                 end
               end
             end
@@ -305,7 +305,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :pawn && !s.promoted && opponent?(s)
+                  s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
               end
             end
@@ -322,7 +322,7 @@ module Bioshogi
             # 2. 進めた歩の前が空であること
             verify_if do
               if v = soldier.move_to(:up)
-                !board[v]
+                board.empty_cell?(v)
               end
             end
 
@@ -330,28 +330,26 @@ module Bioshogi
             verify_if do
               V.ginbasami_verctors.any? do |right, right_right, right_right_up|
                 # 3. 右に相手の銀ある
-                found = yield_self do
+                yield_self {
                   if v = soldier.move_to(right)
                     if s = board[v]
-                      s.piece.key == :silver && !s.promoted && opponent?(s)
+                      s.piece.key == :silver && s.normal? && opponent?(s)
                     end
                   end
-                end
-                found or next
+                } or next
 
                 # 4. 右右に自分の歩がある
-                found = yield_self do
+                yield_self {
                   if v = soldier.move_to(right_right)
                     if s = board[v]
-                      s.piece.key == :pawn && !s.promoted && own?(s)
+                      s.piece.key == :pawn && s.normal? && own?(s)
                     end
                   end
-                end
-                found or next
+                } or next
 
                 # 5. 右右上が空である
                 if v = soldier.move_to(right_right_up)
-                  !board[v]
+                  board.empty_cell?(v)
                 end
               end
             end
@@ -369,7 +367,7 @@ module Bioshogi
             verify_if do
               if v = soldier.move_to(:up)
                 if s = board[v]
-                  s.piece.key == :pawn && !s.promoted && opponent?(s)
+                  s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
               end
             end
@@ -425,7 +423,7 @@ module Bioshogi
                     if opponent?(s)
                       case mode
                       when :walk_to_bishop         # 角を探す
-                        if s.piece.key == :bishop && !s.promoted
+                        if s.piece.key == :bishop && s.normal?
                           mode = :walk_to_dengaku_target
                         end
                       when :walk_to_dengaku_target # 大駒を探す
@@ -551,7 +549,7 @@ module Bioshogi
             verify_if do
               if hand_log = executor.container.hand_logs[-2]
                 if s = hand_log.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にしている
-                  if s.piece.key == :pawn && !s.promoted && own?(s)
+                  if s.piece.key == :pawn && s.normal? && own?(s)
                     s.place == soldier.move_to(:up)
                   end
                 end
@@ -562,7 +560,7 @@ module Bioshogi
             verify_if do
               if hand_log = executor.container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
-                  if s.piece.key == :pawn && !s.promoted && opponent?(s)
+                  if s.piece.key == :pawn && s.normal? && opponent?(s)
                     s.place == soldier.move_to(:up)
                   end
                 end
@@ -609,7 +607,7 @@ module Bioshogi
               V.tsugikei_vectors.any? do |e|
                 if v = soldier.move_to(e)
                   if s = board[v]
-                    s.piece.key == :knight && !s.promoted && own?(s)
+                    s.piece.key == :knight && s.normal? && own?(s)
                   end
                 end
               end

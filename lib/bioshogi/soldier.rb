@@ -73,6 +73,10 @@ module Bioshogi
       Assertion.assert { place          }
     end
 
+    def normal?
+      !promoted
+    end
+
     def attributes
       { piece: piece, promoted: promoted, place: place, location: location }
     end

@@ -10,24 +10,19 @@ module Bioshogi
 
       ################################################################################
 
-      # 「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)
-      def smaller_one_of_side_spaces
-        [place.x.value, __distance_from_right].min
-      end
+      # # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
+      # def left_or_right_to_closer_side
+      #   if place.x.value > __distance_from_right
+      #     1
+      #   else
+      #     -1
+      #   end
+      # end
 
-      # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
-      def sign_to_goto_closer_side
-        if place.x.value > __distance_from_right
-          1
-        else
-          -1
-        end
-      end
-
-      # 先手から見て右からの距離
-      def __distance_from_right
-        Dimension::DimensionColumn.dimension_size.pred - place.x.value
-      end
+      # # 先手から見て右からの距離
+      # def __distance_from_right
+      #   Dimension::DimensionColumn.dimension_size.pred - place.x.value
+      # end
 
       # # センターにいる？ (5の列にいる？)
       # def column_is_center?

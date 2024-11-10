@@ -54,6 +54,9 @@ module Bioshogi
         :left_spaces,
         :right_spaces,
 
+        :column_spaces_min,
+        :left_or_right_to_closer_side,
+
         :column_is_two_to_eight?,
         :column_is_two_or_eight?,
         :column_is_three_to_seven?,
@@ -74,6 +77,16 @@ module Bioshogi
       # location から見て右方向の余白
       def right_spaces
         dimension_size.pred - left_spaces
+      end
+
+      # left_spaces とright_spaces の小さい方
+      def column_spaces_min
+        [left_spaces, right_spaces].min
+      end
+
+      # 左右の壁に近づく場合の方向
+      def left_or_right_to_closer_side
+        column_is_right_area? ? :right : :left
       end
 
       # 2から8筋か？

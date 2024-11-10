@@ -8,6 +8,14 @@ DimensionColumn.fetch("1").right_spaces         # => 0
 DimensionColumn.fetch("5").right_spaces         # => 4
 DimensionColumn.fetch("9").right_spaces         # => 8
 
+DimensionColumn.fetch("4").column_spaces_min # => 3
+DimensionColumn.fetch("5").column_spaces_min # => 4
+DimensionColumn.fetch("6").column_spaces_min # => 3
+
+DimensionColumn.fetch("4").left_or_right_to_closer_side # => :right
+DimensionColumn.fetch("5").left_or_right_to_closer_side # => :left
+DimensionColumn.fetch("6").left_or_right_to_closer_side # => :left
+
 DimensionColumn.fetch("1").column_is_two_to_eight?   # => false
 DimensionColumn.fetch("2").column_is_two_to_eight?   # => true
 DimensionColumn.fetch("3").column_is_two_to_eight?   # => true

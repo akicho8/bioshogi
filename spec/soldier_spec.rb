@@ -43,5 +43,10 @@ module Bioshogi
       assert Hand::Move.create(soldier: soldier, origin_soldier: origin_soldier).to_kif == "▲６八銀成(79)"
       assert Hand::Drop.create(soldier: Soldier.from_str("▲５五飛")).to_kif == "▲５五飛打"
     end
+
+    it "normal?" do
+      assert { Soldier.from_str("▲55歩").normal? }
+      assert { !Soldier.from_str("▲55と").normal? }
+    end
   end
 end
