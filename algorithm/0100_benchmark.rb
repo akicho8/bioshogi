@@ -1,7 +1,7 @@
 require 'active_support/core_ext/benchmark'
 require "./all_algorithms"
 
-(4..4).each do |dimension|
+(4..4).each do |dimension_size|
   (4..4).each do |depth_max|
     rows = [
       DirtyMinimax,
@@ -15,7 +15,7 @@ require "./all_algorithms"
       app = klass.new
       app.params[:silent] = true
       app.params[:depth_max] = depth_max
-      app.params[:dimension] = dimension
+      app.params[:dimension_size] = dimension_size
       start_time = Time.now
       app.run
 
@@ -26,7 +26,7 @@ require "./all_algorithms"
       row.update(sec: "%.2f" % (Time.now - start_time))
     end
     puts
-    puts "** 盤面: #{dimension}x#{dimension}, 深さ: #{depth_max}"
+    puts "** 盤面: #{dimension_size}x#{dimension_size}, 深さ: #{depth_max}"
     tp rows
   end
 end

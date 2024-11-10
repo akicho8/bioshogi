@@ -26,7 +26,7 @@ module Bioshogi
 
       def vertical_pieces(x)
         Enumerator.new do |yielder|
-          Dimension::DimensionRow.dimension.times do |y|
+          Dimension::DimensionRow.dimension_size.times do |y|
             if soldier = lookup([x, y])
               yielder << soldier
             end
@@ -74,8 +74,8 @@ module Bioshogi
       end
 
       def to_sfen
-        Dimension::DimensionRow.dimension.times.collect { |y|
-          Dimension::DimensionColumn.dimension.times.collect { |x|
+        Dimension::DimensionRow.dimension_size.times.collect { |y|
+          Dimension::DimensionColumn.dimension_size.times.collect { |x|
             lookup([x, y])
           }.chunk(&:class).flat_map { |klass, e|
             if klass == NilClass

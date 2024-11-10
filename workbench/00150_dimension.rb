@@ -41,7 +41,7 @@ test_methods = [
 ]
 
 test = -> klass {
-  tp klass.dimension.times.collect { |e|
+  tp klass.dimension_size.times.collect { |e|
     instance = klass.fetch(e)
     test_methods.inject({}) { |a, m|
       a.merge(m => instance.public_send(m))

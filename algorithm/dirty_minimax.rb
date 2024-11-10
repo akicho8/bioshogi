@@ -20,7 +20,7 @@ class DirtyMinimax
     @params ||= {
       times: 256,
       depth_max: 3,
-      dimension: 4,
+      dimension_size: 4,
       depth_max_range: nil,
       time_limit: nil,          # 制限なし
     }
@@ -210,10 +210,10 @@ end
 
 if $0 == __FILE__
   # DirtyMinimax.new.run          # => {:o=>1, :x=>10}
-  # DirtyMinimax.new(times: 2, dimension: 4, depth_max: 3).run                           # => {:o=>3, :x=>3}
-  # DirtyMinimax.new(times: 2, dimension: 4, depth_max_range: 3..3, time_limit: 0.5).run # => {:o=>3, :x=>3}
-  # DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 1..8, time_limit: 1.0).run # => {:o=>4, :x=>1}
-  DirtyMinimax.new(times: 1, dimension: 6, depth_max_range: 0..7, time_limit: 1.0).run # => {:o=>4, :x=>1}
+  # DirtyMinimax.new(times: 2, dimension_size: 4, depth_max: 3).run                           # => {:o=>3, :x=>3}
+  # DirtyMinimax.new(times: 2, dimension_size: 4, depth_max_range: 3..3, time_limit: 0.5).run # => {:o=>3, :x=>3}
+  # DirtyMinimax.new(times: 1, dimension_size: 6, depth_max_range: 1..8, time_limit: 1.0).run # => {:o=>4, :x=>1}
+  DirtyMinimax.new(times: 1, dimension_size: 6, depth_max_range: 0..7, time_limit: 1.0).run # => {:o=>4, :x=>1}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:1.00004
 # >> ・・・・・・

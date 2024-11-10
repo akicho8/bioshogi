@@ -86,7 +86,7 @@ class BuggyNegaScout < NegaMax
 end
 
 if $0 == __FILE__
-  BuggyNegaScout.new(dimension: 4, depth_max: 6).run             # => {:o=>6, :x=>10}
+  BuggyNegaScout.new(dimension_size: 4, depth_max: 6).run             # => {:o=>6, :x=>10}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:0.276997
 # >> ・○・・

@@ -74,7 +74,7 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::DimensionColumn.l
 # >>          5   (0.6%)           5   (0.6%)     Bioshogi::Piece::NameMethods::ClassMethods#all_names
 # >>          6   (0.7%)           5   (0.6%)     Bioshogi::Dimension::DimensionColumn#hankaku_number
 # >>         12   (1.4%)           5   (0.6%)     Bioshogi::Dimension::Base#valid?
-# >> Bioshogi::Dimension::DimensionColumn.lookup (/Users/ikeda/src/bioshogi/lib/bioshogi/dimension.rb:178)
+# >> Bioshogi::Dimension::DimensionColumn.lookup (/Users/ikeda/src/bioshogi/lib/bioshogi/dimension_size.rb:178)
 # >>   samples:     6 self (0.7%)  /     88 total (10.6%)
 # >>   callers:
 # >>       84  (   95.5%)  Bioshogi::Place.lookup

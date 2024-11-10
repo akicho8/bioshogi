@@ -3,7 +3,7 @@
 module Bioshogi
   module Dimension
     class Base
-      class_attribute :dimension, default: 9
+      class_attribute :dimension_size, default: 9
 
       attr_reader :value
 
@@ -17,7 +17,7 @@ module Bioshogi
         end
 
         def dimension_set(v)
-          self.dimension = v
+          self.dimension_size = v
           @char_infos  = nil
           @table       = nil
           @value_range = nil

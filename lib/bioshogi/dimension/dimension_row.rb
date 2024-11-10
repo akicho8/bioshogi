@@ -7,7 +7,7 @@ module Bioshogi
 
       class << self
         def char_infos
-          @char_infos ||= CharInfo.take(dimension)
+          @char_infos ||= CharInfo.take(dimension_size)
         end
 
         def top
@@ -15,7 +15,7 @@ module Bioshogi
         end
 
         def bottom
-          fetch(dimension.pred)
+          fetch(dimension_size.pred)
         end
 
         # 一時的に成れない状況にする
@@ -68,7 +68,7 @@ module Bioshogi
 
       # 自分の側の一番下を0として底辺までの高さを返す (例えば7段目であれば2を返す)
       def bottom_spaces
-        dimension.pred - top_spaces
+        dimension_size.pred - top_spaces
       end
 
       # 相手の陣地にいる？
@@ -93,7 +93,7 @@ module Bioshogi
 
       # 中央のすぐ下にいる？ (位の歩を支える銀の位置で▲なら6段目で△なら4段目ならtrue)
       def kurai_sasae?
-        value == (dimension / 2 + 1)
+        value == (dimension_size / 2 + 1)
       end
 
       # 玉が初めて入玉した位置か？

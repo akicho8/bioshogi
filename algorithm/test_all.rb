@@ -13,7 +13,7 @@ class TestAll < Test::Unit::TestCase
       NegaScout,
     ].collect do |klass|
       container = klass.new
-      container.params[:dimension] = 4
+      container.params[:dimension_size] = 4
       container.params[:silent] = true
       container.params[:depth_max] = 3
       container.run

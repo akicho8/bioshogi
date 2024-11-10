@@ -10,20 +10,20 @@ module Bioshogi
     class DimensionColumn < Base
       # ▲から見て2筋と8筋
       SIDE_PLUS_1   = 1                                                                # 2筋と8筋は左右から「1」つ内側にある
-      ARRAY_2_8     = [SIDE_PLUS_1, dimension.pred - SIDE_PLUS_1] # [2, 8]
+      ARRAY_2_8     = [SIDE_PLUS_1, dimension_size.pred - SIDE_PLUS_1] # [2, 8]
       SET_2_8       = ARRAY_2_8.to_set                                                 # #<Set: {2, 3}>
       RANGE_2_8     = Range.new(*ARRAY_2_8)                                            # 2..8
 
       # ▲から見て3筋と7筋
       SIDE_PLUS_2   = 2                                                                # 3筋と7筋は左右から「2」つ内側にある
-      ARRAY_3_7     = [SIDE_PLUS_2, dimension.pred - SIDE_PLUS_2] # [3, 7]
+      ARRAY_3_7     = [SIDE_PLUS_2, dimension_size.pred - SIDE_PLUS_2] # [3, 7]
       SET_3_7       = ARRAY_3_7.to_set                                                 # #<Set: {3, 3}>
       RANGE_3_7     = Range.new(*ARRAY_3_7)                                            # 3..7
 
       class << self
         # ["1", "2", "3"] -> ["3", "2", "1"].last(2) -> ["2", "1"]
         def char_infos
-          @char_infos ||= CharInfo.values.reverse.last(dimension)
+          @char_infos ||= CharInfo.values.reverse.last(dimension_size)
         end
 
         def left
@@ -31,7 +31,7 @@ module Bioshogi
         end
 
         def right
-          fetch(dimension.pred)
+          fetch(dimension_size.pred)
         end
       end
 
@@ -73,7 +73,7 @@ module Bioshogi
 
       # location から見て右方向の余白
       def right_spaces
-        dimension.pred - left_spaces
+        dimension_size.pred - left_spaces
       end
 
       # 2から8筋か？
@@ -93,7 +93,7 @@ module Bioshogi
 
       # センターにいる？ (5の列にいる？)
       def x_is_center?
-        value == dimension / 2
+        value == dimension_size / 2
       end
 
       # 端？
@@ -103,17 +103,17 @@ module Bioshogi
 
       # 右側か？
       def x_is_right_area?
-        value > dimension / 2
+        value > dimension_size / 2
       end
 
       # 左側か？
       def x_is_left_area?
-        value < dimension / 2
+        value < dimension_size / 2
       end
 
       # 右端か？
       def x_is_right_edge?
-        value == dimension.pred
+        value == dimension_size.pred
       end
 
       # 左端か？

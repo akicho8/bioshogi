@@ -1,7 +1,7 @@
 require 'active_support/core_ext/benchmark'
 require './all_algorithms'
 
-dimension = 5
+dimension_size = 5
 rows = [
   NegaMax,
   NegaAlpha,
@@ -14,7 +14,7 @@ rows = [
     app.params[:silent] = true
     app.params[:depth_max_range] = 1..depth_max
     app.params[:time_limit] = 0.05
-    app.params[:dimension] = dimension
+    app.params[:dimension_size] = dimension_size
     app.params[:times] = 2
     start_time = Time.now
     app.run

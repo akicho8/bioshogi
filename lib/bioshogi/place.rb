@@ -15,8 +15,8 @@ module Bioshogi
       include Enumerable
 
       def each(&block)
-        Dimension::DimensionRow.dimension.times.flat_map { |y|
-          Dimension::DimensionColumn.dimension.times.collect { |x|
+        Dimension::DimensionRow.dimension_size.times.flat_map { |y|
+          Dimension::DimensionColumn.dimension_size.times.collect { |x|
             self[[x, y]]
           }
         }.each(&block)

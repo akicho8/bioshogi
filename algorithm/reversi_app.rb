@@ -15,7 +15,7 @@ class ReversiApp
 
   def initialize(params = {})
     @params = {
-      dimension: 4 * 2,
+      dimension_size: 4 * 2,
     }.merge(params)
 
     @players = [:o, :x]
@@ -87,7 +87,7 @@ class ReversiApp
   end
 
   def game_over?
-    board.size >= (dimension**2) || continuous_pass?
+    board.size >= (dimension_size**2) || continuous_pass?
   end
 
   def run_counts
@@ -98,13 +98,13 @@ class ReversiApp
     @same_pos ||= Hash.new(0)
   end
 
-  def dimension
-    params[:dimension]
+  def dimension_size
+    params[:dimension_size]
   end
 
   def to_s
-    dimension.times.collect { |y|
-      dimension.times.collect { |x|
+    dimension_size.times.collect { |y|
+      dimension_size.times.collect { |x|
         v = board[Vector[x, y]]
         if v
           if v == :o
@@ -168,7 +168,7 @@ class ReversiApp
   end
 
   def placement
-    half = dimension / 2
+    half = dimension_size / 2
     board[Vector[half - 1, half - 1]] = :x
     board[Vector[half, half]]         = :x
     board[Vector[half, half - 1]]     = :o
@@ -176,8 +176,8 @@ class ReversiApp
   end
 
   def blank_places
-    dimension.times.flat_map { |y|
-      dimension.times.collect { |x|
+    dimension_size.times.flat_map { |y|
+      dimension_size.times.collect { |x|
         v = Vector[x, y]
         unless board[v]
           v
@@ -196,7 +196,7 @@ class ReversiApp
     loop do
       place += vec          # 置いた次の位置から進めるため最初に実行する
       # 外に出てしまったらダメ
-      if place.any? { |e| !(0...dimension).cover?(e) }
+      if place.any? { |e| !(0...dimension_size).cover?(e) }
         count = 0
         break
       end

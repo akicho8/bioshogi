@@ -74,7 +74,7 @@ class NegaScout < NegaMax
 end
 
 if $0 == __FILE__
-  NegaScout.new(dimension: 4, depth_max: 6).run             # => {:o=>2, :x=>14}
+  NegaScout.new(dimension_size: 4, depth_max: 6).run             # => {:o=>2, :x=>14}
 end
 # >> ------------------------------------------------------------ [0] o 実行速度:0.306705
 # >> ・○・・

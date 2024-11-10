@@ -31,8 +31,8 @@ module Bioshogi
               :lattice_stroke_width     => 1,                           # 格子の線の太さ
               :inner_frame_stroke_width => 2,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
               :inner_frame_fill_color   => nil,                         # 基本透明とする(基本指定なしでよい)
-              :dimension_w              => Dimension::DimensionColumn.dimension, # 横のセル数
-              :dimension_h              => Dimension::DimensionRow.dimension, # 縦のセル数
+              :dimension_w              => Dimension::DimensionColumn.dimension_size, # 横のセル数
+              :dimension_h              => Dimension::DimensionRow.dimension_size, # 縦のセル数
               :fg_file                  => nil,                         # 盤テクスチャ
 
               # optional

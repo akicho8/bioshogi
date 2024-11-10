@@ -35,7 +35,7 @@ module Bioshogi
       end
 
       def dimension_wh
-        [DimensionColumn.dimension, DimensionRow.dimension]
+        [DimensionColumn.dimension_size, DimensionRow.dimension_size]
       end
     end
   end

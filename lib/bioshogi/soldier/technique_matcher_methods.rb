@@ -26,7 +26,7 @@ module Bioshogi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::DimensionColumn.dimension.pred - place.x.value
+        Dimension::DimensionColumn.dimension_size.pred - place.x.value
       end
 
       # # センターにいる？ (5の列にいる？)

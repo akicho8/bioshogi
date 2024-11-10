@@ -6,7 +6,7 @@ class SimpleMinimax
   attr_accessor :container
 
   def run
-    @container = ReversiApp.new(dimension: 6)
+    @container = ReversiApp.new(dimension_size: 6)
     depth_max = 3
 
     turn = 0
