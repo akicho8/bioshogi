@@ -71,16 +71,16 @@ module Bioshogi
       assert { Soldier.from_str("△34飛").right_spaces  == 6 }
     end
 
-    it "x_is_*?" do
-      assert { Soldier.from_str("△34飛").x_is_two_to_eight?   == true  }
-      assert { Soldier.from_str("△34飛").x_is_two_or_eight?   == false }
-      assert { Soldier.from_str("△34飛").x_is_three_to_seven? == true  }
-      assert { Soldier.from_str("△34飛").x_is_center?         == false }
-      assert { Soldier.from_str("△34飛").x_is_edge?           == false }
-      assert { Soldier.from_str("△34飛").x_is_right_area?     == false }
-      assert { Soldier.from_str("△34飛").x_is_left_area?      == true  }
-      assert { Soldier.from_str("△34飛").x_is_right_edge?     == false }
-      assert { Soldier.from_str("△34飛").x_is_left_edge?      == false }
+    it "column_is_*?" do
+      assert { Soldier.from_str("△34飛").column_is_two_to_eight?   == true  }
+      assert { Soldier.from_str("△34飛").column_is_two_or_eight?   == false }
+      assert { Soldier.from_str("△34飛").column_is_three_to_seven? == true  }
+      assert { Soldier.from_str("△34飛").column_is_center?         == false }
+      assert { Soldier.from_str("△34飛").column_is_edge?           == false }
+      assert { Soldier.from_str("△34飛").column_is_right_area?     == false }
+      assert { Soldier.from_str("△34飛").column_is_left_area?      == true  }
+      assert { Soldier.from_str("△34飛").column_is_right_edge?     == false }
+      assert { Soldier.from_str("△34飛").column_is_left_edge?      == false }
     end
 
     it "yondanme?" do

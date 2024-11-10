@@ -14,15 +14,15 @@ Soldier.from_str("△34飛").bottom_spaces                       # => 3
 Soldier.from_str("△34飛").left_spaces                         # => 2
 Soldier.from_str("△34飛").right_spaces                        # => 6
 
-Soldier.from_str("△34飛").x_is_two_to_eight?                  # => true
-Soldier.from_str("△34飛").x_is_two_or_eight?                  # => false
-Soldier.from_str("△34飛").x_is_three_to_seven?                # => true
-Soldier.from_str("△34飛").x_is_center?                        # => false
-Soldier.from_str("△34飛").x_is_edge?                          # => false
-Soldier.from_str("△34飛").x_is_right_area?                    # => false
-Soldier.from_str("△34飛").x_is_left_area?                     # => true
-Soldier.from_str("△34飛").x_is_right_edge?                    # => false
-Soldier.from_str("△34飛").x_is_left_edge?                     # => false
+Soldier.from_str("△34飛").column_is_two_to_eight?                  # => true
+Soldier.from_str("△34飛").column_is_two_or_eight?                  # => false
+Soldier.from_str("△34飛").column_is_three_to_seven?                # => true
+Soldier.from_str("△34飛").column_is_center?                        # => false
+Soldier.from_str("△34飛").column_is_edge?                          # => false
+Soldier.from_str("△34飛").column_is_right_area?                    # => false
+Soldier.from_str("△34飛").column_is_left_area?                     # => true
+Soldier.from_str("△34飛").column_is_right_edge?                    # => false
+Soldier.from_str("△34飛").column_is_left_edge?                     # => false
 
 Soldier.from_str("△34飛").move_to(:up).name                   # => "３五"
 Soldier.from_str("△34飛").move_to(:up, magnification: 0).name # => "３四"

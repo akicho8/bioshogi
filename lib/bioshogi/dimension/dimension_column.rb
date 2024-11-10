@@ -54,16 +54,16 @@ module Bioshogi
         :left_spaces,
         :right_spaces,
 
-        :x_is_two_to_eight?,
-        :x_is_two_or_eight?,
-        :x_is_three_to_seven?,
-        :x_is_center?,
-        :x_is_edge?,
+        :column_is_two_to_eight?,
+        :column_is_two_or_eight?,
+        :column_is_three_to_seven?,
+        :column_is_center?,
+        :column_is_edge?,
 
-        :x_is_right_area?,
-        :x_is_left_area?,
-        :x_is_right_edge?,
-        :x_is_left_edge?,
+        :column_is_right_area?,
+        :column_is_left_area?,
+        :column_is_right_edge?,
+        :column_is_left_edge?,
       ]
 
       # location から見て左方向の余白
@@ -77,47 +77,47 @@ module Bioshogi
       end
 
       # 2から8筋か？
-      def x_is_two_to_eight?
+      def column_is_two_to_eight?
         RANGE_2_8.cover?(value)
       end
 
       # 2または8筋か？
-      def x_is_two_or_eight?
+      def column_is_two_or_eight?
         SET_2_8.include?(value)
       end
 
       # 3から7筋か？
-      def x_is_three_to_seven?
+      def column_is_three_to_seven?
         RANGE_3_7.cover?(value)
       end
 
       # センターにいる？ (5の列にいる？)
-      def x_is_center?
+      def column_is_center?
         value == dimension_size / 2
       end
 
       # 端？
-      def x_is_edge?
-        x_is_left_edge? || x_is_right_edge?
+      def column_is_edge?
+        column_is_left_edge? || column_is_right_edge?
       end
 
       # 右側か？
-      def x_is_right_area?
+      def column_is_right_area?
         value > dimension_size / 2
       end
 
       # 左側か？
-      def x_is_left_area?
+      def column_is_left_area?
         value < dimension_size / 2
       end
 
       # 右端か？
-      def x_is_right_edge?
+      def column_is_right_edge?
         value == dimension_size.pred
       end
 
       # 左端か？
-      def x_is_left_edge?
+      def column_is_left_edge?
         value == 0
       end
 

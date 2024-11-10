@@ -30,13 +30,13 @@ module Bioshogi
       end
 
       # # センターにいる？ (5の列にいる？)
-      # def x_is_center?
-      #   place.x_is_center?
+      # def column_is_center?
+      #   place.column_is_center?
       # end
 
       # 自玉の位置にいる？
       def initial_place?
-        x_is_center? && bottom_spaces == 0
+        column_is_center? && bottom_spaces == 0
       end
 
       # 垂れ歩状態か？ (つまり2, 3, 4段目)
