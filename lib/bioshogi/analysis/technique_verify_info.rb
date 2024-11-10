@@ -18,7 +18,7 @@ module Bioshogi
 
             #【条件2】上に自分の金があること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :gold && own?(s)
                 end
@@ -33,7 +33,7 @@ module Bioshogi
           func: proc {
             verify_if do
               V.ikkenryu_vectors.any? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == :king && opponent?(s)
                   end
@@ -52,7 +52,7 @@ module Bioshogi
 
             #【条件2】相手が歩であること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
@@ -62,7 +62,7 @@ module Bioshogi
             #【条件3】桂馬の効きの位置に「玉」または「飛車」があること
             verify_if do
               V.keima_vectors.any? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     (s.piece.key == :king || (s.piece.key == :rook && s.normal?)) && opponent?(s)
                   end
@@ -84,7 +84,7 @@ module Bioshogi
 
             #【条件3】前に歩があること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :pawn && s.normal? && own?(s)
                 end
@@ -93,7 +93,7 @@ module Bioshogi
 
             #【条件4】歩の上に何もないこと (歩の上に何か駒があった場合は無効) :OPTIONAL:
             skip_if do
-              if v = soldier.move_to(:up_up)
+              if v = soldier.relative_move_to(:up_up)
                 board[v]
               end
             end
@@ -115,7 +115,7 @@ module Bioshogi
 
             #【条件4】移動元の端側に「玉」があること
             verify_if do
-              if v = origin_soldier.move_to(soldier.left_or_right_to_closer_side)
+              if v = origin_soldier.relative_move_to(soldier.left_or_right_to_closer_side)
                 if s = board[v]
                   s.piece.key == :king && own?(s)
                 end
@@ -130,7 +130,7 @@ module Bioshogi
           func: proc {
             verify_if do
               V.left_right_vectors.any? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == :king && opponent?(s)
                   end
@@ -145,7 +145,7 @@ module Bioshogi
           description: "銀を打ったとき下に相手の玉がある",
           func: proc {
             verify_if do
-              if v = soldier.move_to(:down)
+              if v = soldier.relative_move_to(:down)
                 if s = board[v]
                   s.piece.key == :king && opponent?(s)
                 end
@@ -163,7 +163,7 @@ module Bioshogi
 
             #【条件2】先が空であること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
               end
             end
@@ -193,7 +193,7 @@ module Bioshogi
                 matched = false
                 step = 0                                          # 斜めの効きの数 (駒に衝突したらそこも含める)
                 Dimension::DimensionRow.dimension_size.times do |i|
-                  if v = soldier.move_to(up_left, magnification: 1 + i)
+                  if v = soldier.relative_move_to(up_left, magnification: 1 + i)
                     step += 1                                     # 効きの数+1
                     if step >= threshold && v.opp_side?(location) # 相手の陣地に入れるか？
                       matched = true
@@ -216,7 +216,7 @@ module Bioshogi
           func: proc {
             verify_if do
               V.wariuchi_vectors.all? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     if opponent?(s)
                       (s.piece.key == :rook && s.normal?) || s.piece.key == :gold
@@ -234,10 +234,10 @@ module Bioshogi
           func: proc {
             verify_if do
               V.tasuki_vectors.any? do |up_left, down_right|
-                if v = soldier.move_to(up_left)
+                if v = soldier.relative_move_to(up_left)
                   if s = board[v]
                     if s.piece.key == :rook && s.normal? && opponent?(s) # 左上に飛車がある
-                      if v = soldier.move_to(down_right)
+                      if v = soldier.relative_move_to(down_right)
                         if s = board[v]
                           (s.piece.key == :gold || (s.piece.key == :silver && s.promoted)) && opponent?(s) # 右下に金または成銀がある
                         end
@@ -264,7 +264,7 @@ module Bioshogi
           func: proc {
             #【条件1】上に相手の桂がある
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :knight && s.normal? && opponent?(s)
                 end
@@ -285,7 +285,7 @@ module Bioshogi
           description: "打った桂の上に相手の歩がある",
           func: proc {
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
@@ -303,7 +303,7 @@ module Bioshogi
 
             #【条件2】進めた歩の前が空であること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
               end
             end
@@ -313,7 +313,7 @@ module Bioshogi
               V.ginbasami_verctors.any? do |right, right_right, right_right_up|
                 #【条件3】右に相手の銀ある
                 yield_self {
-                  if v = soldier.move_to(right)
+                  if v = soldier.relative_move_to(right)
                     if s = board[v]
                       s.piece.key == :silver && s.normal? && opponent?(s)
                     end
@@ -322,7 +322,7 @@ module Bioshogi
 
                 #【条件4】右右に自分の歩がある
                 yield_self {
-                  if v = soldier.move_to(right_right)
+                  if v = soldier.relative_move_to(right_right)
                     if s = board[v]
                       s.piece.key == :pawn && s.normal? && own?(s)
                     end
@@ -330,7 +330,7 @@ module Bioshogi
                 } or next
 
                 #【条件5】右右上が空である
-                if v = soldier.move_to(right_right_up)
+                if v = soldier.relative_move_to(right_right_up)
                   board.empty_cell?(v)
                 end
               end
@@ -347,7 +347,7 @@ module Bioshogi
 
             #【条件2】上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
@@ -359,7 +359,7 @@ module Bioshogi
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
               # Dimension::DimensionRow.dimension_size は書かなくてもいい
               (2..).any? do |y|
-                if v = soldier.move_to(:up, magnification: y)
+                if v = soldier.relative_move_to(:up, magnification: y)
                   if s = board[v]
                     if s.piece.key == :king && opponent?(s)
                       true
@@ -377,7 +377,7 @@ module Bioshogi
             verify_if do
               # この 2 は突いた歩の 2 つ下から香を調べるため
               (2..).any? do |y|
-                if v = soldier.move_to(:down, magnification: y)
+                if v = soldier.relative_move_to(:down, magnification: y)
                   if s = board[v]
                     if s.maeni_ittyokusen? && own?(s) # 「自分の香飛龍」か？
                       true
@@ -400,7 +400,7 @@ module Bioshogi
             verify_if do
               mode = :walk_to_bishop
               (1..).each do |y|
-                if v = soldier.move_to(:up, magnification: y)
+                if v = soldier.relative_move_to(:up, magnification: y)
                   if s = board[v]
                     if opponent?(s)
                       case mode
@@ -437,7 +437,7 @@ module Bioshogi
           func: proc {
             verify_if do
               V.keima_vectors.all? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     if opponent?(s)
                       s.abs_weight > soldier.abs_weight
@@ -458,14 +458,14 @@ module Bioshogi
 
             #【条件2】一つ上が空であること
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
               end
             end
 
             #【条件3】二つ上に相手の前に進める駒があること (成銀や馬があっても土下座の対象とする)
             verify_if do
-              if v = soldier.move_to(:up_up)
+              if v = soldier.relative_move_to(:up_up)
                 if s = board[v]
                   if opponent?(s)
                     s.piece.maesusumeru || s.promoted
@@ -485,7 +485,7 @@ module Bioshogi
 
             #【条件2】相手が「成駒」または「飛金銀香玉」である
             verify_if do
-              if v = soldier.move_to(:up)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   if opponent?(s)
                     s.promoted || s.piece.tatakare_target
@@ -498,7 +498,7 @@ module Bioshogi
             # とするのが本当は正しいのだけど大変なので
             # 「打った位置の後ろに自分の(前に進めることのできる)駒がないこと」だけを判定している
             skip_if do
-              if v = soldier.move_to(:down)
+              if v = soldier.relative_move_to(:down)
                 if s = board[v]
                   if own?(s)
                     s.promoted || s.piece.maesusumeru
@@ -513,7 +513,7 @@ module Bioshogi
                 if drop_hand = hand_log.drop_hand            # 打った手
                   if s = drop_hand.soldier                   # 駒
                     Assertion.assert { own?(s) }
-                    s.piece.key == :pawn && s.place == soldier.move_to(:up)
+                    s.piece.key == :pawn && s.place == soldier.relative_move_to(:up)
                   end
                 end
               end
@@ -532,7 +532,7 @@ module Bioshogi
               if hand_log = executor.container.hand_logs[-2]
                 if s = hand_log.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にしている
                   if s.piece.key == :pawn && s.normal? && own?(s)
-                    s.place == soldier.move_to(:up)
+                    s.place == soldier.relative_move_to(:up)
                   end
                 end
               end
@@ -543,7 +543,7 @@ module Bioshogi
               if hand_log = executor.container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   if s.piece.key == :pawn && s.normal? && opponent?(s)
-                    s.place == soldier.move_to(:up)
+                    s.place == soldier.relative_move_to(:up)
                   end
                 end
               end
@@ -562,7 +562,7 @@ module Bioshogi
               if hand_log = executor.container.hand_logs[-2]
                 if s = hand_log.drop_hand&.soldier
                   if s.piece.key == :pawn && own?(s)
-                    s.place == soldier.move_to(:up)
+                    s.place == soldier.relative_move_to(:up)
                   end
                 end
               end
@@ -573,7 +573,7 @@ module Bioshogi
               if hand_log = executor.container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   if opponent?(s)
-                    s.place == soldier.move_to(:up)
+                    s.place == soldier.relative_move_to(:up)
                   end
                 end
               end
@@ -587,7 +587,7 @@ module Bioshogi
           func: proc {
             verify_if do
               V.tsugikei_vectors.any? do |e|
-                if v = soldier.move_to(e)
+                if v = soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == :knight && s.normal? && own?(s)
                   end

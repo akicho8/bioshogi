@@ -31,11 +31,11 @@ hash[Place["７６"]]             # => 1
 
 ################################################################################
 
-Place["55"].move_to(Location[:white], V.up)                  # => #<Bioshogi::Place ５六>
-Place["55"].move_to(Location[:white], :up)                   # => #<Bioshogi::Place ５六>
-Place["55"].move_to(Location[:white], :up, magnification: 0) # => #<Bioshogi::Place ５五>
-Place["55"].move_to(Location[:white], :up, magnification: 2) # => #<Bioshogi::Place ５七>
-Place["55"].move_to(Location[:white], :up, magnification: 9) # => nil
+Place["55"].relative_move_to(Location[:white], V.up)                  # => #<Bioshogi::Place ５六>
+Place["55"].relative_move_to(Location[:white], :up)                   # => #<Bioshogi::Place ５六>
+Place["55"].relative_move_to(Location[:white], :up, magnification: 0) # => #<Bioshogi::Place ５五>
+Place["55"].relative_move_to(Location[:white], :up, magnification: 2) # => #<Bioshogi::Place ５七>
+Place["55"].relative_move_to(Location[:white], :up, magnification: 9) # => nil
 
 Place["55"].move_to_bottom_edge(Location[:white])            # => #<Bioshogi::Place ５一>
 Place["55"].move_to_top_edge(Location[:white])               # => #<Bioshogi::Place ５九>

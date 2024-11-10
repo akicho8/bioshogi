@@ -71,7 +71,7 @@ module Bioshogi
 
         [:up, :down].each do |up|
           (1..).each do |y|
-            v = soldier.move_to(up, magnification: y)
+            v = soldier.relative_move_to(up, magnification: y)
             v or break # 盤面の外
             if s = @analyzer.board[v]
               if opponent?(s)

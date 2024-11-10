@@ -72,7 +72,7 @@ module Bioshogi
       *Dimension::DimensionColumn::DELEGATE_METHODS,
       *Dimension::DimensionRow::DELEGATE_METHODS,
 
-      :move_to,
+      :relative_move_to,
       :move_to_xy,
       :king_default_place?,
 
@@ -201,7 +201,7 @@ module Bioshogi
     end
 
     # より抽象的な方法で移動した位置を返す
-    def move_to(location, vector, magnification: 1)
+    def relative_move_to(location, vector, magnification: 1)
       if vector.kind_of?(Symbol)
         vector = V.public_send(vector)
       end

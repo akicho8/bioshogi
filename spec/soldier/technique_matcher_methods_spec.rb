@@ -56,12 +56,12 @@ module Bioshogi
       assert { Soldier.from_str("△34飛").move_to_left_edge.name   == "１四" }
     end
 
-    it "move_to" do
-      assert { Soldier.from_str("△34飛").move_to(:up).name                    == "３五" }
-      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 0).name  == "３四" }
-      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 1).name  == "３五" }
-      assert { Soldier.from_str("△34飛").move_to(:up, magnification: 2).name  == "３六" }
-      assert { Soldier.from_str("△34飛").move_to(:up, magnification: -2).name == "３二" }
+    it "relative_move_to" do
+      assert { Soldier.from_str("△34飛").relative_move_to(:up).name                    == "３五" }
+      assert { Soldier.from_str("△34飛").relative_move_to(:up, magnification: 0).name  == "３四" }
+      assert { Soldier.from_str("△34飛").relative_move_to(:up, magnification: 1).name  == "３五" }
+      assert { Soldier.from_str("△34飛").relative_move_to(:up, magnification: 2).name  == "３六" }
+      assert { Soldier.from_str("△34飛").relative_move_to(:up, magnification: -2).name == "３二" }
     end
 
     it "*_spaces" do

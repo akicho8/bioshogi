@@ -107,12 +107,12 @@ module Bioshogi
       assert { Place["55"].move_to_xy(Location[:white], 1, -1).name == "６六" }
     end
 
-    it "move_to" do
-      assert { Place["55"].move_to(Location[:white], V.up)                  == Place["56"] }
-      assert { Place["55"].move_to(Location[:white], :up)                   == Place["56"] }
-      assert { Place["55"].move_to(Location[:white], :up, magnification: 0) == Place["55"] }
-      assert { Place["55"].move_to(Location[:white], :up, magnification: 2) == Place["57"] }
-      assert { Place["55"].move_to(Location[:white], :up, magnification: 9) == nil         }
+    it "relative_move_to" do
+      assert { Place["55"].relative_move_to(Location[:white], V.up)                  == Place["56"] }
+      assert { Place["55"].relative_move_to(Location[:white], :up)                   == Place["56"] }
+      assert { Place["55"].relative_move_to(Location[:white], :up, magnification: 0) == Place["55"] }
+      assert { Place["55"].relative_move_to(Location[:white], :up, magnification: 2) == Place["57"] }
+      assert { Place["55"].relative_move_to(Location[:white], :up, magnification: 9) == nil         }
     end
 
     it "move_to_*_edge" do
