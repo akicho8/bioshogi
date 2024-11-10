@@ -74,6 +74,7 @@ module Bioshogi
 
       :move_to,
       :move_to_xy,
+      :king_default_place?,
 
       :move_to_bottom_edge,
       :move_to_top_edge,
@@ -205,6 +206,11 @@ module Bioshogi
         vector = V.public_send(vector)
       end
       xy_add(*(vector * location.sign_dir * magnification))
+    end
+
+    # 自玉の位置にいる？
+    def king_default_place?(location)
+      column_is_center?(location) && bottom_spaces(location) == 0
     end
 
     ################################################################################ location から見た上下左右に寄せた位置を返す

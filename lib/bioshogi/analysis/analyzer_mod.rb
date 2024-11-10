@@ -11,7 +11,7 @@ module Bioshogi
         super
 
         if move_hand.soldier.piece.key == :king
-          # if move_hand.origin_soldier.initial_place?
+          # if move_hand.origin_soldier.king_default_place?
           #   # 元の位置から動いたか？
           # end
           player.king_moved_counter += 1 # 居玉判定用

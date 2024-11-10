@@ -27,11 +27,11 @@ module Bioshogi
 
     it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
       assert { Soldier.from_str("▲41歩").left_or_right_to_closer_side == :right }
-      assert { Soldier.from_str("△41歩").left_or_right_to_closer_side == :right }
-      assert { Soldier.from_str("▲51歩").left_or_right_to_closer_side == :left }
-      assert { Soldier.from_str("△51歩").left_or_right_to_closer_side == :left }
-      assert { Soldier.from_str("▲61歩").left_or_right_to_closer_side == :left }
-      assert { Soldier.from_str("△61歩").left_or_right_to_closer_side == :left }
+      assert { Soldier.from_str("△41歩").left_or_right_to_closer_side == :left  }
+      assert { Soldier.from_str("▲51歩").left_or_right_to_closer_side == :left  }
+      assert { Soldier.from_str("△51歩").left_or_right_to_closer_side == :left  }
+      assert { Soldier.from_str("▲61歩").left_or_right_to_closer_side == :left  }
+      assert { Soldier.from_str("△61歩").left_or_right_to_closer_side == :right }
     end
 
     it "tarefu_desuka?" do
@@ -93,6 +93,11 @@ module Bioshogi
       assert { Soldier.from_str("△56玉").just_nyuugyoku? == false }
       assert { Soldier.from_str("△57玉").just_nyuugyoku? == true  }
       assert { Soldier.from_str("△58玉").just_nyuugyoku? == false }
+    end
+
+    it "king_default_place?" do
+      assert { Soldier.from_str("△51飛").king_default_place? }
+      assert { Soldier.from_str("▲59飛").king_default_place? }
     end
   end
 end

@@ -122,6 +122,12 @@ module Bioshogi
       assert { Place["55"].move_to_right_edge(Location[:white])  == Place["95"] }
     end
 
+    it "king_default_place?" do
+      assert { !Place["55"].king_default_place?(Location[:black]) }
+      assert { Place["51"].king_default_place?(Location[:white]) }
+      assert { Place["59"].king_default_place?(Location[:black]) }
+    end
+
     ################################################################################
   end
 end

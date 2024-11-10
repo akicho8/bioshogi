@@ -17,8 +17,8 @@ Place["11"].object_id           # => 2040
 # Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
 # Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
 
-Place["76"].hash                # => 2082891752263303151
-Place["７６"].hash              # => 2082891752263303151
+Place["76"].hash                # => -2656019782535967827
+Place["７６"].hash              # => -2656019782535967827
 Place["76"].object_id           # => 2060
 Place["７６"].object_id         # => 2060
 hash = {}
@@ -26,8 +26,8 @@ hash = {}
 hash[Place["76"]] = 1
 hash[Place["７６"]]             # => 1
 
-[1, 2].hash                     # => -4399854291003605512
-[1, 2].hash                     # => -4399854291003605512
+[1, 2].hash                     # => 3664671274976281473
+[1, 2].hash                     # => 3664671274976281473
 
 ################################################################################
 
@@ -41,5 +41,8 @@ Place["55"].move_to_bottom_edge(Location[:white])            # => #<Bioshogi::Pl
 Place["55"].move_to_top_edge(Location[:white])               # => #<Bioshogi::Place ５九>
 Place["55"].move_to_left_edge(Location[:white])              # => #<Bioshogi::Place １五>
 Place["55"].move_to_right_edge(Location[:white])             # => #<Bioshogi::Place ９五>
+
+Place["51"].king_default_place?(Location[:white]) # => true
+Place["59"].king_default_place?(Location[:black]) # => true
 
 ################################################################################

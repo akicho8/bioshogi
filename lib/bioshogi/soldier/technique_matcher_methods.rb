@@ -10,11 +10,6 @@ module Bioshogi
 
       ################################################################################
 
-      # 自玉の位置にいる？
-      def initial_place?
-        column_is_center? && bottom_spaces == 0
-      end
-
       # 前に一直線に進めるタイプか？
       def maeni_ittyokusen?
         (piece.key == :lance && normal?) || piece.key == :rook
