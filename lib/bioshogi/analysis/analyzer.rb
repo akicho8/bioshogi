@@ -21,7 +21,7 @@ module Bioshogi
 
         if executor.container.params[:analyzer_technique_enable]
           # 主に手筋用で戦法チェックにも使える
-          key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand] # :PIECE_HASH_TABLE:
+          key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :PIECE_HASH_TABLE:
           if e = TacticInfo.piece_hash_table[key]
             e.each do |e|
               execute_block(e) do |list|
@@ -445,6 +445,16 @@ module Bioshogi
       # 自分
       def player
         @player ||= executor.player
+      end
+
+      # 打った駒の情報
+      def drop_hand
+        @drop_hand ||= executor.drop_hand
+      end
+
+      # 移動させた駒の情報
+      def move_hand
+        @move_hand ||= executor.move_hand
       end
 
       prepend TechniqueMatcherHelper
