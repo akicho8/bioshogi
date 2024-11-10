@@ -413,6 +413,11 @@ module Bioshogi
       end
 
       # 盤面
+      def board
+        @board ||= player.board
+      end
+
+      # 盤面
       def surface
         @surface ||= player.board.surface
       end

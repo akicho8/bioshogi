@@ -145,7 +145,7 @@ module Bioshogi
     # 二歩？
     def collision_pawn(board)
       if piece.key == :pawn && !promoted
-        board.vertical_pieces(place.x).find do |e|
+        board.vertical_soldiers(place.x).find do |e|
           e.piece.key == :pawn && !e.promoted && e.location == location
         end
       end
