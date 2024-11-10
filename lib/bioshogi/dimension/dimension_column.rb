@@ -57,14 +57,14 @@ module Bioshogi
         :column_spaces_min,
         :left_or_right_to_closer_side,
 
-        :column_is_two_to_eight?,
-        :column_is_two_or_eight?,
+        :column_is_second_to_eighth?,
+        :column_is_second_or_eighth?,
         :column_is_three_to_seven?,
         :column_is_center?,
         :column_is_edge?,
 
-        :column_is_right_area?,
-        :column_is_left_area?,
+        :column_is_right_side?,
+        :column_is_left_side?,
         :column_is_right_edge?,
         :column_is_left_edge?,
       ]
@@ -86,16 +86,16 @@ module Bioshogi
 
       # 左右の壁に近づく場合の方向
       def left_or_right_to_closer_side
-        column_is_right_area? ? :right : :left
+        column_is_right_side? ? :right : :left
       end
 
       # 2から8筋か？
-      def column_is_two_to_eight?
+      def column_is_second_to_eighth?
         RANGE_2_8.cover?(value)
       end
 
       # 2または8筋か？
-      def column_is_two_or_eight?
+      def column_is_second_or_eighth?
         SET_2_8.include?(value)
       end
 
@@ -115,12 +115,12 @@ module Bioshogi
       end
 
       # 右側か？
-      def column_is_right_area?
+      def column_is_right_side?
         value > dimension_size / 2
       end
 
       # 左側か？
-      def column_is_left_area?
+      def column_is_left_side?
         value < dimension_size / 2
       end
 

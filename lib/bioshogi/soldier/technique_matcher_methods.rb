@@ -10,38 +10,14 @@ module Bioshogi
 
       ################################################################################
 
-      # # 左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)
-      # def left_or_right_to_closer_side
-      #   if place.x.value > __distance_from_right
-      #     1
-      #   else
-      #     -1
-      #   end
-      # end
-
-      # # 先手から見て右からの距離
-      # def __distance_from_right
-      #   Dimension::DimensionColumn.dimension_size.pred - place.x.value
-      # end
-
-      # # センターにいる？ (5の列にいる？)
-      # def column_is_center?
-      #   place.column_is_center?
-      # end
-
       # 自玉の位置にいる？
       def initial_place?
         column_is_center? && bottom_spaces == 0
       end
 
-      # 垂れ歩状態か？ (つまり2, 3, 4段目)
-      def tarehu_ikeru?
-        top_spaces.between?(1, Dimension::DimensionRow.promotable_depth)
-      end
-
       # 前に一直線に進めるタイプか？
       def maeni_ittyokusen?
-        (piece.key == :lance && !promoted) || piece.key == :rook
+        (piece.key == :lance && normal?) || piece.key == :rook
       end
 
       ################################################################################

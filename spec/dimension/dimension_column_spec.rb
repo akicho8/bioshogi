@@ -79,28 +79,28 @@ module Bioshogi
         assert { DimensionColumn.fetch("6").left_or_right_to_closer_side == :left  }
       end
 
-      it "column_is_two_to_eight?" do
-        assert { DimensionColumn.fetch("1").column_is_two_to_eight? == false }
-        assert { DimensionColumn.fetch("2").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("3").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("4").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("5").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("6").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("7").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("8").column_is_two_to_eight? == true  }
-        assert { DimensionColumn.fetch("9").column_is_two_to_eight? == false }
+      it "column_is_second_to_eighth?" do
+        assert { DimensionColumn.fetch("1").column_is_second_to_eighth? == false }
+        assert { DimensionColumn.fetch("2").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("3").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("4").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("5").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("6").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("7").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("8").column_is_second_to_eighth? == true  }
+        assert { DimensionColumn.fetch("9").column_is_second_to_eighth? == false }
       end
 
-      it "column_is_two_or_eight?" do
-        assert { DimensionColumn.fetch("1").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("2").column_is_two_or_eight? == true  }
-        assert { DimensionColumn.fetch("3").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("4").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("5").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("6").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("7").column_is_two_or_eight? == false }
-        assert { DimensionColumn.fetch("8").column_is_two_or_eight? == true  }
-        assert { DimensionColumn.fetch("9").column_is_two_or_eight? == false }
+      it "column_is_second_or_eighth?" do
+        assert { DimensionColumn.fetch("1").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("2").column_is_second_or_eighth? == true  }
+        assert { DimensionColumn.fetch("3").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("4").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("5").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("6").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("7").column_is_second_or_eighth? == false }
+        assert { DimensionColumn.fetch("8").column_is_second_or_eighth? == true  }
+        assert { DimensionColumn.fetch("9").column_is_second_or_eighth? == false }
       end
 
       it "column_is_three_to_seven?" do
@@ -128,16 +128,16 @@ module Bioshogi
         assert { DimensionColumn.fetch("9").column_is_edge? == true  }
       end
 
-      it "column_is_right_area?" do
-        assert { DimensionColumn.fetch("4").column_is_right_area? == true  }
-        assert { DimensionColumn.fetch("5").column_is_right_area? == false }
-        assert { DimensionColumn.fetch("6").column_is_right_area? == false }
+      it "column_is_right_side?" do
+        assert { DimensionColumn.fetch("4").column_is_right_side? == true  }
+        assert { DimensionColumn.fetch("5").column_is_right_side? == false }
+        assert { DimensionColumn.fetch("6").column_is_right_side? == false }
       end
 
-      it "column_is_left_area?" do
-        assert { DimensionColumn.fetch("4").column_is_left_area? == false }
-        assert { DimensionColumn.fetch("5").column_is_left_area? == false }
-        assert { DimensionColumn.fetch("6").column_is_left_area? == true  }
+      it "column_is_left_side?" do
+        assert { DimensionColumn.fetch("4").column_is_left_side? == false }
+        assert { DimensionColumn.fetch("5").column_is_left_side? == false }
+        assert { DimensionColumn.fetch("6").column_is_left_side? == true  }
       end
 
       it "column_is_right_edge?" do

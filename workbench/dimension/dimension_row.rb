@@ -30,3 +30,9 @@ DimensionRow.fetch("4").just_nyuugyoku?     # => false
 DimensionRow.fetch("3").atoippo_nyuugyoku?     # => false
 DimensionRow.fetch("4").atoippo_nyuugyoku?     # => true
 DimensionRow.fetch("5").atoippo_nyuugyoku?     # => false
+
+DimensionRow.fetch("1").tarefu_desuka? # => false
+DimensionRow.fetch("2").tarefu_desuka? # => true
+DimensionRow.fetch("3").tarefu_desuka? # => true
+DimensionRow.fetch("4").tarefu_desuka? # => true
+DimensionRow.fetch("5").tarefu_desuka? # => false

@@ -59,6 +59,7 @@ module Bioshogi
         :kurai_sasae?,
         :just_nyuugyoku?,
         :atoippo_nyuugyoku?,
+        :tarefu_desuka?,
       ]
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7段目であれば6を返す)
@@ -108,6 +109,11 @@ module Bioshogi
       # 玉があと一歩で入玉できる位置か？
       def atoippo_nyuugyoku?
         top_spaces == promotable_depth
+      end
+
+      # 垂れ歩状態か？ (つまり2, 3, 4段目)
+      def tarefu_desuka?
+        top_spaces.between?(1, promotable_depth)
       end
 
       ################################################################################

@@ -69,10 +69,18 @@ module Bioshogi
         assert { DimensionRow.fetch("4").just_nyuugyoku? == false }
       end
 
-      it "works" do
+      it "atoippo_nyuugyoku?" do
         assert { DimensionRow.fetch("3").atoippo_nyuugyoku? == false }
         assert { DimensionRow.fetch("4").atoippo_nyuugyoku? == true  }
         assert { DimensionRow.fetch("5").atoippo_nyuugyoku? == false }
+      end
+
+      it "tarefu_desuka?" do
+        assert { DimensionRow.fetch("1").tarefu_desuka? == false }
+        assert { DimensionRow.fetch("2").tarefu_desuka? == true  }
+        assert { DimensionRow.fetch("3").tarefu_desuka? == true  }
+        assert { DimensionRow.fetch("4").tarefu_desuka? == true  }
+        assert { DimensionRow.fetch("5").tarefu_desuka? == false }
       end
 
       ################################################################################

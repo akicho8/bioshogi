@@ -7,9 +7,6 @@ module Bioshogi
     class TechniqueVerifyInfo
       ROW_IS_2  = 1 # ▲から見て2段目のこと
 
-      Y_UP   = -1
-      Y_DOWN = 1
-
       include ApplicationMemoryRecord
       memory_record [
         {
@@ -51,7 +48,7 @@ module Bioshogi
           description: "玉または飛の斜めの歩を攻める",
           func: proc {
             #【条件1】2〜8筋であること (端の場合は「こびん」とは言わないため)
-            verify_if { soldier.column_is_two_to_eight? }
+            verify_if { soldier.column_is_second_to_eighth? }
 
             #【条件2】相手が歩であること
             verify_if do
@@ -162,7 +159,7 @@ module Bioshogi
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: proc {
             #【条件1】2, 3, 4 段目であること
-            verify_if { soldier.tarehu_ikeru? }
+            verify_if { soldier.tarefu_desuka? }
 
             #【条件2】先が空であること
             verify_if do
@@ -278,7 +275,7 @@ module Bioshogi
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             skip_if do
-              soldier.column_is_two_or_eight? && soldier.top_spaces == ROW_IS_2
+              soldier.column_is_second_or_eighth? && soldier.top_spaces == 1
             end
           },
         },
@@ -361,8 +358,8 @@ module Bioshogi
             verify_if do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
               # Dimension::DimensionRow.dimension_size は書かなくてもいい
-              (2..Dimension::DimensionRow.dimension_size).any? do |y|
-                if v = soldier.move_to_xy(0, Y_UP * y)
+              (2..).any? do |y|
+                if v = soldier.move_to(:up, magnification: y)
                   if s = board[v]
                     if s.piece.key == :king && opponent?(s)
                       true
@@ -379,8 +376,8 @@ module Bioshogi
             #【条件4】下に「自分の香飛龍」 (17→18→19と探す)
             verify_if do
               # この 2 は突いた歩の 2 つ下から香を調べるため
-              (2..Dimension::DimensionRow.dimension_size).any? do |y|
-                if v = soldier.move_to_xy(0, Y_DOWN * y)
+              (2..).any? do |y|
+                if v = soldier.move_to(:down, magnification: y)
                   if s = board[v]
                     if s.maeni_ittyokusen? && own?(s) # 「自分の香飛龍」か？
                       true
@@ -402,8 +399,8 @@ module Bioshogi
           func: proc {
             verify_if do
               mode = :walk_to_bishop
-              Dimension::DimensionRow.dimension_size.times do |y|
-                if v = soldier.move_to_xy(0, Y_UP * (1 + y))
+              (1..).each do |y|
+                if v = soldier.move_to(:up, magnification: y)
                   if s = board[v]
                     if opponent?(s)
                       case mode
@@ -413,7 +410,7 @@ module Bioshogi
                         end
                       when :walk_to_dengaku_target # 大駒を探す
                         if s.piece.dengaku_target
-                          mode = :dengaku_mached
+                          mode = :dengaku_matched
                           break
                         end
                       else
@@ -429,7 +426,7 @@ module Bioshogi
                   break         # 盤の外に出た場合は終わる
                 end
               end
-              mode == :dengaku_mached
+              mode == :dengaku_matched
             end
           },
         },

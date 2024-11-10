@@ -14,13 +14,13 @@ Soldier.from_str("△34飛").bottom_spaces                       # => 3
 Soldier.from_str("△34飛").left_spaces                         # => 2
 Soldier.from_str("△34飛").right_spaces                        # => 6
 
-Soldier.from_str("△34飛").column_is_two_to_eight?             # => true
-Soldier.from_str("△34飛").column_is_two_or_eight?             # => false
+Soldier.from_str("△34飛").column_is_second_to_eighth?             # => true
+Soldier.from_str("△34飛").column_is_second_or_eighth?             # => false
 Soldier.from_str("△34飛").column_is_three_to_seven?           # => true
 Soldier.from_str("△34飛").column_is_center?                   # => false
 Soldier.from_str("△34飛").column_is_edge?                     # => false
-Soldier.from_str("△34飛").column_is_right_area?               # => false
-Soldier.from_str("△34飛").column_is_left_area?                # => true
+Soldier.from_str("△34飛").column_is_right_side?               # => false
+Soldier.from_str("△34飛").column_is_left_side?                # => true
 Soldier.from_str("△34飛").column_is_right_edge?               # => false
 Soldier.from_str("△34飛").column_is_left_edge?                # => false
 

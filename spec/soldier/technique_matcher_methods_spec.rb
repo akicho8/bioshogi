@@ -34,12 +34,12 @@ module Bioshogi
       assert { Soldier.from_str("△61歩").left_or_right_to_closer_side == :left }
     end
 
-    it "tarehu_ikeru?" do
-      assert { Soldier.from_str("▲11歩").tarehu_ikeru? == false }
-      assert { Soldier.from_str("▲12歩").tarehu_ikeru? == true  }
-      assert { Soldier.from_str("▲13歩").tarehu_ikeru? == true  }
-      assert { Soldier.from_str("▲14歩").tarehu_ikeru? == true  }
-      assert { Soldier.from_str("▲15歩").tarehu_ikeru? == false }
+    it "tarefu_desuka?" do
+      assert { Soldier.from_str("▲11歩").tarefu_desuka? == false }
+      assert { Soldier.from_str("▲12歩").tarefu_desuka? == true  }
+      assert { Soldier.from_str("▲13歩").tarefu_desuka? == true  }
+      assert { Soldier.from_str("▲14歩").tarefu_desuka? == true  }
+      assert { Soldier.from_str("▲15歩").tarefu_desuka? == false }
     end
 
     it "maeni_ittyokusen" do
@@ -72,13 +72,13 @@ module Bioshogi
     end
 
     it "column_is_*?" do
-      assert { Soldier.from_str("△34飛").column_is_two_to_eight?   == true  }
-      assert { Soldier.from_str("△34飛").column_is_two_or_eight?   == false }
+      assert { Soldier.from_str("△34飛").column_is_second_to_eighth?   == true  }
+      assert { Soldier.from_str("△34飛").column_is_second_or_eighth?   == false }
       assert { Soldier.from_str("△34飛").column_is_three_to_seven? == true  }
       assert { Soldier.from_str("△34飛").column_is_center?         == false }
       assert { Soldier.from_str("△34飛").column_is_edge?           == false }
-      assert { Soldier.from_str("△34飛").column_is_right_area?     == false }
-      assert { Soldier.from_str("△34飛").column_is_left_area?      == true  }
+      assert { Soldier.from_str("△34飛").column_is_right_side?     == false }
+      assert { Soldier.from_str("△34飛").column_is_left_side?      == true  }
       assert { Soldier.from_str("△34飛").column_is_right_edge?     == false }
       assert { Soldier.from_str("△34飛").column_is_left_edge?      == false }
     end

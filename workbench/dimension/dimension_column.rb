@@ -16,25 +16,25 @@ DimensionColumn.fetch("4").left_or_right_to_closer_side # => :right
 DimensionColumn.fetch("5").left_or_right_to_closer_side # => :left
 DimensionColumn.fetch("6").left_or_right_to_closer_side # => :left
 
-DimensionColumn.fetch("1").column_is_two_to_eight?   # => false
-DimensionColumn.fetch("2").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("3").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("4").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("5").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("6").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("7").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("8").column_is_two_to_eight?   # => true
-DimensionColumn.fetch("9").column_is_two_to_eight?   # => false
+DimensionColumn.fetch("1").column_is_second_to_eighth?   # => false
+DimensionColumn.fetch("2").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("3").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("4").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("5").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("6").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("7").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("8").column_is_second_to_eighth?   # => true
+DimensionColumn.fetch("9").column_is_second_to_eighth?   # => false
 
-DimensionColumn.fetch("1").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("2").column_is_two_or_eight?   # => true
-DimensionColumn.fetch("3").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("4").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("5").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("6").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("7").column_is_two_or_eight?   # => false
-DimensionColumn.fetch("8").column_is_two_or_eight?   # => true
-DimensionColumn.fetch("9").column_is_two_or_eight?   # => false
+DimensionColumn.fetch("1").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("2").column_is_second_or_eighth?   # => true
+DimensionColumn.fetch("3").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("4").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("5").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("6").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("7").column_is_second_or_eighth?   # => false
+DimensionColumn.fetch("8").column_is_second_or_eighth?   # => true
+DimensionColumn.fetch("9").column_is_second_or_eighth?   # => false
 
 DimensionColumn.fetch("1").column_is_three_to_seven? # => false
 DimensionColumn.fetch("2").column_is_three_to_seven? # => false
@@ -55,13 +55,13 @@ DimensionColumn.fetch("2").column_is_edge?           # => false
 DimensionColumn.fetch("8").column_is_edge?           # => false
 DimensionColumn.fetch("9").column_is_edge?           # => true
 
-DimensionColumn.fetch("4").column_is_right_area?     # => true
-DimensionColumn.fetch("5").column_is_right_area?     # => false
-DimensionColumn.fetch("6").column_is_right_area?     # => false
+DimensionColumn.fetch("4").column_is_right_side?     # => true
+DimensionColumn.fetch("5").column_is_right_side?     # => false
+DimensionColumn.fetch("6").column_is_right_side?     # => false
 
-DimensionColumn.fetch("4").column_is_left_area?      # => false
-DimensionColumn.fetch("5").column_is_left_area?      # => false
-DimensionColumn.fetch("6").column_is_left_area?      # => true
+DimensionColumn.fetch("4").column_is_left_side?      # => false
+DimensionColumn.fetch("5").column_is_left_side?      # => false
+DimensionColumn.fetch("6").column_is_left_side?      # => true
 
 DimensionColumn.fetch("1").column_is_right_edge?     # => true
 DimensionColumn.fetch("2").column_is_right_edge?     # => false
