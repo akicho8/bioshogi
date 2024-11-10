@@ -2,7 +2,7 @@ require "./setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-# Dimension::PlaceY.promotable_disabled
+# Dimension::DimensionRow.promotable_disabled
 # Dimension.wh_change([2, 5])
 #
 # container = Container::Basic.new
@@ -71,9 +71,9 @@ system "stackprof stackprof.dump"
 # >>         93   (2.8%)          50   (1.5%)     Bioshogi::Board::UpdateMethods#safe_delete_on
 # >>       1343  (40.4%)          49   (1.5%)     Set#each
 # >>         46   (1.4%)          46   (1.4%)     Bioshogi::SimpleModel#initialize
-# >>        163   (4.9%)          45   (1.4%)     Bioshogi::Dimension::PlaceY.lookup
+# >>        163   (4.9%)          45   (1.4%)     Bioshogi::Dimension::DimensionRow.lookup
 # >>         40   (1.2%)          40   (1.2%)     Bioshogi::SimpleModel#initialize
-# >>        158   (4.8%)          38   (1.1%)     Bioshogi::Dimension::PlaceX.lookup
+# >>        158   (4.8%)          38   (1.1%)     Bioshogi::Dimension::DimensionColumn.lookup
 # >>         36   (1.1%)          36   (1.1%)     Bioshogi::Piece::ScoreMethods#piece_score
 # >>         34   (1.0%)          34   (1.0%)     Bioshogi::Board#surface
 # >>         64   (1.9%)          28   (0.8%)     Bioshogi::Board::UpdateMethods#place_on

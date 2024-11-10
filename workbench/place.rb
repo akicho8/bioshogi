@@ -14,8 +14,8 @@ b = Place["２一"]
 Place["１一"].object_id         # => 2040
 Place["11"].object_id           # => 2040
 
-# Dimension::PlaceX.fetch(1).object_id # => 70357212614280
-# Dimension::PlaceX.fetch(1).object_id # => 70357212614280
+# Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
+# Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
 
 Place["76"].hash                # => 2082891752263303151
 Place["７６"].hash              # => 2082891752263303151

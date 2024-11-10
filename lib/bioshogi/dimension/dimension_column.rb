@@ -7,7 +7,7 @@
 
 module Bioshogi
   module Dimension
-    class PlaceX < Base
+    class DimensionColumn < Base
       # ▲から見て2筋と8筋
       SIDE_PLUS_1   = 1                                                                # 2筋と8筋は左右から「1」つ内側にある
       ARRAY_2_8     = [SIDE_PLUS_1, dimension.pred - SIDE_PLUS_1] # [2, 8]

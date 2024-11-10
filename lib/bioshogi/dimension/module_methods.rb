@@ -15,15 +15,15 @@ module Bioshogi
       def wh_change(wsize, &block)
         save_value = dimension_wh
         h, v = wsize
-        PlaceX.dimension_set(h)
-        PlaceY.dimension_set(v)
+        DimensionColumn.dimension_set(h)
+        DimensionRow.dimension_set(v)
         if block_given?
           begin
             yield
           ensure
             h, v = save_value
-            PlaceX.dimension_set(h)
-            PlaceY.dimension_set(v)
+            DimensionColumn.dimension_set(h)
+            DimensionRow.dimension_set(v)
           end
         else
           save_value
@@ -35,7 +35,7 @@ module Bioshogi
       end
 
       def dimension_wh
-        [PlaceX.dimension, PlaceY.dimension]
+        [DimensionColumn.dimension, DimensionRow.dimension]
       end
     end
   end

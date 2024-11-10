@@ -38,7 +38,7 @@ module Bioshogi
 
       it "works" do
         [Diver::NegaAlphaDiver, Diver::NegaScoutDiver].each do |diver_class|
-          Dimension::PlaceY.promotable_disabled do
+          Dimension::DimensionRow.promotable_disabled do
             Dimension.wh_change([2, 5]) do
               container = Container::Simple.new
               container.board.placement_from_shape <<~EOT

@@ -10,16 +10,16 @@ module Bioshogi
         super
 
         c = piller_counts[soldier.place.x.value] + 1
-        if c > Dimension::PlaceY.dimension
+        if c > Dimension::DimensionRow.dimension
           raise MustNotHappen, "#{soldier.place.x.hankaku_number}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
         end
         piller_counts[soldier.place.x.value] = c
-        self.piece_piller_by_latest_piece = (c == Dimension::PlaceY.dimension) # 最後の駒が反映される
+        self.piece_piller_by_latest_piece = (c == Dimension::DimensionRow.dimension) # 最後の駒が反映される
       end
 
       # 現在の状態は駒柱がある状態か？
       def piece_piller_by_latest_piece?
-        piller_counts.each_value.any? { |c| c >= Dimension::PlaceY.dimension } # O(n) になるので使いたくない
+        piller_counts.each_value.any? { |c| c >= Dimension::DimensionRow.dimension } # O(n) になるので使いたくない
       end
 
       def all_clear
@@ -38,7 +38,7 @@ module Bioshogi
               raise "must not happen"
             end
             piller_counts[soldier.place.x.value] = c
-            self.piece_piller_by_latest_piece = (c == Dimension::PlaceY.dimension)
+            self.piece_piller_by_latest_piece = (c == Dimension::DimensionRow.dimension)
           end
         end
       end

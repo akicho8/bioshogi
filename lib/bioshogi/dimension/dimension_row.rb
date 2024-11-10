@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Dimension
-    class PlaceY < Base
+    class DimensionRow < Base
       cattr_accessor(:promotable_depth) { 3 }      # 相手の陣地の成れる縦幅
 
       class << self
@@ -21,7 +21,7 @@ module Bioshogi
         # 一時的に成れない状況にする
         def promotable_disabled(&block)
           old_value = promotable_depth
-          PlaceY.promotable_depth = 0
+          DimensionRow.promotable_depth = 0
           if block_given?
             begin
               yield

@@ -1,7 +1,7 @@
 require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-# Dimension::PlaceY.promotable_disabled
+# Dimension::DimensionRow.promotable_disabled
 Dimension.wh_change([3, 4])
 
 container = Container::Basic.new

@@ -15,8 +15,8 @@ module Bioshogi
       include Enumerable
 
       def each(&block)
-        Dimension::PlaceY.dimension.times.flat_map { |y|
-          Dimension::PlaceX.dimension.times.collect { |x|
+        Dimension::DimensionRow.dimension.times.flat_map { |y|
+          Dimension::DimensionColumn.dimension.times.collect { |x|
             self[[x, y]]
           }
         }.each(&block)
@@ -37,12 +37,12 @@ module Bioshogi
         case value
         when Array
           a, b = value
-          x = Dimension::PlaceX.lookup(a)
-          y = Dimension::PlaceY.lookup(b)
+          x = Dimension::DimensionColumn.lookup(a)
+          y = Dimension::DimensionRow.lookup(b)
         when String
           a, b = value.chars
-          x = Dimension::PlaceX.lookup(a)
-          y = Dimension::PlaceY.lookup(b)
+          x = Dimension::DimensionColumn.lookup(a)
+          y = Dimension::DimensionRow.lookup(b)
         else
           if respond_to?(:to_a)
             return lookup(value.to_a)
@@ -69,8 +69,8 @@ module Bioshogi
 
     # for Soldier
     DELEGATE_METHODS = [
-      *Dimension::PlaceX::DELEGATE_METHODS,
-      *Dimension::PlaceY::DELEGATE_METHODS,
+      *Dimension::DimensionColumn::DELEGATE_METHODS,
+      *Dimension::DimensionRow::DELEGATE_METHODS,
 
       :move_to,
       :move_to_xy,
@@ -227,13 +227,13 @@ module Bioshogi
 
     ################################################################################ location から見た情報を返す
 
-    Dimension::PlaceX::DELEGATE_METHODS.each do |name|
+    Dimension::DimensionColumn::DELEGATE_METHODS.each do |name|
       define_method(name) do |location|
         @x.white_then_flip(location).public_send(name)
       end
     end
 
-    Dimension::PlaceY::DELEGATE_METHODS.each do |name|
+    Dimension::DimensionRow::DELEGATE_METHODS.each do |name|
       define_method(name) do |location|
         @y.white_then_flip(location).public_send(name)
       end

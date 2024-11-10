@@ -21,7 +21,7 @@ module Bioshogi
 
       # SIDE_PLUS_1   = 1 # 2筋と8筋は左右から「1」つ内側にある
       # # ▲から見て2筋と8筋
-      # ARRAY_2_8     = [SIDE_PLUS_1, Dimension::PlaceX.dimension.pred - SIDE_PLUS_1] # [2, 8]
+      # ARRAY_2_8     = [SIDE_PLUS_1, Dimension::DimensionColumn.dimension.pred - SIDE_PLUS_1] # [2, 8]
       # SET_2_8       = ARRAY_2_8.to_set                                                 # #<Set: {2, 3}>
       # RANGE_2_8     = Range.new(*ARRAY_2_8)                                            # 2..8
 
@@ -210,7 +210,7 @@ module Bioshogi
               V.bishop_naname_mae_vectors.any? do |up_left|       # 左上と右上を試す
                 matched = false
                 step = 0                                          # 斜めの効きの数 (駒に衝突したらそこも含める)
-                Dimension::PlaceY.dimension.times do |i|
+                Dimension::DimensionRow.dimension.times do |i|
                   if v = soldier.move_to(up_left, magnification: 1 + i)
                     step += 1                                     # 効きの数+1
                     if step >= threshold && v.opp_side?(location) # 相手の陣地に入れるか？
@@ -377,8 +377,8 @@ module Bioshogi
             # 3. 奥に相手の玉がいること (13→12→11と探す)
             verify_if do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
-              # Dimension::PlaceY.dimension は書かなくてもいい
-              (2..Dimension::PlaceY.dimension).any? do |y|
+              # Dimension::DimensionRow.dimension は書かなくてもいい
+              (2..Dimension::DimensionRow.dimension).any? do |y|
                 if v = soldier.move_to_xy(0, Y_UP * y)
                   if s = surface[v]
                     if s.piece.key == :king && opponent?(s)
@@ -396,7 +396,7 @@ module Bioshogi
             # 4. 下に「自分の香飛龍」 (17→18→19と探す)
             verify_if do
               # この 2 は突いた歩の 2 つ下から香を調べるため
-              (2..Dimension::PlaceY.dimension).any? do |y|
+              (2..Dimension::DimensionRow.dimension).any? do |y|
                 if v = soldier.move_to_xy(0, Y_DOWN * y)
                   if s = surface[v]
                     if s.maeni_ittyokusen? && own?(s) # 「自分の香飛龍」か？
@@ -419,7 +419,7 @@ module Bioshogi
           func: proc {
             verify_if do
               mode = :walk_to_bishop
-              Dimension::PlaceY.dimension.times do |y|
+              Dimension::DimensionRow.dimension.times do |y|
                 if v = soldier.move_to_xy(0, Y_UP * (1 + y))
                   if s = surface[v]
                     if opponent?(s)
@@ -501,7 +501,7 @@ module Bioshogi
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
           func: proc {
             # 1. 打った位置が1から4段目である
-            verify_if { soldier.top_spaces.between?(1, Dimension::PlaceY.promotable_depth) }
+            verify_if { soldier.top_spaces.between?(1, Dimension::DimensionRow.promotable_depth) }
 
             # 2. 相手が「成駒」または「飛金銀香玉」である
             verify_if do

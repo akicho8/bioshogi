@@ -121,19 +121,19 @@ module Bioshogi
     ################################################################################
 
     def top
-      Dimension::PlaceY.top.white_then_flip(self)
+      Dimension::DimensionRow.top.white_then_flip(self)
     end
 
     def bottom
-      Dimension::PlaceY.bottom.white_then_flip(self)
+      Dimension::DimensionRow.bottom.white_then_flip(self)
     end
 
     def left
-      Dimension::PlaceX.left.white_then_flip(self)
+      Dimension::DimensionColumn.left.white_then_flip(self)
     end
 
     def right
-      Dimension::PlaceX.right.white_then_flip(self)
+      Dimension::DimensionColumn.right.white_then_flip(self)
     end
 
     ################################################################################

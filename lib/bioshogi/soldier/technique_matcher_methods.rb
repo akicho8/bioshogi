@@ -26,7 +26,7 @@ module Bioshogi
 
       # 先手から見て右からの距離
       def __distance_from_right
-        Dimension::PlaceX.dimension.pred - place.x.value
+        Dimension::DimensionColumn.dimension.pred - place.x.value
       end
 
       # # センターにいる？ (5の列にいる？)
@@ -41,7 +41,7 @@ module Bioshogi
 
       # 垂れ歩状態か？ (つまり2, 3, 4段目)
       def tarehu_ikeru?
-        top_spaces.between?(1, Dimension::PlaceY.promotable_depth)
+        top_spaces.between?(1, Dimension::DimensionRow.promotable_depth)
       end
 
       # 前に一直線に進めるタイプか？

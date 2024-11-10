@@ -10,9 +10,9 @@ Dimension.wh_change([2, 2]) do
     EOT
 end
 
-Dimension::PlaceX.fetch("１").object_id == Dimension::PlaceX.fetch("１").object_id # => true
+Dimension::DimensionColumn.fetch("１").object_id == Dimension::DimensionColumn.fetch("１").object_id # => true
 
-instance = Dimension::PlaceX.fetch("１")
+instance = Dimension::DimensionColumn.fetch("１")
 instance.name           # => "１"
 instance.value          # => 8
 instance.hankaku_number # => "1"
@@ -21,7 +21,7 @@ instance.to_sfen        # => "1"
 instance.to_human_int   # => 1
 instance.yomiage        # => "いち"
 
-instance = Dimension::PlaceY.fetch("１")
+instance = Dimension::DimensionRow.fetch("１")
 instance.name           # => "一"
 instance.value          # => 0
 instance.hankaku_number # => "1"
@@ -48,9 +48,9 @@ test = -> klass {
     }
   }
 }
-test.(Dimension::PlaceX)
-test.(Dimension::PlaceY)
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:44", :lookup, [nil, #<Bioshogi::Dimension::PlaceY:70178848317620 "一" 0>]]
+test.(Dimension::DimensionColumn)
+test.(Dimension::DimensionRow)
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:44", :lookup, [nil, #<Bioshogi::Dimension::DimensionRow:70178848317620 "一" 0>]]
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> | name | value | hankaku_number | zenkaku_number | to_sfen | to_human_int | yomiage |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|

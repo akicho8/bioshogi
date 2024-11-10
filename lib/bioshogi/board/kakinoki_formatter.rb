@@ -27,21 +27,21 @@ module Bioshogi
       private
 
       def header
-        "  " + Dimension::PlaceX.dimension.times.collect { |i| Dimension::PlaceX.fetch(i).name }.join(" ")
+        "  " + Dimension::DimensionColumn.dimension.times.collect { |i| Dimension::DimensionColumn.fetch(i).name }.join(" ")
       end
 
       def line
-        "+" + "---" * Dimension::PlaceX.dimension + "+"
+        "+" + "---" * Dimension::DimensionColumn.dimension + "+"
       end
 
       def rows
-        Dimension::PlaceY.dimension.times.collect do |y|
-          fields = Dimension::PlaceX.dimension.times.collect do |x|
+        Dimension::DimensionRow.dimension.times.collect do |y|
+          fields = Dimension::DimensionColumn.dimension.times.collect do |x|
             place = Place.fetch([x, y])
             soldier = @board.surface[place]
             cell_str(soldier)
           end
-          "|" + fields.join + "|" + Dimension::PlaceY.fetch(y).name
+          "|" + fields.join + "|" + Dimension::DimensionRow.fetch(y).name
         end
       end
 

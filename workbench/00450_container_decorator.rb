@@ -11,9 +11,9 @@ class Container::ContainerDecorator < SimpleDelegator
 
   def to_html
     tag.table(border: true) do
-      Dimension::PlaceY.dimension.times.collect { |y|
+      Dimension::DimensionRow.dimension.times.collect { |y|
         tag.tr {
-          Dimension::PlaceX.dimension.times.collect { |x|
+          Dimension::DimensionColumn.dimension.times.collect { |x|
             style = nil
             cell = ""
             if soldier = board.lookup([x, y])
