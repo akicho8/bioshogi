@@ -543,35 +543,30 @@ module Bioshogi
 
         {
           key: "継ぎ歩",
-          description: "",
+          description: "条件が成立しない方を先に判定した方が早めに打ち切れるので2手目1手目の順で見る",
           func: proc {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
-            soldier = executor.hand.soldier
-            x = soldier.place.x
-            y = soldier.place.y
-            y2 = y.value - soldier.location.sign_dir # 24歩のY座標(整数値)
+            # 2手前: ▲24歩(25) 突き
+            verify_if do
+              if hand_log = executor.container.hand_logs[-2]
+                if s = hand_log.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にしている
+                  if s.piece.key == :pawn && !s.promoted && own?(s)
+                    s.place == soldier.move_to(:up)
+                  end
+                end
+              end
+            end
 
             # 1手前: △24同歩 取らされる
-            flag = false
-            if hand_log = executor.container.hand_logs[-1]
-              if s = hand_log&.move_hand&.soldier
-                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && opponent?(s))
+            verify_if do
+              if hand_log = executor.container.hand_logs[-1]
+                if s = hand_log.move_hand&.soldier
+                  if s.piece.key == :pawn && !s.promoted && opponent?(s)
+                    s.place == soldier.move_to(:up)
+                  end
+                end
               end
-            end
-            unless flag
-              throw :skip
-            end
-
-            # 2手前: ▲24歩(25) 突き
-            flag = false
-            if hand_log = executor.container.hand_logs[-2]
-              if s = hand_log&.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にすること
-                flag = (s.place.x == x && s.place.y.value == y2 && s.piece.key == :pawn && !s.promoted && own?(s))
-              end
-            end
-            unless flag
-              throw :skip
             end
           },
         },
@@ -582,33 +577,26 @@ module Bioshogi
           func: proc {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
-            soldier = executor.hand.soldier
-            x = soldier.place.x
-            y = soldier.place.y
-            y2 = y.value - soldier.location.sign_dir # 24歩のY座標(整数値)
-
-            # 1手前: △24同何か 取らされる
-            flag = false
-            if hand_log = executor.container.hand_logs[-1]
-              if s = hand_log&.move_hand&.soldier
-                flag = (s.place.x == x && s.place.y.value == y2 && opponent?(s))
-              end
-            end
-            unless flag
-              throw :skip
-            end
-
             # 2手前: ▲24歩打
-            flag = false
-            if hand_log = executor.container.hand_logs[-2]
-              if s = hand_log&.drop_hand&.soldier
-                if s.piece.key == :pawn && s.place.x == x && s.place.y.value == y2 && own?(s)
-                  flag = true
+            verify_if do
+              if hand_log = executor.container.hand_logs[-2]
+                if s = hand_log.drop_hand&.soldier
+                  if s.piece.key == :pawn && own?(s)
+                    s.place == soldier.move_to(:up)
+                  end
                 end
               end
             end
-            unless flag
-              throw :skip
+
+            # 1手前: △24同何か 取らされる
+            verify_if do
+              if hand_log = executor.container.hand_logs[-1]
+                if s = hand_log.move_hand&.soldier
+                  if opponent?(s)
+                    s.place == soldier.move_to(:up)
+                  end
+                end
+              end
             end
           },
         },
