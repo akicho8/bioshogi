@@ -10,8 +10,8 @@ module Bioshogi
       # LEFT  = V[-1,  0]
       # DOWN  = V[ 0,  1]
 
-      LR            = [-1, +1]                           # 1ステップの左右
-      LR2           = [[1, 2], [-1, -2]]                 # 1〜2ステップの左右
+      # LR            = [-1, +1]                           # 1ステップの左右
+      # LR2           = [[1, 2], [-1, -2]]                 # 1〜2ステップの左右
       # LRUD_PLUS_TWO = [[2, 0], [-2, 0], [0, 2],[ 0, -2]] # 1つ離れたところの上下左右
 
       ROW_IS_2  = 1 # ▲から見て2段目のこと
@@ -657,7 +657,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:28:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
-# ~>    from -:7:in `<module:Analysis>'
-# ~>    from -:6:in `<module:Bioshogi>'
-# ~>    from -:5:in `<main>'
