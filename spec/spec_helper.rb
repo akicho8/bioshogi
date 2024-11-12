@@ -50,4 +50,8 @@ RSpec.configure do |config|
 
   # https://wai-doi.hatenablog.com/entry/rspec-describe
   # config.expose_dsl_globally = false # グローバルに RSpec 関連メソッドをぶちまけないようにする
+
+  # config.after(:suite) do
+  #   p $counter
+  # end
 end

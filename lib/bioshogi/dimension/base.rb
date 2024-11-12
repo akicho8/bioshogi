@@ -1,13 +1,21 @@
 # frozen-string-literal: true
 
+# $counter = Hash.new(0)
+
 module Bioshogi
   module Dimension
     class Base
-      class_attribute :dimension_size, default: 9
+      DEFAULT = 9
+
+      class_attribute :dimension_size, default: DEFAULT
 
       attr_reader :value
 
       class << self
+        def default_size?
+          dimension_size == DEFAULT
+        end
+
         def fetch(value)
           lookup(value) or raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
         end
@@ -16,8 +24,12 @@ module Bioshogi
           table[value]
         end
 
-        def dimension_set(v)
+        def size_reset(v)
           self.dimension_size = v
+          cache_clear
+        end
+
+        def cache_clear
           @char_infos  = nil
           @table       = nil
           @value_range = nil
@@ -36,7 +48,7 @@ module Bioshogi
           }.freeze
         end
 
-        # 幅
+        # # 幅
         def value_range
           @value_range ||= 0...char_infos.size
         end
@@ -46,7 +58,14 @@ module Bioshogi
 
       def initialize(value)
         @value = value
+
+        # freeze するためメモ化するなら @func ||= xxx ではなく @cache[:func] ||= xxx とする
+        @cache = {}
       end
+
+      # def cache_clear
+      #   @cache.clear
+      # end
 
       delegate *[
         :key,
@@ -56,7 +75,7 @@ module Bioshogi
       ], to: :char_info
 
       def char_info
-        self.class.char_infos[@value]
+        self.class.char_infos[value]
       end
 
       def yomiage
@@ -64,15 +83,39 @@ module Bioshogi
       end
 
       def flip
-        self.class.fetch(self.class.char_infos.size - 1 - @value)
+        self.class.fetch(dimension_size.pred - value)
       end
 
+      # FIXME: ここでキャッシュするとテストがこける
       def white_then_flip(location)
-        if Location[location].key == :white
+        location = Location[location]
+        if location.key == :white
           flip
         else
           self
         end
+
+        # location2 = Location[location]
+        # real = yield_self do
+        #   if location2.key == :white
+        #     flip
+        #   else
+        #     self
+        #   end
+        # end
+        #
+        #
+        # location2 = Location[location]
+        # real = @cache["white_then_flip_#{key}_#{location2.key}"] ||= yield_self do
+        #   if location2.key == :white
+        #     flip
+        #   else
+        #     self
+        #   end
+        # end
+        #
+        # $counter["#{key}_#{location2.key}_#{real.key}"] += 1
+        # real
       end
 
       def ==(other)
@@ -80,7 +123,7 @@ module Bioshogi
       end
 
       def <=>(other)
-        @value <=> other.value
+        value <=> other.value
       end
 
       def eql?(other)
@@ -92,7 +135,7 @@ module Bioshogi
       end
 
       def inspect
-        "#<#{self.class.name}:#{object_id} #{name.inspect} #{@value}>"
+        "#<#{self.class.name}:#{object_id} #{name.inspect} #{value}>"
       end
     end
   end

@@ -3,7 +3,7 @@
 module Bioshogi
   module Dimension
     class DimensionRow < Base
-      cattr_accessor(:promotable_depth) { 3 }      # 相手の陣地の成れる縦幅
+      class_attribute :promotable_depth, default: 3 # 相手の陣地の成れる縦幅
 
       class << self
         def char_infos
@@ -18,18 +18,23 @@ module Bioshogi
           fetch(dimension_size.pred)
         end
 
+        def promotable_depth_set(value)
+          self.promotable_depth = value
+          cache_clear
+        end
+
         # 一時的に成れない状況にする
         def promotable_disabled(&block)
-          old_value = promotable_depth
-          DimensionRow.promotable_depth = 0
+          save_value = promotable_depth
+          promotable_depth_set(0)
           if block_given?
             begin
               yield
             ensure
-              self.promotable_depth = old_value
+              promotable_depth_set(save_value)
             end
           else
-            old_value
+            save_value
           end
         end
       end
@@ -39,7 +44,7 @@ module Bioshogi
       end
 
       def to_sfen
-        ("a".ord + value).chr
+        @cache[:to_sfen] ||= ("a".ord + value).chr
       end
 
       # 人間向けの数字で 68 なら 8
@@ -68,6 +73,7 @@ module Bioshogi
       end
 
       # 自分の側の一番下を0として底辺までの高さを返す (例えば7段目であれば2を返す)
+      # ここはキャッシュしない方が早い
       def bottom_spaces
         dimension_size.pred - top_spaces
       end

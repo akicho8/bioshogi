@@ -8,17 +8,7 @@
 module Bioshogi
   module Dimension
     class DimensionColumn < Base
-      # ▲から見て2筋と8筋
-      SIDE_PLUS_1   = 1                                                                # 2筋と8筋は左右から「1」つ内側にある
-      ARRAY_2_8     = [SIDE_PLUS_1, dimension_size.pred - SIDE_PLUS_1] # [2, 8]
-      SET_2_8       = ARRAY_2_8.to_set                                                 # #<Set: {2, 3}>
-      RANGE_2_8     = Range.new(*ARRAY_2_8)                                            # 2..8
-
-      # ▲から見て3筋と7筋
-      SIDE_PLUS_2   = 2                                                                # 3筋と7筋は左右から「2」つ内側にある
-      ARRAY_3_7     = [SIDE_PLUS_2, dimension_size.pred - SIDE_PLUS_2] # [3, 7]
-      SET_3_7       = ARRAY_3_7.to_set                                                 # #<Set: {3, 3}>
-      RANGE_3_7     = Range.new(*ARRAY_3_7)                                            # 3..7
+      ONE_COLUMN = 1
 
       class << self
         # ["1", "2", "3"] -> ["3", "2", "1"].last(2) -> ["2", "1"]
@@ -39,13 +29,14 @@ module Bioshogi
         char_info.number_zenkaku
       end
 
+      # キャッシュ効果あり
       def to_sfen
-        (self.class.char_infos.size - value).to_s
+        @cache[:to_sfen] ||= (dimension_size - value).to_s
       end
 
       # 人間向けの数字で 68 なら 6
       def to_human_int
-        self.class.char_infos.size - value
+        dimension_size - value
       end
 
       ################################################################################ どれも▲から見た結果を返す
@@ -91,17 +82,17 @@ module Bioshogi
 
       # 2から8筋か？
       def column_is_second_to_eighth?
-        RANGE_2_8.cover?(value)
+        ONE_COLUMN <= value && value <= dimension_size.pred - ONE_COLUMN
       end
 
       # 2または8筋か？
       def column_is_second_or_eighth?
-        SET_2_8.include?(value)
+        value == ONE_COLUMN || value == dimension_size.pred - ONE_COLUMN
       end
 
       # 3から7筋か？
       def column_is_three_to_seven?
-        RANGE_3_7.cover?(value)
+        ONE_COLUMN < value && value < dimension_size.pred - ONE_COLUMN
       end
 
       # センターにいる？ (5の列にいる？)

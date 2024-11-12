@@ -17,7 +17,7 @@ module Bioshogi
         EOT
         assert { container.current_player.move_hands(promoted_only: true).collect(&:to_s)                           == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"]                                 }
         assert { container.current_player.move_hands(promoted_only: true).collect(&:to_s)                           == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"]                                 }
-        assert { container.current_player.move_hands.collect(&:to_s)                          == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２三角(12)", "△２一角成(12)", "△２一角(12)"] }
+        assert { container.current_player.move_hands.collect(&:to_s)                                                == ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２三角(12)", "△２一角成(12)", "△２一角(12)"] }
         assert { container.current_player.move_hands(promoted_only: true, king_captured_only: true).collect(&:to_s) == ["△２三角成(12)"]                                                                                   }
         assert { container.current_player.legal_all_hands.collect(&:to_s)                                           == ["△２一玉(11)"]                                                                                     }
         assert { container.current_player.mate_danger?                                                              == false                                                                                                }
@@ -27,3 +27,13 @@ module Bioshogi
     end
   end
 end
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
+# >> .
+# >> 
+# >> Top 1 slowest examples (0.02146 seconds, 49.0% of total time):
+# >>   Bioshogi::Player works
+# >>     0.02146 seconds -:5
+# >> 
+# >> Finished in 0.04384 seconds (files took 2.68 seconds to load)
+# >> 1 example, 0 failures
+# >> 

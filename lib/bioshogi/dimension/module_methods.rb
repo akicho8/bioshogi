@@ -3,27 +3,14 @@
 module Bioshogi
   module Dimension
     module ModuleMethods
-      # 一時的に盤面のサイズを変更する(テスト用)
-      #
-      #   before do
-      #     @size_save = Dimension.wh_change([3, 5])
-      #   end
-      #   after do
-      #     Dimension.wh_change(@size_save)
-      #   end
-      #
       def wh_change(wsize, &block)
         save_value = dimension_wh
-        h, v = wsize
-        DimensionColumn.dimension_set(h)
-        DimensionRow.dimension_set(v)
+        set_wh(*wsize)
         if block_given?
           begin
             yield
           ensure
-            h, v = save_value
-            DimensionColumn.dimension_set(h)
-            DimensionRow.dimension_set(v)
+            set_wh(*save_value)
           end
         else
           save_value
@@ -36,6 +23,15 @@ module Bioshogi
 
       def dimension_wh
         [DimensionColumn.dimension_size, DimensionRow.dimension_size]
+      end
+
+      def default_size?
+        DimensionColumn.default_size? && DimensionRow.default_size?
+      end
+
+      def set_wh(w, h)
+        DimensionColumn.size_reset(w)
+        DimensionRow.size_reset(h)
       end
     end
   end

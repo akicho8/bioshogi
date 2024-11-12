@@ -82,14 +82,7 @@ module Bioshogi
       end
 
       def perform_analyzer_enable?
-        # return instance_variable_get("@perform_analyzer_enable_p") if instance_variable_defined?("@perform_analyzer_enable_p")
-        # @perform_analyzer_enable_p ||= yield_self do
-        if Bioshogi.config[:analyzer_enable]
-          if Dimension.dimension_info.key == :d9x9
-            container.params[:analyzer_enable]
-          end
-        end
-        # end
+        Bioshogi.config[:analyzer_enable] && container.params[:analyzer_enable] && Dimension.default_size?
       end
     end
   end

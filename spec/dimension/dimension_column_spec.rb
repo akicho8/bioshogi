@@ -53,6 +53,14 @@ module Bioshogi
         assert { DimensionColumn.right.name == "１" }
       end
 
+      # it "座標サイズを変更したときも反転が正しい" do
+      #   assert { DimensionColumn.fetch("2").flip.to_human_int == 8 }
+      #   Dimension.wh_change([5, 9]) do
+      #     assert { DimensionColumn.fetch("2").flip.to_human_int == 4 }
+      #   end
+      #   assert { DimensionColumn.fetch("2").flip.to_human_int == 8 }
+      # end
+
       ################################################################################
 
       it "left_spaces" do
