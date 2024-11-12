@@ -118,7 +118,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | 九間飛車左穴熊           | 九間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | 森安流袖飛車穴熊         |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 3→4→3戦法              | 四間飛車           |
-# >> | Bioshogi::Analysis::AttackInfo    | 戸部流4→3戦法           | 3→4→3戦法        |
+# >> | Bioshogi::Analysis::AttackInfo    | 戸辺流4→3戦法           | 3→4→3戦法        |
 # >> | Bioshogi::Analysis::AttackInfo    | 向かい飛車               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | ダイレクト向かい飛車     |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | モノレール向かい飛車     |                    |

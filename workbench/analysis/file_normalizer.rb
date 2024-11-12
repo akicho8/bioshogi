@@ -91,7 +91,7 @@ Analysis::FileNormalizer.new.call
 # >>   [89 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/楠本式石田流.kif
 # >>   [90 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/新鬼殺し.kif
 # >>   [91 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/3→4→3戦法.kif
-# >>   [92 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/戸部流4→3戦法.kif
+# >>   [92 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/戸辺流4→3戦法.kif
 # >>   [93 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/向かい飛車.kif
 # >>   [94 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/逆棒銀.kif
 # >>   [95 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/ダイレクト向かい飛車.kif

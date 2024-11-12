@@ -32,7 +32,7 @@
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/一直線穴熊.kif:8:棋戦詳細：第21期棋王戦予選決勝
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/対振り持久戦.kif:9:棋戦詳細：第63期順位戦C級2組1回戦
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/矢倉▲3七銀戦法.kif:8:棋戦詳細：第1回銀河戦本戦Bブロック22回戦
-~/src/bioshogi/lib/bioshogi/analysis/戦法/戸部流4→3戦法.kif:9:棋戦詳細：第63期順位戦C級2組1回戦
+~/src/bioshogi/lib/bioshogi/analysis/戦法/戸辺流4→3戦法.kif:9:棋戦詳細：第63期順位戦C級2組1回戦
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/角交換振り飛車.kif:6:棋戦詳細：名人八七段勝抜戦
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/遠山流.kif:8:棋戦詳細：アマプロ勝ち抜き戦（近代将棋1995年4月号）
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/四手角.kif:9:棋戦詳細：第18期棋王戦本戦3回戦
