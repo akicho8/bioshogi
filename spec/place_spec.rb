@@ -30,8 +30,8 @@ module Bioshogi
       expect { Place.fetch([-1, 0])  }.to raise_error(SyntaxDefact)
       expect { Place.fetch([0, -1])  }.to raise_error(SyntaxDefact)
 
-      expect { Dimension.wh_change([2, 2]) { Place.fetch("33")   } }.to raise_error(SyntaxDefact)
-      expect { Dimension.wh_change([2, 2]) { Place.fetch("３三") } }.to raise_error(SyntaxDefact)
+      expect { Dimension.change([2, 2]) { Place.fetch("33")   } }.to raise_error(SyntaxDefact)
+      expect { Dimension.change([2, 2]) { Place.fetch("３三") } }.to raise_error(SyntaxDefact)
     end
 
     it "#name は、座標を表す" do

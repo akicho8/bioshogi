@@ -2,7 +2,7 @@ require "./setup"
 
 Place.fetch([-1, 0]) rescue $!  # => #<Bioshogi::SyntaxDefact: 座標が読み取れません : [-1, 0]>
 
-Dimension.wh_change([2, 2]) do
+Dimension.change([2, 2]) do
   BoardParser.parse(<<~EOT).soldiers.collect(&:name).sort # => ["▲２一歩"]
 +------+
 | 歩 ・|

@@ -1,6 +1,6 @@
 require "./setup"
 
-Dimension.wh_change([3, 3])
+Dimension.change([3, 3])
 container = Container::Basic.new
 container.pieces_set("▲歩")
 container.board.placement_from_shape <<~EOT

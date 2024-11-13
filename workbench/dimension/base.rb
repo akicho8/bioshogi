@@ -1,17 +1,10 @@
 require "./setup"
+def _
+  "%.1f ms" % Benchmark.ms { 1000000.times { yield } }
+end
+a = DimensionColumn.fetch("1")
+_ { a.white_then_flip(:white) } # => "461.6 ms"
 
-# Dimension.wh_change([2, 2]) do
+# Dimension.change([2, 2]) do
 # puts Board.create_by_preset("平手").to_kif
 # end
-# >>   ９ ８ ７ ６ ５ ４ ３ ２ １
-# >> +---------------------------+
-# >> |v香v桂v銀v金v玉v金v銀v桂v香|一
-# >> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
-# >> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
-# >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
-# >> | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
-# >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
-# >> | 香 桂 銀 金 玉 金 銀 桂 香|九
-# >> +---------------------------+

@@ -3,7 +3,7 @@ require "../setup"
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
 # Dimension::DimensionRow.promotable_disabled
-Dimension.wh_change([4, 9])
+Dimension.change([4, 9])
 
 container = Container::Basic.new
 container.player_at(:black).pieces_add("金桂")

@@ -3,7 +3,7 @@
 require "./setup"
 
 Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-Dimension.wh_change([3, 3]) do
+Dimension.change([3, 3]) do
   container = Container::Basic.new
   container.board.placement_from_human("▲３三歩 △１一歩")
   puts container

@@ -13,7 +13,7 @@
 #   # | ・|二
 #   # | 香|三
 #   # +---+
-#   Dimension.wh_change([1, 3]) do
+#   Dimension.change([1, 3]) do
 #     container = Container::Basic.new
 #     container.player_at(:black).soldier_create("１三香")
 #     # puts container
@@ -29,7 +29,7 @@
 #   # | ・|二
 #   # | 杏|三
 #   # +---+
-#   Dimension.wh_change([1, 3]) do
+#   Dimension.change([1, 3]) do
 #     container = Container::Basic.new
 #     container.player_at(:black).soldier_create("１三杏")
 #     # puts container

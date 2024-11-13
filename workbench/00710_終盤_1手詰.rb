@@ -1,7 +1,7 @@
 require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-Dimension.wh_change([2, 4]) do
+Dimension.change([2, 4]) do
   container = Container::Basic.new
   container.placement_from_bod <<~EOT
 後手の持駒：

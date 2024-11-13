@@ -2,7 +2,7 @@ require "./setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 # Dimension::DimensionRow.promotable_disabled
-Dimension.wh_change([3, 4])
+Dimension.change([3, 4])
 
 container = Container::Basic.new
 # container.placement_from_bod <<~EOT

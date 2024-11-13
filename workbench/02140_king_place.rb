@@ -17,7 +17,7 @@ require "./setup"
 # container.player_at(:white).king_place # => #<Bioshogi::Place １一>
 # container.player_at(:black).king_place # => #<Bioshogi::Place １二>
 
-# Dimension.wh_change([3, 3])
+# Dimension.change([3, 3])
 # container = Container::Basic.new
 # container.placement_from_bod(<<~EOT)
 # +---------+
@@ -34,7 +34,7 @@ require "./setup"
 # brain.create_all_hands(promoted_only: true).collect(&:to_kif) # => ["▲３二金(23)", "▲２二金(23)", "▲１二金(23)", "▲３三金(23)", "▲１三金(23)"]
 # tp brain.fast_score_list # => [{:hand=><▲３二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>7.1e-05}, {:hand=><▲２二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>3.2e-05}, {:hand=><▲１二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>2.8e-05}, {:hand=><▲３三金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>2.7e-05}, {:hand=><▲１三金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>4.4e-05}]
 
-Dimension.wh_change([3, 1])
+Dimension.change([3, 1])
 container = Container::Basic.new
 container.placement_from_bod(<<~EOT)
 +---------+

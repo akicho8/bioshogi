@@ -313,7 +313,7 @@ container.board["５九"].name # => "▲５九玉"
 *** ５五将棋の例
 
 #+BEGIN_SRC ruby
-Dimension.wh_change([5, 5])
+Dimension.change([5, 5])
 container = Container::Basic.start
 soldiers = ["５五玉", "４五金", "３五銀", "２五角", "１五飛", "５四歩"]
 container.players.each do |player|
@@ -366,7 +366,7 @@ p container
 
 #+BEGIN_SRC ruby
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
-Dimension.wh_change([3, 3]) do
+Dimension.change([3, 3]) do
   container = Container::Basic.new
   container.board.placement_from_human("▲３三歩 △１一歩")
   puts container

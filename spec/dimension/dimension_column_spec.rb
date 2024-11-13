@@ -10,10 +10,10 @@ module Bioshogi
           expect { DimensionColumn.fetch(-1)  }.to raise_error(SyntaxDefact)
         end
         it "横の範囲外" do
-          expect { Dimension.wh_change([2, 2]) { DimensionColumn.fetch("３") } }.to raise_error(SyntaxDefact)
+          expect { Dimension.change([2, 2]) { DimensionColumn.fetch("３") } }.to raise_error(SyntaxDefact)
         end
         it "縦の範囲外" do
-          expect { Dimension.wh_change([2, 2]) { DimensionRow.fetch("三")  } }.to raise_error(SyntaxDefact)
+          expect { Dimension.change([2, 2]) { DimensionRow.fetch("三")  } }.to raise_error(SyntaxDefact)
         end
         # it "正しい座標" do
         #     assert { DimensionColumn.fetch(0).valid? == true }
@@ -55,7 +55,7 @@ module Bioshogi
 
       # it "座標サイズを変更したときも反転が正しい" do
       #   assert { DimensionColumn.fetch("2").flip.to_human_int == 8 }
-      #   Dimension.wh_change([5, 9]) do
+      #   Dimension.change([5, 9]) do
       #     assert { DimensionColumn.fetch("2").flip.to_human_int == 4 }
       #   end
       #   assert { DimensionColumn.fetch("2").flip.to_human_int == 8 }

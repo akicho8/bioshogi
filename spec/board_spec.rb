@@ -64,7 +64,7 @@ module Bioshogi
     end
 
     it "指定の座標だけを消す微妙なテスト" do
-      Dimension.wh_change([1, 3]) do
+      Dimension.change([1, 3]) do
         container = Container::Basic.new
         container.player_at(:black).soldier_create("１三香")
         container.board.safe_delete_on(Place["１三"])

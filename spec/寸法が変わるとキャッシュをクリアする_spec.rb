@@ -8,7 +8,7 @@ module Bioshogi
     it "works" do
       container = Container::Basic.new
 
-      Dimension.wh_change([2, 3]) do
+      Dimension.change([2, 3]) do
         container = Container::Basic.new
         container.placement_from_bod <<~EOT
         +------+
@@ -18,7 +18,7 @@ module Bioshogi
         +------+
           手数＝1
         EOT
-        container.current_player.move_hands(promoted_only: true).collect(&:to_s) # => ["△２二玉(11)", "△２一玉(11)", "△２三角成(12)", "△２一角成(12)"]
+        container.current_player.move_hands(promoted_only: true).collect(&:to_s) # => 
       end
 
       # ここでは 9x9 に戻っている
@@ -37,12 +37,25 @@ module Bioshogi
   end
 end
 # >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
-# >> .
+# >> F
 # >> 
-# >> Top 1 slowest examples (0.01596 seconds, 46.6% of total time):
+# >> Failures:
+# >> 
+# >>   1) 寸法が変わるとキャッシュをクリアする works
+# >>      Failure/Error: Unable to find - to read failed line
+# >> 
+# >>      NoMethodError:
+# >>        undefined method `change' for Bioshogi::Dimension:Module
+# >>      # -:11:in `block (2 levels) in <module:Bioshogi>'
+# >> 
+# >> Top 1 slowest examples (0.00127 seconds, 5.1% of total time):
 # >>   寸法が変わるとキャッシュをクリアする works
-# >>     0.01596 seconds -:5
+# >>     0.00127 seconds -:8
 # >> 
-# >> Finished in 0.03424 seconds (files took 2.53 seconds to load)
-# >> 1 example, 0 failures
+# >> Finished in 0.02488 seconds (files took 2.58 seconds to load)
+# >> 1 example, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:8 # 寸法が変わるとキャッシュをクリアする works
 # >> 

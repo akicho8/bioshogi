@@ -44,7 +44,7 @@ EOT
     end
 
     it "盤面サイズを変更していてもパースできる" do
-      Dimension.wh_change([2, 2]) do
+      Dimension.change([2, 2]) do
         assert { test1(<<-EOT) == ["▲２一歩"] }
 +------+
 | 歩 ・|

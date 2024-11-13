@@ -23,7 +23,7 @@ module Bioshogi
 
     it "移動可能な筋の取得(超重要なテスト)" do
       container = Container::Basic.new
-      Dimension.wh_change([1, 5]) do
+      Dimension.change([1, 5]) do
         test = -> s {
           soldier = Soldier.from_str(s)
           soldier.move_list(container).collect(&:to_kif).sort
@@ -34,7 +34,7 @@ module Bioshogi
     end
 
     it "成るパターンと成らないパターンがある。相手の駒があるのでそれ以上進めない" do
-      Dimension.wh_change([1, 5]) do
+      Dimension.change([1, 5]) do
         container = Container::Basic.facade(init: "▲１五香 △１三歩")
         assert { container.board["１五"].move_list(container).collect(&:to_kif) == ["▲１四香(15)", "▲１三香成(15)", "▲１三香(15)"] }
       end

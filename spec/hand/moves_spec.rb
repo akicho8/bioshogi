@@ -3,7 +3,7 @@ require "spec_helper"
 module Bioshogi
   describe Player do
     it "works" do
-      Dimension.wh_change([2, 3]) do
+      Dimension.change([2, 3]) do
         container = Container::Basic.new
         container.placement_from_bod <<~EOT
         後手の持駒：

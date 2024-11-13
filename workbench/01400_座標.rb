@@ -11,7 +11,7 @@ Dimension::DimensionRow.fetch("9")  # => #<Bioshogi::Dimension::DimensionRow:700
 Dimension::DimensionRow.fetch("９") # => #<Bioshogi::Dimension::DimensionRow:70093707713700 "九" 8>
 Dimension::DimensionRow.fetch("九") # => #<Bioshogi::Dimension::DimensionRow:70093707713700 "九" 8>
 
-Dimension.wh_change([2, 4]) do
+Dimension.change([2, 4]) do
   Dimension::DimensionColumn.char_infos # => ["２", "１"]
   Dimension::DimensionColumn.units_set # => {"２"=>0, "１"=>1}
   Dimension::DimensionColumn.units_set  # => {"２"=>0, "１"=>1}
@@ -22,7 +22,7 @@ Dimension.wh_change([2, 4]) do
   Dimension::DimensionColumn.fetch("2") # => #<Bioshogi::Dimension::DimensionColumn:70093707690420 "２" 0>
 end
 
-Dimension.wh_change([1, 1]) do
+Dimension.change([1, 1]) do
   Dimension::DimensionColumn.char_infos # => ["１"]
   Dimension::DimensionColumn.units_set # => {"１"=>0}
   puts Board.new

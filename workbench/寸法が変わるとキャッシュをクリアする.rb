@@ -2,7 +2,7 @@ require "./setup"
 
 container = Container::Basic.new
 
-Dimension.wh_change([2, 3]) do
+Dimension.change([2, 3]) do
   container = Container::Basic.new
   container.placement_from_bod <<~EOT
   +------+

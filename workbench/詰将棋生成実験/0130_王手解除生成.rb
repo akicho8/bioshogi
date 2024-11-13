@@ -2,7 +2,7 @@ require "../setup"
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Dimension.wh_change([2, 3])
+Dimension.change([2, 3])
 
 container = Container::Basic.new
 container.board.placement_from_shape <<~EOT

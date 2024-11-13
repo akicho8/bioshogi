@@ -4,7 +4,7 @@ module Bioshogi
   module Dimension
     class Base
       DEFAULT = 9
-      CACHE_ENABLE = true
+      CACHE_ENABLE = true # 結局のところ white_then_flip でキャッシュは必要ないが、キャッシュすることで Place.cache_clear の適切な使用がテストできる
 
       class_attribute :dimension_size, default: DEFAULT
 

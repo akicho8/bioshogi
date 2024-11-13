@@ -1,7 +1,7 @@
 require "../setup"
 
 Dimension::DimensionRow.promotable_disabled
-Dimension.wh_change([2, 3])
+Dimension.change([2, 3])
 
 container = Container::Basic.new
 container.board.placement_from_shape <<~EOT
