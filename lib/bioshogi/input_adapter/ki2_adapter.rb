@@ -87,12 +87,12 @@ module Bioshogi
                 if piece.brave?
                   m = {"左" => :first, "右" => :last}.fetch(md.to_s)
                   m = white_then_flip(m)
-                  list = list.sort_by { |e| e.place.x.value }.send(m, 1)
+                  list = list.sort_by { |e| e.place.column.value }.send(m, 1)
                 else
                   m = {"左" => :>, "右" => :<}.fetch(md.to_s)
                   m = white_then_flip(m)
                   list = list.find_all do |e|
-                    place.x.value.send(m, e.place.x.value)
+                    place.column.value.send(m, e.place.column.value)
                   end
                 end
               end
@@ -105,7 +105,7 @@ module Bioshogi
                 m = {"上" => :<, "引" => :>}.fetch(md.to_s)
                 m = white_then_flip(m)
                 list = list.find_all do |e|
-                  place.y.value.send(m, e.place.y.value)
+                  place.row.value.send(m, e.place.row.value)
                 end
               end
             end
@@ -115,7 +115,7 @@ module Bioshogi
           if list.size >= 2
             if v = up_down
               if v.include?("寄")
-                list = list.find_all { |e| e.place.y == place.y }
+                list = list.find_all { |e| e.place.row == place.row }
               end
             end
           end
@@ -123,9 +123,9 @@ module Bioshogi
           # 真下にあるもの
           if list.size >= 2
             if one_up?
-              y = place.y.value + player.location.which_value(1, -1)
+              y = place.row.value + player.location.which_value(1, -1)
               list = list.find_all { |e|
-                e.place.x == place.x && e.place.y.value == y
+                e.place.column == place.column && e.place.row.value == y
               }
             end
           end

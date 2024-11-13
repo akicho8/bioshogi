@@ -9,11 +9,11 @@ module Bioshogi
       def place_on(soldier, options = {})
         super
 
-        c = piller_counts[soldier.place.x.value] + 1
+        c = piller_counts[soldier.place.column.value] + 1
         if c > Dimension::Row.dimension_size
-          raise MustNotHappen, "#{soldier.place.x.hankaku_number}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
+          raise MustNotHappen, "#{soldier.place.column.hankaku_number}の列に#{c}個目の駒を配置しようとしています。棋譜を二重に読ませようとしていませんか？"
         end
-        piller_counts[soldier.place.x.value] = c
+        piller_counts[soldier.place.column.value] = c
         self.piece_piller_by_latest_piece = (c == Dimension::Row.dimension_size) # 最後の駒が反映される
       end
 
@@ -32,12 +32,12 @@ module Bioshogi
       def safe_delete_on(*)
         super.tap do |soldier|
           if soldier
-            c = piller_counts[soldier.place.x.value]
+            c = piller_counts[soldier.place.column.value]
             c -= 1
             if c.negative?
               raise "must not happen"
             end
-            piller_counts[soldier.place.x.value] = c
+            piller_counts[soldier.place.column.value] = c
             self.piece_piller_by_latest_piece = (c == Dimension::Row.dimension_size)
           end
         end

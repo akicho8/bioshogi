@@ -281,27 +281,27 @@ module Bioshogi
 
     # 左からこれる駒の数
     def _hidari_kara_c
-      candidate_soldiers.count { |s| s.place.x.value < _tx }
+      candidate_soldiers.count { |s| s.place.column.value < _tx }
     end
 
     # 右からこれる駒の数
     def _migi_kara_c
-      candidate_soldiers.count { |s| s.place.x.value > _tx }
+      candidate_soldiers.count { |s| s.place.column.value > _tx }
     end
 
     # 水平に寄れる駒の数
     def yoreru_c
-      candidate_soldiers.count { |s| s.place.y.value == _ty }
+      candidate_soldiers.count { |s| s.place.row.value == _ty }
     end
 
     # 上がれる駒の数(移動先より下にある数)
     def agareru_c
-      candidate_soldiers.count { |s| s.place.y.value.send(_i(:>), _ty) }
+      candidate_soldiers.count { |s| s.place.row.value.send(_i(:>), _ty) }
     end
 
     # 下がれる駒の数(移動先より上にある数)
     def sagareru_c
-      candidate_soldiers.count { |s| s.place.y.value.send(_i(:<), _ty) }
+      candidate_soldiers.count { |s| s.place.row.value.send(_i(:<), _ty) }
     end
 
     # 移動先X
@@ -336,21 +336,21 @@ module Bioshogi
 
     # 候補手の座標範囲
     def _xr
-      @_xr ||= Range.new(*candidate_soldiers.collect { |e| e.place.x.value }.minmax)
+      @_xr ||= Range.new(*candidate_soldiers.collect { |e| e.place.column.value }.minmax)
     end
 
     def _yr
-      @_yr ||= Range.new(*candidate_soldiers.collect { |e| e.place.y.value }.minmax)
+      @_yr ||= Range.new(*candidate_soldiers.collect { |e| e.place.row.value }.minmax)
     end
 
     # 移動元で二つの龍が水平線上にいる？
     def idou_moto_no_ryu_ga_suihei_ni_iru?
-      candidate_soldiers.collect { |e| e.place.y.value }.uniq.size == 1
+      candidate_soldiers.collect { |e| e.place.row.value }.uniq.size == 1
     end
 
     # 移動先の水平線上よりすべて上 or すべて下
     # つまり、移動先のYが候補のYの範囲に含まれている
-    # だから candidate_soldiers.all?{|s|s.place.y.value < _ty} || candidate_soldiers.all?{|s|s.place.y.value > _ty} から !_yr.cover?(_ty) に変更できる
+    # だから candidate_soldiers.all?{|s|s.place.row.value < _ty} || candidate_soldiers.all?{|s|s.place.row.value > _ty} から !_yr.cover?(_ty) に変更できる
     def idousakino_suiheisenjou_yori_subete_ue_mataha_shita?
       !_yr.cover?(_ty)
     end

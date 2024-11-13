@@ -19,13 +19,11 @@ module Bioshogi
       assert { container.player_at(:white).my_mate? == true  }
       assert { container.player_at(:white).op_mate? == false }
 
-      # 詰む場合はそれなりに重い
       ms = Benchmark.ms { container.player_at(:white).my_mate? }
-      assert { ms >= 20.0 }
+      assert("詰む場合はそれなりに重い") { ms >= 20.0 }
 
-      # でも詰まない場合の処理は早い
       ms = Benchmark.ms { container.player_at(:black).my_mate? }
-      assert { ms < 0.2 }
+      assert("でも詰まない場合の処理は早い") { ms < 0.2 }
     end
   end
 end

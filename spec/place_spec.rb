@@ -101,6 +101,16 @@ module Bioshogi
       assert { [a, b].sort == [b, a] }
     end
 
+    ################################################################################ アクセサ
+
+    it "column" do
+      assert { Place["34"].column.name == "３" }
+    end
+
+    it "row" do
+      assert { Place["34"].row.name == "四" }
+    end
+
     ################################################################################
 
     it "move_to_xy" do
