@@ -2,7 +2,7 @@ require "../setup"
 
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-# Dimension::DimensionRow.promotable_disabled
+# Dimension::Row.promotable_disabled
 Dimension.change([3, 9])
 
 container = Container::Basic.new

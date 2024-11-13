@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Dimension
-    class DimensionRow < Base
+    class Row < Base
       class_attribute :promotable_depth, default: 3 # 相手の陣地の成れる縦幅
 
       class << self

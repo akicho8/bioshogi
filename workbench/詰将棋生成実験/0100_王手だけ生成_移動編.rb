@@ -1,6 +1,6 @@
 require "../setup"
 
-Dimension::DimensionRow.promotable_disabled
+Dimension::Row.promotable_disabled
 Dimension.change([2, 3])
 
 container = Container::Basic.new

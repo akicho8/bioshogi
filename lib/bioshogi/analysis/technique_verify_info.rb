@@ -192,7 +192,7 @@ module Bioshogi
               V.bishop_naname_mae_vectors.any? do |up_left|       # 左上と右上を試す
                 matched = false
                 step = 0                                          # 斜めの効きの数 (駒に衝突したらそこも含める)
-                Dimension::DimensionRow.dimension_size.times do |i|
+                Dimension::Row.dimension_size.times do |i|
                   if v = soldier.relative_move_to(up_left, magnification: 1 + i)
                     step += 1                                     # 効きの数+1
                     if step >= threshold && v.opp_side?(location) # 相手の陣地に入れるか？
@@ -357,7 +357,7 @@ module Bioshogi
             #【条件3】奥に相手の玉がいること (13→12→11と探す)
             verify_if do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
-              # Dimension::DimensionRow.dimension_size は書かなくてもいい
+              # Dimension::Row.dimension_size は書かなくてもいい
               (2..).any? do |y|
                 if v = soldier.relative_move_to(:up, magnification: y)
                   if s = board[v]
@@ -481,7 +481,7 @@ module Bioshogi
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
           func: proc {
             #【条件1】打った位置が1から4段目である
-            verify_if { soldier.top_spaces.between?(1, Dimension::DimensionRow.promotable_depth) }
+            verify_if { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
 
             #【条件2】相手が「成駒」または「飛金銀香玉」である
             verify_if do

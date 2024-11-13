@@ -51,7 +51,7 @@ module Bioshogi
             raise SyntaxDefact, "最初の行の横幅が#{cell_width}桁毎になっていません\n#{@source}"
           end
           count = s.gsub("---", "-").count("-")
-          @h_units = Dimension::DimensionColumn.char_infos.last(count)
+          @h_units = Dimension::Column.char_infos.last(count)
         else
           @h_units = s.strip.split # 一行目のX座標の単位取得。全角数字の羅列から推測する。「一 二」なら横幅2と判定できる
         end
@@ -73,7 +73,7 @@ module Bioshogi
         h_units_read
 
         mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
-        @v_units = mds.collect.with_index { |v, i| v[:y] || Dimension::DimensionRow.char_infos[i] }
+        @v_units = mds.collect.with_index { |v, i| v[:y] || Dimension::Row.char_infos[i] }
         inlines = mds.collect { |v| v[:inline] }
 
         inlines.each.with_index do |s, y|

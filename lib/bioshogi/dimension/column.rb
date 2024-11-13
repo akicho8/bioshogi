@@ -7,7 +7,7 @@
 
 module Bioshogi
   module Dimension
-    class DimensionColumn < Base
+    class Column < Base
       ONE_COLUMN = 1
 
       class << self

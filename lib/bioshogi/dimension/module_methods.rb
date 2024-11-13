@@ -18,7 +18,7 @@ module Bioshogi
       end
 
       def default_size?
-        DimensionColumn.default_size? && DimensionRow.default_size?
+        Column.default_size? && Row.default_size?
       end
 
       def dimension_info
@@ -26,14 +26,14 @@ module Bioshogi
       end
 
       def current_size
-        [DimensionColumn.dimension_size, DimensionRow.dimension_size]
+        [Column.dimension_size, Row.dimension_size]
       end
 
       private
 
       def set_wh(w, h)
-        DimensionColumn.size_reset(w)
-        DimensionRow.size_reset(h)
+        Column.size_reset(w)
+        Row.size_reset(h)
         Place.cache_clear       # 超重要
       end
     end

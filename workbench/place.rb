@@ -22,8 +22,8 @@ Place["11"].object_id           # => 2040
 
 Place["11"].to_human_h          # => {:x=>1, :y=>1}
 
-# Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
-# Dimension::DimensionColumn.fetch(1).object_id # => 70357212614280
+# Dimension::Column.fetch(1).object_id # => 70357212614280
+# Dimension::Column.fetch(1).object_id # => 70357212614280
 
 Place["76"].hash                # => 2621198824031224169
 Place["７６"].hash              # => 2621198824031224169
