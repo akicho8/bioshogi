@@ -38,7 +38,7 @@ module Bioshogi
           # つまり ((@lance <=> @rook) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
           skip_if do
             if @rook_count == 1 && @lance_count == 1
-              ((@lance.y.value <=> @rook.y.value) + soldier.location.sign_dir).nonzero?
+              ((@lance.row.value <=> @rook.row.value) + soldier.location.sign_dir).nonzero?
             end
           end
 

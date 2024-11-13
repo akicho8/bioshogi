@@ -306,12 +306,12 @@ module Bioshogi
 
     # 移動先X
     def _tx
-      @_tx ||= place_to.x.value
+      @_tx ||= place_to.column.value
     end
 
     # 移動元Y
     def _ty
-      @_ty ||= place_to.y.value
+      @_ty ||= place_to.row.value
     end
 
     # プレイヤー視点から見た移動先の一つ下
@@ -326,12 +326,12 @@ module Bioshogi
 
     # 移動元X
     def _ox
-      @_ox ||= place_from.x.value
+      @_ox ||= place_from.column.value
     end
 
     # 移動先Y
     def _oy
-      @_oy ||= place_from.y.value
+      @_oy ||= place_from.row.value
     end
 
     # 候補手の座標範囲

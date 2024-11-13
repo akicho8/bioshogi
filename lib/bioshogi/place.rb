@@ -16,9 +16,9 @@ module Bioshogi
         include Enumerable
 
         def each(&block)
-          Dimension::Row.dimension_size.times.flat_map { |y|
-            Dimension::Column.dimension_size.times.collect { |x|
-              self[[x, y]]
+          Dimension::Row.dimension_size.times.flat_map { |row|
+            Dimension::Column.dimension_size.times.collect { |column|
+              self[[column, row]]
             }
           }.each(&block)
         end
@@ -33,18 +33,18 @@ module Bioshogi
           return value
         end
 
-        x = nil
-        y = nil
+        column = nil
+        row = nil
 
         case value
         when Array
           a, b = value
-          x = Dimension::Column.lookup(a)
-          y = Dimension::Row.lookup(b)
+          column = Dimension::Column.lookup(a)
+          row = Dimension::Row.lookup(b)
         when String
           a, b = value.chars
-          x = Dimension::Column.lookup(a)
-          y = Dimension::Row.lookup(b)
+          column = Dimension::Column.lookup(a)
+          row = Dimension::Row.lookup(b)
         else
           if respond_to?(:to_a)
             return lookup(value.to_a)
@@ -53,10 +53,10 @@ module Bioshogi
 
         # 座標は最大で99なのでインスタンスを使いまわす
         # ただしグローバルな寸法が変わると不整合な状態になるため cache_clear を適切に呼ばないといけない
-        if x && y
+        if column && row
           @cache ||= {}
-          @cache[x] ||= {}
-          @cache[x][y] ||= new(x, y)
+          @cache[column] ||= {}
+          @cache[column][row] ||= new(column, row)
         end
       end
 
@@ -77,7 +77,7 @@ module Bioshogi
       end
     end
 
-    attr_accessor :x, :y
+    attr_accessor :column, :row
 
     # for Soldier
     DELEGATE_METHODS = [
@@ -94,9 +94,9 @@ module Bioshogi
       :move_to_right_edge,
     ]
 
-    def initialize(x, y)
-      @x = x
-      @y = y
+    def initialize(column, row)
+      @column = column
+      @row = row
       @cache = {}
       freeze
     end
@@ -108,16 +108,6 @@ module Bioshogi
 
     def inspect
       "#<#{self.class.name} #{name}>"
-    end
-
-    ################################################################################
-
-    def column
-      x
-    end
-
-    def row
-      y
     end
 
     ################################################################################
@@ -156,15 +146,15 @@ module Bioshogi
       @cache[:to_human_int] ||= to_a.collect(&:to_human_int)
     end
 
-    # "６八銀" なら {x:6, y:8}
+    # "６八銀" なら {column:6, row:8}
     # キャッシュすると2倍速くなる
     def to_human_h
-      @cache[:to_human_h] ||= Hash[[:x, :y].zip(to_human_int)]
+      @cache[:to_human_h] ||= Hash[[:column, :row].zip(to_human_int)]
     end
 
     # ほぼキャッシュ効果なし。それどころか少し遅くなる。ただ配列を再生成しないのでこれでいいことにする。
     def to_a
-      @cache[:to_a] ||= [@x, @y]
+      @cache[:to_a] ||= [@column, @row]
     end
 
     ################################################################################
@@ -174,9 +164,9 @@ module Bioshogi
       @cache[:flip] ||= self.class.fetch(to_a.collect(&:flip))
     end
 
-    # x座標のみ反転
+    # column座標のみ反転
     def flop
-      @cache[:flop] ||= self.class.fetch([@x.flip, @y])
+      @cache[:flop] ||= self.class.fetch([@column.flip, @row])
     end
 
     # Soldier では独自に定義しているためここに Soldier からここに委譲してはいけない
@@ -222,7 +212,7 @@ module Bioshogi
     end
 
     def xy_add(x, y)
-      self.class.lookup([@x.value + x, @y.value + y])
+      self.class.lookup([@column.value + x, @row.value + y])
     end
     private :xy_add
 
@@ -240,32 +230,32 @@ module Bioshogi
     ################################################################################ location から見た上下左右に寄せた位置を返す
 
     def move_to_bottom_edge(location)
-      self.class.fetch([x, location.bottom])
+      self.class.fetch([column, location.bottom])
     end
 
     def move_to_top_edge(location)
-      self.class.fetch([x, location.top])
+      self.class.fetch([column, location.top])
     end
 
     def move_to_left_edge(location)
-      self.class.fetch([location.left, y])
+      self.class.fetch([location.left, row])
     end
 
     def move_to_right_edge(location)
-      self.class.fetch([location.right, y])
+      self.class.fetch([location.right, row])
     end
 
     ################################################################################ location から見た情報を返す
 
     Dimension::Column::DELEGATE_METHODS.each do |name|
       define_method(name) do |location|
-        @x.white_then_flip(location).public_send(name)
+        @column.white_then_flip(location).public_send(name)
       end
     end
 
     Dimension::Row::DELEGATE_METHODS.each do |name|
       define_method(name) do |location|
-        @y.white_then_flip(location).public_send(name)
+        @row.white_then_flip(location).public_send(name)
       end
     end
 
