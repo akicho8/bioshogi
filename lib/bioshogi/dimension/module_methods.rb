@@ -32,6 +32,7 @@ module Bioshogi
       def set_wh(w, h)
         DimensionColumn.size_reset(w)
         DimensionRow.size_reset(h)
+        Place.cache_clear       # 超重要
       end
     end
   end

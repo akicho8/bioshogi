@@ -54,4 +54,8 @@ RSpec.configure do |config|
   # config.after(:suite) do
   #   p $counter
   # end
+
+  if ENV["ORDER_DEFINED"]
+    config.order = :defined
+  end
 end

@@ -12,14 +12,16 @@ module Bioshogi
     class << self
       private :new
 
-      include Enumerable
+      begin
+        include Enumerable
 
-      def each(&block)
-        Dimension::DimensionRow.dimension_size.times.flat_map { |y|
-          Dimension::DimensionColumn.dimension_size.times.collect { |x|
-            self[[x, y]]
-          }
-        }.each(&block)
+        def each(&block)
+          Dimension::DimensionRow.dimension_size.times.flat_map { |y|
+            Dimension::DimensionColumn.dimension_size.times.collect { |x|
+              self[[x, y]]
+            }
+          }.each(&block)
+        end
       end
 
       def fetch(value)
@@ -49,15 +51,25 @@ module Bioshogi
           end
         end
 
+        # 座標は最大で99なのでインスタンスを使いまわす
+        # ただしグローバルな寸法が変わると不整合な状態になるため cache_clear を適切に呼ばないといけない
         if x && y
-          @memo ||= {}
-          @memo[x] ||= {}
-          @memo[x][y] ||= new(x, y).freeze
+          @cache ||= {}
+          @cache[x] ||= {}
+          @cache[x][y] ||= new(x, y)
         end
       end
 
       def [](value)
         lookup(value)
+      end
+
+      def cache_clear
+        if @cache
+          @cache.each_value do |hv|
+            hv.each_value(&:cache_clear)
+          end
+        end
       end
 
       def regexp
@@ -85,6 +97,13 @@ module Bioshogi
     def initialize(x, y)
       @x = x
       @y = y
+      @cache = {}
+      freeze
+    end
+
+    def cache_clear
+      to_a.each(&:cache_clear)
+      @cache.clear
     end
 
     def inspect
@@ -93,58 +112,61 @@ module Bioshogi
 
     ################################################################################
 
-    def name
-      to_a.collect(&:name).join
-    end
-
-    def zenkaku_number
-      to_a.collect(&:zenkaku_number).join
-    end
-
-    def hankaku_number
-      to_a.collect(&:hankaku_number).join
-    end
-
-    def yomiage
-      to_a.collect(&:yomiage).join
-    end
-
     def to_s
       name
     end
 
+    def name
+      @cache[:name] ||= to_a.collect(&:name).join
+    end
+
+    def zenkaku_number
+      @cache[:zenkaku_number] ||= to_a.collect(&:zenkaku_number).join
+    end
+
+    def hankaku_number
+      @cache[:hankaku_number] ||= to_a.collect(&:hankaku_number).join
+    end
+
+    def yomiage
+      @cache[:yomiage] ||= to_a.collect(&:yomiage).join
+    end
+
     def to_sfen
-      to_a.collect(&:to_sfen).join
+      @cache[:to_sfen] ||= to_a.collect(&:to_sfen).join
     end
 
     def to_xy
-      [@x.value, @y.value]
+      @cache[:to_xy] ||= to_a.collect(&:value)
     end
 
     # "６八銀" なら [6, 8]
+    # キャッシュすると3倍速くなる
     def to_human_int
-      to_a.collect(&:to_human_int)
+      @cache[:to_human_int] ||= to_a.collect(&:to_human_int)
     end
 
     # "６八銀" なら {x:6, y:8}
+    # キャッシュすると2倍速くなる
     def to_human_h
-      { x: @x.to_human_int, y: @y.to_human_int }
+      @cache[:to_human_h] ||= Hash[[:x, :y].zip(to_human_int)]
     end
 
+    # ほぼキャッシュ効果なし。それどころか少し遅くなる。ただ配列を再生成しないのでこれでいいことにする。
     def to_a
-      [@x, @y]
+      @cache[:to_a] ||= [@x, @y]
     end
 
     ################################################################################
 
-    # 180度回転 (上下対象ではない)
+    # 180度回転
     def flip
-      self.class.fetch([@x.flip, @y.flip])
+      @cache[:flip] ||= self.class.fetch(to_a.collect(&:flip))
     end
 
     # x座標のみ反転
     def flop
-      self.class.fetch([@x.flip, @y])
+      @cache[:flop] ||= self.class.fetch([@x.flip, @y])
     end
 
     # Soldier では独自に定義しているためここに Soldier からここに委譲してはいけない
@@ -157,14 +179,6 @@ module Bioshogi
     end
 
     ################################################################################
-
-    # def valid?
-    #   @x.valid? && @y.valid?
-    # end
-    #
-    # def invalid?
-    #   !valid?
-    # end
 
     def ==(other)
       eql?(other)

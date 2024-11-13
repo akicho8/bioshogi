@@ -1,11 +1,10 @@
 # frozen-string-literal: true
 
-# $counter = Hash.new(0)
-
 module Bioshogi
   module Dimension
     class Base
       DEFAULT = 9
+      CACHE_ENABLE = true
 
       class_attribute :dimension_size, default: DEFAULT
 
@@ -37,7 +36,7 @@ module Bioshogi
 
         def table
           @table ||= char_infos.each.with_index.inject({}) { |a, (e, i)|
-            object = new(i).freeze
+            object = new(i)
             a.merge({
                 object           => object,
                 i                => object,
@@ -61,11 +60,13 @@ module Bioshogi
 
         # freeze するためメモ化するなら @func ||= xxx ではなく @cache[:func] ||= xxx とする
         @cache = {}
+
+        freeze
       end
 
-      # def cache_clear
-      #   @cache.clear
-      # end
+      def cache_clear
+        @cache.clear
+      end
 
       delegate *[
         :key,
@@ -83,39 +84,27 @@ module Bioshogi
       end
 
       def flip
-        self.class.fetch(dimension_size.pred - value)
+        @cache[:flip] ||= self.class.fetch(dimension_size.pred - value)
       end
 
-      # FIXME: ここでキャッシュするとテストがこける
       def white_then_flip(location)
-        location = Location[location]
-        if location.key == :white
-          flip
+        if CACHE_ENABLE
+          location = Location[location]
+          @cache["white_then_flip/#{location.key}"] ||= yield_self do
+            if location.key == :white
+              flip
+            else
+              self
+            end
+          end
         else
-          self
+          location = Location[location]
+          if location.key == :white
+            flip
+          else
+            self
+          end
         end
-
-        # location2 = Location[location]
-        # real = yield_self do
-        #   if location2.key == :white
-        #     flip
-        #   else
-        #     self
-        #   end
-        # end
-        #
-        #
-        # location2 = Location[location]
-        # real = @cache["white_then_flip_#{key}_#{location2.key}"] ||= yield_self do
-        #   if location2.key == :white
-        #     flip
-        #   else
-        #     self
-        #   end
-        # end
-        #
-        # $counter["#{key}_#{location2.key}_#{real.key}"] += 1
-        # real
       end
 
       def ==(other)
