@@ -59,7 +59,7 @@ module Bioshogi
       end
 
       def type
-        "t_drop"
+        :t_drop
       end
 
       def to_akf(options = {})

@@ -86,12 +86,12 @@ module Bioshogi
       def type
         if state_where_it_can_become_promote?
           if promote_trigger?
-            "t_promote_on"
+            :t_promote_on
           else
-            "t_promote_throw"
+            :t_promote_throw
           end
         else
-          "t_move"
+          :t_move
         end
       end
 

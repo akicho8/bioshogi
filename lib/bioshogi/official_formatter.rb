@@ -40,7 +40,7 @@ module Bioshogi
         s << @options[:separator]
       end
 
-      if type == "t_drop"
+      if type == :t_drop
         s << piece_name
         # 日本将棋連盟 棋譜の表記方法
         # https://www.shogi.or.jp/faq/kihuhyouki.html
@@ -53,15 +53,15 @@ module Bioshogi
         if @options[:force_drop] || !candidate_soldiers.empty?
           s << kw("打")
         end
-      elsif type == "t_promote_on"
+      elsif type == :t_promote_on
         s << piece_name
         s << motion
         s << kw("成")
-      elsif type == "t_promote_throw"
+      elsif type == :t_promote_throw
         s << piece_name
         s << motion
         s << kw("不成") # or "生"
-      elsif type == "t_move"
+      elsif type == :t_move
         s << soldier_name
         s << motion
       else
@@ -80,26 +80,26 @@ module Bioshogi
 
     def to_debug_hash
       {
-        :place_from     => place_from,
-        :place_to       => place_to,
-        :candidate_soldiers      => candidate_soldiers.collect(&:name),
-        :koreru_c       => koreru_c,
-        :_migi_idou     => _migi_idou?,
-        :_hidari_idou   => _hidari_idou?,
-        :_ue_idou       => _ue_idou?,
-        :_shita_idou    => _shita_idou?,
-        :_hidari_kara_c => _hidari_kara_c,
-        :_migi_kara_c   => _migi_kara_c,
-        :yoreru_c       => yoreru_c,
-        :agareru_c      => agareru_c,
-        :sagareru_c     => sagareru_c,
-        :shita_y        => shita_y,
-        :_tx            => _tx,
-        :_ty            => _ty,
-        :_ox            => _ox,
-        :_oy            => _oy,
-        :_xr            => _xr,
-        :_yr            => _yr,
+        :place_from         => place_from,
+        :place_to           => place_to,
+        :candidate_soldiers => candidate_soldiers.collect(&:name),
+        :koreru_c           => koreru_c,
+        :_migi_idou         => _migi_idou?,
+        :_hidari_idou       => _hidari_idou?,
+        :_ue_idou           => _ue_idou?,
+        :_shita_idou        => _shita_idou?,
+        :_hidari_kara_c     => _hidari_kara_c,
+        :_migi_kara_c       => _migi_kara_c,
+        :yoreru_c           => yoreru_c,
+        :agareru_c          => agareru_c,
+        :sagareru_c         => sagareru_c,
+        :shita_y            => shita_y,
+        :_tx                => _tx,
+        :_ty                => _ty,
+        :_ox                => _ox,
+        :_oy                => _oy,
+        :_xr                => _xr,
+        :_yr                => _yr,
       }
     end
 
