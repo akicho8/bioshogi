@@ -27,7 +27,7 @@ module Bioshogi
             :typical_error_case             => false,
             :analyzer_enable           => true,
             :analyzer_technique_enable => true,
-            :candidate_enable               => true,  # ki2にしないのであれば指定するとかなり速くなる
+            :ki2_function               => true,  # ki2にしないのであれば指定するとかなり速くなる
 
             :validate_enable                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
             :validate_double_pawn_skip      => false, # 二歩を無視するか？

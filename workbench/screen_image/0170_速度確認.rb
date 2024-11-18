@@ -13,7 +13,7 @@ def test2
       :turn_limit                     => @turn_limit,
       # :analyzer_enable           => false,
       # :analyzer_technique_enable => false,
-      :candidate_enable                 => false,
+      :ki2_function                 => false,
       :validate_enable                  => false,
       # :container_class                 => Container::Fast,
     })

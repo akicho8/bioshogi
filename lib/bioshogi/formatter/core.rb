@@ -78,7 +78,7 @@ module Bioshogi
           e.params.update(@parser_options.slice(*[
                 :analyzer_enable,
                 :analyzer_technique_enable,
-                :candidate_enable,
+                :ki2_function,
                 :validate_enable,
                 :validate_double_pawn_skip,
                 :validate_warp_skip,
@@ -92,7 +92,7 @@ module Bioshogi
         container.params.update({
             :analyzer_enable           => false,
             :analyzer_technique_enable => false,
-            :candidate_enable               => false,
+            :ki2_function               => false,
             :validate_enable                => false,
           })
         container_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い

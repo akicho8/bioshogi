@@ -3,7 +3,7 @@ require "./setup"
 container_options = {
   analyzer_enable: false,
   analyzer_technique_enable: false,
-  candidate_enable: false,
+  ki2_function: false,
   validate_enable: false,
 }
 

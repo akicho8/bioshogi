@@ -12,7 +12,7 @@ module Bioshogi
         @params ||= {
           :analyzer_enable           => false,
           :analyzer_technique_enable => false,
-          :candidate_enable               => true,
+          :ki2_function               => true,
           :validate_enable                => true,
           :board_class                    => Board,
         }

@@ -48,7 +48,7 @@ module Bioshogi
         @drop_hand          = input.drop_hand
         @move_hand          = input.move_hand
         @candidate_soldiers = nil
-        if container.params[:candidate_enable]
+        if container.params[:ki2_function]
           @candidate_soldiers = input.candidate_soldiers
         end
 
