@@ -18,8 +18,8 @@ module Bioshogi
 
         # パラメータがないものはあとで埋めるもの
 
-        { key: "居飛車",           parent: nil,        related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist_keys: "振り飛車",  add_to_self: nil, add_to_opponent: nil,           },
-        { key: "振り飛車",         parent: nil,        related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist_keys: "居飛車",    add_to_self: nil, add_to_opponent: "対振り飛車",  },
+        { key: "居飛車",    parent: nil, related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist_keys: "振り飛車",  add_to_self: nil, add_to_opponent: nil,           },
+        { key: "振り飛車",  parent: nil, related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist_keys: "居飛車",    add_to_self: nil, add_to_opponent: "対振り飛車",  },
 
         { key: "相居飛車",   },
         { key: "相振り飛車", },
@@ -47,40 +47,39 @@ module Bioshogi
 
         ################################################################################
 
-        ################################################################################
+        {
+          key: "全駒", parent: nil, related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
+          add_to_self: nil, add_to_opponent: "玉単騎",
+          piece_box_added_proc: -> note_info, captured_soldier {
+            player.zengoma?
+          },
+        },
+        { key: "玉単騎", },
 
-        { key: "大駒全ブッチ", },
+        ################################################################################
 
         {
           key: "大駒コンプリート", parent: nil, related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
           add_to_self: nil, add_to_opponent: "大駒全ブッチ",
           piece_box_added_proc: -> note_info, captured_soldier {
-            if captured_soldier.piece.stronger
-              player.stronger_piece_completed?
-              # retv = player.stronger_piece_completed?
-              # # 相手にも追加
-              # if retv
-              #   # raise
-              #   # player.opponent_player.skill_set.list_push(Analysis::NoteInfo["大駒全ブッチ"])
-              #   # list << note_info
-              #   # skill_set.list_of(e) << note_info
-              # end
-              # retv
+            if captured_soldier.piece.strong
+              player.strong_piece_completed?
             end
           },
         },
+        { key: "大駒全ブッチ", },
+
         { key: "背水の陣", },
 
         ################################################################################
 
         {
           key: "駒柱", parent: nil, related_ancestors: nil, alternate_name: nil, alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,
+          add_to_self: nil, add_to_opponent: "駒柱",
           every_time_proc: -> note_info {
-            retv = player.board.piece_piller_by_latest_piece
-            if retv
-              player.opponent_player.skill_set.list_push(note_info)
+            player.board.piller_cop.active?.tap do
+              player.board.piller_cop.active = false # FIXME: できればここで更新はしたくない
             end
-            retv
           },
         },
 

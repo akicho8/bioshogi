@@ -54,6 +54,7 @@ module Bioshogi
 
         hand.execute(container)
         execute_after_process
+
         if captured_soldier
           piece_box_added(captured_soldier)
         end

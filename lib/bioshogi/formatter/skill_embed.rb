@@ -181,7 +181,7 @@ module Bioshogi
         if @container.turn_info.display_turn >= MIN_TURN
           if win_side_location
             player = @container.player_at(win_side_location)
-            if player.stronger_piece_have_count.zero?                           # 最後の状態でも全ブッチ状態なら
+            if player.strong_piece_have_count.zero?                           # 最後の状態でも全ブッチ状態なら
               if player.skill_set.has_skill?(Analysis::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
                 player.skill_set.list_push(Analysis::NoteInfo["背水の陣"])
               end

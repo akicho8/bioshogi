@@ -15,6 +15,12 @@ module Bioshogi
         (piece.key == :lance && normal?) || piece.key == :rook
       end
 
+      ################################################################################ for BoardPieceCountsMethods
+
+      # def location_with_piece
+      #   [location.key, piece.key]
+      # end
+
       ################################################################################
 
       # 駒の重さ(=価値) 常にプラス

@@ -9,7 +9,7 @@ module Bioshogi
         @piece_box ||= PieceBox.new
       end
 
-      def pieces_add(str = "歩9角飛香2桂2銀2金2玉")
+      def pieces_add(str = PieceBox::ONE_SIDE_PIECES)
         piece_box.add(Piece.s_to_h(str))
       end
 

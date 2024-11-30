@@ -3,10 +3,11 @@
 module Bioshogi
   class Player
     module OtherMethods
+      STRONG_PIECE_ALL_COUNT = Location.count * Piece.strong_pieces.count
+
       attr_writer :king_moved_counter
       attr_accessor :king_place
       attr_accessor :king_first_moved_turn # 玉が最初に動いた手数
-      attr_accessor :death_counter         # 駒が死んだ数
 
       def king_moved_counter
         @king_moved_counter ||= 0
@@ -27,24 +28,26 @@ module Bioshogi
       ################################################################################
 
       # 大駒コンプリートしている？
-      def stronger_piece_completed?
-        stronger_piece_have_count >= 4
+      def strong_piece_completed?
+        strong_piece_have_count >= STRONG_PIECE_ALL_COUNT
       end
 
       # 大駒の数
-      def stronger_piece_have_count
-        count = 0
+      def strong_piece_have_count
+        Piece.strong_pieces.sum do |e|
+          piece_box.fetch(e.key, 0) + board.specific_piece_count_for(location.key, e.key)
+        end
+      end
 
-        # 持駒の大駒
-        count += piece_box[:rook] || 0
-        count += piece_box[:bishop] || 0
+      ################################################################################
 
-        # 盤上の大駒
-        key = location.key
-        count += board.piece_count_of(key, :rook)
-        count += board.piece_count_of(key, :bishop)
-
-        count
+      def zengoma?
+        if board.location_piece_counts[opponent_player.location.key] == 1              # 盤上の相手の駒が1つ
+          if opponent_player.piece_box.empty?                                          # 相手の持駒がない
+            location = opponent_player.location                                        # 相手の側
+            board.soldiers.one? { |e| e.piece.key == :king && e.location == location } # 相手の残りの駒が玉か？ (最後に重い処理を持ってくる)
+          end
+        end
       end
 
       ################################################################################

@@ -461,3 +461,8 @@ module Bioshogi
     end
   end
 end
+# ~> -:6:in `<class:Analyzer>': undefined method `cattr_accessor' for Bioshogi::Analysis::Analyzer:Class (NoMethodError)
+# ~> Did you mean?  attr_accessor
+# ~> 	from -:5:in `<module:Analysis>'
+# ~> 	from -:4:in `<module:Bioshogi>'
+# ~> 	from -:3:in `<main>'

@@ -16,7 +16,13 @@ Piece.s_to_h("歩十")     # => {:pawn=>10}
 Piece.s_to_h("歩十一")   # => {:pawn=>11}
 Piece.s_to_h("歩二十一") # => {:pawn=>21}
 
+tp Piece.strong_pieces          # => [<Bioshogi::Piece:2000 飛 rook>, <Bioshogi::Piece:2020 角 bishop>]
+
 tp Piece["飛"].to_h
+# >> |----|
+# >> | 飛 |
+# >> | 角 |
+# >> |----|
 # >> |------------------------------+------|
 # >> |                          key | rook |
 # >> |                         name | 飛   |
@@ -27,6 +33,9 @@ tp Piece["飛"].to_h
 # >> |                    sfen_char | R    |
 # >> |                   promotable | true |
 # >> |                 always_alive | true |
-# >> |                     stronger | true |
+# >> |                       strong | true |
+# >> |               dengaku_target | true |
+# >> |              tatakare_target | true |
+# >> |                  maesusumeru | true |
 # >> |                         code | 1    |
 # >> |------------------------------+------|

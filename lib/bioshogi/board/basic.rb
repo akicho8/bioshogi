@@ -18,7 +18,7 @@ module Bioshogi
       include TechniqueMatcherMethods
 
       prepend Analysis::BoardPillerMethods
-      prepend PieceCountsMethods
+      prepend Analysis::BoardPieceCountsMethods
     end
   end
 end
