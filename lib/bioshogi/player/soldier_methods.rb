@@ -3,12 +3,18 @@
 module Bioshogi
   class Player
     module SoldierMethods
-      def soldiers
-        board.surface.values.find_all { |e| e.location == location }
+      def core_soldier(piece_key)
+        board.core_soldier_places_hash.dig(location.key, piece_key)
       end
 
       def king_soldier
-        soldiers.find { |e| e.piece.key == :king }
+        core_soldier(:king)
+      end
+
+      ################################################################################
+
+      def soldiers
+        board.surface.values.find_all { |e| e.location == location }
       end
 
       def to_s_soldiers
@@ -27,7 +33,7 @@ module Bioshogi
         end
       end
 
-      # 玉を除く駒が10毎以上相手陣に入っているか？
+      # 玉を除く駒が10枚以上相手陣に入っているか？
       def many_soliders_are_in_the_opponent_area?
         entered_soldiers.count >= Piece::EkScoreInfo::N_SOLIDIERS_IN_OPPONENT_AREA_WITHOUT_KING
       end

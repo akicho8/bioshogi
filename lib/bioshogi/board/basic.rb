@@ -19,6 +19,7 @@ module Bioshogi
 
       prepend Analysis::BoardPillerMethods
       prepend Analysis::BoardPieceCountsMethods
+      prepend Analysis::CoreSoldierPlaceMethods
     end
   end
 end

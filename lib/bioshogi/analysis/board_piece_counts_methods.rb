@@ -1,6 +1,6 @@
 # frozen-string-literal: true
 #
-# 盤上に駒数を素早く得るための仕組み
+# 盤上の駒数を素早く得るための仕組み
 #
 
 module Bioshogi

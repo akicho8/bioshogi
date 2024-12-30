@@ -28,13 +28,13 @@ module Bioshogi
     end
   end
 end
-# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 7 / 15 LOC (46.67%) covered.
+# >> Coverage report generated for RSpec to /Users/ikeda/src/bioshogi/coverage. 5 / 13 LOC (38.46%) covered.
 # >> .
 # >> 
-# >> Top 1 slowest examples (0.34134 seconds, 98.6% of total time):
+# >> Top 1 slowest examples (0.1277 seconds, 91.9% of total time):
 # >>   used_piece_counts works
-# >>     0.34134 seconds -:5
+# >>     0.1277 seconds -:5
 # >> 
-# >> Finished in 0.3461 seconds (files took 1.69 seconds to load)
+# >> Finished in 0.13901 seconds (files took 2.73 seconds to load)
 # >> 1 example, 0 failures
 # >> 

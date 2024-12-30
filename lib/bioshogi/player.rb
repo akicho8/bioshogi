@@ -6,6 +6,7 @@ module Bioshogi
     include PieceBoxMethods
     include SoldierMethods
     include OtherMethods
+    include Analysis::PlayerMethods
     include PressureMethods
 
     attr_reader :location
