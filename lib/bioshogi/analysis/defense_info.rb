@@ -173,6 +173,15 @@ module Bioshogi
       def pawn_bishop_have_ok
         nil
       end
+
+      class << self
+        def anaguma_elems
+          @anaguma_elems ||= yield_self do
+            anaguma = NoteInfo.fetch(:"穴熊")
+            find_all { |e| e.add_to_self == anaguma }
+          end
+        end
+      end
     end
   end
 end
