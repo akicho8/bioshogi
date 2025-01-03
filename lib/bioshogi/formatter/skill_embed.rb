@@ -15,6 +15,7 @@ module Bioshogi
 
       def call
         miyakodume_check
+        tsurushikei_check
         meijin_judgement        # 力戦より前
         rikisen_judgement
 
@@ -102,6 +103,24 @@ module Bioshogi
                         hand_log.skill_set.list_push(tag)
                       end
                     end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+
+      def tsurushikei_check
+        if last_action_params = @xparser.pi.last_action_params
+          if last_action_key = last_action_params[:last_action_key]
+            if last_action_info = LastActionInfo[last_action_key]
+              if last_action_info.key == :TSUMI
+                if hand_log = @container.hand_logs.last
+                  tag = Analysis::NoteInfo["吊るし桂"]
+                  if hand_log.soldier.piece.key == :knight
+                    @container.win_player.skill_set.list_push(tag) # 勝者に入れておく
+                    hand_log.skill_set.list_push(tag)              # 最後の手にも入れておく
                   end
                 end
               end
