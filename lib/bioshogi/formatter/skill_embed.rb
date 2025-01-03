@@ -94,8 +94,8 @@ module Bioshogi
               if last_action_info.key == :TSUMI
                 if soldier = @container.board["55"]
                   if soldier.piece.key == :king
-                    tag = Analysis::NoteInfo["都詰め"]
                     if @container.lose_player.location == soldier.location
+                      tag = Analysis::NoteInfo["都詰め"]
                       @container.win_player.skill_set.list_push(tag)
                       # 最後の手にも入れておく
                       if hand_log = @container.hand_logs.last
