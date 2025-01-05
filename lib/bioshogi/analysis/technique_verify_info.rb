@@ -297,7 +297,11 @@ module Bioshogi
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
           func: proc {
             #【条件1】「同歩」でないこと
-            verify_if { !executor.move_hand.captured_soldier }
+            skip_if do
+              if move_hand = executor.move_hand
+                move_hand.captured_soldier
+              end
+            end
 
             #【条件2】進めた歩の前が空であること
             verify_if do
