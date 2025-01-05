@@ -123,7 +123,7 @@ module Bioshogi
         },
 
         ################################################################################ 銀
-        
+
         {
           key: "腹銀",
           description: "銀を打ったか移動させたとき左右どちらかに相手の玉がある",
@@ -186,8 +186,72 @@ module Bioshogi
           },
         },
 
+        ################################################################################ 金
+
+        {
+          key: "腹金",
+          description: "金を打ったか移動させたとき左右どちらかに相手の玉がある",
+          func: proc {
+            verify_if do
+              V.left_right_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :king && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
+          key: "尻金",
+          description: "金を打ったか移動させたとき下に相手の玉がある",
+          func: proc {
+            verify_if do
+              if v = soldier.relative_move_to(:down)
+                if s = board[v]
+                  s.piece.key == :king && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+
+        {
+          key: "肩金",
+          description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
+          func: proc {
+            verify_if do
+              V.bishop_naname_mae_vectors.any? do |up_left|
+                if v = soldier.relative_move_to(up_left)
+                  if s = board[v]
+                    s.piece.key == :king && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
+          key: "裾金",
+          description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
+          func: proc {
+            verify_if do
+              V.wariuchi_vectors.any? do |down_left|
+                if v = soldier.relative_move_to(down_left)
+                  if s = board[v]
+                    s.piece.key == :king && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
         ################################################################################
-        
+
         {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
@@ -341,7 +405,7 @@ module Bioshogi
             end
           },
         },
-        
+
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
