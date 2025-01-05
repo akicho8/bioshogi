@@ -122,9 +122,11 @@ module Bioshogi
           },
         },
 
+        ################################################################################ 銀
+        
         {
           key: "腹銀",
-          description: "銀を打ったとき左右どちらかに相手の玉がある",
+          description: "銀を打ったか移動させたとき左右どちらかに相手の玉がある",
           func: proc {
             verify_if do
               V.left_right_vectors.any? do |e|
@@ -140,7 +142,7 @@ module Bioshogi
 
         {
           key: "尻銀",
-          description: "銀を打ったとき下に相手の玉がある",
+          description: "銀を打ったか移動させたとき下に相手の玉がある",
           func: proc {
             verify_if do
               if v = soldier.relative_move_to(:down)
@@ -154,7 +156,7 @@ module Bioshogi
 
         {
           key: "肩銀",
-          description: "銀を打ったとき左斜め前か右斜め前に玉がある",
+          description: "銀を打ったか移動させたとき左斜め前か右斜め前に玉がある",
           func: proc {
             verify_if do
               V.bishop_naname_mae_vectors.any? do |up_left|
@@ -170,7 +172,7 @@ module Bioshogi
 
         {
           key: "裾銀",
-          description: "銀を打ったとき左斜め後か右斜め後に玉がある",
+          description: "銀を打ったか移動させたとき左斜め後か右斜め後に玉がある",
           func: proc {
             verify_if do
               V.wariuchi_vectors.any? do |down_left|
@@ -184,6 +186,8 @@ module Bioshogi
           },
         },
 
+        ################################################################################
+        
         {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
@@ -312,7 +316,7 @@ module Bioshogi
 
         {
           key: "歩頭の桂",
-          description: "打った桂の上に相手の歩がある",
+          description: "打ったまたは移動した桂の上に相手の歩がある",
           func: proc {
             verify_if do
               if v = soldier.relative_move_to(:up)
@@ -324,6 +328,20 @@ module Bioshogi
           },
         },
 
+        {
+          key: "金頭の桂",
+          description: "打ったまたは移動した桂の上に相手の金がある",
+          func: proc {
+            verify_if do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :gold && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+        
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
