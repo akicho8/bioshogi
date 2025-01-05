@@ -153,6 +153,38 @@ module Bioshogi
         },
 
         {
+          key: "肩銀",
+          description: "銀を打ったとき左斜め前か右斜め前に玉がある",
+          func: proc {
+            verify_if do
+              V.bishop_naname_mae_vectors.any? do |up_left|
+                if v = soldier.relative_move_to(up_left)
+                  if s = board[v]
+                    s.piece.key == :king && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
+          key: "裾銀",
+          description: "銀を打ったとき左斜め後か右斜め後に玉がある",
+          func: proc {
+            verify_if do
+              V.wariuchi_vectors.any? do |down_left|
+                if v = soldier.relative_move_to(down_left)
+                  if s = board[v]
+                    s.piece.key == :king && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: proc {
