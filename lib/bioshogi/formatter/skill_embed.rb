@@ -16,6 +16,8 @@ module Bioshogi
       def call
         miyakodume_check
         tsurushikei_check
+        settintsume_check
+
         meijin_judgement        # 力戦より前
         rikisen_judgement
 
@@ -89,21 +91,15 @@ module Bioshogi
       end
 
       def miyakodume_check
-        if last_action_params = @xparser.pi.last_action_params
-          if last_action_key = last_action_params[:last_action_key]
-            if last_action_info = LastActionInfo[last_action_key]
-              if last_action_info.key == :TSUMI
-                if soldier = @container.board["55"]
-                  if soldier.piece.key == :king
-                    if @container.lose_player.location == soldier.location
-                      tag = Analysis::NoteInfo["都詰め"]
-                      @container.win_player.skill_set.list_push(tag)
-                      # 最後の手にも入れておく
-                      if hand_log = @container.hand_logs.last
-                        hand_log.skill_set.list_push(tag)
-                      end
-                    end
-                  end
+        if @xparser.pi.saigoha_tsumi_p
+          if soldier = @container.board["55"]
+            if soldier.piece.key == :king
+              if @container.lose_player.location == soldier.location
+                tag = Analysis::NoteInfo["都詰め"]
+                @container.win_player.skill_set.list_push(tag)
+                # 最後の手にも入れておく
+                if hand_log = @container.hand_logs.last
+                  hand_log.skill_set.list_push(tag)
                 end
               end
             end
@@ -111,19 +107,33 @@ module Bioshogi
         end
       end
 
-      def tsurushikei_check
-        if last_action_params = @xparser.pi.last_action_params
-          if last_action_key = last_action_params[:last_action_key]
-            if last_action_info = LastActionInfo[last_action_key]
-              if last_action_info.key == :TSUMI
-                if hand_log = @container.hand_logs.last
-                  tag = Analysis::NoteInfo["吊るし桂"]
-                  if hand_log.soldier.piece.key == :knight
-                    @container.win_player.skill_set.list_push(tag) # 勝者に入れておく
-                    hand_log.skill_set.list_push(tag)              # 最後の手にも入れておく
-                  end
-                end
+      def settintsume_check
+        if @xparser.pi.saigoha_tsumi_p
+          found = ["11", "91", "19", "99"].any? do |e|
+            if soldier = @container.board[e]
+              if soldier.piece.key == :king
+                @container.lose_player.location == soldier.location
               end
+            end
+          end
+          if found
+            tag = Analysis::NoteInfo["雪隠詰め"]
+            @container.win_player.skill_set.list_push(tag)
+            # 最後の手にも入れておく
+            if hand_log = @container.hand_logs.last
+              hand_log.skill_set.list_push(tag)
+            end
+          end
+        end
+      end
+
+      def tsurushikei_check
+        if @xparser.pi.saigoha_tsumi_p
+          if hand_log = @container.hand_logs.last
+            tag = Analysis::NoteInfo["吊るし桂"]
+            if hand_log.soldier.piece.key == :knight
+              @container.win_player.skill_set.list_push(tag) # 勝者に入れておく
+              hand_log.skill_set.list_push(tag)              # 最後の手にも入れておく
             end
           end
         end
