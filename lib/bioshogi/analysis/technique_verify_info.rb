@@ -5,8 +5,6 @@
 module Bioshogi
   module Analysis
     class TechniqueVerifyInfo
-      ROW_IS_2  = 1 # ▲から見て2段目のこと
-
       include ApplicationMemoryRecord
       memory_record [
         {
