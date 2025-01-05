@@ -186,30 +186,12 @@ module Bioshogi
           },
         },
 
-        ################################################################################ 金
-
         {
-          key: "腹金",
-          description: "金を打ったか移動させたとき左右どちらかに相手の玉がある",
+          key: "頭銀",
+          description: "銀を打ったか移動させたとき前に相手の玉がある",
           func: proc {
             verify_if do
-              V.left_right_vectors.any? do |e|
-                if v = soldier.relative_move_to(e)
-                  if s = board[v]
-                    s.piece.key == :king && opponent?(s)
-                  end
-                end
-              end
-            end
-          },
-        },
-
-        {
-          key: "尻金",
-          description: "金を打ったか移動させたとき下に相手の玉がある",
-          func: proc {
-            verify_if do
-              if v = soldier.relative_move_to(:down)
+              if v = soldier.relative_move_to(:up)
                 if s = board[v]
                   s.piece.key == :king && opponent?(s)
                 end
@@ -217,20 +199,30 @@ module Bioshogi
             end
           },
         },
+        
+        ################################################################################ 金
+
+        {
+          key: "腹金",
+          description: "金を打ったか移動させたとき左右どちらかに相手の玉がある",
+          func: proc {
+            instance_eval(&TechniqueVerifyInfo[:"腹銀"].func)
+          },
+        },
+
+        {
+          key: "尻金",
+          description: "金を打ったか移動させたとき下に相手の玉がある",
+          func: proc {
+            instance_eval(&TechniqueVerifyInfo[:"尻銀"].func)
+          },
+        },
 
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
           func: proc {
-            verify_if do
-              V.bishop_naname_mae_vectors.any? do |up_left|
-                if v = soldier.relative_move_to(up_left)
-                  if s = board[v]
-                    s.piece.key == :king && opponent?(s)
-                  end
-                end
-              end
-            end
+            instance_eval(&TechniqueVerifyInfo[:"肩銀"].func)
           },
         },
 
@@ -238,18 +230,18 @@ module Bioshogi
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
           func: proc {
-            verify_if do
-              V.wariuchi_vectors.any? do |down_left|
-                if v = soldier.relative_move_to(down_left)
-                  if s = board[v]
-                    s.piece.key == :king && opponent?(s)
-                  end
-                end
-              end
-            end
+            instance_eval(&TechniqueVerifyInfo[:"裾銀"].func)
           },
         },
 
+        {
+          key: "頭金",
+          description: "金を打ったか移動させたとき前に相手の玉がある",
+          func: proc {
+            instance_eval(&TechniqueVerifyInfo[:"頭銀"].func)
+          },
+        },
+        
         ################################################################################
 
         {
