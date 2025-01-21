@@ -12,3 +12,4 @@ lib/bioshogi/analysis/囲い/角矢倉.kif:先手の囲い：カブト囲い, �
 lib/bioshogi/analysis/囲い/高矢倉.kif:先手の囲い：オリジナル雁木, 高矢倉
 lib/bioshogi/analysis/戦法/オザワシステム.kif:先手の囲い：紙穴熊, 振り飛車穴熊
 lib/bioshogi/analysis/戦法/オザワシステム.kif:*▲囲い：紙穴熊, 振り飛車穴熊
+lib/bioshogi/analysis/戦法/石田流.kif:先手の囲い：片銀冠, 振り飛車銀冠穴熊
