@@ -1,0 +1,52 @@
+問題集ID：603
+問題集KEY：EXB0knQxNMq
+問題集タイトル：石田流攻め筋集
+問題集投稿者：きなこもち
+問題集URL：https://www.shogi-extend.com/rack/books/EXB0knQxNMq
+問題集公開設定：非公開
+問題集出題順序：カスタマイズ
+問題集作成日時：2025-01-02 12:43
+問題集説明：
+ID：13454
+KEY：dl89SvUQX28
+タイトル：対持久戦に対する角の配置転換
+投稿者：きなこもち
+公開設定：非公開
+URL：https://www.shogi-extend.com/rack/articles/dl89SvUQX28
+種類：定跡
+難易度：1
+メッセージ：
+タグ：
+説明：
+正解ID：17659
+正解番号：1
+正解手数：11
+人間向けの解答：▲59角 △51金 ▲36歩 △41金 ▲37角 △31金 ▲74歩 △同歩 ▲65歩 △同歩 ▲82角成
+正解作成日時：2025-01-02 15:30
+*画像URL：https://www.shogi-extend.com/share-board.png?body=position+sfen+ln1g5%2F1r7%2Fp1psp4%2F3p5%2F1pP6%2F2RPS3P%2FPPB1PPPP1%2F4G1S2%2F5GKNL+b+2p+1+moves+7g5i+6a5a+3g3f+5a4a+5i3g+4a3a+7e7d+7c7d+6f6e+6d6e+3g8b%2B&turn=0&viewpoint=black
+*共有将棋盤URL：https://www.shogi-extend.com/share-board?body=position+sfen+ln1g5%2F1r7%2Fp1psp4%2F3p5%2F1pP6%2F2RPS3P%2FPPB1PPPP1%2F4G1S2%2F5GKNL+b+2p+1+moves+7g5i+6a5a+3g3f+5a4a+5i3g+4a3a+7e7d+7c7d+6f6e+6d6e+3g8b%2B&title=%E5%AF%BE%E6%8C%81%E4%B9%85%E6%88%A6%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E8%A7%92%E3%81%AE%E9%85%8D%E7%BD%AE%E8%BB%A2%E6%8F%9B&turn=0&viewpoint=black
+後手の持駒：歩二
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂 ・v金 ・ ・ ・ ・ ・|一
+| ・v飛 ・ ・ ・ ・ ・ ・ ・|二
+|v歩 ・v歩v銀v歩 ・ ・ ・ ・|三
+| ・ ・ ・v歩 ・ ・ ・ ・ ・|四
+| ・v歩 歩 ・ ・ ・ ・ ・ ・|五
+| ・ ・ 飛 歩 銀 ・ ・ ・ 歩|六
+| 歩 歩 角 ・ 歩 歩 歩 歩 ・|七
+| ・ ・ ・ ・ 金 ・ 銀 ・ ・|八
+| ・ ・ ・ ・ ・ 金 玉 桂 香|九
++---------------------------+
+先手の持駒：なし
+先手番
+手数----指手---------消費時間--
+   1 ５九角(77)
+   2 ５一金(61)
+   3 ３六歩(37)
+   4 ４一金(51)
+   5 ３七角(59)
+   6 ３一金(41)
+   7 ７四歩(75)
+   8 ７四歩(73)
+   9 ６五歩(66)

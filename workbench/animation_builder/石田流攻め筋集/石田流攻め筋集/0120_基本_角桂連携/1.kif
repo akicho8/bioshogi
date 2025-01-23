@@ -1,0 +1,52 @@
+問題集ID：603
+問題集KEY：EXB0knQxNMq
+問題集タイトル：石田流攻め筋集
+問題集投稿者：きなこもち
+問題集URL：https://www.shogi-extend.com/rack/books/EXB0knQxNMq
+問題集公開設定：非公開
+問題集出題順序：カスタマイズ
+問題集作成日時：2025-01-02 12:43
+問題集説明：
+ID：13443
+KEY：yIvCuNgmoam
+タイトル：角切り→桂
+投稿者：きなこもち
+公開設定：非公開
+URL：https://www.shogi-extend.com/rack/articles/yIvCuNgmoam
+種類：定跡
+難易度：1
+メッセージ：
+タグ：
+説明：
+正解ID：17646
+正解番号：1
+正解手数：7
+人間向けの解答：▲53角成 △同金 ▲65桂 △52金 ▲73桂成 △同桂 ▲同飛成
+正解作成日時：2025-01-02 12:47
+*画像URL：https://www.shogi-extend.com/share-board.png?body=position+sfen+ln7%2F1r2g4%2Fp1pps4%2F9%2F1p7%2FP1R6%2FBPN6%2F9%2F9+b+-+1+moves+9g5c%2B+5b5c+7g6e+5c5b+6e7c%2B+8a7c+7f7c%2B&turn=0&viewpoint=black
+*共有将棋盤URL：https://www.shogi-extend.com/share-board?body=position+sfen+ln7%2F1r2g4%2Fp1pps4%2F9%2F1p7%2FP1R6%2FBPN6%2F9%2F9+b+-+1+moves+9g5c%2B+5b5c+7g6e+5c5b+6e7c%2B+8a7c+7f7c%2B&title=%E8%A7%92%E5%88%87%E3%82%8A%E2%86%92%E6%A1%82&turn=0&viewpoint=black
+後手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂 ・ ・ ・ ・ ・ ・ ・|一
+| ・v飛 ・ ・v金 ・ ・ ・ ・|二
+|v歩 ・v歩v歩v銀 ・ ・ ・ ・|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・v歩 ・ ・ ・ ・ ・ ・ ・|五
+| 歩 ・ 飛 ・ ・ ・ ・ ・ ・|六
+| 角 歩 桂 ・ ・ ・ ・ ・ ・|七
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+先手の持駒：なし
+先手番
+手数----指手---------消費時間--
+   1 ５三角成(97)
+   2 ５三金(52)
+   3 ６五桂(77)
+   4 ５二金(53)
+   5 ７三桂成(65)
+   6 ７三桂(81)
+   7 ７三飛成(76)
+   8 投了
+まで7手で先手の勝ち

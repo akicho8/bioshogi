@@ -15,8 +15,13 @@ module Bioshogi
             super.merge({
                 # 全体
                 :page_duration              => 1.0,    # 1手N秒 10000/60 = 166.666666667 なので 0.0166666666667 を指定すると 60 FPS になる
-                :end_duration               => 0,      # 終了図をN秒表示する
+
+                :begin_pages                => 1,      # 表紙を表示するフレーム数。空なら begin_duration / page_duration
+                :begin_duration             => nil,    # 表紙をN秒表示する (こちらを有効にするには同時に begin_pages を nil すること)
+
                 :end_pages                  => nil,    # 終了図追加フレーム数。空なら end_duration / page_duration
+                :end_duration               => 0,      # 終了図をN秒表示する
+
                 :progress_callback          => nil,    # 進捗通知用
                 :cover_text                 => nil,    # 表紙(nilなら作らない)
                 :bottom_text                => nil,    # 表紙の右下に小さく表示する1行
@@ -61,6 +66,14 @@ module Bioshogi
         def ffmpeg_after_embed_options
           if v = params[:ffmpeg_after_embed_options].presence
             Shellwords.join(Shellwords.split(v))
+          end
+        end
+
+        def begin_pages
+          if v = params[:begin_pages]
+            v.to_i
+          else
+            params[:begin_duration].fdiv(page_duration).ceil
           end
         end
 

@@ -1,0 +1,6 @@
+task :default => :run
+
+task :run do
+  system "saferenum -xd 石田流攻め筋集"
+  system "ruby main.rb"
+end

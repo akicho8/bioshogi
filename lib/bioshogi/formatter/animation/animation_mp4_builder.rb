@@ -101,28 +101,36 @@ module Bioshogi
                 @screen_image_renderer = ScreenImage.renderer(@container, params)
 
                 if factory_method_key == "is_factory_method_rmagick"
-                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.pi.move_infos.size + 3 + 7, &params[:progress_callback])
+                  @progress_cop = ProgressCop.new(begin_pages + 1 + @formatter.pi.move_infos.size + end_pages + 7, &params[:progress_callback])
 
                   begin
                     list = Magick::ImageList.new
 
                     if v = params[:cover_text].presence
-                      @progress_cop.next_step("表紙描画")
-                      tob("表紙描画") { list << CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render }
+                      cover_image = CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render
+                      begin_pages.times do |i|
+                        @progress_cop.next_step("表紙描画 #{i}/#{begin_pages}")
+                        tob("表紙描画 #{i}/#{begin_pages}") { list << cover_image.copy }
+                      end
                     end
 
                     @progress_cop.next_step("初期配置")
                     list << @screen_image_renderer.next_build
+                    
+                    # 駒の動き
                     @formatter.pi.move_infos.each.with_index do |e, i|
                       @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")
                       @container.execute(e[:input])
                       list << @screen_image_renderer.next_build
                       logger.info { "move: #{i} / #{@formatter.pi.move_infos.size}" } if i.modulo(10).zero?
                     end
+                    
+                    # 終了図
                     end_pages.times do |i|
                       @progress_cop.next_step("終了図 #{i}/#{end_pages}")
                       tob("終了図 #{i}/#{end_pages}") { list << @screen_image_renderer.last_rendered_image.copy }
                     end
+                    
                     @progress_cop.next_step("mp4 生成")
                     heavy_tob(:write) do
                       list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
@@ -143,23 +151,18 @@ module Bioshogi
                 end
 
                 if factory_method_key == "is_factory_method_ffmpeg"
-                  logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                  @progress_cop = ProgressCop.new(1 + 1 + @formatter.pi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
+                  @progress_cop = ProgressCop.new(begin_pages + 1 + @formatter.pi.move_infos.size + end_pages + 1 + 6, &params[:progress_callback])
 
-                  logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                   if v = params[:cover_text].presence
-                    logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                    @progress_cop.next_step("表紙描画")
-                    logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
-                    tob("表紙描画") { CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render.write(sfg.next) }
-                    logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
+                    cover_image = CoverImage.renderer(text: v, **params.slice(:bottom_text, :width, :height)).render
+                    begin_pages.times do |i|
+                      @progress_cop.next_step("表紙描画 #{i}/#{begin_pages}")
+                      tob("表紙描画 #{i}/#{begin_pages}") { cover_image.write(sfg.next) }
+                    end
                   end
-
-                  logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
+                  
                   @progress_cop.next_step("初期配置")
-                  logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
                   tob("初期配置") { @screen_image_renderer.next_build.write(sfg.next) }
-                  logger.info { "[TRACE] #{__FILE__}:#{__LINE__}" }
 
                   @formatter.pi.move_infos.each.with_index do |e, i|
                     @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")

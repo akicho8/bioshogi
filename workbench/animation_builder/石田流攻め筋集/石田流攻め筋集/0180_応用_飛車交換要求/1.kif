@@ -1,0 +1,52 @@
+問題集ID：603
+問題集KEY：EXB0knQxNMq
+問題集タイトル：石田流攻め筋集
+問題集投稿者：きなこもち
+問題集URL：https://www.shogi-extend.com/rack/books/EXB0knQxNMq
+問題集公開設定：非公開
+問題集出題順序：カスタマイズ
+問題集作成日時：2025-01-02 12:43
+問題集説明：
+ID：13450
+KEY：F3r9SxyULlf
+タイトル：7筋を突き捨ててからの棒銀→飛車同士の交換
+投稿者：きなこもち
+公開設定：非公開
+URL：https://www.shogi-extend.com/rack/articles/F3r9SxyULlf
+種類：定跡
+難易度：1
+メッセージ：
+タグ：
+説明：
+正解ID：17653
+正解番号：1
+正解手数：7
+人間向けの解答：▲74歩 △同歩 ▲65銀 △64銀 ▲74飛 △同飛 ▲同銀
+正解作成日時：2025-01-02 14:32
+*画像URL：https://www.shogi-extend.com/share-board.png?body=position+sfen+ln7%2F4g4%2Fp1pps4%2F1r2p4%2F1pP6%2FP1RPS4%2FBPN6%2F9%2FLN7+b+-+1+moves+7e7d+7c7d+5f6e+5c6d+7f7d+8d7d+6e7d&turn=0&viewpoint=black
+*共有将棋盤URL：https://www.shogi-extend.com/share-board?body=position+sfen+ln7%2F4g4%2Fp1pps4%2F1r2p4%2F1pP6%2FP1RPS4%2FBPN6%2F9%2FLN7+b+-+1+moves+7e7d+7c7d+5f6e+5c6d+7f7d+8d7d+6e7d&title=7%E7%AD%8B%E3%82%92%E7%AA%81%E3%81%8D%E6%8D%A8%E3%81%A6%E3%81%A6%E3%81%8B%E3%82%89%E3%81%AE%E6%A3%92%E9%8A%80%E2%86%92%E9%A3%9B%E8%BB%8A%E5%90%8C%E5%A3%AB%E3%81%AE%E4%BA%A4%E6%8F%9B&turn=0&viewpoint=black
+後手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂 ・ ・ ・ ・ ・ ・ ・|一
+| ・ ・ ・ ・v金 ・ ・ ・ ・|二
+|v歩 ・v歩v歩v銀 ・ ・ ・ ・|三
+| ・v飛 ・ ・v歩 ・ ・ ・ ・|四
+| ・v歩 歩 ・ ・ ・ ・ ・ ・|五
+| 歩 ・ 飛 歩 銀 ・ ・ ・ ・|六
+| 角 歩 桂 ・ ・ ・ ・ ・ ・|七
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+| 香 桂 ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+先手の持駒：なし
+先手番
+手数----指手---------消費時間--
+   1 ７四歩(75)
+   2 ７四歩(73)
+   3 ６五銀(56)
+   4 ６四銀(53)
+   5 ７四飛(76)
+   6 ７四飛(84)
+   7 ７四銀(65)
+   8 投了
+まで7手で先手の勝ち

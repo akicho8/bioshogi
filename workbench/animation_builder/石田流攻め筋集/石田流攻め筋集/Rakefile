@@ -1,0 +1,5 @@
+task :default => [:saferenum]
+
+task :saferenum do
+  system "saferenum -xd ."
+end
