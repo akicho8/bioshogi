@@ -48,6 +48,7 @@ lib/bioshogi/analysis/戦法/中原流相掛かり.kif:先手の戦法：相掛�
 lib/bioshogi/analysis/戦法/中原流相掛かり.kif:後手の戦法：相掛かり, 腰掛け銀
 lib/bioshogi/analysis/戦法/中原飛車.kif:後手の戦法：△3三角型空中戦法, 中原飛車
 lib/bioshogi/analysis/戦法/中飛車左穴熊.kif:後手の戦法：5筋位取り中飛車, 対振り持久戦, 中飛車左穴熊
+lib/bioshogi/analysis/戦法/久保流早石田.kif:先手の戦法：升田式石田流, 久保流早石田
 lib/bioshogi/analysis/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/analysis/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/analysis/戦法/初手▲7八銀戦法.kif:先手の戦法：初手▲7八銀戦法, 四間飛車
