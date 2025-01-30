@@ -199,7 +199,7 @@ module Bioshogi
             end
           },
         },
-        
+
         ################################################################################ 金
 
         {
@@ -241,7 +241,7 @@ module Bioshogi
             instance_eval(&TechniqueVerifyInfo[:"頭銀"].func)
           },
         },
-        
+
         ################################################################################
 
         {
@@ -706,6 +706,28 @@ module Bioshogi
         },
 
         {
+          key: "跳ね違いの桂",
+          description: "移動元から見て移動してない方に相手が1手前に移動した桂があるか？",
+          func: proc {
+            verify_if do
+              # △33桂(21)▲13桂成(25)で考える
+              # 跳ね違いは相手の桂を捌けなくする目的でもあるため「成っていない桂」のチェックとする
+              V.keima_vectors.any? do |e|
+                if v = origin_soldier.relative_move_to(e)                  # 25から33と13を見る
+                  if s = board[v]                                          # そこにある駒
+                    if opponent?(s) && s.piece.key == :knight && s.normal? # その駒は相手の駒かつ桂
+                      if hand_log = executor.container.hand_logs[-1]       # それは1手前に「動かした」駒か？
+                        hand_log&.move_hand&.soldier == s
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
           func: proc {
@@ -733,3 +755,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:8:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
+# ~>    from -:7:in `<module:Analysis>'
+# ~>    from -:6:in `<module:Bioshogi>'
+# ~>    from -:5:in `<main>'

@@ -69,17 +69,31 @@ module Bioshogi
         end
 
         def piece_hash_table_keys_by(hv)
-          drop_p = array_from_motion(hv[:motion])
+          promoted = array_from_promoted(hv[:promoted])
+          motion = array_from_motion(hv[:motion])
 
           av = []
           Array.wrap(hv[:piece_key]).each do |x|
-            Array.wrap(hv[:promoted]).each do |y|
-              Array.wrap(drop_p).each do |z|
+            Array.wrap(promoted).each do |y|
+              Array.wrap(motion).each do |z|
                 av << [x, y, z]
               end
             end
           end
           av
+        end
+
+        def array_from_promoted(promoted)
+          case promoted
+          when true
+            [true]
+          when false
+            [false]
+          when :both
+            [true, false]
+          else
+            raise "must not happen"
+          end
         end
 
         def array_from_motion(motion)
