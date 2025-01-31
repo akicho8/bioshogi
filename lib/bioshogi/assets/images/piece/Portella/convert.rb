@@ -4,8 +4,7 @@ require "rmagick"
 
 [
   # black
-  { key: "0OU", output: "BK0", shift:   0, }, # 王
-  { key: "0GY", output: "BX0", shift:   0, }, # 玉
+  { key: "0GY", output: "BK0", shift:   0, }, # 玉
   { key: "0HI", output: "BR0", shift:   0, }, # 飛
   { key: "0RY", output: "BR1", shift:   0, }, # 龍
   { key: "0KA", output: "BB0", shift:   0, }, # 角
@@ -21,7 +20,6 @@ require "rmagick"
   { key: "0TO", output: "BP1", shift:   0, }, # と
   # white
   { key: "1OU", output: "WK0", shift:   0, }, # 王
-  { key: "1GY", output: "WX0", shift:   0, }, # 玉
   { key: "1HI", output: "WR0", shift:  -2, }, # 飛
   { key: "1RY", output: "WR1", shift:  -2, }, # 龍
   { key: "1KA", output: "WB0", shift:  -2, }, # 角
@@ -61,33 +59,31 @@ require "rmagick"
   system "identify #{output}"
   # system "open #{output}"
 end
-# >> BK0.png PNG 249x256 249x256+0+0 8-bit sRGB 21569B 0.000u 0:00.000
-# >> BX0.png PNG 249x256 249x256+0+0 8-bit sRGB 21396B 0.000u 0:00.000
-# >> BR0.png PNG 249x256 249x256+0+0 8-bit sRGB 21203B 0.000u 0:00.000
-# >> BR1.png PNG 249x256 249x256+0+0 8-bit sRGB 21090B 0.000u 0:00.000
-# >> BB0.png PNG 249x256 249x256+0+0 8-bit sRGB 20447B 0.000u 0:00.000
-# >> BB1.png PNG 249x256 249x256+0+0 8-bit sRGB 21052B 0.000u 0:00.000
-# >> BG0.png PNG 249x256 249x256+0+0 8-bit sRGB 18240B 0.000u 0:00.000
-# >> BS0.png PNG 249x256 249x256+0+0 8-bit sRGB 19032B 0.000u 0:00.000
-# >> BS1.png PNG 249x256 249x256+0+0 8-bit sRGB 18670B 0.000u 0:00.000
-# >> BN0.png PNG 249x256 249x256+0+0 8-bit sRGB 18239B 0.000u 0:00.000
-# >> BN1.png PNG 249x256 249x256+0+0 8-bit sRGB 17587B 0.000u 0:00.000
-# >> BL0.png PNG 249x256 249x256+0+0 8-bit sRGB 17444B 0.000u 0:00.000
-# >> BL1.png PNG 249x256 249x256+0+0 8-bit sRGB 16916B 0.000u 0:00.000
-# >> BP0.png PNG 249x256 249x256+0+0 8-bit sRGB 15927B 0.000u 0:00.000
-# >> BP1.png PNG 249x256 249x256+0+0 8-bit sRGB 14983B 0.000u 0:00.000
-# >> WK0.png PNG 249x256 249x256+0+0 8-bit sRGB 22286B 0.000u 0:00.000
-# >> WX0.png PNG 249x256 249x256+0+0 8-bit sRGB 23058B 0.000u 0:00.000
-# >> WR0.png PNG 249x256 249x258+0+2 8-bit sRGB 23689B 0.000u 0:00.000
-# >> WR1.png PNG 249x256 249x258+0+2 8-bit sRGB 22758B 0.000u 0:00.000
-# >> WB0.png PNG 249x256 249x258+0+2 8-bit sRGB 22617B 0.000u 0:00.000
-# >> WB1.png PNG 249x256 249x258+0+2 8-bit sRGB 22750B 0.000u 0:00.000
-# >> WG0.png PNG 249x256 249x263+0+7 8-bit sRGB 20613B 0.000u 0:00.000
-# >> WS0.png PNG 249x256 249x264+0+8 8-bit sRGB 20356B 0.000u 0:00.000
-# >> WS1.png PNG 249x256 249x264+0+8 8-bit sRGB 20176B 0.000u 0:00.000
-# >> WN0.png PNG 249x256 249x266+0+10 8-bit sRGB 19170B 0.000u 0:00.000
-# >> WN1.png PNG 249x256 249x266+0+10 8-bit sRGB 18831B 0.000u 0:00.000
-# >> WL0.png PNG 249x256 249x267+0+11 8-bit sRGB 18244B 0.000u 0:00.000
-# >> WL1.png PNG 249x256 249x267+0+11 8-bit sRGB 18473B 0.000u 0:00.000
-# >> WP0.png PNG 249x256 249x272+0+15 8-bit sRGB 17314B 0.000u 0:00.000
-# >> WP1.png PNG 249x256 249x272+0+15 8-bit sRGB 15969B 0.000u 0:00.000
+# >> BK0.png PNG 249x256 249x256+0+0 8-bit sRGB 21394B 0.000u 0:00.000
+# >> BR0.png PNG 249x256 249x256+0+0 8-bit sRGB 21201B 0.000u 0:00.000
+# >> BR1.png PNG 249x256 249x256+0+0 8-bit sRGB 21088B 0.000u 0:00.000
+# >> BB0.png PNG 249x256 249x256+0+0 8-bit sRGB 20445B 0.000u 0:00.000
+# >> BB1.png PNG 249x256 249x256+0+0 8-bit sRGB 21050B 0.000u 0:00.000
+# >> BG0.png PNG 249x256 249x256+0+0 8-bit sRGB 18238B 0.000u 0:00.000
+# >> BS0.png PNG 249x256 249x256+0+0 8-bit sRGB 19030B 0.000u 0:00.000
+# >> BS1.png PNG 249x256 249x256+0+0 8-bit sRGB 18668B 0.000u 0:00.000
+# >> BN0.png PNG 249x256 249x256+0+0 8-bit sRGB 18237B 0.000u 0:00.000
+# >> BN1.png PNG 249x256 249x256+0+0 8-bit sRGB 17585B 0.000u 0:00.000
+# >> BL0.png PNG 249x256 249x256+0+0 8-bit sRGB 17442B 0.000u 0:00.000
+# >> BL1.png PNG 249x256 249x256+0+0 8-bit sRGB 16914B 0.000u 0:00.000
+# >> BP0.png PNG 249x256 249x256+0+0 8-bit sRGB 15925B 0.000u 0:00.000
+# >> BP1.png PNG 249x256 249x256+0+0 8-bit sRGB 14981B 0.000u 0:00.000
+# >> WK0.png PNG 249x256 249x256+0+0 8-bit sRGB 22284B 0.000u 0:00.000
+# >> WR0.png PNG 249x256 249x258+0+2 8-bit sRGB 23687B 0.000u 0:00.000
+# >> WR1.png PNG 249x256 249x258+0+2 8-bit sRGB 22756B 0.000u 0:00.000
+# >> WB0.png PNG 249x256 249x258+0+2 8-bit sRGB 22615B 0.000u 0:00.000
+# >> WB1.png PNG 249x256 249x258+0+2 8-bit sRGB 22748B 0.000u 0:00.000
+# >> WG0.png PNG 249x256 249x263+0+7 8-bit sRGB 20611B 0.000u 0:00.000
+# >> WS0.png PNG 249x256 249x264+0+8 8-bit sRGB 20354B 0.000u 0:00.000
+# >> WS1.png PNG 249x256 249x264+0+8 8-bit sRGB 20174B 0.000u 0:00.000
+# >> WN0.png PNG 249x256 249x266+0+10 8-bit sRGB 19168B 0.000u 0:00.000
+# >> WN1.png PNG 249x256 249x266+0+10 8-bit sRGB 18829B 0.000u 0:00.000
+# >> WL0.png PNG 249x256 249x267+0+11 8-bit sRGB 18242B 0.000u 0:00.000
+# >> WL1.png PNG 249x256 249x267+0+11 8-bit sRGB 18471B 0.000u 0:00.000
+# >> WP0.png PNG 249x256 249x272+0+15 8-bit sRGB 17312B 0.000u 0:00.000
+# >> WP1.png PNG 249x256 249x272+0+15 8-bit sRGB 15967B 0.000u 0:00.000
