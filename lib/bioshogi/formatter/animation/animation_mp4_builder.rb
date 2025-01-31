@@ -116,7 +116,7 @@ module Bioshogi
 
                     @progress_cop.next_step("初期配置")
                     list << @screen_image_renderer.next_build
-                    
+
                     # 駒の動き
                     @formatter.pi.move_infos.each.with_index do |e, i|
                       @progress_cop.next_step("(#{i}/#{@formatter.pi.move_infos.size}) #{e[:input]}")
@@ -124,13 +124,13 @@ module Bioshogi
                       list << @screen_image_renderer.next_build
                       logger.info { "move: #{i} / #{@formatter.pi.move_infos.size}" } if i.modulo(10).zero?
                     end
-                    
+
                     # 終了図
                     end_pages.times do |i|
                       @progress_cop.next_step("終了図 #{i}/#{end_pages}")
                       tob("終了図 #{i}/#{end_pages}") { list << @screen_image_renderer.last_rendered_image.copy }
                     end
-                    
+
                     @progress_cop.next_step("mp4 生成")
                     heavy_tob(:write) do
                       list.write("_output0.mp4") # staging ではここで例外も出さずに落ちることがある
@@ -160,7 +160,7 @@ module Bioshogi
                       tob("表紙描画 #{i}/#{begin_pages}") { cover_image.write(sfg.next) }
                     end
                   end
-                  
+
                   @progress_cop.next_step("初期配置")
                   tob("初期配置") { @screen_image_renderer.next_build.write(sfg.next) }
 
