@@ -14,10 +14,11 @@ module Bioshogi
 
               # 持駒数
               :piece_count_bg_color        => "hsla(0,0%,100%,0.7)", # 駒数の背景
-              :piece_count_font_color      => "hsla(0,0%,  0%,0.9)", # *駒数の色(nilなら piece_font_color を代用)
+              :piece_count_font_color      => "hsla(0,0%,  0%,0.7)", # *駒数の色(nilなら piece_font_color を代用)
               :piece_count_font_scale      => 0.6,               # 持駒数の大きさ
               :piece_count_stroke_color    => nil,               # 持駒数の縁取り色
               :piece_count_stroke_width    => nil,               # 持駒数の縁取り太さ
+              :piece_count_bold            => nil,               # 持駒数のフォントを bold タイプにするか？
               :piece_count_position_adjust => {                  # 駒数の位置
                 :single                    => [0.7, 0.05],       # 駒数1桁のとき。[0, 0] なら該当の駒の中央
                 :double                    => [0.8, 0.05],       # 駒数2桁のとき
@@ -96,6 +97,7 @@ module Bioshogi
             :font_scale   => params[:piece_count_font_scale],
             :stroke_color => params[:piece_count_stroke_color],
             :stroke_width => params[:piece_count_stroke_width],
+            :bold         => params[:piece_count_bold],
             )
         end
       end
