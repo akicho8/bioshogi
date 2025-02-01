@@ -51,11 +51,14 @@ module Bioshogi
 
       # フォントでの駒のときだけ駒レイヤーに影をつける
       def with_shadow_only_font_pice(layer)
-        if params[:piece_image_key]
-          layer
+        if piece_image_info
+          if piece_image_info.custom_shadow_support
+            layer = with_shadow(layer)
+          end
         else
-          with_shadow(layer)
+          layer = with_shadow(layer)
         end
+        layer
       end
 
       # 指定のレイヤーに影をつける

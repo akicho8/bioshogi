@@ -25,15 +25,16 @@ module Bioshogi
                 :black => [0.0425, 0.07],
                 :white => [0.0,    0.01],
               },
+
               # 盤
-              :canvas_bg_color          => "hsla(0,0%,100%,1.0)",       # 部屋の色(必須)
-              :piece_font_color         => "hsla(0,0%,0%,0.8)",         # 駒の色(必須)
-              :lattice_stroke_width     => 1,                           # 格子の線の太さ
-              :inner_frame_stroke_width => 2,                           # 枠の線お太さ(nil なら lattice_stroke_width を代用)
-              :inner_frame_fill_color   => nil,                         # 基本透明とする(基本指定なしでよい)
+              :canvas_bg_color          => "hsla(0,0%,100%,1.0)",            # 部屋の色(必須)
+              :piece_font_color         => "hsla(0,0%,0%,0.8)",              # 駒の色(必須)
+              :lattice_stroke_width     => 1,                                # 格子の線の太さ
+              :inner_frame_stroke_width => 2,                                # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+              :inner_frame_fill_color   => nil,                              # 基本透明とする(基本指定なしでよい)
               :dimension_w              => Dimension::Column.dimension_size, # 横のセル数
-              :dimension_h              => Dimension::Row.dimension_size, # 縦のセル数
-              :fg_file                  => nil,                         # 盤テクスチャ
+              :dimension_h              => Dimension::Row.dimension_size,    # 縦のセル数
+              :fg_file                  => nil,                              # 盤テクスチャ
 
               # optional
               :last_soldier_font_color    => nil,                     # *最後に動いた駒の色。基本指定しない。(nilなら piece_font_color を代用)
@@ -52,15 +53,16 @@ module Bioshogi
               :piece_move_cell_fill_color => "hsla(0,0%,0%,0.05)",        # 移動元と移動先のセルの背景色(nilなら描画しない)
               :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
-              # font
+              # フォント駒
               :font_theme_key        => nil,                         # フォントの種類 noto_seif
               :font_regular          => ASSETS_DIR.join("fonts/RictyDiminished-Regular.ttf"), # 駒のフォント(普通)
               :font_bold             => ASSETS_DIR.join("fonts/RictyDiminished-Bold.ttf"),    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
               :soldier_font_bold     => false,                        # 太字を使うか？
               :piece_font_weight_key             => :is_piece_font_weight_auto,               # 太字はおまかせ (つまり何もしない。nil でもよい)
 
-              # 駒
-              :piece_image_key               => nil, # リアルな駒を使うか？
+              # 画像駒
+              :piece_image_key          => nil, # どの画像駒を使うか？ (nil なら使わない)
+              :piece_image_scale        => nil, # 画像駒の大きさ (nil なら PieceImageInfo の default_scale を使う)
 
               # other
               :viewpoint                => "black", # 視点
@@ -73,8 +75,8 @@ module Bioshogi
               :star_fill_color          => nil,     # *星の色(nilなら inner_frame_lattice_color を代用)
               :star_step                => 3,       # 星はnセルごとに書く
 
-              :color_theme_key          => "is_color_theme_real", # 色テーマ
-              :renderer_override_params => {},                            # 色テーマを上書きするパラメータ
+              :color_theme_key          => "is_color_theme_modern", # 色テーマ
+              :renderer_override_params => {},                      # 色テーマを上書きするパラメータ
             })
         end
       end
@@ -91,6 +93,12 @@ module Bioshogi
         @container = container
         @params = self.class.default_params.merge(params)
 
+        # 一つ一つのパラメータを設定するのは大変である
+        # そこで以下を設定するとまとまったパラメータを一気に設定する
+        # - color_theme_key
+        # - font_theme_key
+        # - piece_font_weight_key
+
         if e = ColorThemeInfo.lookup(@params[:color_theme_key])
           @params.update(e.to_params)
         end
@@ -103,6 +111,7 @@ module Bioshogi
           @params.update(e.to_params)
         end
 
+        # 最終的に調整したいときは renderer_override_params に指定するとすべてを上書きできる
         if v = @params[:renderer_override_params]
           @params.update(v)
         end
@@ -331,6 +340,11 @@ module Bioshogi
       # 外側の領域
       def outer_rect
         outer_bottom_right - outer_top_left
+      end
+
+      # portella, nureyon などの情報
+      def piece_image_info
+        @piece_image_info ||= PieceImageInfo.lookup(params[:piece_image_key])
       end
     end
   end

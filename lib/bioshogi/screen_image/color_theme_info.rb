@@ -5,11 +5,12 @@ module Bioshogi
     class ColorThemeInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: :is_color_theme_real,   },
-        { key: :is_color_theme_piyo,   },
-        { key: :is_color_theme_paper,  },
-        { key: :is_color_theme_shape,  },
-        { key: :is_color_theme_club24, },
+        { key: :is_color_theme_modern,  },
+        { key: :is_color_theme_real,    },
+        { key: :is_color_theme_piyo,    },
+        { key: :is_color_theme_paper,   },
+        { key: :is_color_theme_shape,   },
+        { key: :is_color_theme_club24,  },
       ]
 
       ################################################################################
@@ -22,11 +23,13 @@ module Bioshogi
         options = {
           verbose: false,
         }.merge(options)
+
         parser = Parser.parse(SFEN1)
         file = ASSETS_DIR.join("images/color_theme_preview/#{key}.png")
         bin = parser.to_png(color_theme_key: key, width: 1920, height: 1080)
         FileUtils.makedirs(file.dirname)
         file.write(bin)
+
         if options[:verbose]
           puts file
         end
@@ -34,11 +37,22 @@ module Bioshogi
 
       ################################################################################
 
+      def is_color_theme_modern
+        {
+          **piece_count_on_shadow_black_on_white,
+          **outer_frame_padding_enabled,
+          **shadow_disabled,
+          :canvas_bg_color        => "hsl(0,0%,30%)",            # 背景
+          :outer_frame_fill_color => "hsl(36.23,75.36%,58.63%)", # 盤の色
+          :piece_image_key        => "nureyon",
+        }
+      end
+
       def is_color_theme_real
         is_color_theme_shogi_extend.merge({
             :fg_file => ASSETS_DIR.join("images/board/board_a.png"),
             :bg_file => ASSETS_DIR.join("images/background/background_a.png"),
-            :piece_image_key => "Portella",
+            :piece_image_key    => "Portella",
           })
       end
 
@@ -70,7 +84,7 @@ module Bioshogi
 
       def is_color_theme_piyo
         is_color_theme_shogi_extend.merge({
-            :canvas_bg_color             => "hsl(35,100% 85%)", # 背景
+            :canvas_bg_color             => "hsl(35,100%,85%)", # 背景
             :outer_frame_fill_color      => "hsl(37,73%,68%)",  # 盤の色
             :piece_pentagon_fill_color   => "hsl(52,76%,87%)",  # ☗の色
             :piece_pentagon_stroke_color => "hsl(36,78%,50%)",  # ☗の縁取り色

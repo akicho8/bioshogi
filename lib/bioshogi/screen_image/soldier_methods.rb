@@ -6,7 +6,7 @@ module Bioshogi
       end
 
       def soldier_draw(soldier)
-        if params[:piece_image_key]
+        if piece_image_info
           soldier_draw_by_image(soldier)
         else
           soldier_draw_by_char(soldier)
@@ -47,18 +47,22 @@ module Bioshogi
       end
 
       def piece_image_draw(v:, location:, piece:, promoted: false)
-        type = params[:piece_image_key]
-        key = [location.to_sfen, piece.sfen_char, promoted ? "1" : "0"].join.upcase
-        type_with_key = "#{type}/#{key}"
-        wh = cell_rect.collect(&:ceil)
-        cache_key = [type_with_key, wh].join("/")
+        texture_key = [location.to_sfen, piece.sfen_char, promoted ? "1" : "0"].join.upcase
+        # if piece_image_info.transform_texture
+        #   texture_key = piece_image_info.transform_texture.fetch(texture_key).texture_key
+        # end
+        relative_path = "#{piece_image_info.key}/#{texture_key}"
+        scale = params[:piece_image_scale] || piece_image_info.default_scale
+        wh = (cell_rect * scale).collect(&:ceil) # => [105, 114]
+        cache_key = [relative_path, wh.join("x")].join(",")       # => "nureyon/BP0,105x114"
         @piece_image_draw ||= {}
         image = @piece_image_draw[cache_key] ||= yield_self do
-          png_path = ASSETS_DIR.join("images/piece/#{type_with_key}.png")
-          image = Magick::Image.read(png_path).first
+          full_path = ASSETS_DIR.join("images/piece/#{relative_path}.#{piece_image_info.ext_name}")
+          image = Magick::Image.read(full_path).first
           image.resize_to_fill(*wh)
         end
-        @d_piece_layer.composite!(image, *px(v), Magick::OverCompositeOp)
+        gap_from_top_left = V.one * (1.0 - scale) / 2 # スケールが 0.8 なら左上から 0.1 の位置
+        @d_piece_layer.composite!(image, *px(v + gap_from_top_left), Magick::OverCompositeOp)
       end
 
       def soldier_move_cell_draw
@@ -101,7 +105,7 @@ module Bioshogi
 
       def soldier_name(soldier)
         if soldier.piece.key == :king && soldier.location.key == :white
-          "王"
+          "王"                  # FIXME: ハードコーディングすんな
         else
           soldier.any_name
         end
