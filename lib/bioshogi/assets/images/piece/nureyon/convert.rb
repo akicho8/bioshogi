@@ -32,7 +32,7 @@ require "rmagick"
   { key: "WP0", from: "BP0", flip: true,  }, # 歩
   { key: "WP1", from: "BP1", flip: true,  }, # と
 ].each do |e|
-  in_file  = "svg/#{e[:from]}.svg"
+  in_file  = "original/#{e[:from]}.svg"
   out_file = "#{e[:key]}.png"
   system "rsvg-convert -o #{out_file} #{in_file}" # rmagick で svg を扱うと単色なるし、なにより png の100倍ほど遅い
   if e[:flip]
