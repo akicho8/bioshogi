@@ -9,6 +9,7 @@ class App
     :end_duration    => 1.0,
     :turn_embed_key  => "is_turn_embed_on",
     :audio_theme_key => :is_audio_theme_none,
+    :color_theme_key => :is_color_theme_modern,
     # :width           => 854,
     # :height          => 480,
     :width           => 1920,
@@ -46,7 +47,8 @@ class App
 
   def items
     items = Pathname(__dir__).glob("石田流攻め筋集/0*")
-    # items = items.reverse.take(1)
+
+    # items = items.reverse.take(5)
     # items = items.find_all { |e| e.to_s.include?("0160_対金無双_端攻め_先に85桂") }
 
     items.collect.with_index do |e, i|
@@ -61,7 +63,7 @@ class App
         )
     end
   end
-  
+
   Item = Data.define(:index, :basename, :description, :file) do
     def no_desc
       [index.next, description].join(".")
