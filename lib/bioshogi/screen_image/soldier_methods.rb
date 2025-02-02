@@ -43,11 +43,11 @@ module Bioshogi
 
       def soldier_draw_by_image(soldier)
         v = V[*soldier.place.to_xy]
-        piece_image_draw(v: v, location: soldier.location, piece: soldier.piece, promoted: soldier.promoted)
+        piece_image_draw(v: v, soldier: soldier)
       end
 
-      def piece_image_draw(v:, location:, piece:, promoted: false)
-        piece_path = piece_image_info.piece_path(location, piece, promoted)
+      def piece_image_draw(v:, soldier:)
+        piece_path = piece_image_info.piece_path(soldier)
         scale = params[:piece_image_scale] || piece_image_info.default_scale
         wh = (cell_rect * scale).collect(&:ceil)               # => [105, 114]
         cache_key = [piece_path, wh.join("x")].join(",")       # => "nureyon/BP0,105x114"

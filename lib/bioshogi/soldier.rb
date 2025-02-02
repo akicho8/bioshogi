@@ -56,6 +56,7 @@ module Bioshogi
 
     include SimpleModel
     include TechniqueMatcherMethods
+    include ScreenImage::SoldierModelMethods
 
     attr_accessor :piece
     attr_accessor :promoted

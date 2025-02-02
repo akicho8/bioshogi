@@ -64,6 +64,10 @@ module Bioshogi
         lookup(value)
       end
 
+      def zero
+        fetch([0, 0])
+      end
+
       def cache_clear
         if @cache
           @cache.each_value do |hv|

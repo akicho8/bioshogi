@@ -58,7 +58,8 @@ module Bioshogi
             piece = Piece.fetch(piece_key)
 
             if params[:piece_image_key]
-              piece_image_draw(v: v, location: location, piece: piece)
+              soldier = Soldier.create(location: location, piece: piece, promoted: false, place: Place.zero)
+              piece_image_draw(v: v, soldier: soldier)
             else
               # 持駒の影
               piece_pentagon_draw(v: v, location: location, piece: piece)
