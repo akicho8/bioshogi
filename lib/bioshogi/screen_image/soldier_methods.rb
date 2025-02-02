@@ -47,22 +47,20 @@ module Bioshogi
       end
 
       def piece_image_draw(v:, location:, piece:, promoted: false)
-        texture_key = [location.to_sfen, piece.sfen_char, promoted ? "1" : "0"].join.upcase
-        # if piece_image_info.transform_texture
-        #   texture_key = piece_image_info.transform_texture.fetch(texture_key).texture_key
-        # end
-        relative_path = "#{piece_image_info.key}/#{texture_key}"
+        piece_path = piece_image_info.piece_path(location, piece, promoted)
         scale = params[:piece_image_scale] || piece_image_info.default_scale
-        wh = (cell_rect * scale).collect(&:ceil) # => [105, 114]
-        cache_key = [relative_path, wh.join("x")].join(",")       # => "nureyon/BP0,105x114"
+        wh = (cell_rect * scale).collect(&:ceil)               # => [105, 114]
+        cache_key = [piece_path, wh.join("x")].join(",")       # => "nureyon/BP0,105x114"
+
         @piece_image_draw ||= {}
         image = @piece_image_draw[cache_key] ||= yield_self do
-          full_path = ASSETS_DIR.join("images/piece/#{relative_path}.#{piece_image_info.ext_name}")
+          full_path = ASSETS_DIR.join("images/piece/#{piece_path}.#{piece_image_info.ext_name}")
           image = Magick::Image.read(full_path).first
-          image.resize_to_fill(*wh)
+          image.resize_to_fill(*wh)                            # 描画領域の大きさに調整(縮小)させる
         end
-        gap_from_top_left = V.one * (1.0 - scale) / 2 # スケールが 0.8 なら左上から 0.1 の位置
-        @d_piece_layer.composite!(image, *px(v + gap_from_top_left), Magick::OverCompositeOp)
+
+        top_left = V.one * (1.0 - scale) / 2 # スケールが 0.8 なら左上から右下方向に 0.1 の位置から描画すればセルの真ん中に配置できる
+        @d_piece_layer.composite!(image, *px(v + top_left), Magick::OverCompositeOp)
       end
 
       def soldier_move_cell_draw

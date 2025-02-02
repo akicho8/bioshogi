@@ -7,4 +7,4 @@ object = info.screen_image_renderer({
     :height          => 1080,
   })
 object.display
-# >> /Users/ikeda/src/bioshogi/workbench/tmp/898a619e69deb4a6bc6bb21b8f1f5772.png
+# >> /Users/ikeda/src/bioshogi/workbench/tmp/c84a502847dde7aafe5f9d095a7ada12.png

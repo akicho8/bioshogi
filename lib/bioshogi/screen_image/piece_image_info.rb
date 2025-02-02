@@ -15,6 +15,18 @@ module Bioshogi
           end
         end
       end
+
+      # 駒の種類をプレフィクスにした駒の部分パスを返す
+      # "nureyon/BP0"
+      def piece_path(location, piece, promoted)
+        path = [
+          location.to_sfen,     # B (Black)
+          piece.sfen_char,      # P (Pawn)
+          promoted ? "1" : "0", # 0 (不成)
+        ].join.upcase
+
+        "#{key}/#{path}"
+      end
     end
   end
 end
