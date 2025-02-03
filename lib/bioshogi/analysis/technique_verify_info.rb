@@ -569,6 +569,34 @@ module Bioshogi
         },
 
         {
+          key: "控えの桂",
+          description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
+          func: proc {
+            #【条件1】打った位置が6段目以降である
+            verify_if { soldier.top_spaces >= Dimension::Row.promotable_depth + 2 }
+
+            #  打った桂の利きの2箇所にある相手の駒を取得する
+            soldiers = V.keima_vectors.collect { |e|
+              if v = soldier.relative_move_to(e)
+                if s = board[v]
+                  if opponent?(s)
+                    s
+                  end
+                end
+              end
+            }.compact
+
+            # 【条件2】 相手の駒は1つ以上ある
+            verify_if { !soldiers.empty? }
+
+            # 【条件3】 相手の駒は「歩」である
+            verify_if do
+              soldiers.all? { |e| e.piece.key == :pawn }
+            end
+          },
+        },
+
+        {
           key: "土下座の歩",
           description: nil,
           func: proc {
