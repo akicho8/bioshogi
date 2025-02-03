@@ -540,6 +540,17 @@ module Bioshogi
         },
 
         {
+          # https://yokohamayanke.com/1078/ によると金底の香の状態でも「下段の香」として紹介されている
+          # いろんな条件を考えたが結局「下段」のみのチェックとする
+          key: "下段の香",
+          description: "打った香が一番下",
+          func: proc {
+            #【条件1】「最下段」であること
+            verify_if { soldier.bottom_spaces.zero? }
+          },
+        },
+
+        {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
           func: proc {
