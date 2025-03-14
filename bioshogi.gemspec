@@ -41,4 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "systemu"
   spec.add_dependency "rubyzip", ">= 2.3.0"
   spec.add_dependency "faraday"
+  spec.add_dependency "nkf"     # for Kconv
+  spec.add_dependency "benchmark"
 end

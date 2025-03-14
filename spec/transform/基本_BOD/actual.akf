@@ -1,20 +1,20 @@
-{:header=>
-  {"後手"=>"ごて",
-   "後手の持駒"=>"飛 角 金 銀 桂 香 歩四",
-   "先手"=>"せんて",
-   "先手の持駒"=>"銀二 歩四",
-   "手数"=>0},
- :moves=>
-  [{:index=>0,
-    :human_index=>1,
-    :place_same=>nil,
-    :total_seconds=>0,
-    :used_seconds=>nil,
-    :skill=>nil,
-    :history_sfen=>
+{header:
+  {"後手" => "ごて",
+   "後手の持駒" => "飛 角 金 銀 桂 香 歩四",
+   "先手" => "せんて",
+   "先手の持駒" => "銀二 歩四",
+   "手数" => 0},
+ moves:
+  [{index: 0,
+    human_index: 1,
+    place_same: nil,
+    total_seconds: 0,
+    used_seconds: nil,
+    skill: nil,
+    history_sfen:
      "position sfen ln7/3+B2+R2/2k1p4/p3g4/2s3p2/4K4/PP1PPpP1P/9/LNg1g2NL w 2S4Prbgsnl4p 2",
-    :short_sfen=>
+    short_sfen:
      "position sfen ln7/3+B2+R2/2k1p4/p3g4/2s3p2/4K4/PP1PPpP1P/9/LNg1g2NL w 2S4Prbgsnl4p 2"}],
- :last_action_kakinoki_word=>"投了",
- :judgment_message=>"まで0手で先手の勝ち",
- :error_text=>nil}
+ last_action_kakinoki_word: "投了",
+ judgment_message: "まで0手で先手の勝ち",
+ error_text: nil}
