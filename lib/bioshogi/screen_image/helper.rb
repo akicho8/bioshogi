@@ -29,7 +29,7 @@ module Bioshogi
 
       # いったんファイル出力してから戻している時点で相当無駄があるが apng や mp4 の場合でも失敗しない
       def to_write_binary
-        Tempfile.open(["", ".#{ext_name}"]) do |t|
+        Tempfile.create(["", ".#{ext_name}"]) do |t|
           render.write(t.path)
           File.binread(t.path)
         end
@@ -37,7 +37,7 @@ module Bioshogi
 
       # PNG24 を強制する (for zip)
       def to_png24_binary
-        Tempfile.open(["", ".png"]) do |t|
+        Tempfile.create(["", ".png"]) do |t|
           render.write("PNG24:#{t.path}")
           File.binread(t.path)
         end
