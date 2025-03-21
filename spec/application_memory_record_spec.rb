@@ -1,13 +1,11 @@
 require "spec_helper"
 
-module Bioshogi
-  describe ApplicationMemoryRecord do
-    it "works" do
-      klass = Class.new do
-        include ApplicationMemoryRecord
-        memory_record []
-      end
-      expect { klass.fetch(:foo) }.to raise_error(KeyNotFound)
+describe Bioshogi::ApplicationMemoryRecord do
+  it "works" do
+    klass = Class.new do
+      include Bioshogi::ApplicationMemoryRecord
+      memory_record []
     end
+    expect { klass.fetch(:foo) }.to raise_error(Bioshogi::KeyNotFound)
   end
 end

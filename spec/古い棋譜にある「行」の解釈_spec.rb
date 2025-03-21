@@ -1,6 +1,5 @@
 require "spec_helper"
 
-module Bioshogi
   describe do
     def test1(str)
       container = Bioshogi::Container::Basic.new
@@ -22,8 +21,8 @@ module Bioshogi
     end
 
     it "エラー" do
-      expect { test1("１七飛成") }.to raise_error(AmbiguousFormatError)
-      expect { test1("３三角") }.to raise_error(AmbiguousFormatError)
+      expect { test1("１七飛成") }.to raise_error(Bioshogi::AmbiguousFormatError)
+      expect { test1("３三角") }.to raise_error(Bioshogi::AmbiguousFormatError)
     end
 
     it "「上」は「行」と書ける" do
@@ -36,7 +35,6 @@ module Bioshogi
 
     it "ただし大駒以外には使えない" do
       assert { test1("８八金右上") == ["８八金(97)", "８八金右上", "-9788KI"] }
-      expect { test1("８八金右行") }.to raise_error(AmbiguousFormatError)
+      expect { test1("８八金右行") }.to raise_error(Bioshogi::AmbiguousFormatError)
     end
   end
-end

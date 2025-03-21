@@ -1,26 +1,25 @@
 require "spec_helper"
 
-module Bioshogi
-  describe Parser::Base do
-    it "-2725RYのときに候補が2つあるのでKI2にしたときに「△２五飛引成」になる" do
-      info = Parser.parse("+7776FU,-3334FU,+2726FU,-4344FU,+2625FU,-2233KA,+5756FU,-8222HI,+5968OU,-2324FU,+2524FU,-3324KA,+2824HI,-2224HI,+0015KA,-0027HI,+0028FU,-2725RY")
-      assert { info.to_ki2.include?("△２五飛引成") == true }
-    end
+describe Bioshogi::Parser::Base do
+  it "-2725RYのときに候補が2つあるのでKI2にしたときに「△２五飛引成」になる" do
+    info = Bioshogi::Parser.parse("+7776FU,-3334FU,+2726FU,-4344FU,+2625FU,-2233KA,+5756FU,-8222HI,+5968OU,-2324FU,+2524FU,-3324KA,+2824HI,-2224HI,+0015KA,-0027HI,+0028FU,-2725RY")
+    assert { info.to_ki2.include?("△２五飛引成") == true }
+  end
 
-    describe "消費時間があるCSAからの変換" do
-      describe "投了の部分まで時間が指定されている場合" do
-        before do
-          @info = Parser.parse(<<~EOT, analyzer_enable: false)
-+7968GI,,T30
--3334FU,T1
-+2726FU
--8384FU,T2
-%TORYO,,,T1
-EOT
-        end
+  describe "消費時間があるBioshogi::CSAからの変換" do
+    describe "投了の部分まで時間が指定されている場合" do
+      before do
+        @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
+        +7968GI,,T30
+        -3334FU,T1
+        +2726FU
+        -8384FU,T2
+        %TORYO,,,T1
+        EOT
+      end
 
-        it "to_csa" do
-          expect(@info.to_csa).to eq(<<~EOT)
+      it "to_csa" do
+        expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:平手
 PI
@@ -49,7 +48,7 @@ EOT
 
       describe "投了の部分まで時間が指定がない場合" do
         before do
-          @info = Parser.parse(<<~EOT, analyzer_enable: false)
+          @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
 +7968GI,T30
 -3334FU,T1
 +2726FU
@@ -70,10 +69,10 @@ PI
 -8384FU,T2
 %TORYO
 EOT
-        end
+      end
 
-        it "to_kif" do
-          expect(@info.to_kif).to eq(<<~EOT)
+      it "to_kif" do
+        expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)
@@ -83,7 +82,6 @@ EOT
    5 投了
 まで4手で後手の勝ち
 EOT
-        end
       end
     end
   end

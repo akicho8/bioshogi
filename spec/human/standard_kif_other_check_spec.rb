@@ -1,16 +1,15 @@
 require "spec_helper"
 
-module Bioshogi
-  describe "バグが再発しないように確認するためのテスト" do
-    def test1(str)
-      container = Bioshogi::Container::Basic.new
-      container.board.placement_from_shape(@board)
-      container.next_player.execute(str)
-      container.hand_logs.last.to_kif_ki2_csa
-    end
+describe "バグが再発しないように確認するためのテスト" do
+  def test1(str)
+    container = Bioshogi::Container::Basic.new
+    container.board.placement_from_shape(@board)
+    container.next_player.execute(str)
+    container.hand_logs.last.to_kif_ki2_csa
+  end
 
-    it "P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」" do
-      @board = <<~EOT
+  it "P3B_A 寄る(ことができる)駒が2枚以上なので「左右」＋「寄」" do
+    @board = <<~EOT
 +---------------------------+
 | 玉 ・ 銀 龍v銀v玉 銀 銀 ・|
 | ・ ・ ・ 金 ・ ・ 香 と ・|
@@ -45,4 +44,3 @@ EOT
       assert { test1("４二金右上") == ["４二金(51)", "４二金右上", "-5142KI"] }
     end
   end
-end
