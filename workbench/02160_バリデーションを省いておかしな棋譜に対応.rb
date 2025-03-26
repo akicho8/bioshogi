@@ -1,8 +1,8 @@
 require "./setup"
 
 container_options = {
-  analyzer_enable: false,
-  analyzer_technique_enable: false,
+  analysis_feature: false,
+  analysis_technique_feature: false,
   ki2_function: false,
   validate_enable: false,
 }

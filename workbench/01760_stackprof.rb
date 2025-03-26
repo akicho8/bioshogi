@@ -1,6 +1,6 @@
 require "./setup"
 
-# Bioshogi.config[:analyzer_enable] = false
+# Bioshogi.config[:analysis_feature] = false
 
 require "stackprof"
 
@@ -333,7 +333,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
 # >>                                   |    20  | 
-# >>     1    (0.1%)                   |    21  |       if executor.container.params[:analyzer_technique_enable]
+# >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_technique_feature]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Analysis::TacticInfo.piece_hash_table[key]

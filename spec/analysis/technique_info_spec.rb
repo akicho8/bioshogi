@@ -7,8 +7,8 @@ RSpec.describe Bioshogi::Analysis::TechniqueInfo do
 
   def container_new
     Bioshogi::Container::Basic.new.tap do |e|
-      e.params[:analyzer_enable] = true
-      e.params[:analyzer_technique_enable] = true
+      e.params[:analysis_feature] = true
+      e.params[:analysis_technique_feature] = true
     end
   end
 

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe "駒落ちBioshogi::CSA棋譜からの変換" do
   before do
-    @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
+    @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
 V2.2
 $EVENT:その他の棋戦
 $START_TIME:1938/03/01

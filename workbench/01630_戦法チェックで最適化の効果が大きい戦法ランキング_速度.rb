@@ -1,13 +1,13 @@
 require "./setup"
 require 'active_support/core_ext/benchmark'
 
-# Bioshogi.config[:analyzer_enable] = false
+# Bioshogi.config[:analysis_feature] = false
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}").sort
 files = Array(files).take((ARGV.first || 100).to_i)
 seconds = Benchmark.realtime do
   files.each do |file|
-    info = Parser.file_parse(file, typical_error_case: :skip, analyzer_technique_enable: true)
+    info = Parser.file_parse(file, typical_error_case: :skip, analysis_technique_feature: true)
     info.to_kif
   end
 end

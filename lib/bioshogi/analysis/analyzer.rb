@@ -19,7 +19,7 @@ module Bioshogi
           end
         end
 
-        if executor.container.params[:analyzer_technique_enable]
+        if executor.container.params[:analysis_technique_feature]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :PIECE_HASH_TABLE:
           if e = TacticInfo.piece_hash_table[key]
@@ -461,8 +461,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:6:in `<class:Analyzer>': undefined method `cattr_accessor' for Bioshogi::Analysis::Analyzer:Class (NoMethodError)
-# ~> Did you mean?  attr_accessor
-# ~> 	from -:5:in `<module:Analysis>'
-# ~> 	from -:4:in `<module:Bioshogi>'
-# ~> 	from -:3:in `<main>'

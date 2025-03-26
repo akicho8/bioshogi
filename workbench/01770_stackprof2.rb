@@ -1,6 +1,6 @@
 require "./setup"
 
-# Bioshogi.config[:analyzer_enable] = false
+# Bioshogi.config[:analysis_feature] = false
 
 require "stackprof"
 

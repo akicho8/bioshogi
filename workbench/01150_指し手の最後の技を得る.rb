@@ -1,7 +1,7 @@
 require "./setup"
 
 container = Container::Basic.start
-container.params[:analyzer_enable] = true
+container.params[:analysis_feature] = true
 
 # 最後の手に技が入っている
 container.execute("68銀", executor_class: PlayerExecutor::WithoutAnalyzer)

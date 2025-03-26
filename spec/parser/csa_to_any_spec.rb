@@ -9,7 +9,7 @@ RSpec.describe Bioshogi::Parser::Base do
   describe "消費時間があるBioshogi::CSAからの変換" do
     describe "投了の部分まで時間が指定されている場合" do
       before do
-        @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
+        @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
         +7968GI,,T30
         -3334FU,T1
         +2726FU
@@ -48,7 +48,7 @@ EOT
 
       describe "投了の部分まで時間が指定がない場合" do
         before do
-          @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
+          @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
 +7968GI,T30
 -3334FU,T1
 +2726FU

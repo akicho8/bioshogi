@@ -35,7 +35,7 @@ module Bioshogi
           end
         end
 
-        if perform_analyzer_enable?
+        if analysis_feature_enabled?
           TacticInfo.piece_box_added_proc_list.each do |e|
             if instance_exec(e, captured_soldier, &e.piece_box_added_proc)
               skill_push2(e)
@@ -53,7 +53,7 @@ module Bioshogi
       end
 
       def perform_analyzer
-        if perform_analyzer_enable?
+        if analysis_feature_enabled?
           Analyzer.new(self).call
         end
       end
@@ -81,8 +81,8 @@ module Bioshogi
         @skill_set ||= SkillSet.new
       end
 
-      def perform_analyzer_enable?
-        Bioshogi.config[:analyzer_enable] && container.params[:analyzer_enable] && Dimension.default_size?
+      def analysis_feature_enabled?
+        Bioshogi.config[:analysis_feature] && container.params[:analysis_feature] && Dimension.default_size?
       end
     end
   end

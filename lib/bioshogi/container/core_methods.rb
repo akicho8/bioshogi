@@ -10,8 +10,8 @@ module Bioshogi
 
       def params
         @params ||= {
-          :analyzer_enable           => false,
-          :analyzer_technique_enable => false,
+          :analysis_feature           => false,
+          :analysis_technique_feature => false,
           :ki2_function               => true,
           :validate_enable                => true,
           :board_class                    => Board,

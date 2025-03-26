@@ -7,10 +7,10 @@ info = Parser.parse(sfen)
 
 container = Container::Basic.new         # Container::Fast にする
 container.params.update({
-    :analyzer_enable           => false,
-    :analyzer_technique_enable => false,
-    :ki2_function               => false,
-    :validate_enable                => false,
+    :analysis_feature          => false,
+    :analysis_technique_feature => false,
+    :ki2_function              => false,
+    :validate_enable           => false,
   })
 info.formatter.container_init(container)
 screen_image_renderer = ScreenImage.renderer(container, viewpoint: "black")
