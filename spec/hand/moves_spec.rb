@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Player do
+RSpec.describe Bioshogi::Player do
   it "works" do
     Bioshogi::Dimension.change([2, 3]) do
       container = Bioshogi::Container::Basic.new

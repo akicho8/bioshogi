@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::SkillSet do
+RSpec.describe Bioshogi::Analysis::SkillSet do
   before do
     @skill_set = Bioshogi::Analysis::SkillSet.new
     @skill_set.defense_infos << Bioshogi::Analysis::DefenseInfo["片美濃囲い"]

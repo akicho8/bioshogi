@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Dimension::ModuleMethods do
+RSpec.describe Bioshogi::Dimension::ModuleMethods do
   it ".default_size?" do
     assert { Bioshogi::Dimension.default_size? }
   end

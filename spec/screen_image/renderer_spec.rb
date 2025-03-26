@@ -1,7 +1,7 @@
 require "spec_helper"
 require_relative "test_methods"
 
-describe Bioshogi::ScreenImage::Renderer, screen_image: true do
+RSpec.describe Bioshogi::ScreenImage::Renderer, screen_image: true do
   it "render" do
     renderer = target1
     assert { renderer.render }

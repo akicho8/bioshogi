@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::CoreSoldierPlaceMethods do
+RSpec.describe Bioshogi::Analysis::CoreSoldierPlaceMethods do
   it "core_soldier_places_hash" do
     board = Bioshogi::Board.create_by_preset("平手")
     assert { board.core_soldier_places_for(:black, :rook)   == Bioshogi::Place["28"] }

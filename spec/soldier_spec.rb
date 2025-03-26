@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Soldier do
+RSpec.describe Bioshogi::Soldier do
   before do
     @attributes = { place: Bioshogi::Place["６八"], piece: Bioshogi::Piece["銀"], promoted: false, location: Bioshogi::Location[:black] }
   end

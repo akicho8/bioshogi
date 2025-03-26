@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::AttackInfo do
+RSpec.describe Bioshogi::Analysis::AttackInfo do
   it ".human_name" do
     assert { Bioshogi::Analysis::AttackInfo.human_name == "戦法" }
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ウィキペディアにある表記通りの解釈ができる" do
+RSpec.describe "ウィキペディアにある表記通りの解釈ができる" do
   def test1(str)
     container = Bioshogi::Container::Basic.new
     container.board.placement_from_shape(<<~EOT)

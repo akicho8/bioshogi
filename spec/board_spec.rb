@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Board do
+RSpec.describe Bioshogi::Board do
   it ".create_by_preset" do
     assert { Bioshogi::Board.create_by_preset("角落ち").preset_info.key == :"角落ち" }
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Dimension::Row do
+RSpec.describe Bioshogi::Dimension::Row do
   it "数字表記" do
     assert { Bioshogi::Dimension::Row.fetch("一").hankaku_number == "1" }
   end

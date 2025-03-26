@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Board do
+RSpec.describe Bioshogi::Board do
   it "反転" do
     board = Bioshogi::Board.create_by_shape(<<~EOT)
       ９ ８ ７ ６ ５ ４ ３ ２ １

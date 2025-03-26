@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::BoardPieceCountsMethods do
+RSpec.describe Bioshogi::Analysis::BoardPieceCountsMethods do
   it "specific_piece_counts" do
     board = Bioshogi::Board.create_by_preset("平手")
     assert { board.specific_piece_count_for(:white, :bishop) == 1 }

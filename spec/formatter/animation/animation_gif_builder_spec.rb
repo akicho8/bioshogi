@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Formatter::Animation::AnimationGifBuilder, animation: true do
+RSpec.describe Bioshogi::Formatter::Animation::AnimationGifBuilder, animation: true do
   include AnimationSupport
 
   describe "gif" do

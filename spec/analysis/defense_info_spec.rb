@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::DefenseInfo do
+RSpec.describe Bioshogi::Analysis::DefenseInfo do
   xdescribe "keyとnameは異なる" do
     it "key" do
       assert { Bioshogi::Analysis::DefenseInfo["ビッグ4(振)"].key == :"ビッグ4(振)" }

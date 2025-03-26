@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::V do
+RSpec.describe Bioshogi::V do
   it "+" do
     assert { (Bioshogi::V[5, 6] + Bioshogi::V[2, 3]) == Bioshogi::V[7, 9]   }
     assert { (Bioshogi::V[5, 6] + 10)      == Bioshogi::V[15, 16] }

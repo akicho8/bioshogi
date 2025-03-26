@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ぴよ将棋の駒落ち駒KIFの読み込み" do
+RSpec.describe "ぴよ将棋の駒落ち駒KIFの読み込み" do
   # だけど現在はこのKIFにはなってないっぽいしこれに依存してロジックが無駄に複雑になるため対応しないでいいかもしれない
   it "works" do
     str = "

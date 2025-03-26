@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::V::PresetVectors do
+RSpec.describe Bioshogi::V::PresetVectors do
   it "works" do
     assert { Bioshogi::V.around_vectors     }
     assert { Bioshogi::V.left_right_vectors }

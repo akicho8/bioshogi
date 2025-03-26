@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Yomiage::Formatter do
+RSpec.describe Bioshogi::Yomiage::Formatter do
   it "works" do
     container = Bioshogi::Container::Basic.new
     container.placement_from_bod(<<~EOT)

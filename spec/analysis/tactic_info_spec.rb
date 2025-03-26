@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::TacticInfo do
+RSpec.describe Bioshogi::Analysis::TacticInfo do
   describe "すべての戦法の判定", tactic: true do
     Bioshogi::Analysis::TacticInfo.all_elements.each do |e|
       it e.key do

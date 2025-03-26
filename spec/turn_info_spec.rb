@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::TurnInfo do
+RSpec.describe Bioshogi::TurnInfo do
   it "1手づつ先後が変化する" do
     turn_info = Bioshogi::TurnInfo.new
     assert { turn_info.current_location.key == :black }

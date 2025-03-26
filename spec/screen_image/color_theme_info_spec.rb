@@ -1,7 +1,7 @@
 require "spec_helper"
 require_relative "test_methods"
 
-describe Bioshogi::ScreenImage::ColorThemeInfo, screen_image: true do
+RSpec.describe Bioshogi::ScreenImage::ColorThemeInfo, screen_image: true do
   it "color_theme_key" do
     renderer = target1(color_theme_key: "is_color_theme_real")
     assert { renderer.render }

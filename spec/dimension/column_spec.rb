@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Dimension::Column do
+RSpec.describe Bioshogi::Dimension::Column do
   describe "範囲外または無効" do
     it "引数が根本的にダメなのでエラー" do
       expect { Bioshogi::Dimension::Column.fetch("")  }.to raise_error(Bioshogi::SyntaxDefact)

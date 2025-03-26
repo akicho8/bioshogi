@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Formatter::Animation::SerialFilenameGenerator do
+RSpec.describe Bioshogi::Formatter::Animation::SerialFilenameGenerator do
   it "works" do
     sfg = Bioshogi::Formatter::Animation::SerialFilenameGenerator.new
     assert { sfg.name == "_input%04d.png" }

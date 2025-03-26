@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe do
+RSpec.describe do
   it "works" do
     sfen = "position startpos moves 2g2f 3i4h"
     info = Bioshogi::Parser.parse(sfen, validate_enable: false)

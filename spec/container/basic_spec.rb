@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Container::Basic do
+RSpec.describe Bioshogi::Container::Basic do
   it "works" do
     container = Bioshogi::Container::Basic.new
     container.placement_from_preset("平手")

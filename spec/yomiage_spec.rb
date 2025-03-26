@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "読み上げ" do
+RSpec.describe "読み上げ" do
   it "works" do
     info = Bioshogi::Parser.parse("position sfen 4k4/9/4G4/9/9/9/9/9/9 b 2G2r2b2g4s4n4l18p 1")
     assert { info.to_yomiage == "gyokugata。ごーいちgyoku。せめかた。ごーさんkin。もちごま。kin。kin" }

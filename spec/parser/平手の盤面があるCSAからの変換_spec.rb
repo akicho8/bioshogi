@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Parser::Base do
+RSpec.describe Bioshogi::Parser::Base do
   describe "平手の盤面があるBioshogi::CSAからの変換" do
     before do
       @info = Bioshogi::Parser.parse(<<~EOT)

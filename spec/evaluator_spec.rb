@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe do
+RSpec.describe do
   it "works" do
     container = Bioshogi::Container::Basic.new
     container.board.placement_from_human("▲９七歩")

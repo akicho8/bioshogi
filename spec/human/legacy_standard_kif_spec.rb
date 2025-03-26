@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "将棋連盟が定めている人間向け棋譜入力" do
+RSpec.describe "将棋連盟が定めている人間向け棋譜入力" do
   before do
     @params = {pieces_add: "飛 角 銀"}
   end

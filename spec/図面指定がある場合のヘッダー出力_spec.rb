@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "図面指定がある場合のヘッダー出力" do
+RSpec.describe "図面指定がある場合のヘッダー出力" do
   it "平手" do
     container = Bioshogi::Container::Basic.new
     container.board.placement_from_preset("裸玉")

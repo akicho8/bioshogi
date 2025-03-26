@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::SoldierBox do
+RSpec.describe Bioshogi::SoldierBox do
   it "works" do
     soldier_box = Bioshogi::SoldierBox.new
     soldier_box << Bioshogi::Soldier.from_str("△５一玉")

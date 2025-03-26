@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::PillerCop do
+RSpec.describe Bioshogi::PillerCop do
   it "縦に1列埋まると active が true になる" do
     piller_cop = Bioshogi::PillerCop.new
     assert { piller_cop.counts == [0, 0, 0, 0, 0, 0, 0, 0, 0] }

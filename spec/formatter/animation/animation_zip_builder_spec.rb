@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Formatter::Animation::AnimationZipBuilder, animation: true do
+RSpec.describe Bioshogi::Formatter::Animation::AnimationZipBuilder, animation: true do
   it "zip" do
     info = Bioshogi::Parser.parse("position startpos moves 7g7f 8c8d")
     bin = info.to_animation_zip(cover_text: "(cover_text)", basename_format: "xxx%d")

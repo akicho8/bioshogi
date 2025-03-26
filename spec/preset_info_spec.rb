@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::PresetInfo do
+RSpec.describe Bioshogi::PresetInfo do
   describe "日本語ゆえの表記ゆれ問題" do
     it "飛車落ち" do
       assert { Bioshogi::PresetInfo["飛車落ち"] }

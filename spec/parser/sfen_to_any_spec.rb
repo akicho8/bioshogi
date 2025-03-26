@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Parser::Base do
+RSpec.describe Bioshogi::Parser::Base do
   describe "sfen から変換" do
     it "手合割がわかる" do
       info = Bioshogi::Parser.parse("position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")

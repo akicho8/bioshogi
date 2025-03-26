@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "駒落ちBioshogi::CSA棋譜からの変換" do
+RSpec.describe "駒落ちBioshogi::CSA棋譜からの変換" do
   before do
     @info = Bioshogi::Parser.parse(<<~EOT, analyzer_enable: false)
 V2.2
@@ -62,18 +62,17 @@ EOT
     まで2手で下手の勝ち
     EOT
   end
-end
 
-describe "(1) 平手初期配置と駒落ち" do
-  it "落とす駒が明記されているケース" do
-    info = Bioshogi::Parser.parse(<<~EOT)
+  describe "(1) 平手初期配置と駒落ち" do
+    it "落とす駒が明記されているケース" do
+      info = Bioshogi::Parser.parse(<<~EOT)
 V2.2
 PI82HI22KA
 -
 -3334FU
 %TORYO
 EOT
-    expect(info.to_csa).to eq(<<~EOT)
+      expect(info.to_csa).to eq(<<~EOT)
 V2.2
 ' 手合割:二枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
@@ -118,3 +117,5 @@ P-00HI00HI00KA00KA00KI00KI00KI00GI00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00
 EOT
     end
   end
+end
+

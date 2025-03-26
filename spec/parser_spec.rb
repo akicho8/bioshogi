@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Parser do
+RSpec.describe Bioshogi::Parser do
   describe "判定" do
     it "KIF" do
       assert { Bioshogi::Parser.parse("手数-指手-消費時間").class == Bioshogi::Parser::KifParser }

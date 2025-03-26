@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Converter do
+RSpec.describe Bioshogi::Converter do
   it "棋譜変換できる" do
     output_file = Bioshogi::TMP_DIR.join("sample.ki2")
     output_file.existence&.delete

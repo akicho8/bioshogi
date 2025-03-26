@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "#move_list" do
+RSpec.describe "#move_list" do
   it "ある地点に移動するとき成れるのか？" do
     soldier = Bioshogi::Soldier.from_str("▲13銀")
     assert { soldier.tsugini_nareru_on?(Bioshogi::Place["14"]) }

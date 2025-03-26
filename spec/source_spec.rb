@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Source do
+RSpec.describe Bioshogi::Source do
   it "行末の空白だけ削除する" do
     source = Bioshogi::Source.wrap([" a \r", " b \n", " c \r\n "].join)
     assert { source.to_s == [" a", " b", " c"].collect { |e| "#{e}\n" }.join }

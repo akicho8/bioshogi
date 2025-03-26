@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::CounterHash do
+RSpec.describe Bioshogi::CounterHash do
   it "works" do
     h = Bioshogi::CounterHash.new
     assert { h[:x] ==  0 }

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ヘッダーの読み取り" do
+RSpec.describe "ヘッダーの読み取り" do
   it "基本" do
     assert { Bioshogi::Parser.parse("key：value").pi.header.to_h == { "key" => "value" } }
   end

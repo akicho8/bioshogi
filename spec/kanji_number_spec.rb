@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::KanjiNumber do
+RSpec.describe Bioshogi::KanjiNumber do
   it "works" do
     assert { Bioshogi::KanjiNumber.kanji_to_number_string("") == "" }
     assert { Bioshogi::KanjiNumber.kanji_to_number_string("歩") == "歩" }

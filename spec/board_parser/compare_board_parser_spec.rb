@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::BoardParser::CompareBoardParser do
+RSpec.describe Bioshogi::BoardParser::CompareBoardParser do
   it "他の駒以外のものも拾える" do
     info = Bioshogi::BoardParser::CompareBoardParser.parse(<<~EOT)
     +------+

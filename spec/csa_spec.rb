@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe do
+RSpec.describe do
   it "5341NK だけでは判断が難しい例" do
     container = Bioshogi::Container::Basic.new
     container.placement_from_preset("平手")

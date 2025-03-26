@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "持ち時間" do
+RSpec.describe "持ち時間" do
   it "works" do
     assert { Bioshogi::Parser.parse("持ち時間：１時間２分").to_kif.match?(/：1時間2分$/) }
     assert { Bioshogi::Parser.parse("持ち時間：１時間").to_kif.match?(/：1時間$/) }

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::StyleAccessor do
+RSpec.describe Bioshogi::Analysis::StyleAccessor do
   it "works" do
     assert { Bioshogi::Analysis::DefenseInfo.styles_hash }
     assert { Bioshogi::Analysis::DefenseInfo["美濃囲い"].style_info.name == "王道"   }

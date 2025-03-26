@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::SingleClock do
+RSpec.describe Bioshogi::SingleClock do
   it "Bioshogi::SingleClock" do
     single_clock = Bioshogi::SingleClock.new
     single_clock.add(1)

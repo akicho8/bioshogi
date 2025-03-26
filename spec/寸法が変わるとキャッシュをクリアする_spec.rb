@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe "寸法が変わるとキャッシュをクリアする" do
+RSpec.describe "寸法が変わるとキャッシュをクリアする" do
   it "works" do
     container = Bioshogi::Container::Basic.new
 

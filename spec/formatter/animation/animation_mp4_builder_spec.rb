@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Formatter::Animation::AnimationMp4Builder, animation: true do
+RSpec.describe Bioshogi::Formatter::Animation::AnimationMp4Builder, animation: true do
   include AnimationSupport
 
   def test1(params = {})

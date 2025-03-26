@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Analysis::TechniqueInfo do
+RSpec.describe Bioshogi::Analysis::TechniqueInfo do
   it ".rocket_list" do
     Bioshogi::Analysis::TechniqueInfo.rocket_list.include?(Bioshogi::Analysis::TechniqueInfo[:"6段ロケット"])
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Piece do
+RSpec.describe Bioshogi::Piece do
   before do
     @pieces = [Bioshogi::Piece["歩"], Bioshogi::Piece["歩"], Bioshogi::Piece["飛"]]
   end

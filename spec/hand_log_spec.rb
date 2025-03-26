@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::HandLog do
+RSpec.describe Bioshogi::HandLog do
   it "to_xxx" do
     move_hand = Bioshogi::Hand::Move.create(soldier: Bioshogi::Soldier.from_str("▲６八銀"), origin_soldier: Bioshogi::Soldier.from_str("▲７九銀"))
     object = Bioshogi::HandLog.new(move_hand: move_hand, candidate_soldiers: [])

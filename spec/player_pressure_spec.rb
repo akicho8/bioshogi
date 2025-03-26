@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Player do
+RSpec.describe Bioshogi::Player do
   it "終盤度" do
     container = Bioshogi::Container::Basic.new
     container.placement_from_bod(<<~EOT)

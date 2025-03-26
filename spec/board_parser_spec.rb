@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "盤面の読み取り" do
+RSpec.describe "盤面の読み取り" do
   def test1(source)
     Bioshogi::BoardParser.parse(source).soldiers.collect(&:name).sort
   end

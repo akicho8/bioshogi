@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::AI::Brain do
+RSpec.describe Bioshogi::AI::Brain do
   it "初手が嬉野流になるよう誘導される" do
     container = Bioshogi::Container::Basic.start
     player = container.player_at(:black)

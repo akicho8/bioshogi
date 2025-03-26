@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ミクロコスモス" do
+RSpec.describe "ミクロコスモス" do
   it "works" do
     bod = nil
     GC.start

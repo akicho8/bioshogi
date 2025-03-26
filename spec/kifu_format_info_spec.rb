@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe do
+RSpec.describe do
   it "works" do
     assert { Bioshogi::KifuFormatInfo[:kif].name == "KIF" }
   end

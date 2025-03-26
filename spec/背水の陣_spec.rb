@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe do
+RSpec.describe do
   it "先手は負けたので背水の陣タグが含まれていてはいけない" do
     info = Bioshogi::Parser.file_parse("#{__dir__}/files/後手入玉勝ち_先手が指し終わったタイミングで後手が勝つ特殊なケース.csa")
     assert { !info.to_kif.match?(/先手の備考：.*背水の陣/) }

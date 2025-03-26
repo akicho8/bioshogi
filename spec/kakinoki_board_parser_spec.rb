@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::BoardParser::KakinokiBoardParser do
+RSpec.describe Bioshogi::BoardParser::KakinokiBoardParser do
   it "works" do
     assert { Bioshogi::BoardParser::KakinokiBoardParser.accept?("+--+") }
     assert { Bioshogi::BoardParser::KakinokiBoardParser.accept?("|・|") }

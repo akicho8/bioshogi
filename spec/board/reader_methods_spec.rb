@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Board::ReaderMethods do
+RSpec.describe Bioshogi::Board::ReaderMethods do
   it "lookup" do
     assert { Bioshogi::Board.create_by_preset("平手").lookup("11")  }
     assert { !Bioshogi::Board.create_by_preset("平手").lookup("12") }

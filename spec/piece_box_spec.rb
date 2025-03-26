@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::PieceBox do
+RSpec.describe Bioshogi::PieceBox do
   it "いろんなものに変換" do
     piece_box = Bioshogi::PieceBox.new(Bioshogi::Piece.s_to_h("飛玉角角"))
     assert { piece_box.to_sfen(:black) == "KR2B" }

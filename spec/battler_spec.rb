@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Soldier do
+RSpec.describe Bioshogi::Soldier do
   describe "文字列表現" do
     before do
       @soldier = Bioshogi::Container::Basic.player_test(init: "５五と").soldiers.first

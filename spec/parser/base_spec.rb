@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Parser::Base do
+RSpec.describe Bioshogi::Parser::Base do
   describe "「上手の持駒：なし」があって手合割がわかっているときは「上手の持駒」の部分は消しとく" do
     before do
       @info = Bioshogi::Parser.parse(<<~EOT)

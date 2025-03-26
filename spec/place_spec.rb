@@ -1,7 +1,7 @@
 
 require "spec_helper"
 
-describe Bioshogi::Place do
+RSpec.describe Bioshogi::Place do
   it "コレクション" do
     assert { Bioshogi::Place.each.present? == true }
   end

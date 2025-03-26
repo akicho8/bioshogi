@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Location do
+RSpec.describe Bioshogi::Location do
   it "変換可能" do
     assert { Bioshogi::Location[-1].key      == :white }
     assert { Bioshogi::Location[0].key       == :black }

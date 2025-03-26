@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Player::SoldierMethods do
+RSpec.describe Bioshogi::Player::SoldierMethods do
   before do
     @container = Bioshogi::Container::Basic.new
     @container.board.placement_from_human("▲53玉 ▲23飛 △51玉 △22角")

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Bioshogi::Player::OtherMethods do
+RSpec.describe Bioshogi::Player::OtherMethods do
   it "zengoma?" do
     container = Bioshogi::Container::Basic.new
     container.board.placement_from_human("△51玉 △22角 ▲28飛")
