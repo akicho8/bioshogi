@@ -4,7 +4,7 @@ container_options = {
   analysis_feature: false,
   analysis_technique_feature: false,
   ki2_function: false,
-  validate_enable: false,
+  validate_feature: false,
 }
 
 body = "51玉(59)"

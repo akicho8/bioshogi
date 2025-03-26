@@ -29,7 +29,7 @@ module Bioshogi
             :analysis_technique_feature => true,
             :ki2_function               => true,  # ki2にしないのであれば指定するとかなり速くなる
 
-            :validate_enable                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
+            :validate_feature                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
             :validate_double_pawn_skip      => false, # 二歩を無視するか？
             :validate_warp_skip             => false, # 角ワープを無視するか？
           }

@@ -1,6 +1,6 @@
 require "../setup"
 
-info = Parser.parse("position startpos moves 2g2f 3i4h", validate_enable: false)
+info = Parser.parse("position startpos moves 2g2f 3i4h", validate_feature: false)
 puts info.formatter.container.board
 object = info.screen_image_renderer({width: 800, height: 800})
 object.display

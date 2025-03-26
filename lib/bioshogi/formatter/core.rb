@@ -79,7 +79,7 @@ module Bioshogi
                 :analysis_feature,
                 :analysis_technique_feature,
                 :ki2_function,
-                :validate_enable,
+                :validate_feature,
                 :validate_double_pawn_skip,
                 :validate_warp_skip,
               ]))
@@ -93,7 +93,7 @@ module Bioshogi
             :analysis_feature           => false,
             :analysis_technique_feature => false,
             :ki2_function               => false,
-            :validate_enable                => false,
+            :validate_feature                => false,
           })
         container_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
         container

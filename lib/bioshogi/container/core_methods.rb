@@ -13,7 +13,7 @@ module Bioshogi
           :analysis_feature           => false,
           :analysis_technique_feature => false,
           :ki2_function               => true,
-          :validate_enable                => true,
+          :validate_feature                => true,
           :board_class                    => Board,
         }
       end

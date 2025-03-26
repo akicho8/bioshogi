@@ -14,7 +14,7 @@ def test2
       # :analysis_feature           => false,
       # :analysis_technique_feature => false,
       :ki2_function                 => false,
-      :validate_enable                  => false,
+      :validate_feature                  => false,
       # :container_class                 => Container::Fast,
     })
   object = info.screen_image_renderer({width: 100, height: 100})

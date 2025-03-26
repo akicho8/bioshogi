@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe do
   it "works" do
     sfen = "position startpos moves 2g2f 3i4h"
-    info = Bioshogi::Parser.parse(sfen, validate_enable: false)
+    info = Bioshogi::Parser.parse(sfen, validate_feature: false)
     expect(info.formatter.container.board.to_s).to eq(<<~EOT)
       ９ ８ ７ ６ ５ ４ ３ ２ １
     +---------------------------+

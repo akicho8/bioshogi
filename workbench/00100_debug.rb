@@ -4,7 +4,7 @@ container_options = {
   analysis_feature: false,
   analysis_technique_feature: false,
   ki2_function: false,
-  validate_enable: false,
+  validate_feature: false,
 }
 
 info = Parser.parse("55玉(59)", container_options)
