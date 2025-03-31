@@ -10,3 +10,4 @@ _*
 /examples/flamegraph
 /pkg
 .tmp
+*.band

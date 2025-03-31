@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.license      = "AGPL-3.0"
 
   # https://pocke.hatenablog.com/entry/2020/10/24/171955
-  spec.files         = `git ls-files`.split($/).grep_v(%r{^(test|spec|features|demo|algorithm|workbench|min_max|bioshogi.png|doc)/})
+  spec.files         = `git ls-files`.split.grep_v(%r{^(test|spec|features|demo|algorithm|workbench|min_max|bioshogi.png|doc)/})
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = [] # spec.files.grep(%r{^(test|spec|features|demo|algorithm|workbench|min_max)/})
   spec.require_paths = ["lib"]
