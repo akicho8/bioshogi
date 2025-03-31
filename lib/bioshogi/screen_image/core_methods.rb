@@ -54,26 +54,26 @@ module Bioshogi
               :normal_piece_color_map     => {},                          # 成ってない駒それぞれの色(nilなら piece_font_color を代用)
 
               # フォント駒
-              :font_theme_key        => nil,                         # フォントの種類 noto_seif
+              :font_theme_key        => nil,                                                  # フォントの種類 noto_seif
               :font_regular          => ASSETS_DIR.join("fonts/RictyDiminished-Regular.ttf"), # 駒のフォント(普通)
               :font_bold             => ASSETS_DIR.join("fonts/RictyDiminished-Bold.ttf"),    # 駒のフォント(太字) (shogi-extendから直接参照しているためnilにしてはいけない)
-              :soldier_font_bold     => false,                        # 太字を使うか？
-              :piece_font_weight_key             => :is_piece_font_weight_auto,               # 太字はおまかせ (つまり何もしない。nil でもよい)
+              :soldier_font_bold     => false,                                                # 太字を使うか？
+              :piece_font_weight_key => :is_piece_font_weight_auto,                           # 太字はおまかせ (つまり何もしない。nil でもよい)
 
               # 画像駒
-              :piece_image_key          => nil, # どの画像駒を使うか？ (nil なら使わない)
-              :piece_image_scale        => nil, # 画像駒の大きさ (nil なら PieceImageInfo の default_scale を使う)
+              :piece_image_key   => nil, # どの画像駒を使うか？ (nil なら使わない)
+              :piece_image_scale => nil, # 画像駒の大きさ (nil なら PieceImageInfo の default_scale を使う)
 
               # other
-              :viewpoint                => "black", # 視点
-              :image_format             => "png",   # 出力する画像タイプ
-              :negate                   => false,   # 反転
-              :bg_file                  => nil,     # 背景ファイル
+              :viewpoint    => "black", # 視点
+              :image_format => "png",   # 出力する画像タイプ
+              :negate       => false,   # 反転
+              :bg_file      => nil,     # 背景ファイル
 
               # star
-              :star_size                => 0.03,    # 星のサイズ(割合)
-              :star_fill_color          => nil,     # *星の色(nilなら inner_frame_lattice_color を代用)
-              :star_step                => 3,       # 星はnセルごとに書く
+              :star_size       => 0.03, # 星のサイズ(割合)
+              :star_fill_color => nil,  # *星の色(nilなら inner_frame_lattice_color を代用)
+              :star_step       => 3,    # 星はnセルごとに書く
 
               :color_theme_key          => "is_color_theme_modern", # 色テーマ
               :renderer_override_params => {},                      # 色テーマを上書きするパラメータ
