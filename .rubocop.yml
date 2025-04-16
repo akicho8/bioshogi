@@ -1,0 +1,65 @@
+# Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# AllCops:
+#   Exclude:
+#     - "nuxt_side/**/*"
+#     - "nuxt_side_small/**/*"
+#     - "share_board_order_setting_modal_ui_mock_experiment/**/*"
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
+
+# ↓これが理想だけど強制的に [1,2,] が [1,2] になってしまうため役に立たない
+#
+# Style/TrailingCommaInArrayLiteral
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+#
+# Style/TrailingCommaInHashLiteral
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+#
+# Style/TrailingCommaInArguments
+#   EnforcedStyleForMultiline: consistent_comma
+#   EnforcedStyleForSingleline: ignore
+
+################################################################################ しょうがないので無効にしている
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+################################################################################
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/StabbyLambdaParentheses:
+  Enabled: false
+
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+Style/RedundantReturn:
+  Enabled: false
+
+Layout/LeadingCommentSpace:
+  Enabled: false
