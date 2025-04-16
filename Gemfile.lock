@@ -92,7 +92,6 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     racc (1.8.1)
-    rack (3.1.13)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -133,20 +132,6 @@ GEM
     rubocop-ast (1.44.1)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
-    rubocop-performance (1.25.0)
-      lint_roller (~> 1.1)
-      rubocop (>= 1.75.0, < 2.0)
-      rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails (2.31.0)
-      activesupport (>= 4.2.0)
-      lint_roller (~> 1.1)
-      rack (>= 1.1)
-      rubocop (>= 1.75.0, < 2.0)
-      rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails-omakase (1.1.0)
-      rubocop (>= 1.72)
-      rubocop-performance (>= 1.24)
-      rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
     securerandom (0.4.1)
@@ -184,7 +169,7 @@ DEPENDENCIES
   pry
   rake
   rspec
-  rubocop-rails-omakase
+  rubocop
   simplecov
   stackprof
   test-unit
