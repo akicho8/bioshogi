@@ -34,5 +34,5 @@ container.player_at(:black).evaluator(evaluator_class: Evaluator::Level2).score 
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝0 まで
-# >> 
+# >>
 # >> 先手番

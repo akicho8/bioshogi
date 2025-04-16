@@ -53,7 +53,7 @@ module Bioshogi
       private
 
       def alpha_to_digit(s)
-        s.gsub(/[[:lower:]]/) { |s| s.ord - 'a'.ord + 1 }
+        s.gsub(/[[:lower:]]/) { |s| s.ord - "a".ord + 1 }
       end
     end
   end

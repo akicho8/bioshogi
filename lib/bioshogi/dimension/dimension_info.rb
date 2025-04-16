@@ -17,7 +17,7 @@ module Bioshogi
         private
 
         def invert_table
-          @invert_table ||= inject({}) {|a, e| a.merge(e.wh => e) }
+          @invert_table ||= inject({}) { |a, e| a.merge(e.wh => e) }
         end
       end
     end

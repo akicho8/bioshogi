@@ -7,7 +7,7 @@ Parser.parse("position startpos moves B*1e") .container rescue puts $!.message
 # >> 手番: 先手
 # >> 指し手: ５五飛
 # >> 棋譜:
-# >> 
+# >>
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -23,13 +23,13 @@ Parser.parse("position startpos moves B*1e") .container rescue puts $!.message
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝0 まで
-# >> 
+# >>
 # >> 先手番
 # >> 角を打とうとしましたが角を持っていません
 # >> 手番: 先手
 # >> 指し手: B*1e
 # >> 棋譜:
-# >> 
+# >>
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -45,5 +45,5 @@ Parser.parse("position startpos moves B*1e") .container rescue puts $!.message
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝0 まで
-# >> 
+# >>
 # >> 先手番

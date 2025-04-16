@@ -18,7 +18,7 @@ module Bioshogi
       private
 
       def parser_class_find(source)
-        support_parsers.find {|e| e.accept?(source) }
+        support_parsers.find { |e| e.accept?(source) }
       end
 
       def support_parsers

@@ -8,12 +8,12 @@ player_executor = PlayerExecutor::Human.new(player, "▲５五銀")
 player_executor.execute
 
 container = Container::Basic.start
-container.execute("▲22角成")    # => 
+container.execute("▲22角成")    # =>
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:131:in `raise_error': ５五に移動できる銀がないため打の省略形と考えましたが銀を持っていません。手番が間違っているのかもしれません (Bioshogi::HoldPieceNotFound2)
 # ~> 手番: 先手
 # ~> 指し手: ▲５五銀
 # ~> 棋譜: ２六歩(27) ３四歩(33)
-# ~> 
+# ~>
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
@@ -29,7 +29,7 @@ container.execute("▲22角成")    # =>
 # ~> +---------------------------+
 # ~> 先手の持駒：なし
 # ~> 手数＝2 △３四歩(33) まで
-# ~> 
+# ~>
 # ~> 先手番
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'

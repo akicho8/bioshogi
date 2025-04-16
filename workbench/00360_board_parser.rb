@@ -30,7 +30,7 @@ tp soldiers
 
 container = Container::Basic.new
 container.board.placement_from_soldiers(soldiers)
-puts container.board.to_s
+puts container.board
 
 tp PresetInfo["平手"].location_split[Location[:black]]
 # >> |----------|

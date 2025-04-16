@@ -73,7 +73,7 @@ module Bioshogi
       def kif_comment(location)
         TacticInfo.collect { |e|
           if v = public_send(e.list_key).normalize.presence
-            [location.name, e.name, "：", v.collect(&:name).join(', '), "\n"].sum("*")
+            [location.name, e.name, "：", v.collect(&:name).join(", "), "\n"].sum("*")
           end
         }.compact.join.presence
       end

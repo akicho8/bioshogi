@@ -128,7 +128,7 @@ puts `identify _output.gif`
 # >> -rw-r--r-- 1 ikeda staff 396K 10  3 15:31 _input0000.png
 # >> -rw-r--r-- 1 ikeda staff 400K 10  3 15:31 _input0001.png
 # >> -rw-r--r-- 1 ikeda staff 404K 10  3 15:31 _input0002.png
-# >> 
+# >>
 # >> [AnimationGifBuilder] [execute] ffmpeg -v warning -hide_banner -framerate 10000/5000.0 -i _input%04d.png  -y _output1.gif
 # >> [AnimationGifBuilder] [execute] elapsed: 1s
 # >> [AnimationGifBuilder] -rw-r--r-- 1 ikeda staff 904K 10  3 15:31 _output1.gif

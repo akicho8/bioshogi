@@ -9,7 +9,7 @@ module Bioshogi
             t = Time.now
             logger.info { "[#{name}][begin]" }
             begin
-              Timeout::timeout(expires_in, &block)
+              Timeout.timeout(expires_in, &block)
             rescue Timeout::Error => error
               raise Timeout::Error, "[#{name}] #{error.message}"
             end

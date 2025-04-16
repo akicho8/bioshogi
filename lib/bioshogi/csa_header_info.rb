@@ -67,7 +67,7 @@ module Bioshogi
       private
 
       def invert_table
-        @invert_table ||= inject({}) {|a, e| a.merge(e.kif_side_key => e) }
+        @invert_table ||= inject({}) { |a, e| a.merge(e.kif_side_key => e) }
       end
     end
 

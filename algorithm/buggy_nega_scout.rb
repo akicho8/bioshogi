@@ -57,19 +57,19 @@ class BuggyNegaScout < NegaMax
   end
 
   # private
-  # 
+  #
   # def nega_alpha(turn:, depth_max:, depth: 0, alpha: -Float::INFINITY, beta: Float::INFINITY)
   #   player = container.player_at(turn)
-  # 
+  #
   #   if depth_max <= depth
   #     return container.evaluate(player)
   #   end
-  # 
+  #
   #   children = container.available_places(player)
   #   if children.empty?
   #     return -nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)
   #   end
-  # 
+  #
   #   children.each do |place|
   #     container.place_on(player, place) do
   #       score = -nega_alpha(turn: turn + 1, depth_max: depth_max, depth: depth + 1, alpha: -beta, beta: -alpha)

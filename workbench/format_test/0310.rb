@@ -17,4 +17,4 @@ puts info.to_csa
 # >> +2726FU,T0
 # >> -8384FU,T2
 # >> %TORYO,T1
-# >> 
+# >>

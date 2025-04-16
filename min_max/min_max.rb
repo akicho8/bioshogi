@@ -22,7 +22,7 @@ def min_max(node, depth)
 
   if "nodeが自分の局面"
     max = -9999
-    nodes.each{|node|
+    nodes.each { |node|
       score = min_max(node, depth - 1)
       if max < score
         max = score
@@ -30,7 +30,7 @@ def min_max(node, depth)
     }
   elsif "nodeが相手の局面"
     min = 9999
-    nodes.each{|node|
+    nodes.each { |node|
       score = min_max(node, depth - 1)
       if min > score
         min = score

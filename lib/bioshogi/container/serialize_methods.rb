@@ -33,7 +33,7 @@ module Bioshogi
         s = []
         s << board.to_s
         s << players.collect { |player|
-          "#{player.call_name}の持駒:#{player.piece_box.to_s}"
+          "#{player.call_name}の持駒:#{player.piece_box}"
         }.join("\n") + "\n"
         s.join
       end

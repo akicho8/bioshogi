@@ -17,7 +17,7 @@ str = page.body
 File.write(url.gsub(/\W/, "_") + ".html", str)
 
 urls = str.scan(%r{//kif-pona.heroz.jp/games/.*?locale=ja})
-urls = urls.collect {|e| "http:#{e}" }
+urls = urls.collect { |e| "http:#{e}" }
 urls # => ["http://kif-pona.heroz.jp/games/hanairobiyori-ispt-20171104_220810?locale=ja", "http://kif-pona.heroz.jp/games/anklesam-hanairobiyori-20171104_220223?locale=ja", "http://kif-pona.heroz.jp/games/komakoma1213-hanairobiyori-20171104_215841?locale=ja", "http://kif-pona.heroz.jp/games/hanairobiyori-mizumakura-20171104_215208?locale=ja", "http://kif-pona.heroz.jp/games/baldbull-hanairobiyori-20171104_213234?locale=ja", "http://kif-pona.heroz.jp/games/hanairobiyori-chihaya_3-20171104_212752?locale=ja", "http://kif-pona.heroz.jp/games/hanairobiyori-kazuruisena-20171104_212234?locale=ja", "http://kif-pona.heroz.jp/games/hanairobiyori-kanposs-20171104_211903?locale=ja", "http://kif-pona.heroz.jp/games/hanairobiyori-Yuki1290-20171104_211225?locale=ja", "http://kif-pona.heroz.jp/games/9271-hanairobiyori-20171026_103138?locale=ja"]
 urls.size                       # => 10
 

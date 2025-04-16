@@ -30,7 +30,7 @@ require "./all_algorithms"
     tp rows
   end
 end
-# >> 
+# >>
 # >> ** 盤面: 4x4, 深さ: 4
 # >> |----------------+----------+---+----+------|
 # >> | model          | evaluate | o | x  | sec  |

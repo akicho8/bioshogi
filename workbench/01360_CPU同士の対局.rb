@@ -9,9 +9,9 @@ loop do
     break
   end
 end
-puts container.to_s
-puts container.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts container.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts container
+puts container.to_kif_a.group_by.with_index { |v, i|i / 8 }.values.collect { |v|v.join(" ") }
+puts container.to_ki2_a.group_by.with_index { |v, i|i / 8 }.values.collect { |v|v.join(" ") }
 # >> 後手の持駒：玉
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
@@ -27,7 +27,7 @@ puts container.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.joi
 # >> +---------------------------+
 # >> 先手の持駒：香 歩三
 # >> 手数＝278 △３六歩(35) まで
-# >> 
+# >>
 # >> 先手番
 # >> ８六歩(87) ６二銀(71) ７八銀(79) ４二金(41) １六歩(17) ７一金(61) １五歩(16) ６一玉(51)
 # >> ６八金(69) ５二金(42) １六香(19) ５一玉(61) ４八玉(59) ９二飛(82) ６九金(68) ３二銀(31)

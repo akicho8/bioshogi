@@ -33,7 +33,7 @@ puts info.to_kif
 # P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 # EOT
 # tp info.soldiers
-# 
+#
 # # info.class                      # => Bioshogi::Parser::CsaParser
 # # info.to_kif                     # =>
 # >> 先手：A

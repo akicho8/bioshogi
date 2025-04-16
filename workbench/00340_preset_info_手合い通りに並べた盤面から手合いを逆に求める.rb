@@ -7,7 +7,7 @@ PresetInfo.each do |preset_info|
 
   # ここを簡潔にしたメソッドがある
   Location.each do |location|
-    soldiers = container.board.surface.values.find_all {|e| e.location == location }
+    soldiers = container.board.surface.values.find_all { |e| e.location == location }
     soldiers = soldiers.collect(&:white_then_flip).sort
     e = PresetInfo.find do |e|
       e.location_split[:black] == soldiers

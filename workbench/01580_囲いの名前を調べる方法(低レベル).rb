@@ -17,9 +17,9 @@ container.board.placement_from_shape(<<~EOT)
 
 location = Location[:black]
 
-soldiers = container.board.surface.values.find_all {|e|e.location == location }
+soldiers = container.board.surface.values.find_all { |e|e.location == location }
 tp soldiers.collect(&:name)
-sorted_black_side_soldiers = soldiers.collect{|e|e.white_then_flip}.sort
+sorted_black_side_soldiers = soldiers.collect { |e|e.white_then_flip }.sort
 tp sorted_black_side_soldiers
 
 defense_info = Analysis::DefenseInfo.find do |e|

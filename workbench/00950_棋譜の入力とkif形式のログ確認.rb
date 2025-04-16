@@ -4,7 +4,7 @@ require "./setup"
 container = Container::Basic.start
 [
   "７六歩", "８四歩", "７八金", "３二金",
-].each{|input|
+].each { |input|
   container.execute(input)
 }
 puts container.board

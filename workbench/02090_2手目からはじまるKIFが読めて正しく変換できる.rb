@@ -42,17 +42,17 @@ puts info.to_ki2(has_header: false)
 # >> +---------------------------+
 # >> 先手の持駒：なし
 # >> 手数＝3 ▲３六歩(37) まで
-# >> 
+# >>
 # >> 後手番
 # >> V2.2
 # >> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
-# >> P2 * -HI *  *  *  *  * -KA * 
+# >> P2 * -HI *  *  *  *  * -KA *
 # >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
-# >> P4 *  *  *  *  *  *  *  *  * 
-# >> P5 *  *  *  *  *  *  *  *  * 
-# >> P6 *  * +FU *  *  *  *  *  * 
+# >> P4 *  *  *  *  *  *  *  *  *
+# >> P5 *  *  *  *  *  *  *  *  *
+# >> P6 *  * +FU *  *  *  *  *  *
 # >> P7+FU+FU * +FU+FU+FU+FU+FU+FU
-# >> P8 * +KA *  *  *  *  * +HI * 
+# >> P8 * +KA *  *  *  *  * +HI *
 # >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 # >> -
 # >> -5354FU

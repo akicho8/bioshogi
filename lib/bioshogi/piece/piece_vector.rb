@@ -104,9 +104,9 @@ module Bioshogi
 
       def pattern_plus
         [
-          nil,     [0,-1],     nil,
+          nil,     [0, -1],     nil,
           [-1, 0],    nil, [+1, 0],
-          nil,     [0,+1],     nil,
+          nil,     [0, +1],     nil,
         ]
       end
 

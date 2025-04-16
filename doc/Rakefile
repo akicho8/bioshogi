@@ -1,4 +1,3 @@
 task :default do
   system "rake doc", chdir: ".."
 end
-

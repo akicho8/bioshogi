@@ -59,7 +59,7 @@ module Bioshogi
         private
 
         def invert_table
-          @invert_table ||= find_all(&:kakinoki_word).inject({}) {|a, e| a.merge(e.kakinoki_word => e) }
+          @invert_table ||= find_all(&:kakinoki_word).inject({}) { |a, e| a.merge(e.kakinoki_word => e) }
         end
       end
 

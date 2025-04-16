@@ -52,7 +52,7 @@ module Bioshogi
       to_a <=> other.to_a
     end
 
-    %i(+ - * /).each do |op|
+    %i[+ - * /].each do |op|
       class_eval <<-EOT, __FILE__, __LINE__ + 1
         def #{op}(other)                                        # def +(other)
           if other.kind_of?(self.class)                         #   if other.kind_of?(self.class)

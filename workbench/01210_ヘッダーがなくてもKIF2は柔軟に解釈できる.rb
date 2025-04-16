@@ -11,5 +11,3 @@ info = Parser.parse(<<~EOT)
 ▽４二銀 ▲４八銀 ▽５四歩 ▲６八玉 ▽５五歩
 EOT
 puts info.to_ki2
-
-

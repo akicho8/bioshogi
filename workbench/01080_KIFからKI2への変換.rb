@@ -12,7 +12,7 @@ container.placement_from_preset(info.pi.header["手合割"])
 info.pi.move_infos.each do |info|
   container.execute(info[:input])
 end
-out << container.to_ki2_a.group_by.with_index{|_, i|i / 10}.values.collect { |v| v.join(" ") + "\n" }.join
+out << container.to_ki2_a.group_by.with_index { |_, i|i / 10 }.values.collect { |v| v.join(" ") + "\n" }.join
 out << container.judgment_message
 puts out
 
@@ -24,7 +24,7 @@ puts out
 # >> 先手：加藤桃子 女王
 # >> 後手：里見香奈 女流王座
 # >> 戦法：ゴキゲン中飛車
-# >> 
+# >>
 # >> ▲２六歩 △３四歩 ▲２五歩 △３三角 ▲７六歩 △４二銀 ▲４八銀 △５四歩 ▲６八玉 △５五歩
 # >> ▲３六歩 △５二飛 ▲３七銀 △５三銀 ▲４六銀 △４四銀 ▲５八金右 △６二玉 ▲７八玉 △７二玉
 # >> ▲６六歩 △８二玉 ▲６七金 △７二銀 ▲７七角 △９四歩 ▲８八玉 △９五歩 ▲９八香 △８四歩

@@ -16,9 +16,9 @@ end
 # >>              default      1.644  (± 0.0%) i/s -      9.000  in   5.474478s
 # >>        validate_feature      1.735  (± 0.0%) i/s -      9.000  in   5.188338s
 # >>       ki2_function      1.711  (± 0.0%) i/s -      9.000  in   5.260716s
-# >> 
+# >>
 # >> Comparison:
 # >>        validate_feature:        1.7 i/s
 # >>       ki2_function:        1.7 i/s - 1.01x  slower
 # >>              default:        1.6 i/s - 1.06x  slower
-# >> 
+# >>

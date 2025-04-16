@@ -3,7 +3,6 @@
 module Bioshogi
   module AI
     module Evaluator
-
       # http://www.yss-aya.com/book.html
       AttackWeightTable = {
         # 相手玉近くの自分の金銀の価値

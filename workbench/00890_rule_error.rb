@@ -1,11 +1,11 @@
 require "./setup"
 
 info = Parser.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 2g2e")
-info.formatter.container.to_history_sfen           # => 
+info.formatter.container.to_history_sfen           # =>
 # ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:83:in `raise_error': 【反則】▲２五歩(27)としましたが２七から２五に移動することはできません (Bioshogi::SoldierWarpError)
 # ~> 手番: 先手
 # ~> 指し手: 2e2g
-# ~> 棋譜: 
+# ~> 棋譜:
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
@@ -21,7 +21,7 @@ info.formatter.container.to_history_sfen           # =>
 # ~> +---------------------------+
 # ~> 先手の持駒：なし
 # ~> 手数＝0 まで
-# ~> 
+# ~>
 # ~> 先手番
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:33:in `execute'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:20:in `execute'

@@ -5,7 +5,7 @@ Parser.parse("V2,P1 *,+0093KA,T1").to_kif
 # ~> 手番: 先手
 # ~> 指し手: +0093KA
 # ~> 棋譜:
-# ~> 
+# ~>
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
@@ -21,7 +21,7 @@ Parser.parse("V2,P1 *,+0093KA,T1").to_kif
 # ~> +---------------------------+
 # ~> 先手の持駒：なし
 # ~> 手数＝0 まで
-# ~> 
+# ~>
 # ~> 先手番
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'

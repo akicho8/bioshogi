@@ -14,7 +14,7 @@ info.pi.move_infos.each do |info|
   # puts container
 end
 out << "手数----指手---------消費時間--\n"
-out << container.to_kif_a.collect.with_index(1).collect {|e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
+out << container.to_kif_a.collect.with_index(1).collect { |e, i| "#{i} #{e} (00:00/00:00:00)\n" }.join
 out << "#{container.to_kif_a.size.next} 投了\n"
 puts out
 # >> 開始日時：2017/11/11 10:00:00

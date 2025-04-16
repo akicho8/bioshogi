@@ -5,7 +5,7 @@ require "../setup"
 def test1
   # info = Parser.parse(Pathname("katomomo.kif").read, turn_limit: @turn_limit)
   # object = info.screen_image_renderer({width: 100, height: 100})
-  # object.to_png[0..3]           # => 
+  # object.to_png[0..3]           # =>
 end
 
 def test2

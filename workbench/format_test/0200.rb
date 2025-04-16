@@ -26,7 +26,7 @@ puts info.to_kif
 # ~> 手番: 先手
 # ~> 指し手: ５四歩(53)
 # ~> 棋譜:
-# ~> 
+# ~>
 # ~> 後手の持駒：なし
 # ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # ~> +---------------------------+
@@ -42,7 +42,7 @@ puts info.to_kif
 # ~> +---------------------------+
 # ~> 先手の持駒：なし
 # ~> 手数＝0 まで
-# ~> 
+# ~>
 # ~> 先手番
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
@@ -73,7 +73,7 @@ puts info.to_kif
 # >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
-# >>  
+# >>
 # >> * attributes
 # >> |-------------------+--------|
 # >> | pi.force_preset_info | 平手   |
@@ -81,19 +81,19 @@ puts info.to_kif
 # >> |    pi.force_location |        |
 # >> |    pi.force_handicap |        |
 # >> |-------------------+--------|
-# >>  
+# >>
 # >> * pi.header attributes
 # >> |------------+--|
 # >> | 後手の持駒 |  |
 # >> | 先手の持駒 |  |
 # >> |------------+--|
-# >>  
+# >>
 # >> * pi.header methods (read)
 # >> |-------------------+--|
 # >> | handicap_validity |  |
 # >> |    pi.force_location |  |
 # >> |-------------------+--|
-# >>  
+# >>
 # >> * @pi.board_source
 # >> +---------------------------+
 # >> |v香v桂v銀v金v玉v金v銀v桂v香|一
@@ -106,7 +106,7 @@ puts info.to_kif
 # >> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
 # >> | 香 桂 銀 金 玉 金 銀 桂 香|九
 # >> +---------------------------+
-# >>  
+# >>
 # >> * pi.move_infos
 # >> |-------------+------------+------------+--------------|
 # >> | turn_number | input      | clock_part | used_seconds |
@@ -114,7 +114,7 @@ puts info.to_kif
 # >> |           2 | ５四歩(53) |            |              |
 # >> |           3 | ３六歩(37) |            |              |
 # >> |-------------+------------+------------+--------------|
-# >>  
+# >>
 # >> * @pi.last_action_params
 # >> |-----------------+------|
 # >> |     turn_number | 4    |

@@ -15,7 +15,7 @@ puts `identify _output.webp`
 # >> [AnimationWebpBuilder] [execute] ffmpeg -v warning -hide_banner -framerate 1000/500 -i _input%04d.png  -y _output1.webp
 # >> [AnimationWebpBuilder] [execute] elapsed: 2s
 # >> [AnimationWebpBuilder] [execute] stderr: [libwebp_anim @ 0x7fc2f7835200] Using libwebp for RGB-to-YUV conversion. You may want to consider passing in YUV instead for lossy encoding.
-# >> 
+# >>
 # >> [AnimationWebpBuilder] -rw-r--r-- 1 ikeda staff 22K  8 25 18:02 _output1.webp
 # >> [AnimationWebpBuilder] rm -fr /var/folders/9c/_62dfc8502g_d5r05zyfwlxh0000gn/T/d20210825-85804-1iibgt4
 # >> _output.webp[0] WEBP 1200x630 1200x630+0+0 8-bit sRGB 22522B 0.010u 0:00.010

@@ -12,8 +12,8 @@ info = Parser.parse("position #{container.to_short_sfen}")
 puts info.to_ki2
 
 # >> 手合割：十九枚落ち
-# >> 
+# >>
 # >> まで0手で後手の勝ち
 # >> 手合割：十九枚落ち
-# >> 
+# >>
 # >> まで0手で下手の勝ち

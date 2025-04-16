@@ -29,7 +29,7 @@ require "./setup"
 
 # container.player_at(:white).king_place # => #<Bioshogi::Place １一>
 # container.player_at(:black).king_place # => nil
-# 
+#
 # brain = container.player_at(:black).brain(evaluator_class: Evaluator::Level2)
 # brain.create_all_hands(promoted_only: true).collect(&:to_kif) # => ["▲３二金(23)", "▲２二金(23)", "▲１二金(23)", "▲３三金(23)", "▲１三金(23)"]
 # tp brain.fast_score_list # => [{:hand=><▲３二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>7.1e-05}, {:hand=><▲２二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>3.2e-05}, {:hand=><▲１二金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>2.8e-05}, {:hand=><▲３三金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>2.7e-05}, {:hand=><▲１三金(23)>, :score=>41202, :socre2=>41202, :best_pv=>[], :eval_times=>1, :sec=>4.4e-05}]

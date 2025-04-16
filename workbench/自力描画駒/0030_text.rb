@@ -24,7 +24,3 @@ c.draw(image)
 
 image.write("_output1.png")
 `open _output1.png`
-
-
-
-

@@ -6,7 +6,7 @@ module Bioshogi
   class PillerCop
     attr_reader :counts
     attr_accessor :active
-    
+
     def initialize
       reset
     end

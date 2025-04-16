@@ -8,19 +8,19 @@ info = Parser.parse(<<~EOT)
 +------+
 先手の持駒：金2銀
 EOT
-info.to_yomiage_list            # => 
+info.to_yomiage_list            # =>
 tp info.to_yomiage_list
 
 info = Parser.parse("position sfen 9/9/9/9/9/9/9/9/9 b - 1")
-info.to_yomiage_list            # => 
+info.to_yomiage_list            # =>
 tp info.to_yomiage_list
 
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/zeitwerk-2.5.3/lib/zeitwerk/loader.rb:354:in `rescue in block in set_autoloads_in_dir': wrong constant name BreakbeatLongStrip.band inferred by Zeitwerk::GemInflector from directory (Zeitwerk::NameError)
-# ~> 
+# ~>
 # ~>   /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/breakbeat_long_strip.band
-# ~> 
+# ~>
 # ~> Possible ways to address this:
-# ~> 
+# ~>
 # ~>   * Tell Zeitwerk to ignore this particular directory.
 # ~>   * Tell Zeitwerk to ignore one of its parent directories.
 # ~>   * Rename the directory to comply with the naming conventions.

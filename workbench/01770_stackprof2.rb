@@ -88,4 +88,4 @@ system "stackprof stackprof.dump --method Bioshogi::Dimension::Column.lookup"
 # >>                                   |   181  |         end
 # >>    82    (9.9%)                   |   182  |         super
 # >>     1    (0.1%) /     1   (0.1%)  |   183  |       end
-# >>                                   |   184  | 
+# >>                                   |   184  |

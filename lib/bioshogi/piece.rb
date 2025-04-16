@@ -32,7 +32,7 @@ module Bioshogi
         str = str.remove(/\p{blank}/)
         str.scan(/(#{Piece.all_names.join("|")})(\d+)?/o).inject({}) do |a, (piece, count)|
           piece = Piece.fetch(piece)
-          a.merge(piece.key => (count || 1).to_i) {|_, v1, v2| v1 + v2 }
+          a.merge(piece.key => (count || 1).to_i) { |_, v1, v2| v1 + v2 }
         end
       end
 

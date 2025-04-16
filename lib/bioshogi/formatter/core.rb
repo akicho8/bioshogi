@@ -234,7 +234,7 @@ module Bioshogi
         if @pi.error_message
           v = @pi.error_message.strip + "\n"
           s = "-" * 76 + "\n"
-          [s, *v.lines, s].collect {|e| "#{comment_mark} #{e}" }.join
+          [s, *v.lines, s].collect { |e| "#{comment_mark} #{e}" }.join
         end
       end
 

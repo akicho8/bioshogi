@@ -9,4 +9,4 @@ Bioshogi::SystemSupport.strict_system("ruby -e '1 / 0'") rescue $! # => #<Standa
 # >> [execute] elapsed: 3s
 # >> [execute] stderr: -e:1:in `/': divided by 0 (ZeroDivisionError)
 # >> 	from -e:1:in `<main>'
-# >> 
+# >>

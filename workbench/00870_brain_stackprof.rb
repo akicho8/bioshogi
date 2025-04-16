@@ -3,10 +3,10 @@ require "./setup"
 # container = Container::Basic.start
 # container.execute("▲６八銀")
 # container.instance_variables     # => [:@board, :@turn_info, :@players, :@initial_state_board_sfen, :@variables, :@var_stack, :@params, :@hand_logs]
-# 
+#
 # container = Container::Simple.start
 # container.execute("▲６八銀")
-# container.instance_variables     # => 
+# container.instance_variables     # =>
 
 # Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
@@ -40,7 +40,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >> +---------------------------+
 # >> 先手の持駒：歩
 # >> 手数＝50 △６四馬(19) まで
-# >> 
+# >>
 # >> 先手番
 # >> |-----------------------------+-------|
 # >> |     Bioshogi::Hand::Move.create | 21973 |
@@ -99,10 +99,10 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>   676    (5.1%) /   676   (5.1%)  |    31  |         if value.kind_of?(self)
 # >>                                   |    32  |           return value
 # >>                                   |    33  |         end
-# >>                                   |    34  | 
+# >>                                   |    34  |
 # >>                                   |    35  |         x = nil
 # >>                                   |    36  |         y = nil
-# >>                                   |    37  | 
+# >>                                   |    37  |
 # >>                                   |    38  |         case value
 # >>    73    (0.5%) /    73   (0.5%)  |    39  |         when Array
 # >>                                   |    40  |           a, b = value
@@ -113,11 +113,11 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>     1    (0.0%)                   |    45  |           x = Dimension::Column.lookup(a)
 # >>                                   |    46  |           y = Dimension::Row.lookup(b)
 # >>    10    (0.1%) /    10   (0.1%)  |    47  |         end
-# >>                                   |    48  | 
+# >>                                   |    48  |
 # >>                                   |    49  |         if x && y
 # >>    76    (0.6%) /    76   (0.6%)  |    50  |           @memo ||= {}
 # >>   777    (5.8%) /   104   (0.8%)  |    51  |           @memo[x] ||= {}
 # >>  1324    (9.9%) /   101   (0.8%)  |    52  |           @memo[x][y] ||= new(x, y).freeze
 # >>                                   |    53  |         end
 # >>    18    (0.1%) /    18   (0.1%)  |    54  |       end
-# >>                                   |    55  | 
+# >>                                   |    55  |

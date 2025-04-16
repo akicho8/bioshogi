@@ -5,15 +5,15 @@ info = Parser.parse(Pathname("ryuou20101214.kif"))
 tp info.pi.header.to_h
 
 container = Container::Basic.start
-info.pi.move_infos.each{|info|
+info.pi.move_infos.each { |info|
   container.execute(info[:input])
 }
 puts container
 tp container.to_kif_a
 tp container.to_ki2_a
 
-puts container.to_kif_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
-puts container.to_ki2_a.group_by.with_index{|v, i|i / 8}.values.collect{|v|v.join(" ")}
+puts container.to_kif_a.group_by.with_index { |v, i|i / 8 }.values.collect { |v|v.join(" ") }
+puts container.to_ki2_a.group_by.with_index { |v, i|i / 8 }.values.collect { |v|v.join(" ") }
 # >> |----------+----------------------------------|
 # >> |   対局ID | 333                              |
 # >> | 開始日時 | 2010/12/14 09:00:00              |

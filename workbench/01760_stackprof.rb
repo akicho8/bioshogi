@@ -96,7 +96,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |    52  |         executor.skill_set.list_push(e) # executor の方にも設定(これいる？)
 # >>                                   |    53  |       end
 # >>     2    (0.2%) /     2   (0.2%)  |    54  |     end
-# >>                                   |    55  | 
+# >>                                   |    55  |
 # >> Bioshogi::Analyzer#execute_one (/Users/ikeda/src/bioshogi/lib/bioshogi/analyzer.rb:56)
 # >>   samples:     1 self (0.1%)  /     74 total (8.0%)
 # >>   callers:
@@ -129,64 +129,64 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>    10    (1.1%)                   |    59  |         if list.include?(e)
 # >>                                   |    60  |           throw :skip
 # >>                                   |    61  |         end
-# >>                                   |    62  | 
+# >>                                   |    62  |
 # >>                                   |    63  |         # 「居飛車」判定のとき「振り飛車」がすでにあればスキップ
 # >>                                   |    64  |         if e.skip_elements
 # >>                                   |    65  |           if e.skip_elements.any? { |e| list.include?(e) }
 # >>                                   |    66  |             throw :skip
 # >>                                   |    67  |           end
 # >>                                   |    68  |         end
-# >>                                   |    69  | 
+# >>                                   |    69  |
 # >>                                   |    70  |         # 片美濃のチェックをしようとするとき、すでに子孫のダイヤモンド美濃があれば、片美濃のチェックはスキップ
 # >>                                   |    71  |         if e.cached_descendants.any? { |e| list.include?(e) }
 # >>                                   |    72  |           throw :skip
 # >>                                   |    73  |         end
-# >>                                   |    74  | 
+# >>                                   |    74  |
 # >>                                   |    75  |         # 手数制限。制限を超えていたらskip
 # >>     1    (0.1%)                   |    76  |         if e.turn_limit
 # >>                                   |    77  |           if e.turn_limit < player.container.turn_info.turn_offset.next
 # >>                                   |    78  |             throw :skip
 # >>                                   |    79  |           end
 # >>                                   |    80  |         end
-# >>                                   |    81  | 
+# >>                                   |    81  |
 # >>                                   |    82  |         # 手数限定。手数が異なっていたらskip
 # >>                                   |    83  |         if e.turn_eq
 # >>                                   |    84  |           if e.turn_eq != player.container.turn_info.turn_offset.next
 # >>                                   |    85  |             throw :skip
 # >>                                   |    86  |           end
 # >>                                   |    87  |         end
-# >>                                   |    88  | 
+# >>                                   |    88  |
 # >>                                   |    89  |         # 手番限定。手番が異なればskip
 # >>                                   |    90  |         if e.order_key
 # >>                                   |    91  |           if e.order_key != player.container.turn_info.order_key
 # >>                                   |    92  |             throw :skip
 # >>                                   |    93  |           end
 # >>                                   |    94  |         end
-# >>                                   |    95  | 
+# >>                                   |    95  |
 # >>                                   |    96  |         # 開戦済みならskip
 # >>     4    (0.4%)                   |    97  |         cold_war_verification(e)
-# >>                                   |    98  | 
+# >>                                   |    98  |
 # >>                                   |    99  |         # 「打」時制限。移動元駒があればskip
 # >>                                   |   100  |         if e.drop_only
 # >>                                   |   101  |           if origin_soldier
 # >>                                   |   102  |             throw :skip
 # >>                                   |   103  |           end
 # >>                                   |   104  |         end
-# >>                                   |   105  | 
+# >>                                   |   105  |
 # >>                                   |   106  |         # 駒を取ったとき制限。取ってないならskip
 # >>                                   |   107  |         if e.kill_only
 # >>                                   |   108  |           if !executor.captured_soldier
 # >>                                   |   109  |             throw :skip
 # >>                                   |   110  |           end
 # >>                                   |   111  |         end
-# >>                                   |   112  | 
+# >>                                   |   112  |
 # >>                                   |   113  |         # 所持駒数一致制限。異なっていたらskip
 # >>     1    (0.1%)                   |   114  |         if v = e.hold_piece_empty
 # >>                                   |   115  |           if !player.piece_box.empty?
 # >>                                   |   116  |             throw :skip
 # >>                                   |   117  |           end
 # >>                                   |   118  |         end
-# >>                                   |   119  | 
+# >>                                   |   119  |
 # >>                                   |   120  |         if true
 # >>                                   |   121  |           # 何もない制限。何かあればskip
 # >>     3    (0.3%)                   |   122  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["○"]
@@ -196,7 +196,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   126  |               end
 # >>                                   |   127  |             end
 # >>                                   |   128  |           end
-# >>                                   |   129  | 
+# >>                                   |   129  |
 # >>                                   |   130  |           # 何かある制限。何もなければskip
 # >>     3    (0.3%)                   |   131  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["●"]
 # >>                                   |   132  |             ary.each do |e|
@@ -206,7 +206,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   136  |             end
 # >>                                   |   137  |           end
 # >>                                   |   138  |         end
-# >>                                   |   139  | 
+# >>                                   |   139  |
 # >>                                   |   140  |         if true
 # >>                                   |   141  |           # 移動元ではない制限。移動元だったらskip
 # >>                                   |   142  |           if ary = e.board_parser.other_objects_loc_ary[location.key]["☆"]
@@ -220,7 +220,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   150  |               end
 # >>                                   |   151  |             end
 # >>                                   |   152  |           end
-# >>                                   |   153  | 
+# >>                                   |   153  |
 # >>                                   |   154  |           # 移動元である(any条件)。どの移動元にも該当しなかったらskip
 # >>     3    (0.3%) /     1   (0.1%)  |   155  |           if places_hash = e.board_parser.other_objects_loc_places_hash[location.key]["★"]
 # >>                                   |   156  |             # 移動元がないということは、もう何も該当しないので skip
@@ -234,7 +234,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   164  |             end
 # >>                                   |   165  |           end
 # >>                                   |   166  |         end
-# >>                                   |   167  | 
+# >>                                   |   167  |
 # >>                                   |   168  |         # 自分の金or銀がある
 # >>     3    (0.3%)                   |   169  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◆"]
 # >>                                   |   170  |           ary.each do |e|
@@ -243,7 +243,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   173  |             end
 # >>                                   |   174  |           end
 # >>                                   |   175  |         end
-# >>                                   |   176  | 
+# >>                                   |   176  |
 # >>                                   |   177  |         # 自分の歩以上の駒がある
 # >>                                   |   178  |         if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
 # >>                                   |   179  |           ary.each do |e|
@@ -252,21 +252,21 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   182  |             end
 # >>                                   |   183  |           end
 # >>                                   |   184  |         end
-# >>                                   |   185  | 
+# >>                                   |   185  |
 # >>                                   |   186  |         # 歩を持っていたらskip
 # >>                                   |   187  |         if e.not_have_pawn
 # >>                                   |   188  |           if piece_box.has_key?(:pawn)
 # >>                                   |   189  |             throw :skip
 # >>                                   |   190  |           end
 # >>                                   |   191  |         end
-# >>                                   |   192  | 
+# >>                                   |   192  |
 # >>                                   |   193  |         # # 歩を除いて何か持っていたらskip
 # >>                                   |   194  |         # if e.not_have_anything_except_pawn
 # >>                                   |   195  |         #   if !piece_box.except(:pawn).empty?
 # >>                                   |   196  |         #     throw :skip
 # >>                                   |   197  |         #   end
 # >>                                   |   198  |         # end
-# >>                                   |   199  | 
+# >>                                   |   199  |
 # >>                                   |   200  |         if true
 # >>                                   |   201  |           # 駒が一致していなければskip
 # >>     2    (0.2%)                   |   202  |           if v = e.hold_piece_eq
@@ -274,7 +274,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   204  |               throw :skip
 # >>                                   |   205  |             end
 # >>                                   |   206  |           end
-# >>                                   |   207  | 
+# >>                                   |   207  |
 # >>                                   |   208  |           # 指定の駒をすべて含んでいるならOK
 # >>                                   |   209  |           if v = e.hold_piece_in
 # >>                                   |   210  |             if v.all? { |piece_key, _| piece_box.has_key?(piece_key) }
@@ -282,7 +282,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   212  |               throw :skip
 # >>                                   |   213  |             end
 # >>                                   |   214  |           end
-# >>                                   |   215  | 
+# >>                                   |   215  |
 # >>                                   |   216  |           # 指定の駒をどれか含んでいるならskip
 # >>     1    (0.1%)                   |   217  |           if v = e.hold_piece_not_in
 # >>                                   |   218  |             if v.any? { |piece_key, _| piece_box.has_key?(piece_key) }
@@ -290,7 +290,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   220  |             end
 # >>                                   |   221  |           end
 # >>                                   |   222  |         end
-# >>                                   |   223  | 
+# >>                                   |   223  |
 # >>                                   |   224  |         # どれかが盤上に正確に含まれるならOK
 # >>     6    (0.7%)                   |   225  |         if ary = e.board_parser.black_any_exist_soldiers.location_adjust[location.key].presence
 # >>     4    (0.4%)                   |   226  |           if ary.any? { |e| soldier_exist?(e) }
@@ -298,7 +298,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |   228  |             throw :skip
 # >>                                   |   229  |           end
 # >>                                   |   230  |         end
-# >>                                   |   231  | 
+# >>                                   |   231  |
 # >>                                   |   232  |         # 指定の配置が盤上に含まれるならOK
 # >>     2    (0.2%)                   |   233  |         ary = e.board_parser.location_adjust[location.key]
 # >>    24    (2.6%)                   |   234  |         if ary.all? { |e| soldier_exist?(e) }
@@ -332,7 +332,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>    74    (8.0%)                   |    17  |           execute_one(e)
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
-# >>                                   |    20  | 
+# >>                                   |    20  |
 # >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_technique_feature]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
