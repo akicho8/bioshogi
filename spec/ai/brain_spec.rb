@@ -79,7 +79,7 @@ RSpec.describe Bioshogi::AI::Brain do
   it "一番得するように打つ" do
     Bioshogi::Dimension.change([2, 2]) do
       container = Bioshogi::Container::Simple.facade(init: "▲１二歩", pieces_set: "▲歩")
-      assert { container.player_at(:black).brain.fast_score_list.collect { |e| {hand: e[:hand].to_kif, score: e[:score]} } == [{:hand=>"▲１一歩成(12)", :score=>1305, }, {:hand=>"▲２二歩打", :score=>200}] }
+      assert { container.player_at(:black).brain.fast_score_list.collect { |e| { hand: e[:hand].to_kif, score: e[:score] } } == [{ :hand=>"▲１一歩成(12)", :score=>1305, }, { :hand=>"▲２二歩打", :score=>200 }] }
     end
   end
 end

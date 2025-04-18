@@ -5,7 +5,7 @@ module Bioshogi
     class Ki2Adapter < KifAdapter
       def self.flip_table
         @flip_table ||= yield_self do
-          table = {:first => :last, :> => :<}
+          table = { :first => :last, :> => :< }
           table.merge(table.invert)
         end
       end
@@ -85,11 +85,11 @@ module Bioshogi
             if v = left_right
               if md = v.match(/[左右]/)
                 if piece.brave?
-                  m = {"左" => :first, "右" => :last}.fetch(md.to_s)
+                  m = { "左" => :first, "右" => :last }.fetch(md.to_s)
                   m = white_then_flip(m)
                   list = list.sort_by { |e| e.place.column.value }.send(m, 1)
                 else
-                  m = {"左" => :>, "右" => :<}.fetch(md.to_s)
+                  m = { "左" => :>, "右" => :< }.fetch(md.to_s)
                   m = white_then_flip(m)
                   list = list.find_all do |e|
                     place.column.value.send(m, e.place.column.value)
@@ -102,7 +102,7 @@ module Bioshogi
           if list.size >= 2
             if v = up_down
               if md = v.match(/[上引]/)
-                m = {"上" => :<, "引" => :>}.fetch(md.to_s)
+                m = { "上" => :<, "引" => :> }.fetch(md.to_s)
                 m = white_then_flip(m)
                 list = list.find_all do |e|
                   place.row.value.send(m, e.place.row.value)

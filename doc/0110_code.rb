@@ -1,7 +1,7 @@
-#+hidden: true
+# +hidden: true
 require "./setup"
 
-#+title2: 機能
+# +title2: 機能
 
 # - 各種棋譜フォーマットの読み書き
 # - 各種棋譜フォーマットの相互変換
@@ -9,7 +9,7 @@ require "./setup"
 # - 棋譜から戦法名や囲い名を抽出する
 # - 指定局面の最善手を返す
 
-#+title2: 棋譜の読み取りと変換
+# +title2: 棋譜の読み取りと変換
 
 info = Bioshogi::Parser.parse("76歩 34歩")
 info.to_kif   # => "手合割：平手\n手数----指手---------消費時間--\n   1 ７六歩(77)\n   2 ３四歩(33)\n   3 投了\nまで2手で後手の勝ち\n"

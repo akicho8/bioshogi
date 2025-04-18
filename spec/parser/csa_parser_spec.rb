@@ -67,7 +67,7 @@ RSpec.describe Bioshogi::Parser::CsaParser do
     it "棋譜部分のパース" do
       assert { Bioshogi::Parser::CsaParser.parse("1234FU").pi.move_infos.first[:input] == "1234FU" }
       assert { Bioshogi::Parser::CsaParser.parse("+1234FU").pi.move_infos.first[:input] == "+1234FU" }
-      assert { Bioshogi::Parser::CsaParser.parse("+1234FU,T1").pi.move_infos.first == {input: "+1234FU", used_seconds: 1} }
+      assert { Bioshogi::Parser::CsaParser.parse("+1234FU,T1").pi.move_infos.first == { input: "+1234FU", used_seconds: 1 } }
     end
 
     it "残り時間の変換" do

@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # CSA標準棋譜ファイル形式
 # http://www.computer-shogi.org/protocol/record_v22.html ← 見れなくなった

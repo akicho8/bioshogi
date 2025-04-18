@@ -18,8 +18,8 @@ RSpec.describe Bioshogi::Parser do
   end
 
   it "ヘッダー行のセパレータは全角セミコロン" do
-    assert { Bioshogi::Parser.parse("a：b").pi.header.to_h == {"a" => "b"} }
-    assert { Bioshogi::Parser.parse("a:b：c").pi.header.to_h == {"a:b" => "c"} }
+    assert { Bioshogi::Parser.parse("a：b").pi.header.to_h == { "a" => "b" } }
+    assert { Bioshogi::Parser.parse("a:b：c").pi.header.to_h == { "a:b" => "c" } }
   end
 
   it "ヘッダー行のセパレータに半角を含めると時間の部分のセミコロンと衝突するので対応しない" do
@@ -27,8 +27,8 @@ RSpec.describe Bioshogi::Parser do
   end
 
   it "日時の場合正規化する" do
-    assert { Bioshogi::Parser.parse("開始日時：2000-1-1  1:23:45").pi.header.to_h == {"開始日時" => "2000/01/01 01:23:45"} }
-    assert { Bioshogi::Parser.parse("終了日時：2000/1/1 01:23:45").pi.header.to_h == {"終了日時" => "2000/01/01 01:23:45"} }
+    assert { Bioshogi::Parser.parse("開始日時：2000-1-1  1:23:45").pi.header.to_h == { "開始日時" => "2000/01/01 01:23:45" } }
+    assert { Bioshogi::Parser.parse("終了日時：2000/1/1 01:23:45").pi.header.to_h == { "終了日時" => "2000/01/01 01:23:45" } }
   end
 end
 # >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.

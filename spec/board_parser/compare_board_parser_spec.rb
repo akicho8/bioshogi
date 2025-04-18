@@ -8,7 +8,7 @@ RSpec.describe Bioshogi::BoardParser::CompareBoardParser do
     | ・ 歩|
     +------+
       EOT
-    info.other_objects == [{place: Bioshogi::Place["21"], location: Bioshogi::Location[:white], something: "○"}]
+    info.other_objects == [{ place: Bioshogi::Place["21"], location: Bioshogi::Location[:white], something: "○" }]
   end
 
   id do

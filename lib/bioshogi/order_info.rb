@@ -7,8 +7,8 @@ module Bioshogi
   class OrderInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: :order_first,  name: "先手"}, # 奇数回に指す側
-      { key: :order_second, name: "後手"}, # 偶数回に指す側
+      { key: :order_first,  name: "先手" }, # 奇数回に指す側
+      { key: :order_second, name: "後手" }, # 偶数回に指す側
     ]
   end
 end

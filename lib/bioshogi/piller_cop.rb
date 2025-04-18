@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 駒柱をなるべく高速に判定する
 #

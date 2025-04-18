@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 module Bioshogi
   class PresetInfo
     include ApplicationMemoryRecord

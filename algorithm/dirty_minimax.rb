@@ -101,7 +101,7 @@ class DirtyMinimax
       container.place_on(player, e) do
         v, pv = compute_score(turn: turn + 1, depth_max: params[:depth_max])
         v = -v
-        {hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v}
+        { hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v }
       end
     end
     infos.sort_by { |e| -e[:score] }
@@ -123,7 +123,7 @@ class DirtyMinimax
             start_time = Time.now
             v, pv = compute_score(turn: turn + 1, depth_max: depth_max)
             v = -v
-            {hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time}
+            { hand: e, best_pv: pv, score: v, score2: player == :o ? v : -v, sec: Time.now - start_time }
           end
         end
       end

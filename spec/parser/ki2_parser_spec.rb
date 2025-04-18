@@ -52,10 +52,10 @@ RSpec.describe Bioshogi::Parser::Ki2Parser do
     it "棋譜の羅列" do
       assert do
         @result.pi.move_infos == [
-          {input: "▲７六歩"},
-          {input: "△３四歩", comments: ["コメント1"]},
-          {input: "▲６六歩"},
-          {input: "△８四歩", comments: ["コメント2"]},
+          { input: "▲７六歩" },
+          { input: "△３四歩", comments: ["コメント1"] },
+          { input: "▲６六歩" },
+          { input: "△８四歩", comments: ["コメント2"] },
         ]
       end
     end

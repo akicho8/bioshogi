@@ -1,4 +1,5 @@
 # -*- frozen_string_literal: true -*-
+
 # https://www.shogi-extend.com/api/swars/tag_frequency
 module Bioshogi
   module Analysis

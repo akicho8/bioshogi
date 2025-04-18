@@ -28,7 +28,7 @@ rows = [
   player_executor = PlayerExecutor::Human.new(player, e)
   input = player_executor.input
   input.perform_validations
-  {klass: input.class.name.demodulize, source: e}.merge(input.to_h)
+  { klass: input.class.name.demodulize, source: e }.merge(input.to_h)
 }
 tp rows
 # >> |------------+----------------+------------+-------+-------+----------+-----------------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

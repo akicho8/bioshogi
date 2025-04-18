@@ -26,7 +26,7 @@ piece_box.score                                # => 45670
 
 PieceBox.real_box # => {:king=>2, :rook=>2, :bishop=>2, :gold=>4, :silver=>4, :knight=>4, :lance=>4, :pawn=>18}
 
-hash = {:king => 1}.freeze
+hash = { :king => 1 }.freeze
 piece_box = PieceBox.new(hash)  # => {:king=>1}
 piece_box.add(king: 1)
 piece_box                       # => {:king=>2}

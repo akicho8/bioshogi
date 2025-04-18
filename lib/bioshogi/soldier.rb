@@ -18,7 +18,7 @@ module Bioshogi
         if v = attributes[:location]
           location = Location[v]
         end
-        attrs = {place: Place.fetch(md[:place]), location: location}
+        attrs = { place: Place.fetch(md[:place]), location: location }
         new_with_promoted(md[:piece], attrs)
       end
 

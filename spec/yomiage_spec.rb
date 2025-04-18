@@ -23,25 +23,25 @@ RSpec.describe "読み上げ" do
       tp info.to_yomiage_list
     end
     expected = [
-      {:command => "talk", :message => "gyokugata"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "いちいちgyoku"},
-      {:command => "interval", :sleep => 1.0, :sleep_key => :sep2},
-      {:command => "talk", :message => "にぃいちkin"},
-      {:command => "interval", :sleep => 1.0, :sleep_key => :sep2},
-      {:command => "talk", :message => "せめかた"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "いちにぃkin"},
-      {:command => "interval", :sleep => 1.0, :sleep_key => :sep2},
-      {:command => "talk", :message => "にぃにぃkin"},
-      {:command => "interval", :sleep => 1.0, :sleep_key => :sep2},
-      {:command => "talk", :message => "もちごま"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "kin"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "kin"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "銀"},
+      { :command => "talk", :message => "gyokugata" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "いちいちgyoku" },
+      { :command => "interval", :sleep => 1.0, :sleep_key => :sep2 },
+      { :command => "talk", :message => "にぃいちkin" },
+      { :command => "interval", :sleep => 1.0, :sleep_key => :sep2 },
+      { :command => "talk", :message => "せめかた" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "いちにぃkin" },
+      { :command => "interval", :sleep => 1.0, :sleep_key => :sep2 },
+      { :command => "talk", :message => "にぃにぃkin" },
+      { :command => "interval", :sleep => 1.0, :sleep_key => :sep2 },
+      { :command => "talk", :message => "もちごま" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "kin" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "kin" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "銀" },
     ]
     assert { info.to_yomiage_list == expected }
   end
@@ -52,17 +52,17 @@ RSpec.describe "読み上げ" do
       tp info.to_yomiage_list
     end
     expected = [
-      {:command => "talk", :message => "gyokugata"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "なし"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "せめかた"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "なし"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "もちごま"},
-      {:command => "interval", :sleep => 0.5, :sleep_key => :sep1},
-      {:command => "talk", :message => "なし"},
+      { :command => "talk", :message => "gyokugata" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "なし" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "せめかた" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "なし" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "もちごま" },
+      { :command => "interval", :sleep => 0.5, :sleep_key => :sep1 },
+      { :command => "talk", :message => "なし" },
     ]
     assert { info.to_yomiage_list == expected }
   end

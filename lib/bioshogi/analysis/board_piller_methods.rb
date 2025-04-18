@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 駒柱判定用
 #

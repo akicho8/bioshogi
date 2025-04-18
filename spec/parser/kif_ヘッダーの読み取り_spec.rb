@@ -15,6 +15,6 @@ RSpec.describe "ヘッダーの読み取り" do
   end
 
   it "値がない" do
-    assert { Bioshogi::Parser.parse("key：").pi.header.to_h == { } }
+    assert { Bioshogi::Parser.parse("key：").pi.header.to_h == {} }
   end
 end

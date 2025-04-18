@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 大駒の位置をO(1)で得るための履歴
 #

@@ -17,7 +17,7 @@ def test2
       :validate_feature                  => false,
       # :container_class                 => Container::Fast,
     })
-  object = info.screen_image_renderer({width: 100, height: 100})
+  object = info.screen_image_renderer({ width: 100, height: 100 })
   object.to_blob_binary[0..3]           # => "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG", "\x89PNG"
 end
 

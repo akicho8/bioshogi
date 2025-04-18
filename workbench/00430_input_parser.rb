@@ -20,7 +20,7 @@ list = [
   "P*2f",
   "4e5c+",
 ]
-tp list.collect { |e| {source: e}.merge(InputParser.match!(e).named_captures) }
+tp list.collect { |e| { source: e }.merge(InputParser.match!(e).named_captures) }
 InputParser.scan(list.join) == list # => true
 InputParser.scan(list.join) # => ["６八銀左上", "△６八全", "△６八銀成", "△６八銀打", "△同銀", "△同銀成", "７六歩(77)", "7677FU", "-7677FU", "+0077RY", "8c8d", "P*2f", "4e5c+"]
 

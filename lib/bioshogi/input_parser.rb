@@ -15,7 +15,7 @@ module Bioshogi
 
     def check(text)
       rows = InputParser.scan(text).collect do |str|
-        {"入力" => str}.merge(match!(str).named_captures)
+        { "入力" => str }.merge(match!(str).named_captures)
       end
       tp rows
     end

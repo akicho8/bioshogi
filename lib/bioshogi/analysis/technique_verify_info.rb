@@ -11,10 +11,10 @@ module Bioshogi
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
           func: proc {
-            #【条件1】「最下段」であること
+            # 【条件1】「最下段」であること
             verify_if { soldier.bottom_spaces.zero? }
 
-            #【条件2】上に自分の金があること
+            # 【条件2】上に自分の金があること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -45,10 +45,10 @@ module Bioshogi
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
           func: proc {
-            #【条件1】2〜8筋であること (端の場合は「こびん」とは言わないため)
+            # 【条件1】2〜8筋であること (端の場合は「こびん」とは言わないため)
             verify_if { soldier.column_is_second_to_eighth? }
 
-            #【条件2】相手が歩であること
+            # 【条件2】相手が歩であること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -57,7 +57,7 @@ module Bioshogi
               end
             end
 
-            #【条件3】桂馬の効きの位置に「玉」または「飛車」があること
+            # 【条件3】桂馬の効きの位置に「玉」または「飛車」があること
             verify_if do
               V.keima_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -74,13 +74,13 @@ module Bioshogi
           key: "位の確保",
           description: "中盤戦になる前に5段目の歩を銀で支える",
           func: proc {
-            #【条件1】前線(6段目)にいること
+            # 【条件1】前線(6段目)にいること
             verify_if { soldier.kurai_sasae? }
 
-            #【条件2】3〜7列であること (両端2列は「位」とは言わないため)
+            # 【条件2】3〜7列であること (両端2列は「位」とは言わないため)
             verify_if { soldier.column_is_three_to_seven? }
 
-            #【条件3】前に歩があること
+            # 【条件3】前に歩があること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -89,7 +89,7 @@ module Bioshogi
               end
             end
 
-            #【条件4】歩の上に何もないこと (歩の上に何か駒があった場合は無効) :OPTIONAL:
+            # 【条件4】歩の上に何もないこと (歩の上に何か駒があった場合は無効) :OPTIONAL:
             skip_if do
               if v = soldier.relative_move_to(:up_up)
                 board[v]
@@ -102,16 +102,16 @@ module Bioshogi
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: proc {
-            #【条件1】下から3段目であること
+            # 【条件1】下から3段目であること
             verify_if { soldier.bottom_spaces == 2 }
 
-            #【条件2】端から3つ目であること
+            # 【条件2】端から3つ目であること
             verify_if { soldier.column_spaces_min == 2 }
 
-            #【条件3】動元は「端から2つ目」であること (▲41から飛んだ場合を除外する)
+            # 【条件3】動元は「端から2つ目」であること (▲41から飛んだ場合を除外する)
             verify_if { origin_soldier.column_spaces_min == 1 }
 
-            #【条件4】移動元の端側に「玉」があること
+            # 【条件4】移動元の端側に「玉」があること
             verify_if do
               if v = origin_soldier.relative_move_to(soldier.left_or_right_to_closer_side)
                 if s = board[v]
@@ -248,10 +248,10 @@ module Bioshogi
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: proc {
-            #【条件1】2, 3, 4 段目であること
+            # 【条件1】2, 3, 4 段目であること
             verify_if { soldier.tarefu_desuka? }
 
-            #【条件2】先が空であること
+            # 【条件2】先が空であること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
@@ -265,18 +265,18 @@ module Bioshogi
           key: "遠見の角",
           description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
           func: proc {
-            #【条件1】中盤以降であること (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
+            # 【条件1】中盤以降であること (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             verify_if { executor.container.outbreak_turn }
 
-            #【条件2】自陣から打っていること
+            # 【条件2】自陣から打っていること
             verify_if { soldier.own_side? }
 
-            #【条件3】端から打っていること
+            # 【条件3】端から打っていること
             if false
               verify_if { soldier.column_is_edge? }
             end
 
-            #【条件4】相手の陣地に直通しているかつ長さが 5 以上であること
+            # 【条件4】相手の陣地に直通しているかつ長さが 5 以上であること
             verify_if do
               threshold = 5                                       # 成立するステップ数。4 だとマッチしすぎるため 5 にする
               V.bishop_naname_mae_vectors.any? do |up_left|       # 左上と右上を試す
@@ -352,7 +352,7 @@ module Bioshogi
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
           func: proc {
-            #【条件1】上に相手の桂がある
+            # 【条件1】上に相手の桂がある
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -361,7 +361,7 @@ module Bioshogi
               end
             end
 
-            #【条件2】「22銀」や「82銀」ではないこと :OPTIONAL:
+            # 【条件2】「22銀」や「82銀」ではないこと :OPTIONAL:
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             skip_if do
@@ -402,14 +402,14 @@ module Bioshogi
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
           func: proc {
-            #【条件1】「同歩」でないこと
+            # 【条件1】「同歩」でないこと
             skip_if do
               if move_hand = executor.move_hand
                 move_hand.captured_soldier
               end
             end
 
-            #【条件2】進めた歩の前が空であること
+            # 【条件2】進めた歩の前が空であること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
@@ -419,7 +419,7 @@ module Bioshogi
             # 左右どちらかが成立していること
             verify_if do
               V.ginbasami_verctors.any? do |right, right_right, right_right_up|
-                #【条件3】右に相手の銀ある
+                # 【条件3】右に相手の銀ある
                 yield_self {
                   if v = soldier.relative_move_to(right)
                     if s = board[v]
@@ -428,7 +428,7 @@ module Bioshogi
                   end
                 } or next
 
-                #【条件4】右右に自分の歩がある
+                # 【条件4】右右に自分の歩がある
                 yield_self {
                   if v = soldier.relative_move_to(right_right)
                     if s = board[v]
@@ -437,7 +437,7 @@ module Bioshogi
                   end
                 } or next
 
-                #【条件5】右右上が空である
+                # 【条件5】右右上が空である
                 if v = soldier.relative_move_to(right_right_up)
                   board.empty_cell?(v)
                 end
@@ -450,10 +450,10 @@ module Bioshogi
           key: "端玉には端歩",
           description: nil,
           func: proc {
-            #【条件1】端であること
+            # 【条件1】端であること
             verify_if { soldier.column_is_edge? }
 
-            #【条件2】上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
+            # 【条件2】上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -462,7 +462,7 @@ module Bioshogi
               end
             end
 
-            #【条件3】奥に相手の玉がいること (13→12→11と探す)
+            # 【条件3】奥に相手の玉がいること (13→12→11と探す)
             verify_if do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
               # Dimension::Row.dimension_size は書かなくてもいい
@@ -481,7 +481,7 @@ module Bioshogi
               end
             end
 
-            #【条件4】下に「自分の香飛龍」 (17→18→19と探す)
+            # 【条件4】下に「自分の香飛龍」 (17→18→19と探す)
             verify_if do
               # この 2 は突いた歩の 2 つ下から香を調べるため
               (2..).any? do |y|
@@ -545,7 +545,7 @@ module Bioshogi
           key: "下段の香",
           description: "打った香が一番下",
           func: proc {
-            #【条件1】「最下段」であること
+            # 【条件1】「最下段」であること
             verify_if { soldier.bottom_spaces.zero? }
           },
         },
@@ -572,7 +572,7 @@ module Bioshogi
           key: "控えの桂",
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
           func: proc {
-            #【条件1】打った位置が6段目以降である
+            # 【条件1】打った位置が6段目以降である
             verify_if { soldier.top_spaces >= Dimension::Row.promotable_depth + 2 }
 
             #  打った桂の利きの2箇所にある相手の駒を取得する
@@ -600,17 +600,17 @@ module Bioshogi
           key: "土下座の歩",
           description: nil,
           func: proc {
-            #【条件1】8,9段目であること
+            # 【条件1】8,9段目であること
             verify_if { soldier.bottom_spaces < 2 }
 
-            #【条件2】一つ上が空であること
+            # 【条件2】一つ上が空であること
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
               end
             end
 
-            #【条件3】二つ上に相手の前に進める駒があること (成銀や馬があっても土下座の対象とする)
+            # 【条件3】二つ上に相手の前に進める駒があること (成銀や馬があっても土下座の対象とする)
             verify_if do
               if v = soldier.relative_move_to(:up_up)
                 if s = board[v]
@@ -627,10 +627,10 @@ module Bioshogi
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
           func: proc {
-            #【条件1】打った位置が1から4段目である
+            # 【条件1】打った位置が1から4段目である
             verify_if { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
 
-            #【条件2】相手が「成駒」または「飛金銀香玉」である
+            # 【条件2】相手が「成駒」または「飛金銀香玉」である
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -641,7 +641,7 @@ module Bioshogi
               end
             end
 
-            #【条件3】打った歩に結びついている利きがないこと
+            # 【条件3】打った歩に結びついている利きがないこと
             # とするのが本当は正しいのだけど大変なので
             # 「打った位置の後ろに自分の(前に進めることのできる)駒がないこと」だけを判定している
             skip_if do
@@ -654,7 +654,7 @@ module Bioshogi
               end
             end
 
-            #【条件4】連打の歩ではないこと :OPTIONAL:
+            # 【条件4】連打の歩ではないこと :OPTIONAL:
             skip_if do
               if hand_log = executor.container.hand_logs[-2] # 前回の自分の手
                 if drop_hand = hand_log.drop_hand            # 打った手

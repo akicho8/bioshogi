@@ -4,7 +4,7 @@ require "spec_helper"
 
 RSpec.describe "将棋連盟が定めている人間向け棋譜入力" do
   before do
-    @params = {pieces_add: "飛 角 銀"}
+    @params = { pieces_add: "飛 角 銀" }
   end
 
   describe "http://www.shogi.or.jp/faq/kihuhyouki.html" do
@@ -66,118 +66,118 @@ RSpec.describe "将棋連盟が定めている人間向け棋譜入力" do
   end
 
   it "真右だけ" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "______", "______", "４五と",
           "______", "______", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と")) == ["５五と(45)", "５五と"] }
   end
 
   it "右下だけ" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "______", "______", "______",
           "______", "______", "４六と",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と")) == ["５五と(46)", "５五と"] }
   end
 
   it "真下だけ" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "______", "______", "______",
           "______", "５六と", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と")) == ["５五と(56)", "５五と"] }
   end
 
   it "下面" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "______", "______", "______",
           "６六と", "５六と", "４六と",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と右")) == ["５五と(46)", "５五と右"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と直")) == ["５五と(56)", "５五と直"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と左")) == ["５五と(66)", "５五と左"] }
   end
 
   it "左下と下" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "______", "______", "______",
           "６六と", "５六と", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と左")) == ["５五と(66)", "５五と左"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と直")) == ["５五と(56)", "５五と直"] }
   end
 
   it "縦に二つ" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "５四と", "______",
           "______", "______", "______",
           "______", "５六と", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と引")) == ["５五と(54)", "５五と引"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と上")) == ["５五と(56)", "５五と上"] }
   end
 
   it "左と左下" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "６五と", "______", "______",
           "６六と", "______", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と寄")) == ["５五と(65)", "５五と寄"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と上")) == ["５五と(66)", "５五と上"] }
   end
 
   it "左上と左下" do
-    @params.update({init: [
+    @params.update({ init: [
           "６四銀", "______", "______",
           "______", "______", "______",
           "６六銀", "______", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五銀引")) == ["５五銀(64)", "５五銀引"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五銀上")) == ["５五銀(66)", "５五銀上"] }
   end
 
   it "左右" do
-    @params.update({init: [
+    @params.update({ init: [
           "______", "______", "______",
           "６五と", "______", "４五と",
           "______", "______", "______",
-        ]})
+        ] })
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と左")) == ["５五と(65)", "５五と左"] }
     assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五と右")) == ["５五と(45)", "５五と右"] }
   end
 
   describe "打" do
     it "基本表示しない" do
-      @params.update({init: [
+      @params.update({ init: [
             "______", "______", "______",
             "______", "______", "______",
             "______", "______", "______",
-          ]})
+          ] })
       assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五銀")) == ["５五銀打", "５五銀"] }
     end
 
     it "盤上の駒1つ移動と重複するため明示" do
-      @params.update({init: [
+      @params.update({ init: [
             "______", "______", "______",
             "______", "______", "______",
             "______", "５六銀", "______",
-          ]})
+          ] })
       assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五銀打")) == ["５五銀打", "５五銀打"] }
     end
 
     it "盤上の駒2つ以上の移動と重複するため明示(盤上の重複の解決処理と打の関係)" do
-      @params.update({init: [
+      @params.update({ init: [
             "______", "______", "______",
             "______", "______", "______",
             "６六銀", "５六銀", "______",
-          ]})
+          ] })
       assert { Bioshogi::Container::Basic.read_spec(@params.merge(execute: "５五銀打")) == ["５五銀打", "５五銀打"] }
     end
   end

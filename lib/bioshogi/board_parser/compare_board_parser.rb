@@ -38,7 +38,7 @@ module Bioshogi
               soldiers << soldier
             end
           when something != "・"
-            other_objects << {place: place, prefix_char: prefix_char, something: something}
+            other_objects << { place: place, prefix_char: prefix_char, something: something }
           end
         end
       end

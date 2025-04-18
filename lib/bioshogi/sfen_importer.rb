@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 module Bioshogi
   class SfenImporter
     def initialize(container, sfen_info)

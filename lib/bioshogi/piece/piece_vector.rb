@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # basic_once_vectors      通常の1ベクトル
 # basic_repeat_vectors    通常の繰り返しベクトル

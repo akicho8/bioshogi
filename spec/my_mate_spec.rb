@@ -18,10 +18,10 @@ RSpec.describe Bioshogi::Player do
     assert { container.player_at(:white).my_mate? == true  }
     assert { container.player_at(:white).op_mate? == false }
 
-    ms = Benchmark.ms { container.player_at(:white).my_mate? }
+    ms = Benchmark.realtime { container.player_at(:white).my_mate? } * 1000
     assert("詰む場合はそれなりに重い") { ms >= 20.0 }
 
-    ms = Benchmark.ms { container.player_at(:black).my_mate? }
+    ms = Benchmark.realtime { container.player_at(:black).my_mate? } * 1000
     assert("でも詰まない場合の処理は早い") { ms < 0.2 }
   end
 end

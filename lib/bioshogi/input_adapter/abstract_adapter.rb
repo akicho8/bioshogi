@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # >> |------------+--------------+-----------+----------+-----------+------------+----------------+-------------+--------------+---------------------+------------------+----------------+----------+----------+--------+-----------+----------------+------------------+--------+----------+---------------------|
 # >> | source     | ki2_location | kif_place | ki2_same | kif_piece | ki2_one_up | ki2_left_right | ki2_up_down | ki2_as_it_is | ki2_promote_trigger | kif_drop_trigger | kif_place_from | csa_sign | csa_from | csa_to | csa_piece | sfen_drop_piece | sfen_drop_trigger | sfen_to | sfen_from | sfen_promote_trigger |
@@ -50,7 +51,7 @@ module Bioshogi
       end
 
       def errors_add(error_class, message)
-        errors << {error_class: error_class, message: message}
+        errors << { error_class: error_class, message: message }
       end
 
       # 目的地に来れる盤上の駒の配列

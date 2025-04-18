@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # parent には自分は存在したとき「親を消したい」場合のみ指定する
 #

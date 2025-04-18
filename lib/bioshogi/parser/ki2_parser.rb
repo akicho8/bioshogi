@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 module Bioshogi
   module Parser
     class Ki2Parser < Base

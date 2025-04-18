@@ -38,7 +38,7 @@ RSpec.describe Bioshogi::Board::ReaderMethods do
 
   it "to_piece_box" do
     assert { Bioshogi::Board.new.to_piece_box == {} }
-    assert { Bioshogi::Board.create_by_preset("平手").to_piece_box == {:lance => 4, :pawn => 18, :knight => 4, :rook => 2, :bishop => 2, :silver => 4, :gold => 4, :king => 2} }
+    assert { Bioshogi::Board.create_by_preset("平手").to_piece_box == { :lance => 4, :pawn => 18, :knight => 4, :rook => 2, :bishop => 2, :silver => 4, :gold => 4, :king => 2 } }
   end
 
   it "to_s_soldiers" do

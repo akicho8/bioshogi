@@ -35,16 +35,16 @@ RSpec.describe Bioshogi::InputParser do
   end
 
   it "拾う" do
-    assert { test1("24歩")   == {"kif_place" => "24", "kif_piece" => "歩"} }
-    assert { test1("同歩")   == {"ki2_same" => "同", "kif_piece" => "歩"} }
+    assert { test1("24歩")   == { "kif_place" => "24", "kif_piece" => "歩" } }
+    assert { test1("同歩")   == { "ki2_same" => "同", "kif_piece" => "歩" } }
   end
 
   it "紙面の改ページのあと同の前に座標を書く場合があるため「24同歩」に対応する。ついでに「同24歩」にも対応" do
-    assert { test1("24同歩") == {"kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩"} }
-    assert { test1("同24歩") == {"kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩"} }
+    assert { test1("24同歩") == { "kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩" } }
+    assert { test1("同24歩") == { "kif_place" => "24", "ki2_same" => "同", "kif_piece" => "歩" } }
   end
 
   it "元座標あり" do
-    assert { test1("74歩(77)") == {"kif_place" => "74", "kif_piece" => "歩", "kif_place_from" => "(77)"} }
+    assert { test1("74歩(77)") == { "kif_place" => "74", "kif_piece" => "歩", "kif_place_from" => "(77)" } }
   end
 end

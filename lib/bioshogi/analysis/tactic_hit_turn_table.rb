@@ -1,4 +1,5 @@
 # -*- frozen_string_literal: true -*-
+
 # /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/tactic_hit_turn_table_generator.rb から生成しているので編集するべからず
 # 手数が nil のものは最後に判定してるため成立した手数を正確に知ることができない
 module Bioshogi

@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # h = CounterHash.new
 # h[:x]                           # => 0

@@ -14,7 +14,7 @@ module Bioshogi
               "合計"           => total_score(player),
             }
           end
-          rows += [{"差(自分基準)" => score_compute}]
+          rows += [{ "差(自分基準)" => score_compute }]
         end
 
         private

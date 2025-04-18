@@ -69,7 +69,7 @@ class App
 
       @mate_records = []
       mate_proc = -> player, score, hand_route {
-        @mate_records << {"評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s}
+        @mate_records << { "評価値" => score, "詰み筋" => hand_route.collect(&:to_s).join(" "), "詰み側" => player.location.to_s, "攻め側の持駒" => player.op.piece_box.to_s }
       }
 
       brain = container.player_at(:black).brain(diver_class: AI::Diver::NegaAlphaMateDiver) # 詰将棋専用探索

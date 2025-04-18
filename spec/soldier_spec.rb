@@ -21,7 +21,7 @@ RSpec.describe Bioshogi::Soldier do
     a = Bioshogi::Soldier.from_str("▲６八銀")
     b = Bioshogi::Soldier.from_str("▲６八銀")
     assert { (a == b) == true }
-    assert { {a => true}[b] == true }
+    assert { { a => true }[b] == true }
   end
 
   it "Bioshogi::Place の #eql? と #hash の定義で異なる object_id でも内容で判断して [obj1] - [obj2] = [] ができるようになる" do

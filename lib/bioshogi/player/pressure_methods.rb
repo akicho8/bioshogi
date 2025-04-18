@@ -11,7 +11,7 @@ module Bioshogi
       # 圧力レベル(デバッグ用)
       def pressure_report
         rows = []
-        rows += soldiers.collect { |e| {"盤上" => e, "勢力" => e.pressure_level} }
+        rows += soldiers.collect { |e| { "盤上" => e, "勢力" => e.pressure_level } }
         rows += piece_box.collect { |piece_key, count|
           piece = Piece[piece_key]
           {
@@ -19,9 +19,9 @@ module Bioshogi
             "持駒" => "#{piece}#{count}",
           }
         }
-        rows += [{"勢力" => "合計 #{pressure_level}"}]
-        rows += [{"勢力" => "終盤率 #{pressure_rate}"}]
-        rows += [{"勢力" => "序盤率 #{1.0 - pressure_rate}"}]
+        rows += [{ "勢力" => "合計 #{pressure_level}" }]
+        rows += [{ "勢力" => "終盤率 #{pressure_rate}" }]
+        rows += [{ "勢力" => "序盤率 #{1.0 - pressure_rate}" }]
         rows
       end
 

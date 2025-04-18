@@ -21,15 +21,15 @@ RSpec.describe Bioshogi::PieceBox do
   end
 
   it "引数のハッシュは破壊されない" do
-    hash = {:king => 1}.freeze
+    hash = { :king => 1 }.freeze
     piece_box = Bioshogi::PieceBox.new(hash)
     piece_box.add(king: 1)
-    assert { piece_box == {:king => 2} }
-    assert { hash      == {:king => 1} }
+    assert { piece_box == { :king => 2 } }
+    assert { hash      == { :king => 1 } }
   end
 
   it "すべての駒が入っている" do
-    assert { Bioshogi::PieceBox.real_box == {king: 2, rook: 2, bishop: 2, gold: 4, silver: 4, knight: 4, lance: 4, pawn: 18} }
+    assert { Bioshogi::PieceBox.real_box == { king: 2, rook: 2, bishop: 2, gold: 4, silver: 4, knight: 4, lance: 4, pawn: 18 } }
   end
 
   it "駒を+1して-1したら駒はなくなっている" do

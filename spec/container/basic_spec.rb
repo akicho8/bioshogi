@@ -67,7 +67,7 @@ RSpec.describe Bioshogi::Container::Basic do
       先手の持駒：飛
     EOT
 
-    assert { container.to_piece_box == {:rook=>2, :lance=>3, :knight=>4, :silver=>4, :gold=>4, :king=>1, :bishop=>2, :pawn=>18} }
+    assert { container.to_piece_box == { :rook=>2, :lance=>3, :knight=>4, :silver=>4, :gold=>4, :king=>1, :bishop=>2, :pawn=>18 } }
     assert { container.not_enough_piece_box.to_s == "玉 香" }
 
     piece_box = container.not_enough_piece_box
@@ -148,7 +148,7 @@ EOT
   end
 
   it "同歩からの同飛になること" do
-    object = Bioshogi::Simulator.run({execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手"})
+    object = Bioshogi::Simulator.run({ execute: "▲２六歩 △２四歩 ▲２五歩 △同歩 ▲同飛", board: "平手" })
     assert { object.container.to_ki2_a == ["▲２六歩", "△２四歩", "▲２五歩", "△同歩", "▲同飛"] }
   end
 

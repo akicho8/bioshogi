@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # 進捗通知
 #

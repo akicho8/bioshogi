@@ -26,7 +26,7 @@ parser.screen_image_renderer(color_theme_key: "is_color_theme_paper").display
 exit
 
 
-parser.screen_image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: {piece_image_key: "Portella"}).display
+parser.screen_image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: { piece_image_key: "Portella" }).display
 
 # parser.screen_image_renderer(color_theme_key: "is_color_theme_emoji_pattern_mito").display
 # parser.screen_image_renderer(color_theme_key: "is_color_theme_emoji_pattern_skelton").display

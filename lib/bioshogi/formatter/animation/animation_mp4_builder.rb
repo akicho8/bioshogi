@@ -1,4 +1,5 @@
 # frozen-string-literal: true
+
 #
 # フレームレートを指定値に変換する。指定しない場合は入力ファイルの値を継承
 # http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%A4%CE%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3%A4%DE%A4%C8%A4%E1

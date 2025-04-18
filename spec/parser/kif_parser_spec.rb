@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Bioshogi::Parser::KifParser do
   it "アスタリスクで始まるヘッダーはそのまま取り込む" do
-    assert { Bioshogi::Parser.parse("*KEY1：value1").pi.header.to_h == {"*KEY1" => "value1"} }
+    assert { Bioshogi::Parser.parse("*KEY1：value1").pi.header.to_h == { "*KEY1" => "value1" } }
   end
 
   it "72手目で投了する場合71手目は先手が指しているので次の手番は後手になっている←複雑なのでやらない" do
@@ -159,7 +159,7 @@ P-00HI00HI00KA00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00FU00FU00FU00FU00FU00
     2 ３四歩
     EOT
     assert { info.class == Bioshogi::Parser::KifParser }
-    assert { info.pi.move_infos == [{turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil}, {turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil}] }
+    assert { info.pi.move_infos == [{ turn_number: "1", input: "７六歩", clock_part: nil, used_seconds: nil }, { turn_number: "2", input: "３四歩", clock_part: nil, used_seconds: nil }] }
 
     info = Bioshogi::Parser.parse("1 投了")
     assert { info.class == Bioshogi::Parser::KifParser }

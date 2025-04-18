@@ -3,7 +3,7 @@ require "./setup"
 object = Simulator.run({
     title: "桂と金の交換または桂成",
     comment: "金が逃げても３二桂成を防げない",
-    pieces: {black: "桂"},
+    pieces: { black: "桂" },
     execute: "▲２四桂 △２三金 ▲３二桂成",
     board: <<-EOT,
   ９ ８ ７ ６ ５ ４ ３ ２ １

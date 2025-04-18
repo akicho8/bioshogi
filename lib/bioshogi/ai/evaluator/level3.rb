@@ -14,7 +14,7 @@ module Bioshogi
               "序終盤合計"     => total_score(player),
             }
           end
-          rows += [{"全体" => score_compute}]
+          rows += [{ "全体" => score_compute }]
         end
 
         private
