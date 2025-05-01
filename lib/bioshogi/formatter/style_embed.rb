@@ -13,7 +13,7 @@ module Bioshogi
 
       def call
         if @xparser.preset_info
-          if @xparser.preset_info.special_piece
+          if @xparser.preset_info.hirate_like
             @container.players.each do |player|
               if main_style_info = player.skill_set.main_style_info
                 @xparser.pi.header.object.update("#{player.call_name}の棋風" => main_style_info.name)

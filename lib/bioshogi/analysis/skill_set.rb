@@ -24,7 +24,7 @@ module Bioshogi
         attack_infos.empty? && defense_infos.empty?
       end
 
-      # # 結果が決まってからの処理
+      # 結果が決まってからの処理
       def rikisen_check_process
         if power_battle?
           list_push(AttackInfo["力戦"])
@@ -54,6 +54,10 @@ module Bioshogi
       def list_push(e)
         raise "must not happen" unless e
         list_of(e).push(e)
+      end
+
+      def list_push2(e)
+        list_push(TacticInfo.flat_fetch(e))
       end
 
       def has_skill?(e)

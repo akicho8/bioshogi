@@ -155,10 +155,15 @@ module Bioshogi
 
       # 手合割
       def preset_info
-        @preset_info ||= @pi.force_preset_info
-        @preset_info ||= initial_container.board.preset_info
-        @preset_info ||= PresetInfo[pi.header["手合割"]]
-        @preset_info ||= PresetInfo["平手"]
+        @preset_info ||= preset_info_or_nil || PresetInfo["平手"]
+      end
+
+      # 手合割(なければ nil)
+      def preset_info_or_nil
+        return @preset_info_or_nil if instance_variable_defined?(:@preset_info_or_nil)
+        @preset_info_or_nil ||= @pi.force_preset_info
+        @preset_info_or_nil ||= initial_container.board.preset_info
+        @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
       end
 
       def container_run_all(container)

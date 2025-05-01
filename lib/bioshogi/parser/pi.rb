@@ -43,10 +43,14 @@ module Bioshogi
 
       # 勝ち負けがついた一般的な終わり方をしたか？
       def win_player_collect_p
-        if last_action_params
-          if last_action_key = last_action_params[:last_action_key]
-            if last_action_info = Formatter::LastActionInfo[last_action_key]
-              last_action_info.win_player_collect_p
+        return @win_player_collect_p if instance_variable_defined?(:@win_player_collect_p)
+
+        @win_player_collect_p ||= yield_self do
+          if last_action_params
+            if last_action_key = last_action_params[:last_action_key]
+              if last_action_info = Formatter::LastActionInfo[last_action_key]
+                last_action_info.win_player_collect_p
+              end
             end
           end
         end
@@ -54,10 +58,14 @@ module Bioshogi
 
       # 詰みまで指したか？
       def saigoha_tsumi_p
-        if last_action_params
-          if last_action_key = last_action_params[:last_action_key]
-            if last_action_info = Formatter::LastActionInfo[last_action_key]
-              last_action_info.key == :TSUMI
+        return @saigoha_tsumi_p if instance_variable_defined?(:@saigoha_tsumi_p)
+
+        @saigoha_tsumi_p ||= yield_self do
+          if last_action_params
+            if last_action_key = last_action_params[:last_action_key]
+              if last_action_info = Formatter::LastActionInfo[last_action_key]
+                last_action_info.key == :TSUMI
+              end
             end
           end
         end

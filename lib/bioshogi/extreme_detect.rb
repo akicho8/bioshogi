@@ -2,7 +2,7 @@ require "benchmark"
 require "diff/lcs"
 
 module Bioshogi
-  class ExtremeValidator
+  class ExtremeDetect
     def initialize(options = {})
       @options = {
         :limit => nil,

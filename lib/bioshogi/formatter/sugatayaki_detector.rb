@@ -1,6 +1,6 @@
 module Bioshogi
   module Formatter
-    class SugatayakiValidator
+    class SugatayakiDetector
       delegate :win_side_location, :container, to: :@skill_embed
 
       def initialize(skill_embed)

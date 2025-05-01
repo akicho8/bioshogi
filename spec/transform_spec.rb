@@ -4,16 +4,16 @@
 # rake spec:transform
 #
 # ▼あれこれ表示
-# Bioshogi::VERBOSE=1 rake spec:transform
+# VERBOSE=1 rake spec:transform
 #
 # ▼比較するファイルをいったん生成
-# Bioshogi::TRANSFORM_OUTPUT=1 rake spec:transform
+# TRANSFORM_OUTPUT=1 rake spec:transform
 #
 require "spec_helper"
 
 RSpec.describe "変換", transform: true do
   trace = -> s {
-    if ENV["Bioshogi::VERBOSE"]
+    if ENV["VERBOSE"]
       puts s
     end
   }
@@ -44,7 +44,7 @@ RSpec.describe "変換", transform: true do
     describe e.dirname.basename do
       info = Bioshogi::Parser.parse(e, typical_error_case: :embed)
       trace.call "Bioshogi::IN: #{e.dirname.basename}"
-      if ENV["Bioshogi::TRANSFORM_OUTPUT"]
+      if ENV["TRANSFORM_OUTPUT"]
         puts "    read: #{e}"
         types.each do |type|
           file = e.dirname.join("expected.#{type}")

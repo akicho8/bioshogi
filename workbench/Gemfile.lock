@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    bioshogi (0.0.15)
+    bioshogi (0.0.17)
       actionview
       activesupport (>= 7.1.0)
       benchmark
