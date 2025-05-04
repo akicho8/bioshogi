@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class RocketAnalyzer
+    class RocketDetector
       DEBUG = false
 
       delegate *[

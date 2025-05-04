@@ -32,7 +32,7 @@ module Bioshogi
             end
           end
 
-          RocketAnalyzer.new(self).call
+          RocketDetector.new(self).call
         end
 
         # 毎回呼ぶやつ (for 駒柱)
