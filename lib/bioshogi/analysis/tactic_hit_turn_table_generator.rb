@@ -47,6 +47,7 @@ module Bioshogi
       def template
         o = []
         o << "# -*- frozen_string_literal: true -*-"
+        o << ""
         o << "# #{__FILE__} から生成しているので編集するべからず"
         o << "# 手数が nil のものは最後に判定してるため成立した手数を正確に知ることができない"
         o << "module Bioshogi"
