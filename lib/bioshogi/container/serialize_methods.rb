@@ -108,12 +108,13 @@ module Bioshogi
         attr_reader :initial_state_board_sfen
         attr_reader :initial_state_turn_info
 
-        def initialize(*)
-          super
-          before_run_process            # FIXME
-        end
+        # def initialize(*)
+        #   super
+        #   before_run_process            # FIXME
+        # end
 
         def before_run_process
+          super
           # turn_info_auto_set
           @initial_state_board_sfen = to_short_sfen # FIXME: これはイケてない
           @initial_state_turn_info = turn_info.clone

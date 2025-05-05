@@ -57,10 +57,10 @@ module Bioshogi
       end
 
       # 詰みまで指したか？
-      def saigoha_tsumi_p
-        return @saigoha_tsumi_p if instance_variable_defined?(:@saigoha_tsumi_p)
+      def last_checkmate_p
+        return @last_checkmate_p if instance_variable_defined?(:@last_checkmate_p)
 
-        @saigoha_tsumi_p ||= yield_self do
+        @last_checkmate_p ||= yield_self do
           if last_action_params
             if last_action_key = last_action_params[:last_action_key]
               if last_action_info = Formatter::LastActionInfo[last_action_key]

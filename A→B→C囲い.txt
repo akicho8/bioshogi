@@ -1,6 +1,4 @@
 lib/bioshogi/analysis/備考/持久戦.kif:後手の囲い：カタ囲い, 居飛車穴熊
-lib/bioshogi/analysis/囲い/あずまや囲い.kif:先手の囲い：あずまや囲い, 居玉
-lib/bioshogi/analysis/囲い/あずまや囲い.kif:後手の囲い：無敵囲い, 居玉
 lib/bioshogi/analysis/囲い/カブト美濃.kif:先手の囲い：坊主美濃, カブト美濃
 lib/bioshogi/analysis/囲い/ムリヤリ矢倉.kif:後手の囲い：ムリヤリ矢倉, 金矢倉
 lib/bioshogi/analysis/囲い/居飛車金冠.kif:先手の囲い：カブト囲い, 居飛車金冠

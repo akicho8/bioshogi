@@ -4,8 +4,10 @@ module Bioshogi
   module Container
     concern :CoreMethods do
       attr_writer :board
+      attr_accessor :initial_preset_info
 
       def before_run_process
+        set_initial_preset_info
       end
 
       def params
@@ -32,6 +34,12 @@ module Bioshogi
 
       def board
         @board ||= params[:board_class].new
+      end
+
+      def set_initial_preset_info
+        unless instance_variable_defined?(:@initial_preset_info)
+          @initial_preset_info = board.preset_info
+        end
       end
 
       def placement_from_bod(str)
@@ -97,3 +105,6 @@ module Bioshogi
     end
   end
 end
+# ~> -:5:in '<module:Container>': undefined method 'concern' for module Bioshogi::Container (NoMethodError)
+# ~> 	from -:4:in '<module:Bioshogi>'
+# ~> 	from -:3:in '<main>'

@@ -1,40 +1,37 @@
 # frozen-string-literal: true
 
+# |-------------+--------------------------------------+----------------------------------------------------------|
+# | 属性        | 意味                                 | 備考                                                     |
+# |-------------+--------------------------------------+----------------------------------------------------------|
+# | hirate_like | ほぼ平手の配置か？                   |                                                          |
+# | minor       | 一般的なソフトが対応してないものか？ | 「手合割：トンボ」などと表記すると一般的なソフトはバグる |
+# | handicap    | △が初手を指すか？                   |                                                          |
+# | x_taden     | 銀多伝・金多伝を許可するか？         |                                                          |
+# |-------------+--------------------------------------+----------------------------------------------------------|
+
 module Bioshogi
   class PresetInfo
     include ApplicationMemoryRecord
-    # hirate_like:
-    #   大駒があるか？
-    #   大駒がないのに「居飛車」と言うのはおかしいので hirate_like を確認する
-    #
-    # minor:
-    #   一般的なソフトが対応してないものか？
-    #   逆算で安易に「手合割：トンボ」と表記しないようにするため
-    #   と一般的なソフトはなにそれ状態になり初期配置を用意できない
-    #
-    # handicap:
-    #   △が初手を指すモードか？
-    #
     memory_record [
-      { key: "平手",           minor: false, handicap: false, hirate_like: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "香落ち",         minor: false, handicap: true,  hirate_like: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "右香落ち",       minor: true,  handicap: true,  hirate_like: true,  piece_boxes: { black: "",       white: "",       }, },
-      { key: "角落ち",         minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "飛車落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "飛香落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二枚持ち",       minor: true,  handicap: true,  hirate_like: false, piece_boxes: { black: "飛角",   white: "",       }, }, # これは盤の情報から逆算できない。「二枚落ち」と判定されてしまうため、根本的にロジックを変更しないといけない。
-      { key: "三枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
-      { key: "四枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "六枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "トンボ",         minor: true,  handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "八枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "十枚落ち",       minor: false, handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "十九枚落ち",     minor: true,  handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "二十枚落ち",     minor: true,  handicap: true,  hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "青空将棋",       minor: true,  handicap: false, hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
-      { key: "バリケード将棋", minor: true,  handicap: false, hirate_like: false, piece_boxes: { black: "飛角香", white: "飛角香", }, },
-      { key: "5五将棋",        minor: true,  handicap: false, hirate_like: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "平手",           major: true,  handicap: false, hirate_like: true,  x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "香落ち",         major: true,  handicap: true,  hirate_like: true,  x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "右香落ち",       major: false, handicap: true,  hirate_like: true,  x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "角落ち",         major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "飛車落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "飛香落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "二枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "二枚持ち",       major: false, handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "飛角",   white: "",       }, }, # これは盤の情報から逆算できない。「二枚落ち」と判定されてしまうため、根本的にロジックを変更しないといけない。
+      { key: "三枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, }, # 1849/03/15 伊藤宗印 vs 天満屋 の手合割にある
+      { key: "四枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "六枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: true,  piece_boxes: { black: "",       white: "",       }, },
+      { key: "トンボ",         major: false, handicap: true,  hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "八枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "十枚落ち",       major: true,  handicap: true,  hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "十九枚落ち",     major: false, handicap: true,  hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "二十枚落ち",     major: false, handicap: true,  hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "青空将棋",       major: false, handicap: false, hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
+      { key: "バリケード将棋", major: false, handicap: false, hirate_like: false, x_taden: false, piece_boxes: { black: "飛角香", white: "飛角香", }, },
+      { key: "5五将棋",        major: false, handicap: false, hirate_like: false, x_taden: false, piece_boxes: { black: "",       white: "",       }, },
     ]
 
     class << self
@@ -50,8 +47,13 @@ module Bioshogi
       end
 
       # 一般的なものに絞る
-      def major_list
-        @major_list ||= reject(&:minor)
+      def major_only
+        @major_only ||= find_all(&:major)
+      end
+
+      # 一般的でないものに絞る
+      def minor_only
+        @minor_only ||= reject(&:major)
       end
 
       # 持駒の比較は別途行う必要あり
@@ -82,7 +84,7 @@ module Bioshogi
           if options[:inclusion_minor]
             list = to_a
           else
-            list = major_list
+            list = major_only
           end
           list.find { |e| sorted_soldiers == e.sorted_soldiers }
         end

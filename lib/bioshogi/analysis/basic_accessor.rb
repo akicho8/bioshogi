@@ -132,6 +132,17 @@ module Bioshogi
         end
       end
 
+      def only_preset_attr
+        unless instance_variable_defined?(:@only_preset_attr)
+          if defined?(super)
+            @only_preset_attr = super
+          else
+            @only_preset_attr = nil
+          end
+        end
+        @only_preset_attr
+      end
+
       def hit_turn
         TacticHitTurnTable[key]
       end

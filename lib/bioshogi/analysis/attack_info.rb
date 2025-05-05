@@ -313,6 +313,10 @@ module Bioshogi
       include ShapeInfoRelation
       include BasicAccessor
       include StyleAccessor
+
+      def only_preset_attr
+        :hirate_like
+      end
     end
   end
 end

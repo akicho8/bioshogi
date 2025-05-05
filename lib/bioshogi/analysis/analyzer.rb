@@ -107,6 +107,15 @@ module Bioshogi
 
           ################################################################################
 
+          # 特定の初期配置でないならスキップ
+          if v = e.only_preset_attr
+            unless executor.container.initial_preset_info&.public_send(v)
+              throw :skip
+            end
+          end
+
+          ################################################################################
+
           # 手数制限。制限を超えていたらskip
           if e.turn_limit
             if e.turn_limit < player.container.turn_info.display_turn.next
@@ -461,3 +470,8 @@ module Bioshogi
     end
   end
 end
+# ~> -:6:in '<class:Analyzer>': undefined method 'cattr_accessor' for class Bioshogi::Analysis::Analyzer (NoMethodError)
+# ~> Did you mean?  attr_accessor
+# ~> 	from -:5:in '<module:Analysis>'
+# ~> 	from -:4:in '<module:Bioshogi>'
+# ~> 	from -:3:in '<main>'

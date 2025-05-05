@@ -1,5 +1,6 @@
 lib/bioshogi/analysis/備考/大駒コンプリート.kif:後手の戦法：四間飛車, 向かい飛車
 lib/bioshogi/analysis/備考/持久戦.kif:先手の戦法：稲庭戦法, 腰掛け銀
+lib/bioshogi/analysis/備考/相居玉.kif:先手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/analysis/備考/相穴熊.kif:先手の戦法：対振り持久戦, 袖飛車
 lib/bioshogi/analysis/囲い/_▲7七金型雁木.kif:後手の戦法：袖飛車, 地下鉄飛車
 lib/bioshogi/analysis/囲い/ちょんまげ美濃.kif:先手の戦法：四間飛車, 陽動振り飛車
@@ -52,6 +53,7 @@ lib/bioshogi/analysis/戦法/久保流早石田.kif:先手の戦法：升田式�
 lib/bioshogi/analysis/戦法/先手中飛車.kif:先手の戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/analysis/戦法/先手中飛車.kif:*▲戦法：先手中飛車, ゴキゲン中飛車
 lib/bioshogi/analysis/戦法/初手▲7八銀戦法.kif:先手の戦法：初手▲7八銀戦法, 四間飛車
+lib/bioshogi/analysis/戦法/力戦.kif:後手の戦法：村田システム, 袖飛車
 lib/bioshogi/analysis/戦法/原始棒銀.kif:先手の戦法：原始棒銀, 棒銀
 lib/bioshogi/analysis/戦法/右四間飛車.kif:先手の戦法：腰掛け銀, 右四間飛車
 lib/bioshogi/analysis/戦法/四間飛車ミレニアム.kif:先手の戦法：角道オープン四間飛車, 四間飛車ミレニアム

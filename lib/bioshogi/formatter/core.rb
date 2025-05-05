@@ -134,7 +134,8 @@ module Bioshogi
             container.turn_info.handicap = pi.force_handicap
           end
         end
-        container.before_run_process # 最初の状態を記録
+
+        container.before_run_process # 最初の状態を記録 (MEMO: ここで呼ぶのはおかしくないか？)
       end
 
       # 持駒を反映する
@@ -262,3 +263,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:14:in '<class:Core>': undefined method 'delegate' for class Bioshogi::Formatter::Core (NoMethodError)
+# ~> 	from -:5:in '<module:Formatter>'
+# ~> 	from -:4:in '<module:Bioshogi>'
+# ~> 	from -:3:in '<main>'

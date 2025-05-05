@@ -18,13 +18,8 @@ module Bioshogi
               next
             end
           end
-          if e.preset_required
-            unless @xparser.preset_info_or_nil
-              next
-            end
-          end
-          if e.hirate_like
-            unless @xparser.preset_info_or_nil.hirate_like
+          if v = e.only_preset_attr
+            unless @xparser.preset_info_or_nil&.public_send(v)
               next
             end
           end
@@ -39,7 +34,7 @@ module Bioshogi
             end
           end
           if e.checkmate
-            unless @xparser.pi.saigoha_tsumi_p
+            unless @xparser.pi.last_checkmate_p
               next
             end
           end
