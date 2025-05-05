@@ -27,7 +27,7 @@ module Bioshogi
               execute_block(e) do |list|
                 walk_counts[e.key] += 1
                 cold_war_verification(e)
-                instance_eval(&e.technique_verify_info.func)
+                instance_exec(&e.technique_verify_info.func)
               end
             end
           end

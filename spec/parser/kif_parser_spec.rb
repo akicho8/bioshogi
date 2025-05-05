@@ -14,7 +14,7 @@ RSpec.describe Bioshogi::Parser::KifParser do
   end
 
   it "移動元を明示したのに駒がなかったときの例外に指し手の情報が含まれている" do
-    proc { Bioshogi::Parser.parse("55歩(56)").to_kif }.should raise_error(Bioshogi::PieceNotFoundOnBoard, /棋譜/)
+    -> { Bioshogi::Parser.parse("55歩(56)").to_kif }.should raise_error(Bioshogi::PieceNotFoundOnBoard, /棋譜/)
   end
 
   it "残り時間の変換" do

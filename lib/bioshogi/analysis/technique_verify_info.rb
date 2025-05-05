@@ -10,7 +10,7 @@ module Bioshogi
         {
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
-          func: proc {
+          func: -> {
             # 【条件1】「最下段」であること
             verify_if { soldier.bottom_spaces.zero? }
 
@@ -28,7 +28,7 @@ module Bioshogi
         {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに相手の玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.ikkenryu_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -44,7 +44,7 @@ module Bioshogi
         {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
-          func: proc {
+          func: -> {
             # 【条件1】2〜8筋であること (端の場合は「こびん」とは言わないため)
             verify_if { soldier.column_is_second_to_eighth? }
 
@@ -73,7 +73,7 @@ module Bioshogi
         {
           key: "位の確保",
           description: "中盤戦になる前に5段目の歩を銀で支える",
-          func: proc {
+          func: -> {
             # 【条件1】前線(6段目)にいること
             verify_if { soldier.kurai_sasae? }
 
@@ -101,7 +101,7 @@ module Bioshogi
         {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
-          func: proc {
+          func: -> {
             # 【条件1】下から3段目であること
             verify_if { soldier.bottom_spaces == 2 }
 
@@ -127,7 +127,7 @@ module Bioshogi
         {
           key: "腹銀",
           description: "銀を打ったか移動させたとき左右どちらかに相手の玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.left_right_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -143,7 +143,7 @@ module Bioshogi
         {
           key: "尻銀",
           description: "銀を打ったか移動させたとき下に相手の玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               if v = soldier.relative_move_to(:down)
                 if s = board[v]
@@ -157,7 +157,7 @@ module Bioshogi
         {
           key: "肩銀",
           description: "銀を打ったか移動させたとき左斜め前か右斜め前に玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.bishop_naname_mae_vectors.any? do |up_left|
                 if v = soldier.relative_move_to(up_left)
@@ -173,7 +173,7 @@ module Bioshogi
         {
           key: "裾銀",
           description: "銀を打ったか移動させたとき左斜め後か右斜め後に玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.wariuchi_vectors.any? do |down_left|
                 if v = soldier.relative_move_to(down_left)
@@ -189,7 +189,7 @@ module Bioshogi
         {
           key: "頭銀",
           description: "銀を打ったか移動させたとき前に相手の玉がある",
-          func: proc {
+          func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -205,40 +205,40 @@ module Bioshogi
         {
           key: "腹金",
           description: "金を打ったか移動させたとき左右どちらかに相手の玉がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"腹銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"腹銀"].func)
           },
         },
 
         {
           key: "尻金",
           description: "金を打ったか移動させたとき下に相手の玉がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"尻銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"尻銀"].func)
           },
         },
 
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"肩銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"肩銀"].func)
           },
         },
 
         {
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"裾銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"裾銀"].func)
           },
         },
 
         {
           key: "頭金",
           description: "金を打ったか移動させたとき前に相手の玉がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"頭銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"頭銀"].func)
           },
         },
 
@@ -247,7 +247,7 @@ module Bioshogi
         {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
-          func: proc {
+          func: -> {
             # 【条件1】2, 3, 4 段目であること
             verify_if { soldier.tarefu_desuka? }
 
@@ -264,7 +264,7 @@ module Bioshogi
         {
           key: "遠見の角",
           description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
-          func: proc {
+          func: -> {
             # 【条件1】中盤以降であること (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             verify_if { executor.container.outbreak_turn }
 
@@ -303,7 +303,7 @@ module Bioshogi
         {
           key: "割り打ちの銀",
           description: "打った銀の後ろの左右両方に相手の飛か金がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.wariuchi_vectors.all? do |e|
                 if v = soldier.relative_move_to(e)
@@ -321,7 +321,7 @@ module Bioshogi
         {
           key: "たすきの銀",
           description: "打った銀の斜め前に飛があり対極に金がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.tasuki_vectors.any? do |up_left, down_right|
                 if v = soldier.relative_move_to(up_left)
@@ -343,15 +343,15 @@ module Bioshogi
         {
           key: "たすきの角",
           description: "打った角の斜め前に飛があり対極に金がある",
-          func: proc {
-            instance_eval(&TechniqueVerifyInfo[:"たすきの銀"].func)
+          func: -> {
+            instance_exec(&TechniqueVerifyInfo[:"たすきの銀"].func)
           },
         },
 
         {
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
-          func: proc {
+          func: -> {
             # 【条件1】上に相手の桂がある
             verify_if do
               if v = soldier.relative_move_to(:up)
@@ -373,7 +373,7 @@ module Bioshogi
         {
           key: "歩頭の桂",
           description: "打ったまたは移動した桂の上に相手の歩がある",
-          func: proc {
+          func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -387,7 +387,7 @@ module Bioshogi
         {
           key: "金頭の桂",
           description: "打ったまたは移動した桂の上に相手の金がある",
-          func: proc {
+          func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -401,7 +401,7 @@ module Bioshogi
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
-          func: proc {
+          func: -> {
             # 【条件1】「同歩」でないこと
             skip_if do
               if move_hand = executor.move_hand
@@ -449,7 +449,7 @@ module Bioshogi
         {
           key: "端玉には端歩",
           description: nil,
-          func: proc {
+          func: -> {
             # 【条件1】端であること
             verify_if { soldier.column_is_edge? }
 
@@ -504,7 +504,7 @@ module Bioshogi
         {
           key: "田楽刺し",
           description: "角の頭に打ってその奥に玉などの大駒がある",
-          func: proc {
+          func: -> {
             verify_if do
               mode = :walk_to_bishop
               (1..).each do |y|
@@ -544,7 +544,7 @@ module Bioshogi
           # いろんな条件を考えたが結局「下段」のみのチェックとする
           key: "下段の香",
           description: "打った香が一番下",
-          func: proc {
+          func: -> {
             # 【条件1】「最下段」であること
             verify_if { soldier.bottom_spaces.zero? }
           },
@@ -553,7 +553,7 @@ module Bioshogi
         {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.keima_vectors.all? do |e|
                 if v = soldier.relative_move_to(e)
@@ -571,7 +571,7 @@ module Bioshogi
         {
           key: "控えの桂",
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
-          func: proc {
+          func: -> {
             # 【条件1】打った位置が6段目以降である
             verify_if { soldier.top_spaces >= Dimension::Row.promotable_depth + 2 }
 
@@ -599,7 +599,7 @@ module Bioshogi
         {
           key: "土下座の歩",
           description: nil,
-          func: proc {
+          func: -> {
             # 【条件1】8,9段目であること
             verify_if { soldier.bottom_spaces < 2 }
 
@@ -626,7 +626,7 @@ module Bioshogi
         {
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
-          func: proc {
+          func: -> {
             # 【条件1】打った位置が1から4段目である
             verify_if { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
 
@@ -671,7 +671,7 @@ module Bioshogi
         {
           key: "継ぎ歩",
           description: "条件が成立しない方を先に判定した方が早めに打ち切れるので2手目1手目の順で見る",
-          func: proc {
+          func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
             # 2手前: ▲24歩(25) 突き
@@ -701,7 +701,7 @@ module Bioshogi
         {
           key: "連打の歩",
           description: "",
-          func: proc {
+          func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
             # 2手前: ▲24歩打
@@ -731,7 +731,7 @@ module Bioshogi
         {
           key: "継ぎ桂",
           description: "継ぐのは前なので打った桂の2つ後ろの左右のどちらかに自分の桂がある",
-          func: proc {
+          func: -> {
             verify_if do
               V.tsugikei_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -747,7 +747,7 @@ module Bioshogi
         {
           key: "跳ね違いの桂",
           description: "移動元から見て移動してない方に相手が1手前に移動した桂があるか？",
-          func: proc {
+          func: -> {
             verify_if do
               # △33桂(21)▲13桂成(25)で考える
               # 跳ね違いは相手の桂を捌けなくする目的でもあるため「成っていない桂」のチェックとする
@@ -769,7 +769,7 @@ module Bioshogi
         {
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
-          func: proc {
+          func: -> {
             verify_if { soldier.just_nyuugyoku?           }
             verify_if { origin_soldier.atoippo_nyuugyoku? }
           },
@@ -778,7 +778,7 @@ module Bioshogi
         {
           key: "角不成",
           description: "相手陣地に入るときと出るときの両方チェックする",
-          func: proc {
+          func: -> {
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
         },
@@ -786,7 +786,7 @@ module Bioshogi
         {
           key: "飛車不成",
           description: "角不成と同じ方法でよい",
-          func: proc {
+          func: -> {
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
         },

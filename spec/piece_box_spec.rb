@@ -43,6 +43,6 @@ RSpec.describe Bioshogi::PieceBox do
 
   it "駒がないのに減らしたらエラー" do
     piece_box = Bioshogi::PieceBox.new
-    proc { piece_box.add(king: -1) }.should raise_error(Bioshogi::HoldPieceNotFound)
+    -> { piece_box.add(king: -1) }.should raise_error(Bioshogi::HoldPieceNotFound)
   end
 end
