@@ -167,6 +167,8 @@ module Bioshogi
 
       include ShapeInfoRelation
       include BasicAccessor
+      include TreeMod
+      include StaticKifMod
       include StyleAccessor
 
       # outbreak_skip で代用するため pawn_bishop_have_ok は無効化する

@@ -1,6 +1,6 @@
 require "./setup"
 
-info = Analysis::TechniqueInfo.fetch("居飛車の税金").main_reference_info
+info = Analysis::TechniqueInfo.fetch("居飛車の税金").static_kif_info
 puts info.to_kif
 # >> 手合割：平手
 # >> 後手の戦法：2手目△3ニ飛戦法

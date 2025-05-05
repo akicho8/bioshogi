@@ -33,7 +33,7 @@ module Bioshogi
           # bin = info.to_animation_mp4(page_duration: 0.0166666666667, end_duration: 0)
           # no_audio_file.write(bin)
 
-          file = Analysis::TacticInfo.flat_lookup("トマホーク").main_reference_file
+          file = Analysis::TacticInfo.flat_lookup("トマホーク").static_kif_file
           info = Parser.parse(file)
           bin = info.to_animation_mp4({
               :color_theme_key => :is_color_theme_real,

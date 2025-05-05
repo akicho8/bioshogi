@@ -4,9 +4,6 @@ module Bioshogi
   module Analysis
     concern :BasicAccessor do
       included do
-        include TreeSupport::Treeable
-        include TreeSupport::Stringify
-
         delegate :tactic_key, to: "self.class"
       end
 
@@ -50,36 +47,12 @@ module Bioshogi
         @name ||= alternate_name || super
       end
 
-      def parent
-        unless defined?(@parent)
-          if defined?(super) && v = super
-            @parent = self.class.fetch(v)
-          else
-            @parent = nil
-          end
-        end
-
-        @parent
-      end
-
-      def children
-        @children ||= self.class.find_all { |e| e.parent == self }
-      end
-
-      def cached_descendants
-        @cached_descendants ||= descendants
-      end
-
-      def related_ancestors
-        @related_ancestors ||= Array(super).collect { |e| self.class.fetch(e) }
-      end
-
       def alias_names
-        Array(super)
+        @alias_names ||= Array(super)
       end
 
       def sect_info
-        SectInfo.fetch(sect_key)
+        @sect_info ||= SectInfo.fetch(sect_key)
       end
 
       def hold_piece_eq
@@ -131,7 +104,7 @@ module Bioshogi
       end
 
       def tactic_info
-        TacticInfo.fetch(tactic_key)
+        @tactic_info ||= TacticInfo.fetch(tactic_key)
       end
 
       def group_info
@@ -203,30 +176,8 @@ module Bioshogi
       end
 
       def hit_turn
-        TacticHitTurnTable[key]
+        @hit_turn ||= TacticHitTurnTable[key]
       end
-
-      ################################################################################
-
-      # この戦法を発動する代表とする棋譜ファイル
-      def main_reference_file
-        Pathname("#{__dir__}/#{tactic_info.name}/#{key}.kif")
-      end
-
-      # この戦法を発動する代表とする棋譜ファイルの情報
-      def main_reference_info(options = {})
-        Parser.file_parse(main_reference_file, options)
-      end
-
-      # この戦法を発動するファイルたち
-      def reference_files
-        [
-          main_reference_file,
-          *Pathname("#{__dir__}/#{tactic_info.name}").glob("#{key}/**/*.kif"),
-        ]
-      end
-
-      ################################################################################
     end
   end
 end

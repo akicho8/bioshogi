@@ -2,7 +2,7 @@ require "./setup"
 include Analysis
 
 # e = NoteInfo["ロケット"]        # => <ロケット>
-# e.main_reference_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
+# e.static_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
 #   p hand_log.skill_set.has_skill?(e)
 #   # if hand_log.skill_set.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
 #   #   p i

@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Analysis::DefenseInfo.fetch("振り飛車端玉銀冠").main_reference_info
+info = Analysis::DefenseInfo.fetch("振り飛車端玉銀冠").static_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |--------------------------------------------------------+----------------------+-----------+------------------------|

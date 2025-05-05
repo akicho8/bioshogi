@@ -63,6 +63,8 @@ module Bioshogi
 
       include ShapeInfoRelation
       include BasicAccessor
+      include TreeMod
+      include StaticKifMod
       include StyleAccessor
 
       class << self

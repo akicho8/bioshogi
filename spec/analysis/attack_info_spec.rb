@@ -28,12 +28,12 @@ RSpec.describe Bioshogi::Analysis::AttackInfo do
     assert { Bioshogi::Analysis::AttackInfo["UFO銀"].name == "UFO銀" }
   end
 
-  it "main_reference_file" do
-    assert { Bioshogi::Analysis::AttackInfo["UFO銀"].main_reference_file.exist? }
+  it "static_kif_file" do
+    assert { Bioshogi::Analysis::AttackInfo["UFO銀"].static_kif_file.exist? }
   end
 
-  it "main_reference_info" do
-    assert { Bioshogi::Analysis::AttackInfo["UFO銀"].main_reference_info }
+  it "static_kif_info" do
+    assert { Bioshogi::Analysis::AttackInfo["UFO銀"].static_kif_info }
   end
 
   it "hit_turn" do

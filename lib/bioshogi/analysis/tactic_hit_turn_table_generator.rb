@@ -17,7 +17,7 @@ module Bioshogi
       def to_h
         av = Analysis::TacticInfo.all_elements.collect do |e|
           turn = nil
-          e.main_reference_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
+          e.static_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
             if hand_log.skill_set.has_skill?(e)
               turn = i.next
               break

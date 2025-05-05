@@ -1,6 +1,6 @@
 require "./setup"
 
-info = Analysis::TechniqueInfo.fetch("銀冠の小部屋").main_reference_info
+info = Analysis::TechniqueInfo.fetch("銀冠の小部屋").static_kif_info
 puts info.to_kif
 # >> 手合割：平手
 # >> 先手の戦法：右四間飛車急戦

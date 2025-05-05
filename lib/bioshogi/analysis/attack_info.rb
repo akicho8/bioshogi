@@ -312,6 +312,8 @@ module Bioshogi
 
       include ShapeInfoRelation
       include BasicAccessor
+      include TreeMod
+      include StaticKifMod
       include StyleAccessor
 
       def only_preset_attr
