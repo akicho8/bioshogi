@@ -33,8 +33,11 @@ module Bioshogi
       end
 
       def clock_exist?
-        return @clock_exist if instance_variable_defined?(:@clock_exist)
-        @clock_exist ||= @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
+        unless defined?(@clock_exist_p)
+          @clock_exist_p = @move_infos.any? { |e| e[:used_seconds].to_i.nonzero? }
+        end
+
+        @clock_exist_p
       end
 
       def clock_nothing?
@@ -43,32 +46,36 @@ module Bioshogi
 
       # 勝ち負けがついた一般的な終わり方をしたか？
       def win_player_collect_p
-        return @win_player_collect_p if instance_variable_defined?(:@win_player_collect_p)
-
-        @win_player_collect_p ||= yield_self do
-          if last_action_params
-            if last_action_key = last_action_params[:last_action_key]
-              if last_action_info = Formatter::LastActionInfo[last_action_key]
-                last_action_info.win_player_collect_p
+        unless defined?(@win_player_collect_p)
+          @win_player_collect_p = yield_self do
+            if last_action_params
+              if last_action_key = last_action_params[:last_action_key]
+                if last_action_info = Formatter::LastActionInfo[last_action_key]
+                  last_action_info.win_player_collect_p
+                end
               end
             end
           end
         end
+
+        @win_player_collect_p
       end
 
       # 詰みまで指したか？
       def last_checkmate_p
-        return @last_checkmate_p if instance_variable_defined?(:@last_checkmate_p)
-
-        @last_checkmate_p ||= yield_self do
-          if last_action_params
-            if last_action_key = last_action_params[:last_action_key]
-              if last_action_info = Formatter::LastActionInfo[last_action_key]
-                last_action_info.key == :TSUMI
+        unless defined?(@last_checkmate_p)
+          @last_checkmate_p = yield_self do
+            if last_action_params
+              if last_action_key = last_action_params[:last_action_key]
+                if last_action_info = Formatter::LastActionInfo[last_action_key]
+                  last_action_info.key == :TSUMI
+                end
               end
             end
           end
         end
+
+        @last_checkmate_p
       end
     end
   end

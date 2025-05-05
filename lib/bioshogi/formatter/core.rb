@@ -161,10 +161,13 @@ module Bioshogi
 
       # 手合割(なければ nil)
       def preset_info_or_nil
-        return @preset_info_or_nil if instance_variable_defined?(:@preset_info_or_nil)
-        @preset_info_or_nil ||= @pi.force_preset_info
-        @preset_info_or_nil ||= initial_container.board.preset_info
-        @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
+        unless defined?(@preset_info_or_nil)
+          @preset_info_or_nil ||= @pi.force_preset_info
+          @preset_info_or_nil ||= initial_container.board.preset_info
+          @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
+        end
+
+        @preset_info_or_nil
       end
 
       def container_run_all(container)
@@ -264,6 +267,6 @@ module Bioshogi
   end
 end
 # ~> -:14:in '<class:Core>': undefined method 'delegate' for class Bioshogi::Formatter::Core (NoMethodError)
-# ~> 	from -:5:in '<module:Formatter>'
-# ~> 	from -:4:in '<module:Bioshogi>'
-# ~> 	from -:3:in '<main>'
+# ~>    from -:5:in '<module:Formatter>'
+# ~>    from -:4:in '<module:Bioshogi>'
+# ~>    from -:3:in '<main>'

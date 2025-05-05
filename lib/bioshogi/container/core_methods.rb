@@ -7,7 +7,7 @@ module Bioshogi
       attr_accessor :initial_preset_info
 
       def before_run_process
-        set_initial_preset_info
+        initial_preset_info_set
       end
 
       def params
@@ -36,10 +36,12 @@ module Bioshogi
         @board ||= params[:board_class].new
       end
 
-      def set_initial_preset_info
-        unless instance_variable_defined?(:@initial_preset_info)
+      def initial_preset_info_set
+        unless defined?(@initial_preset_info)
           @initial_preset_info = board.preset_info
         end
+
+        nil
       end
 
       def placement_from_bod(str)
@@ -106,5 +108,5 @@ module Bioshogi
   end
 end
 # ~> -:5:in '<module:Container>': undefined method 'concern' for module Bioshogi::Container (NoMethodError)
-# ~> 	from -:4:in '<module:Bioshogi>'
-# ~> 	from -:3:in '<main>'
+# ~>    from -:4:in '<module:Bioshogi>'
+# ~>    from -:3:in '<main>'
