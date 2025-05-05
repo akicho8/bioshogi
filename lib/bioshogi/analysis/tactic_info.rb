@@ -27,6 +27,12 @@ module Bioshogi
           all_elements_hash[key.to_s.to_sym]
         end
 
+        def flat_fetch_if(key)
+          if key
+            flat_fetch(key)
+          end
+        end
+
         def flat_fetch(key)
           all_elements_hash.fetch(key.to_s.to_sym)
         end

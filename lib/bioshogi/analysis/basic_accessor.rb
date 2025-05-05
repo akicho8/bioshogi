@@ -34,20 +34,32 @@ module Bioshogi
 
       # 必ず alternate_name に反応するようにしておく
       def alternate_name
-        if defined?(super)
-          super
+        unless defined?(@alternate_name)
+          if defined?(super) && v = super
+            @alternate_name = v
+          else
+            @alternate_name = nil
+          end
         end
+
+        @alternate_name
       end
 
       # key と name は異なる
       def name
-        alternate_name || super
+        @name ||= alternate_name || super
       end
 
       def parent
-        if super
-          @parent ||= self.class.fetch(super)
+        unless defined?(@parent)
+          if defined?(super) && v = super
+            @parent = self.class.fetch(v)
+          else
+            @parent = nil
+          end
         end
+
+        @parent
       end
 
       def children
@@ -71,27 +83,51 @@ module Bioshogi
       end
 
       def hold_piece_eq
-        if v = super
-          @hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))
+        unless defined?(@hold_piece_eq)
+          if defined?(super) && v = super
+            @hold_piece_eq = PieceBox.new(Piece.s_to_h(v))
+          else
+            @hold_piece_eq = nil
+          end
         end
+
+        @hold_piece_eq
       end
 
       def op_hold_piece_eq
-        if defined?(super) && v = super
-          @op_hold_piece_eq ||= PieceBox.new(Piece.s_to_h(v))
+        unless defined?(@op_hold_piece_eq)
+          if defined?(super) && v = super
+            @op_hold_piece_eq = PieceBox.new(Piece.s_to_h(v))
+          else
+            @op_hold_piece_eq = nil
+          end
         end
+
+        @op_hold_piece_eq
       end
 
       def hold_piece_in
-        if v = super
-          @hold_piece_in ||= PieceBox.new(Piece.s_to_h(v))
+        unless defined?(@hold_piece_in)
+          if defined?(super) && v = super
+            @hold_piece_in = PieceBox.new(Piece.s_to_h(v))
+          else
+            @hold_piece_in = nil
+          end
         end
+
+        @hold_piece_in
       end
 
       def hold_piece_not_in
-        if v = super
-          @hold_piece_not_in ||= PieceBox.new(Piece.s_to_h(v))
+        unless defined?(@hold_piece_not_in)
+          if defined?(super) && v = super
+            @hold_piece_not_in = PieceBox.new(Piece.s_to_h(v))
+          else
+            @hold_piece_not_in = nil
+          end
         end
+
+        @hold_piece_not_in
       end
 
       def tactic_info
@@ -99,47 +135,70 @@ module Bioshogi
       end
 
       def group_info
-        return @group_info if instance_variable_defined?(:@group_info)
-        if respond_to?(:group_key) && group_key
-          @group_info ||= GroupInfo.fetch(group_key)
+        unless defined?(@group_info)
+          if respond_to?(:group_key) && v = group_key
+            @group_info = GroupInfo.fetch(v)
+          else
+            @group_info = nil
+          end
         end
+
+        @group_info
       end
 
       def add_to_opponent
-        return @add_to_opponent if instance_variable_defined?(:@add_to_opponent)
-        if defined?(super) && v = super
-          @add_to_opponent ||= TacticInfo.flat_lookup(v)
+        unless defined?(@add_to_opponent)
+          if defined?(super) && v = super
+            @add_to_opponent = TacticInfo.flat_fetch(v)
+          else
+            @add_to_opponent = nil
+          end
         end
+
+        @add_to_opponent
       end
 
       def add_to_self
-        return @add_to_self if instance_variable_defined?(:@add_to_self)
-        if defined?(super) && v = super
-          @add_to_self ||= TacticInfo.flat_lookup(v)
+        unless defined?(@add_to_self)
+          if defined?(super) && v = super
+            @add_to_self = TacticInfo.flat_fetch(v)
+          else
+            @add_to_self = nil
+          end
         end
+
+        @add_to_self
       end
 
       def technique_verify_info
-        @technique_verify_info ||= TechniqueVerifyInfo.lookup(key)
+        unless defined?(@technique_verify_info)
+          @technique_verify_info = TechniqueVerifyInfo.lookup(key)
+        end
+
+        @technique_verify_info
       end
 
       def skip_elements
-        return @skip_elements if instance_variable_defined?(:@skip_elements)
-
-        @skip_elements = nil
-        if respond_to?(:skip_if_exist_keys)
-          @skip_elements = Array(skip_if_exist_keys).collect { |e| TacticInfo.flat_lookup(e) }
+        unless defined?(@skip_elements)
+          if respond_to?(:skip_if_exist_keys) && v = skip_if_exist_keys
+            @skip_elements = Array(v).collect { |e| TacticInfo.flat_fetch(e) }
+          else
+            @skip_elements = nil
+          end
         end
+
+        @skip_elements
       end
 
       def only_preset_attr
-        unless instance_variable_defined?(:@only_preset_attr)
-          if defined?(super)
-            @only_preset_attr = super
+        unless defined?(@only_preset_attr)
+          if defined?(super) && v = super
+            @only_preset_attr = v
           else
             @only_preset_attr = nil
           end
         end
+
         @only_preset_attr
       end
 
