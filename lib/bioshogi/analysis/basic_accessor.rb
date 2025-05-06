@@ -143,12 +143,12 @@ module Bioshogi
         @add_to_self
       end
 
-      def technique_verify_info
-        unless defined?(@technique_verify_info)
-          @technique_verify_info = TechniqueVerifyInfo.lookup(key)
+      def technique_detector
+        unless defined?(@technique_detector)
+          @technique_detector = TechniqueDetector.lookup(key)
         end
 
-        @technique_verify_info
+        @technique_detector
       end
 
       def skip_elements

@@ -17,11 +17,15 @@ module Bioshogi
         end
 
         def left
-          fetch(0)
+          first
         end
 
         def right
-          fetch(dimension_size.pred)
+          last
+        end
+
+        def center
+          half
         end
       end
 
@@ -42,6 +46,7 @@ module Bioshogi
       ################################################################################ どれも▲から見た結果を返す
 
       DELEGATE_METHODS = [
+        :distance_from_center,
         :left_spaces,
         :right_spaces,
 
@@ -59,6 +64,11 @@ module Bioshogi
         :column_is_right_edge?,
         :column_is_left_edge?,
       ]
+
+      # 半分の位置からの距離
+      def distance_from_center
+        distance_from_half
+      end
 
       # location から見て左方向の余白
       def left_spaces

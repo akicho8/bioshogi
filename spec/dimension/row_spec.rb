@@ -24,6 +24,12 @@ RSpec.describe Bioshogi::Dimension::Row do
 
   ################################################################################
 
+  it "distance_from_middle" do
+    assert { Bioshogi::Dimension::Row.fetch("4").distance_from_middle == 1 }
+    assert { Bioshogi::Dimension::Row.fetch("5").distance_from_middle == 0 }
+    assert { Bioshogi::Dimension::Row.fetch("6").distance_from_middle == 1 }
+  end
+
   it "top_spaces" do
     assert { Bioshogi::Dimension::Row.fetch("1").top_spaces == 0 }
     assert { Bioshogi::Dimension::Row.fetch("5").top_spaces == 4 }

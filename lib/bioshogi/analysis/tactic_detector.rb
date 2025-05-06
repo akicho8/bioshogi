@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class TacticDetect
+    class TacticDetector
       def call
         @rows = TacticInfo.all_elements.flat_map do |e|
           e.reference_files.collect do |file|

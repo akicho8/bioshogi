@@ -27,7 +27,7 @@ module Bioshogi
               execute_block(e) do |list|
                 walk_counts[e.key] += 1
                 cold_war_verification(e)
-                instance_exec(&e.technique_verify_info.func)
+                instance_exec(&e.technique_detector.func)
               end
             end
           end
@@ -470,8 +470,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:6:in '<class:Analyzer>': undefined method 'cattr_accessor' for class Bioshogi::Analysis::Analyzer (NoMethodError)
-# ~> Did you mean?  attr_accessor
-# ~> 	from -:5:in '<module:Analysis>'
-# ~> 	from -:4:in '<module:Bioshogi>'
-# ~> 	from -:3:in '<main>'

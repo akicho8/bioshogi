@@ -60,7 +60,7 @@ if true
 
   # 開発環境専用のものは遅延読み込みする
   loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/*_generator.rb")
-  loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/tactic_detect.rb")
+  loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/tactic_detector.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/analysis/file_normalizer.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/extreme_detect.rb")
   loader.do_not_eager_load("#{__dir__}/bioshogi/formatter/animation/demo_builder.rb")

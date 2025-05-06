@@ -1,5 +1,9 @@
 require "./setup"
 
+Row.fetch("4").distance_from_middle    # => 1
+Row.fetch("5").distance_from_middle    # => 0
+Row.fetch("6").distance_from_middle    # => 1
+
 Row.fetch("1").top_spaces    # => 0
 Row.fetch("5").top_spaces    # => 4
 Row.fetch("9").top_spaces    # => 8

@@ -61,6 +61,12 @@ RSpec.describe Bioshogi::Dimension::Column do
 
   ################################################################################
 
+  it "distance_from_center" do
+    assert { Bioshogi::Dimension::Column.fetch("4").distance_from_center == 1 }
+    assert { Bioshogi::Dimension::Column.fetch("5").distance_from_center == 0 }
+    assert { Bioshogi::Dimension::Column.fetch("6").distance_from_center == 1 }
+  end
+
   it "left_spaces" do
     assert { Bioshogi::Dimension::Column.fetch("1").left_spaces == 8 }
     assert { Bioshogi::Dimension::Column.fetch("5").left_spaces == 4 }

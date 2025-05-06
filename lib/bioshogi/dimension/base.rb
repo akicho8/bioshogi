@@ -11,16 +11,22 @@ module Bioshogi
       attr_reader :value
 
       class << self
+        ################################################################################
+
+        def first
+          fetch(0)
+        end
+
+        def last
+          fetch(dimension_size.pred)
+        end
+
+        def half
+          fetch(dimension_size / 2)
+        end
+
         def default_size?
           dimension_size == DEFAULT
-        end
-
-        def fetch(value)
-          lookup(value) or raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
-        end
-
-        def lookup(value)
-          table[value]
         end
 
         def size_reset(v)
@@ -28,10 +34,16 @@ module Bioshogi
           cache_clear
         end
 
-        def cache_clear
-          @char_infos  = nil
-          @table       = nil
-          @value_range = nil
+        ################################################################################
+
+        def fetch(value)
+          table.fetch(value) do
+            raise SyntaxDefact, "座標が読み取れません : #{value.inspect}"
+          end
+        end
+
+        def lookup(value)
+          table[value]
         end
 
         def table
@@ -47,9 +59,17 @@ module Bioshogi
           }.freeze
         end
 
-        # # 幅
+        ################################################################################
+
+        # 幅
         def value_range
           @value_range ||= 0...char_infos.size
+        end
+
+        def cache_clear
+          @char_infos  = nil
+          @table       = nil
+          @value_range = nil
         end
       end
 
@@ -83,6 +103,8 @@ module Bioshogi
         Yomiage::NumberInfo.fetch(key).yomiage
       end
 
+      ################################################################################
+
       def flip
         @cache[:flip] ||= self.class.fetch(dimension_size.pred - value)
       end
@@ -107,6 +129,22 @@ module Bioshogi
         end
       end
 
+      ################################################################################
+
+      def distance(other)
+        if self.class != other.class
+          raise ArgumentError, "同じクラスはありません : #{other}"
+        end
+
+        (value - other.value).abs
+      end
+
+      def distance_from_half
+        distance(self.class.half)
+      end
+
+      ################################################################################
+
       def ==(other)
         self.class == other.class && value == other.value
       end
@@ -126,6 +164,8 @@ module Bioshogi
       def inspect
         "#<#{self.class.name}:#{object_id} #{name.inspect} #{value}>"
       end
+
+      ################################################################################
     end
   end
 end

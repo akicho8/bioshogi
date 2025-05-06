@@ -11,11 +11,15 @@ module Bioshogi
         end
 
         def top
-          fetch(0)
+          first
         end
 
         def bottom
-          fetch(dimension_size.pred)
+          last
+        end
+
+        def middle
+          half
         end
 
         def promotable_depth_set(value)
@@ -55,6 +59,7 @@ module Bioshogi
       ################################################################################ すべて▲から見た結果を返す
 
       DELEGATE_METHODS = [
+        :distance_from_middle,
         :top_spaces,
         :bottom_spaces,
         :opp_side?,
@@ -66,6 +71,11 @@ module Bioshogi
         :atoippo_nyuugyoku?,
         :tarefu_desuka?,
       ]
+
+      # 半分の位置からの距離
+      def distance_from_middle
+        distance_from_half
+      end
 
       # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7段目であれば6を返す)
       def top_spaces

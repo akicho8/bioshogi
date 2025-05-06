@@ -4,17 +4,17 @@
 
 module Bioshogi
   module Analysis
-    class TechniqueVerifyInfo
+    class TechniqueDetector
       include ApplicationMemoryRecord
       memory_record [
         {
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
           func: -> {
-            # 【条件1】「最下段」であること
+            # 【条件1】「最下段」である
             verify_if { soldier.bottom_spaces.zero? }
 
-            # 【条件2】上に自分の金があること
+            # 【条件2】上に自分の金がある
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -24,7 +24,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに相手の玉がある",
@@ -40,15 +39,14 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
           func: -> {
-            # 【条件1】2〜8筋であること (端の場合は「こびん」とは言わないため)
+            # 【条件1】2〜8筋である (端の場合は「こびん」とは言わないため)
             verify_if { soldier.column_is_second_to_eighth? }
 
-            # 【条件2】相手が歩であること
+            # 【条件2】相手が歩である
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -57,7 +55,7 @@ module Bioshogi
               end
             end
 
-            # 【条件3】桂馬の効きの位置に「玉」または「飛車」があること
+            # 【条件3】桂馬の効きの位置に「玉」または「飛車」がある
             verify_if do
               V.keima_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -69,7 +67,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "位の確保",
           description: "中盤戦になる前に5段目の歩を銀で支える",
@@ -77,10 +74,10 @@ module Bioshogi
             # 【条件1】前線(6段目)にいること
             verify_if { soldier.kurai_sasae? }
 
-            # 【条件2】3〜7列であること (両端2列は「位」とは言わないため)
+            # 【条件2】3〜7列である (両端2列は「位」とは言わないため)
             verify_if { soldier.column_is_three_to_seven? }
 
-            # 【条件3】前に歩があること
+            # 【条件3】前に歩がある
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -97,21 +94,20 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: -> {
-            # 【条件1】下から3段目であること
+            # 【条件1】下から3段目である
             verify_if { soldier.bottom_spaces == 2 }
 
-            # 【条件2】端から3つ目であること
+            # 【条件2】端から3つ目である
             verify_if { soldier.column_spaces_min == 2 }
 
-            # 【条件3】動元は「端から2つ目」であること (▲41から飛んだ場合を除外する)
+            # 【条件3】動元は「端から2つ目」である (▲41から飛んだ場合を除外する)
             verify_if { origin_soldier.column_spaces_min == 1 }
 
-            # 【条件4】移動元の端側に「玉」があること
+            # 【条件4】移動元の端側に「玉」がある
             verify_if do
               if v = origin_soldier.relative_move_to(soldier.left_or_right_to_closer_side)
                 if s = board[v]
@@ -139,7 +135,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "尻銀",
           description: "銀を打ったか移動させたとき下に相手の玉がある",
@@ -153,7 +148,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "肩銀",
           description: "銀を打ったか移動させたとき左斜め前か右斜め前に玉がある",
@@ -169,7 +163,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "裾銀",
           description: "銀を打ったか移動させたとき左斜め後か右斜め後に玉がある",
@@ -185,7 +178,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "頭銀",
           description: "銀を打ったか移動させたとき前に相手の玉がある",
@@ -205,41 +197,27 @@ module Bioshogi
         {
           key: "腹金",
           description: "金を打ったか移動させたとき左右どちらかに相手の玉がある",
-          func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"腹銀"].func)
-          },
+          func: -> { instance_exec(&TechniqueDetector[:"腹銀"].func) },
         },
-
         {
           key: "尻金",
           description: "金を打ったか移動させたとき下に相手の玉がある",
-          func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"尻銀"].func)
-          },
+          func: -> { instance_exec(&TechniqueDetector[:"尻銀"].func) },
         },
-
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
-          func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"肩銀"].func)
-          },
+          func: -> { instance_exec(&TechniqueDetector[:"肩銀"].func) },
         },
-
         {
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
-          func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"裾銀"].func)
-          },
+          func: -> { instance_exec(&TechniqueDetector[:"裾銀"].func) },
         },
-
         {
           key: "頭金",
           description: "金を打ったか移動させたとき前に相手の玉がある",
-          func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"頭銀"].func)
-          },
+          func: -> { instance_exec(&TechniqueDetector[:"頭銀"].func) },
         },
 
         ################################################################################
@@ -248,10 +226,10 @@ module Bioshogi
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
           func: -> {
-            # 【条件1】2, 3, 4 段目であること
+            # 【条件1】2, 3, 4 段目である
             verify_if { soldier.tarefu_desuka? }
 
-            # 【条件2】先が空であること
+            # 【条件2】先が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
@@ -265,7 +243,7 @@ module Bioshogi
           key: "遠見の角",
           description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
           func: -> {
-            # 【条件1】中盤以降であること (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
+            # 【条件1】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             verify_if { executor.container.outbreak_turn }
 
             # 【条件2】自陣から打っていること
@@ -276,7 +254,7 @@ module Bioshogi
               verify_if { soldier.column_is_edge? }
             end
 
-            # 【条件4】相手の陣地に直通しているかつ長さが 5 以上であること
+            # 【条件4】相手の陣地に直通しているかつ長さが 5 以上である
             verify_if do
               threshold = 5                                       # 成立するステップ数。4 だとマッチしすぎるため 5 にする
               V.bishop_naname_mae_vectors.any? do |up_left|       # 左上と右上を試す
@@ -299,7 +277,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "割り打ちの銀",
           description: "打った銀の後ろの左右両方に相手の飛か金がある",
@@ -317,7 +294,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "たすきの銀",
           description: "打った銀の斜め前に飛があり対極に金がある",
@@ -339,15 +315,57 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "たすきの角",
           description: "打った角の斜め前に飛があり対極に金がある",
+          func: -> { instance_exec(&TechniqueDetector[:"たすきの銀"].func) },
+        },
+        {
+          key: "壁金",
+          description: "飛車や角の位置に玉よりも先に金が移動した",
           func: -> {
-            instance_exec(&TechniqueVerifyInfo[:"たすきの銀"].func)
+            # 【条件1】端から2つ目である
+            verify_if { soldier.column_spaces_min == 1 }
+
+            # 【条件2】下から2段目である
+            verify_if { soldier.bottom_spaces == 1 }
+
+            # 【条件3】下に桂がある
+            verify_if do
+              if v = soldier.relative_move_to(:down)
+                if s = board[v]
+                  s.piece.key == :knight && own?(s)
+                end
+              end
+            end
+
+            # 【条件4】上に歩がある
+            verify_if do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :pawn && own?(s)
+                end
+              end
+            end
+
+            # 【条件5】移動元は端から3つ目である
+            verify_if { origin_soldier.column_spaces_min == 2 }
+
+            # 【条件6】玉との横軸の距離は3以内である (最長3 = 居玉) 銀と同じ方向に玉がいるというだけで穴熊状態の可能性もある
+            verify_if { soldier.place.column.distance(player.king_place.column) <= 3 }
+
+            # 【条件7】玉は中心から2以内にいる = 銀より内側にいる (居玉 = 0, 早囲い = 2, 美濃囲い = 3, 穴熊 = 4)
+            verify_if { player.king_place.column.distance_from_center <= 3 }
+
+            # 【条件8】玉は自分の陣地にいる
+            verify_if { player.king_place.own_side?(location) }
           },
         },
-
+        {
+          key: "壁銀",
+          description: "飛車や角の位置に玉よりも先に銀が移動した",
+          func: -> { instance_exec(&TechniqueDetector[:"壁金"].func) },
+        },
         {
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
@@ -369,7 +387,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "歩頭の桂",
           description: "打ったまたは移動した桂の上に相手の歩がある",
@@ -383,7 +400,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "金頭の桂",
           description: "打ったまたは移動した桂の上に相手の金がある",
@@ -397,7 +413,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
@@ -409,7 +424,7 @@ module Bioshogi
               end
             end
 
-            # 【条件2】進めた歩の前が空であること
+            # 【条件2】進めた歩の前が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
@@ -445,15 +460,14 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "端玉には端歩",
           description: nil,
           func: -> {
-            # 【条件1】端であること
+            # 【条件1】端である
             verify_if { soldier.column_is_edge? }
 
-            # 【条件2】上が相手の歩であること (▲16歩△14歩の状態で▲15歩としたということ)
+            # 【条件2】上が相手の歩である (▲16歩△14歩の状態で▲15歩としたということ)
             verify_if do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -500,7 +514,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "田楽刺し",
           description: "角の頭に打ってその奥に玉などの大駒がある",
@@ -538,18 +551,16 @@ module Bioshogi
             end
           },
         },
-
         {
           # https://yokohamayanke.com/1078/ によると金底の香の状態でも「下段の香」として紹介されている
           # いろんな条件を考えたが結局「下段」のみのチェックとする
           key: "下段の香",
           description: "打った香が一番下",
           func: -> {
-            # 【条件1】「最下段」であること
+            # 【条件1】「最下段」である
             verify_if { soldier.bottom_spaces.zero? }
           },
         },
-
         {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
@@ -567,7 +578,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "控えの桂",
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
@@ -595,22 +605,21 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "土下座の歩",
           description: nil,
           func: -> {
-            # 【条件1】8,9段目であること
+            # 【条件1】8,9段目である
             verify_if { soldier.bottom_spaces < 2 }
 
-            # 【条件2】一つ上が空であること
+            # 【条件2】一つ上が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
                 board.empty_cell?(v)
               end
             end
 
-            # 【条件3】二つ上に相手の前に進める駒があること (成銀や馬があっても土下座の対象とする)
+            # 【条件3】二つ上に相手の前に進める駒がある (成銀や馬があっても土下座の対象とする)
             verify_if do
               if v = soldier.relative_move_to(:up_up)
                 if s = board[v]
@@ -622,7 +631,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
@@ -667,7 +675,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "継ぎ歩",
           description: "条件が成立しない方を先に判定した方が早めに打ち切れるので2手目1手目の順で見る",
@@ -697,7 +704,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "連打の歩",
           description: "",
@@ -727,7 +733,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "継ぎ桂",
           description: "継ぐのは前なので打った桂の2つ後ろの左右のどちらかに自分の桂がある",
@@ -743,7 +748,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "跳ね違いの桂",
           description: "移動元から見て移動してない方に相手が1手前に移動した桂があるか？",
@@ -765,7 +769,6 @@ module Bioshogi
             end
           },
         },
-
         {
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
@@ -774,7 +777,6 @@ module Bioshogi
             verify_if { origin_soldier.atoippo_nyuugyoku? }
           },
         },
-
         {
           key: "角不成",
           description: "相手陣地に入るときと出るときの両方チェックする",
@@ -782,7 +784,6 @@ module Bioshogi
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
         },
-
         {
           key: "飛車不成",
           description: "角不成と同じ方法でよい",
@@ -794,7 +795,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:8:in `<class:TechniqueVerifyInfo>': uninitialized constant Bioshogi::Analysis::TechniqueVerifyInfo::ApplicationMemoryRecord (NameError)
-# ~>    from -:7:in `<module:Analysis>'
-# ~>    from -:6:in `<module:Bioshogi>'
-# ~>    from -:5:in `<main>'
