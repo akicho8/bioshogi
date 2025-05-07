@@ -11,4 +11,3 @@ _ { a.white_then_flip(:white) } # => "518.8 ms"
 
 Column.fetch("1").distance(Column.fetch("3")) # => 2
 Column.fetch("3").distance(Column.fetch("1")) # => 2
-
