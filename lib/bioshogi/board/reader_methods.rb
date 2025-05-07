@@ -13,7 +13,7 @@ module Bioshogi
         lookup(place) or raise PieceNotFoundOnBoard, "#{place}に何もありません\n#{self}"
       end
 
-      def empty_cell?(place)
+      def cell_empty?(place)
         !lookup(place)
       end
 

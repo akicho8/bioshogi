@@ -8,6 +8,40 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "蓋歩",
+          description: "飛車を帰らせない",
+          func: -> {
+            # 【条件1】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
+            verify_if do
+              if hand_log = executor.container.hand_logs[-1]
+                if s = hand_log.move_hand&.soldier
+                  if s.piece.key == :rook && s.normal? && opponent?(s)
+                    if s.place == soldier.relative_move_to(:down)
+                      if v = s.relative_move_to(:up)
+                        board.cell_empty?(v)
+                      end
+                    end
+                  end
+                end
+              end
+            end
+
+            # 【条件2】その歩は桂か銀に支えられている
+            verify_if do
+              func = -> (vectors, piece_key) {
+                V.public_send(vectors).any? do |e|
+                  if v = soldier.relative_move_to(e)
+                    if s = board[v]
+                      s.piece.key == piece_key && s.normal? && own?(s)
+                    end
+                  end
+                end
+              }
+              func[:tsugikei_vectors, :knight] || func[:wariuchi_vectors, :silver]
+            end
+          },
+        },
+        {
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
           func: -> {
@@ -232,7 +266,7 @@ module Bioshogi
             # 【条件2】先が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
-                board.empty_cell?(v)
+                board.cell_empty?(v)
               end
             end
           },
@@ -427,7 +461,7 @@ module Bioshogi
             # 【条件2】進めた歩の前が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
-                board.empty_cell?(v)
+                board.cell_empty?(v)
               end
             end
 
@@ -454,7 +488,7 @@ module Bioshogi
 
                 # 【条件5】右右上が空である
                 if v = soldier.relative_move_to(right_right_up)
-                  board.empty_cell?(v)
+                  board.cell_empty?(v)
                 end
               end
             end
@@ -615,7 +649,7 @@ module Bioshogi
             # 【条件2】一つ上が空である
             verify_if do
               if v = soldier.relative_move_to(:up)
-                board.empty_cell?(v)
+                board.cell_empty?(v)
               end
             end
 

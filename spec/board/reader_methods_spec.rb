@@ -16,9 +16,9 @@ RSpec.describe Bioshogi::Board::ReaderMethods do
     expect { Bioshogi::Board.create_by_preset("平手").fetch("55") }.to raise_error(Bioshogi::PieceNotFoundOnBoard)
   end
 
-  it "empty_cell?" do
-    assert { !Bioshogi::Board.create_by_preset("平手").empty_cell?("11") }
-    assert { Bioshogi::Board.create_by_preset("平手").empty_cell?("12") }
+  it "cell_empty?" do
+    assert { !Bioshogi::Board.create_by_preset("平手").cell_empty?("11") }
+    assert { Bioshogi::Board.create_by_preset("平手").cell_empty?("12") }
   end
 
   it "blank_places" do
