@@ -59,12 +59,14 @@ module Bioshogi
 
         # いま打った駒が飛車か香車かで初期値を調整する
 
-        if soldier.piece.key == :rook
-          @rook_count += 1
-          @rook = soldier.place
-        else
-          @lance_count += 1
-          @lance = soldier.place
+        if soldier.place != top_place # 打った位置が一番上(例えば91)ではないなら
+          if soldier.piece.key == :rook
+            @rook_count += 1
+            @rook = soldier.place
+          else
+            @lance_count += 1
+            @lance = soldier.place
+          end
         end
 
         # 打った位置から上下に移動して飛車と香車の位置と個数を調べる
@@ -72,7 +74,12 @@ module Bioshogi
         [:up, :down].each do |up|
           (1..).each do |y|
             v = soldier.relative_move_to(up, magnification: y)
-            v or break # 盤面の外
+            unless v
+              break # 盤外
+            end
+            if v == top_place   # 一番上(例えば91)にある飛車などは横に利かせるためのものなのでカウントしない
+              break
+            end
             if s = @analyzer.board[v]
               if opponent?(s)
                 break                                   # 相手の駒
@@ -98,6 +105,11 @@ module Bioshogi
 
       def count_all
         @rook_count + @lance_count
+      end
+
+      # 「95香」とした場合「91」の地点を返す
+      def top_place
+        @top_place ||= soldier.move_to_top_edge
       end
     end
   end
