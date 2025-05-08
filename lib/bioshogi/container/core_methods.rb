@@ -15,8 +15,10 @@ module Bioshogi
           :analysis_feature           => false,
           :analysis_technique_feature => false,
           :ki2_function               => true,
-          :validate_feature                => true,
-          :board_class                    => Board,
+          :validate_feature           => true,
+          :double_pawn_detect         => true, # 二歩を検出するか？
+          :warp_detect                => true, # 角ワープを検出するか？
+          :board_class                => Board,
         }
       end
 

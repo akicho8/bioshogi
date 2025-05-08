@@ -24,14 +24,15 @@ module Bioshogi
             # embed: 二歩の棋譜なら例外を出さずに直前で止めて反則であることを棋譜に記す
             #  skip: 棋譜には記さない
             # false: 例外を出す(デフォルト)
-            :typical_error_case             => false,
+            :typical_error_case         => false,
+
             :analysis_feature           => true,
             :analysis_technique_feature => true,
-            :ki2_function               => true,  # ki2にしないのであれば指定するとかなり速くなる
+            :ki2_function               => true, # ki2にしないのであれば指定するとかなり速くなる
 
-            :validate_feature                => true,  # 将棋ウォーズの棋譜なら指定すると少し速くなる
-            :validate_double_pawn_skip      => false, # 二歩を無視するか？
-            :validate_warp_skip             => false, # 角ワープを無視するか？
+            :validate_feature           => true, # 将棋ウォーズの棋譜なら指定すると少し速くなる
+            :double_pawn_detect         => true, # 二歩を検出するか？
+            :warp_detect                => true, # 角ワープを検出するか？
           }
         end
       end

@@ -75,14 +75,15 @@ module Bioshogi
 
       def container_new
         container_class.new.tap do |e|
-          e.params.update(@parser_options.slice(*[
-                :analysis_feature,
-                :analysis_technique_feature,
-                :ki2_function,
-                :validate_feature,
-                :validate_double_pawn_skip,
-                :validate_warp_skip,
-              ]))
+          params = @parser_options.slice(*[
+              :analysis_feature,
+              :analysis_technique_feature,
+              :ki2_function,
+              :validate_feature,
+              :double_pawn_detect,
+              :warp_detect,
+            ])
+          e.params.update(params)
         end
       end
 
@@ -93,7 +94,7 @@ module Bioshogi
             :analysis_feature           => false,
             :analysis_technique_feature => false,
             :ki2_function               => false,
-            :validate_feature                => false,
+            :validate_feature           => false,
           })
         container_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
         container

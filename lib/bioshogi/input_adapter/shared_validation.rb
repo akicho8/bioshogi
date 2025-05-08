@@ -41,8 +41,7 @@ module Bioshogi
             end
           end
 
-          if player.container.params[:validate_warp_skip]
-          else
+          if player.container.params[:warp_detect]
             # 初手 "25歩(27)" とした場合
             unless candidate_soldiers.include?(move_hand.origin_soldier)
               errors_add SoldierWarpError, "#{move_hand}としましたが#{place_from}から#{place}には移動できません"
@@ -60,8 +59,7 @@ module Bioshogi
       def soft_validations
         super
 
-        if player.container.params[:validate_double_pawn_skip]
-        else
+        if player.container.params[:double_pawn_detect]
           if drop_hand
             if collision_soldier = soldier.collision_pawn(board)
               errors_add DoublePawnCommonError, "二歩です。すでに#{collision_soldier}があるため#{drop_hand}ができません"
