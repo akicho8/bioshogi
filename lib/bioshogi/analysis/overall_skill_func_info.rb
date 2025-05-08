@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Formatter
+  module Analysis
     class OverallSkillFuncInfo
       include ApplicationMemoryRecord
       memory_record [

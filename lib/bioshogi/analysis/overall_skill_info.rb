@@ -12,7 +12,7 @@
 # - 相や対で始まるものは関連するタグに対応して必ず決まるので他の条件は要らない
 #
 module Bioshogi
-  module Formatter
+  module Analysis
     class OverallSkillInfo
       include ApplicationMemoryRecord
       memory_record [

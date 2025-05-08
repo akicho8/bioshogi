@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 module Bioshogi
-  module Formatter
+  module Analysis
     class OverallSkillDetector
       attr_accessor :xparser
       attr_accessor :container

@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        OverallSkillDetector.new(@xparser, @container).call
+        Analysis::OverallSkillDetector.new(@xparser, @container).call
         header_write
       end
 

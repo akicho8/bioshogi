@@ -1,5 +1,5 @@
 module Bioshogi
-  module Formatter
+  module Analysis
     class SugatayakiDetector
       delegate :win_side_location, :container, to: :@skill_embed
 
