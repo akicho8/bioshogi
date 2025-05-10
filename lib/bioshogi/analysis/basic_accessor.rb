@@ -29,24 +29,6 @@ module Bioshogi
         end
       end
 
-      # 必ず alternate_name に反応するようにしておく
-      def alternate_name
-        unless defined?(@alternate_name)
-          if defined?(super) && v = super
-            @alternate_name = v
-          else
-            @alternate_name = nil
-          end
-        end
-
-        @alternate_name
-      end
-
-      # key と name は異なる
-      def name
-        @name ||= alternate_name || super
-      end
-
       def alias_names
         @alias_names ||= Array(super)
       end
