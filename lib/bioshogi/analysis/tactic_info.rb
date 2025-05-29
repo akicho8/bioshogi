@@ -144,7 +144,7 @@ module Bioshogi
         end
 
         def source_expand(str)
-          str = str.to_s
+          str = str.to_s.strip
           [
             # "アヒル戦法"
             str,
