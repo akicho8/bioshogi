@@ -95,6 +95,40 @@ module Bioshogi
         ################################################################################
 
         {
+          key: "○○系",
+          func: -> {
+            # @container.players.each do |e|
+            #   items = e.skill_set.attack_infos.unwant_rejected_ancestors
+            #   CategoryInfo.each do |c|
+            #     if items.any? { |e| e.root == c.object }
+            #       e.skill_set.list_push2(c.self_push)
+            #       e.opponent_player.skill_set.list_push2(c.opponent_push)
+            #     end
+            #   end
+            # end
+
+            # @container.players.each do |e|
+            #   e.skill_set.to_all_flat_array.each do |item|
+            #     if item.respond_to?(:category)
+            #       if v = item.category
+            #         e.skill_set.list_push(v)
+            #       end
+            #     end
+            #     if item.respond_to?(:sub_category)
+            #       if v = item.sub_category
+            #         Array(v).each do |v|
+            #           e.skill_set.list_push(v)
+            #         end
+            #       end
+            #     end
+            #   end
+            # end
+          },
+        },
+
+        ################################################################################
+
+        {
           key: "居玉",
           description: "一度も動かなかった or または戦いが激しくなってから動いた",
           func: -> {

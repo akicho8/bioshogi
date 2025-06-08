@@ -25,6 +25,8 @@ module Bioshogi
         { key: "相振り飛車",     turn_gteq: nil, only_preset_attr: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "対抗形",         turn_gteq: nil, only_preset_attr: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
+        { key: "○○系",         turn_gteq: nil, only_preset_attr: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+
         { key: "居玉",           turn_gteq: nil, only_preset_attr: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "相居玉",         turn_gteq: nil, only_preset_attr: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 

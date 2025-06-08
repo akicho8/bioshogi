@@ -29,7 +29,15 @@ module Bioshogi
       end
 
       def related_ancestors
-        @related_ancestors ||= Array(super).collect { |e| self.class.fetch(e) }
+        unless defined?(@related_ancestors)
+          if defined?(super) && v = super
+            @related_ancestors = Array(v).collect { |e| self.class.fetch(e) }
+          else
+            @related_ancestors = []
+          end
+        end
+
+        @related_ancestors
       end
     end
   end

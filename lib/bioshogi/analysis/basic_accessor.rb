@@ -89,6 +89,30 @@ module Bioshogi
         @tactic_info ||= TacticInfo.fetch(tactic_key)
       end
 
+      def category
+        unless defined?(@category)
+          if defined?(super) && v = super
+            @category = TacticInfo.flat_fetch(v)
+          else
+            @category = nil
+          end
+        end
+
+        @category
+      end
+
+      # def sub_category
+      #   unless defined?(@sub_category)
+      #     if defined?(super) && v = super
+      #       @sub_category = TacticInfo.flat_fetch(v)
+      #     else
+      #       @sub_category = nil
+      #     end
+      #   end
+      #
+      #   @sub_category
+      # end
+
       def group_info
         unless defined?(@group_info)
           if respond_to?(:group_key) && v = group_key

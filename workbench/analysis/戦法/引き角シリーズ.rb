@@ -12,7 +12,7 @@ tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 info = Analysis::AttackInfo.fetch("飯島流引き角戦法").static_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 
-info = Analysis::AttackInfo.fetch("飯島流相掛かり引き角戦法").static_kif_info
+info = Analysis::AttackInfo.fetch("飯島流相掛かり引き角").static_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 
 # puts info.to_kif
@@ -43,6 +43,6 @@ tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 # >> |-------------------------------------------------------------------+--------------+-----------+------------------------|
 # >> | attack                                                            | defense      | technique | note                   |
 # >> |-------------------------------------------------------------------+--------------+-----------+------------------------|
-# >> | ["相掛かり", "相掛かり棒銀", "UFO銀", "飯島流相掛かり引き角戦法"] | ["居玉"]     | []        | ["居飛車", "相居飛車"] |
+# >> | ["相掛かり", "相掛かり棒銀", "UFO銀", "飯島流相掛かり引き角"] | ["居玉"]     | []        | ["居飛車", "相居飛車"] |
 # >> | ["相掛かり"]                                                      | ["カニ囲い"] | []        | ["居飛車", "相居飛車"] |
 # >> |-------------------------------------------------------------------+--------------+-----------+------------------------|

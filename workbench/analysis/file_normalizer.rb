@@ -125,7 +125,7 @@ Analysis::FileNormalizer.new.call
 # >>   [123 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/銀雲雀.kif
 # >>   [124 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/地下鉄飛車.kif
 # >>   [125 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/飯島流引き角戦法.kif
-# >>   [126 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/飯島流相掛かり引き角戦法.kif
+# >>   [126 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/飯島流相掛かり引き角.kif
 # >>   [127 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/丸山ワクチン.kif
 # >>   [128 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/エルモ急戦.kif
 # >>   [129 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/▲4六銀右急戦.kif
@@ -135,7 +135,7 @@ Analysis::FileNormalizer.new.call
 # >>   [133 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/山田定跡.kif
 # >>   [134 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/鷺宮定跡.kif
 # >>   [135 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/棒銀.kif
-# >>   [136 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/対矢倉急戦棒銀.kif
+# >>   [136 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/速攻棒銀.kif
 # >>   [137 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/暴銀.kif
 # >>   [138 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/左美濃急戦.kif
 # >>   [139 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/右四間飛車.kif
@@ -188,11 +188,11 @@ Analysis::FileNormalizer.new.call
 # >>   [186 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/2手目△3二銀システム.kif
 # >>   [187 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/メイドシステム.kif
 # >>   [188 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/一間飛車.kif
-# >>   [189 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/一間飛車穴熊.kif
+# >>   [189 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/一間飛車右穴熊.kif
 # >>   [190 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/ネコ式タテ歩取り.kif
 # >>   [191 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/桐山流タテ歩棒銀.kif
 # >>   [192 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/きんとうん戦法.kif
-# >>   [193 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/対ひねり飛車たこ金戦法.kif
+# >>   [193 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/たこ金戦法.kif
 # >>   [194 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/きｍきｍ金.kif
 # >>   [195 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/ゴリゴリ金.kif
 # >>   [196 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/右玉.kif

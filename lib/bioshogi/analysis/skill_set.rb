@@ -70,6 +70,10 @@ module Bioshogi
         end
       end
 
+      def to_all_flat_array
+        flat_map(&:normalize)
+      end
+
       def normalized_names_with_alias
         flat_map(&:normalized_names_with_alias)
       end
@@ -89,6 +93,8 @@ module Bioshogi
 
       class List < Array
         # 重複しているように感じる囲いなどを整理する
+        # たとえば "3→4→3戦法" は普通に判定すると最初に「四間飛車」になってしまうが人間からするとあきらかに違う
+        # したがって経由した四間飛車を消さないといけない
         def normalize
           list = to_a
           # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
@@ -97,6 +103,11 @@ module Bioshogi
           # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが related_ancestors にある
           list -= list.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
           list
+        end
+
+        # 不要な先祖を削除する
+        def unwant_rejected_ancestors
+          to_a - to_a.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
         end
 
         # 重複しているように感じる囲いなどを整理したのち別名を追加した文字列リストを返す

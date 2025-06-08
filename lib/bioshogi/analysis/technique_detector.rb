@@ -825,6 +825,15 @@ module Bioshogi
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
         },
+
+        ################################################################################
+
+        # {
+        #   key: "飛車切り",
+        #   description: nil,
+        #   func: -> {
+        #   },
+        # },
       ]
     end
   end

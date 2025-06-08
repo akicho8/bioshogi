@@ -23,6 +23,13 @@ RSpec.describe Bioshogi::Analysis::SkillSet do
     it "defense_infos内でエイリアスを含めたすべての名前を取得" do
       assert { @skill_set.defense_infos.normalized_names_with_alias == ["ダイヤモンド美濃"] }
     end
+
+    it "無駄な先祖をだけを削除した配列を返す" do
+      skill_set = Bioshogi::Analysis::SkillSet.new
+      skill_set.list_push2("四間飛車")
+      skill_set.list_push2("3→4→3戦法")
+      assert { skill_set.attack_infos.unwant_rejected_ancestors == [Bioshogi::Analysis::AttackInfo["3→4→3戦法"]] }
+    end
   end
 
   it "all" do
@@ -36,4 +43,5 @@ RSpec.describe Bioshogi::Analysis::SkillSet do
   it "代表とする棋風" do
     assert { @skill_set.main_style_info.key == :"変態" }
   end
+
 end

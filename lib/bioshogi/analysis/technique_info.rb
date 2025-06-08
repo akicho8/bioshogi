@@ -60,6 +60,7 @@ module Bioshogi
         { key: "4段ロケット",  parent: "3段ロケット", },
         { key: "5段ロケット",  parent: "4段ロケット", },
         { key: "6段ロケット",  parent: "5段ロケット", },
+        # { key: "飛車切り",     trigger_piece_key: { piece_key: :rook,   promoted: false, motion: :move }, parent: nil, related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil,  pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: nil,  kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  },
       ]
 
       class_attribute :human_name, default: "手筋"

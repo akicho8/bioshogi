@@ -152,7 +152,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | 銀雲雀                   | 5筋位取り         |
 # >> | Bioshogi::Analysis::AttackInfo    | 地下鉄飛車               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 飯島流引き角戦法         |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 飯島流相掛かり引き角戦法 |                    |
+# >> | Bioshogi::Analysis::AttackInfo    | 飯島流相掛かり引き角 |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 丸山ワクチン             |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 新丸山ワクチン           | 丸山ワクチン       |
 # >> | Bioshogi::Analysis::AttackInfo    | ▲4六銀右急戦           |                    |
@@ -162,7 +162,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | エルモ急戦               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 鷺宮定跡                 |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 棒銀                     |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 対矢倉急戦棒銀                 | 棒銀               |
+# >> | Bioshogi::Analysis::AttackInfo    | 速攻棒銀                 | 棒銀               |
 # >> | Bioshogi::Analysis::AttackInfo    | 暴銀                     |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 左美濃急戦               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 右四間飛車               |                    |
@@ -213,11 +213,11 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | Uターン飛車              |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 阪田流2手目△9四歩       |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 一間飛車                 |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 一間飛車穴熊             | 一間飛車           |
+# >> | Bioshogi::Analysis::AttackInfo    | 一間飛車右穴熊             | 一間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | ネコ式タテ歩取り         |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 桐山流タテ歩棒銀         |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | きんとうん戦法           |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 対ひねり飛車たこ金戦法   |                    |
+# >> | Bioshogi::Analysis::AttackInfo    | たこ金戦法   |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | きｍきｍ金               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 力戦                     |                    |
 # >> | Bioshogi::Analysis::DefenseInfo   | 居玉                     |                    |
