@@ -66,6 +66,7 @@ module Bioshogi
         :not_opp_side?,
         :own_side?,
         :not_own_side?,
+        :funoue_line_ni_uita?,
         :kurai_sasae?,
         :just_nyuugyoku?,
         :atoippo_nyuugyoku?,
@@ -106,6 +107,11 @@ module Bioshogi
       # 自分の陣地にいない？
       def not_own_side?
         !own_side?
+      end
+
+      # 浮き飛車状態？
+      def funoue_line_ni_uita?
+        bottom_spaces == promotable_depth
       end
 
       # 位を支える位置(中央の1行下)か？

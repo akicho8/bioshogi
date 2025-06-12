@@ -129,6 +129,24 @@ module Bioshogi
           },
         },
         {
+          key: "浮き飛車",
+          description: "戻る場合も考慮する",
+          func: -> {
+            # 【条件1】前線(6段目)にいること
+            verify_if { soldier.funoue_line_ni_uita? }
+
+            # 【条件2】移動元と同じ列であること
+            verify_if { soldier.place.column == origin_soldier.place.column }
+
+            # 【条件3】「同飛」でないこと (相手の駒を取る目的で移動していないこと)
+            skip_if do
+              if move_hand = executor.move_hand
+                move_hand.captured_soldier
+              end
+            end
+          },
+        },
+        {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: -> {
