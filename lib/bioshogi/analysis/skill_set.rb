@@ -97,18 +97,21 @@ module Bioshogi
         # したがって経由した四間飛車を消さないといけない
         def normalize
           list = to_a
-          # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
-          list -= list.flat_map { |e| e.ancestors }
-          # さらに「ダイヤモンド美濃」に含まれる「銀美濃」を消す
-          # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが related_ancestors にある
-          list -= list.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
+          # # 「ダイヤモンド美濃」から見た「美濃囲い」や「片美濃囲い」を消す
+          # list -= list.flat_map { |e| e.ancestors }
+          # # さらに「ダイヤモンド美濃」に含まれる「銀美濃」を消す
+          # # 「ダイヤモンド美濃」の直接の親ではないが、派生元と見なしてもよいものが related_ancestors にある
+          # list -= list.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
+
+          list -= list.flat_map(&:delete_infos)
+
           list
         end
 
-        # 不要な先祖を削除する
-        def unwant_rejected_ancestors
-          to_a - to_a.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
-        end
+        # # 不要な先祖を削除する
+        # def unwant_rejected_ancestors
+        #   to_a - to_a.flat_map { |e| e.related_ancestors.flat_map(&:self_and_ancestors) }
+        # end
 
         # 重複しているように感じる囲いなどを整理したのち別名を追加した文字列リストを返す
         def normalized_names_with_alias

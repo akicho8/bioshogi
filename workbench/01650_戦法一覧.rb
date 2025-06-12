@@ -175,7 +175,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | メイドシステム           | 初手▲7八銀戦法     |
 # >> | Bioshogi::Analysis::AttackInfo    | 棒金                     |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 棒玉                     |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 超速▲3七銀戦法             |                    |
+# >> | Bioshogi::Analysis::AttackInfo    | 超速▲3七銀             |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 対振り持久戦             |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | △7二飛亜急戦           |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 袖飛車                   |                    |
@@ -206,7 +206,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | 魔界四間飛車             | 四間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | 目くらまし戦法           |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 端棒銀                   |                    |
-# >> | Bioshogi::Analysis::AttackInfo    | 金銀橋                   |                    |
+# >> | Bioshogi::Analysis::AttackInfo    | リッチブリッジ                   |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | カメレオン戦法           |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | xaby角戦法               |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 金沢流                   |                    |

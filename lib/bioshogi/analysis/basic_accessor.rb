@@ -125,6 +125,18 @@ module Bioshogi
         @group_info
       end
 
+      def delete_infos
+        unless defined?(@delete_infos)
+          if respond_to?(:delete_keys) && v = delete_keys
+            @delete_infos = Array(v).collect { |e| TacticInfo.flat_fetch(e) }
+          else
+            @delete_infos = []
+          end
+        end
+
+        @delete_infos
+      end
+
       def add_to_opponent
         unless defined?(@add_to_opponent)
           if defined?(super) && v = super

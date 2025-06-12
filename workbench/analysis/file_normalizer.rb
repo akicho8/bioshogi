@@ -147,7 +147,7 @@ Analysis::FileNormalizer.new.call
 # >>   [145 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/新嬉野流.kif
 # >>   [146 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/棒金.kif
 # >>   [147 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/棒玉.kif
-# >>   [148 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/超速▲3七銀戦法.kif
+# >>   [148 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/超速▲3七銀.kif
 # >>   [149 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/対振り持久戦.kif
 # >>   [150 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/金無双急戦.kif
 # >>   [151 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/袖飛車.kif
@@ -201,7 +201,7 @@ Analysis::FileNormalizer.new.call
 # >>   [199 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/羽生流右玉.kif
 # >>   [200 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/角換わり右玉.kif
 # >>   [201 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/雁木右玉.kif
-# >>   [202 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/金銀橋.kif
+# >>   [202 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/リッチブリッジ.kif
 # >>   [203 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/ツノ銀型右玉.kif
 # >>   [204 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/三段右玉.kif
 # >>   [205 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/清野流岐阜戦法.kif

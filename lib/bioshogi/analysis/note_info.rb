@@ -8,14 +8,14 @@ module Bioshogi
         # 戦法から引っ越し
         # 「角交換型」と「手損角交換型」には shape_info あり
 
-        { key: "角交換型",         parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: 1,   hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil, group_key: nil,  add_to_self: nil, add_to_opponent: "角交換型",     technique_detector: nil, },
-        { key: "手得角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil, group_key: nil,  add_to_self: nil, add_to_opponent: nil,            technique_detector: nil, },
-        { key: "手損角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: :order_first, not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil, group_key: nil,  add_to_self: nil, add_to_opponent: "手得角交換型", technique_detector: nil, },
+        { key: "角交換型",         parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: 1,   hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "角交換型",     technique_detector: nil, },
+        { key: "手得角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: nil,            technique_detector: nil, },
+        { key: "手損角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: :order_first, not_have_pawn: nil, kill_only: true, drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "手得角交換型", technique_detector: nil, },
 
         # shape_info あり
 
-        { key: "矢倉旧24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil, group_key: nil,  add_to_self: nil, add_to_opponent: "矢倉旧24手組", technique_detector: nil,     },
-        { key: "矢倉新24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil, group_key: nil,  add_to_self: nil, add_to_opponent: "矢倉新24手組", technique_detector: nil,     },
+        { key: "矢倉旧24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉旧24手組", technique_detector: nil,     },
+        { key: "矢倉新24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil, pawn_bishop_have_ok: nil, pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉新24手組", technique_detector: nil,     },
 
         ################################################################################
 
@@ -50,22 +50,22 @@ module Bioshogi
 
         ################################################################################
 
-        { key: "三間飛車系",   },
-        { key: "四間飛車系",   },
-        { key: "右四間飛車系", },
-        { key: "中飛車系",     },
-        { key: "横歩取り系",   },
-        { key: "向かい飛車系", },
-        { key: "引き角系",     },
-        { key: "筋違い角系",   },
-        { key: "角換わり系",   },
-        { key: "相掛かり系",   },
-        { key: "右玉系",       },
-        { key: "矢倉系",       },
-        { key: "袖飛車系",     },
-        { key: "棒銀系",       },
-        { key: "早繰り銀系",   },
-        { key: "腰掛け銀系",   },
+        # { key: "三間飛車系",   },
+        # { key: "四間飛車系",   },
+        # { key: "右四間飛車系", },
+        # { key: "中飛車系",     },
+        # { key: "横歩取り系",   },
+        # { key: "向かい飛車系", },
+        # { key: "引き角系",     },
+        # { key: "筋違い角系",   },
+        # { key: "角換わり系",   },
+        # { key: "相掛かり系",   },
+        # { key: "右玉系",       },
+        # { key: "矢倉系",       },
+        # { key: "袖飛車系",     },
+        # { key: "棒銀系",       },
+        # { key: "早繰り銀系",   },
+        # { key: "腰掛け銀系",   },
 
         ################################################################################
 
