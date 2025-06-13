@@ -675,6 +675,11 @@ module Bioshogi
           },
         },
         {
+          key: "歩の裏の歩",
+          description: nil,
+          func: -> { instance_exec(&TechniqueDetector[:"歩の裏の香"].func) },
+        },
+        {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
           func: -> {
