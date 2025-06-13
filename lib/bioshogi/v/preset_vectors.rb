@@ -3,8 +3,12 @@ module Bioshogi
     module PresetVectors
       ################################################################################
 
+      def cross_vectors
+        @cross_vectors ||= [up, right, down, left]
+      end
+
       def around_vectors
-        @around_vectors ||= [up, right, down, left]
+        @around_vectors ||= cross_vectors + tasuki_vectors.flatten(1)
       end
 
       def left_right_vectors
@@ -24,7 +28,7 @@ module Bioshogi
       end
 
       def ginbasami_verctors
-        @ginbasami_verctors ||= [[right, right_right, right_right_up], [left,  left_left,   left_left_up]]
+        @ginbasami_verctors ||= [[right, right_right, right_right_up], [left, left_left, left_left_up]]
       end
 
       def tsugikei_vectors

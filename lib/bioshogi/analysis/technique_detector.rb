@@ -147,6 +147,53 @@ module Bioshogi
           },
         },
         {
+          key: "玉飛接近",
+          description: nil,
+          func: -> {
+            if soldier.piece.key == :rook
+              target = :king
+            else
+              target = :rook
+            end
+
+            # 【条件1】飛車のとき初期値から動いていないこと
+            skip_if do
+              if origin_soldier.piece.key == :rook
+                origin_soldier.bottom_spaces == 1 && origin_soldier.right_spaces == 1
+              end
+            end
+
+            # 【条件2】玉のとき59から動いてないこと
+            skip_if do
+              if origin_soldier.piece.key == :rook
+                origin_soldier.bottom_spaces == 0 && origin_soldier.column_is_center?
+              end
+            end
+
+            # 【条件3】移動先の周囲に自分の玉がいる
+            verify_if do
+              V.around_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == target && own?(s)
+                  end
+                end
+              end
+            end
+
+            # 【条件4】移動元の周囲に自分の玉がいない
+            verify_if do
+              V.around_vectors.none? do |e|
+                if v = origin_soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == target && own?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: -> {
