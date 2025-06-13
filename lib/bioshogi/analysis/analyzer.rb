@@ -227,6 +227,15 @@ module Bioshogi
             end
           end
 
+          # 自分の金or銀がない
+          if ary = e.board_parser.other_objects_loc_ary[location.key]["□"]
+            ary.each do |e|
+              if silver_or_gold?(e[:place])
+                throw :skip
+              end
+            end
+          end
+
           # 自分の歩以上の駒がある
           if ary = e.board_parser.other_objects_loc_ary[location.key]["◇"]
             ary.each do |e|
