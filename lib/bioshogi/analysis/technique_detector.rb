@@ -221,6 +221,17 @@ module Bioshogi
           },
         },
         {
+          key: "中段玉",
+          description: nil,
+          func: -> {
+            # 【条件1】移動元は自陣にいる
+            verify_if { origin_soldier.own_side? }
+
+            # 【条件2】移動先に自陣にいない
+            verify_if { soldier.not_own_side? }
+          },
+        },
+        {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: -> {
