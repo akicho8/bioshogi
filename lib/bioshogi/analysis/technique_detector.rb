@@ -194,6 +194,33 @@ module Bioshogi
           },
         },
         {
+          key: "守りの馬",
+          description: nil,
+          func: -> {
+            # 【条件1】移動先の周囲に自分の玉がいる
+            verify_if do
+              V.around_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :king && own?(s)
+                  end
+                end
+              end
+            end
+
+            # 【条件2】移動元の周囲に自分の玉がいない
+            verify_if do
+              V.around_vectors.none? do |e|
+                if v = origin_soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :king && own?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自分の玉がある",
           func: -> {
