@@ -614,6 +614,20 @@ module Bioshogi
           },
         },
         {
+          key: "歩の裏の香",
+          description: nil,
+          func: -> {
+            # 【条件1】下に相手の歩がある
+            verify_if do
+              if v = soldier.relative_move_to(:down)
+                if s = board[v]
+                  s.piece.key == :pawn && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
           func: -> {
