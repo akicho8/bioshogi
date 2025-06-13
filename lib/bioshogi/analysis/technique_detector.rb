@@ -857,6 +857,13 @@ module Bioshogi
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
         },
+        {
+          key: "銀不成",
+          description: "角不成と同じ方法でよい",
+          func: -> {
+            verify_if { origin_soldier.tsugini_nareru_on?(place) }
+          },
+        },
 
         ################################################################################
 
