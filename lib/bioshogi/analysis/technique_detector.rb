@@ -525,6 +525,20 @@ module Bioshogi
           },
         },
         {
+          key: "桂頭の玉",
+          description: "「桂頭の玉、寄せにくし」の略",
+          func: -> {
+            # 【条件1】上に相手の桂がある
+            verify_if do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :knight && s.normal? && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "歩頭の桂",
           description: "打ったまたは移動した桂の上に相手の歩がある",
           func: -> {
