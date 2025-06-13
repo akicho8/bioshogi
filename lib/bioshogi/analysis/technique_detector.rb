@@ -148,7 +148,7 @@ module Bioshogi
         },
         {
           key: "玉飛接近",
-          description: nil,
+          description: "龍は馬と似て守りに効いている場合もあるため接近してもよいとする",
           func: -> {
             if soldier.piece.key == :rook
               target = :king
@@ -175,7 +175,7 @@ module Bioshogi
               V.around_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
                   if s = board[v]
-                    s.piece.key == target && own?(s)
+                    s.piece.key == target && s.normal? && own?(s) # 飛と玉に対応できるように s.normal? の判定を入れている
                   end
                 end
               end
@@ -186,7 +186,7 @@ module Bioshogi
               V.around_vectors.none? do |e|
                 if v = origin_soldier.relative_move_to(e)
                   if s = board[v]
-                    s.piece.key == target && own?(s)
+                    s.piece.key == target && s.normal? && own?(s)
                   end
                 end
               end
@@ -706,7 +706,7 @@ module Bioshogi
             verify_if do
               if v = soldier.relative_move_to(:down)
                 if s = board[v]
-                  s.piece.key == :pawn && opponent?(s)
+                  s.piece.key == :pawn && s.normal? && opponent?(s)
                 end
               end
             end
