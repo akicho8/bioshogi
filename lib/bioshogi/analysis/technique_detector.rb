@@ -716,13 +716,22 @@ module Bioshogi
           key: "歩の裏の香",
           description: nil,
           func: -> {
-            # 【条件1】下に相手の歩がある
+            # 【条件1】下(方向)に相手の歩がある
             verify_if do
-              if v = soldier.relative_move_to(:down)
-                if s = board[v]
-                  s.piece.key == :pawn && s.normal? && opponent?(s)
+              found = false
+              Dimension::Row.dimension_size.times do |i|
+                if v = soldier.relative_move_to(:down, magnification: 1 + i)
+                  if s = board[v]
+                    if s.piece.key == :pawn && s.normal? && opponent?(s)
+                      found = true
+                      break
+                    end
+                  end
+                else
+                  break
                 end
               end
+              found
             end
           },
         },
