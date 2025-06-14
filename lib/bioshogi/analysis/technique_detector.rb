@@ -235,6 +235,21 @@ module Bioshogi
           },
         },
         {
+          key: "端玉",
+          description: "端に入ったときだけ判定する",
+          func: -> {
+            # 【条件1】左右の端 (かどを除く) に移動した
+            verify_if do
+              soldier.column_is_edge? && soldier.top_spaces >= 1 && soldier.bottom_spaces >= 1
+            end
+
+            # 【条件2】移動元が左右の端 (かどを除く) ではないこと
+            skip_if do
+              origin_soldier.column_is_edge? && origin_soldier.top_spaces >= 1 && origin_soldier.bottom_spaces >= 1
+            end
+          },
+        },
+        {
           key: "中段玉",
           description: nil,
           func: -> {
