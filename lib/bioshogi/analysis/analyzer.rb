@@ -77,7 +77,7 @@ module Bioshogi
         # end
         #
         # if v = skill.add_to_opponent
-        #   player.opponent_player.skill_set.list_push(v)
+        #   opponent_player.skill_set.list_push(v)
         #   # executor.skill_set.list_push(v)
         # end
       end
@@ -422,7 +422,7 @@ module Bioshogi
 
       # 相手の持駒
       def op_piece_box
-        @op_piece_box ||= player.opponent_player.piece_box
+        @op_piece_box ||= opponent_player.piece_box
       end
 
       # 移動元情報
@@ -463,6 +463,11 @@ module Bioshogi
       # 自分
       def player
         @player ||= executor.player
+      end
+
+      # 相手
+      def opponent_player
+        @opponent_player ||= player.opponent_player
       end
 
       # 打った駒の情報

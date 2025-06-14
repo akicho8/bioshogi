@@ -740,6 +740,30 @@ module Bioshogi
           description: nil,
           func: -> { instance_exec(&TechniqueDetector[:"歩の裏の香"].func) },
         },
+
+        {
+          key: "マムシのと金",
+          description: nil,
+          func: -> {
+            # 【条件1】移動元の駒は「と」である (すでに成っていること)
+            verify_if { origin_soldier.promoted }
+
+            # 【条件2】相手の玉に近づいた
+            verify_if do
+              opponent_player.king_place&.then do
+                soldier.place.distance(it) < origin_soldier.place.distance(it)
+              end
+            end
+
+            # 【条件3】駒を取ってないこと (近づくだけ)
+            skip_if do
+              if move_hand = executor.move_hand
+                move_hand.captured_soldier
+              end
+            end
+          },
+        },
+
         {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",

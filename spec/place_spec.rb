@@ -116,16 +116,30 @@ RSpec.describe Bioshogi::Place do
 
   ################################################################################
 
+  it "2次元の距離" do
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["55"]) == 0 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["54"]) == 1 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["44"]) == 2 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["45"]) == 1 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["46"]) == 2 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["56"]) == 1 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["66"]) == 2 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["65"]) == 1 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["64"]) == 2 }
+  end
+
+  ################################################################################
+
   it "move_to_xy" do
     assert { Bioshogi::Place["55"].move_to_xy(Bioshogi::Location[:white], 1, -1).name == "６六" }
   end
 
   it "relative_move_to" do
-    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], Bioshogi::V.up)                  == Bioshogi::Place["56"] }
-    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up)                   == Bioshogi::Place["56"] }
+    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], Bioshogi::V.up) == Bioshogi::Place["56"] }
+    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up) == Bioshogi::Place["56"] }
     assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up, magnification: 0) == Bioshogi::Place["55"] }
     assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up, magnification: 2) == Bioshogi::Place["57"] }
-    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up, magnification: 9) == nil         }
+    assert { Bioshogi::Place["55"].relative_move_to(Bioshogi::Location[:white], :up, magnification: 9) == nil }
   end
 
   it "move_to_*_edge" do
