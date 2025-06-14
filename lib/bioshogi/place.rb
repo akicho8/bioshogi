@@ -84,7 +84,8 @@ module Bioshogi
 
     attr_accessor :column, :row
 
-    # for Soldier
+    # Soldier に生やすやつ
+    # ただの delgate ではなく soldier 側の location をこっそり受け取る
     DELEGATE_METHODS = [
       *Dimension::Column::DELEGATE_METHODS,
       *Dimension::Row::DELEGATE_METHODS,
@@ -185,7 +186,7 @@ module Bioshogi
 
     ################################################################################
 
-    # 距離を返す (ユークリッド距離ではなく升目の移動ステップ数)
+    # マンハッタン距離を返す
     def distance(other)
       column.distance(other.column) + row.distance(other.row)
     end

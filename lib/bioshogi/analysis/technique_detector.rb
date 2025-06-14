@@ -74,6 +74,20 @@ module Bioshogi
           },
         },
         {
+          key: "自陣飛車",
+          description: nil,
+          func: -> {
+            verify_if { soldier.own_side? }
+          },
+        },
+        {
+          key: "自陣角",
+          description: nil,
+          func: -> {
+            verify_if { soldier.own_side? }
+          },
+        },
+        {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
           func: -> {
