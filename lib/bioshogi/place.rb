@@ -187,19 +187,20 @@ module Bioshogi
     ################################################################################
 
     # マンハッタン距離を返す
-    def distance(other)
+    def manhattan_distance(other)
       column.distance(other.column) + row.distance(other.row)
     end
 
-    # other との縦横の差の大きい方を返す
-    # つまり a.distance_max(b) <= 2 なら a の 5x5 の中に b が含まれていることがわかる
-    def distance_max(other)
+    # 縦横の大きい方のマンハッタン距離を返す
+    # a.manhattan_distance_a_side_max(b) <= 2 なら a の 5x5 の中に b が含まれていることがわかる
+    def manhattan_distance_a_side_max(other)
        [column.distance(other.column), row.distance(other.row)].max
     end
 
+    # manhattan_distance_a_side_max の高速版
     # other との縦横の差が n 以下か？
-    # つまり a.distance_max2(b, 2) なら a の 5x5 の中に b が含まれていることがわかる
-    def distance_max2(other, n)
+    # a.in_outer_area?(b, 2) なら a の 5x5 の中に b が含まれていることがわかる
+    def in_outer_area?(other, n)
       column.distance(other.column) <= n && row.distance(other.row) <= n
     end
 

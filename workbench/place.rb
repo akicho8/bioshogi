@@ -58,27 +58,27 @@ Place["59"].king_default_place?(Location[:black]) # => true
 
 ################################################################################
 
-Place["55"].distance(Place["55"]) # => 0
-Place["55"].distance(Place["54"]) # => 1
-Place["55"].distance(Place["44"]) # => 2
-Place["55"].distance(Place["45"]) # => 1
-Place["55"].distance(Place["46"]) # => 2
-Place["55"].distance(Place["56"]) # => 1
-Place["55"].distance(Place["66"]) # => 2
-Place["55"].distance(Place["65"]) # => 1
-Place["55"].distance(Place["64"]) # => 2
+Place["55"].manhattan_distance(Place["55"]) # => 0
+Place["55"].manhattan_distance(Place["54"]) # => 1
+Place["55"].manhattan_distance(Place["44"]) # => 2
+Place["55"].manhattan_distance(Place["45"]) # => 1
+Place["55"].manhattan_distance(Place["46"]) # => 2
+Place["55"].manhattan_distance(Place["56"]) # => 1
+Place["55"].manhattan_distance(Place["66"]) # => 2
+Place["55"].manhattan_distance(Place["65"]) # => 1
+Place["55"].manhattan_distance(Place["64"]) # => 2
 
-Place["55"].distance(Place["55"]) # => 0
-Place["55"].distance(Place["66"]) # => 2
-Place["55"].distance(Place["77"]) # => 4
-Place["55"].distance(Place["88"]) # => 6
+Place["55"].manhattan_distance(Place["55"]) # => 0
+Place["55"].manhattan_distance(Place["66"]) # => 2
+Place["55"].manhattan_distance(Place["77"]) # => 4
+Place["55"].manhattan_distance(Place["88"]) # => 6
 
-Place["55"].distance_max(Place["55"]) # => 0
-Place["55"].distance_max(Place["66"]) # => 1
-Place["55"].distance_max(Place["77"]) # => 2
-Place["55"].distance_max(Place["78"]) # => 3
+Place["55"].manhattan_distance_a_side_max(Place["55"]) # => 0
+Place["55"].manhattan_distance_a_side_max(Place["66"]) # => 1
+Place["55"].manhattan_distance_a_side_max(Place["77"]) # => 2
+Place["55"].manhattan_distance_a_side_max(Place["78"]) # => 3
 
-Place["55"].distance_max2(Place["55"], 2) # => true
-Place["55"].distance_max2(Place["66"], 2) # => true
-Place["55"].distance_max2(Place["77"], 2) # => true
-Place["55"].distance_max2(Place["78"], 2) # => false
+Place["55"].in_outer_area?(Place["55"], 2) # => true
+Place["55"].in_outer_area?(Place["66"], 2) # => true
+Place["55"].in_outer_area?(Place["77"], 2) # => true
+Place["55"].in_outer_area?(Place["78"], 2) # => false

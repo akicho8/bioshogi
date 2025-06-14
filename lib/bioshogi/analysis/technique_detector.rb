@@ -211,26 +211,17 @@ module Bioshogi
           key: "守りの馬",
           description: nil,
           func: -> {
-            # 【条件1】移動先の周囲に自分の玉がいる
+            # 【条件1】自分の玉が存在する
+            verify_if { player.king_place }
+
+            # 【条件2】移動先の近くに自分の玉がいる
             verify_if do
-              V.around_vectors.any? do |e|
-                if v = soldier.relative_move_to(e)
-                  if s = board[v]
-                    s.piece.key == :king && own?(s)
-                  end
-                end
-              end
+              soldier.place.in_outer_area?(player.king_place, 2)
             end
 
-            # 【条件2】移動元の周囲に自分の玉がいない
-            verify_if do
-              V.around_vectors.none? do |e|
-                if v = origin_soldier.relative_move_to(e)
-                  if s = board[v]
-                    s.piece.key == :king && own?(s)
-                  end
-                end
-              end
+            # 【条件3】移動元の近くに、すでに自分の玉がいたらパス
+            skip_if do
+              origin_soldier.place.in_outer_area?(player.king_place, 2)
             end
           },
         },
@@ -243,12 +234,12 @@ module Bioshogi
 
             # 【条件1】移動先の近くに相手の玉がいる
             verify_if do
-              soldier.place.distance_max2(opponent_player.king_place, 2)
+              soldier.place.in_outer_area?(opponent_player.king_place, 2)
             end
 
             # 【条件2】移動元の近くに、すでに相手の玉がいたらパス
             skip_if do
-              origin_soldier.place.distance_max2(opponent_player.king_place, 2)
+              origin_soldier.place.in_outer_area?(opponent_player.king_place, 2)
             end
           },
         },
@@ -803,9 +794,8 @@ module Bioshogi
 
             # 【条件2】相手の玉に近づいた
             verify_if do
-              opponent_player.king_place.then do |v|
-                soldier.place.distance(v) < origin_soldier.place.distance(v)
-              end
+              v = opponent_player.king_place
+              soldier.place.manhattan_distance(v) < origin_soldier.place.manhattan_distance(v)
             end
 
             # 【条件3】駒を取ってないこと (近づくだけ)
