@@ -235,6 +235,24 @@ module Bioshogi
           },
         },
         {
+          key: "双玉接近",
+          description: nil,
+          func: -> {
+            # 【条件0】相手の玉が存在する
+            verify_if { opponent_player.king_place }
+
+            # 【条件1】移動先の近くに相手の玉がいる
+            verify_if do
+              soldier.place.distance_max2(opponent_player.king_place, 2)
+            end
+
+            # 【条件2】移動元の近くに、すでに相手の玉がいたらパス
+            skip_if do
+              origin_soldier.place.distance_max2(opponent_player.king_place, 2)
+            end
+          },
+        },
+        {
           key: "端玉",
           description: "端に入ったときだけ判定する",
           func: -> {
@@ -490,6 +508,9 @@ module Bioshogi
           key: "壁金",
           description: "飛車や角の位置に玉よりも先に金が移動した",
           func: -> {
+            # 【条件0】自分の玉が存在すること
+            verify_if { player.king_place }
+
             # 【条件1】端から2つ目である
             verify_if { soldier.column_spaces_min == 1 }
 
@@ -774,13 +795,16 @@ module Bioshogi
           key: "マムシのと金",
           description: nil,
           func: -> {
+            # 【条件0】相手の玉が存在すること
+            verify_if { opponent_player.king_place }
+
             # 【条件1】移動元の駒は「と」である (すでに成っていること)
             verify_if { origin_soldier.promoted }
 
             # 【条件2】相手の玉に近づいた
             verify_if do
-              opponent_player.king_place&.then do
-                soldier.place.distance(it) < origin_soldier.place.distance(it)
+              opponent_player.king_place.then do |v|
+                soldier.place.distance(v) < origin_soldier.place.distance(v)
               end
             end
 

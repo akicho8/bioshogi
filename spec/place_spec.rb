@@ -116,7 +116,7 @@ RSpec.describe Bioshogi::Place do
 
   ################################################################################
 
-  it "2次元の距離" do
+  it "マンハッタン距離 一周" do
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["55"]) == 0 }
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["54"]) == 1 }
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["44"]) == 2 }
@@ -126,6 +126,27 @@ RSpec.describe Bioshogi::Place do
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["66"]) == 2 }
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["65"]) == 1 }
     assert { Bioshogi::Place["55"].distance(Bioshogi::Place["64"]) == 2 }
+  end
+
+  it "distance" do
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["55"]) == 0 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["66"]) == 2 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["77"]) == 4 }
+    assert { Bioshogi::Place["55"].distance(Bioshogi::Place["88"]) == 6 }
+  end
+
+  it "distance_max" do
+    assert { Bioshogi::Place["55"].distance_max(Bioshogi::Place["55"]) == 0 }
+    assert { Bioshogi::Place["55"].distance_max(Bioshogi::Place["66"]) == 1 }
+    assert { Bioshogi::Place["55"].distance_max(Bioshogi::Place["77"]) == 2 }
+    assert { Bioshogi::Place["55"].distance_max(Bioshogi::Place["78"]) == 3 }
+  end
+
+  it "distance_max2" do
+    assert { Bioshogi::Place["55"].distance_max2(Bioshogi::Place["55"], 2) == true }
+    assert { Bioshogi::Place["55"].distance_max2(Bioshogi::Place["66"], 2) == true }
+    assert { Bioshogi::Place["55"].distance_max2(Bioshogi::Place["77"], 2) == true }
+    assert { Bioshogi::Place["55"].distance_max2(Bioshogi::Place["78"], 2) == false }
   end
 
   ################################################################################

@@ -191,6 +191,18 @@ module Bioshogi
       column.distance(other.column) + row.distance(other.row)
     end
 
+    # other との縦横の差の大きい方を返す
+    # つまり a.distance_max(b) <= 2 なら a の 5x5 の中に b が含まれていることがわかる
+    def distance_max(other)
+       [column.distance(other.column), row.distance(other.row)].max
+    end
+
+    # other との縦横の差が n 以下か？
+    # つまり a.distance_max2(b, 2) なら a の 5x5 の中に b が含まれていることがわかる
+    def distance_max2(other, n)
+      column.distance(other.column) <= n && row.distance(other.row) <= n
+    end
+
     ################################################################################
 
     def ==(other)
