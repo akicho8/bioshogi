@@ -5,5 +5,5 @@ Analysis::DefenseInfo.anaguma_elems # => [<片穴熊>, <居飛車穴熊>, <松�
 
 Analysis::DefenseInfo["紙穴熊"].only_preset_attr         # => :hirate_like
 Analysis::AttackInfo["棒銀"].only_preset_attr            # => :hirate_like
-Analysis::NoteInfo["居飛車"].only_preset_attr            # => :hirate_like
-Analysis::TechniqueInfo["割り打ちの銀"].only_preset_attr # => :hirate_like
+Analysis::NoteInfo["居飛車"].only_preset_attr            # => nil
+Analysis::TechniqueInfo["割り打ちの銀"].only_preset_attr # => nil

@@ -4,7 +4,7 @@ module Bioshogi
   module Analysis
     class DefenseInfo
       include ApplicationMemoryRecord
-      memory_record do
+      memory_record attr_reader: TagColumnNames do
         [
           ################################################################################ あとから追加する
 
@@ -165,11 +165,7 @@ module Bioshogi
 
       class_attribute :human_name, default: "囲い"
 
-      include ShapeInfoRelation
-      include BasicAccessor
-      include TreeMod
-      include StaticKifMod
-      include StyleAccessor
+      include TagBase
 
       # outbreak_skip で代用するため pawn_bishop_have_ok は無効化する
       def pawn_bishop_have_ok

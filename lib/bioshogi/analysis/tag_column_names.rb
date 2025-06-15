@@ -1,0 +1,33 @@
+module Bioshogi
+  module Analysis
+    TagColumnNames = [
+      :trigger_piece_key,
+      :group_key,
+      :parent,
+      :related_ancestors,
+      :alias_names,
+      :turn_limit,
+      :turn_eq,
+      :order_key,
+      :not_have_pawn,
+      :kill_only,
+      :drop_only,
+      :pawn_bishop_have_ok,
+      :pawn_have_ok,
+      :outbreak_skip,
+      :kill_count_lteq,
+      :hold_piece_not_in,
+      :hold_piece_in,
+      :hold_piece_empty,
+      :hold_piece_eq,
+      :op_hold_piece_eq,
+      :add_to_self,
+      :add_to_opponent,
+      :tag_detector,
+      :description,
+      :every_time_proc,
+      :only_preset_attr,
+      :piece_box_added_proc,
+    ]
+  end
+end
