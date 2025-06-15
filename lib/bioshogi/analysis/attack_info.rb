@@ -427,7 +427,7 @@ module Bioshogi
 
       include TagBase
 
-      def only_preset_attr
+      def preset_has
         :hirate_like
       end
     end

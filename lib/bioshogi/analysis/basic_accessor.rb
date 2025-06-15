@@ -39,7 +39,7 @@ module Bioshogi
 
       def hold_piece_eq
         unless defined?(@hold_piece_eq)
-          if defined?(super) && v = super
+          if v = super
             @hold_piece_eq = PieceBox.new(Piece.s_to_h(v))
           else
             @hold_piece_eq = nil
@@ -51,7 +51,7 @@ module Bioshogi
 
       def op_hold_piece_eq
         unless defined?(@op_hold_piece_eq)
-          if defined?(super) && v = super
+          if v = super
             @op_hold_piece_eq = PieceBox.new(Piece.s_to_h(v))
           else
             @op_hold_piece_eq = nil
@@ -63,7 +63,7 @@ module Bioshogi
 
       def hold_piece_in
         unless defined?(@hold_piece_in)
-          if defined?(super) && v = super
+          if v = super
             @hold_piece_in = PieceBox.new(Piece.s_to_h(v))
           else
             @hold_piece_in = nil
@@ -75,7 +75,7 @@ module Bioshogi
 
       def hold_piece_not_in
         unless defined?(@hold_piece_not_in)
-          if defined?(super) && v = super
+          if v = super
             @hold_piece_not_in = PieceBox.new(Piece.s_to_h(v))
           else
             @hold_piece_not_in = nil
@@ -91,27 +91,11 @@ module Bioshogi
 
       def category
         unless defined?(@category)
-          if defined?(super) && v = super
-            @category = TagIndex.fetch(v)
-          else
-            @category = nil
-          end
+          @category = TagIndex.fetch_if(super)
         end
 
         @category
       end
-
-      # def sub_category
-      #   unless defined?(@sub_category)
-      #     if defined?(super) && v = super
-      #       @sub_category = TagIndex.fetch(v)
-      #     else
-      #       @sub_category = nil
-      #     end
-      #   end
-      #
-      #   @sub_category
-      # end
 
       def group_info
         unless defined?(@group_info)
@@ -147,11 +131,7 @@ module Bioshogi
 
       def add_to_opponent
         unless defined?(@add_to_opponent)
-          if defined?(super) && v = super
-            @add_to_opponent = TagIndex.fetch(v)
-          else
-            @add_to_opponent = nil
-          end
+          @add_to_opponent = TagIndex.fetch_if(super)
         end
 
         @add_to_opponent
@@ -159,11 +139,7 @@ module Bioshogi
 
       def add_to_self
         unless defined?(@add_to_self)
-          if defined?(super) && v = super
-            @add_to_self = TagIndex.fetch(v)
-          else
-            @add_to_self = nil
-          end
+          @add_to_self = TagIndex.fetch_if(super)
         end
 
         @add_to_self
@@ -187,18 +163,6 @@ module Bioshogi
         end
 
         @skip_elements
-      end
-
-      def only_preset_attr
-        unless defined?(@only_preset_attr)
-          if defined?(super) && v = super
-            @only_preset_attr = v
-          else
-            @only_preset_attr = nil
-          end
-        end
-
-        @only_preset_attr
       end
 
       def hit_turn

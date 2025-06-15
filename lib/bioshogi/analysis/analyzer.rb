@@ -110,7 +110,7 @@ module Bioshogi
           ################################################################################
 
           # 特定の初期配置でないならスキップ
-          if v = e.only_preset_attr
+          if v = e.preset_has
             unless executor.container.initial_preset_info&.public_send(v)
               throw :skip
             end

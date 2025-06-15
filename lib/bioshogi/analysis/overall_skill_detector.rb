@@ -18,7 +18,7 @@ module Bioshogi
               next
             end
           end
-          if v = e.only_preset_attr
+          if v = e.preset_has
             unless @xparser.preset_info_or_nil&.public_send(v)
               next
             end

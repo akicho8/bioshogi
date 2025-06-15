@@ -10,7 +10,7 @@ module Bioshogi
 
       def parent
         unless defined?(@parent)
-          if defined?(super) && v = super
+          if v = super
             @parent = self.class.fetch(v)
           else
             @parent = nil
@@ -30,11 +30,7 @@ module Bioshogi
 
       def related_ancestors
         unless defined?(@related_ancestors)
-          if defined?(super) && v = super
-            @related_ancestors = Array(v).collect { |e| self.class.fetch(e) }
-          else
-            @related_ancestors = []
-          end
+          @related_ancestors = Array(super).collect { |e| self.class.fetch(e) }
         end
 
         @related_ancestors
