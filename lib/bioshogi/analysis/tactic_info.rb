@@ -60,11 +60,15 @@ module Bioshogi
         ################################################################################
 
         # :PIECE_HASH_TABLE:
-        # technique_detector を持っている all_elements
+        # tag_detector を持っている all_elements
         def piece_hash_table
           @piece_hash_table ||= all_elements.each_with_object({}) do |e, m|
-            if e.technique_detector
-              Array.wrap(e.trigger_piece_key).each do |hv|
+            if (e.respond_to?(:trigger_piece_key) && e.trigger_piece_key) && !e.tag_detector
+              raise ArgumentError, "trigger_piece_key はあるが tag_detector がない : #{key}"
+            end
+
+            if e.tag_detector
+              Array.wrap(e.trigger_params).each do |hv|
                 piece_hash_table_keys_by(hv).each do |key|
                   m[key] ||= []
                   m[key] << e

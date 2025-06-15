@@ -317,12 +317,12 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>       12  (    6.1%)  Bioshogi::Soldier#hash
 # >>        9  (    4.6%)  Bioshogi::Analyzer#execute_block
 # >>        4  (    2.0%)  Bioshogi::Soldier#eql?
-# >>        2  (    1.0%)  block in <class:TechniqueDetector>
-# >>        2  (    1.0%)  block in <class:TechniqueDetector>
-# >>        1  (    0.5%)  block in <class:TechniqueDetector>
+# >>        2  (    1.0%)  block in <class:TagDetector>
+# >>        2  (    1.0%)  block in <class:TagDetector>
+# >>        1  (    0.5%)  block in <class:TagDetector>
 # >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
-# >>        1  (    0.5%)  block in <class:TechniqueDetector>
-# >>        1  (    0.5%)  block in <class:TechniqueDetector>
+# >>        1  (    0.5%)  block in <class:TagDetector>
+# >>        1  (    0.5%)  block in <class:TagDetector>
 # >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
 # >>   code:
 # >>                                   |    13  |     def execute
@@ -341,5 +341,5 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
 # >>                                   |    27  |               walk_counts[e.key] += 1
 # >>                                   |    28  |               cold_war_verification(e)
-# >>     7    (0.8%)                   |    29  |               instance_eval(&e.technique_detector.func)
+# >>     7    (0.8%)                   |    29  |               instance_eval(&e.tag_detector.func)
 # >>                                   |    30  |             end

@@ -125,6 +125,27 @@ module Bioshogi
         @group_info
       end
 
+      def trigger_params
+        unless defined?(@trigger_params)
+          v = nil
+          if respond_to?(:trigger_piece_key)
+            v = trigger_piece_key
+          end
+
+          if v && TriggerInfo.lookup(key)
+            raise ArgumentError, "trigger_piece_key があるのに TriggerInfo でも定義されている"
+          end
+
+          unless v
+            v = TriggerInfo.lookup(key)&.trigger_piece_key
+          end
+
+          @trigger_params = v
+        end
+
+        @trigger_params
+      end
+
       def delete_infos
         unless defined?(@delete_infos)
           if respond_to?(:delete_keys) && v = delete_keys
@@ -161,12 +182,12 @@ module Bioshogi
         @add_to_self
       end
 
-      def technique_detector
-        unless defined?(@technique_detector)
-          @technique_detector = TechniqueDetector.lookup(key)
+      def tag_detector
+        unless defined?(@tag_detector)
+          @tag_detector = TagDetector.lookup(key)
         end
 
-        @technique_detector
+        @tag_detector
       end
 
       def skip_elements
