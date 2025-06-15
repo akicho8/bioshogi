@@ -12,7 +12,6 @@ module Bioshogi
       :not_have_pawn,
       :kill_only,
       :drop_only,
-      :pawn_bishop_have_ok,
       :pawn_have_ok,
       :outbreak_skip,
       :kill_count_lteq,
