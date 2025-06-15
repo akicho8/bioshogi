@@ -24,6 +24,11 @@ Row.fetch("7").own_side?     # => true
 Row.fetch("6").not_own_side? # => true
 Row.fetch("7").not_own_side? # => false
 
+Row.fetch("3").middle_row?          # => false
+Row.fetch("4").middle_row?          # => true
+Row.fetch("6").middle_row?          # => true
+Row.fetch("7").middle_row?          # => false
+
 Row.fetch("5").funoue_line_ni_uita?  # => false
 Row.fetch("6").funoue_line_ni_uita?  # => true
 Row.fetch("7").funoue_line_ni_uita?  # => false

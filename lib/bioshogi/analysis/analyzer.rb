@@ -480,6 +480,21 @@ module Bioshogi
         @move_hand ||= executor.move_hand
       end
 
+      # 取った駒
+      def captured_soldier
+        if move_hand
+          move_hand.captured_soldier
+        end
+      end
+
+      # 前より敵玉に近づいたか？
+      # 半径を狭めないと近づいたことにならないので manhattan_distance_a_side_max を使うこと
+      def move_to_op_king?
+        opponent_player.king_soldier.place.then do |e|
+          soldier.place.manhattan_distance_a_side_max(e) < origin_soldier.place.manhattan_distance_a_side_max(e)
+        end
+      end
+
       prepend TechniqueMatcherHelper
     end
   end

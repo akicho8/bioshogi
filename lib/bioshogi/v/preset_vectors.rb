@@ -7,8 +7,8 @@ module Bioshogi
         @cross_vectors ||= [up, right, down, left]
       end
 
-      def around_vectors
-        @around_vectors ||= cross_vectors + tasuki_vectors.flatten(1)
+      def outer_vectors
+        @outer_vectors ||= cross_vectors + tasuki_vectors.flatten(1)
       end
 
       def left_right_vectors

@@ -84,6 +84,10 @@ module Bioshogi
 
     attr_accessor :column, :row
 
+    # # Soldier に生やすやつ
+    # DELEGATE_METHODS = [
+    # ]
+
     # Soldier に生やすやつ
     # ただの delgate ではなく soldier 側の location をこっそり受け取る
     DELEGATE_METHODS = [

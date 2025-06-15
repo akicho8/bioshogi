@@ -62,6 +62,13 @@ RSpec.describe Bioshogi::Dimension::Row do
     assert { Bioshogi::Dimension::Row.fetch("7").not_own_side? == false }
   end
 
+  it "middle_row?" do
+    assert { Bioshogi::Dimension::Row.fetch("3").middle_row? == false }
+    assert { Bioshogi::Dimension::Row.fetch("4").middle_row? == true }
+    assert { Bioshogi::Dimension::Row.fetch("6").middle_row? == true }
+    assert { Bioshogi::Dimension::Row.fetch("7").middle_row? == false }
+  end
+
   it "funoue_line_ni_uita?" do
     assert { Bioshogi::Dimension::Row.fetch("5").funoue_line_ni_uita? == false  }
     assert { Bioshogi::Dimension::Row.fetch("6").funoue_line_ni_uita? == true   }

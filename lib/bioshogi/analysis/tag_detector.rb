@@ -122,29 +122,20 @@ module Bioshogi
             # 【条件1】「歩成り」であればパス
             skip_if { origin_soldier.normal? }
 
-            # 【条件2】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
-            verify_if do
-              if move_hand = executor.move_hand
-                if s = move_hand.captured_soldier
-                  s.abs_weight > Piece.fetch(:pawn).basic_weight
-                end
-              end
-            end
+            # 【条件2】駒を取っていること
+            verify_if { captured_soldier }
 
-            # 【条件3】敵玉が存在すること
-            verify_if { opponent_player.king_place }
+            # 【条件3】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
+            verify_if { captured_soldier.abs_weight > Piece.fetch(:pawn).basic_weight }
+
+            # 【条件3】敵玉が存在する
+            verify_if { opponent_player.king_soldier }
 
             # 【条件4】移動先の近くに敵玉がいる (半径3)
-            verify_if do
-              soldier.place.in_outer_area?(opponent_player.king_place, 3)
-            end
+            verify_if { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 3) }
 
             # 【条件5】相手玉に向かって進んでいること (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
-            verify_if do
-              opponent_player.king_place.then do |e|
-                soldier.place.manhattan_distance(e) < origin_soldier.place.manhattan_distance(e)
-              end
-            end
+            verify_if { move_to_op_king? }
           },
         },
         {
@@ -185,11 +176,7 @@ module Bioshogi
             verify_if { soldier.place.column == origin_soldier.place.column }
 
             # 【条件3】「同飛」でないこと (相手の駒を取る目的で移動していないこと)
-            skip_if do
-              if move_hand = executor.move_hand
-                move_hand.captured_soldier
-              end
-            end
+            skip_if { captured_soldier }
           },
         },
         {
@@ -218,7 +205,7 @@ module Bioshogi
 
             # 【条件3】移動先の周囲に自玉がいる
             verify_if do
-              V.around_vectors.any? do |e|
+              V.outer_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == target && s.normal? && own?(s) # 飛と玉に対応できるように s.normal? の判定を入れている
@@ -229,7 +216,7 @@ module Bioshogi
 
             # 【条件4】移動元の周囲に自玉がいない
             verify_if do
-              V.around_vectors.none? do |e|
+              V.outer_vectors.none? do |e|
                 if v = origin_soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == target && s.normal? && own?(s)
@@ -244,17 +231,13 @@ module Bioshogi
           description: nil,
           func: -> {
             # 【条件1】自玉が存在する
-            verify_if { player.king_place }
+            verify_if { player.king_soldier }
 
             # 【条件2】移動先の近くに自玉がいる
-            verify_if do
-              soldier.place.in_outer_area?(player.king_place, 2)
-            end
+            verify_if { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
             # 【条件3】移動元の近くに、すでに自玉がいたらパス
-            skip_if do
-              origin_soldier.place.in_outer_area?(player.king_place, 2)
-            end
+            skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
           },
         },
         {
@@ -262,16 +245,53 @@ module Bioshogi
           description: nil,
           func: -> {
             # 【条件0】敵玉が存在する
-            verify_if { opponent_player.king_place }
+            verify_if { opponent_player.king_soldier }
 
             # 【条件1】移動先の近くに敵玉がいる
-            verify_if do
-              soldier.place.in_outer_area?(opponent_player.king_place, 2)
-            end
+            verify_if { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
 
             # 【条件2】移動元の近くに、すでに敵玉がいたらパス
-            skip_if do
-              origin_soldier.place.in_outer_area?(opponent_player.king_place, 2)
+            skip_if { origin_soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
+          },
+        },
+        {
+          key: "天空の城",
+          description: nil,
+          func: -> {
+            # 【条件1】自玉が存在する
+            verify_if { player.king_soldier }
+
+            # 【条件2】自玉は4から6段目にいる？
+            verify_if { player.king_soldier.middle_row? }
+
+            # 【条件3】すでに持っていればパスする
+            skip_if { player.skill_set.has_skill?(TacticInfo.flat_fetch("天空の城")) }
+
+            # 【条件4】移動先の近くに自玉がいる
+            verify_if { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+
+            # 【条件4】自玉のまわりに金以上の価値のある駒が多い
+            gteq_count = 4
+            gteq_weight = Piece[:gold].basic_weight
+            verify_if do
+              if king = board[player.king_soldier.place]
+                match = false
+                count = 0
+                V.outer_vectors.each do |e|
+                  if v = king.relative_move_to(e)
+                    if s = board[v]
+                      if s.abs_weight >= gteq_weight
+                        count += 1
+                        if count >= gteq_count
+                          match = true
+                          break
+                        end
+                      end
+                    end
+                  end
+                end
+                match
+              end
             end
           },
         },
@@ -558,17 +578,17 @@ module Bioshogi
             # 【条件5】移動元は端から3つ目である
             verify_if { origin_soldier.column_spaces_min == 2 }
 
-            # 【条件6】自玉が存在すること
-            verify_if { player.king_place }
+            # 【条件6】自玉が存在する
+            verify_if { player.king_soldier }
 
             # 【条件7】玉との横軸の距離は3以内である (最長3 = 居玉) 銀と同じ方向に玉がいるというだけで穴熊状態の可能性もある
-            verify_if { soldier.place.column.distance(player.king_place.column) <= 3 }
+            verify_if { soldier.place.column.distance(player.king_soldier.place.column) <= 3 }
 
             # 【条件8】玉は中心から2以内にいる = 銀より内側にいる (居玉 = 0, 早囲い = 2, 美濃囲い = 3, 穴熊 = 4)
-            verify_if { player.king_place.column.distance_from_center <= 3 }
+            verify_if { player.king_soldier.place.column.distance_from_center <= 3 }
 
             # 【条件9】玉は自分の陣地にいる
-            verify_if { player.king_place.own_side?(location) }
+            verify_if { player.king_soldier.own_side? }
           },
         },
         {
@@ -642,11 +662,7 @@ module Bioshogi
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
           func: -> {
             # 【条件1】「同歩」でないこと
-            skip_if do
-              if move_hand = executor.move_hand
-                move_hand.captured_soldier
-              end
-            end
+            skip_if { captured_soldier }
 
             # 【条件2】進めた歩の前が空である
             verify_if do
@@ -821,22 +837,14 @@ module Bioshogi
             # 【条件1】移動元の駒は「と」である (すでに成っていること)
             verify_if { origin_soldier.promoted }
 
-            # 【条件2】敵玉が存在すること
-            verify_if { opponent_player.king_place }
+            # 【条件2】敵玉が存在する
+            verify_if { opponent_player.king_soldier }
 
-            # 【条件3】敵玉に近づいた
-            verify_if do
-              opponent_player.king_place.then do |e|
-                soldier.place.manhattan_distance(e) < origin_soldier.place.manhattan_distance(e)
-              end
-            end
+            # 【条件3】敵玉に近づく
+            verify_if { move_to_op_king? }
 
             # 【条件3】駒を取ってないこと (近づくだけ)
-            skip_if do
-              if move_hand = executor.move_hand
-                move_hand.captured_soldier
-              end
-            end
+            skip_if { captured_soldier }
           },
         },
 

@@ -66,6 +66,7 @@ module Bioshogi
         :not_opp_side?,
         :own_side?,
         :not_own_side?,
+        :middle_row?,
         :funoue_line_ni_uita?,
         :kurai_sasae?,
         :just_nyuugyoku?,
@@ -107,6 +108,11 @@ module Bioshogi
       # 自分の陣地にいない？
       def not_own_side?
         !own_side?
+      end
+
+      # 4..6段目？
+      def middle_row?
+        not_own_side? && not_opp_side?
       end
 
       # 浮き飛車状態？

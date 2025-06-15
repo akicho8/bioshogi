@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Bioshogi::V::PresetVectors do
   it "works" do
     assert { Bioshogi::V.cross_vectors     }
-    assert { Bioshogi::V.around_vectors    }
+    assert { Bioshogi::V.outer_vectors    }
     assert { Bioshogi::V.left_right_vectors }
     assert { Bioshogi::V.ikkenryu_vectors   }
     assert { Bioshogi::V.keima_vectors      }
