@@ -29,16 +29,20 @@ module Bioshogi
           # 「飛龍香」が縦に2つ以上あること
           verify_if { count_all >= 2 }
 
-          # 「飛飛」並びは除外する
-          skip_if { @rook_count == 2 && @lance_count == 0 }
+          if false
+            # 「飛飛」並びは除外する
+            skip_if { @rook_count == 2 && @lance_count == 0 }
+          end
 
-          # 飛の下に香がある形は除外する
-          # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [3, 4, -1, 1] (先手)
-          # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [5, 4, 1, -1] (後手)
-          # つまり ((@lance <=> @rook) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
-          skip_if do
-            if @rook_count == 1 && @lance_count == 1
-              ((@lance.row.value <=> @rook.row.value) + soldier.location.sign_dir).nonzero?
+          if false
+            # 飛の下に香がある形は除外する
+            # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [3, 4, -1, 1] (先手)
+            # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [5, 4, 1, -1] (後手)
+            # つまり ((@lance <=> @rook) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
+            skip_if do
+              if @rook_count == 1 && @lance_count == 1
+                ((@lance.row.value <=> @rook.row.value) + soldier.location.sign_dir).nonzero?
+              end
             end
           end
 
