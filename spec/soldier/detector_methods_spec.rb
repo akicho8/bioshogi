@@ -98,4 +98,18 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
     assert { Bioshogi::Soldier.from_str("△51飛").king_default_place? }
     assert { Bioshogi::Soldier.from_str("▲59飛").king_default_place? }
   end
+
+  it "both_side_without_corner?" do
+    assert { Bioshogi::Soldier.from_str("▲11玉").both_side_without_corner? == false }
+    assert { Bioshogi::Soldier.from_str("▲12玉").both_side_without_corner? == true }
+    assert { Bioshogi::Soldier.from_str("▲18玉").both_side_without_corner? == true }
+    assert { Bioshogi::Soldier.from_str("▲19玉").both_side_without_corner? == false }
+
+    assert { Bioshogi::Soldier.from_str("▲91玉").both_side_without_corner? == false }
+    assert { Bioshogi::Soldier.from_str("▲92玉").both_side_without_corner? == true }
+    assert { Bioshogi::Soldier.from_str("▲98玉").both_side_without_corner? == true }
+    assert { Bioshogi::Soldier.from_str("▲99玉").both_side_without_corner? == false }
+
+    assert { Bioshogi::Soldier.from_str("▲22玉").both_side_without_corner? == false }
+  end
 end

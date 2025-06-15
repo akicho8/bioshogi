@@ -38,3 +38,15 @@ Soldier.from_str("▲51歩").left_or_right_to_closer_side # => :left
 Soldier.from_str("△51歩").left_or_right_to_closer_side # => :left
 Soldier.from_str("▲61歩").left_or_right_to_closer_side # => :left
 Soldier.from_str("△61歩").left_or_right_to_closer_side # => :right
+
+Soldier.from_str("▲11玉").both_side_without_corner? # => false
+Soldier.from_str("▲12玉").both_side_without_corner? # => true
+Soldier.from_str("▲18玉").both_side_without_corner? # => true
+Soldier.from_str("▲19玉").both_side_without_corner? # => false
+
+Soldier.from_str("△91玉").both_side_without_corner? # => false
+Soldier.from_str("△92玉").both_side_without_corner? # => true
+Soldier.from_str("△98玉").both_side_without_corner? # => true
+Soldier.from_str("△99玉").both_side_without_corner? # => false
+
+Soldier.from_str("△22玉").both_side_without_corner? # => false

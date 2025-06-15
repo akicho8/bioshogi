@@ -176,6 +176,20 @@ RSpec.describe Bioshogi::Place do
     assert { Bioshogi::Place["59"].king_default_place?(Bioshogi::Location[:black]) }
   end
 
+  it "both_side_without_corner?" do
+    assert { Bioshogi::Place["11"].both_side_without_corner? == false }
+    assert { Bioshogi::Place["12"].both_side_without_corner? == true }
+    assert { Bioshogi::Place["18"].both_side_without_corner? == true }
+    assert { Bioshogi::Place["19"].both_side_without_corner? == false }
+
+    assert { Bioshogi::Place["91"].both_side_without_corner? == false }
+    assert { Bioshogi::Place["92"].both_side_without_corner? == true }
+    assert { Bioshogi::Place["98"].both_side_without_corner? == true }
+    assert { Bioshogi::Place["99"].both_side_without_corner? == false }
+
+    assert { Bioshogi::Place["22"].both_side_without_corner? == false }
+  end
+
   ################################################################################
 end
 # >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.

@@ -122,7 +122,7 @@ module Bioshogi
             # 【条件1】「歩成り」であればパス
             skip_if { origin_soldier.normal? }
 
-            # 【条件2】駒を取っていること
+            # 【条件2】駒を取っている
             verify_if { captured_soldier }
 
             # 【条件3】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
@@ -134,7 +134,7 @@ module Bioshogi
             # 【条件4】移動先の近くに敵玉がいる (半径3)
             verify_if { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 3) }
 
-            # 【条件5】相手玉に向かって進んでいること (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
+            # 【条件5】相手玉に向かって進んでいる (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
             verify_if { move_to_op_king? }
           },
         },
@@ -142,7 +142,7 @@ module Bioshogi
           key: "位の確保",
           description: "中盤戦になる前に5段目の歩を銀で支える",
           func: -> {
-            # 【条件1】前線(6段目)にいること
+            # 【条件1】前線(6段目)にいる
             verify_if { soldier.kurai_sasae? }
 
             # 【条件2】3〜7列である (両端2列は「位」とは言わないため)
@@ -157,7 +157,7 @@ module Bioshogi
               end
             end
 
-            # 【条件4】歩の上に何もないこと (歩の上に何か駒があった場合は無効) :OPTIONAL:
+            # 【条件4】歩の上に何もない (歩の上に何か駒があった場合は無効) :OPTIONAL:
             skip_if do
               if v = soldier.relative_move_to(:up_up)
                 board[v]
@@ -169,13 +169,13 @@ module Bioshogi
           key: "浮き飛車",
           description: "戻る場合も考慮する",
           func: -> {
-            # 【条件1】前線(6段目)にいること
+            # 【条件1】前線(6段目)にいる
             verify_if { soldier.funoue_line_ni_uita? }
 
             # 【条件2】移動元と同じ列であること
             verify_if { soldier.place.column == origin_soldier.place.column }
 
-            # 【条件3】「同飛」でないこと (相手の駒を取る目的で移動していないこと)
+            # 【条件3】「同飛」でない (相手の駒を取る目的で移動していない)
             skip_if { captured_soldier }
           },
         },
@@ -189,14 +189,14 @@ module Bioshogi
               target = :rook
             end
 
-            # 【条件1】飛車のとき初期値から動いていないこと
+            # 【条件1】飛車のとき初期値から動いていない
             skip_if do
               if origin_soldier.piece.key == :rook
                 origin_soldier.bottom_spaces == 1 && origin_soldier.right_spaces == 1
               end
             end
 
-            # 【条件2】玉のとき59から動いてないこと
+            # 【条件2】玉のとき59から動いてない
             skip_if do
               if origin_soldier.piece.key == :rook
                 origin_soldier.bottom_spaces == 0 && origin_soldier.column_is_center?
@@ -244,13 +244,13 @@ module Bioshogi
           key: "双玉接近",
           description: nil,
           func: -> {
-            # 【条件0】敵玉が存在する
+            # 【条件1】敵玉が存在する
             verify_if { opponent_player.king_soldier }
 
-            # 【条件1】移動先の近くに敵玉がいる
+            # 【条件2】移動先の近くに敵玉がいる
             verify_if { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
 
-            # 【条件2】移動元の近くに、すでに敵玉がいたらパス
+            # 【条件3】移動元の近くに敵玉がいたらパス
             skip_if { origin_soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
           },
         },
@@ -261,7 +261,7 @@ module Bioshogi
             # 【条件1】自玉が存在する
             verify_if { player.king_soldier }
 
-            # 【条件2】自玉は4から6段目にいる？
+            # 【条件2】自玉は4から6段目にいる
             verify_if { player.king_soldier.middle_row? }
 
             # 【条件3】すでに持っていればパスする
@@ -270,29 +270,29 @@ module Bioshogi
             # 【条件4】移動先の近くに自玉がいる
             verify_if { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
-            # 【条件4】自玉のまわりに金以上の価値のある駒が多い
-            gteq_count = 4
-            gteq_weight = Piece[:gold].basic_weight
+            # 【条件5】自玉のまわりに金以上の価値のある駒が多い
             verify_if do
-              if king = board[player.king_soldier.place]
-                match = false
-                count = 0
-                V.outer_vectors.each do |e|
-                  if v = king.relative_move_to(e)
-                    if s = board[v]
-                      if s.abs_weight >= gteq_weight
-                        count += 1
-                        if count >= gteq_count
-                          match = true
-                          break
-                        end
+              gteq_weight = Piece[:gold].basic_weight
+              match = false
+              count = 0
+              V.outer_vectors.each do |e|
+                if v = player.king_soldier.relative_move_to(e)
+                  if s = board[v]
+                    if s.abs_weight >= gteq_weight
+                      count += 1
+                      if count >= 4
+                        match = true
+                        break
                       end
                     end
                   end
                 end
-                match
               end
+              match
             end
+
+            # 【条件6】駒得している
+            verify_if { player.current_score > opponent_player.current_score }
           },
         },
         {
@@ -300,14 +300,10 @@ module Bioshogi
           description: "端に入ったときだけ判定する",
           func: -> {
             # 【条件1】左右の端 (かどを除く) に移動した
-            verify_if do
-              soldier.column_is_edge? && soldier.top_spaces >= 1 && soldier.bottom_spaces >= 1
-            end
+            verify_if { soldier.both_side_without_corner? }
 
-            # 【条件2】移動元が左右の端 (かどを除く) ではないこと
-            skip_if do
-              origin_soldier.column_is_edge? && origin_soldier.top_spaces >= 1 && origin_soldier.bottom_spaces >= 1
-            end
+            # 【条件2】移動元が左右の端 (かどを除く) ではない
+            skip_if { origin_soldier.both_side_without_corner? }
           },
         },
         {
@@ -473,10 +469,10 @@ module Bioshogi
             # 【条件1】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             verify_if { executor.container.outbreak_turn }
 
-            # 【条件2】自陣から打っていること
+            # 【条件2】自陣から打っている
             verify_if { soldier.own_side? }
 
-            # 【条件3】端から打っていること
+            # 【条件3】端から打っている
             if false
               verify_if { soldier.column_is_edge? }
             end
@@ -609,7 +605,7 @@ module Bioshogi
               end
             end
 
-            # 【条件2】「22銀」や「82銀」ではないこと :OPTIONAL:
+            # 【条件2】「22銀」や「82銀」ではない :OPTIONAL:
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             skip_if do
@@ -659,9 +655,9 @@ module Bioshogi
         },
         {
           key: "銀ばさみ",
-          description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もないこと。",
+          description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
           func: -> {
-            # 【条件1】「同歩」でないこと
+            # 【条件1】同歩ならパス
             skip_if { captured_soldier }
 
             # 【条件2】進めた歩の前が空である
@@ -671,7 +667,7 @@ module Bioshogi
               end
             end
 
-            # 左右どちらかが成立していること
+            # 左右どちらかが成立している
             verify_if do
               V.ginbasami_verctors.any? do |right, right_right, right_right_up|
                 # 【条件3】右に相手の銀ある
@@ -716,7 +712,7 @@ module Bioshogi
               end
             end
 
-            # 【条件3】奥に敵玉がいること (13→12→11と探す)
+            # 【条件3】奥に敵玉がいる (13→12→11と探す)
             verify_if do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
               # Dimension::Row.dimension_size は書かなくてもいい
@@ -834,7 +830,7 @@ module Bioshogi
           key: "マムシのと金",
           description: nil,
           func: -> {
-            # 【条件1】移動元の駒は「と」である (すでに成っていること)
+            # 【条件1】移動元の駒は「と」である (すでに成っている)
             verify_if { origin_soldier.promoted }
 
             # 【条件2】敵玉が存在する
@@ -843,7 +839,7 @@ module Bioshogi
             # 【条件3】敵玉に近づく
             verify_if { move_to_op_king? }
 
-            # 【条件3】駒を取ってないこと (近づくだけ)
+            # 【条件3】駒を取っていたらパス (近づくだけ)
             skip_if { captured_soldier }
           },
         },
@@ -936,9 +932,9 @@ module Bioshogi
               end
             end
 
-            # 【条件3】打った歩に結びついている利きがないこと
+            # 【条件3】打った歩に結びついている利きがない
             # とするのが本当は正しいのだけど大変なので
-            # 「打った位置の後ろに自分の(前に進めることのできる)駒がないこと」だけを判定している
+            # 「打った位置の後ろに自分の(前に進めることのできる)駒がない」だけを判定している
             skip_if do
               if v = soldier.relative_move_to(:down)
                 if s = board[v]
@@ -949,7 +945,7 @@ module Bioshogi
               end
             end
 
-            # 【条件4】連打の歩ではないこと :OPTIONAL:
+            # 【条件4】連打の歩ならパス :OPTIONAL:
             skip_if do
               if hand_log = executor.container.hand_logs[-2] # 前回の自分の手
                 if drop_hand = hand_log.drop_hand            # 打った手

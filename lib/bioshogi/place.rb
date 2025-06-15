@@ -90,7 +90,7 @@ module Bioshogi
 
     # Soldier に生やすやつ
     # ただの delgate ではなく soldier 側の location をこっそり受け取る
-    DELEGATE_METHODS = [
+    DELEGATE_METHODS_WITH_LOCATION = [
       *Dimension::Column::DELEGATE_METHODS,
       *Dimension::Row::DELEGATE_METHODS,
 
@@ -102,6 +102,11 @@ module Bioshogi
       :move_to_top_edge,
       :move_to_left_edge,
       :move_to_right_edge,
+    ]
+
+    # flip する必要がない上下左右対称のメソッド
+    DIRECT_DELEGATE_METHODS = [
+      :both_side_without_corner?,
     ]
 
     def initialize(column, row)
@@ -255,6 +260,13 @@ module Bioshogi
     # なるべく使うな
     def move_to_xy(location, x, y)
       xy_add(x * location.sign_dir, y * location.sign_dir)
+    end
+
+    ################################################################################ 上下左右対象
+
+    # 角を除いた両サイドにいる？
+    def both_side_without_corner?
+      @column.column_is_edge? && @row.top_spaces >= 1 && @row.bottom_spaces >= 1
     end
 
     ################################################################################ location から見た上下左右に寄せた位置を返す

@@ -15,8 +15,6 @@ module Bioshogi
           container.hand_logs.last&.then do |hand_log|
             hand_log.skill_set.list_push(tag)
           end
-
-          # tp info
         end
       end
 
