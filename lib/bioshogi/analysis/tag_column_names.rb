@@ -1,7 +1,7 @@
 module Bioshogi
   module Analysis
     TagColumnNames = [
-      :trigger_piece_key,
+      :trigger,
       :group_key,
       :parent,
       :related_ancestors,

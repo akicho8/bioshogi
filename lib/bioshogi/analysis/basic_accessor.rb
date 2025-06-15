@@ -121,22 +121,16 @@ module Bioshogi
         @group_info
       end
 
-      def trigger_params
-        unless defined?(@trigger_params)
-          v = trigger_piece_key
-
-          if v && TriggerInfo.lookup(key)
-            raise ArgumentError, "trigger_piece_key があるのに TriggerInfo でも定義されている"
+      def trigger
+        unless defined?(@trigger)
+          if super && TriggerInfo.lookup(key)
+            raise ArgumentError, "trigger があるのに TriggerInfo でも定義されている"
           end
 
-          unless v
-            v = TriggerInfo.lookup(key)&.trigger_piece_key
-          end
-
-          @trigger_params = v
+          @trigger = super || TriggerInfo.lookup(key)&.trigger
         end
 
-        @trigger_params
+        @trigger
       end
 
       def delete_infos

@@ -44,12 +44,12 @@ module Bioshogi
       # tag_detector を持っている values
       def piece_hash_table
         @piece_hash_table ||= values.each_with_object({}) do |e, m|
-          if e.trigger_piece_key && !e.tag_detector
-            raise ArgumentError, "trigger_piece_key はあるが tag_detector がない : #{key}"
+          if e.trigger && !e.tag_detector
+            raise ArgumentError, "trigger はあるが tag_detector がない : #{key}"
           end
 
           if e.tag_detector
-            Array.wrap(e.trigger_params).each do |hv|
+            Array.wrap(e.trigger).each do |hv|
               piece_hash_table_keys_by(hv).each do |key|
                 m[key] ||= []
                 m[key] << e

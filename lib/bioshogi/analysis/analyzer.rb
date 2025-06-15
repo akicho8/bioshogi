@@ -12,6 +12,7 @@ module Bioshogi
       end
 
       def call
+        # ShapeInfo 系
         if e = TagIndex.primary_soldier_hash_table[black_side_soldier]
           e.each do |e|
             walk_counts[e.key] += 1
@@ -19,6 +20,7 @@ module Bioshogi
           end
         end
 
+        # TagDetector 系
         if executor.container.params[:analysis_technique_feature]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :PIECE_HASH_TABLE:
