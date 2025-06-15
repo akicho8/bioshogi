@@ -786,7 +786,7 @@ module Bioshogi
           },
         },
         {
-          key: "歩の裏の香",
+          key: "歩裏の香",
           description: nil,
           func: -> {
             # 【条件1】下(方向)に相手の歩がある
@@ -809,9 +809,9 @@ module Bioshogi
           },
         },
         {
-          key: "歩の裏の歩",
+          key: "歩裏の歩",
           description: nil,
-          func: -> { instance_exec(&TechniqueDetector[:"歩の裏の香"].func) },
+          func: -> { instance_exec(&TechniqueDetector[:"歩裏の香"].func) },
         },
 
         {
