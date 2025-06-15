@@ -265,7 +265,7 @@ module Bioshogi
             verify_if { player.king_soldier.middle_row? }
 
             # 【条件3】すでに持っていればパスする
-            skip_if { player.skill_set.has_skill?(TacticInfo.flat_fetch("天空の城")) }
+            skip_if { player.skill_set.has_skill?(TagIndex.fetch("天空の城")) }
 
             # 【条件4】移動先の近くに自玉がいる
             verify_if { soldier.place.in_outer_area?(player.king_soldier.place, 2) }

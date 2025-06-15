@@ -1,6 +1,6 @@
 require "../../setup"
 
-info = Analysis::TacticInfo.flat_fetch("力戦").static_kif_info
+info = Analysis::TagIndex.fetch("力戦").static_kif_info
 tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
 puts info.to_kif
 # >> |----------------------------+----------+--------------------------------------------------------------------+------------------------------------------------------------------------|

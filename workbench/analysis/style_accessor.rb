@@ -1,7 +1,7 @@
 require "./setup"
 include Analysis
 
-tp TacticInfo.all_elements.inject({}) { |a, e| a.merge(e.key => e.style_info) }
+tp TagIndex.values.inject({}) { |a, e| a.merge(e.key => e.style_info) }
 
 # AttackInfo.tactic_key # => :attack
 # # AttackInfo.styles_hash

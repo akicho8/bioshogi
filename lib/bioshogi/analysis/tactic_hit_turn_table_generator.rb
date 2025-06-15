@@ -15,7 +15,7 @@ module Bioshogi
       end
 
       def to_h
-        av = Analysis::TacticInfo.all_elements.collect do |e|
+        av = Analysis::TagIndex.values.collect do |e|
           turn = nil
           e.static_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
             if hand_log.skill_set.has_skill?(e)

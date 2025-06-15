@@ -1,9 +1,9 @@
 require "./setup"
 Analysis::TacticInfo[:attack].model # => Bioshogi::Analysis::AttackInfo
 Analysis::TacticInfo[:attack].name  # => "戦法"
-tp Analysis::TacticInfo.piece_hash_table
+tp Analysis::TagIndex.piece_hash_table
 
-# list = Analysis::TacticInfo.all_elements.collect { |e|
+# list = Analysis::TagIndex.values.collect { |e|
 #   s = e.name
 #   s = s.tr("０１２３４５６７８９", "0123456789")
 #   s = s.gsub(/(\d)(\d)/) do |s|

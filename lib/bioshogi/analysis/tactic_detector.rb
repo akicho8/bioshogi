@@ -4,7 +4,7 @@ module Bioshogi
   module Analysis
     class TacticDetector
       def call
-        @rows = TacticInfo.all_elements.flat_map do |e|
+        @rows = TagIndex.values.flat_map do |e|
           e.reference_files.collect do |file|
             SingleValidator.new(e, file).call
           end

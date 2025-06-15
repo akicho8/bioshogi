@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        if e = TacticInfo.primary_soldier_hash_table[black_side_soldier]
+        if e = TagIndex.primary_soldier_hash_table[black_side_soldier]
           e.each do |e|
             walk_counts[e.key] += 1
             execute_one(e)
@@ -22,7 +22,7 @@ module Bioshogi
         if executor.container.params[:analysis_technique_feature]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :PIECE_HASH_TABLE:
-          if e = TacticInfo.piece_hash_table[key]
+          if e = TagIndex.piece_hash_table[key]
             e.each do |e|
               execute_block(e) do |list|
                 walk_counts[e.key] += 1
@@ -36,7 +36,7 @@ module Bioshogi
         end
 
         # 毎回呼ぶやつ (for 駒柱)
-        TacticInfo.every_time_proc_list.each do |e|
+        TagIndex.every_time_proc_list.each do |e|
           walk_counts[e.key] += 1
           if instance_exec(e, &e.every_time_proc)
             skill_push(e)

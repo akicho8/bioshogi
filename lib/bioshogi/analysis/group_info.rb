@@ -46,7 +46,7 @@ module Bioshogi
       ]
 
       def values
-        @values ||= TacticInfo.all_elements.find_all { |e| e.group_info === self }
+        @values ||= TagIndex.values.find_all { |e| e.group_info === self }
       end
     end
   end

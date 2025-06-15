@@ -2,7 +2,7 @@ module Bioshogi
   module Analysis
     class FileNormalizer
       def call
-        TacticInfo.all_elements.each.with_index(&method(:normalize_one))
+        TagIndex.values.each.with_index(&method(:normalize_one))
       end
 
       private
@@ -27,7 +27,7 @@ module Bioshogi
             @old_text = @file.read
             @new_text = Parser.parse(source_text).to_kif
             new_file.write(@new_text)
-            puts "#{mark} [#{@index.next} / #{TacticInfo.all_elements.size}] #{new_file}"
+            puts "#{mark} [#{@index.next} / #{TagIndex.values.size}] #{new_file}"
           end
         end
 

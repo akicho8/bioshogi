@@ -57,7 +57,7 @@ module Bioshogi
       end
 
       def list_push2(e)
-        list_push(TacticInfo.flat_fetch(e))
+        list_push(TagIndex.fetch(e))
       end
 
       def has_skill?(e)

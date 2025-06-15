@@ -311,7 +311,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>        7  (    3.6%)  Bioshogi::Analyzer#execute_block
 # >>   callees (196 total):
 # >>       83  (   42.3%)  Bioshogi::Analyzer#execute
-# >>       78  (   39.8%)  Bioshogi::TacticInfo.primary_soldier_hash_table
+# >>       78  (   39.8%)  Bioshogi::TagIndex.primary_soldier_hash_table
 # >>       74  (   37.8%)  Bioshogi::Analyzer#execute_one
 # >>       17  (    8.7%)  Bioshogi::Analyzer#soldier
 # >>       12  (    6.1%)  Bioshogi::Soldier#hash
@@ -323,10 +323,10 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
 # >>        1  (    0.5%)  block in <class:TagDetector>
 # >>        1  (    0.5%)  block in <class:TagDetector>
-# >>        1  (    0.5%)  Bioshogi::TacticInfo.piece_hash_table
+# >>        1  (    0.5%)  Bioshogi::TagIndex.piece_hash_table
 # >>   code:
 # >>                                   |    13  |     def execute
-# >>   111   (12.1%)                   |    14  |       if e = Analysis::TacticInfo.primary_soldier_hash_table[soldier]
+# >>   111   (12.1%)                   |    14  |       if e = Analysis::TagIndex.primary_soldier_hash_table[soldier]
 # >>    74    (8.0%)                   |    15  |         e.each do |e|
 # >>                                   |    16  |           walk_counts[e.key] += 1
 # >>    74    (8.0%)                   |    17  |           execute_one(e)
@@ -336,7 +336,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_technique_feature]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
-# >>     1    (0.1%)                   |    24  |         if e = Analysis::TacticInfo.piece_hash_table[key]
+# >>     1    (0.1%)                   |    24  |         if e = Analysis::TagIndex.piece_hash_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
 # >>                                   |    27  |               walk_counts[e.key] += 1

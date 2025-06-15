@@ -46,7 +46,7 @@ module Bioshogi
         {
           key: "相居飛車",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("居飛車")
+            tag = Analysis::TagIndex.fetch("居飛車")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
                 player.skill_set.list_push2("相居飛車")
@@ -57,7 +57,7 @@ module Bioshogi
         {
           key: "対居飛車",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("居飛車")
+            tag = Analysis::TagIndex.fetch("居飛車")
             @container.players.each do |player|
               if player.opponent_player.skill_set.has_skill?(tag)
                 player.skill_set.list_push2("対居飛車")
@@ -68,7 +68,7 @@ module Bioshogi
         {
           key: "相振り飛車",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("振り飛車")
+            tag = Analysis::TagIndex.fetch("振り飛車")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
                 player.skill_set.list_push2("相振り飛車")
@@ -80,7 +80,7 @@ module Bioshogi
           key: "対抗形",
           description: "片方だけが「振り飛車」なら両方に「対抗形」",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("振り飛車")
+            tag = Analysis::TagIndex.fetch("振り飛車")
             if player = @container.players.find { |e| e.skill_set.has_skill?(tag) }
               others = @container.players - [player]
               if others.none? { |e| e.skill_set.has_skill?(tag) }
@@ -142,7 +142,7 @@ module Bioshogi
         {
           key: "相居玉",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("居玉")
+            tag = Analysis::TagIndex.fetch("居玉")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |e|
                 e.skill_set.list_push2("相居玉")
@@ -206,7 +206,7 @@ module Bioshogi
         {
           key: "相穴熊",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("穴熊")
+            tag = Analysis::TagIndex.fetch("穴熊")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
                 player.skill_set.list_push2("相穴熊")
@@ -217,7 +217,7 @@ module Bioshogi
         {
           key: "相入玉",
           func: -> {
-            tag = Analysis::TacticInfo.flat_fetch("入玉")
+            tag = Analysis::TagIndex.fetch("入玉")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
                 player.skill_set.list_push2("相入玉")

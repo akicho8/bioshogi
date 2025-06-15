@@ -92,7 +92,7 @@ module Bioshogi
       def category
         unless defined?(@category)
           if defined?(super) && v = super
-            @category = TacticInfo.flat_fetch(v)
+            @category = TagIndex.fetch(v)
           else
             @category = nil
           end
@@ -104,7 +104,7 @@ module Bioshogi
       # def sub_category
       #   unless defined?(@sub_category)
       #     if defined?(super) && v = super
-      #       @sub_category = TacticInfo.flat_fetch(v)
+      #       @sub_category = TagIndex.fetch(v)
       #     else
       #       @sub_category = nil
       #     end
@@ -149,7 +149,7 @@ module Bioshogi
       def delete_infos
         unless defined?(@delete_infos)
           if respond_to?(:delete_keys) && v = delete_keys
-            @delete_infos = Array(v).collect { |e| TacticInfo.flat_fetch(e) }
+            @delete_infos = Array(v).collect { |e| TagIndex.fetch(e) }
           else
             @delete_infos = []
           end
@@ -161,7 +161,7 @@ module Bioshogi
       def add_to_opponent
         unless defined?(@add_to_opponent)
           if defined?(super) && v = super
-            @add_to_opponent = TacticInfo.flat_fetch(v)
+            @add_to_opponent = TagIndex.fetch(v)
           else
             @add_to_opponent = nil
           end
@@ -173,7 +173,7 @@ module Bioshogi
       def add_to_self
         unless defined?(@add_to_self)
           if defined?(super) && v = super
-            @add_to_self = TacticInfo.flat_fetch(v)
+            @add_to_self = TagIndex.fetch(v)
           else
             @add_to_self = nil
           end
@@ -193,7 +193,7 @@ module Bioshogi
       def skip_elements
         unless defined?(@skip_elements)
           if respond_to?(:skip_if_exist_keys) && v = skip_if_exist_keys
-            @skip_elements = Array(v).collect { |e| TacticInfo.flat_fetch(e) }
+            @skip_elements = Array(v).collect { |e| TagIndex.fetch(e) }
           else
             @skip_elements = nil
           end
