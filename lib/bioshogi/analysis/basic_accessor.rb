@@ -115,11 +115,7 @@ module Bioshogi
 
       def group_info
         unless defined?(@group_info)
-          if respond_to?(:group_key) && v = group_key
-            @group_info = GroupInfo.fetch(v)
-          else
-            @group_info = nil
-          end
+          @group_info = GroupInfo.fetch_if(group_key)
         end
 
         @group_info
@@ -127,10 +123,7 @@ module Bioshogi
 
       def trigger_params
         unless defined?(@trigger_params)
-          v = nil
-          if respond_to?(:trigger_piece_key)
-            v = trigger_piece_key
-          end
+          v = trigger_piece_key
 
           if v && TriggerInfo.lookup(key)
             raise ArgumentError, "trigger_piece_key があるのに TriggerInfo でも定義されている"
@@ -148,7 +141,7 @@ module Bioshogi
 
       def delete_infos
         unless defined?(@delete_infos)
-          if respond_to?(:delete_keys) && v = delete_keys
+          if v = delete_keys
             @delete_infos = Array(v).collect { |e| TagIndex.fetch(e) }
           else
             @delete_infos = []
@@ -192,7 +185,7 @@ module Bioshogi
 
       def skip_elements
         unless defined?(@skip_elements)
-          if respond_to?(:skip_if_exist_keys) && v = skip_if_exist_keys
+          if v = skip_if_exist_keys
             @skip_elements = Array(v).collect { |e| TagIndex.fetch(e) }
           else
             @skip_elements = nil

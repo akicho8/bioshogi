@@ -44,7 +44,7 @@ module Bioshogi
       # tag_detector を持っている values
       def piece_hash_table
         @piece_hash_table ||= values.each_with_object({}) do |e, m|
-          if (e.respond_to?(:trigger_piece_key) && e.trigger_piece_key) && !e.tag_detector
+          if e.trigger_piece_key && !e.tag_detector
             raise ArgumentError, "trigger_piece_key はあるが tag_detector がない : #{key}"
           end
 
@@ -117,15 +117,11 @@ module Bioshogi
       end
 
       def piece_box_added_proc_list
-        @piece_box_added_proc_list ||= values.find_all do |e|
-          e.respond_to?(:piece_box_added_proc) && e.piece_box_added_proc
-        end
+        @piece_box_added_proc_list ||= values.find_all(&:piece_box_added_proc)
       end
 
       def every_time_proc_list
-        @every_time_proc_list ||= values.find_all do |e|
-          e.respond_to?(:every_time_proc) && e.every_time_proc
-        end
+        @every_time_proc_list ||= values.find_all(&:every_time_proc)
       end
 
       private

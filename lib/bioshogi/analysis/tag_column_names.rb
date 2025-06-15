@@ -28,6 +28,8 @@ module Bioshogi
       :every_time_proc,
       :only_preset_attr,
       :piece_box_added_proc,
+      :delete_keys,
+      :skip_if_exist_keys,
     ]
   end
 end
