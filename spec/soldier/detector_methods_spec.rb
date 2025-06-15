@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Bioshogi::Soldier::TechniqueMatcherMethods do
+RSpec.describe Bioshogi::Soldier::DetectorMethods do
   it "底からの移動幅" do
     assert { Bioshogi::Soldier.from_str("▲19香").bottom_spaces == 0 }
     assert { Bioshogi::Soldier.from_str("▲18香").bottom_spaces == 1 }

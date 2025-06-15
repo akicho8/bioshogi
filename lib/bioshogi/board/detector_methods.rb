@@ -1,6 +1,6 @@
 module Bioshogi
   module Board
-    module TechniqueMatcherMethods
+    module DetectorMethods
       # 180度回転した盤面を返す
       def flip
         self.class.new.tap do |board|

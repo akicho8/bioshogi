@@ -1,7 +1,7 @@
 module Bioshogi
   class Soldier
     # 手筋判定用
-    concern :TechniqueMatcherMethods do
+    concern :DetectorMethods do
       Place::DELEGATE_METHODS.each do |name|
         define_method(name) do |*args, **options|
           place.public_send(name, location, *args, **options)

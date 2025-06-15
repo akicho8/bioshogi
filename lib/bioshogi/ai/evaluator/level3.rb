@@ -83,9 +83,8 @@ module Bioshogi
         # target: 対象玉 (自分側 or 相手側)
         # key: :attack or :defense
         def a_d_score_of(player, target, key)
-          king_place = target.king_place
           table = AttackWeightTable[key]
-          player.soldiers.sum { |e| soldier_score_for_scene(e, king_place, table) }
+          player.soldiers.sum { |e| soldier_score_for_scene(e, target.king_soldier.place, table) }
         end
 
         # 盤上の駒の位置による重み

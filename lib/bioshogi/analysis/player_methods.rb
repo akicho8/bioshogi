@@ -12,6 +12,7 @@ module Bioshogi
       end
 
       # 玉の位置
+      # FIXME: 消す
       def king_place
         @king_place ||= king_soldier&.place
       end
