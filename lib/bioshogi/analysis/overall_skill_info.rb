@@ -33,7 +33,7 @@ module Bioshogi
         { key: "急戦・持久戦",   turn_gteq: nil, only_preset_attr: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "短手数・長手数", turn_gteq: nil, only_preset_attr: :hirate_like, critical: true, outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "背水の陣",       turn_gteq: nil, only_preset_attr: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "屍の舞",       turn_gteq: nil, only_preset_attr: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "穴熊の姿焼",     turn_gteq: nil, only_preset_attr: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
 
         { key: "相穴熊",         turn_gteq: nil, only_preset_attr: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },

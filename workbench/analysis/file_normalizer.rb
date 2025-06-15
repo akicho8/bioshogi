@@ -396,7 +396,7 @@ Analysis::FileNormalizer.new.call
 # >>   [394 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/相穴熊.kif
 # >>   [395 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/大駒全ブッチ.kif
 # >>   [396 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/大駒コンプリート.kif
-# >>   [397 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/背水の陣.kif
+# >>   [397 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/屍の舞.kif
 # >>   [398 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/駒柱.kif
 # >>   [399 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/穴熊の姿焼き.kif
 # >>   [400 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/備考/名人に定跡なし.kif

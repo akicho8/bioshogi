@@ -183,14 +183,14 @@ module Bioshogi
         ################################################################################
 
         {
-          key: "背水の陣",
+          key: "屍の舞",
           description: "大駒がない状態で勝った場合",
           func: -> {
             if win_side_location
               player = @container.player_at(win_side_location)
               if player.strong_piece_have_count.zero?                              # 最後の状態でも全ブッチ状態なら
                 if player.skill_set.has_skill?(Analysis::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
-                  player.skill_set.list_push2("背水の陣")
+                  player.skill_set.list_push2("屍の舞")
                 end
               end
             end

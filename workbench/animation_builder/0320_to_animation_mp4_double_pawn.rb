@@ -4,7 +4,7 @@ Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STD
 # sfen = "position startpos moves 7g7f 3c3d 8h2b+ 8c8d 2b3a 8d8e 3a2a 8e8f 2a1a 8f8g+ 1a2a 8g8h"
 sfen = "position sfen 4k4/9/4p4/9/9/9/4P4/9/4K4 b P 1 moves 5g5f 5c5d P*5e"
 sfen = "
-先手の備考：居飛車, 相居飛車, 背水の陣
+先手の備考：居飛車, 相居飛車, 屍の舞
 後手の備考：居飛車, 相居飛車
 後手の持駒：なし
   ９ ８ ７ ６ ５ ４ ３ ２ １

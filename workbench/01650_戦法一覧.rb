@@ -379,7 +379,7 @@ tp rows
 # >> | Bioshogi::Analysis::NoteInfo      | 相居玉                   |                    |
 # >> | Bioshogi::Analysis::NoteInfo      | 大駒全ブッチ             |                    |
 # >> | Bioshogi::Analysis::NoteInfo      | 大駒コンプリート         |                    |
-# >> | Bioshogi::Analysis::NoteInfo      | 背水の陣                 |                    |
+# >> | Bioshogi::Analysis::NoteInfo      | 屍の舞                 |                    |
 # >> | Bioshogi::Analysis::NoteInfo      | 駒柱                     |                    |
 # >> | Bioshogi::Analysis::NoteInfo      | 穴熊の姿焼き             |                    |
 # >> | Bioshogi::Analysis::NoteInfo      | 都詰め                   |                    |

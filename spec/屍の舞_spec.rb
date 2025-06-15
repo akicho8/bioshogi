@@ -1,0 +1,13 @@
+require "spec_helper"
+
+RSpec.describe do
+  it "先手は負けたので屍の舞タグが含まれていてはいけない" do
+    info = Bioshogi::Parser.file_parse("#{__dir__}/files/後手入玉勝ち_先手が指し終わったタイミングで後手が勝つ特殊なケース.csa")
+    assert { !info.to_kif.match?(/先手の備考：.*屍の舞/) }
+  end
+
+  it "先手切断され勝ち_後手大駒全ブッチ後相手の手番で切断したので負けであり「屍の舞」は得られない" do
+    info = Bioshogi::Parser.file_parse("#{__dir__}/files/先手切断され勝ち_後手大駒全ブッチ後相手の手番で切断したので負けであり「屍の舞」は得られない.csa")
+    assert { !info.to_kif.match?(/後手の備考：.*屍の舞/) }
+  end
+end
