@@ -59,13 +59,13 @@ module Bioshogi
         end
       end
 
-      def verify_if
+      def and_cond
         unless yield
           throw :skip
         end
       end
 
-      def skip_if
+      def break_cond
         if yield
           throw :skip
         end

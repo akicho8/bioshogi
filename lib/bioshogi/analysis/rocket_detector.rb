@@ -11,8 +11,8 @@ module Bioshogi
         :board,
         :drop_hand,
         :opponent?,
-        :verify_if,
-        :skip_if,
+        :and_cond,
+        :break_cond,
       ], to: :@analyzer
 
       def initialize(analyzer)
@@ -22,16 +22,16 @@ module Bioshogi
       def call
         catch :skip do
           # 1. 「飛龍」が来たか「香」を打った
-          verify_if { trigger? }
+          and_cond { trigger? }
 
           investigate
 
           # 「飛龍香」が縦に2つ以上あること
-          verify_if { count_all >= 2 }
+          and_cond { count_all >= 2 }
 
           if false
             # 「飛飛」並びは除外する
-            skip_if { @rook_count == 2 && @lance_count == 0 }
+            break_cond { @rook_count == 2 && @lance_count == 0 }
           end
 
           if false
@@ -39,7 +39,7 @@ module Bioshogi
             # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [3, 4, -1, 1] (先手)
             # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [5, 4, 1, -1] (後手)
             # つまり ((@lance <=> @rook) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
-            skip_if do
+            break_cond do
               if @rook_count == 1 && @lance_count == 1
                 ((@lance.row.value <=> @rook.row.value) + soldier.location.sign_dir).nonzero?
               end
