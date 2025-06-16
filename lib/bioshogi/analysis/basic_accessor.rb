@@ -105,16 +105,12 @@ module Bioshogi
         @group_info
       end
 
-      def trigger
-        unless defined?(@trigger)
-          if super && TriggerInfo.lookup(key)
-            raise ArgumentError, "trigger があるのに TriggerInfo でも定義されている"
-          end
-
-          @trigger = super || TriggerInfo.lookup(key)&.trigger
+      def tag_detector
+        unless defined?(@tag_detector)
+          @tag_detector = TagDetector.lookup(key)
         end
 
-        @trigger
+        @tag_detector
       end
 
       def delete_infos

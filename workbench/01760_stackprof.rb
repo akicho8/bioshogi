@@ -323,7 +323,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
 # >>        1  (    0.5%)  block in <class:TagDetector>
 # >>        1  (    0.5%)  block in <class:TagDetector>
-# >>        1  (    0.5%)  Bioshogi::TagIndex.piece_hash_table
+# >>        1  (    0.5%)  Bioshogi::TagIndex.motion_trigger_table
 # >>   code:
 # >>                                   |    13  |     def execute
 # >>   111   (12.1%)                   |    14  |       if e = Analysis::TagIndex.primary_soldier_hash_table[soldier]
@@ -336,7 +336,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_technique_feature]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
-# >>     1    (0.1%)                   |    24  |         if e = Analysis::TagIndex.piece_hash_table[key]
+# >>     1    (0.1%)                   |    24  |         if e = Analysis::TagIndex.motion_trigger_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
 # >>                                   |    27  |               walk_counts[e.key] += 1

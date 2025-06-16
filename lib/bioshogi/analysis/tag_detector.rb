@@ -10,6 +10,7 @@ module Bioshogi
         {
           key: "蓋歩",
           description: "飛車を帰らせない",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 【条件1】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
             verify_if do
@@ -44,6 +45,7 @@ module Bioshogi
         {
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 【条件1】「最下段」である
             verify_if { soldier.bottom_spaces.zero? }
@@ -61,6 +63,7 @@ module Bioshogi
         {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに敵玉がある",
+          trigger: { piece_key: :rook,   promoted: true,  motion: :move },
           func: -> {
             verify_if do
               V.ikkenryu_vectors.any? do |e|
@@ -76,6 +79,7 @@ module Bioshogi
         {
           key: "自陣飛車",
           description: nil,
+          trigger: { piece_key: :rook,   promoted: false, motion: :drop },
           func: -> {
             verify_if { soldier.own_side? }
           },
@@ -83,6 +87,7 @@ module Bioshogi
         {
           key: "自陣角",
           description: nil,
+          trigger: { piece_key: :bishop, promoted: false, motion: :drop },
           func: -> {
             verify_if { soldier.own_side? }
           },
@@ -90,6 +95,7 @@ module Bioshogi
         {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :both },
           func: -> {
             # 【条件1】2〜8筋である (端の場合は「こびん」とは言わないため)
             verify_if { soldier.column_is_second_to_eighth? }
@@ -118,6 +124,7 @@ module Bioshogi
         {
           key: "と金攻め",
           description: nil,
+          trigger: { piece_key: :pawn,   promoted: true,  motion: :move },
           func: -> {
             # 【条件1】「歩成り」であればパス
             skip_if { origin_soldier.normal? }
@@ -141,6 +148,7 @@ module Bioshogi
         {
           key: "位の確保",
           description: "中盤戦になる前に5段目の歩を銀で支える",
+          trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> {
             # 【条件1】前線(6段目)にいる
             verify_if { soldier.kurai_sasae? }
@@ -168,6 +176,7 @@ module Bioshogi
         {
           key: "浮き飛車",
           description: "戻る場合も考慮する",
+          trigger: { piece_key: :rook,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】前線(6段目)にいる
             verify_if { soldier.funoue_line_ni_uita? }
@@ -182,6 +191,10 @@ module Bioshogi
         {
           key: "玉飛接近",
           description: "龍は馬と似て守りに効いている場合もあるため接近してもよいとする",
+          trigger: [
+            { piece_key: :rook, promoted: false, motion: :move },
+            { piece_key: :king, promoted: false, motion: :move },
+          ],
           func: -> {
             if soldier.piece.key == :rook
               target = :king
@@ -229,6 +242,7 @@ module Bioshogi
         {
           key: "守りの馬",
           description: nil,
+          trigger: { piece_key: :bishop, promoted: true,  motion: :move },
           func: -> {
             # 【条件1】自玉が存在する
             verify_if { player.king_soldier }
@@ -243,6 +257,7 @@ module Bioshogi
         {
           key: "双玉接近",
           description: nil,
+          trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             # 【条件1】敵玉が存在する
             verify_if { opponent_player.king_soldier }
@@ -257,6 +272,11 @@ module Bioshogi
         {
           key: "天空の城",
           description: nil,
+          trigger: [
+            { piece_key: :king,   promoted: false, motion: :move },
+            { piece_key: :silver, promoted: true,  motion: :move },
+            { piece_key: :gold,   promoted: false, motion: :both },
+          ],
           func: -> {
             # 【条件1】自玉が存在する
             verify_if { player.king_soldier }
@@ -270,7 +290,7 @@ module Bioshogi
             # 【条件4】移動先の近くに自玉がいる
             verify_if { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
-            # 【条件5】自玉のまわりに金以上の価値のある駒が多い
+            # 【条件5】自玉のまわりに金以上の価値のある駒が4以上ある
             verify_if do
               gteq_weight = Piece[:gold].basic_weight
               match = false
@@ -298,6 +318,7 @@ module Bioshogi
         {
           key: "端玉",
           description: "端に入ったときだけ判定する",
+          trigger: { piece_key: :king,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】左右の端 (かどを除く) に移動した
             verify_if { soldier.both_side_without_corner? }
@@ -309,6 +330,7 @@ module Bioshogi
         {
           key: "中段玉",
           description: nil,
+          trigger: { piece_key: :king,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】移動元は自陣にいる
             verify_if { origin_soldier.own_side? }
@@ -320,6 +342,7 @@ module Bioshogi
         {
           key: "パンツを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3つ目かつ、移動元の隣(端に近い方)に自玉がある",
+          trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {
             # 【条件1】下から3段目である
             verify_if { soldier.bottom_spaces == 2 }
@@ -346,6 +369,7 @@ module Bioshogi
         {
           key: "腹銀",
           description: "銀を打ったか移動させたとき左右どちらかに敵玉がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.left_right_vectors.any? do |e|
@@ -361,6 +385,7 @@ module Bioshogi
         {
           key: "尻銀",
           description: "銀を打ったか移動させたとき下に敵玉がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               if v = soldier.relative_move_to(:down)
@@ -374,6 +399,7 @@ module Bioshogi
         {
           key: "肩銀",
           description: "銀を打ったか移動させたとき左斜め前か右斜め前に玉がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.bishop_naname_mae_vectors.any? do |up_left|
@@ -389,6 +415,7 @@ module Bioshogi
         {
           key: "裾銀",
           description: "銀を打ったか移動させたとき左斜め後か右斜め後に玉がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.wariuchi_vectors.any? do |down_left|
@@ -404,6 +431,7 @@ module Bioshogi
         {
           key: "頭銀",
           description: "銀を打ったか移動させたとき前に敵玉がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
@@ -420,26 +448,31 @@ module Bioshogi
         {
           key: "腹金",
           description: "金を打ったか移動させたとき左右どちらかに敵玉がある",
+          trigger: { piece_key: :gold,   promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"腹銀"].func) },
         },
         {
           key: "尻金",
           description: "金を打ったか移動させたとき下に敵玉がある",
+          trigger: { piece_key: :gold,   promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"尻銀"].func) },
         },
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
+          trigger: { piece_key: :gold,   promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"肩銀"].func) },
         },
         {
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
+          trigger: { piece_key: :gold,   promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"裾銀"].func) },
         },
         {
           key: "頭金",
           description: "金を打ったか移動させたとき前に敵玉がある",
+          trigger: { piece_key: :gold,   promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"頭銀"].func) },
         },
 
@@ -448,6 +481,7 @@ module Bioshogi
         {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 【条件1】2, 3, 4 段目である
             verify_if { soldier.tarefu_desuka? }
@@ -465,6 +499,7 @@ module Bioshogi
         {
           key: "遠見の角",
           description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
+          trigger: { piece_key: :bishop, promoted: false, motion: :both },
           func: -> {
             # 【条件1】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             verify_if { executor.container.outbreak_turn }
@@ -503,6 +538,7 @@ module Bioshogi
         {
           key: "割り打ちの銀",
           description: "打った銀の後ろの左右両方に相手の飛か金がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.wariuchi_vectors.all? do |e|
@@ -520,6 +556,7 @@ module Bioshogi
         {
           key: "たすきの銀",
           description: "打った銀の斜め前に飛があり対極に金がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.tasuki_vectors.any? do |up_left, down_right|
@@ -541,11 +578,13 @@ module Bioshogi
         {
           key: "たすきの角",
           description: "打った角の斜め前に飛があり対極に金がある",
+          trigger: { piece_key: :bishop, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"たすきの銀"].func) },
         },
         {
           key: "壁金",
           description: "飛車や角の位置に玉よりも先に金が移動した",
+          trigger: { piece_key: :gold,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】端から2つ目である
             verify_if { soldier.column_spaces_min == 1 }
@@ -590,11 +629,13 @@ module Bioshogi
         {
           key: "壁銀",
           description: "飛車や角の位置に玉よりも先に銀が移動した",
+          trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> { instance_exec(&TagDetector[:"壁金"].func) },
         },
         {
           key: "桂頭の銀",
           description: "打った銀の上に相手の桂がある",
+          trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
             # 【条件1】上に相手の桂がある
             verify_if do
@@ -616,6 +657,7 @@ module Bioshogi
         {
           key: "桂頭の玉",
           description: "「桂頭の玉、寄せにくし」の略",
+          trigger: { piece_key: :king,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】上に相手の桂がある
             verify_if do
@@ -630,6 +672,7 @@ module Bioshogi
         {
           key: "歩頭の桂",
           description: "打ったまたは移動した桂の上に相手の歩がある",
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
           func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
@@ -643,6 +686,7 @@ module Bioshogi
         {
           key: "金頭の桂",
           description: "打ったまたは移動した桂の上に相手の金がある",
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
           func: -> {
             verify_if do
               if v = soldier.relative_move_to(:up)
@@ -656,6 +700,7 @@ module Bioshogi
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :both },
           func: -> {
             # 【条件1】同歩ならパス
             skip_if { captured_soldier }
@@ -699,6 +744,7 @@ module Bioshogi
         {
           key: "端玉には端歩",
           description: nil,
+          trigger: { piece_key: :pawn,   promoted: false, motion: :move },
           func: -> {
             # 【条件1】端である
             verify_if { soldier.column_is_edge? }
@@ -753,6 +799,7 @@ module Bioshogi
         {
           key: "田楽刺し",
           description: "角の頭に打ってその奥に玉などの大駒がある",
+          trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
             verify_if do
               mode = :walk_to_bishop
@@ -792,6 +839,7 @@ module Bioshogi
           # いろんな条件を考えたが結局「下段」のみのチェックとする
           key: "下段の香",
           description: "打った香が一番下",
+          trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
             # 【条件1】「最下段」である
             verify_if { soldier.bottom_spaces.zero? }
@@ -800,6 +848,7 @@ module Bioshogi
         {
           key: "歩裏の香",
           description: nil,
+          trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
             # 【条件1】下(方向)に相手の歩がある
             verify_if do
@@ -823,12 +872,14 @@ module Bioshogi
         {
           key: "歩裏の歩",
           description: nil,
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> { instance_exec(&TagDetector[:"歩裏の香"].func) },
         },
 
         {
           key: "マムシのと金",
           description: nil,
+          trigger: { piece_key: :pawn,   promoted: true,  motion: :move },
           func: -> {
             # 【条件1】移動元の駒は「と」である (すでに成っている)
             verify_if { origin_soldier.promoted }
@@ -847,6 +898,7 @@ module Bioshogi
         {
           key: "ふんどしの桂",
           description: "打った桂の2つ前の左右に自分より価値の高い相手の駒がある",
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.keima_vectors.all? do |e|
@@ -864,6 +916,7 @@ module Bioshogi
         {
           key: "控えの桂",
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
+          trigger: { piece_key: :knight, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】打った位置が6段目以降である
             verify_if { soldier.top_spaces >= Dimension::Row.promotable_depth + 2 }
@@ -891,6 +944,7 @@ module Bioshogi
         {
           key: "土下座の歩",
           description: nil,
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】8,9段目である
             verify_if { soldier.bottom_spaces < 2 }
@@ -917,6 +971,7 @@ module Bioshogi
         {
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 【条件1】打った位置が1から4段目である
             verify_if { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
@@ -961,6 +1016,7 @@ module Bioshogi
         {
           key: "継ぎ歩",
           description: "条件が成立しない方を先に判定した方が早めに打ち切れるので2手目1手目の順で見る",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
@@ -990,6 +1046,7 @@ module Bioshogi
         {
           key: "連打の歩",
           description: "",
+          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
           func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
@@ -1019,6 +1076,7 @@ module Bioshogi
         {
           key: "継ぎ桂",
           description: "継ぐのは前なので打った桂の2つ後ろの左右のどちらかに自分の桂がある",
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
           func: -> {
             verify_if do
               V.tsugikei_vectors.any? do |e|
@@ -1034,6 +1092,7 @@ module Bioshogi
         {
           key: "跳ね違いの桂",
           description: "移動元から見て移動してない方に相手が1手前に移動した桂があるか？",
+          trigger: { piece_key: :knight, promoted: :both, motion: :move },
           func: -> {
             verify_if do
               # △33桂(21)▲13桂成(25)で考える
@@ -1055,6 +1114,7 @@ module Bioshogi
         {
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
+          trigger: { piece_key: :king,   promoted: false, motion: :move },
           func: -> {
             verify_if { soldier.just_nyuugyoku?           }
             verify_if { origin_soldier.atoippo_nyuugyoku? }
@@ -1063,6 +1123,7 @@ module Bioshogi
         {
           key: "角不成",
           description: "相手陣地に入るときと出るときの両方チェックする",
+          trigger: { piece_key: :bishop, promoted: false, motion: :move },
           func: -> {
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
@@ -1070,6 +1131,7 @@ module Bioshogi
         {
           key: "飛車不成",
           description: "角不成と同じ方法でよい",
+          trigger: { piece_key: :rook,   promoted: false, motion: :move },
           func: -> {
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },
@@ -1077,6 +1139,7 @@ module Bioshogi
         {
           key: "銀不成",
           description: "角不成と同じ方法でよい",
+          trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> {
             verify_if { origin_soldier.tsugini_nareru_on?(place) }
           },

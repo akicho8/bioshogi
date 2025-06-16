@@ -53,8 +53,4 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
   it "name" do
     assert { Bioshogi::Analysis::TacticInfo[:attack].name == "戦法" }
   end
-
-  it ".piece_hash_table" do
-    assert { Bioshogi::Analysis::TagIndex.piece_hash_table[[:pawn, false, true]].include?(Bioshogi::Analysis::TechniqueInfo["金底の歩"]) }
-  end
 end

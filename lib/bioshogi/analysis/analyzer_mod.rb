@@ -37,7 +37,7 @@ module Bioshogi
 
         if analysis_feature_enabled?
           TagIndex.piece_box_added_proc_list.each do |e|
-            if instance_exec(e, captured_soldier, &e.piece_box_added_proc)
+            if instance_exec(e, captured_soldier, &e.if_capture_then)
               skill_push2(e)
             end
           end

@@ -21,13 +21,13 @@ module Bioshogi
       # 曖昧検索用
       # TagIndex.fuzzy_lookup("アヒル").key # => :アヒル戦法
       def fuzzy_lookup(key)
-        v = nil
-        source_expand(key).each do |str|
-          if v = lookup(str)
+        found = nil
+        abbrev_expand(key).each do |str|
+          if found = lookup(str)
             break
           end
         end
-        v
+        found
       end
 
       def values
@@ -36,68 +36,6 @@ module Bioshogi
 
       def values_hash
         @values_hash ||= values.inject({}) { |a, e| a.merge(e.key => e) }
-      end
-
-      ################################################################################
-
-      # :PIECE_HASH_TABLE:
-      # tag_detector を持っている values
-      def piece_hash_table
-        @piece_hash_table ||= values.each_with_object({}) do |e, m|
-          if e.trigger && !e.tag_detector
-            raise ArgumentError, "trigger はあるが tag_detector がない : #{key}"
-          end
-
-          if e.tag_detector
-            Array.wrap(e.trigger).each do |hv|
-              piece_hash_table_keys_by(hv).each do |key|
-                m[key] ||= []
-                m[key] << e
-              end
-            end
-          end
-        end
-      end
-
-      def piece_hash_table_keys_by(hv)
-        promoted = array_from_promoted(hv[:promoted])
-        motion = array_from_motion(hv[:motion])
-
-        av = []
-        Array.wrap(hv[:piece_key]).each do |x|
-          Array.wrap(promoted).each do |y|
-            Array.wrap(motion).each do |z|
-              av << [x, y, z]
-            end
-          end
-        end
-        av
-      end
-
-      def array_from_promoted(promoted)
-        case promoted
-        when true
-          [true]
-        when false
-          [false]
-        when :both
-          [true, false]
-        else
-          raise "must not happen"
-        end
-      end
-
-      def array_from_motion(motion)
-        case motion
-        when :move
-          [false]
-        when :drop
-          [true]
-        when :both
-          [true, false] # 「打」と「移動」を許可する
-        else
-          raise "must not happen"
-        end
       end
 
       ################################################################################
@@ -117,7 +55,7 @@ module Bioshogi
       end
 
       def piece_box_added_proc_list
-        @piece_box_added_proc_list ||= values.find_all(&:piece_box_added_proc)
+        @piece_box_added_proc_list ||= values.find_all(&:if_capture_then)
       end
 
       def every_time_proc_list
@@ -126,7 +64,7 @@ module Bioshogi
 
       private
 
-      def source_expand(str)
+      def abbrev_expand(str)
         str = str.to_s.strip
         [
           # "アヒル戦法"

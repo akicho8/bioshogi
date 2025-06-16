@@ -26,7 +26,7 @@ module Bioshogi
       :description,
       :every_time_proc,
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
-      :piece_box_added_proc,
+      :if_capture_then,
       :delete_keys,
       :skip_if_exist_keys,
     ]
