@@ -42,7 +42,9 @@ module Bioshogi
             end
           end
 
-          RocketDetector.new(self).call
+          CustomDetectorInfo.each do |e|
+            e.klass.new(self).call
+          end
         end
       end
 
