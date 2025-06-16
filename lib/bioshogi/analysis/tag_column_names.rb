@@ -28,7 +28,7 @@ module Bioshogi
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
       :if_capture_then,
       :delete_keys,
-      :skip_if_exist_keys,
+      :skip_if_exist,
     ]
   end
 end

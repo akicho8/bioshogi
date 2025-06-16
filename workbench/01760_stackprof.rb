@@ -131,8 +131,8 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |    61  |         end
 # >>                                   |    62  |
 # >>                                   |    63  |         # 「居飛車」判定のとき「振り飛車」がすでにあればスキップ
-# >>                                   |    64  |         if e.skip_elements
-# >>                                   |    65  |           if e.skip_elements.any? { |e| list.include?(e) }
+# >>                                   |    64  |         if e.skip_if_exist
+# >>                                   |    65  |           if e.skip_if_exist.any? { |e| list.include?(e) }
 # >>                                   |    66  |             throw :skip
 # >>                                   |    67  |           end
 # >>                                   |    68  |         end

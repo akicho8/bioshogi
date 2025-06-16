@@ -93,10 +93,8 @@ module Bioshogi
           end
 
           # 「居飛車」判定のとき「振り飛車」がすでにあればスキップ
-          if e.skip_elements
-            if e.skip_elements.any? { |e| list.include?(e) }
-              throw :skip
-            end
+          if e.skip_if_exist.any? { |e| list.include?(e) }
+            throw :skip
           end
 
           # 片美濃のチェックをしようとするとき、すでに子孫のダイヤモンド美濃があれば、片美濃のチェックはスキップ

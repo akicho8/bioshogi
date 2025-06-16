@@ -149,16 +149,12 @@ module Bioshogi
         @tag_detector
       end
 
-      def skip_elements
-        unless defined?(@skip_elements)
-          if v = skip_if_exist_keys
-            @skip_elements = Array(v).collect { |e| TagIndex.fetch(e) }
-          else
-            @skip_elements = nil
-          end
+      def skip_if_exist
+        unless defined?(@skip_if_exist)
+          @skip_if_exist = Array(super).collect { |e| TagIndex.fetch(e) }
         end
 
-        @skip_elements
+        @skip_if_exist
       end
 
       def hit_turn
