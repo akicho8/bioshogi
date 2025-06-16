@@ -10,7 +10,7 @@ module Bioshogi
         {
           key: "蓋歩",
           description: "飛車を帰らせない",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
             and_cond do
@@ -45,7 +45,7 @@ module Bioshogi
         {
           key: "金底の歩",
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】「最下段」である
             and_cond { soldier.bottom_spaces.zero? }
@@ -63,7 +63,7 @@ module Bioshogi
         {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに敵玉がある",
-          trigger: { piece_key: :rook,   promoted: true,  motion: :move },
+          trigger: { piece_key: :rook, promoted: true,  motion: :move },
           func: -> {
             and_cond do
               V.ikkenryu_vectors.any? do |e|
@@ -79,7 +79,7 @@ module Bioshogi
         {
           key: "自陣飛車",
           description: nil,
-          trigger: { piece_key: :rook,   promoted: false, motion: :drop },
+          trigger: { piece_key: :rook, promoted: false, motion: :drop },
           func: -> {
             and_cond { soldier.own_side? }
           },
@@ -95,7 +95,7 @@ module Bioshogi
         {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :both },
+          trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
             # 【条件1】2〜8筋である (端の場合は「こびん」とは言わないため)
             and_cond { soldier.column_is_second_to_eighth? }
@@ -124,9 +124,9 @@ module Bioshogi
         {
           key: "と金攻め",
           description: nil,
-          trigger: { piece_key: :pawn,   promoted: true,  motion: :move },
+          trigger: { piece_key: :pawn, promoted: true,  motion: :move },
           func: -> {
-            # 【条件1】「歩成り」であればパス
+            # 【条件1】「歩成り」であれば終了
             break_cond { origin_soldier.normal? }
 
             # 【条件2】駒を取っている
@@ -176,7 +176,7 @@ module Bioshogi
         {
           key: "浮き飛車",
           description: "戻る場合も考慮する",
-          trigger: { piece_key: :rook,   promoted: false, motion: :move },
+          trigger: { piece_key: :rook, promoted: false, motion: :move },
           func: -> {
             # 【条件1】前線(6段目)にいる
             and_cond { soldier.funoue_line_ni_uita? }
@@ -250,7 +250,7 @@ module Bioshogi
             # 【条件2】移動先の近くに自玉がいる
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
-            # 【条件3】移動元の近くに、すでに自玉がいたらパス
+            # 【条件3】移動元の近くに、すでに自玉がいたら終了
             break_cond { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
           },
         },
@@ -265,7 +265,7 @@ module Bioshogi
             # 【条件2】移動先の近くに敵玉がいる
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
 
-            # 【条件3】移動元の近くに敵玉がいたらパス
+            # 【条件3】移動元の近くに敵玉がいたら終了
             break_cond { origin_soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
           },
         },
@@ -284,7 +284,7 @@ module Bioshogi
             # 【条件2】自玉は4から6段目にいる
             and_cond { player.king_soldier.middle_row? }
 
-            # 【条件3】すでに持っていればパスする
+            # 【条件3】すでに持っていれば終了する
             break_cond { player.skill_set.has_skill?(TagIndex.fetch("天空の城")) }
 
             # 【条件4】移動先の近くに自玉がいる
@@ -318,7 +318,7 @@ module Bioshogi
         {
           key: "端玉",
           description: "端に入ったときだけ判定する",
-          trigger: { piece_key: :king,   promoted: false, motion: :move },
+          trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             # 【条件1】左右の端 (かどを除く) に移動した
             and_cond { soldier.both_side_without_corner? }
@@ -330,7 +330,7 @@ module Bioshogi
         {
           key: "中段玉",
           description: nil,
-          trigger: { piece_key: :king,   promoted: false, motion: :move },
+          trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             # 【条件1】移動元は自陣にいる
             and_cond { origin_soldier.own_side? }
@@ -448,31 +448,31 @@ module Bioshogi
         {
           key: "腹金",
           description: "金を打ったか移動させたとき左右どちらかに敵玉がある",
-          trigger: { piece_key: :gold,   promoted: false, motion: :both },
+          trigger: { piece_key: :gold, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"腹銀"].func) },
         },
         {
           key: "尻金",
           description: "金を打ったか移動させたとき下に敵玉がある",
-          trigger: { piece_key: :gold,   promoted: false, motion: :both },
+          trigger: { piece_key: :gold, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"尻銀"].func) },
         },
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
-          trigger: { piece_key: :gold,   promoted: false, motion: :both },
+          trigger: { piece_key: :gold, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"肩銀"].func) },
         },
         {
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
-          trigger: { piece_key: :gold,   promoted: false, motion: :both },
+          trigger: { piece_key: :gold, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"裾銀"].func) },
         },
         {
           key: "頭金",
           description: "金を打ったか移動させたとき前に敵玉がある",
-          trigger: { piece_key: :gold,   promoted: false, motion: :both },
+          trigger: { piece_key: :gold, promoted: false, motion: :both },
           func: -> { instance_exec(&TagDetector[:"頭銀"].func) },
         },
 
@@ -481,7 +481,7 @@ module Bioshogi
         {
           key: "垂れ歩",
           description: "打った歩の前が空で次に成れる余地がある場合",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】2, 3, 4 段目である
             and_cond { soldier.tarefu_desuka? }
@@ -584,7 +584,7 @@ module Bioshogi
         {
           key: "壁金",
           description: "飛車や角の位置に玉よりも先に金が移動した",
-          trigger: { piece_key: :gold,   promoted: false, motion: :move },
+          trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
             # 【条件1】端から2つ目である
             and_cond { soldier.column_spaces_min == 1 }
@@ -657,7 +657,7 @@ module Bioshogi
         {
           key: "桂頭の玉",
           description: "「桂頭の玉、寄せにくし」の略",
-          trigger: { piece_key: :king,   promoted: false, motion: :move },
+          trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             # 【条件1】上に相手の桂がある
             and_cond do
@@ -700,9 +700,9 @@ module Bioshogi
         {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :both },
+          trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            # 【条件1】同歩ならパス
+            # 【条件1】同歩なら終了
             break_cond { captured_soldier }
 
             # 【条件2】進めた歩の前が空である
@@ -744,7 +744,7 @@ module Bioshogi
         {
           key: "端玉には端歩",
           description: nil,
-          trigger: { piece_key: :pawn,   promoted: false, motion: :move },
+          trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
             # 【条件1】端である
             and_cond { soldier.column_is_edge? }
@@ -872,14 +872,14 @@ module Bioshogi
         {
           key: "歩裏の歩",
           description: nil,
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> { instance_exec(&TagDetector[:"歩裏の香"].func) },
         },
 
         {
           key: "マムシのと金",
           description: nil,
-          trigger: { piece_key: :pawn,   promoted: true,  motion: :move },
+          trigger: { piece_key: :pawn, promoted: true,  motion: :move },
           func: -> {
             # 【条件1】移動元の駒は「と」である (すでに成っている)
             and_cond { origin_soldier.promoted }
@@ -890,7 +890,7 @@ module Bioshogi
             # 【条件3】敵玉に近づく
             and_cond { move_to_op_king? }
 
-            # 【条件3】駒を取っていたらパス (近づくだけ)
+            # 【条件3】駒を取っていたら終了 (近づくだけ)
             break_cond { captured_soldier }
           },
         },
@@ -971,7 +971,7 @@ module Bioshogi
         {
           key: "たたきの歩",
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件1】打った位置が1から4段目である
             and_cond { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
@@ -1000,7 +1000,7 @@ module Bioshogi
               end
             end
 
-            # 【条件4】連打の歩ならパス :OPTIONAL:
+            # 【条件4】連打の歩なら終了 :OPTIONAL:
             break_cond do
               if hand_log = executor.container.hand_logs[-2] # 前回の自分の手
                 if drop_hand = hand_log.drop_hand            # 打った手
@@ -1016,7 +1016,7 @@ module Bioshogi
         {
           key: "継ぎ歩",
           description: "条件が成立しない方を先に判定した方が早めに打ち切れるので2手目1手目の順で見る",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
@@ -1046,7 +1046,7 @@ module Bioshogi
         {
           key: "連打の歩",
           description: "",
-          trigger: { piece_key: :pawn,   promoted: false, motion: :drop },
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 0手前: ▲25歩打 継ぎ歩 したらここに来る
 
@@ -1114,7 +1114,7 @@ module Bioshogi
         {
           key: "入玉",
           description: "玉が4段目から3段目に移動した",
-          trigger: { piece_key: :king,   promoted: false, motion: :move },
+          trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             and_cond { soldier.just_nyuugyoku?           }
             and_cond { origin_soldier.atoippo_nyuugyoku? }
@@ -1131,7 +1131,7 @@ module Bioshogi
         {
           key: "飛車不成",
           description: "角不成と同じ方法でよい",
-          trigger: { piece_key: :rook,   promoted: false, motion: :move },
+          trigger: { piece_key: :rook, promoted: false, motion: :move },
           func: -> {
             and_cond { origin_soldier.tsugini_nareru_on?(place) }
           },
