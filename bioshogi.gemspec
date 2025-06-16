@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "table_format"
   spec.add_dependency "memory_record"
   spec.add_dependency "tree_support"
-  spec.add_dependency "color"
+  spec.add_dependency "color", "< 2.0.0"
   spec.add_dependency "zeitwerk"
   spec.add_dependency "thor"
   spec.add_dependency "rmagick", ">= 5.0.0"
