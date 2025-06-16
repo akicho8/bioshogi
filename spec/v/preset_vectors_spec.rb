@@ -5,7 +5,7 @@ RSpec.describe Bioshogi::V::PresetVectors do
     assert { Bioshogi::V.cross_vectors     }
     assert { Bioshogi::V.outer_vectors    }
     assert { Bioshogi::V.left_right_vectors }
-    assert { Bioshogi::V.ikkenryu_vectors   }
+    assert { Bioshogi::V.ikkenryu_cross_vectors   }
     assert { Bioshogi::V.keima_vectors      }
     assert { Bioshogi::V.wariuchi_vectors   }
     assert { Bioshogi::V.ginbasami_verctors }

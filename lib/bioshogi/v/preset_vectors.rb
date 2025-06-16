@@ -19,8 +19,8 @@ module Bioshogi
         @wariuchi_vectors ||= [down_left, down_right]
       end
 
-      def ikkenryu_vectors
-        @ikkenryu_vectors ||= [left_left, right_right, up_up, down_down]
+      def ikkenryu_cross_vectors
+        @ikkenryu_cross_vectors ||= [left_left, right_right, up_up, down_down]
       end
 
       def keima_vectors

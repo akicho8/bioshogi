@@ -66,7 +66,7 @@ module Bioshogi
           trigger: { piece_key: :rook, promoted: true,  motion: :move },
           func: -> {
             and_cond do
-              V.ikkenryu_vectors.any? do |e|
+              V.ikkenryu_cross_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
                   if s = board[v]
                     s.piece.key == :king && opponent?(s)
@@ -1116,7 +1116,10 @@ module Bioshogi
           description: "玉が4段目から3段目に移動した",
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
+            # 【条件1】3段目に移動する
             and_cond { soldier.just_nyuugyoku?           }
+
+            # 【条件2】4段目から移動する
             and_cond { origin_soldier.atoippo_nyuugyoku? }
           },
         },
@@ -1146,13 +1149,6 @@ module Bioshogi
         },
 
         ################################################################################
-
-        # {
-        #   key: "飛車切り",
-        #   description: nil,
-        #   func: -> {
-        #   },
-        # },
       ]
     end
   end
