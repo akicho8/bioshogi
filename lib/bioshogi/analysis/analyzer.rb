@@ -12,23 +12,17 @@ module Bioshogi
       end
 
       def call
-        # FIXME: ここらへんはすべてを and 条件とするとする
+        process_case1
+        process_case2
+        process_case3
+      end
 
-        # ShapeInfo 系
+      # ShapeInfo 系
+      def process_case1
         if e = TagIndex.primary_soldier_hash_table[black_side_soldier]
           e.each do |e|
             walk_counts[e.key] += 1
             execute_one(e)
-          end
-        end
-
-        process_case2
-
-        # 毎回呼ぶやつ (for 駒柱)
-        TagIndex.every_time_proc_list.each do |e|
-          walk_counts[e.key] += 1
-          if instance_exec(e, &e.every_time_proc)
-            skill_push(e)
           end
         end
       end
@@ -49,6 +43,16 @@ module Bioshogi
           end
 
           RocketDetector.new(self).call
+        end
+      end
+
+      # 毎回呼ぶやつ (for 駒柱)
+      def process_case3
+        TagIndex.every_time_proc_list.each do |e|
+          walk_counts[e.key] += 1
+          if instance_exec(e, &e.every_time_proc)
+            skill_push(e)
+          end
         end
       end
 
@@ -73,21 +77,6 @@ module Bioshogi
 
       def skill_push(skill)
         executor.skill_push2(skill)
-
-        # # executor.skill_push(skill) # ← ほんとうはこれだけでいい。共通化するべき。
-        #
-        # player.skill_set.list_push(skill)   # プレイヤーの個別設定
-        # executor.skill_set.list_push(skill) # executor の方にも設定(これいる？)
-        #
-        # if v = skill.add_to_self
-        #   player.skill_set.list_push(v)
-        #   # executor.skill_set.list_push(v)
-        # end
-        #
-        # if v = skill.add_to_opponent
-        #   opponent_player.skill_set.list_push(v)
-        #   # executor.skill_set.list_push(v)
-        # end
       end
 
       def execute_one(e)

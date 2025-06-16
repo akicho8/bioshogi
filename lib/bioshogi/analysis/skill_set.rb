@@ -53,7 +53,7 @@ module Bioshogi
 
       def list_push(e)
         raise "must not happen" unless e
-        list_of(e).push(e)
+        list_of(e) << e
       end
 
       def list_push2(e)
@@ -91,7 +91,7 @@ module Bioshogi
         (attack_infos + defense_infos).collect(&:style_info).max
       end
 
-      class List < Array
+      class List < Set
         # 重複しているように感じる囲いなどを整理する
         # たとえば "3→4→3戦法" は普通に判定すると最初に「四間飛車」になってしまうが人間からするとあきらかに違う
         # したがって経由した四間飛車を消さないといけない
