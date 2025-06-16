@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module TechniqueMatcherHelper
+    module DslMethods
     end
   end
 end

@@ -311,24 +311,24 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>        7  (    3.6%)  Bioshogi::Analyzer#execute_block
 # >>   callees (196 total):
 # >>       83  (   42.3%)  Bioshogi::Analyzer#execute
-# >>       78  (   39.8%)  Bioshogi::TagIndex.primary_soldier_hash_table
+# >>       78  (   39.8%)  Bioshogi::TagIndex.shape_trigger_table
 # >>       74  (   37.8%)  Bioshogi::Analyzer#execute_one
 # >>       17  (    8.7%)  Bioshogi::Analyzer#soldier
 # >>       12  (    6.1%)  Bioshogi::Soldier#hash
 # >>        9  (    4.6%)  Bioshogi::Analyzer#execute_block
 # >>        4  (    2.0%)  Bioshogi::Soldier#eql?
-# >>        2  (    1.0%)  block in <class:TagDetector>
-# >>        2  (    1.0%)  block in <class:TagDetector>
-# >>        1  (    0.5%)  block in <class:TagDetector>
+# >>        2  (    1.0%)  block in <class:MotionDetector>
+# >>        2  (    1.0%)  block in <class:MotionDetector>
+# >>        1  (    0.5%)  block in <class:MotionDetector>
 # >>        1  (    0.5%)  Bioshogi::PlayerExecutor::Base#container
-# >>        1  (    0.5%)  block in <class:TagDetector>
-# >>        1  (    0.5%)  block in <class:TagDetector>
+# >>        1  (    0.5%)  block in <class:MotionDetector>
+# >>        1  (    0.5%)  block in <class:MotionDetector>
 # >>        1  (    0.5%)  Bioshogi::TagIndex.motion_trigger_table
 # >>   code:
 # >>                                   |    13  |     def execute
-# >>   111   (12.1%)                   |    14  |       if e = Analysis::TagIndex.primary_soldier_hash_table[soldier]
+# >>   111   (12.1%)                   |    14  |       if e = Analysis::TagIndex.shape_trigger_table[soldier]
 # >>    74    (8.0%)                   |    15  |         e.each do |e|
-# >>                                   |    16  |           walk_counts[e.key] += 1
+# >>                                   |    16  |           run_counts[e.key] += 1
 # >>    74    (8.0%)                   |    17  |           execute_one(e)
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
@@ -339,7 +339,7 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>     1    (0.1%)                   |    24  |         if e = Analysis::TagIndex.motion_trigger_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
-# >>                                   |    27  |               walk_counts[e.key] += 1
+# >>                                   |    27  |               run_counts[e.key] += 1
 # >>                                   |    28  |               cold_war_verification(e)
-# >>     7    (0.8%)                   |    29  |               instance_eval(&e.tag_detector.func)
+# >>     7    (0.8%)                   |    29  |               instance_eval(&e.motion_detector.func)
 # >>                                   |    30  |             end

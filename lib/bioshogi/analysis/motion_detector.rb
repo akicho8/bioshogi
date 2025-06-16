@@ -4,7 +4,7 @@
 
 module Bioshogi
   module Analysis
-    class TagDetector
+    class MotionDetector
       include ApplicationMemoryRecord
       memory_record [
         {
@@ -449,31 +449,31 @@ module Bioshogi
           key: "腹金",
           description: "金を打ったか移動させたとき左右どちらかに敵玉がある",
           trigger: { piece_key: :gold, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"腹銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"腹銀"].func) },
         },
         {
           key: "尻金",
           description: "金を打ったか移動させたとき下に敵玉がある",
           trigger: { piece_key: :gold, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"尻銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"尻銀"].func) },
         },
         {
           key: "肩金",
           description: "金を打ったか移動させたとき左斜め前か右斜め前に玉がある",
           trigger: { piece_key: :gold, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"肩銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"肩銀"].func) },
         },
         {
           key: "裾金",
           description: "金を打ったか移動させたとき左斜め後か右斜め後に玉がある",
           trigger: { piece_key: :gold, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"裾銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"裾銀"].func) },
         },
         {
           key: "頭金",
           description: "金を打ったか移動させたとき前に敵玉がある",
           trigger: { piece_key: :gold, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"頭銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"頭銀"].func) },
         },
 
         ################################################################################
@@ -579,7 +579,7 @@ module Bioshogi
           key: "たすきの角",
           description: "打った角の斜め前に飛があり対極に金がある",
           trigger: { piece_key: :bishop, promoted: false, motion: :both },
-          func: -> { instance_exec(&TagDetector[:"たすきの銀"].func) },
+          func: -> { instance_exec(&MotionDetector[:"たすきの銀"].func) },
         },
         {
           key: "壁金",
@@ -630,7 +630,7 @@ module Bioshogi
           key: "壁銀",
           description: "飛車や角の位置に玉よりも先に銀が移動した",
           trigger: { piece_key: :silver, promoted: false, motion: :move },
-          func: -> { instance_exec(&TagDetector[:"壁金"].func) },
+          func: -> { instance_exec(&MotionDetector[:"壁金"].func) },
         },
         {
           key: "桂頭の銀",
@@ -873,7 +873,7 @@ module Bioshogi
           key: "歩裏の歩",
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
-          func: -> { instance_exec(&TagDetector[:"歩裏の香"].func) },
+          func: -> { instance_exec(&MotionDetector[:"歩裏の香"].func) },
         },
 
         {

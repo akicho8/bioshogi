@@ -2,13 +2,11 @@ module Bioshogi
   module Analysis
     class MotionTriggerTableBuilder
       def build
-        TagIndex.values.each_with_object({}) do |e, m|
-          if e.tag_detector
-            Array.wrap(e.tag_detector.trigger).each do |trigger|
-              trigger_expand(trigger).each do |key|
-                m[key] ||= []
-                m[key] << e
-              end
+        TagIndex.motion_type_values.each_with_object({}) do |e, m|
+          Array.wrap(e.motion_detector.trigger).each do |trigger|
+            trigger_expand(trigger).each do |key|
+              m[key] ||= []
+              m[key] << e
             end
           end
         end

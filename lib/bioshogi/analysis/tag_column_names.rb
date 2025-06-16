@@ -22,9 +22,9 @@ module Bioshogi
       :op_hold_piece_eq,
       :add_to_self,
       :add_to_opponent,
-      :tag_detector,
+      :motion_detector,
       :description,
-      :every_time_proc,
+      :if_every_then,
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
       :if_capture_then,
       :delete_keys,

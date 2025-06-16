@@ -105,12 +105,12 @@ module Bioshogi
         @group_info
       end
 
-      def tag_detector
-        unless defined?(@tag_detector)
-          @tag_detector = TagDetector.lookup(key)
+      def motion_detector
+        unless defined?(@motion_detector)
+          @motion_detector = MotionDetector.lookup(key)
         end
 
-        @tag_detector
+        @motion_detector
       end
 
       def delete_infos
@@ -141,12 +141,12 @@ module Bioshogi
         @add_to_self
       end
 
-      def tag_detector
-        unless defined?(@tag_detector)
-          @tag_detector = TagDetector.lookup(key)
+      def motion_detector
+        unless defined?(@motion_detector)
+          @motion_detector = MotionDetector.lookup(key)
         end
 
-        @tag_detector
+        @motion_detector
       end
 
       def skip_if_exist

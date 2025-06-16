@@ -12,14 +12,15 @@ module Bioshogi
       end
 
       def call
-        process_case1
-        process_case2
-        process_case3
+        shape_perform
+        motion_perform
+        every_perform
+        custom_perform
       end
 
       # ShapeInfo 系
-      def process_case1
-        if e = TagIndex.primary_soldier_hash_table[black_side_soldier]
+      def shape_perform
+        if e = TagIndex.shape_trigger_table[black_side_soldier]
           e.each do |e|
             walk_counts[e.key] += 1
             execute_one(e)
@@ -27,8 +28,8 @@ module Bioshogi
         end
       end
 
-      # TagDetector 系
-      def process_case2
+      # MotionDetector 系
+      def motion_perform
         if executor.container.params[:analysis_technique_feature]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :MOTION_TRIGGER_TABLE:
@@ -37,24 +38,26 @@ module Bioshogi
               execute_block(e) do |list|
                 walk_counts[e.key] += 1
                 cold_war_verification(e)
-                instance_exec(&e.tag_detector.func)
+                instance_exec(&e.motion_detector.func)
               end
             end
-          end
-
-          CustomDetectorInfo.each do |e|
-            e.klass.new(self).call
           end
         end
       end
 
       # 毎回呼ぶやつ (for 駒柱)
-      def process_case3
-        TagIndex.every_time_proc_list.each do |e|
+      def every_perform
+        TagIndex.every_type_values.each do |e|
           walk_counts[e.key] += 1
-          if instance_exec(e, &e.every_time_proc)
+          if instance_exec(e, &e.if_every_then)
             skill_push(e)
           end
+        end
+      end
+
+      def custom_perform
+        CustomDetectorInfo.each do |e|
+          e.klass.new(self).call
         end
       end
 
@@ -485,7 +488,7 @@ module Bioshogi
         end
       end
 
-      prepend TechniqueMatcherHelper
+      prepend DslMethods
     end
   end
 end

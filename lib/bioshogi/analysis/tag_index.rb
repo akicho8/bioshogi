@@ -22,7 +22,7 @@ module Bioshogi
       # TagIndex.fuzzy_lookup("アヒル").key # => :アヒル戦法
       def fuzzy_lookup(key)
         found = nil
-        abbrev_expand(key).each do |str|
+        AbbrevExpander.expand(key).each do |str|
           if found = lookup(str)
             break
           end
@@ -40,47 +40,37 @@ module Bioshogi
 
       ################################################################################
 
+      # 特定の駒を指定の場所に動かしたときに発動するタイプたち
+      def shape_type_values
+        @shape_type_values ||= values.find_all(&:shape_info)
+      end
+
+      # 駒を取ったタイミングで発動するタイプたち
+      def capture_type_values
+        @capture_type_values ||= values.find_all(&:if_capture_then)
+      end
+
+      # 毎回呼ばれるタイプたち
+      def every_type_values
+        @every_type_values ||= values.find_all(&:if_every_then)
+      end
+
+      # モーションで発動するタイプたち
+      def motion_type_values
+        @motion_type_values ||= values.find_all(&:motion_detector)
+      end
+
+      ################################################################################
+
       # トリガーがある場合はそれだけ登録すればよくて
       # 登録がないものはすべてをトリガーキーと見なす
-      def primary_soldier_hash_table
-        @primary_soldier_hash_table ||= values.each_with_object({}) do |e, m|
-          if e.shape_info
-            e.board_parser.primary_soldiers.each do |s|
-              # soldier 自体をキーにすればほどよく分散できる
-              m[s] ||= []
-              m[s] << e
-            end
+      def shape_trigger_table
+        @shape_trigger_table ||= shape_type_values.each_with_object({}) do |e, m|
+          e.shape_info.board_parser.primary_soldiers.each do |s|
+            m[s] ||= []
+            m[s] << e
           end
         end
-      end
-
-      def piece_box_added_proc_list
-        @piece_box_added_proc_list ||= values.find_all(&:if_capture_then)
-      end
-
-      def every_time_proc_list
-        @every_time_proc_list ||= values.find_all(&:every_time_proc)
-      end
-
-      private
-
-      def abbrev_expand(str)
-        str = str.to_s.strip
-        [
-          # "アヒル戦法"
-          str,
-          # "アヒル" → "アヒル戦法"
-          str + "戦法",
-          str + "囲い",
-          str + "流",
-          # "都成流戦法" → "都成流"
-          str.remove(/戦法\z/),
-          str.remove(/囲い\z/),
-          str.remove(/流\z/),
-          # 特殊
-          str.sub(/向かい飛車/, "向飛車"), # "向かい飛車" → "向飛車"
-          str.sub(/向飛車/, "向かい飛車"), # "向飛車" → "向かい飛車"
-        ]
       end
     end
   end
