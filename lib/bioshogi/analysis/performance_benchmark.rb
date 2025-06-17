@@ -12,13 +12,13 @@ module Bioshogi
         files = Array(files).take((ARGV.first || 100).to_i)
         seconds = Benchmark.realtime do
           files.each do |file|
-            info = Parser.file_parse(file, typical_error_case: :skip, analysis_technique_feature: true)
+            info = Parser.file_parse(file, typical_error_case: :skip, analysis_motion_feature: true)
             info.to_kif
           end
         end
 
         p seconds
-        tp Analysis::Analyzer.walk_counts.sort_by { |k, v| -v }.to_h
+        tp Bioshogi.analysis_run_counts.sort_by { |k, v| -v }.to_h
       end
     end
   end

@@ -20,7 +20,7 @@ StackProf.run(mode: :wall, out: "stackprof.dump", raw: true) do
   end
 end
 puts container
-tp Bioshogi.run_counts
+tp Bioshogi.method_run_counts
 
 system "stackprof stackprof.dump"
 system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
@@ -81,7 +81,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>        177   (1.3%)          91   (0.7%)     Bioshogi::Board::UpdateMethods#place_on
 # >>         81   (0.6%)          81   (0.6%)     Bioshogi::SimpleModel#initialize
 # >>         64   (0.5%)          44   (0.3%)     MemoryRecord::SingletonMethods::ClassMethods#fetch
-# >>         40   (0.3%)          40   (0.3%)     #<Module:0x00007ffcd23ba188>.run_counts
+# >>         40   (0.3%)          40   (0.3%)     #<Module:0x00007ffcd23ba188>.method_run_counts
 # >>         67   (0.5%)          36   (0.3%)     Bioshogi::Player::BrainMethods#evaluator
 # >>         99   (0.7%)          36   (0.3%)     Bioshogi::PieceScore#any_weight
 # >>         31   (0.2%)          31   (0.2%)     Bioshogi::Evaluator::Base#initialize

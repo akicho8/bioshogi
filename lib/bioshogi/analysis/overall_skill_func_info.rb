@@ -14,7 +14,7 @@ module Bioshogi
             if win_side_location
               player = @container.player_at(win_side_location)
               if player.skill_set.power_battle?
-                player.skill_set.list_push2("名人に定跡なし")
+                player.skill_set.list_push("名人に定跡なし")
               end
             end
           },
@@ -24,7 +24,7 @@ module Bioshogi
           func: -> {
             @container.players.each do |e|
               if e.skill_set.power_battle?
-                e.skill_set.list_push2("力戦")
+                e.skill_set.list_push("力戦")
               end
             end
           },
@@ -38,7 +38,7 @@ module Bioshogi
             @container.players.each do |e|
               skill_set = e.skill_set
               if !skill_set.has_skill?(Analysis::NoteInfo["振り飛車"]) && !skill_set.has_skill?(Analysis::NoteInfo["居飛車"])
-                e.skill_set.list_push2("居飛車")
+                e.skill_set.list_push("居飛車")
               end
             end
           },
@@ -49,7 +49,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("居飛車")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
-                player.skill_set.list_push2("相居飛車")
+                player.skill_set.list_push("相居飛車")
               end
             end
           },
@@ -60,7 +60,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("居飛車")
             @container.players.each do |player|
               if player.opponent_player.skill_set.has_skill?(tag)
-                player.skill_set.list_push2("対居飛車")
+                player.skill_set.list_push("対居飛車")
               end
             end
           },
@@ -71,7 +71,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("振り飛車")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
-                player.skill_set.list_push2("相振り飛車")
+                player.skill_set.list_push("相振り飛車")
               end
             end
           },
@@ -85,7 +85,7 @@ module Bioshogi
               others = @container.players - [player]
               if others.none? { |e| e.skill_set.has_skill?(tag) }
                 @container.players.each do |e|
-                  e.skill_set.list_push2("対抗形")
+                  e.skill_set.list_push("対抗形")
                 end
               end
             end
@@ -101,8 +101,8 @@ module Bioshogi
             #   items = e.skill_set.attack_infos.unwant_rejected_ancestors
             #   CategoryInfo.each do |c|
             #     if items.any? { |e| e.root == c.object }
-            #       e.skill_set.list_push2(c.self_push)
-            #       e.opponent_player.skill_set.list_push2(c.opponent_push)
+            #       e.skill_set.list_push(c.self_push)
+            #       e.opponent_player.skill_set.list_push(c.opponent_push)
             #     end
             #   end
             # end
@@ -134,7 +134,7 @@ module Bioshogi
           func: -> {
             @container.players.each do |e|
               if e.king_first_moved_turn.nil? || e.king_first_moved_turn >= @container.outbreak_turn
-                e.skill_set.list_push2("居玉")
+                e.skill_set.list_push("居玉")
               end
             end
           },
@@ -145,7 +145,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("居玉")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |e|
-                e.skill_set.list_push2("相居玉")
+                e.skill_set.list_push("相居玉")
               end
             end
           },
@@ -162,7 +162,7 @@ module Bioshogi
               tag = "持久戦"
             end
             @container.players.each do |e|
-              e.skill_set.list_push2(tag)
+              e.skill_set.list_push(tag)
             end
           },
         },
@@ -175,7 +175,7 @@ module Bioshogi
               tag = "長手数"
             end
             @container.players.each do |e|
-              e.skill_set.list_push2(tag)
+              e.skill_set.list_push(tag)
             end
           },
         },
@@ -190,7 +190,7 @@ module Bioshogi
               player = @container.player_at(win_side_location)
               if player.strong_piece_have_count.zero?                              # 最後の状態でも全ブッチ状態なら
                 if player.skill_set.has_skill?(Analysis::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
-                  player.skill_set.list_push2("屍の舞")
+                  player.skill_set.list_push("屍の舞")
                 end
               end
             end
@@ -209,7 +209,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("穴熊")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
-                player.skill_set.list_push2("相穴熊")
+                player.skill_set.list_push("相穴熊")
               end
             end
           },
@@ -220,7 +220,7 @@ module Bioshogi
             tag = Analysis::TagIndex.fetch("入玉")
             if @container.players.all? { |e| e.skill_set.has_skill?(tag) }
               @container.players.each do |player|
-                player.skill_set.list_push2("相入玉")
+                player.skill_set.list_push("相入玉")
               end
             end
           },
@@ -231,7 +231,7 @@ module Bioshogi
             @container.players.each do |player|
               technique_infos = player.skill_set.technique_infos
               if Analysis::TechniqueInfo.rocket_list.any? { |e| technique_infos.include?(e) }
-                player.skill_set.list_push2("ロケット")
+                player.skill_set.list_push("ロケット")
               end
             end
           },
@@ -245,9 +245,9 @@ module Bioshogi
             if soldier = @container.board["55"]
               if soldier.piece.key == :king
                 if @container.lose_player.location == soldier.location
-                  @container.win_player.skill_set.list_push2("都詰め")
+                  @container.win_player.skill_set.list_push("都詰め")
                   if hand_log = @container.hand_logs.last
-                    hand_log.skill_set.list_push2("都詰め")
+                    hand_log.skill_set.list_push("都詰め")
                   end
                 end
               end
@@ -259,8 +259,8 @@ module Bioshogi
           func: -> {
             if hand_log = @container.hand_logs.last
               if hand_log.soldier.piece.key == :knight
-                @container.win_player.skill_set.list_push2("吊るし桂")
-                hand_log.skill_set.list_push2("吊るし桂")
+                @container.win_player.skill_set.list_push("吊るし桂")
+                hand_log.skill_set.list_push("吊るし桂")
               end
             end
           },
@@ -276,9 +276,9 @@ module Bioshogi
               end
             end
             if found
-              @container.win_player.skill_set.list_push2("雪隠詰め")
+              @container.win_player.skill_set.list_push("雪隠詰め")
               if hand_log = @container.hand_logs.last
-                hand_log.skill_set.list_push2("雪隠詰め")
+                hand_log.skill_set.list_push("雪隠詰め")
               end
             end
           },

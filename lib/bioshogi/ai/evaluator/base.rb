@@ -21,7 +21,7 @@ module Bioshogi
 
         # 自分基準評価値
         def score
-          Bioshogi.run_counts["#{self.class.name}#score"] += 1
+          Bioshogi.method_run_counts["#{self.class.name}#score"] += 1
           score_compute
         end
 

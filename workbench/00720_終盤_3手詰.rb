@@ -20,12 +20,12 @@ EOT
   AI::Diver::NegaAlphaDiver,
   AI::Diver::NegaScoutDiver,
 ].each do |diver_class|
-  tp Bioshogi.run_counts.clear
+  tp Bioshogi.method_run_counts.clear
   brain = container.current_player.brain(diver_class: diver_class) # AI::Diver::NegaAlphaDiver
   records = brain.iterative_deepening(depth_max_range: 5..5)
   # tp records
   tp AI::Brain.human_format(records)
-  tp Bioshogi.run_counts
+  tp Bioshogi.method_run_counts
 end
 
 # >> |------+--------------+----------------------------------------------------------------+---------+------------+----------|

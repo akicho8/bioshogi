@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module DslMethods
+    module ShapeDetectorMethods
     end
   end
 end

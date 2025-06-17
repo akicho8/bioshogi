@@ -34,8 +34,11 @@ module Bioshogi
   TMP_DIR    = ROOT.join("../tmp")
 
   include ActiveSupport::Configurable
-  config_accessor(:analysis_feature) { true }
-  mattr_accessor(:run_counts) { Hash.new(0) }
+
+  config_accessor(:analysis_feature) { true } # 戦法類の判定を有効にするか？
+
+  mattr_accessor(:method_run_counts)   { Hash.new(0) } # メソッド実行処理量
+  mattr_accessor(:analysis_run_counts) { Hash.new(0) } # 戦法チェックの処理量
 
   SFEN1 = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
   SFEN2 = "position sfen 1plnsgbrk/1+p+l+n+sgbrk/1+P+L+N+SGBRK/1PLNSGBRK/9/9/9/9/9 b - 1"

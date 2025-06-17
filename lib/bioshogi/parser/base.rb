@@ -27,7 +27,7 @@ module Bioshogi
             :typical_error_case         => false,
 
             :analysis_feature           => true,
-            :analysis_technique_feature => true,
+            :analysis_motion_feature => true,
             :ki2_function               => true, # ki2にしないのであれば指定するとかなり速くなる
 
             :validate_feature           => true, # 将棋ウォーズの棋譜なら指定すると少し速くなる

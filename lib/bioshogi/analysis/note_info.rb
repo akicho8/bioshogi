@@ -53,7 +53,7 @@ module Bioshogi
           {
             key: "全駒",
             add_to_opponent: "玉単騎",
-            if_capture_then: -> note_info, captured_soldier { player.zengoma? },
+            if_capture_then: -> { player.zengoma? },
           },
           { key: "玉単騎", },
 
@@ -62,7 +62,7 @@ module Bioshogi
           {
             key: "大駒コンプリート",
             add_to_opponent: "大駒全ブッチ",
-            if_capture_then: -> note_info, captured_soldier {
+            if_capture_then: -> {
               if captured_soldier.piece.strong
                 player.strong_piece_completed?
               end
@@ -77,7 +77,7 @@ module Bioshogi
           {
             key: "駒柱",
             add_to_opponent: "駒柱",
-            if_every_then: -> note_info {
+            if_true_then: -> {
               player.board.piller_cop.active?.tap do
                 player.board.piller_cop.active = false # FIXME: できればここで更新はしたくない
               end

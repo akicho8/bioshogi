@@ -3,24 +3,16 @@
 module Bioshogi
   module Analysis
     class RocketDetector
-      DEBUG = false
+      include ExecuterDsl
 
-      delegate *[
-        :executor,
-        :soldier,
-        :board,
-        :drop_hand,
-        :opponent?,
-        :and_cond,
-        :break_cond,
-      ], to: :@analyzer
+      attr_reader :executor
 
-      def initialize(analyzer)
-        @analyzer = analyzer
+      def initialize(executor)
+        @executor = executor
       end
 
       def call
-        catch :skip do
+        perform_block do
           # 1. 「飛龍」が来たか「香」を打った
           and_cond { trigger? }
 
@@ -47,7 +39,7 @@ module Bioshogi
           end
 
           if e = TechniqueInfo[:"#{count_all}段ロケット"] # 7段以上のロケットは除外する
-            @analyzer.skill_push(e)
+            skill_add(e)
           end
         end
       end
@@ -84,7 +76,7 @@ module Bioshogi
             if v == top_place   # 一番上(例えば91)にある飛車などは横に利かせるためのものなのでカウントしない
               break
             end
-            if s = @analyzer.board[v]
+            if s = board[v]
               if opponent?(s)
                 break                                   # 相手の駒
               end

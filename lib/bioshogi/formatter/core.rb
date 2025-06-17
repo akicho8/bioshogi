@@ -77,7 +77,7 @@ module Bioshogi
         container_class.new.tap do |e|
           params = @parser_options.slice(*[
               :analysis_feature,
-              :analysis_technique_feature,
+              :analysis_motion_feature,
               :ki2_function,
               :validate_feature,
               :double_pawn_detect,
@@ -92,7 +92,7 @@ module Bioshogi
         container = Container::Basic.new
         container.params.update({
             :analysis_feature           => false,
-            :analysis_technique_feature => false,
+            :analysis_motion_feature => false,
             :ki2_function               => false,
             :validate_feature           => false,
           })

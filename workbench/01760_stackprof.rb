@@ -328,18 +328,18 @@ system "stackprof stackprof.dump --method Bioshogi::Analyzer#execute"
 # >>                                   |    13  |     def execute
 # >>   111   (12.1%)                   |    14  |       if e = Analysis::TagIndex.shape_trigger_table[soldier]
 # >>    74    (8.0%)                   |    15  |         e.each do |e|
-# >>                                   |    16  |           run_counts[e.key] += 1
+# >>                                   |    16  |           method_run_counts[e.key] += 1
 # >>    74    (8.0%)                   |    17  |           execute_one(e)
 # >>                                   |    18  |         end
 # >>                                   |    19  |       end
 # >>                                   |    20  |
-# >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_technique_feature]
+# >>     1    (0.1%)                   |    21  |       if executor.container.params[:analysis_motion_feature]
 # >>                                   |    22  |         # 主に手筋用で戦法チェックにも使える
 # >>                                   |    23  |         key = [soldier.piece.key, soldier.promoted, !!executor.drop_hand]
 # >>     1    (0.1%)                   |    24  |         if e = Analysis::TagIndex.motion_trigger_table[key]
 # >>     9    (1.0%)                   |    25  |           e.each do |e|
 # >>     9    (1.0%)                   |    26  |             execute_block(e) do |list|
-# >>                                   |    27  |               run_counts[e.key] += 1
+# >>                                   |    27  |               method_run_counts[e.key] += 1
 # >>                                   |    28  |               cold_war_verification(e)
 # >>     7    (0.8%)                   |    29  |               instance_eval(&e.motion_detector.func)
 # >>                                   |    30  |             end

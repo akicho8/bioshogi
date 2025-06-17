@@ -10,7 +10,7 @@ module Bioshogi
 
       class_methods do
         def create(...)
-          Bioshogi.run_counts["#{name}.#{__method__}"] += 1
+          Bioshogi.method_run_counts["#{name}.#{__method__}"] += 1
           new(...).freeze
         end
       end
@@ -18,11 +18,11 @@ module Bioshogi
       def sandbox_execute(container, &block)
         begin
           execute(container)
-          Bioshogi.run_counts["sandbox_execute.execute"] += 1
+          Bioshogi.method_run_counts["sandbox_execute.execute"] += 1
           yield
         ensure
           revert(container)
-          Bioshogi.run_counts["sandbox_execute.revert"] += 1
+          Bioshogi.method_run_counts["sandbox_execute.revert"] += 1
         end
       end
 

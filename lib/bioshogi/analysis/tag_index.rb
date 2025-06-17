@@ -5,6 +5,9 @@ module Bioshogi
 
       # TagIndex.lookup("金底の歩").key # => :金底の歩
       def lookup(key)
+        if TagBase === key
+          return key
+        end
         values_hash[key.to_s.to_sym]
       end
 
@@ -15,7 +18,7 @@ module Bioshogi
       end
 
       def fetch(key)
-        values_hash.fetch(key.to_s.to_sym)
+        lookup(key) or raise ArgumentError, "TagIndex.fetch(#{key.inspect})"
       end
 
       # 曖昧検索用
@@ -52,7 +55,7 @@ module Bioshogi
 
       # 毎回呼ばれるタイプたち
       def every_type_values
-        @every_type_values ||= values.find_all(&:if_every_then)
+        @every_type_values ||= values.find_all(&:if_true_then)
       end
 
       # モーションで発動するタイプたち

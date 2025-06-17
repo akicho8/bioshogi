@@ -113,18 +113,6 @@ module Bioshogi
         @motion_detector
       end
 
-      def delete_infos
-        unless defined?(@delete_infos)
-          if v = delete_keys
-            @delete_infos = Array(v).collect { |e| TagIndex.fetch(e) }
-          else
-            @delete_infos = []
-          end
-        end
-
-        @delete_infos
-      end
-
       def add_to_opponent
         unless defined?(@add_to_opponent)
           @add_to_opponent = TagIndex.fetch_if(super)

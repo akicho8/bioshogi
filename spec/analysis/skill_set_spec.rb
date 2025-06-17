@@ -26,18 +26,18 @@ RSpec.describe Bioshogi::Analysis::SkillSet do
 
     # it "無駄な先祖をだけを削除した配列を返す" do
     #   skill_set = Bioshogi::Analysis::SkillSet.new
-    #   skill_set.list_push2("四間飛車")
-    #   skill_set.list_push2("3→4→3戦法")
+    #   skill_set.list_push("四間飛車")
+    #   skill_set.list_push("3→4→3戦法")
     #   assert { skill_set.attack_infos.unwant_rejected_ancestors == [Bioshogi::Analysis::AttackInfo["3→4→3戦法"]] }
     # end
   end
 
   it "all" do
-    assert { @skill_set.collect(&:size) == [3, 2, 0, 1] }
+    assert { @skill_set.collect(&:size) == [2, 3, 0, 1] }
   end
 
   it "エイリアスを含めたすべての名前を取得" do
-    assert { @skill_set.normalized_names_with_alias == ["片美濃囲い", "銀美濃", "ダイヤモンド美濃", "コーヤン流三間飛車", "コーヤン流", "中田功XP", "嬉野流", "入玉"] }
+    assert { @skill_set.normalized_names_with_alias == ["コーヤン流三間飛車", "コーヤン流", "中田功XP", "嬉野流", "片美濃囲い", "銀美濃", "ダイヤモンド美濃", "入玉"] }
   end
 
   it "代表とする棋風" do

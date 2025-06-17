@@ -24,10 +24,9 @@ module Bioshogi
       :add_to_opponent,
       :motion_detector,
       :description,
-      :if_every_then,
+      :if_true_then,
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
       :if_capture_then,
-      :delete_keys,
       :skip_if_exist,
     ]
   end

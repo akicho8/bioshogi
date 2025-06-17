@@ -18,7 +18,7 @@ module Bioshogi
       end
 
       def list_key
-        "#{key}_infos"
+        :"#{key}_infos"
       end
     end
   end

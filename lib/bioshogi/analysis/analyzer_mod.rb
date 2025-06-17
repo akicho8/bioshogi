@@ -36,11 +36,7 @@ module Bioshogi
         end
 
         if analysis_feature_enabled?
-          TagIndex.capture_type_values.each do |e|
-            if instance_exec(e, captured_soldier, &e.if_capture_then)
-              skill_push2(e)
-            end
-          end
+          CaptureAnalyzer.new(self).call
         end
       end
 
@@ -54,26 +50,10 @@ module Bioshogi
 
       def perform_analyzer
         if analysis_feature_enabled?
-          Analyzer.new(self).call
-        end
-      end
-
-      def skill_push2(skill)
-        player.skill_set.list_push(skill)   # プレイヤーの個別設定
-        skill_set.list_push(skill) # executor の方にも設定(これいる？) ← いらない
-
-        # 自分に入れる
-        # p skill
-        # p skill.add_to_self
-        if v = skill.add_to_self
-          player.skill_set.list_push(v)
-        end
-
-        # 相手に入れる
-        if v = skill.add_to_opponent
-          player.opponent_player.skill_set.list_push(v)
-          # 設計ミス
-          # skill_set.list_push(v) # ← しかし、ここで入れてしまうと 先手に後手の技が入ってしまう。つまり先後の情報を含める。
+          ShapeAnalyzer.new(self).call
+          MotionAnalyzer.new(self).call
+          EveryAnalyzer.new(self).call
+          CustomAnalyzer.new(self).call
         end
       end
 
