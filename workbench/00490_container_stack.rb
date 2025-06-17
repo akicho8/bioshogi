@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 object = Container::ContainerStack.new
 object.container.placement_from_preset("平手")

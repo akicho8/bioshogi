@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 board = Board.new
 board.placement_from_preset("トンボ")

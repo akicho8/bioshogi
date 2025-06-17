@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("URL：http://example.net/")
 puts info.to_kif

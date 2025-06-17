@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 Analysis::TacticInfo[:attack].model # => Bioshogi::Analysis::AttackInfo
 Analysis::TacticInfo[:attack].name  # => "戦法"
 tp Analysis::TagIndex.motion_trigger_table

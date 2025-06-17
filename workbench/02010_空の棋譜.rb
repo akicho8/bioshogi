@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("")
 tp info.pi.header.to_h

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.file_parse("yagura.kif")
 info.formatter.container.players.each do |player|

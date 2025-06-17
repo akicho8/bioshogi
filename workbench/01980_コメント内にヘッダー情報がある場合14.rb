@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 開始日時：2001/01/01

@@ -1,6 +1,6 @@
 # NegaMaxアルゴリズム同士の対決
 
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.start
 container.piece_plot

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # Bioshogi.config[:analysis_feature] = false
 

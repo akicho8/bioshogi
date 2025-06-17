@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 piece = Piece[:pawn]
 piece.any_weight(false)         # => 100

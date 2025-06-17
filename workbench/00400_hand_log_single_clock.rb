@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 parser = Parser.parse(<<~EOT)
 手数----指手---------消費時間--

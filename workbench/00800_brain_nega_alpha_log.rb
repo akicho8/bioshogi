@@ -1,6 +1,6 @@
 # NegaMaxのログ表示
 
-require "./setup"
+require "#{__dir__}/setup"
 
 Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Dimension.change([3, 3]) do

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 str = "
 手合割：その他

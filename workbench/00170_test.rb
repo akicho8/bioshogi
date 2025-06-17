@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.facade(init: "▲１五玉 ▲１四歩 △１一玉 △１二歩", execute: ["１三歩成", "１三歩"])
 puts container

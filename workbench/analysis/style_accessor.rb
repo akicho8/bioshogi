@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 include Analysis
 
 tp TagIndex.values.inject({}) { |a, e| a.merge(e.key => e.style_info) }

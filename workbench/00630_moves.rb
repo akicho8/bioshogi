@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Dimension.change([2, 3]) do
   container = Container::Basic.new

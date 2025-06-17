@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 board = Board.create_by_preset("平手")
 puts board
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

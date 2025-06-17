@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 rows = Analysis::TacticInfo.flat_map do |tactic_info|
   tactic_info.model.collect do |e|

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("
 ▲７六歩    △８四歩    ▲７八銀    △３四歩    ▲７七銀    △８五歩    ▲２六歩    △４二銀    ▲７八金    △３二金

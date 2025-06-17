@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 include Analysis
 
 # e = NoteInfo["ロケット"]        # => <ロケット>

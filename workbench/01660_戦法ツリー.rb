@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Analysis::TacticInfo.each do |e|
   puts "-" * 80 + " " + e.model.name

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 *KEY1：value1

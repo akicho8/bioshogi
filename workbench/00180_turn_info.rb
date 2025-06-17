@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 object = TurnInfo.new(handicap: true)
 object                          # => #<0+0:△上手番>

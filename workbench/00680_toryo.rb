@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # Board.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 # Dimension::Row.promotable_disabled

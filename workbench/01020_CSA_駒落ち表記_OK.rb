@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 puts Parser.parse("V2.2,P-51OU,P+53KI00GI,P-00AL,-,-5141OU,+0052GI", debug: true).to_csa
 # >> 上手の持駒：飛二 角二 金三 銀三 桂四 香四 歩一八

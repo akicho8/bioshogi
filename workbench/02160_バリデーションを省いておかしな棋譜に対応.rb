@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container_options = {
   analysis_feature: false,

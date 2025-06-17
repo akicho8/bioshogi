@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 info = Parser.parse("48玉 34歩 76歩 88角成")
 puts info.to_kif
 # >> 先手の戦法：新米長玉

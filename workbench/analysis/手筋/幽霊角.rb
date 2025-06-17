@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(Pathname("../../lib/bioshogi/analysis/手筋/幽霊角.kif"))
 puts info.to_kif

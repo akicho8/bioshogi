@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 sfen = Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S2s 1 moves 7i6h S*2d")
 sfen.soldiers.first(3).collect(&:name) # => ["△９一香", "△８一桂", "△７一銀"]

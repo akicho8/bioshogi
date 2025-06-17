@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # info = Parser.parse("68S")
 # # puts info.to_kif

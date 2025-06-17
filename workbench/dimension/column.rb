@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Column.fetch("1").left_spaces          # => 8
 Column.fetch("5").left_spaces          # => 4

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # 方法1
 board = Board.new

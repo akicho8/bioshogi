@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 Board.create_by_preset("平手").lookup("11")               # => <Bioshogi::Soldier "△１一香">
 Board.create_by_preset("平手").lookup("12")               # => nil
 Board.create_by_preset("平手")["11"]                      # => <Bioshogi::Soldier "△１一香">

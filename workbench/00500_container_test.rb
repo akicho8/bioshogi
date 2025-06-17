@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.facade(init: "▲２七歩 ▲２八飛 △２三歩 △２二飛", execute: ["２六歩", "２四歩(23)"])
 container.to_ki2_a          # => ["▲２六歩", "△２四歩"]

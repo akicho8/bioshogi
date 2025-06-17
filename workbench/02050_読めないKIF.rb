@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 info = Parser.parse(<<~EOT)
 # --- Kifu for Windows (Pro) V6.65.05 棋譜ファイル ---
 対局ID：6425

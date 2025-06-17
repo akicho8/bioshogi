@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Soldier.from_str("▲41歩").left_or_right_to_closer_side # => :right
 Soldier.from_str("△41歩").left_or_right_to_closer_side # => :left

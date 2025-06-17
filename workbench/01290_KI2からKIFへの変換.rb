@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Bioshogi::Parser.parse(Pathname("katomomo.ki2"))
 

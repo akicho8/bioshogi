@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Analysis::TechniqueInfo.fetch("銀冠の小部屋").static_kif_info
 puts info.to_kif

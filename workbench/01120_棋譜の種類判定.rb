@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 klass = Parser.accepted_class(<<~EOT) # => Bioshogi::Parser::KifParser
 1 ７六歩(77)   ( 0:34/00:00:34)

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 require "benchmark/ips"
 n = 10

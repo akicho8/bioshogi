@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 piece_box = PieceBox.new(Piece.s_to_h("玉"))
 piece_box.to_h                                 # => {:king=>1}

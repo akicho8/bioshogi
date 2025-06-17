@@ -1,5 +1,5 @@
 # すべての駒の移動可能なルートの確認
-require "./setup"
+require "#{__dir__}/setup"
 
 Piece.each do |piece|
   container = Container::Basic.new

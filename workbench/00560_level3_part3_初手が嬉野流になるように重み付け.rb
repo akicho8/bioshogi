@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.start
 player = container.player_at(:black)

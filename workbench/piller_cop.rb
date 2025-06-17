@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 piller_cop = PillerCop.new
 piller_cop.counts                 # => [0, 0, 0, 0, 0, 0, 0, 0, 0]
 piller_cop.set(Place["21"])

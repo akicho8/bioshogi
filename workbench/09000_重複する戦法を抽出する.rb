@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}")
 files = files.take(3000000)

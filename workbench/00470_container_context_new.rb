@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 s = Container::ContainerStack.new
 s.context_new do

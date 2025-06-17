@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("▲１六歩 △１四歩 ▲１五歩 △１五歩")
 puts info.to_ki2

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 object = Simulator.run({
     title: "桂と金の交換または桂成",

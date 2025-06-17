@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Place.fetch([-1, 0]) rescue $!  # => #<Bioshogi::SyntaxDefact: 座標が読み取れません : [-1, 0]>
 

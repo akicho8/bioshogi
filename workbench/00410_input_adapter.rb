@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.new
 container.pieces_set("▲銀")

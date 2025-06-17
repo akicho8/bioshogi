@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 body = "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1"
 info = Parser.parse(body)

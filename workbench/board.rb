@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 preset_info = Board.guess_preset_info(<<~EOT)
   ９ ８ ７ ６ ５ ４ ３ ２ １

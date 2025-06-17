@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 str = "
 # ----  ぴよ将棋 棋譜ファイル  ----

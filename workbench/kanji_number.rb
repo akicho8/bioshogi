@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 KanjiNumber.kanji_to_number_string("")               # => ""
 KanjiNumber.kanji_to_number_string("歩")             # => "歩"

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Parser.parse("#comment\n開始日時：2000年01月02日(金) 01：02：03").pi.header.to_h   # => {"開始日時"=>"2000/01/02 01:02:03"}
 Parser.parse("#comment\n　開始日時：2000年01月02日(金) 01：02：03").pi.header.to_h # => {"開始日時"=>"2000/01/02 01:02:03"}

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 board = Parser.parse("手合割：トンボ")
 puts board.to_kif

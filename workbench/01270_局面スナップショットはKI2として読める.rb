@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 puts Parser.parse(<<~EOT).container
 後手の持駒：飛

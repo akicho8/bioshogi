@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 board = Board.create_by_preset("平手")
 board.core_soldier_places_for(:black, :rook)   # => #<Bioshogi::Place ２八>

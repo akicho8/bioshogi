@@ -1,5 +1,5 @@
 # 棋譜の入力とkif形式のログ確認
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.start
 [

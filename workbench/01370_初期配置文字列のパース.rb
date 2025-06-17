@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 tp Soldier.from_str("▲７六と")
 

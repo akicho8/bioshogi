@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 def f(v)
   container = Container::Basic.new

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.new
 container.board.placement_from_preset("裸玉")

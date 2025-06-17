@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 board = Board.create_by_preset("平手")
 board.specific_piece_count_for(:white, :bishop) # => 1

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 outout_dir = Pathname("~/src/2ch棋譜変換後").expand_path
 files = Pathname.glob("../../2chkifu/**/*.{ki2,KI2}")
 files = files.take(5000)

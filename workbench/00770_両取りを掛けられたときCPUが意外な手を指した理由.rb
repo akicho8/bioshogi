@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # 両取りをかけられた状態で馬を切ったCPUの考え方
 #

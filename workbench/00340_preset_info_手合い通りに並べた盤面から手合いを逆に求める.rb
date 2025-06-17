@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 PresetInfo.each do |preset_info|
   container = Container::Basic.new

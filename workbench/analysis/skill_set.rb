@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 skill_set = Analysis::SkillSet.new
 skill_set.defense_infos << Analysis::DefenseInfo["片美濃囲い"]

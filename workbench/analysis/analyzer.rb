@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 container = Container::Basic.new
 container.placement_from_preset("平手")
 # container.pieces_set("▲歩△歩")

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("position startpos moves 7i6h")
 puts info.to_kif

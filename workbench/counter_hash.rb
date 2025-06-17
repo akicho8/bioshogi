@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 h = CounterHash.new
 h[:x]                           # => 0
 h.increment(:x)                 # => 1

@@ -1,5 +1,5 @@
 # 盤面のHTML化
-require "./setup"
+require "#{__dir__}/setup"
 
 require "delegate"
 require "action_view"

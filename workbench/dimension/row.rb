@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Row.fetch("4").distance_from_middle    # => 1
 Row.fetch("5").distance_from_middle    # => 0

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 puts Analysis::TechniqueInfo.fetch("蓋歩").static_kif_info.to_kif
 # >> 棋戦：共有将棋盤
 # >> 手合割：平手

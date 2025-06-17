@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 soldier_box = SoldierBox.new
 soldier_box << Soldier.from_str("△５一玉")

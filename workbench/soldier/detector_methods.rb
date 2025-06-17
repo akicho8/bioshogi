@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 Soldier.from_str("▲19香").boar_mode?                   # => true
 Soldier.from_str("▲19飛").boar_mode?                   # => true
 Soldier.from_str("▲19杏").boar_mode?                   # => false

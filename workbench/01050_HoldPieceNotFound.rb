@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Parser.parse("５五飛").container rescue puts $!.message
 Parser.parse("position startpos moves B*1e") .container rescue puts $!.message

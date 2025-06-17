@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("先手：alice\n先手の持駒：銀\n\n68銀 34歩 76歩 88角不成 55銀打 55角成")
 tp info.to_akf[:header]

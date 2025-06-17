@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 require 'active_support/core_ext/benchmark'
 
 def f(options = {})

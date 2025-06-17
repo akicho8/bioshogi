@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 container = Container::Basic.new
 # container.placement_from_preset("平手")
 container.board.placement_from_human("▲53玉 ▲23飛 △51玉 △22角")

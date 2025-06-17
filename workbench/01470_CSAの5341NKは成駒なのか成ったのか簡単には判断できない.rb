@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # 5341NK だけでは判断が難しい例
 

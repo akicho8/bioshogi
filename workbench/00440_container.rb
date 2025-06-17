@@ -1,5 +1,5 @@
 # 棋譜の入力
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.new
 container.placement_from_preset("平手")

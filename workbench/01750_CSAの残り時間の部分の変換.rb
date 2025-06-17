@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse("持ち時間：1時間01分")
 puts info.to_kif

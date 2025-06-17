@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Parser::CsaParser.parse("%TIME_UP").judgment_message # => "まで0手で時間切れにより後手の勝ち"
 Parser::CsaParser.parse("%CHUDAN").judgment_message  # => "まで0手で切断により後手の勝ち"

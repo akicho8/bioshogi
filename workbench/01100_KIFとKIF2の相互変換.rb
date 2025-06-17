@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 a = Parser.file_parse("katomomo.kif")
 b = Parser.file_parse("katomomo.ki2")

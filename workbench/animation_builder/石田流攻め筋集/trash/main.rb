@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 # Pathname("/Users/ikeda/Downloads/石田流攻め筋集").glob("**/1.kif") do |e|
 #   title = e.dirname.basename.to_s

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 def _
   "%.1f ms" % Benchmark.ms { 1.times { yield } }
 end

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 object = Hand::Move.create(soldier: Soldier.from_str("▲６八銀"), origin_soldier: Soldier.from_str("▲７九銀"), captured_soldier: Soldier.from_str("△６八飛"))
 object.to_s    # => "▲６八銀(79)"

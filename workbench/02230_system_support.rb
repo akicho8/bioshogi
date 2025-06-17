@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 Bioshogi::SystemSupport.strict_system("ruby -e '1 / 0'") rescue $! # => #<StandardError: -e:1:in `/': divided by 0 (ZeroDivisionError)

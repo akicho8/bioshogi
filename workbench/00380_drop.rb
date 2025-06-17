@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 object = Hand::Drop.create(soldier: Soldier.from_str("▲６八銀"))
 object.to_s    # => "▲６八銀打"

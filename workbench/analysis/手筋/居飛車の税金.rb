@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 info = Analysis::TechniqueInfo.fetch("居飛車の税金").static_kif_info
 puts info.to_kif

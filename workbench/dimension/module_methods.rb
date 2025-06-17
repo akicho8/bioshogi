@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 Dimension.default_size?                             # => true
 Dimension.current_size                              # => [9, 9]

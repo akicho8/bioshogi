@@ -1,5 +1,5 @@
 # 移動可能なルートの確認
-require "./setup"
+require "#{__dir__}/setup"
 
 container = Container::Basic.new
 player = container.player_at(:black)

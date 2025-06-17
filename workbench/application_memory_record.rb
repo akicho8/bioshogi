@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 class Foo
   include Bioshogi::ApplicationMemoryRecord

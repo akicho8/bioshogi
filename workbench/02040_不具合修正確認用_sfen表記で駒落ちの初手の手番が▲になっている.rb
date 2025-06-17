@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 info = Parser.parse(<<~EOT)
 開始日時：1925/01/20
 棋戦：その他の棋戦

@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 GC.disable
 rows = nil
 total = Benchmark.ms do

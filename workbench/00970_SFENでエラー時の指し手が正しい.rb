@@ -1,4 +1,4 @@
-require "./setup"
+require "#{__dir__}/setup"
 
 sfen = "position startpos moves 7i6h 8c8d 5g5f 8d8e 6h5g 3c3d 6i7h 7a7b 2g2f 7b8c 5g6f 8c7d 2f2e 4a3b 2e2d 2c2d 2h2d P*2c 2d3d 2b4d 2e2d 2c2d 8h7i 2b4d 2h2d 3a3b 7i5g P*8h 7h8h 2a3c 2d2h P*8f 8g8f 8e8f P*8d P*2f 4i5h 8f9e 8h7h 9e8d P*8h 5a6b 4g4f 7c7d 5g6f 4d6f 6g6f B*4d 5f5e 8d7e B*2b 8a7c 6e7d 6a7b 2b1a+ 8b8d 7d7c 7b7c 1a1b 7e6f L*6i S*5g 6i6f 5g6f P*6g 6f7e 3i3h L*8f N*8g 8f8g+ 8h8g P*8h 7h8h P*8f"
 info = Parser.parse(sfen)
