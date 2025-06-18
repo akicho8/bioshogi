@@ -10,20 +10,16 @@ module Bioshogi
         freeze
       end
 
-      def value(key)
-        @value[key] ||= List[]
-      end
-
       def each(&block)
-        TacticInfo.collect { |e| value(e.key) }.each(&block)
+        TacticInfo.collect { |e| value(e) }.each(&block)
       end
 
       TacticInfo.each do |e|
-        define_method(e.list_key) { value(e.key) }
+        define_method(e.list_key) { value(e) }
       end
 
       def list_of(tag)
-        value(tag.tactic_info.key)
+        value(tag.tactic_info)
       end
 
       def <<(tag)
@@ -31,13 +27,13 @@ module Bioshogi
         list_of(tag) << tag
       end
 
-      def has_skill?(tag)
+      def has_tag?(tag)
         list_of(tag).include?(tag)
       end
 
       def to_h
         TacticInfo.inject({}) do |a, e|
-          a.merge(e.key => value(e.key).normalize.collect(&:name))
+          a.merge(e.key => value(e).normalize.collect(&:name))
         end
       end
 
@@ -51,7 +47,7 @@ module Bioshogi
 
       def kif_comment(location)
         TacticInfo.collect { |e|
-          if v = value(e.key).normalize.presence
+          if v = value(e).normalize.presence
             [location.name, e.name, "：", v.collect(&:name).join(", "), "\n"].sum("*")
           end
         }.compact.join.presence
@@ -70,6 +66,12 @@ module Bioshogi
       end
 
       ################################################################################
+
+      private
+
+      def value(tactic_info)
+        @value[tactic_info.key] ||= List[]
+      end
 
       class List < Set
         def normalize

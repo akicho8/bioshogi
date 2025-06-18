@@ -174,14 +174,14 @@ module Bioshogi
       def container_run_all(container)
         Runner.new(self, container).call
         if @parser_options[:analysis_feature]
-          SkillEmbed.new(self, container).call
+          TagEmbed.new(self, container).call
           StyleEmbed.new(self, container).call
         end
       end
 
-      # FIXME: これは skill_embed のなかだけにあればよくね？
-      def skill_set_hash
-        @skill_set_hash ||= {}
+      # FIXME: これは tag_embed のなかだけにあればよくね？
+      def tag_set_hash
+        @tag_set_hash ||= {}
       end
 
       # FIXME: メソッドが重複してね？

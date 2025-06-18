@@ -1,45 +1,43 @@
 require "#{__dir__}/setup"
-
-info = Parser.parse("先手：alice\n先手の持駒：銀\n\n68銀 34歩 76歩 88角不成 55銀打 55角成")
-tp info.to_akf[:header]
-# tp info.to_akf[:moves][0]
-# tp info.to_akf[:moves][1]
-tp info.to_akf[:moves].first
-tp info.to_akf[:moves].drop(1)
-tp info.to_akf.except(:moves)
-# >> |----------------------+----------------------------------|
-# >> |                 先手 | alice                            |
-# >> |           先手の持駒 | 銀                               |
-# >> |           先手の囲い | 居玉                             |
-# >> |           後手の囲い | 居玉                             |
-# >> |           先手の戦法 | 嬉野流                           |
-# >> |           先手の備考 | 居飛車, 相居飛車, 相居玉         |
-# >> |           後手の備考 | 角不成, 居飛車, 相居飛車, 相居玉 |
-# >> |                 手数 | 6                                |
-# >> | last_action_kakinoki_word | 投了                             |
-# >> |     judgment_message | まで6手で後手の勝ち              |
-# >> |           error_text |                                  |
-# >> |----------------------+----------------------------------|
-# >> |---------------+-------------------------------------------------------------------------------|
-# >> |         index | 0                                                                             |
-# >> |   human_index | 0                                                                             |
-# >> |    place_same |                                                                               |
-# >> | total_seconds | 0                                                                             |
-# >> |  used_seconds |                                                                               |
-# >> |         skill |                                                                               |
-# >> |  history_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 |
-# >> | short_sfen | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 |
-# >> |---------------+-------------------------------------------------------------------------------|
-# >> |-------+-------------+------------+-----------+-----------------+--------+----------+----------------+----------------+--------------------------------------------------------------------------------+-------+----------------+---------+---------------+--------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------|
-# >> | index | human_index | place_same | _location | type            | piece  | promoted | from           | to             | captured                                                                       | _sfen | _kif           | _csa    | total_seconds | used_seconds | skill                                                  | history_sfen                                                                                                       | short_sfen                                                                       |
-# >> |-------+-------------+------------+-----------+-----------------+--------+----------+----------------+----------------+--------------------------------------------------------------------------------+-------+----------------+---------+---------------+--------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------|
-# >> |     1 |           1 |            | black     | t_move          | silver | false    | {:x=>7, :y=>9} | {:x=>6, :y=>8} |                                                                                | 7i6h  | ▲６八銀(79)   | +7968GI |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h                           | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL w S 2     |
-# >> |     2 |           2 | false      | white     | t_move          | pawn   | false    | {:x=>3, :y=>3} | {:x=>3, :y=>4} |                                                                                | 3c3d  | △３四歩(33)   | -3334FU |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h 3c3d                      | position sfen lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b S 3   |
-# >> |     3 |           3 | false      | black     | t_move          | pawn   | false    | {:x=>7, :y=>7} | {:x=>7, :y=>6} |                                                                                | 7g7f  | ▲７六歩(77)   | +7776FU |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h 3c3d 7g7f                 | position sfen lnsgkgsnl/1r5b1/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1B1S3R1/LN1GKGSNL w S 4 |
-# >> |     4 |           4 | false      | white     | t_promote_throw | bishop | false    | {:x=>2, :y=>2} | {:x=>8, :y=>8} | {:piece=>:bishop, :promoted=>false, :place=>{:x=>8, :y=>8}, :location=>:black} | 2b8h  | △８八角(22)   | -2288KA |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h 3c3d 7g7f 2b8h            | position sfen lnsgkgsnl/1r7/pppppp1pp/6p2/9/2P6/PP1PPPPPP/1b1S3R1/LN1GKGSNL b Sb 5  |
-# >> |     5 |           5 | false      | black     | t_drop          | silver |          |                | {:x=>5, :y=>5} |                                                                                | S*5e  | ▲５五銀打     | +0055GI |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h 3c3d 7g7f 2b8h S*5e       | position sfen lnsgkgsnl/1r7/pppppp1pp/6p2/4S4/2P6/PP1PPPPPP/1b1S3R1/LN1GKGSNL w b 6 |
-# >> |     6 |           6 | true       | white     | t_promote_on    | bishop | false    | {:x=>8, :y=>8} | {:x=>5, :y=>5} | {:piece=>:silver, :promoted=>false, :place=>{:x=>5, :y=>5}, :location=>:black} | 8h5e+ | △５五角成(88) | -8855UM |             0 |            0 | {:defense=>[], :attack=>[], :technique=>[], :note=>[]} | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b S 1 moves 7i6h 3c3d 7g7f 2b8h S*5e 8h5e+ | position sfen lnsgkgsnl/1r7/pppppp1pp/6p2/4+b4/2P6/PP1PPPPPP/3S3R1/LN1GKGSNL b bs 7 |
-# >> |-------+-------------+------------+-----------+-----------------+--------+----------+----------------+----------------+--------------------------------------------------------------------------------+-------+----------------+---------+---------------+--------------+--------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------|
-# >> |--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | pi.header | {"先手"=>"alice", "先手の持駒"=>"銀", "先手の囲い"=>"居玉", "後手の囲い"=>"居玉", "先手の戦法"=>"嬉野流", "先手の備考"=>"居飛車, 相居飛車, 相居玉", "後手の備考"=>"角不成, 居飛車, 相居飛車, 相居玉", "手数"=>6, :last_action_kakinoki_word=>"投了", :judgment_message=>"まで6手で後手の勝ち", :error_text=>nil} |
-# >> |--------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+info = Parser.parse("先手：alice\n先手の持駒：銀\n\n▲55銀打")
+puts info.to_kif
+# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor/error_handler.rb:12:in 'Bioshogi::PlayerExecutor::ErrorHandler#call': 打を明示しましたが銀を持っていません (Bioshogi::HoldPieceNotFound)
+# ~> 手番: 先手
+# ~> 指し手: ▲55銀打
+# ~> 棋譜:
+# ~> 
+# ~> 後手の持駒：なし
+# ~>   ９ ８ ７ ６ ５ ４ ３ ２ １
+# ~> +---------------------------+
+# ~> |v香v桂v銀v金v玉v金v銀v桂v香|一
+# ~> | ・v飛 ・ ・ ・ ・ ・v角 ・|二
+# ~> |v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+# ~> | ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+# ~> | 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+# ~> | ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+# ~> | 香 桂 銀 金 玉 金 銀 桂 香|九
+# ~> +---------------------------+
+# ~> 先手の持駒：なし
+# ~> 手数＝0 まで
+# ~> 先手番
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor/base.rb:38:in 'Bioshogi::PlayerExecutor::Base#perform_validations'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor/base.rb:43:in 'Bioshogi::PlayerExecutor::Base#execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:25:in 'Bioshogi::Player#execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container/execute_methods.rb:31:in 'block in Bioshogi::Container::ExecuteMethods#execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container/execute_methods.rb:30:in 'Array#each'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container/execute_methods.rb:30:in 'Bioshogi::Container::ExecuteMethods#execute'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:26:in 'block in Bioshogi::Formatter::Runner#call'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in 'Array#each'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in 'Enumerator#with_index'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in 'Bioshogi::Formatter::Runner#call'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/core.rb:175:in 'Bioshogi::Formatter::Core#container_run_all'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/core.rb:106:in 'block in Bioshogi::Formatter::Core#container'
+# ~> 	from <internal:kernel>:91:in 'Kernel#tap'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/core.rb:104:in 'Bioshogi::Formatter::Core#container'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/core.rb:69:in 'Bioshogi::Formatter::Core#container_run_once'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_ki2_shared.rb:26:in 'Bioshogi::Formatter::KifKi2Shared#to_s'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/core.rb:31:in 'Bioshogi::Formatter::Core#to_kif'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:29:in 'Bioshogi::Parser::Base#to_kif'
+# ~> 	from -:3:in '<main>'

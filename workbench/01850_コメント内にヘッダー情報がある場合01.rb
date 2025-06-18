@@ -21,7 +21,7 @@ tp info.pi.header.to_h
 
 # info.formatter.container_run_once
 # tp info.pi.header.to_h
-# tp info.skill_set_hash
+# tp info.tag_set_hash
 
 # >> |-----------+--------------------------|
 # >> |  開始日時 | 2003/08/25               |

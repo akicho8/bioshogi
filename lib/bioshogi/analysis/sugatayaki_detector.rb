@@ -1,10 +1,10 @@
 module Bioshogi
   module Analysis
     class SugatayakiDetector
-      delegate :win_side_location, :container, to: :@skill_embed
+      delegate :win_side_location, :container, to: :@tag_embed
 
-      def initialize(skill_embed)
-        @skill_embed = skill_embed
+      def initialize(tag_embed)
+        @tag_embed = tag_embed
       end
 
       def call

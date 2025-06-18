@@ -13,7 +13,7 @@
 #
 module Bioshogi
   module Analysis
-    class OverallSkillInfo
+    class OverallTagInfo
       include ApplicationMemoryRecord
       memory_record [
         { key: "名人に定跡なし", turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "力戦より前", },
@@ -46,7 +46,7 @@ module Bioshogi
       ]
 
       def func
-        @func ||= OverallSkillFuncInfo.fetch(key).func
+        @func ||= OverallTagFuncInfo.fetch(key).func
       end
     end
   end

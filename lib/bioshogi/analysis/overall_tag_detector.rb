@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class OverallSkillDetector
+    class OverallTagDetector
       attr_accessor :xparser
       attr_accessor :container
 
@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        OverallSkillInfo.each do |e|
+        OverallTagInfo.each do |e|
           if v = e.turn_gteq
             unless @container.turn_info.turn_offset >= v
               next

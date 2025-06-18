@@ -39,7 +39,7 @@ module Bioshogi
           end
 
           if e = TechniqueInfo[:"#{count_all}段ロケット"] # 7段以上のロケットは除外する
-            skill_add(e)
+            tag_add(e)
           end
         end
       end

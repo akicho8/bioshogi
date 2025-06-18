@@ -40,7 +40,7 @@ module Bioshogi
           n = "%*d" % [@params[:number_width], i.next]
           s = [n, s, @main_clock].compact.join(" ")
           s = s.rstrip + "\n"
-          if v = e.to_skill_set_kif_comment
+          if v = e.kif_comment
             s += v
           end
           s

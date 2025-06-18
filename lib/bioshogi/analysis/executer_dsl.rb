@@ -387,15 +387,15 @@ module Bioshogi
         end
       end
 
-      def skill_add(skill)
-        player.tag_bundle << skill
-        tag_bundle << skill
+      def tag_add(tag)
+        player.tag_bundle << tag
+        tag_bundle << tag
 
-        if v = skill.add_to_self
+        if v = tag.add_to_self
           player.tag_bundle << v
         end
 
-        if v = skill.add_to_opponent
+        if v = tag.add_to_opponent
           player.opponent_player.tag_bundle << v
         end
       end

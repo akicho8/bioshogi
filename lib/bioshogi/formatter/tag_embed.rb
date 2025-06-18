@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Formatter
-    class SkillEmbed
+    class TagEmbed
       attr_accessor :xparser
       attr_accessor :container
 
@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        Analysis::OverallSkillDetector.new(@xparser, @container).call
+        Analysis::OverallTagDetector.new(@xparser, @container).call
         header_write
       end
 
@@ -25,11 +25,11 @@ module Bioshogi
             if v = list.presence
               v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
               key = "#{player.call_name}の#{e.name}"
-              @xparser.skill_set_hash[key] = v.collect(&:name)
+              @xparser.tag_set_hash[key] = v.collect(&:name)
             end
           end
         end
-        hv = @xparser.skill_set_hash.transform_values { |e| e.join(", ") }
+        hv = @xparser.tag_set_hash.transform_values { |e| e.join(", ") }
         @xparser.pi.header.object.update(hv)
       end
     end

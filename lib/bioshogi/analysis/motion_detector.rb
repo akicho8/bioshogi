@@ -285,7 +285,7 @@ module Bioshogi
             and_cond { player.king_soldier.middle_row? }
 
             # 【条件3】すでに持っていれば終了する
-            break_cond { player.tag_bundle.has_skill?(TagIndex.fetch("天空の城")) }
+            break_cond { player.tag_bundle.has_tag?(TagIndex.fetch("天空の城")) }
 
             # 【条件4】移動先の近くに自玉がいる
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }

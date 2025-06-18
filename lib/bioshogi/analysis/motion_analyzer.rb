@@ -28,7 +28,7 @@ module Bioshogi
                 instance_exec(&e.motion_detector.func)
               end
               if retv
-                skill_add(e)
+                tag_add(e)
               end
             end
           end

@@ -53,7 +53,7 @@ module Bioshogi
       [to_kif, to_ki2, to_csa]
     end
 
-    def to_skill_set_kif_comment(options = {})
+    def kif_comment(options = {})
       tag_bundle.kif_comment(soldier.location)
     end
 

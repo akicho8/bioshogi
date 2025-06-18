@@ -16,7 +16,7 @@ module Bioshogi
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
             if perform_block { various_conditions(e) }
-              skill_add(e)
+              tag_add(e)
             end
           end
         end

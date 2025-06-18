@@ -14,7 +14,7 @@ module Bioshogi
       def call
         TagIndex.capture_type_values.each do |e|
           if instance_exec(&e.if_capture_then)
-            skill_add(e)
+            tag_add(e)
           end
         end
       end
