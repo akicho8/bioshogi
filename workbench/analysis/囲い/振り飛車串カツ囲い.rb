@@ -1,7 +1,7 @@
 require "../../setup"
 
 info = Analysis::DefenseInfo.fetch("振り飛車串カツ囲い").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 puts info.to_kif
 # >> |--------------+------------------------+-----------+--------------------------------|
 # >> | attack       | defense                | technique | note                           |

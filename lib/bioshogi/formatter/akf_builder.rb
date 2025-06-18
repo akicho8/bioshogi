@@ -48,7 +48,7 @@ module Bioshogi
             :place_same    => hand_log.place_same,
             **hand_log.to_akf,
             **@main_clock.last_clock.to_h,
-            :skill         => hand_log.skill_set.to_h,
+            :skill         => hand_log.tag_bundle.to_h,
             :history_sfen  => @container2.to_history_sfen,
             :short_sfen => @container2.to_short_sfen,
           }

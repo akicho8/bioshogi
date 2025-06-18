@@ -39,7 +39,7 @@ module Bioshogi
             info = Parser.parse(str)
             info.formatter.container_run_once
             info.formatter.container.players.each do |player|
-              keys = player.skill_set.list_of(@item).normalize.collect(&:key)
+              keys = player.tag_bundle.list_of(@item).normalize.collect(&:key)
               row[player.location.key] = keys
             end
             info.formatter.container.players.each do |player|

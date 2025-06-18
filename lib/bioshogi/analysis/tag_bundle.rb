@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class SkillSet
+    class TagBundle
       include Enumerable
 
       def initialize
@@ -15,24 +15,24 @@ module Bioshogi
       end
 
       def each(&block)
-        TacticInfo.collect { |e| public_send(e.list_key) }.each(&block)
+        TacticInfo.collect { |e| value(e.key) }.each(&block)
       end
 
       TacticInfo.each do |e|
         define_method(e.list_key) { value(e.key) }
       end
 
-      def list_of(skill)
-        value(skill.tactic_key)
+      def list_of(tag)
+        value(tag.tactic_info.key)
       end
 
-      def list_push(skill)
-        skill = TagIndex.fetch(skill)
-        list_of(skill) << skill
+      def <<(tag)
+        tag = TagIndex.fetch(tag)
+        list_of(tag) << tag
       end
 
-      def has_skill?(skill)
-        list_of(skill).include?(skill)
+      def has_skill?(tag)
+        list_of(tag).include?(tag)
       end
 
       def to_h
@@ -51,7 +51,7 @@ module Bioshogi
 
       def kif_comment(location)
         TacticInfo.collect { |e|
-          if v = public_send(e.list_key).normalize.presence
+          if v = value(e.key).normalize.presence
             [location.name, e.name, "：", v.collect(&:name).join(", "), "\n"].sum("*")
           end
         }.compact.join.presence
@@ -62,17 +62,10 @@ module Bioshogi
         (attack_infos + defense_infos).collect(&:style_info).max
       end
 
-      ################################################################################
-
-      # 結果が決まってからの処理
-      def rikisen_check_process
-        if power_battle?
-          list_push(AttackInfo["力戦"])
-        end
-      end
+      ################################################################################ Support Methods
 
       # 力戦条件
-      def power_battle?
+      def attack_and_defense_is_blank?
         attack_infos.empty? && defense_infos.empty?
       end
 

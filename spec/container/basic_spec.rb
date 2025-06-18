@@ -43,8 +43,8 @@ RSpec.describe Bioshogi::Container::Basic do
 
   it "normalized_names_with_alias" do
     container = Bioshogi::Container::Basic.new
-    container.player_at(:black).skill_set.attack_infos << Bioshogi::Analysis::AttackInfo["コーヤン流三間飛車"]
-    container.player_at(:white).skill_set.defense_infos << Bioshogi::Analysis::DefenseInfo["美濃囲い"]
+    container.player_at(:black).tag_bundle.attack_infos << Bioshogi::Analysis::AttackInfo["コーヤン流三間飛車"]
+    container.player_at(:white).tag_bundle.defense_infos << Bioshogi::Analysis::DefenseInfo["美濃囲い"]
     assert { container.normalized_names_with_alias == ["コーヤン流三間飛車", "コーヤン流", "中田功XP", "美濃囲い"] }
   end
 

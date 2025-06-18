@@ -58,7 +58,7 @@ module Bioshogi
       # 両者の(別名を含む)スキル名のリストを合わせてユニークにしたもの
       # つまりその対局に関連するすべてのタグに相当する
       def normalized_names_with_alias
-        players.flat_map { |e| e.skill_set.normalized_names_with_alias }.uniq
+        players.flat_map { |e| e.tag_bundle.normalized_names_with_alias }.uniq
       end
 
       # def basic_score

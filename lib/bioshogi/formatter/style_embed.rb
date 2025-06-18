@@ -15,7 +15,7 @@ module Bioshogi
         if @xparser.preset_info
           if @xparser.preset_info.hirate_like
             @container.players.each do |player|
-              if main_style_info = player.skill_set.main_style_info
+              if main_style_info = player.tag_bundle.main_style_info
                 @xparser.pi.header.object.update("#{player.call_name}の棋風" => main_style_info.name)
               end
             end

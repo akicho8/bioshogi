@@ -57,8 +57,8 @@ module Bioshogi
         end
       end
 
-      def skill_set
-        @skill_set ||= SkillSet.new
+      def tag_bundle
+        @tag_bundle ||= TagBundle.new
       end
 
       def analysis_feature_enabled?

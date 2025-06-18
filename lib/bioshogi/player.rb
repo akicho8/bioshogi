@@ -90,10 +90,10 @@ module Bioshogi
       end
     end
 
-    def skill_set
-      @skill_set ||= Analysis::SkillSet.new
+    def tag_bundle
+      @tag_bundle ||= Analysis::TagBundle.new
     end
-    delegate :attack_infos, :defense_infos, to: :skill_set
+    delegate :attack_infos, :defense_infos, to: :tag_bundle
 
     def single_clock
       @single_clock ||= SingleClock.new

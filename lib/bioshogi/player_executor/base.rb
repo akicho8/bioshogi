@@ -114,7 +114,7 @@ module Bioshogi
         end
       end
 
-      def skill_set
+      def tag_bundle
       end
     end
   end

@@ -21,7 +21,7 @@ info = Parser.parse(<<~EOT)
   16 ６二銀(71)
   17 ６八銀(79)
 EOT
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 puts info.to_kif
 # >> |------------------+----------+-----------+------------------------------------|
 # >> | attack           | defense  | technique | note                               |

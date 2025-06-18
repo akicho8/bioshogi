@@ -9,7 +9,7 @@ module Bioshogi
 
     attr_accessor :candidate_soldiers
     attr_accessor :place_same
-    attr_accessor :skill_set
+    attr_accessor :tag_bundle
     attr_accessor :handicap
 
     attr_accessor :single_clock
@@ -54,7 +54,7 @@ module Bioshogi
     end
 
     def to_skill_set_kif_comment(options = {})
-      skill_set.kif_comment(soldier.location)
+      tag_bundle.kif_comment(soldier.location)
     end
 
     def hand

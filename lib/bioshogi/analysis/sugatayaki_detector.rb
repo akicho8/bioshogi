@@ -9,11 +9,11 @@ module Bioshogi
 
       def call
         if valid?
-          win_player.skill_set.list_push(tag)
+          win_player.tag_bundle << tag
 
           # 最後の手にも入れておく
           container.hand_logs.last&.then do |hand_log|
-            hand_log.skill_set.list_push(tag)
+            hand_log.tag_bundle << tag
           end
         end
       end

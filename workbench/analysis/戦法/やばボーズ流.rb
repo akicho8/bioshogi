@@ -1,8 +1,8 @@
 require "../../setup"
 info = Analysis::AttackInfo.fetch("やばボーズ流").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 w = info.formatter.container.players[1]
-w.skill_set.attack_infos.normalize.any? { |e| e.root == Analysis::AttackInfo["三間飛車"] }       # => false
+w.tag_bundle.attack_infos.normalize.any? { |e| e.root == Analysis::AttackInfo["三間飛車"] }       # => false
 puts info.to_kif
 # >> |------------------+------------+------------------------------------+----------------------------------------------------------------------------------------|
 # >> | attack           | defense    | technique                          | note                                                                                   |

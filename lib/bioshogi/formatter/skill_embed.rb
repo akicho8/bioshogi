@@ -21,7 +21,7 @@ module Bioshogi
       def header_write
         Analysis::TacticInfo.each do |e|
           @container.players.each do |player|
-            list = player.skill_set.public_send(e.list_key).normalize
+            list = player.tag_bundle.public_send(e.list_key).normalize
             if v = list.presence
               v = v.uniq # 手筋の場合、複数になる場合があるので uniq する
               key = "#{player.call_name}の#{e.name}"

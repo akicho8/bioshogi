@@ -14,7 +14,7 @@ module Bioshogi
           :move_hand          => @move_hand,
           :candidate_soldiers => @candidate_soldiers, # nil の場合もある
           :place_same         => place_same?,
-          :skill_set          => skill_set,
+          :tag_bundle          => tag_bundle,
           :handicap           => container.turn_info.handicap?,
           :single_clock       => player.single_clock.clone.freeze, # 時計の状態を保持して手に結びつける
         }).freeze

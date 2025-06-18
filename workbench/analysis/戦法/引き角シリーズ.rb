@@ -1,19 +1,19 @@
 require "../../setup"
 
 info = Analysis::AttackInfo.fetch("鳥刺し").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 info = Analysis::AttackInfo.fetch("嬉野流").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 info = Analysis::AttackInfo.fetch("新嬉野流").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 info = Analysis::AttackInfo.fetch("飯島流引き角戦法").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 info = Analysis::AttackInfo.fetch("飯島流相掛かり引き角").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 # puts info.to_kif
 # >> |--------------+----------------+-----------+--------------------------------|

@@ -32,7 +32,7 @@ tp TagIndex.values.inject({}) { |a, e| a.merge(e.key => e.style_info) }
 
 info = Parser.parse("48玉 34歩 76歩 88角成")
 info.container.players.count    # => 2
-info.container.players[0].skill_set.main_style_info # => <準変態>
+info.container.players[0].tag_bundle.main_style_info # => <準変態>
 # # p info.pi.header
 #
 # exit

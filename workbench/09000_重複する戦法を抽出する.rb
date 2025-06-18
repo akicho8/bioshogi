@@ -9,7 +9,7 @@ files.each do |file|
   info = Parser.file_parse(file, typical_error_case: :skip)
   info.container.players.each do |player|
     [:attack_infos, :defense_infos].each do |kind|
-      names = player.skill_set.public_send(kind).normalize.collect(&:name)
+      names = player.tag_bundle.public_send(kind).normalize.collect(&:name)
       hash[names] += 1
     end
   end

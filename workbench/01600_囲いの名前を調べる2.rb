@@ -2,7 +2,7 @@ require "#{__dir__}/setup"
 
 info = Parser.file_parse("yagura.kif")
 info.formatter.container.players.each do |player|
-  tp player.skill_set.to_h
+  tp player.tag_bundle.to_h
 end
 puts info.to_kif
 # >> |---------+--------------------|

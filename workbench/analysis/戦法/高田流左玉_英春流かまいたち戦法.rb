@@ -1,10 +1,10 @@
 require "../../setup"
 
 info = Analysis::AttackInfo.fetch("高田流左玉").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 info = Analysis::AttackInfo.fetch("英春流かまいたち戦法").static_kif_info
-tp info.formatter.container.players.collect { |e| e.skill_set.to_h }
+tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 
 # >> |--------------------------------------------+------------------+-----------+------------------------|
 # >> | attack                                     | defense          | technique | note                   |

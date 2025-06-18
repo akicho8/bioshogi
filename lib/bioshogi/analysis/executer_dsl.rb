@@ -12,7 +12,7 @@ module Bioshogi
         :soldier,               # 盤上で操作し終わった駒
         :origin_soldier,        # 移動元の駒
         :captured_soldier,
-        :skill_set,
+        :tag_bundle,
       ], to: :executor
 
       delegate *[
@@ -45,7 +45,7 @@ module Bioshogi
       end
 
       def various_conditions(e)
-        list = player.skill_set.list_of(e)
+        list = player.tag_bundle.list_of(e)
 
         ################################################################################ FIXME: 最初にチェックするのは遅いかもしれない
 
@@ -388,15 +388,15 @@ module Bioshogi
       end
 
       def skill_add(skill)
-        player.skill_set.list_push(skill)
-        skill_set.list_push(skill)
+        player.tag_bundle << skill
+        tag_bundle << skill
 
         if v = skill.add_to_self
-          player.skill_set.list_push(v)
+          player.tag_bundle << v
         end
 
         if v = skill.add_to_opponent
-          player.opponent_player.skill_set.list_push(v)
+          player.opponent_player.tag_bundle << v
         end
       end
     end

@@ -34,7 +34,7 @@ RSpec.describe Bioshogi::Analysis::TechniqueInfo do
     先手番
     EOT
     container.execute("31歩打")
-    assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"金底の歩" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"金底の歩" }
   end
 
   it "パンツを脱ぐ" do
@@ -47,21 +47,21 @@ RSpec.describe Bioshogi::Analysis::TechniqueInfo do
     container = container_new
     container.placement_from_bod("#{board}\n手数＝1")
     container.execute("73桂")
-    assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flop}\n手数＝1")
     container.execute("33桂")
-    assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flip}\n手数＝0")
     container.execute("37桂")
-    assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flip.flop}\n手数＝0")
     container.execute("77桂")
-    assert { container.hand_logs.last.skill_set.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
   end
 end
