@@ -100,11 +100,18 @@ module Bioshogi
     end
 
     def headers_hash
-      Analysis::TacticInfo.each_with_object({}) do |e, m|
+      acc = {}
+      Analysis::TacticInfo.each do |e|
         if v = tag_bundle.value(e).normalize.presence
-          m["#{call_name}の#{e.name}"] = v.collect(&:name)
+          acc["#{call_name}の#{e.name}"] = v.collect(&:name).join(", ")
         end
       end
+      if container.params[:preset_info_or_nil]
+        if main_style_info = tag_bundle.main_style_info
+          acc["#{call_name}の棋風"] = main_style_info.name
+        end
+      end
+      acc
     end
   end
 end

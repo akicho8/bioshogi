@@ -121,10 +121,6 @@ module Bioshogi
         {}.merge(*players.collect(&:headers_hash))
       end
 
-      def headers_hash2
-        headers_hash.transform_values { |e| e.join(", ") }
-      end
-
       ################################################################################
     end
   end

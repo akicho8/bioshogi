@@ -55,14 +55,14 @@ module Bioshogi
 
       # 戦法と囲いのスタイル(複数)のなかからもっとも変態に近いものを得る
       def main_style_info
-        (attack_infos + defense_infos).collect(&:style_info).max
+        (value(:attack) + value(:defense)).collect(&:style_info).max
       end
 
       ################################################################################ Support Methods
 
       # 力戦条件
       def attack_and_defense_is_blank?
-        attack_infos.empty? && defense_infos.empty?
+        value(:attack).empty? && value(:defense).empty?
       end
 
       ################################################################################
