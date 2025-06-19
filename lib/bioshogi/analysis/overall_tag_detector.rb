@@ -3,38 +3,36 @@
 module Bioshogi
   module Analysis
     class OverallTagDetector
-      attr_accessor :xparser    # FIXME: xparser に依存するのはおかしい
       attr_accessor :container
 
-      def initialize(xparser, container)
-        @xparser = xparser
+      def initialize(container)
         @container = container
       end
 
       def call
         OverallTagInfo.each do |e|
           if v = e.turn_gteq
-            unless @container.turn_info.turn_offset >= v
+            unless container.turn_info.turn_offset >= v
               next
             end
           end
           if v = e.preset_has
-            unless @xparser.preset_info_or_nil&.public_send(v)
+            unless container.params[:preset_info_or_nil]&.public_send(v)
               next
             end
           end
           if e.critical
-            unless @container.critical_turn
+            unless container.critical_turn
               next
             end
           end
           if e.outbreak
-            unless @container.outbreak_turn
+            unless container.outbreak_turn
               next
             end
           end
           if e.checkmate
-            unless @xparser.pi.last_checkmate_p
+            unless container.params[:last_checkmate_p]
               next
             end
           end
@@ -42,10 +40,19 @@ module Bioshogi
         end
       end
 
-      # 勝った側を返す
-      # nil の場合もある
       def win_side_location
-        @win_side_location ||= @xparser.win_side_location(@container)
+        @win_side_location ||= yield_self do
+          if v = container.params[:win_side_location]
+            # 勝者が明示されている場合
+            # SHOGI-EXTEND 側からは常に勝者を入れている
+            # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
+            v
+          elsif container.params[:win_player_collect_p]
+            # 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる
+            # これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない
+            container.win_player.location
+          end
+        end
       end
     end
   end

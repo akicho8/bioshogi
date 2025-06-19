@@ -1,9 +1,13 @@
 module Bioshogi
   module Container
-    class << self
-      def create(...)
-        Basic.new(...)
-      end
+    extend self
+
+    def create(...)
+      Basic.new(...)
+    end
+
+    def new(...)
+      Basic.new(...)
     end
   end
 end

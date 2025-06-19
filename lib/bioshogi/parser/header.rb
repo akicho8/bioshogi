@@ -28,6 +28,12 @@ module Bioshogi
         piece_normalize
       end
 
+      def win_side_location
+        if v = object["勝者"]
+          Location.fetch(v)
+        end
+      end
+
       private
 
       def time_normalize

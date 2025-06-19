@@ -6,20 +6,28 @@ module Bioshogi
       attr_writer :board
       attr_accessor :initial_preset_info
 
+      def initialize(params = {})
+        self.params.update(params)
+      end
+
       def before_run_process
         initial_preset_info_set
       end
 
-      def params
-        @params ||= {
-          :analysis_feature           => false,
+      def default_params
+        {
+          :analysis_feature        => false,
           :analysis_motion_feature => false,
-          :ki2_function               => true,
-          :validate_feature           => true,
-          :double_pawn_detect         => true, # 二歩を検出するか？
-          :warp_detect                => true, # 角ワープを検出するか？
-          :board_class                => Board,
+          :ki2_function            => true,
+          :validate_feature        => true,
+          :double_pawn_detect      => true, # 二歩を検出するか？
+          :warp_detect             => true, # 角ワープを検出するか？
+          :board_class             => Board,
         }
+      end
+
+      def params
+        @params ||= default_params
       end
 
       def deep_dup

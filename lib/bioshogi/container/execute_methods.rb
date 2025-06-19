@@ -22,6 +22,9 @@ module Bioshogi
         end
       end
 
+      def before_execute_all
+      end
+
       def execute(str, options = {})
         options = {
           executor_class: executor_class,
@@ -30,6 +33,10 @@ module Bioshogi
         InputParser.scan(str).each do |str|
           current_player.execute(str, options)
         end
+      end
+
+      def after_execute_all
+        p ["#{__FILE__}:#{__LINE__}", __method__, ]
       end
 
       def executor_class

@@ -73,29 +73,39 @@ module Bioshogi
         @parser_options[:container_class] || Container::Basic
       end
 
+      def container_default_params
+        params = @parser_options.slice(*[
+            :analysis_feature,
+            :analysis_motion_feature,
+            :ki2_function,
+            :validate_feature,
+            :double_pawn_detect,
+            :warp_detect,
+          ])
+
+        # xparser を渡すのではなく必要なパラメータだけ渡せ
+        params[:preset_info_or_nil]   = preset_info_or_nil           # 手合割
+        params[:win_side_location]    = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
+        params[:last_checkmate_p]     = @pi.last_checkmate_p         # 詰みまで指したか？ (弱)
+        params[:win_player_collect_p] = @pi.win_player_collect_p     # 勝敗がついた終わり方をしたか？ (container 側で調べる)
+
+        params
+      end
+
       def container_new
-        container_class.new.tap do |e|
-          params = @parser_options.slice(*[
-              :analysis_feature,
-              :analysis_motion_feature,
-              :ki2_function,
-              :validate_feature,
-              :double_pawn_detect,
-              :warp_detect,
-            ])
-          e.params.update(params)
-        end
+        container_class.new(container_default_params)
       end
 
       # 画像生成のための container の初期状態を返す
       def container_for_image
-        container = Container::Basic.new
-        container.params.update({
-            :analysis_feature           => false,
-            :analysis_motion_feature => false,
-            :ki2_function               => false,
-            :validate_feature           => false,
-          })
+        params = {
+          :analysis_feature        => false,
+          :analysis_motion_feature => false,
+          :ki2_function            => false,
+          :validate_feature        => false,
+        }
+
+        container = Container::Basic.new(params) # FIXME: Container::Fast を使うこと
         container_init(container) # FIXME: これ、必要ない SFEN を生成したりして遅い
         container
       end
@@ -174,6 +184,7 @@ module Bioshogi
       def container_run_all(container)
         Runner.new(self, container).call
         if @parser_options[:analysis_feature]
+          p ["#{__FILE__}:#{__LINE__}", __method__, ]
           TagEmbed.new(self, container).call
           StyleEmbed.new(self, container).call
         end
@@ -248,26 +259,33 @@ module Bioshogi
         end
       end
 
-      # 勝った側を返す
-      # nil の場合もある
-      def win_side_location(container)
-        # 勝者が明示されている場合
-        # SHOGI-EXTEND 側からは常に勝者を入れている
-        # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
-        if v = @pi.header["勝者"]
-          Location.fetch(v)
-        else
-          # 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる
-          # これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない
-          if @pi.win_player_collect_p
-            container.win_player.location
-          end
-        end
-      end
+      # # 勝った側を返す
+      # # nil の場合もある
+      # def win_side_location
+      #   # 勝者が明示されている場合
+      #   # SHOGI-EXTEND 側からは常に勝者を入れている
+      #   # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
+      #   if v = @pi.header["勝者"]
+      #     Location.fetch(v)
+      #   end
+      # end
+
+      # # 勝った側を返す
+      # # nil の場合もある
+      # def win_side_location(container)
+      #   # 勝者が明示されている場合
+      #   # SHOGI-EXTEND 側からは常に勝者を入れている
+      #   # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
+      #   if v = @pi.header["勝者"]
+      #     Location.fetch(v)
+      #   else
+      #     # 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる
+      #     # これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない
+      #     if @pi.win_player_collect_p
+      #       container.win_player.location
+      #     end
+      #   end
+      # end
     end
   end
 end
-# ~> -:14:in '<class:Core>': undefined method 'delegate' for class Bioshogi::Formatter::Core (NoMethodError)
-# ~>    from -:5:in '<module:Formatter>'
-# ~>    from -:4:in '<module:Bioshogi>'
-# ~>    from -:3:in '<main>'

@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        Analysis::OverallTagDetector.new(@xparser, @container).call
+        Analysis::OverallTagDetector.new(@container).call
         header_write
       end
 

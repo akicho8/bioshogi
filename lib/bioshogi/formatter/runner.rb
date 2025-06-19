@@ -12,6 +12,7 @@ module Bioshogi
       end
 
       def call
+        container.before_execute_all
         begin
           @formatter.pi.move_infos.each.with_index do |info, i|
             if @formatter.parser_options[:debug]
@@ -38,6 +39,7 @@ module Bioshogi
             raise error
           end
         end
+        container.after_execute_all
       end
     end
   end
