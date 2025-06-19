@@ -98,5 +98,13 @@ module Bioshogi
     def single_clock
       @single_clock ||= SingleClock.new
     end
+
+    def headers_hash
+      Analysis::TacticInfo.each_with_object({}) do |e, m|
+        if v = tag_bundle.value(e).normalize.presence
+          m["#{call_name}の#{e.name}"] = v.collect(&:name)
+        end
+      end
+    end
   end
 end

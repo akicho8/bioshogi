@@ -114,6 +114,18 @@ module Bioshogi
       def load_from_sfen(sfen_info)
         SfenImporter.new(self, sfen_info).import_all
       end
+
+      ################################################################################
+
+      def headers_hash
+        {}.merge(*players.collect(&:headers_hash))
+      end
+
+      def headers_hash2
+        headers_hash.transform_values { |e| e.join(", ") }
+      end
+
+      ################################################################################
     end
   end
 end

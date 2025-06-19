@@ -36,7 +36,9 @@ module Bioshogi
       end
 
       def after_execute_all
-        p ["#{__FILE__}:#{__LINE__}", __method__, ]
+        if params[:analysis_feature]
+          Analysis::OverallTagDetector.new(self).call
+        end
       end
 
       def executor_class
