@@ -67,11 +67,11 @@ module Bioshogi
 
       ################################################################################
 
-      private
-
       def value(tactic_info)
-        @value[tactic_info.key] ||= List[]
+        @value[TacticInfo.fetch(tactic_info).key] ||= List[]
       end
+
+      private
 
       class List < Set
         def normalize

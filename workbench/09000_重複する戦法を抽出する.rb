@@ -8,8 +8,8 @@ files.each do |file|
   puts file
   info = Parser.file_parse(file, typical_error_case: :skip)
   info.container.players.each do |player|
-    [:attack_infos, :defense_infos].each do |kind|
-      names = player.tag_bundle.public_send(kind).normalize.collect(&:name)
+    [:attack, :defense].each do |key|
+      names = player.tag_bundle.value(kind).normalize.collect(&:name)
       hash[names] += 1
     end
   end

@@ -3,7 +3,7 @@
 module Bioshogi
   module Analysis
     class OverallTagDetector
-      attr_accessor :xparser
+      attr_accessor :xparser    # FIXME: xparser に依存するのはおかしい
       attr_accessor :container
 
       def initialize(xparser, container)
