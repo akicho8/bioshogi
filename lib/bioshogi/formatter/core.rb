@@ -117,7 +117,7 @@ module Bioshogi
         end
       end
 
-      # FIXME: container の最初の状態をコピーしておく
+      # FIXME: container の最初の状態をコピーしておく → 知っていればいい情報だけをとっておく
       def initial_container
         @initial_container ||= container_new.tap do |e|
           container_init(e)
@@ -203,52 +203,8 @@ module Bioshogi
       end
 
       def judgment_message
-        if e = last_action_info
+        if e = pi.last_action_info2
           e.judgment_message(container)
-        end
-      end
-
-      def last_action_info
-        @last_action_info ||= yield_self do
-          key = nil
-
-          # エラーなら最優先
-          unless key
-            if @pi.error_message
-              key = :ILLEGAL_MOVE
-            end
-          end
-
-          # 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
-          unless key
-            if @pi.last_action_params
-              v = @pi.last_action_params[:last_action_key]
-              if LastActionInfo[v]
-                key = v
-              end
-            end
-          end
-
-          # 何の指定もないときだけ投了とする
-          unless key
-            unless @pi.last_action_params
-              key = :TORYO
-            end
-          end
-
-          LastActionInfo[key]
-        end
-      end
-
-      def used_seconds_at(index)
-        @pi.move_infos.dig(index, :used_seconds).to_i
-      end
-
-      def error_message_part(comment_mark = "*")
-        if @pi.error_message
-          v = @pi.error_message.strip + "\n"
-          s = "-" * 76 + "\n"
-          [s, *v.lines, s].collect { |e| "#{comment_mark} #{e}" }.join
         end
       end
     end

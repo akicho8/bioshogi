@@ -42,10 +42,10 @@ module Bioshogi
           if s = @formatter.judgment_message
             out << "#{s}\n"
           end
-          if s = illegal_judgement_message
+          if s = @formatter.pi.illegal_judgement_message
             out << s
           end
-          out << @formatter.error_message_part
+          out << @formatter.pi.error_message_part
         end
 
         out.join
@@ -111,17 +111,6 @@ module Bioshogi
             if v.blank? || v == "なし"
               @header.delete(key)
             end
-          end
-        end
-      end
-
-      # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
-      # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
-      def illegal_judgement_message
-        if @formatter.pi.last_action_params
-          v = @formatter.pi.last_action_params[:last_action_key]
-          unless LastActionInfo[v]
-            "*#{v}\n"
           end
         end
       end

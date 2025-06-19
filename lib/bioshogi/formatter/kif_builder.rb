@@ -33,7 +33,7 @@ module Bioshogi
       def body_hands
         @formatter.container.hand_logs.collect.with_index { |e, i|
           if @main_clock
-            @main_clock.add(@formatter.used_seconds_at(i))
+            @main_clock.add(@formatter.pi.used_seconds_at(i))
           end
           s = e.to_kif(char_type: :formal_sheet)
           s = mb_ljust(s, @params[:hand_width])
@@ -53,8 +53,8 @@ module Bioshogi
         left_part = nil
         right_part = nil
 
-        if @formatter.last_action_info
-          if kakinoki_word = @formatter.last_action_info.kakinoki_word
+        if @formatter.pi.last_action_info2
+          if kakinoki_word = @formatter.pi.last_action_info2.kakinoki_word
             left_part = "%*d %s" % [
               @params[:number_width],
               @formatter.container.hand_logs.size.next,
@@ -62,12 +62,10 @@ module Bioshogi
             ]
           end
 
-          if @formatter.pi.last_action_params
-            if used_seconds = @formatter.pi.last_action_params[:used_seconds]
-              if @main_clock
-                @main_clock.add(used_seconds)
-                right_part = @main_clock.to_s
-              end
+          if used_seconds = @formatter.pi.last_action_params[:used_seconds]
+            if @main_clock
+              @main_clock.add(used_seconds)
+              right_part = @main_clock.to_s
             end
           end
 

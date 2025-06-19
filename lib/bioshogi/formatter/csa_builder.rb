@@ -73,7 +73,7 @@ module Bioshogi
         end
 
         if @formatter.pi.error_message
-          out << @formatter.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
+          out << @formatter.pi.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
         end
 
         out = out.join
@@ -114,7 +114,7 @@ module Bioshogi
         if @formatter.container.hand_logs.present?
           list = @formatter.container.hand_logs.collect.with_index do |e, i|
             if @formatter.pi.clock_exist?
-              [e.to_csa, "T#{@formatter.used_seconds_at(i)}"].join(",")
+              [e.to_csa, "T#{@formatter.pi.used_seconds_at(i)}"].join(",")
             else
               e.to_csa
             end

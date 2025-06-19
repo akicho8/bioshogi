@@ -48,10 +48,9 @@ RSpec.describe Bioshogi::Parser::Base do
        2 ３四歩(33)   ( 0:02/00:00:02)
        3 反則勝ち
     EOT
-    assert { info.formatter.last_action_info == nil }
-    assert { info.formatter.judgment_message == nil }
-    # assert { info.last_action_info.key == :TORYO }
-    # assert { info.judgment_message == "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)" }
+    assert { info.formatter.pi.last_action_info2.key == :TORYO }
+    assert { info.formatter.judgment_message == "まで2手で後手の勝ち" }
+    assert { info.formatter.pi.illegal_judgement_message == "*本当の結末は「反則勝ち」だが激指ではこれが入っていると読み込めない\n" }
     assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない
   end
 

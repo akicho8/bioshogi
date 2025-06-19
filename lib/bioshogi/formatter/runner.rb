@@ -24,7 +24,7 @@ module Bioshogi
             if @formatter.parser_options[:turn_limit] && container.turn_info.display_turn >= @formatter.parser_options[:turn_limit]
               break
             end
-            container.execute(info[:input], used_seconds: formatter.used_seconds_at(i))
+            container.execute(info[:input], used_seconds: formatter.pi.used_seconds_at(i))
           end
         rescue CommonError => error
           if v = @formatter.parser_options[:typical_error_case]

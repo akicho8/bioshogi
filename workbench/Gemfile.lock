@@ -82,12 +82,12 @@ GEM
       rubyntlm (~> 0.6, >= 0.6.3)
       webrick (~> 1.7)
       webrobots (~> 0.1.2)
-    memory_record (0.0.21)
+    memory_record (0.0.22)
       activesupport
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0610)
+    mime-types-data (3.2025.0617)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
     net-http (0.6.0)

@@ -39,8 +39,8 @@ module Bioshogi
           :short_sfen => @container2.to_short_sfen,
         }
         @hv[:moves] += @formatter.pi.move_infos.collect.with_index do |info, i|
-          @container2.execute(info[:input], used_seconds: @formatter.used_seconds_at(i))
-          @main_clock.add(@formatter.used_seconds_at(i))
+          @container2.execute(info[:input], used_seconds: @formatter.pi.used_seconds_at(i))
+          @main_clock.add(@formatter.pi.used_seconds_at(i))
           hand_log = @container2.hand_logs.last
           {
             :index         => i.next,
@@ -65,12 +65,12 @@ module Bioshogi
 
         # @hv[:header] = @hv[:header]
 
-        if @formatter.last_action_info
-          @hv[:last_action_kakinoki_word] = @formatter.last_action_info.kakinoki_word
+        if @formatter.pi.last_action_info2
+          @hv[:last_action_kakinoki_word] = @formatter.pi.last_action_info2.kakinoki_word
         end
 
         @hv[:judgment_message]          = @formatter.judgment_message
-        @hv[:error_text]                = @formatter.error_message_part
+        @hv[:error_text]                = @formatter.pi.error_message_part
 
         @hv
       end
