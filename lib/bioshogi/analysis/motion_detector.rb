@@ -290,25 +290,20 @@ module Bioshogi
             # 【条件4】移動先の近くに自玉がいる
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
-            # 【条件5】自玉のまわりに金以上の価値のある駒が4以上ある
+            # 【条件5】自玉のまわりに「金金銀」以上の価値のある駒がある
             and_cond do
-              gteq_weight = Piece[:gold].basic_weight
-              match = false
-              count = 0
-              V.outer_vectors.each do |e|
+              min_score = Piece[:gold].basic_weight * 2 + Piece[:silver].basic_weight
+              score = 0
+              V.outer_vectors.any? do |e|
                 if v = player.king_soldier.relative_move_to(e)
                   if s = board[v]
-                    if s.abs_weight >= gteq_weight
-                      count += 1
-                      if count >= 4
-                        match = true
-                        break
-                      end
+                    if own?(s)
+                      score += s.abs_weight
+                      score >= min_score
                     end
                   end
                 end
               end
-              match
             end
 
             # 【条件6】駒得している
