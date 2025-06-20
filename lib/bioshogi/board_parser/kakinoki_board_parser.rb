@@ -59,13 +59,13 @@ module Bioshogi
 
       def place_validate(x, y, something)
         unless @h_units[x] && @v_units[y]
-          raise SyntaxDefact, "盤面の情報が読み取れません。#{something.inspect} が盤面からはみ出ているかもしれません。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
+          raise SyntaxDefact, "盤面の情報が読み取れません。おそらく #{something.inspect} が盤面からはみ出ています。#{coordinate_message(x, y)}\n#{@source}"
         end
       end
 
       def prefix_char_validate(x, y, prefix_char)
         unless prefix_char.match?(/[[:ascii:]]/)
-          raise SyntaxDefact, "盤面がずれているかもしれません。prefix_char=#{prefix_char.inspect}。左上の升目を (0, 0) としたときの (#{x}, #{y}) の地点です\n#{@source}"
+          raise SyntaxDefact, "盤面がずれています。#{prefix_char.inspect} は想定外の文字です。#{coordinate_message(x, y)}\n#{@source}"
         end
       end
 
@@ -89,6 +89,10 @@ module Bioshogi
 
       def build(place, piece, location_key)
         Soldier.new_with_promoted(piece, place: place, location: Location.fetch(location_key))
+      end
+
+      def coordinate_message(x, y)
+        "左上を原点としたときとしたときの#{y.next}行目の#{x.next}列目の地点です。"
       end
     end
   end
