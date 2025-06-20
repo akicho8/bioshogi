@@ -87,7 +87,7 @@ module Bioshogi
         params[:preset_info_or_nil] = preset_info_or_nil           # 手合割
         params[:win_side_location]  = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
 
-        if v = @pi.final_result.last_action_info
+        if v = @pi.last_action_info
           params.update(v.container_params)
         end
 

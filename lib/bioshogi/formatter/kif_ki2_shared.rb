@@ -42,7 +42,7 @@ module Bioshogi
           if s = @formatter.judgment_message
             out << "#{s}\n"
           end
-          if s = @formatter.pi.final_result.illegal_judgement_message
+          if s = @formatter.pi.illegal_judgement_message
             out << "*#{s}\n"
           end
           out << @formatter.pi.error_message_part

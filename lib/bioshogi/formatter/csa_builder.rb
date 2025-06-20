@@ -125,13 +125,12 @@ module Bioshogi
         out.join
       end
 
-      # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が last_action_key 入っているたため、LastActionInfo を fetch できない
+      # 将棋倶楽部24の棋譜は先手の手番で後手が投了できる「反則勝ち」が入っているたため、LastActionInfo を fetch できない
       # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
       # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
       def footer_content
         av = []
-        last_action_info = @formatter.pi.final_result.last_action_info || LastActionInfo[:TORYO]
-        av << "%#{last_action_info.csa_key}"
+        av << "%#{@formatter.pi.last_action_info.csa_key}"
         if v = @formatter.pi.last_used_seconds
           av << "T#{v}"
         end

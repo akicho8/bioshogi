@@ -12,7 +12,8 @@ module Bioshogi
       attr_accessor :first_comments
       attr_accessor :board_source
 
-      attr_accessor :final_result
+      attr_accessor :last_action_unknown_str
+      attr_accessor :last_action_info
       attr_accessor :last_used_seconds
 
       attr_accessor :header
@@ -29,8 +30,9 @@ module Bioshogi
         @first_comments     = []
         @board_source       = nil
 
-        @final_result       = FinalResult.new
-        @last_used_seconds  = nil
+        @last_action_info        = LastActionInfo[:TORYO]
+        @last_action_unknown_str = nil
+        @last_used_seconds       = nil
 
         @header             = Header.new
         @force_preset_info  = nil
@@ -68,27 +70,37 @@ module Bioshogi
       # 出力するときの結末
       # nil を返す場合もある
       def output_last_action_info
-        @output_last_action_info ||= yield_self do
-          info = nil
-          info ||= illegal_move_last_action_info # 1. エラーなら最優先
-          info ||= final_result.last_action_info # 2. 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
-          info ||= LastActionInfo.fetch(:TORYO)  # 3. 何もなければ投了にしておく (このあたり正確性よりも、読めないことが問題なので何でもいい)
-          info
-        end
+        # @output_last_action_info ||= yield_self do
+        #   info = nil
+        #   info ||= illegal_move_last_action_info # 1. エラーなら最優先
+        #   info ||= last_action_info # 2. 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
+        #   # info ||= LastActionInfo.fetch(:TORYO)  # 3. 何もなければ投了にしておく (このあたり正確性よりも、読めないことが問題なので何でもいい)
+        #   info
+        # end
+
+        @output_last_action_info ||= illegal_move_last_action_info || last_action_info
       end
 
       def error_message_part(comment_mark = "*")
-        if v = @error_message
+        if v = error_message
           v = v.strip + "\n"
           s = "-" * 76 + "\n"
           [s, *v.lines, s].collect { |e| "#{comment_mark} #{e}" }.join
         end
       end
 
+      # 将棋倶楽部24の棋譜だけに存在する、自分の手番で相手が投了したときの文言に対応する
+      # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
+      def illegal_judgement_message
+        if last_action_unknown_str
+          "本当の結末は「#{last_action_unknown_str}」だが激指ではこれが入っていると読み込めなくなるので仕方なく投了にしている"
+        end
+      end
+
       private
 
       def illegal_move_last_action_info
-        if @error_message
+        if error_message
           LastActionInfo.fetch(:ILLEGAL_MOVE)
         end
       end

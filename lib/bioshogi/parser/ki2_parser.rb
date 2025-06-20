@@ -32,7 +32,7 @@ module Bioshogi
         end
 
         if body_part.match?(/^まで\d+手で千日手/)
-          @pi.final_result.last_action_key = :SENNICHITE
+          @pi.last_action_info = LastActionInfo.fetch(:SENNICHITE)
         end
       end
     end

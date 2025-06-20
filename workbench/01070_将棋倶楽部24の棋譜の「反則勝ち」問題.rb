@@ -7,24 +7,29 @@ info = Parser.parse(<<~EOT)
 3 反則勝ち
 EOT
 tp info.pi.move_infos
-tp info.pi.final_result.last_action_key
-tp info.last_action_info     # => <TORYO>
-info.judgment_message        # => "*先手の手番なのに後手が投了 (将棋倶楽部24だけに存在する「反則勝ち」)"
-info.to_csa.lines.last.strip # => "%TORYO"
+tp info.pi.last_action_info         # => <TORYO>
+tp info.pi.output_last_action_info  # => <TORYO>
+info.container.judgment_message     # => "まで2手で後手の勝ち"
+info.to_csa.lines.last.strip        # => "%TORYO"
 # >> |-------------+------------+---------------+--------------|
 # >> | turn_number | input      | clock_part    | used_seconds |
 # >> |-------------+------------+---------------+--------------|
 # >> |           1 | ７六歩(77) | 0:02/00:00:02 |            2 |
 # >> |           2 | ３四歩(33) | 0:02/00:00:02 |            2 |
 # >> |-------------+------------+---------------+--------------|
-# >> |-----------------+----------|
-# >> | last_action_key | 反則勝ち |
-# >> |    used_seconds |          |
-# >> |-----------------+----------|
-# >> |----------+-------|
-# >> |      key | TORYO |
-# >> | kakinoki_word | 投了  |
-# >> |   reason |       |
-# >> |     draw |       |
-# >> |     code | 0     |
-# >> |----------+-------|
+# >> |----------------------+-------|
+# >> |                  key | TORYO |
+# >> |        kakinoki_word | 投了  |
+# >> |               reason |       |
+# >> |                 draw |       |
+# >> | win_player_collect_p | true  |
+# >> |                 code | 0     |
+# >> |----------------------+-------|
+# >> |----------------------+-------|
+# >> |                  key | TORYO |
+# >> |        kakinoki_word | 投了  |
+# >> |               reason |       |
+# >> |                 draw |       |
+# >> | win_player_collect_p | true  |
+# >> |                 code | 0     |
+# >> |----------------------+-------|
