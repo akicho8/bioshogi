@@ -189,6 +189,44 @@ module Bioshogi
           },
         },
         {
+          key: "裸玉",
+          description: "玉のまわりに歩ぐらいしかない",
+          trigger: [
+            { piece_key: :king, promoted: false, motion: :move },
+          ],
+          func: -> {
+            min_score = Piece[:lance].basic_weight
+
+            # 【条件1】移動先が潤っていればちがう
+            break_cond do
+              V.outer_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    if own?(s)
+                      s.abs_weight >= min_score
+                    end
+                  end
+                end
+              end
+            end
+
+            # 【条件2】移動元が潤っている (移動先の玉が近くにいるため除外すること)
+            and_cond do
+              V.outer_vectors.any? do |e|
+                if v = origin_soldier.relative_move_to(e)
+                  if s = board[v]
+                    if own?(s)
+                      if s.piece.key != :king
+                        s.abs_weight >= min_score
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "玉飛接近",
           description: "龍は馬と似て守りに効いている場合もあるため接近してもよいとする",
           trigger: [
