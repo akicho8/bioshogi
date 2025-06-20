@@ -70,16 +70,15 @@ module Bioshogi
       # 出力するときの結末
       # nil を返す場合もある
       def output_last_action_info
-        # @output_last_action_info ||= yield_self do
-        #   info = nil
-        #   info ||= illegal_move_last_action_info # 1. エラーなら最優先
-        #   info ||= last_action_info # 2. 元の棋譜の記載を優先 (CSA語, 柿木語 のみ対応)
-        #   # info ||= LastActionInfo.fetch(:TORYO)  # 3. 何もなければ投了にしておく (このあたり正確性よりも、読めないことが問題なので何でもいい)
-        #   info
-        # end
-
         @output_last_action_info ||= illegal_move_last_action_info || last_action_info
       end
+
+      def illegal_move_last_action_info
+        if error_message
+          LastActionInfo.fetch(:ILLEGAL_MOVE)
+        end
+      end
+      private :illegal_move_last_action_info
 
       def error_message_part(comment_mark = "*")
         if v = error_message
@@ -94,14 +93,6 @@ module Bioshogi
       def illegal_judgement_message
         if last_action_unknown_str
           "本当の結末は「#{last_action_unknown_str}」だが激指ではこれが入っていると読み込めなくなるので仕方なく投了にしている"
-        end
-      end
-
-      private
-
-      def illegal_move_last_action_info
-        if error_message
-          LastActionInfo.fetch(:ILLEGAL_MOVE)
         end
       end
     end
