@@ -12,7 +12,7 @@ module Bioshogi
       TIME_REGEXP = /[A-Z]([+-]?\d+)/
 
       # 指し手
-      MOVE_REGEXP = /^([+-]?\d+\w+)\R+(?:#{TIME_REGEXP})?/o
+      MOVE_REGEXP = /^([+-]?\d+\w+)\R+(?:#{TIME_REGEXP})?/
 
       class << self
         def accept?(source)

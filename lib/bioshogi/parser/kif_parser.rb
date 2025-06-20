@@ -7,9 +7,9 @@ module Bioshogi
 
       TURN_REGEXP    = /^\p{blank}*(?<turn_number>\d+)\p{blank}+/ # 後ろにスペースを含むこと
       TIME_REGEXP    = /\p{blank}*(\(\p{blank}*(?<clock_part>.*)\))/
-      MOVE_REGEXP    = /#{TURN_REGEXP}(?<input>#{InputParser.regexp})#{TIME_REGEXP}?/o
-      LAST1_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)#{TIME_REGEXP}/o
-      LAST2_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)/o
+      MOVE_REGEXP    = /#{TURN_REGEXP}(?<input>#{InputParser.regexp})#{TIME_REGEXP}?/
+      LAST1_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)#{TIME_REGEXP}/
+      LAST2_REGEXP   = /#{TURN_REGEXP}(?<last_action_key>.+)/
       LAST_REGEXP    = Regexp.union(LAST1_REGEXP, LAST2_REGEXP)
       MIN_SEC_REGEXP = /(?<min>\d+):(?<sec>\d+)/
 

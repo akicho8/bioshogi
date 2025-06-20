@@ -5,8 +5,8 @@ module Bioshogi
     class Ki2Parser < Base
       include KakinokiMethods
 
-      ACCEPT_REGEXP = /^\p{blank}*(#{InputParser.regexp}|.*：.*)/o
-      MOVE_REGEXP   = /^\p{blank}*#{InputParser.regexp}/o
+      ACCEPT_REGEXP = /^\p{blank}*(#{InputParser.regexp}|.*：.*)/
+      MOVE_REGEXP   = /^\p{blank}*#{InputParser.regexp}/
 
       class << self
         def accept?(source)

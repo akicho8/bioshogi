@@ -9,10 +9,10 @@ module Bioshogi
 
       BOARD_REGEXP               = /(?<board>^\+\-.*\-\+$)/m
       COMMENT_REGEXP             = /^\p{blank}*\*\p{blank}*(?<comment>.*)/
-      KEY_VALUE_REGEXP           = /^\s*([^#{KEY_VALUE_SEPARATOR}\n]+)#{KEY_VALUE_SEPARATOR}(.*)$/o
-      SYSTEM_COMMENT_LINE_REGEXP = /^\s*#{SYSTEM_COMMENT_CHAR}.*(\R|$)/o
+      KEY_VALUE_REGEXP           = /^\s*([^#{KEY_VALUE_SEPARATOR}\n]+)#{KEY_VALUE_SEPARATOR}(.*)$/
+      SYSTEM_COMMENT_LINE_REGEXP = /^\s*#{SYSTEM_COMMENT_CHAR}.*(\R|$)/
       HEADER_BODY_SEP_REGEXP     = /手数-+指手-+消費時間/
-      HEADER_PART_REGEXP         = /(?<header_dirty_part>.*?)^(#{HEADER_BODY_SEP_REGEXP}|[▲△☗☖▼▽]|まで)/mo
+      HEADER_PART_REGEXP         = /(?<header_dirty_part>.*?)^(#{HEADER_BODY_SEP_REGEXP}|[▲△☗☖▼▽]|まで)/m
 
       def parse
         header_extract          # ヘッダー部分だけを抽出して扱いやすいテキストにする
