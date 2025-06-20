@@ -10,7 +10,7 @@ module Bioshogi
         self.params.update(params)
       end
 
-      def before_run_process
+      def after_setup
         initial_preset_info_set
       end
 
@@ -23,6 +23,7 @@ module Bioshogi
           :double_pawn_detect      => true, # 二歩を検出するか？
           :warp_detect             => true, # 角ワープを検出するか？
           :board_class             => Board,
+          :last_action_info        => LastActionInfo[:TORYO],
         }
       end
 

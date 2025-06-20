@@ -2,7 +2,7 @@ require "#{__dir__}/setup"
 
 container = Container::Basic.new
 container.placement_from_preset("平手")
-container.before_run_process
+container.after_setup
 container.to_history_sfen                # => "position startpos"
 container.pieces_set("▲銀△銀銀")
 puts container

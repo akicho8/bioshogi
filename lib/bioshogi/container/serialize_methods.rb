@@ -110,10 +110,10 @@ module Bioshogi
 
         # def initialize(*)
         #   super
-        #   before_run_process            # FIXME
+        #   after_setup            # FIXME
         # end
 
-        def before_run_process
+        def after_setup
           super
           # turn_info_auto_set
           @initial_state_board_sfen = to_short_sfen # FIXME: これはイケてない

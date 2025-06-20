@@ -17,7 +17,7 @@ module Bioshogi
       @sfen_info.piece_counts.each do |location_key, counts|
         @container.player_at(location_key).piece_box.set(counts)
       end
-      @container.before_run_process
+      @container.after_setup
     end
 
     def import_all

@@ -80,7 +80,7 @@ class App
       tp AI::Brain.human_format(@records)
       tp @mate_records
 
-      container.before_run_process
+      container.after_setup
       if record = @records.first
         ([record[:hand]] + record[:best_pv]).each do |e|
           pp e

@@ -145,7 +145,7 @@ module Bioshogi
           end
         end
 
-        container.before_run_process # 最初の状態を記録 (MEMO: ここで呼ぶのはおかしくないか？)
+        container.after_setup # 最初の状態を記録 (MEMO: ここで呼ぶのはおかしくないか？)
       end
 
       # 持駒を反映する
