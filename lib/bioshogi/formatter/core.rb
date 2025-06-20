@@ -83,13 +83,10 @@ module Bioshogi
             :warp_detect,
           ])
 
-        # xparser を渡すのではなく必要なパラメータだけ渡せ
+        # xparser を渡すのではなく必要なパラメータだけ渡す
         params[:preset_info_or_nil] = preset_info_or_nil           # 手合割
         params[:win_side_location]  = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
-
-        if v = @pi.last_action_info
-          params.update(v.container_params)
-        end
+        params[:last_action_info]   = @pi.last_action_info
 
         params
       end

@@ -32,7 +32,7 @@ module Bioshogi
             end
           end
           if e.checkmate
-            unless container.params[:last_checkmate_p]
+            unless container.params[:last_action_info].last_checkmate_p
               next
             end
           end
@@ -47,7 +47,7 @@ module Bioshogi
             # SHOGI-EXTEND 側からは常に勝者を入れている
             # これは切断されたときどちらが切断してどちらが勝ったのか手番では判断できないため
             v
-          elsif container.params[:win_player_collect_p]
+          elsif container.params[:last_action_info].win_player_collect_p
             # 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる
             # これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない
             container.win_player.location

@@ -79,12 +79,5 @@ module Bioshogi
     def last_checkmate_p
       key == :TSUMI
     end
-
-    def container_params
-      {
-        win_player_collect_p:, # 勝ち負けがついた一般的な終わり方をしたか？
-        last_checkmate_p:,     # 詰みまで指したか？
-      }
-    end
   end
 end
