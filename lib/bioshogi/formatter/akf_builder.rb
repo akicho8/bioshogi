@@ -54,19 +54,17 @@ module Bioshogi
           }
         end
 
-        # if @formatter.pi.last_action_params
-        #   if used_seconds = @formatter.pi.last_action_params[:used_seconds]
+        #   if v = @formatter.pi.last_used_seconds
         #     if @main_clock
-        #       @main_clock.add(used_seconds)
+        #       @main_clock.add(v)
         #       right_part = @main_clock.to_s
         #     end
         #   end
-        # end
 
         # @hv[:header] = @hv[:header]
 
-        if @formatter.pi.last_action_info2
-          @hv[:last_action_kakinoki_word] = @formatter.pi.last_action_info2.kakinoki_word
+        if @formatter.pi.output_last_action_info
+          @hv[:last_action_kakinoki_word] = @formatter.pi.output_last_action_info.kakinoki_word
         end
 
         @hv[:judgment_message]          = @formatter.judgment_message

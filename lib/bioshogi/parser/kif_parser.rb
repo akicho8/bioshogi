@@ -36,15 +36,8 @@ module Bioshogi
               :used_seconds => used_seconds,
             }
           when md = line.match(LAST_REGEXP)
-            last_action_key = md[:last_action_key].strip
-            if last_action_key.present?
-              used_seconds = min_sec_str_to_seconds(md[:clock_part])
-              @pi.last_action_params = {
-                :turn_number     => md[:turn_number],
-                :last_action_key => last_action_key,
-                :used_seconds    => used_seconds,
-              }
-            end
+            @pi.final_result.last_action_key   = md[:last_action_key].strip.presence
+            @pi.last_used_seconds = min_sec_str_to_seconds(md[:clock_part])
           end
         end
       end

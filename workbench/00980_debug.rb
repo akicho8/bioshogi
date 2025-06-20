@@ -23,8 +23,8 @@ puts info.to_kif
 # >> * pi.move_infos
 # >>
 # >>
-# >> * @parser.pi.last_action_params
-# >> #<Bioshogi::Parser::Pi:0x00007fd09c1931a0 @move_infos=[], @first_comments=[], @board_source=nil, @last_action_params=nil, @header=, @force_preset_info=nil, @force_location=nil, @force_handicap=nil, @player_piece_boxes={:black=>{}, :white=>{}}, @error_message=nil>
+# >> * @parser.pi.final_result.last_action_key
+# >> #<Bioshogi::Parser::Pi:0x00007fd09c1931a0 @move_infos=[], @first_comments=[], @board_source=nil, @last_action_key=nil, @header=, @force_preset_info=nil, @force_location=nil, @force_handicap=nil, @player_piece_boxes={:black=>{}, :white=>{}}, @error_message=nil>
 # >> 先手の備考：居飛車, 相居飛車
 # >> 後手の備考：居飛車, 相居飛車
 # >> 手合割：平手

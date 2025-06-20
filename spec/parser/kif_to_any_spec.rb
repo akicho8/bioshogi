@@ -48,9 +48,9 @@ RSpec.describe Bioshogi::Parser::Base do
        2 ３四歩(33)   ( 0:02/00:00:02)
        3 反則勝ち
     EOT
-    assert { info.formatter.pi.last_action_info2.key == :TORYO }
+    assert { info.formatter.pi.output_last_action_info.key == :TORYO }
     assert { info.formatter.judgment_message == "まで2手で後手の勝ち" }
-    assert { info.formatter.pi.illegal_judgement_message == "*本当の結末は「反則勝ち」だが激指ではこれが入っていると読み込めない\n" }
+    assert { info.formatter.pi.final_result.illegal_judgement_message == "本当の結末は「反則勝ち」だが激指ではこれが入っていると読み込めない" }
     assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない
   end
 
@@ -365,14 +365,3 @@ end
 # >>     0.00001 seconds -:190
 # >>   Bioshogi::Parser::Base 2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい to_kif
 # >>     0 seconds -:209
-# >>
-# >> Bioshogi::Finished in 0.19616 seconds (files took 1.98 seconds to load)
-# >> 12 examples, 4 failures, 5 pending
-# >>
-# >> Bioshogi::Failed examples:
-# >>
-# >> rspec -:5 # Bioshogi::Parser::Base 「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない
-# >> rspec -:32 # Bioshogi::Parser::Base 時間が空でも時間を出力するオプション
-# >> rspec -:91 # Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定されている場合 to_kif
-# >> rspec -:139 # Bioshogi::Parser::Base 消費時間があるKIFからの変換 投了の部分まで時間が指定がない場合 to_kif
-# >>

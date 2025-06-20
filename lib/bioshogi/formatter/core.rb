@@ -84,10 +84,12 @@ module Bioshogi
           ])
 
         # xparser を渡すのではなく必要なパラメータだけ渡せ
-        params[:preset_info_or_nil]   = preset_info_or_nil           # 手合割
-        params[:win_side_location]    = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
-        params[:last_checkmate_p]     = @pi.last_checkmate_p         # 詰みまで指したか？ (弱)
-        params[:win_player_collect_p] = @pi.win_player_collect_p     # 勝敗がついた終わり方をしたか？ (container 側で調べる)
+        params[:preset_info_or_nil] = preset_info_or_nil           # 手合割
+        params[:win_side_location]  = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
+
+        if v = @pi.final_result.last_action_info
+          params.update(v.container_params)
+        end
 
         params
       end
@@ -203,7 +205,7 @@ module Bioshogi
       end
 
       def judgment_message
-        if e = pi.last_action_info2
+        if e = pi.output_last_action_info
           e.judgment_message(container)
         end
       end

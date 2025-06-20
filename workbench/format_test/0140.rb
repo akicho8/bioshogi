@@ -72,7 +72,7 @@ puts info.to_bod
 # >> * pi.move_infos
 # >>
 # >>
-# >> * @pi.last_action_params
+# >> * @pi.final_result.last_action_key
 # >> 後手の持駒：飛 角 金 銀 桂 香 歩四
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

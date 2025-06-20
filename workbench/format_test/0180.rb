@@ -113,4 +113,4 @@ puts info.to_kif
 # >> | △８四歩 |
 # >> |----------|
 # >>
-# >> * @pi.last_action_params
+# >> * @pi.final_result.last_action_key

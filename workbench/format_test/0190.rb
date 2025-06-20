@@ -73,7 +73,7 @@ puts info.to_kif
 # >> * pi.move_infos
 # >>
 # >>
-# >> * @pi.last_action_params
+# >> * @pi.final_result.last_action_key
 # >> 後手：ごて
 # >> 先手：せんて
 # >> 先手の備考：居飛車, 相居飛車

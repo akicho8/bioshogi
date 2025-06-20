@@ -64,8 +64,8 @@ RSpec.describe Bioshogi::Parser::KifParser do
     end
 
     it "最後の情報" do
-      assert { @info.pi.last_action_params[:last_action_key] == "投了" }
-      assert { @info.pi.last_action_params[:used_seconds] == 10 }
+      assert { @info.pi.final_result.last_action_key == "投了" }
+      assert { @info.pi.last_used_seconds == 10 }
     end
 
     it "対局前コメント" do

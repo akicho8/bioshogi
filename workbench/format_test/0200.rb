@@ -115,7 +115,7 @@ puts info.to_kif
 # >> |           3 | ３六歩(37) |            |              |
 # >> |-------------+------------+------------+--------------|
 # >>
-# >> * @pi.last_action_params
+# >> * @pi.final_result.last_action_key
 # >> |-----------------+------|
 # >> |     turn_number | 4    |
 # >> | last_action_key | 投了 |

@@ -36,8 +36,12 @@ module Bioshogi
         av << @parser.pi.move_infos.to_t.strip
         av << " "
 
-        av << "* @parser.pi.last_action_params"
-        av << @parser.pi.last_action_params.to_t.strip
+        av << "* @parser.pi.final_result.last_action_key"
+        av << @parser.pi.final_result.last_action_key.inspect
+        av << " "
+
+        av << "* @parser.pi.last_used_seconds"
+        av << @parser.pi.last_used_seconds.inspect
         av << " "
 
         av.join("\n").strip

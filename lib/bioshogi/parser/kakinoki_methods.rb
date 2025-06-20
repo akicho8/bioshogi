@@ -23,7 +23,7 @@ module Bioshogi
         force_location_read     # 明示的な手番の指定があれば読み取る (あとでベースを切り替える)
         kknk_board_read         # 盤面の読み取り
         body_parse              # 指し手の読み取り
-        pi.header.normalize        # ヘッダーの書き換え
+        pi.header.normalize     # ヘッダーの書き換え
       end
 
       def kknk_board_read
@@ -80,7 +80,7 @@ module Bioshogi
       end
 
       def unnecessary_keys_remove
-        pi.header.object.delete("変化")
+        @pi.header.object.delete("変化")
       end
 
       def player_piece_read
@@ -101,7 +101,7 @@ module Bioshogi
       end
 
       def force_preset_read
-        if v = pi.header["手合割"]
+        if v = @pi.header["手合割"]
           if e = PresetInfo[v]
             @pi.force_preset_info = e
             if e.handicap
@@ -117,8 +117,10 @@ module Bioshogi
 
       # コメントは直前の棋譜の情報と共にする
       def command_add(comment)
-        @pi.move_infos.last[:comments] ||= []
-        @pi.move_infos.last[:comments] << comment
+        if e = @pi.move_infos.last
+          e[:comments] ||= []
+          e[:comments] << comment
+        end
       end
     end
   end

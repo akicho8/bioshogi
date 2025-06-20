@@ -73,7 +73,7 @@ puts info.to_kif
 # >> | +7776FU |              |
 # >> |---------+--------------|
 # >>
-# >> * @pi.last_action_params
+# >> * @pi.final_result.last_action_key
 # >> 棋戦：その他の棋戦
 # >> 開始日時：1938/03/01
 # >> 戦法：その他の戦法

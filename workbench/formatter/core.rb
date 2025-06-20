@@ -1,10 +1,3 @@
 require "#{__dir__}/setup"
-puts Parser.parse("68銀").to_kif
-# >> 先手の戦法：嬉野流
-# >> 先手の棋風：王道
-# >> 手合割：平手
-# >> 手数----指手---------消費時間--
-# >>    1 ６八銀(79)
-# >> *▲戦法：嬉野流
-# >>    2 投了
-# >> まで1手で先手の勝ち
+# puts Parser.parse("68銀").to_kif
+Bioshogi::Parser::CsaParser.parse("%TIME_UP").formatter.judgment_message # => 

@@ -44,7 +44,7 @@ puts info.to_kif
 # >> |           1 | 11飛  |            |              |
 # >> |-------------+-------+------------+--------------|
 # >>
-# >> * @parser.pi.last_action_params
+# >> * @parser.pi.final_result.last_action_key
 # >> 手合割：その他
 # >> 先手の囲い：居玉
 # >> 後手の囲い：居玉
