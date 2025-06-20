@@ -220,7 +220,9 @@ module Bioshogi
     end
 
     def <=>(other)
-      to_xy <=> other.to_xy
+      if self.class == other.class
+        to_xy <=> other.to_xy
+      end
     end
 
     def hash

@@ -84,6 +84,7 @@ module Bioshogi
 
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意した
     # だから何をキーにしてもよい。place は基本ユニークなのでこれで並べる
+    # FIXME: これは臭う。というか soldier == nil でエラーになるはず。
     def <=>(other)
       place <=> other.place
     end

@@ -150,7 +150,9 @@ module Bioshogi
       end
 
       def <=>(other)
-        value <=> other.value
+        if self.class == other.class
+          value <=> other.value
+        end
       end
 
       def eql?(other)
