@@ -11,7 +11,7 @@
     place_same: nil,
     total_seconds: 0,
     used_seconds: nil,
-    skill: nil,
+    tag: nil,
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
     short_sfen:
@@ -31,7 +31,7 @@
     _csa: "+7776FU",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f",
     short_sfen:
@@ -51,7 +51,7 @@
     _csa: "-3334FU",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d",
     short_sfen:

@@ -3,7 +3,7 @@
    "後手" => "tume",
    "開始日時" => "2021/12/13 13:43:40",
    "終了日時" => "2021/12/13 13:46:37",
-   "先手の手筋" => "中段玉",
+   "先手の手筋" => "中段玉, 裸玉",
    "後手の手筋" => "と金攻め, 裾銀, 肩銀, 一間竜, 頭金",
    "手数" => 14},
  moves:
@@ -12,7 +12,7 @@
     place_same: nil,
     total_seconds: 0,
     used_seconds: nil,
-    skill: nil,
+    tag: nil,
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1",
     short_sfen:
@@ -36,7 +36,7 @@
     _csa: "+1828OU",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h",
     short_sfen:
@@ -60,7 +60,7 @@
     _csa: "-4738TO",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h",
     short_sfen:
@@ -84,7 +84,7 @@
     _csa: "+4938KI",
     total_seconds: 2,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h",
     short_sfen:
@@ -101,7 +101,7 @@
     _csa: "-0039GI",
     total_seconds: 2,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i",
     short_sfen:
@@ -125,7 +125,7 @@
     _csa: "+3839KI",
     total_seconds: 3,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i",
     short_sfen:
@@ -142,7 +142,7 @@
     _csa: "-0037GI",
     total_seconds: 3,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g",
     short_sfen:
@@ -166,7 +166,7 @@
     _csa: "+2837OU",
     total_seconds: 4,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g",
     short_sfen:
@@ -190,7 +190,7 @@
     _csa: "-7939RY",
     total_seconds: 4,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+",
     short_sfen:
@@ -210,7 +210,7 @@
     _csa: "+3746OU",
     total_seconds: 5,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f",
     short_sfen:
@@ -234,7 +234,7 @@
     _csa: "-3948RY",
     total_seconds: 5,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f 3i4h",
     short_sfen:
@@ -254,7 +254,7 @@
     _csa: "+4635OU",
     total_seconds: 59,
     used_seconds: 54,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f 3i4h 4f3e",
     short_sfen:
@@ -274,7 +274,7 @@
     _csa: "-6657UM",
     total_seconds: 6,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f 3i4h 4f3e 6f5g",
     short_sfen:
@@ -294,7 +294,7 @@
     _csa: "+3525OU",
     total_seconds: 85,
     used_seconds: 26,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f 3i4h 4f3e 6f5g 3e2e",
     short_sfen:
@@ -311,7 +311,7 @@
     _csa: "-0024KI",
     total_seconds: 7,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen k8/2+P6/+P+P+P6/9/3b1P3/3+bP1PPP/5+p3/5GSrK/2r2G2L b GSNLPg2sn 1 moves 1h2h 4g3h 4i3h S*3i 3h3i S*3g 2h3g 7i3i+ 3g4f 3i4h 4f3e 6f5g 3e2e G*2d",
     short_sfen:

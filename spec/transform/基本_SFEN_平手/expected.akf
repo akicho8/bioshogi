@@ -1,12 +1,12 @@
 {header:
   {"先手の戦法" => "引き角",
-   "後手の戦法" => "力戦",
    "先手の囲い" => "居玉",
-   "先手の手筋" => "位の確保, 歩裏の歩, 垂れ歩, 玉飛接近",
-   "後手の手筋" => "浮き飛車, 位の確保, 歩裏の歩, たたきの歩, 腹銀, 肩金",
+   "先手の手筋" => "飛車先交換, 位の確保, 歩裏の歩, 垂れ歩, 玉飛接近",
    "先手の備考" => "居飛車, 相居飛車, 対居飛車, 持久戦, 長手数",
-   "後手の備考" => "居飛車, 相居飛車, 対居飛車, 持久戦, 長手数",
    "先手の棋風" => "変態",
+   "後手の戦法" => "力戦",
+   "後手の手筋" => "浮き飛車, 位の確保, 歩裏の歩, たたきの歩, 腹銀, 肩金",
+   "後手の備考" => "居飛車, 名人に定跡なし, 相居飛車, 対居飛車, 持久戦, 長手数",
    "後手の棋風" => "王道",
    "手数" => 90},
  moves:
@@ -15,7 +15,7 @@
     place_same: nil,
     total_seconds: 0,
     used_seconds: nil,
-    skill: nil,
+    tag: nil,
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
     short_sfen:
@@ -35,7 +35,7 @@
     _csa: "+7776FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f",
     short_sfen:
@@ -55,7 +55,7 @@
     _csa: "-8384FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d",
     short_sfen:
@@ -75,7 +75,7 @@
     _csa: "+6766FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f",
     short_sfen:
@@ -95,7 +95,7 @@
     _csa: "-8485FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e",
     short_sfen:
@@ -115,7 +115,7 @@
     _csa: "+8877KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g",
     short_sfen:
@@ -135,7 +135,7 @@
     _csa: "-3334FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d",
     short_sfen:
@@ -155,7 +155,7 @@
     _csa: "+7968GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h",
     short_sfen:
@@ -175,7 +175,7 @@
     _csa: "-7162GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b",
     short_sfen:
@@ -195,7 +195,7 @@
     _csa: "+6867GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g",
     short_sfen:
@@ -215,7 +215,7 @@
     _csa: "-5142OU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b",
     short_sfen:
@@ -235,7 +235,7 @@
     _csa: "+5756FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f",
     short_sfen:
@@ -255,7 +255,7 @@
     _csa: "-5354FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d",
     short_sfen:
@@ -275,7 +275,7 @@
     _csa: "+6978KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h",
     short_sfen:
@@ -295,7 +295,7 @@
     _csa: "-6152KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b",
     short_sfen:
@@ -315,7 +315,7 @@
     _csa: "+3948GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h",
     short_sfen:
@@ -335,7 +335,7 @@
     _csa: "-4344FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d",
     short_sfen:
@@ -355,7 +355,7 @@
     _csa: "+2838HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h",
     short_sfen:
@@ -375,7 +375,7 @@
     _csa: "-5243KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c",
     short_sfen:
@@ -395,7 +395,7 @@
     _csa: "+3736FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f",
     short_sfen:
@@ -415,7 +415,7 @@
     _csa: "-3132GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b",
     short_sfen:
@@ -435,7 +435,7 @@
     _csa: "+3635FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e",
     short_sfen:
@@ -459,7 +459,7 @@
     _csa: "-3435FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e",
     short_sfen:
@@ -483,7 +483,7 @@
     _csa: "+3835HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e",
     short_sfen:
@@ -500,7 +500,7 @@
     _csa: "-0034FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d",
     short_sfen:
@@ -520,7 +520,7 @@
     _csa: "+3538HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h",
     short_sfen:
@@ -540,7 +540,7 @@
     _csa: "-3233GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c",
     short_sfen:
@@ -560,7 +560,7 @@
     _csa: "+4958KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h",
     short_sfen:
@@ -580,7 +580,7 @@
     _csa: "-4232OU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b",
     short_sfen:
@@ -600,7 +600,7 @@
     _csa: "+6665FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e",
     short_sfen:
@@ -620,7 +620,7 @@
     _csa: "-7374FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d",
     short_sfen:
@@ -640,7 +640,7 @@
     _csa: "+5655FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e",
     short_sfen:
@@ -660,7 +660,7 @@
     _csa: "-6253GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c",
     short_sfen:
@@ -680,7 +680,7 @@
     _csa: "+4857GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g",
     short_sfen:
@@ -700,7 +700,7 @@
     _csa: "-8586FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f",
     short_sfen:
@@ -724,7 +724,7 @@
     _csa: "+8786FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f",
     short_sfen:
@@ -744,7 +744,7 @@
     _csa: "-8173KE",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c",
     short_sfen:
@@ -764,7 +764,7 @@
     _csa: "+5766GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f",
     short_sfen:
@@ -784,7 +784,7 @@
     _csa: "-6364FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d",
     short_sfen:
@@ -804,7 +804,7 @@
     _csa: "+7675FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e",
     short_sfen:
@@ -828,7 +828,7 @@
     _csa: "-6465FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e",
     short_sfen:
@@ -848,7 +848,7 @@
     _csa: "+6657GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g",
     short_sfen:
@@ -868,7 +868,7 @@
     _csa: "-8284HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d",
     short_sfen:
@@ -888,7 +888,7 @@
     _csa: "+6776GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f",
     short_sfen:
@@ -908,7 +908,7 @@
     _csa: "-5364GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d",
     short_sfen:
@@ -932,7 +932,7 @@
     _csa: "+5554FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d",
     short_sfen:
@@ -956,7 +956,7 @@
     _csa: "-7475FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e",
     short_sfen:
@@ -976,7 +976,7 @@
     _csa: "+7667GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g",
     short_sfen:
@@ -1000,7 +1000,7 @@
     _csa: "-4354KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d",
     short_sfen:
@@ -1017,7 +1017,7 @@
     _csa: "+0035FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e",
     short_sfen:
@@ -1041,7 +1041,7 @@
     _csa: "-3435FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e",
     short_sfen:
@@ -1058,7 +1058,7 @@
     _csa: "+0074FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d",
     short_sfen:
@@ -1082,7 +1082,7 @@
     _csa: "-8474HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d",
     short_sfen:
@@ -1099,7 +1099,7 @@
     _csa: "+0072FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b",
     short_sfen:
@@ -1119,7 +1119,7 @@
     _csa: "-7576FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f",
     short_sfen:
@@ -1139,7 +1139,7 @@
     _csa: "+7788KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h",
     short_sfen:
@@ -1156,7 +1156,7 @@
     _csa: "-0085FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e",
     short_sfen:
@@ -1180,7 +1180,7 @@
     _csa: "+8685FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e",
     short_sfen:
@@ -1197,7 +1197,7 @@
     _csa: "-0087FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g",
     short_sfen:
@@ -1217,7 +1217,7 @@
     _csa: "+8879KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i",
     short_sfen:
@@ -1237,7 +1237,7 @@
     _csa: "-4445FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e",
     short_sfen:
@@ -1261,7 +1261,7 @@
     _csa: "+7887KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g",
     short_sfen:
@@ -1281,7 +1281,7 @@
     _csa: "-3334GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d",
     short_sfen:
@@ -1301,7 +1301,7 @@
     _csa: "+7988KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h",
     short_sfen:
@@ -1321,7 +1321,7 @@
     _csa: "-6566FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f",
     short_sfen:
@@ -1345,7 +1345,7 @@
     _csa: "+5766GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f",
     short_sfen:
@@ -1362,7 +1362,7 @@
     _csa: "-0086FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f",
     short_sfen:
@@ -1386,7 +1386,7 @@
     _csa: "+8786KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f",
     short_sfen:
@@ -1403,7 +1403,7 @@
     _csa: "-0065FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e",
     short_sfen:
@@ -1420,7 +1420,7 @@
     _csa: "+0055FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e",
     short_sfen:
@@ -1444,7 +1444,7 @@
     _csa: "-6566FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f",
     short_sfen:
@@ -1468,7 +1468,7 @@
     _csa: "+8866KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f",
     short_sfen:
@@ -1492,7 +1492,7 @@
     _csa: "-6455GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e",
     short_sfen:
@@ -1512,7 +1512,7 @@
     _csa: "+6675KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e",
     short_sfen:
@@ -1529,7 +1529,7 @@
     _csa: "-0057FU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g",
     short_sfen:
@@ -1553,7 +1553,7 @@
     _csa: "+5857KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g",
     short_sfen:
@@ -1577,7 +1577,7 @@
     _csa: "-7475HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e",
     short_sfen:
@@ -1601,7 +1601,7 @@
     _csa: "+8675KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e",
     short_sfen:
@@ -1618,7 +1618,7 @@
     _csa: "-0086KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f",
     short_sfen:
@@ -1638,7 +1638,7 @@
     _csa: "+5949OU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i",
     short_sfen:
@@ -1662,7 +1662,7 @@
     _csa: "-8675KA",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e",
     short_sfen:
@@ -1679,7 +1679,7 @@
     _csa: "+0062HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b",
     short_sfen:
@@ -1696,7 +1696,7 @@
     _csa: "-0052KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b",
     short_sfen:
@@ -1716,7 +1716,7 @@
     _csa: "+6261RY",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+",
     short_sfen:
@@ -1740,7 +1740,7 @@
     _csa: "-7557UM",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+",
     short_sfen:
@@ -1760,7 +1760,7 @@
     _csa: "+3858HI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h",
     short_sfen:
@@ -1777,7 +1777,7 @@
     _csa: "-0039GI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h S*3i",
     short_sfen:
@@ -1797,7 +1797,7 @@
     _csa: "+4959OU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h S*3i 4i5i",
     short_sfen:
@@ -1814,7 +1814,7 @@
     _csa: "-0048KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h S*3i 4i5i G*4h",
     short_sfen:
@@ -1834,7 +1834,7 @@
     _csa: "+5969OU",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h S*3i 4i5i G*4h 5i6i",
     short_sfen:
@@ -1858,7 +1858,7 @@
     _csa: "-4858KI",
     total_seconds: 0,
     used_seconds: 0,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 8c8d 6g6f 8d8e 8h7g 3c3d 7i6h 7a6b 6h6g 5a4b 5g5f 5c5d 6i7h 6a5b 3i4h 4c4d 2h3h 5b4c 3g3f 3a3b 3f3e 3d3e 3h3e P*3d 3e3h 3b3c 4i5h 4b3b 6f6e 7c7d 5f5e 6b5c 4h5g 8e8f 8g8f 8a7c 5g6f 6c6d 7f7e 6d6e 6f5g 8b8d 6g7f 5c6d 5e5d 7d7e 7f6g 4c5d P*3e 3d3e P*7d 8d7d P*7b 7e7f 7g8h P*8e 8f8e P*8g 8h7i 4d4e 7h8g 3c3d 7i8h 6e6f 5g6f P*8f 8g8f P*6e P*5e 6e6f 8h6f 6d5e 6f7e P*5g 5h5g 7d7e 8f7e B*8f 5i4i 8f7e R*6b G*5b 6b6a+ 7e5g+ 3h5h S*3i 4i5i G*4h 5i6i 4h5h",
     short_sfen:

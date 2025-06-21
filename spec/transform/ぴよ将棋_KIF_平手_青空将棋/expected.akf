@@ -5,12 +5,12 @@
    "先手" => "プレイヤー(R461)",
    "後手" => "Lv17 ひよえ(R910)",
    "先手の戦法" => "力戦",
-   "後手の戦法" => "力戦",
    "先手の囲い" => "居玉",
-   "後手の囲い" => "居玉",
    "先手の備考" => "対振り飛車, 居飛車, 対抗形, 相居玉, 急戦, 短手数",
-   "後手の備考" => "振り飛車, 対居飛車, 対抗形, 相居玉, 急戦, 短手数",
    "先手の棋風" => "王道",
+   "後手の戦法" => "力戦",
+   "後手の囲い" => "居玉",
+   "後手の備考" => "振り飛車, 名人に定跡なし, 対居飛車, 対抗形, 相居玉, 急戦, 短手数",
    "後手の棋風" => "王道",
    "手数" => 2},
  moves:
@@ -19,7 +19,7 @@
     place_same: nil,
     total_seconds: 0,
     used_seconds: nil,
-    skill: nil,
+    tag: nil,
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",
     short_sfen:
@@ -43,7 +43,7 @@
     _csa: "+2822RY",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+",
     short_sfen: "position sfen lnsgkgsnl/1r5+R1/9/9/9/9/9/1B7/LNSGKGSNL w B 2"},
@@ -66,7 +66,7 @@
     _csa: "-8222HI",
     total_seconds: 1,
     used_seconds: 1,
-    skill: {attack: [], defense: [], technique: [], note: []},
+    tag: {attack: [], defense: [], technique: [], note: []},
     history_sfen:
      "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1 moves 2h2b+ 8b2b",
     short_sfen: "position sfen lnsgkgsnl/7r1/9/9/9/9/9/1B7/LNSGKGSNL b Br 3"}],
