@@ -36,6 +36,6 @@ tp Piece["飛"].to_h
 # >> |                       strong | true |
 # >> |               dengaku_target | true |
 # >> |              tatakare_target | true |
-# >> |                  maesusumeru | true |
+# >> |                  forward_movable | true |
 # >> |                         code | 1    |
 # >> |------------------------------+------|
