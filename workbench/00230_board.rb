@@ -3,11 +3,11 @@ require "#{__dir__}/setup"
 container = Container::Basic.new
 
 container.board.all_clear
-container.placement_from_preset("裸玉")
+container.placement_from_preset("十九枚落ち")
 container.board.preset_info&.key    # => :十九枚落ち
 
 container.board.all_clear
-container.board.placement_from_preset("裸玉")
+container.board.placement_from_preset("十九枚落ち")
 container.board.preset_info&.key    # => :十九枚落ち
 
 container.board.all_clear

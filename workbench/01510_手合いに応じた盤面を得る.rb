@@ -1,7 +1,7 @@
 require "#{__dir__}/setup"
 
 container = Container::Basic.new
-container.placement_from_preset("裸玉")
+container.placement_from_preset("十九枚落ち")
 container.board.preset_info&.key    # => :十九枚落ち
 puts container.board.to_ki2
 puts container.board.to_kif

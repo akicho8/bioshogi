@@ -1,7 +1,7 @@
 require "#{__dir__}/setup"
 
 container = Container::Basic.new
-container.board.placement_from_preset("裸玉")
+container.board.placement_from_preset("十九枚落ち")
 
 container.turn_info.handicap = false
 info = Parser.parse("position #{container.to_short_sfen}")

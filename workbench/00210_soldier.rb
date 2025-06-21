@@ -1,8 +1,8 @@
 require "#{__dir__}/setup"
 
-Soldier.preset_one_side_soldiers("裸玉", location: :black).collect(&:name) # => ["▲５九玉"]
-Soldier.preset_one_side_soldiers("裸玉", location: :white).collect(&:name) # => ["△５一玉"]
-Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name)      # => ["▲５九玉", "△５一玉"]
+Soldier.preset_one_side_soldiers("十九枚落ち", location: :black).collect(&:name) # => ["▲５九玉"]
+Soldier.preset_one_side_soldiers("十九枚落ち", location: :white).collect(&:name) # => ["△５一玉"]
+Soldier.preset_soldiers(white: "十九枚落ち", black: "十九枚落ち").collect(&:name)      # => ["▲５九玉", "△５一玉"]
 
 Soldier.from_str("６八銀").name rescue $! # => #<Bioshogi::MustNotHappen: location missing>
 

@@ -44,7 +44,7 @@ module Bioshogi
       end
 
       # 先後それぞれの形を指定する
-      # Soldier.preset_soldiers(white: "裸玉", black: "裸玉").collect(&:name) # => ["▲５九玉", "△５一玉"]
+      # Soldier.preset_soldiers(white: "十九枚落ち", black: "十九枚落ち").collect(&:name) # => ["▲５九玉", "△５一玉"]
       def preset_soldiers(preset_key)
         PresetInfo.fetch(preset_key || :"平手").sorted_soldiers
       end

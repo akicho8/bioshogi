@@ -1,7 +1,7 @@
 require "#{__dir__}/setup"
 
 container = Container::Basic.new
-container.board.placement_from_preset("裸玉")
+container.board.placement_from_preset("十九枚落ち")
 container.turn_info.handicap = false # △から始める場合
 container.to_short_sfen # => "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1"
 puts container

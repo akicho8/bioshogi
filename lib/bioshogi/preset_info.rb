@@ -40,7 +40,6 @@ module Bioshogi
         key = key.sub(/[5５五][5５五々]/, "5五") # 五々将棋 -> 5五将棋
         key = key.sub(/(.)車/, '\1')             # 飛車 香車 -> 飛 香
         key = key.sub(/飛落/, "飛車落")
-        key = key.sub(/裸玉/, "十九枚落ち")      # FIXME: 手筋に「裸玉」があるため干渉する恐れあり
         key = key.sub(/詰将棋/, "平手")
         key = key.sub(/落\z/, "落ち")            # 香落 -> 香落ち
         super

@@ -28,11 +28,11 @@ RSpec.describe Bioshogi::Board do
     container = Bioshogi::Container::Basic.new
 
     container.board.all_clear
-    container.placement_from_preset("裸玉")
+    container.placement_from_preset("十九枚落ち")
     assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
     container.board.all_clear
-    container.board.placement_from_preset("裸玉")
+    container.board.placement_from_preset("十九枚落ち")
     assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
 
     container.board.all_clear

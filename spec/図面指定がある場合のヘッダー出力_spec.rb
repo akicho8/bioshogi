@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe "図面指定がある場合のヘッダー出力" do
   it "平手" do
     container = Bioshogi::Container::Basic.new
-    container.board.placement_from_preset("裸玉")
+    container.board.placement_from_preset("十九枚落ち")
     container.execute("58玉")
     container.execute("52玉")
 
@@ -32,7 +32,7 @@ RSpec.describe "図面指定がある場合のヘッダー出力" do
 
   it "駒落ち" do
     container = Bioshogi::Container::Basic.new
-    container.board.placement_from_preset("裸玉")
+    container.board.placement_from_preset("十九枚落ち")
     container.execute("58玉")
     container.execute("52玉")
 
