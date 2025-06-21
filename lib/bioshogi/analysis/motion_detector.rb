@@ -265,6 +265,34 @@ module Bioshogi
           },
         },
         {
+          key: "飛車先交換",
+          description: nil,
+          trigger: [
+            { piece_key: :rook, promoted: false, motion: :move },
+          ],
+          func: -> {
+            # 1手前: △２四歩(23)
+            and_cond do
+              if hand_log = executor.container.hand_logs[-1]
+                if s = hand_log.move_hand&.soldier
+                  Assertion.assert { opponent?(s) }
+                  s.piece.key == :pawn && s.place == soldier.place
+                end
+              end
+            end
+
+            # 2手前: ▲２四歩(25)
+            and_cond do
+              if hand_log = executor.container.hand_logs[-2]
+                if s = hand_log.move_hand&.soldier
+                  Assertion.assert { own?(s) }
+                  s.piece.key == :pawn && s.place == soldier.place
+                end
+              end
+            end
+          },
+        },
+        {
           key: "玉飛接近",
           description: "龍は馬と似て守りに効いている場合もあるため接近してもよいとする",
           trigger: [
