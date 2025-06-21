@@ -72,7 +72,7 @@ module Bioshogi
       def cell_walker
         h_units_read
 
-        mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*)\|(?<y>.)?/) }.compact
+        mds = shape_lines.collect { |v| v.match(/\|(?<inline>.*?)\s*\|(?<y>.)?/) }.compact
         @v_units = mds.collect.with_index { |v, i| v[:y] || Dimension::Row.char_infos[i] }
         inlines = mds.collect { |v| v[:inline] }
 

@@ -70,8 +70,8 @@ RSpec.describe "盤面の読み取り" do
         EOT
     end
 
-    it "はみ出ている" do
-      expect { test1(<<-EOT) }.to raise_error(Bioshogi::SyntaxDefact, /はみ出ている/)
+    it "はみ出ています" do
+      expect { test1(<<-EOT) }.to raise_error(Bioshogi::SyntaxDefact, /はみ出ています/)
       +---+
         |v歩v歩|
       +---+
