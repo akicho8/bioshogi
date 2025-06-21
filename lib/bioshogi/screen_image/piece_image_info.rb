@@ -8,11 +8,11 @@ module Bioshogi
       ]
 
       class << self
-        def lookup(v)
-          if v
-            v = v.downcase
-            super
+        def key_cast(key)
+          if key
+            key = key.downcase
           end
+          key
         end
       end
 

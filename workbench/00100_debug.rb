@@ -2,7 +2,6 @@ require "#{__dir__}/setup"
 
 container_options = {
   analysis_feature: false,
-  analysis_motion_feature: false,
   ki2_function: false,
   validate_feature: false,
 }

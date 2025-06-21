@@ -168,7 +168,7 @@ EOT
 
   describe "手数を得る" do
     before do
-      @info = Bioshogi::Container::Basic.start
+      @info = Bioshogi::Container::Basic.start(analysis_feature: true)
       @info.execute("76歩")
       @info.execute("34歩")
       @info.execute("22角成")

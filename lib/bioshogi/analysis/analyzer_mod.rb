@@ -19,23 +19,24 @@ module Bioshogi
         end
       end
 
-      # 大駒コンプリートチェック用にしか使ってない、ことはない
       def piece_box_added(captured_soldier)
-        # 駒を取った回数の記録
-        container.kill_count += 1
-
-        # 駒が取られる最初の手数の記録
-        container.critical_turn ||= container.turn_info.turn_offset
-
-        # 「歩と角」を除く駒が取られる最初の手数の記録
-        unless container.outbreak_turn
-          key = captured_soldier.piece.key
-          if key != :pawn && key != :bishop
-            container.outbreak_turn = container.turn_info.turn_offset
-          end
-        end
+        super
 
         if analysis_feature_enabled?
+          # 駒を取った回数の記録
+          container.kill_count += 1
+
+          # 駒が取られる最初の手数の記録
+          container.critical_turn ||= container.turn_info.turn_offset
+
+          # 「歩と角」を除く駒が取られる最初の手数の記録
+          unless container.outbreak_turn
+            key = captured_soldier.piece.key
+            if key != :pawn && key != :bishop
+              container.outbreak_turn = container.turn_info.turn_offset
+            end
+          end
+
           CaptureAnalyzer.new(self).call
         end
       end

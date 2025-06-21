@@ -12,7 +12,7 @@ module Bioshogi
         files = Array(files).take((ARGV.first || 100).to_i)
         seconds = Benchmark.realtime do
           files.each do |file|
-            info = Parser.file_parse(file, typical_error_case: :skip, analysis_motion_feature: true)
+            info = Parser.file_parse(file, typical_error_case: :skip, analysis_feature: true)
             info.to_kif
           end
         end

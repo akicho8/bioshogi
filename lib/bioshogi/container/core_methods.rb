@@ -17,7 +17,6 @@ module Bioshogi
       def default_params
         {
           :analysis_feature        => false,
-          :analysis_motion_feature => false,
           :ki2_function            => true,
           :validate_feature        => true,
           :double_pawn_detect      => true, # 二歩を検出するか？

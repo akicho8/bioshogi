@@ -17,7 +17,7 @@ module Bioshogi
 
       # MotionDetector 系
       def motion_perform
-        if executor.container.params[:analysis_motion_feature]
+        if executor.container.params[:analysis_feature]
           # 主に手筋用で戦法チェックにも使える
           key = [soldier.piece.key, soldier.promoted, !!drop_hand] # :MOTION_TRIGGER_TABLE:
           if e = MotionTriggerTable[key]

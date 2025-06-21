@@ -35,14 +35,15 @@ module Bioshogi
     ]
 
     class << self
-      def lookup(key)
-        key = key.to_s
-        key = key.sub(/[5５五][5５五々]/, "5五") # 五々将棋 -> 5五将棋
-        key = key.sub(/(.)車/, '\1')             # 飛車 香車 -> 飛 香
-        key = key.sub(/飛落/, "飛車落")
-        key = key.sub(/詰将棋/, "平手")
-        key = key.sub(/落\z/, "落ち")            # 香落 -> 香落ち
-        super
+      def key_cast(key)
+        if key.kind_of?(String)
+          key = key.sub(/[5５五][5５五々]/, "5五") # 五々将棋 -> 5五将棋
+          key = key.sub(/(.)車/, '\1')             # 飛車 香車 -> 飛 香
+          key = key.sub(/飛落/, "飛車落")
+          key = key.sub(/詰将棋/, "平手")
+          key = key.sub(/落\z/, "落ち")            # 香落 -> 香落ち
+        end
+        key
       end
 
       # 一般的なものに絞る

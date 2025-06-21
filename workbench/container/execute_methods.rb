@@ -8,7 +8,6 @@ container.placement_from_preset("平手")
 puts container
 # >> |-------------------------+-----------------|
 # >> |        analysis_feature | false           |
-# >> | analysis_motion_feature | false           |
 # >> |            ki2_function | true            |
 # >> |        validate_feature | true            |
 # >> |      double_pawn_detect | true            |

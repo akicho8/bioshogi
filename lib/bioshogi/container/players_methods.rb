@@ -4,9 +4,10 @@ module Bioshogi
   module Container
     concern :PlayersMethods do
       class_methods do
-        def start
-          new.tap do |e|
+        def start(...)
+          new(...).tap do |e|
             e.placement_from_preset("平手")
+            e.after_setup
           end
         end
       end
