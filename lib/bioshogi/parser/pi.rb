@@ -92,7 +92,7 @@ module Bioshogi
       # "*" のあとにスペースを入れると、激指でコメントの先頭にスペースが入ってしまうため、仕方なくくっつけている
       def illegal_judgement_message
         if last_action_unknown_str
-          "本当の結末は「#{last_action_unknown_str}」だが激指ではこれが入っていると読み込めなくなるので仕方なく投了にしている"
+          "本当の結末は「#{last_action_unknown_str}」だがこれが入っていると激指で読み込めなくなるので仕方なく投了にしている"
         end
       end
     end

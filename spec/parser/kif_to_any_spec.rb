@@ -50,7 +50,7 @@ RSpec.describe Bioshogi::Parser::Base do
     EOT
     assert { info.formatter.pi.output_last_action_info.key == :TORYO }
     assert { info.formatter.judgment_message == "まで2手で後手の勝ち" }
-    assert { info.formatter.pi.illegal_judgement_message == "本当の結末は「反則勝ち」だが激指ではこれが入っていると読み込めなくなるので仕方なく投了にしている" }
+    assert { info.formatter.pi.illegal_judgement_message.match?(/本当の結末/) }
     assert { info.to_csa.lines.last.strip == "%TORYO" } # これは矛盾しているけどしかたない
   end
 

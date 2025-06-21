@@ -300,47 +300,30 @@ module Bioshogi
             { piece_key: :king, promoted: false, motion: :move },
           ],
           func: -> {
-            if soldier.piece.key == :rook
-              target = :king
-            else
-              target = :rook
-            end
+            # 【条件1】自玉が存在する
+            and_cond { player.king_soldier }
 
-            # 【条件1】飛車のとき初期値から動いていない
-            skip_if do
-              if origin_soldier.piece.key == :rook
-                origin_soldier.bottom_spaces == 1 && origin_soldier.right_spaces == 1
-              end
-            end
+            # 【スキップ条件】玉と飛の移動が合わせて2回以下ならだめ
+            # この条件があれば中飛車美濃囲いのときに玉飛接近にならない
+            skip_if { (player.used_piece_counts[:K0] + player.used_piece_counts[:R0]) <= 2 }
 
-            # 【条件2】玉のとき59から動いてない
-            skip_if do
-              if origin_soldier.piece.key == :rook
-                origin_soldier.bottom_spaces == 0 && origin_soldier.column_is_center?
-              end
-            end
 
-            # 【条件3】移動先の周囲に自玉がいる
-            and_cond do
+            fn = -> it {
+              partner = it.piece.key == :rook ? :king : :rook
               V.outer_vectors.any? do |e|
-                if v = soldier.relative_move_to(e)
+                if v = it.relative_move_to(e)
                   if s = board[v]
-                    s.piece.key == target && s.normal? && own?(s) # 飛と玉に対応できるように s.normal? の判定を入れている
+                    s.piece.key == partner && s.normal? && own?(s)
                   end
                 end
               end
-            end
+            }
 
-            # 【条件4】移動元の周囲に自玉がいない
-            and_cond do
-              V.outer_vectors.none? do |e|
-                if v = origin_soldier.relative_move_to(e)
-                  if s = board[v]
-                    s.piece.key == target && s.normal? && own?(s)
-                  end
-                end
-              end
-            end
+            # 【条件2】移動先の周囲に相手がいる
+            and_cond { fn[soldier] }
+
+            # 【スキップ条件】移動元の周囲に相手がいる
+            skip_if { fn[origin_soldier] }
           },
         },
         {

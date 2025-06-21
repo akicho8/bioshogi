@@ -95,7 +95,7 @@ module Bioshogi
       # もし「打ったかどうか」も調べるならここではなく個別のクラスで定義する
       def to_counts_key
         s = soldier_for_counts
-        "#{s.piece.sfen_char}#{s.promoted ? 1 : 0}"
+        :"#{s.piece.sfen_char}#{s.promoted ? 1 : 0}"
       end
     end
   end

@@ -22,8 +22,8 @@ RSpec.describe "used_piece_counts" do
 
     container = info.formatter.container
 
-    assert { container.player_at(:black).used_piece_counts == { "B0" => 2 } }
-    assert { container.player_at(:white).used_piece_counts == { "S0" => 1 } }
+    assert { container.player_at(:black).used_piece_counts == { :B0 => 2 } }
+    assert { container.player_at(:white).used_piece_counts == { :S0 => 1 } }
   end
 end
 # >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
