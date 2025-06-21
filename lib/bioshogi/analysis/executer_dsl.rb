@@ -38,7 +38,7 @@ module Bioshogi
         end
       end
 
-      def break_cond
+      def skip_if
         if yield
           throw :skip
         end

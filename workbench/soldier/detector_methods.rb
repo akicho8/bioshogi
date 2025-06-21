@@ -32,12 +32,12 @@ Soldier.from_str("△34飛").relative_move_to(:up, magnification: 0).name # => "
 Soldier.from_str("△34飛").relative_move_to(:up, magnification: 1).name # => "３五"
 Soldier.from_str("△34飛").relative_move_to(:up, magnification: 2).name # => "３六"
 
-Soldier.from_str("▲41歩").left_or_right_to_closer_side # => :right
-Soldier.from_str("△41歩").left_or_right_to_closer_side # => :left
-Soldier.from_str("▲51歩").left_or_right_to_closer_side # => :left
-Soldier.from_str("△51歩").left_or_right_to_closer_side # => :left
-Soldier.from_str("▲61歩").left_or_right_to_closer_side # => :left
-Soldier.from_str("△61歩").left_or_right_to_closer_side # => :right
+Soldier.from_str("▲41歩").align_arrow # => :right
+Soldier.from_str("△41歩").align_arrow # => :left
+Soldier.from_str("▲51歩").align_arrow # => :left
+Soldier.from_str("△51歩").align_arrow # => :left
+Soldier.from_str("▲61歩").align_arrow # => :left
+Soldier.from_str("△61歩").align_arrow # => :right
 
 Soldier.from_str("▲11玉").both_side_without_corner? # => false
 Soldier.from_str("▲12玉").both_side_without_corner? # => true

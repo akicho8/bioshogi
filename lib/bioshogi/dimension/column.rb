@@ -51,7 +51,7 @@ module Bioshogi
         :right_spaces,
 
         :column_spaces_min,
-        :left_or_right_to_closer_side,
+        :align_arrow,
 
         :column_is_second_to_eighth?,
         :column_is_second_or_eighth?,
@@ -85,8 +85,8 @@ module Bioshogi
         [left_spaces, right_spaces].min
       end
 
-      # 左右の壁に近づく場合の方向
-      def left_or_right_to_closer_side
+      # 寄っている方向
+      def align_arrow
         column_is_right_side? ? :right : :left
       end
 

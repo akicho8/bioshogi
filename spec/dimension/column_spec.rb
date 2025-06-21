@@ -85,10 +85,10 @@ RSpec.describe Bioshogi::Dimension::Column do
     assert { Bioshogi::Dimension::Column.fetch("6").column_spaces_min == 3 }
   end
 
-  it "left_or_right_to_closer_side" do
-    assert { Bioshogi::Dimension::Column.fetch("4").left_or_right_to_closer_side == :right }
-    assert { Bioshogi::Dimension::Column.fetch("5").left_or_right_to_closer_side == :left  }
-    assert { Bioshogi::Dimension::Column.fetch("6").left_or_right_to_closer_side == :left  }
+  it "align_arrow" do
+    assert { Bioshogi::Dimension::Column.fetch("4").align_arrow == :right }
+    assert { Bioshogi::Dimension::Column.fetch("5").align_arrow == :left  }
+    assert { Bioshogi::Dimension::Column.fetch("6").align_arrow == :left  }
   end
 
   it "column_is_second_to_eighth?" do

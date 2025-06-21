@@ -79,12 +79,12 @@ module Bioshogi
         distance_from_half
       end
 
-      # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7段目であれば6を返す)
+      # 自分の側の一番上を0としてあとどれだけで突き当たるかの値 (例えば7行目であれば6を返す)
       def top_spaces
         value
       end
 
-      # 自分の側の一番下を0として底辺までの高さを返す (例えば7段目であれば2を返す)
+      # 自分の側の一番下を0として底辺までの高さを返す (例えば7行目であれば2を返す)
       # ここはキャッシュしない方が早い
       def bottom_spaces
         dimension_size.pred - top_spaces
@@ -110,7 +110,7 @@ module Bioshogi
         !own_side?
       end
 
-      # 4..6段目？
+      # 4..6行目？
       def middle_row?
         not_own_side? && not_opp_side?
       end
@@ -139,7 +139,7 @@ module Bioshogi
         top_spaces == promotable_depth
       end
 
-      # 垂れ歩状態か？ (つまり2, 3, 4段目)
+      # 垂れ歩状態か？ (つまり2, 3, 4行目)
       def tarefu_desuka?
         top_spaces.between?(1, promotable_depth)
       end

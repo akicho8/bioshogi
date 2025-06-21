@@ -143,7 +143,7 @@ RSpec.describe Bioshogi::Player do
           assert { Bioshogi::Container::Basic.player_test_soldier_names(init: "５一飛", execute: "５四飛成") == ["▲５四龍"] }
         end
 
-        it "後手が相手の3段目に入ったタイミングで成る(バグっていたので消さないように)" do
+        it "後手が相手の3行目に入ったタイミングで成る(バグっていたので消さないように)" do
           assert { Bioshogi::Container::Basic.player_test_soldier_names(player: :white, init: "４五桂", execute: "５七桂成") == ["△５七圭"] }
         end
       end

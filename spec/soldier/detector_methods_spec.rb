@@ -25,12 +25,12 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
   end
 
   it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
-    assert { Bioshogi::Soldier.from_str("▲41歩").left_or_right_to_closer_side == :right }
-    assert { Bioshogi::Soldier.from_str("△41歩").left_or_right_to_closer_side == :left  }
-    assert { Bioshogi::Soldier.from_str("▲51歩").left_or_right_to_closer_side == :left  }
-    assert { Bioshogi::Soldier.from_str("△51歩").left_or_right_to_closer_side == :left  }
-    assert { Bioshogi::Soldier.from_str("▲61歩").left_or_right_to_closer_side == :left  }
-    assert { Bioshogi::Soldier.from_str("△61歩").left_or_right_to_closer_side == :right }
+    assert { Bioshogi::Soldier.from_str("▲41歩").align_arrow == :right }
+    assert { Bioshogi::Soldier.from_str("△41歩").align_arrow == :left  }
+    assert { Bioshogi::Soldier.from_str("▲51歩").align_arrow == :left  }
+    assert { Bioshogi::Soldier.from_str("△51歩").align_arrow == :left  }
+    assert { Bioshogi::Soldier.from_str("▲61歩").align_arrow == :left  }
+    assert { Bioshogi::Soldier.from_str("△61歩").align_arrow == :right }
   end
 
   it "tarefu_desuka?" do

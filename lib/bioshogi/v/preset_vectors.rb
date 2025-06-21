@@ -1,49 +1,17 @@
 module Bioshogi
   class V
     module PresetVectors
-      ################################################################################
+      ################################################################################ 軸反転
 
-      def cross_vectors
-        @cross_vectors ||= [up, right, down, left]
+      def reverse_x
+        @reverse_x ||= self[-1, 1]
       end
 
-      def outer_vectors
-        @outer_vectors ||= cross_vectors + tasuki_vectors.flatten(1)
+      def reverse_y
+        @reverse_y ||= -reverse_x
       end
 
-      def left_right_vectors
-        @left_right_vectors ||= [left, right]
-      end
-
-      def wariuchi_vectors
-        @wariuchi_vectors ||= [down_left, down_right]
-      end
-
-      def ikkenryu_cross_vectors
-        @ikkenryu_cross_vectors ||= [left_left, right_right, up_up, down_down]
-      end
-
-      def keima_vectors
-        @keima_methods ||= [up_up_left, up_up_right]
-      end
-
-      def ginbasami_verctors
-        @ginbasami_verctors ||= [[right, right_right, right_right_up], [left, left_left, left_left_up]]
-      end
-
-      def tsugikei_vectors
-        @tsugikei_methods ||= [down_down_right, down_down_left]
-      end
-
-      def tasuki_vectors
-        @tasuki_vectors ||= [[up_left, down_right], [up_right, down_left]]
-      end
-
-      def bishop_naname_mae_vectors
-        @bishop_naname_mae_vectors ||= [up_left, up_right]
-      end
-
-      ################################################################################ 上下左右
+      ################################################################################ ＋
 
       def right
         @right ||= self[1, 0]
@@ -61,7 +29,7 @@ module Bioshogi
         @left ||= -right
       end
 
-      ################################################################################ 斜め
+      ################################################################################ ×
 
       def up_left
         @up_left ||= up + left
@@ -77,6 +45,28 @@ module Bioshogi
 
       def down_right
         @down_right ||= down + right
+      end
+
+      ################################################################################ 汎用
+
+      # 十
+      def cross_vectors
+        @cross_vectors ||= [up, right, down, left]
+      end
+
+      # ×
+      def saltire_vectors
+        @saltire_vectors ||= [up_left, up_right, down_left, down_right]
+      end
+
+      # □
+      def outer_vectors
+        @outer_vectors ||= cross_vectors + saltire_vectors
+      end
+
+      # ←→
+      def left_right_vectors
+        @left_right_vectors ||= [left, right]
       end
 
       ################################################################################ 一間竜
@@ -107,7 +97,7 @@ module Bioshogi
         @up_up_left ||= up + up + left
       end
 
-      ################################################################################ 継ぎ桂チェック用
+      ################################################################################ 継ぎ桂
 
       def down_down_right
         @down_down_right ||= down + down + right
@@ -117,7 +107,7 @@ module Bioshogi
         @down_down_left ||= down + down + left
       end
 
-      ################################################################################ 銀ばさみチェック用
+      ################################################################################ 銀ばさみ
 
       def right_right_up
         @right_right_up ||= right + right + up
@@ -125,6 +115,36 @@ module Bioshogi
 
       def left_left_up
         @left_left_up ||= left + left + up
+      end
+
+      ################################################################################
+
+      def wariuchi_vectors
+        @wariuchi_vectors ||= [down_left, down_right]
+      end
+
+      def ikkenryu_cross_vectors
+        @ikkenryu_cross_vectors ||= [left_left, right_right, up_up, down_down]
+      end
+
+      def keima_vectors
+        @keima_methods ||= [up_up_left, up_up_right]
+      end
+
+      def ginbasami_verctors
+        @ginbasami_verctors ||= [[right, right_right, right_right_up], [left, left_left, left_left_up]]
+      end
+
+      def tsugikei_vectors
+        @tsugikei_methods ||= [down_down_right, down_down_left]
+      end
+
+      def tasuki_vectors
+        @tasuki_vectors ||= [[up_left, down_right], [up_right, down_left]]
+      end
+
+      def bishop_up_diagonal_vectors
+        @bishop_up_diagonal_vectors ||= [up_left, up_right]
       end
 
       ################################################################################

@@ -23,7 +23,7 @@ module Bioshogi
 
           if false
             # 「飛飛」並びは除外する
-            break_cond { @rook_count == 2 && @lance_count == 0 }
+            skip_if { @rook_count == 2 && @lance_count == 0 }
           end
 
           if false
@@ -31,7 +31,7 @@ module Bioshogi
             # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [3, 4, -1, 1] (先手)
             # [@lance, @rook, @lance <=> @rook, soldier.location.sign_dir] # => [5, 4, 1, -1] (後手)
             # つまり ((@lance <=> @rook) + soldier.location.sign_dir).zero? のとき飛車の上に香車がいる
-            break_cond do
+            skip_if do
               if @rook_count == 1 && @lance_count == 1
                 ((@lance.row.value <=> @rook.row.value) + soldier.location.sign_dir).nonzero?
               end

@@ -12,9 +12,9 @@ Column.fetch("4").column_spaces_min # => 3
 Column.fetch("5").column_spaces_min # => 4
 Column.fetch("6").column_spaces_min # => 3
 
-Column.fetch("4").left_or_right_to_closer_side # => :right
-Column.fetch("5").left_or_right_to_closer_side # => :left
-Column.fetch("6").left_or_right_to_closer_side # => :left
+Column.fetch("4").align_arrow # => :right
+Column.fetch("5").align_arrow # => :left
+Column.fetch("6").align_arrow # => :left
 
 Column.fetch("1").column_is_second_to_eighth?   # => false
 Column.fetch("2").column_is_second_to_eighth?   # => true
