@@ -1,10 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Bioshogi::Analysis::TechniqueInfo do
-  it ".rocket_list" do
-    Bioshogi::Analysis::TechniqueInfo.rocket_list.include?(Bioshogi::Analysis::TechniqueInfo[:"6段ロケット"])
-  end
-
   def container_new
     Bioshogi::Container::Basic.new.tap do |e|
       e.params[:analysis_feature] = true

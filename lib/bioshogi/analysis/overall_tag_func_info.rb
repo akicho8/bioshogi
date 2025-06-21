@@ -230,7 +230,7 @@ module Bioshogi
           func: -> {
             @container.players.each do |player|
               technique_infos = player.tag_bundle.technique_infos
-              if Analysis::TechniqueInfo.rocket_list.any? { |e| technique_infos.include?(e) }
+              if Analysis::GroupInfo["ロケット"].values.any? { |e| technique_infos.include?(e) }
                 player.tag_bundle << "ロケット"
               end
             end

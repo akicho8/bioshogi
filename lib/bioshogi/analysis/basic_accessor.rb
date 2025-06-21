@@ -105,14 +105,6 @@ module Bioshogi
         @group_info
       end
 
-      def motion_detector
-        unless defined?(@motion_detector)
-          @motion_detector = MotionDetector.lookup(key)
-        end
-
-        @motion_detector
-      end
-
       def add_to_opponent
         unless defined?(@add_to_opponent)
           @add_to_opponent = TagIndex.fetch_if(super)
