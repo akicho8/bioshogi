@@ -56,11 +56,11 @@ module Bioshogi
         execute_after_process
 
         if captured_soldier
-          piece_box_added(captured_soldier)
+          piece_box_added
         end
 
         if move_hand
-          move_hand_process(move_hand)
+          move_hand_process
         end
 
         perform_analyzer
@@ -78,10 +78,10 @@ module Bioshogi
       def execute_after_process
       end
 
-      def piece_box_added(captured_soldier)
+      def piece_box_added
       end
 
-      def move_hand_process(move_hand)
+      def move_hand_process
         if move_hand.soldier.piece.key == :king
           player.king_place = move_hand.soldier.place
         end

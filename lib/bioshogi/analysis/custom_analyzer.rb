@@ -9,9 +9,11 @@ module Bioshogi
         @executor = executor
       end
 
-      def call
-        CustomDetectorInfo.each do |e|
-          e.klass.new(executor).call
+      def call(custom_trigger_key)
+        if e = CustomTriggerInfo.fetch(custom_trigger_key).custom_detector_infos
+          e.each do |e|
+            e.klass.new(executor).call
+          end
         end
       end
     end

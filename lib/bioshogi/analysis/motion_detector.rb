@@ -900,6 +900,18 @@ module Bioshogi
           },
         },
         {
+          key: "歩切れ",
+          description: "中盤以降に絞らないとタグを入れる意味がない",
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
+          func: -> {
+            # 【必要条件】中盤以降である
+            and_cond { container.outbreak_turn }
+
+            # 【却下条件】歩がある
+            skip_if { player.piece_box.has_key?(:pawn) }
+          },
+        },
+        {
           key: "田楽刺し",
           description: "角の頭に打ってその奥に玉などの大駒がある",
           trigger: { piece_key: :lance,  promoted: false, motion: :drop },

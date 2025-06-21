@@ -7,7 +7,7 @@ module Bioshogi
         player.used_piece_counts[hand.to_counts_key] += 1
       end
 
-      def move_hand_process(move_hand)
+      def move_hand_process
         super
 
         if move_hand.soldier.piece.key == :king
@@ -19,7 +19,7 @@ module Bioshogi
         end
       end
 
-      def piece_box_added(captured_soldier)
+      def piece_box_added
         super
 
         if analysis_feature_enabled?
@@ -34,6 +34,7 @@ module Bioshogi
             key = captured_soldier.piece.key
             if key != :pawn && key != :bishop
               container.outbreak_turn = container.turn_info.turn_offset
+              CustomAnalyzer.new(self).call(:ct_outbreak)
             end
           end
 
@@ -54,7 +55,7 @@ module Bioshogi
           ShapeAnalyzer.new(self).call
           MotionAnalyzer.new(self).call
           EveryAnalyzer.new(self).call
-          CustomAnalyzer.new(self).call
+          CustomAnalyzer.new(self).call(:ct_every)
         end
       end
 

@@ -19,6 +19,7 @@ module Bioshogi
           { key: "こびん攻め",   alias_names: nil, outbreak_skip: nil,  },
           { key: "端攻め",       alias_names: nil, outbreak_skip: nil,  },
           { key: "端玉には端歩", alias_names: nil, outbreak_skip: nil,  },
+          { key: "歩切れ",       alias_names: nil, outbreak_skip: nil,  },
 
           # 歩 (マイナス)
           { key: "居飛車の税金", alias_names: nil, outbreak_skip: true, },
