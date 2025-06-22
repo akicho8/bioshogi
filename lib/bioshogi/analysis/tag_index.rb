@@ -8,7 +8,14 @@ module Bioshogi
         if TagBase === key
           return key
         end
-        values_hash[key.to_s.to_sym]
+        values_hash[key_cast(key)]
+      end
+
+      def key_cast(key)
+        if key.kind_of? String
+          warn "できれば最初からシンボルにしとけ : #{key.inspect}"
+        end
+        key.to_sym
       end
 
       def fetch_if(key)
