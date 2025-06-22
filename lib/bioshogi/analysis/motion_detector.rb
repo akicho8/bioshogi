@@ -395,12 +395,12 @@ module Bioshogi
             # 【却下条件】すでに持っている
             skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("天空の城")) }
 
-            # 【必要条件】移動先の近くに自玉がいる
-            and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+            # 【必要条件】移動先の近くに自玉がいる (半径1)
+            and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 1) }
 
-            # 【必要条件】自玉のまわりに「金金銀」以上の価値のある駒がある
+            # 【必要条件】自玉のまわりに価値のある駒がある
             and_cond do
-              min_score = Piece[:gold].basic_weight * 2 + Piece[:silver].basic_weight
+              min_score = ClusterScoreInfo["天空の城構成員"].min_score
               score = 0
               V.outer_vectors.any? do |e|
                 if v = player.king_soldier.relative_move_to(e)

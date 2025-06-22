@@ -54,7 +54,7 @@ module Bioshogi
 
       # 圧倒的なスコアがある？
       def overwhelming_score?
-        current_score >= Piece::PieceScore.sure_victory_score
+        current_score >= Analysis::ClusterScoreInfo["圧倒的な駒得"].min_score
       end
 
       ################################################################################

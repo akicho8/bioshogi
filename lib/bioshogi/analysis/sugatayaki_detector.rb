@@ -24,7 +24,7 @@ module Bioshogi
 
       def info
         {
-          "閾値"       => Piece::PieceScore.sure_victory_score,
+          "閾値"       => ClusterScoreInfo["圧倒的な駒得"].min_score,
           "勝者の得点" => win_player.current_score,
           "敗者の得点" => lose_player.current_score,
           "得点差"     => win_player.current_score - lose_player.current_score,

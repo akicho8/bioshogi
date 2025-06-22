@@ -207,10 +207,12 @@ module Bioshogi
     end
 
     # manhattan_distance_a_side_max の高速版
-    # other との縦横の差が n 以下か？
+    # other との縦横の差が radius 以下か？
     # a.in_outer_area?(b, 2) なら a の 5x5 の中に b が含まれていることがわかる
-    def in_outer_area?(other, n)
-      column.distance(other.column) <= n && row.distance(other.row) <= n
+    # a.in_outer_area?(b, 1) なら a の 3x3 の中に b が含まれていることがわかる
+    # a.in_outer_area?(b, 0) なら a の 1x1 の中に b が含まれていることがわかる
+    def in_outer_area?(other, radius)
+      column.distance(other.column) <= radius && row.distance(other.row) <= radius
     end
 
     ################################################################################

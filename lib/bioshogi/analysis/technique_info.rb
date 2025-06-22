@@ -96,7 +96,6 @@ module Bioshogi
           { key: "桂頭の玉",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
           { key: "中段玉",       alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
           { key: "双玉接近",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: "双玉接近", },
-          { key: "天空の城",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
         ]
       end
 

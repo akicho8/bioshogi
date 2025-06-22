@@ -4,7 +4,7 @@ def _
 end
 
 a = Place["55"]                     # => #<Bioshogi::Place ５五>
-_ { a.to_a }                # => "109.3 ms"
+_ { a.to_a }                # => "108.7 ms"
 
 Place["55"].row.name        # => "五"
 Place["55"].column.name     # => "５"
@@ -28,8 +28,8 @@ Place["11"].to_human_h          # => {column: 1, row: 1}
 # Dimension::Column.fetch(1).object_id # => 70357212614280
 # Dimension::Column.fetch(1).object_id # => 70357212614280
 
-Place["76"].hash                # => 2894204950855917639
-Place["７６"].hash              # => 2894204950855917639
+Place["76"].hash                # => 2575756554078743792
+Place["７６"].hash              # => 2575756554078743792
 Place["76"].object_id           # => 872
 Place["７６"].object_id         # => 872
 hash = {}
@@ -37,8 +37,8 @@ hash = {}
 hash[Place["76"]] = 1
 hash[Place["７６"]]             # => 1
 
-[1, 2].hash                     # => 728421501128345460
-[1, 2].hash                     # => 728421501128345460
+[1, 2].hash                     # => -46445250877106033
+[1, 2].hash                     # => -46445250877106033
 
 ################################################################################
 
