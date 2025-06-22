@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 kif_str = "
 手数----指手---------消費時間--

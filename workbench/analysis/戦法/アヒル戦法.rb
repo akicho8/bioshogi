@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.file_parse("../戦法/アヒル戦法.kif", turn_limit: 42)
 puts info.formatter.container

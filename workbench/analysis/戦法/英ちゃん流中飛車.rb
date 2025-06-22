@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse <<~EOS
 *詳細URL：https://www.shogi-extend.com/swars/battles/Taichan0601-HyperTakeman-20240213_135205

@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 26歩

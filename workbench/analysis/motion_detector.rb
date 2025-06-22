@@ -1,4 +1,4 @@
-require "#{__dir__}/../setup"
+require "#{__dir__}/setup"
 
 require "../setup"
 _ { ActiveRecord::Base.connection.tables } # =>

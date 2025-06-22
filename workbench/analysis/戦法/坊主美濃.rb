@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.file_parse("bouzu_mino.ki2")
 puts info.to_ki2

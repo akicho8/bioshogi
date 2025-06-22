@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 先手の戦法：初手▲7八飛戦法

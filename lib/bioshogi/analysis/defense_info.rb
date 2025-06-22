@@ -6,10 +6,6 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record attr_reader: TagColumnNames do
         [
-          ################################################################################ あとから追加する
-
-          { key: "居玉",               group_key: nil, parent: nil,                  related_ancestors: nil,                         alias_names: nil,                                              turn_limit: nil, turn_eq: nil,  order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: false,      pawn_have_ok: nil,  outbreak_skip: nil,  kill_count_lteq: nil,              hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_empty: nil, hold_piece_eq: nil, preset_has: :hirate_like, sect_key: "居飛車",       add_to_self: nil, add_to_opponent: nil, motion_detector: nil, description: nil,                                                                        },
-
           ################################################################################ 矢倉
 
           { key: "いちご囲い",         group_key: nil, parent: nil,                  related_ancestors: nil,                         alias_names: nil,                                              turn_limit: nil, turn_eq: nil,  order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: false,      pawn_have_ok: true, outbreak_skip: true, kill_count_lteq: nil,              hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_empty: nil, hold_piece_eq: nil, preset_has: :hirate_like, sect_key: "居飛車",       add_to_self: nil, add_to_opponent: nil, motion_detector: nil, description: nil,                                                                        },
@@ -161,6 +157,8 @@ module Bioshogi
           { key: "金多伝",             group_key: nil, parent: nil,                  related_ancestors: nil,                         alias_names: nil,                                              turn_limit: nil, turn_eq: nil,  order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: false,      pawn_have_ok: true, outbreak_skip: true, kill_count_lteq: nil,              hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_empty: nil, hold_piece_eq: nil, preset_has: :x_taden, sect_key: "居飛車",       add_to_self: nil, add_to_opponent: nil, motion_detector: nil, description: nil,                                                                        },
 
           { key: "天空の城", alias_names: "空中楼閣", },
+          { key: "魔方陣", },
+          { key: "居玉",   },
         ]
       end
 

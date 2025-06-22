@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse <<~EOS
 *詳細URL：https://www.shogi-extend.com/swars/battles/Shurekkuda-vivid_dub-20240104_023249

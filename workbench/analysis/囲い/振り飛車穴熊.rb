@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Analysis::DefenseInfo.fetch("振り飛車穴熊").static_kif_info
 tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }

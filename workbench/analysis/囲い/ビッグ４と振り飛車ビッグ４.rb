@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 # info = Analysis::DefenseInfo.fetch("ビッグ4").static_kif_info
 # tp info.pi.header.to_h

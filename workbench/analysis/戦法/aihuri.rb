@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 先手の戦法：手損角交換型, 相振り飛車

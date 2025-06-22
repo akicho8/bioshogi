@@ -1,4 +1,4 @@
-require "#{__dir__}/../setup"
+require "#{__dir__}/setup"
 tp Parser.parse(<<~EOT).pi.to_h
 表題：看寿2003.Bioshogi::DIA #56
 作者：岡村孝雄

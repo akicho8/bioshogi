@@ -1,4 +1,4 @@
-require "../../setup"
+require "#{__dir__}/setup"
 
 info = Analysis::TechniqueInfo.fetch("突き違いの歩").static_kif_info
 tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
