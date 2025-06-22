@@ -85,6 +85,7 @@ module Bioshogi
           { key: "飛車先交換",   alias_names: nil, outbreak_skip: nil,  },
           { key: "浮き飛車",     alias_names: nil, outbreak_skip: true, },
           { key: "自陣飛車",     alias_names: nil, outbreak_skip: nil,  },
+          { key: "二枚飛車",     alias_names: nil, outbreak_skip: nil,  },
           { key: "一間竜",       alias_names: nil, outbreak_skip: nil,  },
 
           # 玉

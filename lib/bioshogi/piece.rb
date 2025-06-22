@@ -147,6 +147,7 @@ module Bioshogi
       promotable
     end
 
+    # FIXME: 消す
     def core_piece?
       core_piece
     end

@@ -189,6 +189,72 @@ module Bioshogi
           },
         },
         {
+          key: "二枚飛車",
+          description: "二枚飛車の間の駒が動いたら二枚飛車になる場合には対応していない",
+          trigger: { piece_key: :rook, promoted: :both, motion: :both },
+          func: -> {
+            # 【必要条件】敵玉が存在する
+            and_cond { opponent_player.king_soldier }
+
+            # 【必要条件】敵玉と行が同じ (許容誤差±1)
+            and_cond { (opponent_player.king_soldier.place.row.value - soldier.place.row.value).abs <= 1 }
+
+            if false
+              # # 富豪的な配列プログラミング
+              #
+              # # 【必要条件】自分の飛車(龍を含む)が盤上に複数ある
+              # and_cond { player.soldiers_lookup(:rook).many? }
+              #
+              # # 【必要条件】自分の飛車(龍を含む)が同じ行にある
+              # and_cond { player.soldiers_lookup(:rook).collect { |s| s.place.row }.uniq.one? }
+            else
+              # 2つあるとして比較する方法
+              soldiers = player.soldiers_lookup(:rook)
+              partner = (soldiers - [soldier]).first
+
+              # 【必要条件】もう一方の飛車が存在する
+              and_cond { partner }
+
+              # 【必要条件】もう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
+              and_cond { soldier.place.row == partner.place.row }
+
+              # 【却下条件】移動してきた場合、移動元はもう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
+              skip_if do
+                if s = origin_soldier
+                  s.place.row == partner.place.row
+                end
+              end
+            end
+
+            # 【必要条件】打った飛車の左右に自分の飛車がいる (この方法は遮る駒のチェックを行える)
+            # and_cond do
+            #   [:left, :right].any? do |left_or_right|
+            #     found = false
+            #     (1..).each do |x|
+            #       v = soldier.relative_move_to(left_or_right, magnification: x)
+            #       unless v
+            #         break # 盤外
+            #       end
+            #       if s = board[v]
+            #         if opponent?(s)
+            #           break                                   # 相手の駒が間にあるとだめ
+            #         end
+            #         if s.piece.key == :rook                   # 「飛」「龍」
+            #           found = true
+            #           break
+            #         else
+            #           break                                   # 自分の他の駒が間にあるとだめ
+            #         end
+            #       else
+            #         # 何もない
+            #       end
+            #     end
+            #     found
+            #   end
+            # end
+          },
+        },
+        {
           key: "裸玉",
           description: "玉のまわりに歩ぐらいしかない",
           trigger: [
@@ -1268,3 +1334,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:8:in '<class:MotionDetector>': uninitialized constant Bioshogi::Analysis::MotionDetector::ApplicationMemoryRecord (NameError)
+# ~>    from -:7:in '<module:Analysis>'
+# ~>    from -:6:in '<module:Bioshogi>'
+# ~>    from -:5:in '<main>'

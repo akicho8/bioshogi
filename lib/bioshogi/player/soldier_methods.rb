@@ -3,16 +3,19 @@
 module Bioshogi
   class Player
     module SoldierMethods
-      def core_soldier(piece_key)
-        board.core_soldier_places_hash.dig(location.key, piece_key)
+      # O(1)
+      def soldiers_lookup(piece_key)
+        board.soldiers_lookup(location.key, piece_key)
       end
 
+      # O(1)
       def king_soldier
-        core_soldier(:king)
+        soldiers_lookup(:king).first
       end
 
       ################################################################################
 
+      # O(n)
       def soldiers
         board.surface.values.find_all { |e| e.location == location }
       end
@@ -20,6 +23,8 @@ module Bioshogi
       def to_s_soldiers
         soldiers.collect(&:name_without_location).sort.join(" ")
       end
+
+      ################################################################################ 得点
 
       # 入玉宣言時の盤上にある駒の得点合計
       def soldiers_ek_score
