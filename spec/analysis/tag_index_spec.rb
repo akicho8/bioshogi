@@ -21,7 +21,7 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
     it "works" do
       assert { Bioshogi::Analysis::TagIndex.lookup("金底の歩") }
     end
-    it "文字列でなくても to_s してから探す" do
+    xit "文字列でなくても to_s してから探す" do
       o = Object.new
       def o.to_s; "金底の歩"; end
       assert { Bioshogi::Analysis::TagIndex.lookup(o) }

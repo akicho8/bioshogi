@@ -12,10 +12,13 @@ module Bioshogi
       end
 
       def key_cast(key)
-        if key.kind_of? String
-          warn "できれば最初からシンボルにしとけ : #{key.inspect}"
+        # if key.kind_of? String
+        #   warn "できれば最初からシンボルにしとけ : #{key.inspect}"
+        # end
+        if key
+          key = key.to_sym
         end
-        key.to_sym
+        key
       end
 
       def fetch_if(key)
