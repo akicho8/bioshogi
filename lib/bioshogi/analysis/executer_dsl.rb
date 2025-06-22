@@ -388,6 +388,8 @@ module Bioshogi
       end
 
       def tag_add(tag)
+        tag = TagIndex.fetch(tag)
+
         player.tag_bundle << tag
         tag_bundle << tag
 

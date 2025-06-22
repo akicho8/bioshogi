@@ -4,6 +4,7 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         { klass: RocketDetector,   custom_trigger_key: :ct_every,    },
+        { klass: MagicSquareDetector, custom_trigger_key: :ct_every,    },
         { klass: OutbreakDetector, custom_trigger_key: :ct_outbreak, },
       ]
 
