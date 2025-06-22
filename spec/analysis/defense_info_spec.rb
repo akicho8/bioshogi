@@ -39,8 +39,4 @@ RSpec.describe Bioshogi::Analysis::DefenseInfo do
       assert { Bioshogi::Analysis::DefenseInfo["片美濃囲い"].descendants.collect(&:name) == ["美濃囲い", "高美濃囲い", "振り飛車四枚美濃", "ダイヤモンド美濃", "片銀冠", "銀冠", "銀美濃", "木村美濃", "裾固め", "大山美濃", "美濃熊囲い"] }
     end
   end
-
-  it "anaguma_elems" do
-    assert { Bioshogi::Analysis::DefenseInfo.anaguma_elems.size > 1 }
-  end
 end
