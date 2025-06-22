@@ -268,17 +268,13 @@ module Bioshogi
         {
           key: "雪隠詰め",
           func: -> {
-            found = ["11", "91", "19", "99"].any? do |e|
-              if soldier = @container.board[e]
-                if soldier.piece.key == :king
-                  @container.lose_player.location == soldier.location
+            if @container.params[:last_action_info].last_checkmate_p
+              soldier = @container.lose_player.king_soldier
+              if soldier.bottom_spaces == 0 && soldier.column_is_edge?
+                @container.win_player.tag_bundle << "雪隠詰め"
+                if hand_log = @container.hand_logs.last
+                  hand_log.tag_bundle << "雪隠詰め"
                 end
-              end
-            end
-            if found
-              @container.win_player.tag_bundle << "雪隠詰め"
-              if hand_log = @container.hand_logs.last
-                hand_log.tag_bundle << "雪隠詰め"
               end
             end
           },
