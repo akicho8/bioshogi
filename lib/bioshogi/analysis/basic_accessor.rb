@@ -121,6 +121,16 @@ module Bioshogi
         @add_to_self
       end
 
+      ################################################################################
+
+      def every_detector
+        unless defined?(@every_detector)
+          @every_detector = EveryDetector.lookup(key)
+        end
+
+        @every_detector
+      end
+
       def motion_detector
         unless defined?(@motion_detector)
           @motion_detector = MotionDetector.lookup(key)
@@ -128,6 +138,16 @@ module Bioshogi
 
         @motion_detector
       end
+
+      def capture_detector
+        unless defined?(@capture_detector)
+          @capture_detector = CaptureDetector.lookup(key)
+        end
+
+        @capture_detector
+      end
+
+      ################################################################################
 
       def skip_if_exist
         unless defined?(@skip_if_exist)

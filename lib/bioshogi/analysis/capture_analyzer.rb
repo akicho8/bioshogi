@@ -15,7 +15,7 @@ module Bioshogi
         TagIndex.capture_type_values.each do |e|
           Bioshogi.analysis_run_counts[e.key] += 1
           retv = perform_block do
-            instance_exec(&e.if_capture_then)
+            instance_exec(&e.capture_detector.func)
           end
           if retv
             tag_add(e)

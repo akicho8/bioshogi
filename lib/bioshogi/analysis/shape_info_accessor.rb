@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    concern :ShapeInfoRelation do
+    concern :ShapeInfoAccessor do
       included do
         delegate :board_parser, :location_split, :sorted_soldiers, to: :shape_info
       end

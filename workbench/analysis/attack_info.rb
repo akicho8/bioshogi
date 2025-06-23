@@ -12,7 +12,7 @@ puts Analysis::AttackInfo.ancestors  # => nil
 # >> TreeSupport::Treeable
 # >> Bioshogi::Analysis::TreeMod
 # >> Bioshogi::Analysis::BasicAccessor
-# >> Bioshogi::Analysis::ShapeInfoRelation
+# >> Bioshogi::Analysis::ShapeInfoAccessor
 # >> #<Module:0x000000011cc6ab48>
 # >> MemoryRecord::Serialization
 # >> MemoryRecord::SingletonMethods

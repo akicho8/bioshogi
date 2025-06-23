@@ -14,7 +14,10 @@ module Bioshogi
       def call
         TagIndex.every_type_values.each do |e|
           Bioshogi.analysis_run_counts[e.key] += 1
-          if instance_exec(&e.if_true_then)
+          retv = perform_block do
+            instance_exec(&e.every_detector.func)
+          end
+          if retv
             tag_add(e)
           end
         end

@@ -53,22 +53,22 @@ module Bioshogi
 
       ################################################################################
 
-      # 特定の駒を指定の場所に動かしたときに発動するタイプたち
+      # 特定の駒を指定の場所に動かしたとき型
       def shape_type_values
         @shape_type_values ||= values.find_all(&:shape_info)
       end
 
-      # 駒を取ったタイミングで発動するタイプたち
+      # 駒を取ったタイミング型
       def capture_type_values
-        @capture_type_values ||= values.find_all(&:if_capture_then)
+        @capture_type_values ||= values.find_all(&:capture_detector)
       end
 
-      # 毎回呼ばれるタイプたち
+      # 毎回呼ばれる重め型
       def every_type_values
-        @every_type_values ||= values.find_all(&:if_true_then)
+        @every_type_values ||= values.find_all(&:every_detector)
       end
 
-      # モーションで発動するタイプたち
+      # モーション発動型
       def motion_type_values
         @motion_type_values ||= values.find_all(&:motion_detector)
       end

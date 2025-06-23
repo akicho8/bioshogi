@@ -9,14 +9,14 @@ module Bioshogi
           # 戦法から引っ越し
           # 「角交換型」と「手損角交換型」には shape_info あり
 
-          { key: "角交換型",         parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: true, drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: 1,   hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "角交換型",     motion_detector: nil, },
-          { key: "手得角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: nil,            motion_detector: nil, },
-          { key: "手損角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: :order_first, not_have_pawn: nil, kill_only: true, drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "手得角交換型", motion_detector: nil, },
+          { key: "角交換型",         parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: true, drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: 1,   hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "角交換型",      },
+          { key: "手得角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: nil,             },
+          { key: "手損角交換型",     parent: "角交換型", related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: :order_first, not_have_pawn: nil, kill_only: true, drop_only: nil,  pawn_have_ok: nil,  outbreak_skip: true, kill_count_lteq: nil, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: "角", op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "手得角交換型",  },
 
           # shape_info あり
 
-          { key: "矢倉旧24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉旧24手組", motion_detector: nil,     },
-          { key: "矢倉新24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉新24手組", motion_detector: nil,     },
+          { key: "矢倉旧24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉旧24手組",      },
+          { key: "矢倉新24手組",     parent: nil,        related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: 24, order_key: nil,    not_have_pawn: nil, kill_only: nil,  drop_only: nil,  pawn_have_ok: nil, outbreak_skip: true, kill_count_lteq: 0, hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil,  op_hold_piece_eq: nil,   add_to_self: nil, add_to_opponent: "矢倉新24手組",      },
 
           ################################################################################
 
@@ -50,45 +50,19 @@ module Bioshogi
 
           ################################################################################
 
-          {
-            key: "全駒",
-            add_to_opponent: "玉単騎",
-            if_capture_then: -> {
-              and_cond do
-                player.zengoma?
-              end
-            },
-          },
+          { key: "全駒", add_to_opponent: "玉単騎", },
           { key: "玉単騎", },
 
           ################################################################################
 
-          {
-            key: "大駒コンプリート",
-            add_to_opponent: "大駒全ブッチ",
-            if_capture_then: -> {
-              and_cond do
-                if captured_soldier.piece.strong
-                  player.strong_piece_completed?
-                end
-              end
-            },
-          },
+          { key: "大駒コンプリート", add_to_opponent: "大駒全ブッチ", },
           { key: "大駒全ブッチ", },
 
           { key: "屍の舞", },
 
           ################################################################################
 
-          {
-            key: "駒柱",
-            add_to_opponent: "駒柱",
-            if_true_then: -> {
-              player.board.piller_cop.active?.tap do
-                player.board.piller_cop.active = false # FIXME: できればここで更新はしたくない
-              end
-            },
-          },
+          { key: "駒柱", add_to_opponent: "駒柱", },
 
           { key: "穴熊の姿焼き",   }, # 勝った方だけに入れる
           { key: "名人に定跡なし", }, # 定跡なしで勝ったら入れる

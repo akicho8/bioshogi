@@ -22,11 +22,8 @@ module Bioshogi
       :op_hold_piece_eq,
       :add_to_self,
       :add_to_opponent,
-      :motion_detector,
       :description,
-      :if_true_then,
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
-      :if_capture_then,
       :skip_if_exist,
     ]
   end
