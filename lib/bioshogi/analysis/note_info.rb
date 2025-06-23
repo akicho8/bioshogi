@@ -53,7 +53,11 @@ module Bioshogi
           {
             key: "全駒",
             add_to_opponent: "玉単騎",
-            if_capture_then: -> { player.zengoma? },
+            if_capture_then: -> {
+              and_cond do
+                player.zengoma?
+              end
+            },
           },
           { key: "玉単騎", },
 
@@ -63,8 +67,10 @@ module Bioshogi
             key: "大駒コンプリート",
             add_to_opponent: "大駒全ブッチ",
             if_capture_then: -> {
-              if captured_soldier.piece.strong
-                player.strong_piece_completed?
+              and_cond do
+                if captured_soldier.piece.strong
+                  player.strong_piece_completed?
+                end
               end
             },
           },

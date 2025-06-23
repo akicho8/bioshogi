@@ -21,6 +21,23 @@ module Bioshogi
           { key: "端玉には端歩", alias_names: nil, outbreak_skip: nil,  },
           { key: "歩切れ",       alias_names: nil, outbreak_skip: nil,  },
 
+          {
+            key: "歩偏執者",
+            if_capture_then: -> {
+              # 【却下条件】取った駒は歩である
+              and_cond { captured_soldier.piece.key == :pawn }
+
+              # 【却下条件】すでに持っている
+              skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("歩偏執者")) }
+
+              # 【却下条件】敵が歩を持っている
+              skip_if { opponent_player.piece_box.has_key?(:pawn) }
+
+              # 【必要条件】盤上に敵の歩が一枚もない
+              and_cond { opponent_player.soldiers_lookup(:pawn).empty?  }
+            },
+          },
+
           # 歩 (マイナス)
           { key: "居飛車の税金", alias_names: nil, outbreak_skip: true, },
           { key: "金底の歩",     alias_names: nil, outbreak_skip: nil,  },

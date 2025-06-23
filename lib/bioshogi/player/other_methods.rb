@@ -25,6 +25,7 @@ module Bioshogi
         if board.location_piece_counts[opponent_player.location.key] == 1              # 盤上の相手の駒が1つ
           if opponent_player.piece_box.empty?                                          # 相手の持駒がない
             location = opponent_player.location                                        # 相手の側
+            # FIXME: これは重い → soldiers_lookup でいける。
             board.soldiers.one? { |e| e.piece.key == :king && e.location == location } # 相手の残りの駒が玉か？ (最後に重い処理を持ってくる)
           end
         end

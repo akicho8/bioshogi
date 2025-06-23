@@ -34,7 +34,7 @@ module Bioshogi
         Assertion.assert { location_key.kind_of? Symbol }
         Assertion.assert { piece_key.kind_of? Symbol }
 
-        core_soldier_places_hash.dig(location_key, piece_key) || []
+        core_soldier_places_hash.fetch(location_key)[piece_key] || []
       end
 
       private
