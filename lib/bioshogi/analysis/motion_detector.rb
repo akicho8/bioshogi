@@ -14,7 +14,7 @@ module Bioshogi
           func: -> {
             # 【必要条件】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
             and_cond do
-              if hand_log = executor.container.hand_logs[-1]
+              if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   if s.piece.key == :rook && s.normal? && opponent?(s)
                     if s.place == soldier.relative_move_to(:down)
@@ -150,6 +150,9 @@ module Bioshogi
           description: "中盤戦になる前に5行目の歩を銀で支える",
           trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> {
+            # 【却下条件】すでに開戦している
+            skip_if { container.outbreak_turn }
+
             # 【必要条件】前線(6行目)にいる
             and_cond { soldier.kurai_sasae? }
 
@@ -178,6 +181,9 @@ module Bioshogi
           description: "戻る場合も考慮する",
           trigger: { piece_key: :rook, promoted: false, motion: :move },
           func: -> {
+            # 【却下条件】すでに開戦している
+            skip_if { container.outbreak_turn }
+
             # 【必要条件】前線(6行目)にいる
             and_cond { soldier.funoue_line_ni_uita? }
 
@@ -300,6 +306,9 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :move },
           ],
           func: -> {
+            # 【却下条件】すでに開戦している
+            skip_if { container.outbreak_turn }
+
             # 【必要条件】下から2行目である
             and_cond { soldier.bottom_spaces == 1 }
 
@@ -339,7 +348,7 @@ module Bioshogi
           func: -> {
             # 1手前: △２四歩(23)
             and_cond do
-              if hand_log = executor.container.hand_logs[-1]
+              if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   Assertion.assert { opponent?(s) }
                   s.piece.key == :pawn && s.place == soldier.place
@@ -349,7 +358,7 @@ module Bioshogi
 
             # 2手前: ▲２四歩(25)
             and_cond do
-              if hand_log = executor.container.hand_logs[-2]
+              if hand_log = container.hand_logs[-2]
                 if s = hand_log.move_hand&.soldier
                   Assertion.assert { own?(s) }
                   s.piece.key == :pawn && s.place == soldier.place
@@ -513,6 +522,9 @@ module Bioshogi
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3列目かつ、移動元の隣(端に近い方)に自玉がある",
           trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {
+            # 【却下条件】すでに開戦している
+            skip_if { container.outbreak_turn }
+
             # 【必要条件】下から3行目である
             and_cond { soldier.bottom_spaces == 2 }
 
@@ -671,7 +683,7 @@ module Bioshogi
           trigger: { piece_key: :bishop, promoted: false, motion: :both },
           func: -> {
             # 【必要条件】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
-            and_cond { executor.container.outbreak_turn }
+            and_cond { container.outbreak_turn }
 
             # 【必要条件】自陣から打っている
             and_cond { soldier.own_side? }
@@ -871,6 +883,9 @@ module Bioshogi
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
+            # 【却下条件】すでに開戦している
+            skip_if { container.outbreak_turn }
+
             # 【却下条件】同歩
             skip_if { captured_soldier }
 
@@ -1183,7 +1198,7 @@ module Bioshogi
 
             # 【却下条件】連打の歩 :OPTIONAL:
             skip_if do
-              if hand_log = executor.container.hand_logs[-2] # 前回の自分の手
+              if hand_log = container.hand_logs[-2] # 前回の自分の手
                 if drop_hand = hand_log.drop_hand            # 打った手
                   if s = drop_hand.soldier                   # 駒
                     Assertion.assert { own?(s) }
@@ -1203,7 +1218,7 @@ module Bioshogi
 
             # 2手前: ▲24歩(25) 突き
             and_cond do
-              if hand_log = executor.container.hand_logs[-2]
+              if hand_log = container.hand_logs[-2]
                 if s = hand_log.move_hand&.soldier # 最初を突き捨てとするため hand ではなく move_hand にしている
                   if s.piece.key == :pawn && s.normal? && own?(s)
                     s.place == soldier.relative_move_to(:up)
@@ -1214,7 +1229,7 @@ module Bioshogi
 
             # 1手前: △24同歩 取らされる
             and_cond do
-              if hand_log = executor.container.hand_logs[-1]
+              if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   if s.piece.key == :pawn && s.normal? && opponent?(s)
                     s.place == soldier.relative_move_to(:up)
@@ -1233,7 +1248,7 @@ module Bioshogi
 
             # 2手前: ▲24歩打
             and_cond do
-              if hand_log = executor.container.hand_logs[-2]
+              if hand_log = container.hand_logs[-2]
                 if s = hand_log.drop_hand&.soldier
                   if s.piece.key == :pawn && own?(s)
                     s.place == soldier.relative_move_to(:up)
@@ -1244,7 +1259,7 @@ module Bioshogi
 
             # 1手前: △24同何か 取らされる
             and_cond do
-              if hand_log = executor.container.hand_logs[-1]
+              if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
                   if opponent?(s)
                     s.place == soldier.relative_move_to(:up)
@@ -1282,7 +1297,7 @@ module Bioshogi
                 if v = origin_soldier.relative_move_to(e)                  # 25から33と13を見る
                   if s = board[v]                                          # そこにある駒
                     if opponent?(s) && s.piece.key == :knight && s.normal? # その駒は相手の駒かつ桂
-                      if hand_log = executor.container.hand_logs[-1]       # それは1手前に「動かした」駒か？
+                      if hand_log = container.hand_logs[-1]       # それは1手前に「動かした」駒か？
                         hand_log&.move_hand&.soldier == s
                       end
                     end

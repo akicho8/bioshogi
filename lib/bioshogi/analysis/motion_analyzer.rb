@@ -17,7 +17,6 @@ module Bioshogi
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
             retv = perform_block do
-              cold_war_verification(e)
               instance_exec(&e.motion_detector.func)
             end
             if retv

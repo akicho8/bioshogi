@@ -157,7 +157,7 @@ module Bioshogi
           { key: "銀多伝",             group_key: nil, parent: nil,                  related_ancestors: nil,                         alias_names: nil,                                              turn_limit: nil, turn_eq: nil,  order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: false,      pawn_have_ok: true, outbreak_skip: true, kill_count_lteq: nil,              hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_empty: nil, hold_piece_eq: nil, preset_has: :x_taden, sect_key: "居飛車",       add_to_self: nil, add_to_opponent: nil,  description: nil,                                                                        },
           { key: "金多伝",             group_key: nil, parent: nil,                  related_ancestors: nil,                         alias_names: nil,                                              turn_limit: nil, turn_eq: nil,  order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: false,      pawn_have_ok: true, outbreak_skip: true, kill_count_lteq: nil,              hold_piece_not_in: nil,  hold_piece_in: nil,  hold_piece_empty: nil, hold_piece_eq: nil, preset_has: :x_taden, sect_key: "居飛車",       add_to_self: nil, add_to_opponent: nil,  description: nil,                                                                        },
 
-          { key: "天空の城", alias_names: "空中楼閣", },
+          { key: "天空の城", alias_names: ["空中楼閣", "空中要塞"], },
           { key: "魔方陣", },
           { key: "居玉",   },
         ]
