@@ -17,7 +17,7 @@ module Bioshogi
       include ReaderMethods
       include DetectorMethods
 
-      prepend Analysis::BoardPillerMethods
+      prepend Analysis::ColumnSoldierCounterMethods
       prepend Analysis::BoardPieceCountsMethods
       prepend Analysis::CoreSoldierPlaceMethods
     end

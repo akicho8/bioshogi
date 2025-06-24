@@ -5,27 +5,27 @@
 #
 module Bioshogi
   module Analysis
-    module BoardPillerMethods
+    module ColumnSoldierCounterMethods
       def place_on(soldier, options = {})
         super
-        piller_cop.set(soldier.place)
+        column_soldier_counter.set(soldier.place)
       end
 
       def safe_delete_on(*)
         super.tap do |soldier|
           if soldier
-            piller_cop.remove(soldier.place)
+            column_soldier_counter.remove(soldier.place)
           end
         end
       end
 
       def all_clear
         super
-        piller_cop.reset
+        column_soldier_counter.reset
       end
 
-      def piller_cop
-        @piller_cop ||= PillerCop.new
+      def column_soldier_counter
+        @column_soldier_counter ||= ColumnSoldierCounter.new
       end
     end
   end

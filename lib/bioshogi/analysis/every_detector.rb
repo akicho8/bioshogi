@@ -8,11 +8,8 @@ module Bioshogi
         {
           key: "駒柱",
           func: -> {
-            and_cond do
-              player.board.piller_cop.active?.tap do
-                player.board.piller_cop.active = false
-              end
-            end
+            # 【必要条件】今の場所の列が埋まっている
+            and_cond { board.column_soldier_counter.filled?(soldier.place.column) }
           },
         },
       ]
