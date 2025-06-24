@@ -12,7 +12,7 @@ module Bioshogi
         strong_piece_have_count >= STRONG_PIECE_ALL_COUNT
       end
 
-      # 大駒の数
+      # 持駒を含めた大駒の数
       def strong_piece_have_count
         Piece.strong_pieces.sum do |e|
           piece_box.fetch(e.key, 0) + board.soldiers_count[location.key][e.key]

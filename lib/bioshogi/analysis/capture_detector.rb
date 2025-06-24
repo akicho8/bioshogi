@@ -1,7 +1,5 @@
 # frozen-string-literal: true
 
-# :OPTIONAL: は考慮する必要があるもの。
-
 module Bioshogi
   module Analysis
     class CaptureDetector
@@ -10,17 +8,18 @@ module Bioshogi
         {
           key: "全駒",
           func: -> {
+            # 【必要条件】相手が玉単騎である
             and_cond { opponent_player.bare_king? }
           },
         },
         {
           key: "大駒コンプリート",
           func: -> {
-            and_cond do
-              if captured_soldier.piece.strong
-                player.strong_piece_completed?
-              end
-            end
+            # 【必要条件】取った駒が飛角である
+            and_cond { captured_soldier.piece.strong }
+
+            # 【必要条件】持駒を含めて大駒をすべて持っている
+            and_cond { player.strong_piece_completed? }
           },
         },
         {
