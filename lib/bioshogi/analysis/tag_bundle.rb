@@ -28,6 +28,7 @@ module Bioshogi
       end
 
       def has_tag?(tag)
+        tag = TagIndex.fetch(tag)
         list_of(tag).include?(tag)
       end
 

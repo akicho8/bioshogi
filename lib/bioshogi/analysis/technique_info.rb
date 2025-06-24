@@ -114,6 +114,10 @@ module Bioshogi
           { key: "桂頭の玉",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
           { key: "中段玉",       alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
           { key: "双玉接近",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: "双玉接近", },
+
+          # 他
+          { key: "大駒コンプリート", add_to_opponent: "大駒全ブッチ", },
+          { key: "大駒全ブッチ", },
         ]
       end
 

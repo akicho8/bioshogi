@@ -32,7 +32,7 @@ module Bioshogi
             and_cond { captured_soldier.piece.key == :pawn }
 
             # 【却下条件】すでに持っている
-            skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("歩偏執者")) }
+            skip_if { player.tag_bundle.has_tag?(:"歩偏執者") }
 
             # 【却下条件】敵が歩を持っている
             skip_if { opponent_player.piece_box.has_key?(:pawn) }

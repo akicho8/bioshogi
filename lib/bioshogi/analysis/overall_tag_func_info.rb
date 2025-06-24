@@ -37,7 +37,7 @@ module Bioshogi
           func: -> {
             @container.players.each do |e|
               tag_bundle = e.tag_bundle
-              if !tag_bundle.has_tag?(Analysis::NoteInfo["振り飛車"]) && !tag_bundle.has_tag?(Analysis::NoteInfo["居飛車"])
+              if !tag_bundle.has_tag?(:"振り飛車") && !tag_bundle.has_tag?(:"居飛車")
                 e.tag_bundle << "居飛車"
               end
             end
@@ -188,8 +188,8 @@ module Bioshogi
           func: -> {
             if win_side_location
               player = @container.player_at(win_side_location)
-              if player.strong_piece_have_count.zero?                              # 最後の状態でも全ブッチ状態なら
-                if player.tag_bundle.has_tag?(Analysis::NoteInfo["大駒全ブッチ"]) # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
+              if player.strong_piece_have_count.zero?         # 最後の状態でも全ブッチ状態なら
+                if player.tag_bundle.has_tag?("大駒全ブッチ") # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
                   player.tag_bundle << "屍の舞"
                 end
               end
