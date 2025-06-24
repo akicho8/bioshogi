@@ -75,7 +75,7 @@ module Bioshogi
           { key: "裾金", },
 
           # 角
-          { key: "幽霊角",       alias_names: "端角", },
+          { key: "幽霊角",       alias_names: nil,  },
           { key: "遠見の角",     alias_names: nil,    },
           { key: "たすきの角",   alias_names: nil,    },
           { key: "自陣角",       alias_names: nil,    },
