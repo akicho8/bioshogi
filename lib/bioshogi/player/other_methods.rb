@@ -15,18 +15,17 @@ module Bioshogi
       # 大駒の数
       def strong_piece_have_count
         Piece.strong_pieces.sum do |e|
-          piece_box.fetch(e.key, 0) + board.specific_piece_count_for(location.key, e.key)
+          piece_box.fetch(e.key, 0) + board.soldiers_count[location.key][e.key]
         end
       end
 
       ################################################################################
 
-      def zengoma?
-        if board.location_piece_counts[opponent_player.location.key] == 1              # 盤上の相手の駒が1つ
-          if opponent_player.piece_box.empty?                                          # 相手の持駒がない
-            location = opponent_player.location                                        # 相手の側
-            # FIXME: これは重い → soldiers_lookup でいける。
-            board.soldiers.one? { |e| e.piece.key == :king && e.location == location } # 相手の残りの駒が玉か？ (最後に重い処理を持ってくる)
+      # 玉単騎状態？
+      def bare_king?
+        if board.soldiers_count_per_location[location.key] == 1 # 盤上の自分の駒が1つ
+          if soldiers_lookup(:king).present?                    # 玉がいる
+            piece_box.empty?                                    # 持駒がない
           end
         end
       end

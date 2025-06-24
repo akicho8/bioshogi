@@ -10,9 +10,7 @@ module Bioshogi
         {
           key: "全駒",
           func: -> {
-            and_cond do
-              player.zengoma?
-            end
+            and_cond { opponent_player.bare_king? }
           },
         },
         {
