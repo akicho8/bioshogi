@@ -116,8 +116,13 @@ module Bioshogi
           { key: "双玉接近",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: "双玉接近", },
 
           # 他
+          { key: "駒柱", add_to_opponent: "駒柱", },
+
           { key: "大駒コンプリート", add_to_opponent: "大駒全ブッチ", },
-          { key: "大駒全ブッチ", },
+          { key: "大駒全ブッチ",                                      },
+
+          { key: "全駒", add_to_opponent: "玉単騎", },
+          { key: "玉単騎",                          },
         ]
       end
 

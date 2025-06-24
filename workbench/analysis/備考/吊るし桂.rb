@@ -1,5 +1,5 @@
 require "#{__dir__}/setup"
-info = Analysis::NoteInfo.fetch("吊るし桂").static_kif_info
+info = Analysis::TagIndex.fetch("吊るし桂").static_kif_info
 tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 puts info.to_kif
 # >> |--------+---------+-----------+--------------|
