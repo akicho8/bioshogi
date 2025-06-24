@@ -165,7 +165,7 @@ module Bioshogi
 
       class_attribute :human_name, default: "囲い"
 
-      include TagBase
+      include TagMethods
     end
   end
 end

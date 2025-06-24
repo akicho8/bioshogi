@@ -19,7 +19,7 @@ module Bioshogi
       end
 
       def tag
-        Analysis::NoteInfo["穴熊の姿焼き"]
+        "穴熊の姿焼き"
       end
 
       def info

@@ -5,7 +5,7 @@ module Bioshogi
 
       # TagIndex.lookup("金底の歩").key # => :金底の歩
       def lookup(key)
-        if TagBase === key
+        if TagMethods === key
           return key
         end
         values_hash[key_cast(key)]

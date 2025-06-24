@@ -53,6 +53,7 @@ module Bioshogi
           { key: "下段の香",    },
           { key: "歩裏の香",    },
           # 香 + 飛 (特別判定)
+          { key: "ロケット",    group_key: "ロケット", },
           { key: "2段ロケット", group_key: "ロケット", },
           { key: "3段ロケット", group_key: "ロケット", },
           { key: "4段ロケット", group_key: "ロケット", },
@@ -115,20 +116,30 @@ module Bioshogi
           { key: "中段玉",       alias_names: nil, outbreak_skip: nil,  add_to_opponent: nil,        },
           { key: "双玉接近",     alias_names: nil, outbreak_skip: nil,  add_to_opponent: "双玉接近", },
 
-          # 他
-          { key: "駒柱", add_to_opponent: "駒柱", },
+          # 対局時の状況
+          { key: "駒柱",             add_to_opponent: "駒柱",         },
 
           { key: "大駒コンプリート", add_to_opponent: "大駒全ブッチ", },
-          { key: "大駒全ブッチ",                                      },
+          { key: "大駒全ブッチ",     add_to_opponent: nil,            },
 
-          { key: "全駒", add_to_opponent: "玉単騎", },
-          { key: "玉単騎",                          },
+          { key: "全駒",             add_to_opponent: "玉単騎",       },
+          { key: "玉単騎",           add_to_opponent: nil,            },
+
+          # 終局時の形勢
+          { key: "屍の舞",         }, # 大駒すべて捨てて勝った
+          { key: "穴熊の姿焼き",   }, # 相手が穴熊を残した状態で圧倒的な差で負かした
+          { key: "名人に定跡なし", }, # 定跡なしで勝った
+
+          # 詰み形
+          { key: "都詰め",         },
+          { key: "雪隠詰め",       },
+          { key: "吊るし桂",       },
         ]
       end
 
       class_attribute :human_name, default: "手筋"
 
-      include TagBase
+      include TagMethods
     end
   end
 end

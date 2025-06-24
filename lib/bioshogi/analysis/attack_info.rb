@@ -428,7 +428,7 @@ module Bioshogi
 
       class_attribute :human_name, default: "戦法"
 
-      include TagBase
+      include TagMethods
 
       def preset_has
         :hirate_like

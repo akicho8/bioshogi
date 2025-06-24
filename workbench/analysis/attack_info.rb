@@ -5,7 +5,7 @@ require "#{__dir__}/setup"
 
 puts Analysis::AttackInfo.ancestors  # => nil
 # >> Bioshogi::Analysis::AttackInfo
-# >> Bioshogi::Analysis::TagBase
+# >> Bioshogi::Analysis::TagMethods
 # >> Bioshogi::Analysis::StyleAccessor
 # >> Bioshogi::Analysis::StaticKifMod
 # >> TreeSupport::Stringify
