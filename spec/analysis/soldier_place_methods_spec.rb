@@ -1,7 +1,7 @@
 require "spec_helper"
 
-RSpec.describe Bioshogi::Analysis::CoreSoldierPlaceMethods do
-  it "core_soldier_places_hash" do
+RSpec.describe Bioshogi::Analysis::SoldierPlaceMethods do
+  it "soldier_places_hash" do
     board = Bioshogi::Board.create_by_preset("平手")
     assert { board.soldiers_lookup(:black, :rook)   == [Bioshogi::Soldier.from_str("▲２八飛")] }
     assert { board.soldiers_lookup(:black, :king)   == [Bioshogi::Soldier.from_str("▲５九玉")] }
