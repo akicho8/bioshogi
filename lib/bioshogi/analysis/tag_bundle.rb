@@ -38,8 +38,8 @@ module Bioshogi
         end
       end
 
-      def to_all_flat_array
-        flat_map(&:normalize)
+      def all_tags
+        TacticInfo.flat_map { |e| value(e).to_a }
       end
 
       def normalized_names_with_alias

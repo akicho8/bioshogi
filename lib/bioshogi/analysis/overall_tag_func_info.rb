@@ -229,8 +229,8 @@ module Bioshogi
           key: "ロケット",
           func: -> {
             @container.players.each do |player|
-              technique_infos = player.tag_bundle.technique_infos
-              if Analysis::GroupInfo["ロケット"].values.any? { |e| technique_infos.include?(e) }
+              group_info = Analysis::GroupInfo["ロケット"]
+              if player.tag_bundle.all_tags.any? { |e| e.group_info == group_info }
                 player.tag_bundle << "ロケット"
               end
             end
