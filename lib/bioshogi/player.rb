@@ -98,20 +98,5 @@ module Bioshogi
     def single_clock
       @single_clock ||= SingleClock.new
     end
-
-    def headers_hash
-      acc = {}
-      Analysis::TacticInfo.each do |e|
-        if v = tag_bundle.value(e).normalize.presence
-          acc["#{call_name}の#{e.name}"] = v.collect(&:name).join(", ")
-        end
-      end
-      if container.params[:preset_info_or_nil]
-        if main_style_info = tag_bundle.main_style_info
-          acc["#{call_name}の棋風"] = main_style_info.name
-        end
-      end
-      acc
-    end
   end
 end

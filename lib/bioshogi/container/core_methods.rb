@@ -117,8 +117,8 @@ module Bioshogi
 
       ################################################################################
 
-      def headers_hash
-        {}.merge(*players.collect(&:headers_hash))
+      def to_header_h
+        {}.merge(*players.collect(&:to_header_h), to_header_shared_h)
       end
 
       ################################################################################

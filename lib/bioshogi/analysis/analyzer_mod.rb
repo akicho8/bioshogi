@@ -23,7 +23,7 @@ module Bioshogi
         super
 
         if analysis_feature_enabled?
-          # 駒を取った回数の記録
+          # 総キル数の記録
           container.kill_count += 1
 
           # 駒が取られる最初の手数の記録

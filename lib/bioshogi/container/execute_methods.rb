@@ -9,7 +9,7 @@ module Bioshogi
           delegate :to_kif_a, :to_ki2_a, :to_kif_oneline, to: :hand_logs
         end
 
-        attr_writer :kill_count      # 駒を取った回数
+        attr_accessor :kill_count      # 総キル数
         attr_accessor :critical_turn # 最初の駒が取られる直前の手数           (avg: 22.6328)
         attr_accessor :outbreak_turn # 「歩と角」を除く駒が取られる直前の手数 (avg: 41.8402)
 
@@ -43,6 +43,19 @@ module Bioshogi
 
       def executor_class
         PlayerExecutor::Human
+      end
+
+      def to_header_shared_h
+        if params[:analysis_feature]
+          {
+            "接触"     => critical_turn.try { "#{self}手目" },
+            "開戦"     => outbreak_turn.try { "#{self}手目" },
+            "総手数"   => "#{turn_info.display_turn}手",
+            "総キル数" => "#{kill_count}回",
+          }
+        else
+          {}
+        end
       end
     end
   end

@@ -181,7 +181,7 @@ module Bioshogi
       def container_run_all(container)
         Runner.new(self, container).call
         if @parser_options[:analysis_feature]
-          @pi.header.object.update(container.headers_hash)
+          @pi.header.object.update(container.to_header_h)
         end
       end
 

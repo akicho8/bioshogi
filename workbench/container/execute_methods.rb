@@ -6,14 +6,16 @@ container = Bioshogi::Container.create
 tp container.params
 container.placement_from_preset("平手")
 puts container
-# >> |-------------------------+-----------------|
-# >> |        analysis_feature | false           |
-# >> |            ki2_function | true            |
-# >> |        validate_feature | true            |
-# >> |      double_pawn_detect | true            |
-# >> |             warp_detect | true            |
-# >> |             board_class | Bioshogi::Board |
-# >> |-------------------------+-----------------|
+tp container.to_header_h
+# >> |--------------------+-----------------|
+# >> |   analysis_feature | false           |
+# >> |       ki2_function | true            |
+# >> |   validate_feature | true            |
+# >> | double_pawn_detect | true            |
+# >> |        warp_detect | true            |
+# >> |        board_class | Bioshogi::Board |
+# >> |   last_action_info | TORYO           |
+# >> |--------------------+-----------------|
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+

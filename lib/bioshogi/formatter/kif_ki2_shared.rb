@@ -68,7 +68,7 @@ module Bioshogi
       end
 
       def header_part_string
-        m = @formatter.initial_container
+        m = @formatter.initial_container # FIXME: かなり臭う。初期状態が正しく入っているのか怪しい。
         if e = m.board.preset_info
           # 手合割がわかる場合
           @header["手合割"] = e.name
@@ -82,7 +82,7 @@ module Bioshogi
       end
 
       def raw_header_part_hash
-        @header.object.collect { |key, value|
+        hv = @header.object.collect { |key, value|
           if value
             if e = CsaHeaderInfo[key]
               if e.as_kif
@@ -92,6 +92,10 @@ module Bioshogi
             [key, value]
           end
         }.compact.to_h
+
+        # hv = hv.merge(@formatter.container.to_header_h)
+
+        hv.compact_blank
       end
 
       def raw_header_part_string
