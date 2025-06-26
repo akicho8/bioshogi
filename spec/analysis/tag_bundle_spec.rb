@@ -3,12 +3,12 @@ require "spec_helper"
 RSpec.describe Bioshogi::Analysis::TagBundle do
   before do
     @tag_bundle = Bioshogi::Analysis::TagBundle.new
-    @tag_bundle.defense_infos << Bioshogi::Analysis::DefenseInfo["片美濃囲い"]
-    @tag_bundle.defense_infos << Bioshogi::Analysis::DefenseInfo["銀美濃"]
-    @tag_bundle.defense_infos << Bioshogi::Analysis::DefenseInfo["ダイヤモンド美濃"]
-    @tag_bundle.attack_infos << Bioshogi::Analysis::AttackInfo["コーヤン流三間飛車"]
-    @tag_bundle.attack_infos << Bioshogi::Analysis::AttackInfo["嬉野流"]
-    @tag_bundle.note_infos << Bioshogi::Analysis::NoteInfo["入玉"]
+    @tag_bundle << "片美濃囲い"
+    @tag_bundle << "銀美濃"
+    @tag_bundle << "ダイヤモンド美濃"
+    @tag_bundle << "コーヤン流三間飛車"
+    @tag_bundle << "嬉野流"
+    @tag_bundle << "入玉"
   end
 
   describe Bioshogi::Analysis::TagBundle::List do
@@ -33,7 +33,7 @@ RSpec.describe Bioshogi::Analysis::TagBundle do
   end
 
   it "all" do
-    assert { @tag_bundle.collect(&:size) == [2, 3, 0, 1] }
+    assert { @tag_bundle.collect(&:size) == [2, 3, 1, 0] }
   end
 
   it "エイリアスを含めたすべての名前を取得" do

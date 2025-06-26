@@ -3,6 +3,9 @@ module Bioshogi
     class TagReporter
       def call
         values = TagIndex.values.find_all(&:shape_info)
+        write("shape_info", values)
+
+        values = TagIndex.values.find_all(&:shape_detector)
         write("shape", values)
 
         values = TagIndex.values.find_all(&:motion_detector)

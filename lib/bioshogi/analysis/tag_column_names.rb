@@ -24,7 +24,6 @@ module Bioshogi
       :add_to_opponent,
       :description,
       :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
-      :skip_if_exist,
     ]
   end
 end

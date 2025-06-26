@@ -15,7 +15,13 @@ module Bioshogi
         if e = TagIndex.shape_trigger_table[black_side_soldier]
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
-            if perform_block { various_conditions(e) }
+            retv = perform_block do
+              various_conditions(e)
+              if e.shape_detector
+                instance_exec(&e.shape_detector.func)
+              end
+            end
+            if retv
               tag_add(e)
             end
           end
@@ -23,24 +29,10 @@ module Bioshogi
       end
 
       def various_conditions(e)
-        list = player.tag_bundle.list_of(e)
-
-        ################################################################################ FIXME: 最初にチェックするのは遅いかもしれない
-
-        # 美濃囲いがすでに完成していれば美濃囲いチェックはスキップ
-        if list.include?(e)
+        # すでに持っていればスキップ
+        if player.tag_bundle.has_tag?(e)
           throw :skip
         end
-
-        # 「居飛車」判定のとき「振り飛車」がすでにあればスキップ
-        if e.skip_if_exist.any? { |e| list.include?(e) }
-          throw :skip
-        end
-
-        # # 片美濃のチェックをしようとするとき、すでに子孫のダイヤモンド美濃があれば、片美濃のチェックはスキップ
-        # if e.cached_descendants.any? { |e| list.include?(e) }
-        #   throw :skip
-        # end
 
         ################################################################################
 

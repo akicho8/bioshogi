@@ -6,8 +6,8 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record attr_reader: TagColumnNames do
         [
-          { key: "居飛車",    parent: nil, related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil,  pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist: "振り飛車",  add_to_self: nil, add_to_opponent: nil,          },
-          { key: "振り飛車",  parent: nil, related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil,  pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, skip_if_exist: "居飛車",    add_to_self: nil, add_to_opponent: "対振り飛車", },
+          { key: "居飛車",    parent: nil, related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil,  pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, add_to_self: nil, add_to_opponent: nil,          },
+          { key: "振り飛車",  parent: nil, related_ancestors: nil,  alias_names: nil, turn_limit: nil, turn_eq: nil, order_key: nil, not_have_pawn: nil, kill_only: nil, drop_only: nil,  pawn_have_ok: nil, outbreak_skip: nil, kill_count_lteq: nil,  hold_piece_not_in: nil, hold_piece_in: nil, hold_piece_empty: nil, hold_piece_eq: nil, add_to_self: nil, add_to_opponent: "対振り飛車", },
 
           # 最後に追加する
           { key: "相居飛車",   },

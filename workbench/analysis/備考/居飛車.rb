@@ -1,5 +1,4 @@
 require "#{__dir__}/setup"
-
 info = Parser.parse(<<~EOT)
 手合割：平手
 手数----指手---------消費時間--

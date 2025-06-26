@@ -123,12 +123,12 @@ module Bioshogi
 
       ################################################################################
 
-      def every_detector
-        unless defined?(@every_detector)
-          @every_detector = EveryDetector.lookup(key)
+      def shape_detector
+        unless defined?(@shape_detector)
+          @shape_detector = ShapeDetector.lookup(key)
         end
 
-        @every_detector
+        @shape_detector
       end
 
       def motion_detector
@@ -137,6 +137,14 @@ module Bioshogi
         end
 
         @motion_detector
+      end
+
+      def every_detector
+        unless defined?(@every_detector)
+          @every_detector = EveryDetector.lookup(key)
+        end
+
+        @every_detector
       end
 
       def capture_detector
@@ -148,14 +156,6 @@ module Bioshogi
       end
 
       ################################################################################
-
-      def skip_if_exist
-        unless defined?(@skip_if_exist)
-          @skip_if_exist = Array(super).collect { |e| TagIndex.fetch(e) }
-        end
-
-        @skip_if_exist
-      end
 
       def hit_turn
         @hit_turn ||= TacticHitTurnTable[key]
