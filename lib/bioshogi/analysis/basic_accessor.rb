@@ -33,10 +33,6 @@ module Bioshogi
         @alias_names ||= Array(super)
       end
 
-      def sect_info
-        @sect_info ||= SectInfo.fetch(sect_key)
-      end
-
       def hold_piece_eq
         unless defined?(@hold_piece_eq)
           if v = super
