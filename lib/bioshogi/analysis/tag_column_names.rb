@@ -1,11 +1,17 @@
 module Bioshogi
   module Analysis
     TagColumnNames = [
-      :trigger,
+      # 基本情報
       :group_key,
       :parent,
       :related_ancestors,
       :alias_names,
+      :add_to_self,
+      :add_to_opponent,
+      :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
+      :description,
+
+      # shape_info 系依存だが、outbreak_skip は他のところでも使っているので完全に shape_info 系として分けるわけにもいかない
       :turn_limit,
       :turn_eq,
       :order_key,
@@ -20,10 +26,6 @@ module Bioshogi
       :hold_piece_empty,
       :hold_piece_eq,
       :op_hold_piece_eq,
-      :add_to_self,
-      :add_to_opponent,
-      :description,
-      :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
     ]
   end
 end
