@@ -24,9 +24,9 @@ module Bioshogi
         @children ||= self.class.find_all { |e| e.parent == self }
       end
 
-      def cached_descendants
-        @cached_descendants ||= descendants
-      end
+      # def cached_descendants
+      #   @cached_descendants ||= descendants
+      # end
 
       def related_ancestors
         unless defined?(@related_ancestors)

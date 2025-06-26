@@ -7,24 +7,6 @@ module Bioshogi
     class MotionDetector
       include ApplicationMemoryRecord
       memory_record [
-        # {
-        #   key: "角交換型",
-        #   trigger: { piece_key: :bishop, promoted: :both, motion: :move },
-        #   func: -> {
-        #     # 【却下条件】すでに開戦している
-        #     skip_if { container.outbreak_turn }
-        #
-        #     # 【必要条件】駒を取っている
-        #     and_cond { captured_soldier }
-        #
-        #     # 【必要条件】取った駒が角である
-        #     and_cond { captured_soldier.piece.key == :bishop }
-        #
-        #     # 【必要条件】移動元
-        #     p origin_soldier.place
-        #     and_cond { origin_soldier.place == Place["88"] || origin_soldier.place == Place["77"] }
-        #   },
-        # },
         {
           key: "蓋歩",
           description: "飛車を帰らせない",
