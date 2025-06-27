@@ -26,7 +26,7 @@ module Bioshogi
             # false: 例外を出す(デフォルト)
             :typical_error_case => false,
 
-            :analysis_feature   => Bioshogi.analysis_feature,
+            :analysis_feature   => Bioshogi.config[:analysis_feature],
             :ki2_function       => true, # ki2にしないのであれば指定するとかなり速くなる
 
             :validate_feature   => true, # 将棋ウォーズの棋譜なら指定すると少し速くなる

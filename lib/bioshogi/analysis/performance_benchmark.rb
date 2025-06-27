@@ -6,7 +6,7 @@ module Bioshogi
       def call
         require "active_support/core_ext/benchmark"
 
-        # Bioshogi.analysis_feature = false
+        # Bioshogi.config[:analysis_feature] = false
 
         files = Bioshogi::ROOT.join("../../2chkifu").glob("**/*.ki2").sort
         files = Array(files).take((ARGV.first || 100).to_i)

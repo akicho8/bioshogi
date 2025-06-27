@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 
-# Bioshogi.analysis_feature = false
+# Bioshogi.config[:analysis_feature] = false
 
 require "stackprof"
 
