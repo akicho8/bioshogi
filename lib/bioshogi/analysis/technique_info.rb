@@ -41,6 +41,7 @@ module Bioshogi
           { key: "4段ロケット", group_key: "ロケット",                },
           { key: "5段ロケット", group_key: "ロケット",                },
           { key: "6段ロケット", group_key: "ロケット",                },
+          { key: "封香連舞",                                          },
 
           # 桂
           { key: "ふんどしの桂",                                      },
@@ -50,6 +51,7 @@ module Bioshogi
           { key: "パンツを脱ぐ",                                      },
           { key: "歩頭の桂",                                          },
           { key: "金頭の桂",                                          },
+          { key: "三桂懐刃",                                          },
 
           # 銀
           { key: "割り打ちの銀",                                      },

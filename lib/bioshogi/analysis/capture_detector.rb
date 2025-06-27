@@ -25,7 +25,7 @@ module Bioshogi
         {
           key: "歩偏執者",
           func: -> {
-            # 【却下条件】取った駒は歩である
+            # 【必要条件】取った駒は歩である
             and_cond { captured_soldier.piece.key == :pawn }
 
             # 【却下条件】すでに持っている
@@ -36,6 +36,28 @@ module Bioshogi
 
             # 【必要条件】盤上に敵の歩が一枚もない
             and_cond { opponent_player.soldiers_lookup(:pawn).empty?  }
+          },
+        },
+        {
+          key: "三桂懐刃",
+          description: "さんけいかいじん──懐に潜めた三つの刃＝桂馬。刺すタイミングを計る恐怖の構え。",
+          func: -> {
+            # 【却下条件】取った駒が桂である
+            and_cond { captured_soldier.piece.key == :knight }
+
+            # 【必要条件】3枚目の桂馬である
+            and_cond { (piece_box[:knight] || 0) == 3 }
+          },
+        },
+        {
+          key: "封香連舞",
+          description: "ふうこうれんぶ──香車たちは今、封じられている（手駒）──だが一たび解き放てば、連舞するがごとく攻め立てる。",
+          func: -> {
+            # 【却下条件】取った駒が香である
+            and_cond { captured_soldier.piece.key == :lance }
+
+            # 【必要条件】4枚目の香車である
+            and_cond { (piece_box[:lance] || 0) == 4 }
           },
         },
       ]
