@@ -7,23 +7,23 @@ module Bioshogi
       memory_record attr_reader: TagColumnNames do
         [
           # 歩
-          { key: "垂れ歩",        outbreak_skip: nil,                 },
-          { key: "たたきの歩",    outbreak_skip: nil,                 },
-          { key: "継ぎ歩",        outbreak_skip: nil,                 },
-          { key: "連打の歩",      outbreak_skip: nil,                 },
-          { key: "蓋歩",          outbreak_skip: nil,                 },
-          { key: "歩裏の歩",      outbreak_skip: nil,                 },
-          { key: "突き違いの歩",  outbreak_skip: true,                },
-          { key: "こびん攻め",    outbreak_skip: nil,                 },
-          { key: "端攻め",        outbreak_skip: nil,                 },
-          { key: "端玉には端歩",  outbreak_skip: nil,                 },
-          { key: "歩切れ",        outbreak_skip: nil,                 },
-          { key: "歩偏執者",                                          },
+          { key: "垂れ歩",       },
+          { key: "たたきの歩",   },
+          { key: "継ぎ歩",       },
+          { key: "連打の歩",     },
+          { key: "蓋歩",         },
+          { key: "歩裏の歩",     },
+          { key: "突き違いの歩", },
+          { key: "こびん攻め",   },
+          { key: "端攻め",       },
+          { key: "端玉には端歩", },
+          { key: "歩切れ",       },
+          { key: "歩偏執者",     },
 
           # 歩 (マイナス)
-          { key: "居飛車の税金",  outbreak_skip: true,                },
-          { key: "金底の歩",      outbreak_skip: nil,                 },
-          { key: "土下座の歩",    outbreak_skip: nil,                 },
+          { key: "居飛車の税金", outbreak_skip: true, },
+          { key: "金底の歩",   },
+          { key: "土下座の歩", },
 
           # と
           { key: "勝ち確5三と",  alias_names: "5三のと金に負けなし",  },

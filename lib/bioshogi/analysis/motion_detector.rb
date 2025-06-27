@@ -177,6 +177,37 @@ module Bioshogi
           },
         },
         {
+          key: "突き違いの歩",
+          trigger: { piece_key: :pawn, promoted: false, motion: :move },
+          func: -> {
+            # 【却下条件】駒を取ってない
+            skip_if { captured_soldier }
+
+            # 【必要条件】歩の前に敵銀がある
+            and_cond do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :silver && s.normal? && opponent?(s)
+                end
+              end
+            end
+
+            # 【必要条件】1手前、隣に相手の歩が突かれた
+            and_cond do
+              if hand_log = container.hand_logs[-1]
+                if s = hand_log.move_hand&.soldier
+                  Assertion.assert { opponent?(s) }
+                  if s.piece.key == :pawn && s.normal?                   # 歩
+                    if s.place.row == soldier.place.row                  # 行が同じ
+                      s.place.column.distance(soldier.place.column) <= 1 # 列の差が1以下。つまり左右以内。
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "浮き飛車",
           description: "戻る場合も考慮する",
           trigger: { piece_key: :rook, promoted: false, motion: :move },

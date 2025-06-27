@@ -1,5 +1,4 @@
 require "#{__dir__}/setup"
-
 info = Parser.parse(<<~EOT)
 棋戦：共有将棋盤
 後手の持駒：なし
