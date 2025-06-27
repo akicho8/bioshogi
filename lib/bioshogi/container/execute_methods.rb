@@ -51,7 +51,7 @@ module Bioshogi
             "接触"     => critical_turn.try { "#{self}手目" },
             "開戦"     => outbreak_turn.try { "#{self}手目" },
             "総手数"   => "#{turn_info.display_turn}手",
-            "総キル数" => "#{kill_count}回",
+            "総キル数" => "#{kill_count}キル",
           }
         else
           {}
