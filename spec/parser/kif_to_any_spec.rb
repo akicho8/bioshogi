@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Bioshogi::Parser::Base do
   it "「手合割：トンボ」では盤面を含めないと他のソフトが読み込めない" do
-    info = Bioshogi::Parser.parse("手合割：トンボ")
+    info = Bioshogi::Parser.parse("手合割：トンボ", analysis_feature: false)
     expect(info.to_kif).to eq(<<~EOT)
     手合割：トンボ
     上手の持駒：なし
@@ -27,7 +27,7 @@ RSpec.describe Bioshogi::Parser::Base do
   end
 
   it "時間が空でも時間を出力するオプション" do
-    info = Bioshogi::Parser.parse(<<~EOT)
+    info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
     手数----指手---------消費時間--
        1 ７六歩(77)  (00:00/00:00:00)
        2 投了        (00:00/00:00:00)
@@ -42,7 +42,7 @@ RSpec.describe Bioshogi::Parser::Base do
   end
 
   it "24棋譜の「反則勝ち」問題" do
-    info = Bioshogi::Parser.parse(<<~EOT)
+    info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
     手数----指手---------消費時間--
        1 ７六歩(77)   ( 0:02/00:00:02)
        2 ３四歩(33)   ( 0:02/00:00:02)
@@ -57,7 +57,7 @@ RSpec.describe Bioshogi::Parser::Base do
   describe "消費時間があるKIFからの変換" do
     describe "投了の部分まで時間が指定されている場合" do
       before do
-        @info = Bioshogi::Parser.parse(<<~EOT)
+        @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
         手合割：平手
         手数----指手---------消費時間--
            1 ６八銀(79)   (00:30/00:00:30)
@@ -85,18 +85,11 @@ EOT
         it "to_kif" do
           expect(@info.to_kif).to eq(<<~EOT)
 手合割：平手
-先手の戦法：嬉野流
-先手の備考：居飛車, 相居飛車, 対居飛車
-先手の棋風：王道
-後手の備考：居飛車, 相居飛車, 対居飛車
 手数----指手---------消費時間--
    1 ６八銀(79)   (00:30/00:00:30)
-*▲戦法：嬉野流
    2 ３四歩(33)   (00:01/00:00:01)
    3 ２六歩(27)   (00:00/00:00:30)
-*▲備考：居飛車
    4 ８四歩(83)   (00:02/00:00:03)
-*△備考：居飛車
    5 投了         (00:01/00:00:31)
 まで4手で後手の勝ち
 EOT
@@ -105,7 +98,7 @@ EOT
 
       describe "投了の部分まで時間が指定がない場合" do
         before do
-          @info = Bioshogi::Parser.parse(<<~EOT)
+          @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
           手合割：平手
           手数----指手---------消費時間--
              1 ６八銀(79)   (00:30/00:00:30)
@@ -133,18 +126,11 @@ EOT
       it "to_kif" do
         expect(@info.to_kif).to eq(<<~EOT)
         手合割：平手
-        先手の戦法：嬉野流
-        先手の備考：居飛車, 相居飛車, 対居飛車
-        先手の棋風：王道
-        後手の備考：居飛車, 相居飛車, 対居飛車
         手数----指手---------消費時間--
            1 ６八銀(79)   (00:30/00:00:30)
-        *▲戦法：嬉野流
            2 ３四歩(33)   (00:01/00:00:01)
            3 ２六歩(27)   (00:00/00:00:30)
-        *▲備考：居飛車
            4 ８四歩(83)   (00:02/00:00:03)
-        *△備考：居飛車
            5 投了
         まで4手で後手の勝ち
         EOT
@@ -154,7 +140,7 @@ EOT
 
   xdescribe "2手目から始まる棋譜が読めて正しく変換できる→読めてはいけないらしい" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
       後手の持駒：なし
         ９ ８ ７ ６ ５ ４ ３ ２ １
       +---------------------------+

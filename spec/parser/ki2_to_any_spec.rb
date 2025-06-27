@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Bioshogi::Parser::Base do
   describe "KI2からの変換" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
       場所：(場所)
       先手：(先手)
       後手：(後手)
@@ -16,21 +16,14 @@ RSpec.describe Bioshogi::Parser::Base do
       場所：(場所)
       先手：(先手)
       後手：(後手)
-      先手の備考：居飛車, 短手数
-      後手の戦法：嬉野流, 新嬉野流
-      後手の備考：対居飛車, 短手数
-      後手の棋風：王道
       手合割：平手
       手数----指手---------消費時間--
          1 ７六歩(77)
          2 ４二銀(31)
-      *△戦法：嬉野流
          3 ２六歩(27)
-      *▲備考：居飛車
          4 ５四歩(53)
          5 ２五歩(26)
          6 ５三銀(42)
-      *△戦法：新嬉野流
          7 ２四歩(25)
          8 ２四歩(23)
          9 ５六歩(57)
@@ -45,10 +38,6 @@ RSpec.describe Bioshogi::Parser::Base do
       場所：(場所)
       先手：(先手)
       後手：(後手)
-      先手の備考：居飛車, 短手数
-      後手の戦法：嬉野流, 新嬉野流
-      後手の備考：対居飛車, 短手数
-      後手の棋風：王道
       手合割：平手
 
       ▲７六歩 △４二銀 ▲２六歩 △５四歩 ▲２五歩 △５三銀 ▲２四歩 △同　歩

@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Bioshogi::Parser::Base do
   describe "Bioshogi::BODからの変換" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
       後手：ごて
       後手の持駒：飛　角　金　銀　桂　香　歩四
         ９ ８ ７ ６ ５ ４ ３ ２ １

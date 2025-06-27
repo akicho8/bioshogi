@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Bioshogi::Parser::Base do
   describe "「上手の持駒：なし」があって手合割がわかっているときは「上手の持駒」の部分は消しとく" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
       手合割：三枚落ち
       上手：伊藤宗印
       上手の持駒：なし
@@ -29,7 +29,7 @@ RSpec.describe Bioshogi::Parser::Base do
 
   describe "手合割が「三枚落ち」で図が指定されている場合" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
       手合割：三枚落ち
       上手：伊藤宗印
       上手の持駒：なし

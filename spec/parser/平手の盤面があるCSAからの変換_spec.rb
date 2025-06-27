@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Bioshogi::Parser::Base do
   describe "平手の盤面があるBioshogi::CSAからの変換" do
     before do
-      @info = Bioshogi::Parser.parse(<<~EOT)
+      @info = Bioshogi::Parser.parse(<<~EOT, analysis_feature: false)
 V2.2
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 * -HI *  *  *  *  * -KA *
@@ -23,12 +23,9 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 
     it "to_kif" do
       expect(@info.to_kif).to eq(<<~EOT)
-      先手の戦法：嬉野流
-      先手の棋風：王道
       手合割：平手
       手数----指手---------消費時間--
          1 ６八銀(79)
-      *▲戦法：嬉野流
          2 ３四歩(33)
          3 投了
       まで2手で後手の勝ち
@@ -37,8 +34,6 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 
     it "to_ki2" do
       expect(@info.to_ki2).to eq(<<~EOT)
-      先手の戦法：嬉野流
-      先手の棋風：王道
       手合割：平手
 
       ▲６八銀 △３四歩

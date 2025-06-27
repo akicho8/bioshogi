@@ -8,7 +8,7 @@ RSpec.describe "図面指定がある場合のヘッダー出力" do
     container.execute("52玉")
 
     container.turn_info.handicap = false
-    info = Bioshogi::Parser.parse("position #{container.to_short_sfen}")
+    info = Bioshogi::Parser.parse("position #{container.to_short_sfen}", analysis_feature: false)
     expect(info.to_ki2).to eq(<<~EOT)
     後手の持駒：なし
       ９ ８ ７ ６ ５ ４ ３ ２ １
@@ -37,7 +37,7 @@ RSpec.describe "図面指定がある場合のヘッダー出力" do
     container.execute("52玉")
 
     container.turn_info.handicap = true
-    info = Bioshogi::Parser.parse("position #{container.to_short_sfen}")
+    info = Bioshogi::Parser.parse("position #{container.to_short_sfen}", analysis_feature: false)
     expect(info.to_ki2).to eq(<<~EOT)
     上手の持駒：なし
       ９ ８ ７ ６ ５ ４ ３ ２ １

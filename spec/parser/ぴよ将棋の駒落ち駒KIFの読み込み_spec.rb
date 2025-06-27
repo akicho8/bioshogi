@@ -24,7 +24,7 @@ RSpec.describe "ぴよ将棋の駒落ち駒KIFの読み込み" do
 手数----指手---------消費時間--
    1 ４二玉(51)
 "
-    info = Bioshogi::Parser.parse(str)
+    info = Bioshogi::Parser.parse(str, analysis_feature: false)
     turn_info = info.formatter.initial_container.turn_info
     assert { turn_info.current_location.key == :white }
     assert { turn_info.location_call_name   == "後手" }
