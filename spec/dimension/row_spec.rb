@@ -80,6 +80,12 @@ RSpec.describe Bioshogi::Dimension::Row do
     assert { Bioshogi::Dimension::Row.fetch("6").kurai_sasae? == true  }
   end
 
+  it "kurai?" do
+    assert { Bioshogi::Dimension::Row.fetch("4").kurai? == false }
+    assert { Bioshogi::Dimension::Row.fetch("5").kurai? == true }
+    assert { Bioshogi::Dimension::Row.fetch("6").kurai? == false }
+  end
+
   it "just_nyuugyoku?" do
     assert { Bioshogi::Dimension::Row.fetch("2").just_nyuugyoku? == false }
     assert { Bioshogi::Dimension::Row.fetch("3").just_nyuugyoku? == true  }

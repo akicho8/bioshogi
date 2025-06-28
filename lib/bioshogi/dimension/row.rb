@@ -69,6 +69,7 @@ module Bioshogi
         :middle_row?,
         :funoue_line_ni_uita?,
         :kurai_sasae?,
+        :kurai?,
         :just_nyuugyoku?,
         :atoippo_nyuugyoku?,
         :tarefu_desuka?,
@@ -127,6 +128,11 @@ module Bioshogi
       # つまり「6」ではなく「位を支える位置」として命名する
       def kurai_sasae?
         value == (dimension_size / 2 + 1)
+      end
+
+      # 真ん中の行か？
+      def kurai?
+        value == (dimension_size / 2)
       end
 
       # 玉が初めて入玉した位置か？

@@ -1169,6 +1169,18 @@ module Bioshogi
           },
         },
         {
+          key: "高跳びの桂",
+          description: nil,
+          trigger: { piece_key: :knight, promoted: false, motion: :move },
+          func: -> {
+            # 【必要条件】奇数列である
+            and_cond { soldier.place.column.value.odd? }
+
+            # 【必要条件】位の行である
+            and_cond { soldier.kurai? }
+          },
+        },
+        {
           key: "土下座の歩",
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
