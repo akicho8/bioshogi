@@ -75,15 +75,22 @@ RSpec.describe Bioshogi::Dimension::Row do
     assert { Bioshogi::Dimension::Row.fetch("7").funoue_line_ni_uita? == false  }
   end
 
-  it "kurai_sasae?" do
-    assert { Bioshogi::Dimension::Row.fetch("5").kurai_sasae? == false }
-    assert { Bioshogi::Dimension::Row.fetch("6").kurai_sasae? == true  }
+  it "kurai_ue?" do
+    assert { Bioshogi::Dimension::Row.fetch("3").kurai_ue? == false }
+    assert { Bioshogi::Dimension::Row.fetch("4").kurai_ue? == true  }
+    assert { Bioshogi::Dimension::Row.fetch("5").kurai_ue? == false }
   end
 
   it "kurai?" do
     assert { Bioshogi::Dimension::Row.fetch("4").kurai? == false }
     assert { Bioshogi::Dimension::Row.fetch("5").kurai? == true }
     assert { Bioshogi::Dimension::Row.fetch("6").kurai? == false }
+  end
+
+  it "kurai_sasae?" do
+    assert { Bioshogi::Dimension::Row.fetch("5").kurai_sasae? == false }
+    assert { Bioshogi::Dimension::Row.fetch("6").kurai_sasae? == true  }
+    assert { Bioshogi::Dimension::Row.fetch("7").kurai_sasae? == false }
   end
 
   it "just_nyuugyoku?" do

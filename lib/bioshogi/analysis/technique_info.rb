@@ -15,15 +15,18 @@ module Bioshogi
           { key: "歩裏の歩",     },
           { key: "突き違いの歩", },
           { key: "こびん攻め",   },
+          { key: "桂頭攻め",     },
+          { key: "角頭攻め",     },
+          { key: "玉頭攻め",     },
           { key: "端攻め",       },
           { key: "端玉には端歩", },
-          { key: "歩切れ",       },
           { key: "歩偏執者",     },
 
           # 歩 (マイナス)
           { key: "居飛車の税金", outbreak_skip: true, },
           { key: "金底の歩",   },
           { key: "土下座の歩", },
+          { key: "歩切れ",     },
 
           # と
           { key: "勝ち確5三と",  alias_names: "5三のと金に負けなし",  },
@@ -107,7 +110,6 @@ module Bioshogi
           { key: "中段玉",                                            },
           { key: "双玉接近",        add_to_opponent: "双玉接近",      },
           { key: "入玉",                                              },
-          # { key: "玉切り",                                            },
 
           # 対局時の状況
           { key: "駒柱",             add_to_opponent: "駒柱",         },

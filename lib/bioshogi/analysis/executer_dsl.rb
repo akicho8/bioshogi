@@ -146,6 +146,24 @@ module Bioshogi
         end
       end
 
+      # arrow のところに相手の駒がいるか？
+      def op_solider_exist1(arrow)
+        if v = soldier.relative_move_to(arrow)
+          if s = board[v]
+            opponent?(s)
+          end
+        end
+      end
+
+      # arrow のところに相手の成っていない piece_key がいるか？
+      def op_solider_exist2(arrow, piece_key)
+        if v = soldier.relative_move_to(arrow)
+          if s = board[v]
+            s.piece.key == piece_key && s.normal? && opponent?(s)
+          end
+        end
+      end
+
       def tag_add(tag)
         tag = TagIndex.fetch(tag)
 

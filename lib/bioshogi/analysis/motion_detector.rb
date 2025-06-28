@@ -93,6 +93,45 @@ module Bioshogi
           },
         },
         {
+          key: "桂頭攻め",
+          description: "「1回跳ねた3段目の桂」か「控えの桂」に対してのみとする",
+          trigger: { piece_key: :pawn, promoted: false, motion: :both },
+          func: -> {
+            and_cond do
+              v = false
+              v ||= soldier.kurai? && op_solider_exist2(:up, :pawn) && op_solider_exist2(:up_up, :knight) # 35歩で歩を攻める
+              v ||= soldier.kurai_ue? && op_solider_exist2(:up, :knight)                                  # 36歩で桂を攻める
+            end
+          },
+        },
+        {
+          key: "角頭攻め",
+          description: "桂頭攻めと同じ",
+          trigger: { piece_key: :pawn, promoted: false, motion: :both },
+          func: -> {
+            skip_if { true }
+
+            # 【必要条件】歩は4,5段目
+            and_cond { soldier.kurai? || soldier.kurai_ue? }
+
+            # 【必要条件】「角頭」または「角頭の歩」を攻めている
+            and_cond { op_solider_exist2(:up, :bishop) || (op_solider_exist2(:up, :pawn) && op_solider_exist2(:up_up, :bishop)) }
+          },
+        },
+        {
+          key: "玉頭攻め",
+          description: nil,
+          trigger: { piece_key: :pawn, promoted: false, motion: :both },
+          func: -> {
+            skip_if { true }
+
+            # 【必要条件】「玉頭」または「玉頭の何かの駒」を攻めている
+            and_cond do
+              op_solider_exist2(:up, :king) || (op_solider_exist1(:up) && op_solider_exist2(:up_up, :king))
+            end
+          },
+        },
+        {
           key: "こびん攻め",
           description: "玉または飛の斜めの歩を攻める",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },

@@ -33,12 +33,17 @@ Row.fetch("5").funoue_line_ni_uita?  # => false
 Row.fetch("6").funoue_line_ni_uita?  # => true
 Row.fetch("7").funoue_line_ni_uita?  # => false
 
-Row.fetch("5").kurai_sasae?  # => false
-Row.fetch("6").kurai_sasae?  # => true
+Row.fetch("3").kurai_ue?  # => false
+Row.fetch("4").kurai_ue?  # => true
+Row.fetch("5").kurai_ue?  # => false
 
 Row.fetch("4").kurai?  # => false
 Row.fetch("5").kurai?  # => true
 Row.fetch("6").kurai?  # => false
+
+Row.fetch("5").kurai_sasae?  # => false
+Row.fetch("6").kurai_sasae?  # => true
+
 
 Row.fetch("2").just_nyuugyoku?     # => false
 Row.fetch("3").just_nyuugyoku?     # => true
