@@ -105,7 +105,7 @@ module Bioshogi
                 m = { "上" => :<, "引" => :> }.fetch(md.to_s)
                 m = white_then_flip(m)
                 list = list.find_all do |e|
-                  place.row.value.send(m, e.place.row.value)
+                  place.row.top_spaces.send(m, e.place.row.top_spaces)
                 end
               end
             end
@@ -123,10 +123,10 @@ module Bioshogi
           # 真下にあるもの
           if list.size >= 2
             if one_up?
-              y = place.row.value + player.location.which_value(1, -1)
-              list = list.find_all { |e|
-                e.place.column == place.column && e.place.row.value == y
-              }
+              y = place.row.top_spaces + player.location.which_value(1, -1)
+              list = list.find_all do |e|
+                e.place.column == place.column && e.place.row.top_spaces == y
+              end
             end
           end
 

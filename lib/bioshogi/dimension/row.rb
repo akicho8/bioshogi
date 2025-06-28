@@ -53,7 +53,7 @@ module Bioshogi
 
       # 人間向けの数字で 68 なら 8
       def to_human_int
-        value + 1
+        top_spaces + 1
       end
 
       ################################################################################ すべて▲から見た結果を返す
@@ -69,10 +69,11 @@ module Bioshogi
         :middle_row?,
         :funoue_line_ni_uita?,
         :kurai_ue?,
+        :row_is_gt4_lteq5?,
         :kurai?,
         :kurai_sasae?,
         :just_nyuugyoku?,
-        :atoippo_nyuugyoku?,
+        :next_nyugyoku?,
         :tarefu_desuka?,
       ]
 
@@ -122,14 +123,20 @@ module Bioshogi
         bottom_spaces == promotable_depth
       end
 
-      # 真ん中の行の上か？
+      # 位(真ん中の行)の一つ上か？
       def kurai_ue?
-        value == (dimension_size / 2 - 1)
+        top_spaces == (dimension_size / 2 - 1)
       end
 
-      # 真ん中の行か？
+      # (相手の陣地 + 1)よりこっちで、位以上
+      # つまり通常の盤面だと5行目だけが該当する
+      def row_is_gt4_lteq5?
+        promotable_depth < top_spaces && top_spaces <= (dimension_size / 2)
+      end
+
+      # 位(真ん中の行)か？
       def kurai?
-        value == (dimension_size / 2)
+        top_spaces == (dimension_size / 2)
       end
 
       # 位を支える位置(中央の1行下)か？
@@ -138,7 +145,7 @@ module Bioshogi
       # 位置に意味を持たせた命名にする
       # つまり「6」ではなく「位を支える位置」として命名する
       def kurai_sasae?
-        value == (dimension_size / 2 + 1)
+        top_spaces == (dimension_size / 2 + 1)
       end
 
       # 玉が初めて入玉した位置か？
@@ -147,7 +154,7 @@ module Bioshogi
       end
 
       # 玉があと一歩で入玉できる位置か？
-      def atoippo_nyuugyoku?
+      def next_nyugyoku?
         top_spaces == promotable_depth
       end
 

@@ -37,6 +37,11 @@ Row.fetch("3").kurai_ue?  # => false
 Row.fetch("4").kurai_ue?  # => true
 Row.fetch("5").kurai_ue?  # => false
 
+Row.fetch("3").row_is_gt4_lteq5?  # => false
+Row.fetch("4").row_is_gt4_lteq5?  # => true
+Row.fetch("5").row_is_gt4_lteq5?  # => true
+Row.fetch("6").row_is_gt4_lteq5?  # => false
+
 Row.fetch("4").kurai?  # => false
 Row.fetch("5").kurai?  # => true
 Row.fetch("6").kurai?  # => false
@@ -49,9 +54,9 @@ Row.fetch("2").just_nyuugyoku?     # => false
 Row.fetch("3").just_nyuugyoku?     # => true
 Row.fetch("4").just_nyuugyoku?     # => false
 
-Row.fetch("3").atoippo_nyuugyoku?     # => false
-Row.fetch("4").atoippo_nyuugyoku?     # => true
-Row.fetch("5").atoippo_nyuugyoku?     # => false
+Row.fetch("3").next_nyugyoku?     # => false
+Row.fetch("4").next_nyugyoku?     # => true
+Row.fetch("5").next_nyugyoku?     # => false
 
 Row.fetch("1").tarefu_desuka? # => false
 Row.fetch("2").tarefu_desuka? # => true
