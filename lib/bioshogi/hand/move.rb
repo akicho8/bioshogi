@@ -39,6 +39,14 @@ module Bioshogi
         origin_soldier.tsugini_nareru_on?(soldier.place)
       end
 
+      # 駒を取った場合、自分より弱い駒を取った？
+      # 厳密な比較ではなく、玉・大駒・小駒で決める
+      # def jibunyori_yowai_komawo_totta?
+      #   if captured_soldier
+      #     soldier.piece.category_score > captured_soldier.piece.category_score
+      #   end
+      # end
+
       # 人間には読みやすいがパースは大変
       # ・不成がわからない
       def to_kif(options = {})

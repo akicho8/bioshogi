@@ -157,7 +157,7 @@ module Bioshogi
         end
 
         if v = tag.add_to_opponent
-          player.opponent_player.tag_bundle << v
+          opponent_player.tag_bundle << v
         end
       end
     end

@@ -32,6 +32,11 @@ module Bioshogi
         list_of(tag).include?(tag)
       end
 
+      def delete_tag(tag)
+        tag = TagIndex.fetch(tag)
+        list_of(tag).delete(tag)
+      end
+
       def to_h
         TacticInfo.inject({}) do |a, e|
           a.merge(e.key => value(e).normalize.collect(&:name))

@@ -38,6 +38,7 @@ module Bioshogi
             end
           end
 
+          CustomAnalyzer.new(self).call(:ct_capture)
           CaptureAnalyzer.new(self).call
         end
       end

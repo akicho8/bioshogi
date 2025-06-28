@@ -12,3 +12,4 @@ tag_bundle.defense_infos.normalized_names_with_alias # => ["片美濃囲い", "�
 tag_bundle.normalized_names_with_alias               # => ["片美濃囲い", "銀美濃", "ダイヤモンド美濃", "坊主美濃", "天野矢倉", "片矢倉", "藤井矢倉"]
 tag_bundle.main_style_info                           # => <準変態>
 tag_bundle.all_tags                                  # => [<片美濃囲い>, <銀美濃>, <ダイヤモンド美濃>, <坊主美濃>, <天野矢倉>]
+tag_bundle.delete_tag("片美濃囲い")

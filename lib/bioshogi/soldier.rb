@@ -194,6 +194,10 @@ module Bioshogi
       piece.any_name(promoted, options)
     end
 
+    def xxx_kiri(options = {})
+      piece.xxx_kiri(promoted, options)
+    end
+
     def yomiage
       piece.yomiage(promoted)
     end

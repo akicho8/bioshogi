@@ -3,9 +3,12 @@ module Bioshogi
     class CustomDetectorInfo
       include ApplicationMemoryRecord
       memory_record [
-        { klass: RocketDetector,   custom_trigger_key: :ct_every,    },
-        { klass: MagicSquareDetector, custom_trigger_key: :ct_every,    },
-        { klass: OutbreakDetector, custom_trigger_key: :ct_outbreak, },
+        { key: "N段ロケット判定",  klass: RocketDetector,      custom_trigger_key: :ct_every,  },
+        { key: "魔方陣判定",       klass: MagicSquareDetector, custom_trigger_key: :ct_every,  },
+        { key: "角切り判定",       klass: KakukiriDetector,    custom_trigger_key: :ct_capture,  },
+        # { key: "角切り判定2",      klass: KakukiriDetector2,   custom_trigger_key: :ct_capture,  },
+        # { key: "角切りキャンセル", klass: KakukiriCanceler,    custom_trigger_key: :ct_capture,  },
+        { key: "開戦時の何か",     klass: OutbreakDetector,    custom_trigger_key: :ct_outbreak, },
       ]
 
       class << self

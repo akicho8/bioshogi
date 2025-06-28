@@ -83,6 +83,8 @@ module Bioshogi
           { key: "自陣角",                                            },
           { key: "守りの馬",                                          },
           { key: "角不成",                                            },
+          { key: "角切り",                                            },
+          { key: "馬切り",                                            },
 
           # 飛
           { key: "飛車先交換",                                        },
@@ -91,6 +93,8 @@ module Bioshogi
           { key: "二枚飛車",                                          },
           { key: "一間竜",                                            },
           { key: "飛車不成",                                          },
+          { key: "飛車切り",                                          },
+          { key: "竜切り",                                            },
 
           # 玉
           { key: "端玉",                                              },
@@ -102,6 +106,7 @@ module Bioshogi
           { key: "中段玉",                                            },
           { key: "双玉接近",        add_to_opponent: "双玉接近",      },
           { key: "入玉",                                              },
+          # { key: "玉切り",                                            },
 
           # 対局時の状況
           { key: "駒柱",             add_to_opponent: "駒柱",         },
