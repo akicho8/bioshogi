@@ -1012,6 +1012,21 @@ module Bioshogi
           },
         },
         {
+          key: "桂頭の桂",
+          description: nil,
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
+          func: -> {
+            # 【必要条件】上に相手の桂がある
+            and_cond do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :knight && s.normal? && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "銀ばさみ",
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
