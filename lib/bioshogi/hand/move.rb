@@ -47,6 +47,30 @@ module Bioshogi
       #   end
       # end
 
+      ################################################################################
+
+      # 右に移動した歩数
+      def right_move_length
+        soldier.white_then_flip.place.column.value - origin_soldier.white_then_flip.place.column.value
+      end
+
+      # 左に移動した歩数
+      def left_move_length
+        -right_move_length
+      end
+
+      # 下に移動した歩数
+      def down_move_length
+        soldier.white_then_flip.place.row.value - origin_soldier.white_then_flip.place.row.value
+      end
+
+      # 上に移動した歩数
+      def up_move_length
+        -down_move_length
+      end
+
+      ################################################################################
+
       # 人間には読みやすいがパースは大変
       # ・不成がわからない
       def to_kif(options = {})

@@ -40,7 +40,7 @@ module Bioshogi
           end
         end
 
-        acc["#{call_name}玉移動"] = "#{king_moved_counter}回"
+        acc["#{call_name}の玉移動"] = "#{king_moved_counter}回"
 
         acc
       end

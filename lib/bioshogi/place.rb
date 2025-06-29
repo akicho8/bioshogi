@@ -217,6 +217,13 @@ module Bioshogi
 
     ################################################################################
 
+    # # 右に移動した？
+    # def move_to_right?(location)
+    #   white_then_flip(location).column.value - origin_soldier.place.column.value
+    # end
+
+    ################################################################################
+
     def ==(other)
       eql?(other)
     end

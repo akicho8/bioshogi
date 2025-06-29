@@ -8,6 +8,30 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "右玉",
+          description: nil,
+          trigger: { piece_key: :king, promoted: false, motion: :move },
+          func: -> {
+            # 【条件】玉の初回移動に限る
+            and_cond { player.used_piece_counts[:K0] == 1 }
+
+            # 【条件】序盤である
+            and_cond { container.joban }
+
+            # 【条件】右に移動した
+            and_cond { move_hand.right_move_length.positive? }
+
+            # 【条件】28 か 29 に飛車がある
+            and_cond do
+              ["28", "29"].any? do |e|
+                if s = board[Place[e].white_then_flip(location)]
+                  s.piece.key == :rook && s.normal? && own?(s)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "歩の錬金術師",
           description: nil,
           trigger: { piece_key: :pawn, promoted: true, motion: :move },
