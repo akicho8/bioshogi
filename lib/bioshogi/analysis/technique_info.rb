@@ -20,7 +20,7 @@ module Bioshogi
           { key: "玉頭攻め",     },
           { key: "端攻め",       },
           { key: "端玉には端歩", },
-          { key: "歩偏執者",     },
+          { key: "ポーンハンター",     },
 
           # 歩 (マイナス)
           { key: "居飛車の税金", outbreak_skip: true, },

@@ -23,19 +23,19 @@ module Bioshogi
           },
         },
         {
-          key: "歩偏執者",
+          key: "ポーンハンター",
           func: -> {
             # 【必要条件】取った駒は歩である
             and_cond { captured_soldier.piece.key == :pawn }
 
             # 【却下条件】すでに持っている
-            skip_if { player.tag_bundle.has_tag?(:"歩偏執者") }
+            skip_if { player.tag_bundle.has_tag?(:"ポーンハンター") }
 
-            # 【却下条件】敵が歩を持っている
-            skip_if { opponent_player.piece_box.has_key?(:pawn) }
-
-            # 【必要条件】盤上に敵の歩が一枚もない
-            and_cond { opponent_player.soldiers_lookup(:pawn).empty?  }
+            # 【必要条件】歩を全部持っている
+            and_cond do
+              count = player.soldiers_lookup(:pawn).size + (player.piece_box[:pawn] || 0)
+              count >= PieceBox.showcase_all[:pawn]
+            end
           },
         },
         {
