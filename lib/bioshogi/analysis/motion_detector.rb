@@ -8,6 +8,40 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "歩の錬金術師",
+          description: nil,
+          trigger: { piece_key: :pawn, promoted: true, motion: :move },
+          func: -> {
+            # 【必要条件】成ったタイミング
+            and_cond { move_hand.promote_trigger? }
+
+            # 【却下条件】すでに持っている
+            skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("歩の錬金術師")) }
+
+            # 【必要条件】たくさん「と金」を作った (盤上にある)
+            and_cond do
+              player.soldiers_lookup2(:pawn, true).size >= 3
+            end
+
+            # 【必要条件】たくさん「と金」を作った (盤上にある)
+            # and_cond do
+            #   max = 3
+            #   found = false
+            #   count = 0
+            #   player.soldiers.each do |e|
+            #     if e.piece.key == :pawn && e.promoted
+            #       count += 1
+            #       if count >= max
+            #         found = true
+            #         break
+            #       end
+            #     end
+            #   end
+            #   found
+            # end
+          },
+        },
+        {
           key: "蓋歩",
           description: "飛車を帰らせない",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },

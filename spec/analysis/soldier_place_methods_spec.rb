@@ -15,4 +15,11 @@ RSpec.describe Bioshogi::Analysis::SoldierPlaceMethods do
     board.safe_delete_on(Bioshogi::Place["59"])
     assert { board.soldiers_lookup(:black, :king)   == [] }
   end
+
+  it "soldier_places_hash2" do
+    board = Bioshogi::Board.create_by_human("△22馬▲88角")
+    assert { board.soldiers_lookup2(:white, :bishop, true)  == [Bioshogi::Soldier.from_str("△２二馬")] }
+    assert { board.soldiers_lookup2(:black, :bishop, false) == [Bioshogi::Soldier.from_str("▲８八角")] }
+    assert{ board.soldiers_lookup2(:black, :rook, false)    == [] }
+  end
 end

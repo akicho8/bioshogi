@@ -3,6 +3,8 @@
 module Bioshogi
   class Player
     module SoldierMethods
+      ################################################################################
+
       # O(1)
       def soldiers_lookup(piece_key)
         board.soldiers_lookup(location.key, piece_key)
@@ -11,6 +13,13 @@ module Bioshogi
       # O(1)
       def king_soldier
         soldiers_lookup(:king).first
+      end
+
+      ################################################################################
+
+      # O(1)
+      def soldiers_lookup2(...)
+        board.soldiers_lookup2(location.key, ...)
       end
 
       ################################################################################
