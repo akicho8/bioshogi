@@ -17,6 +17,16 @@ module Bioshogi
         (piece.key == :lance && normal?) || piece.key == :rook
       end
 
+      ################################################################################ for SoldierLookupTableMethods
+
+      def to_key1
+        :"#{location.key}/#{piece.key}"
+      end
+
+      def to_key2
+        :"#{location.key}/#{piece.key}/#{promoted}"
+      end
+
       ################################################################################ for BoardPieceCountsMethods
 
       # def location_with_piece

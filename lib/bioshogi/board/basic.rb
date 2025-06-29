@@ -20,7 +20,7 @@ module Bioshogi
       include DetectorMethods
       prepend Analysis::ColumnSoldierCounterMethods      # カラムをキーにして列の駒数を得る
       prepend Analysis::BoardPieceCountsMethods          # 「先後と駒」をキーにして駒数を得る / 先後をキーにして駒数を得る
-      prepend Analysis::SoldierPlaceMethods              # 「先後と駒」をキーにして soldier を得る
+      prepend Analysis::SoldierLookupTableMethods              # 「先後と駒」をキーにして soldier を得る
     end
   end
 end

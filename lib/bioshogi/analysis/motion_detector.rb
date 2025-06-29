@@ -342,13 +342,13 @@ module Bioshogi
               # # 富豪的な配列プログラミング
               #
               # # 【条件】自分の飛車(龍を含む)が盤上に複数ある
-              # and_cond { player.soldiers_lookup(:rook).many? }
+              # and_cond { player.soldiers_lookup1(:rook).many? }
               #
               # # 【条件】自分の飛車(龍を含む)が同じ行にある
-              # and_cond { player.soldiers_lookup(:rook).collect { |s| s.place.row }.uniq.one? }
+              # and_cond { player.soldiers_lookup1(:rook).collect { |s| s.place.row }.uniq.one? }
             else
               # 2つあるとして比較する方法
-              soldiers = player.soldiers_lookup(:rook)
+              soldiers = player.soldiers_lookup1(:rook)
               partner = (soldiers - [soldier]).first
 
               # 【条件】もう一方の飛車が存在する

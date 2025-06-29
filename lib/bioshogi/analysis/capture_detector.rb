@@ -33,7 +33,7 @@ module Bioshogi
 
             # 【条件】歩を全部持っている
             and_cond do
-              count = player.soldiers_lookup(:pawn).size + (player.piece_box[:pawn] || 0)
+              count = player.soldiers_lookup1(:pawn).size + (player.piece_box[:pawn] || 0)
               count >= PieceBox.showcase_all[:pawn]
             end
           },

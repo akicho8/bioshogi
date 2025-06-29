@@ -24,7 +24,7 @@ module Bioshogi
       # 玉単騎状態？
       def bare_king?
         if board.soldiers_count_per_location[location.key] == 1 # 盤上の自分の駒が1つ
-          if soldiers_lookup(:king).present?                    # 玉がいる
+          if soldiers_lookup1(:king).present?                    # 玉がいる
             piece_box.empty?                                    # 持駒がない
           end
         end

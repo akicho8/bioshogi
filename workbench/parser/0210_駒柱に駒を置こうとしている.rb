@@ -10,5 +10,5 @@ puts board
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/column_soldier_counter.rb:19:in 'Bioshogi::ColumnSoldierCounter#set'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/column_soldier_counter_methods.rb:11:in 'Bioshogi::Analysis::ColumnSoldierCounterMethods#place_on'
 # ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/board_piece_counts_methods.rb:11:in 'Bioshogi::Analysis::BoardPieceCountsMethods#place_on'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/soldier_place_methods.rb:9:in 'Bioshogi::Analysis::SoldierPlaceMethods#place_on'
+# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/soldier_lookup_table_methods.rb:9:in 'Bioshogi::Analysis::SoldierLookupTableMethods#place_on'
 # ~> 	from -:7:in '<main>'

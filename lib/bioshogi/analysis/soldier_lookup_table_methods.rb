@@ -3,7 +3,7 @@
 # 大駒の位置をO(1)で得るための履歴
 module Bioshogi
   module Analysis
-    module SoldierPlaceMethods
+    module SoldierLookupTableMethods
       # 置く
       def place_on(soldier, options = {})
         super
@@ -28,7 +28,6 @@ module Bioshogi
         soldier_lookup_hash2.clear
       end
 
-      # TODO: soldier_lookup_hash2 だけを使う方が速いかも？
       def soldiers_lookup1(location_key, piece_key)
         soldier_lookup_hash1[:"#{location_key}/#{piece_key}"] || []
       end

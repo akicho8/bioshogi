@@ -6,13 +6,13 @@ module Bioshogi
       ################################################################################
 
       # O(1)
-      def soldiers_lookup(piece_key)
-        board.soldiers_lookup(location.key, piece_key)
+      def soldiers_lookup1(piece_key)
+        board.soldiers_lookup1(location.key, piece_key)
       end
 
       # O(1)
       def king_soldier
-        soldiers_lookup(:king).first
+        soldiers_lookup1(:king).first
       end
 
       ################################################################################
