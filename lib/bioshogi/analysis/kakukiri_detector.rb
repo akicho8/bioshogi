@@ -15,10 +15,10 @@ module Bioshogi
         perform_block do
           # skip_if { true }
 
-          # 【必要条件】駒を取った
+          # 【条件】駒を取った
           Assertion.assert { captured_soldier }
 
-          # 【必要条件】取った駒は強い
+          # 【条件】取った駒は強い
           and_cond { captured_soldier.piece.hisyakaku }
 
           # 1手前──
@@ -28,16 +28,16 @@ module Bioshogi
             m = hand_log.move_hand
           end
 
-          # 【必要条件】相手が駒を動かした
+          # 【条件】相手が駒を動かした
           and_cond { m }
 
-          # 【必要条件】その駒は今取った駒である
+          # 【条件】その駒は今取った駒である
           and_cond { m.soldier == captured_soldier }
 
-          # 【必要条件】その駒は何かの駒を取った
+          # 【条件】その駒は何かの駒を取った
           and_cond { m.captured_soldier }
 
-          # 【必要条件】その駒は金銀と刺し違えた
+          # 【条件】その駒は金銀と刺し違えた
           and_cond { m.captured_soldier.piece.kingin }
 
           # 55から73に角を切って馬になったとき切ったのは角だから移動元の駒を見る

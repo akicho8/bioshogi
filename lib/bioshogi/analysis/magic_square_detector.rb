@@ -13,10 +13,10 @@ module Bioshogi
 
       def call
         perform_block do
-          # 【必要条件】自玉が存在する
+          # 【条件】自玉が存在する
           and_cond { player.king_soldier }
 
-          # 【必要条件】自玉のまわりが味方で囲まれている
+          # 【条件】自玉のまわりが味方で囲まれている
           and_cond do
             V.outer_vectors.all? do |e|
               if v = player.king_soldier.relative_move_to(e)

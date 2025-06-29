@@ -13,10 +13,10 @@ module Bioshogi
 
       def call
         perform_block do
-          # 【必要条件】駒を取った
+          # 【条件】駒を取った
           Assertion.assert { captured_soldier }
 
-          # 【必要条件】取った駒は強い
+          # 【条件】取った駒は強い
           and_cond { captured_soldier.piece.hisyakaku }
 
           # 2手前──

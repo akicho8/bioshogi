@@ -12,18 +12,18 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: true, motion: :move },
           func: -> {
-            # 【必要条件】成ったタイミング
+            # 【条件】成ったタイミング
             and_cond { move_hand.promote_trigger? }
 
-            # 【却下条件】すでに持っている
+            # 【却下】すでに持っている
             skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("歩の錬金術師")) }
 
-            # 【必要条件】たくさん「と金」を作った (盤上にある)
+            # 【条件】たくさん「と金」を作った (盤上にある)
             and_cond do
               player.soldiers_lookup2(:pawn, true).size >= 3
             end
 
-            # 【必要条件】たくさん「と金」を作った (盤上にある)
+            # 【条件】たくさん「と金」を作った (盤上にある)
             # and_cond do
             #   max = 3
             #   found = false
@@ -46,7 +46,7 @@ module Bioshogi
           description: "飛車を帰らせない",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
+            # 【条件】打った歩の下には、1手前に相手の飛車が移動してきていて、その飛車の前方1マスは空いている
             and_cond do
               if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
@@ -61,7 +61,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】その歩は桂か銀に支えられている
+            # 【条件】その歩は桂か銀に支えられている
             and_cond do
               func = -> (vectors, piece_key) {
                 V.public_send(vectors).any? do |e|
@@ -81,10 +81,10 @@ module Bioshogi
           description: "打ち歩が一番下の段でかつ、その上に自分の金がある",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】「最下段」である
+            # 【条件】「最下段」である
             and_cond { soldier.bottom_spaces.zero? }
 
-            # 【必要条件】上に自分の金がある
+            # 【条件】上に自分の金がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -188,7 +188,7 @@ module Bioshogi
           description: "角頭攻めとは条件を変えている",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            # 【必要条件】「玉頭」または「玉頭の何かの駒」を攻めている
+            # 【条件】「玉頭」または「玉頭の何かの駒」を攻めている
             and_cond do
               op_solider_exist2(:up, :king) || (op_solider_exist1(:up) && op_solider_exist2(:up_up, :king))
             end
@@ -199,10 +199,10 @@ module Bioshogi
           description: "玉または飛の斜めの歩を攻める",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            # 【必要条件】2〜8筋である (端の場合は「こびん」とは言わないため)
+            # 【条件】2〜8筋である (端の場合は「こびん」とは言わないため)
             and_cond { soldier.column_is_second_to_eighth? }
 
-            # 【必要条件】相手が歩である
+            # 【条件】相手が歩である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -211,7 +211,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】桂馬の効きの位置に「玉」または「飛車」がある
+            # 【条件】桂馬の効きの位置に「玉」または「飛車」がある
             and_cond do
               V.keima_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -228,22 +228,22 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: true,  motion: :move },
           func: -> {
-            # 【却下条件】歩成り
+            # 【却下】歩成り
             skip_if { origin_soldier.normal? }
 
-            # 【必要条件】駒を取っている
+            # 【条件】駒を取っている
             and_cond { captured_soldier }
 
-            # 【必要条件】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
+            # 【条件】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
             and_cond { captured_soldier.abs_weight > Piece.fetch(:pawn).basic_weight }
 
-            # 【必要条件】敵玉が存在する
+            # 【条件】敵玉が存在する
             and_cond { opponent_player.king_soldier }
 
-            # 【必要条件】移動先の近くに敵玉がいる (半径3)
+            # 【条件】移動先の近くに敵玉がいる (半径3)
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 3) }
 
-            # 【必要条件】相手玉に向かって進んでいる (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
+            # 【条件】相手玉に向かって進んでいる (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
             and_cond { move_to_op_king? }
           },
         },
@@ -252,16 +252,16 @@ module Bioshogi
           description: "中盤戦になる前に5行目の歩を銀で支える",
           trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> {
-            # 【却下条件】すでに開戦している
+            # 【却下】すでに開戦している
             skip_if { container.outbreak_turn }
 
-            # 【必要条件】前線(6行目)にいる
+            # 【条件】前線(6行目)にいる
             and_cond { soldier.kurai_sasae? }
 
-            # 【必要条件】3〜7列である (両端2列は「位」とは言わないため)
+            # 【条件】3〜7列である (両端2列は「位」とは言わないため)
             and_cond { soldier.column_is_three_to_seven? }
 
-            # 【必要条件】前に歩がある
+            # 【条件】前に歩がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -270,7 +270,7 @@ module Bioshogi
               end
             end
 
-            # 【却下条件】上の上(つまり歩の上)に何かある
+            # 【却下】上の上(つまり歩の上)に何かある
             skip_if do
               if v = soldier.relative_move_to(:up_up)
                 board[v]
@@ -282,10 +282,10 @@ module Bioshogi
           key: "突き違いの歩",
           trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
-            # 【却下条件】駒を取ってない
+            # 【却下】駒を取ってない
             skip_if { captured_soldier }
 
-            # 【必要条件】歩の前に敵銀がある
+            # 【条件】歩の前に敵銀がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -294,7 +294,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】1手前、隣に相手の歩が突かれた
+            # 【条件】1手前、隣に相手の歩が突かれた
             and_cond do
               if hand_log = container.hand_logs[-1]
                 if s = hand_log.move_hand&.soldier
@@ -314,16 +314,16 @@ module Bioshogi
           description: "戻る場合も考慮する",
           trigger: { piece_key: :rook, promoted: false, motion: :move },
           func: -> {
-            # 【却下条件】すでに開戦している
+            # 【却下】すでに開戦している
             skip_if { container.outbreak_turn }
 
-            # 【必要条件】前線(6行目)にいる
+            # 【条件】前線(6行目)にいる
             and_cond { soldier.funoue_line_ni_uita? }
 
-            # 【必要条件】移動元と同じ列であること
+            # 【条件】移動元と同じ列であること
             and_cond { soldier.place.column == origin_soldier.place.column }
 
-            # 【却下条件】同飛 (相手の駒を取る目的で移動していない)
+            # 【却下】同飛 (相手の駒を取る目的で移動していない)
             skip_if { captured_soldier }
           },
         },
@@ -332,32 +332,32 @@ module Bioshogi
           description: "二枚飛車の間の駒が動いたら二枚飛車になる場合には対応していない",
           trigger: { piece_key: :rook, promoted: :both, motion: :both },
           func: -> {
-            # 【必要条件】敵玉が存在する
+            # 【条件】敵玉が存在する
             and_cond { opponent_player.king_soldier }
 
-            # 【必要条件】敵玉と行が同じ (許容誤差±1)
+            # 【条件】敵玉と行が同じ (許容誤差±1)
             and_cond { (opponent_player.king_soldier.place.row.value - soldier.place.row.value).abs <= 1 }
 
             if false
               # # 富豪的な配列プログラミング
               #
-              # # 【必要条件】自分の飛車(龍を含む)が盤上に複数ある
+              # # 【条件】自分の飛車(龍を含む)が盤上に複数ある
               # and_cond { player.soldiers_lookup(:rook).many? }
               #
-              # # 【必要条件】自分の飛車(龍を含む)が同じ行にある
+              # # 【条件】自分の飛車(龍を含む)が同じ行にある
               # and_cond { player.soldiers_lookup(:rook).collect { |s| s.place.row }.uniq.one? }
             else
               # 2つあるとして比較する方法
               soldiers = player.soldiers_lookup(:rook)
               partner = (soldiers - [soldier]).first
 
-              # 【必要条件】もう一方の飛車が存在する
+              # 【条件】もう一方の飛車が存在する
               and_cond { partner }
 
-              # 【必要条件】もう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
+              # 【条件】もう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
               and_cond { soldier.place.row == partner.place.row }
 
-              # 【却下条件】移動してきた場合、移動元はもう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
+              # 【却下】移動してきた場合、移動元はもう一方の飛車と同じ行にある (この方法は遮る駒のチェックを行えない)
               skip_if do
                 if s = origin_soldier
                   s.place.row == partner.place.row
@@ -365,7 +365,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】打った飛車の左右に自分の飛車がいる (この方法は遮る駒のチェックを行える)
+            # 【条件】打った飛車の左右に自分の飛車がいる (この方法は遮る駒のチェックを行える)
             # and_cond do
             #   [:left, :right].any? do |left_or_right|
             #     found = false
@@ -402,7 +402,7 @@ module Bioshogi
           func: -> {
             min_score = Piece[:lance].basic_weight
 
-            # 【却下条件】移動先が潤っている
+            # 【却下】移動先が潤っている
             skip_if do
               V.outer_vectors.any? do |e|
                 if v = soldier.relative_move_to(e)
@@ -415,7 +415,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】移動元が潤っている (移動先の玉が近くにいるため除外すること)
+            # 【条件】移動元が潤っている (移動先の玉が近くにいるため除外すること)
             and_cond do
               V.outer_vectors.any? do |e|
                 if v = origin_soldier.relative_move_to(e)
@@ -433,25 +433,25 @@ module Bioshogi
         },
         {
           key: "ハッチ閉鎖",
-          description: "穴熊を銀で閉鎖したタイミングで発動する",
+          description: "穴熊を金銀で閉鎖したタイミングで発動する",
           trigger: [
             { piece_key: :silver, promoted: false, motion: :move },
             { piece_key: :gold,   promoted: false, motion: :move },
           ],
           func: -> {
-            # 【却下条件】すでに開戦している
+            # 【却下】すでに開戦している
             skip_if { container.outbreak_turn }
 
-            # 【必要条件】下から2行目である
+            # 【条件】下から2行目である
             and_cond { soldier.bottom_spaces == 1 }
 
-            # 【必要条件】端から2列目である
+            # 【条件】端から2列目である
             and_cond { soldier.column_spaces_min == 1 }
 
-            # 【必要条件】自玉が存在する
+            # 【条件】自玉が存在する
             and_cond { player.king_soldier }
 
-            # 【必要条件】移動先の壁側の斜め下に自玉がいる
+            # 【条件】移動先の壁側の斜め下に自玉がいる
             and_cond do
               if v = soldier.relative_move_to(:"down_#{soldier.align_arrow}")
                 if s = board[v]
@@ -460,7 +460,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】移動先の壁側と上下に味方がいる
+            # 【条件】移動先の壁側と上下に味方がいる
             and_cond do
               [soldier.align_arrow, :up, :down].all? do |e|
                 if v = soldier.relative_move_to(e)
@@ -508,10 +508,10 @@ module Bioshogi
             { piece_key: :king, promoted: false, motion: :move },
           ],
           func: -> {
-            # 【必要条件】自玉が存在する
+            # 【条件】自玉が存在する
             and_cond { player.king_soldier }
 
-            # 【却下条件】玉と飛の移動が合わせて2回以下 (これがあれば中飛車美濃囲いのときに玉飛接近にならない)
+            # 【却下】玉と飛の移動が合わせて2回以下 (これがあれば中飛車美濃囲いのときに玉飛接近にならない)
             skip_if { (player.used_piece_counts[:K0] + player.used_piece_counts[:R0]) <= 2 }
 
             fn = -> it {
@@ -525,7 +525,7 @@ module Bioshogi
               end
             }
 
-            # 【必要条件】移動先の周囲に相手がいる
+            # 【条件】移動先の周囲に相手がいる
             and_cond { fn[soldier] }
 
             # 【スキップスキプ条件】移動元の周囲に相手がいる
@@ -539,10 +539,10 @@ module Bioshogi
             { piece_key: :pawn, promoted: false, motion: :move },
           ],
           func: -> {
-            # 【必要条件】端である
+            # 【条件】端である
             and_cond { soldier.column_is_edge? }
 
-            # 【必要条件】上が敵歩である
+            # 【条件】上が敵歩である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -551,7 +551,7 @@ module Bioshogi
               end
             end
 
-            # 【却下条件】駒を取る目的で突いた
+            # 【却下】駒を取る目的で突いた
             skip_if { captured_soldier }
           }
         },
@@ -560,13 +560,13 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :bishop, promoted: true,  motion: :move },
           func: -> {
-            # 【必要条件】自玉が存在する
+            # 【条件】自玉が存在する
             and_cond { player.king_soldier }
 
-            # 【必要条件】移動先の近くに自玉がいる
+            # 【条件】移動先の近くに自玉がいる
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
 
-            # 【却下条件】移動元の近くに、すでに自玉がいる
+            # 【却下】移動元の近くに、すでに自玉がいる
             skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
           },
         },
@@ -575,13 +575,13 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】敵玉が存在する
+            # 【条件】敵玉が存在する
             and_cond { opponent_player.king_soldier }
 
-            # 【必要条件】移動先の近くに敵玉がいる
+            # 【条件】移動先の近くに敵玉がいる
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
 
-            # 【却下条件】移動元の近くに敵玉がいる
+            # 【却下】移動元の近くに敵玉がいる
             skip_if { origin_soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
           },
         },
@@ -594,19 +594,19 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :both },
           ],
           func: -> {
-            # 【必要条件】自玉が存在する
+            # 【条件】自玉が存在する
             and_cond { player.king_soldier }
 
-            # 【必要条件】自玉は4から6行目にいる
+            # 【条件】自玉は4から6行目にいる
             and_cond { player.king_soldier.middle_row? }
 
-            # 【却下条件】すでに持っている
+            # 【却下】すでに持っている
             skip_if { player.tag_bundle.has_tag?(TagIndex.fetch("天空の城")) }
 
-            # 【必要条件】移動先の近くに自玉がいる (半径1)
+            # 【条件】移動先の近くに自玉がいる (半径1)
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 1) }
 
-            # 【必要条件】自玉のまわりに価値のある駒がある
+            # 【条件】自玉のまわりに価値のある駒がある
             and_cond do
               min_score = ClusterScoreInfo["天空の城構成員"].min_score
               score = 0
@@ -631,10 +631,10 @@ module Bioshogi
           description: "端に入ったときだけ判定する",
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】左右の端 (かどを除く) に移動した
+            # 【条件】左右の端 (かどを除く) に移動した
             and_cond { soldier.both_side_without_corner? }
 
-            # 【却下条件】移動元が左右の端 (かどを除く)
+            # 【却下】移動元が左右の端 (かどを除く)
             skip_if { origin_soldier.both_side_without_corner? }
           },
         },
@@ -643,10 +643,10 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】移動元は自陣にいる
+            # 【条件】移動元は自陣にいる
             and_cond { origin_soldier.own_side? }
 
-            # 【必要条件】移動先に自陣にいない
+            # 【条件】移動先に自陣にいない
             and_cond { soldier.not_own_side? }
           },
         },
@@ -655,19 +655,19 @@ module Bioshogi
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3列目かつ、移動元の隣(端に近い方)に自玉がある",
           trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {
-            # 【却下条件】すでに開戦している
+            # 【却下】すでに開戦している
             skip_if { container.outbreak_turn }
 
-            # 【必要条件】下から3行目である
+            # 【条件】下から3行目である
             and_cond { soldier.bottom_spaces == 2 }
 
-            # 【必要条件】端から3列目である
+            # 【条件】端から3列目である
             and_cond { soldier.column_spaces_min == 2 }
 
-            # 【必要条件】移動元は「端から2列目」である (▲41から飛んだ場合を除外している)
+            # 【条件】移動元は「端から2列目」である (▲41から飛んだ場合を除外している)
             and_cond { origin_soldier.column_spaces_min == 1 }
 
-            # 【必要条件】移動元の端側に自玉がいる
+            # 【条件】移動元の端側に自玉がいる
             and_cond do
               if v = origin_soldier.relative_move_to(origin_soldier.align_arrow)
                 if s = board[v]
@@ -797,10 +797,10 @@ module Bioshogi
           description: "打った歩の前が空で次に成れる余地がある場合",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】2, 3, 4 行目である
+            # 【条件】2, 3, 4 行目である
             and_cond { soldier.tarefu_desuka? }
 
-            # 【必要条件】先が空である
+            # 【条件】先が空である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 board.cell_empty?(v)
@@ -815,18 +815,18 @@ module Bioshogi
           description: "打った角の位置が下から2番目かつ近い方の端から1番目(つまり自分の香の上の位置)",
           trigger: { piece_key: :bishop, promoted: false, motion: :both },
           func: -> {
-            # 【必要条件】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
+            # 【条件】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
             and_cond { container.outbreak_turn }
 
-            # 【必要条件】自陣から打っている
+            # 【条件】自陣から打っている
             and_cond { soldier.own_side? }
 
-            # 【必要条件】端から打っている
+            # 【条件】端から打っている
             if false
               and_cond { soldier.column_is_edge? }
             end
 
-            # 【必要条件】相手の陣地に直通しているかつ長さが 5 以上である
+            # 【条件】相手の陣地に直通しているかつ長さが 5 以上である
             and_cond do
               threshold = 5                                       # 成立するステップ数。4 だとマッチしすぎるため 5 にする
               V.bishop_up_diagonal_vectors.any? do |up_left|       # 左上と右上を試す
@@ -900,13 +900,13 @@ module Bioshogi
           description: "飛車や角の位置に玉よりも先に金が移動した",
           trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】端から2列目である
+            # 【条件】端から2列目である
             and_cond { soldier.column_spaces_min == 1 }
 
-            # 【必要条件】下から2行目である
+            # 【条件】下から2行目である
             and_cond { soldier.bottom_spaces == 1 }
 
-            # 【必要条件】下に桂がある
+            # 【条件】下に桂がある
             and_cond do
               if v = soldier.relative_move_to(:down)
                 if s = board[v]
@@ -915,7 +915,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】上に歩がある
+            # 【条件】上に歩がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -924,7 +924,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】移動元は端から3列目である
+            # 【条件】移動元は端から3列目である
             and_cond { origin_soldier.column_spaces_min == 2 }
 
             # 【必要条件6】自玉が存在する
@@ -951,7 +951,7 @@ module Bioshogi
           description: "打った銀の上に相手の桂がある",
           trigger: { piece_key: :silver, promoted: false, motion: :both },
           func: -> {
-            # 【必要条件】上に相手の桂がある
+            # 【条件】上に相手の桂がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -960,7 +960,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】「22銀」や「82銀」ではない :OPTIONAL:
+            # 【条件】「22銀」や「82銀」ではない :OPTIONAL:
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             skip_if do
@@ -973,7 +973,7 @@ module Bioshogi
           description: "「桂頭の玉、寄せにくし」の略",
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】上に相手の桂がある
+            # 【条件】上に相手の桂がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -1016,7 +1016,7 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :knight, promoted: false, motion: :both },
           func: -> {
-            # 【必要条件】上に相手の桂がある
+            # 【条件】上に相手の桂がある
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -1031,13 +1031,13 @@ module Bioshogi
           description: "動かした歩の左右どちらかに相手の銀があり、その向こうに自分の歩がある。また歩の前に何もない。",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            # 【却下条件】すでに開戦している
+            # 【却下】すでに開戦している
             skip_if { container.outbreak_turn }
 
-            # 【却下条件】同歩
+            # 【却下】同歩
             skip_if { captured_soldier }
 
-            # 【必要条件】進めた歩の前が空である
+            # 【条件】進めた歩の前が空である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 board.cell_empty?(v)
@@ -1047,7 +1047,7 @@ module Bioshogi
             # 左右どちらかが成立している
             and_cond do
               V.ginbasami_verctors.any? do |right, right_right, right_right_up|
-                # 【必要条件】右に相手の銀ある
+                # 【条件】右に相手の銀ある
                 yield_self {
                   if v = soldier.relative_move_to(right)
                     if s = board[v]
@@ -1056,7 +1056,7 @@ module Bioshogi
                   end
                 } or next
 
-                # 【必要条件】右右に自分の歩がある
+                # 【条件】右右に自分の歩がある
                 yield_self {
                   if v = soldier.relative_move_to(right_right)
                     if s = board[v]
@@ -1065,7 +1065,7 @@ module Bioshogi
                   end
                 } or next
 
-                # 【必要条件】右右上が空である
+                # 【条件】右右上が空である
                 if v = soldier.relative_move_to(right_right_up)
                   board.cell_empty?(v)
                 end
@@ -1078,10 +1078,13 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】端である
+            # 【条件】敵玉が存在する
+            and_cond { opponent_player.king_soldier }
+
+            # 【条件】端である
             and_cond { soldier.column_is_edge? }
 
-            # 【必要条件】上が相手の歩である (▲16歩△14歩の状態で▲15歩としたということ)
+            # 【条件】上が相手の歩である (▲16歩△14歩の状態で▲15歩としたということ)
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -1090,7 +1093,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】奥に敵玉がいる (13→12→11と探す)
+            # 【条件】奥に敵玉がいる (13→12→11と探す)
             and_cond do
               # この 2 は 15 - 2 = 13 の 2 で、15を基点にしているとすれば14に歩があり13から調べるため
               # Dimension::Row.dimension_size は書かなくてもいい
@@ -1109,7 +1112,7 @@ module Bioshogi
               end
             end
 
-            # 【必要条件】下に「自分の香飛龍」 (17→18→19と探す)
+            # 【条件】下に「自分の香飛龍」 (17→18→19と探す)
             and_cond do
               # この 2 は突いた歩の 2 つ下から香を調べるため
               (2..).any? do |y|
@@ -1133,10 +1136,10 @@ module Bioshogi
           description: "中盤以降に絞らないとタグを入れる意味がない",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】中盤以降である
+            # 【条件】中盤以降である
             and_cond { container.outbreak_turn }
 
-            # 【却下条件】歩がある
+            # 【却下】歩がある
             skip_if { player.piece_box.has_key?(:pawn) }
           },
         },
@@ -1185,7 +1188,7 @@ module Bioshogi
           description: "打った香が一番下",
           trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】「最下段」である
+            # 【条件】「最下段」である
             and_cond { soldier.bottom_spaces.zero? }
           },
         },
@@ -1194,7 +1197,7 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】下(方向)に相手の歩がある
+            # 【条件】下(方向)に相手の歩がある
             and_cond do
               found = false
               Dimension::Row.dimension_size.times do |i|
@@ -1225,16 +1228,16 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: true,  motion: :move },
           func: -> {
-            # 【必要条件】移動元の駒は「と」である (すでに成っている)
+            # 【条件】移動元の駒は「と」である (すでに成っている)
             and_cond { origin_soldier.promoted }
 
-            # 【必要条件】敵玉が存在する
+            # 【条件】敵玉が存在する
             and_cond { opponent_player.king_soldier }
 
-            # 【必要条件】敵玉に近づく
+            # 【条件】敵玉に近づく
             and_cond { move_to_op_king? }
 
-            # 【却下条件】駒を取っている (意図して近づいてはいないため)
+            # 【却下】駒を取っている (意図して近づいてはいないため)
             skip_if { captured_soldier }
           },
         },
@@ -1262,7 +1265,7 @@ module Bioshogi
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
           trigger: { piece_key: :knight, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】打った位置が6行目以降である
+            # 【条件】打った位置が6行目以降である
             and_cond { soldier.top_spaces >= Dimension::Row.promotable_depth + 2 }
 
             #  打った桂の利きの2箇所にある相手の駒を取得する
@@ -1276,10 +1279,10 @@ module Bioshogi
               end
             }.compact
 
-            # 【必要条件】 相手の駒は1つ以上ある
+            # 【条件】 相手の駒は1つ以上ある
             and_cond { !soldiers.empty? }
 
-            # 【必要条件】 相手の駒は「歩」である
+            # 【条件】 相手の駒は「歩」である
             and_cond do
               soldiers.all? { |e| e.piece.key == :pawn }
             end
@@ -1290,10 +1293,10 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】奇数列である
+            # 【条件】奇数列である
             and_cond { soldier.place.column.value.odd? }
 
-            # 【必要条件】位の行である
+            # 【条件】位の行である
             and_cond { soldier.kurai? }
           },
         },
@@ -1302,17 +1305,17 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】8,9行目である
+            # 【条件】8,9行目である
             and_cond { soldier.bottom_spaces < 2 }
 
-            # 【必要条件】一つ上が空である
+            # 【条件】一つ上が空である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 board.cell_empty?(v)
               end
             end
 
-            # 【必要条件】二つ上に相手の前に進める駒がある (成銀や馬があっても土下座の対象とする)
+            # 【条件】二つ上に相手の前に進める駒がある (成銀や馬があっても土下座の対象とする)
             and_cond do
               if v = soldier.relative_move_to(:up_up)
                 if s = board[v]
@@ -1329,10 +1332,10 @@ module Bioshogi
           description: "取ると取り返せるような場合もたたきの歩として判別されるのであまり正しくない",
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
-            # 【必要条件】打った位置が1から4行目である
+            # 【条件】打った位置が1から4行目である
             and_cond { soldier.top_spaces.between?(1, Dimension::Row.promotable_depth) }
 
-            # 【必要条件】相手が「成駒」または「飛金銀香玉」である
+            # 【条件】相手が「成駒」または「飛金銀香玉」である
             and_cond do
               if v = soldier.relative_move_to(:up)
                 if s = board[v]
@@ -1343,7 +1346,7 @@ module Bioshogi
               end
             end
 
-            # 【却下条件】打った歩に結びついている利きがある (これはたたきというより打ち込みのため)
+            # 【却下】打った歩に結びついている利きがある (これはたたきというより打ち込みのため)
             # 本当はすべての利きを調べてないといけないのだけど重くなるので、
             # 「打った位置の後ろに自分の(前に進めることのできる)駒がない」だけを判定している
             skip_if do
@@ -1356,7 +1359,7 @@ module Bioshogi
               end
             end
 
-            # 【却下条件】連打の歩 :OPTIONAL:
+            # 【却下】連打の歩 :OPTIONAL:
             skip_if do
               if hand_log = container.hand_logs[-2] # 前回の自分の手
                 if drop_hand = hand_log.drop_hand            # 打った手
@@ -1472,10 +1475,10 @@ module Bioshogi
           description: "玉が4行目から3行目に移動した",
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【必要条件】3行目に移動する
+            # 【条件】3行目に移動する
             and_cond { soldier.just_nyuugyoku?           }
 
-            # 【必要条件】4行目から移動する
+            # 【条件】4行目から移動する
             and_cond { origin_soldier.next_nyugyoku? }
           },
         },

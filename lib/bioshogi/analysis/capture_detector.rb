@@ -8,30 +8,30 @@ module Bioshogi
         {
           key: "全駒",
           func: -> {
-            # 【必要条件】相手が玉単騎である
+            # 【条件】相手が玉単騎である
             and_cond { opponent_player.bare_king? }
           },
         },
         {
           key: "大駒コンプリート",
           func: -> {
-            # 【必要条件】取った駒が飛角である
+            # 【条件】取った駒が飛角である
             and_cond { captured_soldier.piece.strong }
 
-            # 【必要条件】持駒を含めて大駒をすべて持っている
+            # 【条件】持駒を含めて大駒をすべて持っている
             and_cond { player.strong_piece_completed? }
           },
         },
         {
           key: "ポーンハンター",
           func: -> {
-            # 【必要条件】取った駒は歩である
+            # 【条件】取った駒は歩である
             and_cond { captured_soldier.piece.key == :pawn }
 
-            # 【却下条件】すでに持っている
+            # 【却下】すでに持っている
             skip_if { player.tag_bundle.has_tag?(:"ポーンハンター") }
 
-            # 【必要条件】歩を全部持っている
+            # 【条件】歩を全部持っている
             and_cond do
               count = player.soldiers_lookup(:pawn).size + (player.piece_box[:pawn] || 0)
               count >= PieceBox.showcase_all[:pawn]
@@ -42,10 +42,10 @@ module Bioshogi
           key: "三桂懐刃",
           description: "さんけいかいじん──懐に潜めた三つの刃＝桂馬。刺すタイミングを計る恐怖の構え。",
           func: -> {
-            # 【却下条件】取った駒が桂である
+            # 【却下】取った駒が桂である
             and_cond { captured_soldier.piece.key == :knight }
 
-            # 【必要条件】3枚目の桂馬である
+            # 【条件】3枚目の桂馬である
             and_cond { (piece_box[:knight] || 0) == 3 }
           },
         },
@@ -53,10 +53,10 @@ module Bioshogi
           key: "封香連舞",
           description: "ふうこうれんぶ──香車たちは今、封じられている（手駒）──だが一たび解き放てば、連舞するがごとく攻め立てる。",
           func: -> {
-            # 【却下条件】取った駒が香である
+            # 【却下】取った駒が香である
             and_cond { captured_soldier.piece.key == :lance }
 
-            # 【必要条件】4枚目の香車である
+            # 【条件】4枚目の香車である
             and_cond { (piece_box[:lance] || 0) == 4 }
           },
         },

@@ -23,10 +23,10 @@ module Bioshogi
           # 同角 ← -1手目 角捕獲 大駒をとった
           # 同銀 ←  0手目 角捕獲 大駒をとった
 
-          # 【必要条件】駒を取った
+          # 【条件】駒を取った
           Assertion.assert { captured_soldier }
 
-          # 【必要条件】大駒だった
+          # 【条件】大駒だった
           and_cond { captured_soldier.piece.hisyakaku }
 
           # -1手目──
@@ -36,13 +36,13 @@ module Bioshogi
             m = hand_log.move_hand
           end
 
-          # 【必要条件】相手が駒を動かした
+          # 【条件】相手が駒を動かした
           and_cond { m }
 
-          # 【必要条件】その駒は何かの駒を取った (刺し違える意図があった)
+          # 【条件】その駒は何かの駒を取った (刺し違える意図があった)
           and_cond { m.captured_soldier }
 
-          # 【必要条件】大駒だった
+          # 【条件】大駒だった
           and_cond { m.captured_soldier.piece.hisyakaku }
 
           # -2手目──
@@ -52,16 +52,16 @@ module Bioshogi
             m = hand_log.move_hand
           end
 
-          # 【必要条件】相手が駒を動かした
+          # 【条件】相手が駒を動かした
           and_cond { m }
 
-          # 【必要条件】その駒は何かの駒を取った (刺し違える意図があった)
+          # 【条件】その駒は何かの駒を取った (刺し違える意図があった)
           and_cond { m.captured_soldier }
 
-          # 【必要条件】小駒だった
+          # 【条件】小駒だった
           and_cond { m.captured_soldier.piece.yowai }
 
-          # 【必要条件】捕獲した駒は自分より弱い (相手は弱い駒と大駒を刺し違えた)
+          # 【条件】捕獲した駒は自分より弱い (相手は弱い駒と大駒を刺し違えた)
           # and_cond { m.jibunyori_yowai_komawo_totta? }
 
           # 55から73に角を切って馬になったとき切ったのは角だから移動元の駒を見る
