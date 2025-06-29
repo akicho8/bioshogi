@@ -93,38 +93,67 @@ module Bioshogi
           },
         },
         {
-          key: "桂頭攻め",
-          description: "「1回跳ねた3段目の桂」か「控えの桂」に対してのみとする",
+          key: "角頭攻め",
+          description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
             and_cond do
               v = false
-              v ||= soldier.kurai? && op_solider_exist2(:up, :pawn) && op_solider_exist2(:up_up, :knight) # 35歩で歩を攻める
-              v ||= soldier.kurai_ue? && op_solider_exist2(:up, :knight)                                  # 36歩で桂を攻める
+
+              # 【OR条件】対象を直接攻めている
+              v ||= op_solider_exist2(:up, :bishop)
+
+              # 【OR条件】角の上の歩を攻めている
+              #
+              # 次のように単に「角の上の歩」に対して「歩」を突いた場合としてしまうと初形の飛車先の歩交換で角頭攻めになってしまう
+              #
+              # > v銀v桂v香
+              # >    v角
+              # > v歩v歩v歩
+              # >     歩
+              #
+              v ||= yield_self do
+                if soldier.not_own_side?                  # 自分の陣地より上(これをしないとお手伝いになってしまう)
+                  if op_solider_exist2(:up, :pawn)        # 歩を攻めている
+                    if op_solider_exist2(:up_up, :bishop) # 歩の奥に角がある
+                      # 「序盤の24歩」ではないこと
+                      !(container.joban && soldier.column_is2? && soldier.next_nyugyoku?)
+                    end
+                  end
+                end
+              end
             end
           },
         },
         {
-          key: "角頭攻め",
-          description: "桂頭攻めと同じ",
+          key: "桂頭攻め",
+          description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            skip_if { true }
+            and_cond do
+              v = false
 
-            # 【必要条件】歩は4,5段目
-            and_cond { soldier.kurai? || soldier.kurai_ue? }
+              # 【OR条件】対象を直接攻めている
+              v ||= op_solider_exist2(:up, :knight)
 
-            # 【必要条件】「角頭」または「角頭の歩」を攻めている
-            and_cond { op_solider_exist2(:up, :bishop) || (op_solider_exist2(:up, :pawn) && op_solider_exist2(:up_up, :bishop)) }
+              # 【OR条件】桂の上の歩を攻めている
+              v ||= yield_self do
+                if soldier.not_own_side?                 # 自分の陣地よりむこう(これをしないとお手伝いになってしまう)
+                  if soldier.not_opp_side?               # 相手の陣地よりこっち(23歩は桂を攻めている感じがしないため)
+                    if op_solider_exist2(:up, :pawn)     # 歩を攻めている
+                      op_solider_exist2(:up_up, :knight) # 歩の奥に桂がある
+                    end
+                  end
+                end
+              end
+            end
           },
         },
         {
           key: "玉頭攻め",
-          description: nil,
+          description: "角頭攻めとは条件を変えている",
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
-            skip_if { true }
-
             # 【必要条件】「玉頭」または「玉頭の何かの駒」を攻めている
             and_cond do
               op_solider_exist2(:up, :king) || (op_solider_exist1(:up) && op_solider_exist2(:up_up, :king))
@@ -1398,7 +1427,7 @@ module Bioshogi
             and_cond { soldier.just_nyuugyoku?           }
 
             # 【必要条件】4行目から移動する
-            and_cond { origin_soldier.atoippo_nyuugyoku? }
+            and_cond { origin_soldier.next_nyugyoku? }
           },
         },
         {

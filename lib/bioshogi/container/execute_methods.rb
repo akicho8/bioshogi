@@ -13,6 +13,14 @@ module Bioshogi
         attr_accessor :critical_turn # 最初の駒が取られる直前の手数           (avg: 22.6328)
         attr_accessor :outbreak_turn # 「歩と角」を除く駒が取られる直前の手数 (avg: 41.8402)
 
+        def tyuuban_ikou
+          outbreak_turn
+        end
+
+        def joban
+          !outbreak_turn
+        end
+
         def kill_count
           @kill_count ||= 0
         end

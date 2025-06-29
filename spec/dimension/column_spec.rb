@@ -91,6 +91,12 @@ RSpec.describe Bioshogi::Dimension::Column do
     assert { Bioshogi::Dimension::Column.fetch("6").align_arrow == :left  }
   end
 
+  it "column_is2?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").column_is2? == false }
+    assert { Bioshogi::Dimension::Column.fetch("2").column_is2? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("3").column_is2? == false }
+  end
+
   it "column_is_second_to_eighth?" do
     assert { Bioshogi::Dimension::Column.fetch("1").column_is_second_to_eighth? == false }
     assert { Bioshogi::Dimension::Column.fetch("2").column_is_second_to_eighth? == true  }

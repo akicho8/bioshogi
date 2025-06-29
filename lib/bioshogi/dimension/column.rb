@@ -53,6 +53,7 @@ module Bioshogi
         :column_spaces_min,
         :align_arrow,
 
+        :column_is2?,
         :column_is_second_to_eighth?,
         :column_is_second_or_eighth?,
         :column_is_three_to_seven?,
@@ -90,6 +91,11 @@ module Bioshogi
         column_is_right_side? ? :right : :left
       end
 
+      # 2筋か？
+      def column_is2?
+        value == (dimension_size.pred - ONE_COLUMN)
+      end
+
       # 2から8筋か？
       def column_is_second_to_eighth?
         ONE_COLUMN <= value && value <= dimension_size.pred - ONE_COLUMN
@@ -97,7 +103,7 @@ module Bioshogi
 
       # 2または8筋か？
       def column_is_second_or_eighth?
-        value == ONE_COLUMN || value == dimension_size.pred - ONE_COLUMN
+        column_is2? || value == ONE_COLUMN
       end
 
       # 3から7筋か？

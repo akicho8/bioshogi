@@ -71,8 +71,10 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
   end
 
   it "column_is_*?" do
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_second_to_eighth?   == true  }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_second_or_eighth?   == false }
+    assert { Bioshogi::Soldier.from_str("△82飛").column_is2? == true  }
+    assert { Bioshogi::Soldier.from_str("△22飛").column_is2? == false }
+
+    assert { Bioshogi::Soldier.from_str("△34飛").column_is_second_to_eighth? == true  }
     assert { Bioshogi::Soldier.from_str("△34飛").column_is_three_to_seven? == true  }
     assert { Bioshogi::Soldier.from_str("△34飛").column_is_center?         == false }
     assert { Bioshogi::Soldier.from_str("△34飛").column_is_edge?           == false }
@@ -82,10 +84,10 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
     assert { Bioshogi::Soldier.from_str("△34飛").column_is_left_edge?      == false }
   end
 
-  it "atoippo_nyuugyoku?" do
-    assert { Bioshogi::Soldier.from_str("△55玉").atoippo_nyuugyoku? == false }
-    assert { Bioshogi::Soldier.from_str("△56玉").atoippo_nyuugyoku? == true  }
-    assert { Bioshogi::Soldier.from_str("△57玉").atoippo_nyuugyoku? == false }
+  it "next_nyugyoku?" do
+    assert { Bioshogi::Soldier.from_str("△55玉").next_nyugyoku? == false }
+    assert { Bioshogi::Soldier.from_str("△56玉").next_nyugyoku? == true  }
+    assert { Bioshogi::Soldier.from_str("△57玉").next_nyugyoku? == false }
   end
 
   it "just_nyuugyoku?" do

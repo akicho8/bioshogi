@@ -16,6 +16,10 @@ Column.fetch("4").align_arrow # => :right
 Column.fetch("5").align_arrow # => :left
 Column.fetch("6").align_arrow # => :left
 
+Column.fetch("1").column_is2?   # => false
+Column.fetch("2").column_is2?   # => true
+Column.fetch("3").column_is2?   # => false
+
 Column.fetch("1").column_is_second_to_eighth?   # => false
 Column.fetch("2").column_is_second_to_eighth?   # => true
 Column.fetch("3").column_is_second_to_eighth?   # => true
