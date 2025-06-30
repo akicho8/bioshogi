@@ -81,6 +81,13 @@ RSpec.describe Bioshogi::Dimension::Row do
     assert { Bioshogi::Dimension::Row.fetch("5").kurai_ue? == false }
   end
 
+  it "row_is_4to5?" do
+    assert { Bioshogi::Dimension::Row.fetch("3").row_is_4to5? == false }
+    assert { Bioshogi::Dimension::Row.fetch("4").row_is_4to5? == true  }
+    assert { Bioshogi::Dimension::Row.fetch("5").row_is_4to5? == true  }
+    assert { Bioshogi::Dimension::Row.fetch("6").row_is_4to5? == false }
+  end
+
   it "row_is_gt4_lteq5?" do
     assert { Bioshogi::Dimension::Row.fetch("4").row_is_gt4_lteq5? == false }
     assert { Bioshogi::Dimension::Row.fetch("5").row_is_gt4_lteq5? == true  }

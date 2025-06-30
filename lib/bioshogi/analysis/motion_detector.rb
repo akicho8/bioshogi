@@ -8,6 +8,27 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "突き捨て",
+          description: nil,
+          trigger: { piece_key: :pawn, promoted: false, motion: :move },
+          func: -> {
+            # 【却下】駒を取った
+            skip_if { captured_soldier }
+
+            # 【条件】4..5段目
+            and_cond { soldier.row_is_4to5? }
+
+            # 【条件】上に敵の歩がある
+            and_cond do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  s.piece.key == :pawn && s.normal? && opponent?(s)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "退場の金",
           description: nil,
           trigger: { piece_key: :gold, promoted: false, motion: :move },
@@ -55,7 +76,7 @@ module Bioshogi
             # 【条件】右に移動した
             and_cond { move_hand.right_move_length.positive? }
 
-            # 【条件】28 か 29 に飛車がある
+            # 【条件】28 か 29 に自分の飛車がある
             and_cond do
               ["28", "29"].any? do |e|
                 if s = board[Place[e].white_then_flip(location)]
@@ -340,7 +361,7 @@ module Bioshogi
           key: "突き違いの歩",
           trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
-            # 【却下】駒を取ってない
+            # 【却下】駒を取った
             skip_if { captured_soldier }
 
             # 【条件】歩の前に敵銀がある

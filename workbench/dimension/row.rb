@@ -37,8 +37,13 @@ Row.fetch("3").kurai_ue?  # => false
 Row.fetch("4").kurai_ue?  # => true
 Row.fetch("5").kurai_ue?  # => false
 
+Row.fetch("3").row_is_4to5?  # => false
+Row.fetch("4").row_is_4to5?  # => true
+Row.fetch("5").row_is_4to5?  # => true
+Row.fetch("6").row_is_4to5?  # => false
+
 Row.fetch("3").row_is_gt4_lteq5?  # => false
-Row.fetch("4").row_is_gt4_lteq5?  # => true
+Row.fetch("4").row_is_gt4_lteq5?  # => false
 Row.fetch("5").row_is_gt4_lteq5?  # => true
 Row.fetch("6").row_is_gt4_lteq5?  # => false
 

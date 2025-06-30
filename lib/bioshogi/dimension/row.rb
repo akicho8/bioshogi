@@ -70,6 +70,7 @@ module Bioshogi
         :funoue_line_ni_uita?,
         :kurai_ue?,
         :row_is_gt4_lteq5?,
+        :row_is_4to5?,
         :kurai?,
         :kurai_sasae?,
         :just_nyuugyoku?,
@@ -124,14 +125,21 @@ module Bioshogi
       end
 
       # 位(真ん中の行)の一つ上か？
+      # 4
       def kurai_ue?
         top_spaces == (dimension_size / 2 - 1)
       end
 
       # (相手の陣地 + 1)よりこっちで、位以上
       # つまり通常の盤面だと5行目だけが該当する
+      # 5..5
       def row_is_gt4_lteq5?
         promotable_depth < top_spaces && top_spaces <= (dimension_size / 2)
+      end
+
+      # 4..5
+      def row_is_4to5?
+        promotable_depth <= top_spaces && top_spaces <= (dimension_size / 2)
       end
 
       # 位(真ん中の行)か？
