@@ -138,13 +138,47 @@ module Bioshogi
         soldier.location == location
       end
 
-      # 前より敵玉に近づいたか？
+      ################################################################################
+
+      # 敵玉との差
       # 半径を狭めないと近づいたことにならないので manhattan_distance_a_side_max を使うこと
-      def move_to_op_king?
+      def teki_king_diff
         opponent_player.king_soldier.place.then do |e|
-          soldier.place.manhattan_distance_a_side_max(e) < origin_soldier.place.manhattan_distance_a_side_max(e)
+          soldier.place.manhattan_distance_a_side_max(e) - origin_soldier.place.manhattan_distance_a_side_max(e)
         end
       end
+
+      # 前より敵玉に近づいたか？
+      def teki_king_ni_tikazuita?
+        teki_king_diff < 0
+      end
+
+      # 前より敵玉から離れたか？
+      def teki_king_kara_hanareta?
+        teki_king_diff > 0
+      end
+
+      ################################################################################
+
+      # 玉との差
+      # 半径を狭めないと近づいたことにならないので manhattan_distance_a_side_max を使うこと
+      def my_king_diff
+        player.king_soldier.place.then do |e|
+          soldier.place.manhattan_distance_a_side_max(e) - origin_soldier.place.manhattan_distance_a_side_max(e)
+        end
+      end
+
+      # 前より敵玉に近づいたか？
+      def my_king_ni_tikazuita?
+        my_king_diff < 0
+      end
+
+      # 前より敵玉に離れたか？
+      def my_king_kara_hanareta?
+        my_king_diff > 0
+      end
+
+      ################################################################################
 
       # arrow のところに相手の駒がいるか？
       def op_solider_exist1(arrow)

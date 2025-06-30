@@ -8,6 +8,40 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "退場の金",
+          description: nil,
+          trigger: { piece_key: :gold, promoted: false, motion: :move },
+          func: -> {
+            # 【条件】自玉が存在する
+            and_cond { player.king_soldier }
+
+            # 【条件】左上か右上に移動した
+            and_cond { move_hand.right_move_length.abs.positive? && move_hand.up_move_length.positive? }
+
+            # 【条件】下に歩がある
+            and_cond do
+              if v = soldier.relative_move_to(:down)
+                if s = board[v]
+                  s.piece.key == :pawn && s.normal? && own?(s)
+                end
+              end
+            end
+
+            # 【条件】移動してきた側に歩がある
+            and_cond do
+              dir = move_hand.right_move_length > 0 ? :left : :right
+              if v = soldier.relative_move_to(dir)
+                if s = board[v]
+                  s.piece.key == :pawn && s.normal? && own?(s)
+                end
+              end
+            end
+
+            # 【条件】自玉から離れた
+            and_cond { my_king_kara_hanareta? }
+          },
+        },
+        {
           key: "右玉",
           description: nil,
           trigger: { piece_key: :king, promoted: false, motion: :move },
@@ -268,7 +302,7 @@ module Bioshogi
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 3) }
 
             # 【条件】相手玉に向かって進んでいる (玉と反対に移動したら駒を取ったとしても戦力低下になる場合もある)
-            and_cond { move_to_op_king? }
+            and_cond { teki_king_ni_tikazuita? }
           },
         },
         {
@@ -1259,7 +1293,7 @@ module Bioshogi
             and_cond { opponent_player.king_soldier }
 
             # 【条件】敵玉に近づく
-            and_cond { move_to_op_king? }
+            and_cond { teki_king_ni_tikazuita? }
 
             # 【却下】駒を取っている (意図して近づいてはいないため)
             skip_if { captured_soldier }
