@@ -264,7 +264,7 @@ module Bioshogi
           func: -> {
             if @container.params[:last_action_info].last_checkmate_p
               soldier = @container.lose_player.king_soldier
-              if soldier.bottom_spaces == 0 && soldier.column_is_edge?
+              if soldier.bottom_spaces == 0 && soldier.side_edge?
                 @container.win_player.tag_bundle << "雪隠詰め"
                 if hand_log = @container.hand_logs.last
                   hand_log.tag_bundle << "雪隠詰め"

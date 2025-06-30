@@ -18,7 +18,7 @@ instance.value          # => 8
 instance.hankaku_number # => "1"
 instance.zenkaku_number # => "１"
 instance.to_sfen        # => "1"
-instance.to_human_int   # => 1
+instance.human_int   # => 1
 instance.yomiage        # => "いち"
 
 instance = Dimension::Row.fetch("１")
@@ -27,7 +27,7 @@ instance.value          # => 0
 instance.hankaku_number # => "1"
 instance.zenkaku_number # => "１"
 instance.to_sfen        # => "a"
-instance.to_human_int   # => 1
+instance.human_int   # => 1
 instance.yomiage        # => "いち"
 
 test_methods = [
@@ -36,7 +36,7 @@ test_methods = [
   :hankaku_number,
   :zenkaku_number,
   :to_sfen,
-  :to_human_int,
+  :human_int,
   :yomiage,
 ]
 
@@ -52,7 +52,7 @@ test.(Dimension::Column)
 test.(Dimension::Row)
 # >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:44", :lookup, [nil, #<Bioshogi::Dimension::Row:70178848317620 "一" 0>]]
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
-# >> | name | value | hankaku_number | zenkaku_number | to_sfen | to_human_int | yomiage |
+# >> | name | value | hankaku_number | zenkaku_number | to_sfen | human_int | yomiage |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> | ９   |     0 |              9 | ９             |       9 |            9 | きゅう  |
 # >> | ８   |     1 |              8 | ８             |       8 |            8 | はち    |
@@ -65,7 +65,7 @@ test.(Dimension::Row)
 # >> | １   |     8 |              1 | １             |       1 |            1 | いち    |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
-# >> | name | value | hankaku_number | zenkaku_number | to_sfen | to_human_int | yomiage |
+# >> | name | value | hankaku_number | zenkaku_number | to_sfen | human_int | yomiage |
 # >> |------+-------+----------------+----------------+---------+--------------+---------|
 # >> | 一   |     0 |              1 | １             | a       |            1 | いち    |
 # >> | 二   |     1 |              2 | ２             | b       |            2 | にぃ    |

@@ -157,14 +157,14 @@ module Bioshogi
 
     # "６八銀" なら [6, 8]
     # キャッシュすると3倍速くなる
-    def to_human_int
-      @cache[:to_human_int] ||= to_a.collect(&:to_human_int)
+    def human_int
+      @cache[:human_int] ||= to_a.collect(&:human_int)
     end
 
     # "６八銀" なら {column:6, row:8}
     # キャッシュすると2倍速くなる
     def to_human_h
-      @cache[:to_human_h] ||= Hash[[:column, :row].zip(to_human_int)]
+      @cache[:to_human_h] ||= Hash[[:column, :row].zip(human_int)]
     end
 
     # ほぼキャッシュ効果なし。それどころか少し遅くなる。ただ配列を再生成しないのでこれでいいことにする。
@@ -254,7 +254,7 @@ module Bioshogi
 
     # 自玉の位置にいる？
     def king_default_place?(location)
-      column_is_center?(location) && bottom_spaces(location) == 0
+      column_is5?(location) && bottom_spaces(location) == 0
     end
 
     def xy_add(x, y)
@@ -277,7 +277,7 @@ module Bioshogi
 
     # 角を除いた両サイドにいる？
     def both_side_without_corner?
-      @column.column_is_edge? && @row.top_spaces >= 1 && @row.bottom_spaces >= 1
+      @column.side_edge? && @row.top_spaces >= 1 && @row.bottom_spaces >= 1
     end
 
     ################################################################################ location から見た上下左右に寄せた位置を返す
@@ -301,14 +301,14 @@ module Bioshogi
     ################################################################################ location から見た情報を返す
 
     Dimension::Column::DELEGATE_METHODS.each do |name|
-      define_method(name) do |location|
-        @column.white_then_flip(location).public_send(name)
+      define_method(name) do |location, *args|
+        @column.white_then_flip(location).public_send(name, *args)
       end
     end
 
     Dimension::Row::DELEGATE_METHODS.each do |name|
-      define_method(name) do |location|
-        @row.white_then_flip(location).public_send(name)
+      define_method(name) do |location, *args|
+        @row.white_then_flip(location).public_send(name, *args)
       end
     end
 

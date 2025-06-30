@@ -7,8 +7,8 @@ RSpec.describe Bioshogi::Analysis::AttackInfo do
 
   it "新米長玉" do
     info = Bioshogi::Parser.parse("▲７六歩 △６二玉")
-    assert { info.to_kif.include?("後手の戦法：新米長玉") }
-    assert { info.formatter.container.player_at(:white).attack_infos.collect(&:name) == ["新米長玉"] }
+    assert { info.to_kif.include?("後手の戦法：新米長玉, 右玉") }
+    assert { info.formatter.container.player_at(:white).attack_infos.collect(&:name) == ["新米長玉", "右玉"] }
   end
 
   it "嬉野流" do

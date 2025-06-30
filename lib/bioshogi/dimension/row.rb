@@ -52,7 +52,7 @@ module Bioshogi
       end
 
       # 人間向けの数字で 68 なら 8
-      def to_human_int
+      def human_int
         top_spaces + 1
       end
 

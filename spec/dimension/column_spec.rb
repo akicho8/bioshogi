@@ -52,11 +52,11 @@ RSpec.describe Bioshogi::Dimension::Column do
   end
 
   # it "座標サイズを変更したときも反転が正しい" do
-  #   assert { Bioshogi::Dimension::Column.fetch("2").flip.to_human_int == 8 }
+  #   assert { Bioshogi::Dimension::Column.fetch("2").flip.human_int == 8 }
   #   Bioshogi::Dimension.change([5, 9]) do
-  #     assert { Bioshogi::Dimension::Column.fetch("2").flip.to_human_int == 4 }
+  #     assert { Bioshogi::Dimension::Column.fetch("2").flip.human_int == 4 }
   #   end
-  #   assert { Bioshogi::Dimension::Column.fetch("2").flip.to_human_int == 8 }
+  #   assert { Bioshogi::Dimension::Column.fetch("2").flip.human_int == 8 }
   # end
 
   ################################################################################
@@ -67,104 +67,104 @@ RSpec.describe Bioshogi::Dimension::Column do
     assert { Bioshogi::Dimension::Column.fetch("6").distance_from_center == 1 }
   end
 
-  it "left_spaces" do
-    assert { Bioshogi::Dimension::Column.fetch("1").left_spaces == 8 }
-    assert { Bioshogi::Dimension::Column.fetch("5").left_spaces == 4 }
-    assert { Bioshogi::Dimension::Column.fetch("9").left_spaces == 0 }
+  it "left_space" do
+    assert { Bioshogi::Dimension::Column.fetch("1").left_space == 8 }
+    assert { Bioshogi::Dimension::Column.fetch("5").left_space == 4 }
+    assert { Bioshogi::Dimension::Column.fetch("9").left_space == 0 }
   end
 
-  it "right_spaces" do
-    assert { Bioshogi::Dimension::Column.fetch("1").right_spaces == 0 }
-    assert { Bioshogi::Dimension::Column.fetch("5").right_spaces == 4 }
-    assert { Bioshogi::Dimension::Column.fetch("9").right_spaces == 8 }
+  it "right_space" do
+    assert { Bioshogi::Dimension::Column.fetch("1").right_space == 0 }
+    assert { Bioshogi::Dimension::Column.fetch("5").right_space == 4 }
+    assert { Bioshogi::Dimension::Column.fetch("9").right_space == 8 }
   end
 
-  it "column_spaces_min" do
-    assert { Bioshogi::Dimension::Column.fetch("4").column_spaces_min == 3 }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_spaces_min == 4 }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_spaces_min == 3 }
+  it "left_right_space_min" do
+    assert { Bioshogi::Dimension::Column.fetch("4").left_right_space_min == 3 }
+    assert { Bioshogi::Dimension::Column.fetch("5").left_right_space_min == 4 }
+    assert { Bioshogi::Dimension::Column.fetch("6").left_right_space_min == 3 }
   end
 
-  it "align_arrow" do
-    assert { Bioshogi::Dimension::Column.fetch("4").align_arrow == :right }
-    assert { Bioshogi::Dimension::Column.fetch("5").align_arrow == :left  }
-    assert { Bioshogi::Dimension::Column.fetch("6").align_arrow == :left  }
+  it "left_or_right" do
+    assert { Bioshogi::Dimension::Column.fetch("4").left_or_right == :right }
+    assert { Bioshogi::Dimension::Column.fetch("5").left_or_right == nil    }
+    assert { Bioshogi::Dimension::Column.fetch("6").left_or_right == :left  }
   end
 
-  it "column_is2?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is2? == false }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is2? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("3").column_is2? == false }
+  it "column_eq?(2)" do
+    assert { Bioshogi::Dimension::Column.fetch("1").column_eq?(2) == false }
+    assert { Bioshogi::Dimension::Column.fetch("2").column_eq?(2) == true  }
+    assert { Bioshogi::Dimension::Column.fetch("3").column_eq?(2) == false }
   end
 
-  it "column_is_second_to_eighth?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is_second_to_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("3").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("7").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("8").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("9").column_is_second_to_eighth? == false }
+  it "column_is2to8?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").column_is2to8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("2").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("3").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("4").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("5").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("6").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("7").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("8").column_is2to8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("9").column_is2to8? == false }
   end
 
-  it "column_is_second_or_eighth?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is_second_or_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("3").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("7").column_is_second_or_eighth? == false }
-    assert { Bioshogi::Dimension::Column.fetch("8").column_is_second_or_eighth? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("9").column_is_second_or_eighth? == false }
+  it "column_is2or8?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("2").column_is2or8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("3").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("4").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("5").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("6").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("7").column_is2or8? == false }
+    assert { Bioshogi::Dimension::Column.fetch("8").column_is2or8? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("9").column_is2or8? == false }
   end
 
-  it "column_is_three_to_seven?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is_three_to_seven? == false }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is_three_to_seven? == false }
-    assert { Bioshogi::Dimension::Column.fetch("3").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("7").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("8").column_is_three_to_seven? == false }
-    assert { Bioshogi::Dimension::Column.fetch("9").column_is_three_to_seven? == false }
+  it "column_is3to7?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").column_is3to7? == false }
+    assert { Bioshogi::Dimension::Column.fetch("2").column_is3to7? == false }
+    assert { Bioshogi::Dimension::Column.fetch("3").column_is3to7? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("4").column_is3to7? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("5").column_is3to7? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("6").column_is3to7? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("7").column_is3to7? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("8").column_is3to7? == false }
+    assert { Bioshogi::Dimension::Column.fetch("9").column_is3to7? == false }
   end
 
-  it "column_is_center?" do
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_center? == false }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_center? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_center? == false }
+  it "column_is5?" do
+    assert { Bioshogi::Dimension::Column.fetch("4").column_is5? == false }
+    assert { Bioshogi::Dimension::Column.fetch("5").column_is5? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("6").column_is5? == false }
   end
 
-  it "column_is_edge?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is_edge? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is_edge? == false }
-    assert { Bioshogi::Dimension::Column.fetch("8").column_is_edge? == false }
-    assert { Bioshogi::Dimension::Column.fetch("9").column_is_edge? == true  }
+  it "side_edge?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").side_edge? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("2").side_edge? == false }
+    assert { Bioshogi::Dimension::Column.fetch("8").side_edge? == false }
+    assert { Bioshogi::Dimension::Column.fetch("9").side_edge? == true  }
   end
 
-  it "column_is_right_side?" do
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_right_side? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_right_side? == false }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_right_side? == false }
+  it "right_side?" do
+    assert { Bioshogi::Dimension::Column.fetch("4").right_side? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("5").right_side? == false }
+    assert { Bioshogi::Dimension::Column.fetch("6").right_side? == false }
   end
 
-  it "column_is_left_side?" do
-    assert { Bioshogi::Dimension::Column.fetch("4").column_is_left_side? == false }
-    assert { Bioshogi::Dimension::Column.fetch("5").column_is_left_side? == false }
-    assert { Bioshogi::Dimension::Column.fetch("6").column_is_left_side? == true  }
+  it "left_side?" do
+    assert { Bioshogi::Dimension::Column.fetch("4").left_side? == false }
+    assert { Bioshogi::Dimension::Column.fetch("5").left_side? == false }
+    assert { Bioshogi::Dimension::Column.fetch("6").left_side? == true  }
   end
 
-  it "column_is_right_edge?" do
-    assert { Bioshogi::Dimension::Column.fetch("1").column_is_right_edge? == true  }
-    assert { Bioshogi::Dimension::Column.fetch("2").column_is_right_edge? == false }
+  it "right_edge?" do
+    assert { Bioshogi::Dimension::Column.fetch("1").right_edge? == true  }
+    assert { Bioshogi::Dimension::Column.fetch("2").right_edge? == false }
   end
 
-  it "column_is_left_edge?" do
-    assert { Bioshogi::Dimension::Column.fetch("8").column_is_left_edge? == false }
-    assert { Bioshogi::Dimension::Column.fetch("9").column_is_left_edge? == true  }
+  it "left_edge?" do
+    assert { Bioshogi::Dimension::Column.fetch("8").left_edge? == false }
+    assert { Bioshogi::Dimension::Column.fetch("9").left_edge? == true  }
   end
 end

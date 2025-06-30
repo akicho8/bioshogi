@@ -16,21 +16,21 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
   end
 
   it "「左右の壁からどれだけ離れているかの値」の小さい方(先後関係なし)" do
-    assert { Bioshogi::Soldier.from_str("▲41歩").column_spaces_min == 3 }
-    assert { Bioshogi::Soldier.from_str("△41歩").column_spaces_min == 3 }
-    assert { Bioshogi::Soldier.from_str("▲51歩").column_spaces_min == 4 }
-    assert { Bioshogi::Soldier.from_str("△51歩").column_spaces_min == 4 }
-    assert { Bioshogi::Soldier.from_str("▲61歩").column_spaces_min == 3 }
-    assert { Bioshogi::Soldier.from_str("△61歩").column_spaces_min == 3 }
+    assert { Bioshogi::Soldier.from_str("▲41歩").left_right_space_min == 3 }
+    assert { Bioshogi::Soldier.from_str("△41歩").left_right_space_min == 3 }
+    assert { Bioshogi::Soldier.from_str("▲51歩").left_right_space_min == 4 }
+    assert { Bioshogi::Soldier.from_str("△51歩").left_right_space_min == 4 }
+    assert { Bioshogi::Soldier.from_str("▲61歩").left_right_space_min == 3 }
+    assert { Bioshogi::Soldier.from_str("△61歩").left_right_space_min == 3 }
   end
 
   it "左右の壁に近い方に進むときの符号(先手視点なので先後関係なし)" do
-    assert { Bioshogi::Soldier.from_str("▲41歩").align_arrow == :right }
-    assert { Bioshogi::Soldier.from_str("△41歩").align_arrow == :left  }
-    assert { Bioshogi::Soldier.from_str("▲51歩").align_arrow == :left  }
-    assert { Bioshogi::Soldier.from_str("△51歩").align_arrow == :left  }
-    assert { Bioshogi::Soldier.from_str("▲61歩").align_arrow == :left  }
-    assert { Bioshogi::Soldier.from_str("△61歩").align_arrow == :right }
+    assert { Bioshogi::Soldier.from_str("▲41歩").left_or_right == :right }
+    assert { Bioshogi::Soldier.from_str("△41歩").left_or_right == :left  }
+    assert { Bioshogi::Soldier.from_str("▲51歩").left_or_right == nil    }
+    assert { Bioshogi::Soldier.from_str("△51歩").left_or_right == nil    }
+    assert { Bioshogi::Soldier.from_str("▲61歩").left_or_right == :left  }
+    assert { Bioshogi::Soldier.from_str("△61歩").left_or_right == :right }
   end
 
   it "tarefu_desuka?" do
@@ -66,22 +66,22 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
   it "*_spaces" do
     assert { Bioshogi::Soldier.from_str("△34飛").top_spaces    == 5 }
     assert { Bioshogi::Soldier.from_str("△34飛").bottom_spaces == 3 }
-    assert { Bioshogi::Soldier.from_str("△34飛").left_spaces   == 2 }
-    assert { Bioshogi::Soldier.from_str("△34飛").right_spaces  == 6 }
+    assert { Bioshogi::Soldier.from_str("△34飛").left_space   == 2 }
+    assert { Bioshogi::Soldier.from_str("△34飛").right_space  == 6 }
   end
 
   it "column_is_*?" do
-    assert { Bioshogi::Soldier.from_str("△82飛").column_is2? == true  }
-    assert { Bioshogi::Soldier.from_str("△22飛").column_is2? == false }
+    assert { Bioshogi::Soldier.from_str("△82飛").column_eq?(2) == true  }
+    assert { Bioshogi::Soldier.from_str("△22飛").column_eq?(2) == false }
 
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_second_to_eighth? == true  }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_three_to_seven? == true  }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_center?         == false }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_edge?           == false }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_right_side?     == false }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_left_side?      == true  }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_right_edge?     == false }
-    assert { Bioshogi::Soldier.from_str("△34飛").column_is_left_edge?      == false }
+    assert { Bioshogi::Soldier.from_str("△34飛").column_is2to8? == true  }
+    assert { Bioshogi::Soldier.from_str("△34飛").column_is3to7? == true  }
+    assert { Bioshogi::Soldier.from_str("△34飛").column_is5?         == false }
+    assert { Bioshogi::Soldier.from_str("△34飛").side_edge?           == false }
+    assert { Bioshogi::Soldier.from_str("△34飛").right_side?     == false }
+    assert { Bioshogi::Soldier.from_str("△34飛").left_side?      == true  }
+    assert { Bioshogi::Soldier.from_str("△34飛").right_edge?     == false }
+    assert { Bioshogi::Soldier.from_str("△34飛").left_edge?      == false }
   end
 
   it "next_nyugyoku?" do

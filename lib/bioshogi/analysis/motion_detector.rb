@@ -8,6 +8,29 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "穴熊再生",
+          description: nil,
+          trigger: [
+            { piece_key: :silver, promoted: false, motion: :drop },
+            { piece_key: :gold,   promoted: false, motion: :drop },
+          ],
+          func: -> {
+            skip_if { true }
+
+            # # 【条件】4..5段目
+            # and_cond { soldier.row_is_4to5? }
+            #
+            # # 【条件】上に敵の歩がある
+            # and_cond do
+            #   if v = soldier.relative_move_to(:up)
+            #     if s = board[v]
+            #       s.piece.key == :pawn && s.normal? && opponent?(s)
+            #     end
+            #   end
+            # end
+          },
+        },
+        {
           key: "突き捨て",
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :move },
@@ -230,7 +253,7 @@ module Bioshogi
                   if op_solider_exist2(:up, :pawn)        # 歩を攻めている
                     if op_solider_exist2(:up_up, :bishop) # 歩の奥に角がある
                       # 「序盤の24歩」ではないこと
-                      !(container.joban && soldier.column_is2? && soldier.next_nyugyoku?)
+                      !(container.joban && soldier.column_eq?(2) && soldier.next_nyugyoku?)
                     end
                   end
                 end
@@ -279,7 +302,7 @@ module Bioshogi
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
             # 【条件】2〜8筋である (端の場合は「こびん」とは言わないため)
-            and_cond { soldier.column_is_second_to_eighth? }
+            and_cond { soldier.column_is2to8? }
 
             # 【条件】相手が歩である
             and_cond do
@@ -338,7 +361,7 @@ module Bioshogi
             and_cond { soldier.kurai_sasae? }
 
             # 【条件】3〜7列である (両端2列は「位」とは言わないため)
-            and_cond { soldier.column_is_three_to_seven? }
+            and_cond { soldier.column_is3to7? }
 
             # 【条件】前に歩がある
             and_cond do
@@ -525,14 +548,14 @@ module Bioshogi
             and_cond { soldier.bottom_spaces == 1 }
 
             # 【条件】端から2列目である
-            and_cond { soldier.column_spaces_min == 1 }
+            and_cond { soldier.left_right_space_min == 1 }
 
             # 【条件】自玉が存在する
             and_cond { player.king_soldier }
 
             # 【条件】移動先の壁側の斜め下に自玉がいる
             and_cond do
-              if v = soldier.relative_move_to(:"down_#{soldier.align_arrow}")
+              if v = soldier.relative_move_to(:"down_#{soldier.left_or_right}")
                 if s = board[v]
                   s.piece.key == :king && own?(s)
                 end
@@ -541,7 +564,7 @@ module Bioshogi
 
             # 【条件】移動先の壁側と上下に味方がいる
             and_cond do
-              [soldier.align_arrow, :up, :down].all? do |e|
+              [soldier.left_or_right, :up, :down].all? do |e|
                 if v = soldier.relative_move_to(e)
                   if s = board[v]
                     own?(s)
@@ -619,7 +642,7 @@ module Bioshogi
           ],
           func: -> {
             # 【条件】端である
-            and_cond { soldier.column_is_edge? }
+            and_cond { soldier.side_edge? }
 
             # 【条件】上が敵歩である
             and_cond do
@@ -741,14 +764,14 @@ module Bioshogi
             and_cond { soldier.bottom_spaces == 2 }
 
             # 【条件】端から3列目である
-            and_cond { soldier.column_spaces_min == 2 }
+            and_cond { soldier.left_right_space_min == 2 }
 
             # 【条件】移動元は「端から2列目」である (▲41から飛んだ場合を除外している)
-            and_cond { origin_soldier.column_spaces_min == 1 }
+            and_cond { origin_soldier.left_right_space_min == 1 }
 
             # 【条件】移動元の端側に自玉がいる
             and_cond do
-              if v = origin_soldier.relative_move_to(origin_soldier.align_arrow)
+              if v = origin_soldier.relative_move_to(origin_soldier.left_or_right)
                 if s = board[v]
                   s.piece.key == :king && own?(s)
                 end
@@ -902,7 +925,7 @@ module Bioshogi
 
             # 【条件】端から打っている
             if false
-              and_cond { soldier.column_is_edge? }
+              and_cond { soldier.side_edge? }
             end
 
             # 【条件】相手の陣地に直通しているかつ長さが 5 以上である
@@ -980,7 +1003,7 @@ module Bioshogi
           trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
             # 【条件】端から2列目である
-            and_cond { soldier.column_spaces_min == 1 }
+            and_cond { soldier.left_right_space_min == 1 }
 
             # 【条件】下から2行目である
             and_cond { soldier.bottom_spaces == 1 }
@@ -1004,7 +1027,7 @@ module Bioshogi
             end
 
             # 【条件】移動元は端から3列目である
-            and_cond { origin_soldier.column_spaces_min == 2 }
+            and_cond { origin_soldier.left_right_space_min == 2 }
 
             # 【必要条件6】自玉が存在する
             and_cond { player.king_soldier }
@@ -1043,7 +1066,7 @@ module Bioshogi
             # - 端玉に対しての腹銀が「桂頭の銀」扱いになる場合が多いため除外している
             # - ただ本当に21や81の桂に対して「桂頭の銀」をかましている場合もなくはない
             skip_if do
-              soldier.column_is_second_or_eighth? && soldier.top_spaces == 1
+              soldier.column_is2or8? && soldier.top_spaces == 1
             end
           },
         },
@@ -1161,7 +1184,7 @@ module Bioshogi
             and_cond { opponent_player.king_soldier }
 
             # 【条件】端である
-            and_cond { soldier.column_is_edge? }
+            and_cond { soldier.side_edge? }
 
             # 【条件】上が相手の歩である (▲16歩△14歩の状態で▲15歩としたということ)
             and_cond do
