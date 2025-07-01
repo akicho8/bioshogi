@@ -15,6 +15,10 @@ module Bioshogi
         soldiers_lookup1(:king).first
       end
 
+      def king_soldier_only_one_exist?
+        soldiers_lookup1(:king).size == 1
+      end
+
       ################################################################################
 
       # O(1)

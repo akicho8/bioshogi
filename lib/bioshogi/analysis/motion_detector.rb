@@ -15,19 +15,58 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :drop },
           ],
           func: -> {
-            skip_if { true }
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
-            # # 【条件】4..5段目
-            # and_cond { soldier.row_is_4to5? }
-            #
-            # # 【条件】上に敵の歩がある
-            # and_cond do
-            #   if v = soldier.relative_move_to(:up)
-            #     if s = board[v]
-            #       s.piece.key == :pawn && s.normal? && opponent?(s)
-            #     end
-            #   end
-            # end
+            # 【条件】自玉が隅にいる
+            and_cond { player.king_soldier.side_edge? && player.king_soldier.bottom_spaces == 0 }
+
+            # 【条件】打った駒は玉と同じ側である
+            and_cond { soldier.left_or_right == player.king_soldier.left_or_right }
+
+            # 【条件】打った駒は玉の近くである (3x3)
+            and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+          },
+        },
+        {
+          key: "ハッチ閉鎖",
+          description: "穴熊を金銀で閉鎖したタイミングで発動する",
+          trigger: [
+            { piece_key: :silver, promoted: false, motion: :move },
+            { piece_key: :gold,   promoted: false, motion: :move },
+          ],
+          func: -> {
+            # 【却下】すでに開戦している
+            skip_if { container.outbreak_turn }
+
+            # 【条件】下から2行目である
+            and_cond { soldier.bottom_spaces == 1 }
+
+            # 【条件】端から2列目である
+            and_cond { soldier.left_right_space_min == 1 }
+
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
+
+            # 【条件】移動先の壁側の斜め下に自玉がいる
+            and_cond do
+              if v = soldier.relative_move_to(:"down_#{soldier.left_or_right}")
+                if s = board[v]
+                  s.piece.key == :king && own?(s)
+                end
+              end
+            end
+
+            # 【条件】移動先の壁側と上下に味方がいる
+            and_cond do
+              [soldier.left_or_right, :up, :down].all? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    own?(s)
+                  end
+                end
+              end
+            end
           },
         },
         {
@@ -56,8 +95,8 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
-            # 【条件】自玉が存在する
-            and_cond { player.king_soldier }
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
             # 【条件】左上か右上に移動した
             and_cond { move_hand.right_move_length.abs.positive? && move_hand.up_move_length.positive? }
@@ -339,8 +378,8 @@ module Bioshogi
             # 【条件】取った駒の価値が「盤上の歩」より高い (相手の歩を取ったところで効果はない)
             and_cond { captured_soldier.abs_weight > Piece.fetch(:pawn).basic_weight }
 
-            # 【条件】敵玉が存在する
-            and_cond { opponent_player.king_soldier }
+            # 【条件】敵玉が1つ存在する
+            and_cond { opponent_player.king_soldier_only_one_exist? }
 
             # 【条件】移動先の近くに敵玉がいる (半径3)
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 3) }
@@ -434,8 +473,8 @@ module Bioshogi
           description: "二枚飛車の間の駒が動いたら二枚飛車になる場合には対応していない",
           trigger: { piece_key: :rook, promoted: :both, motion: :both },
           func: -> {
-            # 【条件】敵玉が存在する
-            and_cond { opponent_player.king_soldier }
+            # 【条件】敵玉が1つ存在する
+            and_cond { opponent_player.king_soldier_only_one_exist? }
 
             # 【条件】敵玉と行が同じ (許容誤差±1)
             and_cond { (opponent_player.king_soldier.place.row.value - soldier.place.row.value).abs <= 1 }
@@ -534,47 +573,6 @@ module Bioshogi
           },
         },
         {
-          key: "ハッチ閉鎖",
-          description: "穴熊を金銀で閉鎖したタイミングで発動する",
-          trigger: [
-            { piece_key: :silver, promoted: false, motion: :move },
-            { piece_key: :gold,   promoted: false, motion: :move },
-          ],
-          func: -> {
-            # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
-
-            # 【条件】下から2行目である
-            and_cond { soldier.bottom_spaces == 1 }
-
-            # 【条件】端から2列目である
-            and_cond { soldier.left_right_space_min == 1 }
-
-            # 【条件】自玉が存在する
-            and_cond { player.king_soldier }
-
-            # 【条件】移動先の壁側の斜め下に自玉がいる
-            and_cond do
-              if v = soldier.relative_move_to(:"down_#{soldier.left_or_right}")
-                if s = board[v]
-                  s.piece.key == :king && own?(s)
-                end
-              end
-            end
-
-            # 【条件】移動先の壁側と上下に味方がいる
-            and_cond do
-              [soldier.left_or_right, :up, :down].all? do |e|
-                if v = soldier.relative_move_to(e)
-                  if s = board[v]
-                    own?(s)
-                  end
-                end
-              end
-            end
-          },
-        },
-        {
           key: "飛車先交換",
           description: nil,
           trigger: [
@@ -610,8 +608,8 @@ module Bioshogi
             { piece_key: :king, promoted: false, motion: :move },
           ],
           func: -> {
-            # 【条件】自玉が存在する
-            and_cond { player.king_soldier }
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
             # 【却下】玉と飛の移動が合わせて2回以下 (これがあれば中飛車美濃囲いのときに玉飛接近にならない)
             skip_if { (player.used_piece_counts[:K0] + player.used_piece_counts[:R0]) <= 2 }
@@ -662,8 +660,8 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :bishop, promoted: true,  motion: :move },
           func: -> {
-            # 【条件】自玉が存在する
-            and_cond { player.king_soldier }
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
             # 【条件】移動先の近くに自玉がいる
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
@@ -677,8 +675,8 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
-            # 【条件】敵玉が存在する
-            and_cond { opponent_player.king_soldier }
+            # 【条件】敵玉が1つ存在する
+            and_cond { opponent_player.king_soldier_only_one_exist? }
 
             # 【条件】移動先の近くに敵玉がいる
             and_cond { soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
@@ -696,8 +694,8 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :both },
           ],
           func: -> {
-            # 【条件】自玉が存在する
-            and_cond { player.king_soldier }
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
             # 【条件】自玉は4から6行目にいる
             and_cond { player.king_soldier.middle_row? }
@@ -1029,8 +1027,8 @@ module Bioshogi
             # 【条件】移動元は端から3列目である
             and_cond { origin_soldier.left_right_space_min == 2 }
 
-            # 【必要条件6】自玉が存在する
-            and_cond { player.king_soldier }
+            # 【必要条件6】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
 
             # 【必要条件7】玉との横軸の距離は3以内である (最長3 = 居玉) 銀と同じ方向に玉がいるというだけで穴熊状態の可能性もある
             and_cond { soldier.place.column.distance(player.king_soldier.place.column) <= 3 }
@@ -1180,8 +1178,8 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
-            # 【条件】敵玉が存在する
-            and_cond { opponent_player.king_soldier }
+            # 【条件】敵玉が1つ存在する
+            and_cond { opponent_player.king_soldier_only_one_exist? }
 
             # 【条件】端である
             and_cond { soldier.side_edge? }
@@ -1333,8 +1331,8 @@ module Bioshogi
             # 【条件】移動元の駒は「と」である (すでに成っている)
             and_cond { origin_soldier.promoted }
 
-            # 【条件】敵玉が存在する
-            and_cond { opponent_player.king_soldier }
+            # 【条件】敵玉が1つ存在する
+            and_cond { opponent_player.king_soldier_only_one_exist? }
 
             # 【条件】敵玉に近づく
             and_cond { teki_king_ni_tikazuita? }

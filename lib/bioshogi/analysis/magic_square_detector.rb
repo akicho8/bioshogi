@@ -13,8 +13,8 @@ module Bioshogi
 
       def call
         perform_block do
-          # 【条件】自玉が存在する
-          and_cond { player.king_soldier }
+          # 【条件】自玉が1つ存在する
+          and_cond { player.king_soldier_only_one_exist? }
 
           # 【条件】自玉のまわりが味方で囲まれている
           and_cond do
