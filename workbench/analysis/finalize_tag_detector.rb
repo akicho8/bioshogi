@@ -1,7 +1,7 @@
 require "#{__dir__}/setup"
 
 puts Bioshogi::Parser.parse("68銀").to_kif
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/overall_tag_detector.rb:9", :initialize]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/finalize_tag_detector.rb:9", :initialize]
 # >> 先手の戦法：嬉野流
 # >> 先手の棋風：王道
 # >> 手合割：平手

@@ -14,7 +14,7 @@ tp container.to_header_h
 # >> | double_pawn_detect | true            |
 # >> |        warp_detect | true            |
 # >> |        board_class | Bioshogi::Board |
-# >> |   last_action_info | TORYO           |
+# >> |   last_action_info1 | TORYO           |
 # >> |--------------------+-----------------|
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

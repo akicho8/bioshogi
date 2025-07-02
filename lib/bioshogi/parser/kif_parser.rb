@@ -38,7 +38,7 @@ module Bioshogi
           when md = line.match(LAST_REGEXP)
             if v = md[:last_action_key].to_s.strip.presence
               if info = LastActionInfo[v]
-                @pi.last_action_info = info
+                @pi.last_action_info1 = info
               else
                 @pi.last_action_unknown_str = v
               end

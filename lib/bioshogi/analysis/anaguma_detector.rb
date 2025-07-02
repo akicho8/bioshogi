@@ -35,23 +35,36 @@ module Bioshogi
         end
 
         if retv
-          player.tag_bundle << "穴熊"
-
-          tag_add(general_tag, once: true) # 居飛車穴熊 or 振り飛車穴熊
-
-          if e = TagIndex["#{kin_gin_count}枚穴熊"]
-            tag_add(e)
-          end
-
-          if container.joban
-            if kakugawari?
-              tag_add(:"角換わり穴熊", once: true)
-            end
-          end
+          case_穴熊
+          case_居飛車穴熊_or_振り飛車穴熊
+          case_N枚穴熊
+          case_角換わり穴熊
         end
       end
 
       private
+
+      def case_穴熊
+        player.tag_bundle << "穴熊"
+      end
+
+      def case_居飛車穴熊_or_振り飛車穴熊
+        tag_add(general_tag, once: true)
+      end
+
+      def case_N枚穴熊
+        if e = TagIndex["#{kin_gin_count}枚穴熊"]
+          tag_add(e)
+        end
+      end
+
+      def case_角換わり穴熊
+        if container.joban
+          if kakugawari?
+            tag_add(:"角換わり穴熊", once: true)
+          end
+        end
+      end
 
       def kakugawari?
         if false
@@ -65,8 +78,11 @@ module Bioshogi
 
       def general_tag
         @general_tag ||= yield_self do
-          str = player.tag_bundle.ibisha_or_furibisha
-          # str = king_soldier.left_or_right == :left ? :"居飛車" : :"振り飛車"
+          if false
+            str = king_soldier.left_or_right == :left ? :"居飛車" : :"振り飛車"
+          else
+            str = player.tag_bundle.ibisha_or_furibisha
+          end
           :"#{str}穴熊"
         end
       end
@@ -80,7 +96,9 @@ module Bioshogi
             if v = king_soldier.relative_move_to(e)
               if s = board[v]
                 if own?(s)
-                  unless s.piece.key.in?(ROOK_OR_BISHOP) && s.normal? # 飛角は除かないと77角を置いた状態の片穴熊が三枚穴熊になってしまう
+                  if s.piece.hisyakaku && s.normal?
+                    # 飛角は除く。そうしないと77角を置いた状態の片穴熊が三枚穴熊になってしまう。
+                  else
                     s.abs_weight >= min_score
                   end
                 end

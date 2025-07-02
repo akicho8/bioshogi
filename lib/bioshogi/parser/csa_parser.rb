@@ -191,7 +191,7 @@ module Bioshogi
 
       def read_last
         if md = normalized_source.match(/^%(?<last_action_key>\S+)(\R+[A-Z](?<used_seconds>(\d+)))?/)
-          @pi.last_action_info = LastActionInfo.fetch(md[:last_action_key])
+          @pi.last_action_info1 = LastActionInfo.fetch(md[:last_action_key])
           if v = md[:used_seconds]
             @pi.last_used_seconds = v.to_i.seconds
           end

@@ -13,7 +13,7 @@ module Bioshogi
       attr_accessor :board_source
 
       attr_accessor :last_action_unknown_str
-      attr_accessor :last_action_info
+      attr_accessor :last_action_info1
       attr_accessor :last_used_seconds
 
       attr_accessor :header
@@ -30,7 +30,7 @@ module Bioshogi
         @first_comments     = []
         @board_source       = nil
 
-        @last_action_info        = LastActionInfo[:TORYO]
+        @last_action_info1       = nil # LastActionInfo[:TORYO]
         @last_action_unknown_str = nil
         @last_used_seconds       = nil
 
@@ -67,10 +67,14 @@ module Bioshogi
         !clock_exist?
       end
 
+      def input_last_action_info
+        last_action_info1 || header.last_action_info2 || LastActionInfo[:TORYO]
+      end
+
       # 出力するときの結末
       # nil を返す場合もある
       def output_last_action_info
-        @output_last_action_info ||= illegal_move_last_action_info || last_action_info
+        @output_last_action_info ||= illegal_move_last_action_info || input_last_action_info
       end
 
       def illegal_move_last_action_info

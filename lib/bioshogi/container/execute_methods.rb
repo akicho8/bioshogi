@@ -46,7 +46,7 @@ module Bioshogi
       def after_execute_all
         if params[:analysis_feature]
           Analysis::Atsumeruyo.new(self).call
-          Analysis::OverallTagDetector.new(self).call
+          Analysis::FinalizeTagDetector.new(self).call
         end
       end
 

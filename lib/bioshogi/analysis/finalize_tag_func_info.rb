@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class OverallTagFuncInfo
+    class FinalizeTagFuncInfo
       include ApplicationMemoryRecord
       memory_record [
         ################################################################################
@@ -36,7 +36,7 @@ module Bioshogi
           key: "居飛車",
           func: -> {
             @container.players.each do |e|
-              if !e.tag_bundle.certainty_furibisha? && !e.tag_bundle.certainty_ibisha?
+              if !e.tag_bundle.include?("振り飛車") && !e.tag_bundle.include?("居飛車")
                 e.tag_bundle << "居飛車"
               end
             end
@@ -45,9 +45,9 @@ module Bioshogi
         {
           key: "相居飛車",
           func: -> {
-            if @container.players.all? { |e| e.tag_bundle.certainty_ibisha? }
-              @container.players.each do |player|
-                player.tag_bundle << "相居飛車"
+            if @container.players.all? { |e| e.tag_bundle.include?("居飛車") }
+              @container.players.each do |e|
+                e.tag_bundle << "相居飛車"
               end
             end
           },
@@ -55,9 +55,9 @@ module Bioshogi
         {
           key: "対居飛車",
           func: -> {
-            @container.players.each do |player|
-              if player.opponent_player.tag_bundle.certainty_ibisha?
-                player.tag_bundle << "対居飛車"
+            @container.players.each do |e|
+              if e.opponent_player.tag_bundle.include?("居飛車")
+                e.tag_bundle << "対居飛車"
               end
             end
           },
@@ -65,9 +65,9 @@ module Bioshogi
         {
           key: "相振り飛車",
           func: -> {
-            if @container.players.all? { |e| e.tag_bundle.certainty_furibisha? }
-              @container.players.each do |player|
-                player.tag_bundle << "相振り飛車"
+            if @container.players.all? { |e| e.tag_bundle.include?("振り飛車") }
+              @container.players.each do |e|
+                e.tag_bundle << "相振り飛車"
               end
             end
           },
@@ -76,9 +76,9 @@ module Bioshogi
           key: "対抗形",
           description: "片方だけが「振り飛車」なら両方に「対抗形」",
           func: -> {
-            if player = @container.players.find { |e| e.tag_bundle.certainty_furibisha? }
+            if player = @container.players.find { |e| e.tag_bundle.include?("振り飛車") }
               others = @container.players - [player]
-              if others.none? { |e| e.tag_bundle.certainty_furibisha? }
+              if others.none? { |e| e.tag_bundle.include?("振り飛車") }
                 @container.players.each do |e|
                   e.tag_bundle << "対抗形"
                 end
@@ -219,13 +219,14 @@ module Bioshogi
             end
           },
         },
+
         {
           key: "ロケット",
           func: -> {
-            @container.players.each do |player|
-              group_info = Analysis::GroupInfo["ロケット"]
-              if player.tag_bundle.all_tags.any? { |e| e.group_info == group_info }
-                player.tag_bundle << "ロケット"
+            group_info = Analysis::GroupInfo["ロケット"]
+            @container.players.each do |e|
+              if e.tag_bundle.all_tags.any? { |e| e.group_info == group_info }
+                e.tag_bundle << "ロケット"
               end
             end
           },
@@ -262,7 +263,7 @@ module Bioshogi
         {
           key: "雪隠詰め",
           func: -> {
-            if @container.params[:last_action_info].last_checkmate_p
+            if @container.params[:input_last_action_info]&.last_checkmate_p
               soldier = @container.lose_player.king_soldier
               if soldier.bottom_spaces == 0 && soldier.side_edge?
                 @container.win_player.tag_bundle << "雪隠詰め"

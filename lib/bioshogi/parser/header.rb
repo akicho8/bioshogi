@@ -34,6 +34,12 @@ module Bioshogi
         end
       end
 
+      def last_action_info2
+        if v = object["結末"]
+          LastActionInfo[v]
+        end
+      end
+
       private
 
       def time_normalize

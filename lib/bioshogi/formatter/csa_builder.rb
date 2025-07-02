@@ -47,38 +47,43 @@ module Bioshogi
         end
       end
 
+      attr_accessor :formatter
+      attr_accessor :params
+
       def initialize(formatter, params = {})
         @formatter = formatter
         @params = self.class.default_params.merge(params)
       end
 
       def to_s
-        @formatter.container_run_once
+        formatter.container_run_once
 
         out = []
         out << "V#{CSA_VERSION}\n"
 
-        if @params[:has_header]
+        if params[:has_header]
           out << header_content
         end
 
         obj = Container::Basic.new
-        @formatter.container_init(obj) # なぜ？
-        out << obj.to_csa(@params)
+        formatter.container_init(obj) # なぜ？
+        out << obj.to_csa(params)
 
         out << body_hands
 
-        if @params[:has_footer]
-          out << footer_content
+        if params[:has_footer]
+          if e = footer_content
+            out << e
+          end
         end
 
-        if @formatter.pi.error_message
-          out << @formatter.pi.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
+        if formatter.pi.error_message
+          out << formatter.pi.error_message_part(Parser::CsaParser::SYSTEM_COMMENT_CHAR)
         end
 
         out = out.join
 
-        if @params[:oneline]
+        if params[:oneline]
           out = out.gsub(/\n/, ",")
         else
           out += "\n"
@@ -92,7 +97,7 @@ module Bioshogi
 
       def header_content
         CsaHeaderInfo.collect { |e|
-          if v = @formatter.pi.header[e.kif_side_key].presence
+          if v = formatter.pi.header[e.kif_side_key].presence
             if e.as_csa
               v = e.instance_exec(v, &e.as_csa)
             end
@@ -109,12 +114,12 @@ module Bioshogi
         # 2. container.turn_info を利用して container.turn_info.base_location.csa_sign を参照
         # ↑どちらも違う
         # 3. これが正しい
-        out << @formatter.container.turn_info.turn_offset_zero_location.csa_sign + "\n"
+        out << formatter.container.turn_info.turn_offset_zero_location.csa_sign + "\n"
 
-        if @formatter.container.hand_logs.present?
-          list = @formatter.container.hand_logs.collect.with_index do |e, i|
-            if @formatter.pi.clock_exist?
-              [e.to_csa, "T#{@formatter.pi.used_seconds_at(i)}"].join(",")
+        if formatter.container.hand_logs.present?
+          list = formatter.container.hand_logs.collect.with_index do |e, i|
+            if formatter.pi.clock_exist?
+              [e.to_csa, "T#{formatter.pi.used_seconds_at(i)}"].join(",")
             else
               e.to_csa
             end
@@ -129,16 +134,18 @@ module Bioshogi
       # なので仕方なく TORYO にしている。これは実際には後手が投了したのに先手が投了したことになってしまう表記なのでおかしい
       # これは将棋倶楽部24に仕様を正してもらうか、CSA 側でそれに対応するキーワードを用意してもらうしかない
       def footer_content
-        av = []
-        av << "%#{@formatter.pi.last_action_info.csa_key}"
-        if v = @formatter.pi.last_used_seconds
-          av << "T#{v}"
+        if e = formatter.pi.input_last_action_info
+          av = []
+          av << "%#{e.csa_key}"
+          if v = formatter.pi.last_used_seconds
+            av << "T#{v}"
+          end
+          av.join(",") + "\n"
         end
-        av.join(",") + "\n"
       end
 
       def separator
-        if @params[:compact]
+        if params[:compact]
           ","
         else
           "\n"

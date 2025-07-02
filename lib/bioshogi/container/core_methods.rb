@@ -22,7 +22,7 @@ module Bioshogi
           :double_pawn_detect      => true, # 二歩を検出するか？
           :warp_detect             => true, # 角ワープを検出するか？
           :board_class             => Board,
-          :last_action_info        => LastActionInfo[:TORYO],
+          :last_action_info1        => LastActionInfo[:TORYO],
         }
       end
 

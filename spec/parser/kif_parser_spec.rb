@@ -1,6 +1,28 @@
 require "spec_helper"
 
 RSpec.describe Bioshogi::Parser::KifParser do
+  it "ヘッダーにある勝者を読み取る" do
+    pi = Bioshogi::Parser.parse("勝者：△").pi
+    assert { pi.header.win_side_location.key == :white }
+  end
+
+  describe "結末" do
+    it "ヘッダーにある結末を読み取る" do
+      pi = Bioshogi::Parser.parse("結末：詰み").pi
+      assert { pi.header.last_action_info2.name == "TSUMI" }
+      assert { pi.input_last_action_info.name == "TSUMI" }
+    end
+
+    it "フッダーにあるる結末を読み取る" do
+      pi = Bioshogi::Parser.parse("1 投了").pi
+      assert { pi.last_action_info1.name == "TORYO" }
+    end
+
+    # it "両方にある場合" do
+    #   Bioshogi::Parser.parse("結末：投了\n1 投了").pi
+    # end
+  end
+
   it "アスタリスクで始まるヘッダーはそのまま取り込む" do
     assert { Bioshogi::Parser.parse("*KEY1：value1").pi.header.to_h == { "*KEY1" => "value1" } }
   end
@@ -64,7 +86,7 @@ RSpec.describe Bioshogi::Parser::KifParser do
     end
 
     it "最後の情報" do
-      assert { @info.pi.last_action_info.key == :TORYO }
+      assert { @info.pi.last_action_info1.key == :TORYO }
       assert { @info.pi.last_used_seconds == 10 }
     end
 

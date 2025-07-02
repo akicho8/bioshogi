@@ -36,8 +36,8 @@ module Bioshogi
         av << @parser.pi.move_infos.to_t.strip
         av << " "
 
-        av << "* @parser.pi.last_action_info"
-        av << @parser.pi.last_action_info.inspect
+        av << "* @parser.pi.last_action_info1"
+        av << @parser.pi.last_action_info1.inspect
         av << " "
 
         av << "* @parser.pi.last_action_unknown_str"

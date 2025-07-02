@@ -14,7 +14,9 @@ module Bioshogi
       def call
         retv = perform_block do
           # 1. 「飛龍」が来たか「香」を打った
-          and_cond { trigger? }
+          and_cond do
+            soldier.piece.key == :rook || (soldier.piece.key == :lance && soldier.normal? && drop_hand)
+          end
 
           investigate
 
@@ -40,6 +42,8 @@ module Bioshogi
         end
 
         if retv
+          player.tag_bundle << "ロケット"
+
           if e = TagIndex["#{count_all}段ロケット"] # 7段以上のロケットは除外する
             tag_add(e)
           end
@@ -98,7 +102,7 @@ module Bioshogi
       end
 
       def trigger?
-        soldier.piece.key == :rook || (soldier.piece.key == :lance && soldier.normal? && drop_hand) # 「飛龍」が来たか「香」を打った
+
       end
 
       def count_all

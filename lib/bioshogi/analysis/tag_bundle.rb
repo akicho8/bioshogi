@@ -79,22 +79,22 @@ module Bioshogi
         end
 
         # 確信を持って「振り飛車」である
-        def certainty_furibisha?
-          include?(:"振り飛車")
+        def certainty_furibisha
+          include?("振り飛車")
         end
 
         # 確信を持って「居飛車」である
-        def certainty_ibisha?
-          include?(:"居飛車")
+        def certainty_ibisha
+          include?("居飛車")
         end
 
         # 確信はないが振り飛車でなないのであれば居飛車か？
         def may_be_ibisha?
-          !certainty_furibisha?
+          !certainty_furibisha
         end
 
         def ibisha_or_furibisha
-          certainty_furibisha? ? :"振り飛車" : :"居飛車"
+          certainty_furibisha ? "振り飛車" : "居飛車"
         end
       end
 

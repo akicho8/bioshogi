@@ -7,7 +7,7 @@ module Bioshogi
       memory_record [
         {
           key: "圧倒的な駒得",
-          soldiers: [
+          scores: [
             Piece[:king].basic_weight,      # 玉
             Piece[:rook].promoted_weight,   # 龍
             Piece[:bishop].promoted_weight, # 馬
@@ -18,7 +18,7 @@ module Bioshogi
         },
         {
           key: "天空の城構成員",
-          soldiers: [
+          scores: [
             Piece[:gold].basic_weight,
             Piece[:silver].basic_weight * 2,
             Piece[:pawn].basic_weight,
@@ -27,7 +27,7 @@ module Bioshogi
       ]
 
       def min_score
-        @min_score ||= soldiers.sum
+        @min_score ||= scores.sum
       end
     end
   end

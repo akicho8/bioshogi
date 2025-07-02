@@ -13,7 +13,7 @@
 #
 module Bioshogi
   module Analysis
-    class OverallTagInfo
+    class FinalizeTagInfo
       include ApplicationMemoryRecord
       memory_record [
         { key: "名人に定跡なし", turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "力戦より前", },
@@ -38,7 +38,6 @@ module Bioshogi
 
         { key: "相穴熊",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "相入玉",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        { key: "ロケット",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
         { key: "都詰め",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
         { key: "吊るし桂",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
@@ -46,7 +45,7 @@ module Bioshogi
       ]
 
       def func
-        @func ||= OverallTagFuncInfo.fetch(key).func
+        @func ||= FinalizeTagFuncInfo.fetch(key).func
       end
     end
   end

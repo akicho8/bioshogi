@@ -8,13 +8,13 @@ module Bioshogi
         {
           key: "居飛車",
           func: -> {
-            skip_if { player.tag_bundle.certainty_furibisha? }
+            skip_if { player.tag_bundle.include?("振り飛車") }
           },
         },
         {
           key: "振り飛車",
           func: -> {
-            skip_if { player.tag_bundle.certainty_ibisha? }
+            skip_if { player.tag_bundle.include?("居飛車") }
           },
         },
       ]

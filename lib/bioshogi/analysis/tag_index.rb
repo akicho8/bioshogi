@@ -53,7 +53,13 @@ module Bioshogi
 
       def values_hash
         @values_hash ||= values.inject({}) do |a, e|
-          [e.key, *e.alias_names].inject(a) { |a, key| a.merge(key.to_sym => e) }
+          [e.key, *e.alias_names].inject(a) do |a, key|
+            key = key.to_sym
+            if a.has_key?(key)
+              raise "must not happen"
+            end
+            a.merge(key => e)
+          end
         end
       end
 

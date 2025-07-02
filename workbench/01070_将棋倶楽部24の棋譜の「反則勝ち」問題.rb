@@ -7,7 +7,7 @@ info = Parser.parse(<<~EOT)
 3 反則勝ち
 EOT
 tp info.pi.move_infos
-tp info.pi.last_action_info         # => <TORYO>
+tp info.pi.last_action_info1         # => <TORYO>
 tp info.pi.output_last_action_info  # => <TORYO>
 info.container.judgment_message     # => "まで2手で後手の勝ち"
 info.to_csa.lines.last.strip        # => "%TORYO"

@@ -83,9 +83,9 @@ module Bioshogi
           ])
 
         # xparser を渡すのではなく必要なパラメータだけ渡す
-        params[:preset_info_or_nil] = preset_info_or_nil           # 手合割
-        params[:win_side_location]  = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
-        params[:last_action_info]   = @pi.last_action_info
+        params[:preset_info_or_nil]     = preset_info_or_nil           # 手合割
+        params[:win_side_location]      = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
+        params[:input_last_action_info] = @pi.input_last_action_info   # 結末 (都詰めなどの判定に必要)
 
         params
       end
