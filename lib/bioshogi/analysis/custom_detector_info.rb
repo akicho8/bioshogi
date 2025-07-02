@@ -3,7 +3,7 @@ module Bioshogi
     class CustomDetectorInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: "穴熊判定",         klass: RocketDetector2,      custom_trigger_key: :ct_every,  },
+        { key: "穴熊判定",         klass: AnagumaDetector,      custom_trigger_key: :ct_every,  },
         { key: "N段ロケット判定",  klass: RocketDetector,      custom_trigger_key: :ct_every,  },
         { key: "魔方陣判定",       klass: MagicSquareDetector, custom_trigger_key: :ct_every,  },
         { key: "角切り判定",       klass: KakukiriDetector,    custom_trigger_key: :ct_capture,  },

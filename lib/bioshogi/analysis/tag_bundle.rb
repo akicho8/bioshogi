@@ -32,6 +32,10 @@ module Bioshogi
         list_of(tag).include?(tag)
       end
 
+      def include?(...)
+        has_tag?(...)
+      end
+
       def delete_tag(tag)
         tag = TagIndex.fetch(tag)
         list_of(tag).delete(tag)
@@ -59,23 +63,42 @@ module Bioshogi
         }.compact.join.presence
       end
 
-      # 戦法と囲いのスタイル(複数)のなかからもっとも変態に近いものを得る
-      def main_style_info
-        (value(:attack) + value(:defense)).collect(&:style_info).max
-      end
-
-      ################################################################################ Support Methods
-
-      # 力戦条件
-      def attack_and_defense_is_blank?
-        value(:attack).empty? && value(:defense).empty?
-      end
-
-      ################################################################################
-
       def value(tactic_info)
         @value[TacticInfo.fetch(tactic_info).key] ||= List[]
       end
+
+      concerning :SupportMethods do
+        # 戦法と囲いのスタイル(複数)のなかからもっとも変態に近いものを得る
+        def main_style_info
+          (value(:attack) + value(:defense)).collect(&:style_info).max
+        end
+
+        # 力戦条件
+        def attack_and_defense_is_blank?
+          value(:attack).empty? && value(:defense).empty?
+        end
+
+        # 確信を持って「振り飛車」である
+        def certainty_furibisha?
+          include?(:"振り飛車")
+        end
+
+        # 確信を持って「居飛車」である
+        def certainty_ibisha?
+          include?(:"居飛車")
+        end
+
+        # 確信はないが振り飛車でなないのであれば居飛車か？
+        def may_be_ibisha?
+          !certainty_furibisha?
+        end
+
+        def ibisha_or_furibisha
+          certainty_furibisha? ? :"振り飛車" : :"居飛車"
+        end
+      end
+
+      ################################################################################
 
       private
 

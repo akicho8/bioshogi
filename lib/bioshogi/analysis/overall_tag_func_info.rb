@@ -36,7 +36,7 @@ module Bioshogi
           key: "居飛車",
           func: -> {
             @container.players.each do |e|
-              if !e.tag_bundle.has_tag?(:"振り飛車") && !e.tag_bundle.has_tag?(:"居飛車")
+              if !e.tag_bundle.certainty_furibisha? && !e.tag_bundle.certainty_ibisha?
                 e.tag_bundle << "居飛車"
               end
             end
@@ -45,7 +45,7 @@ module Bioshogi
         {
           key: "相居飛車",
           func: -> {
-            if @container.players.all? { |e| e.tag_bundle.has_tag?("居飛車") }
+            if @container.players.all? { |e| e.tag_bundle.certainty_ibisha? }
               @container.players.each do |player|
                 player.tag_bundle << "相居飛車"
               end
@@ -56,7 +56,7 @@ module Bioshogi
           key: "対居飛車",
           func: -> {
             @container.players.each do |player|
-              if player.opponent_player.tag_bundle.has_tag?("居飛車")
+              if player.opponent_player.tag_bundle.certainty_ibisha?
                 player.tag_bundle << "対居飛車"
               end
             end
@@ -65,7 +65,7 @@ module Bioshogi
         {
           key: "相振り飛車",
           func: -> {
-            if @container.players.all? { |e| e.tag_bundle.has_tag?("振り飛車") }
+            if @container.players.all? { |e| e.tag_bundle.certainty_furibisha? }
               @container.players.each do |player|
                 player.tag_bundle << "相振り飛車"
               end
@@ -76,9 +76,9 @@ module Bioshogi
           key: "対抗形",
           description: "片方だけが「振り飛車」なら両方に「対抗形」",
           func: -> {
-            if player = @container.players.find { |e| e.tag_bundle.has_tag?("振り飛車") }
+            if player = @container.players.find { |e| e.tag_bundle.certainty_furibisha? }
               others = @container.players - [player]
-              if others.none? { |e| e.tag_bundle.has_tag?("振り飛車") }
+              if others.none? { |e| e.tag_bundle.certainty_furibisha? }
                 @container.players.each do |e|
                   e.tag_bundle << "対抗形"
                 end
@@ -137,7 +137,7 @@ module Bioshogi
         {
           key: "相居玉",
           func: -> {
-            if @container.players.all? { |e| e.tag_bundle.has_tag?("居玉") }
+            if @container.players.all? { |e| e.tag_bundle.include?("居玉") }
               @container.players.each do |e|
                 e.tag_bundle << "相居玉"
               end
@@ -183,7 +183,7 @@ module Bioshogi
             if win_side_location
               player = @container.player_at(win_side_location)
               if player.strong_piece_have_count.zero?         # 最後の状態でも全ブッチ状態なら
-                if player.tag_bundle.has_tag?("大駒全ブッチ") # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
+                if player.tag_bundle.include?("大駒全ブッチ") # 途中、大駒全ブッチしいて (←これがないと 相入玉.kif でも入ってしまう)
                   player.tag_bundle << "屍の舞"
                 end
               end
@@ -201,7 +201,7 @@ module Bioshogi
           key: "相穴熊",
           func: -> {
             tag = Analysis::TagIndex.fetch("穴熊")
-            if @container.players.all? { |e| e.tag_bundle.has_tag?(tag) }
+            if @container.players.all? { |e| e.tag_bundle.include?(tag) }
               @container.players.each do |player|
                 player.tag_bundle << "相穴熊"
               end
@@ -212,7 +212,7 @@ module Bioshogi
           key: "相入玉",
           func: -> {
             tag = Analysis::TagIndex.fetch("入玉")
-            if @container.players.all? { |e| e.tag_bundle.has_tag?(tag) }
+            if @container.players.all? { |e| e.tag_bundle.include?(tag) }
               @container.players.each do |player|
                 player.tag_bundle << "相入玉"
               end

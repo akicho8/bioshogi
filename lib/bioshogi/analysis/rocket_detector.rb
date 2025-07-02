@@ -40,7 +40,7 @@ module Bioshogi
         end
 
         if retv
-          if e = TagIndex.lookup(:"#{count_all}段ロケット") # 7段以上のロケットは除外する
+          if e = TagIndex["#{count_all}段ロケット"] # 7段以上のロケットは除外する
             tag_add(e)
           end
         end

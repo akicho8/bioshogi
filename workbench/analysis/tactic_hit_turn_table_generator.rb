@@ -3,7 +3,7 @@ include Analysis
 
 # e = NoteInfo["ロケット"]        # => <ロケット>
 # e.static_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
-#   p hand_log.tag_bundle.has_tag?(e)
+#   p hand_log.tag_bundle.include?(e)
 #   # if hand_log.tag_bundle.flat_map { |e| e.flat_map(&:key) }.include?(e.key)
 #   #   p i
 #   #   exit

@@ -3,6 +3,10 @@ module Bioshogi
     module TagIndex
       extend self
 
+      def [](...)
+        lookup(...)
+      end
+
       # TagIndex.lookup("金底の歩").key # => :金底の歩
       def lookup(key)
         if TagMethods === key
@@ -48,7 +52,9 @@ module Bioshogi
       end
 
       def values_hash
-        @values_hash ||= values.inject({}) { |a, e| a.merge(e.key => e) }
+        @values_hash ||= values.inject({}) do |a, e|
+          [e.key, *e.alias_names].inject(a) { |a, key| a.merge(key.to_sym => e) }
+        end
       end
 
       ################################################################################

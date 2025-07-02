@@ -29,7 +29,7 @@ module Bioshogi
             and_cond { captured_soldier.piece.key == :pawn }
 
             # 【却下】すでに持っている
-            skip_if { player.tag_bundle.has_tag?(:"ポーンハンター") }
+            skip_if { player.tag_bundle.include?("ポーンハンター") }
 
             # 【条件】歩を全部持っている
             and_cond do

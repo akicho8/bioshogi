@@ -20,6 +20,7 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
   describe "flat_lookup" do
     it "works" do
       assert { Bioshogi::Analysis::TagIndex.lookup("金底の歩") }
+      assert { Bioshogi::Analysis::TagIndex["金底の歩"] }
     end
     xit "文字列でなくても to_s してから探す" do
       o = Object.new
@@ -31,6 +32,7 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
   describe "flat_fetch" do
     it "works" do
       assert { Bioshogi::Analysis::TagIndex.fetch("金底の歩") }
+      assert { Bioshogi::Analysis::TagIndex.fetch("0枚穴熊") }
     end
   end
 
@@ -47,7 +49,8 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
 
   it "values_hash" do
     assert { Bioshogi::Analysis::TagIndex.values_hash[:"棒銀"] }
-    assert { Bioshogi::Analysis::TagIndex.values_hash[:"美濃囲い"]       }
+    assert { Bioshogi::Analysis::TagIndex.values_hash[:"美濃囲い"] }
+    assert { Bioshogi::Analysis::TagIndex.values_hash[:"0枚穴熊"]  }
   end
 
   it "name" do

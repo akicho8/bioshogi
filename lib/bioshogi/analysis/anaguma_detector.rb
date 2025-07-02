@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class RocketDetector2
+    class AnagumaDetector
       ROOK_OR_BISHOP = [:rook, :bishop]
 
       include ExecuterDsl
@@ -17,6 +17,9 @@ module Bioshogi
         retv = perform_block do
           # 【条件】動かしたまたは打った駒は銀以上の駒である
           and_cond { soldier.abs_weight >= min_score }
+
+          # 【却下】生の飛角 (角打ちや角移動で0枚玉が発動してしまうのを防ぐため)
+          skip_if { soldier.piece.hisyakaku && soldier.normal? }
 
           # 【条件】自玉が1つ存在する
           and_cond { player.king_soldier_only_one_exist? }
@@ -36,24 +39,41 @@ module Bioshogi
 
           tag_add(general_tag, once: true) # 居飛車穴熊 or 振り飛車穴熊
 
-          kanji_count = KanjiNumber.number_to_kanji(kin_gin_count)
-          if e = TagIndex.lookup("#{kanji_count}枚穴熊")
+          if e = TagIndex["#{kin_gin_count}枚穴熊"]
             tag_add(e)
+          end
+
+          if container.joban
+            if kakugawari?
+              tag_add(:"角換わり穴熊", once: true)
+            end
           end
         end
       end
 
       private
 
+      def kakugawari?
+        if false
+          if container.players.all? { |e| e.tag_bundle.may_be_ibisha? }
+            player.piece_box.has_key?(:bishop)
+          end
+        else
+          player.tag_bundle.include?("角換わり")
+        end
+      end
+
       def general_tag
         @general_tag ||= yield_self do
-          str = king_soldier.left_or_right == :left ? :"居飛車" : :"振り飛車"
+          str = player.tag_bundle.ibisha_or_furibisha
+          # str = king_soldier.left_or_right == :left ? :"居飛車" : :"振り飛車"
           :"#{str}穴熊"
         end
       end
 
       # 玉を中心とした外周とその外周に存在する金銀の個数
       # 金銀の個数 = 銀以上の価値のある駒の個数
+      # 個数0枚 = 玉しかいない
       def kin_gin_count
         @kin_gin_count ||= yield_self do
           V.anaguma_vectors(king_soldier.left_or_right).count do |e|

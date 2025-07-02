@@ -29,7 +29,7 @@ module Bioshogi
           and_cond { m }
 
           ["飛車切り", "竜切り", "角切り", "馬切り"].each do |e|
-            if hand_log.tag_bundle.has_tag?(e)
+            if hand_log.tag_bundle.include?(e)
               hand_log.tag_bundle.delete_tag(e)
               # としても結局 player.tag_bundle の方から取り除かないといけない
               # player.tag_bundle に入れたものは2手前のものか判断できない

@@ -18,7 +18,7 @@ module Bioshogi
         av = Analysis::TagIndex.values.collect do |e|
           turn = nil
           e.static_kif_info.formatter.container.hand_logs.each.with_index do |hand_log, i|
-            if hand_log.tag_bundle.has_tag?(e)
+            if hand_log.tag_bundle.include?(e)
               turn = i.next
               break
             end

@@ -54,7 +54,7 @@ module Bioshogi
         # 0 < 1キル → skip
         # 1 < 1キル → ok
         if v = e.kill_count_lteq
-          if v >= player.container.kill_count
+          if v >= container.kill_count
           else
             throw :skip
           end
@@ -62,7 +62,7 @@ module Bioshogi
 
         # 「歩と角」を除く駒が取られた場合はskip
         if e.outbreak_skip
-          if player.container.outbreak_turn # 「歩と角」を除く駒が取られた手数が入っている
+          if container.outbreak_turn # 「歩と角」を除く駒が取られた手数が入っている
             throw :skip
           end
         end
@@ -201,7 +201,7 @@ module Bioshogi
       def tag_add(tag, options = {})
         tag = TagIndex.fetch(tag)
 
-        if options[:once] && player.tag_bundle.has_tag?(tag)
+        if options[:once] && player.tag_bundle.include?(tag)
           return
         end
 
@@ -214,6 +214,12 @@ module Bioshogi
 
         if v = tag.add_to_opponent
           opponent_player.tag_bundle << v
+        end
+      end
+
+      def preset_is(attr)
+        if preset_info = container.initial_preset_info
+          preset_info.public_send(attr)
         end
       end
     end

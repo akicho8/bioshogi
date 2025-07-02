@@ -30,7 +30,7 @@ module Bioshogi
 
       def various_conditions(e)
         # すでに持っていればスキップ
-        if player.tag_bundle.has_tag?(e)
+        if player.tag_bundle.include?(e)
           throw :skip
         end
 
@@ -38,7 +38,7 @@ module Bioshogi
 
         # 特定の初期配置でないならスキップ
         if v = e.preset_has
-          unless executor.container.initial_preset_info&.public_send(v)
+          unless preset_is(v)
             throw :skip
           end
         end
