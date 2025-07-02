@@ -12,7 +12,7 @@ module Bioshogi
       end
 
       def call
-        perform_block do
+        retv = perform_block do
           # 1. 「飛龍」が来たか「香」を打った
           and_cond { trigger? }
 
@@ -37,8 +37,10 @@ module Bioshogi
               end
             end
           end
+        end
 
-          if e = TechniqueInfo[:"#{count_all}段ロケット"] # 7段以上のロケットは除外する
+        if retv
+          if e = TagIndex.lookup(:"#{count_all}段ロケット") # 7段以上のロケットは除外する
             tag_add(e)
           end
         end

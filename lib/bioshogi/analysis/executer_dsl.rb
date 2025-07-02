@@ -198,8 +198,12 @@ module Bioshogi
         end
       end
 
-      def tag_add(tag)
+      def tag_add(tag, options = {})
         tag = TagIndex.fetch(tag)
+
+        if options[:once] && player.tag_bundle.has_tag?(tag)
+          return
+        end
 
         player.tag_bundle << tag
         tag_bundle << tag

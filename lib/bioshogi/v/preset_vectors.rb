@@ -148,6 +148,42 @@ module Bioshogi
       end
 
       ################################################################################
+
+      def anaguma_vectors(left_or_right)
+        public_send(:"#{left_or_right}_anaguma_vectors")
+      end
+
+      ################################################################################
+
+      def left_anaguma_vectors
+        @left_anaguma_vectors ||= left_anaguma_vectors1 + left_anaguma_vectors2
+      end
+
+      # 外周
+      def left_anaguma_vectors1
+        @left_anaguma_vectors1 ||= [up, up + right, right]
+      end
+
+      # 外周の外周
+      def left_anaguma_vectors2
+        @left_anaguma_vectors2 ||= [up + up, up + up + right, up + up + right + right, up + right + right, right + right]
+      end
+
+      ################################################################################
+
+      def right_anaguma_vectors
+        @right_anaguma_vectors ||= right_anaguma_vectors1 + right_anaguma_vectors2
+      end
+
+      def right_anaguma_vectors1
+        @right_anaguma_vectors1 ||= left_anaguma_vectors1.collect { |e| e * reverse_x }
+      end
+
+      def right_anaguma_vectors2
+        @right_anaguma_vectors2 ||= left_anaguma_vectors2.collect { |e| e * reverse_x }
+      end
+
+      ################################################################################
     end
   end
 end
