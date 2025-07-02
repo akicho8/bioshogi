@@ -3,7 +3,7 @@
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/穴角戦法.kif:9:棋戦詳細：第62期棋聖戦一次予選
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/一間飛車.kif:7:棋戦詳細：大田雄蔵会
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/カニカニ銀.kif:8:棋戦詳細：第59期棋聖戦一次予選
-~/src/bioshogi/lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:7:棋戦詳細：第31回近鉄将棋まつり1日目
+~/src/bioshogi/lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:7:棋戦詳細：第31回近鉄将棋まつり1日目
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/加藤流袖飛車.kif:8:棋戦詳細：第23回早指し将棋選手権戦本戦準々決勝
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/楠本式石田流.kif:8:棋戦詳細：第19期棋王戦予選
 ~/src/bioshogi/lib/bioshogi/analysis/戦法/中原流急戦矢倉.kif:8:棋戦詳細：第56期順位戦C級2組10回戦

@@ -99,7 +99,7 @@ lib/bioshogi/analysis/囲い/離れ金無双.kif:後手の囲い：片美濃囲�
 lib/bioshogi/analysis/囲い/高矢倉.kif:先手の囲い：オリジナル雁木, 高矢倉
 lib/bioshogi/analysis/囲い/高矢倉.kif:後手の囲い：片美濃囲い, 美濃囲い, 高美濃囲い, 銀冠
 lib/bioshogi/analysis/囲い/高美濃囲い.kif:後手の囲い：片美濃囲い, 美濃囲い, 高美濃囲い
-lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:後手の囲い：美濃囲い, 高美濃囲い
+lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:後手の囲い：美濃囲い, 高美濃囲い
 lib/bioshogi/analysis/戦法/5筋位取り.kif:後手の囲い：片美濃囲い, 美濃囲い
 lib/bioshogi/analysis/戦法/6筋位取り.kif:後手の囲い：片美濃囲い, 美濃囲い
 lib/bioshogi/analysis/戦法/Uターン飛車.kif:先手の囲い：舟囲い, 左美濃, 天守閣美濃

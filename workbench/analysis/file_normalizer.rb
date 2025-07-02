@@ -84,7 +84,7 @@ Analysis::FileNormalizer.new.call
 # >>   [82 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/ムリヤリ早石田.kif
 # >>   [83 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/升田式石田流.kif
 # >>   [84 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/鬼殺し.kif
-# >>   [85 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif
+# >>   [85 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif
 # >>   [86 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/コーヤン流三間飛車.kif
 # >>   [87 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/真部流.kif
 # >>   [88 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/戦法/初手▲7八飛戦法.kif

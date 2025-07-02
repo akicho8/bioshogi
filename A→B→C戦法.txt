@@ -96,10 +96,10 @@ lib/bioshogi/analysis/囲い/雲隠れ玉.kif:先手の戦法：向かい飛車,
 lib/bioshogi/analysis/囲い/雲隠れ玉.kif:*▲戦法：向かい飛車, 陽動振り飛車
 lib/bioshogi/analysis/囲い/高矢倉.kif:後手の戦法：四間飛車, ノーマル四間飛車
 lib/bioshogi/analysis/囲い/高美濃囲い.kif:後手の戦法：三間飛車, ノーマル三間飛車, 向かい飛車
-lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:先手の戦法：四間飛車, 三間飛車, 早石田
-lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:後手の戦法：三間飛車, 2手目△3ニ飛戦法
-lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:*△戦法：三間飛車, 2手目△3ニ飛戦法
-lib/bioshogi/analysis/戦法/2手目△3ニ飛戦法.kif:*▲戦法：三間飛車, 早石田
+lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:先手の戦法：四間飛車, 三間飛車, 早石田
+lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:後手の戦法：三間飛車, 2手目△3二飛戦法
+lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:*△戦法：三間飛車, 2手目△3二飛戦法
+lib/bioshogi/analysis/戦法/2手目△3二飛戦法.kif:*▲戦法：三間飛車, 早石田
 lib/bioshogi/analysis/戦法/3→4→3戦法.kif:後手の戦法：四間飛車, 三間飛車, 3→4→3戦法
 lib/bioshogi/analysis/戦法/3→4→3戦法.kif:*△戦法：三間飛車, 3→4→3戦法
 lib/bioshogi/analysis/戦法/5筋位取り.kif:後手の戦法：四間飛車, ノーマル四間飛車
@@ -267,7 +267,7 @@ lib/bioshogi/analysis/戦法/極限早繰り銀.kif:先手の戦法：早繰り�
 lib/bioshogi/analysis/戦法/清野流岐阜戦法.kif:先手の戦法：6筋位取り, 清野流岐阜戦法
 lib/bioshogi/analysis/戦法/清野流岐阜戦法.kif:後手の戦法：四間飛車, ノーマル四間飛車, 三間飛車, 向かい飛車
 lib/bioshogi/analysis/戦法/玉頭銀.kif:後手の戦法：四間飛車, ノーマル四間飛車, 玉頭銀, 中飛車
-lib/bioshogi/analysis/戦法/相振り飛車.kif:*△戦法：2手目△3ニ飛戦法, 相振り飛車
+lib/bioshogi/analysis/戦法/相振り飛車.kif:*△戦法：2手目△3二飛戦法, 相振り飛車
 lib/bioshogi/analysis/戦法/相掛かり棒銀.kif:先手の戦法：相掛かり, 相掛かり棒銀
 lib/bioshogi/analysis/戦法/相横歩取り.kif:先手の戦法：横歩取り, 相横歩取り
 lib/bioshogi/analysis/戦法/相筋違い角.kif:先手の戦法：筋違い角, 相筋違い角
@@ -380,11 +380,11 @@ lib/bioshogi/analysis/戦法/鳥刺し.kif:先手の戦法：引き角, 鳥刺�
 lib/bioshogi/analysis/戦法/鳥刺し.kif:*▲戦法：引き角, 鳥刺し
 lib/bioshogi/analysis/戦法/鷺宮定跡.kif:先手の戦法：袖飛車, 鷺宮定跡
 lib/bioshogi/analysis/戦法/鷺宮定跡.kif:*▲戦法：袖飛車, 鷺宮定跡
-lib/bioshogi/analysis/手筋/勝ち確5三と.kif:後手の戦法：三間飛車, 2手目△3ニ飛戦法
-lib/bioshogi/analysis/手筋/勝ち確5三と.kif:*△戦法：三間飛車, 2手目△3ニ飛戦法
+lib/bioshogi/analysis/手筋/勝ち確5三と.kif:後手の戦法：三間飛車, 2手目△3二飛戦法
+lib/bioshogi/analysis/手筋/勝ち確5三と.kif:*△戦法：三間飛車, 2手目△3二飛戦法
 lib/bioshogi/analysis/手筋/土下座の歩.kif:先手の戦法：嬉野流, 引き角
-lib/bioshogi/analysis/手筋/居飛車の税金.kif:後手の戦法：三間飛車, 2手目△3ニ飛戦法
-lib/bioshogi/analysis/手筋/居飛車の税金.kif:*△戦法：三間飛車, 2手目△3ニ飛戦法
+lib/bioshogi/analysis/手筋/居飛車の税金.kif:後手の戦法：三間飛車, 2手目△3二飛戦法
+lib/bioshogi/analysis/手筋/居飛車の税金.kif:*△戦法：三間飛車, 2手目△3二飛戦法
 lib/bioshogi/analysis/手筋/玉飛接近.kif:先手の戦法：中飛車, 原始中飛車
 lib/bioshogi/analysis/手筋/玉飛接近.kif:後手の戦法：中飛車, 原始中飛車
 lib/bioshogi/analysis/手筋/玉飛接近.kif:*▲戦法：中飛車, 原始中飛車

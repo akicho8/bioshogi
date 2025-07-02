@@ -107,7 +107,7 @@ tp rows
 # >> | Bioshogi::Analysis::AttackInfo    | ムリヤリ早石田           | 三間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | 升田式石田流             | 早石田             |
 # >> | Bioshogi::Analysis::AttackInfo    | 鬼殺し                   | 三間飛車           |
-# >> | Bioshogi::Analysis::AttackInfo    | 2手目△3ニ飛戦法        | 三間飛車           |
+# >> | Bioshogi::Analysis::AttackInfo    | 2手目△3二飛戦法        | 三間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | コーヤン流三間飛車                 | 三間飛車           |
 # >> | Bioshogi::Analysis::AttackInfo    | 真部流                   |                    |
 # >> | Bioshogi::Analysis::AttackInfo    | 初手▲7八飛戦法         | 三間飛車           |
