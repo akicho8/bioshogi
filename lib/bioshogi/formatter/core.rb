@@ -84,8 +84,8 @@ module Bioshogi
 
         # xparser を渡すのではなく必要なパラメータだけ渡す
         params[:preset_info_or_nil]     = preset_info_or_nil           # 手合割
-        params[:win_side_location]      = @pi.header.win_side_location # 勝敗がついた側がわかっている (強)
-        params[:input_last_action_info] = @pi.input_last_action_info   # 結末 (都詰めなどの判定に必要)
+        params[:win_side_location]      = pi.header.win_side_location # 勝敗がついた側がわかっている (強)
+        params[:input_last_action_info] = pi.input_last_action_info   # 結末 (都詰めなどの判定に必要)
 
         params
       end
@@ -122,13 +122,13 @@ module Bioshogi
       end
 
       def container_init(container)
-        if @pi.sfen_info
-          container.placement_from_sfen(@pi.sfen_info)
+        if pi.sfen_info
+          container.placement_from_sfen(pi.sfen_info)
         else
           players_piece_box_set(container)
 
-          if @pi.board_source
-            container.board.placement_from_shape(@pi.board_source)
+          if pi.board_source
+            container.board.placement_from_shape(pi.board_source)
           else
             preset_info = PresetInfo[pi.header["手合割"]] || PresetInfo["平手"]
             container.placement_from_preset(preset_info.key)
@@ -156,8 +156,8 @@ module Bioshogi
       # 盤面の指定があるとき、盤面だけを見て、手合割を得る
       def board_preset_info
         @board_preset_info ||= yield_self do
-          if @pi.board_source
-            Board.guess_preset_info(@pi.board_source)
+          if pi.board_source
+            Board.guess_preset_info(pi.board_source)
           end
         end
       end
@@ -170,7 +170,7 @@ module Bioshogi
       # 手合割(なければ nil)
       def preset_info_or_nil
         unless defined?(@preset_info_or_nil)
-          @preset_info_or_nil ||= @pi.force_preset_info
+          @preset_info_or_nil ||= pi.force_preset_info
           @preset_info_or_nil ||= initial_container.board.preset_info
           @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
         end
@@ -181,7 +181,11 @@ module Bioshogi
       def container_run_all(container)
         Runner.new(self, container).call
         if @parser_options[:analysis_feature]
-          @pi.header.object.update(container.to_header_h)
+          pi.header.object.update(container.to_header_h)
+
+          if e = pi.output_last_action_info
+            pi.header["結末"] = e.kakinoki_word
+          end
         end
       end
 
