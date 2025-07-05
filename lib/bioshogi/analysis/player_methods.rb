@@ -3,9 +3,14 @@
 module Bioshogi
   module Analysis
     module PlayerMethods
-      attr_accessor :king_moved_counter
+      attr_writer :kill_count
+      attr_writer :king_moved_counter
       attr_accessor :king_place
       attr_accessor :king_first_moved_turn # 玉が最初に動いた手数
+
+      def kill_count
+        @kill_count ||= 0
+      end
 
       def king_moved_counter
         @king_moved_counter ||= 0
@@ -40,7 +45,10 @@ module Bioshogi
           end
         end
 
+        acc["#{call_name}のキル数"] = "#{kill_count}キル"
         acc["#{call_name}の玉移動"] = "#{king_moved_counter}回"
+
+        # used_piece_counts
 
         acc
       end

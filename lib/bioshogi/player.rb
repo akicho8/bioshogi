@@ -21,12 +21,13 @@ module Bioshogi
     end
 
     def execute(str, options = {})
+      # @executor に入れている理由は最後に実行した情報を保持するためらしい
       @executor = (options[:executor_class] || PlayerExecutor::Human).new(self, str, options)
       @executor.execute
     end
 
     def opponent_player
-      @container.player_at(location.flip)
+      container.player_at(location.flip)
     end
 
     # 自分と相手

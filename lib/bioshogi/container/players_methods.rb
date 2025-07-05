@@ -12,15 +12,17 @@ module Bioshogi
         end
       end
 
-      attr_reader :players
-
       def players
         @players ||= Location.collect do |e|
           Player.new(container: self, location: e)
         end
       end
 
-      # player_at(-1) でも後手を取得できる
+      # player_at(-2) → 先手
+      # player_at(-1) → 後手
+      # player_at(+0) → 先手
+      # player_at(+1) → 後手
+      # player_at(+2) → 先手
       def player_at(location)
         players[Location.fetch(location).code]
       end
@@ -61,10 +63,6 @@ module Bioshogi
       def normalized_names_with_alias
         players.flat_map { |e| e.tag_bundle.normalized_names_with_alias }.uniq
       end
-
-      # def basic_score
-      #   evaluator.basic_score
-      # end
 
       # 互いに王手されている局面か？ (ありえない)
       def position_invalid?

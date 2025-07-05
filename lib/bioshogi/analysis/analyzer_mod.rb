@@ -25,6 +25,7 @@ module Bioshogi
         if analysis_feature_enabled?
           # 総キル数の記録
           container.kill_count += 1
+          player.kill_count += 1
 
           # 駒が取られる最初の手数の記録
           container.critical_turn ||= container.turn_info.turn_offset
