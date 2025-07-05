@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>module Bioshogi::Container - RDoc Documentation</title>
+
+  <meta name="keywords" content="ruby,module,Bioshogi::Container">
+
+    <meta name="description" content="Documentation for the Bioshogi::Container module">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="module">
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+  
+  
+  
+  
+  
+  <div class="nav-section">
+    <h3>Class Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-c-new">new</a></li>
+    </ul>
+  </div>
+
+
+
+  <div class="nav-section">
+    <h3>Instance Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-i-after_execute_all">after_execute_all</a></li>
+      <li ><a href="#method-i-after_setup">after_setup</a></li>
+      <li ><a href="#method-i-before_execute_all">before_execute_all</a></li>
+      <li ><a href="#method-i-board">board</a></li>
+      <li ><a href="#method-i-context_new">context_new</a></li>
+      <li ><a href="#method-i-create">create</a></li>
+      <li ><a href="#method-i-current_player">current_player</a></li>
+      <li ><a href="#method-i-deep_dup">deep_dup</a></li>
+      <li ><a href="#method-i-default_params">default_params</a></li>
+      <li ><a href="#method-i-execute">execute</a></li>
+      <li ><a href="#method-i-executor_class">executor_class</a></li>
+      <li ><a href="#method-i-facade">facade</a></li>
+      <li ><a href="#method-i-hand_logs">hand_logs</a></li>
+      <li ><a href="#method-i-initial_preset_info_set">initial_preset_info_set</a></li>
+      <li ><a href="#method-i-inspect">inspect</a></li>
+      <li ><a href="#method-i-joban">joban</a></li>
+      <li ><a href="#method-i-judgment_message">judgment_message</a></li>
+      <li ><a href="#method-i-kill_count">kill_count</a></li>
+      <li ><a href="#method-i-load_from_sfen">load_from_sfen</a></li>
+      <li ><a href="#method-i-lose_player">lose_player</a></li>
+      <li ><a href="#method-i-new">new</a></li>
+      <li ><a href="#method-i-next_player">next_player</a></li>
+      <li ><a href="#method-i-normalized_names_with_alias">normalized_names_with_alias</a></li>
+      <li ><a href="#method-i-not_enough_piece_box">not_enough_piece_box</a></li>
+      <li ><a href="#method-i-opponent_player">opponent_player</a></li>
+      <li ><a href="#method-i-params">params</a></li>
+      <li ><a href="#method-i-piece_box_clear">piece_box_clear</a></li>
+      <li ><a href="#method-i-pieces_set">pieces_set</a></li>
+      <li ><a href="#method-i-placement_from_bod">placement_from_bod</a></li>
+      <li ><a href="#method-i-placement_from_preset">placement_from_preset</a></li>
+      <li ><a href="#method-i-placement_from_sfen">placement_from_sfen</a></li>
+      <li ><a href="#method-i-player_at">player_at</a></li>
+      <li ><a href="#method-i-player_test">player_test</a></li>
+      <li ><a href="#method-i-player_test_soldier_names">player_test_soldier_names</a></li>
+      <li ><a href="#method-i-players">players</a></li>
+      <li ><a href="#method-i-position_invalid-3F">position_invalid?</a></li>
+      <li ><a href="#method-i-read_spec">read_spec</a></li>
+      <li ><a href="#method-i-screen_image_renderer">screen_image_renderer</a></li>
+      <li ><a href="#method-i-start">start</a></li>
+      <li ><a href="#method-i-startpos-3F">startpos?</a></li>
+      <li ><a href="#method-i-to_bod">to_bod</a></li>
+      <li ><a href="#method-i-to_csa">to_csa</a></li>
+      <li ><a href="#method-i-to_gif">to_gif</a></li>
+      <li ><a href="#method-i-to_header_h">to_header_h</a></li>
+      <li ><a href="#method-i-to_header_shared_h">to_header_shared_h</a></li>
+      <li ><a href="#method-i-to_history_sfen">to_history_sfen</a></li>
+      <li ><a href="#method-i-to_image">to_image</a></li>
+      <li ><a href="#method-i-to_jpg">to_jpg</a></li>
+      <li ><a href="#method-i-to_kif">to_kif</a></li>
+      <li ><a href="#method-i-to_piece_box">to_piece_box</a></li>
+      <li ><a href="#method-i-to_png">to_png</a></li>
+      <li ><a href="#method-i-to_s">to_s</a></li>
+      <li ><a href="#method-i-to_short_sfen">to_short_sfen</a></li>
+      <li ><a href="#method-i-to_short_sfen_without_turn">to_short_sfen_without_turn</a></li>
+      <li ><a href="#method-i-to_webp">to_webp</a></li>
+      <li ><a href="#method-i-to_yomiage">to_yomiage</a></li>
+      <li ><a href="#method-i-to_yomiage_list">to_yomiage_list</a></li>
+      <li ><a href="#method-i-turn_info">turn_info</a></li>
+      <li ><a href="#method-i-tyuuban_ikou">tyuuban_ikou</a></li>
+      <li ><a href="#method-i-win_player">win_player</a></li>
+    </ul>
+  </div>
+
+
+
+  <footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
+</nav>
+
+<main role="main" aria-labelledby="module-Bioshogi::Container">
+  <h1 id="module-Bioshogi::Container" class="anchor-link module">
+    module Bioshogi::Container
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+
+
+
+
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-new" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(params = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">params</span> = {})
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">params</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">params</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+    </section>
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-after_execute_all" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-after_execute_all" title="Link to this method">
+                <span class="method-name">after_execute_all</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="after_execute_all-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">after_execute_all</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:analysis_feature</span>]
+    <span class="ruby-constant">Analysis</span><span class="ruby-operator">::</span><span class="ruby-constant">Atsumeruyo</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
+    <span class="ruby-constant">Analysis</span><span class="ruby-operator">::</span><span class="ruby-constant">FinalizeTagDetector</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-after_setup" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-after_setup" title="Link to this method">
+                <span class="method-name">after_setup</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="after_setup-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">after_setup</span>
+  <span class="ruby-identifier">initial_preset_info_set</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-before_execute_all" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-before_execute_all" title="Link to this method">
+                <span class="method-name">before_execute_all</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="before_execute_all-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">before_execute_all</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-board" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-board" title="Link to this method">
+                <span class="method-name">board</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="board-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">board</span>
+  <span class="ruby-ivar">@board</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:board_class</span>].<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-context_new" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-context_new" title="Link to this method">
+                <span class="method-name">context_new</span>
+                <span class="method-args">() { |deep_dup| ... }</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="context_new-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">context_new</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">deep_dup</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-create" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-create" title="Link to this method">
+                <span class="method-name">create</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-constant">Basic</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-current_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-current_player" title="Link to this method">
+                <span class="method-name">current_player</span>
+                <span class="method-args">(diff = 0)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="current_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_player</span>(<span class="ruby-identifier">diff</span> = <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">players</span>[<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">current_location</span>(<span class="ruby-identifier">diff</span>).<span class="ruby-identifier">code</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>現在の手番のプレイヤー引数の数値だけ手番が入れ替わる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-deep_dup" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-deep_dup" title="Link to this method">
+                <span class="method-name">deep_dup</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="deep_dup-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">deep_dup</span>
+  <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-keyword">self</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-default_params" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-default_params" title="Link to this method">
+                <span class="method-name">default_params</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="default_params-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">default_params</span>
+  {
+    <span class="ruby-value">:analysis_feature</span>        <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">false</span>,
+    <span class="ruby-value">:ki2_function</span>            <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:validate_feature</span>        <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:double_pawn_detect</span>      <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-comment"># 二歩を検出するか？</span>
+    <span class="ruby-value">:warp_detect</span>             <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-comment"># 角ワープを検出するか？</span>
+    <span class="ruby-value">:board_class</span>             <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">Board</span>,
+    <span class="ruby-value">:last_action_info1</span>        <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">LastActionInfo</span>[<span class="ruby-value">:TORYO</span>],
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-execute" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-execute" title="Link to this method">
+                <span class="method-name">execute</span>
+                <span class="method-args">(str, options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="execute-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">execute</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">options</span> = {
+    <span class="ruby-value">executor_class:</span> <span class="ruby-identifier">executor_class</span>,
+  }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+
+  <span class="ruby-constant">InputParser</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">current_player</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-executor_class" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-executor_class" title="Link to this method">
+                <span class="method-name">executor_class</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="executor_class-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">executor_class</span>
+  <span class="ruby-constant">PlayerExecutor</span><span class="ruby-operator">::</span><span class="ruby-constant">Human</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-facade" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-facade" title="Link to this method">
+                <span class="method-name">facade</span>
+                <span class="method-args">(params = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="facade-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/test_methods.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">facade</span>(<span class="ruby-identifier">params</span> = {})
+  <span class="ruby-identifier">container</span> = <span class="ruby-identifier">new</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:init</span>]
+    <span class="ruby-identifier">container</span>.<span class="ruby-identifier">board</span>.<span class="ruby-identifier">placement_from_human</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:init</span>])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:pieces_set</span>]
+    <span class="ruby-identifier">container</span>.<span class="ruby-identifier">pieces_set</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:pieces_set</span>])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">container</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:execute</span>])
+  <span class="ruby-identifier">container</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hand_logs" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hand_logs" title="Link to this method">
+                <span class="method-name">hand_logs</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hand_logs-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hand_logs</span>
+  <span class="ruby-ivar">@hand_logs</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">HandLogs</span>.<span class="ruby-identifier">new</span>([])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-initial_preset_info_set" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-initial_preset_info_set" title="Link to this method">
+                <span class="method-name">initial_preset_info_set</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="initial_preset_info_set-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initial_preset_info_set</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@initial_preset_info</span>)
+    <span class="ruby-ivar">@initial_preset_info</span> = <span class="ruby-identifier">board</span>.<span class="ruby-identifier">preset_info</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-inspect" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-inspect" title="Link to this method">
+                <span class="method-name">inspect</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inspect</span>
+  <span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-joban" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-joban" title="Link to this method">
+                <span class="method-name">joban</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="joban-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">joban</span>
+  <span class="ruby-operator">!</span><span class="ruby-identifier">outbreak_turn</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-judgment_message" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-judgment_message" title="Link to this method">
+                <span class="method-name">judgment_message</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="judgment_message-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">judgment_message</span>
+  <span class="ruby-node">&quot;まで#{turn_info.display_turn}手で#{win_player.call_name}の勝ち&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-kill_count" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-kill_count" title="Link to this method">
+                <span class="method-name">kill_count</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="kill_count-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">kill_count</span>
+  <span class="ruby-ivar">@kill_count</span> <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-load_from_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-load_from_sfen" title="Link to this method">
+                <span class="method-name">load_from_sfen</span>
+                <span class="method-args">(sfen_info)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="load_from_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">load_from_sfen</span>(<span class="ruby-identifier">sfen_info</span>)
+  <span class="ruby-constant">SfenImporter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">sfen_info</span>).<span class="ruby-identifier">import_all</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>SFEN のすべてを流し込む</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-lose_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-lose_player" title="Link to this method">
+                <span class="method-name">lose_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="lose_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_player</span>
+  <span class="ruby-identifier">current_player</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>対局が終わった時点での敗者</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-new" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-constant">Basic</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-next_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-next_player" title="Link to this method">
+                <span class="method-name">next_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="next_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_player</span>
+  <span class="ruby-identifier">opponent_player</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>次のプレイヤー(つまり相手)</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-normalized_names_with_alias" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-normalized_names_with_alias" title="Link to this method">
+                <span class="method-name">normalized_names_with_alias</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="normalized_names_with_alias-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">normalized_names_with_alias</span>
+  <span class="ruby-identifier">players</span>.<span class="ruby-identifier">flat_map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">tag_bundle</span>.<span class="ruby-identifier">normalized_names_with_alias</span> }.<span class="ruby-identifier">uniq</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>両者の(別名を含む)スキル名のリストを合わせてユニークにしたものつまりその対局に関連するすべてのタグに相当する</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-not_enough_piece_box" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-not_enough_piece_box" title="Link to this method">
+                <span class="method-name">not_enough_piece_box</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="not_enough_piece_box-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">not_enough_piece_box</span>
+  <span class="ruby-identifier">all</span> = <span class="ruby-constant">PieceBox</span>.<span class="ruby-identifier">real_box</span>
+  <span class="ruby-identifier">all</span>.<span class="ruby-identifier">safe_sub</span>(<span class="ruby-identifier">to_piece_box</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>足りない駒が入っている箱を返す</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-opponent_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-opponent_player" title="Link to this method">
+                <span class="method-name">opponent_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="opponent_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">opponent_player</span>
+  <span class="ruby-identifier">current_player</span>(<span class="ruby-value">1</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>現在の手番の相手プレイヤー</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-params" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-params" title="Link to this method">
+                <span class="method-name">params</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="params-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">params</span>
+  <span class="ruby-ivar">@params</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">default_params</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-piece_box_clear" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-piece_box_clear" title="Link to this method">
+                <span class="method-name">piece_box_clear</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="piece_box_clear-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_box_clear</span>
+  <span class="ruby-identifier">players</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">clear</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>両方のプレイヤーの駒台をクリア</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-pieces_set" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-pieces_set" title="Link to this method">
+                <span class="method-name">pieces_set</span>
+                <span class="method-args">(str)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="pieces_set-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pieces_set</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">s_to_h2</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location_key</span>, <span class="ruby-identifier">counts</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">location_key</span>).<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">set</span>(<span class="ruby-identifier">counts</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>文字列で両者に駒を配る</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-placement_from_bod" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-placement_from_bod" title="Link to this method">
+                <span class="method-name">placement_from_bod</span>
+                <span class="method-args">(str)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="placement_from_bod-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">placement_from_bod</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:strip</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/(?&lt;board&gt;^\+\-.*\-\+$)/m</span>)
+    <span class="ruby-identifier">board</span>.<span class="ruby-identifier">placement_from_shape</span>(<span class="ruby-identifier">md</span>[<span class="ruby-value">:board</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/(.*)の持駒：(.*)/</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location_key</span>, <span class="ruby-identifier">piece_str</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">location_key</span>).<span class="ruby-identifier">pieces_set</span>(<span class="ruby-identifier">piece_str</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/^手数\s*(＝|=)\s*(?&lt;counter&gt;\d+)/</span>)
+    <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_base</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">:counter</span>].<span class="ruby-identifier">to_i</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># 手合割は bod の仕様にはないはずだけどあれば駒落ちの判断材料にはなる</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/^手合割：\s*(\S+)\s*/</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">preset_info</span> = <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">md</span>.<span class="ruby-identifier">captures</span>.<span class="ruby-identifier">first</span>)
+      <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">handicap</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># 「上手」「下手」の名前がどこかに使われていれば駒落ち(雑)</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Location</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">handicap_name</span>) }
+    <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># FIXME: 「先手番」のチェックがない</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-placement_from_preset" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-placement_from_preset" title="Link to this method">
+                <span class="method-name">placement_from_preset</span>
+                <span class="method-args">(preset_key = nil)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="placement_from_preset-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">placement_from_preset</span>(<span class="ruby-identifier">preset_key</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">preset_info</span> = <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">preset_key</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;平手&quot;</span>)
+
+  <span class="ruby-comment"># 盤の反映</span>
+  <span class="ruby-identifier">board</span>.<span class="ruby-identifier">placement_from_soldiers</span>(<span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">sorted_soldiers</span>)
+
+  <span class="ruby-comment"># 持駒の反映</span>
+  <span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">piece_boxes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location_key</span>, <span class="ruby-identifier">piece_str</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">location_key</span>).<span class="ruby-identifier">pieces_set</span>(<span class="ruby-identifier">piece_str</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># 手番の反映</span>
+  <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">handicap</span>
+
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_base</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> }
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_offset</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> }
+
+  <span class="ruby-comment"># 玉の位置を取得</span>
+  <span class="ruby-identifier">players</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:king_place_update</span>)
+
+  <span class="ruby-comment"># TODO: ここで居玉判定をするべきかどうかの判定を入れたらいい？</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-placement_from_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-placement_from_sfen" title="Link to this method">
+                <span class="method-name">placement_from_sfen</span>
+                <span class="method-args">(sfen_info)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="placement_from_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">placement_from_sfen</span>(<span class="ruby-identifier">sfen_info</span>)
+  <span class="ruby-constant">SfenImporter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">sfen_info</span>).<span class="ruby-identifier">import_initial</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>SFEN で初期配置する</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-player_at" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-player_at" title="Link to this method">
+                <span class="method-name">player_at</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="player_at-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">player_at</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-identifier">players</span>[<span class="ruby-constant">Location</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">location</span>).<span class="ruby-identifier">code</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p><a href="Container.html#method-i-player_at"><code>player_at</code></a>(-2) → 先手player_at(-1) → 後手player_at(+0) → 先手player_at(+1) → 後手player_at(+2) → 先手</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-player_test" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-player_test" title="Link to this method">
+                <span class="method-name">player_test</span>
+                <span class="method-args">(params = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="player_test-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/test_methods.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">player_test</span>(<span class="ruby-identifier">params</span> = {})
+  <span class="ruby-identifier">params</span> = {
+    <span class="ruby-value">player:</span> <span class="ruby-value">:black</span>,
+    <span class="ruby-value">initial_deal:</span> <span class="ruby-keyword">true</span>,
+  }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">params</span>)
+
+  <span class="ruby-identifier">container</span> = <span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">player</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:player</span>])
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:initial_deal</span>]
+    <span class="ruby-identifier">player</span>.<span class="ruby-identifier">pieces_add</span>(<span class="ruby-string">&quot;歩9角飛香2桂2銀2金2玉&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:pieces_add</span>]
+    <span class="ruby-identifier">player</span>.<span class="ruby-identifier">pieces_add</span>(<span class="ruby-identifier">v</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:init</span>]
+    <span class="ruby-identifier">player</span>.<span class="ruby-identifier">soldier_create</span>(<span class="ruby-identifier">v</span>, <span class="ruby-value">from_stand:</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Array</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:execute</span>]).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">player</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">v</span>) }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:pieces_set</span>]
+    <span class="ruby-identifier">player</span>.<span class="ruby-identifier">pieces_set</span>(<span class="ruby-identifier">v</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">player</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-player_test_soldier_names" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-player_test_soldier_names" title="Link to this method">
+                <span class="method-name">player_test_soldier_names</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="player_test_soldier_names-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/test_methods.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">player_test_soldier_names</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-identifier">player_test</span>(<span class="ruby-operator">...</span>).<span class="ruby-identifier">soldiers</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-players" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-players" title="Link to this method">
+                <span class="method-name">players</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="players-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">players</span>
+  <span class="ruby-ivar">@players</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Location</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Player</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">container:</span> <span class="ruby-keyword">self</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">e</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-position_invalid-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-position_invalid-3F" title="Link to this method">
+                <span class="method-name">position_invalid?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="position_invalid-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">position_invalid?</span>
+  <span class="ruby-identifier">players</span>.<span class="ruby-identifier">all?</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:mate_advantage?</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>互いに王手されている局面か？ (ありえない)</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-read_spec" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-read_spec" title="Link to this method">
+                <span class="method-name">read_spec</span>
+                <span class="method-args">(params)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="read_spec-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/test_methods.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">read_spec</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">container</span> = <span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">player</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-value">:black</span>)
+  <span class="ruby-identifier">player</span>.<span class="ruby-identifier">pieces_add</span>(<span class="ruby-string">&quot;歩9角飛香2桂2銀2金2玉&quot;</span>)
+  <span class="ruby-identifier">player</span>.<span class="ruby-identifier">placement_from_human</span>(<span class="ruby-constant">Array</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:init</span>]).<span class="ruby-identifier">join</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/_/</span>, <span class="ruby-string">&quot;&quot;</span>))
+  <span class="ruby-constant">Array</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:execute</span>]).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">player</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">v</span>) }
+  <span class="ruby-identifier">container</span>.<span class="ruby-identifier">hand_logs</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">to_kif_ki2</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-screen_image_renderer" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-screen_image_renderer" title="Link to this method">
+                <span class="method-name">screen_image_renderer</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="screen_image_renderer-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">screen_image_renderer</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">ScreenImage</span>.<span class="ruby-identifier">renderer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-start" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-start" title="Link to this method">
+                <span class="method-name">start</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="start-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">start</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>).<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">e</span>.<span class="ruby-identifier">placement_from_preset</span>(<span class="ruby-string">&quot;平手&quot;</span>)
+    <span class="ruby-identifier">e</span>.<span class="ruby-identifier">after_setup</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-startpos-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-startpos-3F" title="Link to this method">
+                <span class="method-name">startpos?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="startpos-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 124</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">startpos?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-identifier">board</span>.<span class="ruby-identifier">preset_info</span>
+    <span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:&quot;平手&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">players</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">empty?</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>平手で開始する直前の状態か？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_bod" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_bod" title="Link to this method">
+                <span class="method-name">to_bod</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_bod-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_bod</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">s</span> = []
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">player_at</span>(<span class="ruby-value">:white</span>).<span class="ruby-identifier">piece_box_as_header</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">player_at</span>(<span class="ruby-value">:black</span>).<span class="ruby-identifier">piece_box_as_header</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:display_turn_skip</span>]
+    <span class="ruby-identifier">last</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:hand_logs</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-identifier">hand_logs</span>.<span class="ruby-identifier">last</span>
+        <span class="ruby-identifier">last</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">with_location:</span> <span class="ruby-keyword">true</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;手数＝#{turn_info.display_turn} #{last} まで&quot;</span>.<span class="ruby-identifier">squish</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{current_player.call_name}番\n&quot;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_csa" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_csa" title="Link to this method">
+                <span class="method-name">to_csa</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_csa-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">s</span> = []
+
+  <span class="ruby-identifier">preset_info</span> = <span class="ruby-identifier">board</span>.<span class="ruby-identifier">preset_info</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">preset_info</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:oneline</span>]
+      <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{Parser::CsaParser::SYSTEM_COMMENT_CHAR} 手合割:#{preset_info.name}&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:board_expansion</span>]
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_csa</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">preset_info</span> <span class="ruby-operator">==</span> <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&quot;平手&quot;</span>)
+      <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;PI&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_csa</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">players</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">player</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">player</span>.<span class="ruby-identifier">to_csa</span>.<span class="ruby-identifier">presence</span>
+      <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_gif" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_gif" title="Link to this method">
+                <span class="method-name">to_gif</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_gif-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_gif</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">ScreenImage</span>.<span class="ruby-identifier">renderer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">image_format:</span> <span class="ruby-string">&quot;gif&quot;</span>)).<span class="ruby-identifier">to_blob_binary</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_header_h" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_header_h" title="Link to this method">
+                <span class="method-name">to_header_h</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_header_h-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/core_methods.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_header_h</span>
+  {}.<span class="ruby-identifier">merge</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">players</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_header_h</span>), <span class="ruby-identifier">to_header_shared_h</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_header_shared_h" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_header_shared_h" title="Link to this method">
+                <span class="method-name">to_header_shared_h</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_header_shared_h-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_header_shared_h</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:analysis_feature</span>]
+    {
+      <span class="ruby-string">&quot;接触&quot;</span>     <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">critical_turn</span>.<span class="ruby-identifier">try</span> { <span class="ruby-node">&quot;#{self}手目&quot;</span> },
+      <span class="ruby-string">&quot;開戦&quot;</span>     <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">outbreak_turn</span>.<span class="ruby-identifier">try</span> { <span class="ruby-node">&quot;#{self}手目&quot;</span> },
+      <span class="ruby-string">&quot;総手数&quot;</span>   <span class="ruby-operator">=&gt;</span> <span class="ruby-node">&quot;#{turn_info.display_turn}手&quot;</span>,
+      <span class="ruby-string">&quot;総キル数&quot;</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-node">&quot;#{kill_count}キル&quot;</span>,
+    }
+  <span class="ruby-keyword">else</span>
+    {}
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_history_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_history_sfen" title="Link to this method">
+                <span class="method-name">to_history_sfen</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_history_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_history_sfen</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">s</span> = []
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@initial_state_board_sfen</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">BioshogiError</span>, <span class="ruby-string">&quot;@initial_state_board_sfen が未定義&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@initial_state_board_sfen</span> <span class="ruby-comment"># 局面を文字列でとっておくのってなんか違う気がする</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hand_logs</span>.<span class="ruby-identifier">present?</span>
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;moves&quot;</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">hand_logs</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sfen</span>))
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:startpos_embed</span>]
+    <span class="ruby-identifier">s</span> = <span class="ruby-constant">Sfen</span>.<span class="ruby-identifier">startpos_embed</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>最初から現在までの局面</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_image" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_image" title="Link to this method">
+                <span class="method-name">to_image</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_image-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_image</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">screen_image_renderer</span>(<span class="ruby-identifier">options</span>).<span class="ruby-identifier">to_blob_binary</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_jpg" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_jpg" title="Link to this method">
+                <span class="method-name">to_jpg</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_jpg-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_jpg</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">ScreenImage</span>.<span class="ruby-identifier">renderer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">image_format:</span> <span class="ruby-string">&quot;jpg&quot;</span>)).<span class="ruby-identifier">to_blob_binary</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_kif" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_kif" title="Link to this method">
+                <span class="method-name">to_kif</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_kif-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_kif</span>
+  <span class="ruby-identifier">s</span> = []
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">players</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">player</span><span class="ruby-operator">|</span>
+    <span class="ruby-node">&quot;#{player.call_name}の持駒:#{player.piece_box}&quot;</span>
+  }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_piece_box" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_piece_box" title="Link to this method">
+                <span class="method-name">to_piece_box</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_piece_box-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_piece_box</span>
+  <span class="ruby-identifier">piece_box</span> = <span class="ruby-constant">PieceBox</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">piece_box</span> = <span class="ruby-identifier">players</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">piece_box</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">piece_box</span>) }
+  <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_piece_box</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>両者の駒を一つに集める</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_png" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_png" title="Link to this method">
+                <span class="method-name">to_png</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_png-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_png</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">ScreenImage</span>.<span class="ruby-identifier">renderer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">image_format:</span> <span class="ruby-string">&quot;png&quot;</span>)).<span class="ruby-identifier">to_blob_binary</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_s" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_s" title="Link to this method">
+                <span class="method-name">to_s</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-identifier">to_bod</span>(<span class="ruby-operator">...</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_short_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_short_sfen" title="Link to this method">
+                <span class="method-name">to_short_sfen</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_short_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_short_sfen</span>
+  <span class="ruby-node">&quot;#{to_short_sfen_without_turn} #{turn_info.display_turn.next}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>現在の局面def <a href="Container.html#method-i-to_short_sfen"><code>to_short_sfen</code></a></p>
+
+<pre class="ruby"><span class="ruby-keyword">if</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">startpos?</span>
+    <span class="ruby-string">&quot;position startpos&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">to_short_sfen</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">else</span>
+  <span class="ruby-identifier">to_short_sfen</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_short_sfen_without_turn" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_short_sfen_without_turn" title="Link to this method">
+                <span class="method-name">to_short_sfen_without_turn</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_short_sfen_without_turn-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_short_sfen_without_turn</span>
+  <span class="ruby-identifier">s</span> = []
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;position&quot;</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;sfen&quot;</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">current_location</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">players</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">empty?</span> }
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;-&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">players</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sfen</span>).<span class="ruby-identifier">join</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_webp" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_webp" title="Link to this method">
+                <span class="method-name">to_webp</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_webp-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_webp</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">ScreenImage</span>.<span class="ruby-identifier">renderer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value">image_format:</span> <span class="ruby-string">&quot;webp&quot;</span>)).<span class="ruby-identifier">to_blob_binary</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_yomiage" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_yomiage" title="Link to this method">
+                <span class="method-name">to_yomiage</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_yomiage-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_yomiage</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">CheckmateYomiage</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>).<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_yomiage_list" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_yomiage_list" title="Link to this method">
+                <span class="method-name">to_yomiage_list</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_yomiage_list-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/serialize_methods.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_yomiage_list</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">CheckmateYomiage</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>).<span class="ruby-identifier">to_a</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-turn_info" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-turn_info" title="Link to this method">
+                <span class="method-name">turn_info</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="turn_info-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">turn_info</span>
+  <span class="ruby-ivar">@turn_info</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">TurnInfo</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tyuuban_ikou" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-tyuuban_ikou" title="Link to this method">
+                <span class="method-name">tyuuban_ikou</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="tyuuban_ikou-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/execute_methods.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tyuuban_ikou</span>
+  <span class="ruby-identifier">outbreak_turn</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-win_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-win_player" title="Link to this method">
+                <span class="method-name">win_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="win_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/container/players_methods.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">win_player</span>
+  <span class="ruby-identifier">opponent_player</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>対局が終わった時点での勝者</p>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+

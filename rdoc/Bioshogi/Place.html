@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>class Bioshogi::Place - RDoc Documentation</title>
+
+  <meta name="keywords" content="ruby,class,Bioshogi::Place">
+
+    <meta name="description" content="Documentation for the Bioshogi::Place class">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+  
+  <div id="parent-class-section" class="nav-section">
+  <h3>Ancestors</h3>
+  <ul><li><a href="../Object.html">Object</a><ul><li>BasicObject</li></ul></li></ul>
+</div>
+
+  
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><span class="include">Enumerable</span>
+  </ul>
+</div>
+
+  
+  
+  <div class="nav-section">
+    <h3>Class Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-c-5B-5D">[]</a></li>
+      <li ><a href="#method-c-cache_clear">cache_clear</a></li>
+      <li ><a href="#method-c-each">each</a></li>
+      <li ><a href="#method-c-fetch">fetch</a></li>
+      <li ><a href="#method-c-lookup">lookup</a></li>
+      <li ><a href="#method-c-new">new</a></li>
+      <li ><a href="#method-c-regexp">regexp</a></li>
+      <li ><a href="#method-c-zero">zero</a></li>
+    </ul>
+  </div>
+
+
+
+  <div class="nav-section">
+    <h3>Instance Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-i-3C-3D-3E">&lt;=&gt;</a></li>
+      <li ><a href="#method-i-3D-3D">==</a></li>
+      <li ><a href="#method-i-both_side_without_corner-3F">both_side_without_corner?</a></li>
+      <li ><a href="#method-i-cache_clear">cache_clear</a></li>
+      <li ><a href="#method-i-eql-3F">eql?</a></li>
+      <li ><a href="#method-i-flip">flip</a></li>
+      <li ><a href="#method-i-flop">flop</a></li>
+      <li ><a href="#method-i-hankaku_number">hankaku_number</a></li>
+      <li ><a href="#method-i-hash">hash</a></li>
+      <li ><a href="#method-i-human_int">human_int</a></li>
+      <li ><a href="#method-i-in_outer_area-3F">in_outer_area?</a></li>
+      <li ><a href="#method-i-inspect">inspect</a></li>
+      <li ><a href="#method-i-king_default_place-3F">king_default_place?</a></li>
+      <li ><a href="#method-i-manhattan_distance">manhattan_distance</a></li>
+      <li ><a href="#method-i-manhattan_distance_a_side_max">manhattan_distance_a_side_max</a></li>
+      <li ><a href="#method-i-move_to_bottom_edge">move_to_bottom_edge</a></li>
+      <li ><a href="#method-i-move_to_left_edge">move_to_left_edge</a></li>
+      <li ><a href="#method-i-move_to_right_edge">move_to_right_edge</a></li>
+      <li ><a href="#method-i-move_to_top_edge">move_to_top_edge</a></li>
+      <li ><a href="#method-i-move_to_xy">move_to_xy</a></li>
+      <li ><a href="#method-i-name">name</a></li>
+      <li ><a href="#method-i-relative_move_to">relative_move_to</a></li>
+      <li ><a href="#method-i-to_a">to_a</a></li>
+      <li ><a href="#method-i-to_human_h">to_human_h</a></li>
+      <li ><a href="#method-i-to_s">to_s</a></li>
+      <li ><a href="#method-i-to_sfen">to_sfen</a></li>
+      <li ><a href="#method-i-to_xy">to_xy</a></li>
+      <li ><a href="#method-i-vector_add">vector_add</a></li>
+      <li ><a href="#method-i-white_then_flip">white_then_flip</a></li>
+      <li ><a href="#method-i-yomiage">yomiage</a></li>
+      <li ><a href="#method-i-zenkaku_number">zenkaku_number</a></li>
+    </ul>
+  </div>
+
+
+
+  <footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
+</nav>
+
+<main role="main" aria-labelledby="class-Bioshogi::Place">
+  <h1 id="class-Bioshogi::Place" class="anchor-link class">
+    class Bioshogi::Place
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+        <dt id="DELEGATE_METHODS_WITH_LOCATION">DELEGATE_METHODS_WITH_LOCATION
+        <dd>
+          <p><a href="Soldier.html"><code>Soldier</code></a> に生やすやつただの delgate ではなく soldier 側の location をこっそり受け取る</p>
+        <dt id="DIRECT_DELEGATE_METHODS">DIRECT_DELEGATE_METHODS
+        <dd>
+          <p>flip する必要がない上下左右対称のメソッド</p>
+      </dl>
+    </section>
+
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      <div id="attribute-i-column" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-column" title="Link to this attribute">
+            <span class="method-name">column</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-row" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-row" title="Link to this attribute">
+            <span class="method-name">row</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+    </section>
+
+
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-5B-5D" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-5B-5D" title="Link to this method">
+                <span class="method-name">[]</span>
+                <span class="method-args">(value)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="5B-5D-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">[]</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">value</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-cache_clear" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-cache_clear" title="Link to this method">
+                <span class="method-name">cache_clear</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="cache_clear-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cache_clear</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cache</span>
+    <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">each_value</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hv</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">hv</span>.<span class="ruby-identifier">each_value</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:cache_clear</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-each" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-each" title="Link to this method">
+                <span class="method-name">each</span>
+                <span class="method-args">(&amp;block)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="each-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Row</span>.<span class="ruby-identifier">dimension_size</span>.<span class="ruby-identifier">times</span>.<span class="ruby-identifier">flat_map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Column</span>.<span class="ruby-identifier">dimension_size</span>.<span class="ruby-identifier">times</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">self</span>[[<span class="ruby-identifier">column</span>, <span class="ruby-identifier">row</span>]]
+    }
+  }.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-fetch" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-fetch" title="Link to this method">
+                <span class="method-name">fetch</span>
+                <span class="method-args">(value)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="fetch-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">fetch</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">value</span>) <span class="ruby-keyword">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">SyntaxDefact</span>, <span class="ruby-node">&quot;座標が読み取れません : #{value.inspect}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-lookup" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-lookup" title="Link to this method">
+                <span class="method-name">lookup</span>
+                <span class="method-args">(value)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="lookup-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lookup</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">column</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">row</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span> = <span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">column</span> = <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Column</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">a</span>)
+    <span class="ruby-identifier">row</span> = <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Row</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">b</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+    <span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">chars</span>
+    <span class="ruby-identifier">column</span> = <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Column</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">a</span>)
+    <span class="ruby-identifier">row</span> = <span class="ruby-constant">Dimension</span><span class="ruby-operator">::</span><span class="ruby-constant">Row</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">b</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:to_a</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_a</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># 座標は最大で99なのでインスタンスを使いまわす</span>
+  <span class="ruby-comment"># ただしグローバルな寸法が変わると不整合な状態になるため cache_clear を適切に呼ばないといけない</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">column</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">row</span>
+    <span class="ruby-ivar">@cache</span> <span class="ruby-operator">||=</span> {}
+    <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">column</span>] <span class="ruby-operator">||=</span> {}
+    <span class="ruby-ivar">@cache</span>[<span class="ruby-identifier">column</span>][<span class="ruby-identifier">row</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">new</span>(<span class="ruby-identifier">column</span>, <span class="ruby-identifier">row</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-new" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(column, row)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">column</span>, <span class="ruby-identifier">row</span>)
+  <span class="ruby-ivar">@column</span> = <span class="ruby-identifier">column</span>
+  <span class="ruby-ivar">@row</span> = <span class="ruby-identifier">row</span>
+  <span class="ruby-ivar">@cache</span> = {}
+  <span class="ruby-identifier">freeze</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-regexp" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-regexp" title="Link to this method">
+                <span class="method-name">regexp</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="regexp-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">regexp</span>
+  <span class="ruby-regexp">/[一二三四五六七八九１-９1-9]{2}/</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-zero" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-zero" title="Link to this method">
+                <span class="method-name">zero</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="zero-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">zero</span>
+  <span class="ruby-identifier">fetch</span>([<span class="ruby-value">0</span>, <span class="ruby-value">0</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+    </section>
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-3C-3D-3E" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-3C-3D-3E" title="Link to this method">
+                <span class="method-name">&lt;=&gt;</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="3C-3D-3E-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span>
+    <span class="ruby-identifier">to_xy</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_xy</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-3D-3D" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-3D-3D" title="Link to this method">
+                <span class="method-name">==</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="3D-3D-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 228</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">other</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-both_side_without_corner-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-both_side_without_corner-3F" title="Link to this method">
+                <span class="method-name">both_side_without_corner?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="both_side_without_corner-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 280</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">both_side_without_corner?</span>
+  <span class="ruby-ivar">@column</span>.<span class="ruby-identifier">side_edge?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@row</span>.<span class="ruby-identifier">top_spaces</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@row</span>.<span class="ruby-identifier">bottom_spaces</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>角を除いた両サイドにいる？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-cache_clear" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-cache_clear" title="Link to this method">
+                <span class="method-name">cache_clear</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="cache_clear-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 119</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cache_clear</span>
+  <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:cache_clear</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">clear</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-eql-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-eql-3F" title="Link to this method">
+                <span class="method-name">eql?</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="eql-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 242</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">eql?</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">to_xy</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_xy</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-flip" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-flip" title="Link to this method">
+                <span class="method-name">flip</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="flip-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flip</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:flip</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:flip</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>180度回転</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-flop" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-flop" title="Link to this method">
+                <span class="method-name">flop</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="flop-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flop</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:flop</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-ivar">@column</span>.<span class="ruby-identifier">flip</span>, <span class="ruby-ivar">@row</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>column座標のみ反転</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hankaku_number" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hankaku_number" title="Link to this method">
+                <span class="method-name">hankaku_number</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hankaku_number-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hankaku_number</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:hankaku_number</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:hankaku_number</span>).<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hash" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hash" title="Link to this method">
+                <span class="method-name">hash</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hash-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hash</span>
+  <span class="ruby-identifier">to_xy</span>.<span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-human_int" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-human_int" title="Link to this method">
+                <span class="method-name">human_int</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="human_int-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">human_int</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:human_int</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:human_int</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>“６八銀” なら [6, 8] キャッシュすると3倍速くなる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-in_outer_area-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-in_outer_area-3F" title="Link to this method">
+                <span class="method-name">in_outer_area?</span>
+                <span class="method-args">(other, radius)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="in_outer_area-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">in_outer_area?</span>(<span class="ruby-identifier">other</span>, <span class="ruby-identifier">radius</span>)
+  <span class="ruby-identifier">column</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">column</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">radius</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">row</span>) <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">radius</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p><a href="Place.html#method-i-manhattan_distance_a_side_max"><code>manhattan_distance_a_side_max</code></a> の高速版other との縦横の差が radius 以下か？a.in_outer_area?(b, 2) なら a の 5x5 の中に b が含まれていることがわかるa.in_outer_area?(b, 1) なら a の 3x3 の中に b が含まれていることがわかるa.in_outer_area?(b, 0) なら a の 1x1 の中に b が含まれていることがわかる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-inspect" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-inspect" title="Link to this method">
+                <span class="method-name">inspect</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 124</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inspect</span>
+  <span class="ruby-node">&quot;#&lt;#{self.class.name} #{name}&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-king_default_place-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-king_default_place-3F" title="Link to this method">
+                <span class="method-name">king_default_place?</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="king_default_place-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 257</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">king_default_place?</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-identifier">column_is5?</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">bottom_spaces</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>自玉の位置にいる？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-manhattan_distance" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-manhattan_distance" title="Link to this method">
+                <span class="method-name">manhattan_distance</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="manhattan_distance-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 200</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">manhattan_distance</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-identifier">column</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">column</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">row</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>マンハッタン距離を返す斜め上には2歩必要なため「結果 &lt;= 1」とすれば 3x3 をダイヤモンド型で範囲の比較ができる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-manhattan_distance_a_side_max" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-manhattan_distance_a_side_max" title="Link to this method">
+                <span class="method-name">manhattan_distance_a_side_max</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="manhattan_distance_a_side_max-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 206</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">manhattan_distance_a_side_max</span>(<span class="ruby-identifier">other</span>)
+   [<span class="ruby-identifier">column</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">column</span>), <span class="ruby-identifier">row</span>.<span class="ruby-identifier">distance</span>(<span class="ruby-identifier">other</span>.<span class="ruby-identifier">row</span>)].<span class="ruby-identifier">max</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>縦横の大きい方のマンハッタン距離を返すa.manhattan_distance_a_side_max(b) &lt;= 2 なら a の 5x5 の中に b が含まれていることがわかる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_to_bottom_edge" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_to_bottom_edge" title="Link to this method">
+                <span class="method-name">move_to_bottom_edge</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_to_bottom_edge-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 286</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_bottom_edge</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">column</span>, <span class="ruby-identifier">location</span>.<span class="ruby-identifier">bottom</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>location から見た上下左右に寄せた位置を返す</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_to_left_edge" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_to_left_edge" title="Link to this method">
+                <span class="method-name">move_to_left_edge</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_to_left_edge-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 294</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_left_edge</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">location</span>.<span class="ruby-identifier">left</span>, <span class="ruby-identifier">row</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_to_right_edge" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_to_right_edge" title="Link to this method">
+                <span class="method-name">move_to_right_edge</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_to_right_edge-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 298</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_right_edge</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">location</span>.<span class="ruby-identifier">right</span>, <span class="ruby-identifier">row</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_to_top_edge" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_to_top_edge" title="Link to this method">
+                <span class="method-name">move_to_top_edge</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_to_top_edge-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 290</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_top_edge</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">column</span>, <span class="ruby-identifier">location</span>.<span class="ruby-identifier">top</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_to_xy" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_to_xy" title="Link to this method">
+                <span class="method-name">move_to_xy</span>
+                <span class="method-args">(location, x, y)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_to_xy-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 273</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_xy</span>(<span class="ruby-identifier">location</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
+  <span class="ruby-identifier">xy_add</span>(<span class="ruby-identifier">x</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>, <span class="ruby-identifier">y</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>上下左右 -1 +1 -1 +1 に進んだ位置を返す (white側の場合も考慮する) 2つ進んだ位置などを一発で調べたいときに使うなるべく使うな</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-name" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-name" title="Link to this method">
+                <span class="method-name">name</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="name-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 134</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-relative_move_to" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-relative_move_to" title="Link to this method">
+                <span class="method-name">relative_move_to</span>
+                <span class="method-args">(location, vector, magnification: 1)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="relative_move_to-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 249</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">relative_move_to</span>(<span class="ruby-identifier">location</span>, <span class="ruby-identifier">vector</span>, <span class="ruby-value">magnification:</span> <span class="ruby-value">1</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">vector</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
+    <span class="ruby-identifier">vector</span> = <span class="ruby-constant">V</span>.<span class="ruby-identifier">public_send</span>(<span class="ruby-identifier">vector</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">xy_add</span>(<span class="ruby-operator">*</span>(<span class="ruby-identifier">vector</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">magnification</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>より抽象的な方法で移動した位置を返す</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_a" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_a" title="Link to this method">
+                <span class="method-name">to_a</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_a-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_a</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:to_a</span>] <span class="ruby-operator">||=</span> [<span class="ruby-ivar">@column</span>, <span class="ruby-ivar">@row</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>ほぼキャッシュ効果なし。それどころか少し遅くなる。ただ配列を再生成しないのでこれでいいことにする。</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_human_h" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_human_h" title="Link to this method">
+                <span class="method-name">to_human_h</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_human_h-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 166</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_human_h</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:to_human_h</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>[[<span class="ruby-value">:column</span>, <span class="ruby-value">:row</span>].<span class="ruby-identifier">zip</span>(<span class="ruby-identifier">human_int</span>)]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>“６八銀” なら {column:6, row:8} キャッシュすると2倍速くなる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_s" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_s" title="Link to this method">
+                <span class="method-name">to_s</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>
+  <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_sfen" title="Link to this method">
+                <span class="method-name">to_sfen</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:to_sfen</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sfen</span>).<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_xy" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_xy" title="Link to this method">
+                <span class="method-name">to_xy</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_xy-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_xy</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:to_xy</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:value</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vector_add" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-vector_add" title="Link to this method">
+                <span class="method-name">vector_add</span>
+                <span class="method-args">(vector)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="vector_add-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 266</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_add</span>(<span class="ruby-identifier">vector</span>)
+  <span class="ruby-identifier">xy_add</span>(<span class="ruby-identifier">vector</span>.<span class="ruby-identifier">x</span>, <span class="ruby-identifier">vector</span>.<span class="ruby-identifier">y</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-white_then_flip" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-white_then_flip" title="Link to this method">
+                <span class="method-name">white_then_flip</span>
+                <span class="method-args">(location)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="white_then_flip-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 188</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">white_then_flip</span>(<span class="ruby-identifier">location</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Location</span>[<span class="ruby-identifier">location</span>].<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:white</span>
+    <span class="ruby-identifier">flip</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p><a href="Soldier.html"><code>Soldier</code></a> では独自に定義しているためここに <a href="Soldier.html"><code>Soldier</code></a> からここに委譲してはいけない</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-yomiage" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-yomiage" title="Link to this method">
+                <span class="method-name">yomiage</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="yomiage-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">yomiage</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:yomiage</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:yomiage</span>).<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-zenkaku_number" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-zenkaku_number" title="Link to this method">
+                <span class="method-name">zenkaku_number</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="zenkaku_number-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">zenkaku_number</span>
+  <span class="ruby-ivar">@cache</span>[<span class="ruby-value">:zenkaku_number</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:zenkaku_number</span>).<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+

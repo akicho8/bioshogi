@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>module Bioshogi::V::PresetVectors - RDoc Documentation</title>
+
+  <meta name="keywords" content="ruby,module,Bioshogi::V::PresetVectors">
+
+    <meta name="description" content="Documentation for the Bioshogi::V::PresetVectors module">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../../";
+  var index_rel_prefix = "../../";
+</script>
+
+<script src="../../js/navigation.js" defer></script>
+<script src="../../js/search.js" defer></script>
+<script src="../../js/search_index.js" defer></script>
+<script src="../../js/searcher.js" defer></script>
+<script src="../../js/darkfish.js" defer></script>
+
+<link href="../../css/fonts.css" rel="stylesheet">
+<link href="../../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="module">
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+  
+  
+  
+  
+  
+
+
+  <div class="nav-section">
+    <h3>Instance Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-i-anaguma_vectors">anaguma_vectors</a></li>
+      <li ><a href="#method-i-bishop_up_diagonal_vectors">bishop_up_diagonal_vectors</a></li>
+      <li ><a href="#method-i-cross_vectors">cross_vectors</a></li>
+      <li ><a href="#method-i-down">down</a></li>
+      <li ><a href="#method-i-down_down">down_down</a></li>
+      <li ><a href="#method-i-down_down_left">down_down_left</a></li>
+      <li ><a href="#method-i-down_down_right">down_down_right</a></li>
+      <li ><a href="#method-i-down_left">down_left</a></li>
+      <li ><a href="#method-i-down_right">down_right</a></li>
+      <li ><a href="#method-i-ginbasami_verctors">ginbasami_verctors</a></li>
+      <li ><a href="#method-i-ikkenryu_cross_vectors">ikkenryu_cross_vectors</a></li>
+      <li ><a href="#method-i-keima_vectors">keima_vectors</a></li>
+      <li ><a href="#method-i-left">left</a></li>
+      <li ><a href="#method-i-left_anaguma_vectors">left_anaguma_vectors</a></li>
+      <li ><a href="#method-i-left_anaguma_vectors1">left_anaguma_vectors1</a></li>
+      <li ><a href="#method-i-left_anaguma_vectors2">left_anaguma_vectors2</a></li>
+      <li ><a href="#method-i-left_left">left_left</a></li>
+      <li ><a href="#method-i-left_left_up">left_left_up</a></li>
+      <li ><a href="#method-i-left_right_vectors">left_right_vectors</a></li>
+      <li ><a href="#method-i-outer_vectors">outer_vectors</a></li>
+      <li ><a href="#method-i-reverse_x">reverse_x</a></li>
+      <li ><a href="#method-i-reverse_y">reverse_y</a></li>
+      <li ><a href="#method-i-right">right</a></li>
+      <li ><a href="#method-i-right_anaguma_vectors">right_anaguma_vectors</a></li>
+      <li ><a href="#method-i-right_anaguma_vectors1">right_anaguma_vectors1</a></li>
+      <li ><a href="#method-i-right_anaguma_vectors2">right_anaguma_vectors2</a></li>
+      <li ><a href="#method-i-right_right">right_right</a></li>
+      <li ><a href="#method-i-right_right_up">right_right_up</a></li>
+      <li ><a href="#method-i-saltire_vectors">saltire_vectors</a></li>
+      <li ><a href="#method-i-tasuki_vectors">tasuki_vectors</a></li>
+      <li ><a href="#method-i-tsugikei_vectors">tsugikei_vectors</a></li>
+      <li ><a href="#method-i-up">up</a></li>
+      <li ><a href="#method-i-up_left">up_left</a></li>
+      <li ><a href="#method-i-up_right">up_right</a></li>
+      <li ><a href="#method-i-up_up">up_up</a></li>
+      <li ><a href="#method-i-up_up_left">up_up_left</a></li>
+      <li ><a href="#method-i-up_up_right">up_up_right</a></li>
+      <li ><a href="#method-i-wariuchi_vectors">wariuchi_vectors</a></li>
+    </ul>
+  </div>
+
+
+
+  <footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
+</nav>
+
+<main role="main" aria-labelledby="module-Bioshogi::V::PresetVectors">
+  <h1 id="module-Bioshogi::V::PresetVectors" class="anchor-link module">
+    module Bioshogi::V::PresetVectors
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+
+
+
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-anaguma_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-anaguma_vectors" title="Link to this method">
+                <span class="method-name">anaguma_vectors</span>
+                <span class="method-args">(left_or_right)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="anaguma_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 152</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">anaguma_vectors</span>(<span class="ruby-identifier">left_or_right</span>)
+  <span class="ruby-identifier">public_send</span>(<span class="ruby-value">:&quot;#{left_or_right}_anaguma_vectors&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-bishop_up_diagonal_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-bishop_up_diagonal_vectors" title="Link to this method">
+                <span class="method-name">bishop_up_diagonal_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="bishop_up_diagonal_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bishop_up_diagonal_vectors</span>
+  <span class="ruby-ivar">@bishop_up_diagonal_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up_left</span>, <span class="ruby-identifier">up_right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-cross_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-cross_vectors" title="Link to this method">
+                <span class="method-name">cross_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="cross_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cross_vectors</span>
+  <span class="ruby-ivar">@cross_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up</span>, <span class="ruby-identifier">right</span>, <span class="ruby-identifier">down</span>, <span class="ruby-identifier">left</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>十</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down" title="Link to this method">
+                <span class="method-name">down</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down</span>
+  <span class="ruby-ivar">@down</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">0</span>, <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down_down" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down_down" title="Link to this method">
+                <span class="method-name">down_down</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down_down-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down_down</span>
+  <span class="ruby-ivar">@down_down</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">down</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down_down_left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down_down_left" title="Link to this method">
+                <span class="method-name">down_down_left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down_down_left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down_down_left</span>
+  <span class="ruby-ivar">@down_down_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down_down_right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down_down_right" title="Link to this method">
+                <span class="method-name">down_down_right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down_down_right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down_down_right</span>
+  <span class="ruby-ivar">@down_down_right</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>継ぎ桂</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down_left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down_left" title="Link to this method">
+                <span class="method-name">down_left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down_left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down_left</span>
+  <span class="ruby-ivar">@down_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-down_right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-down_right" title="Link to this method">
+                <span class="method-name">down_right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="down_right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">down_right</span>
+  <span class="ruby-ivar">@down_right</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">down</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-ginbasami_verctors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-ginbasami_verctors" title="Link to this method">
+                <span class="method-name">ginbasami_verctors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="ginbasami_verctors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 134</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ginbasami_verctors</span>
+  <span class="ruby-ivar">@ginbasami_verctors</span> <span class="ruby-operator">||=</span> [[<span class="ruby-identifier">right</span>, <span class="ruby-identifier">right_right</span>, <span class="ruby-identifier">right_right_up</span>], [<span class="ruby-identifier">left</span>, <span class="ruby-identifier">left_left</span>, <span class="ruby-identifier">left_left_up</span>]]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-ikkenryu_cross_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-ikkenryu_cross_vectors" title="Link to this method">
+                <span class="method-name">ikkenryu_cross_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="ikkenryu_cross_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ikkenryu_cross_vectors</span>
+  <span class="ruby-ivar">@ikkenryu_cross_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">left_left</span>, <span class="ruby-identifier">right_right</span>, <span class="ruby-identifier">up_up</span>, <span class="ruby-identifier">down_down</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-keima_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-keima_vectors" title="Link to this method">
+                <span class="method-name">keima_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="keima_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">keima_vectors</span>
+  <span class="ruby-ivar">@keima_methods</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up_up_left</span>, <span class="ruby-identifier">up_up_right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left" title="Link to this method">
+                <span class="method-name">left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left</span>
+  <span class="ruby-ivar">@left</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">-</span><span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_anaguma_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_anaguma_vectors" title="Link to this method">
+                <span class="method-name">left_anaguma_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_anaguma_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_anaguma_vectors</span>
+  <span class="ruby-ivar">@left_anaguma_vectors</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">left_anaguma_vectors1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left_anaguma_vectors2</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_anaguma_vectors1" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_anaguma_vectors1" title="Link to this method">
+                <span class="method-name">left_anaguma_vectors1</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_anaguma_vectors1-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_anaguma_vectors1</span>
+  <span class="ruby-ivar">@left_anaguma_vectors1</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up</span>, <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>, <span class="ruby-identifier">right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>外周</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_anaguma_vectors2" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_anaguma_vectors2" title="Link to this method">
+                <span class="method-name">left_anaguma_vectors2</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_anaguma_vectors2-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_anaguma_vectors2</span>
+  <span class="ruby-ivar">@left_anaguma_vectors2</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span>, <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>, <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>, <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>, <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>外周の外周</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_left" title="Link to this method">
+                <span class="method-name">left_left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_left</span>
+  <span class="ruby-ivar">@left_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_left_up" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_left_up" title="Link to this method">
+                <span class="method-name">left_left_up</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_left_up-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_left_up</span>
+  <span class="ruby-ivar">@left_left_up</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_right_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_right_vectors" title="Link to this method">
+                <span class="method-name">left_right_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_right_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_right_vectors</span>
+  <span class="ruby-ivar">@left_right_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">left</span>, <span class="ruby-identifier">right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>←→</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-outer_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-outer_vectors" title="Link to this method">
+                <span class="method-name">outer_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="outer_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_vectors</span>
+  <span class="ruby-ivar">@outer_vectors</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">cross_vectors</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">saltire_vectors</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>□</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-reverse_x" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-reverse_x" title="Link to this method">
+                <span class="method-name">reverse_x</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="reverse_x-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reverse_x</span>
+  <span class="ruby-ivar">@reverse_x</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>軸反転</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-reverse_y" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-reverse_y" title="Link to this method">
+                <span class="method-name">reverse_y</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="reverse_y-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">reverse_y</span>
+  <span class="ruby-ivar">@reverse_y</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">-</span><span class="ruby-identifier">reverse_x</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right" title="Link to this method">
+                <span class="method-name">right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right</span>
+  <span class="ruby-ivar">@right</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">self</span>[<span class="ruby-value">1</span>, <span class="ruby-value">0</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>＋</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right_anaguma_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right_anaguma_vectors" title="Link to this method">
+                <span class="method-name">right_anaguma_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right_anaguma_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_anaguma_vectors</span>
+  <span class="ruby-ivar">@right_anaguma_vectors</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">right_anaguma_vectors1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right_anaguma_vectors2</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right_anaguma_vectors1" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right_anaguma_vectors1" title="Link to this method">
+                <span class="method-name">right_anaguma_vectors1</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right_anaguma_vectors1-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_anaguma_vectors1</span>
+  <span class="ruby-ivar">@right_anaguma_vectors1</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">left_anaguma_vectors1</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">reverse_x</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right_anaguma_vectors2" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right_anaguma_vectors2" title="Link to this method">
+                <span class="method-name">right_anaguma_vectors2</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right_anaguma_vectors2-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_anaguma_vectors2</span>
+  <span class="ruby-ivar">@right_anaguma_vectors2</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">left_anaguma_vectors2</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">reverse_x</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right_right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right_right" title="Link to this method">
+                <span class="method-name">right_right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right_right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_right</span>
+  <span class="ruby-ivar">@right_right</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>一間竜</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-right_right_up" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-right_right_up" title="Link to this method">
+                <span class="method-name">right_right_up</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="right_right_up-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_right_up</span>
+  <span class="ruby-ivar">@right_right_up</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>銀ばさみ</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-saltire_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-saltire_vectors" title="Link to this method">
+                <span class="method-name">saltire_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="saltire_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">saltire_vectors</span>
+  <span class="ruby-ivar">@saltire_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">up_left</span>, <span class="ruby-identifier">up_right</span>, <span class="ruby-identifier">down_left</span>, <span class="ruby-identifier">down_right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>×</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tasuki_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-tasuki_vectors" title="Link to this method">
+                <span class="method-name">tasuki_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="tasuki_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tasuki_vectors</span>
+  <span class="ruby-ivar">@tasuki_vectors</span> <span class="ruby-operator">||=</span> [[<span class="ruby-identifier">up_left</span>, <span class="ruby-identifier">down_right</span>], [<span class="ruby-identifier">up_right</span>, <span class="ruby-identifier">down_left</span>]]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tsugikei_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-tsugikei_vectors" title="Link to this method">
+                <span class="method-name">tsugikei_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="tsugikei_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tsugikei_vectors</span>
+  <span class="ruby-ivar">@tsugikei_methods</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">down_down_right</span>, <span class="ruby-identifier">down_down_left</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up" title="Link to this method">
+                <span class="method-name">up</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up</span>
+  <span class="ruby-ivar">@up</span> <span class="ruby-operator">||=</span> <span class="ruby-operator">-</span><span class="ruby-identifier">down</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up_left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up_left" title="Link to this method">
+                <span class="method-name">up_left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up_left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up_left</span>
+  <span class="ruby-ivar">@up_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>×</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up_right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up_right" title="Link to this method">
+                <span class="method-name">up_right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up_right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up_right</span>
+  <span class="ruby-ivar">@up_right</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up_up" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up_up" title="Link to this method">
+                <span class="method-name">up_up</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up_up-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up_up</span>
+  <span class="ruby-ivar">@up_up</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up_up_left" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up_up_left" title="Link to this method">
+                <span class="method-name">up_up_left</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up_up_left-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up_up_left</span>
+  <span class="ruby-ivar">@up_up_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">left</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-up_up_right" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-up_up_right" title="Link to this method">
+                <span class="method-name">up_up_right</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="up_up_right-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">up_up_right</span>
+  <span class="ruby-ivar">@up_up_right</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">up</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">right</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>桂馬</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-wariuchi_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-wariuchi_vectors" title="Link to this method">
+                <span class="method-name">wariuchi_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="wariuchi_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/v/preset_vectors.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">wariuchi_vectors</span>
+  <span class="ruby-ivar">@wariuchi_vectors</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">down_left</span>, <span class="ruby-identifier">down_right</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+

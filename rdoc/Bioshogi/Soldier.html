@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>class Bioshogi::Soldier - RDoc Documentation</title>
+
+  <meta name="keywords" content="ruby,class,Bioshogi::Soldier">
+
+    <meta name="description" content="Documentation for the Bioshogi::Soldier class">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
+</script>
+
+<script src="../js/navigation.js" defer></script>
+<script src="../js/search.js" defer></script>
+<script src="../js/search_index.js" defer></script>
+<script src="../js/searcher.js" defer></script>
+<script src="../js/darkfish.js" defer></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+<body id="top" role="document" class="class">
+<div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
+  <span aria-hidden="true">&#9776;</span>
+</div>
+
+
+<nav id="navigation" role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+  
+  <div id="parent-class-section" class="nav-section">
+  <h3>Ancestors</h3>
+  <ul><li><a href="../Object.html">Object</a><ul><li>BasicObject</li></ul></li></ul>
+</div>
+
+  
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><a class="include" href="SimpleModel.html">Bioshogi::SimpleModel</a>
+    <li><span class="include">DetectorMethods</span>
+    <li><span class="include">ScreenImage::SoldierModelMethods</span>
+  </ul>
+</div>
+
+  
+  
+  <div class="nav-section">
+    <h3>Class Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-c-create">create</a></li>
+      <li ><a href="#method-c-from_str">from_str</a></li>
+      <li class="calls-super" ><a href="#method-c-new">new</a></li>
+      <li ><a href="#method-c-new_with_promoted">new_with_promoted</a></li>
+      <li ><a href="#method-c-piece_and_promoted">piece_and_promoted</a></li>
+      <li ><a href="#method-c-preset_one_side_soldiers">preset_one_side_soldiers</a></li>
+      <li ><a href="#method-c-preset_soldiers">preset_soldiers</a></li>
+    </ul>
+  </div>
+
+
+
+  <div class="nav-section">
+    <h3>Instance Methods</h3>
+    <ul class="link-list" role="directory">
+      <li ><a href="#method-i-3C-3D-3E">&lt;=&gt;</a></li>
+      <li ><a href="#method-i-3D-3D">==</a></li>
+      <li ><a href="#method-i-abs_weight">abs_weight</a></li>
+      <li ><a href="#method-i-alive-3F">alive?</a></li>
+      <li ><a href="#method-i-all_vectors">all_vectors</a></li>
+      <li ><a href="#method-i-any_name">any_name</a></li>
+      <li ><a href="#method-i-attributes">attributes</a></li>
+      <li ><a href="#method-i-boar_mode-3F">boar_mode?</a></li>
+      <li ><a href="#method-i-collision_pawn">collision_pawn</a></li>
+      <li ><a href="#method-i-ek_score">ek_score</a></li>
+      <li ><a href="#method-i-eql-3F">eql?</a></li>
+      <li ><a href="#method-i-flip">flip</a></li>
+      <li ><a href="#method-i-flop">flop</a></li>
+      <li ><a href="#method-i-hash">hash</a></li>
+      <li ><a href="#method-i-inspect">inspect</a></li>
+      <li ><a href="#method-i-merge">merge</a></li>
+      <li ><a href="#method-i-move_list">move_list</a></li>
+      <li ><a href="#method-i-name">name</a></li>
+      <li ><a href="#method-i-name_without_location">name_without_location</a></li>
+      <li ><a href="#method-i-normal-3F">normal?</a></li>
+      <li ><a href="#method-i-normalized_place">normalized_place</a></li>
+      <li ><a href="#method-i-pressure_level">pressure_level</a></li>
+      <li ><a href="#method-i-relative_weight">relative_weight</a></li>
+      <li ><a href="#method-i-rule_valid-3F">rule_valid?</a></li>
+      <li ><a href="#method-i-to_akf">to_akf</a></li>
+      <li ><a href="#method-i-to_bod">to_bod</a></li>
+      <li ><a href="#method-i-to_csa">to_csa</a></li>
+      <li ><a href="#method-i-to_csa_bod">to_csa_bod</a></li>
+      <li ><a href="#method-i-to_key1">to_key1</a></li>
+      <li ><a href="#method-i-to_key2">to_key2</a></li>
+      <li ><a href="#method-i-to_s">to_s</a></li>
+      <li ><a href="#method-i-to_sfen">to_sfen</a></li>
+      <li ><a href="#method-i-tsugini_nareru_on-3F">tsugini_nareru_on?</a></li>
+      <li ><a href="#method-i-white_then_flip">white_then_flip</a></li>
+      <li ><a href="#method-i-xxx_kiri">xxx_kiri</a></li>
+      <li ><a href="#method-i-yomiage">yomiage</a></li>
+    </ul>
+  </div>
+
+
+
+  <footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
+</nav>
+
+<main role="main" aria-labelledby="class-Bioshogi::Soldier">
+  <h1 id="class-Bioshogi::Soldier" class="anchor-link class">
+    class Bioshogi::Soldier
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+
+
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      <div id="attribute-i-location" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-location" title="Link to this attribute">
+            <span class="method-name">location</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-piece" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-piece" title="Link to this attribute">
+            <span class="method-name">piece</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-place" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-place" title="Link to this attribute">
+            <span class="method-name">place</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+      <div id="attribute-i-promoted" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-promoted" title="Link to this attribute">
+            <span class="method-name">promoted</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+    </section>
+
+
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-create" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-create" title="Link to this method">
+                <span class="method-name">create</span>
+                <span class="method-args">(...)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="create-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>(<span class="ruby-operator">...</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>).<span class="ruby-identifier">freeze</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-from_str" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-from_str" title="Link to this method">
+                <span class="method-name">from_str</span>
+                <span class="method-args">(str, attributes = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="from_str-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">from_str</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">attributes</span> = {})
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">str</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">md</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/\A(?&lt;location&gt;[#{Location.polygon_chars_str}])?(?&lt;place&gt;..)(?&lt;piece&gt;#{Piece.all_names.join(&quot;|&quot;)})\z/o</span>)
+  <span class="ruby-identifier">md</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">SyntaxDefact</span>, <span class="ruby-node">&quot;表記が間違っています。&#39;６八銀&#39; や &#39;68銀&#39; のように1つだけ入力してください : #{str.inspect}&quot;</span>
+
+  <span class="ruby-identifier">location</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">:location</span>]
+    <span class="ruby-identifier">location</span> = <span class="ruby-constant">Location</span>[<span class="ruby-identifier">v</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">attributes</span>[<span class="ruby-value">:location</span>]
+    <span class="ruby-identifier">location</span> = <span class="ruby-constant">Location</span>[<span class="ruby-identifier">v</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">attrs</span> = { <span class="ruby-value">place:</span> <span class="ruby-constant">Place</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">md</span>[<span class="ruby-value">:place</span>]), <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span> }
+  <span class="ruby-identifier">new_with_promoted</span>(<span class="ruby-identifier">md</span>[<span class="ruby-value">:piece</span>], <span class="ruby-identifier">attrs</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>文字列から盤上の駒を生成する</p>
+
+<pre class="ruby"><span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲76歩&quot;</span>)      <span class="ruby-comment"># =&gt; &lt;Bioshogi::Soldier &quot;▲７六歩&quot;&gt;</span>
+</pre>
+        </div>
+
+
+      </div>
+
+      <div id="method-c-new" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-new" title="Link to this method">
+                <span class="method-name">new</span>
+                <span class="method-args">(*)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">*</span>)
+  <span class="ruby-keyword">super</span>
+
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-identifier">piece</span>          }
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span>.<span class="ruby-identifier">nil?</span> }
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-identifier">location</span>       }
+  <span class="ruby-constant">Assertion</span>.<span class="ruby-identifier">assert</span> { <span class="ruby-identifier">place</span>          }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              <a href="SimpleModel.html#method-c-new"><code>Bioshogi::SimpleModel::new</code></a>
+            </div>
+        </div>
+
+
+      </div>
+
+      <div id="method-c-new_with_promoted" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-new_with_promoted" title="Link to this method">
+                <span class="method-name">new_with_promoted</span>
+                <span class="method-args">(object, attributes = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="new_with_promoted-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_with_promoted</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attributes</span> = {})
+  <span class="ruby-identifier">create</span>(<span class="ruby-identifier">piece_and_promoted</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">attributes</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-piece_and_promoted" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-piece_and_promoted" title="Link to this method">
+                <span class="method-name">piece_and_promoted</span>
+                <span class="method-args">(object)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="piece_and_promoted-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_and_promoted</span>(<span class="ruby-identifier">object</span>)
+  <span class="ruby-keyword">case</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">piece</span> = <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">basic_group</span>[<span class="ruby-identifier">object</span>]
+    <span class="ruby-identifier">promoted</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">piece</span> = <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">promoted_group</span>[<span class="ruby-identifier">object</span>]
+    <span class="ruby-identifier">promoted</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">PieceNotFound</span>, <span class="ruby-node">&quot;#{object.inspect} に対応する駒がありません&quot;</span>
+  <span class="ruby-keyword">end</span>
+  { <span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-preset_one_side_soldiers" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-preset_one_side_soldiers" title="Link to this method">
+                <span class="method-name">preset_one_side_soldiers</span>
+                <span class="method-args">(preset_key, location: :black)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="preset_one_side_soldiers-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_one_side_soldiers</span>(<span class="ruby-identifier">preset_key</span>, <span class="ruby-value">location:</span> <span class="ruby-value">:black</span>)
+  <span class="ruby-identifier">location</span> = <span class="ruby-constant">Location</span>[<span class="ruby-identifier">location</span>]
+  <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">preset_key</span>).<span class="ruby-identifier">board_parser</span>.<span class="ruby-identifier">location_adjust</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-preset_soldiers" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-preset_soldiers" title="Link to this method">
+                <span class="method-name">preset_soldiers</span>
+                <span class="method-args">(preset_key)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="preset_soldiers-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_soldiers</span>(<span class="ruby-identifier">preset_key</span>)
+  <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">preset_key</span> <span class="ruby-operator">||</span> <span class="ruby-value">:&quot;平手&quot;</span>).<span class="ruby-identifier">sorted_soldiers</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>先後それぞれの形を指定するSoldier.preset_soldiers(white: “十九枚落ち”, black: “十九枚落ち”).collect(&amp;:name) # =&gt; [“▲５九玉”, “△５一玉”]</p>
+        </div>
+
+
+      </div>
+
+    </section>
+
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+      <div id="method-i-3C-3D-3E" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-3C-3D-3E" title="Link to this method">
+                <span class="method-name">&lt;=&gt;</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="3C-3D-3E-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-identifier">place</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">place</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意しただから何をキーにしてもよい。place は基本ユニークなのでこれで並べるFIXME: これは臭う。というか soldier == nil でエラーになるはず。</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-3D-3D" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-3D-3D" title="Link to this method">
+                <span class="method-name">==</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="3D-3D-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">==</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">other</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-abs_weight" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-abs_weight" title="Link to this method">
+                <span class="method-name">abs_weight</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="abs_weight-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">abs_weight</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">any_weight</span>(<span class="ruby-identifier">promoted</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>駒の重さ(=価値) 常にプラス</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-alive-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-alive-3F" title="Link to this method">
+                <span class="method-name">alive?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="alive-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">alive?</span>
+  <span class="ruby-identifier">v</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">v</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">always_alive</span> <span class="ruby-comment"># 死に駒にならない駒か？ (基本、後ろに移動できる駒)</span>
+  <span class="ruby-identifier">v</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">promoted</span>           <span class="ruby-comment"># すでに成っているか？ (成っている駒は金の動きなので後ろに移動できる)</span>
+  <span class="ruby-identifier">v</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">all_vectors</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">vector_add</span>(<span class="ruby-identifier">e</span>) } <span class="ruby-comment"># ちょっとでも動ける？</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>死に駒ではない？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-all_vectors" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-all_vectors" title="Link to this method">
+                <span class="method-name">all_vectors</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="all_vectors-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_vectors</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">all_vectors</span>(<span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-any_name" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-any_name" title="Link to this method">
+                <span class="method-name">any_name</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="any_name-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">any_name</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">promoted</span>, <span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-attributes" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-attributes" title="Link to this method">
+                <span class="method-name">attributes</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="attributes-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">attributes</span>
+  { <span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-boar_mode-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-boar_mode-3F" title="Link to this method">
+                <span class="method-name">boar_mode?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="boar_mode-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">boar_mode?</span>
+  (<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:lance</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">normal?</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:rook</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>前に一直線に進めるタイプか？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-collision_pawn" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-collision_pawn" title="Link to this method">
+                <span class="method-name">collision_pawn</span>
+                <span class="method-args">(board)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="collision_pawn-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">collision_pawn</span>(<span class="ruby-identifier">board</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:pawn</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span>
+    <span class="ruby-identifier">board</span>.<span class="ruby-identifier">vertical_soldiers</span>(<span class="ruby-identifier">place</span>.<span class="ruby-identifier">column</span>).<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">e</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:pawn</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">e</span>.<span class="ruby-identifier">promoted</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">location</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>二歩？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-ek_score" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-ek_score" title="Link to this method">
+                <span class="method-name">ek_score</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="ek_score-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ek_score</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>)
+    <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">ek_score</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>入玉宣言時の得点</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-eql-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-eql-3F" title="Link to this method">
+                <span class="method-name">eql?</span>
+                <span class="method-args">(other)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="eql-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">eql?</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attributes</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">attributes</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-flip" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-flip" title="Link to this method">
+                <span class="method-name">flip</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="flip-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 107</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flip</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">flip</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">flip</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>180度回転</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-flop" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-flop" title="Link to this method">
+                <span class="method-name">flop</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="flop-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flop</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">flop</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>左右反転</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hash" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hash" title="Link to this method">
+                <span class="method-name">hash</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hash-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hash</span>
+  <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-inspect" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-inspect" title="Link to this method">
+                <span class="method-name">inspect</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inspect</span>
+  <span class="ruby-node">&quot;&lt;#{self.class.name} #{name.inspect}&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-merge" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-merge" title="Link to this method">
+                <span class="method-name">merge</span>
+                <span class="method-args">(attributes)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="merge-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge</span>(<span class="ruby-identifier">attributes</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">attributes</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-move_list" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_list" title="Link to this method">
+                <span class="method-name">move_list</span>
+                <span class="method-args">(board, options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_list-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_list</span>(<span class="ruby-identifier">board</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-constant">SoldierWalker</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">board</span>, <span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>移動可能な座標を取得</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-name" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-name" title="Link to this method">
+                <span class="method-name">name</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="name-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">location</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-name_without_location" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-name_without_location" title="Link to this method">
+                <span class="method-name">name_without_location</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="name_without_location-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name_without_location</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">place</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-normal-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-normal-3F" title="Link to this method">
+                <span class="method-name">normal?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="normal-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">normal?</span>
+  <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-normalized_place" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-normalized_place" title="Link to this method">
+                <span class="method-name">normalized_place</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="normalized_place-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">normalized_place</span>
+  <span class="ruby-identifier">place</span>.<span class="ruby-identifier">white_then_flip</span>(<span class="ruby-identifier">location</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>自分を▲側に補正したときの座標</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-pressure_level" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-pressure_level" title="Link to this method">
+                <span class="method-name">pressure_level</span>
+                <span class="method-args">(area = 4)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="pressure_level-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pressure_level</span>(<span class="ruby-identifier">area</span> = <span class="ruby-value">4</span>)
+  <span class="ruby-keyword">case</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">top_spaces</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">area</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">promoted</span>
+      <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">promoted_attack_level</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">attack_level</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">bottom_spaces</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">area</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">promoted</span>
+      <span class="ruby-operator">-</span><span class="ruby-identifier">piece</span>.<span class="ruby-identifier">promoted_defense_level</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-operator">-</span><span class="ruby-identifier">piece</span>.<span class="ruby-identifier">defense_level</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-value">0</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>敵への駒の圧力(終盤度)</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-relative_weight" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-relative_weight" title="Link to this method">
+                <span class="method-name">relative_weight</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="relative_weight-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">relative_weight</span>
+  <span class="ruby-identifier">abs_weight</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>駒の重さ(=価値)。先手視点。後手ならマイナスになる</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-rule_valid-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-rule_valid-3F" title="Link to this method">
+                <span class="method-name">rule_valid?</span>
+                <span class="method-args">(board)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="rule_valid-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">rule_valid?</span>(<span class="ruby-identifier">board</span>)
+  <span class="ruby-operator">!</span><span class="ruby-identifier">collision_pawn</span>(<span class="ruby-identifier">board</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">alive?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>いまの状態で board に置いたとき「二歩」にも「死に駒」にもならないか？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_akf" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_akf" title="Link to this method">
+                <span class="method-name">to_akf</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_akf-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 223</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_akf</span>
+  {
+    <span class="ruby-value">:piece</span>    <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span>,
+    <span class="ruby-value">:promoted</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">promoted</span>,
+    <span class="ruby-value">:place</span>    <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">to_human_h</span>,
+    <span class="ruby-value">:location</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>,
+  }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_bod" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_bod" title="Link to this method">
+                <span class="method-name">to_bod</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_bod-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_bod</span>
+  <span class="ruby-identifier">location</span>.<span class="ruby-identifier">varrow</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_csa" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_csa" title="Link to this method">
+                <span class="method-name">to_csa</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_csa-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">csa</span>.<span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">promoted</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_csa_bod" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_csa_bod" title="Link to this method">
+                <span class="method-name">to_csa_bod</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_csa_bod-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa_bod</span>
+  <span class="ruby-identifier">location</span>.<span class="ruby-identifier">csa_sign</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">to_csa</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_key1" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_key1" title="Link to this method">
+                <span class="method-name">to_key1</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_key1-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_key1</span>
+  <span class="ruby-value">:&quot;#{location.key}/#{piece.key}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>for SoldierLookupTableMethods</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_key2" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_key2" title="Link to this method">
+                <span class="method-name">to_key2</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_key2-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_key2</span>
+  <span class="ruby-value">:&quot;#{location.key}/#{piece.key}/#{promoted}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_s" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_s" title="Link to this method">
+                <span class="method-name">to_s</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>
+  <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p><a href="Formatter.html"><code>Formatter</code></a></p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_sfen" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_sfen" title="Link to this method">
+                <span class="method-name">to_sfen</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_sfen-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">to_sfen</span>(<span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-tsugini_nareru_on-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-tsugini_nareru_on-3F" title="Link to this method">
+                <span class="method-name">tsugini_nareru_on?</span>
+                <span class="method-args">(to)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="tsugini_nareru_on-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tsugini_nareru_on?</span>(<span class="ruby-identifier">to</span>)
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">promotable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">place</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">to</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>自分を移動元の状態と考えて to に移動したとき成れるか？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-white_then_flip" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-white_then_flip" title="Link to this method">
+                <span class="method-name">white_then_flip</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="white_then_flip-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">white_then_flip</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:white</span>
+    <span class="ruby-identifier">flip</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>▲視点に統一</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-xxx_kiri" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-xxx_kiri" title="Link to this method">
+                <span class="method-name">xxx_kiri</span>
+                <span class="method-args">(options = {})</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="xxx_kiri-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">xxx_kiri</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">xxx_kiri</span>(<span class="ruby-identifier">promoted</span>, <span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-yomiage" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-yomiage" title="Link to this method">
+                <span class="method-name">yomiage</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="yomiage-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">yomiage</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">yomiage</span>(<span class="ruby-identifier">promoted</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
