@@ -7,30 +7,30 @@ module Bioshogi
     class MotionDetector
       include ApplicationMemoryRecord
       memory_record [
-        {
-          key: "穴熊再生",
-          description: nil,
-          trigger: [
-            { piece_key: :silver, promoted: false, motion: :drop },
-            { piece_key: :gold,   promoted: false, motion: :drop },
-          ],
-          func: -> {
-            # # 【条件】平手風である
-            # analysis { preset_has(:hirate_like) }
-
-            # 【条件】自玉が1つ存在する
-            and_cond { player.king_soldier_only_one_exist? }
-
-            # 【条件】自玉が隅にいる
-            and_cond { player.king_soldier.side_edge? && player.king_soldier.bottom_spaces == 0 }
-
-            # 【条件】打った駒は玉と同じ側である
-            and_cond { soldier.left_or_right == player.king_soldier.left_or_right }
-
-            # 【条件】打った駒は玉の近くである (3x3)
-            and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
-          },
-        },
+        # {
+        #   key: "穴熊再生",
+        #   description: nil,
+        #   trigger: [
+        #     { piece_key: :silver, promoted: false, motion: :drop },
+        #     { piece_key: :gold,   promoted: false, motion: :drop },
+        #   ],
+        #   func: -> {
+        #     # # 【条件】平手風である
+        #     # analysis { preset_has(:hirate_like) }
+        #
+        #     # 【条件】自玉が1つ存在する
+        #     and_cond { player.king_soldier_only_one_exist? }
+        #
+        #     # 【条件】自玉が隅にいる
+        #     and_cond { player.king_soldier.side_edge? && player.king_soldier.bottom_spaces == 0 }
+        #
+        #     # 【条件】打った駒は玉と同じ側である
+        #     and_cond { soldier.left_or_right == player.king_soldier.left_or_right }
+        #
+        #     # 【条件】打った駒は玉の近くである (3x3)
+        #     and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+        #   },
+        # },
         {
           key: "ハッチ閉鎖",
           description: "穴熊を金銀で閉鎖したタイミングで発動する",

@@ -3,8 +3,6 @@
 module Bioshogi
   module Analysis
     class AnagumaDetector
-      ROOK_OR_BISHOP = [:rook, :bishop]
-
       include ExecuterDsl
 
       attr_reader :executor
@@ -15,17 +13,17 @@ module Bioshogi
 
       def call
         retv = perform_block do
-          # 【条件】動かしたまたは打った駒は銀以上の駒である
-          and_cond { soldier.abs_weight >= min_score }
-
-          # 【却下】生の飛角 (角打ちや角移動で0枚玉が発動してしまうのを防ぐため)
-          skip_if { soldier.piece.hisyakaku && soldier.normal? }
-
           # 【条件】自玉が1つ存在する
           and_cond { player.king_soldier_only_one_exist? }
 
           # 【条件】自玉が隅にいる
           and_cond { king_soldier.side_edge? && king_soldier.bottom_spaces == 0 }
+
+          # 【条件】動かしたまたは打った駒は銀以上の駒である
+          and_cond { soldier.abs_weight >= min_score }
+
+          # 【却下】生の飛角 (角打ちや角移動で0枚玉が発動してしまうのを防ぐため)
+          skip_if { soldier.piece.hisyakaku && soldier.normal? }
 
           # 【条件】駒は玉と同じ側である
           and_cond { soldier.left_or_right == king_soldier.left_or_right }
@@ -37,6 +35,7 @@ module Bioshogi
         if retv
           case_穴熊
           case_居飛車穴熊_or_振り飛車穴熊
+          case_穴熊再生
           case_N枚穴熊
           case_角換わり穴熊
         end
@@ -50,6 +49,12 @@ module Bioshogi
 
       def case_居飛車穴熊_or_振り飛車穴熊
         tag_add(general_tag, once: true)
+      end
+
+      def case_穴熊再生
+        if drop_hand && soldier.piece.kingin
+          tag_add("穴熊再生")
+        end
       end
 
       def case_N枚穴熊
@@ -87,7 +92,7 @@ module Bioshogi
         end
       end
 
-      # 玉を中心とした外周とその外周に存在する金銀の個数
+      # 穴熊玉を中心とした外周とその外周に存在する金銀の個数
       # 金銀の個数 = 銀以上の価値のある駒の個数
       # 個数0枚 = 玉しかいない
       def kin_gin_count
