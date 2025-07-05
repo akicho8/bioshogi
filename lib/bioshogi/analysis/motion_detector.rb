@@ -7,6 +7,28 @@ module Bioshogi
     class MotionDetector
       include ApplicationMemoryRecord
       memory_record [
+        {
+          key: "双竜双馬陣",
+          description: nil,
+          trigger: [
+            { piece_key: :rook,   promoted: true, motion: :move },
+            { piece_key: :bishop, promoted: true, motion: :move },
+          ],
+          func: -> {
+            # 【条件】今成った
+            and_cond { move_hand.promote_trigger? }
+
+            # 【却下】すでに持っている
+            skip_if { player.tag_bundle.include?("双竜双馬陣") }
+
+            # 【条件】馬が2ついる
+            and_cond { player.soldiers_lookup2(:bishop, true).size == 2 }
+
+            # 【条件】竜2が2ついる
+            and_cond { player.soldiers_lookup2(:rook, true).size == 2 }
+          },
+        },
+
         # {
         #   key: "穴熊再生",
         #   description: nil,
@@ -160,7 +182,7 @@ module Bioshogi
             and_cond { move_hand.promote_trigger? }
 
             # 【却下】すでに持っている
-            skip_if { player.tag_bundle.include?(TagIndex.fetch("歩の錬金術師")) }
+            skip_if { player.tag_bundle.include?("歩の錬金術師") }
 
             # 【条件】たくさん「と金」を作った (盤上にある)
             and_cond do
@@ -665,10 +687,10 @@ module Bioshogi
         #   func: -> {
         #     # 【条件】自玉が1つ存在する
         #     and_cond { player.king_soldier_only_one_exist? }
-        # 
+        #
         #     # 【条件】移動先の近くに自玉がいる
         #     and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
-        # 
+        #
         #     # 【却下】移動元の近くに、すでに自玉がいる
         #     skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
         #   },
@@ -680,10 +702,10 @@ module Bioshogi
         #   func: -> {
         #     # 【条件】自玉が1つ存在する
         #     and_cond { player.king_soldier_only_one_exist? }
-        # 
+        #
         #     # 【条件】移動先の近くに自玉がいる
         #     and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
-        # 
+        #
         #     # 【却下】移動元の近くに、すでに自玉がいる
         #     skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
         #   },
@@ -719,7 +741,7 @@ module Bioshogi
             and_cond { player.king_soldier.middle_row? }
 
             # 【却下】すでに持っている
-            skip_if { player.tag_bundle.include?(TagIndex.fetch("天空の城")) }
+            skip_if { player.tag_bundle.include?("天空の城") }
 
             # 【条件】移動先の近くに自玉がいる (半径1)
             and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 1) }
