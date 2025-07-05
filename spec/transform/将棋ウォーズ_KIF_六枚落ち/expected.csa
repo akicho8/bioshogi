@@ -3,6 +3,7 @@ N+alice 2級
 N-bob 十段
 $EVENT:将棋ウォーズ(10分切れ負け 指導対局 六枚落ち)
 $START_TIME:2021/06/27 07:59:25
+$X_FINAL:詰み
 $TIME_LIMIT:00:10+00
 ' 手合割:六枚落ち
 P1 *  * -GI-KI-OU-KI-GI *  *

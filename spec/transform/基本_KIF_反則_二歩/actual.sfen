@@ -1,1 +1,2 @@
-position sfen 4k4/9/9/9/9/9/9/9/4K4 b 2Pp 1 moves P*5h P*5b
+ERROR: NoMethodError
+undefined method 'gsub' for nil

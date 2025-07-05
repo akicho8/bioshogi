@@ -3,6 +3,7 @@ N+guest
 N-tume
 $START_TIME:2021/12/13 13:43:40
 $END_TIME:2021/12/13 13:46:37
+$X_FINAL:投了
 P1-OU *  *  *  *  *  *  *  *
 P2 *  * +TO *  *  *  *  *  *
 P3+TO+TO+TO *  *  *  *  *  *
