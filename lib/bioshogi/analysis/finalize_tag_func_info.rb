@@ -52,16 +52,16 @@ module Bioshogi
             end
           },
         },
-        {
-          key: "対居飛車",
-          func: -> {
-            @container.players.each do |e|
-              if e.opponent_player.tag_bundle.include?("居飛車")
-                e.tag_bundle << "対居飛車"
-              end
-            end
-          },
-        },
+        # {
+        #   key: "対居飛車",
+        #   func: -> {
+        #     @container.players.each do |e|
+        #       if e.opponent_player.tag_bundle.include?("居飛車")
+        #         e.tag_bundle << "対居飛車"
+        #       end
+        #     end
+        #   },
+        # },
         {
           key: "相振り飛車",
           func: -> {

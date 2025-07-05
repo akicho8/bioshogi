@@ -21,7 +21,7 @@ module Bioshogi
 
         { key: "居飛車",         turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "相居飛車",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        { key: "対居飛車",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        # { key: "対居飛車",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "相振り飛車",     turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "対抗形",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
