@@ -3,6 +3,10 @@
 module Bioshogi
   class Soldier
     class << self
+      # 文字列から盤上の駒を生成する
+      #
+      #   Soldier.from_str("▲76歩")                      # => <Bioshogi::Soldier "▲７六歩">
+      #   Soldier.from_str("76歩", location: :white)      # => <Bioshogi::Soldier "△７六歩">
       def from_str(str, attributes = {})
         if str.kind_of?(self)
           return str
@@ -44,7 +48,7 @@ module Bioshogi
       end
 
       # 先後それぞれの形を指定する
-      # Soldier.preset_soldiers(white: "十九枚落ち", black: "十九枚落ち").collect(&:name) # => ["▲５九玉", "△５一玉"]
+      #   Soldier.preset_soldiers(white: "十九枚落ち", black: "十九枚落ち").collect(&:name) # => ["▲５九玉", "△５一玉"]
       def preset_soldiers(preset_key)
         PresetInfo.fetch(preset_key || :"平手").sorted_soldiers
       end
@@ -82,11 +86,19 @@ module Bioshogi
       { piece: piece, promoted: promoted, place: place, location: location }
     end
 
+    def merge(attributes)
+      self.class.create(self.attributes.merge(attributes))
+    end
+
+    ################################################################################
+
     # 手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意した
     # だから何をキーにしてもよい。place は基本ユニークなのでこれで並べる
-    # FIXME: これは臭う。というか soldier == nil でエラーになるはず。
+    # FIXME: 不具合の元になりそう
     def <=>(other)
-      place <=> other.place
+      if other
+        place <=> other.place
+      end
     end
 
     def ==(other)
@@ -100,6 +112,8 @@ module Bioshogi
     def hash
       attributes.hash
     end
+
+    ################################################################################
 
     # 180度回転
     def flip
@@ -120,6 +134,8 @@ module Bioshogi
       end
     end
 
+    ################################################################################
+
     def all_vectors
       piece.all_vectors(promoted: promoted, location: location)
     end
@@ -130,10 +146,6 @@ module Bioshogi
       v ||= piece.always_alive # 死に駒にならない駒か？ (基本、後ろに移動できる駒)
       v ||= promoted           # すでに成っているか？ (成っている駒は金の動きなので後ろに移動できる)
       v ||= all_vectors.any? { |e| place.vector_add(e) } # ちょっとでも動ける？
-    end
-
-    def merge(attributes)
-      self.class.create(self.attributes.merge(attributes))
     end
 
     ################################################################################ Utility

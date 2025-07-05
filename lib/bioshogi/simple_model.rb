@@ -4,7 +4,7 @@ module Bioshogi
   module SimpleModel
     def initialize(attributes)
       attributes.each do |k, v|
-        public_send("#{k}=", v)
+        send("#{k}=", v)
       end
 
       super()

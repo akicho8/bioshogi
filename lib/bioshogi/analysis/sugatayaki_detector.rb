@@ -1,7 +1,9 @@
 module Bioshogi
   module Analysis
     class SugatayakiDetector
-      delegate :win_side_location, :container, to: :@base
+      attr_accessor :base
+
+      delegate :win_side_location, :container, to: :base
 
       def initialize(base)
         @base = base
