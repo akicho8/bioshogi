@@ -81,8 +81,6 @@ module Bioshogi
       end
 
       concerning :TurnMethods do
-        attr_writer :turn_info
-
         def turn_info
           @turn_info ||= TurnInfo.new
         end
