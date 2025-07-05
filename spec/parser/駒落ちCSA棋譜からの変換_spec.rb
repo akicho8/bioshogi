@@ -74,6 +74,7 @@ PI82HI22KA
 EOT
       expect(info.to_csa).to eq(<<~EOT)
 V2.2
+$X_FINAL:投了
 ' 手合割:二枚落ち
 P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
 P2 *  *  *  *  *  *  *  *  *

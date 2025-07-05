@@ -148,6 +148,7 @@ RSpec.describe Bioshogi::Parser::KifParser do
       expect(@info.to_csa).to eq(<<~EOT)
 V2.2
 $SITE:(site)
+$X_FINAL:投了
 P1 *  *  *  *  *  *  *  * -OU
 P2 *  *  *  *  *  *  *  *  *
 P3 *  *  *  *  *  *  *  *  *

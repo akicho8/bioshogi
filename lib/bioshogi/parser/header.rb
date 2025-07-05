@@ -84,6 +84,7 @@ module Bioshogi
       end
 
       def normalize_value(s)
+        s = s.to_s
         s = s.gsub(/\p{blank}+/, " ")
         s = s.tr("ａ-ｚＡ-Ｚ０-９", "a-zA-Z0-9")
         s = s.strip
