@@ -196,6 +196,7 @@ module Bioshogi
     ################################################################################
 
     # マンハッタン距離を返す
+    # 斜め上には2歩必要なため「結果 <= 1」とすれば 3x3 をダイヤモンド型で範囲の比較ができる
     def manhattan_distance(other)
       column.distance(other.column) + row.distance(other.row)
     end

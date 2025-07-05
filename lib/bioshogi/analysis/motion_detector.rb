@@ -658,21 +658,36 @@ module Bioshogi
             skip_if { captured_soldier }
           }
         },
-        {
-          key: "守りの馬",
-          description: nil,
-          trigger: { piece_key: :bishop, promoted: true,  motion: :move },
-          func: -> {
-            # 【条件】自玉が1つ存在する
-            and_cond { player.king_soldier_only_one_exist? }
-
-            # 【条件】移動先の近くに自玉がいる
-            and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
-
-            # 【却下】移動元の近くに、すでに自玉がいる
-            skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
-          },
-        },
+        # {
+        #   key: "守りの馬",
+        #   description: nil,
+        #   trigger: { piece_key: :bishop, promoted: true,  motion: :move },
+        #   func: -> {
+        #     # 【条件】自玉が1つ存在する
+        #     and_cond { player.king_soldier_only_one_exist? }
+        # 
+        #     # 【条件】移動先の近くに自玉がいる
+        #     and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+        # 
+        #     # 【却下】移動元の近くに、すでに自玉がいる
+        #     skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+        #   },
+        # },
+        # {
+        #   key: "天馬の盾",
+        #   description: nil,
+        #   trigger: { piece_key: :bishop, promoted: true,  motion: :move },
+        #   func: -> {
+        #     # 【条件】自玉が1つ存在する
+        #     and_cond { player.king_soldier_only_one_exist? }
+        # 
+        #     # 【条件】移動先の近くに自玉がいる
+        #     and_cond { soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+        # 
+        #     # 【却下】移動元の近くに、すでに自玉がいる
+        #     skip_if { origin_soldier.place.in_outer_area?(player.king_soldier.place, 2) }
+        #   },
+        # },
         {
           key: "双玉接近",
           description: nil,
