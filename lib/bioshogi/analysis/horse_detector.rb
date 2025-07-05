@@ -34,7 +34,7 @@ module Bioshogi
 
         if retv
           if another_horse_is_near_the_king
-            tag_add("天馬の盾", once: true)
+            tag_add("双馬の盾", once: true)
           else
             tag_add("守りの馬")
           end

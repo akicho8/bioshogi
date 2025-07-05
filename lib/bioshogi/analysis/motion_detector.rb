@@ -674,7 +674,7 @@ module Bioshogi
         #   },
         # },
         # {
-        #   key: "天馬の盾",
+        #   key: "双馬の盾",
         #   description: nil,
         #   trigger: { piece_key: :bishop, promoted: true,  motion: :move },
         #   func: -> {
