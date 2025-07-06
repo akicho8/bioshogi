@@ -35,22 +35,21 @@ module Bioshogi
 
         Analysis::TacticInfo.each do |e|
           if v = tag_bundle.value(e).normalize.presence
-            acc["#{call_name}の#{e.name}"] = v.collect(&:name).join(", ")
+            acc[e.name] = v.collect(&:name).join(", ")
           end
         end
 
         if container.params[:preset_info_or_nil]
           if main_style_info = tag_bundle.main_style_info
-            acc["#{call_name}の棋風"] = main_style_info.name
+            acc["棋風"] = main_style_info.name
           end
         end
 
-        acc["#{call_name}のキル数"] = "#{kill_count}キル"
-        acc["#{call_name}の玉移動"] = "#{king_moved_counter}回"
+        acc["駒使用"] = used_soldier_counter.to_s
+        acc["玉移動"] = "#{king_moved_counter}回"
+        acc["キル数"] = "#{kill_count}キル"
 
-        acc["#{call_name}の駒使用"] = used_soldier_counter.to_s
-
-        acc
+        acc.transform_keys { |e| "#{call_name}の#{e}" }
       end
     end
   end
