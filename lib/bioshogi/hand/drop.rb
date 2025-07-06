@@ -24,7 +24,7 @@ module Bioshogi
         player.piece_box.add(soldier.piece.key => 1)
       end
 
-      def soldier_for_counts
+      def used_soldier
         soldier
       end
 

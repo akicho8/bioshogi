@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "used_piece_counts" do
+RSpec.describe "used_soldier_counter" do
   it "works" do
     info = Bioshogi::Parser.parse(<<~EOT)
     後手の持駒：
@@ -20,10 +20,10 @@ RSpec.describe "used_piece_counts" do
     22角成 同銀 55角打
     EOT
 
-    container = info.formatter.container
+    container = info.container
 
-    assert { container.player_at(:black).used_piece_counts == { :B0 => 2 } }
-    assert { container.player_at(:white).used_piece_counts == { :S0 => 1 } }
+    assert { container.player_at(:black).used_soldier_counter.to_h == { :B0 => 2 } }
+    assert { container.player_at(:white).used_soldier_counter.to_h == { :S0 => 1 } }
   end
 end
 # >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.

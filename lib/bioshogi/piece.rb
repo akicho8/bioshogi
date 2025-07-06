@@ -200,6 +200,10 @@ module Bioshogi
       def promoted_names
         [promoted_name, *promoted_formal_sheet_name, *other_matched_promoted_names, csa.promoted_name].flatten.compact
       end
+
+      def to_counts_key(promoted)
+        :"#{sfen_char}#{promoted ? 1 : 0}"
+      end
     end
 
     concerning :SfenMethods do

@@ -26,8 +26,8 @@ module Bioshogi
         @king_place = king_soldier&.place
       end
 
-      def used_piece_counts
-        @used_piece_counts ||= Hash.new(0)
+      def used_soldier_counter
+        @used_soldier_counter ||= UsedSoldierCounter.new
       end
 
       def to_header_h
@@ -48,7 +48,7 @@ module Bioshogi
         acc["#{call_name}のキル数"] = "#{kill_count}キル"
         acc["#{call_name}の玉移動"] = "#{king_moved_counter}回"
 
-        # used_piece_counts
+        acc["#{call_name}の駒使用"] = used_soldier_counter.to_s
 
         acc
       end

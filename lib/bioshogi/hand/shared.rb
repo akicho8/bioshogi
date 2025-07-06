@@ -6,6 +6,8 @@ module Bioshogi
         attr_accessor :soldier
 
         private_class_method :new
+
+        delegate :to_counts_key, to: :used_soldier
       end
 
       class_methods do
@@ -87,15 +89,9 @@ module Bioshogi
       end
 
       # 使った駒とする soldier
-      def soldier_for_counts
+      # つまり移動する駒なら origin_soldier で打った駒なら soldier になる
+      def used_soldier
         raise NotImplementedError, "#{__method__} is not implemented"
-      end
-
-      # 使った駒とする soldier を元にしたキー
-      # もし「打ったかどうか」も調べるならここではなく個別のクラスで定義する
-      def to_counts_key
-        s = soldier_for_counts
-        :"#{s.piece.sfen_char}#{s.promoted ? 1 : 0}"
       end
     end
   end

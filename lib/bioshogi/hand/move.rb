@@ -111,7 +111,7 @@ module Bioshogi
         ].join
       end
 
-      def soldier_for_counts
+      def used_soldier
         origin_soldier
       end
 

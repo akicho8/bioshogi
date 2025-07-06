@@ -4,7 +4,7 @@ module Bioshogi
   module Analysis
     concern :AnalyzerMod do
       def execute_after_process
-        player.used_piece_counts[hand.to_counts_key] += 1
+        player.used_soldier_counter.update(hand.used_soldier)
       end
 
       def move_hand_process

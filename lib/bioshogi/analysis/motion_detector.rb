@@ -155,7 +155,7 @@ module Bioshogi
           trigger: { piece_key: :king, promoted: false, motion: :move },
           func: -> {
             # 【条件】玉の初回移動に限る
-            and_cond { player.used_piece_counts[:K0] == 1 }
+            and_cond { player.used_soldier_counter[:K0] == 1 }
 
             # 【条件】序盤である
             and_cond { container.joban }
@@ -637,7 +637,7 @@ module Bioshogi
             and_cond { player.king_soldier_only_one_exist? }
 
             # 【却下】玉と飛の移動が合わせて2回以下 (これがあれば中飛車美濃囲いのときに玉飛接近にならない)
-            skip_if { (player.used_piece_counts[:K0] + player.used_piece_counts[:R0]) <= 2 }
+            skip_if { (player.used_soldier_counter[:K0] + player.used_soldier_counter[:R0]) <= 2 }
 
             fn = -> it {
               partner = it.piece.key == :rook ? :king : :rook

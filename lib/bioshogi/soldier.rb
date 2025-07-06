@@ -230,6 +230,10 @@ module Bioshogi
       piece.csa.any_name(promoted)
     end
 
+    def to_counts_key
+      piece.to_counts_key(promoted)
+    end
+
     def to_akf
       {
         :piece    => piece.key,
