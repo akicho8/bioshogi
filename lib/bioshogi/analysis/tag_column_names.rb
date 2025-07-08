@@ -3,8 +3,8 @@ module Bioshogi
     TagColumnNames = [
       # 基本情報
       :group_key,
-      :parent,
-      :related_ancestors,
+      :parent,                  # DEPLICATE
+      :related_ancestors,       # DEPLICATE
       :alias_names,
       :add_to_self,
       :add_to_opponent,

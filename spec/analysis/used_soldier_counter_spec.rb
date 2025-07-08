@@ -1,6 +1,9 @@
-require "~/src/shogi-extend/workbench/setup"
-s { User.count }              # => 70
-_ { User.count }              # => "0.33 ms"
-# >>   User Count (0.4ms)  SELECT COUNT(*) FROM `users`
+require "spec_helper"
 
-require "~/src/bioshogi/lib/bioshogi"
+RSpec.describe Bioshogi::Analysis::UsedSoldierCounter do
+  it "to_s" do
+    e = Bioshogi::Analysis::UsedSoldierCounter.new
+    e.update(Bioshogi::Soldier.from_str("▲55飛"))
+    e.to_s.include?("飛1")
+  end
+end
