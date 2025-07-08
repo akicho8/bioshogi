@@ -22,7 +22,7 @@ module Bioshogi
           { key: "端攻め",            },
           { key: "端玉には端歩",      },
           { key: "ポーンハンター",    },
-          { key: "角交換でも5筋の歩突き", },
+          { key: "パンドラの歩", },
 
           # 歩 (マイナス)
           { key: "居飛車の税金", outbreak_skip: true, },

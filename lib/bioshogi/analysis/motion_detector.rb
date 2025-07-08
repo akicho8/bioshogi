@@ -8,7 +8,7 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
-          key: "角交換でも5筋の歩突き",
+          key: "パンドラの歩",
           description: nil,
           trigger: [
             { piece_key: :pawn, promoted: false, motion: :move },
