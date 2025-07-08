@@ -48,6 +48,10 @@ module Bioshogi
 
       ################################################################################
 
+      def preset_is(attr)
+        container.params[:preset_info_or_nil]&.public_send(attr)
+      end
+
       def cold_war_verification(e)
         # 開戦済みならskip
         # 例えばそれまで静かで始めて角交換したときは kill_count は 1 になるので outbreak_skip: nil, kill_count_lteq: 1 にしておけば skip されない
@@ -214,12 +218,6 @@ module Bioshogi
 
         if v = tag.add_to_opponent
           opponent_player.tag_bundle << v
-        end
-      end
-
-      def preset_is(attr)
-        if preset_info = container.initial_preset_info
-          preset_info.public_send(attr)
         end
       end
     end

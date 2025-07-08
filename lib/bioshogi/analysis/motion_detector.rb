@@ -8,6 +8,30 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "角交換でも5筋の歩突き",
+          description: nil,
+          trigger: [
+            { piece_key: :pawn, promoted: false, motion: :move },
+          ],
+          func: -> {
+            # 【条件】序盤である
+            and_cond { container.joban }
+
+            # 【条件】下から4行目である
+            and_cond { soldier.bottom_spaces == 3 }
+
+            # 【条件】5列名である
+            and_cond { soldier.column_is5? }
+
+            # 【条件】相手が角を持っている
+            and_cond { opponent_player.piece_box.has_key?(:bishop) }
+
+            # 【条件】平手風の手合割である
+            and_cond { preset_is(:hirate_like) }
+          },
+        },
+
+        {
           key: "双竜双馬陣",
           description: nil,
           trigger: [
