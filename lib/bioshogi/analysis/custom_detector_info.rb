@@ -4,6 +4,7 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         { key: "穴熊判定",         klass: AnagumaDetector,      custom_trigger_key: :ct_every,  },
+        { key: "入玉穴熊判定",     klass: NyuugyokuAnagumaDetector,     custom_trigger_key: :ct_every,  },
         { key: "双馬結界判定",         klass: HorseDetector,      custom_trigger_key: :ct_every,  },
         { key: "N段ロケット判定",  klass: RocketDetector,      custom_trigger_key: :ct_every,  },
         { key: "魔方陣判定",       klass: MagicSquareDetector, custom_trigger_key: :ct_every,  },
