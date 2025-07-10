@@ -5,6 +5,19 @@ module Bioshogi
     class CaptureDetector
       include ApplicationMemoryRecord
       memory_record [
+        # {
+        #   key: "序盤は飛車より角",
+        #   func: -> {
+        #     # 【条件】角を取った
+        #     and_cond { captured_soldier.piece.key == :bishop }
+        #
+        #     # 【条件】動かした駒は飛か龍
+        #     and_cond { soldier.piece.key == :rook }
+        #
+        #     # 【条件】序盤である
+        #     and_cond { container.joban }
+        #   },
+        # },
         {
           key: "全駒",
           func: -> {

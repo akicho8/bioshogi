@@ -1309,7 +1309,7 @@ module Bioshogi
         },
         {
           key: "田楽刺し",
-          description: "角の頭に打ってその奥に玉などの大駒がある",
+          description: "角の頭に打ってその奥に玉などの大駒がある。「底歩に香」の手筋があるためこれは角のみを対象とする",
           trigger: { piece_key: :lance,  promoted: false, motion: :drop },
           func: -> {
             and_cond do
@@ -1342,6 +1342,62 @@ module Bioshogi
                 end
               end
               mode == :dengaku_matched
+            end
+          },
+        },
+        {
+          key: "底歩に香",
+          description: nil,
+          trigger: { piece_key: :lance,  promoted: false, motion: :drop },
+          func: -> {
+            # 【条件】底歩がある
+            and_cond do
+              if s = board[soldier.move_to_top_edge]
+                s.piece.key == :pawn && s.normal? && opponent?(s)
+              end
+            end
+
+            # 【条件】そこ歩の上に金がある
+            and_cond do
+              if s = board[soldier.move_to_top_edge]
+                if v = s.relative_move_to(:up)
+                  if s = board[v]
+                    s.piece.key == :gold && opponent?(s)
+                  end
+                end
+              end
+            end
+
+            # 【条件】打った香車の1つ前の升目が空いている
+            and_cond do
+              if v = soldier.relative_move_to(:up)
+                board.cell_empty?(v)
+              end
+            end
+
+            # 【条件】敵金まで香が通っている
+            and_cond do
+              found = false
+              (1..).each do |y|
+                if v = soldier.relative_move_to(:up, magnification: y)
+                  if s = board[v]
+                    if opponent?(s)
+                      if s.bottom_spaces == 1 # つまり金である
+                        found = true
+                      end
+                    else
+                      # 自分の駒が間にある場合は香が相手まで通っていない
+                      break
+                    end
+                  else
+                    # 駒がない場合はさらに奥に進む
+                  end
+                else
+                  # 盤の外に出た場合は終わる(前の条件があるので、ここに来ることはない)
+                  break
+                end
+              end
+              found
             end
           },
         },
@@ -1386,7 +1442,6 @@ module Bioshogi
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> { instance_exec(&MotionDetector[:"歩裏の香"].func) },
         },
-
         {
           key: "マムシのと金",
           description: nil,
