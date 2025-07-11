@@ -16,13 +16,3 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 %TORYO
 EOT
 puts info.to_kif
-
-
-
-
-
-
-
-
-
-

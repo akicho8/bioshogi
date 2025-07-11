@@ -20,6 +20,6 @@ RSpec.describe Bioshogi::Analysis::SoldierLookupTableMethods do
     board = Bioshogi::Board.create_by_human("△22馬▲88角")
     assert { board.soldiers_lookup2(:white, :bishop, true)  == [Bioshogi::Soldier.from_str("△２二馬")] }
     assert { board.soldiers_lookup2(:black, :bishop, false) == [Bioshogi::Soldier.from_str("▲８八角")] }
-    assert{ board.soldiers_lookup2(:black, :rook, false)    == [] }
+    assert { board.soldiers_lookup2(:black, :rook, false)    == [] }
   end
 end

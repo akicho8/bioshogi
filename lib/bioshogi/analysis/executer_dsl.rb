@@ -48,6 +48,10 @@ module Bioshogi
 
       ################################################################################
 
+      def previous_hand_log(n = 1)
+        container.hand_logs[-n]
+      end
+
       def preset_is(attr)
         container.params[:preset_info_or_nil]&.public_send(attr)
       end

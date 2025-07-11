@@ -22,7 +22,7 @@ module Bioshogi
           # 2手前──
 
           m = nil
-          if hand_log = container.hand_logs[-2]
+          if hand_log = previous_hand_log(2)
             m = hand_log.move_hand
           end
 

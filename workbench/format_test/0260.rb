@@ -20,15 +20,3 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 +7776FU
 EOT
 puts info.to_kif
-
-
-
-
-
-
-
-
-
-
-
-

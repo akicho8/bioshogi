@@ -8,13 +8,3 @@ info = Parser.parse(<<~EOT, typical_error_case: :embed)
 EOT
 # p info
 puts info.to_csa
-
-
-
-
-
-
-
-
-
-

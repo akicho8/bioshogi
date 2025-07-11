@@ -27,33 +27,3 @@ info = Parser.parse(<<~EOT)
    2 ２二飛(82)( 0:01/00:00:01)
 EOT
 puts info.to_kif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

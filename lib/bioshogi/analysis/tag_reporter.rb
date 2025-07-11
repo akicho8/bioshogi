@@ -22,7 +22,7 @@ module Bioshogi
       end
 
       def attributes_of(e)
-        {"種類" => e.human_name, **e.attributes}
+        { "種類" => e.human_name, **e.attributes }
       end
 
       def outdir

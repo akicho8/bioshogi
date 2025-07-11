@@ -103,7 +103,6 @@ module Bioshogi
         end
 
         def trigger?
-
         end
 
         def count_all

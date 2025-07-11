@@ -7,35 +7,3 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
