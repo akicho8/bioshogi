@@ -15,10 +15,10 @@ module Bioshogi
       :turn_limit,
       :turn_eq,
       :order_key,
-      :has_pawn_then_skip,
+      :has_pawn_then_skip,       # 歩を持っていたらスキップ
+      :has_other_pawn_then_skip, # 歩を除いて駒を持っていたらスキップ
       :kill_only,
       :drop_only,
-      :pawn_have_ok,
       :outbreak_skip,
       :kill_count_lteq,
       :hold_piece_not_in,
