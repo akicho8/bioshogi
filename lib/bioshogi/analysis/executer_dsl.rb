@@ -77,7 +77,7 @@ module Bioshogi
 
         # 歩を除いて何か持っていたらskip
         if e.has_other_pawn_then_skip
-          unless piece_box.except(:pawn).empty?
+          if !piece_box.except(:pawn).empty?
             throw :skip
           end
         end
