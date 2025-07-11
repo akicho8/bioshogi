@@ -21,11 +21,11 @@ info = Parser.parse(<<~EOT)
 
 EOT
 puts info.to_kif
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/kakukiri_detector2.rb:48", :call, 1]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/kakukiri_detector2.rb:49", :call, 1]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/kakukiri_detector2.rb:50", :call, {rook: 1}]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/kakukiri_detector2.rb:51", :call, {rook: 1}]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/kakukiri_detector2.rb:52", :call, {bishop: 1}]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/hikakukoukan_detector.rb:48", :call, 1]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/hikakukoukan_detector.rb:49", :call, 1]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/hikakukoukan_detector.rb:50", :call, {rook: 1}]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/hikakukoukan_detector.rb:51", :call, {rook: 1}]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/hikakukoukan_detector.rb:52", :call, {bishop: 1}]
 # >> true
 # >> 棋戦：共有将棋盤
 # >> 先手の手筋：序盤は飛車より角
