@@ -175,7 +175,7 @@ module Bioshogi
         end
 
         # 歩を持っていたらskip
-        if e.not_have_pawn
+        if e.has_pawn_then_skip
           if piece_box.has_key?(:pawn)
             throw :skip
           end

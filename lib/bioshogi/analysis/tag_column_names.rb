@@ -15,7 +15,7 @@ module Bioshogi
       :turn_limit,
       :turn_eq,
       :order_key,
-      :not_have_pawn,
+      :has_pawn_then_skip,
       :kill_only,
       :drop_only,
       :pawn_have_ok,
