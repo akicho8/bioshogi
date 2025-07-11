@@ -181,13 +181,6 @@ module Bioshogi
           end
         end
 
-        # # 歩を除いて何か持っていたらskip
-        # if e. :pawn_have_ok
-        #   unless piece_box.except(:pawn).empty?
-        #     throw :skip
-        #   end
-        # end
-
         if true
           # 駒が一致していなければskip
           if v = e.hold_piece_eq

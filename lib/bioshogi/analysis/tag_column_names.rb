@@ -18,7 +18,6 @@ module Bioshogi
       :has_pawn_then_skip,
       :kill_only,
       :drop_only,
-      :pawn_have_ok,
       :outbreak_skip,
       :kill_count_lteq,
       :hold_piece_not_in,
