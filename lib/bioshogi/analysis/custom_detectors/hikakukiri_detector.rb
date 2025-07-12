@@ -3,7 +3,7 @@
 module Bioshogi
   module Analysis
     module CustomDetectors
-      class KakukiriDetector
+      class HikakukiriDetector
         include ExecuterDsl
 
         attr_reader :executor
