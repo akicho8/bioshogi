@@ -147,6 +147,10 @@ module Bioshogi
         @bishop_up_diagonal_vectors ||= [up_left, up_right]
       end
 
+      def front_vectors
+        @front_vectors ||= [up, up_left, up_right]
+      end
+
       ################################################################################
 
       def anaguma_vectors(left_or_right)

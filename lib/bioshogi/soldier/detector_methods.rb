@@ -12,6 +12,23 @@ module Bioshogi
 
       ################################################################################
 
+      # 後手は先手目線として計算する
+      #
+      #   Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲56玉")) == V.up
+      #   Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲54玉")) == V.down
+      #   Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲45玉")) == V.left
+      #   Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲65玉")) == V.right
+      #
+      #   Soldier.from_str("△55玉").vector_from(Soldier.from_str("△56玉")) == V.down
+      #   Soldier.from_str("△55玉").vector_from(Soldier.from_str("△54玉")) == V.up
+      #   Soldier.from_str("△55玉").vector_from(Soldier.from_str("△45玉")) == V.right
+      #   Soldier.from_str("△55玉").vector_from(Soldier.from_str("△65玉")) == V.left
+      def vector_from(from)
+        white_then_flip.place.vector_from(from.white_then_flip.place)
+      end
+
+      ################################################################################
+
       # 前に一直線に進めるタイプか？
       def boar_mode?
         (piece.key == :lance && normal?) || piece.key == :rook

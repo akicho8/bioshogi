@@ -8,6 +8,47 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "堅陣の金",
+          description: nil,
+          trigger: [
+            { piece_key: :gold, promoted: false, motion: :move },
+          ],
+          func: -> {
+            # 【条件】自陣の下2行内に移動した
+            and_cond { soldier.bottom_spaces <= 1 }
+
+            # 【条件】引いた
+            and_cond { move_hand.move_vector == V.down }
+
+            # 【却下】駒を取る目的だった
+            skip_if { captured_soldier }
+
+            # 【却下】左上・上・右上に敵の駒がある
+            # 本当は全面に敵駒があるかどうかではなく金が取られて損をする場合に「仕方なく引いた」ときとしたい
+            skip_if do
+              V.front_vectors.any? do |e|
+                if v = origin_soldier.relative_move_to(e)
+                  if s = board[v]
+                    opponent?(s)
+                  end
+                end
+              end
+            end
+
+            # 【却下】桂馬に狙われていた
+            skip_if do
+              V.keima_vectors.any? do |e|
+                if v = origin_soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :knight && s.normal? && opponent?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
           key: "パンドラの歩",
           description: nil,
           trigger: [

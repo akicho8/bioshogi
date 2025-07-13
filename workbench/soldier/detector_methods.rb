@@ -54,3 +54,13 @@ Soldier.from_str("△98玉").both_side_without_corner? # => true
 Soldier.from_str("△99玉").both_side_without_corner? # => false
 
 Soldier.from_str("△22玉").both_side_without_corner? # => false
+
+Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲56玉")) == V.up    # => true
+Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲54玉")) == V.down  # => true
+Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲45玉")) == V.left  # => true
+Soldier.from_str("▲55玉").vector_from(Soldier.from_str("▲65玉")) == V.right # => true
+
+Soldier.from_str("△55玉").vector_from(Soldier.from_str("△56玉")) == V.down  # => true
+Soldier.from_str("△55玉").vector_from(Soldier.from_str("△54玉")) == V.up    # => true
+Soldier.from_str("△55玉").vector_from(Soldier.from_str("△45玉")) == V.right # => true
+Soldier.from_str("△55玉").vector_from(Soldier.from_str("△65玉")) == V.left  # => true

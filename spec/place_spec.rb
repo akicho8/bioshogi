@@ -190,6 +190,13 @@ RSpec.describe Bioshogi::Place do
     assert { Bioshogi::Place["22"].both_side_without_corner? == false }
   end
 
+  it "vector_from" do
+    assert { Bioshogi::Place["55"].vector_from(Bioshogi::Place["56"]) == Bioshogi::V.up    }
+    assert { Bioshogi::Place["55"].vector_from(Bioshogi::Place["54"]) == Bioshogi::V.down  }
+    assert { Bioshogi::Place["55"].vector_from(Bioshogi::Place["45"]) == Bioshogi::V.left  }
+    assert { Bioshogi::Place["55"].vector_from(Bioshogi::Place["65"]) == Bioshogi::V.right }
+  end
+
   ################################################################################
 end
 # >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.

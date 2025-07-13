@@ -71,6 +71,23 @@ module Bioshogi
 
       ################################################################################
 
+      # 移動差分をベクトルとして返す
+      #
+      #   Hand::Move.create(soldier: Soldier.from_str("▲55玉"), origin_soldier: Soldier.from_str("▲56玉")).move_vector == V.up
+      #   Hand::Move.create(soldier: Soldier.from_str("▲55玉"), origin_soldier: Soldier.from_str("▲54玉")).move_vector == V.down
+      #   Hand::Move.create(soldier: Soldier.from_str("▲55玉"), origin_soldier: Soldier.from_str("▲45玉")).move_vector == V.left
+      #   Hand::Move.create(soldier: Soldier.from_str("▲55玉"), origin_soldier: Soldier.from_str("▲65玉")).move_vector == V.right
+      #
+      #   Hand::Move.create(soldier: Soldier.from_str("△55玉"), origin_soldier: Soldier.from_str("△56玉")).move_vector == V.down
+      #   Hand::Move.create(soldier: Soldier.from_str("△55玉"), origin_soldier: Soldier.from_str("△54玉")).move_vector == V.up
+      #   Hand::Move.create(soldier: Soldier.from_str("△55玉"), origin_soldier: Soldier.from_str("△45玉")).move_vector == V.right
+      #   Hand::Move.create(soldier: Soldier.from_str("△55玉"), origin_soldier: Soldier.from_str("△65玉")).move_vector == V.left
+      def move_vector
+        soldier.white_then_flip.vector_from(origin_soldier.white_then_flip)
+      end
+
+      ################################################################################
+
       # 人間には読みやすいがパースは大変
       # ・不成がわからない
       def to_kif(options = {})

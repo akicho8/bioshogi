@@ -79,6 +79,7 @@ module Bioshogi
           { key: "裾銀",         },
 
           # 金
+          { key: "堅陣の金",     },
           { key: "退場の金",     },
           { key: "壁金",         },
           { key: "頭金",         },

@@ -218,10 +218,15 @@ module Bioshogi
 
     ################################################################################
 
-    # # 右に移動した？
-    # def move_to_right?(location)
-    #   white_then_flip(location).column.value - origin_soldier.place.column.value
-    # end
+    # ▲視点で from からの差をベクトルで返す
+    #
+    #   Place["55"].vector_from(Place["56"]) == V.up    # => true
+    #   Place["55"].vector_from(Place["54"]) == V.down  # => true
+    #   Place["55"].vector_from(Place["45"]) == V.left  # => true
+    #   Place["55"].vector_from(Place["65"]) == V.right # => true
+    def vector_from(from)
+      V[column.value - from.column.value, row.value - from.row.value]
+    end
 
     ################################################################################
 

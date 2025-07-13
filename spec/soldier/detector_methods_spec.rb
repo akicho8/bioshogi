@@ -114,4 +114,16 @@ RSpec.describe Bioshogi::Soldier::DetectorMethods do
 
     assert { Bioshogi::Soldier.from_str("▲22玉").both_side_without_corner? == false }
   end
+
+  it "vector_from" do
+    assert { Bioshogi::Soldier.from_str("▲55玉").vector_from(Bioshogi::Soldier.from_str("▲56玉")) == Bioshogi::V.up    }
+    assert { Bioshogi::Soldier.from_str("▲55玉").vector_from(Bioshogi::Soldier.from_str("▲54玉")) == Bioshogi::V.down  }
+    assert { Bioshogi::Soldier.from_str("▲55玉").vector_from(Bioshogi::Soldier.from_str("▲45玉")) == Bioshogi::V.left  }
+    assert { Bioshogi::Soldier.from_str("▲55玉").vector_from(Bioshogi::Soldier.from_str("▲65玉")) == Bioshogi::V.right }
+
+    assert { Bioshogi::Soldier.from_str("△55玉").vector_from(Bioshogi::Soldier.from_str("△56玉")) == Bioshogi::V.down  }
+    assert { Bioshogi::Soldier.from_str("△55玉").vector_from(Bioshogi::Soldier.from_str("△54玉")) == Bioshogi::V.up    }
+    assert { Bioshogi::Soldier.from_str("△55玉").vector_from(Bioshogi::Soldier.from_str("△45玉")) == Bioshogi::V.right }
+    assert { Bioshogi::Soldier.from_str("△55玉").vector_from(Bioshogi::Soldier.from_str("△65玉")) == Bioshogi::V.left  }
+  end
 end
