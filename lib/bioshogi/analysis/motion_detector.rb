@@ -384,6 +384,12 @@ module Bioshogi
           },
         },
         {
+          key: "金底の香",
+          description: nil,
+          trigger: { piece_key: :lance, promoted: false, motion: :drop },
+          func: -> { instance_exec(&MotionDetector[:"金底の歩"].func) },
+        },
+        {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに敵玉がある",
           trigger: { piece_key: :rook, promoted: true,  motion: :move },
