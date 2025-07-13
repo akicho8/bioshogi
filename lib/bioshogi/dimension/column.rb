@@ -63,6 +63,7 @@ module Bioshogi
         :right_side?,
         :left_side?,
         :left_or_right,
+        :left_or_right_dir_to_center,
       ]
 
       ################################################################################
@@ -142,6 +143,12 @@ module Bioshogi
           :left
         else
           nil
+        end
+      end
+
+      def left_or_right_dir_to_center
+        if v = left_or_right
+          v == :right ? :left : :right
         end
       end
 

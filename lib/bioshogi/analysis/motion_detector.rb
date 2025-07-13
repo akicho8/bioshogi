@@ -8,6 +8,64 @@ module Bioshogi
       include ApplicationMemoryRecord
       memory_record [
         {
+          key: "空中戦",
+          description: nil,
+          trigger: [
+            { piece_key: [:rook, :bishop], promoted: false, motion: :both },
+          ],
+          func: -> {
+            # 【条件】序盤である
+            and_cond { container.joban }
+
+            # 【却下】駒を取る目的だった
+            skip_if { captured_soldier }
+
+            # 【条件】金の移動はまだ2回以内である
+            and_cond { player.used_soldier_counter[:G0] <= 2 }
+
+            # 【条件】銀の移動はまだ2回以内である
+            and_cond { player.used_soldier_counter[:S0] <= 2 }
+
+            # 【条件】両者の飛車が 4..6 行目であるかつ中央に向けて利きがある
+            and_cond do
+              container.players.all? do |e|
+                e.soldiers_lookup2(:rook, false).any? do |e| # ここの any? は「あれば first」の意味
+                  if e.middle_row?
+                    if e.left_or_right
+                      # 左右どちらかにいるので中央に向けて1歩移動できるか？
+                      if v = e.relative_move_to(e.left_or_right_dir_to_center)
+                        board.cell_empty?(v)
+                      end
+                    else
+                      # 中央にいる
+                      true
+                    end
+                  end
+                end
+              end
+            end
+
+            # 【条件】両者のどちらかの角が中央に向けて利いている
+            and_cond do
+              container.players.any? do |e|
+                e.soldiers_lookup2(:bishop, false).any? do |e| # ここの any? は「あれば first」の意味
+                  if e.middle_row? || e.bottom_spaces >= 2     # 4..6 行目または下から3行目(つまり4..7行目)
+                    if e.left_or_right
+                      # 中央(左上または右上)に向けて1歩移動できるか？
+                      if v = e.relative_move_to(:"up_#{e.left_or_right_dir_to_center}")
+                        board.cell_empty?(v)
+                      end
+                    else
+                      # 中央にいる
+                      true
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "堅陣の金",
           description: nil,
           trigger: [
@@ -1772,3 +1830,7 @@ module Bioshogi
     end
   end
 end
+# ~> -:8:in '<class:MotionDetector>': uninitialized constant Bioshogi::Analysis::MotionDetector::ApplicationMemoryRecord (NameError)
+# ~>    from -:7:in '<module:Analysis>'
+# ~>    from -:6:in '<module:Bioshogi>'
+# ~>    from -:5:in '<main>'

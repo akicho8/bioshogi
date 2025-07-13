@@ -118,6 +118,7 @@ module Bioshogi
 
           # 飛角
           { key: "双竜双馬陣", },
+          { key: "空中戦", add_to_opponent: "空中戦", },
 
           # 玉
           { key: "端玉",                                              },
