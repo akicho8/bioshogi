@@ -940,7 +940,7 @@ module Bioshogi
           },
         },
         {
-          key: "パンツを脱ぐ",
+          key: "パンティを脱ぐ",
           description: "開戦前かつ、跳んだ桂が下から3つ目かつ、(近い方の)端から3列目かつ、移動元の隣(端に近い方)に自玉がある",
           trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {

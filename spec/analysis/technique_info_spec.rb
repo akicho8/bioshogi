@@ -32,7 +32,7 @@ RSpec.describe Bioshogi::Analysis::TechniqueInfo do
     assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"金底の歩" }
   end
 
-  it "パンツを脱ぐ" do
+  it "パンティを脱ぐ" do
     board = Bioshogi::Board.create_by_shape(<<~EOT)
     +---------------------------+
     |v玉v桂 ・ ・ ・ ・ ・ ・ ・|
@@ -42,21 +42,21 @@ RSpec.describe Bioshogi::Analysis::TechniqueInfo do
     container = container_new
     container.placement_from_bod("#{board}\n手数＝1")
     container.execute("73桂")
-    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンティを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flop}\n手数＝1")
     container.execute("33桂")
-    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンティを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flip}\n手数＝0")
     container.execute("37桂")
-    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンティを脱ぐ" }
 
     container = container_new
     container.placement_from_bod("#{board.flip.flop}\n手数＝0")
     container.execute("77桂")
-    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンツを脱ぐ" }
+    assert { container.hand_logs.last.tag_bundle.technique_infos.first.key == :"パンティを脱ぐ" }
   end
 end

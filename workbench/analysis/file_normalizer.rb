@@ -357,7 +357,7 @@ Analysis::FileNormalizer.new.call
 # >>   [355 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/田楽刺し.kif
 # >>   [356 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/継ぎ桂.kif
 # >>   [357 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/ふんどしの桂.kif
-# >>   [358 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/パンツを脱ぐ.kif
+# >>   [358 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/パンティを脱ぐ.kif
 # >>   [359 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/銀ばさみ.kif
 # >>   [360 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/端玉には端歩.kif
 # >>   [361 / 402] /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/手筋/銀冠の小部屋.kif

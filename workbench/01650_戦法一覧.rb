@@ -339,7 +339,7 @@ tp rows
 # >> | Bioshogi::Analysis::DefenseInfo   | 雲隠れ玉                 |                    |
 # >> | Bioshogi::Analysis::DefenseInfo   | モノレール囲い           |                    |
 # >> | Bioshogi::Analysis::TechniqueInfo | 金底の歩                 |                    |
-# >> | Bioshogi::Analysis::TechniqueInfo | パンツを脱ぐ             |                    |
+# >> | Bioshogi::Analysis::TechniqueInfo | パンティを脱ぐ             |                    |
 # >> | Bioshogi::Analysis::TechniqueInfo | 腹銀                     |                    |
 # >> | Bioshogi::Analysis::TechniqueInfo | 垂れ歩                   |                    |
 # >> | Bioshogi::Analysis::TechniqueInfo | 割り打ちの銀             |                    |

@@ -31,7 +31,7 @@ tp Analysis::TagIndex.motion_trigger_table
 # >> |  [:bishop, false, true] | [<たすきの角>, <遠見の角>]                                                                                 |
 # >> | [:bishop, false, false] | [<たすきの角>, <遠見の角>, <角不成>]                                                                       |
 # >> |  [:knight, false, true] | [<歩頭の桂>, <金頭の桂>, <継ぎ桂>, <ふんどしの桂>, <控えの桂>]                                             |
-# >> | [:knight, false, false] | [<歩頭の桂>, <金頭の桂>, <継ぎ桂>, <跳ね違いの桂>, <ふんどしの桂>, <パンツを脱ぐ>]                         |
+# >> | [:knight, false, false] | [<歩頭の桂>, <金頭の桂>, <継ぎ桂>, <跳ね違いの桂>, <ふんどしの桂>, <パンティを脱ぐ>]                         |
 # >> |   [:lance, false, true] | [<田楽刺し>, <下段の香>]                                                                                   |
 # >> |  [:knight, true, false] | [<跳ね違いの桂>]                                                                                           |
 # >> |   [:rook, false, false] | [<飛車不成>]                                                                                               |
