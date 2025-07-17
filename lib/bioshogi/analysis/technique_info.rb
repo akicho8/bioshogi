@@ -130,6 +130,7 @@ module Bioshogi
           { key: "桂頭の玉",                                          },
           { key: "中段玉",                                            },
           { key: "双玉接近",        add_to_opponent: "双玉接近",      },
+          { key: "玉頭戦",          add_to_opponent: "玉頭戦",        },
           { key: "入玉",                                              },
 
           # 対局時の状況

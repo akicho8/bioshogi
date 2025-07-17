@@ -854,6 +854,26 @@ module Bioshogi
             skip_if { origin_soldier.place.in_outer_area?(opponent_player.king_soldier.place, 2) }
           },
         },
+        # {
+        #   key: "玉頭戦",
+        #   description: nil,
+        #   trigger: { piece_key: :king, promoted: false, motion: :move },
+        #   func: -> {
+        #     # 【条件】敵玉が1つ存在する
+        #     and_cond { opponent_player.king_soldier_only_one_exist? }
+        # 
+        #     # 【条件】同じ列か1つずれの状態かつ、行の差が4以内である(間が5マス以内)
+        #     fn = -> soldier {
+        #       vector = soldier.place.vector_from(opponent_player.king_soldier.place)
+        #       p ["#{__FILE__}:#{__LINE__}", __method__, vector]
+        #       vector.x.abs <= 1 && vector.y.abs <= 6
+        #     }
+        #     and_cond { fn[soldier] }
+        # 
+        #     # 【却下】すでに玉頭戦状態だった
+        #     skip_if { fn[origin_soldier] }
+        #   },
+        # },
         {
           key: "天空の城",
           description: nil,
