@@ -2,19 +2,33 @@ require "#{__dir__}/setup"
 
 class App
   ANIMATION_OPTIONS = {
-    :page_duration   => 0.5,
+    :page_duration   => 1.0,
     :begin_pages     => nil,
-    :begin_duration  => 1.0,
+    :begin_duration  => 3.0,
     :end_pages       => nil,
-    :end_duration    => 1.0,
+    :end_duration    => 3.0,
     :turn_embed_key  => "is_turn_embed_on",
     :audio_theme_key => :is_audio_theme_none,
-    :color_theme_key => :is_color_theme_modern,
+    :color_theme_key => :is_color_theme_real, # is_color_theme_real, is_color_theme_modern
+    # :color_theme_key => :is_color_theme_modern, # is_color_theme_real, is_color_theme_modern
     # :width           => 854,
     # :height          => 480,
     :width           => 1920,
     :height          => 1080,
+
+    # :renderer_override_params => {
+    #   # 外
+    #   :inner_frame_stroke_color  => "hsla(0,0%,0%,0.6)", # hsl(0,0%,15%), hsla(0,0%,0%,0.6)
+    #   :inner_frame_stroke_width  => 1,
+    #   # 内
+    #   :inner_frame_lattice_color => "hsla(0,0%,0%,0.6)",
+    #   :lattice_stroke_width      => 1,
+    # },
   }
+
+  ANIMATION_OPTIONS[:page_duration] = 0.25
+  ANIMATION_OPTIONS[:begin_duration] = 0.5
+  ANIMATION_OPTIONS[:end_duration] = 0.5
 
   def call
     # { key: "is_rect_size_854x480",   name: "854x480",        aspect_ratio: "16:9",   icon: "youtube", type: "is-danger", recommend: "◎", general_name: "FULL HD",     width: 854, height: 480,    type: "is-primary", environment: ["development", "staging", "production"], message: "低画質",        },
@@ -30,7 +44,7 @@ class App
       items.each do |e|
         puts "[#{e.index}] #{e.basename}"
         info = Parser.parse(e.file.read)
-        options = ANIMATION_OPTIONS.merge(cover_text: e.no_desc)
+        options = ANIMATION_OPTIONS.merge(cover_text: e.number_with_description)
         bin = info.to_animation_mp4(options)
         Pathname(".tmp/output#{e.index}.mp4").write(bin)
       end
@@ -38,6 +52,8 @@ class App
       body = items.collect { |e, i| "file 'output#{e.index}.mp4'" + "\n" }.join
       Pathname(".tmp/filelist.txt").write(body)
       system "ffmpeg -f concat -safe 0 -i .tmp/filelist.txt -c copy -y _output.mp4"
+      # system "ffmpeg -f concat -safe 0 -i .tmp/filelist.txt -framerate 1 -vf format=yuv420p -c:v libx264 -preset slow -crf 18 -y _output.mp4"
+
       chrome "_output.mp4"
     end
 
@@ -48,7 +64,7 @@ class App
   def items
     items = Pathname(__dir__).glob("石田流攻め筋集/0*")
 
-    # items = items.reverse.take(5)
+    # items = items.reverse.take(1)
     # items = items.find_all { |e| e.to_s.include?("0160_対金無双_端攻め_先に85桂") }
 
     items.collect.with_index do |e, i|
@@ -65,7 +81,7 @@ class App
   end
 
   Item = Data.define(:index, :basename, :description, :file) do
-    def no_desc
+    def number_with_description
       [index.next, description].join(".")
     end
     # def inspect

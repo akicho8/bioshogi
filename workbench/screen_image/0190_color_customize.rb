@@ -15,6 +15,13 @@ params = {
   :inner_frame_lattice_color     => "#55A",         # 格子の色
   :inner_frame_stroke_color => "#5858AA",      # 格子の外枠色
   :promoted_font_color    => "#3cA",         # 成駒の色
+
+  # :color_theme_key => nil,
+  :renderer_override_params => {
+    :inner_frame_lattice_color => "blue",                                # 枠の線お太さ(nil なら lattice_stroke_width を代用)
+    :lattice_stroke_width      => 1,                                # 格子の線の太さ
+  },
+
 }
 
 # params = params.inject({}) {|a, (k, v)|
