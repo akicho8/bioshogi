@@ -15,9 +15,13 @@ module Bioshogi
       # line で stroke を使うと fill + stroke で二重に同じところを塗るっぽい
       # だから半透明にしても濃くなる
       # なので fill だけにする
+      # しかし、そうすると今度は 2px 以上が描画できなくなるのでやっぱり stroke も入れておく
       def lattice_draw(layer)
         draw_context(layer) do |g|
-          g.fill(inner_frame_lattice_color) # 塗り潰し色で line する (stroke と勘違いしがち)
+          g.stroke_width(lattice_stroke_width) # 2px 以上の場合はこれがいる
+          g.stroke(inner_frame_lattice_color)  # (↑のときの色)
+          g.fill = inner_frame_lattice_color   # 線の中心線の色(1pxだけならこれだけあればいい)
+
           (1...lattice.w).each do |x|
             line_draw(g, V[x, 0], V[x, lattice.h])
           end
