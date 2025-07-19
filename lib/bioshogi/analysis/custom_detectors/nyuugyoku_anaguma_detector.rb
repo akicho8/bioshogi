@@ -13,7 +13,7 @@ module Bioshogi
         end
 
         def call
-          retv = perform_block do
+          retval = perform_block do
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 
@@ -30,7 +30,7 @@ module Bioshogi
             and_cond { soldier.place.in_outer_area?(king_soldier.place, 1) }
           end
 
-          if retv
+          if retval
             if soldier_count >= 3
               tag_add(:"入玉穴熊", once: true)
             end

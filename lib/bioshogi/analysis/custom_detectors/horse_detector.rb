@@ -13,7 +13,7 @@ module Bioshogi
         end
 
         def call
-          retv = perform_block do
+          retval = perform_block do
             # 【条件】移動してきた
             and_cond { move_hand }
 
@@ -33,7 +33,7 @@ module Bioshogi
             skip_if { near_the_king(origin_soldier) }
           end
 
-          if retv
+          if retval
             if another_horse_is_near_the_king
               tag_add("双馬結界", once: true)
             else

@@ -15,13 +15,13 @@ module Bioshogi
         if e = TagIndex.shape_trigger_table[black_side_soldier]
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
-            retv = perform_block do
+            retval = perform_block do
               various_conditions(e)
               if e.shape_detector
                 instance_exec(&e.shape_detector.func)
               end
             end
-            if retv
+            if retval
               tag_add(e)
             end
           end

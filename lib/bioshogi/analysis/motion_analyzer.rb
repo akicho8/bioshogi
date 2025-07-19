@@ -16,10 +16,10 @@ module Bioshogi
         if e = MotionTriggerTable[key]
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
-            retv = perform_block do
+            retval = perform_block do
               instance_exec(&e.motion_detector.func)
             end
-            if retv
+            if retval
               tag_add(e)
             end
           end

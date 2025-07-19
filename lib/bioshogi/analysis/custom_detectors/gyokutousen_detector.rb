@@ -13,7 +13,7 @@ module Bioshogi
         end
 
         def call
-          retv = perform_block do
+          retval = perform_block do
             # 【却下】すでに持っている
             skip_if { player.tag_bundle.include?("玉頭戦") }
 
@@ -47,7 +47,7 @@ module Bioshogi
             end
           end
 
-          if retv
+          if retval
             tag_add("玉頭戦")
           end
         end

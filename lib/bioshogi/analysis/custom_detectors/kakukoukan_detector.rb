@@ -13,7 +13,7 @@ module Bioshogi
         end
 
         def call
-          retv = perform_block do
+          retval = perform_block do
             # 【条件】何かで駒を取った
             Assertion.assert { captured_soldier }
 
@@ -43,7 +43,7 @@ module Bioshogi
             and_cond { move_hand.captured_soldier.piece.key == :bishop }
           end
 
-          if retv
+          if retval
             # 角交換された側
             player.tag_bundle << "手得"
             player.tag_bundle << "角交換"

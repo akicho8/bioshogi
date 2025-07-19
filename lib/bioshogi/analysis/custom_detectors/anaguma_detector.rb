@@ -13,7 +13,7 @@ module Bioshogi
         end
 
         def call
-          retv = perform_block do
+          retval = perform_block do
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 
@@ -33,7 +33,7 @@ module Bioshogi
             and_cond { soldier.place.in_outer_area?(king_soldier.place, 2) }
           end
 
-          if retv
+          if retval
             case_穴熊
             case_居飛車穴熊_or_振り飛車穴熊
             case_穴熊再生

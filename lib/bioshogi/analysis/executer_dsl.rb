@@ -26,12 +26,12 @@ module Bioshogi
       ################################################################################
 
       def perform_block
-        retv = false
+        retval = false
         catch :skip do
           yield
-          retv = true
+          retval = true
         end
-        retv
+        retval
       end
 
       def and_cond
