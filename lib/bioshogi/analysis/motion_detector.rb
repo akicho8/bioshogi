@@ -1216,16 +1216,16 @@ module Bioshogi
             # 【条件】移動元は端から3列目である
             and_cond { origin_soldier.left_right_space_min == 2 }
 
-            # 【必要条件6】自玉が1つ存在する
+            # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 
-            # 【必要条件7】玉との横軸の距離は3以内である (最長3 = 居玉) 銀と同じ方向に玉がいるというだけで穴熊状態の可能性もある
+            # 【条件】玉との横軸の距離は3以内である (最長3 = 居玉) 銀と同じ方向に玉がいるというだけで穴熊状態の可能性もある
             and_cond { soldier.place.column.distance(player.king_soldier.place.column) <= 3 }
 
-            # 【必要条件8】玉は中心から2以内にいる = 銀より内側にいる (居玉 = 0, 早囲い = 2, 美濃囲い = 3, 穴熊 = 4)
+            # 【条件】玉は中心から2以内にいる = 銀より内側にいる (居玉 = 0, 早囲い = 2, 美濃囲い = 3, 穴熊 = 4)
             and_cond { player.king_soldier.place.column.distance_from_center <= 3 }
 
-            # 【必要条件9】玉は自分の陣地にいる
+            # 【条件】玉は自分の陣地にいる
             and_cond { player.king_soldier.own_side? }
           },
         },
