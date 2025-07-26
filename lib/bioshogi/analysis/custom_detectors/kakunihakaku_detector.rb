@@ -20,9 +20,7 @@ module Bioshogi
             Assertion.assert { captured_soldier }
 
             # 【条件】馬か角を取った (取り返した)
-            and_cond { captured_soldier.piece.key == :bishop }
-
-            p ["#{__FILE__}:#{__LINE__}", __method__, "現在", soldier]
+            and_cond { captured_soldier.piece.hisyakaku }
 
             # 1手前──相手が角交換してきた
 
@@ -34,10 +32,8 @@ module Bioshogi
             # 【条件】相手が操作した
             and_cond { m1 }
 
-            p ["#{__FILE__}:#{__LINE__}", __method__, "1手前", hand_log1.soldier]
-
             # 【条件】その駒は角か馬だった
-            and_cond { m1.soldier.piece.key == :bishop }
+            and_cond { m1.soldier.piece.hisyakaku }
 
             # 【条件】その駒は何かの駒を取った (刺し違える意図があった)
             and_cond { m1.captured_soldier }

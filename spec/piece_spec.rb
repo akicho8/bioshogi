@@ -102,4 +102,9 @@ RSpec.describe Bioshogi::Piece do
   it "sort" do
     assert { [Bioshogi::Piece[:pawn], Bioshogi::Piece[:king]].sort == [Bioshogi::Piece[:king], Bioshogi::Piece[:pawn]] }
   end
+  
+  it "swaped" do
+    assert { Bioshogi::Piece[:rook].swaped == Bioshogi::Piece[:bishop] }
+    assert { Bioshogi::Piece[:king].swaped == nil }
+  end
 end
