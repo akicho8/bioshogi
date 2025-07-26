@@ -42,6 +42,8 @@ module Bioshogi
         { key: "都詰め",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
         { key: "吊るし桂",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
         { key: "雪隠詰め",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
+
+        { key: "雁木削除",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
       ]
 
       def func

@@ -121,6 +121,20 @@ module Bioshogi
           },
         },
 
+        {
+          key: "雁木削除",
+          description: "雁木の出だしから振り飛車になった場合に雁木を削除する",
+          func: -> {
+            container.players.each do |player|
+              if player.tag_bundle.include?("振り飛車")
+                if player.tag_bundle.include?("雁木戦法")
+                  player.tag_bundle.delete_tag("雁木戦法")
+                end
+              end
+            end
+          },
+        },
+
         ################################################################################
 
         {
