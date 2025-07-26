@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 
-info = Parser.file_parse("../戦法/丸山ワクチン.kif", turn_limit: 6)
+info = Parser.file_parse("../戦法/丸山ワクチン.kif", turn_max: 6)
 puts info.formatter.container
 puts info.to_kif
 # >> 後手の持駒：なし

@@ -144,6 +144,6 @@ body = "
 まで92手で時間切れにより後手の勝ち
 "
 
-info = Parser.parse(body, turn_limit: 0)
+info = Parser.parse(body, turn_max: 0)
 puts info.to_sfen
 # >> position sfen l2g5/1ks6/1png4p/p1p4b1/3P1+BpN1/P1P1P1+s1P/1P1S5/3K1S+p2/LN5RL b RNL4P2g2p 1

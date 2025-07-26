@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 
-info = Parser.file_parse("../戦法/アヒル戦法.kif", turn_limit: 42)
+info = Parser.file_parse("../戦法/アヒル戦法.kif", turn_max: 42)
 puts info.formatter.container
 puts info.to_kif
 # >> 後手の持駒：桂

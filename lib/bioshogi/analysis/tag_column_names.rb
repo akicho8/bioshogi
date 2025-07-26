@@ -12,7 +12,7 @@ module Bioshogi
       :description,
 
       # shape_info 系依存だが、outbreak_skip は他のところでも使っているので完全に shape_info 系として分けるわけにもいかない
-      :turn_limit,
+      :turn_max,
       :turn_eq,
       :order_key,
       :has_pawn_then_skip,       # 歩を持っていたらスキップ

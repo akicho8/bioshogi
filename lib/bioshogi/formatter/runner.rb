@@ -21,7 +21,7 @@ module Bioshogi
             if @formatter.parser_options[:callback]
               @formatter.parser_options[:callback].call(container)
             end
-            if @formatter.parser_options[:turn_limit] && container.turn_info.display_turn >= @formatter.parser_options[:turn_limit]
+            if @formatter.parser_options[:turn_max] && container.turn_info.display_turn >= @formatter.parser_options[:turn_max]
               break
             end
             container.execute(info[:input], used_seconds: formatter.pi.used_seconds_at(i))

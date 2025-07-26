@@ -1,16 +1,16 @@
 require "../setup"
 
-@turn_limit = 100
+@turn_max = 100
 
 def test1
-  # info = Parser.parse(Pathname("katomomo.kif").read, turn_limit: @turn_limit)
+  # info = Parser.parse(Pathname("katomomo.kif").read, turn_max: @turn_max)
   # object = info.screen_image_renderer({width: 100, height: 100})
   # object.to_png[0..3]           # =>
 end
 
 def test2
   info = Parser.parse(Pathname("../katomomo.kif").read, {
-      :turn_limit                     => @turn_limit,
+      :turn_max                     => @turn_max,
       # :analysis_feature           => false,
       :ki2_function                 => false,
       :validate_feature                  => false,

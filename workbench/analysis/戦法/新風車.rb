@@ -1,6 +1,6 @@
 require "#{__dir__}/setup"
 
-info = Parser.file_parse("../戦法/新風車.ki2", turn_limit: 42)
+info = Parser.file_parse("../戦法/新風車.ki2", turn_max: 42)
 puts info.formatter.container
 puts info.to_ki2
 # >> 後手の持駒：なし

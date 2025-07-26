@@ -46,8 +46,8 @@ module Bioshogi
         ################################################################################
 
         # 手数制限。制限を超えていたらskip
-        if e.turn_limit
-          if e.turn_limit < player.container.turn_info.display_turn.next
+        if e.turn_max
+          if e.turn_max < player.container.turn_info.display_turn.next
             throw :skip
           end
         end
