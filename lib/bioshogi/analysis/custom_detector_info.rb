@@ -11,6 +11,7 @@ module Bioshogi
         { key: "角切り判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukiriDetector,       },
         { key: "序盤飛角交換判定", custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukoukanDetector,     },
         { key: "角交換判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::KakukoukanDetector,       },
+        { key: "角には角判定",     custom_trigger_key: :ct_capture,  klass: CustomDetectors::KakunihakakuDetector,     },
         { key: "玉頭戦判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::GyokutousenDetector,      },
         { key: "開戦時の何か",     custom_trigger_key: :ct_outbreak, klass: CustomDetectors::OutbreakDetector,         },
       ]
