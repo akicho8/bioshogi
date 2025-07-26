@@ -861,7 +861,7 @@ module Bioshogi
         #   func: -> {
         #     # 【条件】敵玉が1つ存在する
         #     and_cond { opponent_player.king_soldier_only_one_exist? }
-        # 
+        #
         #     # 【条件】同じ列か1つずれの状態かつ、行の差が4以内である(間が5マス以内)
         #     fn = -> soldier {
         #       vector = soldier.place.vector_from(opponent_player.king_soldier.place)
@@ -869,7 +869,7 @@ module Bioshogi
         #       vector.x.abs <= 1 && vector.y.abs <= 6
         #     }
         #     and_cond { fn[soldier] }
-        # 
+        #
         #     # 【却下】すでに玉頭戦状態だった
         #     skip_if { fn[origin_soldier] }
         #   },
