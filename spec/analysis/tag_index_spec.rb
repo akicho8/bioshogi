@@ -36,7 +36,7 @@ RSpec.describe Bioshogi::Analysis::TagIndex do
     end
   end
 
-  it "fuzzy_flat_lookup" do
+  it "fuzzy_lookup" do
     assert { Bioshogi::Analysis::TagIndex.fuzzy_lookup("嬉野") }
     assert { Bioshogi::Analysis::TagIndex.fuzzy_lookup("角頭歩") }
     assert { Bioshogi::Analysis::TagIndex.fuzzy_lookup("アヒル") }
