@@ -15,13 +15,13 @@ module Bioshogi
 
       def initialize(str)
         @str = str.strip
-
-        if @str.blank?
-          raise ArgumentError
-        end
       end
 
       def call
+        if @str.blank?
+          return []
+        end
+
         # 順番重要
         [
           str,
