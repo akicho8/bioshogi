@@ -728,7 +728,7 @@ module Bioshogi
         },
         {
           key: "飛車先交換",
-          description: "",
+          description: nil,
           trigger: [
             { piece_key: :rook, promoted: false, motion: :move },
           ],
@@ -737,9 +737,8 @@ module Bioshogi
             and_cond do
               if hand_log = previous_hand_log(1)
                 if s = hand_log.move_hand&.soldier
-                  if opponent?(s) # 駒落ちなのに下手から指してしまった場合 opponent?(s) が偽になるため判定が必要になる
-                    s.piece.key == :pawn && s.place == soldier.place
-                  end
+                  Assertion.assert { opponent?(s) }
+                  s.piece.key == :pawn && s.place == soldier.place
                 end
               end
             end
@@ -748,9 +747,8 @@ module Bioshogi
             and_cond do
               if hand_log = previous_hand_log(2)
                 if s = hand_log.move_hand&.soldier
-                  if own?(s)
-                    s.piece.key == :pawn && s.place == soldier.place
-                  end
+                  Assertion.assert { own?(s) }
+                  s.piece.key == :pawn && s.place == soldier.place
                 end
               end
             end
