@@ -737,6 +737,34 @@ module Bioshogi
             and_cond do
               if hand_log = previous_hand_log(1)
                 if s = hand_log.move_hand&.soldier
+                  # 次の assert は超重要で
+                  #  - 駒落ち
+                  #  - バリデーションなし
+                  #  - 戦法判定あり
+                  #  - 先後をまちがえたまま進める
+                  #  - 飛車を動かす
+                  # のときひっかかる。
+                  # 解決方法は assert を緩めるのではなく
+                  #  - バリデーションなし
+                  #  - 戦法判定なし
+                  # としないといけない
+                  #
+                  # 再現コード
+                  #
+                  #  info = Bioshogi::Parser.parse(<<~EOT, { validate_feature: false, analysis_feature: true })
+                  #  P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+                  #  P2 * -HI *  *  *  *  *  *  *
+                  #  P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+                  #  P4 *  *  *  *  *  *  *  *  *
+                  #  P5 *  *  *  *  *  *  *  *  *
+                  #  P6 *  *  *  *  *  *  *  *  *
+                  #  P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+                  #  P8 * +KA *  *  *  *  * +HI *
+                  #  P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+                  #  -
+                  #  +7968GI,T0
+                  #  -8232HI,T0
+                  #  %TORYO
                   Assertion.assert { opponent?(s) }
                   s.piece.key == :pawn && s.place == soldier.place
                 end
