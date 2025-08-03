@@ -42,6 +42,7 @@ module Bioshogi
 
   SFEN1 = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
   SFEN2 = "position sfen 1plnsgbrk/1+p+l+n+sgbrk/1+P+L+N+SGBRK/1PLNSGBRK/9/9/9/9/9 b - 1"
+  SAIGONO_SINPAN = "position sfen 1+P1pS2+PR/2n2S1lg/1l3p1p1/1G2n1pS1/N1p2k3/3S2l2/4K1lgP/3P1+p2p/4Pg1PN b BPrb4p 1 moves B*5f 4e4d 4b3c 4d5c 5a4b 5c5b 5f7d B*6c 7d6c+ 5b6c B*8e 6c6b 4b5a 6b5c 3c4b 5c4d P*4e 4d4e 8e6g P*5f 6g5f 4e4d 4b3c 4d5c 5a4b 5c5b 5f7d B*6c 7d6c+ 5b6c B*8e 6c6b 4b5a 6b5c 3c4b 5c4d P*4e 4d4e 8e6g P*5f 6g5f 4e4d 4b3c 4d5c 5a4b 5c5b 5f7d B*6c 7d6c+ 5b6c B*8e 6c6b 4b5a 6b5c 3c4b 5c4d P*4e 4d4e 8e6g 4e4d 2d3c 4d3e 1i2g 3e2f G*1f 2f2g 6g4i 4h4i G*2h"
 
   ANALYSIS_VERSION = 5
 end
