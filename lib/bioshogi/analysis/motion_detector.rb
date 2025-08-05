@@ -10,9 +10,7 @@ module Bioshogi
         {
           key: "空中戦",
           description: nil,
-          trigger: [
-            { piece_key: [:rook, :bishop], promoted: false, motion: :both },
-          ],
+          trigger: { piece_key: [:rook, :bishop], promoted: false, motion: :both },
           func: -> {
             # 【条件】序盤である
             and_cond { container.joban }
@@ -68,9 +66,7 @@ module Bioshogi
         {
           key: "堅陣の金",
           description: nil,
-          trigger: [
-            { piece_key: :gold, promoted: false, motion: :move },
-          ],
+          trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
             # 【条件】自陣の下2行内に移動した
             and_cond { soldier.bottom_spaces <= 1 }
@@ -109,9 +105,7 @@ module Bioshogi
         {
           key: "パンドラの歩",
           description: nil,
-          trigger: [
-            { piece_key: :pawn, promoted: false, motion: :move },
-          ],
+          trigger: { piece_key: :pawn, promoted: false, motion: :move },
           func: -> {
             # 【条件】序盤である
             and_cond { container.joban }
@@ -1315,6 +1309,37 @@ module Bioshogi
           },
         },
         {
+          key: "急所の桂",
+          description: nil,
+          trigger: { piece_key: :knight, promoted: false, motion: :both },
+          func: -> {
+            # 【条件】前進で取られるところに桂打ち(または移動)した
+            and_cond do
+              if v = soldier.relative_move_to(:up)
+                if s = board[v]
+                  if opponent?(s)
+                    s.promoted || s.piece.forward_movable
+                  end
+                end
+              end
+            end
+
+            # 【条件】桂の利きが価値の高い駒に当たっている
+            and_cond do
+              V.keima_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    if opponent?(s)
+                      s.abs_weight > soldier.abs_weight
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+
+        {
           key: "金頭の桂",
           description: "打ったまたは移動した桂の上に相手の金がある",
           trigger: { piece_key: :knight, promoted: false, motion: :both },
@@ -1632,6 +1657,7 @@ module Bioshogi
             end
           },
         },
+
         {
           key: "控えの桂",
           description: "打った桂の利きにある相手の駒を集め、それが1つ以上かつすべて歩である",
@@ -1885,6 +1911,6 @@ module Bioshogi
   end
 end
 # ~> -:8:in '<class:MotionDetector>': uninitialized constant Bioshogi::Analysis::MotionDetector::ApplicationMemoryRecord (NameError)
-# ~>    from -:7:in '<module:Analysis>'
-# ~>    from -:6:in '<module:Bioshogi>'
-# ~>    from -:5:in '<main>'
+# ~> 	from -:7:in '<module:Analysis>'
+# ~> 	from -:6:in '<module:Bioshogi>'
+# ~> 	from -:5:in '<main>'

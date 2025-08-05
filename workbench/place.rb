@@ -4,7 +4,7 @@ def _
 end
 
 a = Place["55"]                     # => #<Bioshogi::Place ５五>
-_ { a.to_a }                # => "111.5 ms"
+_ { a.to_a }                # => "109.8 ms"
 
 Place["55"].row.name        # => "五"
 Place["55"].column.name     # => "５"
@@ -28,8 +28,8 @@ Place["11"].to_human_h          # => {column: 1, row: 1}
 # Dimension::Column.fetch(1).object_id # => 70357212614280
 # Dimension::Column.fetch(1).object_id # => 70357212614280
 
-Place["76"].hash                # => 4581355961207629003
-Place["７６"].hash              # => 4581355961207629003
+Place["76"].hash                # => 190808455494642203
+Place["７６"].hash              # => 190808455494642203
 Place["76"].object_id           # => 872
 Place["７６"].object_id         # => 872
 hash = {}
@@ -37,8 +37,8 @@ hash = {}
 hash[Place["76"]] = 1
 hash[Place["７６"]]             # => 1
 
-[1, 2].hash                     # => -1588499876889902393
-[1, 2].hash                     # => -1588499876889902393
+[1, 2].hash                     # => -3530358422464507121
+[1, 2].hash                     # => -3530358422464507121
 
 ################################################################################
 
@@ -89,3 +89,8 @@ Place["55"].vector_from(Place["56"]) == V.up # => true
 Place["55"].vector_from(Place["54"]) == V.down # => true
 Place["55"].vector_from(Place["45"]) == V.left # => true
 Place["55"].vector_from(Place["65"]) == V.right # => true
+
+Place["55"].vector_to(Place["56"]) == V.down  # => true
+Place["55"].vector_to(Place["54"]) == V.up # => true
+Place["55"].vector_to(Place["45"]) == V.right # => true
+Place["55"].vector_to(Place["65"]) == V.left # => true

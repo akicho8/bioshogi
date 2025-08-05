@@ -27,6 +27,23 @@ module Bioshogi
         white_then_flip.place.vector_from(from.white_then_flip.place)
       end
 
+      def vector_to(to)
+        white_then_flip.place.vector_to(to.white_then_flip.place)
+      end
+
+      # a から b を見たとき b は左右どちらにいるか？
+      # relative_move_to に渡せる抽象化した向きを返す
+      # def left_or_light_from_a_to_b(a, b)
+      #   v1 = a.white_then_flip.place.column.value
+      #   v2 = b.white_then_flip.place.column.value
+      #   case
+      #   when v1 < v2
+      #     :left
+      #   when v1 > v2
+      #     :right
+      #   end
+      # end
+
       ################################################################################
 
       # 前に一直線に進めるタイプか？

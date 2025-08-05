@@ -206,6 +206,24 @@ module Bioshogi
         end
       end
 
+      ################################################################################
+
+      # 非推奨
+      # a から b を見たとき b は左右どちらにいるか？
+      # relative_move_to に渡せる抽象化した向きを返す
+      def left_or_light_from_a_to_b(a, b)
+        v1 = a.white_then_flip.place.column.value
+        v2 = b.white_then_flip.place.column.value
+        case
+        when v1 < v2
+          :left
+        when v1 > v2
+          :right
+        end
+      end
+
+      ################################################################################
+
       def tag_add(tag, options = {})
         tag = TagIndex.fetch(tag)
 

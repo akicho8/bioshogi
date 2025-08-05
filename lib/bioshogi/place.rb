@@ -228,6 +228,10 @@ module Bioshogi
       V[column.value - from.column.value, row.value - from.row.value]
     end
 
+    def vector_to(to)
+      to.vector_from(self)
+    end
+
     ################################################################################
 
     def ==(other)
