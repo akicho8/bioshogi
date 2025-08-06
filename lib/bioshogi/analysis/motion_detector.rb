@@ -7,6 +7,39 @@ module Bioshogi
     class MotionDetector
       include ApplicationMemoryRecord
       memory_record [
+        # {
+        #   key: "王手飛車",
+        #   description: nil,
+        #   trigger: { piece_key: :bishop, promoted: false, motion: :both },
+        #   func: -> {
+        #     and_cond do
+        #       V.saltire_vectors.each do |e|
+        #         p e
+        #         rook_found = false
+        #         (1..Float::INFINITY).each do |magnification|
+        #           if v = soldier.relative_move_to(e, magnification: magnification)
+        #             if s = board[v]
+        #               if opponent?(s)
+        #                 if s.piece.key == :rook # 飛 or 龍
+        #                   rook_found = true
+        #                   break
+        #                 end
+        #               end
+        #             else
+        #               # 空なので続ける
+        #             end
+        #           else
+        #             # 場外なので終わる
+        #             break
+        #           end
+        #         end
+        #         if rook_found
+        #         end
+        #       end
+        #     end
+        #   },
+        # },
+
         {
           key: "空中戦",
           description: nil,
@@ -1910,7 +1943,3 @@ module Bioshogi
     end
   end
 end
-# ~> -:8:in '<class:MotionDetector>': uninitialized constant Bioshogi::Analysis::MotionDetector::ApplicationMemoryRecord (NameError)
-# ~> 	from -:7:in '<module:Analysis>'
-# ~> 	from -:6:in '<module:Bioshogi>'
-# ~> 	from -:5:in '<main>'

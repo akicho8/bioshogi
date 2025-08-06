@@ -1,3 +1,7 @@
+task :prepare do
+  require "bioshogi"
+end
+
 desc "bundle update (alias)"
 task :bu => :bundle_update
 

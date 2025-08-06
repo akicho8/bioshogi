@@ -9,7 +9,7 @@ module Bioshogi
         { key: "N段ロケット判定",  custom_trigger_key: :ct_every,    klass: CustomDetectors::RocketDetector,           },
         { key: "魔方陣判定",       custom_trigger_key: :ct_every,    klass: CustomDetectors::MagicSquareDetector,      },
         { key: "技ありの桂判定",   custom_trigger_key: :ct_every,    klass: CustomDetectors::WazaarinokeiDetector,     },
-        # { key: "王手飛車判定",     custom_trigger_key: :ct_capture,  klass: CustomDetectors::OutebishaDetector,        },
+        { key: "王手飛車判定",     custom_trigger_key: :ct_every,    klass: CustomDetectors::OutebishaDetector,        },
         { key: "角切り判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukiriDetector,       },
         { key: "序盤飛角交換判定", custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukoukanDetector,     },
         { key: "角交換判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::KakukoukanDetector,       },

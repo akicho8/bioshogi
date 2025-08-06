@@ -8,17 +8,21 @@ module Bioshogi
 
         # Bioshogi.config[:analysis_feature] = false
 
-        files = Bioshogi::ROOT.join("../../2chkifu").glob("**/*.ki2").sort
-        files = Array(files).take((ARGV.first || 100).to_i)
+        path = Bioshogi::ROOT.join("../../2chkifu").expand_path
+        files = path.glob("**/*.ki2").sort
+        max = 100
+        files = Array(files).take(max)
         seconds = Benchmark.realtime do
           files.each do |file|
+            print "."
+            STDOUT.flush
             info = Parser.file_parse(file, typical_error_case: :skip, analysis_feature: true)
             info.to_kif
           end
         end
-
+        puts
         p seconds
-        tp Bioshogi.analysis_run_counts.sort_by { |k, v| -v }.to_h
+        tp Bioshogi.analysis_run_counts.sort_by { |k, v| -v }.take(30).to_h
       end
     end
   end

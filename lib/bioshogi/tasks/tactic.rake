@@ -6,3 +6,8 @@ task :tactic_stat do
   require "bioshogi"
   Bioshogi::Analysis::TacticStat.new.call
 end
+
+desc "変換テスト"
+task :nc => :prepare do
+  Bioshogi::Analysis::NormalizeCheck.new.call
+end

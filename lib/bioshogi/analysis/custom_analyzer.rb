@@ -12,6 +12,7 @@ module Bioshogi
       def call(custom_trigger_key)
         if e = CustomTriggerInfo.fetch(custom_trigger_key).custom_detector_infos
           e.each do |e|
+            Bioshogi.analysis_run_counts[e.key] += 1
             e.klass.new(executor).call
           end
         end
