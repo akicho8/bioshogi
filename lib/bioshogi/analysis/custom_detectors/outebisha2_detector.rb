@@ -3,7 +3,7 @@
 module Bioshogi
   module Analysis
     module CustomDetectors
-      class OutebishaDetector
+      class Outebisha2Detector
         include ExecuterDsl
 
         attr_reader :executor
@@ -15,20 +15,20 @@ module Bioshogi
         def call
           retval = perform_block do
             # 【条件】角を操作した
-            and_cond { soldier.piece.key == :bishop }
+            and_cond { soldier.piece.key == :rook }
           end
 
           if retval
             founds = []
             king_found = false
-            V.saltire_vectors.each do |e|
+            V.cross_vectors.each do |e|
               (1..Float::INFINITY).each do |magnification|
                 if v = soldier.relative_move_to(e, magnification: magnification)
                   if s = board[v]
                     if opponent?(s)
                       if s.piece.key == :king
                         king_found = true
-                      elsif s.piece.key == :rook
+                      elsif s.piece.key == :bishop
                         founds << [e, magnification]
                       end
                     end
@@ -48,12 +48,12 @@ module Bioshogi
 
             case
             when king_found && founds.present?
-              tag_add("王手飛車")
+              tag_add("王手角")
             when there_king_on_other_side_of_rook?(founds)
-              tag_add("準王手飛車")
+              tag_add("準王手角")
             when founds.many?
               tag_add("両取り")
-              tag_add("角による両取り")
+              tag_add("飛車による両取り")
             end
           end
         end
