@@ -18,7 +18,7 @@ info = Parser.parse(<<~EOT)
 75角
 EOT
 puts info.to_kif
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/custom_detectors/outebisha2_detector.rb:21", :call]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/custom_detectors/outekaku_detector.rb:21", :call]
 # >> 先手の手筋：両取り, 角による両取り
 # >> 先手の駒使用：歩0 銀0 金0 飛0 角1 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
 # >> 先手の玉移動：0回

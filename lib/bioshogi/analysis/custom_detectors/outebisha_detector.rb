@@ -15,20 +15,20 @@ module Bioshogi
         def call
           retval = perform_block do
             # 【条件】角を操作した
-            and_cond { soldier.piece.key == :bishop }
+            and_cond { soldier.piece.key == own_piece }
           end
 
           if retval
             founds = []
             king_found = false
-            V.saltire_vectors.each do |e|
+            V.public_send(own_piece_vector).each do |e|
               (1..Float::INFINITY).each do |magnification|
                 if v = soldier.relative_move_to(e, magnification: magnification)
                   if s = board[v]
                     if opponent?(s)
                       if s.piece.key == :king
                         king_found = true
-                      elsif s.piece.key == :rook
+                      elsif s.piece.key == target_piece
                         founds << [e, magnification]
                       end
                     end
@@ -48,12 +48,12 @@ module Bioshogi
 
             case
             when king_found && founds.present?
-              tag_add("王手飛車")
+              tag_add(tag_first)
             when there_king_on_other_side_of_rook?(founds)
-              tag_add("準王手飛車")
+              tag_add(tag_second)
             when founds.many?
               tag_add("両取り")
-              tag_add("角による両取り")
+              tag_add(tag_third)
             end
           end
         end
@@ -84,6 +84,30 @@ module Bioshogi
             end
             king_found
           end
+        end
+
+        def own_piece
+          :bishop
+        end
+
+        def own_piece_vector
+          :saltire_vectors
+        end
+
+        def target_piece
+          :rook
+        end
+
+        def tag_first
+          "王手飛車"
+        end
+
+        def tag_second
+          "準王手飛車"
+        end
+
+        def tag_third
+          "角による両取り"
         end
       end
     end
