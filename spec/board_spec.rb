@@ -6,20 +6,17 @@ RSpec.describe Bioshogi::Board do
   end
 
   describe "逆算" do
-    it "トンボはマイナーなので逆算できない" do
+    it "トンボはマイナーなので major_only を有効にすると逆算できない" do
       board = Bioshogi::Board.new
       board.placement_from_preset("トンボ")
-      assert { board.preset_info                         == nil }
-      assert { board.preset_info(inclusion_minor: false) == nil }
-      assert { board.preset_info(inclusion_minor: true)  == Bioshogi::PresetInfo.fetch("トンボ") }
+      assert { board.preset_info(major_only: true) == nil }
+      assert { board.preset_info == Bioshogi::PresetInfo.fetch("トンボ") }
     end
 
     it "二枚落ちはメジャーなので逆算できる" do
       board = Bioshogi::Board.new
       board.placement_from_preset("二枚落ち")
-      assert { board.preset_info                         == Bioshogi::PresetInfo.fetch("二枚落ち") }
-      assert { board.preset_info(inclusion_minor: false) == Bioshogi::PresetInfo.fetch("二枚落ち") }
-      assert { board.preset_info(inclusion_minor: true)  == Bioshogi::PresetInfo.fetch("二枚落ち") }
+      assert { board.preset_info == Bioshogi::PresetInfo.fetch("二枚落ち") }
     end
   end
 
@@ -29,16 +26,16 @@ RSpec.describe Bioshogi::Board do
 
     container.board.all_clear
     container.placement_from_preset("十九枚落ち")
-    assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+    assert { container.board.preset_info(major_only: false)&.key == :"十九枚落ち" }
 
     container.board.all_clear
     container.board.placement_from_preset("十九枚落ち")
-    assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+    assert { container.board.preset_info(major_only: false)&.key == :"十九枚落ち" }
 
     container.board.all_clear
     container.board.placement_from_preset("二十枚落ち")
     container.board.placement_from_human("△５一玉")
-    assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+    assert { container.board.preset_info(major_only: false)&.key == :"十九枚落ち" }
 
     container.board.all_clear
     container.board.placement_from_shape <<~EOT
@@ -54,7 +51,7 @@ RSpec.describe Bioshogi::Board do
     | 香 桂 銀 金 玉 金 銀 桂 香|九
     +---------------------------+
       EOT
-    assert { container.board.preset_info(inclusion_minor: true)&.key == :"十九枚落ち" }
+    assert { container.board.preset_info(major_only: false)&.key == :"十九枚落ち" }
   end
 
   it "サンプル" do

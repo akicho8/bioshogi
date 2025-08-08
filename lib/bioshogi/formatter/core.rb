@@ -129,7 +129,6 @@ module Bioshogi
 
           if pi.board_source
             container.board.placement_from_shape(pi.board_source)
-            # preset_info = container.board.preset_info(inclusion_minor: true)
           else
             preset_info = PresetInfo[pi.header["手合割"]] || PresetInfo["平手"]
             container.placement_from_preset(preset_info.key)
@@ -193,7 +192,7 @@ module Bioshogi
       def preset_info_or_nil
         unless defined?(@preset_info_or_nil)
           @preset_info_or_nil ||= pi.force_preset_info
-          @preset_info_or_nil ||= initial_container.board.preset_info(inclusion_minor: true)
+          @preset_info_or_nil ||= initial_container.board.preset_info(major_only: false)
           @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
         end
 

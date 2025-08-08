@@ -57,7 +57,6 @@ module Bioshogi
 
       # 盤の状態から手合割を逆算
       # バリケード将棋などは持駒も見る必要があるけどやってない
-      # ここで inclusion_minor オプションなどをつければ「右香落ち」にも対応できるが、他のソフトで読めない場合がでてくる
       def preset_info(options = {})
         PresetInfo.lookup_by_soldiers(surface.values, options)
       end

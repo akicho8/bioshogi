@@ -166,7 +166,7 @@ module Bioshogi
       def guess_preset
         if @board
           @pi.board_source = @board.to_s # FIXME: 元に戻すのは無駄
-          if e = @board.preset_info(inclusion_minor: true) # inclusion_minor がないと「右香落ち」が出てこない
+          if e = @board.preset_info
             @pi.force_preset_info = e
           end
         end
