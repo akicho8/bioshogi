@@ -14,6 +14,7 @@ module Bioshogi
         @pi.sfen_info      = Sfen.parse(normalized_source)
         @pi.move_infos     = @pi.sfen_info.move_infos
         @pi.force_handicap = @pi.sfen_info.handicap?
+        # @pi.force_preset_info = @pi.sfen_info.handicap?
 
         @pi.sfen_info.piece_counts.each do |location_key, counts|
           location = Location.fetch(location_key)

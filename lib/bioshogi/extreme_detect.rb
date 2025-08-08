@@ -49,9 +49,16 @@ module Bioshogi
     end
 
     def assert_equal(a, b, messsage = nil)
+      if true
+        # sfen になると情報が欠けて指し手だけから「穴熊の姿焼き」が判定できないため
+        a = a.gsub(/\*.*穴熊の姿焼き.*\R/, "")
+        b = b.gsub(/\*.*穴熊の姿焼き.*\R/, "")
+      end
+
       r = a == b
       unless r
-        diff(a, b)
+        diff_str = diff(a, b, messsage)
+        puts diff_str
       end
 
       result[r] += 1
@@ -62,7 +69,7 @@ module Bioshogi
         error_body.open("a") do |e|
           e.puts "-" * 80
           e.puts @current.expand_path
-          e.puts messsage
+          e.puts diff_str
           e.puts caller
           e.puts "◆a"
           e.puts a
@@ -72,16 +79,18 @@ module Bioshogi
       end
     end
 
-    def diff(str1, str2)
+    def diff(str1, str2, messsage)
       diff = Diff::LCS.sdiff(*[str1, str2].collect { |e| e.lines.collect(&:rstrip) }).each_with_object("") do |e, m|
         if e.old_element != e.new_element
           m << "- #{e.old_element}\n" if e.old_element
           m << "+ #{e.new_element}\n" if e.new_element
         end
       end
-      puts "--------------------------------------------------------------------------------"
-      puts diff
-      puts "--------------------------------------------------------------------------------"
+      str = []
+      str << "-------------------------------------------------------------------------------- #{messsage}\n"
+      str << diff
+      str << "--------------------------------------------------------------------------------\n"
+      str.join
     end
 
     def all_transform_test

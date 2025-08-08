@@ -69,7 +69,7 @@ module Bioshogi
 
       def header_part_string
         m = @formatter.initial_container # FIXME: かなり臭う。初期状態が正しく入っているのか怪しい。
-        if e = m.board.preset_info
+        if e = m.board.preset_info(inclusion_minor: false) # 読めないソフトがあるため「右香落ち」や「トンボ」を除外する
           # 手合割がわかる場合
           @header["手合割"] = e.name
           mochigoma_delete_if_blank # 手合割がわかるとき持駒が空なら消す

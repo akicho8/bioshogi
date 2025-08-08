@@ -29,7 +29,7 @@ module Bioshogi
       def kknk_board_read
         if md = normalized_source.match(BOARD_REGEXP)
           @pi.board_source = md[:board]
-          @pi.force_preset_info ||= Board.guess_preset_info(@pi.board_source)
+          @pi.force_preset_info ||= Board.guess_preset_info(@pi.board_source, inclusion_minor: true) # inclusion_minor: true をつけないと「右香落ち」が出てこない
         end
       end
 
