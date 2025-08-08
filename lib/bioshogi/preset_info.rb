@@ -128,6 +128,10 @@ module Bioshogi
       handicap ? 1 : 0
     end
 
+    def start_locaction
+      @start_locaction ||= Location.fetch(handicap ? :white : :black)
+    end
+
     include Analysis::ShapeInfoAccessor
   end
 end

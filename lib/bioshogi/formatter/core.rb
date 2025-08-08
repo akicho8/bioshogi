@@ -134,12 +134,33 @@ module Bioshogi
             container.placement_from_preset(preset_info.key)
           end
 
-          if pi.force_location
-            container.turn_info.turn_base = pi.force_location.code
-          end
+          if false
+            # 本来はシンプルに次のようにすればいいのだけど、
+            # 「駒落ち」かつ「上手番」の2つの指定があったとき、両方指定すると 1 + 1 = 2 となり
+            # 逆に先手から始まってしまい、「【反則】下手の手番で上手が着手しました」となる
+            if pi.force_handicap
+              container.turn_info.handicap = pi.force_handicap
+            end
+            if pi.force_location
+              container.turn_info.turn_base = pi.force_location.code
+            end
+          else
+            # とりあえず優先して駒落ちフラグを設定する
+            if pi.force_handicap
+              container.turn_info.handicap = pi.force_handicap
+            end
 
-          if pi.force_handicap
-            container.turn_info.handicap = pi.force_handicap
+            # 次に「希望の手番」を設定する。force_location としているがもう force ではなくなっている。
+            case
+            when container.turn_info.handicap && pi.force_location&.key == :white
+              # 「駒落ち(設定済み)」x「△開始」= さわらない
+            when !container.turn_info.handicap && pi.force_location&.key == :black
+              # 「平手」x「▲開始」= さわらない
+            when pi.force_location
+              # 「平手」x「△開始」
+              # 「駒落ち」x「▲開始」
+              container.turn_info.turn_base = pi.force_location.code
+            end
           end
         end
 
