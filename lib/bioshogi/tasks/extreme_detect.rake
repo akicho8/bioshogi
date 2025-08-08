@@ -1,7 +1,6 @@
-desc "2ch棋譜読み込み変換テスト(LIMIT=xxx)"
-task "extreme_detect" do
-  require "bioshogi"
-  Bioshogi::ExtremeDetect.new(limit: ENV["LIMIT"]).call
+desc "2ch棋譜読み込み変換テスト(MAX=xxx)"
+task "extreme_detect" => :prepare do
+  Bioshogi::ExtremeDetect.new.call
 end
 
 desc "alias to extreme_detect"

@@ -205,7 +205,7 @@ module Bioshogi
           },
         },
         {
-          key: "穴熊の姿焼",
+          key: "穴熊の姿焼き",
           func: -> {
             SugatayakiDetector.new(self).call
           },

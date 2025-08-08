@@ -5,7 +5,7 @@ module Bioshogi
   class ExtremeDetect
     def initialize(options = {})
       @options = {
-        :limit => nil,
+        :max => ENV["MAX"],
       }.merge(options)
     end
 
@@ -48,7 +48,7 @@ module Bioshogi
       p result
     end
 
-    def assert_equal(a, b)
+    def assert_equal(a, b, messsage = nil)
       r = a == b
       unless r
         diff(a, b)
@@ -62,6 +62,7 @@ module Bioshogi
         error_body.open("a") do |e|
           e.puts "-" * 80
           e.puts @current.expand_path
+          e.puts messsage
           e.puts caller
           e.puts "◆a"
           e.puts a
@@ -88,31 +89,31 @@ module Bioshogi
 
       # KIF
       v = Parser.parse(info.to_kif)
-      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
-      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
-      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
-      assert_equal v.to_sfen, info.to_sfen
+      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false), "kif → kif"
+      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false), "kif → ki2"
+      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false), "kif → csa"
+      assert_equal v.to_sfen, info.to_sfen, "kif → sfen"
 
       # KI2
       v = Parser.parse(info.to_ki2)
-      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
-      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
-      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
-      assert_equal v.to_sfen, info.to_sfen
+      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false), "ki2 → kif"
+      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false), "ki2 → ki2"
+      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false), "ki2 → csa"
+      assert_equal v.to_sfen, info.to_sfen, "ki2 → sfen"
 
       # CSA
       v = Parser.parse(info.to_csa)
-      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false)
-      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false)
-      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false)
-      assert_equal v.to_sfen, info.to_sfen
+      assert_equal v.to_kif(has_header: false), info.to_kif(has_header: false), "csa → kif"
+      assert_equal v.to_ki2(has_header: false), info.to_ki2(has_header: false), "csa → ki2"
+      assert_equal v.to_csa(has_header: false), info.to_csa(has_header: false), "csa → csa"
+      assert_equal v.to_sfen, info.to_sfen, "csa → sfen"
 
       # SFEN
       v = Parser.parse(info.to_sfen)
-      assert_equal v.to_kif(has_header: false, has_footer: false), info.to_kif(has_header: false, has_footer: false)
-      assert_equal v.to_ki2(has_header: false, has_footer: false), info.to_ki2(has_header: false, has_footer: false)
-      assert_equal v.to_csa(has_header: false, has_footer: false), info.to_csa(has_header: false, has_footer: false)
-      assert_equal v.to_sfen, info.to_sfen
+      assert_equal v.to_kif(has_header: false, has_footer: false), info.to_kif(has_header: false, has_footer: false), "sfen → kif"
+      assert_equal v.to_ki2(has_header: false, has_footer: false), info.to_ki2(has_header: false, has_footer: false), "sfen → ki2"
+      assert_equal v.to_csa(has_header: false, has_footer: false), info.to_csa(has_header: false, has_footer: false), "sfen → csa"
+      assert_equal v.to_sfen, info.to_sfen, "sfen → sfen"
     end
 
     def error_body
@@ -123,8 +124,8 @@ module Bioshogi
       @error_list ||= LOG_DIR.join("error_list.txt")
     end
 
-    def limit
-      @limit ||= (@options[:limit].presence || 1000_0000).to_i
+    def max
+      @max ||= (@options[:max].presence || 1000_0000).to_i
     end
 
     def result
@@ -138,7 +139,7 @@ module Bioshogi
         else
           files = ROOT.glob("../../2chkifu/**/*.{ki2,KI2}").sort # ~/src/2chkifu
         end
-        files.take(limit)
+        files.take(max)
       end
     end
   end

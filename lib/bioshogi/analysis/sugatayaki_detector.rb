@@ -34,10 +34,10 @@ module Bioshogi
       end
 
       def valid?
-        unless win_side_location # 勝ち負けがはっきりしているか？
+        unless win_side_location # 勝ち負けがはっきりしていないなら却下
           return
         end
-        unless anaguma_formation? # 相手が穴熊状態か？
+        unless anaguma_formation? # 相手が穴熊状態でなければ却下
           return
         end
         # unless strong_piece_completed? # 大駒コンプリートしている？ → overwhelming_score? の方が汎用的
