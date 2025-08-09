@@ -175,6 +175,7 @@ module Bioshogi
 
           { key: "天空の城", alias_names: ["空中楼閣", "空中要塞"], },
           { key: "魔方陣", },
+          { key: "オリオン囲い", },
           { key: "居玉",   },
         ]
       end

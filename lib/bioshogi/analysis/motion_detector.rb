@@ -1902,6 +1902,38 @@ module Bioshogi
           },
         },
         {
+          key: "オリオン囲い",
+          description: "玉の上に銀が3つ。玉の左右は空",
+          trigger: [
+            { piece_key: :silver, promoted: false, motion: :both },
+            { piece_key: :king,   promoted: false, motion: :move },
+          ],
+          func: -> {
+            # 【条件】自玉が1つ存在する
+            and_cond { player.king_soldier_only_one_exist? }
+
+            # 【条件】玉の上に銀が3つ
+            and_cond do
+              V.front_vectors.all? do |e|
+                if v = player.king_soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :silver && s.normal? && own?(s)
+                  end
+                end
+              end
+            end
+
+            # 【条件】玉の左右は空である
+            and_cond do
+              V.left_right_vectors.all? do |e|
+                if v = player.king_soldier.relative_move_to(e)
+                  board.cell_empty?(v)
+                end
+              end
+            end
+          },
+        },
+        {
           key: "入玉",
           description: "玉が4行目から3行目に移動した",
           trigger: { piece_key: :king, promoted: false, motion: :move },
