@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module CustomDetectors
+    module XmotionDetectors
       class HorseDetector
         include ExecuterDsl
 
@@ -15,10 +15,10 @@ module Bioshogi
         def call
           retval = perform_block do
             # 【条件】移動してきた
-            and_cond { move_hand }
+            Assertion.assert { move_hand }
 
             # 【条件】馬である
-            and_cond { soldier.piece.key == :bishop && soldier.promoted }
+            Assertion.assert { soldier.piece.key == :bishop && soldier.promoted }
 
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }

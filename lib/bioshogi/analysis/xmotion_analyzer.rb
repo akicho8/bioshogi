@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    class MotionAnalyzer2
+    class XmotionAnalyzer
       include ExecuterDsl
 
       attr_reader :executor
@@ -13,8 +13,8 @@ module Bioshogi
 
       def call
         key = [soldier.piece.key, soldier.promoted, !!drop_hand]
-        if e = MotionTriggerTable2[key]
-          e.each do |e|
+        if av = XmotionDetectorInfo.trigger_table[key]
+          av.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
             e.klass.new(executor).call
           end

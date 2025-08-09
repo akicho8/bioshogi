@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module CustomDetectors
+    module XmotionDetectors
       class WazaarinokeiDetector
         include ExecuterDsl
 
@@ -14,8 +14,15 @@ module Bioshogi
 
         def call
           perform_block do
-            # 【条件】桂成
-            and_cond { soldier.piece.key == :knight && move_hand&.promote_trigger? }
+            if false
+              # 【条件】桂
+              and_cond { soldier.piece.key == :knight && move_hand&.promote_trigger? }
+            else
+              Assertion.assert { soldier.piece.key == :knight && move_hand }
+            end
+
+            # 【条件】成り
+            and_cond { move_hand.promote_trigger? }
 
             # 【却下】それによって歩以外の駒を取った場合はただの「ふんどしの桂」である
             skip_if do
@@ -61,8 +68,10 @@ module Bioshogi
               end
             end
 
-            hand_log.tag_bundle << "技ありの桂"
-            player.tag_bundle << "技ありの桂"
+            "技ありの桂".yield_self do |tag|
+              hand_log.tag_bundle << tag
+              player.tag_bundle << tag
+            end
           end
         end
       end

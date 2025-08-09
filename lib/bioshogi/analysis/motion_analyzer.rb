@@ -5,6 +5,17 @@ module Bioshogi
     class MotionAnalyzer
       include ExecuterDsl
 
+      class << self
+        def trigger_table
+          @trigger_table ||= TagIndex.motion_type_values.each_with_object({}) do |e, m|
+            e.motion_detector.triggers.each do |key|
+              m[key] ||= []
+              m[key] << e
+            end
+          end
+        end
+      end
+
       attr_reader :executor
 
       def initialize(executor)
@@ -13,7 +24,7 @@ module Bioshogi
 
       def call
         key = [soldier.piece.key, soldier.promoted, !!drop_hand]
-        if e = MotionTriggerTable[key]
+        if e = self.class.trigger_table[key]
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
             retval = perform_block do

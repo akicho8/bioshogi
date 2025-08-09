@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module CustomDetectors
+    module XmotionDetectors
       class OutebishaDetector
         include ExecuterDsl
 
@@ -13,9 +13,14 @@ module Bioshogi
         end
 
         def call
-          retval = perform_block do
-            # 【条件】角を操作した
-            and_cond { soldier.piece.key == own_piece }
+          if false
+            retval = perform_block do
+              # 【条件】角を操作した
+              and_cond { soldier.piece.key == own_piece }
+            end
+          else
+            Assertion.assert { soldier.piece.key == own_piece }
+            retval = true
           end
 
           if retval
@@ -86,6 +91,8 @@ module Bioshogi
           end
         end
 
+        ################################################################################
+
         def own_piece
           :bishop
         end
@@ -109,6 +116,8 @@ module Bioshogi
         def tag_third
           "角による両取り"
         end
+
+        ################################################################################
       end
     end
   end

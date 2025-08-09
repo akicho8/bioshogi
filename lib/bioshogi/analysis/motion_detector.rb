@@ -1940,6 +1940,10 @@ module Bioshogi
 
         ################################################################################
       ]
+
+      def triggers
+        TriggerExpander.expand(trigger)
+      end
     end
   end
 end

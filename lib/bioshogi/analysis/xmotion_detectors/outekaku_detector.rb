@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module CustomDetectors
+    module XmotionDetectors
       class OutekakuDetector < OutebishaDetector
         def own_piece
           :rook

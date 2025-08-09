@@ -57,7 +57,7 @@ module Bioshogi
           ShapeAnalyzer.new(self).call
           MotionAnalyzer.new(self).call
           EveryAnalyzer.new(self).call
-          MotionAnalyzer2.new(self).call
+          XmotionAnalyzer.new(self).call
           CustomAnalyzer.new(self).call(:ct_every)
         end
       end
