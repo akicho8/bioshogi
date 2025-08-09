@@ -23,8 +23,7 @@ module Bioshogi
       end
 
       def call
-        key = [soldier.piece.key, soldier.promoted, !!drop_hand]
-        if e = self.class.trigger_table[key]
+        if e = self.class.trigger_table[motion_key]
           e.each do |e|
             Bioshogi.analysis_run_counts[e.key] += 1
             retval = perform_block do

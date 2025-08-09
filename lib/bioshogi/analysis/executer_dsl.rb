@@ -13,6 +13,7 @@ module Bioshogi
         :origin_soldier,        # 操作した駒 (移動元の駒)
         :captured_soldier,      # 取った駒
         :tag_bundle,            # 現在の手に結びつくタグ
+        :motion_key,            # 指し手の動作キー
       ], to: :executor
 
       delegate *[

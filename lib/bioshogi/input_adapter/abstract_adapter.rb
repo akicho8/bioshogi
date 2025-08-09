@@ -103,6 +103,10 @@ module Bioshogi
         @hand ||= move_hand || drop_hand
       end
 
+      def motion_key
+        @motion_key ||= soldier.motion_key(drop_hand)
+      end
+
       def to_h
         {
           :place_from      => place_from,
@@ -111,6 +115,7 @@ module Bioshogi
           :promoted        => promoted,
           :promote_trigger => promote_trigger,
           :drop_trigger    => drop_trigger,
+          :motion_key      => motion_key,
           :errors          => errors,
         }
       end

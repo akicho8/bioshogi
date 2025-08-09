@@ -14,6 +14,7 @@ module Bioshogi
       delegate :board, :piece_box, :container, to: :player
       delegate :origin_soldier, :captured_soldier, to: :move_hand, allow_nil: true
       delegate :soldier, to: :hand
+      delegate :motion_key, to: :input
 
       def initialize(player, source, params = {})
         @player = player

@@ -61,6 +61,12 @@ module Bioshogi
         :"#{location.key}/#{piece.key}/#{promoted}"
       end
 
+      ################################################################################ for XmotionAnalyzer, MotionAnalyzer
+
+      def motion_key(drop_hand)
+        [piece.key, promoted, !!drop_hand]
+      end
+
       ################################################################################ for BoardPieceCountsMethods
 
       # def location_with_piece
