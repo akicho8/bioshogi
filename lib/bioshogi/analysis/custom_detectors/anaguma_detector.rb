@@ -67,7 +67,7 @@ module Bioshogi
         def case_角換わり穴熊
           if container.joban
             if kakugawari?
-              tag_add(:"角換わり穴熊", once: true)
+              tag_add("角換わり穴熊", once: true)
             end
           end
         end
