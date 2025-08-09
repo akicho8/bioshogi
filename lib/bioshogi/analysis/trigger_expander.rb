@@ -5,54 +5,54 @@ module Bioshogi
 
       def expand(trigger)
         Array.wrap(trigger).flat_map do |trigger|
-          trigger_expand(trigger)
+          expand_one(trigger)
         end
       end
 
       private
 
-      def trigger_expand(trigger)
-        promoted = promoted_expand(trigger[:promoted])
-        motion = motion_expand(trigger[:motion])
+      def expand_one(trigger)
+        piece_key = piece_key_by(trigger[:piece_key])
+        promoted = promoted_by(trigger[:promoted])
+        motion = motion_by(trigger[:motion])
 
-        av = []
-        Array.wrap(trigger[:piece_key]).each do |x|
-          Array.wrap(promoted).each do |y|
-            Array.wrap(motion).each do |z|
-              av << [x, y, z]
+        piece_key.flat_map do |x|
+          promoted.flat_map do |y|
+            motion.collect do |z|
+              [x, y, z]
             end
           end
         end
-        av
       end
 
-      def promoted_expand(promoted)
+      # ここで piece_key == :all なら Piece.keys を返す案もある
+      def piece_key_by(piece_key)
+        Array.wrap(piece_key).collect do |e|
+          Piece.fetch(e).key
+        end
+      end
+
+      def promoted_by(promoted)
         case promoted
         when true
-          true
+          [true]
         when false
-          false
+          [false]
         when :both
-          [
-            true,
-            false,
-          ]
+          [true, false]
         else
           raise "must not happen"
         end
       end
 
-      def motion_expand(motion)
+      def motion_by(motion)
         case motion
         when :move
-          false
+          [false]
         when :drop
-          true
+          [true]
         when :both
-          [
-            true,               # 打
-            false,              # 移動
-          ]
+          [true, false]
         else
           raise "must not happen"
         end

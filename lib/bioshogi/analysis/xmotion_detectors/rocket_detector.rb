@@ -2,7 +2,7 @@
 
 module Bioshogi
   module Analysis
-    module CustomDetectors
+    module XmotionDetectors
       class RocketDetector
         include ExecuterDsl
 
@@ -14,8 +14,8 @@ module Bioshogi
 
         def call
           retval = perform_block do
-            # 1. 「飛龍」が来たか「香」を打った
-            and_cond do
+            # # 1. 「飛龍」が来た(or 打った)か「香」を打った
+            Assertion.assert do
               soldier.piece.key == :rook || (soldier.piece.key == :lance && soldier.normal? && drop_hand)
             end
 
@@ -100,9 +100,6 @@ module Bioshogi
               end
             end
           end
-        end
-
-        def trigger?
         end
 
         def count_all

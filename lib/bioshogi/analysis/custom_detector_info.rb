@@ -5,7 +5,6 @@ module Bioshogi
       memory_record [
         { key: "穴熊判定",         custom_trigger_key: :ct_every,    klass: CustomDetectors::AnagumaDetector,          },
         { key: "入玉穴熊判定",     custom_trigger_key: :ct_every,    klass: CustomDetectors::NyuugyokuAnagumaDetector, },
-        { key: "N段ロケット判定",  custom_trigger_key: :ct_every,    klass: CustomDetectors::RocketDetector,           },
         { key: "魔方陣判定",       custom_trigger_key: :ct_every,    klass: CustomDetectors::MagicSquareDetector,      },
         { key: "角切り判定",       custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukiriDetector,       },
         { key: "序盤飛角交換判定", custom_trigger_key: :ct_capture,  klass: CustomDetectors::HikakukoukanDetector,     },

@@ -23,6 +23,14 @@ module Bioshogi
           trigger: { piece_key: :bishop, promoted: true, motion: :move },
           klass: XmotionDetectors::HorseDetector,
         },
+        {
+          key: "N段ロケット判定",
+          trigger: [
+            { piece_key: :rook,  promoted: :both, motion: :both },
+            { piece_key: :lance, promoted: false, motion: :drop },
+          ],
+          klass: XmotionDetectors::RocketDetector,
+        },
       ]
 
       class << self
