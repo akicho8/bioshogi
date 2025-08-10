@@ -7,7 +7,7 @@ module Bioshogi
     # 担当するクラス
     def accepted_class(source)
       source = Source.wrap(source)
-      support_parsers.find { |e| e.accept?(source) }
+      support_parsers.find { |e| e.accept?(source) } || default_parser
     end
 
     # 棋譜ファイルのコンテンツを読み込む
@@ -35,6 +35,10 @@ module Bioshogi
         Ki2Parser,
         BodParser,
       ]
+    end
+
+    def default_parser
+      KifParser
     end
   end
 end

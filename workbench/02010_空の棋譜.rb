@@ -1,12 +1,17 @@
 require "#{__dir__}/setup"
 
 info = Parser.parse("")
-tp info.pi.header.to_h
-tp info.pi.header.entry_all_names
-tp info.pi.header.__to_meta_h
-tp info.pi.header.to_kisen_a
-tp info.pi.header.entry_all_names
-tp info.pi.header.tags
-puts info.to_ki2
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/parser.rb:29:in `parse': 棋譜のフォーマットが不明です :  (Bioshogi::FileFormatError)
-# ~> 	from -:3:in `<main>'
+puts info.to_kif
+# >> 先手の駒使用：歩0 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
+# >> 先手の玉移動：0回
+# >> 先手のキル数：0キル
+# >> 後手の駒使用：歩0 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
+# >> 後手の玉移動：0回
+# >> 後手のキル数：0キル
+# >> 総手数：0手
+# >> 総キル数：0キル
+# >> 結末：投了
+# >> 手合割：平手
+# >> 手数----指手---------消費時間--
+# >>    1 投了
+# >> まで0手で後手の勝ち
