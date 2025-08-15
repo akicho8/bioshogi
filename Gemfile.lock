@@ -20,13 +20,13 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionview (8.0.2)
-      activesupport (= 8.0.2)
+    actionview (8.0.2.1)
+      activesupport (= 8.0.2.1)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activesupport (8.0.2)
+    activesupport (8.0.2.1)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -102,7 +102,7 @@ GEM
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rainbow (3.1.1)
     rake (13.3.0)
-    regexp_parser (2.11.1)
+    regexp_parser (2.11.2)
     rmagick (6.1.2)
       observer (~> 0.1)
       pkg-config (~> 1.4)
@@ -137,7 +137,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rails (2.32.0)
+    rubocop-rails (2.33.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
