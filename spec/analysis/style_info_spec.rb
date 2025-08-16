@@ -1,6 +1,7 @@
-require "~/src/shogi-extend/workbench/setup"
-s { User.count }              # => 70
-_ { User.count }              # => "0.33 ms"
-# >>   User Count (0.4ms)  SELECT COUNT(*) FROM `users`
+require "spec_helper"
 
-require "~/src/bioshogi/lib/bioshogi"
+RSpec.describe Bioshogi::Analysis::StyleInfo do
+  it "works" do
+    assert { Bioshogi::Analysis::StyleInfo }
+  end
+end
