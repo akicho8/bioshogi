@@ -1,6 +1,7 @@
 require "#{__dir__}/setup"
 Analysis::TacticInfo[:attack].model # => Bioshogi::Analysis::AttackInfo
 Analysis::TacticInfo[:attack].name  # => "戦法"
+Analysis::TacticInfo["戦法"].name   # => "戦法"
 
 # list = Analysis::TagIndex.values.collect { |e|
 #   s = e.name
