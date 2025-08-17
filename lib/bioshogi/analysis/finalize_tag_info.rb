@@ -21,7 +21,7 @@ module Bioshogi
 
         { key: "居飛車",         turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "相居飛車",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        # { key: "対居飛車",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        # { key: "対居飛車",     turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "相振り飛車",     turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "対抗形",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
@@ -32,7 +32,7 @@ module Bioshogi
         { key: "短手数・長手数", turn_gteq: nil, preset_is: :hirate_like, critical: true, outbreak: nil,  checkmate: nil,  description: "",           },
 
         { key: "屍の舞",         turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
-        { key: "穴熊の姿焼き",     turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "穴熊の姿焼き",   turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
 
         { key: "相穴熊",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "相入玉",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
