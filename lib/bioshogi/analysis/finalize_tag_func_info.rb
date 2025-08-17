@@ -90,38 +90,6 @@ module Bioshogi
         ################################################################################
 
         {
-          key: "○○系",
-          func: -> {
-            # container.players.each do |e|
-            #   items = e.tag_bundle.attack_infos.unwant_rejected_ancestors
-            #   CategoryInfo.each do |c|
-            #     if items.any? { |e| e.root == c.object }
-            #       e.tag_bundle << c.self_push
-            #       e.opponent_player.tag_bundle << c.opponent_push
-            #     end
-            #   end
-            # end
-
-            # container.players.each do |e|
-            #   e.tag_bundle.to_all_flat_array.each do |item|
-            #     if item.respond_to?(:category)
-            #       if v = item.category
-            #         e.tag_bundle << v
-            #       end
-            #     end
-            #     if item.respond_to?(:sub_category)
-            #       if v = item.sub_category
-            #         Array(v).each do |v|
-            #           e.tag_bundle << v
-            #         end
-            #       end
-            #     end
-            #   end
-            # end
-          },
-        },
-
-        {
           key: "雁木削除",
           description: "雁木の出だしから振り飛車になった場合のみ雁木を削除する (例外的措置)",
           func: -> {
