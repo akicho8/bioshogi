@@ -37,7 +37,7 @@ module Bioshogi
         ################################################################################
 
         # 特定の初期配置でないならスキップ
-        if v = e.preset_has
+        if v = e.preset_is
           unless preset_is(v)
             throw :skip
           end

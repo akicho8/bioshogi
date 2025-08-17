@@ -2,8 +2,9 @@ require "#{__dir__}/setup"
 
 info = Parser.parse(<<~EOT)
 棋戦：共有将棋盤
+手合割：平手
 先手の備考：入玉
-後手の持駒：玉二 金 銀 桂四 香四 歩十一
+後手の持駒：
   ９ ８ ７ ６ ５ ４ ３ ２ １
 +---------------------------+
 | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -16,7 +17,7 @@ info = Parser.parse(<<~EOT)
 | ・ ・ ・ ・ と と ・ ・ ・|八
 |vと ・ ・ ・ ・ ・ ・ ・ ・|九
 +---------------------------+
-先手の持駒：なし
+先手の持駒：
 先手番
 手数----指手---------消費時間--
    1 ８三玉(94)
@@ -41,10 +42,58 @@ info = Parser.parse(<<~EOT)
 まで17手で先手の勝ち
 EOT
 puts info.to_kif
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:956", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:960", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:941", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:944", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:948", nil]
+# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/motion_detector.rb:952", nil]
 # >> 棋戦：共有将棋盤
+# >> 手合割：平手
 # >> 先手の備考：入玉
-# >> 先手の手筋：中段玉
-# >> 後手の持駒：玉二 金 銀 桂四 香四 歩十一
+# >> 先手の囲い：天空の城
+# >> 先手の手筋：入玉, 中段玉
+# >> 先手の棋風：準王道
+# >> 先手の駒使用：歩0 銀0 金0 飛0 角0 玉9 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
+# >> 先手の玉移動：9回
+# >> 先手のキル数：0キル
+# >> 後手の駒使用：歩0 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と8 圭0 全0 杏0
+# >> 後手の玉移動：0回
+# >> 後手のキル数：0キル
+# >> 総手数：17手
+# >> 総キル数：0キル
+# >> 結末：投了
+# >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １
 # >> +---------------------------+
 # >> | ・ ・ ・ ・ ・ ・ ・ ・ ・|一
@@ -61,9 +110,10 @@ puts info.to_kif
 # >> 先手番
 # >> 手数----指手---------消費時間--
 # >>    1 ８三玉(94)
-# >> *▲備考：入玉
+# >> *▲手筋：入玉
 # >>    2 ８九と(99)
 # >>    3 ７四玉(83)
+# >> *▲囲い：天空の城
 # >>    4 ７九と(89)
 # >>    5 ６四玉(74)
 # >>    6 ６九と(79)

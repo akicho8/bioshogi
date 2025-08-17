@@ -14,6 +14,9 @@ module Bioshogi
 
         def call
           perform_block do
+            # 【条件】平手風である
+            and_cond { preset_is(:hirate_like) }
+
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 

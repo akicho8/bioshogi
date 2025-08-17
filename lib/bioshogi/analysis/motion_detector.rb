@@ -188,7 +188,7 @@ module Bioshogi
         #   ],
         #   func: -> {
         #     # # 【条件】平手風である
-        #     # analysis { preset_has(:hirate_like) }
+        #     # and_cond { preset_is(:hirate_like) }
         #
         #     # 【条件】自玉が1つ存在する
         #     and_cond { player.king_soldier_only_one_exist? }
@@ -938,6 +938,9 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :both },
           ],
           func: -> {
+            # 【条件】平手風である
+            and_cond { preset_is(:hirate_like) }
+
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 
@@ -1909,6 +1912,9 @@ module Bioshogi
             { piece_key: :king,   promoted: false, motion: :move },
           ],
           func: -> {
+            # 【条件】平手風である
+            and_cond { preset_is(:hirate_like) }
+
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 

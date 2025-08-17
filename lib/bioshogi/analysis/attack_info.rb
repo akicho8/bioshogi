@@ -445,7 +445,7 @@ module Bioshogi
 
       include TagMethods
 
-      def preset_has
+      def preset_is
         :hirate_like
       end
     end

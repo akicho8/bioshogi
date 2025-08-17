@@ -16,34 +16,34 @@ module Bioshogi
     class FinalizeTagInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: "名人に定跡なし", turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "力戦より前", },
-        { key: "力戦",           turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "名人に定跡なし", turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "力戦より前", },
+        { key: "力戦",           turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
 
-        { key: "居飛車",         turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
-        { key: "相居飛車",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        # { key: "対居飛車",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        { key: "相振り飛車",     turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        { key: "対抗形",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "居飛車",         turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "相居飛車",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        # { key: "対居飛車",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "相振り飛車",     turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "対抗形",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "○○系",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "○○系",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "居玉",           turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
-        { key: "相居玉",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "居玉",           turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "相居玉",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "急戦・持久戦",   turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
-        { key: "短手数・長手数", turn_gteq: nil, preset_has: :hirate_like, critical: true, outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "急戦・持久戦",   turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "短手数・長手数", turn_gteq: nil, preset_is: :hirate_like, critical: true, outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "屍の舞",         turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
-        { key: "穴熊の姿焼き",     turn_gteq: nil, preset_has: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "屍の舞",         turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "穴熊の姿焼き",     turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
 
-        { key: "相穴熊",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
-        { key: "相入玉",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "相穴熊",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "相入玉",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
 
-        { key: "都詰め",         turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
-        { key: "吊るし桂",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
-        { key: "雪隠詰め",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
+        { key: "都詰め",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
+        { key: "吊るし桂",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
+        { key: "雪隠詰め",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: true, description: "",           },
 
-        { key: "雁木削除",       turn_gteq: nil, preset_has: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
+        { key: "雁木削除",       turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
       ]
 
       def func

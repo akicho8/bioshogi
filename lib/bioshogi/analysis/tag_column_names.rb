@@ -8,7 +8,7 @@ module Bioshogi
       :alias_names,
       :add_to_self,
       :add_to_opponent,
-      :preset_has,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
+      :preset_is,        # PresetInfo のなかで、この値を持つ対局だけで、有効とする
       :description,
 
       # shape_info 系依存だが、outbreak_skip は他のところでも使っているので完全に shape_info 系として分けるわけにもいかない

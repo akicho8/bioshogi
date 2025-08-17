@@ -16,7 +16,7 @@ module Bioshogi
               next
             end
           end
-          if v = e.preset_has
+          if v = e.preset_is
             unless container.params[:preset_info_or_nil]&.public_send(v)
               next
             end

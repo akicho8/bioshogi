@@ -123,7 +123,7 @@ module Bioshogi
 
         {
           key: "雁木削除",
-          description: "雁木の出だしから振り飛車になった場合に雁木を削除する",
+          description: "雁木の出だしから振り飛車になった場合のみ雁木を削除する (例外的措置)",
           func: -> {
             container.players.each do |player|
               if player.tag_bundle.include?("振り飛車")

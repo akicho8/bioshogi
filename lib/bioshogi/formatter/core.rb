@@ -83,7 +83,7 @@ module Bioshogi
           ])
 
         # xparser を渡すのではなく必要なパラメータだけ渡す
-        params[:preset_info_or_nil]     = preset_info_or_nil           # 手合割
+        params[:preset_info_or_nil]     = preset_info_or_nil          # 手合割
         params[:win_side_location]      = pi.header.win_side_location # 勝敗がついた側がわかっている (強)
         params[:input_last_action_info] = pi.input_last_action_info   # 結末 (都詰めなどの判定に必要)
 
@@ -194,10 +194,17 @@ module Bioshogi
           @preset_info_or_nil ||= pi.force_preset_info
           @preset_info_or_nil ||= initial_container.board.preset_info(major_only: false)
           @preset_info_or_nil ||= PresetInfo[pi.header["手合割"]]
+          # # 天空の城をスプリントから除外したいが開発環境では途中の局面から判定(有効)にしたいための苦肉の策
+          # @preset_info_or_nil ||= PresetInfo[pi.header["X-初期配置"]]
         end
 
         @preset_info_or_nil
       end
+
+      # # 天空の城をスプリントから除外したいが開発環境では途中の局面から判定(有効)にしたいための苦肉の策
+      # def initial_preset
+      #   @initial_preset ||= PresetInfo[pi.header["初期配置"]] # 特殊
+      # end
 
       def container_run_all(container)
         Runner.new(self, container).call
