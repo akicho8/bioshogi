@@ -224,7 +224,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">player</span>, <span class="ruby-identifier">source</span>, <span class="ruby-identifier">params</span> = {})
   <span class="ruby-ivar">@player</span> = <span class="ruby-identifier">player</span>
   <span class="ruby-ivar">@source</span> = <span class="ruby-identifier">source</span>
@@ -262,7 +262,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="clock_add_process-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clock_add_process</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -290,7 +290,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="execute-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 42</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">execute</span>
   <span class="ruby-identifier">perform_validations</span>
 
@@ -351,7 +351,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="execute_after_process-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">execute_after_process</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -379,7 +379,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="input-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 24</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">input</span>
   <span class="ruby-ivar">@input</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">md</span> = <span class="ruby-constant">InputParser</span>.<span class="ruby-identifier">match!</span>(<span class="ruby-ivar">@source</span>)
@@ -411,7 +411,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_hand_process-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_hand_process</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">move_hand</span>.<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:king</span>
     <span class="ruby-identifier">player</span>.<span class="ruby-identifier">king_place</span> = <span class="ruby-identifier">move_hand</span>.<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>
@@ -442,7 +442,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="perform_analyzer-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">perform_analyzer</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -470,7 +470,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="perform_validations-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 31</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">perform_validations</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">:validate_feature</span>]
     <span class="ruby-keyword">return</span>
@@ -506,7 +506,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="piece_box_added-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_box_added</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -534,7 +534,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="turn_changed_process-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 99</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">turn_changed_process</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -562,7 +562,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="turn_ended_process-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 93</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player_executor/base.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">turn_ended_process</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

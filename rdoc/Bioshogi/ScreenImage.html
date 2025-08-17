@@ -308,7 +308,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="board_layer_create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">board_layer_create</span>
   <span class="ruby-identifier">layer</span> = <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:s_board_layer</span>)
   <span class="ruby-keyword">case</span>
@@ -1311,7 +1311,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="inner_frame_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 35</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">inner_frame_stroke_width</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_fill_color</span>]
     <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
@@ -1347,7 +1347,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="inner_frame_lattice_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 135</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_lattice_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_lattice_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_font_color</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -1376,7 +1376,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="inner_frame_stroke_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 143</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_stroke_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_stroke_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_font_color</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -1463,10 +1463,13 @@
 
         <div class="method-description">
           <div class="method-source-code" id="lattice_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lattice_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">fill</span>(<span class="ruby-identifier">inner_frame_lattice_color</span>) <span class="ruby-comment"># 塗り潰し色で line する (stroke と勘違いしがち)</span>
+    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke_width</span>(<span class="ruby-identifier">lattice_stroke_width</span>) <span class="ruby-comment"># 2px 以上の場合はこれがいる</span>
+    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke</span>(<span class="ruby-identifier">inner_frame_lattice_color</span>)  <span class="ruby-comment"># (↑のときの色)</span>
+    <span class="ruby-identifier">g</span>.<span class="ruby-identifier">fill</span> = <span class="ruby-identifier">inner_frame_lattice_color</span>   <span class="ruby-comment"># 線の中心線の色(1pxだけならこれだけあればいい)</span>
+
     (<span class="ruby-value">1</span><span class="ruby-operator">...</span><span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">line_draw</span>(<span class="ruby-identifier">g</span>, <span class="ruby-constant">V</span>[<span class="ruby-identifier">x</span>, <span class="ruby-value">0</span>], <span class="ruby-constant">V</span>[<span class="ruby-identifier">x</span>, <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span>])
     <span class="ruby-keyword">end</span>
@@ -1476,7 +1479,7 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          <p>外枠を含まない格子line で stroke を使うと fill + stroke で二重に同じところを塗るっぽいだから半透明にしても濃くなるなので fill だけにする</p>
+          <p>外枠を含まない格子line で stroke を使うと fill + stroke で二重に同じところを塗るっぽいだから半透明にしても濃くなるなので fill だけにするしかし、そうすると今度は 2px 以上が描画できなくなるのでやっぱり stroke も入れておく</p>
         </div>
 
 
@@ -2749,7 +2752,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="star_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 46</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">star_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke</span>(<span class="ruby-string">&quot;transparent&quot;</span>)
@@ -2789,7 +2792,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="star_fill_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 139</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">star_fill_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:star_fill_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">inner_frame_lattice_color</span>
 <span class="ruby-keyword">end</span></pre>
@@ -2818,7 +2821,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="texture_image-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">texture_image</span>
   <span class="ruby-ivar">@texture_image</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">image</span> = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:fg_file</span>].<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">first</span>

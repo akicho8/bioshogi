@@ -122,6 +122,8 @@
       <li ><a href="#method-i-piece_vector">piece_vector</a></li>
       <li ><a href="#method-i-promotable-3F">promotable?</a></li>
       <li ><a href="#method-i-promoted_names">promoted_names</a></li>
+      <li ><a href="#method-i-swaped">swaped</a></li>
+      <li ><a href="#method-i-to_counts_key">to_counts_key</a></li>
       <li ><a href="#method-i-to_h">to_h</a></li>
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-xxx_kiri">xxx_kiri</a></li>
@@ -580,7 +582,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_basic_names-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 167</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 175</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_basic_names</span>
   <span class="ruby-ivar">@all_basic_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">flat_map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:basic_names</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -609,7 +611,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_basic_names_set-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 172</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 180</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_basic_names_set</span>
   <span class="ruby-ivar">@all_basic_names_set</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">all_basic_names</span>.<span class="ruby-identifier">to_set</span>
 <span class="ruby-keyword">end</span></pre>
@@ -638,7 +640,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_names-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 158</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_names</span>
   <span class="ruby-ivar">@all_names</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">flat_map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:names</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -667,7 +669,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_names_set-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 162</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 170</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_names_set</span>
   <span class="ruby-ivar">@all_names_set</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">all_names</span>.<span class="ruby-identifier">to_set</span>
 <span class="ruby-keyword">end</span></pre>
@@ -696,7 +698,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="any_name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 180</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 188</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">any_name</span>(<span class="ruby-identifier">promoted</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">promoted</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:char_type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:formal_sheet</span>
@@ -736,7 +738,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="basic_names-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 196</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 204</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">basic_names</span>
   [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">basic_alias</span>, <span class="ruby-identifier">csa</span>.<span class="ruby-identifier">basic_name</span>, <span class="ruby-identifier">sfen_char</span>, <span class="ruby-identifier">key</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
 <span class="ruby-keyword">end</span></pre>
@@ -765,7 +767,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="csa-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 224</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 236</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">csa</span>
   <span class="ruby-ivar">@csa</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PieceCsa</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -794,7 +796,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="ek_score_info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 253</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 265</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ek_score_info</span>
   <span class="ruby-ivar">@ek_score_info</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">EkScoreInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -823,7 +825,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="fetch_by_sfen_char-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 207</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 219</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">fetch_by_sfen_char</span>(<span class="ruby-identifier">ch</span>)
   <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">ch</span>.<span class="ruby-identifier">upcase</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -881,7 +883,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="names-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 192</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 200</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">names</span>
   <span class="ruby-identifier">basic_names</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">promoted_names</span>
 <span class="ruby-keyword">end</span></pre>
@@ -939,7 +941,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="piece_pressure-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 243</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 255</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_pressure</span>
   <span class="ruby-ivar">@piece_pressure</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PiecePressure</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -968,7 +970,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="piece_scale-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 233</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 245</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_scale</span>
   <span class="ruby-ivar">@piece_scale</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PieceScale</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -997,7 +999,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="piece_score-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 238</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 250</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_score</span>
   <span class="ruby-ivar">@piece_score</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PieceScore</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1026,7 +1028,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="piece_vector-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 228</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 240</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_vector</span>
   <span class="ruby-ivar">@piece_vector</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PieceVector</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1084,9 +1086,71 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="promoted_names-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 200</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 208</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">promoted_names</span>
   [<span class="ruby-identifier">promoted_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">promoted_formal_sheet_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">other_matched_promoted_names</span>, <span class="ruby-identifier">csa</span>.<span class="ruby-identifier">promoted_name</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">compact</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-swaped" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-swaped" title="Link to this method">
+                <span class="method-name">swaped</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="swaped-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">swaped</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@swaped</span>)
+    <span class="ruby-ivar">@swaped</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>[<span class="ruby-identifier">swap_key</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@swaped</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_counts_key" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_counts_key" title="Link to this method">
+                <span class="method-name">to_counts_key</span>
+                <span class="method-args">(promoted)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_counts_key-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 212</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_counts_key</span>(<span class="ruby-identifier">promoted</span>)
+  <span class="ruby-value">:&quot;#{sfen_char}#{promoted ? 1 : 0}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1142,7 +1206,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="to_sfen-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 216</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>(<span class="ruby-value">promoted:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">location:</span> <span class="ruby-value">:black</span>)
   [
     <span class="ruby-identifier">promoted</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;+&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>,
@@ -1205,7 +1269,7 @@ formal_sheet: &quot;成銀&quot;</pre>
 
         <div class="method-description">
           <div class="method-source-code" id="yomiage_piece_info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 248</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/piece.rb, line 260</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">yomiage_piece_info</span>
   <span class="ruby-ivar">@yomiage_piece_info</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">YomiagePieceInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
 <span class="ruby-keyword">end</span></pre>

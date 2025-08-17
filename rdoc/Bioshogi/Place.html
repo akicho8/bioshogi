@@ -128,6 +128,8 @@
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-to_xy">to_xy</a></li>
       <li ><a href="#method-i-vector_add">vector_add</a></li>
+      <li ><a href="#method-i-vector_from">vector_from</a></li>
+      <li ><a href="#method-i-vector_to">vector_to</a></li>
       <li ><a href="#method-i-white_then_flip">white_then_flip</a></li>
       <li ><a href="#method-i-yomiage">yomiage</a></li>
       <li ><a href="#method-i-zenkaku_number">zenkaku_number</a></li>
@@ -503,7 +505,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="3C-3D-3E-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 232</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 241</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span>
     <span class="ruby-identifier">to_xy</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_xy</span>
@@ -534,7 +536,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="3D-3D-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 228</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 237</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">==</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">other</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -563,7 +565,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="both_side_without_corner-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 280</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 289</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">both_side_without_corner?</span>
   <span class="ruby-ivar">@column</span>.<span class="ruby-identifier">side_edge?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@row</span>.<span class="ruby-identifier">top_spaces</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@row</span>.<span class="ruby-identifier">bottom_spaces</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span></pre>
@@ -622,7 +624,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="eql-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 242</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 251</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">eql?</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">to_xy</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_xy</span>
 <span class="ruby-keyword">end</span></pre>
@@ -738,7 +740,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="hash-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 238</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 247</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hash</span>
   <span class="ruby-identifier">to_xy</span>.<span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -854,7 +856,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="king_default_place-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 257</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 266</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">king_default_place?</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-identifier">column_is5?</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">bottom_spaces</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -941,7 +943,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_to_bottom_edge-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 286</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 295</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_bottom_edge</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">column</span>, <span class="ruby-identifier">location</span>.<span class="ruby-identifier">bottom</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -970,7 +972,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_to_left_edge-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 294</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 303</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_left_edge</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">location</span>.<span class="ruby-identifier">left</span>, <span class="ruby-identifier">row</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -999,7 +1001,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_to_right_edge-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 298</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 307</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_right_edge</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">location</span>.<span class="ruby-identifier">right</span>, <span class="ruby-identifier">row</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -1028,7 +1030,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_to_top_edge-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 290</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_top_edge</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">fetch</span>([<span class="ruby-identifier">column</span>, <span class="ruby-identifier">location</span>.<span class="ruby-identifier">top</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -1057,7 +1059,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_to_xy-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 273</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 282</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_to_xy</span>(<span class="ruby-identifier">location</span>, <span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
   <span class="ruby-identifier">xy_add</span>(<span class="ruby-identifier">x</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>, <span class="ruby-identifier">y</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1115,7 +1117,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="relative_move_to-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 249</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 258</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">relative_move_to</span>(<span class="ruby-identifier">location</span>, <span class="ruby-identifier">vector</span>, <span class="ruby-value">magnification:</span> <span class="ruby-value">1</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">vector</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Symbol</span>)
     <span class="ruby-identifier">vector</span> = <span class="ruby-constant">V</span>.<span class="ruby-identifier">public_send</span>(<span class="ruby-identifier">vector</span>)
@@ -1292,9 +1294,73 @@
 
         <div class="method-description">
           <div class="method-source-code" id="vector_add-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 266</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 275</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_add</span>(<span class="ruby-identifier">vector</span>)
   <span class="ruby-identifier">xy_add</span>(<span class="ruby-identifier">vector</span>.<span class="ruby-identifier">x</span>, <span class="ruby-identifier">vector</span>.<span class="ruby-identifier">y</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vector_from" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-vector_from" title="Link to this method">
+                <span class="method-name">vector_from</span>
+                <span class="method-args">(from)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="vector_from-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 227</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_from</span>(<span class="ruby-identifier">from</span>)
+  <span class="ruby-constant">V</span>[<span class="ruby-identifier">column</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">from</span>.<span class="ruby-identifier">column</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">row</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">from</span>.<span class="ruby-identifier">row</span>.<span class="ruby-identifier">value</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>▲視点で from からの差をベクトルで返す</p>
+
+<pre class="ruby"><span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;55&quot;</span>].<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;56&quot;</span>]) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">up</span>    <span class="ruby-comment"># =&gt; true</span>
+<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;55&quot;</span>].<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;54&quot;</span>]) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">down</span>  <span class="ruby-comment"># =&gt; true</span>
+<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;55&quot;</span>].<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;45&quot;</span>]) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">left</span>  <span class="ruby-comment"># =&gt; true</span>
+<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;55&quot;</span>].<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Place</span>[<span class="ruby-string">&quot;65&quot;</span>]) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">right</span> <span class="ruby-comment"># =&gt; true</span>
+</pre>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vector_to" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-vector_to" title="Link to this method">
+                <span class="method-name">vector_to</span>
+                <span class="method-args">(to)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="vector_to-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/place.rb, line 231</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_to</span>(<span class="ruby-identifier">to</span>)
+  <span class="ruby-identifier">to</span>.<span class="ruby-identifier">vector_from</span>(<span class="ruby-keyword">self</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

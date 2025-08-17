@@ -179,6 +179,7 @@
   <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">sfen_info</span>      = <span class="ruby-constant">Sfen</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">normalized_source</span>)
   <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">move_infos</span>     = <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">sfen_info</span>.<span class="ruby-identifier">move_infos</span>
   <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">force_handicap</span> = <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">sfen_info</span>.<span class="ruby-identifier">handicap?</span>
+  <span class="ruby-comment"># @pi.force_preset_info = @pi.sfen_info.handicap?</span>
 
   <span class="ruby-ivar">@pi</span>.<span class="ruby-identifier">sfen_info</span>.<span class="ruby-identifier">piece_counts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location_key</span>, <span class="ruby-identifier">counts</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">location</span> = <span class="ruby-constant">Location</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">location_key</span>)

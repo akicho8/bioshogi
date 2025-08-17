@@ -129,6 +129,8 @@
 
 <p>駒柱判定用</p>
 
+<p>序盤のロジックおよびコメントはパターン1として書いているが実際はパターン2にも当てはまる。最後で分岐する。</p>
+
 <p>executor メソッドに反応する (each に反応する Enumerable のように)</p>
 
 <p>|—————–+————————————| | turn_gteq       | N手以上である                      | | hirate_like     | 平手風の開始局面から始まっている   | | critical        | 駒が衝突した (角と歩も含む)        | | outbreak        | 駒が衝突した (角と歩を除く)        | | checkmate       | 最後は詰みである                   | |—————–+————————————|</p>
@@ -138,9 +140,11 @@
 <p>相や対で始まるものは関連するタグに対応して必ず決まるので他の条件は要らない</p>
 </li></ul>
 
-<p><a href="https://www.shogi-extend.com/api/swars/tag_frequency">www.shogi-extend.com/api/swars/tag_frequency</a></p>
+<p>see: /Users/ikeda/src/bioshogi/workbench/analysis/frequency.rb</p>
 
 <p>:optional: は考慮する必要があるもの。</p>
+
+<p>戦法チェックで最適化の効果が大きい戦法ランキング</p>
 
 <p>戦法チェックで最適化の効果が大きい戦法ランキング</p>
 
@@ -240,6 +244,8 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
 -3334FU
 %TORYO</pre>
 
+<p>Swars::User::Stat::FrequencyExtractor.high_accuracy &gt;&gt; |—–| &gt;&gt; | 515 | &gt;&gt; |—–| &gt;&gt; |—–+———————–| &gt;&gt; | key | ratio                 | &gt;&gt; |—–+———————–| &gt;&gt; | 杏  | 0.0012432623567665045 | &gt;&gt; | 全  |  0.002663247067491629 | &gt;&gt; | 圭  | 0.0026711358306407544 | &gt;&gt; | と  |  0.009093115889395976 | &gt;&gt; | 龍  |  0.017298266838485784 | &gt;&gt; | 馬  |  0.019454151941932046 | &gt;&gt; | 香  |  0.023406805585627757 | &gt;&gt; | 桂  |   0.06559815350942172 | &gt;&gt; | 玉  |   0.08727810239208346 | &gt;&gt; | 角  |   0.09229347386967632 | &gt;&gt; | 飛  |   0.09975018682220436 | &gt;&gt; | 金  |    0.1051636332294009 | &gt;&gt; | 銀  |    0.1780809228105882 | &gt;&gt; | 歩  |    0.2960055418562846 | &gt;&gt; |—–+———————–| &gt;&gt; [{:key=&gt;“杏”, :ratio=&gt;0.0012432623567665045}, &gt;&gt;  {:key=&gt;“全”, :ratio=&gt;0.002663247067491629}, &gt;&gt;  {:key=&gt;“圭”, :ratio=&gt;0.0026711358306407544}, &gt;&gt;  {:key=&gt;“と”, :ratio=&gt;0.009093115889395976}, &gt;&gt;  {:key=&gt;“龍”, :ratio=&gt;0.017298266838485784}, &gt;&gt;  {:key=&gt;“馬”, :ratio=&gt;0.019454151941932046}, &gt;&gt;  {:key=&gt;“香”, :ratio=&gt;0.023406805585627757}, &gt;&gt;  {:key=&gt;“桂”, :ratio=&gt;0.06559815350942172}, &gt;&gt;  {:key=&gt;“玉”, :ratio=&gt;0.08727810239208346}, &gt;&gt;  {:key=&gt;“角”, :ratio=&gt;0.09229347386967632}, &gt;&gt;  {:key=&gt;“飛”, :ratio=&gt;0.09975018682220436}, &gt;&gt;  {:key=&gt;“金”, :ratio=&gt;0.1051636332294009}, &gt;&gt;  {:key=&gt;“銀”, :ratio=&gt;0.1780809228105882}, &gt;&gt;  {:key=&gt;“歩”, :ratio=&gt;0.2960055418562846}]</p>
+
 <p>&gt;&gt; |————<code>--------------</code>———–<code>----------</code>———–<code>------------</code>—————-<code>-------------</code>————–<code>---------------------</code>——————<code>----------------</code>———-<code>----------</code>——–<code>-----------</code>—————-<code>------------------</code>——–<code>----------</code>———————| &gt;&gt; | source     | ki2_location | kif_place | ki2_same | kif_piece | ki2_one_up | ki2_left_right | ki2_up_down | ki2_as_it_is | ki2_promote_trigger | kif_drop_trigger | kif_place_from | csa_sign | csa_from | csa_to | csa_piece | sfen_drop_piece | sfen_drop_trigger | sfen_to | sfen_from | sfen_promote_trigger | &gt;&gt; |————<code>--------------</code>———–<code>----------</code>———–<code>------------</code>—————-<code>-------------</code>————–<code>---------------------</code>——————<code>----------------</code>———-<code>----------</code>——–<code>-----------</code>—————-<code>------------------</code>——–<code>----------</code>———————| &gt;&gt; | ６八銀左上 |              | ６八      |          | 銀        |            | 左             | 上          |              |                     |                  |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | △６八全   | △           | ６八      |          | 全        |            |                |             |              |                     |                  |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | △６八銀成 | △           | ６八      |          | 銀        |            |                |             |              | 成                  |                  |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | △６八銀打 | △           | ６八      |          | 銀        |            |                |             |              |                     | 打               |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | △同銀     | △           |           | 同       | 銀        |            |                |             |              |                     |                  |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | △同銀成   | △           |           | 同       | 銀        |            |                |             |              | 成                  |                  |                |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | ７六歩(77) |              | ７六      |          | 歩        |            |                |             |              |                     |                  | (77)           |          |          |        |           |                |                  |        |          |                     | &gt;&gt; | 7677FU     |              |           |          |           |            |                |             |              |                     |                  |                |          |       76 |     77 | FU        |                |                  |        |          |                     | &gt;&gt; | -7677FU    |              |           |          |           |            |                |             |              |                     |                  |                | -        |       76 |     77 | FU        |                |                  |        |          |                     | &gt;&gt; | +0077RY    |              |           |          |           |            |                |             |              |                     |                  |                | +        |       00 |     77 | RY        |                |                  |        |          |                     | &gt;&gt; | 8c8d       |              |           |          |           |            |                |             |              |                     |                  |                |          |          |        |           |                |                  | 8d     | 8c       |                     | &gt;&gt; | P*2f       |              |           |          |           |            |                |             |              |                     |                  |                |          |          |        |           | P              | *                | 2f     |          |                     | &gt;&gt; | 4e5c+      |              |           |          |           |            |                |             |              |                     |                  |                |          |          |        |           |                |                  | 5c     | 4e       | +                   | &gt;&gt; |————<code>--------------</code>———–<code>----------</code>———–<code>------------</code>—————-<code>-------------</code>————–<code>---------------------</code>——————<code>----------------</code>———-<code>----------</code>——–<code>-----------</code>—————-<code>------------------</code>——–<code>----------</code>———————|</p>
 
 <p>角落ちで “33角(22)” とすると下の player.board.fetch(v) でエラーになるなので move_hand があるときは同時に origin_soldier のチェックも必要になる</p>
@@ -310,6 +316,9 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
         <dd>
           
         <dt id="RV">RV
+        <dd>
+          
+        <dt id="SAIGONO_SINPAN">SAIGONO_SINPAN
         <dd>
           
         <dt id="SFEN1">SFEN1

@@ -173,7 +173,7 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/parser.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">accepted_class</span>(<span class="ruby-identifier">source</span>)
   <span class="ruby-identifier">source</span> = <span class="ruby-constant">Source</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">source</span>)
-  <span class="ruby-identifier">support_parsers</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">accept?</span>(<span class="ruby-identifier">source</span>) }
+  <span class="ruby-identifier">support_parsers</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">accept?</span>(<span class="ruby-identifier">source</span>) } <span class="ruby-operator">||</span> <span class="ruby-identifier">default_parser</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           <p>担当するクラス</p>

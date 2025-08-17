@@ -156,9 +156,6 @@
         <dt id="Frequency">Frequency
         <dd>
           
-        <dt id="MotionTriggerTable">MotionTriggerTable
-        <dd>
-          
         <dt id="TacticHitTurnTable">TacticHitTurnTable
         <dd>
           
@@ -300,7 +297,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="analysis_feature_enabled-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/analyzer_mod.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/analyzer_mod.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">analysis_feature_enabled?</span>
   <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:analysis_feature</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">:analysis_feature</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Dimension</span>.<span class="ruby-identifier">default_size?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -463,7 +460,7 @@
           <div class="method-source-code" id="execute_after_process-source">
             <pre><span class="ruby-comment"># File lib/bioshogi/analysis/analyzer_mod.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">execute_after_process</span>
-  <span class="ruby-identifier">player</span>.<span class="ruby-identifier">used_piece_counts</span>[<span class="ruby-identifier">hand</span>.<span class="ruby-identifier">to_counts_key</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+  <span class="ruby-identifier">player</span>.<span class="ruby-identifier">used_soldier_counter</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">hand</span>.<span class="ruby-identifier">used_soldier</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -932,6 +929,7 @@
     <span class="ruby-constant">ShapeAnalyzer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
     <span class="ruby-constant">MotionAnalyzer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
     <span class="ruby-constant">EveryAnalyzer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
+    <span class="ruby-constant">XmotionAnalyzer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>
     <span class="ruby-constant">CustomAnalyzer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>(<span class="ruby-value">:ct_every</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1353,7 +1351,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="tag_bundle-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/analyzer_mod.rb, line 64</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/analyzer_mod.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tag_bundle</span>
   <span class="ruby-ivar">@tag_bundle</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">TagBundle</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>

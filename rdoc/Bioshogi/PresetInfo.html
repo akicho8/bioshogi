@@ -100,6 +100,7 @@
       <li ><a href="#method-i-declined_soldiers">declined_soldiers</a></li>
       <li ><a href="#method-i-formal_level">formal_level</a></li>
       <li ><a href="#method-i-handicap_shift">handicap_shift</a></li>
+      <li ><a href="#method-i-start_locaction">start_locaction</a></li>
       <li ><a href="#method-i-to_board">to_board</a></li>
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-to_short_sfen">to_short_sfen</a></li>
@@ -194,8 +195,8 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/preset_info.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lookup_by_soldiers</span>(<span class="ruby-identifier">soldiers</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">options</span> = {
-    <span class="ruby-value">:optimize</span>        <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-comment"># 速くなる (気がするだけでほとんど効果がない)</span>
-    <span class="ruby-value">:inclusion_minor</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-comment"># トンボなど一般的な名前も含めるか？</span>
+    <span class="ruby-value">:optimize</span>    <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-comment"># 速くなる (気がするだけでほとんど効果がない)</span>
+    <span class="ruby-value">:major_only</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-comment"># true: トンボなど一般的な名前も含めない</span>
   }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:optimize</span>]
@@ -216,10 +217,10 @@
     <span class="ruby-comment"># end</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">sorted_soldiers</span> = <span class="ruby-identifier">soldiers</span>.<span class="ruby-identifier">sort</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:inclusion_minor</span>]
-      <span class="ruby-identifier">list</span> = <span class="ruby-identifier">to_a</span>
-    <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:major_only</span>]
       <span class="ruby-identifier">list</span> = <span class="ruby-identifier">major_only</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">list</span> = <span class="ruby-identifier">to_a</span>
     <span class="ruby-keyword">end</span>
     <span class="ruby-identifier">list</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sorted_soldiers</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">sorted_soldiers</span> }
   <span class="ruby-keyword">end</span>
@@ -375,6 +376,35 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/preset_info.rb, line 127</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">handicap_shift</span>
   <span class="ruby-identifier">handicap</span> <span class="ruby-operator">?</span> <span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-start_locaction" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-start_locaction" title="Link to this method">
+                <span class="method-name">start_locaction</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="start_locaction-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/preset_info.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">start_locaction</span>
+  <span class="ruby-ivar">@start_locaction</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Location</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">handicap</span> <span class="ruby-operator">?</span> <span class="ruby-value">:white</span> <span class="ruby-operator">:</span> <span class="ruby-value">:black</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

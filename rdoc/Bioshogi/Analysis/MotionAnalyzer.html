@@ -85,6 +85,7 @@
     <h3>Class Methods</h3>
     <ul class="link-list" role="directory">
       <li ><a href="#method-c-new">new</a></li>
+      <li ><a href="#method-c-trigger_table">trigger_table</a></li>
     </ul>
   </div>
 
@@ -163,9 +164,43 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/motion_analyzer.rb, line 10</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/motion_analyzer.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">executor</span>)
   <span class="ruby-ivar">@executor</span> = <span class="ruby-identifier">executor</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-c-trigger_table" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-trigger_table" title="Link to this method">
+                <span class="method-name">trigger_table</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="trigger_table-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/motion_analyzer.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">trigger_table</span>
+  <span class="ruby-ivar">@trigger_table</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">TagIndex</span>.<span class="ruby-identifier">motion_type_values</span>.<span class="ruby-identifier">each_with_object</span>({}) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">e</span>.<span class="ruby-identifier">motion_detector</span>.<span class="ruby-identifier">triggers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">m</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">||=</span> []
+      <span class="ruby-identifier">m</span>[<span class="ruby-identifier">key</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -199,16 +234,15 @@
 
         <div class="method-description">
           <div class="method-source-code" id="call-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/motion_analyzer.rb, line 14</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/motion_analyzer.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>
-  <span class="ruby-identifier">key</span> = [<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span>, <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">promoted</span>, <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">drop_hand</span>]
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-constant">MotionTriggerTable</span>[<span class="ruby-identifier">key</span>]
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">trigger_table</span>[<span class="ruby-identifier">motion_key</span>]
     <span class="ruby-identifier">e</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
       <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">analysis_run_counts</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-      <span class="ruby-identifier">retv</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">retval</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
         <span class="ruby-identifier">instance_exec</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">e</span>.<span class="ruby-identifier">motion_detector</span>.<span class="ruby-identifier">func</span>)
       <span class="ruby-keyword">end</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">retv</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">retval</span>
         <span class="ruby-identifier">tag_add</span>(<span class="ruby-identifier">e</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>

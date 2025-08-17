@@ -91,6 +91,7 @@
       <li ><a href="#method-i-errors">errors</a></li>
       <li ><a href="#method-i-errors_add">errors_add</a></li>
       <li ><a href="#method-i-hand">hand</a></li>
+      <li ><a href="#method-i-motion_key">motion_key</a></li>
       <li ><a href="#method-i-move_hand">move_hand</a></li>
       <li ><a href="#method-i-perform_validations">perform_validations</a></li>
       <li ><a href="#method-i-soldier">soldier</a></li>
@@ -395,6 +396,35 @@
 
       </div>
 
+      <div id="method-i-motion_key" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-motion_key" title="Link to this method">
+                <span class="method-name">motion_key</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="motion_key-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/input_adapter/abstract_adapter.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">motion_key</span>
+  <span class="ruby-ivar">@motion_key</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">motion_key</span>(<span class="ruby-identifier">drop_hand</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
       <div id="method-i-move_hand" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
@@ -543,7 +573,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_h-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/input_adapter/abstract_adapter.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/input_adapter/abstract_adapter.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_h</span>
   {
     <span class="ruby-value">:place_from</span>      <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">place_from</span>,
@@ -552,6 +582,7 @@
     <span class="ruby-value">:promoted</span>        <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">promoted</span>,
     <span class="ruby-value">:promote_trigger</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">promote_trigger</span>,
     <span class="ruby-value">:drop_trigger</span>    <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">drop_trigger</span>,
+    <span class="ruby-value">:motion_key</span>      <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">motion_key</span>,
     <span class="ruby-value">:errors</span>          <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">errors</span>,
   }
 <span class="ruby-keyword">end</span></pre>

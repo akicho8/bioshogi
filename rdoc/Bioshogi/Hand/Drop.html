@@ -95,12 +95,12 @@
     <ul class="link-list" role="directory">
       <li ><a href="#method-i-execute">execute</a></li>
       <li ><a href="#method-i-revert">revert</a></li>
-      <li ><a href="#method-i-soldier_for_counts">soldier_for_counts</a></li>
       <li ><a href="#method-i-to_akf">to_akf</a></li>
       <li ><a href="#method-i-to_csa">to_csa</a></li>
       <li ><a href="#method-i-to_kif">to_kif</a></li>
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-type">type</a></li>
+      <li ><a href="#method-i-used_soldier">used_soldier</a></li>
     </ul>
   </div>
 
@@ -231,35 +231,6 @@
   <span class="ruby-identifier">container</span>.<span class="ruby-identifier">board</span>.<span class="ruby-identifier">safe_delete_on</span>(<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>)
   <span class="ruby-identifier">player</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>)
   <span class="ruby-identifier">player</span>.<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-value">1</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-
-      </div>
-
-      <div id="method-i-soldier_for_counts" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-soldier_for_counts" title="Link to this method">
-                <span class="method-name">soldier_for_counts</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="soldier_for_counts-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/drop.rb, line 27</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_for_counts</span>
-  <span class="ruby-identifier">soldier</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -431,6 +402,35 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/hand/drop.rb, line 61</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">type</span>
   <span class="ruby-value">:t_drop</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-used_soldier" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-used_soldier" title="Link to this method">
+                <span class="method-name">used_soldier</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="used_soldier-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/drop.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">used_soldier</span>
+  <span class="ruby-identifier">soldier</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

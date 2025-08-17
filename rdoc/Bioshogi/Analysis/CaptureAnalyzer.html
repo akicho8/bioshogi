@@ -203,10 +203,10 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>
   <span class="ruby-constant">TagIndex</span>.<span class="ruby-identifier">capture_type_values</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">analysis_run_counts</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-    <span class="ruby-identifier">retv</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">retval</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">instance_exec</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">e</span>.<span class="ruby-identifier">capture_detector</span>.<span class="ruby-identifier">func</span>)
     <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">retv</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">retval</span>
       <span class="ruby-identifier">tag_add</span>(<span class="ruby-identifier">e</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>

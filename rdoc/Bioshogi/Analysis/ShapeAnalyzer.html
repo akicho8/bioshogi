@@ -205,13 +205,13 @@
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-constant">TagIndex</span>.<span class="ruby-identifier">shape_trigger_table</span>[<span class="ruby-identifier">black_side_soldier</span>]
     <span class="ruby-identifier">e</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
       <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">analysis_run_counts</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-      <span class="ruby-identifier">retv</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">retval</span> = <span class="ruby-identifier">perform_block</span> <span class="ruby-keyword">do</span>
         <span class="ruby-identifier">various_conditions</span>(<span class="ruby-identifier">e</span>)
         <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">shape_detector</span>
           <span class="ruby-identifier">instance_exec</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">e</span>.<span class="ruby-identifier">shape_detector</span>.<span class="ruby-identifier">func</span>)
         <span class="ruby-keyword">end</span>
       <span class="ruby-keyword">end</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">retv</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">retval</span>
         <span class="ruby-identifier">tag_add</span>(<span class="ruby-identifier">e</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
@@ -252,7 +252,7 @@
   <span class="ruby-comment">################################################################################</span>
 
   <span class="ruby-comment"># 特定の初期配置でないならスキップ</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">preset_has</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">preset_is</span>
     <span class="ruby-keyword">unless</span> <span class="ruby-identifier">preset_is</span>(<span class="ruby-identifier">v</span>)
       <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
     <span class="ruby-keyword">end</span>
@@ -261,8 +261,8 @@
   <span class="ruby-comment">################################################################################</span>
 
   <span class="ruby-comment"># 手数制限。制限を超えていたらskip</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">turn_limit</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">turn_limit</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">player</span>.<span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">display_turn</span>.<span class="ruby-identifier">next</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">turn_max</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">turn_max</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">player</span>.<span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">display_turn</span>.<span class="ruby-identifier">next</span>
       <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
@@ -390,18 +390,11 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># 歩を持っていたらskip</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">not_have_pawn</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">has_pawn_then_skip</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:pawn</span>)
       <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-
-  <span class="ruby-comment"># # 歩を除いて何か持っていたらskip</span>
-  <span class="ruby-comment"># if e. :pawn_have_ok</span>
-  <span class="ruby-comment">#   unless piece_box.except(:pawn).empty?</span>
-  <span class="ruby-comment">#     throw :skip</span>
-  <span class="ruby-comment">#   end</span>
-  <span class="ruby-comment"># end</span>
 
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span>
     <span class="ruby-comment"># 駒が一致していなければskip</span>

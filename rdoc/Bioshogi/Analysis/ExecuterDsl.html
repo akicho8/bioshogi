@@ -77,6 +77,7 @@
       <li ><a href="#method-i-and_cond">and_cond</a></li>
       <li ><a href="#method-i-black_side_soldier">black_side_soldier</a></li>
       <li ><a href="#method-i-cold_war_verification">cold_war_verification</a></li>
+      <li ><a href="#method-i-left_or_light_from_a_to_b">left_or_light_from_a_to_b</a></li>
       <li ><a href="#method-i-my_king_diff">my_king_diff</a></li>
       <li ><a href="#method-i-my_king_kara_hanareta-3F">my_king_kara_hanareta?</a></li>
       <li ><a href="#method-i-my_king_ni_tikazuita-3F">my_king_ni_tikazuita?</a></li>
@@ -88,6 +89,7 @@
       <li ><a href="#method-i-perform_block">perform_block</a></li>
       <li ><a href="#method-i-place">place</a></li>
       <li ><a href="#method-i-preset_is">preset_is</a></li>
+      <li ><a href="#method-i-previous_hand_log">previous_hand_log</a></li>
       <li ><a href="#method-i-silver_or_gold-3F">silver_or_gold?</a></li>
       <li ><a href="#method-i-silver_piece_basic_weight">silver_piece_basic_weight</a></li>
       <li ><a href="#method-i-skip_if">skip_if</a></li>
@@ -150,7 +152,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="and_cond-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 37</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">and_cond</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-keyword">yield</span>
     <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
@@ -181,7 +183,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="black_side_soldier-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 84</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">black_side_soldier</span>
   <span class="ruby-ivar">@black_side_soldier</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">executor</span>.<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">white_then_flip</span>
 <span class="ruby-keyword">end</span></pre>
@@ -210,7 +212,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="cold_war_verification-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cold_war_verification</span>(<span class="ruby-identifier">e</span>)
   <span class="ruby-comment"># 開戦済みならskip</span>
   <span class="ruby-comment"># 例えばそれまで静かで始めて角交換したときは kill_count は 1 になるので outbreak_skip: nil, kill_count_lteq: 1 にしておけば skip されない</span>
@@ -231,14 +233,50 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-comment"># 歩を除いて何か持っていたらskip</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">pawn_have_ok</span>
-    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">except</span>(<span class="ruby-value">:pawn</span>).<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">has_other_pawn_then_skip</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">except</span>(<span class="ruby-value">:pawn</span>).<span class="ruby-identifier">empty?</span>
       <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_or_light_from_a_to_b" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_or_light_from_a_to_b" title="Link to this method">
+                <span class="method-name">left_or_light_from_a_to_b</span>
+                <span class="method-args">(a, b)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_or_light_from_a_to_b-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_or_light_from_a_to_b</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+  <span class="ruby-identifier">v1</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">column</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">v2</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">column</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">case</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">v1</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">v2</span>
+    <span class="ruby-value">:left</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-identifier">v1</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">v2</span>
+    <span class="ruby-value">:right</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>非推奨a から b を見たとき b は左右どちらにいるか？relative_move_to に渡せる抽象化した向きを返す</p>
         </div>
 
 
@@ -262,7 +300,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="my_king_diff-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 165</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 174</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">my_king_diff</span>
   <span class="ruby-identifier">player</span>.<span class="ruby-identifier">king_soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">then</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">manhattan_distance_a_side_max</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">-</span> <span class="ruby-identifier">origin_soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">manhattan_distance_a_side_max</span>(<span class="ruby-identifier">e</span>)
@@ -293,7 +331,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="my_king_kara_hanareta-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 177</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 186</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">my_king_kara_hanareta?</span>
   <span class="ruby-identifier">my_king_diff</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -322,7 +360,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="my_king_ni_tikazuita-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 172</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 181</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">my_king_ni_tikazuita?</span>
   <span class="ruby-identifier">my_king_diff</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -351,7 +389,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="op_piece_box-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 131</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">op_piece_box</span>
   <span class="ruby-ivar">@op_piece_box</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">opponent_player</span>.<span class="ruby-identifier">piece_box</span>
 <span class="ruby-keyword">end</span></pre>
@@ -380,7 +418,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="op_solider_exist1-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 184</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">op_solider_exist1</span>(<span class="ruby-identifier">arrow</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">relative_move_to</span>(<span class="ruby-identifier">arrow</span>)
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span> = <span class="ruby-identifier">board</span>[<span class="ruby-identifier">v</span>]
@@ -413,7 +451,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="op_solider_exist2-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 193</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 202</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">op_solider_exist2</span>(<span class="ruby-identifier">arrow</span>, <span class="ruby-identifier">piece_key</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">relative_move_to</span>(<span class="ruby-identifier">arrow</span>)
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span> = <span class="ruby-identifier">board</span>[<span class="ruby-identifier">v</span>]
@@ -446,7 +484,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="opponent-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 132</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 141</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">opponent?</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">opponent_player</span>.<span class="ruby-identifier">location</span>
 <span class="ruby-keyword">end</span></pre>
@@ -475,7 +513,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="own-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">own?</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">location</span>
 <span class="ruby-keyword">end</span></pre>
@@ -504,14 +542,14 @@
 
         <div class="method-description">
           <div class="method-source-code" id="perform_block-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 28</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">perform_block</span>
-  <span class="ruby-identifier">retv</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">retval</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">catch</span> <span class="ruby-value">:skip</span> <span class="ruby-keyword">do</span>
     <span class="ruby-keyword">yield</span>
-    <span class="ruby-identifier">retv</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">retval</span> = <span class="ruby-keyword">true</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">retv</span>
+  <span class="ruby-identifier">retval</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -538,7 +576,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="place-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">place</span>
   <span class="ruby-ivar">@place</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>
 <span class="ruby-keyword">end</span></pre>
@@ -567,11 +605,38 @@
 
         <div class="method-description">
           <div class="method-source-code" id="preset_is-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 220</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_is</span>(<span class="ruby-identifier">attr</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">preset_info</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">initial_preset_info</span>
-    <span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">public_send</span>(<span class="ruby-identifier">attr</span>)
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">container</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">:preset_info_or_nil</span>]&amp;.<span class="ruby-identifier">public_send</span>(<span class="ruby-identifier">attr</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-previous_hand_log" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-previous_hand_log" title="Link to this method">
+                <span class="method-name">previous_hand_log</span>
+                <span class="method-args">(n = 1)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="previous_hand_log-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">previous_hand_log</span>(<span class="ruby-identifier">n</span> = <span class="ruby-value">1</span>)
+  <span class="ruby-identifier">container</span>.<span class="ruby-identifier">hand_logs</span>[<span class="ruby-operator">-</span><span class="ruby-identifier">n</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -598,7 +663,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="silver_or_gold-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">silver_or_gold?</span>(<span class="ruby-identifier">place</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">surface</span>[<span class="ruby-identifier">place</span>]
     <span class="ruby-identifier">v</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">location</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">v</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:silver</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:gold</span>)
@@ -629,7 +694,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="silver_piece_basic_weight-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 126</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">silver_piece_basic_weight</span>
   <span class="ruby-ivar">@silver_piece_basic_weight</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Piece</span>[<span class="ruby-value">:silver</span>].<span class="ruby-identifier">basic_weight</span>
 <span class="ruby-keyword">end</span></pre>
@@ -658,7 +723,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="skip_if-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">skip_if</span>
   <span class="ruby-keyword">if</span> <span class="ruby-keyword">yield</span>
     <span class="ruby-identifier">throw</span> <span class="ruby-value">:skip</span>
@@ -689,7 +754,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="soldier_exist-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_exist?</span>(<span class="ruby-identifier">s</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">surface</span>[<span class="ruby-identifier">s</span>.<span class="ruby-identifier">place</span>]
     <span class="ruby-identifier">v</span>.<span class="ruby-identifier">piece</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">piece</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">promoted</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">promoted</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">location</span>
@@ -720,7 +785,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="surface-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 136</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">surface</span>
   <span class="ruby-ivar">@surface</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">surface</span>
 <span class="ruby-keyword">end</span></pre>
@@ -749,7 +814,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="tag_add-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 201</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 228</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tag_add</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">tag</span> = <span class="ruby-constant">TagIndex</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">tag</span>)
 
@@ -793,7 +858,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="teki_king_diff-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 145</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">teki_king_diff</span>
   <span class="ruby-identifier">opponent_player</span>.<span class="ruby-identifier">king_soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">then</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">manhattan_distance_a_side_max</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">-</span> <span class="ruby-identifier">origin_soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">manhattan_distance_a_side_max</span>(<span class="ruby-identifier">e</span>)
@@ -824,7 +889,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="teki_king_kara_hanareta-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 157</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 166</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">teki_king_kara_hanareta?</span>
   <span class="ruby-identifier">teki_king_diff</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -853,7 +918,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="teki_king_ni_tikazuita-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 152</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 161</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">teki_king_ni_tikazuita?</span>
   <span class="ruby-identifier">teki_king_diff</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -882,7 +947,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="worth_more_gteq_pawn-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 110</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">worth_more_gteq_pawn?</span>(<span class="ruby-identifier">place</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">surface</span>[<span class="ruby-identifier">place</span>]
     <span class="ruby-identifier">v</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">location</span>
@@ -913,7 +978,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="worth_more_gteq_silver-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 96</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/executer_dsl.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">worth_more_gteq_silver?</span>(<span class="ruby-identifier">place</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">surface</span>[<span class="ruby-identifier">place</span>]
     <span class="ruby-identifier">v</span>.<span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">location</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">abs_weight</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">silver_piece_basic_weight</span>

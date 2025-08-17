@@ -129,7 +129,7 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/simple_model.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">attributes</span>)
   <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">public_send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
+    <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>, <span class="ruby-identifier">v</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">super</span>()

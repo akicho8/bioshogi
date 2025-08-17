@@ -121,6 +121,24 @@
 
 
 
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      <div id="attribute-i-base" class="method-detail anchor-link">
+        <div class="method-heading attribute-method-heading">
+          <a href="#attribute-i-base" title="Link to this attribute">
+            <span class="method-name">base</span>
+            <span class="attribute-access-type">[RW]</span>
+          </a>
+        </div>
+
+        <div class="method-description">
+        
+        </div>
+      </div>
+    </section>
 
 
      <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
@@ -146,7 +164,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 6</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">base</span>)
   <span class="ruby-ivar">@base</span> = <span class="ruby-identifier">base</span>
 <span class="ruby-keyword">end</span></pre>
@@ -182,7 +200,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="anaguma_formation-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">anaguma_formation?</span>
   <span class="ruby-identifier">sub_anaguma_formation?</span>(<span class="ruby-keyword">false</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">sub_anaguma_formation?</span>(<span class="ruby-keyword">true</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -211,7 +229,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="call-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 10</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">valid?</span>
     <span class="ruby-identifier">win_player</span>.<span class="ruby-identifier">tag_bundle</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tag</span>
@@ -247,7 +265,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">info</span>
   {
     <span class="ruby-string">&quot;閾値&quot;</span>       <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">ClusterScoreInfo</span>[<span class="ruby-string">&quot;圧倒的な駒得&quot;</span>].<span class="ruby-identifier">min_score</span>,
@@ -281,7 +299,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="lose_player-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_player</span>
   <span class="ruby-ivar">@lose_player</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">lose_side_location</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -310,7 +328,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="lose_side_location-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 75</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_side_location</span>
   <span class="ruby-ivar">@lose_side_location</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">win_side_location</span>.<span class="ruby-identifier">flip</span>
 <span class="ruby-keyword">end</span></pre>
@@ -339,7 +357,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="lose_side_soldier_at-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 80</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_side_soldier_at</span>(<span class="ruby-identifier">place</span>, <span class="ruby-identifier">flop</span>)
   <span class="ruby-identifier">place</span> = <span class="ruby-constant">Place</span>[<span class="ruby-identifier">place</span>]
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">flop</span>
@@ -377,7 +395,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="sub_anaguma_formation-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 56</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sub_anaguma_formation?</span>(<span class="ruby-identifier">flop</span>)
   <span class="ruby-keyword">true</span> <span class="ruby-operator">&amp;&amp;</span>
     <span class="ruby-identifier">lose_side_soldier_at</span>(<span class="ruby-string">&quot;19&quot;</span>, <span class="ruby-identifier">flop</span>).<span class="ruby-identifier">try</span> { <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:king</span> } <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-comment"># 角に玉がある</span>
@@ -410,7 +428,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="tag-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tag</span>
   <span class="ruby-string">&quot;穴熊の姿焼き&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -439,12 +457,12 @@
 
         <div class="method-description">
           <div class="method-source-code" id="valid-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">valid?</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">win_side_location</span> <span class="ruby-comment"># 勝ち負けがはっきりしているか？</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">win_side_location</span> <span class="ruby-comment"># 勝ち負けがはっきりしていないなら却下</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">anaguma_formation?</span> <span class="ruby-comment"># 相手が穴熊状態か？</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">anaguma_formation?</span> <span class="ruby-comment"># 相手が穴熊状態でなければ却下</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-comment"># unless strong_piece_completed? # 大駒コンプリートしている？ → overwhelming_score? の方が汎用的</span>
@@ -480,7 +498,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="win_player-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/sugatayaki_detector.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">win_player</span>
   <span class="ruby-ivar">@win_player</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">win_side_location</span>)
 <span class="ruby-keyword">end</span></pre>

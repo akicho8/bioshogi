@@ -88,14 +88,13 @@
       <li ><a href="#method-i-legal_hand-3F">legal_hand?</a></li>
       <li ><a href="#method-i-mate_hand-3F">mate_hand?</a></li>
       <li ><a href="#method-i-sandbox_execute">sandbox_execute</a></li>
-      <li ><a href="#method-i-soldier_for_counts">soldier_for_counts</a></li>
       <li ><a href="#method-i-to_akf">to_akf</a></li>
-      <li ><a href="#method-i-to_counts_key">to_counts_key</a></li>
       <li ><a href="#method-i-to_csa">to_csa</a></li>
       <li ><a href="#method-i-to_kif">to_kif</a></li>
       <li ><a href="#method-i-to_s">to_s</a></li>
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-type">type</a></li>
+      <li ><a href="#method-i-used_soldier">used_soldier</a></li>
     </ul>
   </div>
 
@@ -165,7 +164,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>(<span class="ruby-operator">...</span>)
   <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">method_run_counts</span>[<span class="ruby-node">&quot;#{name}.#{__method__}&quot;</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
   <span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>).<span class="ruby-identifier">freeze</span>
@@ -195,7 +194,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inspect</span>
   <span class="ruby-node">&quot;&lt;#{self}&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -224,7 +223,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="king_captured-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">king_captured?</span>
   <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:captured_soldier</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">captured_soldier</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">captured_soldier</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:king</span>
 <span class="ruby-keyword">end</span></pre>
@@ -253,7 +252,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="legal_hand-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 76</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">legal_hand?</span>(<span class="ruby-identifier">container</span>)
   <span class="ruby-identifier">sandbox_execute</span>(<span class="ruby-identifier">container</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-operator">!</span><span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>).<span class="ruby-identifier">mate_danger?</span> <span class="ruby-comment"># 「自玉に詰みがある」の反対</span>
@@ -293,7 +292,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="mate_hand-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">mate_hand?</span>(<span class="ruby-identifier">container</span>)
   <span class="ruby-identifier">sandbox_execute</span>(<span class="ruby-identifier">container</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">flip</span>).<span class="ruby-identifier">mate_danger?</span>
@@ -324,7 +323,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="sandbox_execute-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">sandbox_execute</span>(<span class="ruby-identifier">container</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">execute</span>(<span class="ruby-identifier">container</span>)
@@ -337,35 +336,6 @@
 <span class="ruby-keyword">end</span></pre>
           </div>
           
-        </div>
-
-
-      </div>
-
-      <div id="method-i-soldier_for_counts" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-soldier_for_counts" title="Link to this method">
-                <span class="method-name">soldier_for_counts</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="soldier_for_counts-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 90</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_for_counts</span>
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          <p>使った駒とする soldier</p>
         </div>
 
 
@@ -389,42 +359,12 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_akf-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_akf</span>(<span class="ruby-operator">*</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
-        </div>
-
-
-      </div>
-
-      <div id="method-i-to_counts_key" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-to_counts_key" title="Link to this method">
-                <span class="method-name">to_counts_key</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="to_counts_key-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 96</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_counts_key</span>
-  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">soldier_for_counts</span>
-  <span class="ruby-value">:&quot;#{s.piece.sfen_char}#{s.promoted ? 1 : 0}&quot;</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          <p>使った駒とする soldier を元にしたキーもし「打ったかどうか」も調べるならここではなく個別のクラスで定義する</p>
         </div>
 
 
@@ -448,7 +388,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_csa-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 37</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa</span>(<span class="ruby-operator">*</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -477,7 +417,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_kif-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 35</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_kif</span>(<span class="ruby-operator">*</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -506,7 +446,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 53</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">to_kif</span>(<span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -535,7 +475,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_sfen-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>(<span class="ruby-operator">*</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -564,12 +504,41 @@
 
         <div class="method-description">
           <div class="method-source-code" id="type-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 29</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">type</span>
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
+        </div>
+
+
+      </div>
+
+      <div id="method-i-used_soldier" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-used_soldier" title="Link to this method">
+                <span class="method-name">used_soldier</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="used_soldier-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/shared.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">used_soldier</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>, <span class="ruby-node">&quot;#{__method__} is not implemented&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>使った駒とする soldier つまり移動する駒なら origin_soldier で打った駒なら soldier になる</p>
         </div>
 
 

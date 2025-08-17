@@ -89,10 +89,10 @@
       <li ><a href="#method-i-down_move_length">down_move_length</a></li>
       <li ><a href="#method-i-execute">execute</a></li>
       <li ><a href="#method-i-left_move_length">left_move_length</a></li>
+      <li ><a href="#method-i-move_vector">move_vector</a></li>
       <li ><a href="#method-i-promote_trigger-3F">promote_trigger?</a></li>
       <li ><a href="#method-i-revert">revert</a></li>
       <li ><a href="#method-i-right_move_length">right_move_length</a></li>
-      <li ><a href="#method-i-soldier_for_counts">soldier_for_counts</a></li>
       <li ><a href="#method-i-state_where_it_can_become_promote-3F">state_where_it_can_become_promote?</a></li>
       <li ><a href="#method-i-to_akf">to_akf</a></li>
       <li ><a href="#method-i-to_csa">to_csa</a></li>
@@ -100,6 +100,7 @@
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-type">type</a></li>
       <li ><a href="#method-i-up_move_length">up_move_length</a></li>
+      <li ><a href="#method-i-used_soldier">used_soldier</a></li>
     </ul>
   </div>
 
@@ -256,6 +257,46 @@
 
       </div>
 
+      <div id="method-i-move_vector" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-move_vector" title="Link to this method">
+                <span class="method-name">move_vector</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="move_vector-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_vector</span>
+  <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">vector_from</span>(<span class="ruby-identifier">origin_soldier</span>.<span class="ruby-identifier">white_then_flip</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>移動差分をベクトルとして返す</p>
+
+<pre class="ruby"><span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲56玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">up</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲54玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">down</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲45玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">left</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲65玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">right</span>
+
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△56玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">down</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△54玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">up</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△45玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">right</span>
+<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>), <span class="ruby-value">origin_soldier:</span> <span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△65玉&quot;</span>)).<span class="ruby-identifier">move_vector</span> <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">left</span>
+</pre>
+        </div>
+
+
+      </div>
+
       <div id="method-i-promote_trigger-3F" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
@@ -350,35 +391,6 @@
 
       </div>
 
-      <div id="method-i-soldier_for_counts" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-soldier_for_counts" title="Link to this method">
-                <span class="method-name">soldier_for_counts</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="soldier_for_counts-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 114</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_for_counts</span>
-  <span class="ruby-identifier">origin_soldier</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-
-      </div>
-
       <div id="method-i-state_where_it_can_become_promote-3F" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
@@ -426,7 +438,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_akf-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 130</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_akf</span>(<span class="ruby-identifier">options</span> = {})
   {
     <span class="ruby-value">:_location</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">origin_soldier</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>,
@@ -466,7 +478,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_csa-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 94</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa</span>(<span class="ruby-identifier">options</span> = {})
   [
     <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">csa_sign</span>,           <span class="ruby-comment"># &quot;+&quot;</span>
@@ -500,7 +512,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_kif-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 76</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_kif</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">options</span> = {
     <span class="ruby-value">with_location:</span> <span class="ruby-keyword">true</span>,
@@ -539,7 +551,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_sfen-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 106</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>(<span class="ruby-identifier">options</span> = {})
   [
     <span class="ruby-identifier">origin_soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-comment"># 2h</span>
@@ -572,7 +584,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="type-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 135</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">type</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">state_where_it_can_become_promote?</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">promote_trigger?</span>
@@ -615,6 +627,35 @@
 <span class="ruby-keyword">end</span></pre>
           </div>
           <p>上に移動した歩数</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-used_soldier" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-used_soldier" title="Link to this method">
+                <span class="method-name">used_soldier</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="used_soldier-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/hand/move.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">used_soldier</span>
+  <span class="ruby-identifier">origin_soldier</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
         </div>
 
 

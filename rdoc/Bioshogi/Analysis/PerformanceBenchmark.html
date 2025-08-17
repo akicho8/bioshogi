@@ -136,17 +136,21 @@
 
   <span class="ruby-comment"># Bioshogi.config[:analysis_feature] = false</span>
 
-  <span class="ruby-identifier">files</span> = <span class="ruby-constant">Bioshogi</span><span class="ruby-operator">::</span><span class="ruby-constant">ROOT</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;../../2chkifu&quot;</span>).<span class="ruby-identifier">glob</span>(<span class="ruby-string">&quot;**/*.ki2&quot;</span>).<span class="ruby-identifier">sort</span>
-  <span class="ruby-identifier">files</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">files</span>).<span class="ruby-identifier">take</span>((<span class="ruby-constant">ARGV</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">||</span> <span class="ruby-value">100</span>).<span class="ruby-identifier">to_i</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-constant">Bioshogi</span><span class="ruby-operator">::</span><span class="ruby-constant">ROOT</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;../../2chkifu&quot;</span>).<span class="ruby-identifier">expand_path</span>
+  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-string">&quot;**/*.ki2&quot;</span>).<span class="ruby-identifier">sort</span>
+  <span class="ruby-identifier">max</span> = <span class="ruby-value">100</span>
+  <span class="ruby-identifier">files</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">files</span>).<span class="ruby-identifier">take</span>(<span class="ruby-identifier">max</span>)
   <span class="ruby-identifier">seconds</span> = <span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">realtime</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">print</span> <span class="ruby-string">&quot;.&quot;</span>
+      <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">flush</span>
       <span class="ruby-identifier">info</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">file_parse</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value">typical_error_case:</span> <span class="ruby-value">:skip</span>, <span class="ruby-value">analysis_feature:</span> <span class="ruby-keyword">true</span>)
       <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-
+  <span class="ruby-identifier">puts</span>
   <span class="ruby-identifier">p</span> <span class="ruby-identifier">seconds</span>
-  <span class="ruby-identifier">tp</span> <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">analysis_run_counts</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-operator">-</span><span class="ruby-identifier">v</span> }.<span class="ruby-identifier">to_h</span>
+  <span class="ruby-identifier">tp</span> <span class="ruby-constant">Bioshogi</span>.<span class="ruby-identifier">analysis_run_counts</span>.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-operator">-</span><span class="ruby-identifier">v</span> }.<span class="ruby-identifier">take</span>(<span class="ruby-value">30</span>).<span class="ruby-identifier">to_h</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

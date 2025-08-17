@@ -78,7 +78,7 @@
       <li ><a href="#method-i-king_moved_counter">king_moved_counter</a></li>
       <li ><a href="#method-i-king_place_update">king_place_update</a></li>
       <li ><a href="#method-i-to_header_h">to_header_h</a></li>
-      <li ><a href="#method-i-used_piece_counts">used_piece_counts</a></li>
+      <li ><a href="#method-i-used_soldier_counter">used_soldier_counter</a></li>
     </ul>
   </div>
 
@@ -277,22 +277,21 @@
 
   <span class="ruby-constant">Analysis</span><span class="ruby-operator">::</span><span class="ruby-constant">TacticInfo</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">tag_bundle</span>.<span class="ruby-identifier">value</span>(<span class="ruby-identifier">e</span>).<span class="ruby-identifier">normalize</span>.<span class="ruby-identifier">presence</span>
-      <span class="ruby-identifier">acc</span>[<span class="ruby-node">&quot;#{call_name}の#{e.name}&quot;</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>)
+      <span class="ruby-identifier">acc</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">:preset_info_or_nil</span>]
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">main_style_info</span> = <span class="ruby-identifier">tag_bundle</span>.<span class="ruby-identifier">main_style_info</span>
-      <span class="ruby-identifier">acc</span>[<span class="ruby-node">&quot;#{call_name}の棋風&quot;</span>] = <span class="ruby-identifier">main_style_info</span>.<span class="ruby-identifier">name</span>
+      <span class="ruby-identifier">acc</span>[<span class="ruby-string">&quot;棋風&quot;</span>] = <span class="ruby-identifier">main_style_info</span>.<span class="ruby-identifier">name</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">acc</span>[<span class="ruby-node">&quot;#{call_name}のキル数&quot;</span>] = <span class="ruby-node">&quot;#{kill_count}キル&quot;</span>
-  <span class="ruby-identifier">acc</span>[<span class="ruby-node">&quot;#{call_name}の玉移動&quot;</span>] = <span class="ruby-node">&quot;#{king_moved_counter}回&quot;</span>
+  <span class="ruby-identifier">acc</span>[<span class="ruby-string">&quot;駒使用&quot;</span>] = <span class="ruby-identifier">used_soldier_counter</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">acc</span>[<span class="ruby-string">&quot;玉移動&quot;</span>] = <span class="ruby-node">&quot;#{king_moved_counter}回&quot;</span>
+  <span class="ruby-identifier">acc</span>[<span class="ruby-string">&quot;キル数&quot;</span>] = <span class="ruby-node">&quot;#{kill_count}キル&quot;</span>
 
-  <span class="ruby-comment"># used_piece_counts</span>
-
-  <span class="ruby-identifier">acc</span>
+  <span class="ruby-identifier">acc</span>.<span class="ruby-identifier">transform_keys</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{call_name}の#{e}&quot;</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -301,11 +300,11 @@
 
       </div>
 
-      <div id="method-i-used_piece_counts" class="method-detail anchor-link ">
+      <div id="method-i-used_soldier_counter" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
-              <a href="#method-i-used_piece_counts" title="Link to this method">
-                <span class="method-name">used_piece_counts</span>
+              <a href="#method-i-used_soldier_counter" title="Link to this method">
+                <span class="method-name">used_soldier_counter</span>
                 <span class="method-args">()</span>
               </a>
             </div>
@@ -318,10 +317,10 @@
           </div>
 
         <div class="method-description">
-          <div class="method-source-code" id="used_piece_counts-source">
+          <div class="method-source-code" id="used_soldier_counter-source">
             <pre><span class="ruby-comment"># File lib/bioshogi/analysis/player_methods.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">used_piece_counts</span>
-  <span class="ruby-ivar">@used_piece_counts</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">used_soldier_counter</span>
+  <span class="ruby-ivar">@used_soldier_counter</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">UsedSoldierCounter</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

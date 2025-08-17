@@ -117,6 +117,7 @@
       <li ><a href="#method-i-hash">hash</a></li>
       <li ><a href="#method-i-inspect">inspect</a></li>
       <li ><a href="#method-i-merge">merge</a></li>
+      <li ><a href="#method-i-motion_key">motion_key</a></li>
       <li ><a href="#method-i-move_list">move_list</a></li>
       <li ><a href="#method-i-name">name</a></li>
       <li ><a href="#method-i-name_without_location">name_without_location</a></li>
@@ -127,6 +128,7 @@
       <li ><a href="#method-i-rule_valid-3F">rule_valid?</a></li>
       <li ><a href="#method-i-to_akf">to_akf</a></li>
       <li ><a href="#method-i-to_bod">to_bod</a></li>
+      <li ><a href="#method-i-to_counts_key">to_counts_key</a></li>
       <li ><a href="#method-i-to_csa">to_csa</a></li>
       <li ><a href="#method-i-to_csa_bod">to_csa_bod</a></li>
       <li ><a href="#method-i-to_key1">to_key1</a></li>
@@ -134,6 +136,8 @@
       <li ><a href="#method-i-to_s">to_s</a></li>
       <li ><a href="#method-i-to_sfen">to_sfen</a></li>
       <li ><a href="#method-i-tsugini_nareru_on-3F">tsugini_nareru_on?</a></li>
+      <li ><a href="#method-i-vector_from">vector_from</a></li>
+      <li ><a href="#method-i-vector_to">vector_to</a></li>
       <li ><a href="#method-i-white_then_flip">white_then_flip</a></li>
       <li ><a href="#method-i-xxx_kiri">xxx_kiri</a></li>
       <li ><a href="#method-i-yomiage">yomiage</a></li>
@@ -242,7 +246,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 54</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>(<span class="ruby-operator">...</span>)
   <span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>).<span class="ruby-identifier">freeze</span>
 <span class="ruby-keyword">end</span></pre>
@@ -271,7 +275,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="from_str-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 8</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">from_str</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">attributes</span> = {})
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-keyword">self</span>)
     <span class="ruby-keyword">return</span> <span class="ruby-identifier">str</span>
@@ -293,7 +297,8 @@
           </div>
           <p>文字列から盤上の駒を生成する</p>
 
-<pre class="ruby"><span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲76歩&quot;</span>)      <span class="ruby-comment"># =&gt; &lt;Bioshogi::Soldier &quot;▲７六歩&quot;&gt;</span>
+<pre class="ruby"><span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲76歩&quot;</span>)                      <span class="ruby-comment"># =&gt; &lt;Bioshogi::Soldier &quot;▲７六歩&quot;&gt;</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;76歩&quot;</span>, <span class="ruby-value">location:</span> <span class="ruby-value">:white</span>)      <span class="ruby-comment"># =&gt; &lt;Bioshogi::Soldier &quot;△７六歩&quot;&gt;</span>
 </pre>
         </div>
 
@@ -318,7 +323,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">*</span>)
   <span class="ruby-keyword">super</span>
 
@@ -356,7 +361,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new_with_promoted-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new_with_promoted</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">attributes</span> = {})
   <span class="ruby-identifier">create</span>(<span class="ruby-identifier">piece_and_promoted</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">attributes</span>))
 <span class="ruby-keyword">end</span></pre>
@@ -385,7 +390,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="piece_and_promoted-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 27</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_and_promoted</span>(<span class="ruby-identifier">object</span>)
   <span class="ruby-keyword">case</span>
   <span class="ruby-keyword">when</span> <span class="ruby-identifier">piece</span> = <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">basic_group</span>[<span class="ruby-identifier">object</span>]
@@ -422,7 +427,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="preset_one_side_soldiers-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_one_side_soldiers</span>(<span class="ruby-identifier">preset_key</span>, <span class="ruby-value">location:</span> <span class="ruby-value">:black</span>)
   <span class="ruby-identifier">location</span> = <span class="ruby-constant">Location</span>[<span class="ruby-identifier">location</span>]
   <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">preset_key</span>).<span class="ruby-identifier">board_parser</span>.<span class="ruby-identifier">location_adjust</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>]
@@ -452,12 +457,15 @@
 
         <div class="method-description">
           <div class="method-source-code" id="preset_soldiers-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_soldiers</span>(<span class="ruby-identifier">preset_key</span>)
   <span class="ruby-constant">PresetInfo</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">preset_key</span> <span class="ruby-operator">||</span> <span class="ruby-value">:&quot;平手&quot;</span>).<span class="ruby-identifier">sorted_soldiers</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          <p>先後それぞれの形を指定するSoldier.preset_soldiers(white: “十九枚落ち”, black: “十九枚落ち”).collect(&amp;:name) # =&gt; [“▲５九玉”, “△５一玉”]</p>
+          <p>先後それぞれの形を指定する</p>
+
+<pre class="ruby"><span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">preset_soldiers</span>(<span class="ruby-value">white:</span> <span class="ruby-string">&quot;十九枚落ち&quot;</span>, <span class="ruby-value">black:</span> <span class="ruby-string">&quot;十九枚落ち&quot;</span>).<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>) <span class="ruby-comment"># =&gt; [&quot;▲５九玉&quot;, &quot;△５一玉&quot;]</span>
+</pre>
         </div>
 
 
@@ -488,12 +496,14 @@
 
         <div class="method-description">
           <div class="method-source-code" id="3C-3D-3E-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 90</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
-  <span class="ruby-identifier">place</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">place</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">other</span>
+    <span class="ruby-identifier">place</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">place</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          <p>手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意しただから何をキーにしてもよい。place は基本ユニークなのでこれで並べるFIXME: これは臭う。というか soldier == nil でエラーになるはず。</p>
+          <p>手合割などを調べる際に並び順で異なるオブジェクトと見なされないようにするためだけに用意しただから何をキーにしてもよい。place は基本ユニークなのでこれで並べるFIXME: 不具合の元になりそう</p>
         </div>
 
 
@@ -517,7 +527,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="3D-3D-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 94</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">==</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-identifier">eql?</span>(<span class="ruby-identifier">other</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -546,7 +556,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="abs_weight-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">abs_weight</span>
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">any_weight</span>(<span class="ruby-identifier">promoted</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -575,7 +585,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="alive-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 130</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 144</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">alive?</span>
   <span class="ruby-identifier">v</span> = <span class="ruby-keyword">false</span>
   <span class="ruby-identifier">v</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">always_alive</span> <span class="ruby-comment"># 死に駒にならない駒か？ (基本、後ろに移動できる駒)</span>
@@ -607,7 +617,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_vectors-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 125</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_vectors</span>
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">all_vectors</span>(<span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -636,7 +646,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="any_name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 195</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 205</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">any_name</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">promoted</span>, <span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -665,7 +675,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="attributes-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">attributes</span>
   { <span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -694,7 +704,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="boar_mode-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">boar_mode?</span>
   (<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:lance</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">normal?</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:rook</span>
 <span class="ruby-keyword">end</span></pre>
@@ -723,7 +733,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="collision_pawn-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 154</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 164</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">collision_pawn</span>(<span class="ruby-identifier">board</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:pawn</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span>
     <span class="ruby-identifier">board</span>.<span class="ruby-identifier">vertical_soldiers</span>(<span class="ruby-identifier">place</span>.<span class="ruby-identifier">column</span>).<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -756,7 +766,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="ek_score-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 173</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ek_score</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>)
     <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">ek_score</span>
@@ -789,7 +799,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="eql-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 98</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">eql?</span>(<span class="ruby-identifier">other</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attributes</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">attributes</span>
 <span class="ruby-keyword">end</span></pre>
@@ -818,7 +828,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="flip-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 107</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flip</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">flip</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">flip</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -847,7 +857,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="flop-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 112</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">flop</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">piece:</span> <span class="ruby-identifier">piece</span>, <span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">place:</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">flop</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -876,7 +886,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="hash-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 102</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hash</span>
   <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -905,7 +915,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 232</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 246</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inspect</span>
   <span class="ruby-node">&quot;&lt;#{self.class.name} #{name.inspect}&gt;&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -934,12 +944,41 @@
 
         <div class="method-description">
           <div class="method-source-code" id="merge-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">merge</span>(<span class="ruby-identifier">attributes</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">attributes</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
+        </div>
+
+
+      </div>
+
+      <div id="method-i-motion_key" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-motion_key" title="Link to this method">
+                <span class="method-name">motion_key</span>
+                <span class="method-args">(drop_hand)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="motion_key-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">motion_key</span>(<span class="ruby-identifier">drop_hand</span>)
+  [<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span>, <span class="ruby-identifier">promoted</span>, <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">drop_hand</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>for XmotionAnalyzer, MotionAnalyzer</p>
         </div>
 
 
@@ -963,7 +1002,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="move_list-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 149</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 159</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">move_list</span>(<span class="ruby-identifier">board</span>, <span class="ruby-identifier">options</span> = {})
   <span class="ruby-constant">SoldierWalker</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">board</span>, <span class="ruby-keyword">self</span>, <span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -992,7 +1031,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 187</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 197</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">location</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">place</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1021,7 +1060,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="name_without_location-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 191</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 201</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name_without_location</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">place</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1050,7 +1089,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="normal-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">normal?</span>
   <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1079,7 +1118,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="normalized_place-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 168</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">normalized_place</span>
   <span class="ruby-identifier">place</span>.<span class="ruby-identifier">white_then_flip</span>(<span class="ruby-identifier">location</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1108,7 +1147,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="pressure_level-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pressure_level</span>(<span class="ruby-identifier">area</span> = <span class="ruby-value">4</span>)
   <span class="ruby-keyword">case</span>
   <span class="ruby-keyword">when</span> <span class="ruby-identifier">top_spaces</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">area</span>
@@ -1152,7 +1191,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="relative_weight-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">relative_weight</span>
   <span class="ruby-identifier">abs_weight</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1181,7 +1220,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="rule_valid-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 163</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 173</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">rule_valid?</span>(<span class="ruby-identifier">board</span>)
   <span class="ruby-operator">!</span><span class="ruby-identifier">collision_pawn</span>(<span class="ruby-identifier">board</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">alive?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1210,7 +1249,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_akf-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 223</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 237</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_akf</span>
   {
     <span class="ruby-value">:piece</span>    <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span>,
@@ -1244,9 +1283,38 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_bod-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 207</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 217</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_bod</span>
   <span class="ruby-identifier">location</span>.<span class="ruby-identifier">varrow</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">any_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-to_counts_key" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-to_counts_key" title="Link to this method">
+                <span class="method-name">to_counts_key</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="to_counts_key-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 233</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_counts_key</span>
+  <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">to_counts_key</span>(<span class="ruby-identifier">promoted</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -1273,7 +1341,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_csa-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 219</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 229</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa</span>
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">csa</span>.<span class="ruby-identifier">any_name</span>(<span class="ruby-identifier">promoted</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1302,7 +1370,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_csa_bod-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 215</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 225</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_csa_bod</span>
   <span class="ruby-identifier">location</span>.<span class="ruby-identifier">csa_sign</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">to_csa</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1331,7 +1399,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_key1-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 22</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_key1</span>
   <span class="ruby-value">:&quot;#{location.key}/#{piece.key}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1360,7 +1428,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_key2-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 26</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_key2</span>
   <span class="ruby-value">:&quot;#{location.key}/#{piece.key}/#{promoted}&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1389,7 +1457,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 183</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>
   <span class="ruby-identifier">name</span>
 <span class="ruby-keyword">end</span></pre>
@@ -1418,7 +1486,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="to_sfen-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 211</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 221</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_sfen</span>
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">to_sfen</span>(<span class="ruby-value">promoted:</span> <span class="ruby-identifier">promoted</span>, <span class="ruby-value">location:</span> <span class="ruby-identifier">location</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1447,12 +1515,81 @@
 
         <div class="method-description">
           <div class="method-source-code" id="tsugini_nareru_on-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tsugini_nareru_on?</span>(<span class="ruby-identifier">to</span>)
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">promotable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">promoted</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">place</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">to</span>.<span class="ruby-identifier">opp_side?</span>(<span class="ruby-identifier">location</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           <p>自分を移動元の状態と考えて to に移動したとき成れるか？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vector_from" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-vector_from" title="Link to this method">
+                <span class="method-name">vector_from</span>
+                <span class="method-args">(from)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="vector_from-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_from</span>(<span class="ruby-identifier">from</span>)
+  <span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">vector_from</span>(<span class="ruby-identifier">from</span>.<span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>後手は先手目線として計算する</p>
+
+<pre class="ruby"><span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲56玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">up</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲54玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">down</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲45玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">left</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;▲65玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">right</span>
+
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△56玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">down</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△54玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">up</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△45玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">right</span>
+<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△55玉&quot;</span>).<span class="ruby-identifier">vector_from</span>(<span class="ruby-constant">Soldier</span>.<span class="ruby-identifier">from_str</span>(<span class="ruby-string">&quot;△65玉&quot;</span>)) <span class="ruby-operator">==</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">left</span>
+</pre>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-vector_to" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-vector_to" title="Link to this method">
+                <span class="method-name">vector_to</span>
+                <span class="method-args">(to)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="vector_to-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier/detector_methods.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vector_to</span>(<span class="ruby-identifier">to</span>)
+  <span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">vector_to</span>(<span class="ruby-identifier">to</span>.<span class="ruby-identifier">white_then_flip</span>.<span class="ruby-identifier">place</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
         </div>
 
 
@@ -1476,7 +1613,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="white_then_flip-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">white_then_flip</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:white</span>
     <span class="ruby-identifier">flip</span>
@@ -1509,7 +1646,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="xxx_kiri-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 199</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 209</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">xxx_kiri</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">xxx_kiri</span>(<span class="ruby-identifier">promoted</span>, <span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1538,7 +1675,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="yomiage-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 203</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/soldier.rb, line 213</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">yomiage</span>
   <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">yomiage</span>(<span class="ruby-identifier">promoted</span>)
 <span class="ruby-keyword">end</span></pre>

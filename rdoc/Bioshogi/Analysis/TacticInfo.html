@@ -81,6 +81,13 @@
 
   
   
+  <div class="nav-section">
+    <h3>Class Methods</h3>
+    <ul class="link-list" role="directory">
+      <li class="calls-super" ><a href="#method-c-lookup">lookup</a></li>
+    </ul>
+  </div>
+
 
 
   <div class="nav-section">
@@ -117,6 +124,46 @@
 
 
 
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+      <div id="method-c-lookup" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-c-lookup" title="Link to this method">
+                <span class="method-name">lookup</span>
+                <span class="method-args">(v)</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="lookup-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lookup</span>(<span class="ruby-identifier">v</span>)
+  <span class="ruby-keyword">super</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">invert_table</span>[<span class="ruby-identifier">v</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
        <header>
          <h3>Public Instance Methods</h3>
@@ -140,7 +187,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="list_key-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 20</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">list_key</span>
   <span class="ruby-value">:&quot;#{key}_infos&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -169,7 +216,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="model-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">model</span>
   <span class="ruby-ivar">@model</span> <span class="ruby-operator">||=</span> <span class="ruby-node">&quot;bioshogi/analysis/#{key}_info&quot;</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
 <span class="ruby-keyword">end</span></pre>
@@ -198,7 +245,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/tactic_info.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">name</span>
   <span class="ruby-identifier">model</span>.<span class="ruby-identifier">human_name</span>
 <span class="ruby-keyword">end</span></pre>

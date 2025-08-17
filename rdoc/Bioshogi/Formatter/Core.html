@@ -228,7 +228,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="board_preset_info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 157</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 178</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">board_preset_info</span>
   <span class="ruby-ivar">@board_preset_info</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">board_source</span>
@@ -333,7 +333,7 @@
     ])
 
   <span class="ruby-comment"># xparser を渡すのではなく必要なパラメータだけ渡す</span>
-  <span class="ruby-identifier">params</span>[<span class="ruby-value">:preset_info_or_nil</span>]     = <span class="ruby-identifier">preset_info_or_nil</span>           <span class="ruby-comment"># 手合割</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-value">:preset_info_or_nil</span>]     = <span class="ruby-identifier">preset_info_or_nil</span>          <span class="ruby-comment"># 手合割</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:win_side_location</span>]      = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">win_side_location</span> <span class="ruby-comment"># 勝敗がついた側がわかっている (強)</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:input_last_action_info</span>] = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">input_last_action_info</span>   <span class="ruby-comment"># 結末 (都詰めなどの判定に必要)</span>
 
@@ -415,12 +415,33 @@
       <span class="ruby-identifier">container</span>.<span class="ruby-identifier">placement_from_preset</span>(<span class="ruby-identifier">preset_info</span>.<span class="ruby-identifier">key</span>)
     <span class="ruby-keyword">end</span>
 
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>
-      <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_base</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>.<span class="ruby-identifier">code</span>
-    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-keyword">false</span>
+      <span class="ruby-comment"># 本来はシンプルに次のようにすればいいのだけど、</span>
+      <span class="ruby-comment"># 「駒落ち」かつ「上手番」の2つの指定があったとき、両方指定すると 1 + 1 = 2 となり</span>
+      <span class="ruby-comment"># 逆に先手から始まってしまい、「【反則】下手の手番で上手が着手しました」となる</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
+        <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>
+        <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_base</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>.<span class="ruby-identifier">code</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-comment"># とりあえず優先して駒落ちフラグを設定する</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
+        <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
+      <span class="ruby-keyword">end</span>
 
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
-      <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_handicap</span>
+      <span class="ruby-comment"># 次に「希望の手番」を設定する。force_location としているがもう force ではなくなっている。</span>
+      <span class="ruby-keyword">case</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>&amp;.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:white</span>
+        <span class="ruby-comment"># 「駒落ち(設定済み)」x「△開始」= さわらない</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-operator">!</span><span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">handicap</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>&amp;.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:black</span>
+        <span class="ruby-comment"># 「平手」x「▲開始」= さわらない</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>
+        <span class="ruby-comment"># 「平手」x「△開始」</span>
+        <span class="ruby-comment"># 「駒落ち」x「▲開始」</span>
+        <span class="ruby-identifier">container</span>.<span class="ruby-identifier">turn_info</span>.<span class="ruby-identifier">turn_base</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_location</span>.<span class="ruby-identifier">code</span>
+      <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
@@ -480,7 +501,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="container_run_all-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 181</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 209</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">container_run_all</span>(<span class="ruby-identifier">container</span>)
   <span class="ruby-constant">Runner</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">container</span>).<span class="ruby-identifier">call</span>
   <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parser_options</span>[<span class="ruby-value">:analysis_feature</span>]
@@ -492,7 +513,12 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p># 天空の城をスプリントから除外したいが開発環境では途中の局面から判定(有効)にしたいための苦肉の策def initial_preset</p>
+
+<pre class="ruby"><span class="ruby-ivar">@initial_preset</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PresetInfo</span>[<span class="ruby-identifier">pi</span>.<span class="ruby-identifier">header</span>[<span class="ruby-string">&quot;初期配置&quot;</span>]] <span class="ruby-comment"># 特殊</span>
+</pre>
+
+<p>end</p>
         </div>
 
 
@@ -576,7 +602,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="judgment_message-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 206</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 234</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">judgment_message</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">output_last_action_info</span>
     <span class="ruby-identifier">e</span>.<span class="ruby-identifier">judgment_message</span>(<span class="ruby-identifier">container</span>)
@@ -607,7 +633,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="players_piece_box_set-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 150</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 171</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">players_piece_box_set</span>(<span class="ruby-identifier">container</span>)
   <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">player_piece_boxes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">k</span>).<span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">set</span>(<span class="ruby-identifier">v</span>)
@@ -638,7 +664,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="preset_info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 166</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 187</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_info</span>
   <span class="ruby-ivar">@preset_info</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">preset_info_or_nil</span> <span class="ruby-operator">||</span> <span class="ruby-constant">PresetInfo</span>[<span class="ruby-string">&quot;平手&quot;</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -667,12 +693,14 @@
 
         <div class="method-description">
           <div class="method-source-code" id="preset_info_or_nil-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 171</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 192</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">preset_info_or_nil</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-ivar">@preset_info_or_nil</span>)
     <span class="ruby-ivar">@preset_info_or_nil</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">force_preset_info</span>
-    <span class="ruby-ivar">@preset_info_or_nil</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">initial_container</span>.<span class="ruby-identifier">board</span>.<span class="ruby-identifier">preset_info</span>
+    <span class="ruby-ivar">@preset_info_or_nil</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">initial_container</span>.<span class="ruby-identifier">board</span>.<span class="ruby-identifier">preset_info</span>(<span class="ruby-value">major_only:</span> <span class="ruby-keyword">false</span>)
     <span class="ruby-ivar">@preset_info_or_nil</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PresetInfo</span>[<span class="ruby-identifier">pi</span>.<span class="ruby-identifier">header</span>[<span class="ruby-string">&quot;手合割&quot;</span>]]
+    <span class="ruby-comment"># # 天空の城をスプリントから除外したいが開発環境では途中の局面から判定(有効)にしたいための苦肉の策</span>
+    <span class="ruby-comment"># @preset_info_or_nil ||= PresetInfo[pi.header[&quot;X-初期配置&quot;]]</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-ivar">@preset_info_or_nil</span>
@@ -702,7 +730,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="raw_header_part_hash-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 193</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/formatter/core.rb, line 221</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">raw_header_part_hash</span>
   <span class="ruby-identifier">pi</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">object</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>

@@ -31,8 +31,8 @@ tp TagIndex.values.inject({}) { |a, e| a.merge(e.key => e.style_info) }
 # m[:"暴銀"]                      # => <変態>
 
 info = Parser.parse("48玉 34歩 76歩 88角成")
-info.container.players.count    # => 
-info.container.players[0].tag_bundle.main_style_info # => 
+info.container.players.count    # =>
+info.container.players[0].tag_bundle.main_style_info # =>
 # # p info.pi.header
 #
 # exit

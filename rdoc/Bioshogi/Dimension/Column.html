@@ -98,6 +98,7 @@
       <li ><a href="#method-i-human_int">human_int</a></li>
       <li ><a href="#method-i-left_edge-3F">left_edge?</a></li>
       <li ><a href="#method-i-left_or_right">left_or_right</a></li>
+      <li ><a href="#method-i-left_or_right_dir_to_center">left_or_right_dir_to_center</a></li>
       <li ><a href="#method-i-left_right_space_min">left_right_space_min</a></li>
       <li ><a href="#method-i-left_side-3F">left_side?</a></li>
       <li ><a href="#method-i-left_space">left_space</a></li>
@@ -294,7 +295,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_eq-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 89</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_eq?</span>(<span class="ruby-identifier">v</span>)
   <span class="ruby-identifier">human_int</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">v</span>
 <span class="ruby-keyword">end</span></pre>
@@ -323,7 +324,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_is2or8-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 97</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 98</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_is2or8?</span>
   <span class="ruby-identifier">column_eq?</span>(<span class="ruby-value">2</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">column_eq?</span>(<span class="ruby-value">8</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -352,7 +353,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_is2to8-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 93</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 94</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_is2to8?</span>
   <span class="ruby-identifier">human_int</span>.<span class="ruby-identifier">in?</span>(<span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">8</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -381,7 +382,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_is3or7-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 105</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 106</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_is3or7?</span>
   <span class="ruby-identifier">column_eq?</span>(<span class="ruby-value">3</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">column_eq?</span>(<span class="ruby-value">7</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -410,7 +411,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_is3to7-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 101</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 102</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_is3to7?</span>
   <span class="ruby-identifier">human_int</span>.<span class="ruby-identifier">in?</span>(<span class="ruby-value">3</span><span class="ruby-operator">..</span><span class="ruby-value">7</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -439,7 +440,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="column_is5-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">column_is5?</span>
   <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">dimension_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
 <span class="ruby-keyword">end</span></pre>
@@ -468,7 +469,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="distance_from_center-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 71</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 72</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">distance_from_center</span>
   <span class="ruby-identifier">distance_from_half</span>
 <span class="ruby-keyword">end</span></pre>
@@ -526,7 +527,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="left_edge-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 123</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_edge?</span>
   <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -555,7 +556,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="left_or_right-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 137</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_or_right</span>
   <span class="ruby-keyword">case</span>
   <span class="ruby-keyword">when</span> <span class="ruby-identifier">right_side?</span>
@@ -564,6 +565,37 @@
     <span class="ruby-value">:left</span>
   <span class="ruby-keyword">else</span>
     <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-left_or_right_dir_to_center" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-left_or_right_dir_to_center" title="Link to this method">
+                <span class="method-name">left_or_right_dir_to_center</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="left_or_right_dir_to_center-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_or_right_dir_to_center</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">left_or_right</span>
+    <span class="ruby-identifier">v</span> <span class="ruby-operator">==</span> <span class="ruby-value">:right</span> <span class="ruby-operator">?</span> <span class="ruby-value">:left</span> <span class="ruby-operator">:</span> <span class="ruby-value">:right</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -591,7 +623,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="left_right_space_min-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_right_space_min</span>
   [<span class="ruby-identifier">left_space</span>, <span class="ruby-identifier">right_space</span>].<span class="ruby-identifier">min</span>
 <span class="ruby-keyword">end</span></pre>
@@ -620,7 +652,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="left_side-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 133</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_side?</span>
   <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">dimension_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
 <span class="ruby-keyword">end</span></pre>
@@ -649,7 +681,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="left_space-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 75</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 76</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">left_space</span>
   <span class="ruby-identifier">value</span>
 <span class="ruby-keyword">end</span></pre>
@@ -707,7 +739,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="right_edge-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 119</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 120</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_edge?</span>
   <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">dimension_size</span>.<span class="ruby-identifier">pred</span>
 <span class="ruby-keyword">end</span></pre>
@@ -736,7 +768,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="right_side-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 129</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_side?</span>
   <span class="ruby-identifier">value</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">dimension_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
 <span class="ruby-keyword">end</span></pre>
@@ -765,7 +797,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="right_space-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 80</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">right_space</span>
   <span class="ruby-identifier">dimension_size</span>.<span class="ruby-identifier">pred</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">left_space</span>
 <span class="ruby-keyword">end</span></pre>
@@ -794,7 +826,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="side_edge-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 115</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/dimension/column.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">side_edge?</span>
   <span class="ruby-identifier">left_edge?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">right_edge?</span>
 <span class="ruby-keyword">end</span></pre>

@@ -91,7 +91,7 @@
       <li ><a href="#method-i-diff">diff</a></li>
       <li ><a href="#method-i-error_body">error_body</a></li>
       <li ><a href="#method-i-error_list">error_list</a></li>
-      <li ><a href="#method-i-limit">limit</a></li>
+      <li ><a href="#method-i-max">max</a></li>
       <li ><a href="#method-i-result">result</a></li>
       <li ><a href="#method-i-target_files">target_files</a></li>
     </ul>
@@ -148,7 +148,7 @@
             <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-ivar">@options</span> = {
-    <span class="ruby-value">:limit</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-value">:max</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;MAX&quot;</span>],
   }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -183,37 +183,37 @@
 
         <div class="method-description">
           <div class="method-source-code" id="all_transform_test-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 86</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_transform_test</span>
   <span class="ruby-identifier">info</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-ivar">@current</span>.<span class="ruby-identifier">read</span>, <span class="ruby-value">typical_error_case:</span> <span class="ruby-value">:skip</span>)
 
   <span class="ruby-comment"># KIF</span>
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;kif → kif&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;kif → ki2&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;kif → csa&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-string">&quot;kif → sfen&quot;</span>
 
   <span class="ruby-comment"># KI2</span>
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;ki2 → kif&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;ki2 → ki2&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;ki2 → csa&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-string">&quot;ki2 → sfen&quot;</span>
 
   <span class="ruby-comment"># CSA</span>
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;csa → kif&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;csa → ki2&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;csa → csa&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-string">&quot;csa → sfen&quot;</span>
 
   <span class="ruby-comment"># SFEN</span>
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">Parser</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>)
-  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_kif</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;sfen → kif&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_ki2</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;sfen → ki2&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_csa</span>(<span class="ruby-value">has_header:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">has_footer:</span> <span class="ruby-keyword">false</span>), <span class="ruby-string">&quot;sfen → csa&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-identifier">info</span>.<span class="ruby-identifier">to_sfen</span>, <span class="ruby-string">&quot;sfen → sfen&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -227,7 +227,7 @@
             <div class="method-heading">
               <a href="#method-i-assert_equal" title="Link to this method">
                 <span class="method-name">assert_equal</span>
-                <span class="method-args">(a, b)</span>
+                <span class="method-args">(a, b, messsage = nil)</span>
               </a>
             </div>
         </div>
@@ -241,10 +241,17 @@
         <div class="method-description">
           <div class="method-source-code" id="assert_equal-source">
             <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 51</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">assert_equal</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">assert_equal</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>, <span class="ruby-identifier">messsage</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-comment"># sfen になると情報が欠けて指し手だけから「穴熊の姿焼き」が判定できないため</span>
+    <span class="ruby-identifier">a</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\*.*穴熊の姿焼き.*\R/</span>, <span class="ruby-string">&quot;&quot;</span>)
+    <span class="ruby-identifier">b</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\*.*穴熊の姿焼き.*\R/</span>, <span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
   <span class="ruby-identifier">r</span> = <span class="ruby-identifier">a</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">b</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">r</span>
-    <span class="ruby-identifier">diff</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>)
+    <span class="ruby-identifier">diff_str</span> = <span class="ruby-identifier">diff</span>(<span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span>, <span class="ruby-identifier">messsage</span>)
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">diff_str</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">result</span>[<span class="ruby-identifier">r</span>] <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
@@ -255,6 +262,7 @@
     <span class="ruby-identifier">error_body</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">&quot;a&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;-&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-value">80</span>
       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-ivar">@current</span>.<span class="ruby-identifier">expand_path</span>
+      <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">diff_str</span>
       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">caller</span>
       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;◆a&quot;</span>
       <span class="ruby-identifier">e</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">a</span>
@@ -339,7 +347,7 @@
             <div class="method-heading">
               <a href="#method-i-diff" title="Link to this method">
                 <span class="method-name">diff</span>
-                <span class="method-args">(str1, str2)</span>
+                <span class="method-args">(str1, str2, messsage)</span>
               </a>
             </div>
         </div>
@@ -352,17 +360,19 @@
 
         <div class="method-description">
           <div class="method-source-code" id="diff-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 74</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">diff</span>(<span class="ruby-identifier">str1</span>, <span class="ruby-identifier">str2</span>)
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">diff</span>(<span class="ruby-identifier">str1</span>, <span class="ruby-identifier">str2</span>, <span class="ruby-identifier">messsage</span>)
   <span class="ruby-identifier">diff</span> = <span class="ruby-constant">Diff</span><span class="ruby-operator">::</span><span class="ruby-constant">LCS</span>.<span class="ruby-identifier">sdiff</span>(<span class="ruby-operator">*</span>[<span class="ruby-identifier">str1</span>, <span class="ruby-identifier">str2</span>].<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:rstrip</span>) }).<span class="ruby-identifier">each_with_object</span>(<span class="ruby-string">&quot;&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span>, <span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">old_element</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">new_element</span>
       <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;- #{e.old_element}\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">old_element</span>
       <span class="ruby-identifier">m</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;+ #{e.new_element}\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">new_element</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;--------------------------------------------------------------------------------&quot;</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">diff</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;--------------------------------------------------------------------------------&quot;</span>
+  <span class="ruby-identifier">str</span> = []
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;-------------------------------------------------------------------------------- #{messsage}\n&quot;</span>
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">diff</span>
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;--------------------------------------------------------------------------------\n&quot;</span>
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">join</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -389,7 +399,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="error_body-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 118</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error_body</span>
   <span class="ruby-ivar">@error_body</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">LOG_DIR</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;error_body.log&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -418,7 +428,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="error_list-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 122</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 132</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">error_list</span>
   <span class="ruby-ivar">@error_list</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">LOG_DIR</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;error_list.txt&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -429,11 +439,11 @@
 
       </div>
 
-      <div id="method-i-limit" class="method-detail anchor-link ">
+      <div id="method-i-max" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
-              <a href="#method-i-limit" title="Link to this method">
-                <span class="method-name">limit</span>
+              <a href="#method-i-max" title="Link to this method">
+                <span class="method-name">max</span>
                 <span class="method-args">()</span>
               </a>
             </div>
@@ -446,10 +456,10 @@
           </div>
 
         <div class="method-description">
-          <div class="method-source-code" id="limit-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 126</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">limit</span>
-  <span class="ruby-ivar">@limit</span> <span class="ruby-operator">||=</span> (<span class="ruby-ivar">@options</span>[<span class="ruby-value">:limit</span>].<span class="ruby-identifier">presence</span> <span class="ruby-operator">||</span> <span class="ruby-value">1000_0000</span>).<span class="ruby-identifier">to_i</span>
+          <div class="method-source-code" id="max-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">max</span>
+  <span class="ruby-ivar">@max</span> <span class="ruby-operator">||=</span> (<span class="ruby-ivar">@options</span>[<span class="ruby-value">:max</span>].<span class="ruby-identifier">presence</span> <span class="ruby-operator">||</span> <span class="ruby-value">1000_0000</span>).<span class="ruby-identifier">to_i</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -476,7 +486,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="result-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 130</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">result</span>
   <span class="ruby-ivar">@result</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">0</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -505,7 +515,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="target_files-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 134</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/extreme_detect.rb, line 144</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">target_files</span>
   <span class="ruby-ivar">@target_files</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">error_list</span>.<span class="ruby-identifier">exist?</span>
@@ -513,7 +523,7 @@
     <span class="ruby-keyword">else</span>
       <span class="ruby-identifier">files</span> = <span class="ruby-constant">ROOT</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-string">&quot;../../2chkifu/**/*.{ki2,KI2}&quot;</span>).<span class="ruby-identifier">sort</span> <span class="ruby-comment"># ~/src/2chkifu</span>
     <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">files</span>.<span class="ruby-identifier">take</span>(<span class="ruby-identifier">limit</span>)
+    <span class="ruby-identifier">files</span>.<span class="ruby-identifier">take</span>(<span class="ruby-identifier">max</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
