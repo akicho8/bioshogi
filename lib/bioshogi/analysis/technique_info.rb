@@ -27,6 +27,7 @@ module Bioshogi
           # 歩 (あまり得しない手筋)
           { key: "居飛車の税金", outbreak_skip: true, },
           { key: "金底の歩",                          },
+          { key: "銀裾の歩",                          },
           { key: "土下座の歩",                        },
           { key: "歩切れ",                            },
 

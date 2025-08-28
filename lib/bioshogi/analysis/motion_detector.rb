@@ -417,6 +417,26 @@ module Bioshogi
           func: -> { instance_exec(&MotionDetector[:"金底の歩"].func) },
         },
         {
+          key: "銀裾の歩",
+          description: "打ち歩が一番下の段でかつ、その上に自分の銀がある",
+          trigger: { piece_key: :pawn, promoted: false, motion: :drop },
+          func: -> {
+            # 【条件】「最下段」である
+            and_cond { soldier.bottom_spaces.zero? }
+
+            # 【条件】左右斜め上に自分の銀がある
+            and_cond do
+              V.bishop_up_diagonal_vectors.any? do |e|
+                if v = soldier.relative_move_to(e)
+                  if s = board[v]
+                    s.piece.key == :silver && s.normal? && own?(s)
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "一間竜",
           description: "上下左右の1つ離れたところのどこかに敵玉がある",
           trigger: { piece_key: :rook, promoted: true,  motion: :move },
