@@ -2,6 +2,7 @@ require "#{__dir__}/setup"
 Analysis::TacticInfo[:attack].model # => Bioshogi::Analysis::AttackInfo
 Analysis::TacticInfo[:attack].name  # => "戦法"
 Analysis::TacticInfo["戦法"].name   # => "戦法"
+tp Analysis::TacticInfo
 
 # list = Analysis::TagIndex.values.collect { |e|
 #   s = e.name
@@ -19,3 +20,9 @@ Analysis::TacticInfo["戦法"].name   # => "戦法"
 #   puts "r -x '#{a}' '#{b}' ~/src/bioshogi ~/src/shogi-extend"
 #   puts "n -x '#{a}' '#{b}' ~/src/bioshogi ~/src/shogi-extend"
 # end
+# >> |------|
+# >> | 戦法 |
+# >> | 囲い |
+# >> | 手筋 |
+# >> | 備考 |
+# >> |------|
