@@ -24,6 +24,13 @@ module Bioshogi
             Piece[:pawn].basic_weight,
           ],
         },
+        {
+          key: "駒得は正義の閾値",
+          scores: [
+            Piece[:rook].basic_weight * 1,   # 飛 (盤上)
+            Piece[:bishop].basic_weight * 1, # 角 (盤上)
+          ],
+        },
       ]
 
       def min_score

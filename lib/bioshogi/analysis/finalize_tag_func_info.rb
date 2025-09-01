@@ -178,6 +178,22 @@ module Bioshogi
             SugatayakiDetector.new(self).call
           },
         },
+        {
+          key: "駒得は何か",
+          description: "大きく駒得して勝ったか、または大きく駒得しているにかかわらず負けた",
+          func: -> {
+            if win_side_player
+              diff = score_info[:diff]
+              threshold = Analysis::ClusterScoreInfo["駒得は正義の閾値"].min_score
+              case
+              when diff > threshold # 大きく駒得した状態で勝った
+                win_side_player.tag_bundle << "駒得は正義"
+              when diff < -threshold # 相手の方が大きく駒得していたのにこちらが勝った
+                lose_side_player.tag_bundle << "駒の持ち腐れ"
+              end
+            end
+          },
+        },
 
         {
           key: "相穴熊",

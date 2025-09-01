@@ -40,6 +40,8 @@ module Bioshogi
         end
       end
 
+      ################################################################################
+
       def win_side_location
         @win_side_location ||= yield_self do
           if v = container.params[:win_side_location]
@@ -54,6 +56,42 @@ module Bioshogi
           end
         end
       end
+
+      def lose_side_location
+        @lose_side_location ||= win_side_location&.flip
+      end
+
+      def win_side_player
+        @win_side_player ||= yield_self do
+          if v = win_side_location
+            container.player_at(v)
+          end
+        end
+      end
+
+      def lose_side_player
+        @lose_side_player ||= yield_self do
+          if v = lose_side_location
+            container.player_at(v)
+          end
+        end
+      end
+
+      ################################################################################
+
+      def score_info
+        if win_side_player
+          win = win_side_player.current_score
+          lose = lose_side_player.current_score
+          {
+            :win  => win,
+            :lose => lose,
+            :diff => win - lose,
+          }
+        end
+      end
+
+      ################################################################################
     end
   end
 end

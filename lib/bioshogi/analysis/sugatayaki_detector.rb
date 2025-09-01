@@ -3,7 +3,7 @@ module Bioshogi
     class SugatayakiDetector
       attr_accessor :base
 
-      delegate :win_side_location, :container, to: :base
+      delegate :win_side_location, :lose_side_location, :win_side_player, :lose_side_player, :container, to: :base
 
       def initialize(base)
         @base = base
@@ -11,7 +11,7 @@ module Bioshogi
 
       def call
         if valid?
-          win_player.tag_bundle << tag
+          win_side_player.tag_bundle << tag
 
           # 最後の手にも入れておく
           container.hand_logs.last&.then do |hand_log|
@@ -27,9 +27,9 @@ module Bioshogi
       def info
         {
           "閾値"       => ClusterScoreInfo["圧倒的な駒得"].min_score,
-          "勝者の得点" => win_player.current_score,
-          "敗者の得点" => lose_player.current_score,
-          "得点差"     => win_player.current_score - lose_player.current_score,
+          "勝者の得点" => win_side_player.current_score,
+          "敗者の得点" => lose_side_player.current_score,
+          "得点差"     => win_side_player.current_score - lose_side_player.current_score,
         }
       end
 
@@ -43,7 +43,7 @@ module Bioshogi
         # unless strong_piece_completed? # 大駒コンプリートしている？ → overwhelming_score? の方が汎用的
         #   return
         # end
-        unless win_player.overwhelming_score? # 自分が圧倒的な戦力を持っているか？
+        unless win_side_player.overwhelming_score? # 自分が圧倒的な戦力を持っているか？
           return
         end
         true
@@ -61,21 +61,6 @@ module Bioshogi
           lose_side_soldier_at("18", flop) &&
           lose_side_soldier_at("29", flop) &&
           lose_side_soldier_at("28", flop)
-      end
-
-      # 勝ったプレイヤー
-      def win_player
-        @win_player ||= container.player_at(win_side_location)
-      end
-
-      # 負けたプレイヤー
-      def lose_player
-        @lose_player ||= container.player_at(lose_side_location)
-      end
-
-      # 負けた側
-      def lose_side_location
-        @lose_side_location ||= win_side_location.flip
       end
 
       # 負けた方の盤上の駒を得る
