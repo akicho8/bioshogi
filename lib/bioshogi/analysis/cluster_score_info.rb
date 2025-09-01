@@ -31,6 +31,13 @@ module Bioshogi
             Piece[:bishop].basic_weight * 1, # 角 (盤上)
           ],
         },
+        {
+          key: "道場出禁の閾値",
+          scores: [
+            Piece[:rook].basic_weight * 1,   # 飛 (盤上)
+            Piece[:bishop].basic_weight * 1, # 角 (盤上)
+          ],
+        },
       ]
 
       def min_score

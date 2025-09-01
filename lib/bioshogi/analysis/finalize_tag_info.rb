@@ -34,6 +34,7 @@ module Bioshogi
         { key: "屍の舞",         turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "穴熊の姿焼き",   turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
         { key: "駒得は何か",     turn_gteq: nil, preset_is: :hirate_like, critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
+        { key: "道場出禁判定",   turn_gteq: nil, preset_is: :x_taden,     critical: nil,  outbreak: true, checkmate: nil,  description: "",           },
 
         { key: "相穴熊",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
         { key: "相入玉",         turn_gteq: nil, preset_is: nil,          critical: nil,  outbreak: nil,  checkmate: nil,  description: "",           },
