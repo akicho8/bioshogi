@@ -1972,6 +1972,21 @@ module Bioshogi
           },
         },
         {
+          key: "タッチダウン",
+          description: "自分玉が相手玉の位置に移動した",
+          trigger: { piece_key: :king, promoted: false, motion: :move },
+          func: -> {
+            # 【条件】一番上である
+            and_cond { soldier.top_spaces == 0 }
+
+            # 【条件】5列名である
+            and_cond { soldier.column_is5? }
+
+            # 【条件】平手風の手合割である
+            and_cond { preset_is(:hirate_like) }
+          },
+        },
+        {
           key: "角不成",
           description: "相手陣地に入るときと出るときの両方チェックする",
           trigger: { piece_key: :bishop, promoted: false, motion: :move },

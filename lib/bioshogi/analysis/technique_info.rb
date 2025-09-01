@@ -153,6 +153,7 @@ module Bioshogi
           { key: "双玉接近",         add_to_opponent: "双玉接近",     },
           { key: "玉頭戦",           add_to_opponent: "玉頭戦",       },
           { key: "入玉",                                              },
+          { key: "タッチダウン",                                      },
 
           # 対局時の状況
           { key: "駒柱",             add_to_opponent: "駒柱",         },
