@@ -958,8 +958,8 @@ module Bioshogi
             { piece_key: :gold,   promoted: false, motion: :both },
           ],
           func: -> {
-            # 【条件】平手風である
-            and_cond { preset_is(:hirate_like) }
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
 
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
@@ -1932,8 +1932,8 @@ module Bioshogi
             { piece_key: :king,   promoted: false, motion: :move },
           ],
           func: -> {
-            # 【条件】平手風である
-            and_cond { preset_is(:hirate_like) }
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
 
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
@@ -1982,8 +1982,8 @@ module Bioshogi
             # 【条件】5列名である
             and_cond { soldier.column_is5? }
 
-            # 【条件】平手風の手合割である
-            and_cond { preset_is(:hirate_like) }
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
           },
         },
         {

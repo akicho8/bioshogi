@@ -3,18 +3,40 @@
 module Bioshogi
   class Player
     module OtherMethods
-      STRONG_PIECE_ALL_COUNT = Location.count * Piece.strong_pieces.count
-
       ################################################################################
 
       # 大駒コンプリートしている？
       def strong_piece_completed?
-        strong_piece_have_count >= STRONG_PIECE_ALL_COUNT
+        strong_piece_have_count >= strong_pieces_count_all
       end
+
+      def strong_pieces_count_all
+        @strong_pieces_count_all ||= (Location.count * Piece.strong_pieces.sum(&:count))
+      end
+      private :strong_pieces_count_all
 
       # 持駒を含めた大駒の数
       def strong_piece_have_count
         Piece.strong_pieces.sum do |e|
+          piece_box.fetch(e.key, 0) + board.soldiers_count[location.key][e.key]
+        end
+      end
+
+      ################################################################################
+
+      # 金銀コンプリートしている？
+      def kingin_piece_completed?
+        kingin_piece_have_count >= kingin_pieces_count_all
+      end
+
+      def kingin_pieces_count_all
+        @kingin_pieces_count_all ||= (Location.count * Piece.kingin_pieces.sum(&:count))
+      end
+      private :kingin_pieces_count_all
+
+      # 持駒を含めた金銀の数
+      def kingin_piece_have_count
+        Piece.kingin_pieces.sum do |e|
           piece_box.fetch(e.key, 0) + board.soldiers_count[location.key][e.key]
         end
       end

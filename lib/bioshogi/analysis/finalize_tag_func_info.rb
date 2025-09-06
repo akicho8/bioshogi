@@ -200,8 +200,10 @@ module Bioshogi
           func: -> {
             if win_side_player
               if container.turn_info.turn_offset < Stat::TURN_MAX_AVG / 2 # 89.4866 / 2
-                # 当初は大駒2枚分を捨てたときに出禁とするつもりだったが実際には互いの差なので大駒1枚で2枚分の差がついていた
-                # なので想定の倍、道場出禁判定になってしまっているけどまぁそれでもいいことにする
+                # 当初は大駒2枚分を捨てたときに出禁とするつもりだった
+                # 実際には互いの差なので大駒1枚で2枚分の差がついていた
+                # なので想定の倍、道場出禁判定になってしまっている
+                # けどまぁそれでもいいことにする
                 if score_info[:diff] >= Analysis::ClusterScoreInfo["道場出禁の閾値"].min_score
                   lose_side_player.tag_bundle << "道場出禁"
                 end

@@ -21,13 +21,32 @@ module Bioshogi
         {
           key: "全駒",
           func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
             # 【条件】相手が玉単騎である
             and_cond { opponent_player.bare_king? }
           },
         },
         {
+          key: "金銀コンプリート",
+          func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
+            # 【条件】取った駒が金銀である
+            and_cond { captured_soldier.piece.kingin }
+
+            # 【条件】持駒を含めて金銀をすべて持っている
+            and_cond { player.kingin_piece_completed? }
+          },
+        },
+        {
           key: "大駒コンプリート",
           func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
             # 【条件】取った駒が飛角である
             and_cond { captured_soldier.piece.strong }
 
@@ -38,6 +57,9 @@ module Bioshogi
         {
           key: "ポーンハンター",
           func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
             # 【条件】取った駒は歩である
             and_cond { captured_soldier.piece.key == :pawn }
 
@@ -55,6 +77,9 @@ module Bioshogi
           key: "三桂懐刃",
           description: "さんけいかいじん──懐に潜めた三つの刃＝桂馬。刺すタイミングを計る恐怖の構え。",
           func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
             # 【却下】取った駒が桂である
             and_cond { captured_soldier.piece.key == :knight }
 
@@ -66,6 +91,9 @@ module Bioshogi
           key: "封香連舞",
           description: "ふうこうれんぶ──香車たちは今、封じられている（手駒）──だが一たび解き放てば、連舞するがごとく攻め立てる。",
           func: -> {
+            # 【条件】一般的な駒落ち以上とする
+            and_cond { preset_is(:x_taden) }
+
             # 【却下】取った駒が香である
             and_cond { captured_soldier.piece.key == :lance }
 

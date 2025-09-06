@@ -158,6 +158,7 @@ module Bioshogi
           # 対局時の状況
           { key: "駒柱",             add_to_opponent: "駒柱",         },
 
+          { key: "金銀コンプリート", },
           { key: "大駒コンプリート", add_to_opponent: "大駒全ブッチ", },
           { key: "大駒全ブッチ",                                      },
 
