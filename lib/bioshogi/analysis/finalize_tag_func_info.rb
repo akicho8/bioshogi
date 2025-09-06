@@ -196,7 +196,7 @@ module Bioshogi
         },
         {
           key: "道場出禁判定",
-          description: "超短手数かつ圧倒的な差で負けた",
+          description: "超短手数かつ圧倒的な差で負けた or 玉単騎 or 全駒",
           func: -> {
             if win_side_player
               if container.turn_info.turn_offset < Stat::TURN_MAX_AVG / 2 # 89.4866 / 2
@@ -206,6 +206,14 @@ module Bioshogi
                 # けどまぁそれでもいいことにする
                 if score_info[:diff] >= Analysis::ClusterScoreInfo["道場出禁の閾値"].min_score
                   lose_side_player.tag_bundle << "道場出禁"
+                end
+              end
+            end
+
+            if win_side_player
+              container.players.each do |player|
+                if player.tag_bundle.include?("玉単騎") || player.tag_bundle.include?("全駒")
+                  player.tag_bundle << "道場出禁"
                 end
               end
             end
