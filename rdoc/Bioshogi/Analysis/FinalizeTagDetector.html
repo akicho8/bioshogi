@@ -86,7 +86,11 @@
     <h3>Instance Methods</h3>
     <ul class="link-list" role="directory">
       <li ><a href="#method-i-call">call</a></li>
+      <li ><a href="#method-i-lose_side_location">lose_side_location</a></li>
+      <li ><a href="#method-i-lose_side_player">lose_side_player</a></li>
+      <li ><a href="#method-i-score_info">score_info</a></li>
       <li ><a href="#method-i-win_side_location">win_side_location</a></li>
+      <li ><a href="#method-i-win_side_player">win_side_player</a></li>
     </ul>
   </div>
 
@@ -230,6 +234,105 @@
 
       </div>
 
+      <div id="method-i-lose_side_location" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-lose_side_location" title="Link to this method">
+                <span class="method-name">lose_side_location</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="lose_side_location-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_side_location</span>
+  <span class="ruby-ivar">@lose_side_location</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">win_side_location</span>&amp;.<span class="ruby-identifier">flip</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-lose_side_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-lose_side_player" title="Link to this method">
+                <span class="method-name">lose_side_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="lose_side_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lose_side_player</span>
+  <span class="ruby-ivar">@lose_side_player</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">lose_side_location</span>
+      <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">v</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-score_info" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-score_info" title="Link to this method">
+                <span class="method-name">score_info</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="score_info-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">score_info</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">win_side_player</span>
+    <span class="ruby-identifier">win</span> = <span class="ruby-identifier">win_side_player</span>.<span class="ruby-identifier">current_score</span>
+    <span class="ruby-identifier">lose</span> = <span class="ruby-identifier">lose_side_player</span>.<span class="ruby-identifier">current_score</span>
+    {
+      <span class="ruby-value">:win</span>  <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">win</span>,
+      <span class="ruby-value">:lose</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">lose</span>,
+      <span class="ruby-value">:diff</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">win</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">lose</span>,
+    }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
       <div id="method-i-win_side_location" class="method-detail anchor-link ">
         <div class="method-header">
             <div class="method-heading">
@@ -248,7 +351,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="win_side_location-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">win_side_location</span>
   <span class="ruby-ivar">@win_side_location</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">container</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">:win_side_location</span>]
@@ -260,6 +363,39 @@
       <span class="ruby-comment"># 明示されていないかつ「投了」「時間切れ」「詰み」で終わった場合のみ、手番による勝者を信じる</span>
       <span class="ruby-comment"># これは入玉の場合「指した方が負け」になるケースがあるため、入玉などは除外しないといけない</span>
       <span class="ruby-identifier">container</span>.<span class="ruby-identifier">win_player</span>.<span class="ruby-identifier">location</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+      <div id="method-i-win_side_player" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-win_side_player" title="Link to this method">
+                <span class="method-name">win_side_player</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="win_side_player-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/finalize_tag_detector.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">win_side_player</span>
+  <span class="ruby-ivar">@win_side_player</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">win_side_location</span>
+      <span class="ruby-identifier">container</span>.<span class="ruby-identifier">player_at</span>(<span class="ruby-identifier">v</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

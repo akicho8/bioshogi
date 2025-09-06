@@ -180,10 +180,10 @@
     <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</a>
   </li>
   <li class="class">
-    <a href="Bioshogi/Analysis/CustomDetectors/HikakukiriDetector.html">Bioshogi::Analysis::CustomDetectors::HikakukiriDetector</a>
+    <a href="Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</a>
   </li>
   <li class="class">
-    <a href="Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</a>
+    <a href="Bioshogi/Analysis/CustomDetectors/HisyakakuKiruDetector.html">Bioshogi::Analysis::CustomDetectors::HisyakakuKiruDetector</a>
   </li>
   <li class="class">
     <a href="Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html">Bioshogi::Analysis::CustomDetectors::KakukoukanDetector</a>
@@ -868,24 +868,24 @@
     <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
-    <a href="Bioshogi/BoardParser/KakinokiBoardParser.html#method-c-accept-3F">::accept?</a>
+    <a href="Bioshogi/Parser/Ki2Parser.html#method-c-accept-3F">::accept?</a>
     &mdash;
-    <span class="container">Bioshogi::BoardParser::KakinokiBoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/KifParser.html#method-c-accept-3F">::accept?</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::KifParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/Base.html#method-c-accept-3F">::accept?</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Base</span>
+    <span class="container">Bioshogi::Parser::Ki2Parser</span>
 
   <li class="method">
     <a href="Bioshogi/BoardParser/SfenBoardParser.html#method-c-accept-3F">::accept?</a>
     &mdash;
     <span class="container">Bioshogi::BoardParser::SfenBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser/KakinokiBoardParser.html#method-c-accept-3F">::accept?</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::KakinokiBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser.html#method-c-accept-3F">::accept?</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser</span>
 
   <li class="method">
     <a href="Bioshogi/Sfen.html#method-c-accept-3F">::accept?</a>
@@ -898,19 +898,9 @@
     <span class="container">Bioshogi::Parser::SfenParser</span>
 
   <li class="method">
-    <a href="Bioshogi/BoardParser.html#method-c-accept-3F">::accept?</a>
+    <a href="Bioshogi/Parser/KifParser.html#method-c-accept-3F">::accept?</a>
     &mdash;
-    <span class="container">Bioshogi::BoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/BoardParser/CsaBoardParser.html#method-c-accept-3F">::accept?</a>
-    &mdash;
-    <span class="container">Bioshogi::BoardParser::CsaBoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/Ki2Parser.html#method-c-accept-3F">::accept?</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Ki2Parser</span>
+    <span class="container">Bioshogi::Parser::KifParser</span>
 
   <li class="method">
     <a href="Bioshogi/BoardParser/Base.html#method-c-accept-3F">::accept?</a>
@@ -918,9 +908,19 @@
     <span class="container">Bioshogi::BoardParser::Base</span>
 
   <li class="method">
+    <a href="Bioshogi/BoardParser/CsaBoardParser.html#method-c-accept-3F">::accept?</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::CsaBoardParser</span>
+
+  <li class="method">
     <a href="Bioshogi/Parser/CsaParser.html#method-c-accept-3F">::accept?</a>
     &mdash;
     <span class="container">Bioshogi::Parser::CsaParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Base.html#method-c-accept-3F">::accept?</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Base</span>
 
   <li class="method">
     <a href="Bioshogi/Piece.html#method-c-basic_group">::basic_group</a>
@@ -988,16 +988,6 @@
     <span class="container">Bioshogi::Analysis::CustomDetectorInfo</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationGifBuilder.html#method-c-default_params">::default_params</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationGifBuilder</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/Ki2Builder.html#method-c-default_params">::default_params</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Ki2Builder</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/KifBuilder.html#method-c-default_params">::default_params</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::KifBuilder</span>
@@ -1006,6 +996,16 @@
     <a href="Bioshogi/Formatter/Animation/AnimationZipBuilder.html#method-c-default_params">::default_params</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AnimationZipBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/AnimationMp4Builder.html#method-c-default_params">::default_params</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::AnimationMp4Builder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/AnimationGifBuilder.html#method-c-default_params">::default_params</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::AnimationGifBuilder</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/CsaBuilder.html#method-c-default_params">::default_params</a>
@@ -1018,14 +1018,14 @@
     <span class="container">Bioshogi::Formatter::AkfBuilder</span>
 
   <li class="method">
+    <a href="Bioshogi/Formatter/Ki2Builder.html#method-c-default_params">::default_params</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Ki2Builder</span>
+
+  <li class="method">
     <a href="Bioshogi/AI/Evaluator/Base.html#method-c-default_params">::default_params</a>
     &mdash;
     <span class="container">Bioshogi::AI::Evaluator::Base</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationMp4Builder.html#method-c-default_params">::default_params</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationMp4Builder</span>
 
   <li class="method">
     <a href="Bioshogi/Parser/Base.html#method-c-default_parser_options">::default_parser_options</a>
@@ -1048,14 +1048,14 @@
     <span class="container">Bioshogi::Analysis::AbbrevExpander</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece.html#method-c-fetch">::fetch</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
-
-  <li class="method">
     <a href="Bioshogi/Dimension/Base.html#method-c-fetch">::fetch</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-c-fetch">::fetch</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
 
   <li class="method">
     <a href="Bioshogi.html#method-c-fetch">::fetch</a>
@@ -1063,9 +1063,9 @@
     <span class="container">Bioshogi</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-c-fetch">::fetch</a>
+    <a href="Bioshogi/Piece.html#method-c-fetch">::fetch</a>
     &mdash;
-    <span class="container">Bioshogi::Place</span>
+    <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
     <a href="Bioshogi/Location.html#method-c-fetch_by_sfen_char">::fetch_by_sfen_char</a>
@@ -1108,14 +1108,19 @@
     <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
+    <a href="Bioshogi/Dimension/Base.html#method-c-half">::half</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
     <a href="Bioshogi/V.html#method-c-half">::half</a>
     &mdash;
     <span class="container">Bioshogi::V</span>
 
   <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-c-half">::half</a>
+    <a href="Bioshogi/Piece.html#method-c-hisyakaku_pieces">::hisyakaku_pieces</a>
     &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
+    <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
     <a href="Bioshogi/AI/Brain.html#method-c-human_format">::human_format</a>
@@ -1133,6 +1138,11 @@
     <span class="container">Bioshogi::ScreenImage::PieceImageInfo</span>
 
   <li class="method">
+    <a href="Bioshogi/Piece.html#method-c-kingin_pieces">::kingin_pieces</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece</span>
+
+  <li class="method">
     <a href="Bioshogi/Dimension/Base.html#method-c-last">::last</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::Base</span>
@@ -1141,6 +1151,26 @@
     <a href="Bioshogi/Dimension/Column.html#method-c-left">::left</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::Column</span>
+
+  <li class="method">
+    <a href="Bioshogi/CsaHeaderInfo.html#method-c-lookup">::lookup</a>
+    &mdash;
+    <span class="container">Bioshogi::CsaHeaderInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticInfo.html#method-c-lookup">::lookup</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Piece.html#method-c-lookup">::lookup</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-c-lookup">::lookup</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
 
   <li class="method">
     <a href="Bioshogi/LastActionInfo.html#method-c-lookup">::lookup</a>
@@ -1153,34 +1183,14 @@
     <span class="container">Bioshogi::Location</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece.html#method-c-lookup">::lookup</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticInfo.html#method-c-lookup">::lookup</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticInfo</span>
-
-  <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-c-lookup">::lookup</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
-
-  <li class="method">
-    <a href="Bioshogi/CsaHeaderInfo.html#method-c-lookup">::lookup</a>
-    &mdash;
-    <span class="container">Bioshogi::CsaHeaderInfo</span>
-
-  <li class="method">
     <a href="Bioshogi/Dimension/DimensionInfo.html#method-c-lookup">::lookup</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::DimensionInfo</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-c-lookup">::lookup</a>
+    <a href="Bioshogi/Dimension/Base.html#method-c-lookup">::lookup</a>
     &mdash;
-    <span class="container">Bioshogi::Place</span>
+    <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
     <a href="Bioshogi/PresetInfo.html#method-c-lookup_by_soldiers">::lookup_by_soldiers</a>
@@ -1203,24 +1213,14 @@
     <span class="container">Bioshogi::PresetInfo</span>
 
   <li class="method">
+    <a href="Bioshogi/Simulator.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Simulator</span>
+
+  <li class="method">
     <a href="Bioshogi/SimpleModel.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::SimpleModel</span>
-
-  <li class="method">
-    <a href="Bioshogi/Board.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Board</span>
-
-  <li class="method">
-    <a href="Bioshogi/RuleError.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::RuleError</span>
-
-  <li class="method">
-    <a href="Bioshogi/ExtremeDetect.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::ExtremeDetect</span>
 
   <li class="method">
     <a href="Bioshogi/AI/Diver/Base.html#method-c-new">::new</a>
@@ -1228,59 +1228,94 @@
     <span class="container">Bioshogi::AI::Diver::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Core.html#method-c-new">::new</a>
+    <a href="Bioshogi/AI/Diver/NegaAlphaMateDiver.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Core</span>
+    <span class="container">Bioshogi::AI::Diver::NegaAlphaMateDiver</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/SerialFilenameGenerator.html#method-c-new">::new</a>
+    <a href="Bioshogi/MainClock.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::SerialFilenameGenerator</span>
+    <span class="container">Bioshogi::MainClock</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/AkfBuilder.html#method-c-new">::new</a>
+    <a href="Bioshogi/AI/Evaluator/Base.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::AkfBuilder</span>
+    <span class="container">Bioshogi::AI::Evaluator::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationGifBuilder.html#method-c-new">::new</a>
+    <a href="Bioshogi/OfficialFormatter.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationGifBuilder</span>
+    <span class="container">Bioshogi::OfficialFormatter</span>
 
   <li class="method">
-    <a href="Bioshogi/Container.html#method-c-new">::new</a>
+    <a href="Bioshogi/AI/Evaluator/Level3.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Container</span>
+    <span class="container">Bioshogi::AI::Evaluator::Level3</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationMp4Builder.html#method-c-new">::new</a>
+    <a href="Bioshogi/Hand/Drop.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationMp4Builder</span>
+    <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-c-new">::new</a>
+    <a href="Bioshogi/AI/Versus.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
+    <span class="container">Bioshogi::AI::Versus</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationZipBuilder.html#method-c-new">::new</a>
+    <a href="Bioshogi/Analysis/AbbrevExpander.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationZipBuilder</span>
+    <span class="container">Bioshogi::Analysis::AbbrevExpander</span>
 
   <li class="method">
-    <a href="Bioshogi/PlayerExecutor/Base.html#method-c-new">::new</a>
+    <a href="Bioshogi/Analysis/Atsumeruyo.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::PlayerExecutor::Base</span>
+    <span class="container">Bioshogi::Analysis::Atsumeruyo</span>
 
   <li class="method">
-    <a href="Bioshogi/PlayerExecutor/ErrorHandler.html#method-c-new">::new</a>
+    <a href="Bioshogi/Formatter/Runner.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::PlayerExecutor::ErrorHandler</span>
+    <span class="container">Bioshogi::Formatter::Runner</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/HikakukiriDetector.html#method-c-new">::new</a>
+    <a href="Bioshogi/Analysis/CaptureAnalyzer.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukiriDetector</span>
+    <span class="container">Bioshogi::Analysis::CaptureAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomAnalyzer.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/CsaBuilder.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::CsaBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::AnagumaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Base.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Header.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Header</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Inspector.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Inspector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html#method-c-new">::new</a>
@@ -1288,9 +1323,14 @@
     <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/AI/Diver/NegaAlphaMateDiver.html#method-c-new">::new</a>
+    <a href="Bioshogi/Parser/Pi.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::AI::Diver::NegaAlphaMateDiver</span>
+    <span class="container">Bioshogi::Parser::Pi</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/HisyakakuKiruDetector.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::HisyakakuKiruDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html#method-c-new">::new</a>
@@ -1298,9 +1338,9 @@
     <span class="container">Bioshogi::Analysis::CustomDetectors::KakukoukanDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-c-new">::new</a>
+    <a href="Bioshogi/Parser/TimeParser.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Place</span>
+    <span class="container">Bioshogi::Parser::TimeParser</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/CustomDetectors/KakunihakakuDetector.html#method-c-new">::new</a>
@@ -1318,14 +1358,14 @@
     <span class="container">Bioshogi::Analysis::CustomDetectors::NyuugyokuAnagumaDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-c-new">::new</a>
+    <a href="Bioshogi/ScreenImage.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
+    <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/AI/Evaluator/Base.html#method-c-new">::new</a>
+    <a href="Bioshogi/Formatter/Core.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::AI::Evaluator::Base</span>
+    <span class="container">Bioshogi::Formatter::Core</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/CustomDetectors/OutbreakDetector.html#method-c-new">::new</a>
@@ -1338,11 +1378,6 @@
     <span class="container">Bioshogi::Analysis::EveryAnalyzer</span>
 
   <li class="method">
-    <a href="Bioshogi/AI/Evaluator/Level3.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::AI::Evaluator::Level3</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/FileNormalizer/NormalizeOne.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::FileNormalizer::NormalizeOne</span>
@@ -1353,14 +1388,14 @@
     <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
 
   <li class="method">
+    <a href="Bioshogi/Formatter/Animation/SerialFilenameGenerator.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::SerialFilenameGenerator</span>
+
+  <li class="method">
     <a href="Bioshogi/Analysis/KakukiriCanceler.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::KakukiriCanceler</span>
-
-  <li class="method">
-    <a href="Bioshogi/AI/Versus.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::AI::Versus</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/MotionAnalyzer.html#method-c-new">::new</a>
@@ -1368,14 +1403,9 @@
     <span class="container">Bioshogi::Analysis::MotionAnalyzer</span>
 
   <li class="method">
-    <a href="Bioshogi/AI/Brain.html#method-c-new">::new</a>
+    <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::AI::Brain</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/AbbrevExpander.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::AbbrevExpander</span>
+    <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/ShapeAnalyzer.html#method-c-new">::new</a>
@@ -1388,9 +1418,24 @@
     <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/Atsumeruyo.html#method-c-new">::new</a>
+    <a href="Bioshogi/Formatter/Animation/AnimationZipBuilder.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::Atsumeruyo</span>
+    <span class="container">Bioshogi::Formatter::Animation::AnimationZipBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/AnimationMp4Builder.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::AnimationMp4Builder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/AnimationGifBuilder.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::AnimationGifBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/TacticDetector/SingleValidator.html#method-c-new">::new</a>
@@ -1403,9 +1448,19 @@
     <span class="container">Bioshogi::Analysis::TacticHitTurnTableGenerator</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/CaptureAnalyzer.html#method-c-new">::new</a>
+    <a href="Bioshogi/PieceBox.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::CaptureAnalyzer</span>
+    <span class="container">Bioshogi::PieceBox</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/AkfBuilder.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::AkfBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/CoverImage.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::CoverImage</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/TagBundle.html#method-c-new">::new</a>
@@ -1413,29 +1468,34 @@
     <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
-    <a href="Bioshogi/Sfen.html#method-c-new">::new</a>
+    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Sfen</span>
+    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/TimeParser.html#method-c-new">::new</a>
+    <a href="Bioshogi/Container.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Parser::TimeParser</span>
+    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/SfenImporter.html#method-c-new">::new</a>
+    <a href="Bioshogi/ExtremeDetect.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::SfenImporter</span>
+    <span class="container">Bioshogi::ExtremeDetect</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Pi.html#method-c-new">::new</a>
+    <a href="Bioshogi/RuleError.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Parser::Pi</span>
+    <span class="container">Bioshogi::RuleError</span>
 
   <li class="method">
-    <a href="Bioshogi/ScreenImage.html#method-c-new">::new</a>
+    <a href="Bioshogi/Place.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::ScreenImage</span>
+    <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::Player</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/UsedSoldierCounter.html#method-c-new">::new</a>
@@ -1443,24 +1503,24 @@
     <span class="container">Bioshogi::Analysis::UsedSoldierCounter</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Inspector.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Inspector</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/XmotionAnalyzer.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionAnalyzer</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/CustomAnalyzer.html#method-c-new">::new</a>
+    <a href="Bioshogi/PlayerExecutor/Base.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::CustomAnalyzer</span>
+    <span class="container">Bioshogi::PlayerExecutor::Base</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/HorseDetector.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::HorseDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/PlayerExecutor/ErrorHandler.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Bioshogi::PlayerExecutor::ErrorHandler</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/Outebisha0Detector.html#method-c-new">::new</a>
@@ -1473,24 +1533,14 @@
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Header.html#method-c-new">::new</a>
+    <a href="Bioshogi/Board.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Parser::Header</span>
+    <span class="container">Bioshogi::Board</span>
 
   <li class="method">
-    <a href="Bioshogi/Simulator.html#method-c-new">::new</a>
+    <a href="Bioshogi/AI/Brain.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Simulator</span>
-
-  <li class="method">
-    <a href="Bioshogi/SingleClock.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::SingleClock</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/Base.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Base</span>
+    <span class="container">Bioshogi::AI::Brain</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/RocketDetector.html#method-c-new">::new</a>
@@ -1498,19 +1548,9 @@
     <span class="container">Bioshogi::Analysis::XmotionDetectors::RocketDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::AnagumaDetector</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/WazaarinokeiDetector.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::WazaarinokeiDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Player.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Player</span>
 
   <li class="method">
     <a href="Bioshogi/Board/Basic.html#method-c-new">::new</a>
@@ -1533,19 +1573,9 @@
     <span class="container">Bioshogi::BoardParser::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/OfficialFormatter.html#method-c-new">::new</a>
+    <a href="Bioshogi/V.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::OfficialFormatter</span>
-
-  <li class="method">
-    <a href="Bioshogi/MainClock.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::MainClock</span>
-
-  <li class="method">
-    <a href="Bioshogi/Soldier.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
+    <span class="container">Bioshogi::V</span>
 
   <li class="method">
     <a href="Bioshogi/ColumnSoldierCounter.html#method-c-new">::new</a>
@@ -1553,29 +1583,9 @@
     <span class="container">Bioshogi::ColumnSoldierCounter</span>
 
   <li class="method">
-    <a href="Bioshogi/Container/CheckmateYomiage.html#method-c-new">::new</a>
+    <a href="Bioshogi/TurnInfo.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Container::CheckmateYomiage</span>
-
-  <li class="method">
-    <a href="Bioshogi/Converter.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Converter</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/CounterHash.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::CounterHash</span>
-
-  <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
+    <span class="container">Bioshogi::TurnInfo</span>
 
   <li class="method">
     <a href="Bioshogi/Source.html#method-c-new">::new</a>
@@ -1583,44 +1593,44 @@
     <span class="container">Bioshogi::Source</span>
 
   <li class="method">
-    <a href="Bioshogi/TurnInfo.html#method-c-new">::new</a>
+    <a href="Bioshogi/Container/CheckmateYomiage.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::TurnInfo</span>
+    <span class="container">Bioshogi::Container::CheckmateYomiage</span>
 
   <li class="method">
-    <a href="Bioshogi/V.html#method-c-new">::new</a>
+    <a href="Bioshogi/Sfen.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::V</span>
+    <span class="container">Bioshogi::Sfen</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-c-new">::new</a>
+    <a href="Bioshogi/SfenImporter.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
+    <span class="container">Bioshogi::SfenImporter</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter.html#method-c-new">::new</a>
+    <a href="Bioshogi/Converter.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter</span>
+    <span class="container">Bioshogi::Converter</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-c-new">::new</a>
+    <a href="Bioshogi/CounterHash.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
+    <span class="container">Bioshogi::CounterHash</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Runner.html#method-c-new">::new</a>
+    <a href="Bioshogi/SingleClock.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Runner</span>
+    <span class="container">Bioshogi::SingleClock</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/CsaBuilder.html#method-c-new">::new</a>
+    <a href="Bioshogi/Dimension/Base.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::CsaBuilder</span>
+    <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/CoverImage.html#method-c-new">::new</a>
+    <a href="Bioshogi/Soldier.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">Bioshogi::CoverImage</span>
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-c-new_with_promoted">::new_with_promoted</a>
@@ -1633,14 +1643,14 @@
     <span class="container">Bioshogi::V</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Base.html#method-c-parse">::parse</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Base</span>
-
-  <li class="method">
     <a href="Bioshogi/BoardParser/Base.html#method-c-parse">::parse</a>
     &mdash;
     <span class="container">Bioshogi::BoardParser::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Sfen.html#method-c-parse">::parse</a>
+    &mdash;
+    <span class="container">Bioshogi::Sfen</span>
 
   <li class="method">
     <a href="Bioshogi/BoardParser.html#method-c-parse">::parse</a>
@@ -1648,9 +1658,9 @@
     <span class="container">Bioshogi::BoardParser</span>
 
   <li class="method">
-    <a href="Bioshogi/Sfen.html#method-c-parse">::parse</a>
+    <a href="Bioshogi/Parser/Base.html#method-c-parse">::parse</a>
     &mdash;
-    <span class="container">Bioshogi::Sfen</span>
+    <span class="container">Bioshogi::Parser::Base</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-c-piece_and_promoted">::piece_and_promoted</a>
@@ -1758,11 +1768,6 @@
     <span class="container">Bioshogi::Sfen</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece.html#method-c-strong_pieces">::strong_pieces</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
-
-  <li class="method">
     <a href="Bioshogi/Piece/PieceScore.html#method-c-sure_victory_score">::sure_victory_score</a>
     &mdash;
     <span class="container">Bioshogi::Piece::PieceScore</span>
@@ -1813,6 +1818,11 @@
     <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
+    <a href="Bioshogi/Place.html#method-i-3C-3D-3E">#&lt;=&gt;</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
     <a href="Bioshogi/V.html#method-i-3C-3D-3E">#&lt;=&gt;</a>
     &mdash;
     <span class="container">Bioshogi::V</span>
@@ -1823,29 +1833,9 @@
     <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-i-3C-3D-3E">#&lt;=&gt;</a>
-    &mdash;
-    <span class="container">Bioshogi::Place</span>
-
-  <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-3C-3D-3E">#&lt;=&gt;</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-3D-3D">#==</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
-    <a href="Bioshogi/V.html#method-i-3D-3D">#==</a>
-    &mdash;
-    <span class="container">Bioshogi::V</span>
-
-  <li class="method">
-    <a href="Bioshogi/Place.html#method-i-3D-3D">#==</a>
-    &mdash;
-    <span class="container">Bioshogi::Place</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Base.html#method-i-3D-3D">#==</a>
@@ -1853,14 +1843,29 @@
     <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/TagIndex.html#method-i-5B-5D">#[]</a>
+    <a href="Bioshogi/Soldier.html#method-i-3D-3D">#==</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::TagIndex</span>
+    <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-i-3D-3D">#==</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
+    <a href="Bioshogi/V.html#method-i-3D-3D">#==</a>
+    &mdash;
+    <span class="container">Bioshogi::V</span>
 
   <li class="method">
     <a href="Bioshogi/Board/ReaderMethods.html#method-i-5B-5D">#[]</a>
     &mdash;
     <span class="container">Bioshogi::Board::ReaderMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TagIndex.html#method-i-5B-5D">#[]</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TagIndex</span>
 
   <li class="method">
     <a href="Bioshogi/Parser/Header.html#method-i-5B-5D-3D">#[]=</a>
@@ -1883,9 +1888,9 @@
     <span class="container">Bioshogi::Parser</span>
 
   <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-add">#add</a>
+    <a href="Bioshogi/SingleClock.html#method-i-add">#add</a>
     &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
+    <span class="container">Bioshogi::SingleClock</span>
 
   <li class="method">
     <a href="Bioshogi/MainClock.html#method-i-add">#add</a>
@@ -1893,9 +1898,9 @@
     <span class="container">Bioshogi::MainClock</span>
 
   <li class="method">
-    <a href="Bioshogi/SingleClock.html#method-i-add">#add</a>
+    <a href="Bioshogi/PieceBox.html#method-i-add">#add</a>
     &mdash;
-    <span class="container">Bioshogi::SingleClock</span>
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-add_to_opponent">#add_to_opponent</a>
@@ -1938,16 +1943,6 @@
     <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-all_clear">#all_clear</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-all_clear">#all_clear</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/ColumnSoldierCounterMethods.html#method-i-all_clear">#all_clear</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::ColumnSoldierCounterMethods</span>
@@ -1956,6 +1951,16 @@
     <a href="Bioshogi/Board/UpdateMethods.html#method-i-all_clear">#all_clear</a>
     &mdash;
     <span class="container">Bioshogi::Board::UpdateMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-all_clear">#all_clear</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-all_clear">#all_clear</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/SoldierLookupTableMethods.html#method-i-all_clear">#all_clear</a>
@@ -1983,14 +1988,14 @@
     <span class="container">Bioshogi::ExtremeDetect</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-all_vectors">#all_vectors</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
     <a href="Bioshogi/Piece/PieceVector.html#method-i-all_vectors">#all_vectors</a>
     &mdash;
     <span class="container">Bioshogi::Piece::PieceVector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Soldier.html#method-i-all_vectors">#all_vectors</a>
+    &mdash;
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-anaguma_formation-3F">#anaguma_formation?</a>
@@ -2018,6 +2023,11 @@
     <span class="container">Bioshogi::Analysis::XmotionDetectors::HorseDetector</span>
 
   <li class="method">
+    <a href="Bioshogi/Piece/PieceCsa.html#method-i-any_name">#any_name</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece::PieceCsa</span>
+
+  <li class="method">
     <a href="Bioshogi/Piece.html#method-i-any_name">#any_name</a>
     &mdash;
     <span class="container">Bioshogi::Piece</span>
@@ -2026,11 +2036,6 @@
     <a href="Bioshogi/Soldier.html#method-i-any_name">#any_name</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece/PieceCsa.html#method-i-any_name">#any_name</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece::PieceCsa</span>
 
   <li class="method">
     <a href="Bioshogi/Piece/PieceScore.html#method-i-any_weight">#any_weight</a>
@@ -2248,184 +2253,9 @@
     <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/AI/Versus.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::AI::Versus</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/AbbrevExpander.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::AbbrevExpander</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/Atsumeruyo.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::Atsumeruyo</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CaptureAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CaptureAnalyzer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomAnalyzer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::AnagumaDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/HikakukiriDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukiriDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::KakukoukanDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/KakunihakakuDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::KakunihakakuDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/MagicSquareDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::MagicSquareDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/NyuugyokuAnagumaDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::NyuugyokuAnagumaDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/SoldierWalker.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::SoldierWalker</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/CustomDetectors/OutbreakDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::CustomDetectors::OutbreakDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/EveryAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::EveryAnalyzer</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/FileNormalizer.html#method-i-call">#call</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::FileNormalizer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/FileNormalizer/NormalizeOne.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::FileNormalizer::NormalizeOne</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/KakukiriCanceler.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::KakukiriCanceler</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/MotionAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::MotionAnalyzer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/NormalizeCheck.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::NormalizeCheck</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/PerformanceBenchmark.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::PerformanceBenchmark</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/ShapeAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::ShapeAnalyzer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticDetector/SingleValidator.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticDetector::SingleValidator</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticHitTurnTableGenerator.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticHitTurnTableGenerator</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticStat.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticStat</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TagReporter.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TagReporter</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/XmotionAnalyzer.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionAnalyzer</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/HorseDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::HorseDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/Outebisha0Detector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::Outebisha0Detector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/RocketDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::RocketDetector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/WazaarinokeiDetector.html#method-i-call">#call</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::WazaarinokeiDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Converter.html#method-i-call">#call</a>
@@ -2433,19 +2263,24 @@
     <span class="container">Bioshogi::Converter</span>
 
   <li class="method">
-    <a href="Bioshogi/ExtremeDetect.html#method-i-call">#call</a>
+    <a href="Bioshogi/Analysis/XmotionDetectors/WazaarinokeiDetector.html#method-i-call">#call</a>
     &mdash;
-    <span class="container">Bioshogi::ExtremeDetect</span>
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::WazaarinokeiDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/DemoBuilder.html#method-i-call">#call</a>
+    <a href="Bioshogi/Analysis/XmotionDetectors/RocketDetector.html#method-i-call">#call</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::DemoBuilder</span>
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::RocketDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Runner.html#method-i-call">#call</a>
+    <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-call">#call</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Runner</span>
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/XmotionDetectors/Outebisha0Detector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::Outebisha0Detector</span>
 
   <li class="method">
     <a href="Bioshogi/PlayerExecutor/ErrorHandler.html#method-i-call">#call</a>
@@ -2453,14 +2288,184 @@
     <span class="container">Bioshogi::PlayerExecutor::ErrorHandler</span>
 
   <li class="method">
-    <a href="Bioshogi/Player.html#method-i-call_name">#call_name</a>
+    <a href="Bioshogi/Analysis/XmotionDetectors/HorseDetector.html#method-i-call">#call</a>
     &mdash;
-    <span class="container">Bioshogi::Player</span>
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::HorseDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/XmotionAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::XmotionAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TagReporter.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TagReporter</span>
+
+  <li class="method">
+    <a href="Bioshogi/ExtremeDetect.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::ExtremeDetect</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticStat.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticStat</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticHitTurnTableGenerator.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticHitTurnTableGenerator</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticDetector/SingleValidator.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticDetector::SingleValidator</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/ShapeAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::ShapeAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/DemoBuilder.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::DemoBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/PerformanceBenchmark.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::PerformanceBenchmark</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/NormalizeCheck.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::NormalizeCheck</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/MotionAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::MotionAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/KakukiriCanceler.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::KakukiriCanceler</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/FileNormalizer/NormalizeOne.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::FileNormalizer::NormalizeOne</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/EveryAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::EveryAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/OutbreakDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::OutbreakDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/NyuugyokuAnagumaDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::NyuugyokuAnagumaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/MagicSquareDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::MagicSquareDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/KakunihakakuDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::KakunihakakuDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::KakukoukanDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/HisyakakuKiruDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::HisyakakuKiruDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomDetectors::AnagumaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CustomAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CustomAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/CaptureAnalyzer.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::CaptureAnalyzer</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/Atsumeruyo.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::Atsumeruyo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Runner.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Runner</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/AbbrevExpander.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::AbbrevExpander</span>
+
+  <li class="method">
+    <a href="Bioshogi/AI/Versus.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::AI::Versus</span>
+
+  <li class="method">
+    <a href="Bioshogi/SoldierWalker.html#method-i-call">#call</a>
+    &mdash;
+    <span class="container">Bioshogi::SoldierWalker</span>
 
   <li class="method">
     <a href="Bioshogi/Location.html#method-i-call_name">#call_name</a>
     &mdash;
     <span class="container">Bioshogi::Location</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player.html#method-i-call_name">#call_name</a>
+    &mdash;
+    <span class="container">Bioshogi::Player</span>
 
   <li class="method">
     <a href="Bioshogi/Location.html#method-i-call_names">#call_names</a>
@@ -2583,14 +2588,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis.html#method-i-clock_add_process">#clock_add_process</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis</span>
-
-  <li class="method">
     <a href="Bioshogi/PlayerExecutor/Base.html#method-i-clock_add_process">#clock_add_process</a>
     &mdash;
     <span class="container">Bioshogi::PlayerExecutor::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis.html#method-i-clock_add_process">#clock_add_process</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
     <a href="Bioshogi/Parser/Pi.html#method-i-clock_exist-3F">#clock_exist?</a>
@@ -2733,14 +2738,14 @@
     <span class="container">Bioshogi::Converter</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-create">#create</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand</span>
-
-  <li class="method">
     <a href="Bioshogi/Container.html#method-i-create">#create</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/Hand.html#method-i-create">#create</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand</span>
 
   <li class="method">
     <a href="Bioshogi/AI.html#method-i-create_all_hands">#create_all_hands</a>
@@ -2818,11 +2823,6 @@
     <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/ScreenImage.html#method-i-default_params">#default_params</a>
-    &mdash;
-    <span class="container">Bioshogi::ScreenImage</span>
-
-  <li class="method">
     <a href="Bioshogi/CoverImage.html#method-i-default_params">#default_params</a>
     &mdash;
     <span class="container">Bioshogi::CoverImage</span>
@@ -2836,6 +2836,11 @@
     <a href="Bioshogi/Formatter/Animation.html#method-i-default_params">#default_params</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation</span>
+
+  <li class="method">
+    <a href="Bioshogi/ScreenImage.html#method-i-default_params">#default_params</a>
+    &mdash;
+    <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/ModuleMethods.html#method-i-default_size-3F">#default_size?</a>
@@ -2898,6 +2903,11 @@
     <span class="container">Bioshogi::AI::Diver::NegaMaxDiver</span>
 
   <li class="method">
+    <a href="Bioshogi/AI/Diver/NegaScoutDiver.html#method-i-dive">#dive</a>
+    &mdash;
+    <span class="container">Bioshogi::AI::Diver::NegaScoutDiver</span>
+
+  <li class="method">
     <a href="Bioshogi/AI/Diver/NegaAlphaDiver.html#method-i-dive">#dive</a>
     &mdash;
     <span class="container">Bioshogi::AI::Diver::NegaAlphaDiver</span>
@@ -2906,11 +2916,6 @@
     <a href="Bioshogi/AI/Diver/NegaAlphaMateDiver.html#method-i-dive">#dive</a>
     &mdash;
     <span class="container">Bioshogi::AI::Diver::NegaAlphaMateDiver</span>
-
-  <li class="method">
-    <a href="Bioshogi/AI/Diver/NegaScoutDiver.html#method-i-dive">#dive</a>
-    &mdash;
-    <span class="container">Bioshogi::AI::Diver::NegaScoutDiver</span>
 
   <li class="method">
     <a href="Bioshogi/AI/Brain.html#method-i-diver_dive">#diver_dive</a>
@@ -2973,6 +2978,16 @@
     <span class="container">Bioshogi::AI</span>
 
   <li class="method">
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-drop_trigger">#drop_trigger</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-drop_trigger">#drop_trigger</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
+
+  <li class="method">
     <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-drop_trigger">#drop_trigger</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
@@ -2981,16 +2996,6 @@
     <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-drop_trigger">#drop_trigger</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-drop_trigger">#drop_trigger</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-drop_trigger">#drop_trigger</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/Media.html#method-i-duration">#duration</a>
@@ -3003,24 +3008,24 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/TagBundle.html#method-i-each">#each</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TagBundle</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/FileList.html#method-i-each">#each</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::FileList</span>
 
   <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-ek_score">#ek_score</a>
+    <a href="Bioshogi/Analysis/TagBundle.html#method-i-each">#each</a>
     &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
+    <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-ek_score">#ek_score</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/PieceBox.html#method-i-ek_score">#ek_score</a>
+    &mdash;
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Piece.html#method-i-ek_score_info">#ek_score_info</a>
@@ -3063,14 +3068,14 @@
     <span class="container">Bioshogi::V</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-eql-3F">#eql?</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
     <a href="Bioshogi/Dimension/Base.html#method-i-eql-3F">#eql?</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Soldier.html#method-i-eql-3F">#eql?</a>
+    &mdash;
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/ExtremeDetect.html#method-i-error_body">#error_body</a>
@@ -3123,19 +3128,9 @@
     <span class="container">Bioshogi::PlayerExecutor::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Move.html#method-i-execute">#execute</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand::Move</span>
-
-  <li class="method">
     <a href="Bioshogi/Container.html#method-i-execute">#execute</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/Player.html#method-i-execute">#execute</a>
-    &mdash;
-    <span class="container">Bioshogi::Player</span>
 
   <li class="method">
     <a href="Bioshogi/Hand/Drop.html#method-i-execute">#execute</a>
@@ -3143,9 +3138,14 @@
     <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
-    <a href="Bioshogi/PlayerExecutor/Base.html#method-i-execute_after_process">#execute_after_process</a>
+    <a href="Bioshogi/Hand/Move.html#method-i-execute">#execute</a>
     &mdash;
-    <span class="container">Bioshogi::PlayerExecutor::Base</span>
+    <span class="container">Bioshogi::Hand::Move</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player.html#method-i-execute">#execute</a>
+    &mdash;
+    <span class="container">Bioshogi::Player</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-execute_after_process">#execute_after_process</a>
@@ -3153,19 +3153,24 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
+    <a href="Bioshogi/PlayerExecutor/Base.html#method-i-execute_after_process">#execute_after_process</a>
+    &mdash;
+    <span class="container">Bioshogi::PlayerExecutor::Base</span>
+
+  <li class="method">
     <a href="Bioshogi/Container/Simple.html#method-i-executor_class">#executor_class</a>
     &mdash;
     <span class="container">Bioshogi::Container::Simple</span>
 
   <li class="method">
-    <a href="Bioshogi/Container.html#method-i-executor_class">#executor_class</a>
-    &mdash;
-    <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
     <a href="Bioshogi/Container/Fast.html#method-i-executor_class">#executor_class</a>
     &mdash;
     <span class="container">Bioshogi::Container::Fast</span>
+
+  <li class="method">
+    <a href="Bioshogi/Container.html#method-i-executor_class">#executor_class</a>
+    &mdash;
+    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
     <a href="Bioshogi/PieceBox.html#method-i-exist-3F">#exist?</a>
@@ -3183,24 +3188,24 @@
     <span class="container">Bioshogi::Analysis::TriggerExpander</span>
 
   <li class="method">
-    <a href="Bioshogi/ScreenImage.html#method-i-ext_name">#ext_name</a>
-    &mdash;
-    <span class="container">Bioshogi::ScreenImage</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/Animation/AnimationWebpBuilder.html#method-i-ext_name">#ext_name</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AnimationWebpBuilder</span>
 
   <li class="method">
-    <a href="Bioshogi/CoverImage.html#method-i-ext_name">#ext_name</a>
-    &mdash;
-    <span class="container">Bioshogi::CoverImage</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/Animation/AnimationApngBuilder.html#method-i-ext_name">#ext_name</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AnimationApngBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/ScreenImage.html#method-i-ext_name">#ext_name</a>
+    &mdash;
+    <span class="container">Bioshogi::ScreenImage</span>
+
+  <li class="method">
+    <a href="Bioshogi/CoverImage.html#method-i-ext_name">#ext_name</a>
+    &mdash;
+    <span class="container">Bioshogi::CoverImage</span>
 
   <li class="method">
     <a href="Bioshogi/KanjiNumber.html#method-i-extract">#extract</a>
@@ -3243,14 +3248,14 @@
     <span class="container">Bioshogi::AI::Brain</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/ReaderMethods.html#method-i-fetch">#fetch</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::ReaderMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/TagIndex.html#method-i-fetch">#fetch</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::TagIndex</span>
+
+  <li class="method">
+    <a href="Bioshogi/Board/ReaderMethods.html#method-i-fetch">#fetch</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::ReaderMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Piece.html#method-i-fetch_by_sfen_char">#fetch_by_sfen_char</a>
@@ -3308,19 +3313,9 @@
     <span class="container">Bioshogi::Location</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/DetectorMethods.html#method-i-flip">#flip</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::DetectorMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Place.html#method-i-flip">#flip</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
-
-  <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-flip">#flip</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Base.html#method-i-flip">#flip</a>
@@ -3328,14 +3323,24 @@
     <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-flop">#flop</a>
+    <a href="Bioshogi/Soldier.html#method-i-flip">#flip</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/Board/DetectorMethods.html#method-i-flip">#flip</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::DetectorMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Board/DetectorMethods.html#method-i-flop">#flop</a>
     &mdash;
     <span class="container">Bioshogi::Board::DetectorMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Soldier.html#method-i-flop">#flop</a>
+    &mdash;
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/Place.html#method-i-flop">#flop</a>
@@ -3423,14 +3428,14 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-hand">#hand</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
-
-  <li class="method">
     <a href="Bioshogi/HandLog.html#method-i-hand">#hand</a>
     &mdash;
     <span class="container">Bioshogi::HandLog</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-hand">#hand</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
 
   <li class="method">
     <a href="Bioshogi.html#method-i-hand_log">#hand_log</a>
@@ -3468,19 +3473,14 @@
     <span class="container">Bioshogi::Place</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-hard_validations">#hard_validations</a>
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-hard_validations">#hard_validations</a>
     &mdash;
-    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter.html#method-i-hard_validations">#hard_validations</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-hard_validations">#hard_validations</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-hard_validations">#hard_validations</a>
@@ -3493,14 +3493,14 @@
     <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
 
   <li class="method">
+    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-hard_validations">#hard_validations</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
+
+  <li class="method">
     <a href="Bioshogi/Analysis/TagBundle.html#method-i-has_tag-3F">#has_tag?</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::TagBundle</span>
-
-  <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-i-hash">#hash</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
 
   <li class="method">
     <a href="Bioshogi/Place.html#method-i-hash">#hash</a>
@@ -3518,6 +3518,11 @@
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
+    <a href="Bioshogi/Dimension/Base.html#method-i-hash">#hash</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
     <a href="Bioshogi/Parser.html#method-i-header_extract">#header_extract</a>
     &mdash;
     <span class="container">Bioshogi::Parser</span>
@@ -3531,6 +3536,16 @@
     <a href="Bioshogi/Formatter/Animation.html#method-i-heavy_tob">#heavy_tob</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player/OtherMethods.html#method-i-hisyakaku_piece_completed-3F">#hisyakaku_piece_completed?</a>
+    &mdash;
+    <span class="container">Bioshogi::Player::OtherMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player/OtherMethods.html#method-i-hisyakaku_piece_have_count">#hisyakaku_piece_have_count</a>
+    &mdash;
+    <span class="container">Bioshogi::Player::OtherMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-hit_turn">#hit_turn</a>
@@ -3553,14 +3568,14 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
-    <a href="Bioshogi/Dimension/Column.html#method-i-human_int">#human_int</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Column</span>
-
-  <li class="method">
     <a href="Bioshogi/Place.html#method-i-human_int">#human_int</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
+    <a href="Bioshogi/Dimension/Column.html#method-i-human_int">#human_int</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Column</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Row.html#method-i-human_int">#human_int</a>
@@ -3598,14 +3613,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/CoverImage.html#method-i-image_rect">#image_rect</a>
-    &mdash;
-    <span class="container">Bioshogi::CoverImage</span>
-
-  <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-image_rect">#image_rect</a>
     &mdash;
     <span class="container">Bioshogi::ScreenImage</span>
+
+  <li class="method">
+    <a href="Bioshogi/CoverImage.html#method-i-image_rect">#image_rect</a>
+    &mdash;
+    <span class="container">Bioshogi::CoverImage</span>
 
   <li class="method">
     <a href="Bioshogi/SfenImporter.html#method-i-import_all">#import_all</a>
@@ -3693,34 +3708,9 @@
     <span class="container">Bioshogi::InputParser</span>
 
   <li class="method">
-    <a href="Bioshogi/V.html#method-i-inspect">#inspect</a>
+    <a href="Bioshogi/Soldier.html#method-i-inspect">#inspect</a>
     &mdash;
-    <span class="container">Bioshogi::V</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
-
-  <li class="method">
-    <a href="Bioshogi/V/OnceVector.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::V::OnceVector</span>
-
-  <li class="method">
-    <a href="Bioshogi/V/RepeatVector.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::V::RepeatVector</span>
-
-  <li class="method">
-    <a href="Bioshogi/Container.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi.html#method-i-inspect">#inspect</a>
@@ -3728,39 +3718,24 @@
     <span class="container">Bioshogi</span>
 
   <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-i-inspect">#inspect</a>
+    <a href="Bioshogi/Piece.html#method-i-inspect">#inspect</a>
     &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
+    <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Inspector.html#method-i-inspect">#inspect</a>
+    <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-i-inspect">#inspect</a>
     &mdash;
-    <span class="container">Bioshogi::Parser::Inspector</span>
+    <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-inspect">#inspect</a>
+    <a href="Bioshogi/Formatter/Animation/SerialFilenameGenerator.html#method-i-inspect">#inspect</a>
     &mdash;
-    <span class="container">Bioshogi::Soldier</span>
+    <span class="container">Bioshogi::Formatter::Animation::SerialFilenameGenerator</span>
 
   <li class="method">
-    <a href="Bioshogi/Parser/Header.html#method-i-inspect">#inspect</a>
+    <a href="Bioshogi/Container.html#method-i-inspect">#inspect</a>
     &mdash;
-    <span class="container">Bioshogi::Parser::Header</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/Base.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Base</span>
-
-  <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand</span>
-
-  <li class="method">
-    <a href="Bioshogi/Place.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Place</span>
+    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
     <a href="Bioshogi/Media.html#method-i-inspect">#inspect</a>
@@ -3768,14 +3743,54 @@
     <span class="container">Bioshogi::Media</span>
 
   <li class="method">
+    <a href="Bioshogi/Parser/Inspector.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Inspector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Header.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Header</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/Base.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/V/RepeatVector.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::V::RepeatVector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Dimension/Base.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/V/OnceVector.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::V::OnceVector</span>
+
+  <li class="method">
+    <a href="Bioshogi/V.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::V</span>
+
+  <li class="method">
+    <a href="Bioshogi/Hand.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand</span>
+
+  <li class="method">
     <a href="Bioshogi/TurnInfo.html#method-i-inspect">#inspect</a>
     &mdash;
     <span class="container">Bioshogi::TurnInfo</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/Animation/SerialFilenameGenerator.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::SerialFilenameGenerator</span>
 
   <li class="method">
     <a href="Bioshogi/AliasMod.html#method-i-invert_table">#invert_table</a>
@@ -3828,6 +3843,11 @@
     <span class="container">Bioshogi::Player</span>
 
   <li class="method">
+    <a href="Bioshogi/LastActionInfo.html#method-i-judgment_message">#judgment_message</a>
+    &mdash;
+    <span class="container">Bioshogi::LastActionInfo</span>
+
+  <li class="method">
     <a href="Bioshogi/Container.html#method-i-judgment_message">#judgment_message</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
@@ -3836,11 +3856,6 @@
     <a href="Bioshogi/Formatter/Core.html#method-i-judgment_message">#judgment_message</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Core</span>
-
-  <li class="method">
-    <a href="Bioshogi/LastActionInfo.html#method-i-judgment_message">#judgment_message</a>
-    &mdash;
-    <span class="container">Bioshogi::LastActionInfo</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Row.html#method-i-just_nyuugyoku-3F">#just_nyuugyoku?</a>
@@ -3888,14 +3903,14 @@
     <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/PlayerMethods.html#method-i-kill_count">#kill_count</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::PlayerMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Container.html#method-i-kill_count">#kill_count</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/PlayerMethods.html#method-i-kill_count">#kill_count</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::PlayerMethods</span>
 
   <li class="method">
     <a href="Bioshogi/AI.html#method-i-king_capture_move_hands">#king_capture_move_hands</a>
@@ -3946,6 +3961,16 @@
     <a href="Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html#method-i-king_soldiers">#king_soldiers</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::CustomDetectors::GyokutousenDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player/OtherMethods.html#method-i-kingin_piece_completed-3F">#kingin_piece_completed?</a>
+    &mdash;
+    <span class="container">Bioshogi::Player::OtherMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Player/OtherMethods.html#method-i-kingin_piece_have_count">#kingin_piece_have_count</a>
+    &mdash;
+    <span class="container">Bioshogi::Player::OtherMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Parser.html#method-i-kknk_board_read">#kknk_board_read</a>
@@ -4128,14 +4153,14 @@
     <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter.html#method-i-location">#location</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter</span>
-
-  <li class="method">
     <a href="Bioshogi/Sfen.html#method-i-location">#location</a>
     &mdash;
     <span class="container">Bioshogi::Sfen</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter.html#method-i-location">#location</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/SoldierBox.html#method-i-location_adjust">#location_adjust</a>
@@ -4163,6 +4188,11 @@
     <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
 
   <li class="method">
+    <a href="Bioshogi/Analysis/TagIndex.html#method-i-lookup">#lookup</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TagIndex</span>
+
+  <li class="method">
     <a href="Bioshogi/AliasMod.html#method-i-lookup">#lookup</a>
     &mdash;
     <span class="container">Bioshogi::AliasMod</span>
@@ -4173,19 +4203,9 @@
     <span class="container">Bioshogi::Board::ReaderMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/TagIndex.html#method-i-lookup">#lookup</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TagIndex</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-lookup">#lookup</a>
     &mdash;
     <span class="container">Bioshogi::Analysis</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-lose_player">#lose_player</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-lose_player">#lose_player</a>
@@ -4193,9 +4213,14 @@
     <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-lose_side_location">#lose_side_location</a>
+    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-lose_side_location">#lose_side_location</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
+    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-lose_side_player">#lose_side_player</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-lose_side_soldier_at">#lose_side_soldier_at</a>
@@ -4283,14 +4308,14 @@
     <span class="container">Bioshogi::Dimension::Row</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/ClusterScoreInfo.html#method-i-min_score">#min_score</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::ClusterScoreInfo</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/CustomDetectors/NyuugyokuAnagumaDetector.html#method-i-min_score">#min_score</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::CustomDetectors::NyuugyokuAnagumaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/ClusterScoreInfo.html#method-i-min_score">#min_score</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::ClusterScoreInfo</span>
 
   <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-minus_one">#minus_one</a>
@@ -4318,14 +4343,14 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-motion_key">#motion_key</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
     <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-motion_key">#motion_key</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/Soldier.html#method-i-motion_key">#motion_key</a>
+    &mdash;
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter.html#method-i-motion_str">#motion_str</a>
@@ -4343,14 +4368,14 @@
     <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis.html#method-i-move_hand_process">#move_hand_process</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis</span>
-
-  <li class="method">
     <a href="Bioshogi/PlayerExecutor/Base.html#method-i-move_hand_process">#move_hand_process</a>
     &mdash;
     <span class="container">Bioshogi::PlayerExecutor::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis.html#method-i-move_hand_process">#move_hand_process</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
     <a href="Bioshogi/AI.html#method-i-move_hands">#move_hands</a>
@@ -4433,6 +4458,21 @@
     <span class="container">Bioshogi::AI</span>
 
   <li class="method">
+    <a href="Bioshogi/KifuFormatInfo.html#method-i-name">#name</a>
+    &mdash;
+    <span class="container">Bioshogi::KifuFormatInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Dimension/Column.html#method-i-name">#name</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Column</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticInfo.html#method-i-name">#name</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticInfo</span>
+
+  <li class="method">
     <a href="Bioshogi/Place.html#method-i-name">#name</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
@@ -4443,24 +4483,9 @@
     <span class="container">Bioshogi::Formatter::Animation::SerialFilenameGenerator</span>
 
   <li class="method">
-    <a href="Bioshogi/KifuFormatInfo.html#method-i-name">#name</a>
-    &mdash;
-    <span class="container">Bioshogi::KifuFormatInfo</span>
-
-  <li class="method">
     <a href="Bioshogi/Dimension/Row.html#method-i-name">#name</a>
     &mdash;
     <span class="container">Bioshogi::Dimension::Row</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/TacticInfo.html#method-i-name">#name</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticInfo</span>
-
-  <li class="method">
-    <a href="Bioshogi/Dimension/Column.html#method-i-name">#name</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Column</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-name">#name</a>
@@ -4673,14 +4698,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-origin_soldier">#origin_soldier</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
-
-  <li class="method">
     <a href="Bioshogi/InputAdapter.html#method-i-origin_soldier">#origin_soldier</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-origin_soldier">#origin_soldier</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
 
   <li class="method">
     <a href="Bioshogi/BoardParser/CompareBoardParser.html#method-i-other_objects">#other_objects</a>
@@ -4768,17 +4793,12 @@
     <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html#method-i-own_piece">#own_piece</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutekakuDetector</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-own_piece">#own_piece</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html#method-i-own_piece_vector">#own_piece_vector</a>
+    <a href="Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html#method-i-own_piece">#own_piece</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutekakuDetector</span>
 
@@ -4786,6 +4806,11 @@
     <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-own_piece_vector">#own_piece_vector</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html#method-i-own_piece_vector">#own_piece_vector</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutekakuDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Row.html#method-i-own_side-3F">#own_side?</a>
@@ -4813,6 +4838,36 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
+    <a href="Bioshogi/Parser/Base.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser/CsaBoardParser.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::CsaBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser/KakinokiBoardParser.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::KakinokiBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser/SfenBoardParser.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::SfenBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/BoardParser/CompareBoardParser.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::BoardParser::CompareBoardParser</span>
+
+  <li class="method">
+    <a href="Bioshogi/Parser/CsaParser.html#method-i-parse">#parse</a>
+    &mdash;
+    <span class="container">Bioshogi::Parser::CsaParser</span>
+
+  <li class="method">
     <a href="Bioshogi/Parser.html#method-i-parse">#parse</a>
     &mdash;
     <span class="container">Bioshogi::Parser</span>
@@ -4826,36 +4881,6 @@
     <a href="Bioshogi/Parser/SfenParser.html#method-i-parse">#parse</a>
     &mdash;
     <span class="container">Bioshogi::Parser::SfenParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/CsaParser.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::CsaParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/Parser/Base.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::Parser::Base</span>
-
-  <li class="method">
-    <a href="Bioshogi/BoardParser/SfenBoardParser.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::BoardParser::SfenBoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/BoardParser/KakinokiBoardParser.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::BoardParser::KakinokiBoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/BoardParser/CsaBoardParser.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::BoardParser::CsaBoardParser</span>
-
-  <li class="method">
-    <a href="Bioshogi/BoardParser/CompareBoardParser.html#method-i-parse">#parse</a>
-    &mdash;
-    <span class="container">Bioshogi::BoardParser::CompareBoardParser</span>
 
   <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-pattern_layer_create">#pattern_layer_create</a>
@@ -4898,14 +4923,14 @@
     <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-perform_validations">#perform_validations</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
-
-  <li class="method">
     <a href="Bioshogi/PlayerExecutor/Base.html#method-i-perform_validations">#perform_validations</a>
     &mdash;
     <span class="container">Bioshogi::PlayerExecutor::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-perform_validations">#perform_validations</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/PieceBox.html#method-i-pick_out">#pick_out</a>
@@ -4923,34 +4948,9 @@
     <span class="container">Bioshogi::Board::UpdateMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece/PiecePressure.html#method-i-piece">#piece</a>
+    <a href="Bioshogi/Piece/PieceScore.html#method-i-piece">#piece</a>
     &mdash;
-    <span class="container">Bioshogi::Piece::PiecePressure</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-piece">#piece</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-piece">#piece</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-piece">#piece</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece/PieceCsa.html#method-i-piece">#piece</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece::PieceCsa</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece.html#method-i-piece">#piece</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
+    <span class="container">Bioshogi::Piece::PieceScore</span>
 
   <li class="method">
     <a href="Bioshogi/Piece/YomiagePieceInfo.html#method-i-piece">#piece</a>
@@ -4958,9 +4958,34 @@
     <span class="container">Bioshogi::Piece::YomiagePieceInfo</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece/PieceScore.html#method-i-piece">#piece</a>
+    <a href="Bioshogi/Piece/PieceCsa.html#method-i-piece">#piece</a>
     &mdash;
-    <span class="container">Bioshogi::Piece::PieceScore</span>
+    <span class="container">Bioshogi::Piece::PieceCsa</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-piece">#piece</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/Piece.html#method-i-piece">#piece</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-piece">#piece</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-piece">#piece</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/Piece/PiecePressure.html#method-i-piece">#piece</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece::PiecePressure</span>
 
   <li class="method">
     <a href="Bioshogi/Player/PieceBoxMethods.html#method-i-piece_box">#piece_box</a>
@@ -4968,14 +4993,14 @@
     <span class="container">Bioshogi::Player::PieceBoxMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/PlayerExecutor/Base.html#method-i-piece_box_added">#piece_box_added</a>
-    &mdash;
-    <span class="container">Bioshogi::PlayerExecutor::Base</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-piece_box_added">#piece_box_added</a>
     &mdash;
     <span class="container">Bioshogi::Analysis</span>
+
+  <li class="method">
+    <a href="Bioshogi/PlayerExecutor/Base.html#method-i-piece_box_added">#piece_box_added</a>
+    &mdash;
+    <span class="container">Bioshogi::PlayerExecutor::Base</span>
 
   <li class="method">
     <a href="Bioshogi/Player/PieceBoxMethods.html#method-i-piece_box_as_header">#piece_box_as_header</a>
@@ -5083,9 +5108,9 @@
     <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/ExecuterDsl.html#method-i-place">#place</a>
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-place">#place</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter.html#method-i-place">#place</a>
@@ -5093,9 +5118,9 @@
     <span class="container">Bioshogi::InputAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-place">#place</a>
+    <a href="Bioshogi/Analysis/ExecuterDsl.html#method-i-place">#place</a>
     &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
+    <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
 
   <li class="method">
     <a href="Bioshogi/SoldierBox.html#method-i-place_as_key_table">#place_as_key_table</a>
@@ -5103,14 +5128,14 @@
     <span class="container">Bioshogi::SoldierBox</span>
 
   <li class="method">
+    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-place_from">#place_from</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
+
+  <li class="method">
     <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-place_from">#place_from</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-place_from">#place_from</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-place_from">#place_from</a>
@@ -5118,9 +5143,9 @@
     <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/Ki2Adapter.html#method-i-place_from">#place_from</a>
+    <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-place_from">#place_from</a>
     &mdash;
-    <span class="container">Bioshogi::InputAdapter::Ki2Adapter</span>
+    <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/Yomiage/Formatter.html#method-i-place_name">#place_name</a>
@@ -5128,14 +5153,9 @@
     <span class="container">Bioshogi::Yomiage::Formatter</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-place_on">#place_on</a>
+    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-place_on">#place_on</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/SoldierLookupTableMethods.html#method-i-place_on">#place_on</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SoldierLookupTableMethods</span>
+    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/ColumnSoldierCounterMethods.html#method-i-place_on">#place_on</a>
@@ -5143,14 +5163,19 @@
     <span class="container">Bioshogi::Analysis::ColumnSoldierCounterMethods</span>
 
   <li class="method">
+    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-place_on">#place_on</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
+
+  <li class="method">
     <a href="Bioshogi/Board/UpdateMethods.html#method-i-place_on">#place_on</a>
     &mdash;
     <span class="container">Bioshogi::Board::UpdateMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-place_on">#place_on</a>
+    <a href="Bioshogi/Analysis/SoldierLookupTableMethods.html#method-i-place_on">#place_on</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
+    <span class="container">Bioshogi::Analysis::SoldierLookupTableMethods</span>
 
   <li class="method">
     <a href="Bioshogi.html#method-i-place_same-3F">#place_same?</a>
@@ -5168,24 +5193,24 @@
     <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/UpdateMethods.html#method-i-placement_from_human">#placement_from_human</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::UpdateMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Player.html#method-i-placement_from_human">#placement_from_human</a>
     &mdash;
     <span class="container">Bioshogi::Player</span>
 
   <li class="method">
-    <a href="Bioshogi/Container.html#method-i-placement_from_preset">#placement_from_preset</a>
+    <a href="Bioshogi/Board/UpdateMethods.html#method-i-placement_from_human">#placement_from_human</a>
     &mdash;
-    <span class="container">Bioshogi::Container</span>
+    <span class="container">Bioshogi::Board::UpdateMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Board/UpdateMethods.html#method-i-placement_from_preset">#placement_from_preset</a>
     &mdash;
     <span class="container">Bioshogi::Board::UpdateMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Container.html#method-i-placement_from_preset">#placement_from_preset</a>
+    &mdash;
+    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-placement_from_sfen">#placement_from_sfen</a>
@@ -5253,14 +5278,14 @@
     <span class="container">Bioshogi::Formatter::Core</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/ExecuterDsl.html#method-i-preset_is">#preset_is</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/AttackInfo.html#method-i-preset_is">#preset_is</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::AttackInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/ExecuterDsl.html#method-i-preset_is">#preset_is</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-pressure_level">#pressure_level</a>
@@ -5268,14 +5293,14 @@
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-pressure_level">#pressure_level</a>
-    &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
-
-  <li class="method">
     <a href="Bioshogi/Player/PressureMethods.html#method-i-pressure_level">#pressure_level</a>
     &mdash;
     <span class="container">Bioshogi::Player::PressureMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/PieceBox.html#method-i-pressure_level">#pressure_level</a>
+    &mdash;
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Player/PressureMethods.html#method-i-pressure_rate">#pressure_rate</a>
@@ -5308,14 +5333,14 @@
     <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-promote_trigger">#promote_trigger</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
-
-  <li class="method">
     <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-promote_trigger">#promote_trigger</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-promote_trigger">#promote_trigger</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-promote_trigger">#promote_trigger</a>
@@ -5328,11 +5353,6 @@
     <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
-    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-promoted">#promoted</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
-
-  <li class="method">
     <a href="Bioshogi/InputAdapter/SfenAdapter.html#method-i-promoted">#promoted</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::SfenAdapter</span>
@@ -5341,6 +5361,11 @@
     <a href="Bioshogi/InputAdapter/KifAdapter.html#method-i-promoted">#promoted</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::KifAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/CsaAdapter.html#method-i-promoted">#promoted</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::CsaAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/Piece.html#method-i-promoted_names">#promoted_names</a>
@@ -5358,14 +5383,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter.html#method-i-raw_header_part_hash">#raw_header_part_hash</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/Core.html#method-i-raw_header_part_hash">#raw_header_part_hash</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Core</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter.html#method-i-raw_header_part_hash">#raw_header_part_hash</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter.html#method-i-raw_header_part_string">#raw_header_part_string</a>
@@ -5383,14 +5408,14 @@
     <span class="container">Bioshogi::Analysis</span>
 
   <li class="method">
-    <a href="Bioshogi/InputParser.html#method-i-regexp">#regexp</a>
-    &mdash;
-    <span class="container">Bioshogi::InputParser</span>
-
-  <li class="method">
     <a href="Bioshogi/KanjiNumber.html#method-i-regexp">#regexp</a>
     &mdash;
     <span class="container">Bioshogi::KanjiNumber</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputParser.html#method-i-regexp">#regexp</a>
+    &mdash;
+    <span class="container">Bioshogi::InputParser</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-related_ancestors">#related_ancestors</a>
@@ -5413,14 +5438,14 @@
     <span class="container">Bioshogi::ColumnSoldierCounter</span>
 
   <li class="method">
-    <a href="Bioshogi/ScreenImage.html#method-i-render">#render</a>
-    &mdash;
-    <span class="container">Bioshogi::ScreenImage</span>
-
-  <li class="method">
     <a href="Bioshogi/CoverImage.html#method-i-render">#render</a>
     &mdash;
     <span class="container">Bioshogi::CoverImage</span>
+
+  <li class="method">
+    <a href="Bioshogi/ScreenImage.html#method-i-render">#render</a>
+    &mdash;
+    <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
     <a href="Bioshogi/ColumnSoldierCounter.html#method-i-reset">#reset</a>
@@ -5443,24 +5468,24 @@
     <span class="container">Bioshogi::V::PresetVectors</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-i-revert">#revert</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
-
-  <li class="method">
     <a href="Bioshogi/Hand/Move.html#method-i-revert">#revert</a>
     &mdash;
     <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
-    <a href="Bioshogi/Location.html#method-i-right">#right</a>
+    <a href="Bioshogi/Hand/Drop.html#method-i-revert">#revert</a>
     &mdash;
-    <span class="container">Bioshogi::Location</span>
+    <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
     <a href="Bioshogi/V/PresetVectors.html#method-i-right">#right</a>
     &mdash;
     <span class="container">Bioshogi::V::PresetVectors</span>
+
+  <li class="method">
+    <a href="Bioshogi/Location.html#method-i-right">#right</a>
+    &mdash;
+    <span class="container">Bioshogi::Location</span>
 
   <li class="method">
     <a href="Bioshogi/V/PresetVectors.html#method-i-right_anaguma_vectors">#right_anaguma_vectors</a>
@@ -5543,19 +5568,9 @@
     <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/ColumnSoldierCounterMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::ColumnSoldierCounterMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Board/UpdateMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::UpdateMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
@@ -5563,9 +5578,19 @@
     <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
 
   <li class="method">
+    <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
+
+  <li class="method">
     <a href="Bioshogi/Analysis/SoldierLookupTableMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::SoldierLookupTableMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Board/UpdateMethods.html#method-i-safe_delete_on">#safe_delete_on</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::UpdateMethods</span>
 
   <li class="method">
     <a href="Bioshogi/PieceBox.html#method-i-safe_sub">#safe_sub</a>
@@ -5608,14 +5633,19 @@
     <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
+    <a href="Bioshogi/AI/Evaluator/Level4.html#method-i-score_compute_report">#score_compute_report</a>
+    &mdash;
+    <span class="container">Bioshogi::AI::Evaluator::Level4</span>
+
+  <li class="method">
     <a href="Bioshogi/AI/Evaluator/Level3.html#method-i-score_compute_report">#score_compute_report</a>
     &mdash;
     <span class="container">Bioshogi::AI::Evaluator::Level3</span>
 
   <li class="method">
-    <a href="Bioshogi/AI/Evaluator/Level4.html#method-i-score_compute_report">#score_compute_report</a>
+    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-score_info">#score_info</a>
     &mdash;
-    <span class="container">Bioshogi::AI::Evaluator::Level4</span>
+    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-screen_image_renderer">#screen_image_renderer</a>
@@ -5628,14 +5658,14 @@
     <span class="container">Bioshogi::Player</span>
 
   <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-set">#set</a>
-    &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
-
-  <li class="method">
     <a href="Bioshogi/ColumnSoldierCounter.html#method-i-set">#set</a>
     &mdash;
     <span class="container">Bioshogi::ColumnSoldierCounter</span>
+
+  <li class="method">
+    <a href="Bioshogi/PieceBox.html#method-i-set">#set</a>
+    &mdash;
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/Animation.html#method-i-sfg">#sfg</a>
@@ -5708,14 +5738,14 @@
     <span class="container">Bioshogi::InputAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/FreqPieceInfo.html#method-i-soldier">#soldier</a>
-    &mdash;
-    <span class="container">Bioshogi::FreqPieceInfo</span>
-
-  <li class="method">
     <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-soldier">#soldier</a>
     &mdash;
     <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
+
+  <li class="method">
+    <a href="Bioshogi/FreqPieceInfo.html#method-i-soldier">#soldier</a>
+    &mdash;
+    <span class="container">Bioshogi::FreqPieceInfo</span>
 
   <li class="method">
     <a href="Bioshogi/BoardParser/Base.html#method-i-soldier_box">#soldier_box</a>
@@ -5773,19 +5803,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Yomiage/Formatter.html#method-i-soldier_name">#soldier_name</a>
-    &mdash;
-    <span class="container">Bioshogi::Yomiage::Formatter</span>
-
-  <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-soldier_name">#soldier_name</a>
     &mdash;
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Player/SoldierMethods.html#method-i-soldiers">#soldiers</a>
+    <a href="Bioshogi/Yomiage/Formatter.html#method-i-soldier_name">#soldier_name</a>
     &mdash;
-    <span class="container">Bioshogi::Player::SoldierMethods</span>
+    <span class="container">Bioshogi::Yomiage::Formatter</span>
 
   <li class="method">
     <a href="Bioshogi/SoldierBox.html#method-i-soldiers">#soldiers</a>
@@ -5808,6 +5833,11 @@
     <span class="container">Bioshogi::Sfen</span>
 
   <li class="method">
+    <a href="Bioshogi/Player/SoldierMethods.html#method-i-soldiers">#soldiers</a>
+    &mdash;
+    <span class="container">Bioshogi::Player::SoldierMethods</span>
+
+  <li class="method">
     <a href="Bioshogi/Analysis/BoardPieceCountsMethods.html#method-i-soldiers_count">#soldiers_count</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::BoardPieceCountsMethods</span>
@@ -5823,6 +5853,11 @@
     <span class="container">Bioshogi::Player::SoldierMethods</span>
 
   <li class="method">
+    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-soldiers_lookup1">#soldiers_lookup1</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
+
+  <li class="method">
     <a href="Bioshogi/Player/SoldierMethods.html#method-i-soldiers_lookup1">#soldiers_lookup1</a>
     &mdash;
     <span class="container">Bioshogi::Player::SoldierMethods</span>
@@ -5831,11 +5866,6 @@
     <a href="Bioshogi/Analysis/SoldierLookupTableMethods.html#method-i-soldiers_lookup1">#soldiers_lookup1</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::SoldierLookupTableMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-soldiers_lookup1">#soldiers_lookup1</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SoldierPlaceMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/SoldierPlaceMethods.html#method-i-soldiers_lookup2">#soldiers_lookup2</a>
@@ -5923,16 +5953,6 @@
     <span class="container">Bioshogi::Formatter::Animation::SystemSupport</span>
 
   <li class="method">
-    <a href="Bioshogi/Player/OtherMethods.html#method-i-strong_piece_completed-3F">#strong_piece_completed?</a>
-    &mdash;
-    <span class="container">Bioshogi::Player::OtherMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Player/OtherMethods.html#method-i-strong_piece_have_count">#strong_piece_have_count</a>
-    &mdash;
-    <span class="container">Bioshogi::Player::OtherMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis.html#method-i-style_info">#style_info</a>
     &mdash;
     <span class="container">Bioshogi::Analysis</span>
@@ -5963,14 +5983,14 @@
     <span class="container">Bioshogi::InputAdapter</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/Basic.html#method-i-surface">#surface</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::Basic</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/ExecuterDsl.html#method-i-surface">#surface</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::ExecuterDsl</span>
+
+  <li class="method">
+    <a href="Bioshogi/Board/Basic.html#method-i-surface">#surface</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::Basic</span>
 
   <li class="method">
     <a href="Bioshogi/Piece.html#method-i-swaped">#swaped</a>
@@ -6013,14 +6033,14 @@
     <span class="container">Bioshogi::Analysis::CustomDetectors::HikakukoukanDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-tag_first">#tag_first</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html#method-i-tag_first">#tag_first</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutekakuDetector</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-tag_first">#tag_first</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html#method-i-tag_second">#tag_second</a>
@@ -6113,14 +6133,14 @@
     <span class="container">Bioshogi::Analysis::XmotionDetectors::OutebishaDetector</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-i-to_a">#to_a</a>
-    &mdash;
-    <span class="container">Bioshogi::Place</span>
-
-  <li class="method">
     <a href="Bioshogi/V.html#method-i-to_a">#to_a</a>
     &mdash;
     <span class="container">Bioshogi::V</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-i-to_a">#to_a</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
 
   <li class="method">
     <a href="Bioshogi/Container/CheckmateYomiage.html#method-i-to_a">#to_a</a>
@@ -6128,9 +6148,9 @@
     <span class="container">Bioshogi::Container::CheckmateYomiage</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Core.html#method-i-to_akf">#to_akf</a>
+    <a href="Bioshogi/Hand/Drop.html#method-i-to_akf">#to_akf</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Core</span>
+    <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
     <a href="Bioshogi/Hand.html#method-i-to_akf">#to_akf</a>
@@ -6138,24 +6158,24 @@
     <span class="container">Bioshogi::Hand</span>
 
   <li class="method">
+    <a href="Bioshogi/Formatter/Core.html#method-i-to_akf">#to_akf</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Core</span>
+
+  <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-to_akf">#to_akf</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-i-to_akf">#to_akf</a>
+    <a href="Bioshogi/Hand/Move.html#method-i-to_akf">#to_akf</a>
     &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
+    <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
     <a href="Bioshogi/HandLog.html#method-i-to_akf">#to_akf</a>
     &mdash;
     <span class="container">Bioshogi::HandLog</span>
-
-  <li class="method">
-    <a href="Bioshogi/Hand/Move.html#method-i-to_akf">#to_akf</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/Core.html#method-i-to_animation_apng">#to_animation_apng</a>
@@ -6193,14 +6213,14 @@
     <span class="container">Bioshogi::Formatter::Animation::AnimationGifBuilder</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Animation/AnimationZipBuilder.html#method-i-to_binary">#to_binary</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Animation::AnimationZipBuilder</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/Animation/AnimationMp4Builder.html#method-i-to_binary">#to_binary</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AnimationMp4Builder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Animation/AnimationZipBuilder.html#method-i-to_binary">#to_binary</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Animation::AnimationZipBuilder</span>
 
   <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-to_blob_binary">#to_blob_binary</a>
@@ -6243,9 +6263,19 @@
     <span class="container">Bioshogi::FreqPieceInfo</span>
 
   <li class="method">
+    <a href="Bioshogi/Hand/Drop.html#method-i-to_csa">#to_csa</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand::Drop</span>
+
+  <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-to_csa">#to_csa</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/HandLog.html#method-i-to_csa">#to_csa</a>
+    &mdash;
+    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/Hand/Move.html#method-i-to_csa">#to_csa</a>
@@ -6253,9 +6283,19 @@
     <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-i-to_csa">#to_csa</a>
+    <a href="Bioshogi/Hand.html#method-i-to_csa">#to_csa</a>
     &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
+    <span class="container">Bioshogi::Hand</span>
+
+  <li class="method">
+    <a href="Bioshogi/Container.html#method-i-to_csa">#to_csa</a>
+    &mdash;
+    <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/PieceBox.html#method-i-to_csa">#to_csa</a>
+    &mdash;
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/Core.html#method-i-to_csa">#to_csa</a>
@@ -6268,29 +6308,9 @@
     <span class="container">Bioshogi::Board::ReaderMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/Container.html#method-i-to_csa">#to_csa</a>
-    &mdash;
-    <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-to_csa">#to_csa</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand</span>
-
-  <li class="method">
     <a href="Bioshogi/Player/PieceBoxMethods.html#method-i-to_csa">#to_csa</a>
     &mdash;
     <span class="container">Bioshogi::Player::PieceBoxMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-to_csa">#to_csa</a>
-    &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
-
-  <li class="method">
-    <a href="Bioshogi/HandLog.html#method-i-to_csa">#to_csa</a>
-    &mdash;
-    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-to_csa_bod">#to_csa_bod</a>
@@ -6313,19 +6333,9 @@
     <span class="container">Bioshogi::Container</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/AkfBuilder.html#method-i-to_h">#to_h</a>
+    <a href="Bioshogi/Sfen.html#method-i-to_h">#to_h</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::AkfBuilder</span>
-
-  <li class="method">
-    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-to_h">#to_h</a>
-    &mdash;
-    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
-
-  <li class="method">
-    <a href="Bioshogi/SingleClock.html#method-i-to_h">#to_h</a>
-    &mdash;
-    <span class="container">Bioshogi::SingleClock</span>
+    <span class="container">Bioshogi::Sfen</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/TagBundle.html#method-i-to_h">#to_h</a>
@@ -6333,19 +6343,14 @@
     <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/TacticHitTurnTableGenerator.html#method-i-to_h">#to_h</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TacticHitTurnTableGenerator</span>
-
-  <li class="method">
-    <a href="Bioshogi/Sfen.html#method-i-to_h">#to_h</a>
-    &mdash;
-    <span class="container">Bioshogi::Sfen</span>
-
-  <li class="method">
     <a href="Bioshogi/Parser/Pi.html#method-i-to_h">#to_h</a>
     &mdash;
     <span class="container">Bioshogi::Parser::Pi</span>
+
+  <li class="method">
+    <a href="Bioshogi/InputAdapter/AbstractAdapter.html#method-i-to_h">#to_h</a>
+    &mdash;
+    <span class="container">Bioshogi::InputAdapter::AbstractAdapter</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-i-to_h">#to_h</a>
@@ -6358,14 +6363,29 @@
     <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/PlayerMethods.html#method-i-to_header_h">#to_header_h</a>
+    <a href="Bioshogi/Formatter/AkfBuilder.html#method-i-to_h">#to_h</a>
     &mdash;
-    <span class="container">Bioshogi::Analysis::PlayerMethods</span>
+    <span class="container">Bioshogi::Formatter::AkfBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TacticHitTurnTableGenerator.html#method-i-to_h">#to_h</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TacticHitTurnTableGenerator</span>
+
+  <li class="method">
+    <a href="Bioshogi/SingleClock.html#method-i-to_h">#to_h</a>
+    &mdash;
+    <span class="container">Bioshogi::SingleClock</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_header_h">#to_header_h</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/PlayerMethods.html#method-i-to_header_h">#to_header_h</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::PlayerMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_header_shared_h">#to_header_shared_h</a>
@@ -6403,11 +6423,6 @@
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_ki2">#to_ki2</a>
-    &mdash;
-    <span class="container">Bioshogi::Board::ReaderMethods</span>
-
-  <li class="method">
     <a href="Bioshogi/HandLog.html#method-i-to_ki2">#to_ki2</a>
     &mdash;
     <span class="container">Bioshogi::HandLog</span>
@@ -6418,19 +6433,14 @@
     <span class="container">Bioshogi::Formatter::Core</span>
 
   <li class="method">
+    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_ki2">#to_ki2</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::ReaderMethods</span>
+
+  <li class="method">
     <a href="Bioshogi/HandLogs.html#method-i-to_ki2_a">#to_ki2_a</a>
     &mdash;
     <span class="container">Bioshogi::HandLogs</span>
-
-  <li class="method">
-    <a href="Bioshogi/Container.html#method-i-to_kif">#to_kif</a>
-    &mdash;
-    <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/HandLog.html#method-i-to_kif">#to_kif</a>
-    &mdash;
-    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/Hand/Move.html#method-i-to_kif">#to_kif</a>
@@ -6438,9 +6448,9 @@
     <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-to_kif">#to_kif</a>
+    <a href="Bioshogi/Formatter/Core.html#method-i-to_kif">#to_kif</a>
     &mdash;
-    <span class="container">Bioshogi::Hand</span>
+    <span class="container">Bioshogi::Formatter::Core</span>
 
   <li class="method">
     <a href="Bioshogi/Hand/Drop.html#method-i-to_kif">#to_kif</a>
@@ -6448,14 +6458,24 @@
     <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
-    <a href="Bioshogi/Formatter/Core.html#method-i-to_kif">#to_kif</a>
+    <a href="Bioshogi/HandLog.html#method-i-to_kif">#to_kif</a>
     &mdash;
-    <span class="container">Bioshogi::Formatter::Core</span>
+    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_kif">#to_kif</a>
     &mdash;
     <span class="container">Bioshogi::Board::ReaderMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/Container.html#method-i-to_kif">#to_kif</a>
+    &mdash;
+    <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/Hand.html#method-i-to_kif">#to_kif</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand</span>
 
   <li class="method">
     <a href="Bioshogi/HandLogs.html#method-i-to_kif_a">#to_kif_a</a>
@@ -6478,6 +6498,11 @@
     <span class="container">Bioshogi::HandLogs</span>
 
   <li class="method">
+    <a href="Bioshogi/ScreenImage/FontThemeInfo.html#method-i-to_params">#to_params</a>
+    &mdash;
+    <span class="container">Bioshogi::ScreenImage::FontThemeInfo</span>
+
+  <li class="method">
     <a href="Bioshogi/Formatter/Animation/AudioThemeInfo.html#method-i-to_params">#to_params</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AudioThemeInfo</span>
@@ -6488,19 +6513,14 @@
     <span class="container">Bioshogi::ScreenImage::ColorThemeInfo</span>
 
   <li class="method">
-    <a href="Bioshogi/ScreenImage/FontThemeInfo.html#method-i-to_params">#to_params</a>
+    <a href="Bioshogi/Container.html#method-i-to_piece_box">#to_piece_box</a>
     &mdash;
-    <span class="container">Bioshogi::ScreenImage::FontThemeInfo</span>
+    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
     <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_piece_box">#to_piece_box</a>
     &mdash;
     <span class="container">Bioshogi::Board::ReaderMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Container.html#method-i-to_piece_box">#to_piece_box</a>
-    &mdash;
-    <span class="container">Bioshogi::Container</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_png">#to_png</a>
@@ -6513,14 +6533,49 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
+    <a href="Bioshogi/Formatter.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/CsaBuilder.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::CsaBuilder</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/UsedSoldierCounter.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::UsedSoldierCounter</span>
+
+  <li class="method">
+    <a href="Bioshogi/OfficialFormatter.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::OfficialFormatter</span>
+
+  <li class="method">
     <a href="Bioshogi/MainClock.html#method-i-to_s">#to_s</a>
     &mdash;
     <span class="container">Bioshogi::MainClock</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-to_s">#to_s</a>
+    <a href="Bioshogi/Container/CheckmateYomiage.html#method-i-to_s">#to_s</a>
     &mdash;
-    <span class="container">Bioshogi::Soldier</span>
+    <span class="container">Bioshogi::Container::CheckmateYomiage</span>
+
+  <li class="method">
+    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::Board::ReaderMethods</span>
+
+  <li class="method">
+    <a href="Bioshogi/SingleClock.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::SingleClock</span>
+
+  <li class="method">
+    <a href="Bioshogi/PieceBox.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Place.html#method-i-to_s">#to_s</a>
@@ -6533,39 +6588,9 @@
     <span class="container">Bioshogi::Source</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/CsaBuilder.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::CsaBuilder</span>
-
-  <li class="method">
-    <a href="Bioshogi/V.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::V</span>
-
-  <li class="method">
-    <a href="Bioshogi/SingleClock.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::SingleClock</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter</span>
-
-  <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_s">#to_s</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
 
   <li class="method">
     <a href="Bioshogi/Board/CsaFormatter.html#method-i-to_s">#to_s</a>
@@ -6573,19 +6598,14 @@
     <span class="container">Bioshogi::Board::CsaFormatter</span>
 
   <li class="method">
+    <a href="Bioshogi/V.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Bioshogi::V</span>
+
+  <li class="method">
     <a href="Bioshogi/Board/KakinokiFormatter.html#method-i-to_s">#to_s</a>
     &mdash;
     <span class="container">Bioshogi::Board::KakinokiFormatter</span>
-
-  <li class="method">
-    <a href="Bioshogi/Container/CheckmateYomiage.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::Container::CheckmateYomiage</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/UsedSoldierCounter.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::UsedSoldierCounter</span>
 
   <li class="method">
     <a href="Bioshogi/Formatter/Animation/ProgressCop.html#method-i-to_s">#to_s</a>
@@ -6593,14 +6613,14 @@
     <span class="container">Bioshogi::Formatter::Animation::ProgressCop</span>
 
   <li class="method">
-    <a href="Bioshogi/OfficialFormatter.html#method-i-to_s">#to_s</a>
+    <a href="Bioshogi/Soldier.html#method-i-to_s">#to_s</a>
     &mdash;
-    <span class="container">Bioshogi::OfficialFormatter</span>
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_s">#to_s</a>
+    <a href="Bioshogi/Hand.html#method-i-to_s">#to_s</a>
     &mdash;
-    <span class="container">Bioshogi::Board::ReaderMethods</span>
+    <span class="container">Bioshogi::Hand</span>
 
   <li class="method">
     <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_s_soldiers">#to_s_soldiers</a>
@@ -6613,29 +6633,9 @@
     <span class="container">Bioshogi::Player::SoldierMethods</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-i-to_sfen">#to_sfen</a>
+    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_sfen">#to_sfen</a>
     &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
-
-  <li class="method">
-    <a href="Bioshogi/HandLog.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::HandLog</span>
-
-  <li class="method">
-    <a href="Bioshogi/PieceBox.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::PieceBox</span>
-
-  <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
+    <span class="container">Bioshogi::Board::ReaderMethods</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Column.html#method-i-to_sfen">#to_sfen</a>
@@ -6648,24 +6648,19 @@
     <span class="container">Bioshogi::PresetInfo</span>
 
   <li class="method">
+    <a href="Bioshogi/Hand/Drop.html#method-i-to_sfen">#to_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand::Drop</span>
+
+  <li class="method">
     <a href="Bioshogi/Hand/Move.html#method-i-to_sfen">#to_sfen</a>
     &mdash;
     <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
-    <a href="Bioshogi/Board/ReaderMethods.html#method-i-to_sfen">#to_sfen</a>
+    <a href="Bioshogi/Piece.html#method-i-to_sfen">#to_sfen</a>
     &mdash;
-    <span class="container">Bioshogi::Board::ReaderMethods</span>
-
-  <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
-    <a href="Bioshogi/Formatter/Core.html#method-i-to_sfen">#to_sfen</a>
-    &mdash;
-    <span class="container">Bioshogi::Formatter::Core</span>
+    <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
     <a href="Bioshogi/Dimension/Row.html#method-i-to_sfen">#to_sfen</a>
@@ -6678,19 +6673,44 @@
     <span class="container">Bioshogi::Player::PieceBoxMethods</span>
 
   <li class="method">
+    <a href="Bioshogi/Hand.html#method-i-to_sfen">#to_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand</span>
+
+  <li class="method">
+    <a href="Bioshogi/Formatter/Core.html#method-i-to_sfen">#to_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::Formatter::Core</span>
+
+  <li class="method">
     <a href="Bioshogi/Place.html#method-i-to_sfen">#to_sfen</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
 
   <li class="method">
-    <a href="Bioshogi/PresetInfo.html#method-i-to_short_sfen">#to_short_sfen</a>
+    <a href="Bioshogi/PieceBox.html#method-i-to_sfen">#to_sfen</a>
     &mdash;
-    <span class="container">Bioshogi::PresetInfo</span>
+    <span class="container">Bioshogi::PieceBox</span>
+
+  <li class="method">
+    <a href="Bioshogi/Soldier.html#method-i-to_sfen">#to_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/HandLog.html#method-i-to_sfen">#to_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_short_sfen">#to_short_sfen</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
+
+  <li class="method">
+    <a href="Bioshogi/PresetInfo.html#method-i-to_short_sfen">#to_short_sfen</a>
+    &mdash;
+    <span class="container">Bioshogi::PresetInfo</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-to_short_sfen_without_turn">#to_short_sfen_without_turn</a>
@@ -6803,14 +6823,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi.html#method-i-turn_ended_process">#turn_ended_process</a>
-    &mdash;
-    <span class="container">Bioshogi</span>
-
-  <li class="method">
     <a href="Bioshogi/PlayerExecutor/Base.html#method-i-turn_ended_process">#turn_ended_process</a>
     &mdash;
     <span class="container">Bioshogi::PlayerExecutor::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi.html#method-i-turn_ended_process">#turn_ended_process</a>
+    &mdash;
+    <span class="container">Bioshogi</span>
 
   <li class="method">
     <a href="Bioshogi/InputAdapter.html#method-i-turn_error_messages">#turn_error_messages</a>
@@ -6833,9 +6853,9 @@
     <span class="container">Bioshogi::FreqPieceInfo</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Move.html#method-i-type">#type</a>
+    <a href="Bioshogi/Hand.html#method-i-type">#type</a>
     &mdash;
-    <span class="container">Bioshogi::Hand::Move</span>
+    <span class="container">Bioshogi::Hand</span>
 
   <li class="method">
     <a href="Bioshogi/Hand/Drop.html#method-i-type">#type</a>
@@ -6843,9 +6863,9 @@
     <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand.html#method-i-type">#type</a>
+    <a href="Bioshogi/Hand/Move.html#method-i-type">#type</a>
     &mdash;
-    <span class="container">Bioshogi::Hand</span>
+    <span class="container">Bioshogi::Hand::Move</span>
 
   <li class="method">
     <a href="Bioshogi/Container.html#method-i-tyuuban_ikou">#tyuuban_ikou</a>
@@ -6908,14 +6928,14 @@
     <span class="container">Bioshogi::Parser::Pi</span>
 
   <li class="method">
-    <a href="Bioshogi/Hand/Drop.html#method-i-used_soldier">#used_soldier</a>
-    &mdash;
-    <span class="container">Bioshogi::Hand::Drop</span>
-
-  <li class="method">
     <a href="Bioshogi/Hand/Move.html#method-i-used_soldier">#used_soldier</a>
     &mdash;
     <span class="container">Bioshogi::Hand::Move</span>
+
+  <li class="method">
+    <a href="Bioshogi/Hand/Drop.html#method-i-used_soldier">#used_soldier</a>
+    &mdash;
+    <span class="container">Bioshogi::Hand::Drop</span>
 
   <li class="method">
     <a href="Bioshogi/Hand.html#method-i-used_soldier">#used_soldier</a>
@@ -6938,14 +6958,14 @@
     <span class="container">Bioshogi::ScreenImage</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-valid-3F">#valid?</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
-
-  <li class="method">
     <a href="Bioshogi/Formatter/Animation/AudioThemeInfo.html#method-i-valid-3F">#valid?</a>
     &mdash;
     <span class="container">Bioshogi::Formatter::Animation::AudioThemeInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-valid-3F">#valid?</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/TagBundle.html#method-i-value">#value</a>
@@ -6953,14 +6973,14 @@
     <span class="container">Bioshogi::Analysis::TagBundle</span>
 
   <li class="method">
-    <a href="Bioshogi/Analysis/TagIndex.html#method-i-values">#values</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::TagIndex</span>
-
-  <li class="method">
     <a href="Bioshogi/Analysis/GroupInfo.html#method-i-values">#values</a>
     &mdash;
     <span class="container">Bioshogi::Analysis::GroupInfo</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/TagIndex.html#method-i-values">#values</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::TagIndex</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/TagIndex.html#method-i-values_hash">#values_hash</a>
@@ -6978,24 +6998,24 @@
     <span class="container">Bioshogi::Place</span>
 
   <li class="method">
-    <a href="Bioshogi/Soldier.html#method-i-vector_from">#vector_from</a>
-    &mdash;
-    <span class="container">Bioshogi::Soldier</span>
-
-  <li class="method">
     <a href="Bioshogi/Place.html#method-i-vector_from">#vector_from</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
 
   <li class="method">
-    <a href="Bioshogi/Place.html#method-i-vector_to">#vector_to</a>
+    <a href="Bioshogi/Soldier.html#method-i-vector_from">#vector_from</a>
     &mdash;
-    <span class="container">Bioshogi::Place</span>
+    <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-vector_to">#vector_to</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
+
+  <li class="method">
+    <a href="Bioshogi/Place.html#method-i-vector_to">#vector_to</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
 
   <li class="method">
     <a href="Bioshogi/AI/Versus.html#method-i-versus">#versus</a>
@@ -7058,11 +7078,6 @@
     <span class="container">Bioshogi::BoardParser::CompareBoardParser</span>
 
   <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-i-white_then_flip">#white_then_flip</a>
-    &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
-
-  <li class="method">
     <a href="Bioshogi/Place.html#method-i-white_then_flip">#white_then_flip</a>
     &mdash;
     <span class="container">Bioshogi::Place</span>
@@ -7073,14 +7088,14 @@
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
+    <a href="Bioshogi/Dimension/Base.html#method-i-white_then_flip">#white_then_flip</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
     <a href="Bioshogi/Container.html#method-i-win_player">#win_player</a>
     &mdash;
     <span class="container">Bioshogi::Container</span>
-
-  <li class="method">
-    <a href="Bioshogi/Analysis/SugatayakiDetector.html#method-i-win_player">#win_player</a>
-    &mdash;
-    <span class="container">Bioshogi::Analysis::SugatayakiDetector</span>
 
   <li class="method">
     <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-win_side_location">#win_side_location</a>
@@ -7091,6 +7106,11 @@
     <a href="Bioshogi/Parser/Header.html#method-i-win_side_location">#win_side_location</a>
     &mdash;
     <span class="container">Bioshogi::Parser::Header</span>
+
+  <li class="method">
+    <a href="Bioshogi/Analysis/FinalizeTagDetector.html#method-i-win_side_player">#win_side_player</a>
+    &mdash;
+    <span class="container">Bioshogi::Analysis::FinalizeTagDetector</span>
 
   <li class="method">
     <a href="Bioshogi/ScreenImage.html#method-i-with_shadow">#with_shadow</a>
@@ -7118,34 +7138,14 @@
     <span class="container">Bioshogi::Analysis::TagReporter</span>
 
   <li class="method">
-    <a href="Bioshogi/Piece.html#method-i-xxx_kiri">#xxx_kiri</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece</span>
-
-  <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-xxx_kiri">#xxx_kiri</a>
     &mdash;
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
-    <a href="Bioshogi/Dimension/Base.html#method-i-yomiage">#yomiage</a>
+    <a href="Bioshogi/Piece.html#method-i-xxx_kiri">#xxx_kiri</a>
     &mdash;
-    <span class="container">Bioshogi::Dimension::Base</span>
-
-  <li class="method">
-    <a href="Bioshogi/Place.html#method-i-yomiage">#yomiage</a>
-    &mdash;
-    <span class="container">Bioshogi::Place</span>
-
-  <li class="method">
-    <a href="Bioshogi/HandLog.html#method-i-yomiage">#yomiage</a>
-    &mdash;
-    <span class="container">Bioshogi::HandLog</span>
-
-  <li class="method">
-    <a href="Bioshogi/Piece/YomiagePieceInfo.html#method-i-yomiage">#yomiage</a>
-    &mdash;
-    <span class="container">Bioshogi::Piece::YomiagePieceInfo</span>
+    <span class="container">Bioshogi::Piece</span>
 
   <li class="method">
     <a href="Bioshogi/Soldier.html#method-i-yomiage">#yomiage</a>
@@ -7153,9 +7153,29 @@
     <span class="container">Bioshogi::Soldier</span>
 
   <li class="method">
+    <a href="Bioshogi/Place.html#method-i-yomiage">#yomiage</a>
+    &mdash;
+    <span class="container">Bioshogi::Place</span>
+
+  <li class="method">
+    <a href="Bioshogi/Dimension/Base.html#method-i-yomiage">#yomiage</a>
+    &mdash;
+    <span class="container">Bioshogi::Dimension::Base</span>
+
+  <li class="method">
+    <a href="Bioshogi/Piece/YomiagePieceInfo.html#method-i-yomiage">#yomiage</a>
+    &mdash;
+    <span class="container">Bioshogi::Piece::YomiagePieceInfo</span>
+
+  <li class="method">
     <a href="Bioshogi/Location.html#method-i-yomiage">#yomiage</a>
     &mdash;
     <span class="container">Bioshogi::Location</span>
+
+  <li class="method">
+    <a href="Bioshogi/HandLog.html#method-i-yomiage">#yomiage</a>
+    &mdash;
+    <span class="container">Bioshogi::HandLog</span>
 
   <li class="method">
     <a href="Bioshogi/HandLog.html#method-i-yomiage_formatter">#yomiage_formatter</a>

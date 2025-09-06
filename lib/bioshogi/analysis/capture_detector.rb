@@ -48,10 +48,10 @@ module Bioshogi
             and_cond { preset_is(:x_taden) }
 
             # 【条件】取った駒が飛角である
-            and_cond { captured_soldier.piece.strong }
+            and_cond { captured_soldier.piece.hisyakaku }
 
             # 【条件】持駒を含めて大駒をすべて持っている
-            and_cond { player.strong_piece_completed? }
+            and_cond { player.hisyakaku_piece_completed? }
           },
         },
         {

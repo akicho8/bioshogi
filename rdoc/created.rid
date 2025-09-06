@@ -1,4 +1,4 @@
-Sun, 17 Aug 2025 11:20:36 +0900
+Sat, 06 Sep 2025 10:18:56 +0900
 lib/bioshogi.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/ai.rb	Mon, 13 Nov 2023 08:56:29 +0900
 lib/bioshogi/ai/brain.rb	Tue, 28 Jan 2025 19:20:14 +0900
@@ -24,17 +24,17 @@ lib/bioshogi/analysis/analyzer_mod.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/atsumeruyo.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/attack_info.rb	Sun, 17 Aug 2025 10:34:19 +0900
 lib/bioshogi/analysis/basic_accessor.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/board_piece_counts_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/board_piece_counts_methods.rb	Sat, 06 Sep 2025 09:06:14 +0900
 lib/bioshogi/analysis/capture_analyzer.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/capture_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/cluster_score_info.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/capture_detector.rb	Sat, 06 Sep 2025 10:10:13 +0900
+lib/bioshogi/analysis/cluster_score_info.rb	Mon, 01 Sep 2025 21:33:48 +0900
 lib/bioshogi/analysis/column_soldier_counter_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/custom_analyzer.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/custom_detector_info.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/custom_detector_info.rb	Sat, 06 Sep 2025 10:16:38 +0900
 lib/bioshogi/analysis/custom_detectors/anaguma_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/custom_detectors/gyokutousen_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/custom_detectors/hikakukiri_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/custom_detectors/hikakukoukan_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/custom_detectors/hisyakaku_kiru_detector.rb	Sat, 06 Sep 2025 10:16:38 +0900
 lib/bioshogi/analysis/custom_detectors/kakukoukan_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/custom_detectors/kakunihakaku_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/custom_detectors/magic_square_detector.rb	Sun, 17 Aug 2025 10:34:19 +0900
@@ -47,16 +47,16 @@ lib/bioshogi/analysis/every_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/executer_dsl.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/file_list.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/file_normalizer.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/finalize_tag_detector.rb	Sun, 17 Aug 2025 10:34:29 +0900
-lib/bioshogi/analysis/finalize_tag_func_info.rb	Sun, 17 Aug 2025 11:15:41 +0900
-lib/bioshogi/analysis/finalize_tag_info.rb	Sun, 17 Aug 2025 11:19:06 +0900
-lib/bioshogi/analysis/frequency.rb	Sat, 16 Aug 2025 14:55:08 +0900
+lib/bioshogi/analysis/finalize_tag_detector.rb	Mon, 01 Sep 2025 20:13:05 +0900
+lib/bioshogi/analysis/finalize_tag_func_info.rb	Sat, 06 Sep 2025 10:10:13 +0900
+lib/bioshogi/analysis/finalize_tag_info.rb	Mon, 01 Sep 2025 21:46:56 +0900
+lib/bioshogi/analysis/frequency.rb	Sat, 06 Sep 2025 10:18:50 +0900
 lib/bioshogi/analysis/group_info.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/kakukiri_canceler.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/motion_analyzer.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/motion_detector.rb	Sun, 17 Aug 2025 11:01:17 +0900
+lib/bioshogi/analysis/motion_detector.rb	Sat, 06 Sep 2025 10:06:36 +0900
 lib/bioshogi/analysis/normalize_check.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/note_info.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/note_info.rb	Mon, 01 Sep 2025 19:44:00 +0900
 lib/bioshogi/analysis/performance_benchmark.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/player_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/shape_analyzer.rb	Sun, 17 Aug 2025 10:34:30 +0900
@@ -69,9 +69,9 @@ lib/bioshogi/analysis/soldier_place_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/static_kif_mod.rb	Fri, 27 Jun 2025 15:00:48 +0900
 lib/bioshogi/analysis/style_accessor.rb	Fri, 27 Jun 2025 15:00:48 +0900
 lib/bioshogi/analysis/style_info.rb	Tue, 28 Jan 2025 19:20:14 +0900
-lib/bioshogi/analysis/sugatayaki_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/sugatayaki_detector.rb	Sat, 06 Sep 2025 10:10:13 +0900
 lib/bioshogi/analysis/tactic_detector.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/tactic_hit_turn_table.rb	Sun, 17 Aug 2025 11:20:02 +0900
+lib/bioshogi/analysis/tactic_hit_turn_table.rb	Sat, 06 Sep 2025 10:07:06 +0900
 lib/bioshogi/analysis/tactic_hit_turn_table_generator.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/tactic_info.rb	Sat, 16 Aug 2025 14:55:08 +0900
 lib/bioshogi/analysis/tactic_stat.rb	Tue, 28 Jan 2025 19:20:14 +0900
@@ -80,7 +80,7 @@ lib/bioshogi/analysis/tag_column_names.rb	Sun, 17 Aug 2025 10:34:30 +0900
 lib/bioshogi/analysis/tag_index.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/tag_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/tag_reporter.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/analysis/technique_info.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/analysis/technique_info.rb	Sat, 06 Sep 2025 08:57:30 +0900
 lib/bioshogi/analysis/tree_mod.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/trigger_expander.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/analysis/used_soldier_counter.rb	Wed, 13 Aug 2025 22:30:01 +0900
@@ -199,7 +199,7 @@ lib/bioshogi/parser/kif_parser.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/parser/pi.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/parser/sfen_parser.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/parser/time_parser.rb	Tue, 13 Dec 2022 12:03:19 +0900
-lib/bioshogi/piece.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/piece.rb	Sat, 06 Sep 2025 10:10:41 +0900
 lib/bioshogi/piece/ek_score_info.rb	Sat, 16 Sep 2023 09:53:16 +0900
 lib/bioshogi/piece/piece_csa.rb	Tue, 31 Oct 2023 16:08:04 +0900
 lib/bioshogi/piece/piece_pressure.rb	Tue, 31 Oct 2023 16:08:59 +0900
@@ -210,7 +210,7 @@ lib/bioshogi/piece/yomiage_piece_info.rb	Tue, 31 Oct 2023 16:08:54 +0900
 lib/bioshogi/piece_box.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/place.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/player.rb	Wed, 13 Aug 2025 22:30:01 +0900
-lib/bioshogi/player/other_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
+lib/bioshogi/player/other_methods.rb	Sat, 06 Sep 2025 10:10:14 +0900
 lib/bioshogi/player/piece_box_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900
 lib/bioshogi/player/pressure_methods.rb	Wed, 18 Jun 2025 21:40:21 +0900
 lib/bioshogi/player/soldier_methods.rb	Wed, 13 Aug 2025 22:30:01 +0900

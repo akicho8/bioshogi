@@ -78,9 +78,11 @@
       <li ><a href="#method-i-current_score">current_score</a></li>
       <li ><a href="#method-i-ek_score_with_cond">ek_score_with_cond</a></li>
       <li ><a href="#method-i-ek_score_without_cond">ek_score_without_cond</a></li>
+      <li ><a href="#method-i-hisyakaku_piece_completed-3F">hisyakaku_piece_completed?</a></li>
+      <li ><a href="#method-i-hisyakaku_piece_have_count">hisyakaku_piece_have_count</a></li>
+      <li ><a href="#method-i-kingin_piece_completed-3F">kingin_piece_completed?</a></li>
+      <li ><a href="#method-i-kingin_piece_have_count">kingin_piece_have_count</a></li>
       <li ><a href="#method-i-overwhelming_score-3F">overwhelming_score?</a></li>
-      <li ><a href="#method-i-strong_piece_completed-3F">strong_piece_completed?</a></li>
-      <li ><a href="#method-i-strong_piece_have_count">strong_piece_have_count</a></li>
     </ul>
   </div>
 
@@ -106,16 +108,6 @@
   <section id="5Buntitled-5D" class="documentation-section anchor-link">
 
 
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-        <dt id="STRONG_PIECE_ALL_COUNT">STRONG_PIECE_ALL_COUNT
-        <dd>
-          
-      </dl>
-    </section>
 
 
 
@@ -142,7 +134,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="bare_king-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">bare_king?</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">soldiers_count_per_location</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-comment"># 盤上の自分の駒が1つ</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">soldiers_lookup1</span>(<span class="ruby-value">:king</span>).<span class="ruby-identifier">present?</span>                    <span class="ruby-comment"># 玉がいる</span>
@@ -175,7 +167,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="current_score-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_score</span>
   <span class="ruby-identifier">soldiers</span>.<span class="ruby-identifier">sum</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:abs_weight</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">score</span>
 <span class="ruby-keyword">end</span></pre>
@@ -204,7 +196,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="ek_score_with_cond-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ek_score_with_cond</span>
   <span class="ruby-comment"># 「入玉」かつ「玉を除く駒が10毎以上相手陣に入っている」なら</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">king_soldier_entered?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">many_soliders_are_in_the_opponent_area?</span>
@@ -236,12 +228,132 @@
 
         <div class="method-description">
           <div class="method-source-code" id="ek_score_without_cond-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ek_score_without_cond</span>
   <span class="ruby-identifier">soldiers_ek_score</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">ek_score</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           <p>入玉宣言時の得点合計(仮)</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hisyakaku_piece_completed-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hisyakaku_piece_completed-3F" title="Link to this method">
+                <span class="method-name">hisyakaku_piece_completed?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hisyakaku_piece_completed-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hisyakaku_piece_completed?</span>
+  <span class="ruby-identifier">hisyakaku_piece_have_count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">hisyakaku_pieces_count_all</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>大駒コンプリートしている？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-hisyakaku_piece_have_count" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-hisyakaku_piece_have_count" title="Link to this method">
+                <span class="method-name">hisyakaku_piece_have_count</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="hisyakaku_piece_have_count-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hisyakaku_piece_have_count</span>
+  <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">hisyakaku_pieces</span>.<span class="ruby-identifier">sum</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>, <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">soldiers_count</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>][<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>持駒を含めた大駒の数</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-kingin_piece_completed-3F" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-kingin_piece_completed-3F" title="Link to this method">
+                <span class="method-name">kingin_piece_completed?</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="kingin_piece_completed-3F-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">kingin_piece_completed?</span>
+  <span class="ruby-identifier">kingin_piece_have_count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">kingin_pieces_count_all</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>金銀コンプリートしている？</p>
+        </div>
+
+
+      </div>
+
+      <div id="method-i-kingin_piece_have_count" class="method-detail anchor-link ">
+        <div class="method-header">
+            <div class="method-heading">
+              <a href="#method-i-kingin_piece_have_count" title="Link to this method">
+                <span class="method-name">kingin_piece_have_count</span>
+                <span class="method-args">()</span>
+              </a>
+            </div>
+        </div>
+
+          <div class="method-controls">
+            <details class="method-source-toggle">
+              <summary>Source</summary>
+            </details>
+          </div>
+
+        <div class="method-description">
+          <div class="method-source-code" id="kingin_piece_have_count-source">
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">kingin_piece_have_count</span>
+  <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">kingin_pieces</span>.<span class="ruby-identifier">sum</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>, <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">soldiers_count</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>][<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          <p>持駒を含めた金銀の数</p>
         </div>
 
 
@@ -265,72 +377,12 @@
 
         <div class="method-description">
           <div class="method-source-code" id="overwhelming_score-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 56</span>
+            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 78</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">overwhelming_score?</span>
   <span class="ruby-identifier">current_score</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">Analysis</span><span class="ruby-operator">::</span><span class="ruby-constant">ClusterScoreInfo</span>[<span class="ruby-string">&quot;圧倒的な駒得&quot;</span>].<span class="ruby-identifier">min_score</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           <p>圧倒的なスコアがある？</p>
-        </div>
-
-
-      </div>
-
-      <div id="method-i-strong_piece_completed-3F" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-strong_piece_completed-3F" title="Link to this method">
-                <span class="method-name">strong_piece_completed?</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="strong_piece_completed-3F-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 11</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">strong_piece_completed?</span>
-  <span class="ruby-identifier">strong_piece_have_count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">STRONG_PIECE_ALL_COUNT</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          <p>大駒コンプリートしている？</p>
-        </div>
-
-
-      </div>
-
-      <div id="method-i-strong_piece_have_count" class="method-detail anchor-link ">
-        <div class="method-header">
-            <div class="method-heading">
-              <a href="#method-i-strong_piece_have_count" title="Link to this method">
-                <span class="method-name">strong_piece_have_count</span>
-                <span class="method-args">()</span>
-              </a>
-            </div>
-        </div>
-
-          <div class="method-controls">
-            <details class="method-source-toggle">
-              <summary>Source</summary>
-            </details>
-          </div>
-
-        <div class="method-description">
-          <div class="method-source-code" id="strong_piece_have_count-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/player/other_methods.rb, line 16</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">strong_piece_have_count</span>
-  <span class="ruby-constant">Piece</span>.<span class="ruby-identifier">strong_pieces</span>.<span class="ruby-identifier">sum</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">piece_box</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>, <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">board</span>.<span class="ruby-identifier">soldiers_count</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>][<span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>]
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          <p>持駒を含めた大駒の数</p>
         </div>
 
 

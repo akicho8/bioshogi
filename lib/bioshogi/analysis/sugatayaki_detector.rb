@@ -40,7 +40,7 @@ module Bioshogi
         unless anaguma_formation? # 相手が穴熊状態でなければ却下
           return
         end
-        # unless strong_piece_completed? # 大駒コンプリートしている？ → overwhelming_score? の方が汎用的
+        # unless hisyakaku_piece_completed? # 大駒コンプリートしている？ → overwhelming_score? の方が汎用的
         #   return
         # end
         unless win_side_player.overwhelming_score? # 自分が圧倒的な戦力を持っているか？

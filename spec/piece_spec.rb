@@ -13,8 +13,8 @@ RSpec.describe Bioshogi::Piece do
     assert { Bioshogi::Piece.s_to_h2("▲歩2 飛 △歩二飛 ▲金") == { :black=>{ :pawn=>2, :rook=>1, :gold=>1 }, :white=>{ :pawn=>2, :rook=>1 } } }
   end
 
-  it ".strong_pieces" do
-    assert { Bioshogi::Piece.strong_pieces == [Bioshogi::Piece[:rook], Bioshogi::Piece[:bishop]] }
+  it ".hisyakaku_pieces" do
+    assert { Bioshogi::Piece.hisyakaku_pieces == [Bioshogi::Piece[:rook], Bioshogi::Piece[:bishop]] }
   end
 
   it "漢数字" do

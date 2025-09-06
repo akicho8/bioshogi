@@ -98,14 +98,14 @@ module Bioshogi
 
     include ApplicationMemoryRecord
     memory_record [
-      { key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "K", promotable: false, always_alive: true,  strong: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  hisyakaku: false, kogoma: false, kingin: false, swap_key: nil,     keini_yowai: false, fuigai: true,  count: 1, },
-      { key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_formal_sheet_name: nil,    other_matched_promoted_names: "竜",  sfen_char: "R", promotable: true,  always_alive: true,  strong: true,  dengaku_target: true,  tatakare_target: true,  forward_movable: true,  hisyakaku: true,  kogoma: false, kingin: false, swap_key: :bishop, keini_yowai: false, fuigai: true,  count: 1, },
-      { key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "B", promotable: true,  always_alive: true,  strong: true,  dengaku_target: true,  tatakare_target: false, forward_movable: false, hisyakaku: true,  kogoma: false, kingin: false, swap_key: :rook,   keini_yowai: true,  fuigai: true,  count: 1, },
-      { key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "G", promotable: false, always_alive: true,  strong: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  hisyakaku: false, kogoma: true,  kingin: true,  swap_key: nil,     keini_yowai: false, fuigai: true,  count: 2, },
-      { key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_formal_sheet_name: "成銀", other_matched_promoted_names: nil,   sfen_char: "S", promotable: true,  always_alive: true,  strong: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  hisyakaku: false, kogoma: true,  kingin: true,  swap_key: nil,     keini_yowai: true,  fuigai: true,  count: 2, },
-      { key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_formal_sheet_name: "成桂", other_matched_promoted_names: "今",  sfen_char: "N", promotable: true,  always_alive: false, strong: false, dengaku_target: false, tatakare_target: false, forward_movable: false, hisyakaku: false, kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: true,  fuigai: true,  count: 2, },
-      { key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_formal_sheet_name: "成香", other_matched_promoted_names: "仝",  sfen_char: "L", promotable: true,  always_alive: false, strong: false, dengaku_target: false, tatakare_target: false, forward_movable: true,  hisyakaku: false, kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: false, fuigai: true,  count: 2, },
-      { key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "P", promotable: true,  always_alive: false, strong: false, dengaku_target: false, tatakare_target: false, forward_movable: true,  hisyakaku: false, kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: true,  fuigai: false, count: 9, },
+      { key: :king,   name: "玉", basic_alias: "王", promoted_name: nil,  promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "K", promotable: false, always_alive: true,  hisyakaku: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  kogoma: false, kingin: false, swap_key: nil,     keini_yowai: false, fuigai: true,  count: 1, },
+      { key: :rook,   name: "飛", basic_alias: nil,  promoted_name: "龍", promoted_formal_sheet_name: nil,    other_matched_promoted_names: "竜",  sfen_char: "R", promotable: true,  always_alive: true,  hisyakaku: true,  dengaku_target: true,  tatakare_target: true,  forward_movable: true,  kogoma: false, kingin: false, swap_key: :bishop, keini_yowai: false, fuigai: true,  count: 1, },
+      { key: :bishop, name: "角", basic_alias: nil,  promoted_name: "馬", promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "B", promotable: true,  always_alive: true,  hisyakaku: true,  dengaku_target: true,  tatakare_target: false, forward_movable: false, kogoma: false, kingin: false, swap_key: :rook,   keini_yowai: true,  fuigai: true,  count: 1, },
+      { key: :gold,   name: "金", basic_alias: nil,  promoted_name: nil,  promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "G", promotable: false, always_alive: true,  hisyakaku: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  kogoma: true,  kingin: true,  swap_key: nil,     keini_yowai: false, fuigai: true,  count: 2, },
+      { key: :silver, name: "銀", basic_alias: nil,  promoted_name: "全", promoted_formal_sheet_name: "成銀", other_matched_promoted_names: nil,   sfen_char: "S", promotable: true,  always_alive: true,  hisyakaku: false, dengaku_target: true,  tatakare_target: true,  forward_movable: true,  kogoma: true,  kingin: true,  swap_key: nil,     keini_yowai: true,  fuigai: true,  count: 2, },
+      { key: :knight, name: "桂", basic_alias: nil,  promoted_name: "圭", promoted_formal_sheet_name: "成桂", other_matched_promoted_names: "今",  sfen_char: "N", promotable: true,  always_alive: false, hisyakaku: false, dengaku_target: false, tatakare_target: false, forward_movable: false, kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: true,  fuigai: true,  count: 2, },
+      { key: :lance,  name: "香", basic_alias: nil,  promoted_name: "杏", promoted_formal_sheet_name: "成香", other_matched_promoted_names: "仝",  sfen_char: "L", promotable: true,  always_alive: false, hisyakaku: false, dengaku_target: false, tatakare_target: false, forward_movable: true,  kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: false, fuigai: true,  count: 2, },
+      { key: :pawn,   name: "歩", basic_alias: nil,  promoted_name: "と", promoted_formal_sheet_name: nil,    other_matched_promoted_names: nil,   sfen_char: "P", promotable: true,  always_alive: false, hisyakaku: false, dengaku_target: false, tatakare_target: false, forward_movable: true,  kogoma: true,  kingin: false, swap_key: nil,     keini_yowai: true,  fuigai: false, count: 9, },
     ]
 
     class << self
@@ -131,8 +131,8 @@ module Bioshogi
         @promoted_group ||= inject({}) { |a, e| a.merge(e.promoted_names.collect { |key| [key, e] }.to_h) }
       end
 
-      def strong_pieces
-        @strong_pieces ||= find_all(&:strong)
+      def hisyakaku_pieces
+        @hisyakaku_pieces ||= find_all(&:hisyakaku)
       end
 
       def kingin_pieces

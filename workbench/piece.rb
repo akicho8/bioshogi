@@ -16,7 +16,7 @@ Piece.s_to_h("歩十")     # => {pawn: 10}
 Piece.s_to_h("歩十一")   # => {pawn: 11}
 Piece.s_to_h("歩二十一") # => {pawn: 21}
 
-tp Piece.strong_pieces          # => [<Bioshogi::Piece:864 飛 rook>, <Bioshogi::Piece:872 角 bishop>]
+tp Piece.hisyakaku_pieces          # => [<Bioshogi::Piece:864 飛 rook>, <Bioshogi::Piece:872 角 bishop>]
 tp Piece.kingin_pieces          # => [<Bioshogi::Piece:880 金 gold>, <Bioshogi::Piece:888 銀 silver>]
 
 tp Piece["飛"].to_h
@@ -38,7 +38,7 @@ tp Piece["飛"].to_h
 # >> |                    sfen_char | R      |
 # >> |                   promotable | true   |
 # >> |                 always_alive | true   |
-# >> |                       strong | true   |
+# >> |                       hisyakaku | true   |
 # >> |               dengaku_target | true   |
 # >> |              tatakare_target | true   |
 # >> |              forward_movable | true   |
