@@ -219,6 +219,22 @@ module Bioshogi
             end
           },
         },
+        {
+          key: "ミニマリスト判定",
+          description: "持駒なしかつ盤上の駒が初期状態より減っている",
+          func: -> {
+            if win_side_player
+              if win_side_player.piece_box.empty?
+                if preset_info = container.params[:preset_info_or_nil]
+                  default_piece_count = preset_info.location_split[win_side_player.location.key].size
+                  if win_side_player.soldiers.count < default_piece_count
+                    win_side_player.tag_bundle << "ミニマリスト"
+                  end
+                end
+              end
+            end
+          },
+        },
 
         {
           key: "相穴熊",

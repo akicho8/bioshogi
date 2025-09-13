@@ -21,17 +21,17 @@ module Bioshogi
               next
             end
           end
-          if e.critical
+          if e.be_critical
             unless container.critical_turn
               next
             end
           end
-          if e.outbreak
+          if e.be_outbreak
             unless container.outbreak_turn
               next
             end
           end
-          if e.checkmate
+          if e.be_checkmate
             unless container.params[:input_last_action_info]&.last_checkmate_p
               next
             end

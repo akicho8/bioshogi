@@ -5,6 +5,7 @@
 module Bioshogi
   module Analysis
     TacticHitTurnTable = {
+     :"ミニマリスト"  =>  nil,
      :"ロケット"  =>  nil,
      :"力戦"  =>  nil,
      :"名人に定跡なし"  =>  nil,
