@@ -101,10 +101,10 @@ module Bioshogi
           **outer_frame_padding_enabled,
           **pentagon_enabled,
           :piece_font_color           => "hsla(0,0%,25%,1.0)",
-          :promoted_font_color        => PaletteInfo.fetch("主用朱色").to_color.html,
+          :promoted_font_color        => PaletteInfo.fetch("主用朱色").to_color.to_rgb.html,
           :outer_frame_fill_color     => "hsla(0,0%,0%,0.2)", # "rgba(120,120,120,0.5)",
           :piece_move_cell_fill_color => "hsla(0,0%,0%,0.1)",
-          :piece_pentagon_fill_color  => PaletteInfo.fetch("主用駒色").to_color.html,
+          :piece_pentagon_fill_color  => PaletteInfo.fetch("主用駒色").to_color.to_rgb.html,
         }
       end
 

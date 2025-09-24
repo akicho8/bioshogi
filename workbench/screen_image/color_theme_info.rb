@@ -19,14 +19,13 @@ bg_file = nil
 # end
 
 # ScreenImage::ColorThemeInfo.each { |e| parser.screen_image_renderer(color_theme_key: e.key).display }
-
 # ScreenImage::ColorThemeInfo.each { |e| parser.screen_image_renderer(color_theme_key: e.key, renderer_override_params: {bg_file: bg_file}).display }
 
-parser.screen_image_renderer(color_theme_key: "is_color_theme_paper").display
+parser.screen_image_renderer(color_theme_key: "is_color_theme_piyo").display
 exit
 
-
-parser.screen_image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: { piece_image_key: "Portella" }).display
+# parser.screen_image_renderer(color_theme_key: "is_color_theme_paper").display
+# parser.screen_image_renderer(color_theme_key: "is_color_theme_real", renderer_override_params: { piece_image_key: "Portella" }).display
 
 # parser.screen_image_renderer(color_theme_key: "is_color_theme_emoji_pattern_mito").display
 # parser.screen_image_renderer(color_theme_key: "is_color_theme_emoji_pattern_skelton").display
@@ -107,15 +106,4 @@ parser.screen_image_renderer(color_theme_key: "is_color_theme_real", renderer_ov
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1210.1249999832362
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1008.8139999425039
-# >> |-------------------------|
-# >> | is_color_theme_paper      |
-# >> | is_color_theme_shape       |
-# >> | is_color_theme_shogi_extend      |
-# >> | is_color_theme_real_wood3         |
-# >> | is_color_theme_brightness_grey   |
-# >> | is_color_theme_brightness_matrix |
-# >> | is_color_theme_brightness_green  |
-# >> | is_color_theme_brightness_orange |
-# >> | is_color_theme_kimetsu_red       |
-# >> | is_color_theme_kimetsu_blue      |
-# >> |-------------------------|
+# >> /Users/ikeda/src/bioshogi/workbench/tmp/56d473333164100fc62b2efb5e96f51d.png

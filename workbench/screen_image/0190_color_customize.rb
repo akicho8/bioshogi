@@ -56,3 +56,4 @@ EOT
 
 object = parser.screen_image_renderer(params)
 object.display
+# >> /Users/ikeda/src/bioshogi/workbench/tmp/e06b0570a1620e3175de9fcb4ce3108c.png

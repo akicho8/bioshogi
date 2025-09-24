@@ -7,7 +7,7 @@ gem "stackprof"
 gem "faraday"
 gem "diff-lcs"
 gem "benchmark-ips"
-gem "color", "< 2.0.0"
+gem "color", ">= 2.0.0"
 
 # bioshogiをフルで使う場合に必要なもの
 # これからは gemspec で必須にしていない

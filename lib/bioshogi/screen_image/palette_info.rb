@@ -8,7 +8,7 @@ module Bioshogi
       ]
 
       def to_color
-        @to_color ||= Color::HSL.new(*hsl)
+        @to_color ||= Color::HSL.from_values(*hsl)
       end
     end
   end
