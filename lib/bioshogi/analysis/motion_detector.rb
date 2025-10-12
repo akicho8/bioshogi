@@ -212,7 +212,7 @@ module Bioshogi
           ],
           func: -> {
             # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
+            skip_if { container.tyuuban_ikou }
 
             # 【条件】下から2行目である
             and_cond { soldier.bottom_spaces == 1 }
@@ -270,6 +270,12 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
+            # 【条件】中盤移行である (これがないと凧金戦法のときに出てしまう)
+            and_cond { container.tyuuban_ikou }
+
+            # 【条件】平手風の手合割である
+            and_cond { preset_is(:hirate_like) }
+
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
 
@@ -595,7 +601,7 @@ module Bioshogi
           trigger: { piece_key: :silver, promoted: false, motion: :move },
           func: -> {
             # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
+            skip_if { container.tyuuban_ikou }
 
             # 【条件】前線(6行目)にいる
             and_cond { soldier.kurai_sasae? }
@@ -657,7 +663,7 @@ module Bioshogi
           trigger: { piece_key: :rook, promoted: false, motion: :move },
           func: -> {
             # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
+            skip_if { container.tyuuban_ikou }
 
             # 【条件】前線(6行目)にいる
             and_cond { soldier.funoue_line_ni_uita? }
@@ -1023,7 +1029,7 @@ module Bioshogi
           trigger: { piece_key: :knight, promoted: false, motion: :move },
           func: -> {
             # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
+            skip_if { container.tyuuban_ikou }
 
             # 【条件】下から3行目である
             and_cond { soldier.bottom_spaces == 2 }
@@ -1183,7 +1189,7 @@ module Bioshogi
           trigger: { piece_key: :bishop, promoted: false, motion: :both },
           func: -> {
             # 【条件】中盤以降である (そうしないと序盤の77角打まで該当してしまう) :OPTIONAL:
-            and_cond { container.outbreak_turn }
+            and_cond { container.tyuuban_ikou }
 
             # 【条件】自陣から打っている
             and_cond { soldier.own_side? }
@@ -1430,7 +1436,7 @@ module Bioshogi
           trigger: { piece_key: :pawn, promoted: false, motion: :both },
           func: -> {
             # 【却下】すでに開戦している
-            skip_if { container.outbreak_turn }
+            skip_if { container.tyuuban_ikou }
 
             # 【却下】同歩
             skip_if { captured_soldier }
@@ -1535,7 +1541,7 @@ module Bioshogi
           trigger: { piece_key: :pawn, promoted: false, motion: :drop },
           func: -> {
             # 【条件】中盤以降である
-            and_cond { container.outbreak_turn }
+            and_cond { container.tyuuban_ikou }
 
             # 【却下】歩がある
             skip_if { player.piece_box.has_key?(:pawn) }
