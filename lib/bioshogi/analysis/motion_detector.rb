@@ -270,11 +270,13 @@ module Bioshogi
           description: nil,
           trigger: { piece_key: :gold, promoted: false, motion: :move },
           func: -> {
-            # 【条件】中盤移行である (これがないと凧金戦法のときに出てしまう)
-            and_cond { container.tyuuban_ikou }
+            if false
+              # 【条件】中盤移行である (これがないと凧金戦法のときに出てしまう)
+              and_cond { container.tyuuban_ikou }
 
-            # 【条件】平手風の手合割である
-            and_cond { preset_is(:hirate_like) }
+              # 【条件】平手風の手合割である
+              and_cond { preset_is(:hirate_like) }
+            end
 
             # 【条件】自玉が1つ存在する
             and_cond { player.king_soldier_only_one_exist? }
