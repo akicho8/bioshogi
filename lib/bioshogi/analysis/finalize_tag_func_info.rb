@@ -159,6 +159,24 @@ module Bioshogi
         ################################################################################
 
         {
+          key: "持将棋埋め込み",
+          func: -> {
+            if input_last_action_info = container.params[:input_last_action_info]
+              if input_last_action_info.key == :JISHOGI
+                container.players.each do |player|
+                  player.tag_bundle << "持将棋"
+                  # 最終手で持将棋になったは限らないため最終手に持将棋を入れるのはおかしい
+                  if false
+                    if hand_log = container.hand_logs.last
+                      hand_log.tag_bundle << "持将棋"
+                    end
+                  end
+                end
+              end
+            end
+          },
+        },
+        {
           key: "屍の舞",
           description: "大駒がない状態で勝った場合",
           func: -> {

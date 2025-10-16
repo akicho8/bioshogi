@@ -12,7 +12,7 @@ module Bioshogi
   # %ILLEGAL_MOVE 手番側の反則負け、反則の内容はコメントで記録する
   # %+ILLEGAL_ACTION 先手(下手)の反則行為により、後手(上手)の勝ち
   # %-ILLEGAL_ACTION 後手(上手)の反則行為により、先手(下手)の勝ち
-  # %JISHOGI 持将棋
+  # %JISHOGI 持将棋 ※←勝ったのか負けたのかこれだけではわからない。KACHI があるということはこっちは負けだろうか？？？
   # %KACHI (入玉で)勝ちの宣言
   # %HIKIWAKE (入玉で)引き分けの宣言
   # %MATTA 待った
@@ -40,7 +40,7 @@ module Bioshogi
       { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
       { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
       { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_player_collect_p: nil,  },
-      { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる
+      { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる ← X_WINNER でわかるようにした ← 嘘
       { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  },
       { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_player_collect_p: nil,  },
       { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_player_collect_p: true, },

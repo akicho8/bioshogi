@@ -31,6 +31,7 @@ module Bioshogi
         { key: "急戦・持久戦",   turn_gteq: nil, preset_is: :hirate_like, be_critical: nil,  be_outbreak: true, be_checkmate: nil,  description: "",           },
         { key: "短手数・長手数", turn_gteq: nil, preset_is: :hirate_like, be_critical: true, be_outbreak: nil,  be_checkmate: nil,  description: "",           },
 
+        { key: "持将棋埋め込み", turn_gteq: nil, preset_is: :hirate_like, be_critical: nil,  be_outbreak: nil,  be_checkmate: nil,  description: "",           },
         { key: "屍の舞",         turn_gteq: nil, preset_is: :hirate_like, be_critical: nil,  be_outbreak: true, be_checkmate: nil,  description: "",           },
         { key: "穴熊の姿焼き",   turn_gteq: nil, preset_is: :hirate_like, be_critical: nil,  be_outbreak: true, be_checkmate: nil,  description: "",           },
         { key: "駒得は何か",     turn_gteq: nil, preset_is: :hirate_like, be_critical: nil,  be_outbreak: true, be_checkmate: nil,  description: "",           },
