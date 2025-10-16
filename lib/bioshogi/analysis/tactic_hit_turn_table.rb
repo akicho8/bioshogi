@@ -15,6 +15,7 @@ module Bioshogi
      :"屍の舞"  =>  nil,
      :"急戦"  =>  nil,
      :"持久戦"  =>  nil,
+     :"持将棋"  =>  nil,
      :"玉単騎"  =>  nil,
      :"相入玉"  =>  nil,
      :"相居玉"  =>  nil,

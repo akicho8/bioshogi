@@ -37,7 +37,7 @@ module Bioshogi
           str = @old_text
           str = str.gsub(/(先手|後手|上手|下手)の(戦法|囲い|手筋|備考|棋風|玉移動|キル数|駒使用)：.*\R/, "")
           str = str.gsub(/(先手|後手|上手|下手)玉移動.*：.*\R/, "")
-          str = str.gsub(/(総キル数|接触|開戦|総手数|結末)：.*\R/, "")
+          str = str.gsub(/(総キル数|接触|開戦|総手数)：.*\R/, "")
         end
 
         def new_file
