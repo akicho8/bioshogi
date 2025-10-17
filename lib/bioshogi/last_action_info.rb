@@ -32,20 +32,20 @@ module Bioshogi
     memory_record [
       # 手番による勝者判定が可能なら win_player_collect_p を true にする
       # CHUDAN などはどちらが中断(切断)したのかもしわからない
-      { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  win_player_collect_p: true, },
-      { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  win_player_collect_p: nil,  }, # 切断の場合どちらが切断したのかわからないため win_player_collect_p: true にしてはいけない
-      { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, win_player_collect_p: nil,  },
-      { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  win_player_collect_p: true, },
-      { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
-      { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
-      { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  },
-      { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_player_collect_p: nil,  },
-      { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる ← X_WINNER でわかるようにした ← 嘘
-      { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  },
-      { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_player_collect_p: nil,  },
-      { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_player_collect_p: true, },
-      { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  },
-      { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  win_player_collect_p: nil,  },
+      { key: "TORYO",           kakinoki_word: "投了",       reason: nil,              draw: nil,  win_player_collect_p: true, jishogi_p: false, },
+      { key: "CHUDAN",          kakinoki_word: "中断",       reason: "切断により",     draw: nil,  win_player_collect_p: nil,  jishogi_p: false, }, # 切断の場合どちらが切断したのかわからないため win_player_collect_p: true にしてはいけない
+      { key: "SENNICHITE",      kakinoki_word: "千日手",     reason: "千日手",         draw: true, win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "TIME_UP",         kakinoki_word: "切れ負け",   reason: "時間切れにより", draw: nil,  win_player_collect_p: true, jishogi_p: false, },
+      { key: "ILLEGAL_MOVE",    kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "+ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "-ILLEGAL_ACTION", kakinoki_word: nil,          reason: "反則により",     draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "JISHOGI",         kakinoki_word: "持将棋",     reason: nil,              draw: nil,  win_player_collect_p: nil,  jishogi_p: true,  },
+      { key: "KACHI",           kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  jishogi_p: true,  }, # この場合、win_player が信用できなくなり、つまりどちらが勝ったのかわからなくなる ← X_WINNER でわかるようにした ← 嘘
+      { key: "HIKIWAKE",        kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "MATTA",           kakinoki_word: "中断",       reason: nil,              draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "TSUMI",           kakinoki_word: "詰み",       reason: nil,              draw: nil,  win_player_collect_p: true, jishogi_p: false, },
+      { key: "FUZUMI",          kakinoki_word: nil,          reason: nil,              draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
+      { key: "ERROR",           kakinoki_word: nil,          reason: "エラーにより",   draw: nil,  win_player_collect_p: nil,  jishogi_p: false, },
     ]
 
     alias csa_key key

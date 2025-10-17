@@ -22,6 +22,9 @@ module Bioshogi
           v ||= str.match?(/\b(PI|P\d|P[\+\-])\b/) # PI P1 P+ P-
           v ||= str.match?(/[+-]\d{4}[A-Z]{2}/)    # +1828OU
           v ||= str.match?(/\b(N[+-])\b/)          # 対局者名
+          v ||= str.match?(/^%[+-]?[A-Z_]+$/)      # %+ILLEGAL_ACTION や %KACHI だけの行
+          # v ||= str.match?(/^[+-]$/)             # + または - だけの行 はノイズにひっかかりそうなのでやめる
+          v
         end
       end
 

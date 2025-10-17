@@ -162,7 +162,7 @@ module Bioshogi
           key: "持将棋埋め込み",
           func: -> {
             if input_last_action_info = container.params[:input_last_action_info]
-              if input_last_action_info.key == :JISHOGI
+              if input_last_action_info.jishogi_p
                 container.players.each do |player|
                   player.tag_bundle << "持将棋"
                   # 最終手で持将棋になったは限らないため最終手に持将棋を入れるのはおかしい

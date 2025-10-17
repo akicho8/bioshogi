@@ -1,5 +1,8 @@
 require "#{__dir__}/setup"
 
+Parser.parse("+\n%KACHI").to_kif.include?("持将棋")   # => true
+Parser.parse("+\n%JISHOGI").to_kif.include?("持将棋") # => true
+
 info = Parser.parse(<<~EOT)
 $X_FINAL:持将棋
 $X_WINNER:△
@@ -23,9 +26,11 @@ puts
 puts Parser.parse(str).to_kif
 # >> 結末：持将棋
 # >> 勝者：△
+# >> 先手の手筋：持将棋
 # >> 先手の駒使用：歩1 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
 # >> 先手の玉移動：0回
 # >> 先手のキル数：0キル
+# >> 後手の手筋：持将棋
 # >> 後手の駒使用：歩1 銀0 金0 飛0 角0 玉0 桂0 香0 馬0 龍0 と0 圭0 全0 杏0
 # >> 後手の玉移動：0回
 # >> 後手のキル数：0キル
