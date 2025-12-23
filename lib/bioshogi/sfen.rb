@@ -40,7 +40,13 @@ module Bioshogi
         m = []
         m << "入力のSFEN形式が不正確です"
         if source.match?(/\s{2,}/)
-          m << "連続するスペースが含まれている個所が壊れているかもしれません"
+          if md = source.match(/\b(?<b_or_w>[bw])\b\s{2,}(?<number>\d)/)
+            m << %(具体的には「#{md}」の部分が壊れています)
+            m << %(「#{md[:b_or_w]} - #{md[:number]}」としてください)
+            m << "これは SFEN 付きの URL を SNS に貼って、そこから飛んだりしている場合に起こりがちです"
+          else
+            m << "スペースが連続している箇所が壊れています"
+          end
         end
         if source.strip.match?(/\R/)
           m << "途中で改行を含めないでください"

@@ -15,7 +15,7 @@ RSpec.describe Bioshogi::Sfen do
     it "連続するスペースを含む" do
       expect {
         Bioshogi::Sfen.parse("position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b  1")
-      }.to raise_error(Bioshogi::SyntaxDefact, /連続するスペース/)
+      }.to raise_error(Bioshogi::SyntaxDefact, /「b - 1」/)
     end
   end
 
