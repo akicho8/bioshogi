@@ -130,7 +130,7 @@ GEM
       activesupport
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uri (1.0.3)
+    uri (1.0.4)
     webrick (1.9.1)
     webrobots (0.1.2)
     zeitwerk (2.7.3)
