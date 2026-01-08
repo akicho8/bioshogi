@@ -88,10 +88,6 @@ module Bioshogi
 
   # 別に問題ないけど将棋のルール上エラーとするもの
 
-  # 死に駒
-  class DeadPieceRuleError < RuleError
-  end
-
   # 成れない駒を成った
   class NoPromotablePiece < RuleError
   end
@@ -141,5 +137,9 @@ module Bioshogi
   # 指定座標に移動できる駒に移動元の駒が含まれていない。初手25歩(27)や初手22角成(88)
   # いわゆる角ワープ
   class SoldierWarpError < CommonError
+  end
+
+  # 死に駒
+  class DeadPieceRuleError < CommonError
   end
 end
