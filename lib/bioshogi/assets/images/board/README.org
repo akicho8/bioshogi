@@ -4,4 +4,4 @@
 
 * shogi-player と合わせる
 
-  cp -av ~/src/bioshogi/lib/bioshogi/assets/images/board/*.png ~/src/shogi-player/assets/is_bg_variant
+  cp -av ~/src/bioshogi/lib/bioshogi/assets/images/board/*.png ~/src/shogi/shogi-player/assets/is_bg_variant
