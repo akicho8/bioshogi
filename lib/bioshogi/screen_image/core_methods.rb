@@ -15,6 +15,9 @@ module Bioshogi
               :aspect_ratio_w => 0.8690934065934065, # 縦横幅の小さい方に対する盤の横幅の割合(横長の場合縦比率より小さめにする)
               :aspect_ratio_h => 0.95,               # 縦横幅の小さい方に対する盤の縦幅の割合(横長の場合1.0にすると縦の隙間がなくなる)
 
+              # スケール (将棋盤の比率に掛ける値)
+              :master_scale => 1.0,
+
               # 文字の大きさの割合
               # ※割合はすべてセルの大きさを1.0とする
               :soldier_font_scale => 0.85, # PieceScale に掛ける共通倍率。かなり印象が変わる。1.00 だと暑苦しい。
@@ -257,11 +260,11 @@ module Bioshogi
       end
 
       def cell_w
-        @cell_w ||= (vmin * params[:aspect_ratio_w]) / lattice.w
+        @cell_w ||= (vmin * params[:aspect_ratio_w] * params[:master_scale]) / lattice.w
       end
 
       def cell_h
-        @cell_h ||= (vmin * params[:aspect_ratio_h]) / lattice.h
+        @cell_h ||= (vmin * params[:aspect_ratio_h] * params[:master_scale]) / lattice.h
       end
 
       # セルサイズの短い方
