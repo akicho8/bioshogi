@@ -1,4 +1,4 @@
-# 直接 require "~/src/bioshogi/lib/bioshogi" されたときに ~/src/bioshogi/lib をパスに加える
+# 直接 require "~/src/shogi/bioshogi/lib/bioshogi" されたときに ~/src/shogi/bioshogi/lib をパスに加える
 # そうしないとグローバルで入れた gem の方を読んでしまう
 unless $LOAD_PATH.include?(__dir__)
   $LOAD_PATH.unshift(__dir__)

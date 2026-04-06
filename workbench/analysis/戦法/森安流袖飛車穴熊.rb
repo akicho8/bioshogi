@@ -2,8 +2,8 @@ require "#{__dir__}/setup"
 info = Analysis::AttackInfo.fetch("森安流袖飛車穴熊").static_kif_info
 tp info.formatter.container.players.collect { |e| e.tag_bundle.to_h }
 puts info.to_kif
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/finalize_tag_func_info.rb:39", nil]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/finalize_tag_func_info.rb:39", nil]
+# >> ["/Users/ikeda/src/shogi/bioshogi/lib/bioshogi/analysis/finalize_tag_func_info.rb:39", nil]
+# >> ["/Users/ikeda/src/shogi/bioshogi/lib/bioshogi/analysis/finalize_tag_func_info.rb:39", nil]
 # >> |------------------------------------+------------------------------------+--------------+------------------------------------|
 # >> | attack                             | defense                            | technique    | note                               |
 # >> |------------------------------------+------------------------------------+--------------+------------------------------------|

@@ -75,7 +75,7 @@ RSpec.describe Bioshogi::Board do
       EOT
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
 # >> .
 # >>
 # >> Bioshogi::Top 1 slowest examples (0.0191 seconds, 71.1% of total time):

@@ -124,7 +124,7 @@ T0
 
 info = Parser.parse(str, debug: true)
 puts info.to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': ２六に何もありません (Bioshogi::PieceNotFoundOnBoard)
+# ~> /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': ２六に何もありません (Bioshogi::PieceNotFoundOnBoard)
 # ~> 手番: 後手
 # ~> 指し手: -2628KY
 # ~> 棋譜: ７六歩(77) ３四歩(33) ６六歩(67) ３五歩(34) ６八銀(79) ３二飛(82) ６七銀(68) ６二玉(51) ５六銀(67) ４二銀(31) ６八飛(28) １四歩(13) １六歩(17) ３六歩(35) ３六歩(37) ３六飛(32) ３七歩打 ３四飛(36) ７八金(69) ７二銀(71) ６五歩(66) ８八角成(22) ８八金(78) ７一玉(62) ２二角打 １三角打 １一角成(22) ５七角成(13) ４五銀(56) ２四飛(34) ２一馬(11) ２七飛成(24) ２八香打 ６八馬(57) ６八玉(59) ２八龍(27) ２八銀(39) ２四香打 ２七桂打 ２七香成(24) ２七銀(28) ２八飛打 ３八金(49) ２九飛成(28) ３九香打 １九龍(29) ２二馬(21) ２四香打 ３六銀(45) ２六桂打 ２六銀(27) ２六香(24) ２三馬(22) ２八香成(26) ４一馬(23)
@@ -146,21 +146,21 @@ puts info.to_kif
 # ~> 手数＝55 ▲４一馬(23) まで
 # ~>
 # ~> 後手番
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:23:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:31:in `block in execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:30:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:30:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:217:in `block in container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `with_index'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:23:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:31:in `block in execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:30:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:30:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:217:in `block in container_run_all'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `with_index'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:206:in `container_run_all'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:126:in `<main>'
 # >> 後手の持駒：なし
 # >>   ９ ８ ７ ６ ５ ４ ３ ２ １

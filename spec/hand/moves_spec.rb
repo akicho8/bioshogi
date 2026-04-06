@@ -25,7 +25,7 @@ RSpec.describe Bioshogi::Player do
     end
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
 # >> .
 # >>
 # >> Bioshogi::Top 1 slowest examples (0.02146 seconds, 49.0% of total time):

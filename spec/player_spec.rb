@@ -353,7 +353,7 @@ RSpec.describe Bioshogi::Player do
     assert { container.hand_logs.first.to_ki2 == "５八金右" }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
 # >> .......................F.......................................
 # >>
 # >> Bioshogi::Failures:

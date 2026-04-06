@@ -20,7 +20,7 @@ info = Parser.parse(<<~EOT)
 EOT
 p info
 puts info.to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:131:in `raise_error': 【反則】先手の手番で後手が着手しました (Bioshogi::DifferentTurnCommonError)
+# ~> /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:131:in `raise_error': 【反則】先手の手番で後手が着手しました (Bioshogi::DifferentTurnCommonError)
 # ~> 手番: 先手
 # ~> 指し手: △８四歩
 # ~> 棋譜:
@@ -41,21 +41,21 @@ puts info.to_kif
 # ~> 先手の持駒：なし
 # ~> 手数＝0 まで
 # ~> 先手番
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:21:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:30:in `block in execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:29:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:29:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:26:in `block in call'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `with_index'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `call'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:116:in `container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:47:in `block in container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:45:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:45:in `container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:11:in `formatter.container_run_once'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/kif_ki2_shared.rb:25:in `to_s'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:201:in `to_kif'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:21:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:30:in `block in execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:29:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:29:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/runner.rb:26:in `block in call'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `with_index'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/runner.rb:16:in `call'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:116:in `container_run_all'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:47:in `block in container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:45:in `tap'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:45:in `container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:11:in `formatter.container_run_once'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/kif_ki2_shared.rb:25:in `to_s'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:201:in `to_kif'
 # ~> 	from -:22:in `<main>'

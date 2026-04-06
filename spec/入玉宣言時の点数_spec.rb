@@ -25,7 +25,7 @@ RSpec.describe "入玉宣言時の点数" do
     assert { container.player_at(:white).ek_score_with_cond == 20 }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
 # >> .
 # >>
 # >> Bioshogi::Top 1 slowest examples (0.01991 seconds, 87.2% of total time):

@@ -212,7 +212,7 @@ P-00HI00HI00KA00GI00GI00KE00KE00KE00KE00KY00KY00KY00KY00FU00FU00FU00FU00FU00FU00
   # EOT
   #       assert { info.header_part_string.exclude?("先手の持駒") }
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
 # >> .F....F.....
 # >>
 # >> Bioshogi::Failures:

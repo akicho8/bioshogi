@@ -419,4 +419,4 @@ e.call
 # >> |         大駒コンプリート | 97  |
 # >> |                     駒柱 | 121 |
 # >> |--------------------------+-----|
-# >> write: /Users/ikeda/src/bioshogi/lib/bioshogi/analysis/tactic_hit_turn_table.rb
+# >> write: /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/analysis/tactic_hit_turn_table.rb

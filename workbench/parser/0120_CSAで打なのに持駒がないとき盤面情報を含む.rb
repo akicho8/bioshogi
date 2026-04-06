@@ -1,7 +1,7 @@
 require "../setup"
 
 Parser.parse("V2,P1 *,+0093KA,T1").to_kif
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': 先手は角を９三に打とうとしましたが角を持っていません (Bioshogi::HoldPieceNotFound)
+# ~> /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:127:in `raise_error': 先手は角を９三に打とうとしましたが角を持っていません (Bioshogi::HoldPieceNotFound)
 # ~> 手番: 先手
 # ~> 指し手: +0093KA
 # ~> 棋譜:
@@ -23,19 +23,19 @@ Parser.parse("V2,P1 *,+0093KA,T1").to_kif
 # ~> 手数＝0 まで
 # ~>
 # ~> 先手番
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:23:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:31:in `block in execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:30:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:30:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:234:in `block in container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `with_index'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `container_run_all'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:37:in `perform_validations'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor_base.rb:42:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:23:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:31:in `block in execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:30:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:30:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:234:in `block in container_run_all'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `with_index'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:224:in `container_run_all'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:46:in `block in container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `tap'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:44:in `container'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/parser_methods.rb:25:in `formatter.container_run_once'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/formatter/kif_format_methods.rb:12:in `to_kif'
 # ~> 	from -:3:in `<main>'

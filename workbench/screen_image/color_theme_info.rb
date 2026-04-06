@@ -106,4 +106,4 @@ exit
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1210.1249999832362
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 882.0249999407679
 # Benchmark.ms { parser.screen_image_renderer(color_theme_key: "is_color_theme_brightness_matrix").to_blob_binary } # => 1008.8139999425039
-# >> /Users/ikeda/src/bioshogi/workbench/tmp/56d473333164100fc62b2efb5e96f51d.png
+# >> /Users/ikeda/src/shogi/bioshogi/workbench/tmp/56d473333164100fc62b2efb5e96f51d.png

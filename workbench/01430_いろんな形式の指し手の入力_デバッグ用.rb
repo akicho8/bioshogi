@@ -9,15 +9,15 @@ list.each do |e|
   p container.turn_info.turn_offset
   pp [e, container.hand_logs.last.to_kif]
 end
-# ~> /Users/ikeda/src/bioshogi/lib/bioshogi/board.rb:67:in `rule_validate': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Bioshogi::DeadPieceRuleError)
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/board.rb:26:in `place_on'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:280:in `board.place_on_with_valid'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:127:in `relative_move_to'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player_executor.rb:129:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/player.rb:133:in `execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:34:in `block in execute'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:19:in `each'
-# ~> 	from /Users/ikeda/src/bioshogi/lib/bioshogi/container_executor.rb:19:in `execute'
+# ~> /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/board.rb:67:in `rule_validate': 【反則】"▲１二桂" は死に駒です。「▲１二桂成」の間違いの可能性があります (Bioshogi::DeadPieceRuleError)
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/board.rb:26:in `place_on'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:280:in `board.place_on_with_valid'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:127:in `relative_move_to'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player_executor.rb:129:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/player.rb:133:in `execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:34:in `block in execute'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:19:in `each'
+# ~> 	from /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/container_executor.rb:19:in `execute'
 # ~> 	from -:8:in `block in <main>'
 # ~> 	from -:6:in `each'
 # ~> 	from -:6:in `<main>'

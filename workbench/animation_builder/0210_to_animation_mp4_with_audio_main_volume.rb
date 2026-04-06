@@ -149,9 +149,9 @@ m `open -a 'Google Chrome' _output.mp4`
 # >> [AnimationMp4Builder] [audio] 2. BGM準備
 # >> [AnimationMp4Builder] [audio] 予測した全体の秒数(total_duration): 15.0
 # >> [AnimationMp4Builder] [audio] 開戦前のみ
-# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
+# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
 # >> [AnimationMp4Builder] [audio] 2021-09-19 20:22:46 18/23  78.26 % T1 フェイドアウトと音量調整
-# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 15.0 -af volume=1.0,afade=t=out:start_time=5.0:duration=10.0  -y _same_length1.m4a
+# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 15.0 -af volume=1.0,afade=t=out:start_time=5.0:duration=10.0  -y _same_length1.m4a
 # >> [AnimationMp4Builder] [audio] [execute] elapsed: 1s
 # >> [AnimationMp4Builder] [audio] headspin_long.m4a: 28.049705
 # >> [AnimationMp4Builder] [audio] fadeout_duration: 10.0

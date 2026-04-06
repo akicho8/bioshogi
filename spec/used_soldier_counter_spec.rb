@@ -26,7 +26,7 @@ RSpec.describe "used_soldier_counter" do
     assert { container.player_at(:white).used_soldier_counter.to_h == { :S0 => 1 } }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
 # >> .
 # >>
 # >> Bioshogi::Top 1 slowest examples (0.1277 seconds, 91.9% of total time):

@@ -17,8 +17,8 @@ tp Analysis::TacticInfo
 # }.compact
 # p list.to_h
 # list.each do |a, b|
-#   puts "r -x '#{a}' '#{b}' ~/src/bioshogi ~/src/shogi/shogi-extend"
-#   puts "n -x '#{a}' '#{b}' ~/src/bioshogi ~/src/shogi/shogi-extend"
+#   puts "r -x '#{a}' '#{b}' ~/src/shogi/bioshogi ~/src/shogi/shogi-extend"
+#   puts "n -x '#{a}' '#{b}' ~/src/shogi/bioshogi ~/src/shogi/shogi-extend"
 # end
 # >> |------|
 # >> | 戦法 |

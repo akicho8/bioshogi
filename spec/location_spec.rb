@@ -77,7 +77,7 @@ RSpec.describe Bioshogi::Location do
     assert { Bioshogi::Location[:white].right.name  == "９" }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
 # >> ............
 # >>
 # >> Bioshogi::Top 10 slowest examples (0.01486 seconds, 61.0% of total time):

@@ -34,7 +34,7 @@ RSpec.describe "寸法が変わるとキャッシュをクリアする" do
     assert { container.hand_logs.last.to_ki2 == "２二銀上" }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 5 / 13 Bioshogi::LOC (38.46%) covered.
 # >> F
 # >>
 # >> Bioshogi::Failures:

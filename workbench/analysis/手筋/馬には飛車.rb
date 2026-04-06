@@ -21,8 +21,8 @@ info = Parser.parse(<<~EOT)
 まで0手で後手の勝ち
 EOT
 puts info.to_kif
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/custom_detectors/kakunihakaku_detector.rb:25", :call, "現在", <Bioshogi::Soldier "▲３七桂">]
-# >> ["/Users/ikeda/src/bioshogi/lib/bioshogi/analysis/custom_detectors/kakunihakaku_detector.rb:37", :call, "1手前", <Bioshogi::Soldier "△３七馬">]
+# >> ["/Users/ikeda/src/shogi/bioshogi/lib/bioshogi/analysis/custom_detectors/kakunihakaku_detector.rb:25", :call, "現在", <Bioshogi::Soldier "▲３七桂">]
+# >> ["/Users/ikeda/src/shogi/bioshogi/lib/bioshogi/analysis/custom_detectors/kakunihakaku_detector.rb:37", :call, "1手前", <Bioshogi::Soldier "△３七馬">]
 # >> 先手の手筋：自陣飛車, 馬には飛車
 # >> 先手の駒使用：歩0 銀0 金0 飛1 角0 玉0 桂1 香0 馬0 龍0 と0 圭0 全0 杏0
 # >> 先手の玉移動：0回

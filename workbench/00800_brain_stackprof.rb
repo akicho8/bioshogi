@@ -85,7 +85,7 @@ system "stackprof stackprof.dump --method Bioshogi::Place.lookup"
 # >>         67   (0.5%)          36   (0.3%)     Bioshogi::Player::BrainMethods#evaluator
 # >>         99   (0.7%)          36   (0.3%)     Bioshogi::PieceScore#any_weight
 # >>         31   (0.2%)          31   (0.2%)     Bioshogi::Evaluator::Base#initialize
-# >> Bioshogi::Place.lookup (/Users/ikeda/src/bioshogi/lib/bioshogi/place.rb:30)
+# >> Bioshogi::Place.lookup (/Users/ikeda/src/shogi/bioshogi/lib/bioshogi/place.rb:30)
 # >>   samples:  1058 self (7.9%)  /   4246 total (31.8%)
 # >>   callers:
 # >>     4215  (   99.3%)  Bioshogi::Place.fetch

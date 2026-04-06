@@ -66,9 +66,9 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [AnimationMp4Builder] [audio] 2. BGM準備
 # >> [AnimationMp4Builder] [audio] 予測した全体の秒数(total_duration): 6.0
 # >> [AnimationMp4Builder] [audio] 開戦前のみ
-# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
+# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
 # >> [AnimationMp4Builder] [audio] 2021-09-15 08:53:06 9/14  64.29 % T0 フェイドアウトと音量調整
-# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 6.0 -af volume=0.7,afade=t=out:start_time=1.0:duration=5.0  -y _same_length1.m4a
+# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 6.0 -af volume=0.7,afade=t=out:start_time=1.0:duration=5.0  -y _same_length1.m4a
 # >> [AnimationMp4Builder] [audio] [execute] elapsed: 1s
 # >> [AnimationMp4Builder] [audio] headspin_long.m4a: 28.049705
 # >> [AnimationMp4Builder] [audio] fadeout_duration: 5.0
@@ -122,9 +122,9 @@ p test(23, nil, nil)               # => "87.044000 Kbit/s 129.050000 Kbit/s"
 # >> [AnimationMp4Builder] [audio] 2. BGM準備
 # >> [AnimationMp4Builder] [audio] 予測した全体の秒数(total_duration): 6.0
 # >> [AnimationMp4Builder] [audio] 開戦前のみ
-# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
+# >> [AnimationMp4Builder] [audio] audio_part_x: /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a
 # >> [AnimationMp4Builder] [audio] 2021-09-15 08:53:12 9/14  64.29 % T0 フェイドアウトと音量調整
-# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 6.0 -af volume=0.7,afade=t=out:start_time=1.0:duration=5.0  -y _same_length1.m4a
+# >> [AnimationMp4Builder] [audio] [execute] ffmpeg -v warning -stream_loop -1 -i /Users/ikeda/src/shogi/bioshogi/lib/bioshogi/assets/audios/headspin_long.m4a -t 6.0 -af volume=0.7,afade=t=out:start_time=1.0:duration=5.0  -y _same_length1.m4a
 # >> [AnimationMp4Builder] [audio] [execute] elapsed: 1s
 # >> [AnimationMp4Builder] [audio] headspin_long.m4a: 28.049705
 # >> [AnimationMp4Builder] [audio] fadeout_duration: 5.0

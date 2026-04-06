@@ -8,7 +8,7 @@ RSpec.describe Bioshogi::BoardParser::KakinokiBoardParser do
     assert { !Bioshogi::BoardParser::KakinokiBoardParser.accept?(nil)   }
   end
 end
-# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
+# >> Bioshogi::Coverage report generated for Bioshogi::RSpec to /Bioshogi::Users/ikeda/src/shogi/bioshogi/coverage. 7 / 15 Bioshogi::LOC (46.67%) covered.
 # >> .
 # >>
 # >> Bioshogi::Top 1 slowest examples (0.00018 seconds, 3.7% of total time):

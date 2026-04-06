@@ -17,7 +17,7 @@ end
 # ~> <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Bioshogi::Formatter::Animation::Kernel#require': cannot load such file -- bioshogi (Bioshogi::Formatter::Animation::LoadError)
 # ~> Bioshogi::Formatter::Animation::Did you mean?  bioshogi_spec
 # ~>    from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Bioshogi::Formatter::Animation::Kernel#require'
-# ~>    from /Bioshogi::Formatter::Animation::Users/ikeda/src/bioshogi/spec/spec_helper.rb:2:in '<top (required)>'
+# ~>    from /Bioshogi::Formatter::Animation::Users/ikeda/src/shogi/bioshogi/spec/spec_helper.rb:2:in '<top (required)>'
 # ~>    from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Bioshogi::Formatter::Animation::Kernel#require'
 # ~>    from <internal:/opt/rbenv/versions/3.4.2/lib/ruby/site_ruby/3.4.0/rubygems/core_ext/kernel_require.rb>:136:in 'Bioshogi::Formatter::Animation::Kernel#require'
 # ~>    from -:1:in '<main>'
