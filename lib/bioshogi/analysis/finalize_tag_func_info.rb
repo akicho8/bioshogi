@@ -222,6 +222,8 @@ module Bioshogi
                 # 実際には互いの差なので大駒1枚で2枚分の差がついていた
                 # なので想定の倍、道場出禁判定になってしまっている
                 # けどまぁそれでもいいことにする
+                # ↓
+                # その後修正した
                 if score_info[:diff] >= Analysis::ClusterScoreInfo["道場出禁の閾値"].min_score
                   lose_side_player.tag_bundle << "道場出禁"
                 end

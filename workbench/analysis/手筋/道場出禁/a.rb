@@ -90,14 +90,6 @@ info = Parser.parse(<<~EOT)
 まで44手で後手の勝ち
 EOT
 puts info.to_kif
-# >> |------+-------|
-# >> |  win | 53700 |
-# >> | lose | 49855 |
-# >> | diff | 3845  |
-# >> |------+-------|
-# >> |------|
-# >> | 3800 |
-# >> |------|
 # >> *詳細URL：https://www.shogi-extend.com/swars/battles/kento12145569-Otonashikoi-20250903_164910
 # >> *ぴよ将棋：https://www.shogi-extend.com/swars/battles/kento12145569-Otonashikoi-20250903_164910/piyo_shogi
 # >> *KENTO：https://www.shogi-extend.com/swars/battles/kento12145569-Otonashikoi-20250903_164910/kento
@@ -109,7 +101,7 @@ puts info.to_kif
 # >> 勝者：△
 # >> 先手の戦法：力戦
 # >> 先手の囲い：居玉
-# >> 先手の手筋：手得, 角交換, 突き捨て, 道場出禁
+# >> 先手の手筋：手得, 角交換, 突き捨て
 # >> 先手の備考：振り飛車, 対抗形, 急戦, 短手数
 # >> 先手の棋風：王道
 # >> 先手の駒使用：歩7 銀9 金2 飛1 角2 玉0 桂1 香0 馬0 龍0 と0 圭0 全0 杏0

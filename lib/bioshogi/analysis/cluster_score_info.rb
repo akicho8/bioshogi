@@ -34,8 +34,11 @@ module Bioshogi
         {
           key: "道場出禁の閾値",
           scores: [
-            Piece[:rook].basic_weight * 1,   # 飛 (盤上)
-            Piece[:bishop].basic_weight * 1, # 角 (盤上)
+            # 2倍しているのは差分のため
+            # つまり実際には角金損とする
+            # 以前は「飛角」* 1 としていたため飛損でタグがついていた
+            Piece[:bishop].basic_weight * 2, # 角 (盤上)
+            Piece[:gold].basic_weight * 2,   # 金 (盤上)
           ],
         },
       ]
