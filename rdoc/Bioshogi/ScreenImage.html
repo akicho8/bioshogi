@@ -1,184 +1,640 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>module Bioshogi::ScreenImage - RDoc Documentation</title>
 
-  <meta name="keywords" content="ruby,module,Bioshogi::ScreenImage">
 
-    <meta name="description" content="Documentation for the Bioshogi::ScreenImage module">
+  <meta
+    name="keywords"
+    content="ruby,module,Bioshogi::ScreenImage"
+  >
+
+    <meta
+      name="description"
+      content="Documentation for the Bioshogi::ScreenImage module"
+    >
+
+
+
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="module Bioshogi::ScreenImage - RDoc Documentation">
+
+
+
+    <meta
+      property="og:description"
+      content="Documentation for Bioshogi::ScreenImage module - API reference and code examples"
+    >
+
+
+
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="module Bioshogi::ScreenImage - RDoc Documentation">
+
+
+
+    <meta
+      name="twitter:description"
+      content="Documentation for Bioshogi::ScreenImage module - API reference and code examples"
+    >
+
+
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
   var index_rel_prefix = "../";
 </script>
 
-<script src="../js/navigation.js" defer></script>
-<script src="../js/search.js" defer></script>
-<script src="../js/search_index.js" defer></script>
-<script src="../js/searcher.js" defer></script>
-<script src="../js/darkfish.js" defer></script>
+<script
+  src="../js/theme-toggle.js?v=7.2.0"
+></script>
 
-<link href="../css/fonts.css" rel="stylesheet">
-<link href="../css/rdoc.css" rel="stylesheet">
+<script
+  src="../js/search_navigation.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_data.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_ranker.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/search_controller.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/c_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/bash_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../js/aliki.js?v=7.2.0"
+  defer
+></script>
+
+<link
+  href="../css/rdoc.css?v=7.2.0"
+  rel="stylesheet"
+>
 
 
-<body id="top" role="document" class="module">
+
+
+<body role="document" class="module has-toc">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- Chevron (right arrow) - used for expand/collapse -->
+  <symbol
+    id="icon-chevron"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </symbol>
+
+  <!-- File/Document - Pages section -->
+  <symbol
+    id="icon-file"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+    ></path>
+
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </symbol>
+
+  <!-- Layers/Stack - Classes and Modules section -->
+  <symbol
+    id="icon-layers"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+    <polyline points="2 17 12 22 22 17"></polyline>
+    <polyline points="2 12 12 17 22 12"></polyline>
+  </symbol>
+
+  <!-- Curly braces with C - Class Methods section -->
+  <symbol
+    id="icon-class-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      C
+    </text>
+  </symbol>
+
+  <!-- Curly braces with I - Instance Methods section -->
+  <symbol
+    id="icon-instance-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      I
+    </text>
+  </symbol>
+
+  <!-- Double chevrons up - Ancestors section -->
+  <symbol
+    id="icon-ancestors"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+  </symbol>
+
+  <!-- User with plus - Included Modules section -->
+  <symbol
+    id="icon-includes"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+
+    <line
+      x1="20"
+      y1="8"
+      x2="20"
+      y2="14"
+    ></line>
+
+    <line
+      x1="23"
+      y1="11"
+      x2="17"
+      y2="11"
+    ></line>
+  </symbol>
+
+  <!-- User with check - Extended Modules section -->
+  <symbol
+    id="icon-extends"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+    <polyline points="17 11 19 13 23 9"></polyline>
+  </symbol>
+
+  <!-- List - Sections section -->
+  <symbol
+    id="icon-list"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <line
+      x1="8"
+      y1="6"
+      x2="21"
+      y2="6"
+    ></line>
+
+    <line
+      x1="8"
+      y1="12"
+      x2="21"
+      y2="12"
+    ></line>
+
+    <line
+      x1="8"
+      y1="18"
+      x2="21"
+      y2="18"
+    ></line>
+
+    <line
+      x1="3"
+      y1="6"
+      x2="3.01"
+      y2="6"
+    ></line>
+
+    <line
+      x1="3"
+      y1="12"
+      x2="3.01"
+      y2="12"
+    ></line>
+
+    <line
+      x1="3"
+      y1="18"
+      x2="3.01"
+      y2="18"
+    ></line>
+  </symbol>
+</svg>
+
+<header class="top-navbar">
+  <a href="../index.html" class="navbar-brand">
+    RDoc Documentation
+  </a>
+
+  <!-- Desktop search bar -->
+  <div class="navbar-search navbar-search-desktop" role="search">
+    <form action="#" method="get" accept-charset="utf-8">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results-desktop"
+             type="text" name="search" placeholder="Search (/) for a class, method..."
+             spellcheck="false" autocomplete="off"
+             title="Type to search, Up and Down to navigate, Enter to load">
+      <ul id="search-results-desktop" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="initially-hidden search-results"></ul>
+    </form>
+  </div>
+
+  <!-- Mobile search icon button -->
+  <button id="search-toggle" class="navbar-search-mobile" aria-label="Open search" type="button">
+    <span aria-hidden="true">🔍</span>
+  </button>
+
+  <!-- Theme toggle button -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" type="button">
+    <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+  </button>
+</header>
+
+<!-- Search Modal (Mobile) -->
+<div id="search-modal" class="search-modal" hidden aria-modal="true" role="dialog" aria-label="Search">
+  <div class="search-modal-backdrop"></div>
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <form class="search-modal-form" action="#" method="get" accept-charset="utf-8">
+        <span class="search-modal-icon" aria-hidden="true">🔍</span>
+        <input id="search-field-mobile" role="combobox" aria-label="Search"
+               aria-autocomplete="list" aria-controls="search-results-mobile"
+               type="text" name="search" placeholder="Search documentation"
+               spellcheck="false" autocomplete="off">
+        <button type="button" class="search-modal-close" aria-label="Close search" id="search-modal-close">
+          <span aria-hidden="true">esc</span>
+        </button>
+      </form>
+    </div>
+    <div class="search-modal-body">
+      <ul id="search-results-mobile" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="search-results search-modal-results initially-hidden"></ul>
+      <div class="search-modal-empty">
+        <p>No recent searches</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
   <span aria-hidden="true">&#9776;</span>
 </div>
 
 
-<nav id="navigation" role="navigation">
-  <div id="project-navigation">
-    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
-  <h2>
-    <a href="../index.html" rel="home">Home</a>
-  </h2>
+<nav id="navigation" role="navigation" hidden>
+  
 
-  <div id="table-of-contents-navigation">
-    <a href="../table_of_contents.html#pages">Pages</a>
-    <a href="../table_of_contents.html#classes">Classes</a>
-    <a href="../table_of_contents.html#methods">Methods</a>
-  </div>
-</div>
 
-    <div id="search-section" role="search" class="project-section initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <div id="search-field-wrapper">
-      <input id="search-field" role="combobox" aria-label="Search"
-             aria-autocomplete="list" aria-controls="search-results"
-             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </div>
 
-    <ul id="search-results" aria-label="Search Results"
-        aria-busy="false" aria-expanded="false"
-        aria-atomic="false" class="initially-hidden"></ul>
-  </form>
-</div>
 
-  </div>
 
   
+
   
+
   
+
   
-  
+
   
   <div class="nav-section">
-    <h3>Class Methods</h3>
-    <ul class="link-list" role="directory">
-      <li ><a href="#method-c-new">new</a></li>
-      <li ><a href="#method-c-renderer">renderer</a></li>
-    </ul>
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-class-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Class Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-c-new">new</a></li>
+
+        <li ><a href="#method-c-renderer">renderer</a></li>
+
+      </ul>
+    </details>
   </div>
 
 
 
   <div class="nav-section">
-    <h3>Instance Methods</h3>
-    <ul class="link-list" role="directory">
-      <li ><a href="#method-i-board_layer_create">board_layer_create</a></li>
-      <li ><a href="#method-i-canvas_layer_create">canvas_layer_create</a></li>
-      <li ><a href="#method-i-cell_draw">cell_draw</a></li>
-      <li ><a href="#method-i-cell_h">cell_h</a></li>
-      <li ><a href="#method-i-cell_rect">cell_rect</a></li>
-      <li ><a href="#method-i-cell_vmin">cell_vmin</a></li>
-      <li ><a href="#method-i-cell_w">cell_w</a></li>
-      <li ><a href="#method-i-cell_walker">cell_walker</a></li>
-      <li ><a href="#method-i-center">center</a></li>
-      <li ><a href="#method-i-char_draw">char_draw</a></li>
-      <li ><a href="#method-i-clear_all">clear_all</a></li>
-      <li ><a href="#method-i-condition_then_color_negate">condition_then_color_negate</a></li>
-      <li ><a href="#method-i-condition_then_flip">condition_then_flip</a></li>
-      <li ><a href="#method-i-current_place">current_place</a></li>
-      <li ><a href="#method-i-d">d</a></li>
-      <li class="calls-super" ><a href="#method-i-default_params">default_params</a></li>
-      <li ><a href="#method-i-display">display</a></li>
-      <li ><a href="#method-i-draw_context">draw_context</a></li>
-      <li ><a href="#method-i-dynamic_layer_setup">dynamic_layer_setup</a></li>
-      <li ><a href="#method-i-ext_name">ext_name</a></li>
-      <li ><a href="#method-i-face_pentagon_color">face_pentagon_color</a></li>
-      <li ><a href="#method-i-face_pentagon_draw">face_pentagon_draw</a></li>
-      <li ><a href="#method-i-face_pentagon_scale">face_pentagon_scale</a></li>
-      <li ><a href="#method-i-face_pentagon_stroke_width">face_pentagon_stroke_width</a></li>
-      <li ><a href="#method-i-image_basename">image_basename</a></li>
-      <li ><a href="#method-i-image_format">image_format</a></li>
-      <li ><a href="#method-i-image_rect">image_rect</a></li>
-      <li ><a href="#method-i-inner_frame_draw">inner_frame_draw</a></li>
-      <li ><a href="#method-i-inner_frame_lattice_color">inner_frame_lattice_color</a></li>
-      <li ><a href="#method-i-inner_frame_stroke_color">inner_frame_stroke_color</a></li>
-      <li ><a href="#method-i-inner_frame_stroke_width">inner_frame_stroke_width</a></li>
-      <li ><a href="#method-i-lattice">lattice</a></li>
-      <li ><a href="#method-i-lattice_draw">lattice_draw</a></li>
-      <li ><a href="#method-i-lattice_layer_create">lattice_layer_create</a></li>
-      <li ><a href="#method-i-lattice_stroke_width">lattice_stroke_width</a></li>
-      <li ><a href="#method-i-line_draw">line_draw</a></li>
-      <li ><a href="#method-i-minus_one">minus_one</a></li>
-      <li ><a href="#method-i-next_build">next_build</a></li>
-      <li ><a href="#method-i-o">o</a></li>
-      <li ><a href="#method-i-origin_place">origin_place</a></li>
-      <li ><a href="#method-i-outer_bottom_right">outer_bottom_right</a></li>
-      <li ><a href="#method-i-outer_frame_padding">outer_frame_padding</a></li>
-      <li ><a href="#method-i-outer_frame_radius">outer_frame_radius</a></li>
-      <li ><a href="#method-i-outer_rect">outer_rect</a></li>
-      <li ><a href="#method-i-outer_top_left">outer_top_left</a></li>
-      <li ><a href="#method-i-pattern_layer_create">pattern_layer_create</a></li>
-      <li ><a href="#method-i-pentagon_box_debug">pentagon_box_debug</a></li>
-      <li ><a href="#method-i-pentagon_points">pentagon_points</a></li>
-      <li ><a href="#method-i-pentagon_real_points">pentagon_real_points</a></li>
-      <li ><a href="#method-i-piece_char_adjust">piece_char_adjust</a></li>
-      <li ><a href="#method-i-piece_count_bg_draw">piece_count_bg_draw</a></li>
-      <li ><a href="#method-i-piece_count_draw">piece_count_draw</a></li>
-      <li ><a href="#method-i-piece_image_draw">piece_image_draw</a></li>
-      <li ><a href="#method-i-piece_image_info">piece_image_info</a></li>
-      <li ><a href="#method-i-piece_pentagon_draw">piece_pentagon_draw</a></li>
-      <li ><a href="#method-i-piece_pentagon_scale">piece_pentagon_scale</a></li>
-      <li ><a href="#method-i-ps">ps</a></li>
-      <li ><a href="#method-i-px">px</a></li>
-      <li ><a href="#method-i-render">render</a></li>
-      <li ><a href="#method-i-round_radious">round_radious</a></li>
-      <li ><a href="#method-i-soldier_draw">soldier_draw</a></li>
-      <li ><a href="#method-i-soldier_draw_all">soldier_draw_all</a></li>
-      <li ><a href="#method-i-soldier_draw_by_char">soldier_draw_by_char</a></li>
-      <li ><a href="#method-i-soldier_draw_by_image">soldier_draw_by_image</a></li>
-      <li ><a href="#method-i-soldier_font_scale">soldier_font_scale</a></li>
-      <li ><a href="#method-i-soldier_move_cell_draw">soldier_move_cell_draw</a></li>
-      <li ><a href="#method-i-soldier_name">soldier_name</a></li>
-      <li ><a href="#method-i-stand_draw">stand_draw</a></li>
-      <li ><a href="#method-i-star_draw">star_draw</a></li>
-      <li ><a href="#method-i-star_fill_color">star_fill_color</a></li>
-      <li ><a href="#method-i-texture_image">texture_image</a></li>
-      <li ><a href="#method-i-to_blob_binary">to_blob_binary</a></li>
-      <li ><a href="#method-i-to_png24_binary">to_png24_binary</a></li>
-      <li ><a href="#method-i-to_write_binary">to_write_binary</a></li>
-      <li ><a href="#method-i-top_left">top_left</a></li>
-      <li ><a href="#method-i-transparent_layer">transparent_layer</a></li>
-      <li ><a href="#method-i-turn_draw">turn_draw</a></li>
-      <li ><a href="#method-i-v_bottom_right_outer">v_bottom_right_outer</a></li>
-      <li ><a href="#method-i-v_top_left_outer">v_top_left_outer</a></li>
-      <li ><a href="#method-i-vmin">vmin</a></li>
-      <li ><a href="#method-i-with_shadow">with_shadow</a></li>
-      <li ><a href="#method-i-with_shadow_only_font_pice">with_shadow_only_font_pice</a></li>
-    </ul>
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-instance-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Instance Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-i-board_layer_create">board_layer_create</a></li>
+
+        <li ><a href="#method-i-canvas_layer_create">canvas_layer_create</a></li>
+
+        <li ><a href="#method-i-cell_draw">cell_draw</a></li>
+
+        <li ><a href="#method-i-cell_h">cell_h</a></li>
+
+        <li ><a href="#method-i-cell_rect">cell_rect</a></li>
+
+        <li ><a href="#method-i-cell_vmin">cell_vmin</a></li>
+
+        <li ><a href="#method-i-cell_w">cell_w</a></li>
+
+        <li ><a href="#method-i-cell_walker">cell_walker</a></li>
+
+        <li ><a href="#method-i-center">center</a></li>
+
+        <li ><a href="#method-i-char_draw">char_draw</a></li>
+
+        <li ><a href="#method-i-clear_all">clear_all</a></li>
+
+        <li ><a href="#method-i-condition_then_color_negate">condition_then_color_negate</a></li>
+
+        <li ><a href="#method-i-condition_then_flip">condition_then_flip</a></li>
+
+        <li ><a href="#method-i-current_place">current_place</a></li>
+
+        <li ><a href="#method-i-d">d</a></li>
+
+        <li class="calls-super" ><a href="#method-i-default_params">default_params</a></li>
+
+        <li ><a href="#method-i-display">display</a></li>
+
+        <li ><a href="#method-i-draw_context">draw_context</a></li>
+
+        <li ><a href="#method-i-dynamic_layer_setup">dynamic_layer_setup</a></li>
+
+        <li ><a href="#method-i-ext_name">ext_name</a></li>
+
+        <li ><a href="#method-i-face_pentagon_color">face_pentagon_color</a></li>
+
+        <li ><a href="#method-i-face_pentagon_draw">face_pentagon_draw</a></li>
+
+        <li ><a href="#method-i-face_pentagon_scale">face_pentagon_scale</a></li>
+
+        <li ><a href="#method-i-face_pentagon_stroke_width">face_pentagon_stroke_width</a></li>
+
+        <li ><a href="#method-i-image_basename">image_basename</a></li>
+
+        <li ><a href="#method-i-image_format">image_format</a></li>
+
+        <li ><a href="#method-i-image_rect">image_rect</a></li>
+
+        <li ><a href="#method-i-inner_frame_draw">inner_frame_draw</a></li>
+
+        <li ><a href="#method-i-inner_frame_lattice_color">inner_frame_lattice_color</a></li>
+
+        <li ><a href="#method-i-inner_frame_stroke_color">inner_frame_stroke_color</a></li>
+
+        <li ><a href="#method-i-inner_frame_stroke_width">inner_frame_stroke_width</a></li>
+
+        <li ><a href="#method-i-lattice">lattice</a></li>
+
+        <li ><a href="#method-i-lattice_draw">lattice_draw</a></li>
+
+        <li ><a href="#method-i-lattice_layer_create">lattice_layer_create</a></li>
+
+        <li ><a href="#method-i-lattice_stroke_width">lattice_stroke_width</a></li>
+
+        <li ><a href="#method-i-line_draw">line_draw</a></li>
+
+        <li ><a href="#method-i-minus_one">minus_one</a></li>
+
+        <li ><a href="#method-i-next_build">next_build</a></li>
+
+        <li ><a href="#method-i-o">o</a></li>
+
+        <li ><a href="#method-i-origin_place">origin_place</a></li>
+
+        <li ><a href="#method-i-outer_bottom_right">outer_bottom_right</a></li>
+
+        <li ><a href="#method-i-outer_frame_padding">outer_frame_padding</a></li>
+
+        <li ><a href="#method-i-outer_frame_radius">outer_frame_radius</a></li>
+
+        <li ><a href="#method-i-outer_rect">outer_rect</a></li>
+
+        <li ><a href="#method-i-outer_top_left">outer_top_left</a></li>
+
+        <li ><a href="#method-i-pattern_layer_create">pattern_layer_create</a></li>
+
+        <li ><a href="#method-i-pentagon_box_debug">pentagon_box_debug</a></li>
+
+        <li ><a href="#method-i-pentagon_points">pentagon_points</a></li>
+
+        <li ><a href="#method-i-pentagon_real_points">pentagon_real_points</a></li>
+
+        <li ><a href="#method-i-piece_char_adjust">piece_char_adjust</a></li>
+
+        <li ><a href="#method-i-piece_count_bg_draw">piece_count_bg_draw</a></li>
+
+        <li ><a href="#method-i-piece_count_draw">piece_count_draw</a></li>
+
+        <li ><a href="#method-i-piece_image_draw">piece_image_draw</a></li>
+
+        <li ><a href="#method-i-piece_image_info">piece_image_info</a></li>
+
+        <li ><a href="#method-i-piece_pentagon_draw">piece_pentagon_draw</a></li>
+
+        <li ><a href="#method-i-piece_pentagon_scale">piece_pentagon_scale</a></li>
+
+        <li ><a href="#method-i-ps">ps</a></li>
+
+        <li ><a href="#method-i-px">px</a></li>
+
+        <li ><a href="#method-i-render">render</a></li>
+
+        <li ><a href="#method-i-round_radious">round_radious</a></li>
+
+        <li ><a href="#method-i-soldier_draw">soldier_draw</a></li>
+
+        <li ><a href="#method-i-soldier_draw_all">soldier_draw_all</a></li>
+
+        <li ><a href="#method-i-soldier_draw_by_char">soldier_draw_by_char</a></li>
+
+        <li ><a href="#method-i-soldier_draw_by_image">soldier_draw_by_image</a></li>
+
+        <li ><a href="#method-i-soldier_font_scale">soldier_font_scale</a></li>
+
+        <li ><a href="#method-i-soldier_move_cell_draw">soldier_move_cell_draw</a></li>
+
+        <li ><a href="#method-i-soldier_name">soldier_name</a></li>
+
+        <li ><a href="#method-i-stand_draw">stand_draw</a></li>
+
+        <li ><a href="#method-i-star_draw">star_draw</a></li>
+
+        <li ><a href="#method-i-star_fill_color">star_fill_color</a></li>
+
+        <li ><a href="#method-i-texture_image">texture_image</a></li>
+
+        <li ><a href="#method-i-to_blob_binary">to_blob_binary</a></li>
+
+        <li ><a href="#method-i-to_png24_binary">to_png24_binary</a></li>
+
+        <li ><a href="#method-i-to_write_binary">to_write_binary</a></li>
+
+        <li ><a href="#method-i-top_left">top_left</a></li>
+
+        <li ><a href="#method-i-transparent_layer">transparent_layer</a></li>
+
+        <li ><a href="#method-i-turn_draw">turn_draw</a></li>
+
+        <li ><a href="#method-i-v_bottom_right_outer">v_bottom_right_outer</a></li>
+
+        <li ><a href="#method-i-v_top_left_outer">v_top_left_outer</a></li>
+
+        <li ><a href="#method-i-vmin">vmin</a></li>
+
+        <li ><a href="#method-i-with_shadow">with_shadow</a></li>
+
+        <li ><a href="#method-i-with_shadow_only_font_pice">with_shadow_only_font_pice</a></li>
+
+      </ul>
+    </details>
   </div>
 
 
+  <div id="classindex-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-layers"></use></svg>
+      </span>
+      <span class="nav-section-title">Classes and Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
 
-  <footer id="validator-badges" role="contentinfo">
-  <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
-</footer>
+    <ul class="link-list nav-list"><li><details><summary><code><a href="../Bioshogi.html">Bioshogi</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="../Bioshogi/AI.html">AI</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/AI/Brain.html">Brain</a></code></li><li><details><summary><code><a href="../Bioshogi/AI/Diver.html">Diver</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/AI/Diver/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/AI/Diver/NegaAlphaDiver.html">NegaAlphaDiver</a></code></li><li><code><a href="../Bioshogi/AI/Diver/NegaAlphaMateDiver.html">NegaAlphaMateDiver</a></code></li><li><code><a href="../Bioshogi/AI/Diver/NegaMaxDiver.html">NegaMaxDiver</a></code></li><li><code><a href="../Bioshogi/AI/Diver/NegaScoutDiver.html">NegaScoutDiver</a></code></li></ul></details></li><li><details><summary><code><a href="../Bioshogi/AI/Evaluator.html">Evaluator</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/AI/Evaluator/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/AI/Evaluator/Level0.html">Level0</a></code></li><li><code><a href="../Bioshogi/AI/Evaluator/Level1.html">Level1</a></code></li><li><code><a href="../Bioshogi/AI/Evaluator/Level2.html">Level2</a></code></li><li><code><a href="../Bioshogi/AI/Evaluator/Level3.html">Level3</a></code></li><li><code><a href="../Bioshogi/AI/Evaluator/Level4.html">Level4</a></code></li></ul></details></li><li><code><a href="../Bioshogi/AI/Versus.html">Versus</a></code></li></ul></details></li><li><code><a href="../Bioshogi/AliasMod.html">AliasMod</a></code></li><li><code><a href="../Bioshogi/AlredyPromoted.html">AlredyPromoted</a></code></li><li><code><a href="../Bioshogi/AmbiguousFormatError.html">AmbiguousFormatError</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis.html">Analysis</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/AbbrevExpander.html">AbbrevExpander</a></code></li><li><code><a href="../Bioshogi/Analysis/Atsumeruyo.html">Atsumeruyo</a></code></li><li><code><a href="../Bioshogi/Analysis/AttackInfo.html">AttackInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/BoardPieceCountsMethods.html">BoardPieceCountsMethods</a></code></li><li><code><a href="../Bioshogi/Analysis/CaptureAnalyzer.html">CaptureAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/CaptureDetector.html">CaptureDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/ClusterScoreInfo.html">ClusterScoreInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/ColumnSoldierCounterMethods.html">ColumnSoldierCounterMethods</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomAnalyzer.html">CustomAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectorInfo.html">CustomDetectorInfo</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis/CustomDetectors.html">CustomDetectors</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html">AnagumaDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html">GyokutousenDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html">HikakukoukanDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/HisyakakuKiruDetector.html">HisyakakuKiruDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html">KakukoukanDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/KakunihakakuDetector.html">KakunihakakuDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/MagicSquareDetector.html">MagicSquareDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/NyuugyokuAnagumaDetector.html">NyuugyokuAnagumaDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/CustomDetectors/OutbreakDetector.html">OutbreakDetector</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Analysis/CustomTriggerInfo.html">CustomTriggerInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/DefenseInfo.html">DefenseInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/EveryAnalyzer.html">EveryAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/EveryDetector.html">EveryDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/ExecuterDsl.html">ExecuterDsl</a></code></li><li><code><a href="../Bioshogi/Analysis/FileList.html">FileList</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis/FileNormalizer.html">FileNormalizer</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/FileNormalizer/NormalizeOne.html">NormalizeOne</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Analysis/FinalizeTagDetector.html">FinalizeTagDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/FinalizeTagFuncInfo.html">FinalizeTagFuncInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/FinalizeTagInfo.html">FinalizeTagInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/GroupInfo.html">GroupInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/KakukiriCanceler.html">KakukiriCanceler</a></code></li><li><code><a href="../Bioshogi/Analysis/MotionAnalyzer.html">MotionAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/MotionDetector.html">MotionDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/NormalizeCheck.html">NormalizeCheck</a></code></li><li><code><a href="../Bioshogi/Analysis/NoteInfo.html">NoteInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/PerformanceBenchmark.html">PerformanceBenchmark</a></code></li><li><code><a href="../Bioshogi/Analysis/PlayerMethods.html">PlayerMethods</a></code></li><li><code><a href="../Bioshogi/Analysis/ShapeAnalyzer.html">ShapeAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/ShapeDetector.html">ShapeDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/ShapeInfo.html">ShapeInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/SoldierLookupTableMethods.html">SoldierLookupTableMethods</a></code></li><li><code><a href="../Bioshogi/Analysis/SoldierPlaceMethods.html">SoldierPlaceMethods</a></code></li><li><code><a href="../Bioshogi/Analysis/StyleInfo.html">StyleInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/SugatayakiDetector.html">SugatayakiDetector</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis/TacticDetector.html">TacticDetector</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/TacticDetector/SingleValidator.html">SingleValidator</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Analysis/TacticHitTurnTableGenerator.html">TacticHitTurnTableGenerator</a></code></li><li><code><a href="../Bioshogi/Analysis/TacticInfo.html">TacticInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/TacticStat.html">TacticStat</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis/TagBundle.html">TagBundle</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/TagBundle/List.html">List</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Analysis/TagIndex.html">TagIndex</a></code></li><li><code><a href="../Bioshogi/Analysis/TagReporter.html">TagReporter</a></code></li><li><code><a href="../Bioshogi/Analysis/TechniqueInfo.html">TechniqueInfo</a></code></li><li><code><a href="../Bioshogi/Analysis/TriggerExpander.html">TriggerExpander</a></code></li><li><code><a href="../Bioshogi/Analysis/UsedSoldierCounter.html">UsedSoldierCounter</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionAnalyzer.html">XmotionAnalyzer</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectorInfo.html">XmotionDetectorInfo</a></code></li><li><details><summary><code><a href="../Bioshogi/Analysis/XmotionDetectors.html">XmotionDetectors</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/HorseDetector.html">HorseDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/Outebisha0Detector.html">Outebisha0Detector</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html">OutebishaDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html">OutekakuDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/RocketDetector.html">RocketDetector</a></code></li><li><code><a href="../Bioshogi/Analysis/XmotionDetectors/WazaarinokeiDetector.html">WazaarinokeiDetector</a></code></li></ul></details></li></ul></details></li><li><code><a href="../Bioshogi/Assertion.html">Assertion</a></code></li><li><code><a href="../Bioshogi/BeforePlaceNotFound.html">BeforePlaceNotFound</a></code></li><li><code><a href="../Bioshogi/BioshogiError.html">BioshogiError</a></code></li><li><details><summary><code><a href="../Bioshogi/Board.html">Board</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Board/Basic.html">Basic</a></code></li><li><code><a href="../Bioshogi/Board/CsaFormatter.html">CsaFormatter</a></code></li><li><code><a href="../Bioshogi/Board/DetectorMethods.html">DetectorMethods</a></code></li><li><code><a href="../Bioshogi/Board/KakinokiFormatter.html">KakinokiFormatter</a></code></li><li><code><a href="../Bioshogi/Board/ReaderMethods.html">ReaderMethods</a></code></li><li><code><a href="../Bioshogi/Board/UpdateMethods.html">UpdateMethods</a></code></li></ul></details></li><li><details><summary><code><a href="../Bioshogi/BoardParser.html">BoardParser</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/BoardParser/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/BoardParser/CompareBoardParser.html">CompareBoardParser</a></code></li><li><code><a href="../Bioshogi/BoardParser/CsaBoardParser.html">CsaBoardParser</a></code></li><li><code><a href="../Bioshogi/BoardParser/KakinokiBoardParser.html">KakinokiBoardParser</a></code></li><li><code><a href="../Bioshogi/BoardParser/SfenBoardParser.html">SfenBoardParser</a></code></li></ul></details></li><li><code><a href="../Bioshogi/BrainProcessingHeavy.html">BrainProcessingHeavy</a></code></li><li><code><a href="../Bioshogi/CLI.html">CLI</a></code></li><li><code><a href="../Bioshogi/ColumnSoldierCounter.html">ColumnSoldierCounter</a></code></li><li><code><a href="../Bioshogi/CommonError.html">CommonError</a></code></li><li><code><a href="../Bioshogi/ConsumedTimeMinusError.html">ConsumedTimeMinusError</a></code></li><li><details><summary><code><a href="../Bioshogi/Container.html">Container</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Container/Basic.html">Basic</a></code></li><li><code><a href="../Bioshogi/Container/Fast.html">Fast</a></code></li><li><code><a href="../Bioshogi/Container/Simple.html">Simple</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Converter.html">Converter</a></code></li><li><code><a href="../Bioshogi/CounterHash.html">CounterHash</a></code></li><li><details><summary><code><a href="../Bioshogi/CoverImage.html">CoverImage</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/CoverImage/Renderer.html">Renderer</a></code></li></ul></details></li><li><code><a href="../Bioshogi/CsaHeaderInfo.html">CsaHeaderInfo</a></code></li><li><code><a href="../Bioshogi/DeadPieceRuleError.html">DeadPieceRuleError</a></code></li><li><code><a href="../Bioshogi/DifferentTurnCommonError.html">DifferentTurnCommonError</a></code></li><li><details><summary><code><a href="../Bioshogi/Dimension.html">Dimension</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Dimension/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/Dimension/CharInfo.html">CharInfo</a></code></li><li><code><a href="../Bioshogi/Dimension/Column.html">Column</a></code></li><li><code><a href="../Bioshogi/Dimension/DimensionInfo.html">DimensionInfo</a></code></li><li><code><a href="../Bioshogi/Dimension/ModuleMethods.html">ModuleMethods</a></code></li><li><code><a href="../Bioshogi/Dimension/Row.html">Row</a></code></li></ul></details></li><li><code><a href="../Bioshogi/DoublePawnCommonError.html">DoublePawnCommonError</a></code></li><li><code><a href="../Bioshogi/ExtremeDetect.html">ExtremeDetect</a></code></li><li><code><a href="../Bioshogi/FileFormatError.html">FileFormatError</a></code></li><li><details><summary><code><a href="../Bioshogi/Formatter.html">Formatter</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Formatter/AkfBuilder.html">AkfBuilder</a></code></li><li><details><summary><code><a href="../Bioshogi/Formatter/Animation.html">Animation</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Formatter/Animation/AnimationApngBuilder.html">AnimationApngBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/AnimationGifBuilder.html">AnimationGifBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/AnimationMp4Builder.html">AnimationMp4Builder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/AnimationWebpBuilder.html">AnimationWebpBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/AnimationZipBuilder.html">AnimationZipBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/AudioThemeInfo.html">AudioThemeInfo</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/DemoBuilder.html">DemoBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/FfmpegError.html">FfmpegError</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/ProgressCop.html">ProgressCop</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/SerialFilenameGenerator.html">SerialFilenameGenerator</a></code></li><li><code><a href="../Bioshogi/Formatter/Animation/SystemSupport.html">SystemSupport</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Formatter/Core.html">Core</a></code></li><li><code><a href="../Bioshogi/Formatter/CsaBuilder.html">CsaBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Ki2Builder.html">Ki2Builder</a></code></li><li><code><a href="../Bioshogi/Formatter/KifBuilder.html">KifBuilder</a></code></li><li><code><a href="../Bioshogi/Formatter/Runner.html">Runner</a></code></li></ul></details></li><li><code><a href="../Bioshogi/FreqPieceInfo.html">FreqPieceInfo</a></code></li><li><details><summary><code><a href="../Bioshogi/Hand.html">Hand</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Hand/Drop.html">Drop</a></code></li><li><code><a href="../Bioshogi/Hand/Move.html">Move</a></code></li></ul></details></li><li><code><a href="../Bioshogi/HandLog.html">HandLog</a></code></li><li><code><a href="../Bioshogi/HandLogs.html">HandLogs</a></code></li><li><code><a href="../Bioshogi/HoldPieceNotFound.html">HoldPieceNotFound</a></code></li><li><code><a href="../Bioshogi/HoldPieceNotFound2.html">HoldPieceNotFound2</a></code></li><li><code><a href="../Bioshogi/IllegibleFormat.html">IllegibleFormat</a></code></li><li><details><summary><code><a href="../Bioshogi/InputAdapter.html">InputAdapter</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/InputAdapter/AbstractAdapter.html">AbstractAdapter</a></code></li><li><code><a href="../Bioshogi/InputAdapter/CsaAdapter.html">CsaAdapter</a></code></li><li><code><a href="../Bioshogi/InputAdapter/Ki2Adapter.html">Ki2Adapter</a></code></li><li><code><a href="../Bioshogi/InputAdapter/KifAdapter.html">KifAdapter</a></code></li><li><code><a href="../Bioshogi/InputAdapter/SfenAdapter.html">SfenAdapter</a></code></li></ul></details></li><li><code><a href="../Bioshogi/InputParser.html">InputParser</a></code></li><li><code><a href="../Bioshogi/KanjiNumber.html">KanjiNumber</a></code></li><li><code><a href="../Bioshogi/KeyNotFound.html">KeyNotFound</a></code></li><li><code><a href="../Bioshogi/KifuFormatInfo.html">KifuFormatInfo</a></code></li><li><code><a href="../Bioshogi/LastActionInfo.html">LastActionInfo</a></code></li><li><code><a href="../Bioshogi/Location.html">Location</a></code></li><li><code><a href="../Bioshogi/MainClock.html">MainClock</a></code></li><li><code><a href="../Bioshogi/Media.html">Media</a></code></li><li><code><a href="../Bioshogi/MementoStackEmpty.html">MementoStackEmpty</a></code></li><li><code><a href="../Bioshogi/MovableBattlerNotFound.html">MovableBattlerNotFound</a></code></li><li><code><a href="../Bioshogi/MustNotHappen.html">MustNotHappen</a></code></li><li><code><a href="../Bioshogi/NoPromotablePiece.html">NoPromotablePiece</a></code></li><li><code><a href="../Bioshogi/NotFoundOnBoard.html">NotFoundOnBoard</a></code></li><li><code><a href="../Bioshogi/NotPromotable.html">NotPromotable</a></code></li><li><code><a href="../Bioshogi/OfficialFormatter.html">OfficialFormatter</a></code></li><li><code><a href="../Bioshogi/OrderInfo.html">OrderInfo</a></code></li><li><details><summary><code><a href="../Bioshogi/Parser.html">Parser</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Parser/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/Parser/BodParser.html">BodParser</a></code></li><li><code><a href="../Bioshogi/Parser/CsaParser.html">CsaParser</a></code></li><li><code><a href="../Bioshogi/Parser/Header.html">Header</a></code></li><li><code><a href="../Bioshogi/Parser/Inspector.html">Inspector</a></code></li><li><code><a href="../Bioshogi/Parser/Ki2Parser.html">Ki2Parser</a></code></li><li><code><a href="../Bioshogi/Parser/KifParser.html">KifParser</a></code></li><li><code><a href="../Bioshogi/Parser/Pi.html">Pi</a></code></li><li><code><a href="../Bioshogi/Parser/SfenParser.html">SfenParser</a></code></li><li><code><a href="../Bioshogi/Parser/TimeParser.html">TimeParser</a></code></li></ul></details></li><li><details><summary><code><a href="../Bioshogi/Piece.html">Piece</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Piece/EkScoreInfo.html">EkScoreInfo</a></code></li><li><code><a href="../Bioshogi/Piece/PieceCsa.html">PieceCsa</a></code></li><li><code><a href="../Bioshogi/Piece/PiecePressure.html">PiecePressure</a></code></li><li><code><a href="../Bioshogi/Piece/PieceScale.html">PieceScale</a></code></li><li><code><a href="../Bioshogi/Piece/PieceScore.html">PieceScore</a></code></li><li><code><a href="../Bioshogi/Piece/PieceVector.html">PieceVector</a></code></li></ul></details></li><li><code><a href="../Bioshogi/PieceAlredyExist.html">PieceAlredyExist</a></code></li><li><code><a href="../Bioshogi/PieceBox.html">PieceBox</a></code></li><li><code><a href="../Bioshogi/PieceNotFound.html">PieceNotFound</a></code></li><li><code><a href="../Bioshogi/PieceNotFoundOnBoard.html">PieceNotFoundOnBoard</a></code></li><li><code><a href="../Bioshogi/Place.html">Place</a></code></li><li><details><summary><code><a href="../Bioshogi/Player.html">Player</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/Player/OtherMethods.html">OtherMethods</a></code></li><li><code><a href="../Bioshogi/Player/PieceBoxMethods.html">PieceBoxMethods</a></code></li><li><code><a href="../Bioshogi/Player/PressureMethods.html">PressureMethods</a></code></li><li><code><a href="../Bioshogi/Player/SoldierMethods.html">SoldierMethods</a></code></li></ul></details></li><li><details><summary><code><a href="../Bioshogi/PlayerExecutor.html">PlayerExecutor</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/PlayerExecutor/Base.html">Base</a></code></li><li><code><a href="../Bioshogi/PlayerExecutor/Brain.html">Brain</a></code></li><li><code><a href="../Bioshogi/PlayerExecutor/ErrorHandler.html">ErrorHandler</a></code></li><li><code><a href="../Bioshogi/PlayerExecutor/Human.html">Human</a></code></li><li><code><a href="../Bioshogi/PlayerExecutor/WithoutAnalyzer.html">WithoutAnalyzer</a></code></li></ul></details></li><li><code><a href="../Bioshogi/PresetInfo.html">PresetInfo</a></code></li><li><code><a href="../Bioshogi/PromotedPiecePutOnError.html">PromotedPiecePutOnError</a></code></li><li><code><a href="../Bioshogi/PromotedPieceToNormalPiece.html">PromotedPieceToNormalPiece</a></code></li><li><code><a href="../Bioshogi/Rect.html">Rect</a></code></li><li><code><a href="../Bioshogi/ReversePlayerPieceMoveError.html">ReversePlayerPieceMoveError</a></code></li><li><code><a href="../Bioshogi/RuleError.html">RuleError</a></code></li><li><code><a href="../Bioshogi/SamePlaceDifferent.html">SamePlaceDifferent</a></code></li><li><code><a href="../Bioshogi/SamePlayerBattlerOverwrideError.html">SamePlayerBattlerOverwrideError</a></code></li><li><details><summary><code><a href="../Bioshogi/ScreenImage.html">ScreenImage</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/ScreenImage/ColorThemeInfo.html">ColorThemeInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/FontThemeInfo.html">FontThemeInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/NureyonImageInfo.html">NureyonImageInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/PaletteInfo.html">PaletteInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/PieceFontWeightInfo.html">PieceFontWeightInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/PieceImageInfo.html">PieceImageInfo</a></code></li><li><code><a href="../Bioshogi/ScreenImage/Renderer.html">Renderer</a></code></li></ul></details></li><li><code><a href="../Bioshogi/Sfen.html">Sfen</a></code></li><li><code><a href="../Bioshogi/SfenImporter.html">SfenImporter</a></code></li><li><code><a href="../Bioshogi/SimpleModel.html">SimpleModel</a></code></li><li><code><a href="../Bioshogi/Simulator.html">Simulator</a></code></li><li><code><a href="../Bioshogi/SingleClock.html">SingleClock</a></code></li><li><code><a href="../Bioshogi/Soldier.html">Soldier</a></code></li><li><code><a href="../Bioshogi/SoldierBox.html">SoldierBox</a></code></li><li><code><a href="../Bioshogi/SoldierWalker.html">SoldierWalker</a></code></li><li><code><a href="../Bioshogi/SoldierWarpError.html">SoldierWarpError</a></code></li><li><code><a href="../Bioshogi/Source.html">Source</a></code></li><li><code><a href="../Bioshogi/Stat.html">Stat</a></code></li><li><code><a href="../Bioshogi/SyntaxDefact.html">SyntaxDefact</a></code></li><li><code><a href="../Bioshogi/TurnInfo.html">TurnInfo</a></code></li><li><code><a href="../Bioshogi/UnconfirmedObject.html">UnconfirmedObject</a></code></li><li><details><summary><code><a href="../Bioshogi/V.html">V</a></code></summary><ul class="link-list nav-list"><li><code><a href="../Bioshogi/V/OnceVector.html">OnceVector</a></code></li><li><code><a href="../Bioshogi/V/PresetVectors.html">PresetVectors</a></code></li><li><code><a href="../Bioshogi/V/RepeatVector.html">RepeatVector</a></code></li></ul></details></li></ul></details></li><li><code><a href="../Object.html">Object</a></code></li></ul>
+  </details>
+</div>
 
 </nav>
 
-<main role="main" aria-labelledby="module-Bioshogi::ScreenImage">
-  <h1 id="module-Bioshogi::ScreenImage" class="anchor-link module">
+<main role="main" aria-labelledby="module-bioshogi-screenimage">
+  
+  
+    <ol role="navigation" aria-label="Breadcrumb navigation" class="breadcrumb">
+      
+      <li>
+        
+        <a href="../Bioshogi.html">Bioshogi</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <span>ScreenImage</span>
+        
+      </li>
+      
+    </ol>
+  
+
+  <span id="module-Bioshogi::ScreenImage" class="legacy-anchor"></span>
+  <h1 id="module-bioshogi-screenimage" class="anchor-link module">
     module Bioshogi::ScreenImage
   </h1>
 
@@ -186,36 +642,47 @@
     
   </section>
 
-  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+  <span id="5Buntitled-5D" class="legacy-anchor"></span>
+  <section class="documentation-section anchor-link">
 
 
 
 
 
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+
+
+
+
+
+
+
+     <section id="public-class-untitled-method-details" class="method-section anchor-link">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3 id="public-class-untitled-methods"><a href="#public-class-untitled-methods">Public Class Methods</a></h3>
        </header>
+
 
       <div id="method-c-new" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-c-new" title="Link to this method">
                 <span class="method-name">new</span>
                 <span class="method-args">(container, params = {})</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 90</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">container</span>, <span class="ruby-identifier">params</span> = {})
   <span class="ruby-comment"># params.assert_valid_keys(default_params.keys)</span>
 
@@ -248,67 +715,100 @@
   <span class="ruby-ivar">@build_counter</span> = <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-c-renderer" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-c-renderer" title="Link to this method">
                 <span class="method-name">renderer</span>
                 <span class="method-args">(...)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="renderer-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image.rb, line 7</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">renderer</span>(<span class="ruby-operator">...</span>)
   <span class="ruby-constant">Renderer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">...</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
     </section>
 
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+
+
+
+
+
+
+     <section id="public-instance-untitled-method-details" class="method-section anchor-link">
        <header>
-         <h3>Public Instance Methods</h3>
+         <h3 id="public-instance-untitled-methods"><a href="#public-instance-untitled-methods">Public Instance Methods</a></h3>
        </header>
+
 
       <div id="method-i-board_layer_create" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-board_layer_create" title="Link to this method">
                 <span class="method-name">board_layer_create</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="board_layer_create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 66</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">board_layer_create</span>
   <span class="ruby-identifier">layer</span> = <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:s_board_layer</span>)
   <span class="ruby-keyword">case</span>
@@ -353,31 +853,44 @@
   <span class="ruby-identifier">with_shadow</span>(<span class="ruby-identifier">layer</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>盤 padding を入れる場合 or 盤画像</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-canvas_layer_create" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-canvas_layer_create" title="Link to this method">
                 <span class="method-name">canvas_layer_create</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="canvas_layer_create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 164</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 167</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">canvas_layer_create</span>
   <span class="ruby-keyword">case</span>
   <span class="ruby-keyword">when</span> <span class="ruby-keyword">false</span>
@@ -410,178 +923,256 @@
   <span class="ruby-identifier">layer</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_draw" title="Link to this method">
                 <span class="method-name">cell_draw</span>
                 <span class="method-args">(g, v)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 245</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 248</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_draw</span>(<span class="ruby-identifier">g</span>, <span class="ruby-identifier">v</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>
     <span class="ruby-identifier">g</span>.<span class="ruby-identifier">rectangle</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v</span>), <span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v</span> <span class="ruby-operator">+</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">one</span>))
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_h" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_h" title="Link to this method">
                 <span class="method-name">cell_h</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_h-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 263</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 266</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_h</span>
-  <span class="ruby-ivar">@cell_h</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">vmin</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:aspect_ratio_h</span>]) <span class="ruby-operator">/</span> <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span>
+  <span class="ruby-ivar">@cell_h</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">vmin</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:aspect_ratio_h</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:master_scale</span>]) <span class="ruby-operator">/</span> <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_rect" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_rect" title="Link to this method">
                 <span class="method-name">cell_rect</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_rect-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 276</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 279</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_rect</span>
   <span class="ruby-ivar">@cell_rect</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Rect</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cell_w</span>, <span class="ruby-identifier">cell_h</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_vmin" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_vmin" title="Link to this method">
                 <span class="method-name">cell_vmin</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_vmin-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 268</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 271</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_vmin</span>
   <span class="ruby-ivar">@cell_vmin</span> <span class="ruby-operator">||=</span> [<span class="ruby-identifier">cell_w</span>, <span class="ruby-identifier">cell_h</span>].<span class="ruby-identifier">min</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>セルサイズの短い方</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_w" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_w" title="Link to this method">
                 <span class="method-name">cell_w</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_w-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 259</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 262</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_w</span>
-  <span class="ruby-ivar">@cell_w</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">vmin</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:aspect_ratio_w</span>]) <span class="ruby-operator">/</span> <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>
+  <span class="ruby-ivar">@cell_w</span> <span class="ruby-operator">||=</span> (<span class="ruby-identifier">vmin</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:aspect_ratio_w</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:master_scale</span>]) <span class="ruby-operator">/</span> <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-cell_walker" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-cell_walker" title="Link to this method">
                 <span class="method-name">cell_walker</span>
                 <span class="method-args">() { |V| ... }</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="cell_walker-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 219</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 222</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cell_walker</span>
   <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">y</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
@@ -590,60 +1181,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-center" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-center" title="Link to this method">
                 <span class="method-name">center</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="center-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 280</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 283</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">center</span>
   <span class="ruby-ivar">@center</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">V</span>[<span class="ruby-ivar">@s_canvas_layer</span>.<span class="ruby-identifier">columns</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>, <span class="ruby-ivar">@s_canvas_layer</span>.<span class="ruby-identifier">rows</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-char_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-char_draw" title="Link to this method">
                 <span class="method-name">char_draw</span>
                 <span class="method-args">(layer: nil, v:, text:, location:, font_scale:, color: params[:piece_font_color], bold: false, stroke_width: nil, stroke_color: nil)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="char_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 79</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">char_draw</span>(<span class="ruby-value">layer:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">v:</span>, <span class="ruby-value">text:</span>, <span class="ruby-value">location:</span>, <span class="ruby-value">font_scale:</span>, <span class="ruby-value">color:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_font_color</span>], <span class="ruby-value">bold:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">stroke_width:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">stroke_color:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">g</span> = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Draw</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-identifier">g</span>.<span class="ruby-identifier">rotation</span> = <span class="ruby-identifier">location</span>.<span class="ruby-identifier">angle</span>
@@ -669,31 +1286,44 @@
   <span class="ruby-identifier">g</span>.<span class="ruby-identifier">annotate</span>(<span class="ruby-identifier">layer</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">cell_rect</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v</span>), <span class="ruby-identifier">text</span>) <span class="ruby-comment"># annotate(image, w, h, x, y, text)</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-clear_all" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-clear_all" title="Link to this method">
                 <span class="method-name">clear_all</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="clear_all-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 16</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">clear_all</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">tagged</span>(<span class="ruby-value">:clear_all</span>) <span class="ruby-keyword">do</span>
     [
@@ -717,31 +1347,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>いらない？</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-condition_then_color_negate" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-condition_then_color_negate" title="Link to this method">
                 <span class="method-name">condition_then_color_negate</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="condition_then_color_negate-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 204</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 207</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">condition_then_color_negate</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:negate</span>]
     <span class="ruby-identifier">layer</span>.<span class="ruby-identifier">negate</span>
@@ -750,31 +1393,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-condition_then_flip" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-condition_then_flip" title="Link to this method">
                 <span class="method-name">condition_then_flip</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="condition_then_flip-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 196</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">condition_then_flip</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:viewpoint</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;white&quot;</span>
     <span class="ruby-identifier">layer</span>.<span class="ruby-identifier">rotate</span>(<span class="ruby-value">180</span>) <span class="ruby-comment"># 5 ms</span>
@@ -783,31 +1439,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-current_place" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-current_place" title="Link to this method">
                 <span class="method-name">current_place</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="current_place-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 112</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 112</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_place</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">hand_log</span>
     <span class="ruby-identifier">soldier</span> = <span class="ruby-identifier">hand_log</span>.<span class="ruby-identifier">soldier</span>
@@ -815,60 +1484,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-d" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-d" title="Link to this method">
                 <span class="method-name">d</span>
                 <span class="method-args">(image)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="d-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 58</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">d</span>(<span class="ruby-identifier">image</span>)
   <span class="ruby-node">`open #{o(image)}`</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>d Magick::Image.read(“logo:”).first</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-default_params" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-default_params" title="Link to this method">
                 <span class="method-name">default_params</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="default_params-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 5</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">default_params</span>
   <span class="ruby-keyword">super</span>.<span class="ruby-identifier">merge</span>({
       <span class="ruby-comment"># 必須</span>
@@ -881,6 +1576,9 @@
       <span class="ruby-comment"># 0.95 * (33.3 / 36.4) で横幅は 0.8690934065934065 になる</span>
       <span class="ruby-value">:aspect_ratio_w</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-value">0.8690934065934065</span>, <span class="ruby-comment"># 縦横幅の小さい方に対する盤の横幅の割合(横長の場合縦比率より小さめにする)</span>
       <span class="ruby-value">:aspect_ratio_h</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-value">0.95</span>,               <span class="ruby-comment"># 縦横幅の小さい方に対する盤の縦幅の割合(横長の場合1.0にすると縦の隙間がなくなる)</span>
+
+      <span class="ruby-comment"># スケール (将棋盤の比率に掛ける値)</span>
+      <span class="ruby-value">:master_scale</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-value">1.0</span>,
 
       <span class="ruby-comment"># 文字の大きさの割合</span>
       <span class="ruby-comment"># ※割合はすべてセルの大きさを1.0とする</span>
@@ -947,184 +1645,263 @@
     })
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
             <div class="method-calls-super">
               Calls superclass method
               
             </div>
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-display" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-display" title="Link to this method">
                 <span class="method-name">display</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="display-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 17</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 17</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">display</span>
   <span class="ruby-identifier">d</span>(<span class="ruby-identifier">render</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-draw_context" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-draw_context" title="Link to this method">
                 <span class="method-name">draw_context</span>
                 <span class="method-args">(layer) { |g| ... }</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="draw_context-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 213</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 216</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_context</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-identifier">g</span> = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Draw</span>.<span class="ruby-identifier">new</span>
   <span class="ruby-keyword">yield</span> <span class="ruby-identifier">g</span>
   <span class="ruby-identifier">g</span>.<span class="ruby-identifier">draw</span>(<span class="ruby-identifier">layer</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>draw の時点で最後に指定した fill が使われる</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-dynamic_layer_setup" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-dynamic_layer_setup" title="Link to this method">
                 <span class="method-name">dynamic_layer_setup</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="dynamic_layer_setup-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 39</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">dynamic_layer_setup</span>
   <span class="ruby-ivar">@d_move_layer</span>        = <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:d_move_layer</span>)
   <span class="ruby-ivar">@d_piece_layer</span>       = <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:d_piece_layer</span>)
   <span class="ruby-ivar">@d_piece_count_layer</span> = <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:d_piece_count_layer</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-ext_name" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-ext_name" title="Link to this method">
                 <span class="method-name">ext_name</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="ext_name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 308</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 311</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ext_name</span>
   <span class="ruby-identifier">image_format</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-face_pentagon_color" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-face_pentagon_color" title="Link to this method">
                 <span class="method-name">face_pentagon_color</span>
                 <span class="method-args">(location)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="face_pentagon_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 154</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">face_pentagon_color</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:face_pentagon_color</span>][<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-face_pentagon_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-face_pentagon_draw" title="Link to this method">
                 <span class="method-name">face_pentagon_draw</span>
                 <span class="method-args">(v:, location:)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="face_pentagon_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 84</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">face_pentagon_draw</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">location:</span>)
   <span class="ruby-identifier">draw_context</span>(<span class="ruby-ivar">@d_piece_layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">color</span> = <span class="ruby-identifier">face_pentagon_color</span>(<span class="ruby-identifier">location</span>)
@@ -1138,89 +1915,128 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>☗を白黒で塗り分ける</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-face_pentagon_scale" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-face_pentagon_scale" title="Link to this method">
                 <span class="method-name">face_pentagon_scale</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="face_pentagon_scale-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 146</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 146</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">face_pentagon_scale</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:face_pentagon_scale</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">piece_pentagon_scale</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>turn</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-face_pentagon_stroke_width" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-face_pentagon_stroke_width" title="Link to this method">
                 <span class="method-name">face_pentagon_stroke_width</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="face_pentagon_stroke_width-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 150</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 150</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">face_pentagon_stroke_width</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:face_pentagon_stroke_width</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_pentagon_stroke_width</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-image_basename" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-image_basename" title="Link to this method">
                 <span class="method-name">image_basename</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="image_basename-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_model_methods.rb, line 5</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_model_methods.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">image_basename</span>
   [
     <span class="ruby-identifier">location</span>.<span class="ruby-identifier">to_sfen</span>,     <span class="ruby-comment"># B (Black)</span>
@@ -1229,89 +2045,128 @@
   ].<span class="ruby-identifier">join</span>.<span class="ruby-identifier">upcase</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>対応する画像のファイル名を返す</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-image_format" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-image_format" title="Link to this method">
                 <span class="method-name">image_format</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="image_format-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 304</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 307</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">image_format</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:image_format</span>].<span class="ruby-identifier">presence</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;params[:image_format] is blank&quot;</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-image_rect" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-image_rect" title="Link to this method">
                 <span class="method-name">image_rect</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="image_rect-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 251</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 254</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">image_rect</span>
   <span class="ruby-ivar">@image_rect</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Rect</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:width</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:height</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-inner_frame_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-inner_frame_draw" title="Link to this method">
                 <span class="method-name">inner_frame_draw</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="inner_frame_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 39</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">inner_frame_stroke_width</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_fill_color</span>]
     <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
@@ -1323,147 +2178,212 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>格子の外枠盤から見れば内側基本透明で枠だけを描画する塗り潰したいときは <a href="ScreenImage.html#method-i-board_layer_create"><code>board_layer_create</code></a> の方で行うべきinner_frame_stroke_width が 0 または nil で inner_frame_fill_color も nil ならスキップ</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-inner_frame_lattice_color" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-inner_frame_lattice_color" title="Link to this method">
                 <span class="method-name">inner_frame_lattice_color</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="inner_frame_lattice_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 139</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 139</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_lattice_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_lattice_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_font_color</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-inner_frame_stroke_color" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-inner_frame_stroke_color" title="Link to this method">
                 <span class="method-name">inner_frame_stroke_color</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="inner_frame_stroke_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 147</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_stroke_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_stroke_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_font_color</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-inner_frame_stroke_width" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-inner_frame_stroke_width" title="Link to this method">
                 <span class="method-name">inner_frame_stroke_width</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="inner_frame_stroke_width-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 300</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 303</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">inner_frame_stroke_width</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:inner_frame_stroke_width</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">lattice_stroke_width</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-lattice" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-lattice" title="Link to this method">
                 <span class="method-name">lattice</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="lattice-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 255</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 258</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lattice</span>
   <span class="ruby-ivar">@lattice</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Rect</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:dimension_w</span>], <span class="ruby-identifier">params</span>[<span class="ruby-value">:dimension_h</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-lattice_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-lattice_draw" title="Link to this method">
                 <span class="method-name">lattice_draw</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="lattice_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 19</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lattice_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke_width</span>(<span class="ruby-identifier">lattice_stroke_width</span>) <span class="ruby-comment"># 2px 以上の場合はこれがいる</span>
@@ -1479,31 +2399,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>外枠を含まない格子line で stroke を使うと fill + stroke で二重に同じところを塗るっぽいだから半透明にしても濃くなるなので fill だけにするしかし、そうすると今度は 2px 以上が描画できなくなるのでやっぱり stroke も入れておく</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-lattice_layer_create" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-lattice_layer_create" title="Link to this method">
                 <span class="method-name">lattice_layer_create</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="lattice_layer_create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 6</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 6</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lattice_layer_create</span>
   <span class="ruby-identifier">transparent_layer</span>(<span class="ruby-value">:s_lattice_layer</span>).<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">lattice_draw</span>(<span class="ruby-identifier">e</span>)
@@ -1512,147 +2445,212 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-lattice_stroke_width" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-lattice_stroke_width" title="Link to this method">
                 <span class="method-name">lattice_stroke_width</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="lattice_stroke_width-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 296</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 299</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">lattice_stroke_width</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:lattice_stroke_width</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-line_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-line_draw" title="Link to this method">
                 <span class="method-name">line_draw</span>
                 <span class="method-args">(g, v1, v2)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="line_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 241</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 244</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">line_draw</span>(<span class="ruby-identifier">g</span>, <span class="ruby-identifier">v1</span>, <span class="ruby-identifier">v2</span>)
   <span class="ruby-identifier">g</span>.<span class="ruby-identifier">line</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v1</span>), <span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v2</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-minus_one" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-minus_one" title="Link to this method">
                 <span class="method-name">minus_one</span>
                 <span class="method-args">(x, y)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="minus_one-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 237</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 240</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">minus_one</span>(<span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span>)
   [<span class="ruby-identifier">x</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">y</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-next_build" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-next_build" title="Link to this method">
                 <span class="method-name">next_build</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="next_build-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 12</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">next_build</span>
   <span class="ruby-ivar">@last_rendered_image</span> = <span class="ruby-identifier">render</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-o" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-o" title="Link to this method">
                 <span class="method-name">o</span>
                 <span class="method-args">(image, name = nil)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="o-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 63</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">o</span>(<span class="ruby-identifier">image</span>, <span class="ruby-identifier">name</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">hex</span>
   <span class="ruby-identifier">file</span> = <span class="ruby-constant">Bundler</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-node">&quot;tmp/#{name}.png&quot;</span>).<span class="ruby-identifier">expand_path</span>
@@ -1662,31 +2660,44 @@
   <span class="ruby-identifier">file</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>o Magick::Image.read(“logo:”).first</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-origin_place" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-origin_place" title="Link to this method">
                 <span class="method-name">origin_place</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="origin_place-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 119</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">origin_place</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">hand_log</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">hand_log</span>.<span class="ruby-identifier">hand</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hand</span><span class="ruby-operator">::</span><span class="ruby-constant">Move</span>)
@@ -1695,89 +2706,128 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-outer_bottom_right" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-outer_bottom_right" title="Link to this method">
                 <span class="method-name">outer_bottom_right</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="outer_bottom_right-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 336</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 339</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_bottom_right</span>
   <span class="ruby-constant">V</span>[<span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>, <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">outer_frame_padding</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>外側の左下</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-outer_frame_padding" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-outer_frame_padding" title="Link to this method">
                 <span class="method-name">outer_frame_padding</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="outer_frame_padding-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 321</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 324</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_frame_padding</span>
   <span class="ruby-constant">V</span>.<span class="ruby-identifier">one</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:outer_frame_padding</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>盤の外側とセルの隙間</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-outer_frame_radius" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-outer_frame_radius" title="Link to this method">
                 <span class="method-name">outer_frame_radius</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="outer_frame_radius-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 312</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 315</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_frame_radius</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:outer_frame_padding</span>].<span class="ruby-identifier">zero?</span>
     <span class="ruby-value">0</span> <span class="ruby-comment"># 隙間が無い場合は線だけの角なので丸めるとセルが削れる。なので強制的に0</span>
@@ -1786,120 +2836,172 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-outer_rect" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-outer_rect" title="Link to this method">
                 <span class="method-name">outer_rect</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="outer_rect-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 341</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 344</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_rect</span>
   <span class="ruby-identifier">outer_bottom_right</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">outer_top_left</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>外側の領域</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-outer_top_left" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-outer_top_left" title="Link to this method">
                 <span class="method-name">outer_top_left</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="outer_top_left-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 331</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 334</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">outer_top_left</span>
   <span class="ruby-constant">V</span>[<span class="ruby-value">0</span>, <span class="ruby-value">0</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">outer_frame_padding</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>外側の左上</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-pattern_layer_create" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-pattern_layer_create" title="Link to this method">
                 <span class="method-name">pattern_layer_create</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="pattern_layer_create-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 160</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 160</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pattern_layer_create</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:pt_file</span>].<span class="ruby-identifier">presence</span>
     <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">Pathname</span>(<span class="ruby-identifier">v</span>).<span class="ruby-identifier">expand_path</span>).<span class="ruby-identifier">first</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-pentagon_box_debug" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-pentagon_box_debug" title="Link to this method">
                 <span class="method-name">pentagon_box_debug</span>
                 <span class="method-args">(v)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="pentagon_box_debug-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 97</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pentagon_box_debug</span>(<span class="ruby-identifier">v</span>)
   <span class="ruby-identifier">draw_context</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke_width</span>(<span class="ruby-value">1</span>)
@@ -1909,31 +3011,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-pentagon_points" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-pentagon_points" title="Link to this method">
                 <span class="method-name">pentagon_points</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="pentagon_points-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 120</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 120</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pentagon_points</span>
   <span class="ruby-ivar">@pentagon_points</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">e</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:pentagon_profile</span>]
@@ -1952,31 +3067,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>相対座標で☖の一周分pentagon_real_points の方で行う計算で固定のものはこちらで先に行っておく</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-pentagon_real_points" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-pentagon_real_points" title="Link to this method">
                 <span class="method-name">pentagon_real_points</span>
                 <span class="method-args">(v:, location:, scale: 1.0)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="pentagon_real_points-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 108</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pentagon_real_points</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">location:</span>, <span class="ruby-value">scale:</span> <span class="ruby-value">1.0</span>)
   <span class="ruby-identifier">cx</span>, <span class="ruby-identifier">cy</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v</span> <span class="ruby-operator">+</span> <span class="ruby-constant">V</span>.<span class="ruby-identifier">half</span>)  <span class="ruby-comment"># 中央</span>
   <span class="ruby-identifier">pentagon_points</span>.<span class="ruby-identifier">flat_map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span><span class="ruby-operator">|</span>
@@ -1987,61 +3115,87 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>実座標化OPTIMIZE: cx, cy を除いた部分だけキャッシュした方がよくない？</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_char_adjust" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_char_adjust" title="Link to this method">
                 <span class="method-name">piece_char_adjust</span>
                 <span class="method-args">(location)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_char_adjust-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 128</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_char_adjust</span>(<span class="ruby-identifier">location</span>)
   <span class="ruby-ivar">@piece_char_adjust</span> <span class="ruby-operator">||=</span> {}
   <span class="ruby-ivar">@piece_char_adjust</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">V</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_char_adjust</span>][<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span>]] <span class="ruby-operator">*</span> <span class="ruby-identifier">location</span>.<span class="ruby-identifier">sign_dir</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>フォントの位置を微調整</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_count_bg_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_count_bg_draw" title="Link to this method">
                 <span class="method-name">piece_count_bg_draw</span>
                 <span class="method-args">(v:, location:)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_count_bg_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 107</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 107</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_count_bg_draw</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">location:</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_count_bg_color</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_count_bg_scale</span>].<span class="ruby-identifier">nonzero?</span>
     <span class="ruby-identifier">draw_context</span>(<span class="ruby-ivar">@d_piece_count_layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
@@ -2069,31 +3223,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>駒数の下の丸</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_count_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_count_draw" title="Link to this method">
                 <span class="method-name">piece_count_draw</span>
                 <span class="method-args">(v:, count:, location:)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_count_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 87</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 87</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_count_draw</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">count:</span>, <span class="ruby-value">location:</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">2</span>
     <span class="ruby-identifier">w</span> = <span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">9</span> <span class="ruby-operator">?</span> <span class="ruby-value">:single</span> <span class="ruby-operator">:</span> <span class="ruby-value">:double</span>
@@ -2113,31 +3280,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>駒数</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_image_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_image_draw" title="Link to this method">
                 <span class="method-name">piece_image_draw</span>
                 <span class="method-args">(v:, soldier:)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_image_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 49</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_image_draw</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">soldier:</span>)
   <span class="ruby-identifier">piece_path</span> = <span class="ruby-identifier">piece_image_info</span>.<span class="ruby-identifier">piece_path</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-identifier">scale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_image_scale</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">piece_image_info</span>.<span class="ruby-identifier">default_scale</span>
@@ -2155,60 +3335,86 @@
   <span class="ruby-ivar">@d_piece_layer</span>.<span class="ruby-identifier">composite!</span>(<span class="ruby-identifier">image</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">px</span>(<span class="ruby-identifier">v</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">top_left</span>), <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">OverCompositeOp</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_image_info" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_image_info" title="Link to this method">
                 <span class="method-name">piece_image_info</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_image_info-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 346</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 349</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_image_info</span>
   <span class="ruby-ivar">@piece_image_info</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">PieceImageInfo</span>.<span class="ruby-identifier">lookup</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_image_key</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>portella, nureyon などの情報</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_pentagon_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_pentagon_draw" title="Link to this method">
                 <span class="method-name">piece_pentagon_draw</span>
                 <span class="method-args">(v:, location:, piece: nil)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_pentagon_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 65</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_pentagon_draw</span>(<span class="ruby-value">v:</span>, <span class="ruby-value">location:</span>, <span class="ruby-value">piece:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_pentagon_draw</span>]
     <span class="ruby-comment"># pentagon_box_debug(v)</span>
@@ -2227,118 +3433,170 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-piece_pentagon_scale" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-piece_pentagon_scale" title="Link to this method">
                 <span class="method-name">piece_pentagon_scale</span>
                 <span class="method-args">(piece)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="piece_pentagon_scale-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 140</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/pentagon.rb, line 140</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">piece_pentagon_scale</span>(<span class="ruby-identifier">piece</span>)
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_pentagon_scale</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">scale</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>piece</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-ps" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-ps" title="Link to this method">
                 <span class="method-name">ps</span>
                 <span class="method-args">(v)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="ps-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 233</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 236</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">ps</span>(<span class="ruby-identifier">v</span>)
   <span class="ruby-identifier">v</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">cell_rect</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>pixel size</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-px" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-px" title="Link to this method">
                 <span class="method-name">px</span>
                 <span class="method-args">(v)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="px-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 228</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 231</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">px</span>(<span class="ruby-identifier">v</span>)
   <span class="ruby-identifier">top_left</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ps</span>(<span class="ruby-identifier">v</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>メモ化の効果なし</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-render" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-render" title="Link to this method">
                 <span class="method-name">render</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="render-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 122</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 125</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">render</span>
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">tagged</span>(<span class="ruby-ivar">@build_counter</span>) <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">require</span> <span class="ruby-string">&quot;rmagick&quot;</span>
@@ -2379,60 +3637,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-round_radious" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-round_radious" title="Link to this method">
                 <span class="method-name">round_radious</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="round_radious-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 326</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 329</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">round_radious</span>
   <span class="ruby-identifier">cell_rect</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">outer_frame_radius</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>角の丸め度合い</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_draw" title="Link to this method">
                 <span class="method-name">soldier_draw</span>
                 <span class="method-args">(soldier)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 8</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_draw</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece_image_info</span>
     <span class="ruby-identifier">soldier_draw_by_image</span>(<span class="ruby-identifier">soldier</span>)
@@ -2441,60 +3725,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_draw_all" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_draw_all" title="Link to this method">
                 <span class="method-name">soldier_draw_all</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_draw_all-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 4</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 4</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_draw_all</span>
   <span class="ruby-identifier">container</span>.<span class="ruby-identifier">board</span>.<span class="ruby-identifier">soldiers</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">method</span>(<span class="ruby-value">:soldier_draw</span>))                                                                                <span class="ruby-comment"># 駒を描画</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_draw_by_char" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_draw_by_char" title="Link to this method">
                 <span class="method-name">soldier_draw_by_char</span>
                 <span class="method-args">(soldier)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_draw_by_char-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 16</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_draw_by_char</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">V</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">to_xy</span>]
   <span class="ruby-identifier">location</span> = <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>
@@ -2523,90 +3833,129 @@
     )
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_draw_by_image" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_draw_by_image" title="Link to this method">
                 <span class="method-name">soldier_draw_by_image</span>
                 <span class="method-args">(soldier)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_draw_by_image-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 44</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_draw_by_image</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-identifier">v</span> = <span class="ruby-constant">V</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">place</span>.<span class="ruby-identifier">to_xy</span>]
   <span class="ruby-identifier">piece_image_draw</span>(<span class="ruby-value">v:</span> <span class="ruby-identifier">v</span>, <span class="ruby-value">soldier:</span> <span class="ruby-identifier">soldier</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_font_scale" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_font_scale" title="Link to this method">
                 <span class="method-name">soldier_font_scale</span>
                 <span class="method-args">(piece)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_font_scale-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 133</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_font_scale</span>(<span class="ruby-identifier">piece</span>)
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:soldier_font_scale</span>] <span class="ruby-operator">*</span> <span class="ruby-identifier">piece</span>.<span class="ruby-identifier">scale</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_move_cell_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_move_cell_draw" title="Link to this method">
                 <span class="method-name">soldier_move_cell_draw</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_move_cell_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 66</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 66</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_move_cell_draw</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:piece_move_cell_fill_color</span>]
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">hand_log</span>
@@ -2620,31 +3969,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-soldier_name" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-soldier_name" title="Link to this method">
                 <span class="method-name">soldier_name</span>
                 <span class="method-args">(soldier)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="soldier_name-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 104</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/soldier_methods.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">soldier_name</span>(<span class="ruby-identifier">soldier</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">piece</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:king</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">soldier</span>.<span class="ruby-identifier">location</span>.<span class="ruby-identifier">key</span> <span class="ruby-operator">==</span> <span class="ruby-value">:white</span>
     <span class="ruby-string">&quot;王&quot;</span>                  <span class="ruby-comment"># FIXME: ハードコーディングすんな</span>
@@ -2653,31 +4015,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-stand_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-stand_draw" title="Link to this method">
                 <span class="method-name">stand_draw</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="stand_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 36</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/stand.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">stand_draw</span>
   <span class="ruby-identifier">g</span> = <span class="ruby-identifier">params</span>[<span class="ruby-value">:stand_piece_line_height</span>]
 
@@ -2728,31 +4103,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-star_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-star_draw" title="Link to this method">
                 <span class="method-name">star_draw</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="star_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 50</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">star_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-identifier">draw_context</span>(<span class="ruby-identifier">layer</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">g</span>.<span class="ruby-identifier">stroke</span>(<span class="ruby-string">&quot;transparent&quot;</span>)
@@ -2768,60 +4156,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-star_fill_color" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-star_fill_color" title="Link to this method">
                 <span class="method-name">star_fill_color</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="star_fill_color-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 143</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">star_fill_color</span>
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:star_fill_color</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">inner_frame_lattice_color</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-texture_image" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-texture_image" title="Link to this method">
                 <span class="method-name">texture_image</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="texture_image-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 117</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/board_methods.rb, line 117</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">texture_image</span>
   <span class="ruby-ivar">@texture_image</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">yield_self</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">image</span> = <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:fg_file</span>].<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">first</span>
@@ -2844,6 +4258,12 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>盤テクスチャ</p>
 <ol><li>
 <p>テクスチャと同じサイズの透明の画像を準備</p>
@@ -2854,61 +4274,81 @@
 </li><li>
 <p>角が取れたテクスチャが出来上がる</p>
 </li></ol>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-to_blob_binary" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-to_blob_binary" title="Link to this method">
                 <span class="method-name">to_blob_binary</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="to_blob_binary-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 24</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_blob_binary</span>
   <span class="ruby-identifier">image</span> = <span class="ruby-identifier">render</span>
   <span class="ruby-identifier">image</span>.<span class="ruby-identifier">format</span> = <span class="ruby-identifier">ext_name</span>
   <span class="ruby-identifier">image</span>.<span class="ruby-identifier">to_blob</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>png や gif は問題ないが apng や mp4 の場合に失敗する → ImageList#format に設定しているせいっぽいそもそも画像リストを write(“foo.png”) にすると foo-0.png foo-1.png などと複数生成されるのだからwrite は拡張子に合わせて format を設定して to_blob の結果を write しているのではないことがわかる</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-to_png24_binary" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-to_png24_binary" title="Link to this method">
                 <span class="method-name">to_png24_binary</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="to_png24_binary-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 39</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_png24_binary</span>
   <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">create</span>([<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-string">&quot;.png&quot;</span>]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">render</span>.<span class="ruby-identifier">write</span>(<span class="ruby-node">&quot;PNG24:#{t.path}&quot;</span>)
@@ -2916,31 +4356,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>PNG24 を強制する (for zip)</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-to_write_binary" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-to_write_binary" title="Link to this method">
                 <span class="method-name">to_write_binary</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="to_write_binary-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 31</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/helper.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_write_binary</span>
   <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">create</span>([<span class="ruby-string">&quot;&quot;</span>, <span class="ruby-node">&quot;.#{ext_name}&quot;</span>]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">render</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">path</span>)
@@ -2948,60 +4401,86 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>いったんファイル出力してから戻している時点で相当無駄があるが apng や mp4 の場合でも失敗しない</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-top_left" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-top_left" title="Link to this method">
                 <span class="method-name">top_left</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="top_left-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 284</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 287</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">top_left</span>
   <span class="ruby-ivar">@top_left</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">center</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">cell_rect</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">lattice</span> <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-transparent_layer" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-transparent_layer" title="Link to this method">
                 <span class="method-name">transparent_layer</span>
                 <span class="method-args">(key)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="transparent_layer-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 45</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 45</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">transparent_layer</span>(<span class="ruby-identifier">key</span>)
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> { <span class="ruby-node">&quot;transparent_layer create for #{key} BEGIN&quot;</span> }
   <span class="ruby-constant">Magick</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">image_rect</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">background_color</span> = <span class="ruby-string">&quot;transparent&quot;</span> }.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span>
@@ -3009,31 +4488,44 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-turn_draw" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-turn_draw" title="Link to this method">
                 <span class="method-name">turn_draw</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="turn_draw-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/turn_methods.rb, line 12</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/turn_methods.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">turn_draw</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:turn_embed_key</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;is_turn_embed_on&quot;</span>
     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-string">&quot;turn_draw&quot;</span>
@@ -3066,118 +4558,170 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-v_bottom_right_outer" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-v_bottom_right_outer" title="Link to this method">
                 <span class="method-name">v_bottom_right_outer</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="v_bottom_right_outer-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 288</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 291</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">v_bottom_right_outer</span>
   <span class="ruby-ivar">@v_bottom_right_outer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">V</span>[<span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">w</span>, <span class="ruby-identifier">lattice</span>.<span class="ruby-identifier">h</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-v_top_left_outer" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-v_top_left_outer" title="Link to this method">
                 <span class="method-name">v_top_left_outer</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="v_top_left_outer-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 292</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 295</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">v_top_left_outer</span>
   <span class="ruby-ivar">@v_top_left_outer</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">V</span>[<span class="ruby-value">-1</span>, <span class="ruby-value">0</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-vmin" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-vmin" title="Link to this method">
                 <span class="method-name">vmin</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="vmin-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 272</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/core_methods.rb, line 275</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">vmin</span>
   <span class="ruby-ivar">@vmin</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">image_rect</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">min</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-with_shadow" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-with_shadow" title="Link to this method">
                 <span class="method-name">with_shadow</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="with_shadow-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 65</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">with_shadow</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:real_shadow_sigma</span>].<span class="ruby-identifier">nonzero?</span>
     <span class="ruby-identifier">s</span> = <span class="ruby-identifier">layer</span>.<span class="ruby-identifier">shadow</span>( <span class="ruby-comment"># https://rmagick.github.io/image3.html#shadow</span>
@@ -3202,31 +4746,44 @@
   <span class="ruby-identifier">layer</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>指定のレイヤーに影をつける</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
       <div id="method-i-with_shadow_only_font_pice" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-with_shadow_only_font_pice" title="Link to this method">
                 <span class="method-name">with_shadow_only_font_pice</span>
                 <span class="method-args">(layer)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="with_shadow_only_font_pice-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 53</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/screen_image/layer_methods.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">with_shadow_only_font_pice</span>(<span class="ruby-identifier">layer</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece_image_info</span>
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">piece_image_info</span>.<span class="ruby-identifier">custom_shadow_support</span>
@@ -3238,14 +4795,53 @@
   <span class="ruby-identifier">layer</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           <p>フォントでの駒のときだけ駒レイヤーに影をつける</p>
+
+
         </div>
+
+
+
 
 
       </div>
 
+
     </section>
 
+
+
+
   </section>
+
 </main>
+
+<aside class="table-of-contents" role="complementary" aria-label="Table of Contents">
+  <div class="toc-sticky">
+    <h3 class="toc-heading">On This Page</h3>
+    <nav class="toc-nav" id="toc-nav" aria-label="Page sections">
+      <!-- Generated by JavaScript based on page headings -->
+    </nav>
+  </div>
+</aside>
+
+
+<footer class="site-footer">
+  
+
+  <div class="footer-bottom">
+    <p>
+      Generated by <a href="https://ruby.github.io/rdoc/">RDoc 7.2.0</a>
+      using the Aliki theme by <a href="http://st0012.dev">Stan Lo</a>
+    </p>
+  </div>
+</footer>
+
+</body>
 

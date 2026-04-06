@@ -1,114 +1,519 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>class Bioshogi::Analysis::XmotionAnalyzer - RDoc Documentation</title>
 
-  <meta name="keywords" content="ruby,class,Bioshogi::Analysis::XmotionAnalyzer">
 
-    <meta name="description" content="Documentation for the Bioshogi::Analysis::XmotionAnalyzer class">
+  <meta
+    name="keywords"
+    content="ruby,class,Bioshogi::Analysis::XmotionAnalyzer"
+  >
+
+    <meta
+      name="description"
+      content="Documentation for the Bioshogi::Analysis::XmotionAnalyzer class"
+    >
+
+
+
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="class Bioshogi::Analysis::XmotionAnalyzer - RDoc Documentation">
+
+
+
+    <meta
+      property="og:description"
+      content="Documentation for Bioshogi::Analysis::XmotionAnalyzer class - API reference and code examples"
+    >
+
+
+
+
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="class Bioshogi::Analysis::XmotionAnalyzer - RDoc Documentation">
+
+
+
+    <meta
+      name="twitter:description"
+      content="Documentation for Bioshogi::Analysis::XmotionAnalyzer class - API reference and code examples"
+    >
+
+
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
   var index_rel_prefix = "../../";
 </script>
 
-<script src="../../js/navigation.js" defer></script>
-<script src="../../js/search.js" defer></script>
-<script src="../../js/search_index.js" defer></script>
-<script src="../../js/searcher.js" defer></script>
-<script src="../../js/darkfish.js" defer></script>
+<script
+  src="../../js/theme-toggle.js?v=7.2.0"
+></script>
 
-<link href="../../css/fonts.css" rel="stylesheet">
-<link href="../../css/rdoc.css" rel="stylesheet">
+<script
+  src="../../js/search_navigation.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/search_data.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/search_ranker.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/search_controller.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/c_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/bash_highlighter.js?v=7.2.0"
+  defer
+></script>
+
+<script
+  src="../../js/aliki.js?v=7.2.0"
+  defer
+></script>
+
+<link
+  href="../../css/rdoc.css?v=7.2.0"
+  rel="stylesheet"
+>
 
 
-<body id="top" role="document" class="class">
+
+
+<body role="document" class="class has-toc">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <!-- Chevron (right arrow) - used for expand/collapse -->
+  <symbol
+    id="icon-chevron"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </symbol>
+
+  <!-- File/Document - Pages section -->
+  <symbol
+    id="icon-file"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path
+      d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+    ></path>
+
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </symbol>
+
+  <!-- Layers/Stack - Classes and Modules section -->
+  <symbol
+    id="icon-layers"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+    <polyline points="2 17 12 22 22 17"></polyline>
+    <polyline points="2 12 12 17 22 12"></polyline>
+  </symbol>
+
+  <!-- Curly braces with C - Class Methods section -->
+  <symbol
+    id="icon-class-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      C
+    </text>
+  </symbol>
+
+  <!-- Curly braces with I - Instance Methods section -->
+  <symbol
+    id="icon-instance-methods"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3C3.5 3 2 4.5 2 7v3c0 1.5-1 2-1 2s1 .5 1 2v5c0 2.5 1.5 4 4 4"></path>
+    <path d="M18 3c2.5 0 4 1.5 4 4v3c0 1.5 1 2 1 2s-1 .5-1 2v5c0 2.5-1.5 4-4 4"></path>
+
+    <text
+      x="12"
+      y="17"
+      text-anchor="middle"
+      font-size="13"
+      font-weight="bold"
+      fill="currentColor"
+      stroke="none"
+    >
+      I
+    </text>
+  </symbol>
+
+  <!-- Double chevrons up - Ancestors section -->
+  <symbol
+    id="icon-ancestors"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <polyline points="17 11 12 6 7 11"></polyline>
+    <polyline points="17 18 12 13 7 18"></polyline>
+  </symbol>
+
+  <!-- User with plus - Included Modules section -->
+  <symbol
+    id="icon-includes"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+
+    <line
+      x1="20"
+      y1="8"
+      x2="20"
+      y2="14"
+    ></line>
+
+    <line
+      x1="23"
+      y1="11"
+      x2="17"
+      y2="11"
+    ></line>
+  </symbol>
+
+  <!-- User with check - Extended Modules section -->
+  <symbol
+    id="icon-extends"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+    <circle cx="8.5" cy="7" r="4"></circle>
+    <polyline points="17 11 19 13 23 9"></polyline>
+  </symbol>
+
+  <!-- List - Sections section -->
+  <symbol
+    id="icon-list"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <line
+      x1="8"
+      y1="6"
+      x2="21"
+      y2="6"
+    ></line>
+
+    <line
+      x1="8"
+      y1="12"
+      x2="21"
+      y2="12"
+    ></line>
+
+    <line
+      x1="8"
+      y1="18"
+      x2="21"
+      y2="18"
+    ></line>
+
+    <line
+      x1="3"
+      y1="6"
+      x2="3.01"
+      y2="6"
+    ></line>
+
+    <line
+      x1="3"
+      y1="12"
+      x2="3.01"
+      y2="12"
+    ></line>
+
+    <line
+      x1="3"
+      y1="18"
+      x2="3.01"
+      y2="18"
+    ></line>
+  </symbol>
+</svg>
+
+<header class="top-navbar">
+  <a href="../../index.html" class="navbar-brand">
+    RDoc Documentation
+  </a>
+
+  <!-- Desktop search bar -->
+  <div class="navbar-search navbar-search-desktop" role="search">
+    <form action="#" method="get" accept-charset="utf-8">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results-desktop"
+             type="text" name="search" placeholder="Search (/) for a class, method..."
+             spellcheck="false" autocomplete="off"
+             title="Type to search, Up and Down to navigate, Enter to load">
+      <ul id="search-results-desktop" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="initially-hidden search-results"></ul>
+    </form>
+  </div>
+
+  <!-- Mobile search icon button -->
+  <button id="search-toggle" class="navbar-search-mobile" aria-label="Open search" type="button">
+    <span aria-hidden="true">🔍</span>
+  </button>
+
+  <!-- Theme toggle button -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode" type="button">
+    <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+  </button>
+</header>
+
+<!-- Search Modal (Mobile) -->
+<div id="search-modal" class="search-modal" hidden aria-modal="true" role="dialog" aria-label="Search">
+  <div class="search-modal-backdrop"></div>
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <form class="search-modal-form" action="#" method="get" accept-charset="utf-8">
+        <span class="search-modal-icon" aria-hidden="true">🔍</span>
+        <input id="search-field-mobile" role="combobox" aria-label="Search"
+               aria-autocomplete="list" aria-controls="search-results-mobile"
+               type="text" name="search" placeholder="Search documentation"
+               spellcheck="false" autocomplete="off">
+        <button type="button" class="search-modal-close" aria-label="Close search" id="search-modal-close">
+          <span aria-hidden="true">esc</span>
+        </button>
+      </form>
+    </div>
+    <div class="search-modal-body">
+      <ul id="search-results-mobile" aria-label="Search Results"
+          aria-busy="false" aria-expanded="false"
+          aria-atomic="false" class="search-results search-modal-results initially-hidden"></ul>
+      <div class="search-modal-empty">
+        <p>No recent searches</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="navigation-toggle" role="button" tabindex="0" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="navigation">
   <span aria-hidden="true">&#9776;</span>
 </div>
 
 
-<nav id="navigation" role="navigation">
-  <div id="project-navigation">
-    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
-  <h2>
-    <a href="../../index.html" rel="home">Home</a>
-  </h2>
+<nav id="navigation" role="navigation" hidden>
+  
 
-  <div id="table-of-contents-navigation">
-    <a href="../../table_of_contents.html#pages">Pages</a>
-    <a href="../../table_of_contents.html#classes">Classes</a>
-    <a href="../../table_of_contents.html#methods">Methods</a>
-  </div>
-</div>
 
-    <div id="search-section" role="search" class="project-section initially-hidden">
-  <form action="#" method="get" accept-charset="utf-8">
-    <div id="search-field-wrapper">
-      <input id="search-field" role="combobox" aria-label="Search"
-             aria-autocomplete="list" aria-controls="search-results"
-             type="text" name="search" placeholder="Search (/) for a class, method, ..." spellcheck="false"
-             title="Type to search, Up and Down to navigate, Enter to load">
-    </div>
 
-    <ul id="search-results" aria-label="Search Results"
-        aria-busy="false" aria-expanded="false"
-        aria-atomic="false" class="initially-hidden"></ul>
-  </form>
-</div>
 
-  </div>
 
   
+
   
-  <div id="parent-class-section" class="nav-section">
-  <h3>Ancestors</h3>
-  <ul><li><a href="../../Object.html">Object</a><ul><li>BasicObject</li></ul></li></ul>
+<div id="parent-class-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-ancestors"></use></svg>
+      </span>
+      <span class="nav-section-title">Ancestors</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
+    <ul><li><a href="../../Object.html">Object</a><ul><li>BasicObject</li></ul></li></ul>
+  </details>
 </div>
+
 
   
 <div id="includes-section" class="nav-section">
-  <h3>Included Modules</h3>
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-includes"></use></svg>
+      </span>
+      <span class="nav-section-title">Included Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
 
-  <ul class="link-list">
-    <li><a class="include" href="ExecuterDsl.html">Bioshogi::Analysis::ExecuterDsl</a>
-  </ul>
+    <ul class="nav-list">
+
+
+      <li><a class="include" href="ExecuterDsl.html">Bioshogi::Analysis::ExecuterDsl</a></li>
+
+
+    </ul>
+  </details>
 </div>
 
+
   
+
   
   <div class="nav-section">
-    <h3>Class Methods</h3>
-    <ul class="link-list" role="directory">
-      <li ><a href="#method-c-new">new</a></li>
-    </ul>
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-class-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Class Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-c-new">new</a></li>
+
+      </ul>
+    </details>
   </div>
 
 
 
   <div class="nav-section">
-    <h3>Instance Methods</h3>
-    <ul class="link-list" role="directory">
-      <li ><a href="#method-i-call">call</a></li>
-    </ul>
+    <details class="nav-section-collapsible" open>
+      <summary class="nav-section-header">
+        <span class="nav-section-icon">
+          <svg><use href="#icon-instance-methods"></use></svg>
+        </span>
+        <span class="nav-section-title">Instance Methods</span>
+        <span class="nav-section-chevron">
+          <svg><use href="#icon-chevron"></use></svg>
+        </span>
+      </summary>
+      <ul class="nav-list" role="directory">
+
+        <li ><a href="#method-i-call">call</a></li>
+
+      </ul>
+    </details>
   </div>
 
 
+  <div id="classindex-section" class="nav-section">
+  <details class="nav-section-collapsible" open>
+    <summary class="nav-section-header">
+      <span class="nav-section-icon">
+        <svg><use href="#icon-layers"></use></svg>
+      </span>
+      <span class="nav-section-title">Classes and Modules</span>
+      <span class="nav-section-chevron">
+        <svg><use href="#icon-chevron"></use></svg>
+      </span>
+    </summary>
 
-  <footer id="validator-badges" role="contentinfo">
-  <p><a href="https://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.10.0.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
-</footer>
+    <ul class="link-list nav-list"><li><details><summary><code><a href="../../Bioshogi.html">Bioshogi</a></code></summary><ul class="link-list nav-list"><li><details><summary><code><a href="../../Bioshogi/AI.html">AI</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/AI/Brain.html">Brain</a></code></li><li><details><summary><code><a href="../../Bioshogi/AI/Diver.html">Diver</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/AI/Diver/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/AI/Diver/NegaAlphaDiver.html">NegaAlphaDiver</a></code></li><li><code><a href="../../Bioshogi/AI/Diver/NegaAlphaMateDiver.html">NegaAlphaMateDiver</a></code></li><li><code><a href="../../Bioshogi/AI/Diver/NegaMaxDiver.html">NegaMaxDiver</a></code></li><li><code><a href="../../Bioshogi/AI/Diver/NegaScoutDiver.html">NegaScoutDiver</a></code></li></ul></details></li><li><details><summary><code><a href="../../Bioshogi/AI/Evaluator.html">Evaluator</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/AI/Evaluator/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/AI/Evaluator/Level0.html">Level0</a></code></li><li><code><a href="../../Bioshogi/AI/Evaluator/Level1.html">Level1</a></code></li><li><code><a href="../../Bioshogi/AI/Evaluator/Level2.html">Level2</a></code></li><li><code><a href="../../Bioshogi/AI/Evaluator/Level3.html">Level3</a></code></li><li><code><a href="../../Bioshogi/AI/Evaluator/Level4.html">Level4</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/AI/Versus.html">Versus</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/AliasMod.html">AliasMod</a></code></li><li><code><a href="../../Bioshogi/AlredyPromoted.html">AlredyPromoted</a></code></li><li><code><a href="../../Bioshogi/AmbiguousFormatError.html">AmbiguousFormatError</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis.html">Analysis</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/AbbrevExpander.html">AbbrevExpander</a></code></li><li><code><a href="../../Bioshogi/Analysis/Atsumeruyo.html">Atsumeruyo</a></code></li><li><code><a href="../../Bioshogi/Analysis/AttackInfo.html">AttackInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/BoardPieceCountsMethods.html">BoardPieceCountsMethods</a></code></li><li><code><a href="../../Bioshogi/Analysis/CaptureAnalyzer.html">CaptureAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/CaptureDetector.html">CaptureDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/ClusterScoreInfo.html">ClusterScoreInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/ColumnSoldierCounterMethods.html">ColumnSoldierCounterMethods</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomAnalyzer.html">CustomAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectorInfo.html">CustomDetectorInfo</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis/CustomDetectors.html">CustomDetectors</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/AnagumaDetector.html">AnagumaDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/GyokutousenDetector.html">GyokutousenDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/HikakukoukanDetector.html">HikakukoukanDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/HisyakakuKiruDetector.html">HisyakakuKiruDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/KakukoukanDetector.html">KakukoukanDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/KakunihakakuDetector.html">KakunihakakuDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/MagicSquareDetector.html">MagicSquareDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/NyuugyokuAnagumaDetector.html">NyuugyokuAnagumaDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/CustomDetectors/OutbreakDetector.html">OutbreakDetector</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Analysis/CustomTriggerInfo.html">CustomTriggerInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/DefenseInfo.html">DefenseInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/EveryAnalyzer.html">EveryAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/EveryDetector.html">EveryDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/ExecuterDsl.html">ExecuterDsl</a></code></li><li><code><a href="../../Bioshogi/Analysis/FileList.html">FileList</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis/FileNormalizer.html">FileNormalizer</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/FileNormalizer/NormalizeOne.html">NormalizeOne</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Analysis/FinalizeTagDetector.html">FinalizeTagDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/FinalizeTagFuncInfo.html">FinalizeTagFuncInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/FinalizeTagInfo.html">FinalizeTagInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/GroupInfo.html">GroupInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/KakukiriCanceler.html">KakukiriCanceler</a></code></li><li><code><a href="../../Bioshogi/Analysis/MotionAnalyzer.html">MotionAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/MotionDetector.html">MotionDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/NormalizeCheck.html">NormalizeCheck</a></code></li><li><code><a href="../../Bioshogi/Analysis/NoteInfo.html">NoteInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/PerformanceBenchmark.html">PerformanceBenchmark</a></code></li><li><code><a href="../../Bioshogi/Analysis/PlayerMethods.html">PlayerMethods</a></code></li><li><code><a href="../../Bioshogi/Analysis/ShapeAnalyzer.html">ShapeAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/ShapeDetector.html">ShapeDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/ShapeInfo.html">ShapeInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/SoldierLookupTableMethods.html">SoldierLookupTableMethods</a></code></li><li><code><a href="../../Bioshogi/Analysis/SoldierPlaceMethods.html">SoldierPlaceMethods</a></code></li><li><code><a href="../../Bioshogi/Analysis/StyleInfo.html">StyleInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/SugatayakiDetector.html">SugatayakiDetector</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis/TacticDetector.html">TacticDetector</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/TacticDetector/SingleValidator.html">SingleValidator</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Analysis/TacticHitTurnTableGenerator.html">TacticHitTurnTableGenerator</a></code></li><li><code><a href="../../Bioshogi/Analysis/TacticInfo.html">TacticInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/TacticStat.html">TacticStat</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis/TagBundle.html">TagBundle</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/TagBundle/List.html">List</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Analysis/TagIndex.html">TagIndex</a></code></li><li><code><a href="../../Bioshogi/Analysis/TagReporter.html">TagReporter</a></code></li><li><code><a href="../../Bioshogi/Analysis/TechniqueInfo.html">TechniqueInfo</a></code></li><li><code><a href="../../Bioshogi/Analysis/TriggerExpander.html">TriggerExpander</a></code></li><li><code><a href="../../Bioshogi/Analysis/UsedSoldierCounter.html">UsedSoldierCounter</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionAnalyzer.html">XmotionAnalyzer</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectorInfo.html">XmotionDetectorInfo</a></code></li><li><details><summary><code><a href="../../Bioshogi/Analysis/XmotionDetectors.html">XmotionDetectors</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/HorseDetector.html">HorseDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/Outebisha0Detector.html">Outebisha0Detector</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/OutebishaDetector.html">OutebishaDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/OutekakuDetector.html">OutekakuDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/RocketDetector.html">RocketDetector</a></code></li><li><code><a href="../../Bioshogi/Analysis/XmotionDetectors/WazaarinokeiDetector.html">WazaarinokeiDetector</a></code></li></ul></details></li></ul></details></li><li><code><a href="../../Bioshogi/Assertion.html">Assertion</a></code></li><li><code><a href="../../Bioshogi/BeforePlaceNotFound.html">BeforePlaceNotFound</a></code></li><li><code><a href="../../Bioshogi/BioshogiError.html">BioshogiError</a></code></li><li><details><summary><code><a href="../../Bioshogi/Board.html">Board</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Board/Basic.html">Basic</a></code></li><li><code><a href="../../Bioshogi/Board/CsaFormatter.html">CsaFormatter</a></code></li><li><code><a href="../../Bioshogi/Board/DetectorMethods.html">DetectorMethods</a></code></li><li><code><a href="../../Bioshogi/Board/KakinokiFormatter.html">KakinokiFormatter</a></code></li><li><code><a href="../../Bioshogi/Board/ReaderMethods.html">ReaderMethods</a></code></li><li><code><a href="../../Bioshogi/Board/UpdateMethods.html">UpdateMethods</a></code></li></ul></details></li><li><details><summary><code><a href="../../Bioshogi/BoardParser.html">BoardParser</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/BoardParser/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/BoardParser/CompareBoardParser.html">CompareBoardParser</a></code></li><li><code><a href="../../Bioshogi/BoardParser/CsaBoardParser.html">CsaBoardParser</a></code></li><li><code><a href="../../Bioshogi/BoardParser/KakinokiBoardParser.html">KakinokiBoardParser</a></code></li><li><code><a href="../../Bioshogi/BoardParser/SfenBoardParser.html">SfenBoardParser</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/BrainProcessingHeavy.html">BrainProcessingHeavy</a></code></li><li><code><a href="../../Bioshogi/CLI.html">CLI</a></code></li><li><code><a href="../../Bioshogi/ColumnSoldierCounter.html">ColumnSoldierCounter</a></code></li><li><code><a href="../../Bioshogi/CommonError.html">CommonError</a></code></li><li><code><a href="../../Bioshogi/ConsumedTimeMinusError.html">ConsumedTimeMinusError</a></code></li><li><details><summary><code><a href="../../Bioshogi/Container.html">Container</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Container/Basic.html">Basic</a></code></li><li><code><a href="../../Bioshogi/Container/Fast.html">Fast</a></code></li><li><code><a href="../../Bioshogi/Container/Simple.html">Simple</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Converter.html">Converter</a></code></li><li><code><a href="../../Bioshogi/CounterHash.html">CounterHash</a></code></li><li><details><summary><code><a href="../../Bioshogi/CoverImage.html">CoverImage</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/CoverImage/Renderer.html">Renderer</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/CsaHeaderInfo.html">CsaHeaderInfo</a></code></li><li><code><a href="../../Bioshogi/DeadPieceRuleError.html">DeadPieceRuleError</a></code></li><li><code><a href="../../Bioshogi/DifferentTurnCommonError.html">DifferentTurnCommonError</a></code></li><li><details><summary><code><a href="../../Bioshogi/Dimension.html">Dimension</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Dimension/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/Dimension/CharInfo.html">CharInfo</a></code></li><li><code><a href="../../Bioshogi/Dimension/Column.html">Column</a></code></li><li><code><a href="../../Bioshogi/Dimension/DimensionInfo.html">DimensionInfo</a></code></li><li><code><a href="../../Bioshogi/Dimension/ModuleMethods.html">ModuleMethods</a></code></li><li><code><a href="../../Bioshogi/Dimension/Row.html">Row</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/DoublePawnCommonError.html">DoublePawnCommonError</a></code></li><li><code><a href="../../Bioshogi/ExtremeDetect.html">ExtremeDetect</a></code></li><li><code><a href="../../Bioshogi/FileFormatError.html">FileFormatError</a></code></li><li><details><summary><code><a href="../../Bioshogi/Formatter.html">Formatter</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Formatter/AkfBuilder.html">AkfBuilder</a></code></li><li><details><summary><code><a href="../../Bioshogi/Formatter/Animation.html">Animation</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Formatter/Animation/AnimationApngBuilder.html">AnimationApngBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/AnimationGifBuilder.html">AnimationGifBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/AnimationMp4Builder.html">AnimationMp4Builder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/AnimationWebpBuilder.html">AnimationWebpBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/AnimationZipBuilder.html">AnimationZipBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/AudioThemeInfo.html">AudioThemeInfo</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/DemoBuilder.html">DemoBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/FfmpegError.html">FfmpegError</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/ProgressCop.html">ProgressCop</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/SerialFilenameGenerator.html">SerialFilenameGenerator</a></code></li><li><code><a href="../../Bioshogi/Formatter/Animation/SystemSupport.html">SystemSupport</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Formatter/Core.html">Core</a></code></li><li><code><a href="../../Bioshogi/Formatter/CsaBuilder.html">CsaBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Ki2Builder.html">Ki2Builder</a></code></li><li><code><a href="../../Bioshogi/Formatter/KifBuilder.html">KifBuilder</a></code></li><li><code><a href="../../Bioshogi/Formatter/Runner.html">Runner</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/FreqPieceInfo.html">FreqPieceInfo</a></code></li><li><details><summary><code><a href="../../Bioshogi/Hand.html">Hand</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Hand/Drop.html">Drop</a></code></li><li><code><a href="../../Bioshogi/Hand/Move.html">Move</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/HandLog.html">HandLog</a></code></li><li><code><a href="../../Bioshogi/HandLogs.html">HandLogs</a></code></li><li><code><a href="../../Bioshogi/HoldPieceNotFound.html">HoldPieceNotFound</a></code></li><li><code><a href="../../Bioshogi/HoldPieceNotFound2.html">HoldPieceNotFound2</a></code></li><li><code><a href="../../Bioshogi/IllegibleFormat.html">IllegibleFormat</a></code></li><li><details><summary><code><a href="../../Bioshogi/InputAdapter.html">InputAdapter</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/InputAdapter/AbstractAdapter.html">AbstractAdapter</a></code></li><li><code><a href="../../Bioshogi/InputAdapter/CsaAdapter.html">CsaAdapter</a></code></li><li><code><a href="../../Bioshogi/InputAdapter/Ki2Adapter.html">Ki2Adapter</a></code></li><li><code><a href="../../Bioshogi/InputAdapter/KifAdapter.html">KifAdapter</a></code></li><li><code><a href="../../Bioshogi/InputAdapter/SfenAdapter.html">SfenAdapter</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/InputParser.html">InputParser</a></code></li><li><code><a href="../../Bioshogi/KanjiNumber.html">KanjiNumber</a></code></li><li><code><a href="../../Bioshogi/KeyNotFound.html">KeyNotFound</a></code></li><li><code><a href="../../Bioshogi/KifuFormatInfo.html">KifuFormatInfo</a></code></li><li><code><a href="../../Bioshogi/LastActionInfo.html">LastActionInfo</a></code></li><li><code><a href="../../Bioshogi/Location.html">Location</a></code></li><li><code><a href="../../Bioshogi/MainClock.html">MainClock</a></code></li><li><code><a href="../../Bioshogi/Media.html">Media</a></code></li><li><code><a href="../../Bioshogi/MementoStackEmpty.html">MementoStackEmpty</a></code></li><li><code><a href="../../Bioshogi/MovableBattlerNotFound.html">MovableBattlerNotFound</a></code></li><li><code><a href="../../Bioshogi/MustNotHappen.html">MustNotHappen</a></code></li><li><code><a href="../../Bioshogi/NoPromotablePiece.html">NoPromotablePiece</a></code></li><li><code><a href="../../Bioshogi/NotFoundOnBoard.html">NotFoundOnBoard</a></code></li><li><code><a href="../../Bioshogi/NotPromotable.html">NotPromotable</a></code></li><li><code><a href="../../Bioshogi/OfficialFormatter.html">OfficialFormatter</a></code></li><li><code><a href="../../Bioshogi/OrderInfo.html">OrderInfo</a></code></li><li><details><summary><code><a href="../../Bioshogi/Parser.html">Parser</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Parser/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/Parser/BodParser.html">BodParser</a></code></li><li><code><a href="../../Bioshogi/Parser/CsaParser.html">CsaParser</a></code></li><li><code><a href="../../Bioshogi/Parser/Header.html">Header</a></code></li><li><code><a href="../../Bioshogi/Parser/Inspector.html">Inspector</a></code></li><li><code><a href="../../Bioshogi/Parser/Ki2Parser.html">Ki2Parser</a></code></li><li><code><a href="../../Bioshogi/Parser/KifParser.html">KifParser</a></code></li><li><code><a href="../../Bioshogi/Parser/Pi.html">Pi</a></code></li><li><code><a href="../../Bioshogi/Parser/SfenParser.html">SfenParser</a></code></li><li><code><a href="../../Bioshogi/Parser/TimeParser.html">TimeParser</a></code></li></ul></details></li><li><details><summary><code><a href="../../Bioshogi/Piece.html">Piece</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Piece/EkScoreInfo.html">EkScoreInfo</a></code></li><li><code><a href="../../Bioshogi/Piece/PieceCsa.html">PieceCsa</a></code></li><li><code><a href="../../Bioshogi/Piece/PiecePressure.html">PiecePressure</a></code></li><li><code><a href="../../Bioshogi/Piece/PieceScale.html">PieceScale</a></code></li><li><code><a href="../../Bioshogi/Piece/PieceScore.html">PieceScore</a></code></li><li><code><a href="../../Bioshogi/Piece/PieceVector.html">PieceVector</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/PieceAlredyExist.html">PieceAlredyExist</a></code></li><li><code><a href="../../Bioshogi/PieceBox.html">PieceBox</a></code></li><li><code><a href="../../Bioshogi/PieceNotFound.html">PieceNotFound</a></code></li><li><code><a href="../../Bioshogi/PieceNotFoundOnBoard.html">PieceNotFoundOnBoard</a></code></li><li><code><a href="../../Bioshogi/Place.html">Place</a></code></li><li><details><summary><code><a href="../../Bioshogi/Player.html">Player</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/Player/OtherMethods.html">OtherMethods</a></code></li><li><code><a href="../../Bioshogi/Player/PieceBoxMethods.html">PieceBoxMethods</a></code></li><li><code><a href="../../Bioshogi/Player/PressureMethods.html">PressureMethods</a></code></li><li><code><a href="../../Bioshogi/Player/SoldierMethods.html">SoldierMethods</a></code></li></ul></details></li><li><details><summary><code><a href="../../Bioshogi/PlayerExecutor.html">PlayerExecutor</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/PlayerExecutor/Base.html">Base</a></code></li><li><code><a href="../../Bioshogi/PlayerExecutor/Brain.html">Brain</a></code></li><li><code><a href="../../Bioshogi/PlayerExecutor/ErrorHandler.html">ErrorHandler</a></code></li><li><code><a href="../../Bioshogi/PlayerExecutor/Human.html">Human</a></code></li><li><code><a href="../../Bioshogi/PlayerExecutor/WithoutAnalyzer.html">WithoutAnalyzer</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/PresetInfo.html">PresetInfo</a></code></li><li><code><a href="../../Bioshogi/PromotedPiecePutOnError.html">PromotedPiecePutOnError</a></code></li><li><code><a href="../../Bioshogi/PromotedPieceToNormalPiece.html">PromotedPieceToNormalPiece</a></code></li><li><code><a href="../../Bioshogi/Rect.html">Rect</a></code></li><li><code><a href="../../Bioshogi/ReversePlayerPieceMoveError.html">ReversePlayerPieceMoveError</a></code></li><li><code><a href="../../Bioshogi/RuleError.html">RuleError</a></code></li><li><code><a href="../../Bioshogi/SamePlaceDifferent.html">SamePlaceDifferent</a></code></li><li><code><a href="../../Bioshogi/SamePlayerBattlerOverwrideError.html">SamePlayerBattlerOverwrideError</a></code></li><li><details><summary><code><a href="../../Bioshogi/ScreenImage.html">ScreenImage</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/ScreenImage/ColorThemeInfo.html">ColorThemeInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/FontThemeInfo.html">FontThemeInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/NureyonImageInfo.html">NureyonImageInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/PaletteInfo.html">PaletteInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/PieceFontWeightInfo.html">PieceFontWeightInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/PieceImageInfo.html">PieceImageInfo</a></code></li><li><code><a href="../../Bioshogi/ScreenImage/Renderer.html">Renderer</a></code></li></ul></details></li><li><code><a href="../../Bioshogi/Sfen.html">Sfen</a></code></li><li><code><a href="../../Bioshogi/SfenImporter.html">SfenImporter</a></code></li><li><code><a href="../../Bioshogi/SimpleModel.html">SimpleModel</a></code></li><li><code><a href="../../Bioshogi/Simulator.html">Simulator</a></code></li><li><code><a href="../../Bioshogi/SingleClock.html">SingleClock</a></code></li><li><code><a href="../../Bioshogi/Soldier.html">Soldier</a></code></li><li><code><a href="../../Bioshogi/SoldierBox.html">SoldierBox</a></code></li><li><code><a href="../../Bioshogi/SoldierWalker.html">SoldierWalker</a></code></li><li><code><a href="../../Bioshogi/SoldierWarpError.html">SoldierWarpError</a></code></li><li><code><a href="../../Bioshogi/Source.html">Source</a></code></li><li><code><a href="../../Bioshogi/Stat.html">Stat</a></code></li><li><code><a href="../../Bioshogi/SyntaxDefact.html">SyntaxDefact</a></code></li><li><code><a href="../../Bioshogi/TurnInfo.html">TurnInfo</a></code></li><li><code><a href="../../Bioshogi/UnconfirmedObject.html">UnconfirmedObject</a></code></li><li><details><summary><code><a href="../../Bioshogi/V.html">V</a></code></summary><ul class="link-list nav-list"><li><code><a href="../../Bioshogi/V/OnceVector.html">OnceVector</a></code></li><li><code><a href="../../Bioshogi/V/PresetVectors.html">PresetVectors</a></code></li><li><code><a href="../../Bioshogi/V/RepeatVector.html">RepeatVector</a></code></li></ul></details></li></ul></details></li><li><code><a href="../../Object.html">Object</a></code></li></ul>
+  </details>
+</div>
 
 </nav>
 
-<main role="main" aria-labelledby="class-Bioshogi::Analysis::XmotionAnalyzer">
-  <h1 id="class-Bioshogi::Analysis::XmotionAnalyzer" class="anchor-link class">
+<main role="main" aria-labelledby="class-bioshogi-analysis-xmotionanalyzer">
+  
+  
+    <ol role="navigation" aria-label="Breadcrumb navigation" class="breadcrumb">
+      
+      <li>
+        
+        <a href="../../Bioshogi.html">Bioshogi</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <a href="../../Bioshogi/Analysis.html">Analysis</a><span>::</span>
+        
+      </li>
+      
+      <li>
+        
+        <span>XmotionAnalyzer</span>
+        
+      </li>
+      
+    </ol>
+  
+
+  <span id="class-Bioshogi::Analysis::XmotionAnalyzer" class="legacy-anchor"></span>
+  <h1 id="class-bioshogi-analysis-xmotionanalyzer" class="anchor-link class">
     class Bioshogi::Analysis::XmotionAnalyzer
   </h1>
 
@@ -116,14 +521,21 @@
     
   </section>
 
-  <section id="5Buntitled-5D" class="documentation-section anchor-link">
+
+  <span id="5Buntitled-5D" class="legacy-anchor"></span>
+  <section class="documentation-section anchor-link">
 
 
 
-    <section class="attribute-method-details" class="method-section">
+
+
+
+
+    <section class="attribute-method-details method-section">
       <header>
-        <h3>Attributes</h3>
+        <h3 id="untitled-attributes"><a href="#untitled-attributes">Attributes</a></h3>
       </header>
+
 
       <div id="attribute-i-executor" class="method-detail anchor-link">
         <div class="method-heading attribute-method-heading">
@@ -134,72 +546,102 @@
         </div>
 
         <div class="method-description">
+
+
         
+
         </div>
       </div>
+
     </section>
 
 
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section anchor-link">
+
+
+
+
+     <section id="public-class-untitled-method-details" class="method-section anchor-link">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3 id="public-class-untitled-methods"><a href="#public-class-untitled-methods">Public Class Methods</a></h3>
        </header>
+
 
       <div id="method-c-new" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-c-new" title="Link to this method">
                 <span class="method-name">new</span>
                 <span class="method-args">(executor)</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/xmotion_analyzer.rb, line 10</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/analysis/xmotion_analyzer.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">executor</span>)
   <span class="ruby-ivar">@executor</span> = <span class="ruby-identifier">executor</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
     </section>
 
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section anchor-link">
+
+
+
+
+
+
+     <section id="public-instance-untitled-method-details" class="method-section anchor-link">
        <header>
-         <h3>Public Instance Methods</h3>
+         <h3 id="public-instance-untitled-methods"><a href="#public-instance-untitled-methods">Public Instance Methods</a></h3>
        </header>
+
 
       <div id="method-i-call" class="method-detail anchor-link ">
         <div class="method-header">
+
             <div class="method-heading">
               <a href="#method-i-call" title="Link to this method">
                 <span class="method-name">call</span>
                 <span class="method-args">()</span>
               </a>
             </div>
+
         </div>
+
 
           <div class="method-controls">
             <details class="method-source-toggle">
               <summary>Source</summary>
             </details>
           </div>
-
-        <div class="method-description">
           <div class="method-source-code" id="call-source">
-            <pre><span class="ruby-comment"># File lib/bioshogi/analysis/xmotion_analyzer.rb, line 14</span>
+            <pre class="ruby"><span class="ruby-comment"># File lib/bioshogi/analysis/xmotion_analyzer.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">av</span> = <span class="ruby-constant">XmotionDetectorInfo</span>.<span class="ruby-identifier">trigger_table</span>[<span class="ruby-identifier">motion_key</span>]
     <span class="ruby-identifier">av</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
@@ -209,14 +651,53 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
+
+
+
+        <div class="method-description">
+
+
           
+
+
         </div>
+
+
+
 
 
       </div>
 
+
     </section>
 
+
+
+
   </section>
+
 </main>
+
+<aside class="table-of-contents" role="complementary" aria-label="Table of Contents">
+  <div class="toc-sticky">
+    <h3 class="toc-heading">On This Page</h3>
+    <nav class="toc-nav" id="toc-nav" aria-label="Page sections">
+      <!-- Generated by JavaScript based on page headings -->
+    </nav>
+  </div>
+</aside>
+
+
+<footer class="site-footer">
+  
+
+  <div class="footer-bottom">
+    <p>
+      Generated by <a href="https://ruby.github.io/rdoc/">RDoc 7.2.0</a>
+      using the Aliki theme by <a href="http://st0012.dev">Stan Lo</a>
+    </p>
+  </div>
+</footer>
+
+</body>
 
