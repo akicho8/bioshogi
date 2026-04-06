@@ -68,14 +68,6 @@ module Bioshogi
         s.join
       end
 
-      def to_yomiage(options = {})
-        CheckmateYomiage.new(self, options).to_s
-      end
-
-      def to_yomiage_list(options = {})
-        CheckmateYomiage.new(self, options).to_a
-      end
-
       ################################################################################
 
       def screen_image_renderer(options = {})

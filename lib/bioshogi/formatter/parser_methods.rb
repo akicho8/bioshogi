@@ -11,8 +11,6 @@ module Bioshogi
           :to_csa,
           :to_sfen,
           :to_bod,
-          :to_yomiage,
-          :to_yomiage_list,
           :to_akf,
           :screen_image_renderer,
           :to_image,

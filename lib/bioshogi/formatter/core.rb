@@ -19,8 +19,6 @@ module Bioshogi
         :to_jpg,
         :to_gif,
         :to_webp,
-        :to_yomiage,
-        :to_yomiage_list,
       ], to: :container
 
       def to_sfen(options = {})

@@ -99,10 +99,6 @@ module Bioshogi
         self.class.char_infos[value]
       end
 
-      def yomiage
-        Yomiage::NumberInfo.fetch(key).yomiage
-      end
-
       ################################################################################
 
       def flip

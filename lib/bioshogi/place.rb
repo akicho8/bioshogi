@@ -143,10 +143,6 @@ module Bioshogi
       @cache[:hankaku_number] ||= to_a.collect(&:hankaku_number).join
     end
 
-    def yomiage
-      @cache[:yomiage] ||= to_a.collect(&:yomiage).join
-    end
-
     def to_sfen
       @cache[:to_sfen] ||= to_a.collect(&:to_sfen).join
     end

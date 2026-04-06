@@ -262,11 +262,6 @@ module Bioshogi
     end
     delegate :attack_level, :promoted_attack_level, :defense_level, :promoted_defense_level, :standby_level, to: :piece_pressure
 
-    def yomiage_piece_info
-      @yomiage_piece_info ||= YomiagePieceInfo.fetch(key)
-    end
-    delegate :yomiage, to: :yomiage_piece_info
-
     def ek_score_info
       @ek_score_info ||= EkScoreInfo.fetch(key)
     end

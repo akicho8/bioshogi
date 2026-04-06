@@ -13,8 +13,8 @@ module Bioshogi
   class Location
     include ApplicationMemoryRecord
     memory_record [
-      { key: :black, name: "▲", pentagon_mark: "☗", equality_name: "先手", handicap_name: "下手", equality_yomiage: "先手", handicap_yomiage: "したて", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, sign_dir: +1, checkmate_yomiage: "せめかた",  },
-      { key: :white, name: "△", pentagon_mark: "☖", equality_name: "後手", handicap_name: "上手", equality_yomiage: "後手", handicap_yomiage: "うわて", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   sign_dir: -1, checkmate_yomiage: "gyokugata", },
+      { key: :black, name: "▲", pentagon_mark: "☗", equality_name: "先手", handicap_name: "下手", flip_mark: "▼", varrow: " ", csa_sign: "+", angle: 0,   other_match_chars: ["☗"], to_sfen: "b", normalize_key: :itself, sign_dir: +1, },
+      { key: :white, name: "△", pentagon_mark: "☖", equality_name: "後手", handicap_name: "上手", flip_mark: "▽", varrow: "v", csa_sign: "-", angle: 180, other_match_chars: ["☖"], to_sfen: "w", normalize_key: :flip,   sign_dir: -1, },
     ]
 
     class << self
@@ -61,14 +61,6 @@ module Bioshogi
 
     def call_name(handicap)
       public_send(call_name_method_name(handicap))
-    end
-
-    def yomiage(handicap)
-      if handicap
-        handicap_yomiage
-      else
-        equality_yomiage
-      end
     end
 
     def mark

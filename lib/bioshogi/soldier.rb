@@ -210,10 +210,6 @@ module Bioshogi
       piece.xxx_kiri(promoted, options)
     end
 
-    def yomiage
-      piece.yomiage(promoted)
-    end
-
     def to_bod
       location.varrow + any_name
     end

@@ -29,10 +29,6 @@ module Bioshogi
       official_formatter(...).to_s
     end
 
-    def yomiage(...)
-      yomiage_formatter(...).to_s
-    end
-
     def to_csa(...)
       hand.to_csa(...)
     end
@@ -63,10 +59,6 @@ module Bioshogi
 
     def official_formatter(...)
       OfficialFormatter.new(self, ...)
-    end
-
-    def yomiage_formatter(...)
-      Yomiage::Formatter.new(self, ...)
     end
   end
 end
