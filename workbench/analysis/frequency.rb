@@ -19,7 +19,7 @@ module Bioshogi
 end
 EOS
 # >> # -*- frozen_string_literal: true -*-
-# >> 
+# >>
 # >> # see: /Users/ikeda/src/bioshogi/workbench/analysis/frequency.rb
 # >> module Bioshogi
 # >>   module Analysis

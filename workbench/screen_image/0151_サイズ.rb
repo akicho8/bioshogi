@@ -1,9 +1,9 @@
 require "../setup"
 [
-  {width: 1200, height: 1600, master_scale: 0.8},
-  {width: 1080, height: 1080, master_scale: 0.8},
-  {width: 1600, height: 900,  master_scale: 1.0},
-  {width: 1200, height: 1350, master_scale: 0.8},
+  { width: 1200, height: 1600, master_scale: 0.8 },
+  { width: 1080, height: 1080, master_scale: 0.8 },
+  { width: 1600, height: 900,  master_scale: 1.0 },
+  { width: 1200, height: 1350, master_scale: 0.8 },
 ].each do |options|
   parser = Parser.parse(SFEN1)
   object = parser.screen_image_renderer(options)
