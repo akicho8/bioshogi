@@ -3,6 +3,7 @@ require "active_support/core_ext/benchmark"
 require "fileutils"
 require "pp"
 require "yaml"
+require "benchmark"
 
 # 標準出力キャプチャ用
 # capture(:stdout) { print "x" } # => "x"
