@@ -5,15 +5,15 @@ module Bioshogi
     class CharInfo
       include ApplicationMemoryRecord
       memory_record [
-        { key: "1",  number_kanji: "一", number_zenkaku: "１", },
-        { key: "2",  number_kanji: "二", number_zenkaku: "２", },
-        { key: "3",  number_kanji: "三", number_zenkaku: "３", },
-        { key: "4",  number_kanji: "四", number_zenkaku: "４", },
-        { key: "5",  number_kanji: "五", number_zenkaku: "５", },
-        { key: "6",  number_kanji: "六", number_zenkaku: "６", },
-        { key: "7",  number_kanji: "七", number_zenkaku: "７", },
-        { key: "8",  number_kanji: "八", number_zenkaku: "８", },
-        { key: "9",  number_kanji: "九", number_zenkaku: "９", },
+        { key: "1",  kanji_number: "一", zenkaku_number: "１", },
+        { key: "2",  kanji_number: "二", zenkaku_number: "２", },
+        { key: "3",  kanji_number: "三", zenkaku_number: "３", },
+        { key: "4",  kanji_number: "四", zenkaku_number: "４", },
+        { key: "5",  kanji_number: "五", zenkaku_number: "５", },
+        { key: "6",  kanji_number: "六", zenkaku_number: "６", },
+        { key: "7",  kanji_number: "七", zenkaku_number: "７", },
+        { key: "8",  kanji_number: "八", zenkaku_number: "８", },
+        { key: "9",  kanji_number: "九", zenkaku_number: "９", },
       ]
 
       def hankaku_number

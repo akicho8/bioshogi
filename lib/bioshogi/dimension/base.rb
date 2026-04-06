@@ -52,9 +52,9 @@ module Bioshogi
             a.merge({
                 object           => object,
                 i                => object,
-                e.number_kanji   => object,
+                e.kanji_number   => object,
                 e.hankaku_number => object,
-                e.number_zenkaku => object,
+                e.zenkaku_number => object,
               })
           }.freeze
         end
@@ -90,8 +90,8 @@ module Bioshogi
 
       delegate *[
         :key,
-        :number_kanji,
-        :number_zenkaku,
+        :kanji_number,
+        :zenkaku_number,
         :hankaku_number,
       ], to: :char_info
 

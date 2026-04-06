@@ -44,7 +44,7 @@ module Bioshogi
       end
 
       def name
-        char_info.number_kanji
+        char_info.kanji_number
       end
 
       def to_sfen

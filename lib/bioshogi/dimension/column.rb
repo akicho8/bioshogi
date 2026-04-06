@@ -28,7 +28,7 @@ module Bioshogi
       end
 
       def name
-        char_info.number_zenkaku
+        char_info.zenkaku_number
       end
 
       # 人間向けの数字で 68 なら 6
